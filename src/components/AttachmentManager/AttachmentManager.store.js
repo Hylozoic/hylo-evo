@@ -11,21 +11,9 @@ export const ADD_ATTACHMENT = `${MODULE_NAME}/ADD_ATTACHMENT`
 export const REMOVE_ATTACHMENT = `${MODULE_NAME}/REMOVE_ATTACHMENT`
 export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
 
-export const makePolymorphicId = (typeOrObject, objectId) => {
-  let type, id
+// -- LOCAL STORE --
 
-  if (typeof typeOrObject === 'object') {
-    [type, id] = [typeOrObject['type'], typeOrObject['id']]
-  } else {
-    [type, id] = [typeOrObject, objectId]
-  }
-
-  id = id || 'new'
-
-  return [type, id].join('-')
-}
-
-// action generators
+// Action generators
 
 export function setAttachments (type, id, attachmentType, attachments) {
   return {
@@ -74,18 +62,6 @@ export function switchAttachments (type, id, attachmentType, position1, position
 
 // Selectors
 
-export function getUploadPending ({ pending }, props) {
-  const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
-
-  if (!props || !pendingUpload) return pendingUpload
-
-  const { type, id, attachmentType } = props
-
-  return pendingUpload.type === type &&
-    pendingUpload.id === id &&
-    pendingUpload.attachmentType === attachmentType
-}
-
 export function getAttachments (state, {
   type,
   id,
@@ -94,21 +70,6 @@ export function getAttachments (state, {
   const result = getOr([], [MODULE_NAME, makePolymorphicId(type, id), attachmentType], state)
   return result
 }
-
-export const getAttachmentsFromObject = ormCreateSelector(
-  orm,
-  (state, _) => get('orm', state),
-  (_, props) => props,
-  ({ Attachment }, { id, type, attachmentType }) => Attachment
-    .all()
-    .filter(({ type: at, ...rest }) =>
-      at === attachmentType &&
-      rest[type.toLowerCase()] === id
-    )
-    .orderBy('position')
-    .toModelArray()
-    .map(a => a.url)
-)
 
 // Reducer
 
@@ -169,10 +130,43 @@ export default function reducer (state = defaultState, action) {
   }
 }
 
+// -- GLOBAL STORE --
+
+// Selectors
+
+export function getUploadPending ({ pending }, props) {
+  const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
+
+  if (!props || !pendingUpload) return pendingUpload
+
+  const { type, id, attachmentType } = props
+
+  return pendingUpload.type === type &&
+    pendingUpload.id === id &&
+    pendingUpload.fileType === attachmentType
+}
+
+export const getAttachmentsFromObject = ormCreateSelector(
+  orm,
+  (state, _) => get('orm', state),
+  (_, props) => props,
+  ({ Attachment }, { id, type, attachmentType }) => Attachment
+    .all()
+    .filter(({ type: at, ...rest }) =>
+      at === attachmentType &&
+      rest[type.toLowerCase()] === id
+    )
+    .orderBy('position')
+    .toModelArray()
+    .map(a => a.url)
+)
+
+// Action generators
+
 export function uploadAttachment ({
-  id = 'new', // this is the id of the thing that the upload is for
   type, // this is the type of thing that the upload is for, e.g. post
-  attachmentType = 'image' // this is the type of the upload itself, e.g. image or file
+  id = 'new', // this is the id of the thing that the upload is for
+  fileType // this is the attachment type used to identify a related attachment manager
 }) {
   const payload = new Promise((resolve, reject) => {
     uploadFile({
@@ -185,13 +179,30 @@ export function uploadAttachment ({
       }),
       cancel: () => resolve({}),
       failure: err => reject(err),
-      attachmentType
+      fileType
     })
   })
 
   return {
     type: UPLOAD_ATTACHMENT,
     payload,
-    meta: { id, type, attachmentType }
+    meta: { type, id, fileType }
   }
 }
+
+// -- UTILITY --
+
+export const makePolymorphicId = (typeOrObject, objectId) => {
+  let type, id
+
+  if (typeof typeOrObject === 'object') {
+    [type, id] = [typeOrObject['type'], typeOrObject['id']]
+  } else {
+    [type, id] = [typeOrObject, objectId]
+  }
+
+  id = id || 'new'
+
+  return [type, id].join('-')
+}
+
