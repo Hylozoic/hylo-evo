@@ -7,8 +7,7 @@ import cx from 'classnames'
 import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 import { POST_PROP_TYPES } from 'store/models/Post'
-import AttachmentManager from './AttachmentManager'
-import { uploadSettings } from './AttachmentManager/AttachmentManager'
+import AttachmentManager from 'components/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
@@ -91,13 +90,12 @@ export default class PostEditor extends React.Component {
       detailsTopics: [],
       acceptContributions: false
     })
-    const currentPost = post
-      ? ({ ...post,
-        locationId: post.locationObject ? post.locationObject.id : null,
-        startTime: Moment(post.startTime),
-        endTime: Moment(post.endTime)
-      })
-      : defaultPostWithCommunitiesAndTopic
+    const currentPost = post ? ({
+      ...post,
+      locationId: post.locationObject ? post.locationObject.id : null,
+      startTime: Moment(post.startTime),
+      endTime: Moment(post.endTime)
+    }) : defaultPostWithCommunitiesAndTopic
 
     return {
       post: currentPost,
@@ -361,7 +359,6 @@ export default class PostEditor extends React.Component {
   render () {
     const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationObject } = post
-
     const {
       onClose, currentUser, communityOptions, loading, addImage,
       showImages, addFile, showFiles, setAnnouncement, announcementSelected,
@@ -421,8 +418,8 @@ export default class PostEditor extends React.Component {
       </div>
       {linkPreview &&
         <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
-      <AttachmentManager postId={id || 'new'} type='image' />
-      <AttachmentManager postId={id || 'new'} type='file' />
+      <AttachmentManager type='post' id={id} attachmentType='image' />
+      <AttachmentManager type='post' id={id} attachmentType='file' />
       <div styleName='footer'>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
@@ -520,7 +517,8 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ActionsBar ({ id,
+export function ActionsBar ({
+  id,
   addImage,
   showImages,
   addFile,
@@ -540,29 +538,39 @@ export function ActionsBar ({ id,
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
-      <ChangeImageButton update={addImage}
-        uploadSettings={uploadSettings(id)}
+      <ChangeImageButton
+        type='post'
+        id={id}
         attachmentType='image'
+        update={addImage}
         disable={showImages}>
-        <Icon name='AddImage'
-          styleName={cx('action-icon', { 'highlight-icon': showImages })} />
+        <Icon
+          name='AddImage'
+          styleName={cx('action-icon', { 'highlight-icon': showImages })}
+        />
       </ChangeImageButton>
-      <ChangeImageButton update={addFile}
-        uploadSettings={uploadSettings(id)}
+      <ChangeImageButton
+        type='post'
+        id={id}
         attachmentType='file'
+        update={addFile}
         disable={showFiles}>
-        <Icon name='Paperclip'
-          styleName={cx('action-icon', { 'highlight-icon': showFiles })} />
+        <Icon
+          name='Paperclip'
+          styleName={cx('action-icon', { 'highlight-icon': showFiles })}
+        />
       </ChangeImageButton>
       {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
-        <Icon name='Announcement'
+        <Icon
+          name='Announcement'
           onClick={() => setAnnouncement(!announcementSelected)}
           styleName={cx('action-icon', { 'highlight-icon': announcementSelected })}
         />
         <ReactTooltip
           effect={'solid'}
           delayShow={550}
-          id='announcement-tt' />
+          id='announcement-tt'
+        />
       </span>}
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}

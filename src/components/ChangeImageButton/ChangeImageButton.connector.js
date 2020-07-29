@@ -1,26 +1,21 @@
 import { connect } from 'react-redux'
-import { upload } from './ChangeImageButton.store'
-import { UPLOAD_ATTACHMENT } from 'store/constants'
+import { getUploadPending, uploadAttachment } from 'components/AttachmentManager/AttachmentManager.store'
 
-export function mapStateToProps (state, { uploadSettings, attachmentType }) {
-  const pending = state.pending[UPLOAD_ATTACHMENT]
-  const loading = !!pending &&
-    pending.id === uploadSettings.id &&
-    pending.type === uploadSettings.type &&
-    pending.attachmentType === attachmentType
-
-  return { loading }
+export function mapStateToProps (state, props) {
+  return {
+    loading: getUploadPending(state, props)
+  }
 }
 
-export function mapDispatchToProps (dispatch, props) {
+export function mapDispatchToProps (dispatch, {
+  id,
+  type,
+  attachmentType,
+  update
+}) {
   return {
-    upload: () =>
-      dispatch(upload({
-        ...props.uploadSettings,
-        attachmentType: props.attachmentType || 'image'
-      }))
-        .then(({ error, payload }) =>
-          !error && payload.url && props.update(payload.url))
+    upload: () => dispatch(uploadAttachment({ id, type, attachmentType }))
+      .then(({ payload, error }) => !error && payload.url && update(payload.url))
   }
 }
 

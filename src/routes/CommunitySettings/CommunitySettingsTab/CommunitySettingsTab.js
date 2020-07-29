@@ -89,14 +89,18 @@ export default class CommunitySettingsTab extends Component {
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
+          id={community.id}
+          type='communityBanner'
+          attachmentType='image'
           update={this.updateSettingDirectly('bannerUrl')}
-          uploadSettings={{ type: 'communityBanner', id: community.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
+          id={community.id}
+          type='communityAvatar'
+          attachmentType='image'
           update={this.updateSettingDirectly('avatarUrl')}
-          uploadSettings={{ type: 'communityAvatar', id: community.id }}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />

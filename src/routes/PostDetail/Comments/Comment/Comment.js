@@ -69,7 +69,6 @@ export default class Comment extends Component {
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
-        {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
       </ClickCatcher>}
     </div>
   }

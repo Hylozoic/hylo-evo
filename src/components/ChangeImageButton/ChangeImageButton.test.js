@@ -3,10 +3,9 @@ import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 describe('mapStateToProps', () => {
   const props = {
-    uploadSettings: {
-      id: '123',
-      subject: 'user-avatar'
-    }
+    type: 'user-avatar',
+    id: '123',
+    attachmentType: 'image'
   }
 
   it('sets loading to false when not pending', () => {
@@ -23,8 +22,9 @@ describe('mapStateToProps', () => {
     const state = {
       pending: {
         [UPLOAD_ATTACHMENT]: {
+          type: 'user-avatar',
           id: '124',
-          subject: 'user-avatar'
+          attachmentType: 'image'
         }
       }
     }
@@ -38,8 +38,9 @@ describe('mapStateToProps', () => {
     const state = {
       pending: {
         [UPLOAD_ATTACHMENT]: {
+          type: 'user-avatar',
           id: '123',
-          subject: 'user-avatar'
+          attachmentType: 'image'
         }
       }
     }

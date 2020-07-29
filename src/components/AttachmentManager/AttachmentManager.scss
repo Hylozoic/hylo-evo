@@ -20,7 +20,7 @@
 
 // ImageManager
 .section-label {
-  composes: section-label from '../PostEditor.scss';
+  composes: section-label from 'components/PostEditor/PostEditor.scss';
 }
 
 .image-manager {

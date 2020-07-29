@@ -1,6 +1,5 @@
 import React from 'react'
 import cx from 'classnames'
-import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
@@ -10,7 +9,6 @@ import './CommentCard.scss'
 export default function CommentCard ({
   comment,
   showDetails,
-  shouldShowReply,
   expanded = true,
   highlightProps
 }) {
@@ -43,9 +41,7 @@ export default function CommentCard ({
           <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
         </Highlight>
       </ClickCatcher>}
-      <div styleName='comment-footer'>
-        {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
-      </div>
+      <div styleName='comment-footer' />
     </div>
   </a>
 }

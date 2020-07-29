@@ -116,14 +116,18 @@ export default class AccountSettingsTab extends Component {
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
+          type='userBanner'
+          id={currentUser.id}
+          attachmentType='image'
           update={this.updateSettingDirectly('bannerUrl')}
-          uploadSettings={{ type: 'userBanner', id: currentUser.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
+          type='userAvatar'
+          id={currentUser.id}
+          attachmentType='image'
           update={this.updateSettingDirectly('avatarUrl')}
-          uploadSettings={{ type: 'userAvatar', id: currentUser.id }}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />

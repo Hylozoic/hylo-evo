@@ -30,8 +30,8 @@ export function updateComment (id, text) {
     graphql: {
       query: `mutation ($id: ID, $data: CommentInput) {
         updateComment(id: $id, data: $data) {
-            id
-            text
+          id
+          text
         }
       }`,
       variables: {

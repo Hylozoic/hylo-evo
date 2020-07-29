@@ -16,7 +16,6 @@ const props = {
     },
     createdAt: new Date()
   },
-  shouldShowReply: false,
   expanded: false,
   highlightProps: { term: 'foo' }
 }
@@ -29,7 +28,6 @@ it('matches last snapshot', () => {
 it('matches last snapshot with different config', () => {
   const differentProps = {
     ...props,
-    shouldShowReply: true,
     expanded: true
   }
   const wrapper = shallow(<CommentCard {...differentProps} />)

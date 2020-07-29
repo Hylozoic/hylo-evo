@@ -1,18 +1,13 @@
 import React from 'react'
-import Loading from 'components/Loading'
-import Icon from 'components/Icon'
-import { bgImageStyle } from 'util/index'
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import ChangeImageButton from 'components/ChangeImageButton'
-import './AttachmentManager.scss'
 import path from 'path'
 import { isEmpty } from 'lodash/fp'
-
-export const uploadSettings = id => ({
-  type: 'post',
-  id: id || 'new'
-})
+import { bgImageStyle } from 'util/index'
+import Loading from 'components/Loading'
+import Icon from 'components/Icon'
+import ChangeImageButton from 'components/ChangeImageButton'
+import './AttachmentManager.scss'
 
 export default class AttachmentManager extends React.Component {
   componentDidMount () {
@@ -20,7 +15,7 @@ export default class AttachmentManager extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (isEmpty(prevProps.attachmentsFromPost) && !isEmpty(this.props.attachmentsFromPost)) {
+    if (isEmpty(prevProps.attachmentsFromObject) && !isEmpty(this.props.attachmentsFromObject)) {
       this.props.loadAttachments()
     }
   }
@@ -30,39 +25,47 @@ export default class AttachmentManager extends React.Component {
   }
 
   render () {
-    if (this.props.type === 'image') {
+    if (this.props.attachmentType === 'image') {
       return <ImageManager {...this.props} />
-    } else if (this.props.type === 'file') {
+    } else {
       return <FileManager {...this.props} />
     }
   }
 }
 
+// AttachmentManager.defaultProps = {
+//   id: 'new'
+// }
+
 export const ImageManager = DragDropContext(HTML5Backend)(
   class ImageManager extends React.Component {
     render () {
-      const { postId, showAttachments, attachments, pending, addAttachment, removeAttachment, switchAttachments } = this.props
+      const { id, type, attachmentType, showAttachments, attachments, pending, addAttachment, removeAttachment, switchAttachments } = this.props
       if (!showAttachments) return null
 
       return <div styleName='image-manager'>
         <div styleName='section-label'>Images</div>
         <div styleName='image-previews'>
           {attachments.map((url, i) =>
-            <ImagePreview url={url}
+            <ImagePreview
+              url={url}
               removeImage={removeAttachment}
               switchImages={switchAttachments}
               position={i}
               key={i} />)}
           {pending && <div styleName='add-image'><Loading /></div>}
-          <ChangeImageButton update={addAttachment}
-            uploadSettings={uploadSettings(postId)}
-            attachmentType='image'>
+          <ChangeImageButton
+            id={id}
+            type={type}
+            attachmentType={attachmentType}
+            update={addAttachment}>
             <div styleName='add-image'>+</div>
           </ChangeImageButton>
         </div>
       </div>
     }
-  })
+  }
+)
 
 const imagePreviewSource = {
   beginDrag (props) {
@@ -103,7 +106,7 @@ export const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (conn
     }))
 
 export function FileManager ({
-  postId, showAttachments, attachments, pending, addAttachment, removeAttachment
+  id, type, attachmentType, showAttachments, attachments, pending, addAttachment, removeAttachment
 }) {
   if (!showAttachments) return null
 
@@ -111,16 +114,18 @@ export function FileManager ({
     <div styleName='section-label'>Files</div>
     <div styleName='file-previews'>
       {attachments.map((url, i) =>
-        <FilePreview url={url}
+        <FilePreview
+          url={url}
           removeFile={removeAttachment}
           position={i}
           key={i} />)}
       {pending && <div styleName='loading-file'>Loading...</div>}
       <ChangeImageButton
-        styleName='add-file-row'
+        id={id}
+        type={type}
+        attachmentType={attachmentType}
         update={addAttachment}
-        uploadSettings={uploadSettings(postId)}
-        attachmentType='file'>
+        styleName='add-file-row'>
         <div styleName='add-file'>
           <span styleName='add-file-plus'>+</span> Add File</div>
       </ChangeImageButton>

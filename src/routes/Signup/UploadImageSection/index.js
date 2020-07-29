@@ -6,8 +6,10 @@ import '../Signup.scss'
 
 export default function UploadImage ({ avatarUrl, currentUser, updateSettingDirectly, loading }) {
   return <ChangeImageButton
+    type='userAvatar'
+    id={currentUser.id}
+    attachmentType='image'
     update={updateSettingDirectly('avatarUrl')}
-    uploadSettings={{ type: 'userAvatar', id: currentUser.id }}
     styleName='change-avatar-button'>
     {uploadAvatar(currentUser, loading, avatarUrl)}
   </ChangeImageButton>

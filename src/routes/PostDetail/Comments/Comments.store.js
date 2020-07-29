@@ -37,6 +37,13 @@ const createCommentMutation = `mutation ($postId: String, $text: String) {
     creator {
       id
     }
+    attachments {
+      type
+      url
+      position
+      id
+    }
+    createdAt
   }
 }`
 export function createComment (postId, text) {

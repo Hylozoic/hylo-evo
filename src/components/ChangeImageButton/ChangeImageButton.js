@@ -2,8 +2,13 @@ import React from 'react'
 import Icon from 'components/Icon'
 import './ChangeImageButton.scss'
 
-export default function ChangeImageButton (props) {
-  const { upload, loading, className, children, disable } = props
+export default function ChangeImageButton ({
+  upload,
+  loading,
+  className,
+  children,
+  disable
+}) {
   const iconName = loading ? 'Clock' : 'AddImage'
   const onClick = loading || disable ? () => {} : upload
 

@@ -98,14 +98,18 @@ export default class NetworkSettingsTab extends Component {
       <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
+          id={network.id}
+          type='networkBanner'
+          attachmentType='image'
           update={updateSettingDirectly('bannerUrl')}
-          uploadSettings={{ type: 'networkBanner', id: network.id }}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <ChangeImageButton
+          id={network.id}
+          type='networkAvatar'
+          attachmentType='image'
           update={updateSettingDirectly('avatarUrl')}
-          uploadSettings={{ type: 'networkAvatar', id: network.id }}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />

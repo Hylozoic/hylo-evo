@@ -9,13 +9,13 @@ describe('AttachmentManager', () => {
     prop3: 'baz'
   }
 
-  it('renders ImageManager when type is image', () => {
-    const wrapper = shallow(<AttachmentManager loadAttachments={jest.fn()} type='image' {...props} />)
+  it('renders FileManager by default file', () => {
+    const wrapper = shallow(<AttachmentManager loadAttachments={jest.fn()} attachmentType='file' {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders FileManager when type is file', () => {
-    const wrapper = shallow(<AttachmentManager loadAttachments={jest.fn()} type='file' {...props} />)
+  it('renders ImageManager when image is set', () => {
+    const wrapper = shallow(<AttachmentManager loadAttachments={jest.fn()} attachmentType='image' {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -23,13 +23,14 @@ describe('AttachmentManager', () => {
 describe('ImageManager', () => {
   it('matches last snapshot', () => {
     const props = {
-      postId: 1,
-      addAttachment: () => {},
-      removeAttachment: () => {},
-      switchAttachments: () => {},
+      id: 1,
+      type: 'post',
       showAttachments: true,
       pending: true,
-      attachments: ['foo.png', 'bar.jpg']
+      attachments: ['foo.png', 'bar.jpg'],
+      addAttachment: () => {},
+      removeAttachment: () => {},
+      switchAttachments: () => {}
     }
     const wrapper = shallow(<ImageManager.DecoratedComponent {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -40,11 +41,11 @@ describe('ImagePreview', () => {
   it('matches last snapshot', () => {
     const props = {
       url: 'foo.zng',
-      removeImage: () => {},
       position: 1,
       connectDragSource: i => i,
       connectDragPreview: i => i,
-      connectDropTarget: i => i
+      connectDropTarget: i => i,
+      removeImage: () => {}
     }
     const wrapper = shallow(<ImagePreview.DecoratedComponent {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -54,12 +55,13 @@ describe('ImagePreview', () => {
 describe('FileManager', () => {
   it('matches last snapshot', () => {
     const props = {
-      postId: 1,
-      addAttachment: () => {},
-      removeAttachment: () => {},
+      id: 1,
+      type: 'post',
       showAttachments: true,
       pending: true,
-      attachments: ['foo.pdf', 'bar.zip']
+      attachments: ['foo.pdf', 'bar.zip'],
+      addAttachment: () => {},
+      removeAttachment: () => {}
     }
     const wrapper = shallow(<FileManager {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -70,9 +72,9 @@ describe('FilePreview', () => {
   it('matches last snapshot', () => {
     const props = {
       url: 'foo.pdf',
-      removeImage: () => {},
       position: 1,
-      fileSize: '23.3mb'
+      fileSize: '23.3mb',
+      removeImage: () => {}
     }
     const wrapper = shallow(<FilePreview {...props} />)
     expect(wrapper).toMatchSnapshot()

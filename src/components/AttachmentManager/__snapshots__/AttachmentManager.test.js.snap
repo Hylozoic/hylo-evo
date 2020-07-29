@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachmentManager renders FileManager when type is file 1`] = `
+exports[`AttachmentManager renders FileManager by default file 1`] = `
 <FileManager
+  attachmentType="file"
+  id="new"
   loadAttachments={
     [MockFunction] {
       "calls": Array [
@@ -18,12 +20,13 @@ exports[`AttachmentManager renders FileManager when type is file 1`] = `
   prop1="foo"
   prop2="bar"
   prop3="baz"
-  type="file"
 />
 `;
 
-exports[`AttachmentManager renders ImageManager when type is image 1`] = `
-<DragDropContext(ImageManager)
+exports[`AttachmentManager renders ImageManager when image is set 1`] = `
+<FileManager
+  attachmentType="image"
+  id="new"
   loadAttachments={
     [MockFunction] {
       "calls": Array [
@@ -40,7 +43,6 @@ exports[`AttachmentManager renders ImageManager when type is image 1`] = `
   prop1="foo"
   prop2="bar"
   prop3="baz"
-  type="image"
 />
 `;
 
@@ -76,13 +78,9 @@ exports[`FileManager matches last snapshot 1`] = `
     <Connect(ChangeImageButton)
       attachmentType="file"
       data-stylename="add-file-row"
+      id={1}
+      type="post"
       update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
     >
       <div
         data-stylename="add-file"
@@ -157,14 +155,9 @@ exports[`ImageManager matches last snapshot 1`] = `
       <Loading />
     </div>
     <Connect(ChangeImageButton)
-      attachmentType="image"
+      id={1}
+      type="post"
       update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
     >
       <div
         data-stylename="add-image"

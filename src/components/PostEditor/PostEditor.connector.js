@@ -1,7 +1,9 @@
 import { get, isEmpty } from 'lodash/fp'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
+import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -13,8 +15,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import {
   CREATE_POST,
   CREATE_PROJECT,
-  FETCH_POST,
-  UPLOAD_ATTACHMENT
+  FETCH_POST
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
@@ -30,8 +31,9 @@ import {
 } from './PostEditor.store'
 import {
   addAttachment,
-  getAttachments
-} from './AttachmentManager/AttachmentManager.store'
+  getAttachments,
+  getUploadPending
+} from 'components/AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
@@ -42,18 +44,16 @@ export function mapStateToProps (state, props) {
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
-  const fetchLinkPreviewPending = state.pending[FETCH_LINK_PREVIEW]
-  const uploadAttachmentPending = state.pending[UPLOAD_ATTACHMENT]
-  const postPending = !!state.pending[CREATE_POST] || !!state.pending[CREATE_PROJECT]
-  const loading = !!state.pending[FETCH_POST] || !!uploadAttachmentPending || postPending
+  const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
+  const uploadAttachmentPending = getUploadPending(state)
+  const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
+  const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
   const editing = !!post || loading
-  const images = getAttachments(state, { type: 'image' })
-  const files = getAttachments(state, { type: 'file' })
-  // Note: this could be a selector exported from AttachmentManager
-  const showImages = !isEmpty(images) ||
-    get('attachmentType', uploadAttachmentPending) === 'image'
-  const showFiles = !isEmpty(files) ||
-    get('attachmentType', uploadAttachmentPending) === 'file'
+  const editingPostId = getRouteParam('postId', state, props)
+  const images = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
+  const files = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
+  const showFiles = !isEmpty(files) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
+  const showImages = !isEmpty(images) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const communitySlug = getRouteParam('slug', null, props)
   const networkSlug = getRouteParam('networkSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
@@ -71,6 +71,7 @@ export function mapStateToProps (state, props) {
     postTypeContext,
     isProject,
     isEvent,
+    editingPostId,
     post,
     loading,
     postPending,
@@ -95,21 +96,22 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
-    removeLinkPreview: () => dispatch(removeLinkPreview()),
-    clearLinkPreview: () => dispatch(clearLinkPreview()),
-    updatePost: postParams => dispatch(updatePost(postParams)),
-    createPost: postParams => dispatch(createPost(postParams)),
-    createProject: postParams => dispatch(createProject(postParams)),
     goToUrl: url => dispatch(push(url)),
-    addImage: url => dispatch(addAttachment(url, 'image')),
-    addFile: url => dispatch(addAttachment(url, 'file')),
-    setAnnouncement: bool => dispatch(setAnnouncement(bool))
+    ...bindActionCreators({
+      setAnnouncement,
+      removeLinkPreview,
+      clearLinkPreview,
+      updatePost,
+      createPost,
+      createProject,
+      addAttachment
+    }, dispatch)
   }
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext
+    fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext, editingPostId
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
@@ -122,9 +124,14 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const pollingFetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)
-  const createPost = postParams => dispatchProps.createPost({ networkSlug, ...postParams })
+  const createPost = postParams =>
+    dispatchProps.createPost({ networkSlug, ...postParams })
   const createProject = projectParams =>
     dispatchProps.createProject({ networkSlug, ...projectParams })
+  const addImage = url =>
+    dispatchProps.addAttachment('post', editingPostId, 'image', url)
+  const addFile = url =>
+    dispatchProps.addAttachment('post', editingPostId, 'file', url)
 
   return {
     ...stateProps,
@@ -133,7 +140,9 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     goToPost,
     pollingFetchLinkPreview,
     createPost,
-    createProject
+    createProject,
+    addImage,
+    addFile
   }
 }
 
