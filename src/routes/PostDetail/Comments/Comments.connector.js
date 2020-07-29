@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
-import { getAttachments } from 'components/AttachmentManager/AttachmentManager.store'
+// import { getAttachments } from 'components/AttachmentManager/AttachmentManager.store'
 import {
   fetchComments,
   createComment,
@@ -12,7 +12,7 @@ import {
 
 export function mapStateToProps (state, props) {
   console.log('!!!! comments state, props:', state, props)
-  // const editingCommentId = 
+  // const editingCommentId =
   // const imageUrls = getAttachments(state, { type: 'comment', id: , attachmentType: 'image' })
   // const fileUrls = getAttachments(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })
   // const showFiles = !isEmpty(fileUrls) || getUploadPending(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })

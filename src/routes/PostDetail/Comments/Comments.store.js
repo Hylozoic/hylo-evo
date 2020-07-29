@@ -70,7 +70,7 @@ export function createComment ({
         postId,
         text,
         imageUrls,
-        fileUrls      
+        fileUrls
       }
     },
     meta: {
