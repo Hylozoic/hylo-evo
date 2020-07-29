@@ -34,7 +34,7 @@ export default class CommentForm extends Component {
   save = text => {
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
-    this.props.createComment(text)
+    this.props.createComment({ text })
     this.props.clearAttachments()
   }
 
@@ -49,7 +49,10 @@ export default class CommentForm extends Component {
     if (!currentUser) return null
 
     const placeholder = `Hi ${currentUser.firstName()}, what's on your mind?`
-    return <div styleName='commentForm' className={className}
+
+    return <div
+      styleName='commentForm'
+      className={className}
       onClick={() => this.editor.current.focus()}>
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />

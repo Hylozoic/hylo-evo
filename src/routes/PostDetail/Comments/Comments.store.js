@@ -27,8 +27,18 @@ export function fetchComments (id, opts = {}) {
   }
 }
 
-const createCommentMutation = `mutation ($postId: String, $text: String) {
-  createComment(data: {postId: $postId, text: $text}) {
+const createCommentMutation = `mutation (
+  $postId: String,
+  $text: String
+  $imageUrls: [String],
+  $fileUrls: [String]
+) {
+  createComment(data: {
+    postId: $postId,
+    text: $text
+    imageUrls: $imageUrls,
+    fileUrls: $fileUrls  
+  }) {
     id
     text
     post {
@@ -46,17 +56,22 @@ const createCommentMutation = `mutation ($postId: String, $text: String) {
     createdAt
   }
 }`
-export function createComment (postId, text) {
-  const variables = {
-    postId,
-    text
-  }
-
+export function createComment ({
+  postId,
+  text,
+  imageUrls = [],
+  fileUrls = []
+}) {
   return {
     type: CREATE_COMMENT,
     graphql: {
       query: createCommentMutation,
-      variables
+      variables: {
+        postId,
+        text,
+        imageUrls,
+        fileUrls      
+      }
     },
     meta: {
       optimistic: true,

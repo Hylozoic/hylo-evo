@@ -1,9 +1,23 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
-import { fetchComments, createComment, getComments, getHasMoreComments, getTotalComments } from './Comments.store'
+import { getAttachments } from 'components/AttachmentManager/AttachmentManager.store'
+import {
+  fetchComments,
+  createComment,
+  getComments,
+  getHasMoreComments,
+  getTotalComments
+} from './Comments.store'
 
 export function mapStateToProps (state, props) {
+  console.log('!!!! comments state, props:', state, props)
+  // const editingCommentId = 
+  // const imageUrls = getAttachments(state, { type: 'comment', id: , attachmentType: 'image' })
+  // const fileUrls = getAttachments(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })
+  // const showFiles = !isEmpty(fileUrls) || getUploadPending(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })
+  // const showImages = !isEmpty(imageUrls) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
+
   return {
     comments: getComments(state, props),
     total: getTotalComments(state, { id: props.postId }),
@@ -16,7 +30,7 @@ export const mapDispatchToProps = (dispatch, props) => {
   const { postId, scrollToBottom } = props
   return {
     fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, { cursor })),
-    createComment: text => dispatch(createComment(postId, text)).then(() => scrollToBottom())
+    createComment: commentParams => dispatch(createComment({ postId, ...commentParams })).then(() => scrollToBottom())
   }
 }
 
