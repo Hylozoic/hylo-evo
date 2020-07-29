@@ -23,7 +23,7 @@ exports[`Review renders correctly 1`] = `
       <span
         data-stylename="step-count"
       >
-        STEP 3/3
+        STEP 4/4
       </span>
     </div>
     <div
@@ -43,35 +43,33 @@ exports[`Review renders correctly 1`] = `
     >
       <ReviewTextInput
         editHandler={[Function]}
-        label="Your Name"
-        onChange={[Function]}
-        onEnter={[Function]}
-        readOnly={true}
-        value=""
-      />
-      <ReviewTextInput
-        editHandler={[Function]}
-        label="Your Email"
-        onChange={[Function]}
-        onEnter={[Function]}
-        readOnly={true}
-        value=""
-      />
-      <ReviewTextInput
-        editHandler={[Function]}
+        inputRef={[Function]}
         label="Community Name"
         onChange={[Function]}
         onEnter={[Function]}
         readOnly={true}
-        value="communityName"
+        value=""
       />
       <ReviewTextInput
         editHandler={[Function]}
+        inputRef={[Function]}
         label="URL"
         onChange={[Function]}
         onEnter={[Function]}
         readOnly={true}
-        value="hylo.com/c/communityDomain"
+        value=""
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Community Template"
+        readOnly={true}
+        value=""
+      />
+      <ReviewTextInput
+        editHandler={[Function]}
+        label="Default Topics"
+        readOnly={true}
+        value={Array []}
       />
     </div>
   </div>
@@ -98,7 +96,6 @@ exports[`ReviewTextInput renders correctly 1`] = `
     data-stylename="review-input-text"
   >
     <TextInput
-      name="community-name"
       noClearButton={true}
       onChange={[MockFunction]}
       readOnly={false}

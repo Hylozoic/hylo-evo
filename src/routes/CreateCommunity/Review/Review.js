@@ -21,16 +21,14 @@ export default class Review extends Component {
     this.state = {
       readOnly: {
         name: true,
-        email: true,
-        communityName: true,
-        communityDomain: true
+        domain: true
       },
       edits: {
         name: '',
-        email: '',
-        communityName: '',
-        communityDomain: '',
-        communityPrivacy: null,
+        domain: '',
+        defaultTopics: [],
+        templateName: null,
+        privacy: null,
         changed: false
       }
     }
@@ -48,7 +46,7 @@ export default class Review extends Component {
 
   handleInputChange = (event, name) => {
     let value = event.target.value
-    if (name === 'communityDomain') {
+    if (name === 'domain') {
       value = removeUrlFromDomain(value)
       if (value !== '') {
         this.props.fetchCommunityExists(value)
@@ -70,16 +68,14 @@ export default class Review extends Component {
   }
 
   submit = () => {
-    const { name, email, communityName, communityDomain, communityNetworkId } = this.state.edits
-    this.state.edits.changed && this.props.updateUserSettings({
-      name,
-      email
-    })
+    const { name, domain, defaultTopics, template, networkId } = this.state.edits
     this.props.createCommunity(
-      // communityPrivacy,
-      communityName,
-      communityDomain,
-      communityNetworkId
+      // privacy,
+      name,
+      domain,
+      template ? template.id : null,
+      defaultTopics,
+      networkId
     )
       .then(({ error }) => {
         if (error) {
@@ -87,23 +83,23 @@ export default class Review extends Component {
             error: 'There was an error, please try again.'
           })
         } else {
-          this.props.goToCommunity(`${communityDomain}`)
+          this.props.goToCommunity(`${domain}`)
         }
       })
   }
 
   errorCheckAndSubmit = () => {
-    const { name, email, communityName, communityDomain } = this.state.edits
-    if (name === '' || email === '' || communityName === '' || communityDomain === '') {
+    const { name, domain } = this.state.edits
+    if (name === '' || domain === '') {
       this.setState({
         error: 'Please fill in each field.'
       })
-    } else if (this.props.communityDomainExists) {
+    } else if (this.props.domainExists) {
       this.setState({
         error: 'This URL already exists. Try another.'
       })
-    } else if (!slugValidatorRegex.test(removeUrlFromDomain(communityDomain))) {
-      formatDomainWithUrl(communityDomain)
+    } else if (!slugValidatorRegex.test(removeUrlFromDomain(domain))) {
+      formatDomainWithUrl(domain)
       this.setState({
         error: invalidSlugMessage
       })
@@ -113,32 +109,32 @@ export default class Review extends Component {
   }
 
   componentWillMount = () => {
-    const { communityPrivacy } = this.props
-    const privacyOption = find(privacyOptions, { label: communityPrivacy })
-    const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
+    const { privacy } = this.props
+    const privacyOption = find(privacyOptions, { label: privacy })
+    const selectedprivacy = get('label', privacyOption) // set to Private by default
     this.setState({
       edits: {
-        name: get('name', this.props.currentUser) || '',
-        email: get('email', this.props.currentUser) || '',
-        communityName: get('communityName', this.props) || '',
-        communityDomain: get('communityDomain', this.props) || '',
-        communityNetworkId: get('communityNetworkId', this.props) || '',
-        communityPrivacy: selectedCommunityPrivacy
+        name: get('name', this.props) || '',
+        domain: get('domain', this.props) || '',
+        defaultTopics: get('defaultTopics', this.props) || [],
+        networkId: get('networkId', this.props) || '',
+        privacy: selectedprivacy,
+        template: get('template', this.props) || null
       }
     })
   }
 
-  formatDomainWithUrl (communityDomain) {
-    if (!communityDomain) return null
-    let formattedDomain = communityDomain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
+  formatDomainWithUrl (domain) {
+    if (!domain) return null
+    let formattedDomain = domain.replace('hylo.com/c/', '').replace('hylo.com/c', '')
     if (formattedDomain !== '') {
       formattedDomain = 'hylo.com/c/' + formattedDomain
     }
     return formattedDomain
   }
 
-  removeUrlFromDomain (communityDomain) {
-    return communityDomain.replace('hylo.com/c/', '')
+  removeUrlFromDomain (domain) {
+    return domain.replace('hylo.com/c/', '')
   }
 
   render () {
@@ -154,43 +150,41 @@ export default class Review extends Component {
       />
       <div styleName='panel'>
         <div>
-          <span styleName='step-count'>STEP 3/3</span>
+          <span styleName='step-count'>STEP 4/4</span>
         </div>
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-review'>
           <ReviewTextInput
-            label={'Your Name'}
+            label={'Community Name'}
             value={this.state.edits.name || ''}
             readOnly={this.state.readOnly.name}
-            editHandler={(event) => this.editHandler('name')}
+            editHandler={() => this.editHandler('name')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'name')}
-          />
-          <ReviewTextInput
-            label={'Your Email'}
-            value={this.state.edits.email || ''}
-            readOnly={this.state.readOnly.email}
-            editHandler={() => this.editHandler('email')}
-            onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'email')}
-          />
-          <ReviewTextInput
-            label={'Community Name'}
-            value={this.state.edits.communityName || ''}
-            readOnly={this.state.readOnly.communityName}
-            editHandler={() => this.editHandler('communityName')}
-            onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'communityName')}
+            inputRef={(input) => { this.name = input }}
           />
           <ReviewTextInput
             label={'URL'}
-            value={formatDomainWithUrl(this.state.edits.communityDomain) || ''}
-            readOnly={this.state.readOnly.communityDomain}
-            editHandler={() => this.editHandler('communityDomain')}
+            value={formatDomainWithUrl(this.state.edits.domain) || ''}
+            readOnly={this.state.readOnly.domain}
+            editHandler={() => this.editHandler('domain')}
             onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'communityDomain')}
+            onChange={(e) => this.handleInputChange(e, 'domain')}
+            inputRef={(input) => { this.domain = input }}
+          />
+          <ReviewTextInput
+            label={'Community Template'}
+            value={this.state.edits.template ? this.state.edits.template.displayName : ''}
+            readOnly
+            editHandler={() => this.props.goToStep('template')}
+          />
+          <ReviewTextInput
+            label={'Default Topics'}
+            value={this.state.edits.defaultTopics}
+            readOnly
+            editHandler={() => this.props.goToStep('template')}
           />
           {networkName && <ReviewTextInput
             label={'Network'}
@@ -199,7 +193,7 @@ export default class Review extends Component {
           />}
           {/* <ReviewTextInput */}
           {/* label={'Privacy'} */}
-          {/* value={this.state.edits.communityPrivacy} */}
+          {/* value={this.state.edits.privacy} */}
           {/* onEnter={this.onEnter} */}
           {/* editHandler={() => this.props.goToPrivacyStep()} */}
           {/* /> */}
@@ -224,21 +218,29 @@ export function ReviewTextInput ({ label, value, editHandler, onChange, readOnly
       <span>{label}</span>
     </div>
     <div styleName='review-input-text'>
-      <TextInput
-        type='text'
-        name='community-name'
-        value={value}
-        theme={inputTheme}
-        readOnly={readOnly}
-        noClearButton
-        onChange={onChange}
-        inputRef={inputRef}
-      />
+      { Array.isArray(value)
+        ? <div styleName='reviewPills'>{value.map((v, index) => <Pill key={index} value={v} />)}</div>
+        : <TextInput
+          type='text'
+          value={value}
+          theme={inputTheme}
+          readOnly={readOnly}
+          noClearButton
+          onChange={onChange}
+          inputRef={inputRef}
+        />
+      }
     </div>
     {editHandler && <div styleName='review-input-edit'>
       <span styleName='edit-button' onClick={editHandler}>Edit</span>
     </div>}
   </div>
+}
+
+function Pill ({ value }) {
+  return <span styleName='defaultTopic'>
+    {value}
+  </span>
 }
 
 const inputTheme = {

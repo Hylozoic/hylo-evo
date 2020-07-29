@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createCommunity with networkId includes networkId in variables 1`] = `
+exports[`createCommunity with template, topics and networkId includes networkId in variables 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation ($data: CommunityInput) {
@@ -20,6 +20,10 @@ Object {
       ",
     "variables": Object {
       "data": Object {
+        "communityTemplateId": 1,
+        "defaultTopics": Array [
+          "topic",
+        ],
         "name": "thename",
         "networkId": 123,
         "slug": "theslug",
@@ -28,6 +32,10 @@ Object {
   },
   "meta": Object {
     "analytics": "Community Created",
+    "communityTemplateId": 1,
+    "defaultTopics": Array [
+      "topic",
+    ],
     "extractModel": "Membership",
     "name": "thename",
     "networkId": 123,
@@ -57,6 +65,8 @@ Object {
       ",
     "variables": Object {
       "data": Object {
+        "communityTemplateId": undefined,
+        "defaultTopics": undefined,
         "name": "thename",
         "slug": "theslug",
       },
@@ -64,6 +74,8 @@ Object {
   },
   "meta": Object {
     "analytics": "Community Created",
+    "communityTemplateId": undefined,
+    "defaultTopics": undefined,
     "extractModel": "Membership",
     "name": "thename",
     "slug": "theslug",

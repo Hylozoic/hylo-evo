@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Domain should call fetchCommunity from mapDispatchToProps 1`] = `
+Object {
+  "payload": "Community Name",
+  "type": "CreateCommunity/ADD_COMMUNITY_NAME",
+}
+`;
+
+exports[`Domain should call goHome from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/domain",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Template.connector should call addCommunityTemplate from mapDispatchToProps 1`] = `
+Object {
+  "payload": 1,
+  "type": "CreateCommunity/ADD_COMMUNITY_TEMPLATE",
+}
+`;
+
+exports[`Template.connector should call addDefaultTopic from mapDispatchToProps 1`] = `
+Object {
+  "payload": "food",
+  "type": "CreateCommunity/ADD_DEFAULT_TOPIC",
+}
+`;
+
+exports[`Template.connector should call fetchCommunityTemplates from mapDispatchToProps 1`] = `
+Object {
+  "graphql": Object {
+    "query": "
+        query {
+          communityTemplates {
+            id
+            displayName
+            defaultTopics {
+              id
+              name
+            }
+          }
+        }
+      ",
+  },
+  "type": "CreateCommunity/FETCH_COMMUNITY_TEMPLATES",
+}
+`;
+
+exports[`Template.connector should call goToNextStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/review",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Template.connector should call goToPreviousStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/domain",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Template.connector should call removeDefaultTopic from mapDispatchToProps 1`] = `
+Object {
+  "payload": "food",
+  "type": "CreateCommunity/REMOVE_DEFAULT_TOPIC",
+}
+`;
+
+exports[`Template.connector should call setDefaultTopics from mapDispatchToProps 1`] = `
+Object {
+  "payload": Array [
+    "food",
+    "cheese",
+  ],
+  "type": "CreateCommunity/SET_DEFAULT_TOPICS",
+}
+`;

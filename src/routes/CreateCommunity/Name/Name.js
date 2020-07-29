@@ -64,7 +64,7 @@ export default class Name extends Component {
       />
       <div styleName='panel'>
         <div>
-          <span styleName='step-count'>STEP 1/3</span>
+          <span styleName='step-count'>STEP 1/4</span>
         </div>
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />

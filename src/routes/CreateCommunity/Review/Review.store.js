@@ -5,10 +5,12 @@ import { AnalyticsEvents } from 'hylo-utils/constants'
 export const MODULE_NAME = `Review`
 export const CREATE_COMMUNITY = `${MODULE_NAME}/CREATE_COMMUNITY`
 
-export function createCommunity (name, slug, networkId) {
+export function createCommunity (name, slug, communityTemplateId, defaultTopics, networkId) {
   const data = {
     name,
-    slug
+    slug,
+    communityTemplateId,
+    defaultTopics
   }
 
   if (networkId) {

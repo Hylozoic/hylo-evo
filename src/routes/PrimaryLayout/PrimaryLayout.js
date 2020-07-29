@@ -41,6 +41,7 @@ import Search from 'routes/Search'
 import SignupModal from 'routes/Signup/SignupModal'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
+import Template from 'routes/CreateCommunity/Template'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
@@ -240,6 +241,7 @@ const createCommunityRoutes = [
   { path: '/create-community/name/:networkId', component: Name },
   { path: '/create-community/name', component: Name },
   { path: '/create-community/domain', component: Domain },
+  { path: '/create-community/template', component: Template },
   { path: '/create-community/review', component: CommunityReview }
 ]
 

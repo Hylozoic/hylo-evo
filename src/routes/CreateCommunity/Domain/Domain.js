@@ -58,6 +58,8 @@ export default class Domain extends Component {
 
   onEnter = event => {
     if (event.key === 'Enter') {
+      event.stopPropagation()
+      event.preventDefault()
       this.errorCheckAndSubmit()
     }
   }
@@ -85,7 +87,7 @@ export default class Domain extends Component {
       />
       <div styleName='panel'>
         <div>
-          <span styleName='step-count'>STEP 2/3</span>
+          <span styleName='step-count'>STEP 2/4</span>
         </div>
         <div styleName='center'>
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
@@ -109,7 +111,7 @@ export default class Domain extends Component {
       <ModalFooter
         submit={this.errorCheckAndSubmit}
         previous={this.props.goToPreviousStep}
-        hidePrevious={false}
+        showPrevious
         continueText={'Continue'}
       />
     </div>

@@ -4,14 +4,7 @@ const dispatch = jest.fn(x => x)
 const props = {}
 const dispatchProps = mapDispatchToProps(dispatch, props)
 
-describe('Domain', () => {
-  it('should call updateUserSettings from mapDispatchToProps', () => {
-    const changes = {
-      name: 'name',
-      email: 'email'
-    }
-    expect(dispatchProps.updateUserSettings(changes)).toMatchSnapshot()
-  })
+describe('Review.connector', () => {
 
   it('should call clearNameFromCreateCommunity from mapDispatchToProps', () => {
     expect(dispatchProps.clearNameFromCreateCommunity()).toMatchSnapshot()
@@ -26,13 +19,13 @@ describe('Domain', () => {
     expect(dispatchProps.clearDomainFromCreateCommunity()).toMatchSnapshot()
   })
 
-  it('should call goToNextStep from mapDispatchToProps', () => {
+  it('should call goToCommunity from mapDispatchToProps', () => {
     const communityDomain = 'communityDomain'
     expect(dispatchProps.goToCommunity(communityDomain)).toMatchSnapshot()
   })
 
-  it('should call goToPrivacyStep from mapDispatchToProps', () => {
-    expect(dispatchProps.goToPrivacyStep()).toMatchSnapshot()
+  it('should call goToStep from mapDispatchToProps', () => {
+    expect(dispatchProps.goToStep('name')).toMatchSnapshot()
   })
 
   it('should have communityName in mapStateToProps', () => {
@@ -40,31 +33,34 @@ describe('Domain', () => {
 
     const state = {
       CreateCommunity: {
-        name
+        name,
+        communityTemplates: []
       }
     }
-    expect(mapStateToProps(state, props).communityName).toBe(name)
+    expect(mapStateToProps(state, props).name).toBe(name)
   })
 
-  it('should have communityDomain in mapStateToProps', () => {
+  it('should have domain in mapStateToProps', () => {
     const domain = 'domain'
 
     const state = {
       CreateCommunity: {
-        domain
+        domain,
+        communityTemplates: []
       }
     }
-    expect(mapStateToProps(state, props).communityDomain).toBe(domain)
+    expect(mapStateToProps(state, props).domain).toBe(domain)
   })
 
-  it('should have communityPrivacy in mapStateToProps', () => {
+  it('should have privacy in mapStateToProps', () => {
     const privacy = 'privacy'
 
     const state = {
       CreateCommunity: {
-        privacy
+        privacy,
+        communityTemplates: []
       }
     }
-    expect(mapStateToProps(state, props).communityPrivacy).toBe(privacy)
+    expect(mapStateToProps(state, props).privacy).toBe(privacy)
   })
 })

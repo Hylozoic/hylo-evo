@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Template renders correctly 1`] = `
+<div
+  data-stylename="flex-wrapper"
+>
+  <ModalSidebar
+    body="Let's set up some default topics to organize posts in your community! All members will automatically be subscribed to these topics. Pick a community template to get started and/or define your own."
+    header="Great, let's get started"
+    imageDialogOne="Hi, I'm Hylo the Axolotl!"
+    imageDialogTwo="It's great to meet you!"
+    imageUrl="/happy-axolotl.png"
+    theme={
+      Object {
+        "sidebarHeader": "sidebar-header-full-page",
+        "sidebarText": "gray-text sidebar-text-full-page",
+      }
+    }
+  />
+  <div
+    data-stylename="panel"
+  >
+    <div>
+      <span
+        data-stylename="step-count"
+      >
+        STEP 3/4
+      </span>
+    </div>
+    <div
+      data-stylename="center"
+    >
+      <div
+        data-stylename="logo center"
+        style={
+          Object {
+            "backgroundImage": "url(/logo-white.svg)",
+          }
+        }
+      />
+    </div>
+    <div
+      data-stylename="chooseTemplate"
+    >
+      <span
+        data-stylename="text-input-label text-input-label-large"
+      >
+        What type of community is this?
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-stylename="template-dropdown"
+        items={
+          Array [
+            Object {
+              "label": "Farm",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span>
+            You can choose a template to start...
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+    <div
+      data-stylename="center"
+    >
+      <input
+        autoFocus={true}
+        data-stylename="signup-input defaultTopicsInput"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        placeholder="Add custom default topics here"
+        readOnly={true}
+        value=""
+      />
+    </div>
+    <div>
+      <div
+        data-stylename="defaultTopics"
+      >
+        <div
+          data-stylename="topicLabel"
+        >
+          <span>
+            Your community's default topics:
+          </span>
+        </div>
+        <div
+          data-stylename="topicsList"
+        >
+          <Pill
+            clickHandler={[Function]}
+            key="0"
+            topic="cheese"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <ModalFooter
+    continueText="Continue"
+    previous={[MockFunction]}
+    showPrevious={true}
+    submit={[Function]}
+  />
+</div>
+`;

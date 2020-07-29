@@ -32,6 +32,18 @@ Object {
 }
 `;
 
+exports[`Domain should call goToCommunity from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/communityDomain",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
 exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
 Object {
   "payload": Object {
@@ -49,6 +61,18 @@ Object {
   "payload": Object {
     "args": Array [
       "/create-community/privacy",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Domain should call goToStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/name",
     ],
     "method": "push",
   },
@@ -79,5 +103,61 @@ Object {
     "optimistic": true,
   },
   "type": "UPDATE_USER_SETTINGS",
+}
+`;
+
+exports[`Review.connector should call clearDomainFromCreateCommunity from mapDispatchToProps 1`] = `
+Object {
+  "payload": null,
+  "type": "CreateCommunity/ADD_COMMUNITY_DOMAIN",
+}
+`;
+
+exports[`Review.connector should call clearNameFromCreateCommunity from mapDispatchToProps 1`] = `
+Object {
+  "payload": null,
+  "type": "CreateCommunity/ADD_COMMUNITY_NAME",
+}
+`;
+
+exports[`Review.connector should call fetchCommunityExists from mapDispatchToProps 1`] = `
+Object {
+  "graphql": Object {
+    "query": "
+        query ($slug: String) {
+          communityExists (slug: $slug) {
+            exists
+          }
+        }
+      ",
+    "variables": Object {
+      "slug": "slug",
+    },
+  },
+  "type": "CreateCommunity/FETCH_COMMUNITY_EXISTS",
+}
+`;
+
+exports[`Review.connector should call goToCommunity from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/communityDomain",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Review.connector should call goToStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-community/name",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
 }
 `;

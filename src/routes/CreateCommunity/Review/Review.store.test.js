@@ -9,12 +9,16 @@ describe('createCommunity', () => {
     })
   })
 
-  describe('with networkId', () => {
+  describe('with template, topics and networkId', () => {
     it('includes networkId in variables', () => {
       const networkId = 123
-      const action = createCommunity('thename', 'theslug', networkId)
+      const templateId = 1
+      const topics = ['topic']
+      const action = createCommunity('thename', 'theslug', templateId, topics, networkId)
       expect(action).toMatchSnapshot()
       expect(action.graphql.variables.data.networkId).toEqual(networkId)
+      expect(action.graphql.variables.data.communityTemplateId).toEqual(templateId)
+      expect(action.graphql.variables.data.defaultTopics).toEqual(topics)
     })
   })
 })

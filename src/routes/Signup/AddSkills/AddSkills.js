@@ -102,7 +102,7 @@ export default class AddSkills extends Component {
         </div>
         <div>
           {!isEmpty(this.props.skills) && <div styleName='your-skills'>
-            <div styleName='your-skills-label'><span>Your Skills &amp; Interests:</span></div>
+            <div styleName='your-skills-label'><span>Your Skills <br /> &amp; Interests:</span></div>
             <div styleName='your-skills-list'>
               {this.props.skills.map((skill, index) =>
                 <Pill key={index} skill={skill} clickHandler={() => this.props.removeSkill(skill.id)} />

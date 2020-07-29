@@ -24,7 +24,7 @@ exports[`Domain renders correctly 1`] = `
       <span
         data-stylename="step-count"
       >
-        STEP 2/3
+        STEP 2/4
       </span>
     </div>
     <div
@@ -66,8 +66,8 @@ exports[`Domain renders correctly 1`] = `
   </div>
   <ModalFooter
     continueText="Continue"
-    hidePrevious={false}
     previous={[MockFunction]}
+    showPrevious={true}
     submit={[Function]}
   />
 </div>

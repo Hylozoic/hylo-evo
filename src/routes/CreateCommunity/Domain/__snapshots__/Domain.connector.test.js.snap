@@ -41,7 +41,7 @@ exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
 Object {
   "payload": Object {
     "args": Array [
-      "/create-community/review",
+      "/create-community/template",
     ],
     "method": "push",
   },

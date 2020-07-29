@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    goToNextStep: () => dispatch(push('/create-community/review')),
+    goToNextStep: () => dispatch(push('/create-community/template')),
     goToPreviousStep: () => dispatch(push('/create-community/name')),
     addCommunityDomain: (domain) => dispatch(addCommunityDomain(domain)),
     fetchCommunityExists: (slug) => dispatch(fetchCommunityExists(slug)),
