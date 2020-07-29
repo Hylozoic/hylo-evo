@@ -113,7 +113,7 @@ export function personUrl (id, communitySlug, networkSlug) {
 }
 
 export function topicUrl (topicName, opts) {
-  const base = baseUrl(opts, allCommunitiesUrl())
+  const base = baseUrl({...opts, defaultUrl: allCommunitiesUrl()})
 
   return `${base}/${topicName}`
 }
@@ -121,7 +121,7 @@ export function topicUrl (topicName, opts) {
 export function postsUrl (opts = {}, querystringParams, defaultUrl = allCommunitiesUrl()) {
   const postTypeContext = get('postTypeContext', opts)
   const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
-  const base = baseUrl(opts, defaultUrl)
+  const base = baseUrl({ ...opts, defaultUrl })
 
   const result = inPostTypeContext
     ? `${base}/${postTypeContext}`
@@ -181,7 +181,7 @@ export function newMessageUrl () {
 }
 
 export function topicsUrl (opts, defaultUrl = allCommunitiesUrl()) {
-  return baseUrl(opts, defaultUrl) + '/topics'
+  return baseUrl({...opts, defaultUrl }) + '/topics'
 }
 
 export const communityJoinUrl = ({ slug, accessCode }) =>
