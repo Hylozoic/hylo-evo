@@ -113,7 +113,7 @@ export function personUrl (id, communitySlug, networkSlug) {
 }
 
 export function topicUrl (topicName, opts) {
-  const base = baseUrl({...opts, defaultUrl: allCommunitiesUrl()})
+  const base = baseUrl({ ...opts, defaultUrl: allCommunitiesUrl() })
 
   return `${base}/${topicName}`
 }
@@ -181,7 +181,7 @@ export function newMessageUrl () {
 }
 
 export function topicsUrl (opts, defaultUrl = allCommunitiesUrl()) {
-  return baseUrl({...opts, defaultUrl }) + '/topics'
+  return baseUrl({ ...opts, defaultUrl }) + '/topics'
 }
 
 export const communityJoinUrl = ({ slug, accessCode }) =>
