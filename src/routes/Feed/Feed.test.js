@@ -13,7 +13,7 @@ describe('Feed', () => {
       currentUser
       currentUserHasMemberships />)
 
-    const feed = wrapper.find('Connect(FeedList)')
+    const feed = wrapper.find('Connect(Component)')
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
       routeParams: {
@@ -40,7 +40,7 @@ describe('Feed', () => {
 
     expect(wrapper).toMatchSnapshot()
 
-    const feed = wrapper.find('Connect(FeedList)')
+    const feed = wrapper.find('Connect(Component)')
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
       routeParams: {

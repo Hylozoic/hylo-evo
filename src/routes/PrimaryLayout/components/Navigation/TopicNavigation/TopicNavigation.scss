@@ -1,5 +1,4 @@
 .topicNavigation {
-  min-width: 206px;
   padding: 32px 12.5px 0 12.5px;
   color: $color-rhino-60;
   overflow: hidden;
@@ -32,7 +31,8 @@
   list-style: none;
   padding: 0 0 0 46px;
   line-height: 27px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: opacity .3s ease;
   color: $color-rhino-60;
 }
@@ -75,7 +75,6 @@
 }
 
 .name {
-  // min-width: 104px;
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;

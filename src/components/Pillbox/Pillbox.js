@@ -71,7 +71,7 @@ export default class Pillbox extends Component {
   }, 200)
 
   render () {
-    const { addLabel = 'Add', editable, handleDelete } = this.props
+    const { addLabel = 'Add', editable, handleClick, handleDelete } = this.props
 
     let { pills, placeholder = 'type here', suggestions } = this.props
 
@@ -130,13 +130,14 @@ export default class Pillbox extends Component {
           {pills.map(pill =>
             <Pill key={pill.id}
               {...pill}
+              handleClick={handleClick}
               editable={editable}
               onRemove={handleDelete} />)}
         </CSSTransitionGroup>
       </div>
       <ReactTooltip place='top'
         type='dark'
-        id='pill-remove'
+        id='pill-label'
         effect='solid'
         disable={!editable}
         delayShow={500} />
@@ -159,16 +160,22 @@ export class Pill extends Component {
   }
 
   render () {
-    const { id, label, onRemove, className, editable } = this.props
+    const { id, label, onRemove, className, editable, handleClick } = this.props
     const { removing } = this.state
 
-    const onClick = () => {
+    const deletePill = () => {
       if (editable && onRemove) {
         if (removing) {
           onRemove(id, label)
         } else {
           this.setState({ removing: true })
         }
+      }
+    }
+
+    const search = () => {
+      if (handleClick) {
+        handleClick(id, label)
       }
     }
 
@@ -179,6 +186,7 @@ export class Pill extends Component {
     const pillStyles = cx(
       'styles.pill',
       {
+        'styles.clickable': !!handleClick,
         'styles.removable': editable && onRemove,
         'styles.removing': editable && onRemove && removing
       }
@@ -186,12 +194,9 @@ export class Pill extends Component {
 
     return <div styleName={pillStyles}
       className={className}
-      data-tip='Click to Remove'
-      data-for='pill-remove'
-      onClick={onClick}
       onMouseLeave={mouseOut}>
-      <span styleName='styles.display-label'>{label}</span>
-      {editable && <Icon styleName='styles.remove-label' name='Ex' />}
+      <span data-tip='Click to Search' data-for='pill-label' styleName='styles.display-label' onClick={search}>{label}</span>
+      {editable && <Icon styleName='styles.remove-label' dataTip='Double click to delete' dataTipFor='pill-label' name='Ex' onClick={deletePill} />}
     </div>
   }
 }

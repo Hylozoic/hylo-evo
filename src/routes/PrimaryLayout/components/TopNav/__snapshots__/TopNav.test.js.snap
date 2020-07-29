@@ -59,6 +59,22 @@ exports[`renders as expected with no community 1`] = `
           </Link>
         </li>
         <li>
+          <span
+            data-stylename="hover-highlight"
+            onClick={[Function]}
+          >
+            Feedback & Support
+          </span>
+        </li>
+        <li>
+          <span
+            data-stylename="hover-highlight isntMobileDevice"
+            onClick={[Function]}
+          >
+            Download App
+          </span>
+        </li>
+        <li>
           <a>
             Log out
           </a>

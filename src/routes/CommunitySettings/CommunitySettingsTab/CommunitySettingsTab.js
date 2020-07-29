@@ -128,7 +128,7 @@ export default class CommunitySettingsTab extends Component {
 
     const locationObject = community.locationObject || currentUser.locationObject
 
-    return <div>
+    return <div styleName='communitySettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <ChangeImageButton
@@ -162,7 +162,10 @@ export default class CommunitySettingsTab extends Component {
             </div>
             <span styleName='privacy-state'>{isPublic ? 'ON' : 'OFF'}</span>
           </div>
-          <div styleName='request-setting'>
+          <div styleName={cx('communityPublicToggle', 'request-setting', { on: isPublic })}>
+            <div styleName='settingDisabled'>Disabled</div>
+            <h3>Who can join {community.name}?</h3>
+            <p>By default, members must be invited to join a community. When a community is public, it can choose to allow anyone to join, or for anyone to apply to become a member.</p>
             <div styleName={cx({ on: isPublic })}>
               <label>
                 <input type='radio' id='isRequestable' name='requestSetting' value='isRequestable' disabled={isPublic === false} onChange={this.updatePrivacySettings} checked={requestSetting === 'isRequestable'} />
@@ -175,8 +178,13 @@ export default class CommunitySettingsTab extends Component {
                 <span styleName={cx('privacy-option', { disabled: !isPublic })}>Anyone can automatically join {community.name}</span>
               </label>
             </div>
+          </div>
+          <div styleName={cx('communityPublicToggle', { on: isPublic })}>
+            <div styleName='settingDisabled'>Disabled</div>
+            <h3>Can people outside of {community.name} see who is a member?</h3>
+            <p>By default, member information will not be visible to the public.</p>
             <div styleName={cx('privacy-option-container', { on: publicMemberDirectory })}>
-              <div>
+              <div styleName='member-visibility'>
                 <SwitchStyled checked={publicMemberDirectory} onChange={this.updateSetting('publicMemberDirectory')} backgroundColor={publicMemberDirectory ? '#40A1DD' : '#808C9B'} />
                 <span styleName={cx('privacy-option', { disabled: !isPublic })}>Anyone can see who is a member of {community.name}</span>
               </div>

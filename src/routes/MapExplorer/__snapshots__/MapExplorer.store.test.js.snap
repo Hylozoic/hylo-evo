@@ -6,23 +6,17 @@ Object {
     "query": "query (
   $slug: String,
   $sortBy: String,
-  $offset: Int,
-  $search: String,
   $filter: String,
+  $search: String,
   $topic: ID,
   $first: Int,
+  $offset: Int,
   $boundingBox: [PointInput]
 ) {
   community(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
-    locationObject {
-      center {
-        lat
-        lng
-      }
-    }
     avatarUrl
     bannerUrl
     postCount
@@ -163,10 +157,9 @@ posts(
   }
 }",
     "variables": Object {
+      "boundingBox": undefined,
       "filter": "offer",
-      "first": 20,
       "networkSlug": undefined,
-      "offset": 20,
       "search": "gardening",
       "slug": undefined,
       "sortBy": undefined,
@@ -179,7 +172,7 @@ posts(
       "getItems": [Function],
     },
   },
-  "type": "FETCH_POSTS",
+  "type": "FETCH_POSTS_MAP",
 }
 `;
 
@@ -188,11 +181,11 @@ Object {
   "graphql": Object {
     "query": "query (
   $sortBy: String,
-  $offset: Int,
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
+  $offset: Int,
   $boundingBox: [PointInput]
 ) {
   
@@ -331,10 +324,9 @@ posts(
 }
 }",
     "variables": Object {
+      "boundingBox": undefined,
       "filter": "request",
-      "first": 20,
       "networkSlug": undefined,
-      "offset": 20,
       "search": "graphic design",
       "slug": undefined,
       "sortBy": undefined,
@@ -347,6 +339,6 @@ posts(
       "getItems": [Function],
     },
   },
-  "type": "FETCH_POSTS",
+  "type": "FETCH_POSTS_MAP",
 }
 `;

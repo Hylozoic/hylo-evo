@@ -127,6 +127,7 @@
     padding-top: 0;
   }
 
+  .subscribe,
   .unsubscribe {
     top: 50px;
   }
@@ -137,6 +138,7 @@
 }
 
 @media screen and (max-width: 425px) {
+  .subscribe,
   .unsubscribe {
     top: 70px;
     padding: 0 10px;

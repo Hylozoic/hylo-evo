@@ -31,11 +31,11 @@
 .fade {
   width: 100%;
   position: absolute;
-  top: 0;
+  bottom: 0;
   opacity: .8;
   display: none;
   left: 0;
-  height: 36px;
+  height: 50%;
   background: -webkit-linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
   background: -o-linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
   background: linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
@@ -58,9 +58,9 @@
 
 .constrained .details {
   font-size: 12px;
-  height: 36px;
   line-height: 20px;
   overflow: hidden;
+  max-height: 100px;
 }
 
 .file-attachments {

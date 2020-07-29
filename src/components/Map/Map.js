@@ -22,7 +22,7 @@ function Map (props) {
       {...viewport}
       width='100%'
       height='100%'
-      mapOptions={{logoPosition: 'bottom-right'}}
+      mapOptions={{ logoPosition: 'bottom-right' }}
       attributionControl={false}
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}

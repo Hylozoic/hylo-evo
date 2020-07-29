@@ -87,10 +87,18 @@ const membersFragment = `
       id
       name
       avatarUrl
+      tagline
       locationObject {
         center {
           lat
           lng
+        }
+      }
+      skills {
+        hasMore
+        items {
+          id
+          name
         }
       }
     }

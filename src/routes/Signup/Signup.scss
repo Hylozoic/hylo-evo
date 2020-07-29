@@ -116,7 +116,7 @@
 .press-enter {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 27px;
   font-size: 10px;
   color: $color-white;
   font-style: italic;
@@ -410,5 +410,15 @@
 
   .signup-wrapper {
     width: 100%;
+    margin: 0;
+    top: 0;
+  }
+
+  .signup-modal-footer {
+    right: 10px;
+  }
+
+  .press-enter {
+    right: 37px;
   }
 }

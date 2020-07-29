@@ -99,7 +99,7 @@ export default class CommunityDetail extends Component {
           {community.isAutoJoinable
             ? <div styleName='c.requestOption'>
               <div styleName='c.requestHint'>Anyone can join this community!</div>
-              {/*<Link to={community.invitePath} target={inIframe() ? '_blank' : ''} styleName='c.requestButton'>Join <span styleName='c.requestCommunity'>{community.name}</span></Link>*/}
+              {/* <Link to={community.invitePath} target={inIframe() ? '_blank' : ''} styleName='c.requestButton'>Join <span styleName='c.requestCommunity'>{community.name}</span></Link> */}
               <Link to={'/c/' + community.slug} target={inIframe() ? '_blank' : ''} styleName='c.requestButton'>Signup or Login to post in <span styleName='c.requestCommunity'>{community.name}</span></Link>
             </div>
             : <div styleName='c.requestOption'>

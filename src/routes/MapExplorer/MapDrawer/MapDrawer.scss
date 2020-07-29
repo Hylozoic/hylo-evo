@@ -11,6 +11,7 @@
   overflow-y: auto;
   z-index: 20;
   overflow-x: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 
   &.noUser {
     height: 100%;
@@ -106,7 +107,9 @@
 .topicButton {
   border: 1px solid #B6EDE2;
   color: $color-caribbean-green;
-  margin: 4px 4px 4px 0px;
+  padding: 0 8px 0 0;
+  margin-right: 8px;
+  margin-bottom: 8px;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -136,13 +139,6 @@
   font-weight: bold;
 }
 
-.filterEx {
-  color: rgba(182, 237, 226, 1.000);
-  font-size: 18px;
-  position: relative;
-  top: 3px;
-}
-
 .currentSearchText {
   cursor: pointer;
   border: 1px solid rgba(224, 229, 233, 1.000);
@@ -154,6 +150,13 @@
   line-height: 30px;
   margin: 4px 4px 4px 0px;
   font-size: 14px;
+}
+
+.filterEx {
+  color: rgba(182, 237, 226, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
 }
 
 .textEx {

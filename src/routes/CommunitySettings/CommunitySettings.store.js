@@ -25,7 +25,7 @@ export function fetchCommunitySettings (slug) {
           isPublic
           isAutoJoinable
           publicMemberDirectory
-          pendingInvitations (first: 100) {
+          pendingInvitations {
             hasMore
             items {
               id

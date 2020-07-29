@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { throttle, isEmpty, some } from 'lodash/fp'
 import cx from 'classnames'
 import { CENTER_COLUMN_ID, position } from 'util/scrolling'
@@ -24,10 +23,32 @@ export default class FeedList extends React.Component {
       tabBarWidth: 0,
       scrollOffset: 0
     }
+
+    this.tabBar = React.createRef()
   }
 
-  setStateFromDOM = tabBar => {
-    const element = ReactDOM.findDOMNode(tabBar)
+  componentDidMount () {
+    this.fetchOrShowCached()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (!prevProps) return
+
+    const updateCheckFunc = key =>
+      this.props[key] !== prevProps[key] ||
+      this.props.routeParams[key] !== prevProps.routeParams[key]
+    if (some(key => updateCheckFunc(key), queryParamWhitelist) ||
+      (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
+      this.fetchOrShowCached()
+    }
+
+    if (this.props.width !== prevProps.width) {
+      this.setStateFromDOM()
+    }
+  }
+
+  setStateFromDOM = () => {
+    const element = this.tabBar.current
     const container = document.getElementById(CENTER_COLUMN_ID)
     if (!element || !container) return
     this.setState({
@@ -45,22 +66,6 @@ export default class FeedList extends React.Component {
       this.setState({ atTabBar: true })
     }
   })
-
-  componentDidMount () {
-    this.fetchOrShowCached()
-  }
-
-  componentDidUpdate (prevProps) {
-    if (!prevProps) return
-
-    const updateCheckFunc = key =>
-      this.props[key] !== prevProps[key] ||
-      this.props.routeParams[key] !== prevProps.routeParams[key]
-    if (some(key => updateCheckFunc(key), queryParamWhitelist) ||
-      (this.props.posts.length === 0 && prevProps.posts.length !== 0)) {
-      this.fetchOrShowCached()
-    }
-  }
 
   fetchOrShowCached = () => {
     const { hasMore, posts, fetchPosts, storeFetchPostsParam } = this.props
@@ -84,29 +89,31 @@ export default class FeedList extends React.Component {
       changeTab,
       changeSort,
       posts,
-      pending
+      pending,
+      targetRef
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
-    const style = {
+    const stickyTabBarStyle = {
       width: tabBarWidth + 'px'
     }
     const isProject = routeParams.postTypeContext === 'project'
     const isEvent = routeParams.postTypeContext === 'event'
     const showSortAndFilters = !isProject && !isEvent
 
-    return <div styleName='FeedList-container'>
+    return <div styleName='FeedList-container' ref={targetRef}>
       <ScrollListener
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
       {showSortAndFilters && <React.Fragment>
         <div>
-          <TabBar ref={this.setStateFromDOM}
+          <TabBar
+            ref={this.tabBar}
             onChangeTab={changeTab}
             selectedTab={postTypeFilter}
             onChangeSort={changeSort}
             selectedSort={sortBy} />
         </div>
-        {atTabBar && <div styleName='tabbar-sticky' style={style}>
+        {atTabBar && <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
           <TabBar onChangeTab={changeTab}
             selectedTab={postTypeFilter}
             onChangeSort={changeSort}

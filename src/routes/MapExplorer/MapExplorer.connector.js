@@ -22,8 +22,9 @@ import {
 
 export function presentMember (person, communityId) {
   return {
-    ...pick([ 'id', 'name', 'avatarUrl', 'locationObject' ], person.ref),
+    ...pick([ 'id', 'name', 'avatarUrl', 'locationObject', 'tagline', 'skills' ], person.ref),
     type: 'member',
+    skills: person.skills.toModelArray(),
     community: person.memberships.first()
       ? person.memberships.first().community.name : null
   }

@@ -6,6 +6,8 @@
   position: relative;
   right: 0px;
   transition: 0.25s;
+  display: flex;
+  flex-direction: column;
   &:hover {
     box-shadow: 0px 0px 6px 0px $color-black-10;
   }
