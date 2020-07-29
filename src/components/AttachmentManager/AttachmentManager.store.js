@@ -10,6 +10,7 @@ export const SET_ATTACHMENTS = `${MODULE_NAME}/SET_ATTACHMENTS`
 export const ADD_ATTACHMENT = `${MODULE_NAME}/ADD_ATTACHMENT`
 export const REMOVE_ATTACHMENT = `${MODULE_NAME}/REMOVE_ATTACHMENT`
 export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
+export const ID_FOR_NEW = 'new'
 
 // -- LOCAL STORE --
 
@@ -19,8 +20,7 @@ export function setAttachments (type, id, attachmentType, attachments) {
   return {
     type: SET_ATTACHMENTS,
     payload: {
-      polymorphicId: makePolymorphicId(type, id),
-      attachmentType,
+      attachmentKey: makeAttachmentKey(type, id, attachmentType),
       attachments
     }
   }
@@ -30,8 +30,7 @@ export function addAttachment (type, id, attachmentType, url) {
   return {
     type: ADD_ATTACHMENT,
     payload: {
-      polymorphicId: makePolymorphicId(type, id),
-      attachmentType,
+      attachmentKey: makeAttachmentKey(type, id, attachmentType),
       url
     }
   }
@@ -41,8 +40,7 @@ export function removeAttachment (type, id, attachmentType, position) {
   return {
     type: REMOVE_ATTACHMENT,
     payload: {
-      polymorphicId: makePolymorphicId(type, id),
-      attachmentType,
+      attachmentKey: makeAttachmentKey(type, id, attachmentType),
       position
     }
   }
@@ -52,8 +50,7 @@ export function switchAttachments (type, id, attachmentType, position1, position
   return {
     type: SWITCH_ATTACHMENTS,
     payload: {
-      polymorphicId: makePolymorphicId(type, id),
-      attachmentType,
+      attachmentKey: makeAttachmentKey(type, id, attachmentType),
       position1,
       position2
     }
@@ -67,7 +64,7 @@ export function getAttachments (state, {
   id,
   attachmentType
 }) {
-  const result = getOr([], [MODULE_NAME, makePolymorphicId(type, id), attachmentType], state)
+  const result = getOr([], [MODULE_NAME, makeAttachmentKey(type, id, attachmentType)], state)
   return result
 }
 
@@ -79,51 +76,37 @@ export default function reducer (state = defaultState, action) {
   const { error, type, payload } = action
   if (error) return state
 
-  const polymorphicId = get('polymorphicId', payload)
-  const attachmentType = get('attachmentType', payload)
-  const attachmentsForId = getOr([], [polymorphicId], state)
-  const attachmentsForAttachmentType = getOr([], [polymorphicId, attachmentType], state)
-
+  const attachmentKey = get('attachmentKey', payload)
+  const attachmentsForKey = getOr([], [attachmentKey], state)
+  
   switch (type) {
     case SET_ATTACHMENTS:
       const attachments = get('attachments', payload)
       return {
         ...state,
-        [polymorphicId]: {
-          ...attachmentsForId,
-          [attachmentType]: attachments
-        }
+        [attachmentKey]: attachments
       }
     case ADD_ATTACHMENT:
       return {
         ...state,
-        [polymorphicId]: {
-          ...attachmentsForId,
-          [attachmentType]: [
-            ...attachmentsForAttachmentType,
-            payload.url
-          ]
-        }
+        [attachmentKey]: [
+          ...attachmentsForKey,
+          payload.url
+        ]
       }
     case REMOVE_ATTACHMENT:
       return {
         ...state,
-        [polymorphicId]: {
-          ...attachmentsForId,
-          [attachmentType]: pullAt(payload.position, attachmentsForAttachmentType)
-        }
+        [attachmentKey]: pullAt(payload.position, attachmentsForKey)
       }
     case SWITCH_ATTACHMENTS:
       const { position1, position2 } = payload
-      const attachmentsForAttachmentTypeCopy = clone(attachmentsForAttachmentType)
-      attachmentsForAttachmentType[position1] = attachmentsForAttachmentTypeCopy[position2]
-      attachmentsForAttachmentType[position2] = attachmentsForAttachmentTypeCopy[position1]
+      const attachmentsForKeyCopy = clone(attachmentsForKey)
+      attachmentsForKey[position1] = attachmentsForKeyCopy[position2]
+      attachmentsForKey[position2] = attachmentsForKeyCopy[position1]
       return {
         ...state,
-        [polymorphicId]: {
-          ...attachmentsForId,
-          [attachmentType]: attachmentsForAttachmentType
-        }
+        [attachmentKey]: attachmentsForKey
       }
     default:
       return state
@@ -133,18 +116,6 @@ export default function reducer (state = defaultState, action) {
 // -- GLOBAL STORE --
 
 // Selectors
-
-export function getUploadPending ({ pending }, props) {
-  const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
-
-  if (!props || !pendingUpload) return pendingUpload
-
-  const { type, id, attachmentType } = props
-
-  return pendingUpload.type === type &&
-    pendingUpload.id === id &&
-    pendingUpload.fileType === attachmentType
-}
 
 export const getAttachmentsFromObject = ormCreateSelector(
   orm,
@@ -161,11 +132,23 @@ export const getAttachmentsFromObject = ormCreateSelector(
     .map(a => a.url)
 )
 
+export function getUploadPending ({ pending }, props) {
+  const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
+
+  if (!props || !pendingUpload) return Boolean(pendingUpload)
+
+  const { type, id = ID_FOR_NEW, attachmentType } = props
+
+  return pendingUpload.type === type &&
+    pendingUpload.id === id &&
+    pendingUpload.fileType === attachmentType
+}
+
 // Action generators
 
 export function uploadAttachment ({
   type, // this is the type of thing that the upload is for, e.g. post
-  id = 'new', // this is the id of the thing that the upload is for
+  id = ID_FOR_NEW, // this is the id of the thing that the upload is for
   fileType // this is the attachment type used to identify a related attachment manager
 }) {
   const payload = new Promise((resolve, reject) => {
@@ -192,17 +175,16 @@ export function uploadAttachment ({
 
 // -- UTILITY --
 
-export const makePolymorphicId = (typeOrObject, objectId) => {
+export const makeAttachmentKey = (typeOrObject, objectId, fileType) => {
   let type, id
 
   if (typeof typeOrObject === 'object') {
-    [type, id] = [typeOrObject['type'], typeOrObject['id']]
+    [type, id, fileType] = [typeOrObject['type'], typeOrObject['id'], typeOrObject['fileType']]
   } else {
-    [type, id] = [typeOrObject, objectId]
+    [type, id] = [typeOrObject, objectId, fileType]
   }
 
-  id = id || 'new'
+  id = id || ID_FOR_NEW
 
-  return [type, id].join('-')
+  return [type, id, fileType].join('-')
 }
-

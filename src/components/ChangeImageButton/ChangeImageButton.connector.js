@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getUploadPending, uploadAttachment } from 'components/AttachmentManager/AttachmentManager.store'
+import { getUploadPending, uploadAttachment, ID_FOR_NEW } from 'components/AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -8,7 +8,7 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, {
-  id,
+  id = ID_FOR_NEW,
   type,
   attachmentType,
   update

@@ -24,7 +24,7 @@ describe('mapStateToProps', () => {
         [UPLOAD_ATTACHMENT]: {
           type: 'user-avatar',
           id: '124',
-          attachmentType: 'image'
+          fileType: 'image'
         }
       }
     }
@@ -40,7 +40,7 @@ describe('mapStateToProps', () => {
         [UPLOAD_ATTACHMENT]: {
           type: 'user-avatar',
           id: '123',
-          attachmentType: 'image'
+          fileType: 'image'
         }
       }
     }

@@ -65,8 +65,8 @@ export default class CommentForm extends Component {
           submitOnReturnHandler={this.save} />
       </div>
       <div styleName='footer'>
-        <AttachmentManager type='comment' id={'new'} attachmentType='image' />
-        <AttachmentManager type='comment' id={'new'} attachmentType='file' />
+        <AttachmentManager type='comment' attachmentType='image' />
+        <AttachmentManager type='comment' attachmentType='file' />
         <ChangeImageButton
           type='comment'
           id={'new'}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachmentManager renders FileManager by default file 1`] = `
+exports[`AttachmentManager renders FileManager when attachmentType is "file" 1`] = `
 <FileManager
   attachmentType="file"
   id="new"
@@ -23,8 +23,8 @@ exports[`AttachmentManager renders FileManager by default file 1`] = `
 />
 `;
 
-exports[`AttachmentManager renders ImageManager when image is set 1`] = `
-<FileManager
+exports[`AttachmentManager renders ImageManager when attachmentType is "image" 1`] = `
+<DragDropContext(ImageManager)
   attachmentType="image"
   id="new"
   loadAttachments={
@@ -76,7 +76,6 @@ exports[`FileManager matches last snapshot 1`] = `
       Loading...
     </div>
     <Connect(ChangeImageButton)
-      attachmentType="file"
       data-stylename="add-file-row"
       id={1}
       type="post"

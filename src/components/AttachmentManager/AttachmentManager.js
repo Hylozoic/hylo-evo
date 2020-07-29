@@ -7,6 +7,7 @@ import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import ChangeImageButton from 'components/ChangeImageButton'
+import { ID_FOR_NEW } from './AttachmentManager.store'
 import './AttachmentManager.scss'
 
 export default class AttachmentManager extends React.Component {
@@ -33,9 +34,9 @@ export default class AttachmentManager extends React.Component {
   }
 }
 
-// AttachmentManager.defaultProps = {
-//   id: 'new'
-// }
+AttachmentManager.defaultProps = {
+  id: ID_FOR_NEW
+}
 
 export const ImageManager = DragDropContext(HTML5Backend)(
   class ImageManager extends React.Component {

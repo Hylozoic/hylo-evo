@@ -13,8 +13,7 @@ describe('AttachmentManager store', () => {
       const action = {
         type: SET_ATTACHMENTS,
         payload: {
-          polymorphicId: 'post-new',
-          attachmentType: 'image',
+          attachmentKey: 'post-new-image',
           attachments: [
             'foo.png',
             'bar.jog'
@@ -24,8 +23,7 @@ describe('AttachmentManager store', () => {
       const action2 = {
         type: SET_ATTACHMENTS,
         payload: {
-          polymorphicId: 'post-new',
-          attachmentType: 'file',
+          attachmentKey: 'post-new-file',
           attachments: [
             'foo.pdf',
             'bar.xls'
@@ -42,8 +40,7 @@ describe('AttachmentManager store', () => {
       const action = {
         type: ADD_ATTACHMENT,
         payload: {
-          polymorphicId: 'post-new',
-          attachmentType: 'file',
+          attachmentKey: 'post-new-file',
           url: 'bar.pdf',
           position: 0
         }
@@ -58,26 +55,23 @@ describe('AttachmentManager store', () => {
       const action = {
         type: REMOVE_ATTACHMENT,
         payload: {
-          polymorphicId: 'post-new',
-          attachmentType: 'file',
+          attachmentKey: 'post-new-file',
           position: 1
         }
       }
       it('removes an attachment', () => {
         const state = {
           ...defaultState,
-          ['post-new']: {
-            ['image']: [
-              'a.png',
-              'b.png',
-              'c.png'  
-            ],
-            ['file']: [
-              'a.pdf',
-              'b.pdf',
-              'c.pdf'  
-            ]
-          }
+          ['post-new-file']: [
+            'a.pdf',
+            'b.pdf',
+            'c.pdf'  
+          ],
+          ['post-new-image']: [
+            'a.png',
+            'b.png',
+            'c.png'  
+          ]
         }
         const finalState = reducer(state, action)
         expect(finalState).toMatchSnapshot()
@@ -88,8 +82,7 @@ describe('AttachmentManager store', () => {
       const action = {
         type: SWITCH_ATTACHMENTS,
         payload: {
-          polymorphicId: 'post-new',
-          attachmentType: 'image',
+          attachmentKey: 'post-new-image',
           position1: 1,
           position2: 2,
         }
@@ -97,18 +90,16 @@ describe('AttachmentManager store', () => {
       it('switches two attachments', () => {
         const state = {
           ...defaultState,
-          ['post-new']: {
-            ['image']: [
-              'a.png',
-              'b.png',
-              'c.png'  
-            ],
-            ['file']: [
-              'a.pdf',
-              'b.pdf',
-              'c.pdf'  
-            ]
-          }
+          ['post-new-file']: [
+            'a.pdf',
+            'b.pdf',
+            'c.pdf'  
+          ],
+          ['post-new-image']: [
+            'a.png',
+            'b.png',
+            'c.png'  
+          ]
         }
         const finalState = reducer(state, action)
         expect(finalState).toMatchSnapshot()
@@ -119,7 +110,7 @@ describe('AttachmentManager store', () => {
   describe('upload', () => {
     const url = 'http://filepicker.io/hfwoe/eh98e'
     const filename = 'foo.jpg'
-    const opts = { type: 'userAvatar', id: 3, attachmentType: 'image' }
+    const opts = { type: 'userAvatar', id: 3, fileType: 'image' }
     
     it('returns an API action after filepicker succeeds', () => {
       const uploadAttachment = setupUploadAttachment(true, [url, filename])

@@ -9,12 +9,12 @@ describe('AttachmentManager', () => {
     prop3: 'baz'
   }
 
-  it('renders FileManager by default file', () => {
+  it('renders FileManager when attachmentType is "file"', () => {
     const wrapper = shallow(<AttachmentManager loadAttachments={jest.fn()} attachmentType='file' {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders ImageManager when image is set', () => {
+  it('renders ImageManager when attachmentType is "image"', () => {
     const wrapper = shallow(<AttachmentManager loadAttachments={jest.fn()} attachmentType='image' {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
