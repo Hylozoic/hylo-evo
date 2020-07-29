@@ -3,7 +3,7 @@ import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentR
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { communityUrl, networkUrl } from 'util/navigation'
+import { communityUrl, networkUrl, publicCommunitiesUrl } from 'util/navigation'
 import orm from 'store/models'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
@@ -13,6 +13,7 @@ export function mapStateToProps (state, props) {
   const community = getCommunityForCurrentRoute(state, props)
   const network = getNetworkForCurrentRoute(state, props)
   let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
+  const isPublic = props.location.pathname.includes('public')
 
   if (community) {
     rootId = community.id
@@ -30,12 +31,16 @@ export function mapStateToProps (state, props) {
     rootSlug = get('slug', network)
     rootPath = networkUrl(rootSlug)
     membersPath = `${rootPath}/members`
+  } else if (isPublic) {
+    rootSlug = 'public'
+    rootPath = publicCommunitiesUrl()
   } else {
     rootSlug = ''
     rootPath = communityUrl()
   }
   const projectsPath = `${rootPath}/project`
   const eventsPath = `${rootPath}/event`
+  const mapPath = `${rootPath}/map`
 
   return {
     rootId,
@@ -44,6 +49,7 @@ export function mapStateToProps (state, props) {
     membersPath,
     projectsPath,
     eventsPath,
+    mapPath,
     badge,
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     communityMembership

@@ -1,4 +1,4 @@
-import { presentPerson, invitePeopleToEvent } from './EventInviteDialog.store'
+import { invitePeopleToEvent } from './EventInviteDialog.store'
 
 describe('invitePeopleToEvent', () => {
   it('matches snapshot', () => {

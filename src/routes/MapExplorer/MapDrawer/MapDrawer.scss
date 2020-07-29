@@ -1,0 +1,183 @@
+.container {
+  height: calc(100vh - 55px);
+  position: fixed;
+  right: 0;
+  top: 55px;
+  padding: 20px;
+  background: white;
+  width: 40%;
+  min-width: 450px;
+  transition: all .25s ease;
+  overflow-y: auto;
+  z-index: 20;
+  overflow-x: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+
+  h1 {
+    float: left;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #2c3f59;
+  }
+}
+
+.contentListContainer {
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contentCard {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.contentCard.member {
+  padding: 16px;
+  max-width: none;
+}
+
+.contentListContainer .contentCard:nth-child(even) {
+  margin-left: 5px;
+  width: calc(50% - 5px);
+}
+
+.contentListContainer .contentCard:nth-child(odd) {
+  margin-right: 5px;
+  width: calc(50% - 5px);
+}
+
+.sorter {
+  float: right;
+  border: 1px solid #bfc5ce;
+  border-radius: 25px;
+  padding: 0 15px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 28px;
+  height: 30px;
+}
+
+.sorter-label {
+  color: gray;
+}
+
+.sorterIcon {
+  vertical-align: middle;
+}
+
+.searchBox {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 2px 10px;
+  font-size: 14px;
+  height: 40px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px 0px $color-black-30;
+  border: 1px solid rgba(208, 213, 220, .5);
+}
+
+.filterIcon {
+  float: right;
+  position: relative;
+  top: -28px;
+  right: 10px;
+  font-size: 18px;
+}
+
+.searchFilters {
+  position: relative;
+  background: white;
+  top: -2px;
+  box-shadow: 0px 4px 15px 0px $color-black-30;
+  padding: 5px;
+}
+
+.topicButton {
+  border: 1px solid #B6EDE2;
+  border-radius: 2px;
+  color: $color-caribbean-green;
+  padding: 0 8px 0 0;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.topicCount {
+  color: $color-caribbean-green;
+  background: $color-caribbean-green-20;
+  display: inline-block;
+  height: 100%;
+  margin: 0 6px 0 0 !important;
+  padding: 4px 10px;
+}
+
+.currentSearchText {
+  cursor: pointer;
+}
+
+.currentFilters {
+  padding: 10px 5px 5px;
+}
+
+.filterEx {
+  color: rgba(182, 237, 226, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+}
+
+.textEx {
+  color: rgba(224, 229, 233, 1.000);
+  font-size: 18px;
+  position: relative;
+  top: 3px;
+}
+
+@media screen and (max-width: 600px) {
+  .contentListContainer .contentCard:nth-child(even) {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+  }
+
+  .contentListContainer .contentCard:nth-child(odd) {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+  }
+
+  .container {
+    width: calc(100% - 64px);
+    min-width: auto;
+    padding-bottom: 100px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    width: 100%;
+  }
+
+  .searchBox {
+    margin-left: 54px;
+    width: calc(100% - 60px);
+    margin-top: 10px;
+  }
+
+  .searchFilters {
+    width: calc(100% - 60px);
+    left: 54px;
+  }
+
+  .filterIcon {
+    right: 15px;
+  }
+
+  .container {
+    padding: 10px 10px 100px 10px;
+  }
+}

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AllTopics matches the latest snapshot 1`] = `
-<withRouter(Connect(FullPageModal))>
+<withRouter(Connect(FullPageModal))
+  fullWidth={true}
+>
   <div
     data-stylename="all-topics"
   >

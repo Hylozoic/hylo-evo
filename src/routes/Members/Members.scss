@@ -27,7 +27,7 @@ $search-width: 460px;
 }
 
 .search {
-  width: $search-width;
+  width: calc(100% - 90px);
 }
 
 .sort-dropdown {
@@ -73,5 +73,10 @@ $search-width: 460px;
   > *:first-child {
     margin-right: $member-spacing;
   }
+}
 
+@media screen and (max-width: 425px) {
+  .content {
+    padding: 0 10px;
+  }
 }

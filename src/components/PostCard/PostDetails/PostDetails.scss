@@ -1,9 +1,14 @@
 .postDetails {
   /* empty */
+  overflow-x: hidden;
 }
 
 .cardPadding {
   padding: 0px $space-4x;
+}
+
+.constrained .cardPadding {
+  padding: 0px 0px;
 }
 
 .body {
@@ -19,6 +24,27 @@
   margin-bottom: 12px;
 }
 
+.constrained {
+  position: relative;
+}
+
+.fade {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  opacity: .8;
+  display: none;
+  left: 0;
+  height: 50%;
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  background: -o-linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  background: linear-gradient(rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+}
+
+.constrained .fade {
+  display: block;
+}
+
 .details {
   composes: cardPadding;
   // Extract typography? This one is exactly half way between
@@ -28,6 +54,13 @@
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 20px;
+}
+
+.constrained .details {
+  font-size: 12px;
+  line-height: 20px;
+  overflow: hidden;
+  max-height: 100px;
 }
 
 .file-attachments {
@@ -71,5 +104,24 @@
       text-decoration: none;
       color: $color-gossamer;
     }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .details.cardPadding {
+    padding: 0 5px;
+  }
+
+  .details {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+
+  .details {
+    font-size: 12px;
+    line-height: 16px;
   }
 }

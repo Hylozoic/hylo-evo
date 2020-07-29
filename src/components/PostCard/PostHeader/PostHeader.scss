@@ -17,11 +17,21 @@
   margin-right: 10px;
 }
 
+.constrained .avatar {
+  margin-right: 5px;
+}
+
 .headerText {
-  display: inline-block;
+  display: block;
   position: relative;
   top: 1px;
   line-height: 15px;
+}
+
+.constrained.header {
+  margin-bottom: 0;
+  height: 50px;
+  padding: 0 10px;
 }
 
 .userName {
@@ -33,6 +43,10 @@
     color: $color-rhino;
     text-decoration: none;
   }
+}
+
+.constrained .userName {
+  font-size: 12px;
 }
 
 .userTitle {
@@ -69,6 +83,7 @@
 
 .timestamp {
   composes: timestamp from 'css/typography.scss';
+  white-space: nowrap;
 }
 
 .timeWindow {
@@ -78,6 +93,10 @@
   font-size: 12px;
   font-weight: bold;
   margin: 10px;
+}
+
+.constrained .timeWindow {
+  display: none;
 }
 
 .context {
@@ -97,6 +116,10 @@
   vertical-align: top;
   justify-content: right;
   align-items: baseline;
+}
+
+.constrained .upperRight {
+  display: none;
 }
 
 .pinIcon {
@@ -146,7 +169,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 220px;
+}
+
+.constrained .topicsLine {
+  display: none;
 }
 
 .topic {
@@ -161,4 +187,38 @@
   margin-left: 10px;
   margin-top: 10px;
   width: 450px;
+}
+
+@media screen and (max-width: 425px) {
+
+  .headerText {
+    max-width: calc(100% - 160px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .userTitle {
+    font-size: 10px;
+    opacity: .5;
+    display: block;
+    overflow: hidden;
+    height: 14px;
+  }
+
+  .header {
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+
+  .topicsLine {
+    width: 100%;
+  }
+
+  .userName {
+    white-space: nowrap;
+  }
+
+  .label {
+    margin-right: 5px;
+  }
 }

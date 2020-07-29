@@ -1,0 +1,344 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works for a community 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query (
+  $slug: String,
+  $sortBy: String,
+  $filter: String,
+  $search: String,
+  $topic: ID,
+  $first: Int,
+  $offset: Int,
+  $boundingBox: [PointInput]
+) {
+  community(slug: $slug, updateLastViewed: true) {
+    id
+    slug
+    name
+    avatarUrl
+    bannerUrl
+    postCount
+    
+posts(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  search: $search,
+  filter: $filter,
+  topic: $topic,
+  boundingBox: $boundingBox,
+  order: \\"desc\\"
+) {
+  hasMore
+  items {
+    
+  id
+  announcement
+  title
+  details
+  type
+  creator {
+    id
+    name
+    avatarUrl
+  }
+  createdAt
+  updatedAt
+  isPublic
+  fulfilledAt
+  startTime
+  endTime
+  myEventResponse
+  commenters(first: 3) {
+    id
+    name
+    avatarUrl
+  }
+  commentersTotal
+  
+  linkPreview {
+    id
+    title
+    url
+    imageUrl
+  }
+  location
+  locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
+  votesTotal
+  myVote
+  acceptContributions
+  totalContributions
+  communities {
+    id
+    name
+    slug
+  }
+  attachments {
+    id
+    position
+    type
+    url
+  }
+  postMemberships {
+    id
+    pinned
+    community {
+      id
+    }
+  }
+  topics {
+    id
+    name
+    postsTotal
+    followersTotal
+  }
+  members {
+    total
+    hasMore
+    items {
+      id
+      name
+      avatarUrl
+      bio
+      tagline
+      location
+      skills (first: 100) {
+        items {
+          id
+          name
+        }
+      }
+    }
+  }
+  eventInvitations {
+    total
+    hasMore
+    items {
+      id
+      response
+      person {
+        id
+        name
+        avatarUrl
+        bio
+        tagline
+        location
+        skills (first: 100) {
+          items {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+  }
+}
+  }
+}",
+    "variables": Object {
+      "boundingBox": undefined,
+      "filter": "offer",
+      "networkSlug": undefined,
+      "search": "gardening",
+      "slug": undefined,
+      "sortBy": undefined,
+      "topic": undefined,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Community",
+    "extractQueryResults": Object {
+      "getItems": [Function],
+    },
+  },
+  "type": "FETCH_POSTS_MAP",
+}
+`;
+
+exports[`works for all communities 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query (
+  $sortBy: String,
+  $search: String,
+  $filter: String,
+  $topic: ID,
+  $first: Int,
+  $offset: Int,
+  $boundingBox: [PointInput]
+) {
+  
+posts(
+  first: $first,
+  offset: $offset,
+  sortBy: $sortBy,
+  search: $search,
+  filter: $filter,
+  topic: $topic,
+  boundingBox: $boundingBox,
+  order: \\"desc\\"
+) {
+  hasMore
+  items {
+    
+  id
+  announcement
+  title
+  details
+  type
+  creator {
+    id
+    name
+    avatarUrl
+  }
+  createdAt
+  updatedAt
+  isPublic
+  fulfilledAt
+  startTime
+  endTime
+  myEventResponse
+  commenters(first: 3) {
+    id
+    name
+    avatarUrl
+  }
+  commentersTotal
+  
+  linkPreview {
+    id
+    title
+    url
+    imageUrl
+  }
+  location
+  locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
+  votesTotal
+  myVote
+  acceptContributions
+  totalContributions
+  communities {
+    id
+    name
+    slug
+  }
+  attachments {
+    id
+    position
+    type
+    url
+  }
+  postMemberships {
+    id
+    pinned
+    community {
+      id
+    }
+  }
+  topics {
+    id
+    name
+    postsTotal
+    followersTotal
+  }
+  members {
+    total
+    hasMore
+    items {
+      id
+      name
+      avatarUrl
+      bio
+      tagline
+      location
+      skills (first: 100) {
+        items {
+          id
+          name
+        }
+      }
+    }
+  }
+  eventInvitations {
+    total
+    hasMore
+    items {
+      id
+      response
+      person {
+        id
+        name
+        avatarUrl
+        bio
+        tagline
+        location
+        skills (first: 100) {
+          items {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+  }
+}
+}",
+    "variables": Object {
+      "boundingBox": undefined,
+      "filter": "request",
+      "networkSlug": undefined,
+      "search": "graphic design",
+      "slug": undefined,
+      "sortBy": undefined,
+      "topic": undefined,
+    },
+  },
+  "meta": Object {
+    "extractModel": "Post",
+    "extractQueryResults": Object {
+      "getItems": [Function],
+    },
+  },
+  "type": "FETCH_POSTS_MAP",
+}
+`;

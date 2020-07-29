@@ -21,6 +21,7 @@ import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
 import AttachmentManager from 'components/AttachmentManager/AttachmentManager.store'
+import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
 import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import AllTopics from 'routes/AllTopics/AllTopics.store'
@@ -47,26 +48,27 @@ export const combinedReducers = combineReducers({
 
   // Local store (Component)
   // generator-marker-local-store-reducer
-  AuthRoute,
-  SkillsSection,
-  NetworkCommunities,
-  NetworkSettings,
-  PrimaryLayout,
-  Messages,
-  PeopleTyping,
-  HyloEditor,
-  PostEditor,
-  AttachmentManager,
-  Members,
-  FullPageModal,
   AllTopics,
-  ModeratorsSettings,
-  Search,
-  FeedList,
-  JoinCommunity,
+  AuthRoute,
+  AttachmentManager,
   CreateCommunity,
   CreateTopic,
-  MemberSelector
+  FeedList,
+  FullPageModal,
+  HyloEditor,
+  JoinCommunity,
+  MapExplorer,
+  Members,
+  MemberSelector,
+  Messages,
+  ModeratorsSettings,
+  NetworkCommunities,
+  NetworkSettings,
+  PeopleTyping,
+  PrimaryLayout,
+  PostEditor,
+  Search,
+  SkillsSection
 })
 
 export default composeReducers(

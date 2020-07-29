@@ -56,3 +56,20 @@
 .footer {
   background-color: rgb(200,200,200)
 }
+
+@media screen and (max-width: 425px) {
+  .commentForm {
+    margin-bottom: 25px;
+    z-index: 1000;
+  }
+
+  .editor {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .editor {
+    font-size: 12px;
+  }
+}

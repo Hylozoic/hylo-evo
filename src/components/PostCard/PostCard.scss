@@ -6,14 +6,75 @@
   position: relative;
   right: 0px;
   transition: 0.25s;
+  display: flex;
+  flex-direction: column;
   &:hover {
     box-shadow: 0px 0px 6px 0px $color-black-10;
   }
 }
 
+.constrained.card {
+  border-top: 5px solid $color-cape-cod-10;
+  padding-top: 10px;
+}
+
 .expanded,
 .expanded:hover {
   box-shadow: 0px 4px 6px 0px $color-black-10;
+}
+
+.constrained.discussion {
+  color: $color-picton-blue;
+  border-top: 5px solid $color-discussions-30;
+
+  &:hover {
+    border-top: 5px solid $color-discussions;
+  }
+}
+
+.constrained.event {
+  color: $color-medium-purple;
+  border-top: 5px solid $color-events-30;
+
+  &:hover {
+    border-top: 5px solid $color-events;
+  }
+}
+
+.constrained.offer {
+  color: $color-caribbean-green;
+  border-top: 5px solid $color-offers-30;
+
+  &:hover {
+    border-top: 5px solid $color-offers;
+  }
+}
+
+.constrained.resource {
+  color: $color-mango-yellow;
+  border-top: 5px solid $color-resources-30;
+
+  &:hover {
+    border-top: 5px solid $color-resources;
+  }
+}
+
+.constrained.project {
+  color: $color-fuchsia-pink;
+  border-top: 5px solid $color-projects-30;
+
+  &:hover {
+    border-top: 5px solid $color-projects;
+  }
+}
+
+.constrained.request {
+  color: $color-persimmon;
+  border-top: 5px solid $color-requests-30;
+
+  &:hover {
+    border-top: 5px solid $color-requests;
+  }
 }
 
 .image {

@@ -6,10 +6,20 @@ exports[`Header should match the latest snapshot 1`] = `
   id="thread-header"
 >
   <div
+    data-stylename="backButton"
+  >
+    <Icon
+      data-stylename="arrow-down"
+      name="ArrowDown"
+    />
+  </div>
+  <div
     data-stylename="header-text"
   >
     one, two, three
   </div>
-  <CloseMessages />
+  <CloseMessages
+    data-stylename="closeMessages"
+  />
 </div>
 `;

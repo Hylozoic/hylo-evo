@@ -37,6 +37,12 @@
   display: flex;
 }
 
+.header-contents {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .logo {
   @include image(64px);
   border-radius: 4px;
@@ -68,7 +74,6 @@
   color: $color-white;
   font-size: 13px;
   opacity: 0.8;
-  margin-top: 10px;
 }
 
 .header-icon {
@@ -129,5 +134,45 @@
   }
   .fade2 {
     display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .imageShape {
+    border-radius: 0;
+  }
+
+  .banner {
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    padding-left: 15px;
+  }
+
+  .header-name {
+    font-size: 20px;
+  }
+
+  .postPrompt {
+    font-size: 14px;
+    line-height: 50px;
+  }
+
+  .postPromptShape {
+    height: 50px;
+  }
+
+  .prompt-image {
+    margin-left: 10px;
+    top: 11px;
+  }
+}
+
+@media screen and (max-width: 325px) {
+  .postPrompt {
+    font-size: 12px;
   }
 }

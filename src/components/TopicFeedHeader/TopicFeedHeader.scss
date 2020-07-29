@@ -117,3 +117,33 @@
   composes: imageShape;
   background-color: $color-rhino-30;
 }
+
+@media screen and (max-width: 600px) {
+  .imageShape {
+    border-radius: 0;
+  }
+
+  .topic-feed-header {
+    padding-top: 0;
+  }
+
+  .subscribe,
+  .unsubscribe {
+    top: 50px;
+  }
+
+  .meta {
+    top: 75px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .subscribe,
+  .unsubscribe {
+    top: 70px;
+    padding: 0 10px;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+  }
+}

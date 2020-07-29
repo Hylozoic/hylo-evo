@@ -16,6 +16,11 @@
   margin: 0 $layout-spacing 0 15px;
   overflow: hidden;
   white-space: nowrap;
+  height: calc(100vh - 56px);
+}
+
+.mapView.collapser {
+  margin: 0 13px 0 15px;
 }
 
 .collapser-collapsed {
@@ -40,4 +45,77 @@
   border-bottom: 2px solid $color-ghost-30;
   padding: 0 0 20px 0;
   margin: 0;
+}
+
+.topicItem, .item {
+  display: none;
+}
+
+@media screen and (max-width: 930px) {
+  .collapser {
+    flex: 0 0 6%;
+    min-width: 50px;
+    margin: 0 15px 0 15px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .links {
+    border-bottom: none;
+    padding: 0 0 0 0;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .navigation {
+    padding: 5px;
+    background-color: rgba(255,255,255,1);
+  }
+
+  .collapser {
+    margin: 0;
+    height: auto;
+  }
+
+  .links {
+    display: flex;
+    justify-content: center;
+  }
+
+  .icon {
+    margin: 0;
+  }
+
+  .topicItem {
+    display: block;
+    padding: 0 15px;
+
+    a {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      top: 6px;
+
+      &:hover, &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .mapView.collapser {
+    margin: 0;
+  }
+
+}
+
+@media screen and (max-width: 320px) {
+  .topicItem {
+    padding: 0 10px;
+
+    a {
+      top: 9px;
+    }
+  }
 }

@@ -1,7 +1,11 @@
 import React from 'react'
 import NavLink from './NavLink'
-import TopicNavigation from './TopicNavigation'
+import Icon from 'components/Icon'
+import { Link } from 'react-router-dom'
+import cx from 'classnames'
 import './Navigation.scss'
+import { topicsUrl } from 'util/navigation'
+import TopicNavigation from './TopicNavigation'
 import { compact } from 'lodash/fp'
 import { EVENTS } from 'config/featureFlags'
 
@@ -10,12 +14,15 @@ export default function Navigation (props) {
     currentUser,
     className,
     collapsed,
+    communitySlug,
     rootId,
     rootSlug,
     rootPath,
     membersPath,
     projectsPath,
     eventsPath,
+    mapPath,
+    mapView,
     badge,
     clearBadge,
     clearFeedList,
@@ -54,16 +61,28 @@ export default function Navigation (props) {
       label: 'Members',
       icon: 'Members',
       to: membersPath
+    },
+    mapPath && {
+      label: 'Map',
+      icon: 'Globe',
+      to: mapPath
     }
   ])
 
-  return <div styleName={collapsed ? 'collapser-collapsed' : 'collapser'}
+  const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
+
+  return <div styleName={cx({ mapView }, collapserState)}
     className={className}>
     <div styleName='navigation'>
       <ul styleName='links'>
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
+        <li styleName={cx('item', 'topicItem')}>
+          <Link to={topicsUrl(communitySlug)}>
+            <Icon name='Topics' />
+          </Link>
+        </li>
       </ul>
       {showTopics && <TopicNavigation backUrl={rootPath} communityId={rootId} communitySlug={rootSlug} collapsed={collapsed} />}
     </div>

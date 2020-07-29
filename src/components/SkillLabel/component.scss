@@ -1,15 +1,13 @@
 .label {
   display: inline-block;
   text-transform: uppercase;
-  height: 25px;
-  line-height: 23px;
   font-size: 10px;
   font-family: 'Circular Bold';
   letter-spacing: 0.6px;
   text-align: center;
   border: 1px solid $color-alto;
   background-color: transparent;
-  padding: 0 12px;
+  padding: 5px 12px;
   border-radius: 25px;
 }
 

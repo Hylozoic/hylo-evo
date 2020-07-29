@@ -13,12 +13,29 @@ $footer-height: 56px;
   overflow: hidden;
 }
 
+
+.footer.constrained {
+  padding-left: 5px;
+  height: 46px;
+}
+
+
 .people {
   margin-right: 20px;
+    white-space: nowrap;
 }
 
 .caption {
   composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.footer.constrained .caption {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.footer.constrained .people {
+  margin-right: 5px;
 }
 
 .share {
@@ -61,5 +78,24 @@ $footer-height: 56px;
     &, .arrowIcon {
       color: white !important;
     }
+  }
+}
+
+.constrainend.vote-button {
+  width: 66px;
+}
+
+@media screen and (max-width: 425px) {
+  .footer {
+    height: 40px;
+    padding-left: 10px;
+  }
+
+  .vote-button {
+    width: 70px;
+  }
+
+  .people {
+    margin-right: 10px;
   }
 }

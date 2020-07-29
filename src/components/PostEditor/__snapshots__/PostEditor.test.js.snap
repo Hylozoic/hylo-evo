@@ -245,17 +245,11 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         Timeframe
       </div>
       <div
-        style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "justifyContent": "space-evenly",
-          }
-        }
+        data-stylename="datePickerModule"
       >
         <DatePicker
           onChange={[Function]}
-          placeholder="Select Start Time"
+          placeholder="Select Start"
           value={"2019-03-06T21:41:23.315Z"}
         />
         <div
@@ -265,7 +259,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         </div>
         <DatePicker
           onChange={[Function]}
-          placeholder="Select End Time"
+          placeholder="Select End"
           value={"2019-03-06T21:41:23.315Z"}
         />
       </div>
@@ -478,17 +472,11 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         Timeframe
       </div>
       <div
-        style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "justifyContent": "space-evenly",
-          }
-        }
+        data-stylename="datePickerModule"
       >
         <DatePicker
           onChange={[Function]}
-          placeholder="Select Start Time"
+          placeholder="Select Start"
           value={"2019-03-06T21:41:23.315Z"}
         />
         <div
@@ -498,7 +486,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         </div>
         <DatePicker
           onChange={[Function]}
-          placeholder="Select End Time"
+          placeholder="Select End"
           value={"2019-03-06T21:41:23.315Z"}
         />
       </div>
@@ -1057,17 +1045,11 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Timeframe
       </div>
       <div
-        style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "justifyContent": "space-evenly",
-          }
-        }
+        data-stylename="datePickerModule"
       >
         <DatePicker
           onChange={[Function]}
-          placeholder="Select Start Time"
+          placeholder="Select Start"
           value={"2019-03-06T21:41:23.315Z"}
         />
         <div
@@ -1077,7 +1059,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         </div>
         <DatePicker
           onChange={[Function]}
-          placeholder="Select End Time"
+          placeholder="Select End"
           value={"2019-03-06T21:41:23.315Z"}
         />
       </div>
@@ -1255,17 +1237,11 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Timeframe
       </div>
       <div
-        style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "justifyContent": "space-evenly",
-          }
-        }
+        data-stylename="datePickerModule"
       >
         <DatePicker
           onChange={[Function]}
-          placeholder="Select Start Time"
+          placeholder="Select Start"
           value={"2019-03-06T21:41:23.315Z"}
         />
         <div
@@ -1275,7 +1251,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         </div>
         <DatePicker
           onChange={[Function]}
-          placeholder="Select End Time"
+          placeholder="Select End"
           value={"2019-03-06T21:41:23.315Z"}
         />
       </div>
@@ -1389,7 +1365,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="editor"
         onChange={[Function]}
         parentComponent="PostEditor"
-        placeholder="Please describe the physical resource that is available, including the location."
+        placeholder="Describe the resource that is available"
         readOnly={false}
       />
     </div>
@@ -1453,17 +1429,11 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Timeframe
       </div>
       <div
-        style={
-          Object {
-            "alignItems": "center",
-            "display": "flex",
-            "justifyContent": "space-evenly",
-          }
-        }
+        data-stylename="datePickerModule"
       >
         <DatePicker
           onChange={[Function]}
-          placeholder="Select Start Time"
+          placeholder="Select Start"
           value={"2019-03-06T21:41:23.315Z"}
         />
         <div
@@ -1473,7 +1443,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         </div>
         <DatePicker
           onChange={[Function]}
-          placeholder="Select End Time"
+          placeholder="Select End"
           value={"2019-03-06T21:41:23.315Z"}
         />
       </div>

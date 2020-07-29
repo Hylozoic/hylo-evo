@@ -10,7 +10,7 @@ exports[`TopNavDropdown renders correctly 1`] = `
     </div>
   </a>
   <div
-    data-stylename="wrapper"
+    data-stylename="wrapper animateFadeInDown"
   >
     <ul
       data-stylename="menu"

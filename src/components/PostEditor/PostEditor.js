@@ -66,7 +66,7 @@ export default class PostEditor extends React.Component {
     detailPlaceholderForPostType: {
       offer: 'Add a description',
       request: 'Add a description',
-      resource: 'Please describe the physical resource that is available, including the location.',
+      resource: 'Describe the resource that is available',
       project: 'Add a description',
       event: 'Add a description',
       default: 'Add a description'
@@ -308,7 +308,7 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime, locationId } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
@@ -317,8 +317,7 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime))) &&
-      (type !== 'resource' || locationId)
+      (!isEvent || (endTime && (startTime < endTime)))
     )
   }
 
@@ -457,10 +456,10 @@ export default class PostEditor extends React.Component {
         {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
         {canHaveTimes && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Timeframe</div>
-          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-            <DatePicker value={startTime} placeholder={'Select Start Time'} onChange={this.handleStartTimeChange} />
+          <div styleName='datePickerModule'>
+            <DatePicker value={startTime} placeholder={'Select Start'} onChange={this.handleStartTimeChange} />
             <div styleName='footerSection-helper'>To</div>
-            <DatePicker value={endTime} placeholder={'Select End Time'} onChange={this.handleEndTimeChange} />
+            <DatePicker value={endTime} placeholder={'Select End'} onChange={this.handleEndTimeChange} />
           </div>
         </div>}
         {hasLocation && <div styleName='footerSection'>
