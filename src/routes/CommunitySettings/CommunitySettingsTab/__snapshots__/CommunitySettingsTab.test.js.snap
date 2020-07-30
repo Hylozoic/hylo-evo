@@ -19,14 +19,11 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     }
   >
     <Connect(UploadAttachmentButton)
+      attachmentType="image"
       data-stylename="change-banner-button"
-      update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "communityBanner",
-        }
-      }
+      id={1}
+      onSuccess={[Function]}
+      type="communityBanner"
     />
   </div>
   <div
@@ -38,14 +35,11 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     }
   >
     <Connect(UploadAttachmentButton)
+      attachmentType="image"
       data-stylename="change-avatar-button"
-      update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "communityAvatar",
-        }
-      }
+      id={1}
+      onSuccess={[Function]}
+      type="communityAvatar"
     />
   </div>
   <SettingsControl

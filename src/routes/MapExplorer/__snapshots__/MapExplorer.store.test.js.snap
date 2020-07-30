@@ -94,10 +94,10 @@ posts(
     slug
   }
   attachments {
-    id
-    position
     type
     url
+    position
+    id
   }
   postMemberships {
     id
@@ -262,10 +262,10 @@ posts(
     slug
   }
   attachments {
-    id
-    position
     type
     url
+    position
+    id
   }
   postMemberships {
     id

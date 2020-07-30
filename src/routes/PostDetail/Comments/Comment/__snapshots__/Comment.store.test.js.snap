@@ -25,8 +25,8 @@ Object {
   "graphql": Object {
     "query": "mutation ($id: ID, $data: CommentInput) {
         updateComment(id: $id, data: $data) {
-            id
-            text
+          id
+          text
         }
       }",
     "variables": Object {

@@ -179,16 +179,7 @@ exports[`matches last snapshot with different config 1`] = `
     </Connect(ClickCatcher)>
     <div
       data-stylename="comment-footer"
-    >
-      <span>
-        <Icon
-          data-stylename="reply-button"
-          green={true}
-          name="Reply"
-        />
-         Reply
-      </span>
-    </div>
+    />
   </div>
 </a>
 `;
