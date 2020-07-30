@@ -101,7 +101,7 @@ export default class NetworkSettingsTab extends Component {
           id={network.id}
           type='networkBanner'
           attachmentType='image'
-          update={updateSettingDirectly('bannerUrl')}
+          onSuccess={updateSettingDirectly('bannerUrl')}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
@@ -109,7 +109,7 @@ export default class NetworkSettingsTab extends Component {
           id={network.id}
           type='networkAvatar'
           attachmentType='image'
-          update={updateSettingDirectly('avatarUrl')}
+          onSuccess={updateSettingDirectly('avatarUrl')}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />

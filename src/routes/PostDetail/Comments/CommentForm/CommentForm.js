@@ -70,14 +70,14 @@ export default class CommentForm extends Component {
         <UploadAttachmentButton
           type='comment'
           attachmentType='image'
-          update={addImage}>
+          onSuccess={addImage}>
           <Icon name='AddImage'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
         </UploadAttachmentButton>
         <UploadAttachmentButton
           type='comment'
           attachmentType='file'
-          update={addFile}>
+          onSuccess={addFile}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
         </UploadAttachmentButton>

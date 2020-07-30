@@ -135,7 +135,7 @@ export default class CommunitySettingsTab extends Component {
           id={community.id}
           type='communityBanner'
           attachmentType='image'
-          update={this.updateSettingDirectly('bannerUrl')}
+          onSuccess={this.updateSettingDirectly('bannerUrl')}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
@@ -143,7 +143,7 @@ export default class CommunitySettingsTab extends Component {
           id={community.id}
           type='communityAvatar'
           attachmentType='image'
-          update={this.updateSettingDirectly('avatarUrl')}
+          onSuccess={this.updateSettingDirectly('avatarUrl')}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />

@@ -119,7 +119,7 @@ export default class AccountSettingsTab extends Component {
           type='userBanner'
           id={currentUser.id}
           attachmentType='image'
-          update={this.updateSettingDirectly('bannerUrl')}
+          onSuccess={this.updateSettingDirectly('bannerUrl')}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
@@ -127,7 +127,7 @@ export default class AccountSettingsTab extends Component {
           type='userAvatar'
           id={currentUser.id}
           attachmentType='image'
-          update={this.updateSettingDirectly('avatarUrl')}
+          onSuccess={this.updateSettingDirectly('avatarUrl')}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />

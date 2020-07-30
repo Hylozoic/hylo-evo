@@ -541,7 +541,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='image'
-        update={addImage}
+        onSuccess={addImage}
         disable={showImages}>
         <Icon
           name='AddImage'
@@ -552,7 +552,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='file'
-        update={addFile}
+        onSuccess={addFile}
         disable={showFiles}>
         <Icon
           name='Paperclip'

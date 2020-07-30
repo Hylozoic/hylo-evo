@@ -60,7 +60,7 @@ export const ImageManager = DragDropContext(HTML5Backend)(
             id={id}
             type={type}
             attachmentType={attachmentType}
-            update={addAttachment}>
+            onSuccess={addAttachment}>
             <div styleName='add-image'>+</div>
           </UploadAttachmentButton>
         </div>
@@ -126,7 +126,7 @@ export function FileManager ({
         id={id}
         type={type}
         attachmentType={attachmentType}
-        update={addAttachment}
+        onSuccess={addAttachment}
         styleName='add-file-row'>
         <div styleName='add-file'>
           <span styleName='add-file-plus'>+</span> Add File</div>
