@@ -1,27 +1,20 @@
 import { connect } from 'react-redux'
-import { get, isEmpty } from 'lodash/fp'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
+import { isEmpty } from 'lodash/fp'
+import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 
 export function mapStateToProps (state, props) {
-  const images = getImagesForPost(state, props)
-  if (isEmpty(images)) return {}
+  const imageUrls = getAttachmentsFromObject(state, {
+    type: 'post',
+    id: props.postId,
+    attachmentType: 'image'
+  })
+
+  if (isEmpty(imageUrls)) return {}
 
   return {
-    imageUrl: images[0].url,
-    otherImageUrls: images.slice(1).map(get('url'))
+    imageUrl: imageUrls[0],
+    otherImageUrls: imageUrls.slice(1)
   }
 }
 
 export default connect(mapStateToProps)
-
-const getImagesForPost = ormCreateSelector(
-  orm,
-  get('orm'),
-  (state, { postId }) => postId,
-  ({ Attachment }, postId) =>
-    Attachment.all()
-      .filter(({ type, post }) => type === 'image' && post === postId)
-      .orderBy(get('position'))
-      .toRefArray()
-)

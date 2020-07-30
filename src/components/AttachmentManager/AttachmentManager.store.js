@@ -1,8 +1,7 @@
 import { pullAt, clone, get, getOr } from 'lodash/fp'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
-import { uploadFile } from 'client/filepicker'
-import { UPLOAD_ATTACHMENT } from 'store/constants'
+import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
+
+export { ID_FOR_NEW }
 
 export const MODULE_NAME = 'AttachmentManager'
 export const LOAD_ATTACHMENTS = `${MODULE_NAME}/LOAD_ATTACHMENTS`
@@ -10,11 +9,10 @@ export const SET_ATTACHMENTS = `${MODULE_NAME}/SET_ATTACHMENTS`
 export const ADD_ATTACHMENT = `${MODULE_NAME}/ADD_ATTACHMENT`
 export const REMOVE_ATTACHMENT = `${MODULE_NAME}/REMOVE_ATTACHMENT`
 export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
-export const ID_FOR_NEW = 'new'
 
 // -- LOCAL STORE --
 
-// Action generators
+// action generators
 
 export function setAttachments (type, id, attachmentType, attachments) {
   return {
@@ -57,7 +55,7 @@ export function switchAttachments (type, id, attachmentType, position1, position
   }
 }
 
-// Selectors
+// selectors
 
 export function getAttachments (state, {
   type,
@@ -68,7 +66,7 @@ export function getAttachments (state, {
   return result
 }
 
-// Reducer
+// reducer
 
 export const defaultState = {}
 
@@ -110,66 +108,6 @@ export default function reducer (state = defaultState, action) {
       }
     default:
       return state
-  }
-}
-
-// -- GLOBAL STORE --
-
-// Selectors
-
-export const getAttachmentsFromObject = ormCreateSelector(
-  orm,
-  (state, _) => get('orm', state),
-  (_, props) => props,
-  ({ Attachment }, { id = ID_FOR_NEW, type, attachmentType }) => Attachment
-    .all()
-    .filter(({ type: at, ...rest }) =>
-      at === attachmentType &&
-      rest[type.toLowerCase()] === id
-    )
-    .orderBy('position')
-    .toModelArray()
-    .map(a => a.url)
-)
-
-export function getUploadPending ({ pending }, props) {
-  const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
-
-  if (!props || !pendingUpload) return Boolean(pendingUpload)
-
-  const { type, id = ID_FOR_NEW, attachmentType } = props
-
-  return pendingUpload.type === type &&
-    pendingUpload.id === id &&
-    pendingUpload.attachmentType === attachmentType
-}
-
-// Action generators
-
-export function uploadAttachment ({
-  type, // this is the type of thing that the upload is for, e.g. post
-  id = ID_FOR_NEW, // this is the id of the thing that the upload is for
-  attachmentType // this is the attachment type used to identify a related attachment manager
-}) {
-  const payload = new Promise((resolve, reject) => {
-    uploadFile({
-      success: (url, filename) => resolve({
-        api: {
-          method: 'post',
-          path: '/noo/upload',
-          params: { type, id, url, filename }
-        }
-      }),
-      cancel: () => resolve({}),
-      failure: err => reject(err),
-      attachmentType
-    })
-  })
-
-  return {
-    type: UPLOAD_ATTACHMENT,
-    payload,
-    meta: { type, id, attachmentType }
   }
 }
 

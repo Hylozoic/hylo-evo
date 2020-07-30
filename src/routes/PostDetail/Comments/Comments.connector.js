@@ -1,22 +1,15 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
-// import { getAttachments } from 'components/AttachmentManager/AttachmentManager.store'
+import fetchComments from 'store/actions/fetchComments'
 import {
-  fetchComments,
-  createComment,
   getComments,
   getHasMoreComments,
   getTotalComments
-} from './Comments.store'
+} from 'store/selectors/getComments'
+import createComment from 'store/actions/createComment'
 
 export function mapStateToProps (state, props) {
-  // const editingCommentId =
-  // const imageUrls = getAttachments(state, { type: 'comment', id: , attachmentType: 'image' })
-  // const fileUrls = getAttachments(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })
-  // const showFiles = !isEmpty(fileUrls) || getUploadPending(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })
-  // const showImages = !isEmpty(imageUrls) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
-
   return {
     comments: getComments(state, props),
     total: getTotalComments(state, { id: props.postId }),

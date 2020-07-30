@@ -16,7 +16,6 @@ export default class AttachmentManager extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    console.log('!!!! componentDidUpdate -- prevProps, this.props:', prevProps, this.props)
     if (isEmpty(prevProps.attachmentsFromObject) && !isEmpty(this.props.attachmentsFromObject)) {
       this.props.loadAttachments()
     }
@@ -57,8 +56,8 @@ export const ImageManager = DragDropContext(HTML5Backend)(
               key={i} />)}
           {pending && <div styleName='add-image'><Loading /></div>}
           <UploadAttachmentButton
-            id={id}
             type={type}
+            id={id}
             attachmentType={attachmentType}
             onSuccess={addAttachment}>
             <div styleName='add-image'>+</div>

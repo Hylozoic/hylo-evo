@@ -1,13 +1,13 @@
 import { isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
+import getUploadPending from 'store/selectors/getUploadPending'
+import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 import {
   addAttachment,
   removeAttachment,
   switchAttachments,
   setAttachments,
-  getAttachments,
-  getUploadPending,
-  getAttachmentsFromObject
+  getAttachments
 } from './AttachmentManager.store'
 
 export function mapStateToProps (state, props) {

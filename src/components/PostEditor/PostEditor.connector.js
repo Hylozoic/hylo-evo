@@ -20,6 +20,11 @@ import {
 import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
+import getUploadPending from 'store/selectors/getUploadPending'
+import {
+  addAttachment,
+  getAttachments
+} from 'components/AttachmentManager/AttachmentManager.store'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -29,11 +34,6 @@ import {
   getLinkPreview,
   setAnnouncement
 } from './PostEditor.store'
-import {
-  addAttachment,
-  getAttachments,
-  getUploadPending
-} from 'components/AttachmentManager/AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)

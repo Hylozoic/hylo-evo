@@ -98,16 +98,16 @@ export default class NetworkSettingsTab extends Component {
       <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <UploadAttachmentButton
-          id={network.id}
           type='networkBanner'
+          id={network.id}
           attachmentType='image'
           onSuccess={updateSettingDirectly('bannerUrl')}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <UploadAttachmentButton
-          id={network.id}
           type='networkAvatar'
+          id={network.id}
           attachmentType='image'
           onSuccess={updateSettingDirectly('avatarUrl')}
           styleName='change-avatar-button' />

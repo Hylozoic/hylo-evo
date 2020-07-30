@@ -1,4 +1,4 @@
-import { getComments } from './Comments.store'
+import { getComments } from './getComments'
 import orm from 'store/models'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
 

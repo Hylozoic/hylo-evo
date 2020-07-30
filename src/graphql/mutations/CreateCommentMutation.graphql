@@ -1,0 +1,29 @@
+mutation CreateCommentMutation (
+  $postId: String,
+  $text: String
+  $imageUrls: [String],
+  $fileUrls: [String]
+) {
+  createComment(data: {
+    postId: $postId,
+    text: $text
+    imageUrls: $imageUrls,
+    fileUrls: $fileUrls  
+  }) {
+    id
+    text
+    post {
+      id
+    }
+    creator {
+      id
+    }
+    attachments {
+      type
+      url
+      position
+      id
+    }
+    createdAt
+  }
+}

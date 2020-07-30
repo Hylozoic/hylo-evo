@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { getUploadPending, uploadAttachment, ID_FOR_NEW } from 'components/AttachmentManager/AttachmentManager.store'
+import uploadAttachment, { ID_FOR_NEW } from 'store/actions/uploadAttachment'
+import getUploadPending from 'store/selectors/getUploadPending'
 
 export function mapStateToProps (state, props) {
   return {
