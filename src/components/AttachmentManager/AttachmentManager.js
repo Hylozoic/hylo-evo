@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
-import UploadFileButton from 'components/UploadFileButton'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { ID_FOR_NEW } from './AttachmentManager.store'
 import './AttachmentManager.scss'
 
@@ -16,6 +16,7 @@ export default class AttachmentManager extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
+    console.log('!!!! componentDidUpdate -- prevProps, this.props:', prevProps, this.props)
     if (isEmpty(prevProps.attachmentsFromObject) && !isEmpty(this.props.attachmentsFromObject)) {
       this.props.loadAttachments()
     }
@@ -55,13 +56,13 @@ export const ImageManager = DragDropContext(HTML5Backend)(
               position={i}
               key={i} />)}
           {pending && <div styleName='add-image'><Loading /></div>}
-          <UploadFileButton
+          <UploadAttachmentButton
             id={id}
             type={type}
             attachmentType={attachmentType}
             update={addAttachment}>
             <div styleName='add-image'>+</div>
-          </UploadFileButton>
+          </UploadAttachmentButton>
         </div>
       </div>
     }
@@ -121,7 +122,7 @@ export function FileManager ({
           position={i}
           key={i} />)}
       {pending && <div styleName='loading-file'>Loading...</div>}
-      <UploadFileButton
+      <UploadAttachmentButton
         id={id}
         type={type}
         attachmentType={attachmentType}
@@ -129,7 +130,7 @@ export function FileManager ({
         styleName='add-file-row'>
         <div styleName='add-file'>
           <span styleName='add-file-plus'>+</span> Add File</div>
-      </UploadFileButton>
+      </UploadAttachmentButton>
     </div>
   </div>
 }

@@ -18,7 +18,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
       }
     }
   >
-    <Connect(UploadFileButton)
+    <Connect(UploadAttachmentButton)
       data-stylename="change-banner-button"
       update={[Function]}
       uploadSettings={
@@ -37,7 +37,7 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
       }
     }
   >
-    <Connect(UploadFileButton)
+    <Connect(UploadAttachmentButton)
       data-stylename="change-avatar-button"
       update={[Function]}
       uploadSettings={

@@ -1,4 +1,4 @@
-import { mapStateToProps } from './UploadFileButton.connector'
+import { mapStateToProps } from './UploadAttachmentButton.connector'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 describe('mapStateToProps', () => {
@@ -24,7 +24,7 @@ describe('mapStateToProps', () => {
         [UPLOAD_ATTACHMENT]: {
           type: 'user-avatar',
           id: '124',
-          fileType: 'image'
+          attachmentType: 'image'
         }
       }
     }
@@ -40,7 +40,7 @@ describe('mapStateToProps', () => {
         [UPLOAD_ATTACHMENT]: {
           type: 'user-avatar',
           id: '123',
-          fileType: 'image'
+          attachmentType: 'image'
         }
       }
     }

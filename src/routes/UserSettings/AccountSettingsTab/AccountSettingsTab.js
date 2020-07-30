@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
 import './AccountSettingsTab.scss'
 import Button from 'components/Button'
-import UploadFileButton from 'components/UploadFileButton'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
@@ -115,7 +115,7 @@ export default class AccountSettingsTab extends Component {
     return <div>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
-        <UploadFileButton
+        <UploadAttachmentButton
           type='userBanner'
           id={currentUser.id}
           attachmentType='image'
@@ -123,7 +123,7 @@ export default class AccountSettingsTab extends Component {
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
-        <UploadFileButton
+        <UploadAttachmentButton
           type='userAvatar'
           id={currentUser.id}
           attachmentType='image'

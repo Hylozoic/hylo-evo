@@ -1,8 +1,8 @@
 import React from 'react'
 import Icon from 'components/Icon'
-import './UploadFileButton.scss'
+import './UploadAttachmentButton.scss'
 
-export default function UploadFileButton ({
+export default function UploadAttachmentButton ({
   upload,
   loading,
   className,

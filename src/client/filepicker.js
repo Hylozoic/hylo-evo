@@ -20,15 +20,15 @@ const fromSources = [
  *   failure:  a failure callback, which receives the error as an argument
  *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
  */
-export const uploadFile = function ({ success, cancel, failure, fileType }) {
-  const accept = fileType === 'image' ? ['image/*'] : ['video/*', 'audio/*', 'application/*', 'text/*']
+export const uploadFile = function ({ success, cancel, failure, attachmentType }) {
+  const accept = attachmentType === 'image' ? ['image/*'] : ['video/*', 'audio/*', 'application/*', 'text/*']
 
   filePicker.picker({
     accept,
     fromSources,
     maxFiles: 1, // TODO: allow for more at once in PostEditor
     onFileUploadFinished: file => {
-      const url = fileType === 'image' ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle : file.url
+      const url = attachmentType === 'image' ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle : file.url
       success(url, file.filename)
     },
     onFileUploadFailed: failure,

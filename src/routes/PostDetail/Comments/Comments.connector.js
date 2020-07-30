@@ -11,7 +11,6 @@ import {
 } from './Comments.store'
 
 export function mapStateToProps (state, props) {
-  console.log('!!!! comments state, props:', state, props)
   // const editingCommentId =
   // const imageUrls = getAttachments(state, { type: 'comment', id: , attachmentType: 'image' })
   // const fileUrls = getAttachments(state, { type: 'comment', id: editingPostId, attachmentType: 'file' })

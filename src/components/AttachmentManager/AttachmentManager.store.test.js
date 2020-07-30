@@ -110,7 +110,7 @@ describe('AttachmentManager store', () => {
   describe('upload', () => {
     const url = 'http://filepicker.io/hfwoe/eh98e'
     const filename = 'foo.jpg'
-    const opts = { type: 'userAvatar', id: 3, fileType: 'image' }
+    const opts = { type: 'userAvatar', id: 3, attachmentType: 'image' }
     
     it('returns an API action after filepicker succeeds', () => {
       const uploadAttachment = setupUploadAttachment(true, [url, filename])

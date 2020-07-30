@@ -20,7 +20,7 @@ import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
 import DatePicker from 'components/DatePicker'
-import UploadFileButton from 'components/UploadFileButton'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
@@ -537,7 +537,7 @@ export function ActionsBar ({
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
-      <UploadFileButton
+      <UploadAttachmentButton
         type='post'
         id={id}
         attachmentType='image'
@@ -547,8 +547,8 @@ export function ActionsBar ({
           name='AddImage'
           styleName={cx('action-icon', { 'highlight-icon': showImages })}
         />
-      </UploadFileButton>
-      <UploadFileButton
+      </UploadAttachmentButton>
+      <UploadAttachmentButton
         type='post'
         id={id}
         attachmentType='file'
@@ -558,7 +558,7 @@ export function ActionsBar ({
           name='Paperclip'
           styleName={cx('action-icon', { 'highlight-icon': showFiles })}
         />
-      </UploadFileButton>
+      </UploadAttachmentButton>
       {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
         <Icon
           name='Announcement'

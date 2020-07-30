@@ -121,15 +121,18 @@ export const getAttachmentsFromObject = ormCreateSelector(
   orm,
   (state, _) => get('orm', state),
   (_, props) => props,
-  ({ Attachment }, { id, type, attachmentType }) => Attachment
-    .all()
-    .filter(({ type: at, ...rest }) =>
-      at === attachmentType &&
-      rest[type.toLowerCase()] === id
-    )
-    .orderBy('position')
-    .toModelArray()
-    .map(a => a.url)
+  ({ Attachment }, { id = ID_FOR_NEW, type, attachmentType }) => {
+    console.log('!!!! in getAttachmentsFromObject -- id,type,attachemenType:', id, type, attachmentType)
+    return Attachment
+      .all()
+      .filter(({ type: at, ...rest }) =>
+        at === attachmentType &&
+        rest[type.toLowerCase()] === id
+      )
+      .orderBy('position')
+      .toModelArray()
+      .map(a => a.url)
+  }
 )
 
 export function getUploadPending ({ pending }, props) {
@@ -141,7 +144,7 @@ export function getUploadPending ({ pending }, props) {
 
   return pendingUpload.type === type &&
     pendingUpload.id === id &&
-    pendingUpload.fileType === attachmentType
+    pendingUpload.attachmentType === attachmentType
 }
 
 // Action generators
@@ -149,7 +152,7 @@ export function getUploadPending ({ pending }, props) {
 export function uploadAttachment ({
   type, // this is the type of thing that the upload is for, e.g. post
   id = ID_FOR_NEW, // this is the id of the thing that the upload is for
-  fileType // this is the attachment type used to identify a related attachment manager
+  attachmentType // this is the attachment type used to identify a related attachment manager
 }) {
   const payload = new Promise((resolve, reject) => {
     uploadFile({
@@ -162,29 +165,29 @@ export function uploadAttachment ({
       }),
       cancel: () => resolve({}),
       failure: err => reject(err),
-      fileType
+      attachmentType
     })
   })
 
   return {
     type: UPLOAD_ATTACHMENT,
     payload,
-    meta: { type, id, fileType }
+    meta: { type, id, attachmentType }
   }
 }
 
 // -- UTILITY --
 
-export const makeAttachmentKey = (typeOrObject, objectId, fileType) => {
+export const makeAttachmentKey = (typeOrObject, objectId, attachmentType) => {
   let type, id
 
   if (typeof typeOrObject === 'object') {
-    [type, id, fileType] = [typeOrObject['type'], typeOrObject['id'], typeOrObject['fileType']]
+    [type, id, attachmentType] = [typeOrObject['type'], typeOrObject['id'], typeOrObject['attachmentType']]
   } else {
-    [type, id] = [typeOrObject, objectId, fileType]
+    [type, id] = [typeOrObject, objectId, attachmentType]
   }
 
   id = id || ID_FOR_NEW
 
-  return [type, id, fileType].join('-')
+  return [type, id, attachmentType].join('-')
 }

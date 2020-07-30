@@ -14,7 +14,7 @@ export function mapDispatchToProps (dispatch, {
   update
 }) {
   return {
-    upload: () => dispatch(uploadAttachment({ id, type, fileType: attachmentType }))
+    upload: () => dispatch(uploadAttachment({ id, type, attachmentType }))
       .then(({ payload, error }) => !error && payload.url && update(payload.url))
   }
 }

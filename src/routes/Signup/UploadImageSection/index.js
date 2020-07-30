@@ -1,18 +1,18 @@
 import React from 'react'
-import UploadFileButton from 'components/UploadFileButton'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { cameraSvg, loadingSvg } from 'util/assets'
 import { bgImageStyle } from 'util/index'
 import '../Signup.scss'
 
 export default function UploadImage ({ avatarUrl, currentUser, updateSettingDirectly, loading }) {
-  return <UploadFileButton
+  return <UploadAttachmentButton
     type='userAvatar'
     id={currentUser.id}
     attachmentType='image'
     update={updateSettingDirectly('avatarUrl')}
     styleName='change-avatar-button'>
     {uploadAvatar(currentUser, loading, avatarUrl)}
-  </UploadFileButton>
+  </UploadAttachmentButton>
 }
 
 export function uploadAvatar (currentUser, loading, avatarUrl) {
