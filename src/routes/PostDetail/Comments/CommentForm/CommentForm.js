@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { throttle } from 'lodash'
+import { pullAt, throttle } from 'lodash'
 import cx from 'classnames'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
+import { bgImageStyle } from 'util/index'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import AttachmentManager from 'components/AttachmentManager'
 import './CommentForm.scss'
 
 const { object, func, string } = PropTypes
@@ -19,6 +19,11 @@ export default class CommentForm extends Component {
     className: string,
     placeholderText: string
   }
+
+  state = {
+    attachmentUrls: []
+  }
+
   constructor (props) {
     super(props)
 
@@ -31,20 +36,46 @@ export default class CommentForm extends Component {
     }
   }, STARTED_TYPING_INTERVAL)
 
+  addAttachment = url => {
+    this.setState(prevState => ({
+      attachmentUrls: [
+        ...prevState.attachmentUrls,
+        url
+      ]
+    }))
+  }
+
+  removeAttachment = index => {
+    this.setState(prevState => ({
+      attachmentUrls: [
+        ...pullAt(index, prevState.attachmentUrls)
+      ]
+    }))
+  }
+
+  clearAttachments = () => {
+    this.setState(() => ({
+      attachments: []
+    }))
+  }
+
   save = text => {
+    const { attachmentUrls: imageUrls } = this.state
+
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
-    this.props.createComment({ text })
-    this.props.clearAttachments()
+    this.props.createComment({ text, imageUrls })
+    this.clearAttachments()
   }
 
   render () {
     const {
       currentUser,
-      addImage,
-      addFile,
       className
     } = this.props
+    const {
+      attachmentUrls
+    } = this.state
 
     if (!currentUser) return null
 
@@ -54,6 +85,17 @@ export default class CommentForm extends Component {
       styleName='commentForm'
       className={className}
       onClick={() => this.editor.current.focus()}>
+      <div>
+        {attachmentUrls.map((attachmentUrl, index) =>
+          <ImagePreview
+            url={attachmentUrl}
+            removeImage={this.removeAttachment}
+            switchImages={() => {}}
+            position={index}
+            key={index}
+          />
+        )}
+      </div>
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor
@@ -65,23 +107,28 @@ export default class CommentForm extends Component {
           submitOnReturnHandler={this.save} />
       </div>
       <div styleName='footer'>
-        <AttachmentManager type='comment' attachmentType='image' />
-        <AttachmentManager type='comment' attachmentType='file' />
         <UploadAttachmentButton
           type='comment'
           attachmentType='image'
-          onSuccess={addImage}>
-          <Icon name='AddImage'
-            styleName={cx('action-icon', { 'highlight-icon': true })} />
-        </UploadAttachmentButton>
-        <UploadAttachmentButton
-          type='comment'
-          attachmentType='file'
-          onSuccess={addFile}>
+          onSuccess={this.addAttachment}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
         </UploadAttachmentButton>
       </div>
     </div>
   }
+}
+
+export function ImagePreview ({
+  url,
+  removeImage,
+  position,
+  connectDragPreview
+}) {
+  return <div styleName='image-preview'>
+    <div style={bgImageStyle(url)} styleName='image'>
+      <Icon name='Ex' styleName='remove-image' onClick={() => removeImage(position)} />
+      {connectDragPreview && connectDragPreview(<div styleName='drag-preview' />)}
+    </div>
+  </div>
 }
