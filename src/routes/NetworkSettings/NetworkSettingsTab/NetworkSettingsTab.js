@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bgImageStyle } from 'util/index'
-import ChangeImageButton from 'components/ChangeImageButton'
+import UploadFileButton from 'components/UploadFileButton'
 import SettingsControl from 'components/SettingsControl'
 import '../NetworkSettings.scss'
 import Button from 'components/Button'
@@ -97,7 +97,7 @@ export default class NetworkSettingsTab extends Component {
     return <div>
       <input type='text' styleName='name' onChange={updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
-        <ChangeImageButton
+        <UploadFileButton
           id={network.id}
           type='networkBanner'
           attachmentType='image'
@@ -105,7 +105,7 @@ export default class NetworkSettingsTab extends Component {
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
-        <ChangeImageButton
+        <UploadFileButton
           id={network.id}
           type='networkAvatar'
           attachmentType='image'

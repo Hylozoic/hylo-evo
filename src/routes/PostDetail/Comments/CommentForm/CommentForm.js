@@ -6,7 +6,7 @@ import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
-import ChangeImageButton from 'components/ChangeImageButton'
+import UploadFileButton from 'components/UploadFileButton'
 import AttachmentManager from 'components/AttachmentManager'
 import './CommentForm.scss'
 
@@ -67,22 +67,22 @@ export default class CommentForm extends Component {
       <div styleName='footer'>
         <AttachmentManager type='comment' attachmentType='image' />
         <AttachmentManager type='comment' attachmentType='file' />
-        <ChangeImageButton
+        <UploadFileButton
           type='comment'
           id={'new'}
           attachmentType='image'
           update={addImage}>
           <Icon name='AddImage'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
-        </ChangeImageButton>
-        <ChangeImageButton
+        </UploadFileButton>
+        <UploadFileButton
           type='comment'
           id={'new'}
           attachmentType='file'
           update={addFile}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
-        </ChangeImageButton>
+        </UploadFileButton>
       </div>
     </div>
   }

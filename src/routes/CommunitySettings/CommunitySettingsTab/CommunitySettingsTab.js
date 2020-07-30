@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import './CommunitySettingsTab.scss'
 import Button from 'components/Button'
-import ChangeImageButton from 'components/ChangeImageButton'
+import UploadFileButton from 'components/UploadFileButton'
 import SettingsControl from 'components/SettingsControl'
 import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
@@ -131,7 +131,7 @@ export default class CommunitySettingsTab extends Component {
     return <div styleName='communitySettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
-        <ChangeImageButton
+        <UploadFileButton
           id={community.id}
           type='communityBanner'
           attachmentType='image'
@@ -139,7 +139,7 @@ export default class CommunitySettingsTab extends Component {
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
-        <ChangeImageButton
+        <UploadFileButton
           id={community.id}
           type='communityAvatar'
           attachmentType='image'

@@ -1,4 +1,4 @@
-import { mapStateToProps } from './ChangeImageButton.connector'
+import { mapStateToProps } from './UploadFileButton.connector'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 describe('mapStateToProps', () => {

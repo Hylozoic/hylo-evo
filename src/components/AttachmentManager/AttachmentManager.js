@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
-import ChangeImageButton from 'components/ChangeImageButton'
+import UploadFileButton from 'components/UploadFileButton'
 import { ID_FOR_NEW } from './AttachmentManager.store'
 import './AttachmentManager.scss'
 
@@ -55,13 +55,13 @@ export const ImageManager = DragDropContext(HTML5Backend)(
               position={i}
               key={i} />)}
           {pending && <div styleName='add-image'><Loading /></div>}
-          <ChangeImageButton
+          <UploadFileButton
             id={id}
             type={type}
             attachmentType={attachmentType}
             update={addAttachment}>
             <div styleName='add-image'>+</div>
-          </ChangeImageButton>
+          </UploadFileButton>
         </div>
       </div>
     }
@@ -121,7 +121,7 @@ export function FileManager ({
           position={i}
           key={i} />)}
       {pending && <div styleName='loading-file'>Loading...</div>}
-      <ChangeImageButton
+      <UploadFileButton
         id={id}
         type={type}
         attachmentType={attachmentType}
@@ -129,7 +129,7 @@ export function FileManager ({
         styleName='add-file-row'>
         <div styleName='add-file'>
           <span styleName='add-file-plus'>+</span> Add File</div>
-      </ChangeImageButton>
+      </UploadFileButton>
     </div>
   </div>
 }

@@ -39,7 +39,7 @@ describe('linkedinPrompt', () => {
 describe('AccountSettingsTab', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<AccountSettingsTab currentUser={{}} />)
-    expect(wrapper.find('Connect(ChangeImageButton)').length).toEqual(2)
+    expect(wrapper.find('Connect(UploadFileButton)').length).toEqual(2)
     expect(wrapper.find('SettingsControl').length).toEqual(5)
     expect(wrapper.find('SocialControl').length).toEqual(3)
     expect(wrapper.find('Button').prop('color')).toEqual('gray')

@@ -7,7 +7,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
   <div
     data-stylename="actions"
   >
-    <Connect(ChangeImageButton)
+    <Connect(UploadFileButton)
       id={1}
       type="post"
       update={[Function]}
@@ -16,8 +16,8 @@ exports[`ActionsBar matches last snapshot 1`] = `
         data-stylename="action-icon"
         name="AddImage"
       />
-    </Connect(ChangeImageButton)>
-    <Connect(ChangeImageButton)
+    </Connect(UploadFileButton)>
+    <Connect(UploadFileButton)
       attachmentType="file"
       id={1}
       type="post"
@@ -26,7 +26,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
         data-stylename="action-icon"
         name="Paperclip"
       />
-    </Connect(ChangeImageButton)>
+    </Connect(UploadFileButton)>
   </div>
   <Button
     color="green"
@@ -45,7 +45,7 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
   <div
     data-stylename="actions"
   >
-    <Connect(ChangeImageButton)
+    <Connect(UploadFileButton)
       id={1}
       type="post"
       update={[Function]}
@@ -54,8 +54,8 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
         data-stylename="action-icon"
         name="AddImage"
       />
-    </Connect(ChangeImageButton)>
-    <Connect(ChangeImageButton)
+    </Connect(UploadFileButton)>
+    <Connect(UploadFileButton)
       attachmentType="file"
       id={1}
       type="post"
@@ -64,7 +64,7 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
         data-stylename="action-icon"
         name="Paperclip"
       />
-    </Connect(ChangeImageButton)>
+    </Connect(UploadFileButton)>
   </div>
   <Button
     color="green"
