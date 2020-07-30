@@ -78,7 +78,7 @@ export default function reducer (state = defaultState, action) {
 
   const attachmentKey = get('attachmentKey', payload)
   const attachmentsForKey = getOr([], [attachmentKey], state)
-  
+
   switch (type) {
     case SET_ATTACHMENTS:
       const attachments = get('attachments', payload)
@@ -121,18 +121,15 @@ export const getAttachmentsFromObject = ormCreateSelector(
   orm,
   (state, _) => get('orm', state),
   (_, props) => props,
-  ({ Attachment }, { id = ID_FOR_NEW, type, attachmentType }) => {
-    console.log('!!!! in getAttachmentsFromObject -- id,type,attachemenType:', id, type, attachmentType)
-    return Attachment
-      .all()
-      .filter(({ type: at, ...rest }) =>
-        at === attachmentType &&
-        rest[type.toLowerCase()] === id
-      )
-      .orderBy('position')
-      .toModelArray()
-      .map(a => a.url)
-  }
+  ({ Attachment }, { id = ID_FOR_NEW, type, attachmentType }) => Attachment
+    .all()
+    .filter(({ type: at, ...rest }) =>
+      at === attachmentType &&
+      rest[type.toLowerCase()] === id
+    )
+    .orderBy('position')
+    .toModelArray()
+    .map(a => a.url)
 )
 
 export function getUploadPending ({ pending }, props) {
