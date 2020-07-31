@@ -14,23 +14,22 @@ const fromSources = [
   'imagesearch'
 ]
 
+export const ACCEPTED_MIME_TYPES = {
+  image: ['image/*'],
+  file: ['video/*', 'audio/*', 'application/*', 'text/*']
+}
+
 /*
  * options:
  *   success:  a success callback, which receives the new file's url as an argument
  *   failure:  a failure callback, which receives the error as an argument
  *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
  */
-export const uploadFile = function ({ success, cancel, failure, attachmentType }) {
-  const acceptedMimeTypes = {
-    image: ['image/*'],
-    file: ['video/*', 'audio/*', 'application/*', 'text/*']
-  }
-  const accept = attachmentType
-    ? acceptedMimeTypes[attachmentType]
-    : [...acceptedMimeTypes.image, ...acceptedMimeTypes.file]
+export const uploadFile = function ({ success, cancel, failure, accept }) {
+  const allAcceptedMimeTypes = [...ACCEPTED_MIME_TYPES.image, ...ACCEPTED_MIME_TYPES.file]
 
   filePicker.picker({
-    accept,
+    accept: accept || allAcceptedMimeTypes,
     fromSources,
     maxFiles: 1, // TODO: allow for more at once in PostEditor
     onFileUploadFinished: file => {
