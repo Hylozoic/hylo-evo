@@ -1,6 +1,5 @@
 import { filestackKey, isTest } from 'config'
 import * as filestack from 'filestack-js'
-import { cloneElement } from 'react'
 
 const filePicker = filestack.init(isTest ? 'dummykey' : filestackKey)
 
