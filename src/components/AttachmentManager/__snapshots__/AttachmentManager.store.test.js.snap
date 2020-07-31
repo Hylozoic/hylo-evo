@@ -3,7 +3,9 @@
 exports[`AttachmentManager store reducer when ADD_ATTACHMENT adds an attachment 1`] = `
 Object {
   "post-new-file": Array [
-    "bar.pdf",
+    Object {
+      "url": "bar.pdf",
+    },
   ],
 }
 `;

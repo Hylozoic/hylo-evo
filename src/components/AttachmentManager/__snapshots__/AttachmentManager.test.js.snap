@@ -68,7 +68,6 @@ exports[`FileManager matches last snapshot 1`] = `
         }
       }
       key="0"
-      position={0}
       removeFile={[Function]}
     />
     <FilePreview
@@ -81,7 +80,6 @@ exports[`FileManager matches last snapshot 1`] = `
         }
       }
       key="1"
-      position={1}
       removeFile={[Function]}
     />
     <FilePreview
@@ -93,7 +91,6 @@ exports[`FileManager matches last snapshot 1`] = `
         }
       }
       key="2"
-      position={2}
       removeFile={[Function]}
     />
     <div

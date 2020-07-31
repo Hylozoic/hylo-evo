@@ -2,7 +2,7 @@
 
 exports[`prepares a list of images for the component 1`] = `
 Object {
-  "imageUrl": "foo",
+  "firstImageUrl": "foo",
   "otherImageUrls": Array [
     "bar",
     "baz",

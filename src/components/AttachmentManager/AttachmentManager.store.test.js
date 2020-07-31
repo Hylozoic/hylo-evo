@@ -41,7 +41,7 @@ describe('AttachmentManager store', () => {
         type: ADD_ATTACHMENT,
         payload: {
           attachmentKey: 'post-new-file',
-          url: 'bar.pdf',
+          attachment: { url: 'bar.pdf' },
           position: 0
         }
       }

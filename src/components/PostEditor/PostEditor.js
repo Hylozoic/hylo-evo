@@ -332,8 +332,8 @@ export default class PostEditor extends React.Component {
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
-    const imageUrls = images.map(image => image.url)
-    const fileUrls = files.map(file => file.url)
+    const imageUrls = images && images.map(image => image.url)
+    const fileUrls = files && files.map(file => file.url)
     const postToSave = {
       id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }

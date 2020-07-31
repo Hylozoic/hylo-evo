@@ -3,11 +3,10 @@
 describe('uploadAttachment', () => {
   const url = 'http://filepicker.io/hfwoe/eh98e'
   const filename = 'foo.jpg'
-  const mimetype = 'image/jpeg'
   const opts = { type: 'userAvatar', id: 3, attachmentType: 'image' }
   
   it('returns an API action after filepicker succeeds', () => {
-    const uploadAttachment = setupUploadAttachment(true, { url, filename, mimetype })
+    const uploadAttachment = setupUploadAttachment(true, { url, filename })
     const action = uploadAttachment(opts)
   
     expect(action).toEqual({
@@ -20,7 +19,7 @@ describe('uploadAttachment', () => {
       api: {
         method: 'post',
         path: '/noo/upload',
-        params: { url, id: 3, type: 'userAvatar', filename, mimetype }
+        params: { url, id: 3, type: 'userAvatar', filename }
       }
     })
   })
