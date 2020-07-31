@@ -9,7 +9,7 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, {
-  id = ID_FOR_NEW,
+  id,
   type,
   attachmentType,
   onSuccess
