@@ -10,13 +10,20 @@ export default function uploadAttachment ({
 }) {
   const payload = new Promise((resolve, reject) => {
     uploadFile({
-      success: (url, filename) => resolve({
-        api: {
-          method: 'post',
-          path: '/noo/upload',
-          params: { type, id, url, filename }
-        }
-      }),
+      success: ({ url, filename }) => {
+        return resolve({
+          api: {
+            method: 'post',
+            path: '/noo/upload',
+            params: {
+              type,
+              id,
+              url,
+              filename
+            }
+          }
+        })
+      },
       cancel: () => resolve({}),
       failure: err => reject(err),
       attachmentType

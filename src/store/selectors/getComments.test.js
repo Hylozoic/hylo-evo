@@ -90,7 +90,7 @@ describe('getComments', () => {
     const comments = getComments(state, { postId: 1 })
     expect(comments.length).toEqual(2)
     expect(comments.map(c => c.text)).toEqual(['eleven', 'twelve'])
-    expect(comments.map(c => c.image.url)).toEqual(['foo.png', 'bar.png'])
+    expect(comments.map(c => c.attachments.map(a => a.url))).toEqual([['foo.png'], ['bar.png']])
   })
 
   it('returns comments for post, ordered by id', () => {

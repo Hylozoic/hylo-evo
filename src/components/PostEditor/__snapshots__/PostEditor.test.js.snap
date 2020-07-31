@@ -10,7 +10,6 @@ exports[`ActionsBar matches last snapshot 1`] = `
     <Connect(UploadAttachmentButton)
       attachmentType="image"
       id={1}
-      onSuccess={[Function]}
       type="post"
     >
       <Icon
@@ -49,7 +48,6 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
     <Connect(UploadAttachmentButton)
       attachmentType="image"
       id={1}
-      onSuccess={[Function]}
       type="post"
     >
       <Icon

@@ -6,8 +6,7 @@ import CreateCommentMutation from 'graphql/mutations/CreateCommentMutation.graph
 export default function createComment ({
   postId,
   text,
-  imageUrls = [],
-  fileUrls = []
+  attachments
 }) {
   return {
     type: CREATE_COMMENT,
@@ -16,8 +15,7 @@ export default function createComment ({
       variables: {
         postId,
         text,
-        imageUrls,
-        fileUrls
+        attachments
       }
     },
     meta: {
@@ -26,6 +24,7 @@ export default function createComment ({
       tempId: uniqueId(`post${postId}_`),
       postId,
       text,
+      attachments,
       analytics: AnalyticsEvents.COMMENT_CREATED
     }
   }

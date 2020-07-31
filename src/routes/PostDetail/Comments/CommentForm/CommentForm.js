@@ -21,7 +21,7 @@ export default class CommentForm extends Component {
   }
 
   state = {
-    attachmentUrls: []
+    attachments: []
   }
 
   constructor (props) {
@@ -36,19 +36,20 @@ export default class CommentForm extends Component {
     }
   }, STARTED_TYPING_INTERVAL)
 
-  addAttachment = url => {
+  addAttachment = attachment => {
+    console.log('!!!! attachment', attachment)
     this.setState(prevState => ({
-      attachmentUrls: [
-        ...prevState.attachmentUrls,
-        url
+      attachments: [
+        ...prevState.attachments,
+        attachment
       ]
     }))
   }
 
   removeAttachment = index => {
     this.setState(prevState => ({
-      attachmentUrls: [
-        ...pullAt(index, prevState.attachmentUrls)
+      attachments: [
+        ...pullAt(index, prevState.attachments)
       ]
     }))
   }
@@ -60,22 +61,17 @@ export default class CommentForm extends Component {
   }
 
   save = text => {
-    const { attachmentUrls: imageUrls } = this.state
+    const attachments = this.state.attachments
 
     this.startTyping.cancel()
     this.props.sendIsTyping(false)
-    this.props.createComment({ text, imageUrls })
+    this.props.createComment({ text, attachments })
     this.clearAttachments()
   }
 
   render () {
-    const {
-      currentUser,
-      className
-    } = this.props
-    const {
-      attachmentUrls
-    } = this.state
+    const { currentUser, className } = this.props
+    const { attachments } = this.state
 
     if (!currentUser) return null
 
@@ -86,9 +82,9 @@ export default class CommentForm extends Component {
       className={className}
       onClick={() => this.editor.current.focus()}>
       <div>
-        {attachmentUrls.map((attachmentUrl, index) =>
+        {attachments && attachments.map(({ url }, index) =>
           <ImagePreview
-            url={attachmentUrl}
+            url={url}
             removeImage={this.removeAttachment}
             switchImages={() => {}}
             position={index}
@@ -107,10 +103,7 @@ export default class CommentForm extends Component {
           submitOnReturnHandler={this.save} />
       </div>
       <div styleName='footer'>
-        <UploadAttachmentButton
-          type='comment'
-          attachmentType='image'
-          onSuccess={this.addAttachment}>
+        <UploadAttachmentButton type='comment' onSuccess={this.addAttachment}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
         </UploadAttachmentButton>

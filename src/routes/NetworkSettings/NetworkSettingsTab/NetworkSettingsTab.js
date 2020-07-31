@@ -100,16 +100,14 @@ export default class NetworkSettingsTab extends Component {
         <UploadAttachmentButton
           type='networkBanner'
           id={network.id}
-          attachmentType='image'
-          onSuccess={updateSettingDirectly('bannerUrl')}
+          onSuccess={({ url }) => updateSettingDirectly('bannerUrl')(url)}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <UploadAttachmentButton
           type='networkAvatar'
           id={network.id}
-          attachmentType='image'
-          onSuccess={updateSettingDirectly('avatarUrl')}
+          onSuccess={({ url }) => updateSettingDirectly('avatarUrl')(url)}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={updateSetting('description')} value={description} type='textarea' />

@@ -27,7 +27,10 @@ describe('ImageManager', () => {
       type: 'post',
       showAttachments: true,
       pending: true,
-      attachments: ['foo.png', 'bar.jpg'],
+      attachments: [
+        { url: 'https://nowhere/foo.png', type: 'image', id: 'new', filename: 'foo.png' },
+        { url: 'https://nowhere/bar.jpg', mimetype: 'image/jpeg', id: 'new', filename: 'bar.jpg' }
+      ],
       addAttachment: () => {},
       removeAttachment: () => {},
       switchAttachments: () => {}
@@ -40,7 +43,13 @@ describe('ImageManager', () => {
 describe('ImagePreview', () => {
   it('matches last snapshot', () => {
     const props = {
-      url: 'foo.zng',
+      attachment: { url: 'https://nowhere/foo.zng', type: 'file', id: 'new', filename: 'foo.zng' },
+      attachments: [
+        { url: 'https://nowhere/foo.png', type: 'image', id: 'new', filename: 'foo.png' },
+        { url: 'https://nowhere/foo.png', mimetype: 'image/jpeg', id: 'new', filename: 'foo.png' }
+      ],
+
+
       position: 1,
       connectDragSource: i => i,
       connectDragPreview: i => i,
@@ -59,7 +68,11 @@ describe('FileManager', () => {
       type: 'post',
       showAttachments: true,
       pending: true,
-      attachments: ['foo.pdf', 'bar.zip'],
+      attachments: [
+        { url: 'https://nowhere/foo.pdf', type: 'file', id: 'new', filename: 'foo.pdf' },
+        { url: 'https://nowhere/bar.zip', mimetype: 'file/somefiletype', id: 'new', filename: 'bar.zip' },
+        { url: 'https://nowhere/bar.zip', id: 'new', filename: 'bar.zip' }
+      ],
       addAttachment: () => {},
       removeAttachment: () => {}
     }
@@ -71,10 +84,10 @@ describe('FileManager', () => {
 describe('FilePreview', () => {
   it('matches last snapshot', () => {
     const props = {
-      url: 'foo.pdf',
+      attachment: { url: 'https://nowhere/foo.pdf', type: 'file', id: 'new', filename: 'foo.pdf' },
       position: 1,
       fileSize: '23.3mb',
-      removeImage: () => {}
+      removeFile: () => {}
     }
     const wrapper = shallow(<FilePreview {...props} />)
     expect(wrapper).toMatchSnapshot()

@@ -29,16 +29,17 @@ exports[`Comment displays an image 1`] = `
       </span>
     </div>
   </div>
-  <a
-    data-stylename="imageLink"
-    href="foo.png"
-    target="_blank"
-  >
-    <img
-      data-stylename="image"
-      src="foo.png"
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
     />
-  </a>
+  </Connect(ClickCatcher)>
 </div>
 `;
 

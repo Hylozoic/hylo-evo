@@ -332,8 +332,10 @@ export default class PostEditor extends React.Component {
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
+    const imageUrls = images.map(image => image.url)
+    const fileUrls = files.map(file => file.url)
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
+      id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -359,8 +361,8 @@ export default class PostEditor extends React.Component {
     const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
     const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationObject } = post
     const {
-      onClose, currentUser, communityOptions, loading, addImage,
-      showImages, addFile, showFiles, setAnnouncement, announcementSelected,
+      onClose, currentUser, communityOptions, loading, addAttachment,
+      showImages, showFiles, setAnnouncement, announcementSelected,
       canModerate, myModeratedCommunities, isProject, isEvent
     } = this.props
 
@@ -494,9 +496,8 @@ export default class PostEditor extends React.Component {
         </div>}
         <ActionsBar
           id={id}
-          addImage={addImage}
+          addAttachment={addAttachment}
           showImages={showImages}
-          addFile={addFile}
           showFiles={showFiles}
           valid={valid}
           loading={loading}
@@ -518,9 +519,8 @@ export default class PostEditor extends React.Component {
 
 export function ActionsBar ({
   id,
-  addImage,
+  addAttachment,
   showImages,
-  addFile,
   showFiles,
   valid,
   loading,
@@ -541,7 +541,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='image'
-        onSuccess={addImage}
+        onSuccess={addAttachment}
         disable={showImages}>
         <Icon
           name='AddImage'
@@ -552,7 +552,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='file'
-        onSuccess={addFile}
+        onSuccess={addAttachment}
         disable={showFiles}>
         <Icon
           name='Paperclip'

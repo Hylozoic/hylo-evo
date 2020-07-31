@@ -3,17 +3,17 @@ import { isEmpty } from 'lodash/fp'
 import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 
 export function mapStateToProps (state, props) {
-  const imageUrls = getAttachmentsFromObject(state, {
+  const imageAttachments = getAttachmentsFromObject(state, {
     type: 'post',
     id: props.postId,
     attachmentType: 'image'
   })
 
-  if (isEmpty(imageUrls)) return {}
+  if (isEmpty(imageAttachments)) return {}
 
   return {
-    imageUrl: imageUrls[0],
-    otherImageUrls: imageUrls.slice(1)
+    firstImageUrl: imageAttachments[0].url,
+    otherImageUrls: imageAttachments.slice(1).map(ia => ia.url)
   }
 }
 

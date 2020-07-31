@@ -1,14 +1,12 @@
 mutation CreateCommentMutation (
   $postId: String,
   $text: String
-  $imageUrls: [String],
-  $fileUrls: [String]
+  $attachments: [AttachmentInput]
 ) {
   createComment(data: {
     postId: $postId,
     text: $text
-    imageUrls: $imageUrls,
-    fileUrls: $fileUrls  
+    attachments: $attachments
   }) {
     id
     text

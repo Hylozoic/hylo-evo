@@ -15,10 +15,10 @@ export function mapDispatchToProps (dispatch, {
   onSuccess
 }) {
   return {
-    uploadAttachment: () => dispatch(uploadAttachment({ id, type, attachmentType }))
+    uploadAttachment: () => dispatch(uploadAttachment({ type, id, attachmentType }))
       .then(({ payload, error }) => {
-        if (!error && payload.url) {
-          return onSuccess(payload.url)
+        if (!error && payload) {
+          return onSuccess(payload)
         }
       })
   }

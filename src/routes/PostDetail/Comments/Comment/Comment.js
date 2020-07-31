@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './Comment.scss'
 import { Link } from 'react-router-dom'
+import { filter, isFunction } from 'lodash'
+import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
-import { personUrl } from 'util/navigation'
-import { humanDate, present, sanitize } from 'hylo-utils/text'
-import { filter, isFunction } from 'lodash'
+import { ImagePreview } from 'routes/PostDetail/Comments/CommentForm/CommentForm'
+import { FilePreview } from 'components/AttachmentManager/AttachmentManager'
+import './Comment.scss'
 
 const { object } = PropTypes
 
@@ -34,7 +36,7 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, isCreator, deleteComment, removeComment } = this.props
     const { editing } = this.state
-    const { creator, createdAt, text, image } = comment
+    const { creator, createdAt, text, attachments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
     const dropdownItems = filter([
@@ -58,10 +60,16 @@ export default class Comment extends Component {
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
-      {image && <a styleName='imageLink' href={image.url} target='_blank'>
-        <img src={image.url} styleName='image' />
-      </a>}
-      {!image && <ClickCatcher>
+      {attachments && attachments.map((attachment, i) => {
+        if (attachment.type === 'image') {
+          return <a styleName='imageLink' href={attachment.url} target='_blank' key={i}>
+            <img src={attachment.url} styleName='image' />
+          </a>
+        } else {
+          return <FilePreview attachment={attachment} position={i} key={i} />
+        }
+      })}
+      <ClickCatcher>
         {editing && <HyloEditor
           styleName='editor'
           onChange={this.startTyping}
@@ -69,7 +77,7 @@ export default class Comment extends Component {
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
-      </ClickCatcher>}
+      </ClickCatcher>
     </div>
   }
 }

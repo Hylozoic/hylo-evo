@@ -8,8 +8,7 @@ export default function UploadImage ({ avatarUrl, currentUser, updateSettingDire
   return <UploadAttachmentButton
     type='userAvatar'
     id={currentUser.id}
-    attachmentType='image'
-    onSuccess={updateSettingDirectly('avatarUrl')}
+    onSuccess={({ url }) => updateSettingDirectly('avatarUrl')(url)}
     styleName='change-avatar-button'>
     {uploadAvatar(currentUser, loading, avatarUrl)}
   </UploadAttachmentButton>

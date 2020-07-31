@@ -47,10 +47,10 @@ export const ImageManager = DragDropContext(HTML5Backend)(
       return <div styleName='image-manager'>
         <div styleName='section-label'>Images</div>
         <div styleName='image-previews'>
-          {attachments.map((url, i) =>
+          {attachments.map((attachment, i) =>
             <ImagePreview
-              url={url}
-              removeImage={removeAttachment}
+              attachment={attachment}
+              removeImage={() => removeAttachment(attachment, i)}
               switchImages={switchAttachments}
               position={i}
               key={i} />)}
@@ -94,12 +94,12 @@ export const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (conn
     class ImagePreview extends React.Component {
       render () {
         const {
-          url, removeImage, connectDragSource, connectDragPreview, connectDropTarget, position
+          attachment, removeImage, connectDragSource, connectDragPreview, connectDropTarget
         } = this.props
 
         return connectDropTarget(connectDragSource(<div styleName='image-preview'>
-          <div style={bgImageStyle(url)} styleName='image'>
-            <Icon name='Ex' styleName='remove-image' onClick={() => removeImage(position)} />
+          <div style={bgImageStyle(attachment.url)} styleName='image'>
+            <Icon name='Ex' styleName='remove-image' onClick={removeImage} />
             {connectDragPreview(<div styleName='drag-preview' />)}
           </div>
         </div>))
@@ -114,11 +114,10 @@ export function FileManager ({
   return <div styleName='file-manager'>
     <div styleName='section-label'>Files</div>
     <div styleName='file-previews'>
-      {attachments.map((url, i) =>
+      {attachments.map((attachment, i) =>
         <FilePreview
-          url={url}
-          removeFile={removeAttachment}
-          position={i}
+          attachment={attachment}
+          removeFile={() => removeAttachment(attachment, i)}
           key={i} />)}
       {pending && <div styleName='loading-file'>Loading...</div>}
       <UploadAttachmentButton
@@ -134,12 +133,12 @@ export function FileManager ({
   </div>
 }
 
-export function FilePreview ({ url, position, removeFile, fileSize }) {
-  const name = path.basename(url)
+export function FilePreview ({ attachment, removeFile, fileSize }) {
+  const name = path.basename(attachment.url)
   return <div styleName='file-preview'>
     <Icon name='Document' styleName='icon-document' />
     <div styleName='file-name'>{decodeURIComponent(name)}</div>
     {fileSize && <div styleName='file-size'>{fileSize}</div>}
-    <Icon name='Ex' styleName='remove-file' onClick={() => removeFile(position)} />
+    {removeFile && <Icon name='Ex' styleName='remove-file' onClick={removeFile} />}
   </div>
 }

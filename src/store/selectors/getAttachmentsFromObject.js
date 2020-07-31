@@ -14,8 +14,13 @@ const getAttachmentsFromObject = ormCreateSelector(
       rest[type.toLowerCase()] === id
     )
     .orderBy('position')
-    .toModelArray()
-    .map(a => a.url)
+    .toRefArray()
+    .map(({ url }) => ({
+      type,
+      id,
+      url,
+      attachmentType
+    }))
 )
 
 export default getAttachmentsFromObject

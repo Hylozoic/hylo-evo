@@ -1,5 +1,6 @@
 import { filestackKey, isTest } from 'config'
 import * as filestack from 'filestack-js'
+import { cloneElement } from 'react'
 
 const filePicker = filestack.init(isTest ? 'dummykey' : filestackKey)
 
@@ -21,21 +22,23 @@ const fromSources = [
  *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
  */
 export const uploadFile = function ({ success, cancel, failure, attachmentType }) {
-  const acceptedTypes = {
+  const acceptedMimeTypes = {
     image: ['image/*'],
     file: ['video/*', 'audio/*', 'application/*', 'text/*']
   }
   const accept = attachmentType
-    ? acceptedTypes[attachmentType]
-    : [...acceptedTypes.image, ...acceptedTypes.file]
-    
+    ? acceptedMimeTypes[attachmentType]
+    : [...acceptedMimeTypes.image, ...acceptedMimeTypes.file]
+
   filePicker.picker({
     accept,
     fromSources,
     maxFiles: 1, // TODO: allow for more at once in PostEditor
     onFileUploadFinished: file => {
-      const url = 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle
-      success(url, file.filename)
+      let url = file.mimetype.split('/')[0] === 'image'
+        ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle
+        : file.url
+      success({ ...file, url })
     },
     onFileUploadFailed: failure,
     onCancel: cancel

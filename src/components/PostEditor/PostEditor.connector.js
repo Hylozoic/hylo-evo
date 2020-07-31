@@ -111,7 +111,7 @@ export const mapDispatchToProps = (dispatch, props) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext, editingPostId
+    fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
@@ -128,10 +128,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     dispatchProps.createPost({ networkSlug, ...postParams })
   const createProject = projectParams =>
     dispatchProps.createProject({ networkSlug, ...projectParams })
-  const addImage = url =>
-    dispatchProps.addAttachment('post', editingPostId, 'image', url)
-  const addFile = url =>
-    dispatchProps.addAttachment('post', editingPostId, 'file', url)
 
   return {
     ...stateProps,
@@ -140,9 +136,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     goToPost,
     pollingFetchLinkPreview,
     createPost,
-    createProject,
-    addImage,
-    addFile
+    createProject
   }
 }
 

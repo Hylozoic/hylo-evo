@@ -3,10 +3,11 @@
 describe('uploadAttachment', () => {
   const url = 'http://filepicker.io/hfwoe/eh98e'
   const filename = 'foo.jpg'
+  const mimetype = 'image/jpeg'
   const opts = { type: 'userAvatar', id: 3, attachmentType: 'image' }
   
   it('returns an API action after filepicker succeeds', () => {
-    const uploadAttachment = setupUploadAttachment(true, [url, filename])
+    const uploadAttachment = setupUploadAttachment(true, { url, filename, mimetype })
     const action = uploadAttachment(opts)
   
     expect(action).toEqual({
@@ -19,13 +20,13 @@ describe('uploadAttachment', () => {
       api: {
         method: 'post',
         path: '/noo/upload',
-        params: { url, id: 3, type: 'userAvatar', filename }
+        params: { url, id: 3, type: 'userAvatar', filename, mimetype }
       }
     })
   })
   
   it('rejects when picker fails', () => {
-    const uploadAttachment = setupUploadAttachment(false, [new Error('nope')])
+    const uploadAttachment = setupUploadAttachment(false, new Error('nope'))
     return expect(uploadAttachment(opts).payload).rejects.toEqual(new Error('nope'))
   })
 })
@@ -35,9 +36,9 @@ function setupUploadAttachment (shouldSucceed, callbackArgs) {
 
   jest.doMock('client/filepicker', () => {
     if (shouldSucceed) {
-      return { uploadFile: opts => opts.success(...callbackArgs) }
+      return { uploadFile: opts => opts.success(callbackArgs) }
     } else {
-      return { uploadFile: opts => opts.failure(...callbackArgs) }
+      return { uploadFile: opts => opts.failure(callbackArgs) }
     }
   })
 

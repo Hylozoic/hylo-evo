@@ -118,16 +118,14 @@ export default class AccountSettingsTab extends Component {
         <UploadAttachmentButton
           type='userBanner'
           id={currentUser.id}
-          attachmentType='image'
-          onSuccess={this.updateSettingDirectly('bannerUrl')}
+          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <UploadAttachmentButton
           type='userAvatar'
           id={currentUser.id}
-          attachmentType='image'
-          onSuccess={this.updateSettingDirectly('avatarUrl')}
+          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />

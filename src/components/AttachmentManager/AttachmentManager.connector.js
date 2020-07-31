@@ -15,6 +15,7 @@ export function mapStateToProps (state, props) {
   const attachments = getAttachments(state, props)
   const attachmentsFromObject = getAttachmentsFromObject(state, props)
   const showAttachments = !isEmpty(attachments) || pending // last clause is for testing only
+
   return {
     pending,
     attachments,
@@ -38,8 +39,8 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    addAttachment: url => addAttachment(type, id, attachmentType, url),
-    removeAttachment: position => removeAttachment(type, id, attachmentType, position),
+    addAttachment: attachment => addAttachment(attachment),
+    removeAttachment: (attachment, position) => removeAttachment(attachment, position),
     switchAttachments: (position1, position2) => switchAttachments(type, id, attachmentType, position1, position2),
     loadAttachments: () => setAttachments(type, id, attachmentType, attachmentsFromObject),
     clearAttachments: () => setAttachments(type, id, attachmentType, [])

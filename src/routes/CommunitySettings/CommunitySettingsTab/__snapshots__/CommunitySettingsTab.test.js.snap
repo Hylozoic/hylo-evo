@@ -19,7 +19,6 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     }
   >
     <Connect(UploadAttachmentButton)
-      attachmentType="image"
       data-stylename="change-banner-button"
       id={1}
       onSuccess={[Function]}
@@ -35,7 +34,6 @@ exports[`CommunitySettingsTab renders correctly 1`] = `
     }
   >
     <Connect(UploadAttachmentButton)
-      attachmentType="image"
       data-stylename="change-avatar-button"
       id={1}
       onSuccess={[Function]}

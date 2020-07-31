@@ -134,16 +134,14 @@ export default class CommunitySettingsTab extends Component {
         <UploadAttachmentButton
           type='communityBanner'
           id={community.id}
-          attachmentType='image'
-          onSuccess={this.updateSettingDirectly('bannerUrl')}
+          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
         <UploadAttachmentButton
           type='communityAvatar'
           id={community.id}
-          attachmentType='image'
-          onSuccess={this.updateSettingDirectly('avatarUrl')}
+          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />

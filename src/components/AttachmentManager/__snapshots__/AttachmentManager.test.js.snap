@@ -59,16 +59,42 @@ exports[`FileManager matches last snapshot 1`] = `
     data-stylename="file-previews"
   >
     <FilePreview
+      attachment={
+        Object {
+          "filename": "foo.pdf",
+          "id": "new",
+          "type": "file",
+          "url": "https://nowhere/foo.pdf",
+        }
+      }
       key="0"
       position={0}
       removeFile={[Function]}
-      url="foo.pdf"
     />
     <FilePreview
+      attachment={
+        Object {
+          "filename": "bar.zip",
+          "id": "new",
+          "mimetype": "file/somefiletype",
+          "url": "https://nowhere/bar.zip",
+        }
+      }
       key="1"
       position={1}
       removeFile={[Function]}
-      url="bar.zip"
+    />
+    <FilePreview
+      attachment={
+        Object {
+          "filename": "bar.zip",
+          "id": "new",
+          "url": "https://nowhere/bar.zip",
+        }
+      }
+      key="2"
+      position={2}
+      removeFile={[Function]}
     />
     <div
       data-stylename="loading-file"
@@ -135,18 +161,32 @@ exports[`ImageManager matches last snapshot 1`] = `
     data-stylename="image-previews"
   >
     <DropTarget(DragSource(ImagePreview))
+      attachment={
+        Object {
+          "filename": "foo.png",
+          "id": "new",
+          "type": "image",
+          "url": "https://nowhere/foo.png",
+        }
+      }
       key="0"
       position={0}
       removeImage={[Function]}
       switchImages={[Function]}
-      url="foo.png"
     />
     <DropTarget(DragSource(ImagePreview))
+      attachment={
+        Object {
+          "filename": "bar.jpg",
+          "id": "new",
+          "mimetype": "image/jpeg",
+          "url": "https://nowhere/bar.jpg",
+        }
+      }
       key="1"
       position={1}
       removeImage={[Function]}
       switchImages={[Function]}
-      url="bar.jpg"
     />
     <div
       data-stylename="add-image"
@@ -176,7 +216,7 @@ exports[`ImagePreview matches last snapshot 1`] = `
     data-stylename="image"
     style={
       Object {
-        "backgroundImage": "url(foo.zng)",
+        "backgroundImage": "url(https://nowhere/foo.zng)",
       }
     }
   >

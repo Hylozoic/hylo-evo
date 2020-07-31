@@ -18,27 +18,27 @@ export function setAttachments (type, id, attachmentType, attachments) {
   return {
     type: SET_ATTACHMENTS,
     payload: {
-      attachmentKey: makeAttachmentKey(type, id, attachmentType),
+      attachmentKey: makeAttachmentKey({ type, id, attachmentType }),
       attachments
     }
   }
 }
 
-export function addAttachment (type, id, attachmentType, url) {
+export function addAttachment (attachment) {
   return {
     type: ADD_ATTACHMENT,
     payload: {
-      attachmentKey: makeAttachmentKey(type, id, attachmentType),
-      url
+      attachmentKey: makeAttachmentKey(attachment),
+      attachment
     }
   }
 }
 
-export function removeAttachment (type, id, attachmentType, position) {
+export function removeAttachment (attachment, position) {
   return {
     type: REMOVE_ATTACHMENT,
     payload: {
-      attachmentKey: makeAttachmentKey(type, id, attachmentType),
+      attachmentKey: makeAttachmentKey(attachment),
       position
     }
   }
@@ -89,7 +89,7 @@ export default function reducer (state = defaultState, action) {
         ...state,
         [attachmentKey]: [
           ...attachmentsForKey,
-          payload.url
+          payload.attachment
         ]
       }
     case REMOVE_ATTACHMENT:
@@ -113,13 +113,16 @@ export default function reducer (state = defaultState, action) {
 
 // -- UTILITY --
 
-export const makeAttachmentKey = (typeOrObject, objectId, attachmentType) => {
-  let type, id
+export const makeAttachmentKey = (typeOrObject, objectId, providedAttachmentType) => {
+  let type, id, attachmentType
 
-  if (typeof typeOrObject === 'object') {
-    [type, id, attachmentType] = [typeOrObject['type'], typeOrObject['id'], typeOrObject['attachmentType']]
+  if (typeof typeOrObject !== 'object') {
+    [type, id, attachmentType] = [typeOrObject, objectId, providedAttachmentType]
   } else {
-    [type, id] = [typeOrObject, objectId, attachmentType]
+    [type, id] = [typeOrObject['type'], typeOrObject['id']]
+    attachmentType = typeOrObject['attachmentType']
+      ? typeOrObject['attachmentType']
+      : 'file'
   }
 
   id = id || ID_FOR_NEW

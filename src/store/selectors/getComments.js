@@ -1,8 +1,8 @@
-import { FETCH_COMMENTS } from 'store/constants'
-import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
-import { makeGetQueryResults } from 'store/reducers/queryResults'
+import { get } from 'lodash/fp'
 import orm from 'store/models'
+import { FETCH_COMMENTS } from 'store/constants'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const getComments = createSelector(
   state => orm.session(state.orm),
@@ -18,7 +18,7 @@ export const getComments = createSelector(
       .map(comment => ({
         ...comment.ref,
         creator: comment.creator,
-        image: comment.attachments.toModelArray()[0]
+        attachments: comment.attachments.toRefArray()
       }))
   }
 )
