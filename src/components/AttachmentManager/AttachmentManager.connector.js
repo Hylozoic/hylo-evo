@@ -4,7 +4,7 @@ import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 
 export function mapStateToProps (state, props) {
   return {
-    uploading: getUploadPending(state, props),
+    uploadPending: getUploadPending(state, props),
     attachmentsFromObject: getAttachmentsFromObject(state, props)
   }
 }

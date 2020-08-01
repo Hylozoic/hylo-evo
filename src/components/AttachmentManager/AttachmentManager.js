@@ -15,6 +15,10 @@ export default class AttachmentManager extends React.Component {
     attachments: []
   }
 
+  defaultProps = {
+    id: ID_FOR_NEW
+  }
+
   componentDidMount () {
     this.loadAttachments()
   }
@@ -62,7 +66,7 @@ export default class AttachmentManager extends React.Component {
     if (!showAttachments) return null
 
     return <React.Fragment>
-      {attachmentType === 'image' &&
+      {(!attachmentType || attachmentType === 'image') &&
         <ImageManager
           {...this.props}
           attachments={attachments}
@@ -78,10 +82,6 @@ export default class AttachmentManager extends React.Component {
         />}
     </React.Fragment>
   }
-}
-
-AttachmentManager.defaultProps = {
-  id: ID_FOR_NEW
 }
 
 export const ImageManager = DragDropContext(HTML5Backend)(
