@@ -22,10 +22,6 @@ import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import getUploadPending from 'store/selectors/getUploadPending'
 import {
-  addAttachment,
-  getAttachments
-} from 'components/AttachmentManager/AttachmentManager.store'
-import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
   pollingFetchLinkPreview,
@@ -46,14 +42,12 @@ export function mapStateToProps (state, props) {
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
   const uploadAttachmentPending = getUploadPending(state)
+  const uploadFileAttachmentPending = getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
+  const uploadImageAttachmentPending = getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
   const editing = !!post || loading
   const editingPostId = getRouteParam('postId', state, props)
-  const images = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
-  const files = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
-  const showFiles = !isEmpty(files) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
-  const showImages = !isEmpty(images) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const communitySlug = getRouteParam('slug', null, props)
   const networkSlug = getRouteParam('networkSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
@@ -79,17 +73,15 @@ export function mapStateToProps (state, props) {
     linkPreview,
     linkPreviewStatus,
     fetchLinkPreviewPending,
-    showImages,
-    showFiles,
-    images,
-    files,
     topic,
     topicName,
     communitySlug,
     networkSlug,
     announcementSelected,
     canModerate,
-    myModeratedCommunities
+    myModeratedCommunities,
+    uploadFileAttachmentPending,
+    uploadImageAttachmentPending
   }
 }
 
@@ -103,8 +95,7 @@ export const mapDispatchToProps = (dispatch, props) => {
       clearLinkPreview,
       updatePost,
       createPost,
-      createProject,
-      addAttachment
+      createProject
     }, dispatch)
   }
 }

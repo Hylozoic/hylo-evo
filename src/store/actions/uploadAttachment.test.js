@@ -35,9 +35,9 @@ function setupUploadAttachment (shouldSucceed, callbackArgs) {
 
   jest.doMock('client/filepicker', () => {
     if (shouldSucceed) {
-      return { uploadFile: opts => opts.success(callbackArgs) }
+      return { uploadFile: opts => opts.success(callbackArgs), ACCEPTED_MIME_TYPES: {} }
     } else {
-      return { uploadFile: opts => opts.failure(callbackArgs) }
+      return { uploadFile: opts => opts.failure(callbackArgs), ACCEPTED_MIME_TYPES: {} }
     }
   })
 

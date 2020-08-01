@@ -20,7 +20,6 @@ import Members from 'routes/Members/Members.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
-import AttachmentManager from 'components/AttachmentManager/AttachmentManager.store'
 import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
 import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
@@ -50,7 +49,6 @@ export const combinedReducers = combineReducers({
   // generator-marker-local-store-reducer
   AllTopics,
   AuthRoute,
-  AttachmentManager,
   CreateCommunity,
   CreateTopic,
   FeedList,

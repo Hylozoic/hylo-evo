@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { get, isEqual, throttle } from 'lodash/fp'
+import { get, isEqual, isEmpty, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
@@ -118,6 +118,8 @@ export default class PostEditor extends React.Component {
     this.editor = React.createRef()
     this.communitiesSelector = React.createRef()
     this.topicSelector = React.createRef()
+    this.imagesAttachmentManager = React.createRef()
+    this.filesAttachmentManager = React.createRef()
   }
 
   componentDidMount () {
@@ -323,17 +325,23 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const {
-      editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
+      editing, createPost, createProject, updatePost, onClose,
+      goToPost, setAnnouncement, announcementSelected, isProject
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId, isPublic
+      id, type, title, communities, linkPreview, members,
+      acceptContributions, eventInvitations, startTime,
+      endTime, location, locationId, isPublic
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
-    const imageUrls = images && images.map(image => image.url)
-    const fileUrls = files && files.map(file => file.url)
+    const imageAttachments = this.getImageAttachments()
+    const fileAttachments = this.getFileAttachments()
+    const imageUrls = imageAttachments && imageAttachments.map(attachment => attachment.url)
+    const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
+
     const postToSave = {
       id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
@@ -357,20 +365,37 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  addImageAttachment = attachment => this.imagesAttachmentManager.current.addAttachment(attachment)
+
+  addFileAttachment = attachment => this.filesAttachmentManager.current.addAttachment(attachment)
+
+  getImageAttachments = () => this.imagesAttachmentManager.current && this.imagesAttachmentManager.current.getAttachments()
+
+  getFileAttachments = () => this.filesAttachmentManager.current && this.filesAttachmentManager.current.getAttachments()
+
+
   render () {
-    const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationObject } = post
     const {
-      onClose, currentUser, communityOptions, loading, addAttachment,
-      showImages, showFiles, setAnnouncement, announcementSelected,
-      canModerate, myModeratedCommunities, isProject, isEvent
+      initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError,
+      dateError, valid, post, detailsTopics = [], showAnnouncementModal
+    } = this.state
+    const {
+      id, type, title, details, communities, linkPreview, topics, members,
+      acceptContributions, eventInvitations, startTime, endTime, location,
+      locationObject
+    } = post
+    const {
+      onClose, currentUser, communityOptions, loading, setAnnouncement,
+      announcementSelected, canModerate, myModeratedCommunities, isProject,
+      isEvent, uploadFileAttachmentPending, uploadImageAttachmentPending
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
     const showPostTypes = !isProject && !isEvent
     const canHaveTimes = type !== 'discussion'
-
+    const showFiles = !isEmpty(this.getFileAttachments()) || uploadFileAttachmentPending
+    const showImages = !isEmpty(this.getImageAttachments()) || uploadImageAttachmentPending
     // Center location autocomplete either on post's current location, or current community's location, or current user's location
     const curLocation = locationObject || get('0.locationObject', communities) || get('locationObject', currentUser)
 
@@ -419,8 +444,8 @@ export default class PostEditor extends React.Component {
       </div>
       {linkPreview &&
         <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
-      <AttachmentManager type='post' id={id} attachmentType='image' />
-      <AttachmentManager type='post' id={id} attachmentType='file' />
+      <AttachmentManager type='post' id={id} attachmentType='image' ref={this.imagesAttachmentManager} />
+      <AttachmentManager type='post' id={id} attachmentType='file' ref={this.filesAttachmentManager} />
       <div styleName='footer'>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
@@ -496,7 +521,8 @@ export default class PostEditor extends React.Component {
         </div>}
         <ActionsBar
           id={id}
-          addAttachment={addAttachment}
+          addImageAttachment={this.addImageAttachment}
+          addFileAttachment={this.addFileAttachment}
           showImages={showImages}
           showFiles={showFiles}
           valid={valid}
@@ -519,7 +545,8 @@ export default class PostEditor extends React.Component {
 
 export function ActionsBar ({
   id,
-  addAttachment,
+  addImageAttachment,
+  addFileAttachment,
   showImages,
   showFiles,
   valid,
@@ -541,7 +568,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='image'
-        onSuccess={addAttachment}
+        onSuccess={addImageAttachment}
         disable={showImages}>
         <Icon
           name='AddImage'
@@ -552,7 +579,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='file'
-        onSuccess={addAttachment}
+        onSuccess={addFileAttachment}
         disable={showFiles}>
         <Icon
           name='Paperclip'

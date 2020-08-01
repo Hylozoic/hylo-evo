@@ -1,49 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AttachmentManager renders FileManager when attachmentType is "file" 1`] = `
-<FileManager
-  attachmentType="file"
-  id="new"
-  loadAttachments={
-    [MockFunction] {
-      "calls": Array [
-        Array [],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": undefined,
-        },
-      ],
-    }
-  }
-  prop1="foo"
-  prop2="bar"
-  prop3="baz"
-/>
+<Fragment>
+  <FileManager
+    addAttachment={[Function]}
+    attachmentType="file"
+    id="new"
+    prop1="foo"
+    prop2="bar"
+    prop3="baz"
+    removeAttachment={[Function]}
+    type="comment"
+    uploadPending={true}
+  />
+</Fragment>
 `;
 
 exports[`AttachmentManager renders ImageManager when attachmentType is "image" 1`] = `
-<DragDropContext(ImageManager)
-  attachmentType="image"
-  id="new"
-  loadAttachments={
-    [MockFunction] {
-      "calls": Array [
-        Array [],
-      ],
-      "results": Array [
-        Object {
-          "isThrow": false,
-          "value": undefined,
-        },
-      ],
-    }
-  }
-  prop1="foo"
-  prop2="bar"
-  prop3="baz"
-/>
+<Fragment>
+  <DragDropContext(ImageManager)
+    addAttachment={[Function]}
+    attachmentType="image"
+    id="new"
+    prop1="foo"
+    prop2="bar"
+    prop3="baz"
+    removeAttachment={[Function]}
+    type="post"
+    uploadPending={true}
+  />
+</Fragment>
 `;
 
 exports[`FileManager matches last snapshot 1`] = `
@@ -61,9 +47,9 @@ exports[`FileManager matches last snapshot 1`] = `
     <FilePreview
       attachment={
         Object {
+          "attachmentType": "file",
           "filename": "foo.pdf",
-          "id": "new",
-          "type": "file",
+          "id": 1,
           "url": "https://nowhere/foo.pdf",
         }
       }
@@ -73,9 +59,9 @@ exports[`FileManager matches last snapshot 1`] = `
     <FilePreview
       attachment={
         Object {
+          "attachmentType": "file",
           "filename": "bar.zip",
-          "id": "new",
-          "mimetype": "file/somefiletype",
+          "id": 1,
           "url": "https://nowhere/bar.zip",
         }
       }
@@ -85,8 +71,9 @@ exports[`FileManager matches last snapshot 1`] = `
     <FilePreview
       attachment={
         Object {
+          "attachmentType": "file",
           "filename": "bar.zip",
-          "id": "new",
+          "id": 1,
           "url": "https://nowhere/bar.zip",
         }
       }
@@ -99,6 +86,7 @@ exports[`FileManager matches last snapshot 1`] = `
       Loading...
     </div>
     <Connect(UploadAttachmentButton)
+      attachmentType="file"
       data-stylename="add-file-row"
       id={1}
       onSuccess={[Function]}
@@ -160,30 +148,28 @@ exports[`ImageManager matches last snapshot 1`] = `
     <DropTarget(DragSource(ImagePreview))
       attachment={
         Object {
+          "attachmentType": "image",
           "filename": "foo.png",
-          "id": "new",
-          "type": "image",
+          "id": 1,
           "url": "https://nowhere/foo.png",
         }
       }
       key="0"
       position={0}
       removeImage={[Function]}
-      switchImages={[Function]}
     />
     <DropTarget(DragSource(ImagePreview))
       attachment={
         Object {
+          "attachmentType": "image",
           "filename": "bar.jpg",
-          "id": "new",
-          "mimetype": "image/jpeg",
+          "id": 1,
           "url": "https://nowhere/bar.jpg",
         }
       }
       key="1"
       position={1}
       removeImage={[Function]}
-      switchImages={[Function]}
     />
     <div
       data-stylename="add-image"
@@ -191,6 +177,7 @@ exports[`ImageManager matches last snapshot 1`] = `
       <Loading />
     </div>
     <Connect(UploadAttachmentButton)
+      attachmentType="image"
       id={1}
       onSuccess={[Function]}
       type="post"
