@@ -373,7 +373,6 @@ export default class PostEditor extends React.Component {
 
   getFileAttachments = () => this.filesAttachmentManager.current && this.filesAttachmentManager.current.getAttachments()
 
-
   render () {
     const {
       initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError,

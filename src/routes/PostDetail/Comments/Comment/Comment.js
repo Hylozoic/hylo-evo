@@ -9,7 +9,6 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
-import { ImagePreview } from 'routes/PostDetail/Comments/CommentForm/CommentForm'
 import { FilePreview } from 'components/AttachmentManager/AttachmentManager'
 import './Comment.scss'
 

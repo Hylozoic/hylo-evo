@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { pullAt, throttle } from 'lodash'
+import { throttle } from 'lodash'
 import cx from 'classnames'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
