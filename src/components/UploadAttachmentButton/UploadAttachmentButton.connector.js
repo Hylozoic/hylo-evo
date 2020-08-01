@@ -16,9 +16,9 @@ export function mapDispatchToProps (dispatch, {
 }) {
   return {
     uploadAttachment: () => dispatch(uploadAttachment({ type, id, attachmentType }))
-      .then(({ payload, error }) => {
-        if (!error && payload) {
-          return onSuccess(payload)
+      .then((response) => {
+        if (response && !response.error && response.payload) {
+          return onSuccess(response.payload)
         }
       })
   }

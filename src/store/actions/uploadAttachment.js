@@ -29,7 +29,7 @@ export default function uploadAttachment ({
           }
         })
       },
-      cancel: () => resolve({}),
+      cancel: () => resolve(),
       failure: err => reject(err),
       accept: acceptedMimeTypes
     })

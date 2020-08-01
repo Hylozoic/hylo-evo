@@ -20,19 +20,7 @@ export default class CommentForm extends Component {
     placeholderText: string
   }
 
-  state = {
-    attachments: []
-  }
-
   editor = React.createRef()
-
-  attachmentManager = React.createRef()
-
-  addAttachment = attachment => this.attachmentManager.current.addAttachment(attachment)
-
-  clearAttachments = () => this.attachmentManager.current.clearAttachments()
-
-  getAttachments = () => this.attachmentManager.current.getAttachments().map(({ url, attachmentType }) => ({ url, attachmentType }))
 
   startTyping = throttle((editorState, stateChanged) => {
     if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
@@ -50,7 +38,7 @@ export default class CommentForm extends Component {
   }
 
   render () {
-    const { currentUser, className } = this.props
+    const { currentUser, addAttachment, className } = this.props
 
     if (!currentUser) return null
 
@@ -69,8 +57,8 @@ export default class CommentForm extends Component {
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
-        <AttachmentManager type='comment' ref={this.attachmentManager} />
-        <UploadAttachmentButton type='comment' onSuccess={this.addAttachment}>
+        <AttachmentManager type='comment' />
+        <UploadAttachmentButton type='comment' onSuccess={addAttachment}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
         </UploadAttachmentButton>

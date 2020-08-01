@@ -11,75 +11,34 @@ import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
 import './AttachmentManager.scss'
 
 export default class AttachmentManager extends React.Component {
-  state = {
-    attachments: []
-  }
-
   defaultProps = {
     id: ID_FOR_NEW
   }
 
   componentDidMount () {
-    this.loadAttachments()
+    this.props.loadAttachments()
   }
 
   componentDidUpdate (prevProps) {
     if (isEmpty(prevProps.attachmentsFromObject) && !isEmpty(this.props.attachmentsFromObject)) {
-      this.loadAttachments()
+      this.props.loadAttachments()
     }
   }
 
   componentWillUnmount () {
-    this.clearAttachments()
+    this.props.clearAttachments()
   }
 
-  loadAttachments = () => this.setState(() => ({
-    attachments: this.props.attachmentsFromObject
-  }))
-
-  clearAttachments = () => this.setState(() => ({
-    attachments: []
-  }))
-
-  addAttachment = attachment => this.setState(prevState => ({
-    attachments: [
-      ...prevState.attachments,
-      attachment
-    ]
-  }))
-
-  removeAttachment = position => this.setState(prevState => ({
-    attachments: pullAt(position, prevState.attachments)
-  }))
-
-  switchAttachments = () => {}
-
-  getAttachments = () => this.state.attachments
-
-  getAttachmentsForAttachmentType = attachmentType => this.state.attachments.filter(attachment => attachment.attachmentType === attachmentType)
-
   render () {
-    const { uploadPending, attachmentType } = this.props
-    const attachments = this.getAttachments()
-    const showAttachments = uploadPending || !isEmpty(attachments)
+    const { uploadPending, attachments, attachmentType } = this.props
 
-    if (!showAttachments) return null
+    if (!(uploadPending || !isEmpty(attachments))) return null
 
     return <React.Fragment>
       {(!attachmentType || attachmentType === 'image') &&
-        <ImageManager
-          {...this.props}
-          attachments={attachments}
-          addAttachment={this.addAttachment}
-          removeAttachment={this.removeAttachment}
-        />}
+        <ImageManager {...this.props} />}
       {attachmentType === 'file' &&
-        <FileManager
-          {...this.props}
-          attachments={attachments}
-          addAttachment={this.addAttachment}
-          removeAttachment={this.removeAttachment}
-        />}
+        <FileManager {...this.props} />}
     </React.Fragment>
   }
 }

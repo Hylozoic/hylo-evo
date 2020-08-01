@@ -1,4 +1,4 @@
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
@@ -21,6 +21,10 @@ import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import getUploadPending from 'store/selectors/getUploadPending'
+import {
+  addAttachment,
+  getAttachments
+} from 'components/AttachmentManager/AttachmentManager.store'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -48,6 +52,10 @@ export function mapStateToProps (state, props) {
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
   const editing = !!post || loading
+  const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
+  const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
+  const showImages = !isEmpty(imageAttachments) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
+  const showFiles = !isEmpty(fileAttachments) || getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const communitySlug = getRouteParam('slug', null, props)
   const networkSlug = getRouteParam('networkSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
@@ -67,6 +75,10 @@ export function mapStateToProps (state, props) {
     isEvent,
     editingPostId,
     post,
+    imageAttachments,
+    fileAttachments,
+    showImages,
+    showFiles,
     loading,
     postPending,
     editing,
@@ -95,7 +107,8 @@ export const mapDispatchToProps = (dispatch, props) => {
       clearLinkPreview,
       updatePost,
       createPost,
-      createProject
+      createProject,
+      addAttachment
     }, dispatch)
   }
 }
