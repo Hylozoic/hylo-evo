@@ -9,8 +9,4 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps)
