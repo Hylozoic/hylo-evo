@@ -10,6 +10,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
     <Connect(UploadAttachmentButton)
       attachmentType="image"
       id={1}
+      onSuccess={[Function]}
       type="post"
     >
       <Icon
@@ -20,6 +21,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
     <Connect(UploadAttachmentButton)
       attachmentType="file"
       id={1}
+      onSuccess={[Function]}
       type="post"
     >
       <Icon
@@ -48,6 +50,7 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
     <Connect(UploadAttachmentButton)
       attachmentType="image"
       id={1}
+      onSuccess={[Function]}
       type="post"
     >
       <Icon
@@ -58,6 +61,7 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
     <Connect(UploadAttachmentButton)
       attachmentType="file"
       id={1}
+      onSuccess={[Function]}
       type="post"
     >
       <Icon
@@ -279,8 +283,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={
         Array [
           Object {
@@ -509,8 +511,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={
         Array [
           Object {
@@ -554,9 +554,9 @@ Array [
       "details": undefined,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
-      "fileUrls": null,
+      "fileUrls": undefined,
       "id": "test",
-      "imageUrls": null,
+      "imageUrls": undefined,
       "isPublic": undefined,
       "linkPreview": Object {
         "id": "1",
@@ -893,8 +893,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       togglePublic={[Function]}
     />
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -1088,8 +1086,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -1283,8 +1279,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -1478,8 +1472,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -1633,8 +1625,6 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -1665,9 +1655,9 @@ Array [
       "details": undefined,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
-      "fileUrls": null,
+      "fileUrls": undefined,
       "id": undefined,
-      "imageUrls": null,
+      "imageUrls": undefined,
       "isPublic": undefined,
       "linkPreview": undefined,
       "location": undefined,
@@ -1826,8 +1816,6 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={true}
@@ -1981,8 +1969,6 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={true}
@@ -2136,8 +2122,6 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       canModerate={true}
       communities={Array []}
       communityCount={0}
@@ -2301,8 +2285,6 @@ exports[`PostEditor renders contribution button 1`] = `
       </div>
     </div>
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -2456,8 +2438,6 @@ exports[`PostEditor renders with min props 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      addFileAttachment={[Function]}
-      addImageAttachment={[Function]}
       communities={Array []}
       communityCount={0}
       loading={false}
@@ -2488,9 +2468,9 @@ Array [
       "details": undefined,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
-      "fileUrls": null,
+      "fileUrls": undefined,
       "id": "test",
-      "imageUrls": null,
+      "imageUrls": undefined,
       "isPublic": undefined,
       "linkPreview": Object {
         "id": "1",

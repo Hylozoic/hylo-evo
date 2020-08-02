@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { get, isEqual, isEmpty, throttle } from 'lodash/fp'
+import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
@@ -25,7 +25,6 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-import { addAttachment } from 'components/AttachmentManager/AttachmentManager.store'
 
 export const MAX_TITLE_LENGTH = 50
 
@@ -553,7 +552,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='image'
-        onSuccess={addAttachment}
+        onSuccess={attachment => addAttachment('post', id, attachment)}
         disable={showImages}>
         <Icon
           name='AddImage'
@@ -564,7 +563,7 @@ export function ActionsBar ({
         type='post'
         id={id}
         attachmentType='file'
-        onSuccess={addAttachment}
+        onSuccess={attachment => addAttachment('post', id, attachment)}
         disable={showFiles}>
         <Icon
           name='Paperclip'

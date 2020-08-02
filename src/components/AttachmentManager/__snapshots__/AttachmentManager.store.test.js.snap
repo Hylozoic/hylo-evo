@@ -2,8 +2,9 @@
 
 exports[`AttachmentManager store reducer when ADD_ATTACHMENT adds an attachment 1`] = `
 Object {
-  "post-new-file": Array [
+  "post-new": Array [
     Object {
+      "attachmentType": "file",
       "url": "bar.pdf",
     },
   ],
@@ -12,42 +13,81 @@ Object {
 
 exports[`AttachmentManager store reducer when REMOVE_ATTACHMENT removes an attachment 1`] = `
 Object {
-  "post-new-file": Array [
-    "a.pdf",
-    "c.pdf",
-  ],
-  "post-new-image": Array [
-    "a.png",
-    "b.png",
-    "c.png",
+  "post-new": Array [
+    Object {
+      "attachmentType": "file",
+      "url": "a.pdf",
+    },
+    Object {
+      "attachmentType": "file",
+      "url": "b.pdf",
+    },
+    Object {
+      "attachmentType": "file",
+      "url": "c.pdf",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "a.png",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "b.png",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "c.png",
+    },
   ],
 }
 `;
 
 exports[`AttachmentManager store reducer when SET_ATTACHMENTS sets attachments 1`] = `
 Object {
-  "post-new-file": Array [
-    "foo.pdf",
-    "bar.xls",
-  ],
-  "post-new-image": Array [
-    "foo.png",
-    "bar.jog",
+  "post-new": Array [
+    Object {
+      "url": "foo.pdf",
+    },
+    Object {
+      "url": "bar.xls",
+    },
+    Object {
+      "url": "foo.png",
+    },
+    Object {
+      "url": "bar.jpg",
+    },
   ],
 }
 `;
 
 exports[`AttachmentManager store reducer when SWITCH_ATTACHMENTS switches two attachments 1`] = `
 Object {
-  "post-new-file": Array [
-    "a.pdf",
-    "b.pdf",
-    "c.pdf",
-  ],
-  "post-new-image": Array [
-    "a.png",
-    "c.png",
-    "b.png",
+  "post-new": Array [
+    Object {
+      "attachmentType": "image",
+      "url": "a.png",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "c.png",
+    },
+    Object {
+      "attachmentType": "image",
+      "url": "b.png",
+    },
+    Object {
+      "attachmentType": "file",
+      "url": "a.pdf",
+    },
+    Object {
+      "attachmentType": "file",
+      "url": "b.pdf",
+    },
+    Object {
+      "attachmentType": "file",
+      "url": "c.pdf",
+    },
   ],
 }
 `;

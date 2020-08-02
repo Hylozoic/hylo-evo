@@ -2,11 +2,12 @@ import { connect } from 'react-redux'
 import getUploadPending from 'store/selectors/getUploadPending'
 import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 import {
+  getAttachments,
+  setAttachments,
+  clearAttachments,
   addAttachment,
   removeAttachment,
-  switchAttachments,
-  setAttachments,
-  getAttachments
+  switchAttachments
 } from './AttachmentManager.store'
 
 export function mapStateToProps (state, props) {
@@ -33,8 +34,8 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...dispatchProps,
     ...ownProps,
     switchAttachments: (position1, position2) => switchAttachments(type, id, attachmentType, position1, position2),
-    loadAttachments: () => setAttachments(type, id, attachmentType, attachmentsFromObject),
-    clearAttachments: () => setAttachments(type, id, attachmentType, [])
+    loadAttachments: () => setAttachments(type, id, attachmentsFromObject),
+    clearAttachments: () => clearAttachments(type, id)
   }
 }
 

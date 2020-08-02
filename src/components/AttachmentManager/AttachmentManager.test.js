@@ -4,10 +4,11 @@ import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview
 
 describe('AttachmentManager', () => {
   const props = {
-    prop1: 'foo',
-    prop2: 'bar',
-    prop3: 'baz',
-    uploadPending: true
+    uploadPending: true,
+    attachments: [],
+    loadAttachments: () => {},
+    removeAttachment: () => {},
+    addAttachment: () => {}
   }
 
   it('renders FileManager when attachmentType is "file"', () => {
@@ -19,6 +20,11 @@ describe('AttachmentManager', () => {
     const wrapper = shallow(<AttachmentManager type='post' attachmentType='image' {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('renders ImageManager when an attachmentType is not specificed', () => {
+    const wrapper = shallow(<AttachmentManager type='post' {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
 })
 
 describe('ImageManager', () => {
@@ -26,10 +32,10 @@ describe('ImageManager', () => {
     const props = {
       id: 1,
       type: 'post',
-      uploadPending: true,
+      uploadPending: false,
       attachments: [
-        { url: 'https://nowhere/foo.png', attachmentType: 'image', id: 1, filename: 'foo.png' },
-        { url: 'https://nowhere/bar.jpg', attachmentType: 'image', id: 1, filename: 'bar.jpg' }
+        { attachmentType: 'image', url: 'https://nowhere/foo.png' },
+        { attachmentType: 'image', url: 'https://nowhere/bar.jpg' }
       ],
       addAttachment: () => {},
       removeAttachment: () => {},
@@ -43,10 +49,10 @@ describe('ImageManager', () => {
 describe('ImagePreview', () => {
   it('matches last snapshot', () => {
     const props = {
-      attachment: { url: 'https://nowhere/foo.zng', type: 'file', id: 'new', filename: 'foo.zng' },
+      attachment: { url: 'https://nowhere/foo.zng', attachmentType: 'file' },
       attachments: [
-        { url: 'https://nowhere/foo.png', attachmentType: 'image', id: 'new', filename: 'foo.png' },
-        { url: 'https://nowhere/foo.png', attachmentType: 'image', id: 'new', filename: 'bar.png' }
+        { attachmentType: 'image', url: 'https://nowhere/foo.png' },
+        { attachmentType: 'image', url: 'https://nowhere/foo.png' }
       ],
       position: 1,
       connectDragSource: i => i,
@@ -66,9 +72,9 @@ describe('FileManager', () => {
       type: 'post',
       uploadPending: true,
       attachments: [
-        { url: 'https://nowhere/foo.pdf', attachmentType: 'file', id: 1, filename: 'foo.pdf' },
-        { url: 'https://nowhere/bar.zip', attachmentType: 'file', id: 1, filename: 'bar.zip' },
-        { url: 'https://nowhere/bar.zip', attachmentType: 'file', id: 1, filename: 'bar.zip' }
+        { url: 'https://nowhere/foo.pdf', attachmentType: 'file' },
+        { url: 'https://nowhere/bar.zip', attachmentType: 'file' },
+        { url: 'https://nowhere/bar.zip', attachmentType: 'file' }
       ],
       addAttachment: () => {},
       removeAttachment: () => {}
@@ -81,7 +87,7 @@ describe('FileManager', () => {
 describe('FilePreview', () => {
   it('matches last snapshot', () => {
     const props = {
-      attachment: { url: 'https://nowhere/foo.pdf', attachmentType: 'file', id: 'new', filename: 'foo.pdf' },
+      attachment: { url: 'https://nowhere/foo.pdf', attachmentType: 'file' },
       position: 1,
       fileSize: '23.3mb',
       removeFile: () => {}

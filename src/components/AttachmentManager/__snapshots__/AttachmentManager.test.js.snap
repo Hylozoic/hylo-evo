@@ -5,11 +5,34 @@ exports[`AttachmentManager renders FileManager when attachmentType is "file" 1`]
   <FileManager
     addAttachment={[Function]}
     attachmentType="file"
-    prop1="foo"
-    prop2="bar"
-    prop3="baz"
+    attachments={Array []}
+    id="new"
+    loadAttachments={[Function]}
     removeAttachment={[Function]}
     type="comment"
+    uploadPending={true}
+  />
+</Fragment>
+`;
+
+exports[`AttachmentManager renders ImageManager when an attachmentType is not specificed 1`] = `
+<Fragment>
+  <DragDropContext(ImageManager)
+    addAttachment={[Function]}
+    attachments={Array []}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    type="post"
+    uploadPending={true}
+  />
+  <FileManager
+    addAttachment={[Function]}
+    attachments={Array []}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    type="post"
     uploadPending={true}
   />
 </Fragment>
@@ -20,9 +43,9 @@ exports[`AttachmentManager renders ImageManager when attachmentType is "image" 1
   <DragDropContext(ImageManager)
     addAttachment={[Function]}
     attachmentType="image"
-    prop1="foo"
-    prop2="bar"
-    prop3="baz"
+    attachments={Array []}
+    id="new"
+    loadAttachments={[Function]}
     removeAttachment={[Function]}
     type="post"
     uploadPending={true}
@@ -46,8 +69,6 @@ exports[`FileManager matches last snapshot 1`] = `
       attachment={
         Object {
           "attachmentType": "file",
-          "filename": "foo.pdf",
-          "id": 1,
           "url": "https://nowhere/foo.pdf",
         }
       }
@@ -58,8 +79,6 @@ exports[`FileManager matches last snapshot 1`] = `
       attachment={
         Object {
           "attachmentType": "file",
-          "filename": "bar.zip",
-          "id": 1,
           "url": "https://nowhere/bar.zip",
         }
       }
@@ -70,8 +89,6 @@ exports[`FileManager matches last snapshot 1`] = `
       attachment={
         Object {
           "attachmentType": "file",
-          "filename": "bar.zip",
-          "id": 1,
           "url": "https://nowhere/bar.zip",
         }
       }
@@ -147,33 +164,26 @@ exports[`ImageManager matches last snapshot 1`] = `
       attachment={
         Object {
           "attachmentType": "image",
-          "filename": "foo.png",
-          "id": 1,
           "url": "https://nowhere/foo.png",
         }
       }
       key="0"
       position={0}
       removeImage={[Function]}
+      switchImages={[Function]}
     />
     <DropTarget(DragSource(ImagePreview))
       attachment={
         Object {
           "attachmentType": "image",
-          "filename": "bar.jpg",
-          "id": 1,
           "url": "https://nowhere/bar.jpg",
         }
       }
       key="1"
       position={1}
       removeImage={[Function]}
+      switchImages={[Function]}
     />
-    <div
-      data-stylename="add-image"
-    >
-      <Loading />
-    </div>
     <Connect(UploadAttachmentButton)
       attachmentType="image"
       id={1}

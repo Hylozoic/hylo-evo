@@ -1,5 +1,6 @@
-import { pullAt, clone, get, getOr } from 'lodash/fp'
+import { get, getOr, filter, reject, pick, clone } from 'lodash/fp'
 import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
+import { NEW_THREAD_ID } from 'routes/Messages/Messages'
 
 export { ID_FOR_NEW }
 
@@ -14,32 +15,36 @@ export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
 
 // action generators
 
-export function setAttachments (type, id, attachmentType, attachments) {
+export function setAttachments (type, id, attachments) {
   return {
     type: SET_ATTACHMENTS,
     payload: {
-      attachmentKey: makeAttachmentKey({ type, id, attachmentType }),
+      attachmentKey: makeAttachmentKey(type, id),
       attachments
     }
   }
 }
 
-export function addAttachment (attachment) {
+export function clearAttachments (type, id) {
+  return setAttachments(type, id, [])
+}
+
+export function addAttachment (type, id, attachment) {
   return {
     type: ADD_ATTACHMENT,
     payload: {
-      attachmentKey: makeAttachmentKey(attachment),
+      attachmentKey: makeAttachmentKey(type, id),
       attachment
     }
   }
 }
 
-export function removeAttachment (attachment, position) {
+export function removeAttachment (type, id, attachment) {
   return {
     type: REMOVE_ATTACHMENT,
     payload: {
-      attachmentKey: makeAttachmentKey(attachment),
-      position
+      attachmentKey: makeAttachmentKey(type, id),
+      attachment
     }
   }
 }
@@ -48,7 +53,8 @@ export function switchAttachments (type, id, attachmentType, position1, position
   return {
     type: SWITCH_ATTACHMENTS,
     payload: {
-      attachmentKey: makeAttachmentKey(type, id, attachmentType),
+      attachmentKey: makeAttachmentKey(type, id),
+      attachmentType,
       position1,
       position2
     }
@@ -59,11 +65,14 @@ export function switchAttachments (type, id, attachmentType, position1, position
 
 export function getAttachments (state, {
   type,
-  id,
+  id = NEW_THREAD_ID,
   attachmentType
 }) {
-  const result = getOr([], [MODULE_NAME, makeAttachmentKey(type, id, attachmentType)], state)
-  return result
+  const allAttachments = getOr([], [MODULE_NAME, makeAttachmentKey(type, id)], state)
+
+  if (attachmentType) return filter({ attachmentType }, allAttachments)
+
+  return allAttachments
 }
 
 // reducer
@@ -72,39 +81,46 @@ export const defaultState = {}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload } = action
+
   if (error) return state
 
+  const attachment = get('attachment', payload)
+  const attachments = get('attachments', payload)
   const attachmentKey = get('attachmentKey', payload)
   const attachmentsForKey = getOr([], [attachmentKey], state)
+  const attachmentType = get('attachmentType', payload)
 
   switch (type) {
     case SET_ATTACHMENTS:
-      const attachments = get('attachments', payload)
       return {
         ...state,
-        [attachmentKey]: attachments
+        [attachmentKey]: attachments.map(a => pick(validAttachmentKeys, a))
       }
     case ADD_ATTACHMENT:
       return {
         ...state,
         [attachmentKey]: [
           ...attachmentsForKey,
-          payload.attachment
+          pick(validAttachmentKeys, attachment)
         ]
       }
     case REMOVE_ATTACHMENT:
       return {
         ...state,
-        [attachmentKey]: pullAt(payload.position, attachmentsForKey)
+        [attachmentKey]: reject(attachment, attachmentsForKey)
       }
     case SWITCH_ATTACHMENTS:
       const { position1, position2 } = payload
-      const attachmentsForKeyCopy = clone(attachmentsForKey)
-      attachmentsForKey[position1] = attachmentsForKeyCopy[position2]
-      attachmentsForKey[position2] = attachmentsForKeyCopy[position1]
+      const forAttachmentType = filter({ attachmentType }, attachmentsForKey)
+      const forAttachmentTypeCopy = clone(forAttachmentType)
+      forAttachmentType[position1] = forAttachmentTypeCopy[position2]
+      forAttachmentType[position2] = forAttachmentTypeCopy[position1]
       return {
         ...state,
-        [attachmentKey]: attachmentsForKey
+        [attachmentKey]: [
+          ...forAttachmentType,
+          ...reject({ attachmentType }, attachmentsForKey)
+        ]
       }
     default:
       return state
@@ -112,20 +128,6 @@ export default function reducer (state = defaultState, action) {
 }
 
 // -- UTILITY --
+export const validAttachmentKeys = ['url', 'attachmentType'] 
 
-export const makeAttachmentKey = (typeOrObject, objectId, providedAttachmentType) => {
-  let type, id, attachmentType
-
-  if (typeof typeOrObject !== 'object') {
-    [type, id, attachmentType] = [typeOrObject, objectId, providedAttachmentType]
-  } else {
-    [type, id] = [typeOrObject['type'], typeOrObject['id']]
-    attachmentType = typeOrObject['attachmentType']
-      ? typeOrObject['attachmentType']
-      : 'file'
-  }
-
-  id = id || ID_FOR_NEW
-
-  return [type, id, attachmentType].join('-')
-}
+export const makeAttachmentKey = (type, id) => [type, id || ID_FOR_NEW].join('-')

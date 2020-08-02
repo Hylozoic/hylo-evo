@@ -13,25 +13,17 @@ describe('AttachmentManager store', () => {
       const action = {
         type: SET_ATTACHMENTS,
         payload: {
-          attachmentKey: 'post-new-image',
+          attachmentKey: 'post-new',
           attachments: [
-            'foo.png',
-            'bar.jog'
-          ]
-        }
-      }
-      const action2 = {
-        type: SET_ATTACHMENTS,
-        payload: {
-          attachmentKey: 'post-new-file',
-          attachments: [
-            'foo.pdf',
-            'bar.xls'
+            { url: 'foo.pdf', attachementType: 'file' },
+            { url: 'bar.xls', attachementType: 'file' },
+            { url: 'foo.png', attachementType: 'image' },
+            { url: 'bar.jpg', attachementType: 'file' }
           ]
         }
       }
       it('sets attachments', () => {
-        let finalState = reducer(reducer(defaultState, action), action2)
+        let finalState = reducer(defaultState, action)
         expect(finalState).toMatchSnapshot()
       })
     })
@@ -40,9 +32,8 @@ describe('AttachmentManager store', () => {
       const action = {
         type: ADD_ATTACHMENT,
         payload: {
-          attachmentKey: 'post-new-file',
-          attachment: { url: 'bar.pdf' },
-          position: 0
+          attachmentKey: 'post-new',
+          attachment: { url: 'bar.pdf', attachmentType: 'file' }
         }
       }
       it('adds an attachment', () => {
@@ -55,22 +46,20 @@ describe('AttachmentManager store', () => {
       const action = {
         type: REMOVE_ATTACHMENT,
         payload: {
-          attachmentKey: 'post-new-file',
-          position: 1
+          attachmentKey: 'post-new',
+          attachment: { url: 'b.pdf', attachmentType: 'image' }
         }
       }
       it('removes an attachment', () => {
         const state = {
           ...defaultState,
-          ['post-new-file']: [
-            'a.pdf',
-            'b.pdf',
-            'c.pdf'  
-          ],
-          ['post-new-image']: [
-            'a.png',
-            'b.png',
-            'c.png'  
+          ['post-new']: [
+            { url: 'a.pdf', attachmentType: 'file' },
+            { url: 'b.pdf', attachmentType: 'file' },
+            { url: 'c.pdf', attachmentType: 'file' },
+            { url: 'a.png', attachmentType: 'image' },
+            { url: 'b.png', attachmentType: 'image' },
+            { url: 'c.png', attachmentType: 'image' }
           ]
         }
         const finalState = reducer(state, action)
@@ -82,7 +71,8 @@ describe('AttachmentManager store', () => {
       const action = {
         type: SWITCH_ATTACHMENTS,
         payload: {
-          attachmentKey: 'post-new-image',
+          attachmentKey: 'post-new',
+          attachmentType: 'image',
           position1: 1,
           position2: 2,
         }
@@ -90,15 +80,13 @@ describe('AttachmentManager store', () => {
       it('switches two attachments', () => {
         const state = {
           ...defaultState,
-          ['post-new-file']: [
-            'a.pdf',
-            'b.pdf',
-            'c.pdf'  
-          ],
-          ['post-new-image']: [
-            'a.png',
-            'b.png',
-            'c.png'  
+          ['post-new']: [
+            { url: 'a.pdf', attachmentType: 'file' },
+            { url: 'b.pdf', attachmentType: 'file' },
+            { url: 'c.pdf', attachmentType: 'file' },
+            { url: 'a.png', attachmentType: 'image' },
+            { url: 'b.png', attachmentType: 'image' },
+            { url: 'c.png', attachmentType: 'image' }
           ]
         }
         const finalState = reducer(state, action)

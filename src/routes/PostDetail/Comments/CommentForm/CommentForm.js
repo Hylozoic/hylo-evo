@@ -3,21 +3,22 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import cx from 'classnames'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
+import AttachmentManager from 'components/AttachmentManager'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
-import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import './CommentForm.scss'
-import AttachmentManager from 'components/AttachmentManager'
-// https://stackoverflow.com/questions/53683186/error-withref-is-removed-to-access-the-wrapped-instance-use-a-ref-on-the-conne
-const { object, func, string } = PropTypes
 
 export default class CommentForm extends Component {
   static propTypes = {
-    currentUser: object,
-    createComment: func,
-    className: string,
-    placeholderText: string
+    currentUser: PropTypes.object,
+    createComment: PropTypes.func,
+    sendIsTyping: PropTypes.func,
+    attachments: PropTypes.array,
+    addAttachment: PropTypes.func,
+    clearAttachments: PropTypes.func,
+    className: PropTypes.string
   }
 
   editor = React.createRef()
@@ -29,16 +30,28 @@ export default class CommentForm extends Component {
   }, STARTED_TYPING_INTERVAL)
 
   save = text => {
-    const attachments = this.getAttachments()
+    const {
+      sendIsTyping,
+      createComment,
+      attachments,
+      clearAttachments
+    } = this.props
 
     this.startTyping.cancel()
-    this.props.sendIsTyping(false)
-    this.props.createComment({ text, attachments })
-    this.clearAttachments()
+    sendIsTyping(false)
+    createComment({
+      text,
+      attachments
+    })
+    clearAttachments('comment')
   }
 
   render () {
-    const { currentUser, addAttachment, className } = this.props
+    const {
+      currentUser,
+      addAttachment,
+      className
+    } = this.props
 
     if (!currentUser) return null
 
@@ -58,7 +71,7 @@ export default class CommentForm extends Component {
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
         <AttachmentManager type='comment' />
-        <UploadAttachmentButton type='comment' onSuccess={addAttachment}>
+        <UploadAttachmentButton type='comment' onSuccess={attachment => addAttachment('comment', 'new', attachment)}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
         </UploadAttachmentButton>
