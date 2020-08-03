@@ -201,8 +201,6 @@ export default class MapExplorer extends React.Component {
       viewport
     } = this.state
 
-    // const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
-
     return <div styleName={cx('container', { 'noUser': !currentUser })}>
       <Map
         layers={[communityIconLayer, clusterLayer]}

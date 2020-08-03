@@ -4,7 +4,7 @@ import React from 'react'
 
 describe('NonAuthLayout', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<NonAuthLayout />)
+    const wrapper = shallow(<NonAuthLayout location={{ pathname: '' }} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

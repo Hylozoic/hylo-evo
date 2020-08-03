@@ -5,7 +5,8 @@ communities(
   isPublic: true,
   sortBy: $sortBy,
   boundingBox: $boundingBox,
-  search: $search
+  search: $search,
+  networkSlugs: $networkSlugs
 ) {
   items {
     ${communityFieldsFragment(false)}

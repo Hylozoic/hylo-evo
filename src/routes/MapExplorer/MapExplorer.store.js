@@ -148,7 +148,8 @@ const publicPostsQuery = `query (
   $search: String,
   $filter: String,
   $topic: ID,
-  $first: Int
+  $first: Int,
+  $networkSlugs: [String]
   $boundingBox: [PointInput]
 ) {
   ${publicPostsQueryFragment}
@@ -157,13 +158,14 @@ const publicPostsQuery = `query (
 const publicCommunitiesQuery = `query (
   $sortBy: String,
   $search: String,
-  $boundingBox: [PointInput]
+  $boundingBox: [PointInput],
+  $networkSlugs: [String]
 ) {
   ${publicCommunitiesQueryFragment}
 }`
 
 // actions
-export function fetchPosts ({ subject, slug, networkSlug, sortBy, search, filter, topic, boundingBox }) {
+export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, search, filter, topic, boundingBox, isPublic }) {
   var query, extractModel, getItems
 
   if (subject === 'community') {
@@ -192,12 +194,14 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, search, filter
       query,
       variables: {
         slug,
-        networkSlug,
         sortBy,
         search,
         filter,
         topic,
-        boundingBox
+        boundingBox,
+        networkSlug,
+        networkSlugs,
+        isPublic
       }
     },
     meta: {
@@ -252,7 +256,7 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
   }
 }
 
-export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search }) {
+export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, networkSlugs }) {
   var query, extractModel, getItems
 
   if (subject === 'public-communities') {
@@ -276,7 +280,8 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search }
       variables: {
         sortBy,
         search,
-        boundingBox
+        boundingBox,
+        networkSlugs
       }
     },
     meta: {

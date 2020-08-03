@@ -45,10 +45,11 @@ describe('mapStateToProps', () => {
     expect(mapStateToProps(state, props)).toEqual(
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
+        currentUser: undefined,
         features: [],
-        fetchMembersParam: { boundingBox: undefined, slug: 'foo', subject: 'community' },
-        fetchPostsParam: { boundingBox: undefined, slug: 'foo', subject: 'community' },
-        fetchPublicCommunitiesParam: { boundingBox: undefined, subject: 'community' },
+        fetchMembersParam: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined },
+        fetchPostsParam: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined, networkSlugs: undefined, isPublic: false },
+        fetchPublicCommunitiesParam: { boundingBox: undefined, subject: 'community', networkSlugs: undefined },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',

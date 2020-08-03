@@ -31,30 +31,29 @@ export function presentMember (person, communityId) {
 }
 
 export function mapStateToProps (state, props) {
+  const routeParams = get('match.params', props)
+  const querystringParams = getQuerystringParam(['showDrawer', 't', 'network'], null, props)
   const community = getCommunityForCurrentRoute(state, props)
   const communityId = community && community.id
-  const routeParams = get('match.params', props)
-  const { slug, networkSlug, context } = routeParams
-
-  const querystringParams = getQuerystringParam(['showDrawer', 't'], null, props)
+  const { slug, context } = routeParams
+  const networkSlug = routeParams.networkSlug
+  const networkSlugs = querystringParams.network // For public maps that show multiple networks
 
   var subject
-  if (slug) {
+  if (context === 'public') {
+    subject = 'public-communities'
+  } else if (slug) {
     subject = 'community'
   } else if (networkSlug) {
     subject = 'network'
-  } else if (context === 'public') {
-    subject = 'public-communities'
   } else {
     subject = 'all-communities'
   }
 
   const fetchMembersParam = {
     subject,
-    ...pick([
-      'slug',
-      'networkSlug'
-    ], routeParams),
+    slug,
+    networkSlug,
     ...pick([
       // TODO: these are actually not being queried by on the server, remove for now?
       'sortBy',
@@ -65,21 +64,22 @@ export function mapStateToProps (state, props) {
 
   const fetchPublicCommunitiesParam = {
     boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
-    subject
+    subject,
+    networkSlugs
   }
 
   const fetchPostsParam = {
     subject,
-    ...pick([
-      'slug',
-      'networkSlug'
-    ], routeParams),
+    slug,
+    networkSlug,
+    networkSlugs, // networkSlug used by network posts query, networkSlugs uses by public posts query
     ...pick([
       // TODO: these are actually not being queried by on the server, remove for now?
       'sortBy',
       'topic'
     ], props),
-    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
+    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
+    isPublic: subject === 'public-communities' // only needed to track which query results to pull for the map
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
@@ -114,7 +114,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const routeParams = get('match.params', props)
-  const querystringParams = getQuerystringParam(['showDrawer', 't'], null, props)
+  const querystringParams = getQuerystringParam(['showDrawer', 't', 'network'], null, props)
   return {
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),

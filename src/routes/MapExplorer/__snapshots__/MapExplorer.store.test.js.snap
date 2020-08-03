@@ -159,7 +159,9 @@ posts(
     "variables": Object {
       "boundingBox": undefined,
       "filter": "offer",
+      "isPublic": undefined,
       "networkSlug": undefined,
+      "networkSlugs": undefined,
       "search": "gardening",
       "slug": undefined,
       "sortBy": undefined,
@@ -326,7 +328,9 @@ posts(
     "variables": Object {
       "boundingBox": undefined,
       "filter": "request",
+      "isPublic": undefined,
       "networkSlug": undefined,
+      "networkSlugs": undefined,
       "search": "graphic design",
       "slug": undefined,
       "sortBy": undefined,

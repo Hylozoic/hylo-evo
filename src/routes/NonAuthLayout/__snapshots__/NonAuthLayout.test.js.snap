@@ -166,6 +166,50 @@ exports[`NonAuthLayout renders correctly 1`] = `
     component={[Function]}
     path="/reset-password"
   />
+  <Switch>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/:context(public)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?"
+    />
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/:context(public)/:view(map)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?"
+    />
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/:context(public)/:view(map)/:communityContext(c)?/:communityId(\\\\d+)?"
+    />
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/:context(public)/:topicName"
+    />
+  </Switch>
+  <div
+    data-stylename="detail hidden"
+    id="detail-column"
+  >
+    <Switch>
+      <Route
+        component={[Function]}
+        key="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
+        path="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
+        key="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
+        path="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
+      />
+      <Route
+        component={[Function]}
+        key="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)"
+        path="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)"
+      />
+    </Switch>
+  </div>
   <div
     data-stylename="signupToggle"
   >
