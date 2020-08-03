@@ -4,7 +4,7 @@ import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
-import PostImage from './PostImage'
+import CardImage from 'components/CardImage'
 import PostBody from './PostBody'
 import EventBody from './EventBody'
 import './PostCard.scss'
@@ -12,7 +12,7 @@ import samplePost from './samplePost'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 
-export { PostHeader, PostFooter, PostImage, PostBody, PostCommunities, EventBody }
+export { PostHeader, PostFooter, PostBody, PostCommunities, EventBody }
 
 export default class PostCard extends React.Component {
   static propTypes = {
@@ -70,7 +70,7 @@ export default class PostCard extends React.Component {
         highlightProps={highlightProps}
         editPost={editPost}
         constrained={constrained} />
-      <PostImage styleName='image' postId={post.id} />
+      <CardImage styleName='image' postId={post.id} />
       {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
       {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
       <PostCommunities isPublic={post.isPublic} communities={post.communities} slug={routeParams.slug} constrained={constrained} />

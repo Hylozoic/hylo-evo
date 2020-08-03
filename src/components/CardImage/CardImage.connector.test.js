@@ -1,4 +1,4 @@
-import { mapStateToProps } from './PostImage.connector'
+import { mapStateToProps } from './CardIMage.connector'
 import orm from 'store/models'
 
 let state

@@ -65,7 +65,7 @@ exports[`renders as expected 1`] = `
     updatedAt="2014-01-17T00:00:00.000Z"
     votesTotal={11519}
   />
-  <Connect(PostImage)
+  <Connect(CardImage)
     data-stylename="image"
     postId="FAKE_29222"
   />

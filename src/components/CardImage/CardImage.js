@@ -1,10 +1,16 @@
 import React from 'react'
 import { bgImageStyle } from 'util/index'
-import './PostImage.scss'
+import './CardImage.scss'
 import { isEmpty } from 'lodash'
 
-const PostImage = ({ firstImageUrl, otherImageUrls, className, linked }) => {
+export default function CardImage ({
+  firstImageUrl,
+  otherImageUrls,
+  className,
+  linked
+}) {
   if (!firstImageUrl) return null
+
   return <div style={bgImageStyle(firstImageUrl)} className={className}>
     <div>
       {linked && <a href={firstImageUrl} target='_blank' styleName='link'>&nbsp;</a>}
@@ -20,4 +26,3 @@ const PostImage = ({ firstImageUrl, otherImageUrls, className, linked }) => {
   </div>
 }
 
-export default PostImage
