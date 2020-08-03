@@ -1,13 +1,13 @@
 /* eslint-env jest */
 
-describe('uploadAttachment', () => {
+describe('uploadAttachmentUsingPicker', () => {
   const url = 'http://filepicker.io/hfwoe/eh98e'
   const filename = 'foo.jpg'
   const opts = { type: 'userAvatar', id: 3, attachmentType: 'image' }
   
   it('returns an API action after filepicker succeeds', () => {
-    const uploadAttachment = setupUploadAttachment(true, { url, filename })
-    const action = uploadAttachment(opts)
+    const uploadAttachmentUsingPicker = setupUploadAttachment(true, { url, filename })
+    const action = uploadAttachmentUsingPicker(opts)
   
     expect(action).toEqual({
       type: 'UPLOAD_ATTACHMENT',
@@ -25,8 +25,8 @@ describe('uploadAttachment', () => {
   })
   
   it('rejects when picker fails', () => {
-    const uploadAttachment = setupUploadAttachment(false, new Error('nope'))
-    return expect(uploadAttachment(opts).payload).rejects.toEqual(new Error('nope'))
+    const uploadAttachmentUsingPicker = setupUploadAttachment(false, new Error('nope'))
+    return expect(uploadAttachmentUsingPicker(opts).payload).rejects.toEqual(new Error('nope'))
   })
 })
 
@@ -43,5 +43,5 @@ function setupUploadAttachment (shouldSucceed, callbackArgs) {
 
   const uploadAttachment = require('./uploadAttachment')
   
-  return uploadAttachment.default
+  return uploadAttachment.uploadAttachmentUsingPicker
 }

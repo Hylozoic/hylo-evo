@@ -33,7 +33,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    switchAttachments: (position1, position2) => switchAttachments(type, id, attachmentType, position1, position2),
+    switchAttachments: (attachmentType, position1, position2) => switchAttachments(type, id, attachmentType, position1, position2),
     loadAttachments: () => setAttachments(type, id, attachmentsFromObject),
     clearAttachments: () => clearAttachments(type, id)
   }

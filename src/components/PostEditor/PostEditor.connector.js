@@ -46,12 +46,12 @@ export function mapStateToProps (state, props) {
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
   const uploadAttachmentPending = getUploadPending(state)
-  const editing = !!post || loading
   const editingPostId = getRouteParam('postId', state, props)
   const uploadFileAttachmentPending = getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const uploadImageAttachmentPending = getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
+  const editing = !!post || loading
   const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending

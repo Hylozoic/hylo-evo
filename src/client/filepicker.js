@@ -19,21 +19,31 @@ export const ACCEPTED_MIME_TYPES = {
   file: ['video/*', 'audio/*', 'application/*', 'text/*']
 }
 
+export const ALL_ACCEPTED_MIME_TYPES = [
+  ...ACCEPTED_MIME_TYPES.image,
+  ...ACCEPTED_MIME_TYPES.file
+]
+
 /*
  * options:
  *   success:  a success callback, which receives the new file's url as an argument
  *   failure:  a failure callback, which receives the error as an argument
  *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
  */
-export const uploadFile = function ({ success, cancel, failure, accept }) {
-  const allAcceptedMimeTypes = [...ACCEPTED_MIME_TYPES.image, ...ACCEPTED_MIME_TYPES.file]
-
+export const uploadFile = function ({
+  success,
+  cancel,
+  failure,
+  accept = ALL_ACCEPTED_MIME_TYPES,
+  // TODO: allow for more at once in PostEditor
+  maxFiles = 1
+}) {
   filePicker.picker({
-    accept: accept || allAcceptedMimeTypes,
+    accept,
     fromSources,
-    maxFiles: 1, // TODO: allow for more at once in PostEditor
+    maxFiles,
     onFileUploadFinished: file => {
-      let url = file.mimetype.split('/')[0] === 'image'
+      const url = file.mimetype.split('/')[0] === 'image'
         ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle
         : file.url
       success({ ...file, url })

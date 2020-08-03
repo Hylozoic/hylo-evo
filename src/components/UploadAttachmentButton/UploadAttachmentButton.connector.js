@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import uploadAttachment from 'store/actions/uploadAttachment'
+import { uploadAttachmentUsingPicker } from 'store/actions/uploadAttachment'
 import getUploadPending from 'store/selectors/getUploadPending'
 
 export function mapStateToProps (state, props) {
@@ -15,7 +15,7 @@ export function mapDispatchToProps (dispatch, {
   onSuccess
 }) {
   return {
-    uploadAttachment: () => dispatch(uploadAttachment({ type, id, attachmentType }))
+    uploadAttachmentUsingPicker: () => dispatch(uploadAttachmentUsingPicker({ type, id, attachmentType }))
       .then(response => {
         if (response && !response.error && response.payload) {
           return onSuccess(response.payload)

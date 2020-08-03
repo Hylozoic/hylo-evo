@@ -34,7 +34,7 @@ export default class AttachmentManager extends React.Component {
 
   render () {
     const { attachments, attachmentType, uploadPending } = this.props
-    
+
     if (isEmpty(attachments) && !uploadPending) return null
 
     const imageAttachments = filter({ attachmentType: 'image' }, attachments)
@@ -93,7 +93,7 @@ const imagePreviewSource = {
 const imagePreviewTarget = {
   drop (props, monitor, component) {
     const item = monitor.getItem()
-    props.switchImages(props.position, item.position)
+    props.switchImages('image', props.position, item.position)
   }
 }
 

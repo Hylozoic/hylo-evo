@@ -94,14 +94,14 @@ export default function reducer (state = defaultState, action) {
     case SET_ATTACHMENTS:
       return {
         ...state,
-        [attachmentKey]: attachments.map(a => pick(validAttachmentKeys, a))
+        [attachmentKey]: attachments.map(a => pick(ATTACHMENT_KEYS_WHITELIST, a))
       }
     case ADD_ATTACHMENT:
       return {
         ...state,
         [attachmentKey]: [
           ...attachmentsForKey,
-          pick(validAttachmentKeys, attachment)
+          pick(ATTACHMENT_KEYS_WHITELIST, attachment)
         ]
       }
     case REMOVE_ATTACHMENT:
@@ -128,6 +128,7 @@ export default function reducer (state = defaultState, action) {
 }
 
 // -- UTILITY --
-export const validAttachmentKeys = ['url', 'attachmentType'] 
+
+export const ATTACHMENT_KEYS_WHITELIST = ['url', 'attachmentType']
 
 export const makeAttachmentKey = (type, id) => [type, id || ID_FOR_NEW].join('-')
