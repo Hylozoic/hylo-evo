@@ -20,10 +20,6 @@ Object {
     },
     Object {
       "attachmentType": "file",
-      "url": "b.pdf",
-    },
-    Object {
-      "attachmentType": "file",
       "url": "c.pdf",
     },
     Object {

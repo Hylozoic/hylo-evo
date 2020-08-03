@@ -26,7 +26,7 @@ export const mapDispatchToProps = {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { type, id, attachmentType } = ownProps
+  const { type, id } = ownProps
   const { attachmentsFromObject } = stateProps
   const { switchAttachments, setAttachments } = dispatchProps
   return {

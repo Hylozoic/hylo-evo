@@ -6,7 +6,7 @@ import { get, throttle, isEmpty } from 'lodash/fp'
 import { tagUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-import CardImage from 'components/CardImage'
+import CardImages from 'components/CardImages'
 import {
   PostBody,
   PostFooter,
@@ -159,7 +159,7 @@ export default class PostDetail extends Component {
         {atHeader && <div styleName='header-sticky' style={headerStyle}>
           <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
         </div>}
-        <CardImage type='post' id={post.id} linked />
+        <CardImages attachments={post.attachments} linked />
         <PostTags tags={post.tags} />
         {isEvent && <EventBody
           styleName='body'

@@ -34,10 +34,12 @@ it('matches last snapshot with different config', () => {
   expect(wrapper).toMatchSnapshot()
 })
 
-it('displays an image', () => {
+it('displays image an image attachments', () => {
   const comment = {
     ...props.comment,
-    image: { url: 'jam.png' }
+    attachments: [
+      { url: 'jam.png', attachmentType: 'image' }
+    ]
   }
   const wrapper = shallow(<CommentCard {...props} comment={comment} />)
   expect(wrapper).toMatchSnapshot()

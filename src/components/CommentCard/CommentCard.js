@@ -5,7 +5,7 @@ import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import './CommentCard.scss'
-import CardImage from 'components/CardImage'
+import CardImages from 'components/CardImages'
 
 export default function CommentCard ({
   comment,
@@ -13,7 +13,7 @@ export default function CommentCard ({
   expanded = true,
   highlightProps
 }) {
-  const { creator, post, slug, image } = comment
+  const { creator, post, slug, attachments } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true, noLinks: true })
   const commentPresentOpts = {
     maxlength: expanded ? null : 144,
@@ -34,7 +34,7 @@ export default function CommentCard ({
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      <CardImage type='comment' id={comment.id} linked />
+      <CardImages attachments={attachments} linked />
       <ClickCatcher>
         <Highlight {...highlightProps}>
           <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />

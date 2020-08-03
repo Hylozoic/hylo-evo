@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
-import cx from 'classnames'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import AttachmentManager from 'components/AttachmentManager'
 import FileStackUploader from 'components/FileStackUploader'
-import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
-import Icon from 'components/Icon'
 import './CommentForm.scss'
+
+// import cx from 'classnames'
+// import UploadAttachmentButton from 'components/UploadAttachmentButton'
+// import Icon from 'components/Icon'
 
 export default class CommentForm extends Component {
   static propTypes = {

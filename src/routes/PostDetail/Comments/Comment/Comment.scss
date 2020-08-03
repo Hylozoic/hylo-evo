@@ -59,18 +59,16 @@ $comment-left-margin: 69px;
   margin-left: 69px;
 }
 
-.image {
-  max-width: 256px;
-  max-height: 256px;
+.images {
+  display: flex;
+  width: unset;
+  padding-top: 0px;
+  margin-left: $comment-left-margin;
 }
 
-.image {
-  background-position: center;
-  background-size: cover;
-  @include fluid-height(62%);
-  width: 100%;
-  margin-bottom: 20px;
-  margin: 0 auto 20px auto;
+.files {
+  display: flex;
+  margin-left: $comment-left-margin
 }
 
 .editor {

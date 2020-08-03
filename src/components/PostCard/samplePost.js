@@ -20,6 +20,7 @@ export default function samplePost () {
     details: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
     votesTotal: faker.random.number(),
     tags: ['activism', 'petition'],
+    attachments: [{ url: 'animage', attachmentType: 'image' }],
     communities: [{ id: '1', slug: 'great', name: 'Great Cause' }],
     commenters: fakePerson(3),
     commentersTotal: faker.random.number(),

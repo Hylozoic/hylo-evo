@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Comment displays an image 1`] = `
+exports[`Comment displays image attachments 1`] = `
 <div
   data-stylename="comment"
 >
@@ -29,6 +29,16 @@ exports[`Comment displays an image 1`] = `
       </span>
     </div>
   </div>
+  <CardImages
+    attachments={
+      Object {
+        "attachmentType": "image",
+        "url": "foo.png",
+      }
+    }
+    data-stylename="images"
+    linked={true}
+  />
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -89,6 +99,10 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       />
     </div>
   </div>
+  <CardImages
+    data-stylename="images"
+    linked={true}
+  />
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -149,6 +163,10 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       />
     </div>
   </div>
+  <CardImages
+    data-stylename="images"
+    linked={true}
+  />
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -192,6 +210,10 @@ exports[`Comment renders correctly 1`] = `
       </span>
     </div>
   </div>
+  <CardImages
+    data-stylename="images"
+    linked={true}
+  />
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -235,6 +257,10 @@ exports[`Comment renders correctly when editing 1`] = `
       </span>
     </div>
   </div>
+  <CardImages
+    data-stylename="images"
+    linked={true}
+  />
   <Connect(ClickCatcher)>
     <Connect(HyloEditor)
       contentHTML="<p>text of the comment</p>"

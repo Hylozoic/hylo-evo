@@ -47,7 +47,7 @@ describe('AttachmentManager store', () => {
         type: REMOVE_ATTACHMENT,
         payload: {
           attachmentKey: 'post-new',
-          attachment: { url: 'b.pdf', attachmentType: 'image' }
+          attachment: { url: 'b.pdf', attachmentType: 'file' }
         }
       }
       it('removes an attachment', () => {

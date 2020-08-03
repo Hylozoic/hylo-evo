@@ -4,7 +4,7 @@ import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostCommunities from './PostCommunities'
-import CardImage from 'components/CardImage'
+import CardImages from 'components/CardImages'
 import PostBody from './PostBody'
 import EventBody from './EventBody'
 import './PostCard.scss'
@@ -70,7 +70,7 @@ export default class PostCard extends React.Component {
         highlightProps={highlightProps}
         editPost={editPost}
         constrained={constrained} />
-      <CardImage type='post' id={post.id} />
+      <CardImages attachments={post.attachments} />
       {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
       {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
       <PostCommunities isPublic={post.isPublic} communities={post.communities} slug={routeParams.slug} constrained={constrained} />

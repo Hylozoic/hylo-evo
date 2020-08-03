@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { filter, isFunction } from 'lodash'
+import { filter, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
@@ -10,7 +10,7 @@ import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
 import { FilePreview } from 'components/AttachmentManager/AttachmentManager'
-import CardImage from 'components/CardImage'
+import CardImages from 'components/CardImages'
 import './Comment.scss'
 
 const { object } = PropTypes
@@ -36,15 +36,15 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, isCreator, deleteComment, removeComment } = this.props
     const { editing } = this.state
-    const { id, creator, createdAt, text, attachments } = comment
+    const { creator, createdAt, text, attachments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
-    const dropdownItems = filter([
+    const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
       { icon: 'Trash', label: 'Delete', onClick: deleteComment },
       { icon: 'Trash', label: 'Remove', onClick: removeComment }
-    ], item => isFunction(item.onClick))
+    ])
 
     const presentedText = present(sanitize(text), { slug })
 
@@ -60,12 +60,10 @@ export default class Comment extends Component {
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
-      <CardImage type='comment' id={id} linked />
-      {attachments && attachments.map((attachment, i) => {
-        if (attachment.type !== 'image') {
-          return <FilePreview attachment={attachment} position={i} key={i} />
-        }
-      })}
+      <CardImages attachments={attachments} linked styleName='images' />
+      {attachments && filter({ type: 'file' }, attachments).map((attachment, i) =>
+        <FilePreview styleName='files'attachment={attachment} position={i} key={i} />
+      )}
       <ClickCatcher>
         {editing && <HyloEditor
           styleName='editor'
