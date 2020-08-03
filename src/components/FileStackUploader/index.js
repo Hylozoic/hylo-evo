@@ -1,4 +1,4 @@
-import component from './FileStackUploader'
-import connector from './FileStackUploader.connector'
+import component from './FilestackUploader'
+import connector from './FilestackUploader.connector'
 
 export default connector(component)

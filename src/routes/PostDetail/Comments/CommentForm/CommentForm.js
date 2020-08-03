@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import AttachmentManager from 'components/AttachmentManager'
-import FileStackUploader from 'components/FileStackUploader'
+import FilestackUploader from 'components/FilestackUploader'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import './CommentForm.scss'
@@ -48,12 +48,10 @@ export default class CommentForm extends Component {
     clearAttachments('comment')
   }
 
+  addAttachment = attachment => this.props.addAttachment('comment', 'new', attachment)
+
   render () {
-    const {
-      currentUser,
-      addAttachment,
-      className
-    } = this.props
+    const { currentUser, className } = this.props
 
     if (!currentUser) return null
 
@@ -63,8 +61,7 @@ export default class CommentForm extends Component {
       styleName='commentForm'
       className={className}
       onClick={() => this.editor.current.focus()}>
-      <h3>Attachments</h3>
-      <AttachmentManager type='comment' />
+      <AttachmentManager type='comment' id='new' />
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor
@@ -74,7 +71,14 @@ export default class CommentForm extends Component {
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
-        <FileStackUploader type='comment' id='new' onSuccess={attachment => addAttachment('comment', 'new', attachment)} />
+        <FilestackUploader
+          type='comment'
+          id='new'
+          onUploadAttachmentSuccess={this.addAttachment}
+        />
+        {/* <Icon name='Paperclip'
+            styleName={cx('action-icon', { 'highlight-icon': true })} /> */}
+
         {/* <UploadAttachmentButton type='comment' onSuccess={attachment => addAttachment('comment', 'new', attachment)}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
