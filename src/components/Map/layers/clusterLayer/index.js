@@ -80,7 +80,7 @@ export default class PostClusterLayer extends CompositeLayer {
           .map(f => f.properties)
       }
       info.object = pickedObject
-      info.expansionZoom = Math.min(this.state.index.getClusterExpansionZoom(pickedObject.cluster_id, this.context.viewport.zoom), 20)
+      info.expansionZoom = Math.min(this.state.index.getClusterExpansionZoom(pickedObject.cluster_id, this.context.viewport.zoom), 14)
     }
     return info
   }
