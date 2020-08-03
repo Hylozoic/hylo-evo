@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 import { bgImageStyle } from 'util/index'
 import './CardImage.scss'
-import { isEmpty } from 'lodash'
 
 export default function CardImage ({
   firstImageUrl,
@@ -26,3 +27,11 @@ export default function CardImage ({
   </div>
 }
 
+CardImage.propTypes = {
+  type: PropTypes.string,
+  id: PropTypes.string,
+  firstImageUrl: PropTypes.string,
+  otherImageUrls: PropTypes.array,
+  className: PropTypes.string,
+  linked: PropTypes.bool
+}

@@ -70,7 +70,7 @@ export default class PostCard extends React.Component {
         highlightProps={highlightProps}
         editPost={editPost}
         constrained={constrained} />
-      <CardImage styleName='image' postId={post.id} />
+      <CardImage styleName='image' type='post' id={post.id} />
       {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
       {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
       <PostCommunities isPublic={post.isPublic} communities={post.communities} slug={routeParams.slug} constrained={constrained} />

@@ -5,6 +5,7 @@ import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import './CommentCard.scss'
+import CardImage from 'components/CardImage'
 
 export default function CommentCard ({
   comment,
@@ -33,14 +34,12 @@ export default function CommentCard ({
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      {image && <img src={image.url}
-        onClick={() => window.open(image.url)}
-        styleName='comment-image' />}
-      {!image && <ClickCatcher>
+      <CardImage styleName='image' type='comment' id={comment.id} linked />
+      <ClickCatcher>
         <Highlight {...highlightProps}>
           <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
         </Highlight>
-      </ClickCatcher>}
+      </ClickCatcher>
       <div styleName='comment-footer' />
     </div>
   </a>

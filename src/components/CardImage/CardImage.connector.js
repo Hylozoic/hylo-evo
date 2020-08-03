@@ -4,11 +4,10 @@ import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 
 export function mapStateToProps (state, props) {
   const imageAttachments = getAttachmentsFromObject(state, {
-    type: 'post',
-    id: props.postId,
+    ...props,
     attachmentType: 'image'
   })
-
+  console.log('!!!!! CardImage props, imageAttachments:', imageAttachments, props)
   if (isEmpty(imageAttachments)) return {}
 
   return {

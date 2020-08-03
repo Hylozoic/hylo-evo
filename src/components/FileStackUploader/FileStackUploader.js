@@ -20,7 +20,6 @@ export default function FileStackUploader ({ uploadAttachment }) {
       // customRender={PickerComponent}
       onSuccess={({ filesUploaded }) => filesUploaded.forEach(result => uploadAttachment(result))}
     />
-    <div id='embedded'></div>
   </React.Fragment>
 }
 

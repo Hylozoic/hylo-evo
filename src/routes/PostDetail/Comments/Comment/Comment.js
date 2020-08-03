@@ -10,6 +10,7 @@ import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
 import { FilePreview } from 'components/AttachmentManager/AttachmentManager'
+import CardImage from 'components/CardImage'
 import './Comment.scss'
 
 const { object } = PropTypes
@@ -35,7 +36,7 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, isCreator, deleteComment, removeComment } = this.props
     const { editing } = this.state
-    const { creator, createdAt, text, attachments } = comment
+    const { id, creator, createdAt, text, attachments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
     const dropdownItems = filter([
@@ -59,12 +60,9 @@ export default class Comment extends Component {
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
+      <CardImage styleName='image' type='comment' id={id} linked />
       {attachments && attachments.map((attachment, i) => {
-        if (attachment.type === 'image') {
-          return <a styleName='imageLink' href={attachment.url} target='_blank' key={i}>
-            <img src={attachment.url} styleName='image' />
-          </a>
-        } else {
+        if (attachment.type !== 'image') {
           return <FilePreview attachment={attachment} position={i} key={i} />
         }
       })}
