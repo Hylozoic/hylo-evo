@@ -29,9 +29,11 @@ export default function FilestackUploader ({
   }
   const onSuccess = ({ filesUploaded }) => filesUploaded.forEach(uploadedFile =>
     uploadAttachment(type, id, uploadedFile).then(response => {
-      if (!response) return onUploadAttachmentError(
-        new Error('No response returned from uploader')
-      )
+      if (!response) {
+        return onUploadAttachmentError(
+          new Error('No response returned from uploader')
+        )
+      }
       if (response.error) return onUploadAttachmentError(response.error)
       if (response.payload) return onUploadAttachmentSuccess(response.payload)
     })
@@ -46,12 +48,11 @@ export default function FilestackUploader ({
 }
 
 FilestackUploader.defaultProps = {
-  onUploadAttachmentError: '',
+  onUploadAttachmentError: () => {},
   apiKey: isTest ? 'dummykey' : filestackKey,
   componentDisplayMode: {},
   actionOptions: {}
 }
-
 
 FilestackUploader.propTypes = {
   type: PropTypes.string.isRequired,
@@ -61,7 +62,7 @@ FilestackUploader.propTypes = {
   apiKey: PropTypes.func.isRequired,
   componentDisplayMode: PropTypes.object.isRequired,
   actionOptions: PropTypes.object.isRequired,
-  onSuccess: PropTypes.func,
+  onSuccess: PropTypes.func
 }
 
 // customRender={PickerComponent}
