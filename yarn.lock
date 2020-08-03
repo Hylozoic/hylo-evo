@@ -6635,6 +6635,27 @@ filesize@3.6.1:
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
   integrity sha512-7KjR1vv6qnicaPMi1iiTcI85CyYwRO/PSFCu6SvqL8jN2Wjt/NIYQTFtFs7fSDCYOstUkEWIQGFUg5YZQfjlcg==
 
+filestack-js@3.x.x:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/filestack-js/-/filestack-js-3.16.0.tgz#7386b3f818e58e2569a36a55ee432582c207994b"
+  integrity sha512-7AyecK96IUtkuPyvvCJXP0JaCWTqZ8F0AaHrlKtTyQEanZBAz0EASqpETEdiOh0GvtIoJHXWWyMZEqOyd7z+Kw==
+  dependencies:
+    "@babel/runtime" "^7.8.4"
+    "@filestack/loader" "^1.0.4"
+    "@sentry/minimal" "^5.12.0"
+    abab "^2.0.3"
+    debug "^4.1.1"
+    eventemitter3 "^4.0.0"
+    fast-xml-parser "^3.16.0"
+    file-type "^10.11.0"
+    follow-redirects "^1.10.0"
+    isutf8 "^2.1.0"
+    jsonschema "^1.2.5"
+    lodash.clonedeep "^4.5.0"
+    p-queue "^4.0.0"
+    spark-md5 "^3.0.0"
+    ts-node "^8.10.1"
+
 filestack-js@^3.15.0:
   version "3.15.0"
   resolved "https://registry.yarnpkg.com/filestack-js/-/filestack-js-3.15.0.tgz#2f259a9a696280b22688d5cd8bb5e2cffb9d38ec"
@@ -6655,6 +6676,13 @@ filestack-js@^3.15.0:
     p-queue "^4.0.0"
     spark-md5 "^3.0.0"
     ts-node "^8.10.1"
+
+filestack-react@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/filestack-react/-/filestack-react-3.2.1.tgz#0928dd476ad26bef2d9d7d8db28d3b8572608e96"
+  integrity sha512-Add88lWzLklycsaFFIyT1DRrHbtn0SJsV5rHsQuc8QCqIzsPyy0Kxc7a30d1YJfh5a00b9K438R8pjlWEVBp1Q==
+  dependencies:
+    filestack-js "3.x.x"
 
 fill-range@^2.1.0:
   version "2.2.4"

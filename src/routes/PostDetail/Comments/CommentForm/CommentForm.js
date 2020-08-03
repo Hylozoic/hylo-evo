@@ -4,6 +4,7 @@ import { throttle } from 'lodash'
 import cx from 'classnames'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import AttachmentManager from 'components/AttachmentManager'
+import FileStackUploader from 'components/FileStackUploader'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
@@ -61,6 +62,8 @@ export default class CommentForm extends Component {
       styleName='commentForm'
       className={className}
       onClick={() => this.editor.current.focus()}>
+      <h3>Attachments</h3>
+      <AttachmentManager type='comment' />
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor
@@ -70,11 +73,11 @@ export default class CommentForm extends Component {
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
-        <AttachmentManager type='comment' />
-        <UploadAttachmentButton type='comment' onSuccess={attachment => addAttachment('comment', 'new', attachment)}>
+        <FileStackUploader type='comment' id='new' onSuccess={attachment => addAttachment('comment', 'new', attachment)} />
+        {/* <UploadAttachmentButton type='comment' onSuccess={attachment => addAttachment('comment', 'new', attachment)}>
           <Icon name='Paperclip'
             styleName={cx('action-icon', { 'highlight-icon': true })} />
-        </UploadAttachmentButton>
+        </UploadAttachmentButton> */}
       </div>
     </div>
   }
