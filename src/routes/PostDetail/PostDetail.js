@@ -159,7 +159,7 @@ export default class PostDetail extends Component {
         {atHeader && <div styleName='header-sticky' style={headerStyle}>
           <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
         </div>}
-        <CardImage type='post' id={post.id} styleName='image' linked />
+        <CardImage type='post' id={post.id} linked />
         <PostTags tags={post.tags} />
         {isEvent && <EventBody
           styleName='body'

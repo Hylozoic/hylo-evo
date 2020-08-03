@@ -7,12 +7,11 @@ import './CardImage.scss'
 export default function CardImage ({
   firstImageUrl,
   otherImageUrls,
-  className,
   linked
 }) {
   if (!firstImageUrl) return null
 
-  return <div style={bgImageStyle(firstImageUrl)} className={className}>
+  return <div style={bgImageStyle(firstImageUrl)} styleName='image'>
     <div>
       {linked && <a href={firstImageUrl} target='_blank' styleName='link'>&nbsp;</a>}
       <div styleName='others'>
@@ -28,10 +27,9 @@ export default function CardImage ({
 }
 
 CardImage.propTypes = {
-  type: PropTypes.string,
-  id: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   firstImageUrl: PropTypes.string,
   otherImageUrls: PropTypes.array,
-  className: PropTypes.string,
   linked: PropTypes.bool
 }

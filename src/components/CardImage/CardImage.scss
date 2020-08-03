@@ -31,3 +31,12 @@
     border: 1px solid white;
   }
 }
+
+.image {
+  background-position: center;
+  background-size: cover;
+  @include fluid-height(62%);
+  width: 100%;
+  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
+}

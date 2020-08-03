@@ -60,7 +60,7 @@ export default class Comment extends Component {
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
-      <CardImage styleName='image' type='comment' id={id} linked />
+      <CardImage type='comment' id={id} linked />
       {attachments && attachments.map((attachment, i) => {
         if (attachment.type !== 'image') {
           return <FilePreview attachment={attachment} position={i} key={i} />

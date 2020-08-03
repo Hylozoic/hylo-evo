@@ -34,7 +34,7 @@ export default function CommentCard ({
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      <CardImage styleName='image' type='comment' id={comment.id} linked />
+      <CardImage type='comment' id={comment.id} linked />
       <ClickCatcher>
         <Highlight {...highlightProps}>
           <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
