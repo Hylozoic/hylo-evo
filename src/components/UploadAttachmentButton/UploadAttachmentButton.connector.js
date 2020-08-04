@@ -15,14 +15,15 @@ export function mapDispatchToProps (dispatch, {
   onSuccess
 }) {
   return {
-    uploadAttachmentUsingPicker: () => dispatch(uploadAttachmentUsingPicker({ type, id, attachmentType }))
-      .then(response => {
-        if (response && !response.error && response.payload) {
-          return onSuccess(response.payload)
-        }
-      }),
-    uploadAttachment: attachment => uploadAttachment(type, id, attachment)
+    // uploadAttachmentUsingPicker: () => dispatch(uploadAttachmentUsingPicker({ type, id, attachmentType }))
+    //   .then(response => {
+    //     if (response && !response.error && response.payload) {
+    //       return onSuccess(response.payload)
+    //     }
+    //   }
+    // ),
+    // uploadAttachment: attachment => dispatch(uploadAttachment(type, id, attachment))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export default connect(mapStateToProps)

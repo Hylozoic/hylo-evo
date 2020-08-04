@@ -4,10 +4,6 @@ import ReactFilestack from 'filestack-react'
 import { filestackKey, isTest } from 'config'
 import { ALL_ACCEPTED_MIME_TYPES } from 'client/filepicker'
 
-// import cx from 'classnames'
-// import './FilestackUploader.scss'
-// import Icon from 'components/Icon'
-
 export default function FilestackUploader ({
   type,
   id,
@@ -16,7 +12,8 @@ export default function FilestackUploader ({
   onUploadAttachmentError,
   apiKey,
   componentDisplayMode: providedComponentDisplayMode,
-  actionOptions: providedActionOptions
+  actionOptions: providedActionOptions,
+  customRender
 }) {
   const actionOptions = {
     accept: ALL_ACCEPTED_MIME_TYPES,
@@ -44,6 +41,7 @@ export default function FilestackUploader ({
     componentDisplayMode={componentDisplayMode}
     actionOptions={actionOptions}
     onSuccess={onSuccess}
+    customRender={customRender}
   />
 }
 
@@ -59,23 +57,9 @@ FilestackUploader.propTypes = {
   id: PropTypes.string.isRequired,
   uploadAttachment: PropTypes.func.isRequired,
   onUploadAttachmentSuccess: PropTypes.func.isRequired,
-  apiKey: PropTypes.func.isRequired,
+  apiKey: PropTypes.string.isRequired,
   componentDisplayMode: PropTypes.object.isRequired,
   actionOptions: PropTypes.object.isRequired,
+  customRender: PropTypes.func,
   onSuccess: PropTypes.func
 }
-
-// customRender={PickerComponent}
-// export function PickerComponent ({ onPick }) {
-//   return <div>
-//     <strong>Attach</strong>
-//      <button onClick={onPick}>Pick</button>
-//   </div>
-// }
-
-// FilestackUploader.propTypes = {
-//   type: PropTypes.string.isRequired,
-//   id: PropTypes.string.isRequired,
-//   attachmentType: PropTypes.string,
-//   uploadAttachment: PropTypes.func.isRequired
-// }

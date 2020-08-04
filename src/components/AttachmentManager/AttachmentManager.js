@@ -37,6 +37,7 @@ export default class AttachmentManager extends React.Component {
 
     if (isEmpty(attachments) && !uploadPending) return null
 
+    const forAllAttachmentTypes = !attachmentType
     const imageAttachments = filter({ attachmentType: 'image' }, attachments)
     const fileAttachments = filter({ attachmentType: 'file' }, attachments)
     const showImages = (!isEmpty(imageAttachments) || uploadPending) &&
@@ -46,9 +47,9 @@ export default class AttachmentManager extends React.Component {
 
     return <React.Fragment>
       {showImages &&
-        <ImageManager {...this.props} attachments={imageAttachments} />}
+        <ImageManager {...this.props} forAllAttachmentTypes={forAllAttachmentTypes} attachments={imageAttachments} />}
       {showFiles &&
-        <FileManager {...this.props} attachments={fileAttachments} />}
+        <FileManager {...this.props} forAllAttachmentTypes={forAllAttachmentTypes} attachments={fileAttachments} />}
     </React.Fragment>
   }
 }
@@ -56,10 +57,10 @@ export default class AttachmentManager extends React.Component {
 export const ImageManager = DragDropContext(HTML5Backend)(
   class ImageManager extends React.Component {
     render () {
-      const { type, id, attachments, uploadPending, addAttachment, removeAttachment } = this.props
+      const { type, id, attachments, uploadPending, addAttachment, removeAttachment, forAllAttachmentTypes } = this.props
 
       return <div styleName='image-manager'>
-        <div styleName='section-label'>Images</div>
+        {!forAllAttachmentTypes && <div styleName='section-label'>Images</div>}
         <div styleName='image-previews'>
           {attachments.map((attachment, i) =>
             <ImagePreview
@@ -69,13 +70,13 @@ export const ImageManager = DragDropContext(HTML5Backend)(
               position={i}
               key={i} />)}
           {uploadPending && <div styleName='add-image'><Loading /></div>}
-          <UploadAttachmentButton
+          {!forAllAttachmentTypes && <UploadAttachmentButton
             type={type}
             id={id}
             attachmentType={'image'}
             onSuccess={attachment => addAttachment(type, id, attachment)}>
             <div styleName='add-image'>+</div>
-          </UploadAttachmentButton>
+          </UploadAttachmentButton>}
         </div>
       </div>
     }
@@ -121,10 +122,10 @@ export const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (conn
     }))
 
 export function FileManager ({
-  type, id, attachments, uploadPending, addAttachment, removeAttachment
+  type, id, attachments, uploadPending, addAttachment, removeAttachment, forAllAttachmentTypes
 }) {
   return <div styleName='file-manager'>
-    <div styleName='section-label'>Files</div>
+    {!forAllAttachmentTypes && <div styleName='section-label'>Files</div>}
     <div styleName='file-previews'>
       {attachments.map((attachment, i) =>
         <FilePreview
@@ -132,7 +133,7 @@ export function FileManager ({
           removeFile={() => removeAttachment(type, id, attachment)}
           key={i} />)}
       {uploadPending && <div styleName='loading-file'>Loading...</div>}
-      <UploadAttachmentButton
+      {!forAllAttachmentTypes && <UploadAttachmentButton
         id={id}
         type={type}
         attachmentType={'file'}
@@ -140,7 +141,7 @@ export function FileManager ({
         styleName='add-file-row'>
         <div styleName='add-file'>
           <span styleName='add-file-plus'>+</span> Add File</div>
-      </UploadAttachmentButton>
+      </UploadAttachmentButton>}
     </div>
   </div>
 }

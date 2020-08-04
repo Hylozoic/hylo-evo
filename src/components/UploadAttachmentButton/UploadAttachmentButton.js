@@ -1,31 +1,40 @@
 import React from 'react'
+import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
 import Icon from 'components/Icon'
 import FilestackUploader from 'components/FilestackUploader'
 import './UploadAttachmentButton.scss'
-import { addAttachment } from 'components/AttachmentManager/AttachmentManager.store'
 
 export default function UploadAttachmentButton ({
-  uploadAttachmentUsingPicker,
-  loading,
-  className,
-  children,
-  disable,
-
   type,
-  id,
-  onSuccess
+  id = ID_FOR_NEW,
+  onSuccess,
+  ...rest
 }) {
-  const iconName = loading ? 'Clock' : 'AddImage'
-  const onClick = loading || disable ? () => {} : uploadAttachmentUsingPicker
-
-  if (children) return <div onClick={onClick} className={className}>{children}</div>
-
   return <FilestackUploader
     type={type}
     id={id}
-    onUploadAttachmentSuccess={attachment => onSuccess(type, id, addAttachment)}
+    // For addAttachment...
+    // onUploadAttachmentSuccess={attachment => onSuccess(type, id, addAttachment)}
+    onUploadAttachmentSuccess={onSuccess}
+    customRender={props => <UploadButton {...props} {...rest} />}
   />
-  // <div styleName='button' onClick={onClick} className={className}>
-  //   <Icon name={iconName} styleName='icon' />
-  // </div>
+}
+
+export function UploadButton ({
+  onPick,
+  loading,
+  disable,
+  className,
+  children
+}) {
+  const iconName = loading ? 'Clock' : 'AddImage'
+  const onClick = loading || disable ? () => {} : onPick
+
+  return <div onClick={onClick} className={className}>
+    {children && children}
+    {!children && <Icon
+      name={iconName}
+      styleName={cx('action-icon', { 'highlight-icon': true })}
+    />}
+  </div>
 }

@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import AttachmentManager from 'components/AttachmentManager'
-import FilestackUploader from 'components/FilestackUploader'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
+import Icon from 'components/Icon'
+import cx from 'classnames'
 import './CommentForm.scss'
-
-// import cx from 'classnames'
-// import UploadAttachmentButton from 'components/UploadAttachmentButton'
-// import Icon from 'components/Icon'
 
 export default class CommentForm extends Component {
   static propTypes = {
@@ -71,18 +69,9 @@ export default class CommentForm extends Component {
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
-        <FilestackUploader
-          type='comment'
-          id='new'
-          onUploadAttachmentSuccess={this.addAttachment}
-        />
-        {/* <Icon name='Paperclip'
-            styleName={cx('action-icon', { 'highlight-icon': true })} /> */}
-
-        {/* <UploadAttachmentButton type='comment' onSuccess={attachment => addAttachment('comment', 'new', attachment)}>
-          <Icon name='Paperclip'
-            styleName={cx('action-icon', { 'highlight-icon': true })} />
-        </UploadAttachmentButton> */}
+        <UploadAttachmentButton type='comment' id='new' onSuccess={this.addAttachment}>
+          <Icon name='AddImage' styleName={cx('action-icon', { 'highlight-icon': true })} />
+        </UploadAttachmentButton>
       </div>
     </div>
   }
