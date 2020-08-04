@@ -1,9 +1,10 @@
 export function convertMapboxToLocation (mapboxResult) {
-  const neighborhoodObject = mapboxResult.context.find(c => c.id.includes('neighborhood'))
-  const postcodeObject = mapboxResult.context.find(c => c.id.includes('postcode'))
-  const placeObject = mapboxResult.context.find(c => c.id.includes('place'))
-  const regionObject = mapboxResult.context.find(c => c.id.includes('region'))
-  const countryObject = mapboxResult.context.find(c => c.id.includes('country'))
+  const context = mapboxResult.context
+  const neighborhoodObject = context && context.find(c => c.id.includes('neighborhood'))
+  const postcodeObject = context && context.find(c => c.id.includes('postcode'))
+  const placeObject = context && context.find(c => c.id.includes('place'))
+  const regionObject = context && context.find(c => c.id.includes('region'))
+  const countryObject = context && context.find(c => c.id.includes('country'))
 
   let city = placeObject ? placeObject.text : mapboxResult.place_type[0] === 'place' ? mapboxResult.text : ''
 
@@ -22,13 +23,14 @@ export function convertMapboxToLocation (mapboxResult) {
     accuracy: mapboxResult.properties.accuracy,
     addressNumber,
     addressStreet,
-    bbox: mapboxResult.bbox ? [{ lng: mapboxResult.bbox[0], lat: mapboxResult.bbox[1] }, { lng: mapboxResult.bbox[2], lat: mapboxResult.bbox[3] }] : [],
+    bbox: mapboxResult.bbox ? [{ lng: mapboxResult.bbox[0], lat: mapboxResult.bbox[1] }, { lng: mapboxResult.bbox[2], lat: mapboxResult.bbox[3] }] : null,
     center: { lng: mapboxResult.center[0], lat: mapboxResult.center[1] },
     city,
     country: countryObject && countryObject.short_code,
     fullText: mapboxResult.place_name,
     // geometry: [Point]
     // locality
+    mapboxId: mapboxResult.id,
     neighborhood: neighborhoodObject && neighborhoodObject.text,
     region: regionObject && regionObject.text,
     postcode: postcodeObject && postcodeObject.text

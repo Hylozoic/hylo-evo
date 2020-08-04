@@ -12,6 +12,8 @@ import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
 // import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
+import LocationInput from 'components/LocationInput'
+import { locationObjectToViewport } from 'util/geo'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -96,6 +98,12 @@ export default class MapExplorer extends React.Component {
     fetchMembers()
     fetchPosts()
     fetchPublicCommunities()
+  }
+
+  handleLocationInputSelection = (value) => {
+    if (value.mapboxId) {
+      this.setState({ viewport: locationObjectToViewport(this.state.viewport, value) })
+    }
   }
 
   mapViewPortUpdate = (update) => {
@@ -227,7 +235,9 @@ export default class MapExplorer extends React.Component {
           routeParams={routeParams}
         />)
         : '' }
-
+      <div styleName={cx('searchAutocomplete')}>
+        <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
+      </div>
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
