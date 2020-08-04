@@ -1,13 +1,12 @@
 import React from 'react'
-import path from 'path'
 import { pick, get } from 'lodash/fp'
+import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
-import Icon from 'components/Icon'
-import cx from 'classnames'
 import ClickCatcher from 'components/ClickCatcher'
+import CardFileAttachments from 'components/CardFileAttachments'
 import LinkPreview from '../LinkPreview'
 import PostCompletion from '../PostCompletion'
-import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
+import cx from 'classnames'
 import './PostDetails.scss'
 
 const maxDetailsLength = 144
@@ -43,28 +42,18 @@ export default function PostDetails ({
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         </ClickCatcher>
       }
-      {
-        canBeCompleted && canEdit && expanded &&
+      {canBeCompleted && canEdit && expanded &&
         <PostCompletion
           type={postType}
           startTime={post.startTime}
           endTime={post.endTime}
           isFulfilled={isFulfilled}
           fulfillPost={fulfillPost}
-          unfulfillPost={unfulfillPost} />
-      }
+          unfulfillPost={unfulfillPost} />}
       {linkPreview &&
         <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
-      {fileAttachments && <div styleName='file-attachments'>
-        {fileAttachments.map(fileAttachment =>
-          <a styleName='file-attachment'
-            href={fileAttachment.url}
-            target='_blank'
-            key={fileAttachment.id}>
-            <Icon name='Document' styleName='file-icon' />
-            <span styleName='file-name'>{decodeURIComponent(path.basename(fileAttachment.url))}</span>
-          </a>)}
-      </div>}
+      {fileAttachments &&
+        <CardFileAttachments attachments={fileAttachments} />}
     </div>
   </Highlight>
 }

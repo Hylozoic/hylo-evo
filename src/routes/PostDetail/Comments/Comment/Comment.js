@@ -9,8 +9,8 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
-import { FilePreview } from 'components/AttachmentManager/AttachmentManager'
-import CardImages from 'components/CardImages'
+import CardImageAttachments from 'components/CardImageAttachments'
+import CardFileAttachments from 'components/CardFileAttachments'
 import './Comment.scss'
 
 const { object } = PropTypes
@@ -60,10 +60,8 @@ export default class Comment extends Component {
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
-      <CardImages attachments={attachments} linked styleName='images' />
-      {attachments && filter({ type: 'file' }, attachments).map((attachment, i) =>
-        <FilePreview styleName='files'attachment={attachment} position={i} key={i} />
-      )}
+      <CardImageAttachments attachments={attachments} linked styleName='images' />
+      <CardFileAttachments attachments={attachments} styleName='files' />
       <ClickCatcher>
         {editing && <HyloEditor
           styleName='editor'

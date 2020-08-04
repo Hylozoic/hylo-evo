@@ -42,7 +42,7 @@ exports[`displays image an image attachments 1`] = `
         just now
       </span>
     </div>
-    <CardImages
+    <CardImageAttachments
       attachments={
         Array [
           Object {
@@ -118,7 +118,7 @@ exports[`matches last snapshot 1`] = `
         just now
       </span>
     </div>
-    <CardImages
+    <CardImageAttachments
       linked={true}
     />
     <Connect(ClickCatcher)>
@@ -186,7 +186,7 @@ exports[`matches last snapshot with different config 1`] = `
         just now
       </span>
     </div>
-    <CardImages
+    <CardImageAttachments
       linked={true}
     />
     <Connect(ClickCatcher)>

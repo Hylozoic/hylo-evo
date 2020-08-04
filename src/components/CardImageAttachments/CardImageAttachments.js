@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { filter, isEmpty } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
-import './CardImages.scss'
+import './CardImageAttachments.scss'
 
-export default function CardImages ({
+export default function CardImageAttachments ({
   attachments,
   linked,
   className
@@ -18,7 +18,7 @@ export default function CardImages ({
 
   if (!firstImageUrl) return null
 
-  return <div style={bgImageStyle(firstImageUrl)} styleName='image' className={className}>
+  return <div style={bgImageStyle(firstImageUrl)} className={className} styleName='image'>
     <div>
       {linked && <a href={firstImageUrl} target='_blank' styleName='link'>&nbsp;</a>}
       <div styleName='others'>
@@ -33,7 +33,7 @@ export default function CardImages ({
   </div>
 }
 
-CardImages.propTypes = {
+CardImageAttachments.propTypes = {
   attachments: PropTypes.array.isRequired,
   linked: PropTypes.bool,
   className: PropTypes.string

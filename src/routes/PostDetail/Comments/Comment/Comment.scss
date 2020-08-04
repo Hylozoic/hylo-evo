@@ -61,9 +61,10 @@ $comment-left-margin: 69px;
 
 .images {
   display: flex;
-  width: unset;
   padding-top: 0px;
   margin-left: $comment-left-margin;
+  width: 70%;
+  border-radius: 20px;
 }
 
 .files {

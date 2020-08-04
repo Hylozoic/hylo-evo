@@ -3,7 +3,7 @@ import * as filestack from 'filestack-js'
 
 const filePicker = filestack.init(isTest ? 'dummykey' : filestackKey)
 
-const fromSources = [
+const FILESTACK_FROM_SOURCES = [
   'local_file_system',
   'url',
   'webcam',
@@ -14,29 +14,25 @@ const fromSources = [
   'imagesearch'
 ]
 
-export const ACCEPTED_MIME_TYPES = {
+export const FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE = {
   image: ['image/*'],
   file: ['video/*', 'audio/*', 'application/*', 'text/*']
 }
 
-export const ALL_ACCEPTED_MIME_TYPES = [
-  ...ACCEPTED_MIME_TYPES.image,
-  ...ACCEPTED_MIME_TYPES.file
+export const FILESTACK_ACCEPTED_MIME_TYPES = [
+  ...FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE.image,
+  ...FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE.file
 ]
 
-/*
- * options:
- *   success:  a success callback, which receives the new file's url as an argument
- *   failure:  a failure callback, which receives the error as an argument
- *   attachmentType: either 'image' or 'file'. Determines what file types are allowed
- */
-export const uploadFile = function ({
-  success,
-  cancel,
-  failure,
-  accept = ALL_ACCEPTED_MIME_TYPES,
-  // TODO: allow for more at once in PostEditor
-  maxFiles = 1
+// Legacy -- Use if not using FilestackUploader (FilestackReact) component
+export const filestackUploader = function ({
+  accept = FILESTACK_ACCEPTED_MIME_TYPES,
+  fromSources = FILESTACK_FROM_SOURCES,
+  maxFiles = 1,
+  onFileUploadFinished,
+  onFileUploadFailed,
+  onCancel,
+  ...rest
 }) {
   filePicker.picker({
     accept,
@@ -46,9 +42,10 @@ export const uploadFile = function ({
       const url = file.mimetype.split('/')[0] === 'image'
         ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle
         : file.url
-      success({ ...file, url })
+      onFileUploadFinished({ ...file, url })
     },
-    onFileUploadFailed: failure,
-    onCancel: cancel
+    onFileUploadFailed,
+    onCancel,
+    ...rest
   }).open()
 }

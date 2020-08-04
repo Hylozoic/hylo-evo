@@ -4,8 +4,9 @@ import RoundImage from 'components/RoundImage'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
+import CardImageAttachments from 'components/CardImageAttachments'
+import CardFileAttachments from 'components/CardFileAttachments'
 import './CommentCard.scss'
-import CardImages from 'components/CardImages'
 
 export default function CommentCard ({
   comment,
@@ -34,7 +35,8 @@ export default function CommentCard ({
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      <CardImages attachments={attachments} linked />
+      <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
+      <CardFileAttachments attachments={attachments} styleName='comment-files' />
       <ClickCatcher>
         <Highlight {...highlightProps}>
           <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />

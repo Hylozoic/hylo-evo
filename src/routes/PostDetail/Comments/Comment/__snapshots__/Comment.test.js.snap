@@ -29,7 +29,7 @@ exports[`Comment displays image attachments 1`] = `
       </span>
     </div>
   </div>
-  <CardImages
+  <CardImageAttachments
     attachments={
       Object {
         "attachmentType": "image",
@@ -99,7 +99,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       />
     </div>
   </div>
-  <CardImages
+  <CardImageAttachments
     data-stylename="images"
     linked={true}
   />
@@ -163,7 +163,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       />
     </div>
   </div>
-  <CardImages
+  <CardImageAttachments
     data-stylename="images"
     linked={true}
   />
@@ -210,7 +210,7 @@ exports[`Comment renders correctly 1`] = `
       </span>
     </div>
   </div>
-  <CardImages
+  <CardImageAttachments
     data-stylename="images"
     linked={true}
   />
@@ -257,7 +257,7 @@ exports[`Comment renders correctly when editing 1`] = `
       </span>
     </div>
   </div>
-  <CardImages
+  <CardImageAttachments
     data-stylename="images"
     linked={true}
   />

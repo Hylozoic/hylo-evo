@@ -1,40 +1,88 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
-import Icon from 'components/Icon'
 import FilestackUploader from 'components/FilestackUploader'
+import Icon from 'components/Icon'
+import cx from 'classnames'
 import './UploadAttachmentButton.scss'
 
-export default function UploadAttachmentButton ({
-  type,
-  id = ID_FOR_NEW,
-  onSuccess,
-  ...rest
-}) {
-  return <FilestackUploader
-    type={type}
-    id={id}
-    // For addAttachment...
-    // onUploadAttachmentSuccess={attachment => onSuccess(type, id, addAttachment)}
-    onUploadAttachmentSuccess={onSuccess}
-    customRender={props => <UploadButton {...props} {...rest} />}
-  />
-}
-
 export function UploadButton ({
-  onPick,
+  onClick,
   loading,
   disable,
   className,
   children
 }) {
   const iconName = loading ? 'Clock' : 'AddImage'
-  const onClick = loading || disable ? () => {} : onPick
+  const loadingOnClick = loading || disable ? () => {} : onClick
 
-  return <div onClick={onClick} className={className}>
+  return <div onClick={loadingOnClick} className={className}>
     {children && children}
     {!children && <Icon
       name={iconName}
       styleName={cx('action-icon', { 'highlight-icon': true })}
     />}
   </div>
+}
+export default function UploadAttachmentButton ({
+  type,
+  id,
+  uploadAttachment,
+  onSuccess,
+  onError,
+  // useFilestackLibrary only props
+  useFilestackLibrary,
+  uploadAttachmentUsingFilestackLibrary,
+  attachmentType,
+  ...uploadButtonProps
+}) {
+  const filePickerUploadComplete = response => {
+    if (!response) {
+      return onError(new Error('No response returned from uploader'))
+    }
+    if (response.error) return onError(response.error)
+    if (response.payload) return onSuccess(response.payload)
+  }
+
+  if (useFilestackLibrary) {
+    const onClick = () => {
+      return uploadAttachmentUsingFilestackLibrary(type, id, attachmentType)
+        .then(filePickerUploadComplete)
+    }
+
+    return <UploadButton {...uploadButtonProps} onClick={onClick} />
+  }
+
+  const fileStackUploaderOnSuccess = ({ filesUploaded }) => {
+    return filesUploaded.forEach(attachment =>
+      uploadAttachment(type, id, attachment)
+        .then(filePickerUploadComplete)
+    )
+  }
+
+  return <FilestackUploader
+    type={type}
+    id={id}
+    onSuccess={fileStackUploaderOnSuccess}
+    customRender={({ onPick }) =>
+      <UploadButton onClick={onPick} {...uploadButtonProps} />
+    }
+  />
+}
+
+UploadAttachmentButton.defaultProps = {
+  id: ID_FOR_NEW,
+  onError: () => {}
+}
+
+UploadAttachmentButton.propTypes = {
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  uploadAttachment: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
+  // useFilestackLibrary only props
+  useFilestackLibrary: PropTypes.bool,
+  uploadAttachmentUsingFilestackLibrary: PropTypes.func,
+  attachmentType: PropTypes.string
 }

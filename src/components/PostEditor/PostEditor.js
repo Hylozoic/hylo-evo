@@ -553,6 +553,7 @@ export function ActionsBar ({
         id={id}
         attachmentType='image'
         onSuccess={attachment => addAttachment('post', id, attachment)}
+        useFilestackLibrary
         disable={showImages}>
         <Icon
           name='AddImage'

@@ -1,4 +1,4 @@
-import { uploadFile, ACCEPTED_MIME_TYPES } from 'client/filepicker'
+import { filestackUploader, FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE } from 'client/filepicker'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 export const ID_FOR_NEW = 'new'
@@ -29,22 +29,25 @@ export default function uploadAttachment (type, id, result) {
   }
 }
 
-export function uploadAttachmentUsingPicker ({
+// Legacy -- limited to a single file selection
+export function uploadAttachmentUsingFilestackLibrary ({
   type, // this is the type of thing that the upload is for, e.g. post
   id = ID_FOR_NEW, // this is the id of the thing that the upload is for
   attachmentType, // this is the attachment type used to identify a related attachment manager
-  accept
+  accept: providedAccept
 }) {
   const payload = new Promise((resolve, reject) => {
-    const acceptedMimeTypes = attachmentType
-      ? ACCEPTED_MIME_TYPES[attachmentType]
-      : accept
+    const accept = attachmentType
+      ? FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE[attachmentType]
+      : providedAccept
+    const onFileUploadFinished = result =>
+      resolve(uploadAttachment(type, id, result).payload)
 
-    uploadFile({
-      success: result => resolve(uploadAttachment(type, id, result).payload),
-      cancel: () => resolve(),
-      failure: err => reject(err),
-      accept: acceptedMimeTypes
+    filestackUploader({
+      accept,
+      onFileUploadFinished,
+      onFileUploadFailed: err => reject(err),
+      onCancel: () => resolve()
     })
   })
 

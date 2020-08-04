@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import uploadAttachment, { uploadAttachmentUsingPicker } from 'store/actions/uploadAttachment'
+import uploadAttachment, { uploadAttachmentUsingFilestackLibrary } from 'store/actions/uploadAttachment'
 import getUploadPending from 'store/selectors/getUploadPending'
 
 export function mapStateToProps (state, props) {
@@ -8,22 +8,13 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, {
-  id,
-  type,
-  attachmentType,
-  onSuccess
-}) {
+export function mapDispatchToProps (dispatch) {
   return {
-    // uploadAttachmentUsingPicker: () => dispatch(uploadAttachmentUsingPicker({ type, id, attachmentType }))
-    //   .then(response => {
-    //     if (response && !response.error && response.payload) {
-    //       return onSuccess(response.payload)
-    //     }
-    //   }
-    // ),
-    // uploadAttachment: attachment => dispatch(uploadAttachment(type, id, attachment))
+    uploadAttachment: (type, id, attachment) =>
+      dispatch(uploadAttachment(type, id, attachment)),
+    uploadAttachmentUsingFilestackLibrary: (type, id, attachmentType) =>
+      dispatch(uploadAttachmentUsingFilestackLibrary({ type, id, attachmentType }))
   }
 }
 
-export default connect(mapStateToProps)
+export default connect(mapStateToProps, mapDispatchToProps)
