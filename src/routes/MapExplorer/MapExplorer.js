@@ -101,7 +101,7 @@ export default class MapExplorer extends React.Component {
   }
 
   handleLocationInputSelection = (value) => {
-    if (value.id) {
+    if (value.mapboxId) {
       this.setState({ viewport: locationObjectToViewport(this.state.viewport, value) })
     }
   }
