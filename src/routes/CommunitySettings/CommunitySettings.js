@@ -49,14 +49,6 @@ export default class CommunitySettings extends Component {
     return <FullPageModal goToOnClose={`/c/${slug}`}
       content={[
         {
-          name: 'Membership Requests',
-          path: `/c/${slug}/settings/requests`,
-          component: <MembershipRequestsTab
-            community={community}
-            currentUser={currentUser}
-          />
-        },
-        {
           name: 'Settings',
           path: `/c/${slug}/settings`,
           component: <CommunitySettingsTab
@@ -74,6 +66,14 @@ export default class CommunitySettings extends Component {
           name: 'Invite',
           path: `/c/${slug}/settings/invite`,
           component: <InviteSettingsTab community={community} />
+        },
+        {
+          name: 'Join Requests',
+          path: `/c/${slug}/settings/requests`,
+          component: <MembershipRequestsTab
+            community={community}
+            currentUser={currentUser}
+          />
         },
         {
           name: 'Delete',

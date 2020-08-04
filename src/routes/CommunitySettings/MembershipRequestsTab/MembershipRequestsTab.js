@@ -63,7 +63,7 @@ export function NoRequests ({ community, viewMembers }) {
         <img src={jollyAxolotl} />
         <br />
         <div>
-          <h2>No new membership requests</h2>
+          <h2>No new join requests</h2>
           We'll notify you by email when someone wants to join <strong>{community.name}</strong>
         </div>
         <Button
@@ -86,6 +86,7 @@ export function NewRequests ({ accept, decline, joinRequests }) {
       </div>
       <div styleName='request-list'>
         {joinRequests.map(r => <JoinRequest
+          key={r.id}
           accept={accept}
           decline={decline}
           request={r} />)}
@@ -103,7 +104,7 @@ export function JoinRequest ({ accept, decline, request }) {
         <Avatar avatarUrl={user.avatarUrl} url={`/m/${user.id}`} styleName='requestorAvatar' />
         <div styleName='requestorInfo'>
           <div styleName='name'>{user.name}</div>
-          <div styleName='skills'>{user.skills.items.map(({ name }) => <span>#{name}</span>)}</div>
+          <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div>
         </div>
       </div>
       <div styleName='action-buttons'>

@@ -65,7 +65,7 @@ export default class CommunityDetail extends Component {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error sending your join request.`
         const request = get(res, 'payload.data')
-        if (request) successMessage = `Your membership request is pending.`
+        if (request) successMessage = `Your join request is pending.`
         return this.setState({ errorMessage, successMessage, request })
       })
   }
@@ -83,7 +83,7 @@ export default class CommunityDetail extends Component {
 
     const topics = community && community.communityTopics
 
-    const isMember = (community.members || []).find(m => m.id === currentUser.id)
+    const isMember = (currentUser && currentUser.memberships.toModelArray()).find(m => m.community.id === community.id)
 
     return <div styleName='c.community'>
       <div styleName='c.communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
