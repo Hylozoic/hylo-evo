@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './SavedSearchesTab.scss'
+import { info } from 'util/assets'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import ReactTooltip from 'react-tooltip'
@@ -42,7 +43,7 @@ export function SearchControl ({ search, deleteSearch }) {
   return <div styleName='search-control'>
     <div styleName='row'>
       <Link to={'/all/map'} styleName='name'>{search.name}</Link>
-      <span styleName='params-icon' data-tip={params} data-for='params'>?</span>
+      <span styleName='params-icon' data-tip={params} data-for='params'><img src={info} /></span>
       <ReactTooltip place='right'
         type='dark'
         id='params'
