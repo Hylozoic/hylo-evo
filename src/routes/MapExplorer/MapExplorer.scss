@@ -196,6 +196,27 @@ button.toggleFeatureFiltersButton {
   background-color: white;
 }
 
+.savedSearches {
+  position: absolute;
+  top: 0px;
+  display: none;
+
+  &.savedSearchesOpen {
+    display: block;
+  }
+}
+
+.savedSearchesButton {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  width: 80px;
+}
+
 .featureTypeFilters {
   position: absolute;
   bottom: 50px;
