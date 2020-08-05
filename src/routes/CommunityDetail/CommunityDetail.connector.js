@@ -31,8 +31,9 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const { location } = props
+  const { currentUser, location } = props
   const communityId = getRouteParam('communityId', {}, props)
+
   const closeLocation = {
     ...props.location,
     pathname: removeCommunityFromUrl(location.pathname)
@@ -40,7 +41,7 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchCommunity: () => dispatch(fetchCommunity(communityId)),
-    fetchJoinRequests: () => dispatch(fetchJoinRequests(communityId)),
+    fetchJoinRequests: () => { if (currentUser) return dispatch(fetchJoinRequests(communityId)) },
     onClose: () => dispatch(push(closeLocation)),
     joinCommunity: (communityId, userId) => dispatch(joinCommunity(communityId, userId)),
     requestToJoinCommunity: (communityId, userId) => dispatch(createJoinRequest(communityId, userId))

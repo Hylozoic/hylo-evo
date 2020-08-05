@@ -117,7 +117,8 @@ const publicPostsQuery = `query (
   $filter: String,
   $topic: ID,
   $first: Int,
-  $boundingBox: [PointInput]
+  $boundingBox: [PointInput],
+  $networkSlugs: [String]
 ) {
   ${publicPostsQueryFragment}
 }`
