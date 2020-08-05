@@ -392,12 +392,15 @@ export const getCurrentTopics = createSelector(
   getFilteredPosts,
   (posts) => {
     const topics = (posts ? posts.reduce((topics, post) => {
-      post.topics.toModelArray().forEach((topic) => { topics[topic.name] = topics[topic.name] ? topics[topic.name] + 1 : 1 })
+      post.topics.toModelArray().forEach((topic) => {
+        const count = topics[topic.name] ? topics[topic.name] + 1 : 1
+        topics[topic.name] = { count, id: topic.id }
+      })
       return topics
     }, {}) : {})
     const orderedTopics = []
     Object.keys(topics).forEach(key => {
-      orderedTopics.push({ 'name': key, 'count': topics[key] })
+      orderedTopics.push({ 'id': topics[key].id, 'name': key, 'count': topics[key].count })
     })
     return orderedTopics.sort((a, b) => b.count - a.count)
   }
