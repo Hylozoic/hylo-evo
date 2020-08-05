@@ -57,7 +57,7 @@
   }
 }
 
-.saved {
+.savedViews {
   background: white;
 
   h2 {
@@ -67,6 +67,7 @@
     font-size: 16px;
     line-height: 20px;
     padding: 9px;
+    margin-bottom: 0;
   }
 }
 
@@ -86,6 +87,27 @@
   &.filters {
     justify-content: flex-start;
   }
+}
+
+.saved-name {
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.saved-filters {
+  justify-content: flex-start;
+  padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 13px;
+  color: #C0C5CD;
+}
+
+.params {
+  background: #2A4059;
+  padding: 11px 15px;
 }
 
 .searchName {
@@ -151,11 +173,12 @@
 }
 
 .delete {
-  margin-top: 2px;
+  cursor: pointer;
 }
 
 .actions {
   margin: 0;
+  display: flex;
 
   .view {
     border: 1px solid #40A1DD;

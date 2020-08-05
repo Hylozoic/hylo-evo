@@ -1,18 +1,11 @@
 import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import Member from 'components/Member'
-import PostCard from 'components/PostCard'
-import { SORT_OPTIONS } from '../MapExplorer.store'
-import styles from './SavedSearches.scss'
+import { formatParams } from 'util/searchParams'
 import { info } from 'util/assets'
-
-const SEARCHES = [
-  { name: 'Saved Search 1', count: 1, params: 'params' },
-  { name: 'Saved Search 2', count: 3, params: 'params 2222' }
-]
+import styles from './SavedSearches.scss'
+import ReactTooltip from 'react-tooltip'
 
 function SavedSearches (props) {
   let {
@@ -22,7 +15,8 @@ function SavedSearches (props) {
     features,
     querystringParams,
     routeParams,
-    saved = SEARCHES,
+    deleteSearch,
+    searches,
     toggle
   } = props
 
@@ -66,10 +60,10 @@ function SavedSearches (props) {
         </div>
         
         
-        <div styleName='saved'>
+        <div styleName='savedViews'>
           <h2>Saved Views</h2>
-          {saved.map((search, index) => {
-            return (<SavedSearch key={index} search={search}/>)
+          {searches.map((search, index) => {
+            return (<SavedSearch key={index} search={search} deleteSearch={deleteSearch}/>)
           })}
         </div>
       </div>
@@ -77,19 +71,27 @@ function SavedSearches (props) {
   )
 }
 
-const SavedSearch = ({ key, search }) => {
-  const { name, count, params } = search;
+const SavedSearch = ({ search, deleteSearch }) => {
+  const { name, count, community, isPublic } = search;
+  const params = formatParams(search)
   return (
     <div styleName='search'>
       <div styleName='row'>
-        <span>{name} <span styleName='count'>{count}</span></span>
-        <span styleName='actions'>
-          <Icon name='Trash' styleName='delete' />
-          <span styleName='view'>View</span>
-        </span>
+        <div styleName='saved-name'>{name} {count && <span styleName='count'>{count}</span>} </div>
+        <div styleName='actions'>
+          <Icon name='Trash' styleName='delete' onClick={() => deleteSearch(search.id)}/>
+          <div styleName='view'>View</div>
+        </div>
       </div>
-      <div styleName='row filters'>
-        <img src={info} /><span styleName='filters'>{params}</span>
+      <div styleName='row filters' data-tip={params} data-for='params'>
+      <img src={info} /><span styleName='saved-filters'>Community: {community.name} • Public Posts: {isPublic ? 'Yes' : 'No'}
+        <ReactTooltip place='right'
+        id='params'
+        effect='solid'
+        multiline
+        delayShow={200}
+        styleName='params' />
+        </span>
       </div>
     </div>
   )

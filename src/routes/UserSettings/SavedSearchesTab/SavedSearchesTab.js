@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './SavedSearchesTab.scss'
+import { formatParams } from 'util/searchParams'
 import { info } from 'util/assets'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
@@ -30,15 +31,7 @@ export default class SavedSearchesTab extends Component {
 }
 
 export function SearchControl ({ search, deleteSearch }) {
-  const { community, network, isPublic, searchText, postTypes } = search
-
-  const params = [
-    community ? `Community: ${community.slug}` : '',
-    network ? `Network: ${network.slug}` : '',
-    `Public posts: ${isPublic}`,
-    searchText ? `Search term: ${searchText}` : '',
-    postTypes ? `Post types: ${postTypes.join(', ')}` : ''
-  ].filter(p => p.length).join('<br/>')
+  const params = formatParams(search)
 
   return <div styleName='search-control'>
     <div styleName='row'>
