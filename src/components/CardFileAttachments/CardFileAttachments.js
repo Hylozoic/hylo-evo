@@ -11,8 +11,8 @@ export default function CardFileAttachments ({
   const fileAttachments = filter({ type: 'file' }, attachments)
 
   return <div styleName='file-attachments' className={className}>
-    {fileAttachments.map(fileAttachment =>
-      <CardFileAttachment fileAttachment={fileAttachment} />)}
+    {fileAttachments.map((fileAttachment, i) =>
+      <CardFileAttachment fileAttachment={fileAttachment} key={i} />)}
   </div>
 }
 
