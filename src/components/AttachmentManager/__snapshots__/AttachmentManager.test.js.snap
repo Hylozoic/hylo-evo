@@ -10,7 +10,7 @@ exports[`AttachmentManager renders FileManager when attachmentType is "file" 1`]
     loadAttachments={[Function]}
     removeAttachment={[Function]}
     type="comment"
-    uploadPending={true}
+    uploadAttachmentPending={true}
   />
 </Fragment>
 `;
@@ -24,7 +24,7 @@ exports[`AttachmentManager renders ImageManager when an attachmentType is not sp
     loadAttachments={[Function]}
     removeAttachment={[Function]}
     type="post"
-    uploadPending={true}
+    uploadAttachmentPending={true}
   />
   <FileManager
     addAttachment={[Function]}
@@ -33,7 +33,7 @@ exports[`AttachmentManager renders ImageManager when an attachmentType is not sp
     loadAttachments={[Function]}
     removeAttachment={[Function]}
     type="post"
-    uploadPending={true}
+    uploadAttachmentPending={true}
   />
 </Fragment>
 `;
@@ -48,7 +48,7 @@ exports[`AttachmentManager renders ImageManager when attachmentType is "image" 1
     loadAttachments={[Function]}
     removeAttachment={[Function]}
     type="post"
-    uploadPending={true}
+    uploadAttachmentPending={true}
   />
 </Fragment>
 `;

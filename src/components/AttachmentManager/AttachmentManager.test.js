@@ -4,7 +4,7 @@ import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview
 
 describe('AttachmentManager', () => {
   const props = {
-    uploadPending: true,
+    uploadAttachmentPending: true,
     attachments: [],
     loadAttachments: () => {},
     removeAttachment: () => {},
@@ -32,7 +32,7 @@ describe('ImageManager', () => {
     const props = {
       id: 1,
       type: 'post',
-      uploadPending: false,
+      uploadAttachmentPending: false,
       attachments: [
         { attachmentType: 'image', url: 'https://nowhere/foo.png' },
         { attachmentType: 'image', url: 'https://nowhere/bar.jpg' }
@@ -70,7 +70,7 @@ describe('FileManager', () => {
     const props = {
       id: 1,
       type: 'post',
-      uploadPending: true,
+      uploadAttachmentPending: true,
       attachments: [
         { url: 'https://nowhere/foo.pdf', attachmentType: 'file' },
         { url: 'https://nowhere/bar.zip', attachmentType: 'file' },

@@ -88,7 +88,7 @@
     "file-loader": "2.0.0",
     "filestack-react": "^3.2.1",
     "filesize": "3.3.0",
-    "filestack-js": "^3.15.0",
+    "filestack-js": "^3.16.0",
     "fs-extra": "7.0.1",
     "global": "^4.3.2",
     "graphql": "^14.2.1",

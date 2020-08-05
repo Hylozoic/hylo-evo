@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { DragDropContext, DragSource, DropTarget } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import path from 'path'
@@ -10,7 +11,38 @@ import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
 import './AttachmentManager.scss'
 
+export const attachmentsObjectType = {
+  url: PropTypes.string.isRequired,
+  attachmentType: PropTypes.string.isRequired
+}
+
+export const attachmentsFromObjectType = {
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  ...attachmentsObjectType
+}
+
 export default class AttachmentManager extends React.Component {
+  static propTypes = {
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    attachmentType: PropTypes.string,
+    showAddButton: PropTypes.bool,
+    showLabel: PropTypes.bool,
+    showLoading: PropTypes.bool,
+    // provided by connector
+    uploadAttachmentPending: PropTypes.bool,
+    attachments: PropTypes.arrayOf(PropTypes.shape(attachmentsObjectType)),
+    attachmentsFromObject: PropTypes.arrayOf(PropTypes.shape(attachmentsFromObjectType)),
+    loadAttachments: PropTypes.func.isRequired,
+    addAttachment: PropTypes.func.isRequired,
+    removeAttachment: PropTypes.func.isRequired,
+    switchAttachments: PropTypes.func.isRequired,
+    clearAttachments: PropTypes.func.isRequired,
+    // only used by connector
+    setAttachments: PropTypes.func.isRequired
+  }
+
   static defaultProps = {
     id: ID_FOR_NEW
   }
@@ -32,24 +64,25 @@ export default class AttachmentManager extends React.Component {
     this.props.clearAttachments()
   }
 
+  clearAttachments = () => this.props.clearAttachments()
+
   render () {
-    const { attachments, attachmentType, uploadPending } = this.props
+    const { attachments, attachmentType, uploadAttachmentPending, showLoading } = this.props
 
-    if (isEmpty(attachments) && !uploadPending) return null
+    if (isEmpty(attachments) && !uploadAttachmentPending) return null
 
-    const forAllAttachmentTypes = !attachmentType
     const imageAttachments = filter({ attachmentType: 'image' }, attachments)
     const fileAttachments = filter({ attachmentType: 'file' }, attachments)
-    const showImages = (!isEmpty(imageAttachments) || uploadPending) &&
+    const showImages = (!isEmpty(imageAttachments) || (uploadAttachmentPending && showLoading)) &&
       (!attachmentType || attachmentType === 'image')
-    const showFiles = (!isEmpty(fileAttachments) || uploadPending) &&
+    const showFiles = (!isEmpty(fileAttachments) || (uploadAttachmentPending && showLoading)) &&
       (!attachmentType || attachmentType === 'file')
-
+    
     return <React.Fragment>
       {showImages &&
-        <ImageManager {...this.props} forAllAttachmentTypes={forAllAttachmentTypes} attachments={imageAttachments} />}
+        <ImageManager {...this.props} showLoading={showLoading} attachments={imageAttachments} />}
       {showFiles &&
-        <FileManager {...this.props} forAllAttachmentTypes={forAllAttachmentTypes} attachments={fileAttachments} />}
+        <FileManager {...this.props} showLoading={showLoading} attachments={fileAttachments} />}
     </React.Fragment>
   }
 }
@@ -57,10 +90,13 @@ export default class AttachmentManager extends React.Component {
 export const ImageManager = DragDropContext(HTML5Backend)(
   class ImageManager extends React.Component {
     render () {
-      const { type, id, attachments, uploadPending, addAttachment, removeAttachment, forAllAttachmentTypes } = this.props
+      const {
+        type, id, attachments, addAttachment, removeAttachment,
+        uploadAttachmentPending, showLoading, showAddButton, showLabel
+      } = this.props
 
       return <div styleName='image-manager'>
-        {!forAllAttachmentTypes && <div styleName='section-label'>Images</div>}
+        {showLabel && <div styleName='section-label'>Images</div>}
         <div styleName='image-previews'>
           {attachments.map((attachment, i) =>
             <ImagePreview
@@ -69,11 +105,11 @@ export const ImageManager = DragDropContext(HTML5Backend)(
               switchImages={this.props.switchAttachments}
               position={i}
               key={i} />)}
-          {uploadPending && <div styleName='add-image'><Loading /></div>}
-          {!forAllAttachmentTypes && <UploadAttachmentButton
+          {showLoading && uploadAttachmentPending && <div styleName='add-image'><Loading /></div>}
+          {showAddButton && <UploadAttachmentButton
             type={type}
             id={id}
-            attachmentType={'image'}
+            attachmentType='image'
             onSuccess={attachment => addAttachment(type, id, attachment)}>
             <div styleName='add-image'>+</div>
           </UploadAttachmentButton>}
@@ -122,21 +158,22 @@ export const ImagePreview = DropTarget('ImagePreview', imagePreviewTarget, (conn
     }))
 
 export function FileManager ({
-  type, id, attachments, uploadPending, addAttachment, removeAttachment, forAllAttachmentTypes
+  type, id, attachments, addAttachment, removeAttachment,
+  uploadAttachmentPending, showLoading, showAddButton, showLabel
 }) {
   return <div styleName='file-manager'>
-    {!forAllAttachmentTypes && <div styleName='section-label'>Files</div>}
+    {showLabel && <div styleName='section-label'>Files</div>}
     <div styleName='file-previews'>
       {attachments.map((attachment, i) =>
         <FilePreview
           attachment={attachment}
           removeFile={() => removeAttachment(type, id, attachment)}
           key={i} />)}
-      {uploadPending && <div styleName='loading-file'>Loading...</div>}
-      {!forAllAttachmentTypes && <UploadAttachmentButton
+      {showLoading && uploadAttachmentPending && <div styleName='loading-file'>Loading...</div>}
+      {showAddButton && <UploadAttachmentButton
         id={id}
         type={type}
-        attachmentType={'file'}
+        attachmentType='file'
         onSuccess={attachment => addAttachment(type, id, attachment)}
         styleName='add-file-row'>
         <div styleName='add-file'>

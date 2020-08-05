@@ -11,4 +11,11 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps, { addAttachment, clearAttachments })
+export function mapDispatchToProps (dispatch) {
+  return {
+    addAttachment: attachment => dispatch(addAttachment('comment', 'new', attachment)),
+    clearAttachments: () => dispatch(clearAttachments('comment'))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)

@@ -430,8 +430,8 @@ export default class PostEditor extends React.Component {
       </div>
       {linkPreview &&
         <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
-      <AttachmentManager type='post' id={id} attachmentType='image' />
-      <AttachmentManager type='post' id={id} attachmentType='file' />
+      <AttachmentManager type='post' id={id} attachmentType='image' showAddButton showLabel showLoading />
+      <AttachmentManager type='post' id={id} attachmentType='file' showAddButton showLabel showLoading />
       <div styleName='footer'>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
@@ -553,7 +553,6 @@ export function ActionsBar ({
         id={id}
         attachmentType='image'
         onSuccess={attachment => addAttachment('post', id, attachment)}
-        useFilestackLibrary
         disable={showImages}>
         <Icon
           name='AddImage'
@@ -565,6 +564,8 @@ export function ActionsBar ({
         id={id}
         attachmentType='file'
         onSuccess={attachment => addAttachment('post', id, attachment)}
+        showAddButton
+        showLabel
         disable={showFiles}>
         <Icon
           name='Paperclip'

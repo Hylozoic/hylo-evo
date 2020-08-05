@@ -20,7 +20,7 @@ import {
 import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
-import getUploadPending from 'store/selectors/getUploadPending'
+import getUploadAttachmentPending from 'store/selectors/getUploadAttachmentPending'
 import {
   addAttachment,
   getAttachments
@@ -45,10 +45,10 @@ export function mapStateToProps (state, props) {
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
-  const uploadAttachmentPending = getUploadPending(state)
+  const uploadAttachmentPending = getUploadAttachmentPending(state)
   const editingPostId = getRouteParam('postId', state, props)
-  const uploadFileAttachmentPending = getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
-  const uploadImageAttachmentPending = getUploadPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
+  const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
+  const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
   const editing = !!post || loading

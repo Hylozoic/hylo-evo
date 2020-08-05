@@ -6,19 +6,21 @@ import AttachmentManager from 'components/AttachmentManager'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
-import Icon from 'components/Icon'
-import cx from 'classnames'
+// import Icon from 'components/Icon'
+// import cx from 'classnames'
 import './CommentForm.scss'
 
 export default class CommentForm extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
-    createComment: PropTypes.func,
-    sendIsTyping: PropTypes.func,
-    attachments: PropTypes.array,
-    addAttachment: PropTypes.func,
-    clearAttachments: PropTypes.func,
-    className: PropTypes.string
+    postId: PropTypes.string.isRequired,
+    createComment: PropTypes.func.isRequired,
+    currentUser: PropTypes.object.isRequired,
+    className: PropTypes.string,
+    // provided by connector
+    sendIsTyping: PropTypes.func.isRequired,
+    addAttachment: PropTypes.func.isRequired,
+    clearAttachments: PropTypes.func.isRequired,
+    attachments: PropTypes.array
   }
 
   editor = React.createRef()
@@ -31,8 +33,8 @@ export default class CommentForm extends Component {
 
   save = text => {
     const {
-      sendIsTyping,
       createComment,
+      sendIsTyping,
       attachments,
       clearAttachments
     } = this.props
@@ -43,13 +45,11 @@ export default class CommentForm extends Component {
       text,
       attachments
     })
-    clearAttachments('comment')
+    clearAttachments()
   }
 
-  addAttachment = attachment => this.props.addAttachment('comment', 'new', attachment)
-
   render () {
-    const { currentUser, className } = this.props
+    const { currentUser, className, addAttachment } = this.props
 
     if (!currentUser) return null
 
@@ -69,10 +69,36 @@ export default class CommentForm extends Component {
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
-        <UploadAttachmentButton type='comment' id='new' onSuccess={this.addAttachment}>
-          <Icon name='AddImage' styleName={cx('action-icon', { 'highlight-icon': true })} />
-        </UploadAttachmentButton>
+        <UploadAttachmentButton
+          type='comment'
+          id='new'
+          onSuccess={addAttachment}
+          // customRender={renderProps =>
+          //   <UploadButton {...renderProps} />
+          // }
+        />
       </div>
     </div>
   }
 }
+
+// export const UploadButton = ({
+//   onClick,
+//   disable,
+//   loading
+// }) => {
+//   return <Icon name='AddImage' styleName={cx('action-icon', 'highlight-icon')} />
+// }
+
+// export function UploadButton ({
+//   loading,
+//   onClick,
+//   className,
+//   iconName = 'AddImage'
+// }) {
+//   const loadingIconName = loading ? 'Clock' : iconName
+
+//   return <div onClick={onClick} className={className}>
+//     <Icon name={loadingIconName} styleName={cx('icon')} />
+//   </div>
+// }

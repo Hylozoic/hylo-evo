@@ -24,7 +24,7 @@ describe('uploadAttachmentUsingPicker', () => {
     })
   })
   
-  it('rejects when picker fails', () => {
+  it('rejects when filestack picker fails', () => {
     const uploadAttachmentUsingPicker = setupUploadAttachment(false, new Error('nope'))
     return expect(uploadAttachmentUsingPicker(opts).payload).rejects.toEqual(new Error('nope'))
   })
@@ -33,7 +33,7 @@ describe('uploadAttachmentUsingPicker', () => {
 function setupUploadAttachment (shouldSucceed, callbackArgs) {
   jest.resetModules()
 
-  jest.doMock('client/filepicker', () => {
+  jest.doMock('client/filestack', () => {
     if (shouldSucceed) {
       return { uploadFile: opts => opts.success(callbackArgs), ACCEPTED_MIME_TYPES: {} }
     } else {

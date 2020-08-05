@@ -1,7 +1,7 @@
 import { filestackKey, isTest } from 'config'
-import * as filestack from 'filestack-js'
+import * as Filestack from 'filestack-js'
 
-const filePicker = filestack.init(isTest ? 'dummykey' : filestackKey)
+const filestack = Filestack.init(isTest ? 'dummykey' : filestackKey)
 
 const FILESTACK_FROM_SOURCES = [
   'local_file_system',
@@ -24,8 +24,18 @@ export const FILESTACK_ACCEPTED_MIME_TYPES = [
   ...FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE.file
 ]
 
+export const ACCEPTED_ATTACHMENT_TYPES = ['image', 'file']
+
+export function mimetypeToAttachmentType (mimetype = '') {
+  const rootMimetype = mimetype.split('/')[0]
+
+  return ACCEPTED_ATTACHMENT_TYPES.includes(rootMimetype)
+    ? rootMimetype
+    : 'file'
+}
+
 // Legacy -- Use if not using FilestackUploader (FilestackReact) component
-export const filestackUploader = function ({
+export function filestackPick ({
   accept = FILESTACK_ACCEPTED_MIME_TYPES,
   fromSources = FILESTACK_FROM_SOURCES,
   maxFiles = 1,
@@ -34,7 +44,7 @@ export const filestackUploader = function ({
   onCancel,
   ...rest
 }) {
-  filePicker.picker({
+  filestack.picker({
     accept,
     fromSources,
     maxFiles,

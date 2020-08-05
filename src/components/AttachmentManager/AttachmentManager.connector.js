@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import getUploadPending from 'store/selectors/getUploadPending'
+import getUploadAttachmentPending from 'store/selectors/getUploadAttachmentPending'
 import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 import {
   getAttachments,
@@ -12,7 +12,7 @@ import {
 
 export function mapStateToProps (state, props) {
   return {
-    uploadPending: getUploadPending(state, props),
+    uploadAttachmentPending: getUploadAttachmentPending(state, props),
     attachments: getAttachments(state, props),
     attachmentsFromObject: getAttachmentsFromObject(state, props)
   }
@@ -22,13 +22,14 @@ export const mapDispatchToProps = {
   addAttachment,
   removeAttachment,
   switchAttachments,
-  setAttachments
+  setAttachments,
+  clearAttachments
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { type, id } = ownProps
   const { attachmentsFromObject } = stateProps
-  const { switchAttachments, setAttachments } = dispatchProps
+  const { switchAttachments, setAttachments, clearAttachments } = dispatchProps
   return {
     ...stateProps,
     ...dispatchProps,

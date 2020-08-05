@@ -1,10 +1,15 @@
-import { filestackUploader, FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE } from 'client/filepicker'
+import {
+  filestackPick,
+  FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE,
+  mimetypeToAttachmentType
+} from 'client/filestack'
 import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 export const ID_FOR_NEW = 'new'
 
-export default function uploadAttachment (type, id, result) {
-  const { url, filename } = result
+export default function uploadAttachment (type, id, filestackFile) {
+  const { url, filename, mimetype } = filestackFile
+  const attachmentType = mimetypeToAttachmentType(mimetype)
 
   if (!url) return {}
 
@@ -24,7 +29,8 @@ export default function uploadAttachment (type, id, result) {
     },
     meta: {
       type,
-      id
+      id,
+      attachmentType
     }
   }
 }
@@ -43,7 +49,7 @@ export function uploadAttachmentUsingFilestackLibrary ({
     const onFileUploadFinished = result =>
       resolve(uploadAttachment(type, id, result).payload)
 
-    filestackUploader({
+    filestackPick({
       accept,
       onFileUploadFinished,
       onFileUploadFailed: err => reject(err),
@@ -54,6 +60,10 @@ export function uploadAttachmentUsingFilestackLibrary ({
   return {
     type: UPLOAD_ATTACHMENT,
     payload,
-    meta: { type, id, attachmentType }
+    meta: {
+      type,
+      id,
+      attachmentType
+    }
   }
 }

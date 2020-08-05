@@ -6,34 +6,21 @@ import Icon from 'components/Icon'
 import cx from 'classnames'
 import './UploadAttachmentButton.scss'
 
-export function UploadButton ({
-  onClick,
-  loading,
-  disable,
-  className,
-  children
-}) {
-  const iconName = loading ? 'Clock' : 'AddImage'
-  const loadingOnClick = loading || disable ? () => {} : onClick
-
-  return <div onClick={loadingOnClick} className={className}>
-    {children && children}
-    {!children && <Icon
-      name={iconName}
-      styleName={cx('action-icon', { 'highlight-icon': true })}
-    />}
-  </div>
-}
 export default function UploadAttachmentButton ({
   type,
   id,
+  attachmentType, // for useFilestackLibrary
   uploadAttachment,
   onSuccess,
   onError,
-  // useFilestackLibrary only props
-  useFilestackLibrary,
-  uploadAttachmentUsingFilestackLibrary,
-  attachmentType,
+  customRender,
+  imagesOnly,
+  disable,
+  useFilestackLibrary, // for useFilestackLibrary
+  // provided by connector
+  loading,
+  uploadAttachmentUsingFilestackLibrary, // for useFilestackLibrary
+  // passed to
   ...uploadButtonProps
 }) {
   const filePickerUploadComplete = response => {
@@ -60,13 +47,27 @@ export default function UploadAttachmentButton ({
     )
   }
 
+  const fileStackCustomRender = ({ onPick }) => {
+    const renderProps = {
+      onClick: disable || loading
+        ? () => {}
+        : onPick,
+      loading,
+      disable,
+      ...uploadButtonProps
+    }
+
+    if (customRender) return customRender(renderProps)
+
+    return <UploadButton {...renderProps} />
+  }
+
   return <FilestackUploader
     type={type}
     id={id}
+    attachmentType={attachmentType}
     onSuccess={fileStackUploaderOnSuccess}
-    customRender={({ onPick }) =>
-      <UploadButton onClick={onPick} {...uploadButtonProps} />
-    }
+    customRender={fileStackCustomRender}
   />
 }
 
@@ -78,11 +79,30 @@ UploadAttachmentButton.defaultProps = {
 UploadAttachmentButton.propTypes = {
   type: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  uploadAttachment: PropTypes.func.isRequired,
+  attachmentType: PropTypes.string, // for useFilestackLibrary
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
-  // useFilestackLibrary only props
-  useFilestackLibrary: PropTypes.bool,
-  uploadAttachmentUsingFilestackLibrary: PropTypes.func,
-  attachmentType: PropTypes.string
+  customRender: PropTypes.func,
+  imagesOnly: PropTypes.bool,
+  disable: PropTypes.bool,
+  useFilestackLibrary: PropTypes.bool, // for useFilestackLibrary
+  // provided by connector
+  loading: PropTypes.bool,
+  uploadAttachment: PropTypes.func.isRequired,
+  uploadAttachmentUsingFilestackLibrary: PropTypes.func // for useFilestackLibrary
+}
+
+export function UploadButton ({
+  onClick,
+  loading,
+  className,
+  iconName = 'AddImage',
+  children
+}) {
+  const loadingIconName = loading ? 'Clock' : iconName
+
+  return <div onClick={onClick} className={className}>
+    {children && children}
+    {!children && <Icon name={loadingIconName} styleName={cx('icon')} />}
+  </div>
 }

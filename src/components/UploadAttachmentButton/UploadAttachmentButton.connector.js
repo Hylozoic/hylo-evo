@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import uploadAttachment, { uploadAttachmentUsingFilestackLibrary } from 'store/actions/uploadAttachment'
-import getUploadPending from 'store/selectors/getUploadPending'
+import getUploadAttachmentPending from 'store/selectors/getUploadAttachmentPending'
 
 export function mapStateToProps (state, props) {
   return {
-    loading: getUploadPending(state, props)
+    loading: getUploadAttachmentPending(state, props)
   }
 }
 
