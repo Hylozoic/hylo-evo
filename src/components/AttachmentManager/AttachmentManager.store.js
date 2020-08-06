@@ -99,7 +99,6 @@ export function getUploadAttachmentPending ({ pending }, { type, id = ID_FOR_NEW
   const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
 
   if (!pendingUpload) return false
-  
   if (!attachmentType) return pendingUpload.type === type && pendingUpload.id === id
 
   return pendingUpload.type === type &&

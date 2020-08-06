@@ -50,12 +50,15 @@ export default function UploadAttachmentButton ({
     setLoading(false)
   }
 
+  const onCancel = () => setLoading(false)
+
   const onClick = () => {
     setLoading(true)
     filestackPicker({
       accept: acceptFromAttachmentType(attachmentType),
       maxFiles: allowMultiple ? 10 : 1,
-      onUploadDone
+      onUploadDone,
+      onCancel
     }).open()
   }
 
