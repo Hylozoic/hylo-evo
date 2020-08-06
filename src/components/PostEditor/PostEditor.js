@@ -478,6 +478,7 @@ export default class PostEditor extends React.Component {
         {hasLocation && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
           <LocationInput
+            saveLocationToDB
             locationObject={curLocation}
             location={location}
             onChange={this.handleLocationChange}

@@ -39,6 +39,7 @@ exports[`AddLocation renders correctly 1`] = `
         onChange={[Function]}
         onKeyPress={[Function]}
         placeholder="Where do you call home?"
+        saveLocationToDB={true}
       />
     </div>
     <div>
