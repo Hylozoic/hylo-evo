@@ -2,41 +2,139 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
 
+const minDefaultProps = {
+  type: 'anything',
+  loadAttachments: () => {},
+  addAttachment: () => {},
+  removeAttachment: () => {},
+  switchAttachments: () => {},
+  clearAttachments: () => {},
+  setAttachments: () => {}
+}
+
+const postEditorCaseDefaultProps = {
+  ...minDefaultProps,
+  type: 'post',
+  showLabel: true,
+  showLoading: true,
+  showsAddButton: true,
+}
+
+const commentFormCaseDefaultProps = {
+  ...minDefaultProps,
+  type: 'comment'
+}
+
+const imageAttachments = [
+  { attachmentType: 'image', url: 'https://nowhere/foo.png' },
+  { attachmentType: 'image', url: 'https://nowhere/bar.jpg' }
+]
+
+const fileAttachments = [
+  { attachmentType: 'file', url: 'https://nowhere/thing1.pdf' },
+  { attachmentType: 'file', url: 'https://nowhere/thing2.xls' }
+]
+
+const attachments = [
+  ...imageAttachments,
+  ...fileAttachments
+]
+
 describe('AttachmentManager', () => {
-  const props = {
-    uploadAttachmentPending: true,
-    attachments: [],
-    loadAttachments: () => {},
-    removeAttachment: () => {},
-    addAttachment: () => {}
-  }
+  it('renders with minProps', () => {
+    const wrapper = 
+    expect(shallow(
+      <AttachmentManager {...minDefaultProps} />
+    ).text()).toBe('')
+  }),
 
-  it('renders FileManager when attachmentType is "file"', () => {
-    const wrapper = shallow(<AttachmentManager type='comment' attachmentType='file' {...props} />)
-    expect(wrapper).toMatchSnapshot()
+  describe('as used with PostEditor (showLabel, showLoading, showAddButtons)', () => {
+    test('when empty', () => {
+      expect(shallow(
+        <AttachmentManager {...postEditorCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
+
+    test('with attachments', () => {
+      expect(shallow(
+        <AttachmentManager attachments={attachments} {...postEditorCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
+
+    test('when loading', () => {
+      expect(shallow(
+        <AttachmentManager uploadAttachmentPending {...postEditorCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
+
+    test('when loading, with attachments', () => {
+      expect(shallow(
+        <AttachmentManager attachments={attachments} uploadAttachmentPending {...postEditorCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
   })
 
-  it('renders ImageManager when attachmentType is "image"', () => {
-    const wrapper = shallow(<AttachmentManager type='post' attachmentType='image' {...props} />)
-    expect(wrapper).toMatchSnapshot()
+  describe('as used with CommentForm (default case)', () => {
+  test('when empty', () => {
+      expect(shallow(
+        <AttachmentManager {...commentFormCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
+
+    test('with attachments', () => {
+      expect(shallow(
+        <AttachmentManager attachments={attachments} {...commentFormCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
+
+    test('when loading', () => {
+      expect(shallow(
+        <AttachmentManager uploadAttachmentPending {...commentFormCaseDefaultProps} />
+      )).toMatchSnapshot()
+    })
+
+    test('when loading, with attachments', () => {
+      expect(shallow(
+        <AttachmentManager attachments={attachments} uploadAttachmentPending {...commentFormCaseDefaultProps} />
+      )).toMatchSnapshot()  
+    })
   })
 
-  it('renders ImageManager when an attachmentType is not specificed', () => {
-    const wrapper = shallow(<AttachmentManager type='post' {...props} />)
-    expect(wrapper).toMatchSnapshot()
+  describe('when attachmentType', () => {
+    describe('"image"', () => {
+      test('with attachments (of both types), when loading', () => {
+        expect(shallow(
+          <AttachmentManager attachmentType='image' attachments={attachments} uploadAttachmentPending {...minDefaultProps} />
+        )).toMatchSnapshot()    
+      })
+    })
+    describe('"file"', () => {
+      test('with attachments (of both types), when loading', () => {
+        expect(shallow(
+          <AttachmentManager attachmentType='file' attachments={attachments} uploadAttachmentPending {...minDefaultProps} />
+        )).toMatchSnapshot()    
+      })
+    })
+    describe('not provided', () => {
+      test('with attachments (of both types), when loading', () => {
+        expect(shallow(
+          <AttachmentManager attachments={attachments} uploadAttachmentPending {...minDefaultProps} />
+        )).toMatchSnapshot()    
+      })
+    })
   })
 })
 
 describe('ImageManager', () => {
   it('matches last snapshot', () => {
     const props = {
-      id: 1,
       type: 'post',
-      uploadAttachmentPending: false,
-      attachments: [
-        { attachmentType: 'image', url: 'https://nowhere/foo.png' },
-        { attachmentType: 'image', url: 'https://nowhere/bar.jpg' }
-      ],
+      id: 1,
+      showLabel: true,
+      showAddButton: true,
+      showLoading: true,
+      uploadAttachmentPending: true,
+      attachments: imageAttachments,
       addAttachment: () => {},
       removeAttachment: () => {},
       switchAttachments: () => {}
@@ -68,14 +166,13 @@ describe('ImagePreview', () => {
 describe('FileManager', () => {
   it('matches last snapshot', () => {
     const props = {
-      id: 1,
       type: 'post',
+      id: 1,
+      showLabel: true,
+      showAddButton: true,
+      showLoading: true,
       uploadAttachmentPending: true,
-      attachments: [
-        { url: 'https://nowhere/foo.pdf', attachmentType: 'file' },
-        { url: 'https://nowhere/bar.zip', attachmentType: 'file' },
-        { url: 'https://nowhere/bar.zip', attachmentType: 'file' }
-      ],
+      attachments: fileAttachments,
       addAttachment: () => {},
       removeAttachment: () => {}
     }

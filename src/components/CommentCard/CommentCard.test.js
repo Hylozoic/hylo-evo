@@ -10,6 +10,7 @@ const props = {
       name: 'Joe Smith',
       avatarUrl: 'foo.jpg'
     },
+    attachments: [],
     post: {
       id: 77,
       title: 'Awesome Sauce #hashtag'

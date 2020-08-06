@@ -4,8 +4,10 @@ import reducer, {
   ADD_ATTACHMENT,
   REMOVE_ATTACHMENT,
   SWITCH_ATTACHMENTS,
+  getUploadAttachmentPending,
   defaultState
 } from './AttachmentManager.store'
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 describe('AttachmentManager store', () => {
   describe('reducer', () => {
@@ -92,6 +94,62 @@ describe('AttachmentManager store', () => {
         const finalState = reducer(state, action)
         expect(finalState).toMatchSnapshot()
       })
+    })
+  })
+  
+  describe('getUploadAttachmentPending', () => {  
+    const props = {
+      type: 'user-avatar',
+      id: '123',
+      attachmentType: 'image'
+    }
+
+    it('returns false when not pending', () => {
+      const state = { pending: {} }  
+
+      expect(getUploadAttachmentPending(state, props)).toEqual(false)
+    })
+  
+    it("returns false when pending doesn't match settings", () => {
+      const state = {
+        pending: {
+          [UPLOAD_ATTACHMENT]: {
+            type: 'user-avatar',
+            id: '124',
+            attachmentType: 'image'
+          }
+        }
+      }
+  
+      expect(getUploadAttachmentPending(state, props)).toEqual(false)
+    })
+  
+    it('returns true when pending matches settings', () => {
+      const state = {
+        pending: {
+          [UPLOAD_ATTACHMENT]: {
+            type: 'user-avatar',
+            id: '123',
+            attachmentType: 'image'
+          }
+        }
+      }
+  
+      expect(getUploadAttachmentPending(state, props)).toEqual(true)
+    })
+
+    it('returns true when pending matches without attachmentType', () => {
+      const state = {
+        pending: {
+          [UPLOAD_ATTACHMENT]: {
+            type: 'user-avatar',
+            id: '123',
+            attachmentType: 'image'
+          }
+        }
+      }
+  
+      expect(getUploadAttachmentPending(state, { type: props.type, id: props.id })).toEqual(true)
     })
   })
 })

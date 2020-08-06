@@ -51,7 +51,19 @@ exports[`displays image an image attachments 1`] = `
           },
         ]
       }
+      data-stylename="comment-images"
       linked={true}
+    />
+    <CardFileAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "jam.png",
+          },
+        ]
+      }
+      data-stylename="comment-files"
     />
     <Connect(ClickCatcher)>
       <Highlight
@@ -119,7 +131,13 @@ exports[`matches last snapshot 1`] = `
       </span>
     </div>
     <CardImageAttachments
+      attachments={Array []}
+      data-stylename="comment-images"
       linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="comment-files"
     />
     <Connect(ClickCatcher)>
       <Highlight
@@ -187,7 +205,13 @@ exports[`matches last snapshot with different config 1`] = `
       </span>
     </div>
     <CardImageAttachments
+      attachments={Array []}
+      data-stylename="comment-images"
       linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="comment-files"
     />
     <Connect(ClickCatcher)>
       <Highlight

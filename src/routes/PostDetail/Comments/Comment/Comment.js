@@ -20,6 +20,10 @@ export default class Comment extends Component {
     comment: object
   }
 
+  static defaultProps = {
+    attachments: []
+  }
+
   state = {
     editing: false
   }

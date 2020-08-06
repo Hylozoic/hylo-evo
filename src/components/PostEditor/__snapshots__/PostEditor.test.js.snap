@@ -8,6 +8,7 @@ exports[`ActionsBar matches last snapshot 1`] = `
     data-stylename="actions"
   >
     <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="image"
       id={1}
       onSuccess={[Function]}
@@ -19,9 +20,12 @@ exports[`ActionsBar matches last snapshot 1`] = `
       />
     </Connect(UploadAttachmentButton)>
     <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="file"
       id={1}
       onSuccess={[Function]}
+      showAddButton={true}
+      showLabel={true}
       type="post"
     >
       <Icon
@@ -48,6 +52,7 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
     data-stylename="actions"
   >
     <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="image"
       id={1}
       onSuccess={[Function]}
@@ -59,9 +64,12 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
       />
     </Connect(UploadAttachmentButton)>
     <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="file"
       id={1}
       onSuccess={[Function]}
+      showAddButton={true}
+      showLabel={true}
       type="post"
     >
       <Icon
@@ -180,11 +188,17 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
   <Connect(AttachmentManager)
     attachmentType="image"
     id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
     id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -408,11 +422,17 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
   <Connect(AttachmentManager)
     attachmentType="image"
     id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
     id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -843,10 +863,16 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -995,10 +1021,16 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -1188,10 +1220,16 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -1381,10 +1419,16 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -1575,10 +1619,16 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -1766,10 +1816,16 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -1919,10 +1975,16 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -2072,10 +2134,16 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -2194,10 +2262,16 @@ exports[`PostEditor renders contribution button 1`] = `
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div
@@ -2388,10 +2462,16 @@ exports[`PostEditor renders with min props 1`] = `
   </div>
   <Connect(AttachmentManager)
     attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <Connect(AttachmentManager)
     attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
     type="post"
   />
   <div

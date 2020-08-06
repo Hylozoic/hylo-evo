@@ -1,53 +1,362 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AttachmentManager renders FileManager when attachmentType is "file" 1`] = `
+exports[`AttachmentManager as used with CommentForm (default case) when empty 1`] = `""`;
+
+exports[`AttachmentManager as used with CommentForm (default case) when loading 1`] = `<Fragment />`;
+
+exports[`AttachmentManager as used with CommentForm (default case) when loading, with attachments 1`] = `
 <Fragment>
-  <FileManager
+  <DragDropContext(ImageManager)
     addAttachment={[Function]}
-    attachmentType="file"
-    attachments={Array []}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/foo.png",
+        },
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/bar.jpg",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
     removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="comment"
+    uploadAttachmentPending={true}
+  />
+  <FileManager
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing1.pdf",
+        },
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing2.xls",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
     type="comment"
     uploadAttachmentPending={true}
   />
 </Fragment>
 `;
 
-exports[`AttachmentManager renders ImageManager when an attachmentType is not specificed 1`] = `
+exports[`AttachmentManager as used with CommentForm (default case) with attachments 1`] = `
+<Fragment>
+  <DragDropContext(ImageManager)
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/foo.png",
+        },
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/bar.jpg",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="comment"
+  />
+  <FileManager
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing1.pdf",
+        },
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing2.xls",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="comment"
+  />
+</Fragment>
+`;
+
+exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when empty 1`] = `""`;
+
+exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when loading 1`] = `
 <Fragment>
   <DragDropContext(ImageManager)
     addAttachment={[Function]}
     attachments={Array []}
+    clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
     removeAttachment={[Function]}
+    setAttachments={[Function]}
+    showLabel={true}
+    showLoading={true}
+    showsAddButton={true}
+    switchAttachments={[Function]}
     type="post"
     uploadAttachmentPending={true}
   />
   <FileManager
     addAttachment={[Function]}
     attachments={Array []}
+    clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
     removeAttachment={[Function]}
+    setAttachments={[Function]}
+    showLabel={true}
+    showLoading={true}
+    showsAddButton={true}
+    switchAttachments={[Function]}
     type="post"
     uploadAttachmentPending={true}
   />
 </Fragment>
 `;
 
-exports[`AttachmentManager renders ImageManager when attachmentType is "image" 1`] = `
+exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when loading, with attachments 1`] = `
+<Fragment>
+  <DragDropContext(ImageManager)
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/foo.png",
+        },
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/bar.jpg",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    showLabel={true}
+    showLoading={true}
+    showsAddButton={true}
+    switchAttachments={[Function]}
+    type="post"
+    uploadAttachmentPending={true}
+  />
+  <FileManager
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing1.pdf",
+        },
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing2.xls",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    showLabel={true}
+    showLoading={true}
+    showsAddButton={true}
+    switchAttachments={[Function]}
+    type="post"
+    uploadAttachmentPending={true}
+  />
+</Fragment>
+`;
+
+exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) with attachments 1`] = `
+<Fragment>
+  <DragDropContext(ImageManager)
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/foo.png",
+        },
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/bar.jpg",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    showLabel={true}
+    showLoading={true}
+    showsAddButton={true}
+    switchAttachments={[Function]}
+    type="post"
+  />
+  <FileManager
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing1.pdf",
+        },
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing2.xls",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    showLabel={true}
+    showLoading={true}
+    showsAddButton={true}
+    switchAttachments={[Function]}
+    type="post"
+  />
+</Fragment>
+`;
+
+exports[`AttachmentManager when attachmentType "file" with attachments (of both types), when loading 1`] = `
+<Fragment>
+  <FileManager
+    addAttachment={[Function]}
+    attachmentType="file"
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing1.pdf",
+        },
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing2.xls",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="anything"
+    uploadAttachmentPending={true}
+  />
+</Fragment>
+`;
+
+exports[`AttachmentManager when attachmentType "image" with attachments (of both types), when loading 1`] = `
 <Fragment>
   <DragDropContext(ImageManager)
     addAttachment={[Function]}
     attachmentType="image"
-    attachments={Array []}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/foo.png",
+        },
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/bar.jpg",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
     removeAttachment={[Function]}
-    type="post"
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="anything"
+    uploadAttachmentPending={true}
+  />
+</Fragment>
+`;
+
+exports[`AttachmentManager when attachmentType not provided with attachments (of both types), when loading 1`] = `
+<Fragment>
+  <DragDropContext(ImageManager)
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/foo.png",
+        },
+        Object {
+          "attachmentType": "image",
+          "url": "https://nowhere/bar.jpg",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="anything"
+    uploadAttachmentPending={true}
+  />
+  <FileManager
+    addAttachment={[Function]}
+    attachments={
+      Array [
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing1.pdf",
+        },
+        Object {
+          "attachmentType": "file",
+          "url": "https://nowhere/thing2.xls",
+        },
+      ]
+    }
+    clearAttachments={[Function]}
+    id="new"
+    loadAttachments={[Function]}
+    removeAttachment={[Function]}
+    setAttachments={[Function]}
+    switchAttachments={[Function]}
+    type="anything"
     uploadAttachmentPending={true}
   />
 </Fragment>
@@ -69,7 +378,7 @@ exports[`FileManager matches last snapshot 1`] = `
       attachment={
         Object {
           "attachmentType": "file",
-          "url": "https://nowhere/foo.pdf",
+          "url": "https://nowhere/thing1.pdf",
         }
       }
       key="0"
@@ -79,20 +388,10 @@ exports[`FileManager matches last snapshot 1`] = `
       attachment={
         Object {
           "attachmentType": "file",
-          "url": "https://nowhere/bar.zip",
+          "url": "https://nowhere/thing2.xls",
         }
       }
       key="1"
-      removeFile={[Function]}
-    />
-    <FilePreview
-      attachment={
-        Object {
-          "attachmentType": "file",
-          "url": "https://nowhere/bar.zip",
-        }
-      }
-      key="2"
       removeFile={[Function]}
     />
     <div
@@ -184,6 +483,11 @@ exports[`ImageManager matches last snapshot 1`] = `
       removeImage={[Function]}
       switchImages={[Function]}
     />
+    <div
+      data-stylename="add-image"
+    >
+      <Loading />
+    </div>
     <Connect(UploadAttachmentButton)
       attachmentType="image"
       id={1}

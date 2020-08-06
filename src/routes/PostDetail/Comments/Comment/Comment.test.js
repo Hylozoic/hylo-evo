@@ -11,6 +11,7 @@ describe('Comment', () => {
         name: 'Joe Smith',
         avatarUrl: 'foo.jpg'
       },
+      attachments: [],
       createdAt: new Date()
     },
     slug: 'foo'
@@ -31,7 +32,9 @@ describe('Comment', () => {
   it('displays image attachments', () => {
     const comment = {
       ...props.comment,
-      attachments: { url: 'foo.png', attachmentType: 'image' }
+      attachments: [
+        { url: 'foo.png', attachmentType: 'image' }
+      ]
     }
     const wrapper = shallow(<Comment comment={comment} slug={props.slug} />)
     expect(wrapper).toMatchSnapshot()
