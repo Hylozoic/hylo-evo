@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
+import HyloEditor from 'components/HyloEditor'
 import AttachmentManager from 'components/AttachmentManager'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import RoundImage from 'components/RoundImage'
-import HyloEditor from 'components/HyloEditor'
-// import Icon from 'components/Icon'
-// import cx from 'classnames'
+import Icon from 'components/Icon'
+import Loading from 'components/Loading'
 import './CommentForm.scss'
 
 export default class CommentForm extends Component {
@@ -74,32 +74,23 @@ export default class CommentForm extends Component {
           id='new'
           allowMultiple
           onSuccess={addAttachment}
-          // customRender={renderProps =>
-          //   <UploadButton {...renderProps} />
-          // }
+          customRender={renderProps =>
+            <UploadButton {...renderProps} />
+          }
         />
       </div>
     </div>
   }
 }
 
-// export const UploadButton = ({
-//   onClick,
-//   disable,
-//   loading
-// }) => {
-//   return <Icon name='AddImage' styleName={cx('action-icon', 'highlight-icon')} />
-// }
+export function UploadButton ({
+  onClick,
+  loading,
+  className
+}) {
+  if (loading) return <Loading type='inline' />
 
-// export function UploadButton ({
-//   loading,
-//   onClick,
-//   className,
-//   iconName = 'AddImage'
-// }) {
-//   const loadingIconName = loading ? 'Clock' : iconName
-
-//   return <div onClick={onClick} className={className}>
-//     <Icon name={loadingIconName} styleName={cx('icon')} />
-//   </div>
-// }
+  return <div onClick={onClick} className={className}>
+    <Icon name='AddImage' styleName='action-icon' />
+  </div>
+}
