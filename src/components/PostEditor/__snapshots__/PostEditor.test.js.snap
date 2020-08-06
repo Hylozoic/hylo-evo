@@ -24,8 +24,6 @@ exports[`ActionsBar matches last snapshot 1`] = `
       attachmentType="file"
       id={1}
       onSuccess={[Function]}
-      showAddButton={true}
-      showLabel={true}
       type="post"
     >
       <Icon
@@ -68,8 +66,6 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
       attachmentType="file"
       id={1}
       onSuccess={[Function]}
-      showAddButton={true}
-      showLabel={true}
       type="post"
     >
       <Icon

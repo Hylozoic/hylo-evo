@@ -566,8 +566,6 @@ export function ActionsBar ({
         attachmentType='file'
         onSuccess={attachment => addAttachment('post', id, attachment)}
         allowMultiple
-        showAddButton
-        showLabel
         disable={showFiles}>
         <Icon
           name='Paperclip'
