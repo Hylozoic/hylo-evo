@@ -20,10 +20,10 @@ import {
 import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
-import getUploadAttachmentPending from 'store/selectors/getUploadAttachmentPending'
 import {
   addAttachment,
-  getAttachments
+  getAttachments,
+  getUploadAttachmentPending
 } from 'components/AttachmentManager/AttachmentManager.store'
 import {
   MODULE_NAME,

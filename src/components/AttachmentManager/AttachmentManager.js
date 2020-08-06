@@ -8,7 +8,7 @@ import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
+import { ID_FOR_NEW } from './AttachmentManager.store'
 import './AttachmentManager.scss'
 
 export const attachmentsObjectType = {
@@ -77,7 +77,7 @@ export default class AttachmentManager extends React.Component {
       (!attachmentType || attachmentType === 'image')
     const showFiles = (!isEmpty(fileAttachments) || (uploadAttachmentPending && showLoading)) &&
       (!attachmentType || attachmentType === 'file')
-    
+
     return <React.Fragment>
       {showImages &&
         <ImageManager {...this.props} showLoading={showLoading} attachments={imageAttachments} />}

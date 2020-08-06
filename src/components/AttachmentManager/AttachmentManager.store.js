@@ -1,8 +1,7 @@
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
 import { get, getOr, filter, reject, pick, clone } from 'lodash/fp'
-import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
-import { NEW_THREAD_ID } from 'routes/Messages/Messages'
-
-export { ID_FOR_NEW }
+import { UPLOAD_ATTACHMENT } from 'store/constants'
 
 export const MODULE_NAME = 'AttachmentManager'
 export const LOAD_ATTACHMENTS = `${MODULE_NAME}/LOAD_ATTACHMENTS`
@@ -10,6 +9,7 @@ export const SET_ATTACHMENTS = `${MODULE_NAME}/SET_ATTACHMENTS`
 export const ADD_ATTACHMENT = `${MODULE_NAME}/ADD_ATTACHMENT`
 export const REMOVE_ATTACHMENT = `${MODULE_NAME}/REMOVE_ATTACHMENT`
 export const SWITCH_ATTACHMENTS = `${MODULE_NAME}/SWITCH_ATTACHMENTS`
+export const ID_FOR_NEW = 'new'
 
 // -- LOCAL STORE --
 
@@ -65,7 +65,7 @@ export function switchAttachments (type, id, attachmentType, position1, position
 
 export function getAttachments (state, {
   type,
-  id = NEW_THREAD_ID,
+  id = ID_FOR_NEW,
   attachmentType
 }) {
   const allAttachments = getOr([], [MODULE_NAME, makeAttachmentKey(type, id)], state)
@@ -73,6 +73,38 @@ export function getAttachments (state, {
   if (attachmentType) return filter({ attachmentType }, allAttachments)
 
   return allAttachments
+}
+
+export const getAttachmentsFromObject = ormCreateSelector(
+  orm,
+  (state, _) => get('orm', state),
+  (_, props) => props,
+  ({ Attachment }, { id = ID_FOR_NEW, type, attachmentType }) => Attachment
+    .all()
+    .filter(({ type: at, ...rest }) =>
+      at === attachmentType &&
+      rest[type.toLowerCase()] === id
+    )
+    .orderBy('position')
+    .toRefArray()
+    .map(({ url }) => ({
+      type,
+      id,
+      url,
+      attachmentType
+    }))
+)
+
+export function getUploadAttachmentPending ({ pending }, { type, id = ID_FOR_NEW, attachmentType } = {}) {
+  const pendingUpload = get(UPLOAD_ATTACHMENT, pending)
+
+  if (!pendingUpload) return false
+  
+  if (!attachmentType) return pendingUpload.type === type && pendingUpload.id === id
+
+  return pendingUpload.type === type &&
+    pendingUpload.id === id &&
+    pendingUpload.attachmentType === attachmentType
 }
 
 // reducer

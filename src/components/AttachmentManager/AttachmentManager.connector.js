@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
-import getUploadAttachmentPending from 'store/selectors/getUploadAttachmentPending'
-import getAttachmentsFromObject from 'store/selectors/getAttachmentsFromObject'
 import {
-  getAttachments,
   setAttachments,
   clearAttachments,
   addAttachment,
   removeAttachment,
-  switchAttachments
+  switchAttachments,
+  getAttachments,
+  getAttachmentsFromObject,
+  getUploadAttachmentPending
 } from './AttachmentManager.store'
 
 export function mapStateToProps (state, props) {

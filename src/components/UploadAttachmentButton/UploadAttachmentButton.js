@@ -1,29 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { ID_FOR_NEW } from 'store/actions/uploadAttachment'
-import FilestackUploader from 'components/FilestackUploader'
+import { ID_FOR_NEW } from 'components/AttachmentManager/AttachmentManager.store'
 import Icon from 'components/Icon'
 import cx from 'classnames'
 import './UploadAttachmentButton.scss'
+import {
+  uploadedFileToAttachment,
+  acceptFromAttachmentType,
+  filestackPicker
+} from 'client/filestack'
 
 export default function UploadAttachmentButton ({
   type,
   id,
-  attachmentType, // for useFilestackLibrary
-  uploadAttachment,
+  attachmentType,
   onSuccess,
   onError,
   customRender,
-  imagesOnly,
+  allowMultiple,
   disable,
-  useFilestackLibrary, // for useFilestackLibrary
   // provided by connector
-  loading,
-  uploadAttachmentUsingFilestackLibrary, // for useFilestackLibrary
-  // passed to
+  uploadAttachment,
+  // passed to customRender
   ...uploadButtonProps
 }) {
-  const filePickerUploadComplete = response => {
+  const [loading, setLoading] = useState(false)
+
+  const uploadAttachmentComplete = response => {
     if (!response) {
       return onError(new Error('No response returned from uploader'))
     }
@@ -31,48 +34,48 @@ export default function UploadAttachmentButton ({
     if (response.payload) return onSuccess(response.payload)
   }
 
-  if (useFilestackLibrary) {
-    const onClick = () => {
-      return uploadAttachmentUsingFilestackLibrary(type, id, attachmentType)
-        .then(filePickerUploadComplete)
-    }
+  // Filestack callbacks
 
-    return <UploadButton {...uploadButtonProps} onClick={onClick} />
+  const onFileUploadFinished = async fileUploaded => {
+    const attachment = uploadedFileToAttachment(fileUploaded)
+    const uploadedAttachment = await uploadAttachment(type, id, attachment)
+    return uploadAttachmentComplete(uploadedAttachment)
   }
 
-  const fileStackUploaderOnSuccess = ({ filesUploaded }) => {
-    return filesUploaded.forEach(attachment =>
-      uploadAttachment(type, id, attachment)
-        .then(filePickerUploadComplete)
+  const onUploadDone = async ({ filesUploaded }) => {
+    await Promise.all(
+      filesUploaded.map(filestackFileObject =>
+        onFileUploadFinished(filestackFileObject))
     )
+    setLoading(false)
   }
 
-  const fileStackCustomRender = ({ onPick }) => {
-    const renderProps = {
-      onClick: disable || loading
-        ? () => {}
-        : onPick,
-      loading,
-      disable,
-      ...uploadButtonProps
-    }
-
-    if (customRender) return customRender(renderProps)
-
-    return <UploadButton {...renderProps} />
+  const onClick = () => {
+    setLoading(true)
+    filestackPicker({
+      accept: acceptFromAttachmentType(attachmentType),
+      maxFiles: allowMultiple ? 10 : 1,
+      onUploadDone
+    }).open()
   }
 
-  return <FilestackUploader
-    type={type}
-    id={id}
-    attachmentType={attachmentType}
-    onSuccess={fileStackUploaderOnSuccess}
-    customRender={fileStackCustomRender}
-  />
+  const renderProps = {
+    onClick: disable || loading
+      ? () => {}
+      : onClick,
+    disable,
+    loading,
+    ...uploadButtonProps
+  }
+
+  if (customRender) return customRender(renderProps)
+
+  return <UploadButton {...renderProps} />
 }
 
 UploadAttachmentButton.defaultProps = {
   id: ID_FOR_NEW,
+  maxFiles: 1,
   onError: () => {}
 }
 
@@ -83,13 +86,11 @@ UploadAttachmentButton.propTypes = {
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
   customRender: PropTypes.func,
-  imagesOnly: PropTypes.bool,
+  allowMultiple: PropTypes.bool,
   disable: PropTypes.bool,
-  useFilestackLibrary: PropTypes.bool, // for useFilestackLibrary
   // provided by connector
   loading: PropTypes.bool,
-  uploadAttachment: PropTypes.func.isRequired,
-  uploadAttachmentUsingFilestackLibrary: PropTypes.func // for useFilestackLibrary
+  uploadAttachment: PropTypes.func.isRequired
 }
 
 export function UploadButton ({

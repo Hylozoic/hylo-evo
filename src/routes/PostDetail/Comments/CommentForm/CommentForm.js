@@ -72,6 +72,7 @@ export default class CommentForm extends Component {
         <UploadAttachmentButton
           type='comment'
           id='new'
+          allowMultiple
           onSuccess={addAttachment}
           // customRender={renderProps =>
           //   <UploadButton {...renderProps} />

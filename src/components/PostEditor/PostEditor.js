@@ -553,6 +553,7 @@ export function ActionsBar ({
         id={id}
         attachmentType='image'
         onSuccess={attachment => addAttachment('post', id, attachment)}
+        allowMultiple
         disable={showImages}>
         <Icon
           name='AddImage'
@@ -564,6 +565,7 @@ export function ActionsBar ({
         id={id}
         attachmentType='file'
         onSuccess={attachment => addAttachment('post', id, attachment)}
+        allowMultiple
         showAddButton
         showLabel
         disable={showFiles}>

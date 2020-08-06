@@ -26,36 +26,61 @@ export const FILESTACK_ACCEPTED_MIME_TYPES = [
 
 export const ACCEPTED_ATTACHMENT_TYPES = ['image', 'file']
 
-export function mimetypeToAttachmentType (mimetype = '') {
-  const rootMimetype = mimetype.split('/')[0]
+export function getRootMimeType (mimetype = '') {
+  return mimetype.split('/')[0]
+}
+
+export function mimetypeToAttachmentType (mimetype) {
+  const rootMimetype = getRootMimeType(mimetype)
 
   return ACCEPTED_ATTACHMENT_TYPES.includes(rootMimetype)
     ? rootMimetype
     : 'file'
 }
 
-// Legacy -- Use if not using FilestackUploader (FilestackReact) component
-export function filestackPick ({
+export function acceptFromAttachmentType (attachmentType) {
+  return attachmentType && ACCEPTED_ATTACHMENT_TYPES.includes(attachmentType)
+    ? FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE[attachmentType]
+    : FILESTACK_ACCEPTED_MIME_TYPES
+}
+
+export function uploadedFileToAttachment ({ url, filename, mimetype }) {
+  return {
+    url,
+    filename,
+    attachmentType: mimetypeToAttachmentType(mimetype)
+  }
+}
+
+export function transformFile (file) {
+  // Apply rotation from EXIF metadata
+  const url = getRootMimeType(file.mimetype) === 'image'
+    ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle
+    : file.url
+
+  return { ...file, url }
+}
+
+export function filestackPicker ({
   accept = FILESTACK_ACCEPTED_MIME_TYPES,
   fromSources = FILESTACK_FROM_SOURCES,
   maxFiles = 1,
-  onFileUploadFinished,
-  onFileUploadFailed,
-  onCancel,
+  onFileUploadFinished = () => {},
+  onUploadDone,
   ...rest
 }) {
-  filestack.picker({
+  return filestack.picker({
     accept,
     fromSources,
     maxFiles,
-    onFileUploadFinished: file => {
-      const url = file.mimetype.split('/')[0] === 'image'
-        ? 'https://cdn.filestackcontent.com/rotate=deg:exif/' + file.handle
-        : file.url
-      onFileUploadFinished({ ...file, url })
+    onFileUploadFinished: fileUploaded =>
+      onFileUploadFinished(transformFile(fileUploaded)),
+    onUploadDone: ({ filesUploaded, ...rest }) => {
+      return onUploadDone({
+        filesUploaded: filesUploaded.map(file => transformFile(file)),
+        ...rest
+      })
     },
-    onFileUploadFailed,
-    onCancel,
     ...rest
-  }).open()
+  })
 }
