@@ -44,9 +44,14 @@
   padding: 25px 30px;
 }
 
+.existingMember {
+  text-align: center;
+}
+
 .communityDescription {
   color: $color-regent;
   font-size: 16px;
+  margin-bottom: 18px;
 }
 
 .communityTopics {
@@ -94,15 +99,11 @@
   margin-right: 10px;
 }
 
-.requestBar {
+%requestBar {
   background-color: $color-white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: 1px solid $color-athens-gray-dark;
-  border-radius: 5px;
   color: $color-regent;
-  display: flex;
   align-items: center;
-  justify-content: center;
+  display: flex;
   height: 50px;
   position: sticky;
   bottom: -120px;
@@ -110,14 +111,34 @@
   z-index: 5;
 }
 
+.requestBarBordered {
+  @extend %requestBar;
+  border: 1px solid $color-athens-gray-dark;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: block;
+}
+
+.requestBarBorderless {
+  @extend %requestBar;
+  border-width: 0px;
+  justify-content: center;
+}
+
+.requestBarBorderless .requestButton {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
 .requestOption {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 50px;
 }
 
 .requestHint {
   font-size: 14px;
+  padding: 5px 15px;
 }
 
 .requestButton {
@@ -132,4 +153,15 @@
 
 .requestCommunity {
   font-weight: bold;
+}
+
+.message {
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  background: #2A4059;
+  color: #FFFFFF;
+  padding: 14px 0px;
 }
