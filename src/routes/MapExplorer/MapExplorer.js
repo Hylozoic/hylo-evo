@@ -21,6 +21,7 @@ import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
+import { isPublicPath, isAllCommunitiesPath, isNetworkPath, isCommunityPath, getCommunitySlugInPath as getCommunitySlug, getNetworkSlugInPath as getNetworkSlug } from 'util/navigation'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -64,7 +65,7 @@ export default class MapExplorer extends React.Component {
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
-    
+
     this.props.fetchSavedSearches();
   }
 
@@ -260,6 +261,37 @@ export default class MapExplorer extends React.Component {
     this.setState({ showSavedSearches: !this.state.showSavedSearches })
   }
 
+  saveSearch = (name) => {
+    const { boundingBox } = this.state
+    const { currentUser, filters, location } = this.props
+    const { featureTypes, search: searchText, topics } = filters
+    const { pathname } = location;
+
+    // const isPublic = isPublicPath(pathname)
+    // const isAll = isAllCommunitiesPath(pathname)
+    const isNetwork = isNetworkPath(pathname)
+    const isCommunity = isCommunityPath(pathname)
+
+    let communitySlug
+    let networkSlug
+    
+    if (isCommunity) communitySlug = getCommunitySlug(pathname)
+    if (isNetwork) networkSlug = getNetworkSlug(pathname)
+
+    const userId = currentUser.id
+
+    const postTypes = Object.keys(featureTypes).reduce((selected, type) => {
+      if (featureTypes[type]) selected.push(type)
+      return selected;
+    }, [])
+
+    const topicIds = topics.map(t => t.id)
+
+    const attributes = { userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds }
+
+    this.props.saveSearch(attributes)
+  }
+
   render () {
     const {
       currentUser,
@@ -317,7 +349,7 @@ export default class MapExplorer extends React.Component {
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
       <img styleName={cx('savedSearchesButton')} onClick={this.toggleSavedSearches} src={heart} />
-      { showSavedSearches ? (<SavedSearches toggle={this.toggleSavedSearches} deleteSearch={deleteSearch} searches={searches}/>) : '' }
+      { showSavedSearches ? (<SavedSearches toggle={this.toggleSavedSearches} deleteSearch={deleteSearch} saveSearch={this.saveSearch} searches={searches}/>) : '' }
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {

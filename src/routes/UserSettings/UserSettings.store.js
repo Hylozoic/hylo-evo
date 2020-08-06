@@ -1,6 +1,7 @@
 import {
   FETCH_SAVED_SEARCHES,
   DELETE_SAVED_SEARCH,
+  SAVE_SEARCH,
   LEAVE_COMMUNITY,
   UNLINK_ACCOUNT
 } from 'store/constants'
@@ -14,6 +15,8 @@ export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
 export const REGISTER_STRIPE_ACCOUNT = `${MODULE_NAME}/REGISTER_STRIPE_ACCOUNT`
+
+import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation.graphql'
 
 const defaultState = {
   searches: []
@@ -100,6 +103,21 @@ export function deleteSearch (id) {
     },
     meta: {
       id,
+      optimistic: true
+    }
+  }
+}
+
+export function saveSearch ({ userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds }) {
+  console.log(userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds)
+  return {
+    type: SAVE_SEARCH,
+    graphql: {
+      query: CreateSavedSearchMutation,
+      variables: { userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds }
+    },
+    meta: {
+      userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds,
       optimistic: true
     }
   }

@@ -4,7 +4,7 @@ import { get, pick } from 'lodash/fp'
 import { FETCH_POSTS_MAP } from 'store/constants'
 import getRouteParam from 'store/selectors/getRouteParam'
 import {
-  fetchSavedSearches, deleteSearch
+  fetchSavedSearches, deleteSearch, saveSearch
 } from '../UserSettings/UserSettings.store'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
@@ -99,6 +99,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchPublicCommunities: (params) => () => dispatch(fetchPublicCommunities({ ...params })),
     fetchSavedSearches: (userId) => () => dispatch(fetchSavedSearches(userId)),
     deleteSearch: (searchId) => dispatch(deleteSearch(searchId)),
+    saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     showCommunityDetails: (communityId) => dispatch(push(communityMapDetailUrl(communityId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),

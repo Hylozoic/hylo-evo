@@ -9,21 +9,16 @@ import ReactTooltip from 'react-tooltip'
 
 function SavedSearches (props) {
   let {
-    fetchPostsParam,
-    filters,
-    onUpdateFilters,
-    features,
-    querystringParams,
-    routeParams,
     deleteSearch,
+    saveSearch,
     searches,
     toggle
   } = props
 
-  const [search, setSearch] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
   const [name, setName] = useState('')
   const triangleStyle = { right: 100 }
+
+  const canSave = name.length;
 
   return (
     <div styleName='container'>
@@ -53,12 +48,10 @@ function SavedSearches (props) {
               placeholder='Name this view'
               value={name}
             />
-            <span styleName='save'>Save</span>
+            <span styleName={`save ${canSave ? '' :  'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>Save</span>
           </span>
           <span styleName='filters'><img src={info} /> No filters</span>
-       
         </div>
-        
         
         <div styleName='savedViews'>
           <h2>Saved Views</h2>
@@ -71,9 +64,10 @@ function SavedSearches (props) {
   )
 }
 
-const SavedSearch = ({ search, deleteSearch }) => {
-  const { name, count, community, isPublic } = search;
+const SavedSearch = ({ deleteSearch, search }) => {
+  const { name, count, community, isPublic, network } = search;
   const params = formatParams(search)
+  //TODO: better parsing of params preview
   return (
     <div styleName='search'>
       <div styleName='row'>
@@ -84,7 +78,8 @@ const SavedSearch = ({ search, deleteSearch }) => {
         </div>
       </div>
       <div styleName='row filters' data-tip={params} data-for='params'>
-      <img src={info} /><span styleName='saved-filters'>Community: {community.name} • Public Posts: {isPublic ? 'Yes' : 'No'}
+      <img src={info} /><span styleName='saved-filters'>
+        {community ? `Community: ${community.name}` : `Network: ${network.slug}`} • Public Posts: {isPublic ? 'Yes' : 'No'}
         <ReactTooltip place='right'
         id='params'
         effect='solid'

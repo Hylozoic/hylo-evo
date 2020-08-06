@@ -277,6 +277,10 @@ export function isAllCommunitiesPath (path) {
   return (path.startsWith('/all'))
 }
 
+export function isCommunityPath (path) {
+  return (path.startsWith('/c/'))
+}
+
 export function isNetworkPath (path) {
   return (path.startsWith('/n/'))
 }
