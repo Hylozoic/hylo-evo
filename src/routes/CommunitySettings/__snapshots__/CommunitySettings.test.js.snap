@@ -46,6 +46,19 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/invite",
       },
       Object {
+        "component": <Connect(MembershipRequestsTab)
+          community={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Join Requests",
+        "path": "/c/foo/settings/requests",
+      },
+      Object {
         "component": <DeleteSettingsTab
           community={
             Object {
