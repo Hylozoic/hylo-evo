@@ -30,7 +30,13 @@
   top: 14px;
 }
 
-.action-icon {
+.upload-button {
+  display: flex;
+  align-items: center;
+  margin-right: $space-2x;
+}
+
+.upload-button-icon {
   font-size: 32px;
   cursor: pointer;
   &:hover {
@@ -38,9 +44,15 @@
   }
 }
 
-.highlight-icon {
-  color: $color-caribbean-green;
-  cursor: default;
+.upload-button-loading {
+  width: 32px;
+  height: 32px;
+  div {
+    svg path {
+      fill: $color-caribbean-green;
+    }
+  }
+  
 }
 
 .placeholder {

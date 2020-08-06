@@ -75,7 +75,7 @@ export default class CommentForm extends Component {
           allowMultiple
           onSuccess={addAttachment}
           customRender={renderProps =>
-            <UploadButton {...renderProps} />
+            <UploadButton {...renderProps} styleName='upload-button' />
           }
         />
       </div>
@@ -88,9 +88,8 @@ export function UploadButton ({
   loading,
   className
 }) {
-  if (loading) return <Loading type='inline' />
-
   return <div onClick={onClick} className={className}>
-    <Icon name='AddImage' styleName='action-icon' />
+    {loading && <Loading type='inline' styleName='upload-button-loading' />}
+    {!loading && <Icon name='AddImage' styleName='upload-button-icon' />}
   </div>
 }
