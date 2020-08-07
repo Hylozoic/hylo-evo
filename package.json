@@ -25,6 +25,7 @@
     "@deck.gl/layers": "^8.2",
     "@deck.gl/mesh-layers": "^8.2",
     "@deck.gl/react": "^8.2",
+    "@math.gl/web-mercator": "^3.2.2",
     "@storybook/addon-actions": "^v5.0.10",
     "@storybook/addon-info": "^5.0.10",
     "@storybook/addon-links": "^v5.0.10",

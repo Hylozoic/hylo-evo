@@ -69,7 +69,7 @@ export default class PostEditor extends React.Component {
     detailPlaceholderForPostType: {
       offer: 'Add a description',
       request: 'Add a description',
-      resource: 'Please describe the physical resource that is available, including the location.',
+      resource: 'Describe the resource that is available',
       project: 'Add a description',
       event: 'Add a description',
       default: 'Add a description'
@@ -314,7 +314,7 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime, locationId } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
@@ -323,8 +323,7 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       communities.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime))) &&
-      (type !== 'resource' || locationId)
+      (!isEvent || (endTime && (startTime < endTime)))
     )
   }
 
@@ -475,6 +474,7 @@ export default class PostEditor extends React.Component {
         {hasLocation && <div styleName='footerSection'>
           <div styleName='footerSection-label alignedLabel'>Location</div>
           <LocationInput
+            saveLocationToDB
             locationObject={curLocation}
             location={location}
             onChange={this.handleLocationChange}

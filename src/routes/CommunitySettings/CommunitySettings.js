@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './CommunitySettings.scss'
 import CommunitySettingsTab from './CommunitySettingsTab'
+import MembershipRequestsTab from './MembershipRequestsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
@@ -71,6 +72,14 @@ export default class CommunitySettings extends Component {
           name: 'Invite',
           path: `/c/${slug}/settings/invite`,
           component: <InviteSettingsTab community={community} />
+        },
+        {
+          name: 'Join Requests',
+          path: `/c/${slug}/settings/requests`,
+          component: <MembershipRequestsTab
+            community={community}
+            currentUser={currentUser}
+          />
         },
         {
           name: 'Delete',
