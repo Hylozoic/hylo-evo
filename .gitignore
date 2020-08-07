@@ -15,7 +15,6 @@ storybook-static
 # misc
 .DS_Store
 .env
-.env.production
 .env.old
 .env.production
 npm-debug.log
