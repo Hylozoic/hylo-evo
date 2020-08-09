@@ -75,6 +75,8 @@ export function getAttachments (state, {
   return allAttachments
 }
 
+// Gets Attachments for any ReduxORM object matching
+// the provided type and id pair
 export const getAttachmentsFromObject = ormCreateSelector(
   orm,
   (state, _) => get('orm', state),

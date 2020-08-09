@@ -64,8 +64,6 @@ export default class AttachmentManager extends React.Component {
     this.props.clearAttachments()
   }
 
-  clearAttachments = () => this.props.clearAttachments()
-
   render () {
     const { attachments, attachmentType, uploadAttachmentPending, showLoading } = this.props
 
@@ -189,6 +187,6 @@ export function FilePreview ({ attachment, removeFile, fileSize }) {
     <Icon name='Document' styleName='icon-document' />
     <div styleName='file-name'>{decodeURIComponent(filename)}</div>
     {fileSize && <div styleName='file-size'>{fileSize}</div>}
-    {removeFile && <Icon name='Ex' styleName='remove-file' onClick={removeFile} />}
+    <Icon name='Ex' styleName='remove-file' onClick={removeFile} />
   </div>
 }

@@ -32,10 +32,10 @@ const postFieldsFragment = withComments => `
         avatarUrl
       }
       attachments {
+        id
+        position
         type
         url
-        position
-        id
       }
       createdAt
     }

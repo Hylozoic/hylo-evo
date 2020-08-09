@@ -97,7 +97,7 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     goToUrl: url => dispatch(push(url)),

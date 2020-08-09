@@ -35,10 +35,7 @@ beforeAll(() => {
     },
     pending: {
       FETCH_LINK_PREVIEW: false
-    },
-    // AttachmentManager: {
-    //   Post: {}
-    // }
+    }
   }
   requiredProps = {
     match: {},
