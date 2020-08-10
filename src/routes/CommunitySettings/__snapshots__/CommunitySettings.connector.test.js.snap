@@ -128,5 +128,7 @@ Object {
   "slug": "foo",
   "updateCommunitySettings": [Function],
   "updateCommunitySettingsMaker": [Function],
+  "upload": [Function],
+  "uploadMaker": [Function],
 }
 `;
