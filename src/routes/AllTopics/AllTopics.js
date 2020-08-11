@@ -160,7 +160,7 @@ export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubs
       </Link>
       {singleCommunity &&
         <div styleName='topic-stats'>
-          {inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)} •
+          {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
           {toggleSubscribe && <span onClick={() => toggleSubscribe(communityTopic)} styleName='topic-subscribe'>
             {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
           </span>}
@@ -169,7 +169,7 @@ export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubs
       {!singleCommunity && communityTopics.map((ct, key) =>
         <CommunityCell community={ct.community} key={key}>
           <div styleName='topic-stats'>
-            {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('follower', ct.followersTotal)} •
+            {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
             {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
               {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
             </span>}
