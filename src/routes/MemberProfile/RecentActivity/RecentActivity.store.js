@@ -33,9 +33,10 @@ const recentActivityQuery =
           title
         }
         attachments {
-          id
-          url
           type
+          url
+          position
+          id
         }
         createdAt
       }

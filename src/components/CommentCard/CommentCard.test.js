@@ -10,13 +10,13 @@ const props = {
       name: 'Joe Smith',
       avatarUrl: 'foo.jpg'
     },
+    attachments: [],
     post: {
       id: 77,
       title: 'Awesome Sauce #hashtag'
     },
     createdAt: new Date()
   },
-  shouldShowReply: false,
   expanded: false,
   highlightProps: { term: 'foo' }
 }
@@ -29,17 +29,18 @@ it('matches last snapshot', () => {
 it('matches last snapshot with different config', () => {
   const differentProps = {
     ...props,
-    shouldShowReply: true,
     expanded: true
   }
   const wrapper = shallow(<CommentCard {...differentProps} />)
   expect(wrapper).toMatchSnapshot()
 })
 
-it('displays an image', () => {
+it('displays image an image attachments', () => {
   const comment = {
     ...props.comment,
-    image: { url: 'jam.png' }
+    attachments: [
+      { url: 'jam.png', attachmentType: 'image' }
+    ]
   }
   const wrapper = shallow(<CommentCard {...props} comment={comment} />)
   expect(wrapper).toMatchSnapshot()

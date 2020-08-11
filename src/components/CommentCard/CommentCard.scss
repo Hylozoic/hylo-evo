@@ -7,7 +7,7 @@
 
 .comment-card {
   composes: bdy-lt-sm from 'css/typography.scss';
-  $padding-left: $space-14x;
+  $padding-left: $space-18x;
 
   border: 1px solid $color-cape-cod-10;
   border-radius: $space-1x;
@@ -24,7 +24,17 @@
   }
 
   .comment-body {
+    padding-left: $padding-left;
     margin-top: 10px;
+  }
+
+  .comment-images {
+    margin-left: $padding-left;
+    width: 50%;
+    border-radius: 20px;
+  }
+  
+  .comment-files {
     padding-left: $padding-left;
   }
 
@@ -47,11 +57,6 @@
   &.expanded:hover {
     box-shadow: 0px 4px 6px 0px $color-black-10;
   }
-}
-
-.comment-image {
-  max-width: 256px;
-  max-height: 256px;
 }
 
 .comment-body {

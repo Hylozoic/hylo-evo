@@ -63,40 +63,6 @@
   max-height: 100px;
 }
 
-.file-attachments {
-  composes: cardPadding;
-  display: flex;
-  flex-direction: row;
-}
-
-.file-attachment {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  text-decoration: none;
-  &:hover, &:visited, &:link, &:active {
-    text-decoration: none;
-  }
-}
-
-.file-icon {
-  font-size: 20px;
-  color: $color-tree-poppy;
-  margin-right: 8px;
-}
-
-.file-name {
-  @include font-regular;
-  color: $color-caribbean-green;
-  &:hover {
-    color: $color-gossamer;
-  }
-  font-size: 12px;
-  max-width: 155px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 :global {
   .hashtag, .mention {
     color: $color-caribbean-green;
@@ -119,7 +85,6 @@
 }
 
 @media screen and (max-width: 375px) {
-
   .details {
     font-size: 12px;
     line-height: 16px;

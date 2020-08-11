@@ -2,24 +2,28 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
-import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
+import AttachmentManager from 'components/AttachmentManager'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
+import RoundImage from 'components/RoundImage'
+import Icon from 'components/Icon'
+import Loading from 'components/Loading'
 import './CommentForm.scss'
-
-const { object, func, string } = PropTypes
 
 export default class CommentForm extends Component {
   static propTypes = {
-    currentUser: object,
-    createComment: func,
-    className: string,
-    placeholderText: string
+    postId: PropTypes.string.isRequired,
+    createComment: PropTypes.func.isRequired,
+    currentUser: PropTypes.object.isRequired,
+    className: PropTypes.string,
+    // provided by connector
+    sendIsTyping: PropTypes.func.isRequired,
+    addAttachment: PropTypes.func.isRequired,
+    clearAttachments: PropTypes.func.isRequired,
+    attachments: PropTypes.array
   }
-  constructor (props) {
-    super(props)
 
-    this.editor = React.createRef()
-  }
+  editor = React.createRef()
 
   startTyping = throttle((editorState, stateChanged) => {
     if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
@@ -28,18 +32,34 @@ export default class CommentForm extends Component {
   }, STARTED_TYPING_INTERVAL)
 
   save = text => {
+    const {
+      createComment,
+      sendIsTyping,
+      attachments,
+      clearAttachments
+    } = this.props
+
     this.startTyping.cancel()
-    this.props.sendIsTyping(false)
-    this.props.createComment(text)
+    sendIsTyping(false)
+    createComment({
+      text,
+      attachments
+    })
+    clearAttachments()
   }
 
   render () {
-    const { currentUser, className } = this.props
+    const { currentUser, className, addAttachment } = this.props
+
     if (!currentUser) return null
 
     const placeholder = `Hi ${currentUser.firstName()}, what's on your mind?`
-    return <div styleName='commentForm' className={className}
+
+    return <div
+      styleName='commentForm'
+      className={className}
       onClick={() => this.editor.current.focus()}>
+      <AttachmentManager type='comment' id='new' />
       <div styleName={'prompt'}>
         <RoundImage url={currentUser.avatarUrl} small styleName='image' />
         <HyloEditor
@@ -49,7 +69,27 @@ export default class CommentForm extends Component {
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save} />
+        <UploadAttachmentButton
+          type='comment'
+          id='new'
+          allowMultiple
+          onSuccess={addAttachment}
+          customRender={renderProps =>
+            <UploadButton {...renderProps} styleName='upload-button' />
+          }
+        />
       </div>
     </div>
   }
+}
+
+export function UploadButton ({
+  onClick,
+  loading,
+  className
+}) {
+  return <div onClick={onClick} className={className}>
+    {loading && <Loading type='inline' styleName='upload-button-loading' />}
+    {!loading && <Icon name='AddImage' styleName='upload-button-icon' />}
+  </div>
 }

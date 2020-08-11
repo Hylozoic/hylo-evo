@@ -59,9 +59,17 @@ $comment-left-margin: 69px;
   margin-left: 69px;
 }
 
-.image {
-  max-width: 256px;
-  max-height: 256px;
+.images {
+  display: flex;
+  padding-top: 0px;
+  margin-left: $comment-left-margin;
+  width: 70%;
+  border-radius: 20px;
+}
+
+.files {
+  display: flex;
+  margin-left: $comment-left-margin
 }
 
 .editor {
