@@ -124,7 +124,7 @@ export default class PrimaryLayout extends Component {
           <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
-            <Route path='/all/topics' component={AllTopics} />
+            <Route path='/:context(all)/topics' component={AllTopics} />
             {/* <Route path='/:context(tag)/:topicName' exact component={TopicSupportComingSoon} /> */}
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
@@ -136,7 +136,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/:context(n)/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/:context(n)/:networkSlug/communities' component={NetworkCommunities} />
-            <Route path='/:context(n)/:networkSlug/:topicName' exact component={Feed} />
+            <Route path='/:context(n)/:networkSlug/topics' component={AllTopics} />
+            <Route path={`/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/:context(c)/:slug/members' component={Members} />
             <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -202,6 +203,7 @@ const detailRoutes = [
   { path: `/:context(n)/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(n)/:networkSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(n)/:networkSlug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(n)/:networkSlug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(c)/:slug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(c)/:slug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(c)/:slug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
