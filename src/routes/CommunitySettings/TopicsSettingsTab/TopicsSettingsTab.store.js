@@ -27,6 +27,7 @@ export function setSearch (search) {
 }
 
 export function setCommunityTopicVisibility (communityTopicId, visibility) {
+  visibility = parseInt(visibility)
   return {
     type: UPDATE_COMMUNITY_TOPIC,
     graphql: {

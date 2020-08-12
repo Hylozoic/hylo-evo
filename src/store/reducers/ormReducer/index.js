@@ -153,6 +153,7 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_COMMUNITY_TOPIC_PENDING:
       communityTopic = CommunityTopic.withId(meta.id)
       communityTopic.update(meta.data)
+      clearCacheFor(CommunityTopic, meta.id)
       break
 
     case VOTE_ON_POST_PENDING:
