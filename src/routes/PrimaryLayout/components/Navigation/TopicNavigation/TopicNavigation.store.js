@@ -1,6 +1,6 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { matchPath } from 'react-router-dom'
-import { flow, groupBy, map, pick, find, reduce, sortBy, values } from 'lodash/fp'
+import { find, flow, groupBy, map, omit, pick, reduce, sortBy, values } from 'lodash/fp'
 import orm from 'store/models'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
@@ -51,14 +51,19 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
     }
 
     if (network) {
+      const networkCommunities = network.communities.toModelArray().map(c => c.id)
       communityTopics = session.CommunityTopic.filter(
         communityTopic => {
-          return communityTopic.community && find(
-            cid => communityTopic.community === cid.toString(),
-            network.communities.toModelArray().map(c => c.id)
-          ) && communityTopic.isSubscribed
+          return communityTopic.isSubscribed
+            && communityTopic.community
+            && find(
+              cid => communityTopic.community === cid.toString(),
+              networkCommunities
+            )
         }
-      ).toModelArray()
+      )
+      .toModelArray()
+      .map(ct => omit(['visibility'], {...ct.ref, topic: ct.topic }))  // remove visibility tracking at network level
 
       return sortBy(getTopicName, communityTopics)
     }
@@ -66,6 +71,7 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
     let allCommunityTopics = session.CommunityTopic
       .filter({ isSubscribed: true })
       .toModelArray()
+      .map(ct => omit(['visibility'], {...ct.ref, topic: ct.topic })) // remove visibility tracking at all topics level
 
     return sortBy(getTopicName, mergeCommunityTopics(allCommunityTopics))
   }
