@@ -24,10 +24,6 @@ export const getTopicsFromSubscribedCommunityTopics = (state, props) => {
     }
   })
 
-  // TODO: WTF?
-  const names = topics.map(topic => topic.name)
-  topics = topics.filter((topic, index) => names.indexOf(topic.name) === index)
-
   return topics
 }
 
@@ -54,16 +50,16 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
       const networkCommunities = network.communities.toModelArray().map(c => c.id)
       communityTopics = session.CommunityTopic.filter(
         communityTopic => {
-          return communityTopic.isSubscribed
-            && communityTopic.community
-            && find(
+          return communityTopic.isSubscribed &&
+            communityTopic.community &&
+            find(
               cid => communityTopic.community === cid.toString(),
               networkCommunities
             )
         }
       )
-      .toModelArray()
-      .map(ct => omit(['visibility'], {...ct.ref, topic: ct.topic }))  // remove visibility tracking at network level
+        .toModelArray()
+        .map(ct => omit(['visibility'], { ...ct.ref, topic: ct.topic })) // remove visibility tracking at network level
 
       return sortBy(getTopicName, communityTopics)
     }
@@ -71,7 +67,7 @@ export const getSubscribedCommunityTopics = ormCreateSelector(
     let allCommunityTopics = session.CommunityTopic
       .filter({ isSubscribed: true })
       .toModelArray()
-      .map(ct => omit(['visibility'], {...ct.ref, topic: ct.topic })) // remove visibility tracking at all topics level
+      .map(ct => omit(['visibility'], { ...ct.ref, topic: ct.topic })) // remove visibility tracking at all topics level
 
     return sortBy(getTopicName, mergeCommunityTopics(allCommunityTopics))
   }

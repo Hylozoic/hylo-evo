@@ -51,7 +51,7 @@ export function deleteCommunityTopic (communityTopicId) {
 // Reducer
 
 const defaultState = {
-  sort: 'updated_at',
+  sort: 'name',
   search: ''
 }
 

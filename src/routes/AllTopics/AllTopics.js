@@ -55,6 +55,10 @@ export default class AllTopics extends Component {
     })
   }
 
+  componentWillUnmount () {
+    this.props.setSearch('')
+  }
+
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
       this.setState({ totalTopicsCached: this.props.totalTopics })
