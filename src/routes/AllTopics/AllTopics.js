@@ -152,31 +152,42 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 
 export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubscribe, deleteItem, canModerate }) {
   const { name, communityTopics, postsTotal, followersTotal } = topic
-  const communityTopic = singleCommunity && topic.communityTopics[0]
+
+  let communityTopicContent
+  if (singleCommunity && communityTopics[0]) {
+    const communityTopic = communityTopics[0]
+
+    // Don't show hidden topics unless user is subscribed to it
+    if (!communityTopic.isSubscribed && communityTopic.visibility === 0) return ''
+
+    communityTopicContent = <div styleName='topic-stats'>
+      {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
+      {toggleSubscribe && <span onClick={() => toggleSubscribe(communityTopic)} styleName='topic-subscribe'>
+        {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+      </span>}
+    </div>
+  } else {
+    // Don't show hidden topics unless user is subscribed to it
+    const visibleCommunityTopics = communityTopics.filter(ct => ct.isSubscribed || ct.visibility !== 0)
+    if (visibleCommunityTopics.length === 0) return ''
+
+    communityTopicContent = visibleCommunityTopics.map((ct, key) => <CommunityCell community={ct.community} key={key}>
+      <div styleName='topic-stats'>
+        {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
+        {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+          {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+        </span>}
+      </div>
+      <br />
+    </CommunityCell>)
+  }
+
   return <div styleName='topic'>
     <div styleName='communitiesList'>
       <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
         <div styleName='topic-name'>#{name}</div>
       </Link>
-      {singleCommunity &&
-        <div styleName='topic-stats'>
-          {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
-          {toggleSubscribe && <span onClick={() => toggleSubscribe(communityTopic)} styleName='topic-subscribe'>
-            {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-          </span>}
-        </div>
-      }
-      {!singleCommunity && communityTopics.map((ct, key) =>
-        <CommunityCell community={ct.community} key={key}>
-          <div styleName='topic-stats'>
-            {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
-            {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
-              {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-            </span>}
-          </div>
-          <br />
-        </CommunityCell>
-      )}
+      {communityTopicContent}
     </div>
   </div>
 }
