@@ -7,35 +7,30 @@ exports[`ActionsBar matches last snapshot 1`] = `
   <div
     data-stylename="actions"
   >
-    <Connect(ChangeImageButton)
+    <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="image"
-      update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
+      id={1}
+      onSuccess={[Function]}
+      type="post"
     >
       <Icon
         data-stylename="action-icon"
         name="AddImage"
       />
-    </Connect(ChangeImageButton)>
-    <Connect(ChangeImageButton)
+    </Connect(UploadAttachmentButton)>
+    <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="file"
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
+      id={1}
+      onSuccess={[Function]}
+      type="post"
     >
       <Icon
         data-stylename="action-icon"
         name="Paperclip"
       />
-    </Connect(ChangeImageButton)>
+    </Connect(UploadAttachmentButton)>
   </div>
   <Button
     color="green"
@@ -54,35 +49,30 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
   <div
     data-stylename="actions"
   >
-    <Connect(ChangeImageButton)
+    <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="image"
-      update={[Function]}
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
+      id={1}
+      onSuccess={[Function]}
+      type="post"
     >
       <Icon
         data-stylename="action-icon"
         name="AddImage"
       />
-    </Connect(ChangeImageButton)>
-    <Connect(ChangeImageButton)
+    </Connect(UploadAttachmentButton)>
+    <Connect(UploadAttachmentButton)
+      allowMultiple={true}
       attachmentType="file"
-      uploadSettings={
-        Object {
-          "id": 1,
-          "type": "post",
-        }
-      }
+      id={1}
+      onSuccess={[Function]}
+      type="post"
     >
       <Icon
         data-stylename="action-icon"
         name="Paperclip"
       />
-    </Connect(ChangeImageButton)>
+    </Connect(UploadAttachmentButton)>
   </div>
   <Button
     color="green"
@@ -192,12 +182,20 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     onClose={[Function]}
   />
   <Connect(AttachmentManager)
-    postId="test"
-    type="image"
+    attachmentType="image"
+    id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="test"
-    type="file"
+    attachmentType="file"
+    id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -419,12 +417,20 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     onClose={[Function]}
   />
   <Connect(AttachmentManager)
-    postId="test"
-    type="image"
+    attachmentType="image"
+    id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="test"
-    type="file"
+    attachmentType="file"
+    id="test"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -678,12 +684,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -830,12 +842,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -1024,12 +1042,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -1218,12 +1242,18 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -1413,12 +1443,18 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -1604,12 +1640,18 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -1757,12 +1799,18 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -1910,12 +1958,18 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -2032,12 +2086,18 @@ exports[`PostEditor renders contribution button 1`] = `
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"
@@ -2226,12 +2286,18 @@ exports[`PostEditor renders with min props 1`] = `
     </div>
   </div>
   <Connect(AttachmentManager)
-    postId="new"
-    type="image"
+    attachmentType="image"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <Connect(AttachmentManager)
-    postId="new"
-    type="file"
+    attachmentType="file"
+    showAddButton={true}
+    showLabel={true}
+    showLoading={true}
+    type="post"
   />
   <div
     data-stylename="footer"

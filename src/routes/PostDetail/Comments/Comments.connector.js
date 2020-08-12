@@ -1,7 +1,13 @@
 import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
-import { fetchComments, createComment, getComments, getHasMoreComments, getTotalComments } from './Comments.store'
+import fetchComments from 'store/actions/fetchComments'
+import {
+  getComments,
+  getHasMoreComments,
+  getTotalComments
+} from 'store/selectors/getComments'
+import createComment from 'store/actions/createComment'
 
 export function mapStateToProps (state, props) {
   return {
@@ -16,7 +22,7 @@ export const mapDispatchToProps = (dispatch, props) => {
   const { postId, scrollToBottom } = props
   return {
     fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, { cursor })),
-    createComment: text => dispatch(createComment(postId, text)).then(() => scrollToBottom())
+    createComment: commentParams => dispatch(createComment({ postId, ...commentParams })).then(() => scrollToBottom())
   }
 }
 

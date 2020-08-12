@@ -7,8 +7,7 @@ import cx from 'classnames'
 import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
 import { POST_PROP_TYPES } from 'store/models/Post'
-import AttachmentManager from './AttachmentManager'
-import { uploadSettings } from './AttachmentManager/AttachmentManager'
+import AttachmentManager from 'components/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
@@ -21,7 +20,7 @@ import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
 import DatePicker from 'components/DatePicker'
-import ChangeImageButton from 'components/ChangeImageButton'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
@@ -93,13 +92,12 @@ export default class PostEditor extends React.Component {
       detailsTopics: [],
       acceptContributions: false
     })
-    const currentPost = post
-      ? ({ ...post,
-        locationId: post.locationObject ? post.locationObject.id : null,
-        startTime: Moment(post.startTime),
-        endTime: Moment(post.endTime)
-      })
-      : defaultPostWithCommunitiesAndTopic
+    const currentPost = post ? ({
+      ...post,
+      locationId: post.locationObject ? post.locationObject.id : null,
+      startTime: Moment(post.startTime),
+      endTime: Moment(post.endTime)
+    }) : defaultPostWithCommunitiesAndTopic
 
     return {
       post: currentPost,
@@ -329,17 +327,24 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const {
-      editing, createPost, createProject, updatePost, onClose, goToPost, images, files, setAnnouncement, announcementSelected, isProject
+      editing, createPost, createProject, updatePost, onClose,
+      goToPost, setAnnouncement, announcementSelected, isProject,
+      imageAttachments, fileAttachments
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members, acceptContributions, eventInvitations, startTime, endTime, location, locationId, isPublic
+      id, type, title, communities, linkPreview, members,
+      acceptContributions, eventInvitations, startTime,
+      endTime, location, locationId, isPublic
     } = this.state.post
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
+    const imageUrls = imageAttachments && imageAttachments.map(attachment => attachment.url)
+    const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
+
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls: images, fileUrls: files, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
+      id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
     const saveFunc = editing ? updatePost : isProject ? createProject : createPost
     setAnnouncement(false)
@@ -362,20 +367,25 @@ export default class PostEditor extends React.Component {
   }
 
   render () {
-    const { initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError, dateError, valid, post, detailsTopics = [], showAnnouncementModal } = this.state
-    const { id, type, title, details, communities, linkPreview, topics, members, acceptContributions, eventInvitations, startTime, endTime, location, locationObject } = post
-
     const {
-      onClose, currentCommunity, currentUser, communityOptions, defaultTopics, loading, addImage,
-      showImages, addFile, showFiles, setAnnouncement, announcementSelected,
-      canModerate, myModeratedCommunities, isProject, isEvent
+      initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError,
+      dateError, valid, post, detailsTopics = [], showAnnouncementModal
+    } = this.state
+    const {
+      id, type, title, details, communities, linkPreview, topics, members,
+      acceptContributions, eventInvitations, startTime, endTime, location,
+      locationObject
+    } = post
+    const {
+      onClose, currentCommunity, currentUser, communityOptions, defaultTopics, loading, setAnnouncement,
+      announcementSelected, canModerate, myModeratedCommunities, isProject,
+      isEvent, showFiles, showImages, addAttachment
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
     const showPostTypes = !isProject && !isEvent
     const canHaveTimes = type !== 'discussion'
-
     // Center location autocomplete either on post's current location, or current community's location, or current user's location
     const curLocation = locationObject || get('0.locationObject', communities) || get('locationObject', currentUser)
 
@@ -424,8 +434,8 @@ export default class PostEditor extends React.Component {
       </div>
       {linkPreview &&
         <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
-      <AttachmentManager postId={id || 'new'} type='image' />
-      <AttachmentManager postId={id || 'new'} type='file' />
+      <AttachmentManager type='post' id={id} attachmentType='image' showAddButton showLabel showLoading />
+      <AttachmentManager type='post' id={id} attachmentType='file' showAddButton showLabel showLoading />
       <div styleName='footer'>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
@@ -504,9 +514,8 @@ export default class PostEditor extends React.Component {
         </div>}
         <ActionsBar
           id={id}
-          addImage={addImage}
+          addAttachment={addAttachment}
           showImages={showImages}
-          addFile={addFile}
           showFiles={showFiles}
           valid={valid}
           loading={loading}
@@ -526,10 +535,10 @@ export default class PostEditor extends React.Component {
   }
 }
 
-export function ActionsBar ({ id,
-  addImage,
+export function ActionsBar ({
+  id,
+  addAttachment,
   showImages,
-  addFile,
   showFiles,
   valid,
   loading,
@@ -546,29 +555,41 @@ export function ActionsBar ({ id,
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
-      <ChangeImageButton update={addImage}
-        uploadSettings={uploadSettings(id)}
+      <UploadAttachmentButton
+        type='post'
+        id={id}
         attachmentType='image'
+        onSuccess={attachment => addAttachment('post', id, attachment)}
+        allowMultiple
         disable={showImages}>
-        <Icon name='AddImage'
-          styleName={cx('action-icon', { 'highlight-icon': showImages })} />
-      </ChangeImageButton>
-      <ChangeImageButton update={addFile}
-        uploadSettings={uploadSettings(id)}
+        <Icon
+          name='AddImage'
+          styleName={cx('action-icon', { 'highlight-icon': showImages })}
+        />
+      </UploadAttachmentButton>
+      <UploadAttachmentButton
+        type='post'
+        id={id}
         attachmentType='file'
+        onSuccess={attachment => addAttachment('post', id, attachment)}
+        allowMultiple
         disable={showFiles}>
-        <Icon name='Paperclip'
-          styleName={cx('action-icon', { 'highlight-icon': showFiles })} />
-      </ChangeImageButton>
+        <Icon
+          name='Paperclip'
+          styleName={cx('action-icon', { 'highlight-icon': showFiles })}
+        />
+      </UploadAttachmentButton>
       {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
-        <Icon name='Announcement'
+        <Icon
+          name='Announcement'
           onClick={() => setAnnouncement(!announcementSelected)}
           styleName={cx('action-icon', { 'highlight-icon': announcementSelected })}
         />
         <ReactTooltip
           effect={'solid'}
           delayShow={550}
-          id='announcement-tt' />
+          id='announcement-tt'
+        />
       </span>}
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}

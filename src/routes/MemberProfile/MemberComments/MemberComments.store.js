@@ -21,9 +21,10 @@ const memberCommentsQuery =
           title
         }
         attachments {
-          id
-          url
           type
+          url
+          position
+          id
         }
         createdAt
       }

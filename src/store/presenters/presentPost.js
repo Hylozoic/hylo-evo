@@ -14,6 +14,7 @@ export default function presentPost (post, communityId) {
     isPublic: post.isPublic,
     commenters: post.commenters.toModelArray(),
     communities: post.communities.toModelArray(),
+    attachments: post.attachments.toModelArray(),
     fileAttachments: post.attachments.filter(a => a.type === 'file').toModelArray(),
     pinned,
     topics: post.topics.toModelArray().map(topic => presentTopic(topic, {})),

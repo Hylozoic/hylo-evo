@@ -2,8 +2,7 @@
 
 exports[`mapDispatchToProps returns the right keys 1`] = `
 Object {
-  "addFile": [Function],
-  "addImage": [Function],
+  "addAttachment": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
   "createProject": [Function],
@@ -63,9 +62,10 @@ Object {
   },
   "defaultTopics": Array [],
   "editing": false,
-  "fetchLinkPreviewPending": undefined,
-  "files": Array [],
-  "images": Array [],
+  "editingPostId": undefined,
+  "fetchLinkPreviewPending": false,
+  "fileAttachments": Array [],
+  "imageAttachments": Array [],
   "isEvent": false,
   "isProject": false,
   "linkPreview": null,
@@ -90,6 +90,8 @@ Object {
   "showImages": false,
   "topic": null,
   "topicName": undefined,
+  "uploadFileAttachmentPending": false,
+  "uploadImageAttachmentPending": false,
 }
 `;
 
@@ -140,9 +142,10 @@ Object {
   },
   "defaultTopics": Array [],
   "editing": true,
-  "fetchLinkPreviewPending": undefined,
-  "files": Array [],
-  "images": Array [],
+  "editingPostId": undefined,
+  "fetchLinkPreviewPending": false,
+  "fileAttachments": Array [],
+  "imageAttachments": Array [],
   "isEvent": false,
   "isProject": false,
   "linkPreview": null,
@@ -167,6 +170,8 @@ Object {
   "showImages": false,
   "topic": null,
   "topicName": undefined,
+  "uploadFileAttachmentPending": false,
+  "uploadImageAttachmentPending": false,
 }
 `;
 

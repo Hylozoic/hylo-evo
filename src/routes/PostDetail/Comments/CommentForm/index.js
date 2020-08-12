@@ -1,3 +1,4 @@
-import CommentForm from './CommentForm'
+import component from './CommentForm'
 import connector from './CommentForm.connector'
-export default connector(CommentForm)
+
+export default connector(component)

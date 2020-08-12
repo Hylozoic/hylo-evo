@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { deleteComment, updateComment } from './Comment.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import updateComment from 'store/actions/updateComment'
+import deleteComment from 'store/actions/deleteComment'
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {

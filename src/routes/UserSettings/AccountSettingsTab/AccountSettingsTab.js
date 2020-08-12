@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
 import './AccountSettingsTab.scss'
 import Button from 'components/Button'
-import ChangeImageButton from 'components/ChangeImageButton'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
@@ -115,15 +115,17 @@ export default class AccountSettingsTab extends Component {
     return <div>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
-        <ChangeImageButton
-          update={this.updateSettingDirectly('bannerUrl')}
-          uploadSettings={{ type: 'userBanner', id: currentUser.id }}
+        <UploadAttachmentButton
+          type='userBanner'
+          id={currentUser.id}
+          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
           styleName='change-banner-button' />
       </div>
       <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
-        <ChangeImageButton
-          update={this.updateSettingDirectly('avatarUrl')}
-          uploadSettings={{ type: 'userAvatar', id: currentUser.id }}
+        <UploadAttachmentButton
+          type='userAvatar'
+          id={currentUser.id}
+          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
           styleName='change-avatar-button' />
       </div>
       <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
