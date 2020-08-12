@@ -31,7 +31,7 @@ export function mapStateToProps (state, props) {
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
     communityTopic = getCommunityTopicForCurrentRoute(state, props)
-    communityTopic = communityTopic && communityTopic.ref
+    communityTopic = communityTopic && {...communityTopic.ref, community: communityTopic.community, topic: communityTopic.topic, }
   }
   if (topicName) {
     topic = getTopicForCurrentRoute(state, props)

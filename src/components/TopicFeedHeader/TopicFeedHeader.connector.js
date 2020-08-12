@@ -9,7 +9,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return {
     ...dispatchProps,
     ...ownProps,
-    toggleSubscribe: communityTopic => dispatchProps.toggleCommunityTopicSubscribe(communityTopic)
+    toggleSubscribe: () => dispatchProps.toggleCommunityTopicSubscribe(ownProps.communityTopic)
   }
 }
 
