@@ -15,18 +15,19 @@ export const ID_FOR_NEW = 'new'
 
 // action generators
 
-export function setAttachments (type, id, attachments) {
+export function setAttachments (type, id, attachmentType, attachments) {
   return {
     type: SET_ATTACHMENTS,
     payload: {
       attachmentKey: makeAttachmentKey(type, id),
+      attachmentType,
       attachments
     }
   }
 }
 
-export function clearAttachments (type, id) {
-  return setAttachments(type, id, [])
+export function clearAttachments (type, id, attachmentType) {
+  return setAttachments(type, id, attachmentType, [])
 }
 
 export function addAttachment (type, id, attachment) {
@@ -127,7 +128,10 @@ export default function reducer (state = defaultState, action) {
     case SET_ATTACHMENTS:
       return {
         ...state,
-        [attachmentKey]: attachments.map(a => pick(ATTACHMENT_KEYS_WHITELIST, a))
+        [attachmentKey]: [
+          ...attachmentType ? reject({ attachmentType }, attachmentsForKey) : [],
+          ...attachments.map(a => pick(ATTACHMENT_KEYS_WHITELIST, a))
+        ]
       }
     case ADD_ATTACHMENT:
       return {
