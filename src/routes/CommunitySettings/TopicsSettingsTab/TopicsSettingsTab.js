@@ -22,6 +22,14 @@ const visibilityOptions = Object.keys(TOPIC_VISIBILITY).reduce((result, option) 
 
 const TOPIC_LIST_ID = 'topic-list'
 
+const topicType = shape({
+  id: string,
+  name: string.isRequired,
+  postsTotal: number,
+  followersTotal: number,
+  isSubscribed: boolean
+})
+
 export default class TopicsSettingsTab extends Component {
   state = {
     createTopicModalVisible: false
@@ -29,22 +37,9 @@ export default class TopicsSettingsTab extends Component {
 
   static propTypes = {
     community: object.isRequired,
-    defaultTopics: arrayOf(shape({
-      id: string,
-      name: string.isRequired,
-      postsTotal: number,
-      followersTotal: number,
-      isSubscribed: boolean
-    })),
-    topics: arrayOf(shape({
-      id: string,
-      name: string.isRequired,
-      postsTotal: number,
-      followersTotal: number,
-      isSubscribed: boolean
-    })),
+    defaultTopics: arrayOf(topicType),
+    topics: arrayOf(topicType),
     network: object,
-    // routeParams: object.isRequired,
     selectedSort: string,
     setSort: func,
     search: string,
@@ -53,20 +48,22 @@ export default class TopicsSettingsTab extends Component {
     totalTopics: number
   }
 
+  updateCachedTopicsState (state, props) {
+    return { totalTopicsCached: props.totalTopics }
+  }
+
   componentDidMount () {
     this.props.fetchTopics()
     this.props.fetchDefaultTopics()
 
     // Caching totalTopics because the total returned in the queryset
     // changes when there is a search term
-    this.setState({
-      totalTopicsCached: this.props.totalTopics
-    })
+    this.setState(this.updateCachedTopicsState)
   }
 
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
-      this.setState({ totalTopicsCached: this.props.totalTopics })
+      this.setState(this.updateCachedTopicsState)
     }
     if (prevProps.fetchTopicsParams.communitySlug !== this.props.fetchTopicsParams.communitySlug) {
       this.props.fetchTopics()
@@ -132,7 +129,6 @@ export default class TopicsSettingsTab extends Component {
                 topic && this.props.createTopic(topic.name, community.id, true, false)
               }}
             />
-            <Icon name='Plus' green styleName='plus' />
           </div>
         </div>
       </div>
@@ -196,7 +192,6 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 export function TopicListItem ({ topic, singleCommunity, setCommunityTopicVisibility, removeSuggestedTopic, isSuggested }) {
   const { name, communityTopics, postsTotal, followersTotal } = topic
 
-  // TODO: is this right? what if it is in multiple communities
   const communityTopic = communityTopics.find(ct => ct.community.id === singleCommunity.id)
 
   return <div styleName='topic'>
@@ -224,16 +219,5 @@ export function TopicListItem ({ topic, singleCommunity, setCommunityTopicVisibi
     {singleCommunity && isSuggested && (
       <Icon name='Trash' onClick={removeSuggestedTopic(communityTopic.id)} styleName='remove-suggested-topic-button' />
     )}
-    {/* {!singleCommunity && communityTopics.map((ct, key) =>
-      <CommunityCell community={ct.community} key={key}>
-        <div styleName='topic-stats'>
-          {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('follower', ct.followersTotal)}
-          {toggleSubscribe && <span onClick={() => changeVisibility(topic)} styleName='visibility-dropdown'>
-            {TOPIC_VISIBILITY(topic.visibility)}
-          </span>}
-        </div>
-        <br />
-      </CommunityCell>
-    )} */}
   </div>
 }

@@ -121,7 +121,6 @@ export const getDefaultTopics = ormCreateSelector(
       .toModelArray()
       .map(topic => presentTopic(topic, props))
 
-    // console.log('getting default topics again ', topics, topics[0] ? topics[0].communityTopics[0] : null)
     return topics.filter(topic => {
       const communityTopic = topic.communityTopics.find(ct => ct.community.id === props.community.id)
       return communityTopic && communityTopic.isDefault
@@ -140,8 +139,6 @@ export const getTopics = ormCreateSelector(
       .filter(x => includes(x.id, results.ids))
       .orderBy(x => results.ids.indexOf(x.id))
       .toModelArray()
-
-    console.log('getting topics', topics.map(topic => presentTopic(topic, props)))
 
     return topics.map(topic => presentTopic(topic, props))
   }

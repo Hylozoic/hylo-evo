@@ -30,6 +30,7 @@
 
 .title {
   flex: 1;
+  vertical-align: top;
 
   a, a:hover {
     color: $color-rhino-60;
@@ -45,6 +46,12 @@
   overflow-x: hidden;
   transition: opacity .3s ease;
   color: $color-rhino-60;
+}
+
+.collapsed {
+  .topics {
+    display: none;
+  }
 }
 
 .topics::-webkit-scrollbar {

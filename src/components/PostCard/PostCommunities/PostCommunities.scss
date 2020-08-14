@@ -14,14 +14,16 @@
 
 .communityList {
   composes: timestamp from 'css/typography.scss';
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .communityLink {
-  color: $color-caribbean-green !important;
+  color: $color-caribbean-green;
   font-size: 12px;
   &:hover {
     text-decoration: none;
-    color: $color-gossamer !important;
+    color: $color-gossamer;
   }
 }
 
@@ -45,21 +47,6 @@
 
 .label {
   composes: timestamp from 'css/typography.scss';
-}
-
-.communityList {
-  composes: timestamp from 'css/typography.scss';
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.communityLink {
-  color: $color-caribbean-green !important;
-  font-size: 12px;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer !important;
-  }
 }
 
 .publicCommunityIcon {

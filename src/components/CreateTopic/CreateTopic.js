@@ -100,10 +100,8 @@ export default class CreateTopic extends Component {
     // First, check if we already have the topic, and it has posts. If so, we
     // redirect to show the user the topic, but we also need to subscribe them.
     const existingTopic = topics.find(t => t.name === name)
-    if (existingTopic) {
-      if (subscribeAfterCreate) {
-        return this.subscribeAndRedirect(name)
-      }
+    if (existingTopic && subscribeAfterCreate) {
+      return this.subscribeAndRedirect(name)
     }
 
     // No existing topic client-side, but it might be on the server
