@@ -4,7 +4,7 @@ exports[`works for CommunityTopic 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation($id: ID, $data: CommunityTopicInput) {
-    updateCommunityTopic(id: $id, data: $data) {
+    updateCommunityTopicFollow(id: $id, data: $data) {
       success
     }
   }",

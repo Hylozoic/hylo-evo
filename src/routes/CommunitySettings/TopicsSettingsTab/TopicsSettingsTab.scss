@@ -1,0 +1,173 @@
+.wrapper {
+  height: 100%;
+}
+
+.default-topics {
+  display: flex;
+  flex-direction: column;
+}
+
+.all-topics {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  color: #808C9B;
+  padding: 15px 0px;
+}
+
+.default-topic-list {
+  flex: 1;
+  padding-bottom: 35px;
+}
+
+.default-topic-selector {
+  border-top: $light-border;
+  border-bottom: $light-border;
+  position: relative;
+  padding: 5px 0px;
+}
+
+.plus {
+  border: 1px solid $color-caribbean-green;
+  display: inline-block;
+  width: 24px;
+  line-height: 24px !important;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 16px;
+  right: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  &:before {
+    font-size: 16px
+  }
+}
+
+.remove-suggested-topic-button {
+  border: 1px solid #E1E5E9;
+  border-radius: 50%;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+  background: white;
+  width: 24px;
+  height: 24px;
+  line-height: 24px !important;
+  font-size: 20px;
+  text-align: center;
+}
+
+.topic-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 35px;
+  min-height: 300px;
+}
+
+.title {
+  composes: hdr-display from 'css/typography.scss';
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+// SearchBar
+.search-bar {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  margin-right: $space-4x;
+}
+
+.search-order {
+  min-width: 80px;
+}
+
+.search-sorter-label {
+  font-size: 15px;
+  line-height: 28px;
+  composes: caption-lt-lg from 'css/typography.scss';
+  > span {
+    vertical-align: middle;
+    margin-left: $space-1x;
+  }
+}
+
+// TopicListItem
+.topic {
+  justify-content: space-between;
+  border-top: $light-border;
+  padding: 11px 0;
+  align-items: center;
+  position: relative;
+}
+
+.topic-name {
+  composes: hdr-headline from 'css/typography.scss';
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: $color-caribbean-green;
+}
+
+.topic-stats {
+  composes: caption-drk-lg from 'css/typography.scss';
+  margin-top: $space-1x;
+}
+
+.visibility-dropdown {
+  composes: text-button from 'css/typography.scss';
+  border: 1px solid #E1E5E9;
+  box-sizing: border-box;
+  border-radius: 30px;
+  font-size: 16px;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 115px;
+  text-align: center;
+  height: 30px;
+  line-height: 22px;
+}
+
+.visibility-dropdown-label {
+  font-size: 13px;
+  padding: 3px;
+
+  .label-content {
+    padding: 0 8px;
+  }
+
+  span {
+    vertical-align: middle;
+  }
+
+  span:before {
+    font-size: 20px;
+  }
+}
+
+.visibilityDropdownPinned {
+  color: $color-picton-blue;
+}
+
+.visibilityDropdownHidden {
+  color: $color-amaranth;
+}
+
+.visibilityDropdownVisible {
+  color: $color-caribbean-green;
+}

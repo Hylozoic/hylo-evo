@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
-import { Link, NavLink, matchPath } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import Badge from 'components/Badge'
-import CreateTopic from 'components/CreateTopic'
 import Icon from 'components/Icon'
-import { tagUrl, topicsUrl } from 'util/navigation'
 import badgeHoverStyles from '../../../../../components/Badge/component.scss'
 import s from './TopicNavigation.scss' // eslint-disable-line no-unused-vars
 
-const { array, string, bool, func } = PropTypes
+const { array, string, bool, func, object } = PropTypes
 
 export default class TopicNavigation extends Component {
   static propTypes = {
-    communityTopics: array,
+    topics: array,
+    routeParams: object,
     communitySlug: string,
+    communityId: string,
+    seeAllUrl: string,
     backUrl: string,
     clearBadge: func,
     clearFeedList: func,
@@ -22,51 +23,65 @@ export default class TopicNavigation extends Component {
     expand: func
   }
 
+  onClickTopic = communityTopic => {
+    const { clearBadge, clearFeedList } = this.props
+    const { id, topic } = communityTopic
+
+    if (id) {
+      this.currentTopic(topic.name) && clearFeedList()
+      communityTopic.newPostCount > 0 && clearBadge(id)
+    }
+  }
+
   render () {
     const {
-      communityTopics, goBack, communityId, communitySlug,
-      clearBadge, clearFeedList, expand, collapsed, location
+      topics, goBack, seeAllUrl, collapsed, expand
     } = this.props
 
-    const currentTopic = topicName =>
-      matchPath(location.pathname, { path: tagUrl(topicName, communitySlug) })
-
-    return <div styleName='s.topicNavigation'>
-      <div styleName={cx('s.header', { 's.header-link': collapsed })}
-        onClick={expand}>
-        <Link to={topicsUrl(communitySlug)}>
-          <Icon name='Topics' styleName='s.icon' />
+    return <div styleName={cx('s.topicNavigation', { 's.collapsed': collapsed })}>
+      <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
+        <Icon name='Topics' styleName='s.icon' />
+        <Link to={seeAllUrl}>
+          <span styleName='s.title'>Topics</span>
         </Link>
-        <span styleName='s.title'>Topics</span>
-        <CreateTopic
+        {/* TODO: remove for now, probably for good?
+          {communityId && <CreateTopic
           communityId={communityId}
-          communitySlug={communitySlug}
-          communityTopics={communityTopics} />
+          communitySlug={slug}
+          topics={topics}
+        />} */}
       </div>
-      <ul styleName='s.topics'>
-        {communityTopics.map(({ id, topic, newPostCount }) =>
-          <li key={topic.name} styleName='s.topic'>
-            <NavLink className={badgeHoverStyles.parent}
-              styleName='s.topicLink'
-              to={tagUrl(topic.name, communitySlug)}
-              onClick={() => {
-                if (id) {
-                  currentTopic(topic.name) && clearFeedList()
-                  newPostCount > 0 && clearBadge(id)
-                }
-              }}
-              activeClassName='active-topic-nav-link'>
-              <span styleName='s.name'>#{topic.name}</span>
-              {newPostCount > 0 && !currentTopic(topic.name) &&
-                <Badge number={newPostCount} styleName='s.badge' />}
-              {currentTopic(topic.name) &&
-                <Icon name='Ex' styleName='s.closeIcon' onClick={goBack} />}
-            </NavLink>
-          </li>)}
-      </ul>
-      {communitySlug && <div styleName='s.addTopic'>
-        <Link to={topicsUrl(communitySlug)}>see all</Link>
-      </div>}
+      <TopicsList
+        onClose={goBack}
+        onClick={this.onClickTopic}
+        topics={topics}
+      />
+      <div styleName='s.addTopic'>
+        <Link to={seeAllUrl}>see all</Link>
+      </div>
     </div>
   }
+}
+
+export function TopicsList ({ topics, onClick, onClose }) {
+  return <ul styleName='s.topics'>
+    {topics.map(topic =>
+      <li key={topic.name} styleName='s.topic' className={cx({ [s.pinned]: topic.visibility === 2 })}>
+        <NavLink className={badgeHoverStyles.parent}
+          styleName='s.topicLink'
+          to={topic.url}
+          // TODO: Removing onClick event for now
+          //       but not sure why it's breaking things
+          // onClick={() => onClick(topic)}
+          activeClassName='active-topic-nav-link'
+        >
+          { topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' /> }
+          <span styleName='s.name'>#{topic.name}</span>
+          {topic.newPostCount > 0 && !topic.current &&
+            <Badge number={topic.newPostCount} styleName='s.badge' />}
+          {topic.current &&
+            <Icon name='Ex' styleName='s.closeIcon' onClick={onClose} />}
+        </NavLink>
+      </li>)}
+  </ul>
 }

@@ -1,4 +1,4 @@
-import { TOGGLE_TOPIC_SUBSCRIBE } from 'store/constants'
+import { TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE } from 'store/constants'
 
 const query =
 `mutation($topicId: ID, $communityId: ID, $isSubscribing: Boolean) {
@@ -7,9 +7,14 @@ const query =
   }
 }`
 
-export default function toggleTopicSubscribe (topicId, communityId, isSubscribing) {
+export default function (communityTopic) {
+  const { topic, community, isSubscribed } = communityTopic
+  const topicId = topic.id
+  const communityId = community.id
+  const isSubscribing = !isSubscribed
+
   return {
-    type: TOGGLE_TOPIC_SUBSCRIBE,
+    type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE,
     graphql: {
       query,
       variables: {
@@ -20,9 +25,9 @@ export default function toggleTopicSubscribe (topicId, communityId, isSubscribin
     },
     meta: {
       optimistic: true,
-      isSubscribing,
       topicId,
-      communityId
+      communityId,
+      isSubscribing
     }
   }
 }

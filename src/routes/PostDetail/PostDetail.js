@@ -3,7 +3,7 @@ import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
-import { tagUrl } from 'util/navigation'
+import { topicUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -210,7 +210,7 @@ export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
-    {tags.map(tag => <Link styleName='tag' to={tagUrl(tag, slug)} key={tag}>
+    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, { communitySlug: slug })} key={tag}>
       #{tag}
     </Link>)}
   </div>

@@ -3,7 +3,6 @@
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   border-top: 1px solid $color-cape-cod-10;
   overflow: hidden;
   min-height: 40px;
@@ -13,6 +12,21 @@
   padding-left: 10px;
 }
 
+.communityList {
+  composes: timestamp from 'css/typography.scss';
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.communityLink {
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
+}
+
 .bottomBorder {
   border-bottom: 1px solid $color-cape-cod-10;
   margin-bottom: 10px;
@@ -20,6 +34,9 @@
 
 .expanded {
   padding-top: 7px;
+  width: 100%;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .row {
@@ -30,21 +47,6 @@
 
 .label {
   composes: timestamp from 'css/typography.scss';
-}
-
-.communityList {
-  composes: timestamp from 'css/typography.scss';
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.communityLink {
-  color: $color-caribbean-green !important;
-  font-size: 12px;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer !important;
-  }
 }
 
 .publicCommunityIcon {

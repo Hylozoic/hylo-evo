@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { any, arrayOf, func, object, string } from 'prop-types'
+import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
 import { sanitize } from 'hylo-utils/text'
 import { validateTopicName } from 'hylo-utils/validators'
-import { tagUrl } from 'util/navigation'
-
+import { topicUrl } from 'util/navigation'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
@@ -19,9 +18,10 @@ export default class CreateTopic extends Component {
     communityId: any,
     communitySlug: string,
     communityTopicExists: object,
-    communityTopics: arrayOf(object),
+    topics: arrayOf(object),
     createTopic: func,
-    fetchCommunityTopic: func
+    fetchCommunityTopic: func,
+    subscribeAfterCreate: bool
   }
 
   defaultState = {
@@ -69,7 +69,7 @@ export default class CreateTopic extends Component {
   ignoreHash = name => name[0] === '#' ? name.slice(1) : name
 
   createAndNotify = name => {
-    this.props.createTopic(name, this.props.communityId)
+    this.props.createTopic(name, this.props.communityId, false, !!this.props.subscribeAfterCreate)
 
     // Note: assumes success
     this.setState({
@@ -88,8 +88,9 @@ export default class CreateTopic extends Component {
     const {
       communitySlug,
       communityTopicExists,
-      communityTopics,
-      fetchCommunityTopic } = this.props
+      topics,
+      fetchCommunityTopic,
+      subscribeAfterCreate } = this.props
 
     const name = this.safeTopicName()
     if (isEmpty(name)) {
@@ -98,8 +99,8 @@ export default class CreateTopic extends Component {
 
     // First, check if we already have the topic, and it has posts. If so, we
     // redirect to show the user the topic, but we also need to subscribe them.
-    const existingTopic = communityTopics.find(t => t.topic.name === name)
-    if (existingTopic) {
+    const existingTopic = topics.find(t => t.name === name)
+    if (existingTopic && subscribeAfterCreate) {
       return this.subscribeAndRedirect(name)
     }
 
@@ -121,7 +122,7 @@ export default class CreateTopic extends Component {
   subscribeAndRedirect = name => {
     // The simplest way to subscribe is to 'abuse' createTopic, since it will
     // ensure topic exists in the client, and silently subscribes user.
-    this.props.createTopic(name, this.props.communityId)
+    this.props.createTopic(name, this.props.communityId, false, !!this.props.subscribeAfterCreate)
     return this.toggleTopicModal(name)
   }
 
@@ -156,10 +157,11 @@ export default class CreateTopic extends Component {
       topicName,
       useNotificationFormat
     } = this.state
+    const { subscribeAfterCreate } = this.props
 
-    if (redirectTopic) {
-      const topicUrl = tagUrl(encodeURI(redirectTopic), this.props.communitySlug)
-      if (topicUrl !== window.location.pathname) return <RedirectRoute to={topicUrl} />
+    if (redirectTopic && subscribeAfterCreate) {
+      const url = topicUrl(encodeURI(redirectTopic), { communitySlug: this.props.communitySlug })
+      if (url !== window.location.pathname) return <RedirectRoute to={url} />
     }
 
     return <React.Fragment>
@@ -177,7 +179,7 @@ export default class CreateTopic extends Component {
         submitButtonText={submitButtonText}
         useNotificationFormat={useNotificationFormat}>
         {useNotificationFormat
-          ? <div styleName='dialog-content'>you're subscribed to #{this.ignoreHash(topicName)}</div>
+          ? (subscribeAfterCreate ? <div styleName='dialog-content'>you're subscribed to #{this.ignoreHash(topicName)}</div> : <div styleName='dialog-content'>Created topic #{this.ignoreHash(topicName)}</div>)
           : <div>
             <TextInput
               aria-label='topic-name'

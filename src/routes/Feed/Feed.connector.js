@@ -31,11 +31,10 @@ export function mapStateToProps (state, props) {
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
     communityTopic = getCommunityTopicForCurrentRoute(state, props)
-    communityTopic = communityTopic && communityTopic.ref
+    communityTopic = communityTopic && { ...communityTopic.ref, community: communityTopic.community, topic: communityTopic.topic }
   }
   if (topicName) {
     topic = getTopicForCurrentRoute(state, props)
-    topic = topic && topic.ref
   }
   if (networkSlug) {
     network = getNetworkForCurrentRoute(state, props)
@@ -84,7 +83,7 @@ export function mapDispatchToProps (dispatch, props) {
           .then(action => {
           // redirect if no topic found
             if (!action.payload.data.communityTopic) {
-              dispatch(replace(topicsUrl(communitySlug)))
+              dispatch(replace(topicsUrl({ communitySlug })))
             }
           })
       } else if (topicName) {

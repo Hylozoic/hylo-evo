@@ -1,16 +1,13 @@
-import AllTopics, { SearchBar, CommunityTopicListItem } from './AllTopics'
-import { shallow } from 'enzyme'
 import React from 'react'
+import { shallow } from 'enzyme'
+import AllTopics, { SearchBar, TopicListItem } from './AllTopics'
 
 describe('AllTopics', () => {
   it('matches the latest snapshot', () => {
-    const ct = [
+    const topic = [
       {
         id: '1',
-        topic: {
-          id: '2',
-          name: 'petitions'
-        },
+        name: 'petitions',
         postsTotal: 24,
         followersTotal: 52,
         isSubscribed: false
@@ -18,20 +15,22 @@ describe('AllTopics', () => {
     ]
     const wrapper = shallow(<AllTopics
       community={{ id: '1', slug: 'goteam' }}
-      communityTopics={ct}
+      routeParams={{ slug: 'goteam' }}
+      topics={topic}
       topicsTotal='10'
-      fetchCommunityTopics={jest.fn()}
-      toggleSubscribe={() => {}} />)
+      fetchTopics={jest.fn()}
+      toggleCommunityTopicSubscribe={() => {}} />)
 
     expect(wrapper).toMatchSnapshot()
   })
 
   it('caches totalTopics', () => {
     const wrapper = shallow(<AllTopics
+      routeParams={{ slug: 'goteam' }}
       community={{ id: '1', slug: 'goteam' }}
-      fetchCommunityTopics={() => {}}
-      toggleSubscribe={() => {}}
-      communityTopics={[]}
+      fetchTopics={() => {}}
+      toggleCommunityTopicSubscribe={() => {}}
+      topics={[]}
       selectedSort='followers'
     />)
 
@@ -57,17 +56,27 @@ describe('SearchBar', () => {
 })
 
 describe('TopicListItem', () => {
-  it('matches the latest snapshot', () => {
-    const ct = {
-      id: '1',
-      topic: {
-        name: 'petitions'
-      },
-      postsTotal: 24,
-      followersTotal: 52,
-      isSubscribed: false
+  it('when multiple communities matches the latest snapshot', () => {
+    const topic = {
+      name: 'petitions',
+      communityTopics: [
+        {
+          id: '1',
+          postsTotal: 24,
+          followersTotal: 52,
+          isSubscribed: false
+        },
+        {
+          id: '2',
+          postsTotal: 1,
+          followersTotal: 4,
+          isSubscribed: true
+        }
+      ]
     }
-    const wrapper = shallow(<CommunityTopicListItem item={ct} slug='goteam' />)
+    const wrapper = shallow(<TopicListItem
+      topic={topic}
+      routeParams={{ slug: 'goteam' }} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

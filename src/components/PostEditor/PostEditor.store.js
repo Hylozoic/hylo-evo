@@ -1,6 +1,9 @@
-import { get } from 'lodash/fp'
+import { get, isEmpty, includes } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import { FETCH_DEFAULT_TOPICS } from 'store/constants'
+import presentTopic from 'store/presenters/presentTopic'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 import linkMatcher from 'util/linkMatcher'
 
 export const MODULE_NAME = 'PostEditor'
@@ -89,6 +92,24 @@ export const getLinkPreview = ormCreateSelector(
   state => state[MODULE_NAME],
   ({ LinkPreview }, { linkPreviewId }) =>
     LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
+)
+
+const getDefaultTopicsResults = makeGetQueryResults(FETCH_DEFAULT_TOPICS)
+
+export const getDefaultTopics = ormCreateSelector(
+  orm,
+  state => state.orm,
+  getDefaultTopicsResults,
+  (_, props) => props,
+  (session, results, props) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    const topics = session.Topic.all()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(x => results.ids.indexOf(x.id))
+      .toModelArray()
+
+    return topics.map(topic => presentTopic(topic, props))
+  }
 )
 
 // Reducer

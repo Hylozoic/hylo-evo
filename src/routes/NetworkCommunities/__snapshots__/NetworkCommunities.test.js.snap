@@ -28,7 +28,7 @@ exports[`Banner renders correctly 1`] = `
 </div>
 `;
 
-exports[`CommunityList renders correctly 1`] = `
+exports[`CommunitiesList renders correctly 1`] = `
 <div
   data-stylename="community-list"
 >
@@ -63,7 +63,7 @@ exports[`CommunityList renders correctly 1`] = `
 </div>
 `;
 
-exports[`CommunityList renders correctly 2`] = `
+exports[`CommunitiesList renders correctly 2`] = `
 <div
   data-stylename="community-card"
 >
@@ -108,7 +108,7 @@ exports[`NetworkCommunities renders correctly 1`] = `
     setSort={[Function]}
     sortBy="name"
   />
-  <CommunityList
+  <CommunitiesList
     communities={
       Array [
         Object {

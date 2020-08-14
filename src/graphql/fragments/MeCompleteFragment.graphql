@@ -61,6 +61,21 @@ fragment MeCompleteFragment on Me {
       slug
       memberCount
       avatarUrl
+      communityTopics(subscribed: true) {
+        total
+        hasMore
+        items {
+          id
+          topic {
+            id
+            name
+          }
+          newPostCount
+          postsTotal
+          followersTotal
+          isSubscribed
+        }
+      }
       network {
         id
         slug

@@ -2,11 +2,11 @@ import React from 'react'
 import TopicNavigation from './TopicNavigation'
 import { shallow } from 'enzyme'
 
-const communityTopics = [
-  { topic: { name: 't1' }, newPostCount: 3 },
-  { topic: { name: 't2' }, newPostCount: 0 },
-  { topic: { name: 't3' } },
-  { topic: { name: 't4' }, newPostCount: 2 }
+const topics = [
+  { name: 't1', url: '/t1', newPostCount: 3 },
+  { name: 't2', url: '/t2', newPostCount: 0 },
+  { name: 't3', url: '/t3', current: true },
+  { name: 't4', url: '/t4', newPostCount: 2 }
 ]
 
 const community = {
@@ -14,10 +14,13 @@ const community = {
 }
 
 const requiredProps = {
-  communityTopics: communityTopics,
+  topics,
   location: { pathname: '/' },
   backUrl: '/return-here',
-  communitySlug: community.slug
+  seeAllUrl: '/seeAllTopics',
+  routeParams: {
+    slug: community.slug
+  }
 }
 
 it('renders correctly for a community', () => {
