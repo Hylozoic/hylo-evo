@@ -1,20 +1,20 @@
 import React from 'react'
 import cx from 'classnames'
-import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
+import CardImageAttachments from 'components/CardImageAttachments'
+import CardFileAttachments from 'components/CardFileAttachments'
 import './CommentCard.scss'
 
 export default function CommentCard ({
   comment,
   showDetails,
-  shouldShowReply,
   expanded = true,
   highlightProps
 }) {
-  const { creator, post, slug, image } = comment
+  const { creator, post, slug, attachments } = comment
   const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true, noLinks: true })
   const commentPresentOpts = {
     maxlength: expanded ? null : 144,
@@ -35,17 +35,14 @@ export default function CommentCard ({
         </Highlight>
         <span styleName='date'>{humanDate(comment.createdAt)}</span>
       </div>
-      {image && <img src={image.url}
-        onClick={() => window.open(image.url)}
-        styleName='comment-image' />}
-      {!image && <ClickCatcher>
+      <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
+      <CardFileAttachments attachments={attachments} styleName='comment-files' />
+      <ClickCatcher>
         <Highlight {...highlightProps}>
           <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
         </Highlight>
-      </ClickCatcher>}
-      <div styleName='comment-footer'>
-        {shouldShowReply && <span><Icon styleName='reply-button' name='Reply' green /> Reply</span>}
-      </div>
+      </ClickCatcher>
+      <div styleName='comment-footer' />
     </div>
   </a>
 }

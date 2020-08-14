@@ -1,21 +1,27 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './Comment.scss'
 import { Link } from 'react-router-dom'
+import { filter, isFunction } from 'lodash/fp'
+import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
-import { personUrl } from 'util/navigation'
-import { humanDate, present, sanitize } from 'hylo-utils/text'
-import { filter, isFunction } from 'lodash'
+import CardImageAttachments from 'components/CardImageAttachments'
+import CardFileAttachments from 'components/CardFileAttachments'
+import './Comment.scss'
 
 const { object } = PropTypes
 
 export default class Comment extends Component {
   static propTypes = {
     comment: object
+  }
+
+  static defaultProps = {
+    attachments: []
   }
 
   state = {
@@ -34,15 +40,15 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, isCreator, deleteComment, removeComment } = this.props
     const { editing } = this.state
-    const { creator, createdAt, text, image } = comment
+    const { creator, createdAt, text, attachments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
-    const dropdownItems = filter([
+    const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
       { icon: 'Trash', label: 'Delete', onClick: deleteComment },
       { icon: 'Trash', label: 'Remove', onClick: removeComment }
-    ], item => isFunction(item.onClick))
+    ])
 
     const presentedText = present(sanitize(text), { slug })
 
@@ -58,10 +64,9 @@ export default class Comment extends Component {
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
-      {image && <a styleName='imageLink' href={image.url} target='_blank'>
-        <img src={image.url} styleName='image' />
-      </a>}
-      {!image && <ClickCatcher>
+      <CardImageAttachments attachments={attachments} linked styleName='images' />
+      <CardFileAttachments attachments={attachments} styleName='files' />
+      <ClickCatcher>
         {editing && <HyloEditor
           styleName='editor'
           onChange={this.startTyping}
@@ -69,8 +74,7 @@ export default class Comment extends Component {
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
-        {/* <div styleName='reply'><Icon name='Reply' styleName='icon' />Reply</div> */}
-      </ClickCatcher>}
+      </ClickCatcher>
     </div>
   }
 }

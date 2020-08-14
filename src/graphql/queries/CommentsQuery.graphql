@@ -15,8 +15,10 @@ query CommentsQuery (
         }
         createdAt
         attachments {
-          id
+          type
           url
+          position
+          id
         }
       }
       total

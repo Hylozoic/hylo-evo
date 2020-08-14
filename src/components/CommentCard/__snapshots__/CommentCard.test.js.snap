@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`displays an image 1`] = `
+exports[`displays image an image attachments 1`] = `
 <a
   data-stylename="link"
   onClick={[Function]}
@@ -42,11 +42,45 @@ exports[`displays an image 1`] = `
         just now
       </span>
     </div>
-    <img
-      data-stylename="comment-image"
-      onClick={[Function]}
-      src="jam.png"
+    <CardImageAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "jam.png",
+          },
+        ]
+      }
+      data-stylename="comment-images"
+      linked={true}
     />
+    <CardFileAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "jam.png",
+          },
+        ]
+      }
+      data-stylename="comment-files"
+    />
+    <Connect(ClickCatcher)>
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+        term="foo"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
+            }
+          }
+          data-stylename="comment-body"
+        />
+      </Highlight>
+    </Connect(ClickCatcher)>
     <div
       data-stylename="comment-footer"
     />
@@ -96,6 +130,15 @@ exports[`matches last snapshot 1`] = `
         just now
       </span>
     </div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="comment-images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="comment-files"
+    />
     <Connect(ClickCatcher)>
       <Highlight
         component="span"
@@ -161,6 +204,15 @@ exports[`matches last snapshot with different config 1`] = `
         just now
       </span>
     </div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="comment-images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="comment-files"
+    />
     <Connect(ClickCatcher)>
       <Highlight
         component="span"
@@ -179,16 +231,7 @@ exports[`matches last snapshot with different config 1`] = `
     </Connect(ClickCatcher)>
     <div
       data-stylename="comment-footer"
-    >
-      <span>
-        <Icon
-          data-stylename="reply-button"
-          green={true}
-          name="Reply"
-        />
-         Reply
-      </span>
-    </div>
+    />
   </div>
 </a>
 `;

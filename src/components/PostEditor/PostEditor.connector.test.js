@@ -35,10 +35,6 @@ beforeAll(() => {
     },
     pending: {
       FETCH_LINK_PREVIEW: false
-    },
-    AttachmentManager: {
-      image: [],
-      file: []
     }
   }
   requiredProps = {

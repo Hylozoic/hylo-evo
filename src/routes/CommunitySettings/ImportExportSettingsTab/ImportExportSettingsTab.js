@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Button from 'components/Button'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import './ImportExportSettingsTab.scss'
 
 export default class ImportExportSettingsTab extends Component {
-  handleClickUpload = () => {
-    const { upload } = this.props
-    upload()
+  importStart = () => {
+    window.alert('Import started!')
   }
 
   render () {
@@ -18,6 +17,8 @@ export default class ImportExportSettingsTab extends Component {
         <div styleName='title'>Import Posts by CSV</div>
       </div>
       <div styleName='help'>
+        <b>WARNING: This is a beta feature that at this time will not inform you of imprt errors, use at your own risk.</b>
+        <br /><br />
         You can select a CSV file to import posts into {name}. Posts will be created by you. The file must have columns with the following headers:
         <ul>
           <li>title: text</li>
@@ -32,10 +33,13 @@ export default class ImportExportSettingsTab extends Component {
         </ul>
       </div>
       <div styleName='button-wrapper'>
-        <Button
-          label='Upload CSV'
-          onClick={this.handleClickUpload}
-        />
+        <UploadAttachmentButton
+          type='importPosts'
+          attachmentType='csv'
+          onSuccess={this.importStart}
+        >
+          <div styleName='upload-button'>Upload CSV</div>
+        </UploadAttachmentButton>
       </div>
     </div>
   }

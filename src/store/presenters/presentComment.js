@@ -4,7 +4,7 @@ export default function presentComment (comment, communitySlug = undefined) {
     ...comment.ref,
     creator: comment.creator.ref,
     post: comment.post.ref,
-    image: comment.attachments.toModelArray()[0],
+    attachments: comment.attachments.toModelArray(),
     slug: communitySlug
   }
 }

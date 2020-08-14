@@ -26,6 +26,24 @@
   justify-content: center;
 }
 
+.upload-button {
+  height: 40px;
+  line-height: 38px;
+  padding: 0px 40px;
+  border-radius: 25px;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+
+  border: 1px solid $color-caribbean-green;
+  background-color: $color-caribbean-green;
+  color: $color-white;
+
+  &:hover, &.hover {
+    background-color: lighten($color-caribbean-green, 2%);
+  }
+}
+
 .delete-button {
   white-space: nowrap;
   padding: 0 15px;

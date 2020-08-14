@@ -1,7 +1,6 @@
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { upload } from 'components/ChangeImageButton/ChangeImageButton.store'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
@@ -29,17 +28,16 @@ export function mapDispatchToProps (dispatch, props) {
     deleteCommunity: id => dispatch(deleteCommunity(id)),
     fetchCommunitySettingsMaker: slug => () => dispatch(fetchCommunitySettings(slug)),
     goToCommunityDeleteConfirmation: () => dispatch(push(communityDeleteConfirmationUrl())),
-    updateCommunitySettingsMaker: id => changes => dispatch(updateCommunitySettings(id, changes)),
-    uploadMaker: (communityId) => () => dispatch(upload({ type: 'importPosts', attachmentType: 'csv', id: communityId }))
+    updateCommunitySettingsMaker: id => changes => dispatch(updateCommunitySettings(id, changes))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { community, slug } = stateProps
   const {
-    fetchCommunitySettingsMaker, goToCommunityDeleteConfirmation, updateCommunitySettingsMaker, uploadMaker
+    fetchCommunitySettingsMaker, goToCommunityDeleteConfirmation, updateCommunitySettingsMaker
   } = dispatchProps
-  let deleteCommunity, fetchCommunitySettings, updateCommunitySettings, upload
+  let deleteCommunity, fetchCommunitySettings, updateCommunitySettings
 
   if (slug) {
     fetchCommunitySettings = fetchCommunitySettingsMaker(slug)
@@ -56,11 +54,9 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
           }
         })
     updateCommunitySettings = updateCommunitySettingsMaker(community.id)
-    upload = uploadMaker(community.id)
   } else {
     deleteCommunity = () => {}
     updateCommunitySettings = () => {}
-    upload = () => {}
   }
 
   return {
@@ -69,8 +65,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deleteCommunity,
     fetchCommunitySettings,
-    updateCommunitySettings,
-    upload
+    updateCommunitySettings
   }
 }
 
