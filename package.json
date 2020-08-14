@@ -1,6 +1,7 @@
 {
   "name": "hylo-evo",
-  "version": "2.0.0",
+  "description": "Hylo Frontend",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
