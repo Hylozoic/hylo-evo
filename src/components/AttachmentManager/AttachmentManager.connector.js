@@ -27,16 +27,16 @@ export const mapDispatchToProps = {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { type, id } = ownProps
+  const { type, id, attachmentType } = ownProps
   const { attachmentsFromObject } = stateProps
   const { switchAttachments, setAttachments, clearAttachments } = dispatchProps
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    switchAttachments: (attachmentType, position1, position2) => switchAttachments(type, id, attachmentType, position1, position2),
-    loadAttachments: () => setAttachments(type, id, attachmentsFromObject),
-    clearAttachments: () => clearAttachments(type, id)
+    switchImages: (position1, position2) => switchAttachments(type, id, 'image', position1, position2),
+    loadAttachments: () => setAttachments(type, id, attachmentType, attachmentsFromObject),
+    clearAttachments: () => clearAttachments(type, id, attachmentType)
   }
 }
 

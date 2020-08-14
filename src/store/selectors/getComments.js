@@ -18,7 +18,8 @@ export const getComments = createSelector(
       .map(comment => ({
         ...comment.ref,
         creator: comment.creator,
-        attachments: comment.attachments.toRefArray()
+        attachments: comment.attachments
+          .orderBy('position').toRefArray()
       }))
   }
 )
