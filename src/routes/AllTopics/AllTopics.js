@@ -156,13 +156,14 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 
 export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubscribe, deleteItem, canModerate }) {
   const { name, communityTopics, postsTotal, followersTotal } = topic
-
   let communityTopicContent
-  if (singleCommunity && communityTopics[0]) {
-    const communityTopic = communityTopics[0]
+
+  if (singleCommunity) {
+    // Grab correct CommunityTopic object
+    const communityTopic = topic.communityTopics.find(ct => ct.community.id === singleCommunity.id)
 
     // Don't show hidden topics unless user is subscribed to it
-    if (!communityTopic.isSubscribed && communityTopic.visibility === 0) return ''
+    if (!communityTopic || (!communityTopic.isSubscribed && communityTopic.visibility === 0)) return ''
 
     communityTopicContent = <div styleName='topic-stats'>
       {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •

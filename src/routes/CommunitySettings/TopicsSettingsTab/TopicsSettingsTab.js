@@ -197,7 +197,7 @@ export function TopicListItem ({ topic, singleCommunity, setCommunityTopicVisibi
   return <div styleName='topic'>
     <div styleName='topic-name'>#{name}</div>
     {singleCommunity &&
-      <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('follower', followersTotal)}</div>}
+      <div styleName='topic-stats'>{inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)}</div>}
     {singleCommunity && !isSuggested && (
       <Dropdown
         alignRight
