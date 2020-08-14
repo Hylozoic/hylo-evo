@@ -35,6 +35,7 @@ export default class ImportExportSettingsTab extends Component {
       <div styleName='button-wrapper'>
         <UploadAttachmentButton
           type='importPosts'
+          id={community.id}
           attachmentType='csv'
           onSuccess={this.importStart}
         >
