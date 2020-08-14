@@ -1,5 +1,7 @@
 .commentForm {
   margin-bottom: $space-10x;
+  box-shadow: 0px 4px 21px 2px $color-rhino-30;
+  border-radius: 4px;
 }
 
 .icon {
@@ -39,6 +41,30 @@
   top: 20px;
   font-size: 17px;
   cursor: default;
+}
+
+.upload-button {
+  display: flex;
+  align-items: center;
+  margin-right: $space-2x;
+}
+
+.upload-button-icon {
+  font-size: 32px;
+  cursor: pointer;
+  &:hover {
+    color: $color-caribbean-green;
+  }
+}
+
+.upload-button-loading {
+  width: 32px;
+  height: 32px;
+  div {
+    svg path {
+      fill: $color-caribbean-green;
+    }
+  }
 }
 
 .placeholder {

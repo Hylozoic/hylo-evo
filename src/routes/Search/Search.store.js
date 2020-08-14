@@ -52,9 +52,10 @@ const searchQuery =
             ${postFieldsFragment(false)}
           }
           attachments {
-            id
-            url
             type
+            url
+            position
+            id
           }
         }
       }

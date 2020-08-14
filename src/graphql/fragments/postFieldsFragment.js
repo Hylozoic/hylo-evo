@@ -33,6 +33,8 @@ const postFieldsFragment = withComments => `
       }
       attachments {
         id
+        position
+        type
         url
       }
       createdAt
@@ -76,10 +78,10 @@ const postFieldsFragment = withComments => `
     slug
   }
   attachments {
-    id
-    position
     type
     url
+    position
+    id
   }
   postMemberships {
     id
