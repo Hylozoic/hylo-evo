@@ -30,23 +30,25 @@ export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
   static propTypes = {
-    onClose: PropTypes.func,
-    initialPromptForPostType: PropTypes.object,
-    titlePlaceholderForPostType: PropTypes.object,
-    detailsPlaceholder: PropTypes.string,
+    clearLinkPreview: PropTypes.func,
     communityOptions: PropTypes.array,
+    createPost: PropTypes.func,
     currentUser: PropTypes.object,
     currentCommunity: PropTypes.object,
-    post: PropTypes.shape(POST_PROP_TYPES),
-    linkPreviewStatus: PropTypes.string,
-    createPost: PropTypes.func,
-    updatePost: PropTypes.func,
-    pollingFetchLinkPreview: PropTypes.func,
-    removeLinkPreview: PropTypes.func,
-    clearLinkPreview: PropTypes.func,
-    goToPost: PropTypes.func,
+    defaultTopics: PropTypes.array,
+    detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
-    loading: PropTypes.bool
+    fetchDefaultTopics: PropTypes.func,
+    initialPromptForPostType: PropTypes.object,
+    goToPost: PropTypes.func,
+    linkPreviewStatus: PropTypes.string,
+    loading: PropTypes.bool,
+    onClose: PropTypes.func,
+    pollingFetchLinkPreview: PropTypes.func,
+    post: PropTypes.shape(POST_PROP_TYPES),
+    removeLinkPreview: PropTypes.func,
+    titlePlaceholderForPostType: PropTypes.object,
+    updatePost: PropTypes.func
   }
 
   static defaultProps = {
@@ -121,6 +123,8 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidMount () {
+    this.props.fetchDefaultTopics()
+
     setTimeout(() => {
       this.titleInput.current.focus()
     }, 100)
@@ -373,7 +377,7 @@ export default class PostEditor extends React.Component {
       locationObject
     } = post
     const {
-      onClose, currentUser, communityOptions, loading, setAnnouncement,
+      onClose, currentCommunity, currentUser, communityOptions, defaultTopics, loading, setAnnouncement,
       announcementSelected, canModerate, myModeratedCommunities, isProject,
       isEvent, showFiles, showImages, addAttachment
     } = this.props
@@ -446,9 +450,11 @@ export default class PostEditor extends React.Component {
         </div>}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Topics</div>
-          <div styleName='footerSection-communities'>
+          <div styleName='footerSection-topics'>
             <TopicSelector
+              currentCommunity={currentCommunity}
               selectedTopics={topics}
+              defaultTopics={defaultTopics}
               detailsTopics={detailsTopics}
               ref={this.topicSelector} />
           </div>

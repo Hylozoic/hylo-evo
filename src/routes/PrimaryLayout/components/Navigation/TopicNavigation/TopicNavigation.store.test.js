@@ -15,6 +15,10 @@ describe('getSubscribedCommunityTopics', () => {
   {
     id: '3',
     name: 'criminals'
+  },
+  {
+    id: '4',
+    name: 'yeah'
   }].forEach(attrs => session.Topic.create(attrs))
 
   ;[
@@ -31,10 +35,11 @@ describe('getSubscribedCommunityTopics', () => {
   ].forEach(attrs => session.Community.create(attrs))
 
   ;[
-    { topic: '1', newPostCount: 5, community: '1', isSubscribed: true },
+    { topic: '1', newPostCount: 5, community: '1', isSubscribed: true, visibility: 1 },
     { topic: '2', community: '1' },
-    { topic: '2', newPostCount: 5, community: '2', isSubscribed: true },
-    { topic: '3', newPostCount: 7, community: '1', isSubscribed: true }
+    { topic: '2', newPostCount: 5, community: '2', isSubscribed: true, visibility: 1 },
+    { topic: '3', newPostCount: 7, community: '1', isSubscribed: true, visibility: 2 },
+    { topic: '4', newPostCount: 7, community: '1', isSubscribed: true, visibility: 0 }
   ].map(attrs => session.CommunityTopic.create(attrs))
 
   const state = {

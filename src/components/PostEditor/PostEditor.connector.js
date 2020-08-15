@@ -20,6 +20,7 @@ import {
 import createPost from 'store/actions/createPost'
 import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
+import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import {
   addAttachment,
   getAttachments,
@@ -31,6 +32,7 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
+  getDefaultTopics,
   getLinkPreview,
   setAnnouncement
 } from './PostEditor.store'
@@ -65,11 +67,13 @@ export function mapStateToProps (state, props) {
   const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentCommunity)
+  const defaultTopics = getDefaultTopics(state, { communitySlug: communitySlug, sortBy: 'name' })
 
   return {
     currentUser,
     currentCommunity,
     communityOptions,
+    defaultTopics,
     postTypeContext,
     isProject,
     isEvent,
@@ -102,6 +106,7 @@ export const mapDispatchToProps = (dispatch) => {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     goToUrl: url => dispatch(push(url)),
     ...bindActionCreators({
+      fetchDefaultTopics,
       setAnnouncement,
       removeLinkPreview,
       clearLinkPreview,
@@ -132,15 +137,17 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     dispatchProps.createPost({ networkSlug, ...postParams })
   const createProject = projectParams =>
     dispatchProps.createProject({ networkSlug, ...projectParams })
+  const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ networkSlug, communitySlug })
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToPost,
-    pollingFetchLinkPreview,
     createPost,
-    createProject
+    createProject,
+    fetchDefaultTopics,
+    goToPost,
+    pollingFetchLinkPreview
   }
 }
 

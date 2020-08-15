@@ -5,14 +5,24 @@ import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
+  let baseProps = {
+    fetchDefaultTopics: jest.fn()
+  }
+
+  beforeEach(() => {
+    baseProps = {
+      fetchDefaultTopics: jest.fn()
+    }
+  })
+
   it('renders with min props', () => {
-    const props = {}
-    const wrapper = shallow(<PostEditor {...props} />)
+    const wrapper = shallow(<PostEditor {...baseProps} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders announcement option with admin in props', () => {
     const props = {
+      ...baseProps,
       canModerate: true
     }
     const wrapper = shallow(<PostEditor {...props} />)
@@ -22,6 +32,7 @@ describe('PostEditor', () => {
   describe('for a new post', () => {
     test('initial prompt and placeholders', () => {
       const props = {
+        ...baseProps,
         initialPrompt: 'a test prompt',
         titlePlaceholderForPostType: {
           default: 'a test title placeholder'
@@ -41,6 +52,7 @@ describe('PostEditor', () => {
     }
     const renderForType = (type) => {
       const props = {
+        ...baseProps,
         post: {
           type,
           startTime: new Date(1551908483315),
@@ -59,6 +71,7 @@ describe('PostEditor', () => {
 
     test('saving a post will create a new post', () => {
       const props = {
+        ...baseProps,
         post: {
           type: 'offer',
           title: 'valid title',
@@ -95,8 +108,9 @@ describe('PostEditor', () => {
   })
 
   describe.skip('for a new event', () => {
-    it('renders correctlry', () => {
+    it('renders correctly', () => {
       const props = {
+        ...baseProps,
         isEvent: true,
         post: {
           communities: []
@@ -109,6 +123,7 @@ describe('PostEditor', () => {
 
   describe('editing a post', () => {
     const props = {
+      ...baseProps,
       editing: true,
       post: {
         id: 'test',
@@ -162,6 +177,7 @@ describe('PostEditor', () => {
 
   it('post is defaulted while loading editor', () => {
     const props = {
+      ...baseProps,
       editing: true,
       loading: true
     }
@@ -171,6 +187,7 @@ describe('PostEditor', () => {
 
   it('post is defaulted while loading editor for NEW post', () => {
     const props = {
+      ...baseProps,
       editing: false,
       loading: true
     }
@@ -181,6 +198,7 @@ describe('PostEditor', () => {
   describe('valid', () => {
     it('is valid when all required values are supplied', () => {
       const props = {
+        ...baseProps,
         post: {
           type: 'request',
           title: 'valid title',
@@ -196,6 +214,7 @@ describe('PostEditor', () => {
 
     it('is invalid when required values are missing', () => {
       const props = {
+        ...baseProps,
         post: {
           title: 'valid title',
           communities: [],
@@ -210,6 +229,7 @@ describe('PostEditor', () => {
 
   test('onClose is attached to the close button', () => {
     const props = {
+      ...baseProps,
       onClose: jest.fn()
     }
     const wrapper = shallow(<PostEditor {...props} />)
@@ -219,6 +239,7 @@ describe('PostEditor', () => {
 
   test('saving a valid post will update a post', () => {
     const props = {
+      ...baseProps,
       editing: true,
       post: {
         id: 'test',
@@ -257,9 +278,10 @@ describe('PostEditor', () => {
   })
 
   describe('linkPreview handling', () => {
-    let baseProps, contentStateMock
+    let linkPreviewProps, contentStateMock
     beforeEach(() => {
-      baseProps = {
+      linkPreviewProps = {
+        ...baseProps,
         post: { communities: [] },
         pollingFetchLinkPreview: jest.fn(),
         clearLinkPreview: jest.fn()
@@ -271,7 +293,7 @@ describe('PostEditor', () => {
     })
 
     it('should fetch for a linkPreview', () => {
-      const props = baseProps
+      const props = linkPreviewProps
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
       testInstance.setLinkPreview(contentStateMock)
@@ -279,7 +301,7 @@ describe('PostEditor', () => {
     })
 
     it('should not fetch for linkPreview when a post.linkPreview is present', () => {
-      const props = merge(baseProps, {
+      const props = merge(linkPreviewProps, {
         post: {
           linkPreview: {},
           communities: []
@@ -292,7 +314,7 @@ describe('PostEditor', () => {
     })
 
     it('should not fetch for linkPreview when linkStatus is "removed"', () => {
-      const props = merge(baseProps, {
+      const props = merge(linkPreviewProps, {
         linkPreviewStatus: 'removed'
       })
       const wrapper = shallow(<PostEditor {...props} />)
@@ -302,7 +324,7 @@ describe('PostEditor', () => {
     })
 
     it('should not fetch for linkPreview when linkStatus is "invalid"', () => {
-      const props = merge(baseProps, {
+      const props = merge(linkPreviewProps, {
         linkPreviewStatus: 'invalid'
       })
       const wrapper = shallow(<PostEditor {...props} />)
@@ -315,7 +337,7 @@ describe('PostEditor', () => {
       contentStateMock = {
         hasText: () => false
       }
-      const props = merge(baseProps, {
+      const props = merge(linkPreviewProps, {
         linkPreviewStatus: 'any'
       })
       const wrapper = shallow(<PostEditor {...props} />)
@@ -329,7 +351,7 @@ describe('PostEditor', () => {
       contentStateMock = {
         hasText: () => false
       }
-      const props = merge(baseProps, {
+      const props = merge(linkPreviewProps, {
         linkPreviewStatus: null,
         post: {
           linkPreview: {}
@@ -345,6 +367,7 @@ describe('PostEditor', () => {
 
   it('renders contribution button', () => {
     const props = {
+      ...baseProps,
       isProject: true,
       currentUser: {
         hasStripeAccount: true,

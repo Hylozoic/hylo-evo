@@ -80,17 +80,23 @@
 
 .topic-stats {
   composes: caption-drk-lg from 'css/typography.scss';
-  margin-top: $space-1x;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 6px;
 }
 
 .topic-subscribe {
   composes: text-button from 'css/typography.scss';
-  font-size: 16px;
-  margin-left: 15px;
+  font-size: 15px;
+  margin-left: 3px;
 }
 
 .topic-dropdown {
   margin-left: 10px;
+}
+
+.communitiesList {
+  flex: 1;
 }
 
 @media screen and (max-width: 700px) {

@@ -2,8 +2,8 @@
 // track of the ordering of lists of data fetched from the API.
 //
 // For example, the Members component will want to track the order of Members
-// to show when the sort order is set to "Name" separately from when it is set
-// to "Location". And both of these lists are different from what should be
+// to show when the sort order is set to 'Name' separately from when it is set
+// to 'Location'. And both of these lists are different from what should be
 // shown when something has been typed into the search field.
 import { get, isNull, omitBy, pick, reduce, uniq, isEmpty, includes } from 'lodash/fp'
 import { mapValues, camelCase } from 'lodash'
@@ -11,6 +11,8 @@ import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import {
   FETCH_POSTS,
+  FETCH_TOPICS,
+  FETCH_DEFAULT_TOPICS,
   CREATE_POST,
   CREATE_PROJECT,
   DROP_QUERY_RESULTS,
@@ -22,6 +24,9 @@ import {
   FETCH_MODERATORS,
   FETCH_COMMUNITIES
 } from 'routes/NetworkSettings/NetworkSettings.store'
+import {
+  CREATE_TOPIC
+} from 'components/CreateTopic/CreateTopic.store'
 import {
   REMOVE_POST_PENDING
 } from 'components/PostCard/PostHeader/PostHeader.store'
@@ -102,6 +107,13 @@ export default function (state = {}, action) {
         }
       })
 
+    case CREATE_TOPIC:
+      root = {
+        isDefault: meta.data.isDefault,
+        ...payload.data.createTopic
+      }
+      return matchNewTopicIntoQueryResults(state, root)
+
     case DROP_QUERY_RESULTS:
       return {
         ...state,
@@ -143,7 +155,7 @@ export function matchNewPostIntoQueryResults (state, { id, type, networkSlug, co
     }
   }
 
-  // Network feeds w/ topics
+  // Community feeds w/ topics
   return reduce((memo, community) => {
     queriesToMatch.push(
       { slug: community.slug },
@@ -162,6 +174,40 @@ export function matchNewPostIntoQueryResults (state, { id, type, networkSlug, co
   }, state, communities)
 }
 
+export function matchNewTopicIntoQueryResults (state, { id, isDefault, networkSlug, communityTopics }) {
+  const queriesToMatch = []
+
+  // All Communities topics
+  queriesToMatch.push({ sortBy: 'name' })
+
+  // Network topics
+  if (networkSlug) {
+    queriesToMatch.push(
+      { networkSlug, autocomplete: '' },
+      { networkSlug, sortBy: 'name', autocomplete: '' },
+      { networkSlug, sortBy: 'updated_at', autocomplete: '' },
+      { networkSlug, sortBy: 'num_followers', autocomplete: '' }
+    )
+  }
+
+  // Community topics
+  return reduce((memo, communityTopic) => {
+    queriesToMatch.push(
+      { communitySlug: communityTopic.community.slug, autocomplete: '' },
+      { communitySlug: communityTopic.community.slug, sortBy: 'name', autocomplete: '' },
+      { communitySlug: communityTopic.community.slug, sortBy: 'updated_at', autocomplete: '' },
+      { communitySlug: communityTopic.community.slug, sortBy: 'num_followers', autocomplete: '' }
+    )
+
+    return reduce((innerMemo, params) => {
+      if (isDefault) {
+        innerMemo = appendId(innerMemo, FETCH_DEFAULT_TOPICS, params, id)
+      }
+      return prependIdForCreate(innerMemo, FETCH_TOPICS, params, id)
+    }, memo, queriesToMatch)
+  }, state, communityTopics.items)
+}
+
 export function matchNewThreadIntoQueryResults (state, { id, type }) {
   return prependIdForCreate(state, FETCH_THREADS, null, id)
 }
@@ -172,7 +218,20 @@ function prependIdForCreate (state, type, params, id) {
   return {
     ...state,
     [key]: {
-      ids: [id].concat(state[key].ids),
+      ids: !state[key].ids.includes(id) ? [id].concat(state[key].ids) : state[key].ids,
+      total: state[key].total && state[key].total + 1,
+      hasMore: state[key].hasMore
+    }
+  }
+}
+
+function appendId (state, type, params, id) {
+  const key = buildKey(type, params)
+  if (!state[key]) return state
+  return {
+    ...state,
+    [key]: {
+      ids: !state[key].ids.includes(id) ? state[key].ids.concat(id) : state[key].ids,
       total: state[key].total && state[key].total + 1,
       hasMore: state[key].hasMore
     }
@@ -198,7 +257,7 @@ function appendIds (state, type, params, data) {
 
 export function makeGetQueryResults (actionType) {
   return (state, props) => {
-    // TBD: Sometimes parameters like "id" and "slug" are to be found in the
+    // TBD: Sometimes parameters like 'id' and 'slug' are to be found in the
     // URL, in which case they are in e.g. props.match.params.id; and sometimes
     // they are passed directly to a component. Should buildKey handle both
     // cases?
@@ -231,6 +290,7 @@ export function buildKey (type, params) {
 export const queryParamWhitelist = [
   'id',
   'slug',
+  'communitySlug',
   'networkSlug',
   'networkSlugs',
   'sortBy',

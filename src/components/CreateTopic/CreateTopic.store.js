@@ -26,12 +26,12 @@ export function fetchCommunityTopic (topicName, communitySlug) {
   }
 }
 
-export function createTopic (topicName, communityId) {
+export function createTopic (topicName, communityId, isDefault = false, isSubscribing = false) {
   return {
     type: CREATE_TOPIC,
     graphql: {
-      query: `mutation ($topicName: String, $communityId: ID) {
-        createTopic(topicName: $topicName, communityId: $communityId) {
+      query: `mutation ($topicName: String, $communityId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+        createTopic(topicName: $topicName, communityId: $communityId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
           id
           name
           communityTopics {
@@ -39,11 +39,14 @@ export function createTopic (topicName, communityId) {
               id
               community {
                 id
+                slug
               }
+              isDefault
               isSubscribed
               newPostCount
               postsTotal
               followersTotal
+              visibility
             }
           }
           followersTotal
@@ -52,7 +55,9 @@ export function createTopic (topicName, communityId) {
       }`,
       variables: {
         communityId,
-        topicName
+        topicName,
+        isDefault,
+        isSubscribing
       }
     },
     meta: {
@@ -66,6 +71,11 @@ export function createTopic (topicName, communityId) {
           getRoot: get('createTopic.communityTopics')
         }
       ],
+      data: {
+        topicName,
+        communityId,
+        isDefault
+      },
       analytics: AnalyticsEvents.TOPIC_CREATED
     }
   }

@@ -8,7 +8,7 @@ import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
-import { personUrl, tagUrl } from 'util/navigation'
+import { personUrl, topicUrl } from 'util/navigation'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
@@ -152,6 +152,6 @@ export function TopicsLine ({ topics, slug, newLine }) {
   return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
     {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>
-      <Link styleName='topic' to={tagUrl(t.name, slug)} key={t.name}>#{t.name}</Link>)}
+      <Link styleName='topic' to={topicUrl(t.name, { communitySlug: slug })} key={t.name}>#{t.name}</Link>)}
   </div>
 }

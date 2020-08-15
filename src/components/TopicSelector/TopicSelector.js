@@ -1,15 +1,40 @@
 import React, { Component } from 'react'
-import TagInput from 'components/TagInput'
+import AsyncCreatableSelect from 'react-select/async-creatable'
 import styles from './TopicSelector.scss'
-import { isEmpty, uniqBy, sortBy, find } from 'lodash/fp'
+import { isEmpty, uniqBy, sortBy } from 'lodash/fp'
 import { validateTopicName } from 'hylo-utils/validators'
 import Icon from 'components/Icon'
 
+const MAX_TOPICS = 3
+
+const inputStyles = {
+  container: styles => ({
+    ...styles,
+    cursor: 'text',
+    fontFamily: 'Circular Book, sans-serif'
+  }),
+  control: styles => ({
+    ...styles,
+    minWidth: '200px',
+    border: 'none',
+    boxShadow: 0,
+    cursor: 'text'
+  }),
+  multiValue: styles => ({ ...styles, backgroundColor: 'transparent' }),
+  multiValueRemove: styles => ({ ...styles, cursor: 'pointer' }),
+  clearIndicator: styles => ({ ...styles, cursor: 'pointer' }),
+  dropdownIndicator: styles => ({ display: 'none' }),
+  indicatorSeparator: styles => ({ display: 'none' }),
+  placeholder: styles => ({ color: 'rgb(192, 197, 205)' })
+}
+
 export default class TopicSelector extends Component {
   static defaultProps = {
-    placeholder: 'Type topic name...',
-    selectedTopics: [],
-    detailsTopics: []
+    currentCommunity: null,
+    defaultTopics: [],
+    detailsTopics: [],
+    placeholder: 'Enter up to three topics...',
+    selectedTopics: []
   }
 
   static defaultState = {
@@ -52,80 +77,79 @@ export default class TopicSelector extends Component {
     this.setState(TopicSelector.defaultState)
   }
 
-  handleInputChange = input => {
+  handleInputChange = async (input) => {
     this.setState({ input })
     if (!isEmpty(input)) {
-      this.props.findTopics(input)
+      if (this.state.selected.length >= MAX_TOPICS) {
+        return []
+      }
+      await this.props.findTopics(input)
+      const { currentCommunity, defaultTopics, topicResults } = this.props
+      const sortedTopics = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
+      return defaultTopics ? [ { label: currentCommunity ? currentCommunity.name : 'Default' + ' Topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
     } else {
       this.props.clearTopics()
+      return []
     }
   }
 
-  handleAddition = topic => {
-    this.setState({
-      selected: this.state.selected.concat([topic])
-    })
+  handleTopicsChange = (newTopics, action) => {
+    let topics = newTopics || []
+    topics = topics.filter(t => !validateTopicName(t.name))
+    if (topics.length <= MAX_TOPICS) {
+      this.setState({
+        selected: topics || [],
+        topicsEdited: true
+      })
+    }
     this.props.clearTopics()
   }
 
-  handleDelete = topic => {
-    this.setState({
-      selected: this.state.selected.filter(t => t.name !== topic.name),
-      topicsEdited: true
-    })
-  }
-
   render () {
-    const { placeholder, readOnly, topicResults } = this.props
-    const { selected, input } = this.state
+    const { currentCommunity, defaultTopics, placeholder } = this.props
+    const { selected } = this.state
 
-    // add a 'create new' row
-    const addNew = !validateTopicName(input) && !find(topic => topic.name === input, topicResults)
-
-    const sortedTopicResults = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
-
-    const suggestions = addNew
-      ? [{ id: input, name: input, isNew: true }].concat(sortedTopicResults)
-      : sortedTopicResults
+    // If at max # topics don't show more default topics to select
+    const defaultsToShow = selected.length >= MAX_TOPICS ? [] : defaultTopics ? [ { label: currentCommunity ? currentCommunity.name : 'Default' + ' Topics', options: defaultTopics } ] : []
 
     return (
-      <TagInput
+      <AsyncCreatableSelect
         placeholder={placeholder}
-        tags={selected}
-        suggestions={isEmpty(input) ? [] : suggestions}
-        handleInputChange={this.handleInputChange}
-        handleAddition={this.handleAddition}
-        handleDelete={this.handleDelete}
-        readOnly={readOnly}
-        theme={styles}
-        maxTags={3}
-        addLeadingHashtag
-        stripInputHashtag
-        renderSuggestion={Suggestion}
+        isMulti
+        name='topics'
+        value={selected}
+        classNamePrefix='topic-selector'
+        defaultOptions={defaultsToShow}
+        styles={inputStyles}
+        loadOptions={this.handleInputChange}
+        onChange={this.handleTopicsChange}
+        getNewOptionData={(inputValue, optionLabel) => (selected.length >= MAX_TOPICS ? null : { name: inputValue, label: inputValue, value: inputValue, __isNew__: true })}
+        noOptionsMessage={() => {
+          return selected.length >= MAX_TOPICS ? 'You can only select up to 3 topics' : 'Start typing to add a topic'
+        }}
+        formatOptionLabel={(item, { context, inputValue, selectValue }) => {
+          if (context === 'value') {
+            return <div styleName='topicLabel'>#{item.label}</div>
+          }
+          if (item.__isNew__) {
+            return <div>Create topic &quot;{item.value}&quot;</div>
+          }
+          const { name, postsTotal, followersTotal } = item
+          const formatCount = count => isNaN(count)
+            ? 0
+            : count < 1000
+              ? count
+              : (count / 1000).toFixed(1) + 'k'
+
+          return <div className={styles.item}>
+            <div styleName='menuTopicLabel'>#{name}</div>
+            <div styleName='suggestionMeta'>
+              <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
+              <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
+            </div>
+          </div>
+        }}
       />
     )
   }
-}
-
-// this should take an object. fix here and call site
-export function Suggestion ({ item, handleChoice }) {
-  const { id, name, isNew, isError, postsTotal, followersTotal } = item
-  const formatCount = count => isNaN(count)
-    ? 0
-    : count < 1000
-      ? count
-      : (count / 1000).toFixed(1) + 'k'
-
-  return <li className={styles.item} key={id || 'blank'}>
-    <a onClick={event => handleChoice(item, event)}>
-      {isError && <div>{name}</div>}
-      {!isError && <div>#{name}</div>}
-      {!isError && (isNew
-        ? <div styleName='suggestionMeta'>create new</div>
-        : <div styleName='suggestionMeta'>
-          <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
-          <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
-        </div>)}
-    </a>
-  </li>
 }

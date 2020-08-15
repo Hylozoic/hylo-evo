@@ -209,7 +209,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -444,7 +444,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -595,182 +595,6 @@ Array [
 ]
 `;
 
-exports[`PostEditor for a new event renders correctlry 1`] = `
-<div
-  data-stylename="wrapper"
->
-  <div
-    data-stylename="header"
-  >
-    <div
-      data-stylename="initial"
-    >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
-        />
-      </a>
-    </div>
-  </div>
-  <div
-    data-stylename="body"
-  >
-    <div
-      data-stylename="body-column"
-    >
-      <RoundImage
-        data-stylename="titleAvatar"
-        medium={true}
-      />
-    </div>
-    <div
-      data-stylename="body-column"
-    >
-      <input
-        data-stylename="titleInput"
-        disabled={false}
-        maxLength={50}
-        onChange={[Function]}
-        placeholder="What’s on your mind?"
-        type="text"
-        value=""
-      />
-      <Connect(HyloEditor)
-        data-stylename="editor"
-        onChange={[Function]}
-        parentComponent="PostEditor"
-        placeholder="Add a description"
-        readOnly={false}
-      />
-    </div>
-  </div>
-  <Connect(AttachmentManager)
-    postId="new"
-    type="image"
-  />
-  <Connect(AttachmentManager)
-    postId="new"
-    type="file"
-  />
-  <div
-    data-stylename="footer"
-  >
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
-        Topics
-      </div>
-      <div
-        data-stylename="footerSection-communities"
-      >
-        <Connect(TopicSelector)
-          detailsTopics={Array []}
-        />
-      </div>
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        Start Time
-      </div>
-      <DatePicker
-        onChange={[Function]}
-        value={"2019-04-01T20:23:11.662Z"}
-      />
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        End Time
-      </div>
-      <DatePicker
-        onChange={[Function]}
-        value={"2019-04-01T20:23:11.662Z"}
-      />
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label alignedLabel"
-      >
-        Location
-      </div>
-      <input
-        data-stylename="locationInput"
-        onChange={[Function]}
-        placeholder="Where is your event"
-        type="text"
-        value=""
-      />
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
-        Invite People
-      </div>
-      <div
-        data-stylename="footerSection-communities"
-      >
-        <Connect(MemberSelector)
-          initialMembers={Array []}
-          onChange={[Function]}
-          readOnly={false}
-        />
-      </div>
-    </div>
-    <div
-      data-stylename="footerSection"
-    >
-      <div
-        data-stylename="footerSection-label"
-      >
-        Post in
-      </div>
-      <div
-        data-stylename="footerSection-communities"
-      >
-        <CommunitiesSelector
-          onChange={[Function]}
-          options={Array []}
-          placeholder="Type community name..."
-          readOnly={false}
-          selected={Array []}
-        />
-      </div>
-    </div>
-    <ActionsBar
-      communities={Array []}
-      communityCount={0}
-      loading={false}
-      save={[Function]}
-      submitButtonLabel="Post"
-      toggleAnnouncementModal={[Function]}
-      valid={false}
-    />
-  </div>
-</div>
-`;
-
 exports[`PostEditor for a new post correct title placeholder and type button selection for "discussion" type 1`] = `
 <div
   data-stylename="wrapper"
@@ -885,7 +709,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1043,7 +867,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1243,7 +1067,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1443,7 +1267,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1644,7 +1468,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -1841,7 +1665,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -2000,7 +1824,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -2159,7 +1983,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -2306,7 +2130,7 @@ exports[`PostEditor renders contribution button 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
@@ -2487,7 +2311,7 @@ exports[`PostEditor renders with min props 1`] = `
         Topics
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}

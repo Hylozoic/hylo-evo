@@ -100,7 +100,7 @@ export const ImageManager = DragDropContext(HTML5Backend)(
             <ImagePreview
               attachment={attachment}
               removeImage={() => removeAttachment(type, id, attachment)}
-              switchImages={this.props.switchAttachments}
+              switchImages={this.props.switchImages}
               position={i}
               key={i} />)}
           {showLoading && uploadAttachmentPending && <div styleName='add-image'><Loading /></div>}
@@ -128,7 +128,7 @@ const imagePreviewSource = {
 const imagePreviewTarget = {
   drop (props, monitor, component) {
     const item = monitor.getItem()
-    props.switchImages('image', props.position, item.position)
+    props.switchImages(props.position, item.position)
   }
 }
 

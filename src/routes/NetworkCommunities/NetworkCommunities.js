@@ -58,7 +58,7 @@ export default class NetworkCommunities extends Component {
         setSearch={setSearch}
         sortBy={sortBy}
         setSort={setSort} />
-      <CommunityList
+      <CommunitiesList
         communities={communities}
         fetchMoreCommunities={fetchMoreCommunities} />
     </div>
@@ -100,7 +100,7 @@ export function SearchBar ({ search, setSearch, sortBy, setSort }) {
   </div>
 }
 
-export function CommunityList ({ communities, fetchMoreCommunities }) {
+export function CommunitiesList ({ communities, fetchMoreCommunities }) {
   return <div styleName='community-list' >
     {communities.map(c => <CommunityCard community={c} key={c.id} />)}
     <ScrollListener onBottom={() => fetchMoreCommunities()}

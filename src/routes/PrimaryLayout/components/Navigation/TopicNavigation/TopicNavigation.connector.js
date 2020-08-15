@@ -1,16 +1,21 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
-import { getSubscribedCommunityTopics } from './TopicNavigation.store'
+import { getTopicsFromSubscribedCommunityTopics } from './TopicNavigation.store'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
-import { removePostFromUrl } from 'util/navigation'
+import { topicsUrl, removePostFromUrl, allCommunitiesUrl } from 'util/navigation'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
+  const { routeParams } = props
+  const topics = getTopicsFromSubscribedCommunityTopics(state, props)
+
   return {
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
-    communityTopics: getSubscribedCommunityTopics(state, props)
+    seeAllUrl: topicsUrl(routeParams, allCommunitiesUrl()),
+    routeParams,
+    topics
   }
 }
 
@@ -35,15 +40,11 @@ export function mapDispatchToProps (dispatch, props) {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { feedListFetchPostsParam, communityTopics } = stateProps
-  const { clearBadge, expand, dropPostResultsMaker, goBack } = dispatchProps
   return {
     ...ownProps,
-    communityTopics,
-    clearBadge,
-    expand,
-    goBack,
-    clearFeedList: dropPostResultsMaker(feedListFetchPostsParam)
+    ...dispatchProps,
+    ...stateProps,
+    clearFeedList: dispatchProps.dropPostResultsMaker(stateProps.feedListFetchPostsParam)
   }
 }
 
