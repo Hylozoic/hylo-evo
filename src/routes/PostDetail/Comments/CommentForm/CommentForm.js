@@ -18,7 +18,7 @@ export default class CommentForm extends Component {
   static propTypes = {
     postId: PropTypes.string.isRequired,
     createComment: PropTypes.func.isRequired,
-    currentUser: PropTypes.object.isRequired,
+    currentUser: PropTypes.object,
     className: PropTypes.string,
     // provided by connector
     sendIsTyping: PropTypes.func.isRequired,
@@ -60,8 +60,9 @@ export default class CommentForm extends Component {
     return <div
       styleName='commentForm'
       className={className}
-      onClick={() => this.editor.current.focus()}>
-      <AttachmentManager type='comment' id='new' />
+      onClick={() => this.editor.current.focus()}
+    >
+      { currentUser ? <AttachmentManager type='comment' id='new' /> : '' }
       <div styleName={cx('prompt', { 'disabled': !currentUser })}>
         { currentUser
           ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />

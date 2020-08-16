@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import { some } from 'lodash/fp'
 import React from 'react'
-import { matchPath, Route, Link, Switch } from 'react-router-dom'
+import { matchPath, Redirect, Route, Link, Switch } from 'react-router-dom'
 import Particles from 'react-particles-js'
 import particlesjsConfig from './particlesjsConfig'
 import Button from 'components/Button'
@@ -9,7 +9,6 @@ import Login from './Login'
 import Signup from './Signup'
 import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import CommunityDetail from 'routes/CommunityDetail'
-import Feed from 'routes/Feed'
 import MapExplorer from 'routes/MapExplorer'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import PostDetail from 'routes/PostDetail'
@@ -76,7 +75,7 @@ export default class NonAuthLayout extends React.Component {
       } />
 
       <Switch>
-        <Route path={`/:context(public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+        <Redirect from={`/public/${OPTIONAL_POST_MATCH}`} exact to='/public/map' key='streamToMap' />
         <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
         <Route path={`/:context(public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
         <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />

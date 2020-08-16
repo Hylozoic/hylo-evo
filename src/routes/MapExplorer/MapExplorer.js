@@ -22,7 +22,7 @@ export default class MapExplorer extends React.Component {
     posts: [],
     publicCommunities: [],
     routeParams: {},
-    querystringParams: {},
+    showDrawer: true,
     topics: [],
     zoom: 0
   }
@@ -37,7 +37,7 @@ export default class MapExplorer extends React.Component {
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
-      showDrawer: props.querystringParams.showDrawer === 'true',
+      showDrawer: props.showDrawer,
       showFeatureFilters: false,
       viewport: {
         latitude: parseFloat(props.centerLocation.lat),
@@ -195,7 +195,6 @@ export default class MapExplorer extends React.Component {
       features,
       fetchPostsParam,
       filters,
-      querystringParams,
       pending,
       routeParams,
       topics
@@ -229,7 +228,6 @@ export default class MapExplorer extends React.Component {
           onUpdateFilters={this.props.storeClientFilterParams}
           features={features}
           topics={topics}
-          querystringParams={querystringParams}
           routeParams={routeParams}
         />)
         : '' }

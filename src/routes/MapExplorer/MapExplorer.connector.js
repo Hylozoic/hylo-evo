@@ -2,6 +2,7 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { get, pick } from 'lodash/fp'
 import { FETCH_POSTS_MAP } from 'store/constants'
+import getRouteParam from 'store/selectors/getRouteParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -31,13 +32,14 @@ export function presentMember (person, communityId) {
 }
 
 export function mapStateToProps (state, props) {
-  const routeParams = get('match.params', props)
-  const querystringParams = getQuerystringParam(['showDrawer', 't', 'network'], null, props)
   const community = getCommunityForCurrentRoute(state, props)
   const communityId = community && community.id
-  const { slug, context } = routeParams
-  const networkSlug = routeParams.networkSlug
-  const networkSlugs = querystringParams.network // For public maps that show multiple networks
+  const routeParams = get('match.params', props)
+  const slug = getRouteParam('slug', state, props)
+  const context = getRouteParam('context', state, props)
+  const networkSlug = getRouteParam('networkSlug', state, props)
+  const networkSlugs = getQuerystringParam('network', state, props)
+  const showDrawer = getQuerystringParam('showDrawer', state, props) === 'true'
 
   var subject
   if (context === 'public') {
@@ -105,8 +107,8 @@ export function mapStateToProps (state, props) {
     pending: state.pending[FETCH_POSTS_MAP],
     posts,
     publicCommunities,
-    querystringParams,
     routeParams,
+    showDrawer,
     topics,
     zoom: centerLocation ? 10 : 0
   }

@@ -15,7 +15,6 @@ function MapDrawer (props) {
     filters,
     onUpdateFilters,
     features,
-    querystringParams,
     routeParams,
     topics
   } = props
@@ -50,7 +49,6 @@ function MapDrawer (props) {
     />
     : <PostCard
       routeParams={routeParams}
-      querystringParams={querystringParams}
       post={f}
       styleName='contentCard'
       constrained
@@ -147,14 +145,12 @@ function MapDrawer (props) {
 
 MapDrawer.propTypes = {
   features: PropTypes.array,
-  querystringParams: PropTypes.object,
   routeParams: PropTypes.object,
   onUpdateFilters: PropTypes.func
 }
 
 MapDrawer.defaultProps = {
   features: [],
-  querystringParams: {},
   routeParams: {},
   onUpdateFilters: (opts) => { console.log('Updating filters with: ' + opts) }
 }
