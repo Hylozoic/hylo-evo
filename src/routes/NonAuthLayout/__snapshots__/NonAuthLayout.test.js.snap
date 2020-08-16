@@ -167,10 +167,12 @@ exports[`NonAuthLayout renders correctly 1`] = `
     path="/reset-password"
   />
   <Switch>
-    <Route
-      component={[Function]}
+    <Redirect
       exact={true}
-      path="/:context(public)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?"
+      from="/public/:postTypeContext(project|event|p)?/:postId(\\\\d+)?"
+      key="streamToMap"
+      push={false}
+      to="/public/map"
     />
     <Route
       component={[Function]}

@@ -59,7 +59,7 @@ describe('mapStateToProps', () => {
         pending: undefined,
         posts: [],
         publicCommunities: [],
-        querystringParams: {},
+        showDrawer: false,
         routeParams: { slug: 'foo' },
         topics: [],
         zoom: 0
