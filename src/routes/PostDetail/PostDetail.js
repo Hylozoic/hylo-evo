@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
@@ -153,7 +154,7 @@ export default class PostDetail extends Component {
       onClick={togglePeopleDialog} />
 
     return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
-      <div styleName='post'>
+      <div styleName={cx('post', { 'noUser': !currentUser })}>
         <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
         <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
         {atHeader && <div styleName='header-sticky' style={headerStyle}>

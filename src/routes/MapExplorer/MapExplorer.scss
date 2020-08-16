@@ -2,6 +2,11 @@
   position: relative;
   height: calc(100vh - 56px);
   overflow: hidden;
+
+  &.noUser {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .expanded {
@@ -62,6 +67,10 @@
   .closeDrawer {
     display: none;
   }
+}
+
+.noUser .toggleDrawerButton {
+  top: 20px;
 }
 
 @media screen and (max-width: 1115px) {

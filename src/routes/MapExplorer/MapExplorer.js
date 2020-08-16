@@ -9,7 +9,6 @@ import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
-// import { createScatterplotLayerFromPublicCommunities } from 'components/Map/layers/scatterplotLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
@@ -23,7 +22,7 @@ export default class MapExplorer extends React.Component {
     posts: [],
     publicCommunities: [],
     routeParams: {},
-    querystringParams: {},
+    showDrawer: true,
     topics: [],
     zoom: 0
   }
@@ -38,7 +37,7 @@ export default class MapExplorer extends React.Component {
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
-      showDrawer: props.querystringParams.showDrawer === 'true',
+      showDrawer: props.showDrawer,
       showFeatureFilters: false,
       viewport: {
         latitude: parseFloat(props.centerLocation.lat),
@@ -192,14 +191,13 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
+      currentUser,
       features,
       fetchPostsParam,
       filters,
-      querystringParams,
       pending,
       routeParams,
       topics
-      // publicCommunities
     } = this.props
 
     const {
@@ -210,9 +208,7 @@ export default class MapExplorer extends React.Component {
       viewport
     } = this.state
 
-    // const publicCommunitiesLayer = createScatterplotLayerFromPublicCommunities(publicCommunities, this.onMapHover, this.onMapClick)
-
-    return <div styleName='container'>
+    return <div styleName={cx('container', { 'noUser': !currentUser })}>
       <Map
         layers={[communityIconLayer, clusterLayer]}
         afterViewportUpdate={this.afterViewportUpdate}
@@ -226,12 +222,12 @@ export default class MapExplorer extends React.Component {
       </button>
       { showDrawer ? (
         <MapDrawer
+          currentUser={currentUser}
           fetchPostsParam={fetchPostsParam}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}
           features={features}
           topics={topics}
-          querystringParams={querystringParams}
           routeParams={routeParams}
         />)
         : '' }

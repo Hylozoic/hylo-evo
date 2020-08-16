@@ -44,6 +44,10 @@
   padding: 25px 30px;
 }
 
+.signupButton {
+  text-align: center;
+}
+
 .existingMember {
   text-align: center;
 }
@@ -51,6 +55,7 @@
 .communityDescription {
   color: $color-regent;
   font-size: 16px;
+  white-space: pre-wrap;
   margin-bottom: 18px;
 }
 
@@ -149,6 +154,11 @@
   font-size: 14px;
   margin: 0 15px;
   padding: 5px 15px;
+
+  &:hover {
+    text-decoration: none;
+    color: $color-white;
+  }
 }
 
 .requestCommunity {

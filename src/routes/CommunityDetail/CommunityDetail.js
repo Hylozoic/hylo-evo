@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
-import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import { inIframe } from 'util/index'
+
 import c from './CommunityDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 import get from 'lodash/get'
@@ -29,7 +31,6 @@ export default class CommunityDetail extends Component {
 
   componentDidMount () {
     this.onCommunityIdChange()
-    this.props.fetchJoinRequests()
   }
 
   componentDidUpdate (prevProps) {
@@ -41,6 +42,7 @@ export default class CommunityDetail extends Component {
   onCommunityIdChange = () => {
     this.props.fetchCommunity()
     this.props.fetchJoinRequests()
+
     this.setState(initialState)
   }
 
@@ -74,6 +76,7 @@ export default class CommunityDetail extends Component {
     const {
       community,
       currentUser,
+      location,
       pending,
       onClose
     } = this.props
@@ -83,7 +86,7 @@ export default class CommunityDetail extends Component {
 
     const topics = community && community.communityTopics
 
-    const isMember = (currentUser && currentUser.memberships.toModelArray()).find(m => m.community.id === community.id)
+    const isMember = (currentUser && currentUser.memberships) ? currentUser.memberships.toModelArray().find(m => m.community.id === community.id) : false
 
     return <div styleName='c.community'>
       <div styleName='c.communityDetailHeader' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
@@ -112,9 +115,11 @@ export default class CommunityDetail extends Component {
           </div>
           : ''
         }
-        { isMember
-          ? <div styleName='c.existingMember'>You are already a member of <Link to={`/c/${community.slug}`}>{community.name}</Link>!</div>
-          : this.renderCommunityDetails()
+        { !currentUser
+          ? <div styleName='c.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='c.requestButton'>Signup or Login to post in <span styleName='c.requestCommunity'>{community.name}</span></Link></div>
+          : isMember
+            ? <div styleName='c.existingMember'>You are already a member of <Link to={`/c/${community.slug}`}>{community.name}</Link>!</div>
+            : this.renderCommunityDetails()
         }
       </div>
       <SocketSubscriber type='community' id={community.id} />
@@ -125,7 +130,7 @@ export default class CommunityDetail extends Component {
     const { community, currentUser, joinRequests } = this.props
     const { errorMessage, successMessage } = this.state
     const usersWithPendingRequests = keyBy(joinRequests, 'user.id')
-    const request = usersWithPendingRequests[currentUser.id]
+    const request = currentUser ? usersWithPendingRequests[currentUser.id] : false
     const displayMessage = errorMessage || successMessage || request
     return (
       <div>

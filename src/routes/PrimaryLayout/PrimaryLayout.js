@@ -150,10 +150,10 @@ export default class PrimaryLayout extends Component {
             <Route path='/search' component={Search} />
             <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
             {signupRoutes.map(({ path, child }) =>
-              <Route path={path} key={path} component={props =>
+              <Route path={path} key={path} render={props =>
                 <SignupModal {...props} child={child} />} />)}
             {createCommunityRoutes.map(({ path, component }) =>
-              <Route path={path} key={path} component={props =>
+              <Route path={path} key={path} render={props =>
                 <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>

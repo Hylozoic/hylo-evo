@@ -13,8 +13,7 @@ import './FeedList.scss'
 export default class FeedList extends React.Component {
   static defaultProps = {
     posts: [],
-    routeParams: {},
-    querystringParams: {}
+    routeParams: {}
   }
 
   constructor (props) {
@@ -83,7 +82,6 @@ export default class FeedList extends React.Component {
   render () {
     const {
       routeParams,
-      querystringParams,
       postTypeFilter,
       collapsedState,
       sortBy,
@@ -132,7 +130,6 @@ export default class FeedList extends React.Component {
           const expanded = post.id === routeParams.postId
           return <PostCard
             routeParams={routeParams}
-            querystringParams={querystringParams}
             post={post}
             styleName={cx('FeedListItem', { expanded })}
             expanded={expanded}

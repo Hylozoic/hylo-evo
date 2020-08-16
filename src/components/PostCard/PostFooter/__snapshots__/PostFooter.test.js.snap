@@ -22,7 +22,7 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
       }
     }
   >
-    Joe, Sue and 2 others commented
+    Joe, Scary and 2 others commented
   </span>
   <a
     data-for="postfooter-tt"
@@ -71,7 +71,7 @@ exports[`PostFooter matches the latest snapshot 1`] = `
       }
     }
   >
-    Joe, Sue and 2 others commented
+    Joe, Scary and 2 others commented
   </span>
   <a
     data-for="postfooter-tt"
@@ -116,18 +116,6 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
   >
     No one is attending yet
   </span>
-  <a
-    data-for="postfooter-tt"
-    data-stylename="vote-button"
-    data-tip="Upvote this post so more people see it."
-    onClick={[Function]}
-  >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
-    />
-    0
-  </a>
   <ReactTooltip
     clickable={false}
     delayShow={550}

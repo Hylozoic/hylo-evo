@@ -15,6 +15,10 @@
   z-index: 1;
 }
 
+.noUser .header-sticky {
+  top: 0;
+}
+
 .activity-sticky {
   z-index: 1;
   position: fixed;

@@ -21,6 +21,10 @@
   composes: bdy-lt-sm from 'css/typography.scss';
   color: $color-rhino-80;
   font-size: 16px;
+
+  &.disabled {
+    cursor: default;
+  }
 }
 
 .image {
@@ -28,6 +32,15 @@
   margin-left: 20px;
   position: relative;
   top: 14px;
+}
+
+.anonymous-image {
+  margin-right: 10px;
+  margin-left: 20px;
+  position: relative;
+  top: 20px;
+  font-size: 17px;
+  cursor: default;
 }
 
 .upload-button {
@@ -52,7 +65,6 @@
       fill: $color-caribbean-green;
     }
   }
-  
 }
 
 .placeholder {
@@ -67,8 +79,24 @@
   overflow-wrap: break-word;
 }
 
-.footer {
-  background-color: rgb(200,200,200)
+.signupButton, .signupButton:visited {
+  line-height: 2em;
+  background: #40A1DD;
+  border-radius: 15px;
+  color: white;
+  display: inline-block;
+  width: 200px;
+  height: 2em;
+  text-align: center;
+  position: relative;
+  top: 11px;
+  right: 11px;
+  text-decoration: none;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 @media screen and (max-width: 425px) {

@@ -10,11 +10,11 @@ import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
   let {
+    currentUser,
     fetchPostsParam,
     filters,
     onUpdateFilters,
     features,
-    querystringParams,
     routeParams,
     topics
   } = props
@@ -49,7 +49,6 @@ function MapDrawer (props) {
     />
     : <PostCard
       routeParams={routeParams}
-      querystringParams={querystringParams}
       post={f}
       styleName='contentCard'
       constrained
@@ -62,7 +61,7 @@ function MapDrawer (props) {
   const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
 
   return (
-    <div styleName='container'>
+    <div styleName={cx('styles.container', { 'styles.noUser': !currentUser })}>
       <input
         styleName='searchBox'
         type='text'
@@ -146,14 +145,12 @@ function MapDrawer (props) {
 
 MapDrawer.propTypes = {
   features: PropTypes.array,
-  querystringParams: PropTypes.object,
   routeParams: PropTypes.object,
   onUpdateFilters: PropTypes.func
 }
 
 MapDrawer.defaultProps = {
   features: [],
-  querystringParams: {},
   routeParams: {},
   onUpdateFilters: (opts) => { console.log('Updating filters with: ' + opts) }
 }
