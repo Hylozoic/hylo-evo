@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import { get, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
-import { bgImageStyle } from 'util/index'
-import { communityUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
-import { get, isEmpty, chunk } from 'lodash/fp'
+import { communityUrl } from 'util/navigation'
+import CommunitiesList from 'components/CommunitiesList'
 import Icon from 'components/Icon'
-import { DEFAULT_AVATAR } from 'store/models/Community'
 import './PostCommunities.scss'
 
 export default class PostCommunities extends Component {
@@ -25,79 +24,66 @@ export default class PostCommunities extends Component {
   }
 
   render () {
-    const { communities, slug, showBottomBorder, constrained } = this.props
+    const { communities, constrained, slug, showBottomBorder } = this.props
+    const { expanded } = this.state
 
     // don't show if there are no communities or this isn't cross posted
     if (isEmpty(communities) || (communities.length === 1 && get('0.slug', communities) === slug)) return null
 
-    const { expanded } = this.state
-
-    const content = expanded
-      ? <span styleName='expandedSection' onClick={this.toggleExpanded}>
-        <div styleName='row'>
-          <span styleName='label'>Posted In:&nbsp;</span>
-          <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowUp' styleName='expandIcon' /></a>
-        </div>
-        {chunk(2, communities).map(pair => <CommunityRow communities={pair} key={pair[0].id} />)}
-      </span>
-      : <div styleName='row'>
+    return <div styleName={cx('communities', { constrained, expanded, bottomBorder: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
+      <div styleName='row'>
         <span styleName='label'>Posted In:&nbsp;</span>
-        <CommunityList communities={communities} expandFunc={this.toggleExpanded} />
-        <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name='ArrowDown' styleName='expandIcon' /></a>
+        {!expanded &&
+          <LinkedCommunityNameList communities={communities} maxShown={2} expandFunc={this.toggleExpanded} />}
+        <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='expandIcon' /></a>
       </div>
 
-    return <div styleName={cx('communities', { constrained }, { expanded, bottomBorder: showBottomBorder })}>
-      {content}
+      {expanded && <CommunitiesList communities={communities} />}
     </div>
   }
 }
 
-function others (n, expandFunc) {
-  if (n < 0) {
-    return null
-  } else if (n === 1) {
-    return <a key='others' styleName='communityLink' onClick={expandFunc}>1 other</a>
-  } else {
-    return <a key='others' styleName='communityLink' onClick={expandFunc}>{n} others</a>
-  }
-}
-
-export function CommunityList ({ communities, expandFunc }) {
-  const renderCommunity = (community, comma) => {
-    return <span key={community.id}><Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name === 'Public' && <Icon name='Public' styleName='publicCommunityIcon' />} {community.name}</Link>{comma ? ', ' : ''}</span>
-  }
-
-  const maxShown = 2
-  const length = communities.length
-  const truncatedNames = (maxShown && maxShown < length)
-    ? communities.slice(0, maxShown).map(c => renderCommunity(c, true)).concat([others(length - maxShown, expandFunc)])
-    : communities.map((c, i) => renderCommunity(c, i !== communities.length - 1 && communities.length !== 2))
-
-  const last = truncatedNames.pop()
-  var elements
-  if (isEmpty(truncatedNames)) {
-    elements = [last]
-  } else {
-    elements = truncatedNames.concat([<span key='and'> and </span>, last])
-  }
+export function LinkedCommunityNameList ({ communities, maxShown = 2, expandFunc }) {
+  const communitiesToDisplay = (maxShown && maxShown <= communities.length)
+    ? communities.slice(0, maxShown)
+    : communities
+  const othersCount = communities.length - communitiesToDisplay.length
 
   return <span styleName='communityList'>
-    {elements.map(e => e)}
+    {communitiesToDisplay.map((community, i) =>
+      <LinkedCommunityName community={community} key={i}>
+        <Separator currentIndex={i} displayCount={communitiesToDisplay.length} othersCount={othersCount} />
+      </LinkedCommunityName>)}
+    {othersCount > 0 &&
+      <Others othersCount={othersCount} expandFunc={expandFunc} />}
   </span>
 }
 
-export function CommunityRow ({ communities }) {
-  return <div styleName='communityRow'>
-    {communities.map(community => <CommunityCell key={community.id} community={community} />)}
-  </div>
+export function LinkedCommunityName ({ community, children }) {
+  return <span key={community.id}>
+    <Link to={communityUrl(community.slug)} styleName='communityLink'>{community.name === 'Public' && <Icon name='Public' styleName='publicCommunityIcon' />} {community.name}</Link>
+    {children}
+  </span>
 }
 
-export function CommunityCell ({ community }) {
-  const { name, avatarUrl } = community
-  const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
+export function Separator ({ currentIndex, displayCount, othersCount }) {
+  const isLastEntry = currentIndex === displayCount - 1
+  const isNextToLastEntry = currentIndex === Math.max(0, displayCount - 2)
+  const hasOthers = othersCount > 0
 
-  return <Link to={communityUrl(community.slug)} styleName='communityCell'>
-    <div styleName='communityCellAvatar' style={imageStyle} />
-    <span styleName='communityCellName'>{name}</span>
-  </Link>
+  if (isLastEntry) return null
+  if (!hasOthers && isNextToLastEntry) return <span key='and'> and </span>
+
+  return <span>, </span>
+}
+
+export function Others ({ othersCount, expandFunc }) {
+  if (othersCount < 0) return null
+
+  const phrase = othersCount === 1 ? '1 other' : othersCount + ' others'
+
+  return <React.Fragment>
+    <span key='and'> and </span>
+    <a key='others' styleName='communityLink' onClick={expandFunc}>{phrase}</a>
+  </React.Fragment>
 }

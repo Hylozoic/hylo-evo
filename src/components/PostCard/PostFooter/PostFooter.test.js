@@ -20,6 +20,7 @@ describe('PostFooter', () => {
       voteOnPost={() => {}}
       commenters={commenters}
       commentersTotal={4}
+      currentUser={commenters[1]}
       votesTotal={3}
       myVote />)
     expect(wrapper).toMatchSnapshot()
@@ -30,6 +31,7 @@ describe('PostFooter', () => {
       voteOnPost={() => {}}
       commenters={commenters}
       commentersTotal={4}
+      currentUser={commenters[1]}
       votesTotal={3}
       myVote={false} />)
     expect(wrapper).toMatchSnapshot()
@@ -45,6 +47,7 @@ describe('PostFooter', () => {
       voteOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
+      currentUser={commenters[1]}
       votesTotal={0}
       type='project'
       members={members} />)
@@ -63,6 +66,7 @@ describe('PostFooter', () => {
       voteOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
+      currentUser={false}
       votesTotal={0}
       type='event' />)
     expect(wrapper).toMatchSnapshot()

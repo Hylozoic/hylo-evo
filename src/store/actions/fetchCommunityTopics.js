@@ -21,7 +21,14 @@ query (
 `
 
 const rootQuery = `
-query ($first: Int, $offset: Int, $subscribed: Boolean, $autocomplete: String) {
+query (
+  $first: Int,
+  $offset: Int,
+  $sortBy: String,
+  $order: String,
+  $subscribed: Boolean,
+  $autocomplete: String
+) {
   ${communityTopicsQueryFragment}
 }
 `

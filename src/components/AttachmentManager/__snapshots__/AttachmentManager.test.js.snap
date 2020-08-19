@@ -469,7 +469,6 @@ exports[`ImageManager matches last snapshot 1`] = `
       key="0"
       position={0}
       removeImage={[Function]}
-      switchImages={[Function]}
     />
     <DropTarget(DragSource(ImagePreview))
       attachment={
@@ -481,7 +480,6 @@ exports[`ImageManager matches last snapshot 1`] = `
       key="1"
       position={1}
       removeImage={[Function]}
-      switchImages={[Function]}
     />
     <div
       data-stylename="add-image"

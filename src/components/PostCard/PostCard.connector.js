@@ -3,9 +3,14 @@ import { push } from 'connected-react-router'
 import { postUrl, editPostUrl } from 'util/navigation'
 import voteOnPost from 'store/actions/voteOnPost'
 import respondToEvent from 'store/actions/respondToEvent'
+import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
-  return {}
+  const currentUser = getMe(state)
+
+  return {
+    currentUser
+  }
 }
 
 export function mapDispatchToProps (dispatch, props) {

@@ -1,9 +1,10 @@
+import cx from 'classnames'
 import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
-import { tagUrl } from 'util/navigation'
+import { topicUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -150,10 +151,12 @@ export default class PostDetail extends Component {
     const postFooter = <PostFooter
       {...post}
       voteOnPost={voteOnPost}
-      onClick={togglePeopleDialog} />
+      onClick={togglePeopleDialog}
+      currentUser={currentUser}
+    />
 
     return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
-      <div styleName='post'>
+      <div styleName={cx('post', { 'noUser': !currentUser })}>
         <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
         <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
         {atHeader && <div styleName='header-sticky' style={headerStyle}>
@@ -210,7 +213,7 @@ export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
-    {tags.map(tag => <Link styleName='tag' to={tagUrl(tag, slug)} key={tag}>
+    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, { communitySlug: slug })} key={tag}>
       #{tag}
     </Link>)}
   </div>

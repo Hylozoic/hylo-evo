@@ -19,6 +19,18 @@
   padding: 0px;
 }
 
+.topicLabel {
+  color: $color-caribbean-green;
+  font-size: 1.2em;
+  line-height: 1.2;
+}
+
+.menuTopicLabel {
+  color: $color-caribbean-green;
+  font-size: 1em;
+  line-height: 1;
+}
+
 .selectedTag {
   color: $color-caribbean-green;
   display: inline-block;

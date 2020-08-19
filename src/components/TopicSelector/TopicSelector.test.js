@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import TopicSelector, { Suggestion } from './TopicSelector'
+import TopicSelector from './TopicSelector'
 
 describe('TopicSelector', () => {
   const defaultMinProps = { }
@@ -103,72 +103,15 @@ describe('TopicSelector', () => {
     })
   })
 
-  describe('handleAddition', () => {
+  describe('handleTopicsChange', () => {
     it('sets state and calls clearTopics', () => {
       const clearTopics = jest.fn()
       const wrapper = renderComponent(shallow, { clearTopics })
-      const topic = { name: 'one' }
+      const topics = [{ name: 'one' }]
       wrapper.setState({ selected: [{ name: 'zero' }] })
-      wrapper.instance().handleAddition(topic)
-      expect(wrapper.instance().state.selected).toEqual([{ name: 'zero' }, { name: 'one' }])
+      wrapper.instance().handleTopicsChange(topics)
+      expect(wrapper.instance().state.selected).toEqual([{ name: 'one' }])
       expect(clearTopics).toHaveBeenCalledWith()
     })
-  })
-
-  describe('handleDelete', () => {
-    it('sets state and calls clearTopics', () => {
-      const clearTopics = jest.fn()
-      const wrapper = renderComponent(shallow, { clearTopics })
-      const topic = { name: 'one' }
-      wrapper.setState({ selected: [{ name: 'zero' }, { name: 'one' }] })
-      wrapper.instance().handleDelete(topic)
-      expect(wrapper.instance().state.selected).toEqual([{ name: 'zero' }])
-      expect(wrapper.instance().state.topicsEdited).toEqual(true)
-    })
-  })
-})
-
-describe('Suggestion', () => {
-  const defaultMinProps = {
-    item: {}
-  }
-
-  function renderComponent (renderFunc, props = {}) {
-    return renderFunc(
-      <Suggestion {...{ ...defaultMinProps, ...props }} />
-    )
-  }
-
-  it('renders correctly (with min props)', () => {
-    const wrapper = renderComponent(shallow)
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with a topic)', () => {
-    const item = {
-      name: 'design',
-      postsTotal: 250,
-      followersTotal: 1200
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with a new topic)', () => {
-    const item = {
-      name: 'design',
-      isNew: true
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  it('renders correctly (with an error)', () => {
-    const item = {
-      name: 'there was an error',
-      isError: true
-    }
-    const wrapper = renderComponent(shallow, { item })
-    expect(wrapper).toMatchSnapshot()
   })
 })

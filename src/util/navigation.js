@@ -72,7 +72,10 @@ export function baseUrl ({
   if (safeMemberId) {
     return personUrl(safeMemberId, safeCommunitySlug, networkSlug)
   } else if (topicName) {
-    return tagUrl(topicName, safeCommunitySlug)
+    return topicUrl(topicName, {
+      communitySlug: safeCommunitySlug,
+      networkSlug: networkSlug
+    })
   } else if (view) {
     return viewUrl(view, context, safeCommunitySlug, networkSlug)
   } else if (networkSlug) {
@@ -109,20 +112,16 @@ export function personUrl (id, communitySlug, networkSlug) {
   return `${base}/m/${id}`
 }
 
-export function tagUrl (tagName, communitySlug) {
-  const base = baseUrl({ communitySlug, defaultUrl: allCommunitiesUrl() })
+export function topicUrl (topicName, opts) {
+  const base = baseUrl({ ...opts, defaultUrl: allCommunitiesUrl() })
 
-  return `${base}/${tagName}`
+  return `${base}/${topicName}`
 }
 
-export function postsUrl (opts = {}, querystringParams) {
-  const optsWithDefaults = {
-    defaultUrl: allCommunitiesUrl(),
-    ...opts
-  }
+export function postsUrl (opts = {}, querystringParams, defaultUrl = allCommunitiesUrl()) {
   const postTypeContext = get('postTypeContext', opts)
   const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
-  const base = baseUrl(optsWithDefaults)
+  const base = baseUrl({ ...opts, defaultUrl })
 
   const result = inPostTypeContext
     ? `${base}/${postTypeContext}`
@@ -181,8 +180,8 @@ export function newMessageUrl () {
   return `${messagesUrl()}/new`
 }
 
-export function topicsUrl (communitySlug) {
-  return communityUrl(communitySlug) + '/topics'
+export function topicsUrl (opts, defaultUrl = allCommunitiesUrl()) {
+  return baseUrl({ ...opts, defaultUrl }) + '/topics'
 }
 
 export const communityJoinUrl = ({ slug, accessCode }) =>
@@ -269,7 +268,7 @@ export function isNetworkPath (path) {
   return (path.startsWith('/n/'))
 }
 
-export function isTagPath (path) {
+export function isTopicPath (path) {
   return (path.startsWith('/tag/'))
 }
 

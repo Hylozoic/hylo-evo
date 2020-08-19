@@ -1,32 +1,30 @@
-import React from 'react'
-import NavLink from './NavLink'
-import Icon from 'components/Icon'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import './Navigation.scss'
-import { topicsUrl } from 'util/navigation'
-import TopicNavigation from './TopicNavigation'
 import { compact } from 'lodash/fp'
-import { EVENTS } from 'config/featureFlags'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Icon from 'components/Icon'
+import { topicsUrl } from 'util/navigation'
+import NavLink from './NavLink'
+import TopicNavigation from './TopicNavigation'
+
+import './Navigation.scss'
 
 export default function Navigation (props) {
   const {
-    currentUser,
     className,
     collapsed,
-    communitySlug,
-    rootId,
-    rootSlug,
+    routeParams,
     rootPath,
     membersPath,
     projectsPath,
+    communityId,
     eventsPath,
     mapPath,
     mapView,
     badge,
     clearBadge,
     clearFeedList,
-    showTopics
+    hideTopics
   } = props
 
   const homeOnClick = () => {
@@ -35,8 +33,6 @@ export default function Navigation (props) {
       clearBadge()
     }
   }
-
-  const hasEventsFeature = currentUser && currentUser.hasFeature(EVENTS)
 
   const links = compact([
     rootPath && {
@@ -52,7 +48,7 @@ export default function Navigation (props) {
       icon: 'Projects',
       to: projectsPath
     },
-    eventsPath && hasEventsFeature && {
+    eventsPath && {
       label: 'Events',
       icon: 'Events',
       to: eventsPath
@@ -79,12 +75,16 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
         <li styleName={cx('item', 'topicItem')}>
-          <Link to={topicsUrl(communitySlug)}>
+          <Link to={topicsUrl({ routeParams })}>
             <Icon name='Topics' />
           </Link>
         </li>
       </ul>
-      {showTopics && <TopicNavigation backUrl={rootPath} communityId={rootId} communitySlug={rootSlug} collapsed={collapsed} />}
+      {!hideTopics && <TopicNavigation
+        collapsed={collapsed}
+        backUrl={rootPath}
+        routeParams={routeParams}
+        communityId={communityId} />}
     </div>
   </div>
 }

@@ -1,50 +1,44 @@
 import { connect } from 'react-redux'
+import { get } from 'lodash/fp'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
+// import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { communityUrl, networkUrl, publicCommunitiesUrl } from 'util/navigation'
+import { baseUrl, allCommunitiesUrl, isPublicPath } from 'util/navigation'
 import orm from 'store/models'
-import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
+  const routeParams = props.match.params
+
   const community = getCommunityForCurrentRoute(state, props)
-  const network = getNetworkForCurrentRoute(state, props)
-  let rootId, rootSlug, rootPath, membersPath, communityMembership, badge
-  const isPublic = props.location.pathname.includes('public')
+  // const network = getNetworkForCurrentRoute(state, props) // TODO: do we need this?
+  const rootPath = baseUrl(routeParams, allCommunitiesUrl())
+  const projectsPath = `${rootPath}/project`
+  const eventsPath = `${rootPath}/event`
+  const membersPath = `${rootPath}/members`
+  const mapPath = `${rootPath}/map`
+
+  let communityMembership, badge
+
+  // TODO: what about all communities path? as default?
 
   if (community) {
-    rootId = community.id
-    rootSlug = get('slug', community)
-    rootPath = communityUrl(rootSlug)
-    membersPath = `${rootPath}/members`
     // we have to select the Community Membership from the ORM separately. we can't just
     // call `community.Memberships.first()` because that will be cached so long as
     // the community doesn't change, which will mask changes to the Community Membership's
     // newPostCount.
     communityMembership = getCommunityMembership(state, { communityId: community.id })
     badge = get('newPostCount', communityMembership)
-  } else if (network) {
-    rootId = network.id
-    rootSlug = get('slug', network)
-    rootPath = networkUrl(rootSlug)
-    membersPath = `${rootPath}/members`
-  } else if (isPublic) {
-    rootSlug = 'public'
-    rootPath = publicCommunitiesUrl()
-  } else {
-    rootSlug = ''
-    rootPath = communityUrl()
   }
-  const projectsPath = `${rootPath}/project`
-  const eventsPath = `${rootPath}/event`
-  const mapPath = `${rootPath}/map`
+
+  // TODO: show badges for networks?
 
   return {
-    rootId,
-    rootSlug,
+    routeParams,
+    communityId: get('id', community),
+    hideTopics: isPublicPath(props.location.pathname),
     rootPath,
     membersPath,
     projectsPath,

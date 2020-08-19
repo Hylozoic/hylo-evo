@@ -46,6 +46,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
+      currentUser,
       routeParams,
       post,
       editPost,
@@ -74,7 +75,7 @@ export default class PostCard extends React.Component {
       {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
       {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
       <PostCommunities isPublic={post.isPublic} communities={post.communities} slug={routeParams.slug} constrained={constrained} />
-      <PostFooter {...post} voteOnPost={voteOnPost} constrained={constrained} />
+      <PostFooter {...post} voteOnPost={voteOnPost} constrained={constrained} currentUser={currentUser} />
     </div>
   }
 }

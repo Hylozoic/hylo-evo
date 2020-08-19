@@ -4,6 +4,7 @@ import RedirectRoute from 'router/RedirectRoute'
 
 export default function AuthRoute ({
   component,
+  nonAuthComponent,
   requireAuth,
   isLoggedIn,
   currentUser,
@@ -12,9 +13,14 @@ export default function AuthRoute ({
   location,
   ...rest
 }) {
+  if (!isLoggedIn && nonAuthComponent) {
+    return <Route {...rest} render={props => React.createElement(nonAuthComponent, props)} />
+  }
+
   if (isLoggedIn && location.pathname === '/signup') {
     return <RedirectRoute to={'/signup/upload-photo'} />
   }
+
   // On mobile we want to only store the intended URL and forward to the
   // download app modal (which is currently on the Login component/page)
   // Specifically we don't want any components to do any work but this,

@@ -11,10 +11,15 @@ export default
   total
   items {
     id
-    postsTotal
     followersTotal
+    isDefault
     isSubscribed
     newPostCount
+    postsTotal
+    visibility
+    community {
+      id
+    }
     topic {
       id
       name

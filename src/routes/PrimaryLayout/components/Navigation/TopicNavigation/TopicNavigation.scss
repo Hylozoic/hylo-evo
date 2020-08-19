@@ -14,6 +14,11 @@
   margin-bottom: 14px;
   padding-right: $space-2x;
 
+  a {
+    color: $color-rhino-60;
+    vertical-align: top;
+  }
+
   a:hover {
     text-decoration: none;
   }
@@ -25,6 +30,12 @@
 
 .title {
   flex: 1;
+  vertical-align: top;
+
+  a, a:hover {
+    color: $color-rhino-60;
+    text-decoration: none;
+  }
 }
 
 .topics {
@@ -35,6 +46,12 @@
   overflow-x: hidden;
   transition: opacity .3s ease;
   color: $color-rhino-60;
+}
+
+.collapsed {
+  .topics {
+    display: none;
+  }
 }
 
 .topics::-webkit-scrollbar {
@@ -63,6 +80,12 @@
   }
 }
 
+.topic.pinned {
+  a {
+    color: $color-rhino;
+  }
+}
+
 .topicLink {
   width: 100%;
   display: flex;
@@ -74,6 +97,11 @@
   margin-right: 24px;
 }
 
+.pinIcon {
+  color: $color-rhino;
+  margin-left: -23px;
+}
+
 .name {
   flex-grow: 1;
   overflow: hidden;
@@ -82,22 +110,8 @@
 
 .badge {
   padding-right: 2px;
-  display: block;
+  display: flex;
   width: auto;
-  position: absolute;
-  left: -25px;
-  top: -1px;
-
-  span {
-    width: 15px;
-    height: 15px;
-
-    span {
-      color: white;
-      font-size: 10px;
-      line-height: 15px;
-    }
-  }
 }
 
 .closeIcon {

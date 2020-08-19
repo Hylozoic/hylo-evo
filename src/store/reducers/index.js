@@ -23,6 +23,7 @@ import PostEditor from 'components/PostEditor/PostEditor.store'
 import AttachmentManager from 'components/AttachmentManager/AttachmentManager.store'
 import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
 import ModeratorsSettings from 'routes/CommunitySettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
+import TopicsSettings from 'routes/CommunitySettings/TopicsSettingsTab/TopicsSettingsTab.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import AllTopics from 'routes/AllTopics/AllTopics.store'
 import Search from 'routes/Search/Search.store'
@@ -72,7 +73,8 @@ export const combinedReducers = combineReducers({
   PrimaryLayout,
   PostEditor,
   Search,
-  SkillsSection
+  SkillsSection,
+  TopicsSettings
 })
 
 export default composeReducers(

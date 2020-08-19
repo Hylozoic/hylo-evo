@@ -1,6 +1,7 @@
 {
   "name": "hylo-evo",
-  "version": "2.0.0",
+  "description": "Hylo Frontend",
+  "version": "2.1.1",
   "private": true,
   "scripts": {
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
@@ -155,6 +156,7 @@
     "react-resize-detector": "^5.0.6",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-select": "^3.1.0",
     "react-stripe-checkout": "^2.6.3",
     "react-textarea-autosize": "^7.1.0",
     "react-tooltip": "^3.4.0",

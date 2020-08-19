@@ -23,10 +23,12 @@ export default function TopicFeedHeader ({
   type
 }) {
   const bannerUrl = get('bannerUrl', community)
-  const buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
-  const iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
-  const buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
-
+  let buttonText, iconStyle, buttonStyle
+  if (community) {
+    buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
+    iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
+    buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
+  }
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
 

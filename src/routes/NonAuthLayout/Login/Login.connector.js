@@ -1,14 +1,15 @@
-import { connect } from 'react-redux'
-import getLoginError from 'store/selectors/getLoginError'
-import { checkLogin, login, loginWithService } from './Login.store'
 import { push } from 'connected-react-router'
+import { connect } from 'react-redux'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import getLoginError from 'store/selectors/getLoginError'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import mobileRedirect from 'util/mobileRedirect'
+import { checkLogin, login, loginWithService } from './Login.store'
 
 export function mapStateToProps (state, props) {
   return {
     error: getLoginError(state),
-    returnToURL: getReturnToURL(state),
+    returnToURL: getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state),
     downloadAppUrl: mobileRedirect()
   }
 }

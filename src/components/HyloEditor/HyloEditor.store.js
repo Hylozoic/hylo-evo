@@ -2,6 +2,8 @@ import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { includes, mapKeys } from 'lodash'
 import { get } from 'lodash/fp'
+import presentTopic from 'store/presenters/presentTopic'
+
 import {
   MODULE_NAME,
   FIND_MENTIONS,
@@ -106,6 +108,10 @@ export const moduleSelector = (state) => {
   return state[MODULE_NAME]
 }
 
+export const getTopicsSearchTerm = (state) => {
+  return state[MODULE_NAME].topicsSearchTerm
+}
+
 export const getMentionResults = ormCreateSelector(
   orm,
   state => state.orm,
@@ -134,10 +140,9 @@ export const getMentionResults = ormCreateSelector(
 export const getTopicResults = ormCreateSelector(
   orm,
   state => state.orm,
-  moduleSelector,
-  (session, moduleNode) => {
-    const { topicsSearchTerm } = moduleNode
-    if (!topicsSearchTerm) return []
+  getTopicsSearchTerm,
+  (session, searchTerm) => {
+    if (!searchTerm) return []
 
     // FIXME: if the user has been browsing multiple communities, this will
     // include results that don't belong to the current community
@@ -145,9 +150,9 @@ export const getTopicResults = ormCreateSelector(
       .filter(topic => {
         return includes(
           topic.name && topic.name.toLowerCase(),
-          topicsSearchTerm.toLowerCase()
+          searchTerm.toLowerCase()
         )
       })
-      .toRefArray()
+      .toModelArray().map(topic => presentTopic(topic, {}))
   }
 )
