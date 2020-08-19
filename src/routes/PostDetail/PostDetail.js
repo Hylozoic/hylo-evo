@@ -151,7 +151,9 @@ export default class PostDetail extends Component {
     const postFooter = <PostFooter
       {...post}
       voteOnPost={voteOnPost}
-      onClick={togglePeopleDialog} />
+      onClick={togglePeopleDialog}
+      currentUser={currentUser}
+    />
 
     return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
       <div styleName={cx('post', { 'noUser': !currentUser })}>
