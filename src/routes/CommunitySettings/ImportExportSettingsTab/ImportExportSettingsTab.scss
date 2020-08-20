@@ -1,0 +1,63 @@
+.header {
+  border-radius: 4px;
+  background-color: $color-athens-gray;
+  padding: $space-7x $space-6x;
+  margin-bottom: $space-8x;
+  margin-top: $space-6x;
+}
+
+.title {
+  composes: hdr-display from 'css/typography.scss';
+  text-align: center;
+}
+
+.subtitle {
+  composes: caption-lt-lg from 'css/typography.scss';
+}
+
+.help {
+  composes: caption-lt-lg from 'css/typography.scss';
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.upload-button {
+  height: 40px;
+  line-height: 38px;
+  padding: 0px 40px;
+  border-radius: 25px;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+
+  border: 1px solid $color-caribbean-green;
+  background-color: $color-caribbean-green;
+  color: $color-white;
+
+  &:hover, &.hover {
+    background-color: lighten($color-caribbean-green, 2%);
+  }
+}
+
+.delete-button {
+  white-space: nowrap;
+  padding: 0 15px;
+  text-align: center;
+  background-color: white;
+  border-color: $color-amaranth;
+  color: $color-amaranth;
+  margin-right: 10px;
+  &:hover, &.hover {
+    background-color: $color-pale-pink;
+  }
+}
+
+.error {
+  color: $color-amaranth;
+}
+

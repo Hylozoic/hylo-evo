@@ -6,7 +6,6 @@ import cx from 'classnames'
 import './UploadAttachmentButton.scss'
 import {
   uploadedFileToAttachment,
-  acceptFromAttachmentType,
   filestackPicker
 } from 'client/filestack'
 
@@ -37,7 +36,7 @@ export default function UploadAttachmentButton ({
   // Filestack callbacks
 
   const onFileUploadFinished = async fileUploaded => {
-    const attachment = uploadedFileToAttachment(fileUploaded)
+    const attachment = uploadedFileToAttachment({ ...fileUploaded, attachmentType })
     const uploadedAttachment = await uploadAttachment(type, id, attachment)
     return uploadAttachmentComplete(uploadedAttachment)
   }
@@ -55,7 +54,7 @@ export default function UploadAttachmentButton ({
   const onClick = () => {
     setLoading(true)
     filestackPicker({
-      accept: acceptFromAttachmentType(attachmentType),
+      attachmentType,
       maxFiles: allowMultiple ? 10 : 1,
       onUploadDone,
       onCancel

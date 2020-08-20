@@ -3,28 +3,44 @@ import * as Filestack from 'filestack-js'
 
 const filestack = Filestack.init(isTest ? 'dummykey' : filestackKey)
 
-const FILESTACK_FROM_SOURCES = [
-  'local_file_system',
-  'url',
-  'webcam',
-  'facebook',
-  'instagram',
-  'dropbox',
-  'googledrive',
-  'imagesearch'
-]
+const FILESTACK_FROM_SOURCES = {
+  csv: [
+    'local_file_system',
+    'url',
+    'googledrive',
+    'dropbox'
+  ],
+  image: [
+    'local_file_system',
+    'url',
+    'webcam',
+    'instagram',
+    'facebook',
+    'imagesearch',
+    'googledrive',
+    'dropbox'
+  ],
+  file: [
+    'local_file_system',
+    'url',
+    'googledrive',
+    'dropbox'
+  ]
+}
 
 export const FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE = {
+  csv: ['text/csv'],
   image: ['image/*'],
   file: ['video/*', 'audio/*', 'application/*', 'text/*']
 }
 
 export const FILESTACK_ACCEPTED_MIME_TYPES = [
+  ...FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE.csv,
   ...FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE.image,
   ...FILESTACK_ACCEPTED_MIME_TYPES_BY_ATTACHMENT_TYPE.file
 ]
 
-export const ACCEPTED_ATTACHMENT_TYPES = ['image', 'file']
+export const ACCEPTED_ATTACHMENT_TYPES = ['csv', 'image', 'file']
 
 export function getRootMimeType (mimetype = '') {
   return mimetype.split('/')[0]
@@ -62,16 +78,15 @@ export function transformFile (file) {
 }
 
 export function filestackPicker ({
-  accept = FILESTACK_ACCEPTED_MIME_TYPES,
-  fromSources = FILESTACK_FROM_SOURCES,
+  attachmentType = 'image',
   maxFiles = 1,
   onFileUploadFinished = () => {},
   onUploadDone,
   ...rest
 }) {
   return filestack.picker({
-    accept,
-    fromSources,
+    accept: acceptFromAttachmentType(attachmentType),
+    fromSources: FILESTACK_FROM_SOURCES[attachmentType],
     maxFiles,
     onFileUploadFinished: fileUploaded =>
       onFileUploadFinished(transformFile(fileUploaded)),

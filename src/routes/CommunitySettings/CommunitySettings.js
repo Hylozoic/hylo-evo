@@ -4,6 +4,7 @@ import './CommunitySettings.scss'
 import CommunitySettingsTab from './CommunitySettingsTab'
 import MembershipRequestsTab from './MembershipRequestsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
+import ImportExportSettingsTab from './ImportExportSettingsTab'
 import InviteSettingsTab from './InviteSettingsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
 import TopicsSettingsTab from './TopicsSettingsTab'
@@ -38,7 +39,8 @@ export default class CommunitySettings extends Component {
       currentUser,
       updateCommunitySettings,
       canModerate,
-      deleteCommunity
+      deleteCommunity,
+      upload
     } = this.props
 
     if (!community) return <Loading />
@@ -79,6 +81,14 @@ export default class CommunitySettings extends Component {
           component: <MembershipRequestsTab
             community={community}
             currentUser={currentUser}
+          />
+        },
+        {
+          name: '',
+          path: `/c/${slug}/settings/import`,
+          component: <ImportExportSettingsTab
+            community={community}
+            upload={upload}
           />
         },
         {

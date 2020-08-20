@@ -72,6 +72,19 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/requests",
       },
       Object {
+        "component": <ImportExportSettingsTab
+          community={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "",
+        "path": "/c/foo/settings/import",
+      },
+      Object {
         "component": <DeleteSettingsTab
           community={
             Object {
