@@ -81,7 +81,7 @@ exports[`renders correctly with a community 1`] = `
             }
           }
         />,
-        "name": "Import",
+        "name": "",
         "path": "/c/foo/settings/import",
       },
       Object {

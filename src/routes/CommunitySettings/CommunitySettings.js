@@ -84,7 +84,7 @@ export default class CommunitySettings extends Component {
           />
         },
         {
-          name: 'Import',
+          name: '',
           path: `/c/${slug}/settings/import`,
           component: <ImportExportSettingsTab
             community={community}

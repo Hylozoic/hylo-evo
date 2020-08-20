@@ -14,6 +14,11 @@ exports[`renders correctly 1`] = `
   <div
     data-stylename="help"
   >
+    <b>
+      WARNING: This is a beta feature that at this time will not inform you of imprt errors, use at your own risk.
+    </b>
+    <br />
+    <br />
     You can select a CSV file to import posts into 
     Hylo
     . Posts will be created by you. The file must have columns with the following headers:
@@ -50,10 +55,18 @@ exports[`renders correctly 1`] = `
   <div
     data-stylename="button-wrapper"
   >
-    <Button
-      label="Upload CSV"
-      onClick={[Function]}
-    />
+    <Connect(UploadAttachmentButton)
+      attachmentType="csv"
+      id={1}
+      onSuccess={[Function]}
+      type="importPosts"
+    >
+      <div
+        data-stylename="upload-button"
+      >
+        Upload CSV
+      </div>
+    </Connect(UploadAttachmentButton)>
   </div>
 </div>
 `;

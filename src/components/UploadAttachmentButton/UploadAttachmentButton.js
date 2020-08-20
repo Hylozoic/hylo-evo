@@ -36,8 +36,7 @@ export default function UploadAttachmentButton ({
   // Filestack callbacks
 
   const onFileUploadFinished = async fileUploaded => {
-    const attachment = uploadedFileToAttachment({... fileUploaded, attachmentType })
-    console.log("sebding", type, attachment)
+    const attachment = uploadedFileToAttachment({ ...fileUploaded, attachmentType })
     const uploadedAttachment = await uploadAttachment(type, id, attachment)
     return uploadAttachmentComplete(uploadedAttachment)
   }
