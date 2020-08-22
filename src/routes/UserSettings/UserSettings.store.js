@@ -74,13 +74,15 @@ export function fetchSavedSearches (userId) {
           items {
             id
             name
+            context
             community {
+              name
               slug
             }
             network {
+              name
               slug
             }
-            isPublic
             active
             searchText
             postTypes
@@ -108,16 +110,15 @@ export function deleteSearch (id) {
   }
 }
 
-export function saveSearch ({ userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds }) {
-  console.log(userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds)
+export function saveSearch ({ boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }) {
   return {
     type: SAVE_SEARCH,
     graphql: {
       query: CreateSavedSearchMutation,
-      variables: { userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds }
+      variables: { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
     },
     meta: {
-      userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds,
+      boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId,
       optimistic: true
     }
   }

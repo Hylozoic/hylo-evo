@@ -1,7 +1,8 @@
 mutation CreateSavedSearchMutation(
   $boundingBox: [PointInput],
   $communitySlug: String,
-  $isPublic: Boolean,
+  $context: String,
+  $lastPostId: ID,
   $name: String,
   $networkSlug: String,
   $postTypes: [String],
@@ -12,7 +13,8 @@ mutation CreateSavedSearchMutation(
   createSavedSearch(data: {
     boundingBox: $boundingBox,
     communitySlug: $communitySlug,
-    isPublic: $isPublic,
+    context: $context,
+    lastPostId: $lastPostId,
     name: $name,
     networkSlug: $networkSlug,
     postTypes: $postTypes,

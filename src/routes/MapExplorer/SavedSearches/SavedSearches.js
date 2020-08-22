@@ -2,7 +2,7 @@ import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Icon from 'components/Icon'
-import { formatParams } from 'util/searchParams'
+import { formatParams, paramPreview } from 'util/searchParams'
 import { info } from 'util/assets'
 import styles from './SavedSearches.scss'
 import ReactTooltip from 'react-tooltip'
@@ -65,7 +65,7 @@ function SavedSearches (props) {
 }
 
 const SavedSearch = ({ deleteSearch, search }) => {
-  const { name, count, community, isPublic, network } = search;
+  const { name, count } = search;
   const params = formatParams(search)
   //TODO: better parsing of params preview
   return (
@@ -79,7 +79,7 @@ const SavedSearch = ({ deleteSearch, search }) => {
       </div>
       <div styleName='row filters' data-tip={params} data-for='params'>
       <img src={info} /><span styleName='saved-filters'>
-        {community ? `Community: ${community.name}` : `Network: ${network.slug}`} • Public Posts: {isPublic ? 'Yes' : 'No'}
+        <span>{paramPreview(search)}</span>
         <ReactTooltip place='right'
         id='params'
         effect='solid'

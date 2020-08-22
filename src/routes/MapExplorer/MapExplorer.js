@@ -6,7 +6,7 @@ import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, groupBy, isEqual } from 'lodash'
+import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -263,20 +263,21 @@ export default class MapExplorer extends React.Component {
 
   saveSearch = (name) => {
     const { boundingBox } = this.state
-    const { currentUser, filters, location } = this.props
+    const { currentUser, filters, location, posts } = this.props
     const { featureTypes, search: searchText, topics } = filters
     const { pathname } = location;
 
-    // const isPublic = isPublicPath(pathname)
-    // const isAll = isAllCommunitiesPath(pathname)
-    const isNetwork = isNetworkPath(pathname)
-    const isCommunity = isCommunityPath(pathname)
+    let context
+    if (isAllCommunitiesPath(pathname)) context = 'all'
+    if (isPublicPath(pathname)) context = 'public'
+    if (isCommunityPath(pathname)) context = 'community'
+    if (isNetworkPath(pathname)) context = 'network'
 
     let communitySlug
     let networkSlug
     
-    if (isCommunity) communitySlug = getCommunitySlug(pathname)
-    if (isNetwork) networkSlug = getNetworkSlug(pathname)
+    if (context === 'community') communitySlug = getCommunitySlug(pathname)
+    if (context === 'network') networkSlug = getNetworkSlug(pathname)
 
     const userId = currentUser.id
 
@@ -285,9 +286,11 @@ export default class MapExplorer extends React.Component {
       return selected;
     }, [])
 
+    const lastPostId = get(posts, '[0].id')
+
     const topicIds = topics.map(t => t.id)
 
-    const attributes = { userId, name, communitySlug, networkSlug, isPublic, searchText, postTypes, boundingBox, topicIds }
+    const attributes = { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
 
     this.props.saveSearch(attributes)
   }
