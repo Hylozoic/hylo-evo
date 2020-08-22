@@ -112,13 +112,15 @@
 
 .searchName {
   background: white;
-  padding: 10px 15px 0px;
+  padding: 10px 10px 0px;
   font-size: 11px;
   line-height: 14px;
   color: #C0C5CD;
 
   .filters {
-    line-height: 28px;
+    line-height: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .searchBox {

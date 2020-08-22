@@ -10,6 +10,7 @@ import ReactTooltip from 'react-tooltip'
 function SavedSearches (props) {
   let {
     deleteSearch,
+    filters,
     saveSearch,
     searches,
     toggle
@@ -18,7 +19,7 @@ function SavedSearches (props) {
   const [name, setName] = useState('')
   const triangleStyle = { right: 100 }
 
-  const canSave = name.length;
+  const canSave = name.length
 
   return (
     <div styleName='container'>
@@ -32,25 +33,16 @@ function SavedSearches (props) {
         </div>
 
         <div styleName='searchName'>
-          <span styleName='searchBox'>
+          <div styleName='searchBox'>
               <input
               type='text'
               onChange={e => setName(e.target.value)}
-              // onFocus={e => setIsSearching(true)}
-              // onKeyUp={e => {
-              //   if (e.keyCode === 13) {
-              //     setSearch('')
-              //     setIsSearching(false)
-              //     onUpdateFilters({ search: e.target.value })
-              //     e.target.blur()
-              //   }
-              // }}
               placeholder='Name this view'
               value={name}
             />
             <span styleName={`save ${canSave ? '' :  'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>Save</span>
-          </span>
-          <span styleName='filters'><img src={info} /> No filters</span>
+          </div>
+          <div styleName='filters'><img src={info} />&nbsp;&nbsp;{currentFilters(filters)} </div>
         </div>
         
         <div styleName='savedViews'>
@@ -62,6 +54,25 @@ function SavedSearches (props) {
       </div>
     </div>
   )
+}
+
+const currentFilters = (filters) => {
+  const { featureTypes, search, topics } = filters
+
+  const postTypes = Object.keys(featureTypes).reduce((selected, type) => {
+    if (featureTypes[type]) selected.push(type)
+    return selected;
+  }, [])
+
+  const topicNames = topics.map(t => t.name)
+
+  const parsedFilters = []
+  
+  if (postTypes.length) parsedFilters.push(`Post types: ${postTypes.join(', ')}`)
+  if (topicNames.length) parsedFilters.push(`Topics: ${topicNames.join(' ,')}`)
+  if (search.length) parsedFilters.push(`Search: ${search}`)
+
+  return parsedFilters.length ? parsedFilters.join(' • ') : 'No filters'
 }
 
 const SavedSearch = ({ deleteSearch, search }) => {
@@ -90,20 +101,6 @@ const SavedSearch = ({ deleteSearch, search }) => {
       </div>
     </div>
   )
-}
-
-SavedSearches.propTypes = {
-  features: PropTypes.array,
-  querystringParams: PropTypes.object,
-  routeParams: PropTypes.object,
-  onUpdateFilters: PropTypes.func
-}
-
-SavedSearches.defaultProps = {
-  features: [],
-  querystringParams: {},
-  routeParams: {},
-  onUpdateFilters: (opts) => { console.log('Updating filters with: ' + opts) }
 }
 
 export default SavedSearches

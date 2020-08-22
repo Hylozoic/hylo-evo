@@ -352,7 +352,7 @@ export default class MapExplorer extends React.Component {
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
       <img styleName={cx('savedSearchesButton')} onClick={this.toggleSavedSearches} src={heart} />
-      { showSavedSearches ? (<SavedSearches toggle={this.toggleSavedSearches} deleteSearch={deleteSearch} saveSearch={this.saveSearch} searches={searches}/>) : '' }
+      { showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} />) : '' }
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {
