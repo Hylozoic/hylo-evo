@@ -85,6 +85,10 @@ export function fetchSavedSearches (userId) {
             }
             active
             searchText
+            topics {
+              id
+              name
+            }
             postTypes
           }
         }
