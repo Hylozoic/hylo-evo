@@ -103,7 +103,7 @@ export default class PrimaryLayout extends Component {
       { path: '/:context(n)/:networkSlug' },
       { path: '/:context(c)/:slug' }
     ]
-    const collapsedState = hasDetail || queryParams['showDrawer'] === 'true'
+    const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
 
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
       <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />

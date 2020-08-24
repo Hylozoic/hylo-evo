@@ -39,7 +39,7 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
   const networkSlug = getRouteParam('networkSlug', state, props)
   const networkSlugs = getQuerystringParam('network', state, props)
-  const showDrawer = getQuerystringParam('showDrawer', state, props) === 'true'
+  const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
   var subject
   if (context === 'public') {
@@ -108,7 +108,7 @@ export function mapStateToProps (state, props) {
     posts,
     publicCommunities,
     routeParams,
-    showDrawer,
+    hideDrawer,
     topics,
     zoom: centerLocation ? 10 : 0
   }
@@ -116,7 +116,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const routeParams = get('match.params', props)
-  const querystringParams = getQuerystringParam(['showDrawer', 't', 'network'], null, props)
+  const querystringParams = getQuerystringParam(['hideDrawer', 't', 'network'], null, props)
   return {
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
@@ -124,7 +124,7 @@ export function mapDispatchToProps (dispatch, props) {
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     showCommunityDetails: (communityId) => dispatch(push(communityMapDetailUrl(communityId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
-    toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, showDrawer: visible }))),
+    toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }

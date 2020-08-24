@@ -22,7 +22,7 @@ export default class MapExplorer extends React.Component {
     posts: [],
     publicCommunities: [],
     routeParams: {},
-    showDrawer: true,
+    hideDrawer: false,
     topics: [],
     zoom: 0
   }
@@ -37,7 +37,7 @@ export default class MapExplorer extends React.Component {
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
-      showDrawer: props.showDrawer,
+      hideDrawer: props.hideDrawer,
       showFeatureFilters: false,
       viewport: {
         latitude: parseFloat(props.centerLocation.lat),
@@ -126,8 +126,8 @@ export default class MapExplorer extends React.Component {
 
   onMapClick = (info, e) => {
     if (info.objects) {
-      if (this.state.viewport.zoom >= 20) {
-        this.setState({ showDrawer: true })
+      if (this.state.viewport.zoom >= 20 && this.state.hideDrawer) {
+        this.setState({ hideDrawer: false })
       } else {
         this.setState({ viewport: {
           ...this.state.viewport,
@@ -181,8 +181,8 @@ export default class MapExplorer extends React.Component {
   }
 
   toggleDrawer = (e) => {
-    this.setState({ showDrawer: !this.state.showDrawer })
-    this.props.toggleDrawer(!this.state.showDrawer)
+    this.setState({ hideDrawer: !this.state.hideDrawer })
+    this.props.toggleDrawer(!this.state.hideDrawer)
   }
 
   toggleFeatureFilters = (e) => {
@@ -203,7 +203,7 @@ export default class MapExplorer extends React.Component {
     const {
       clusterLayer,
       communityIconLayer,
-      showDrawer,
+      hideDrawer,
       showFeatureFilters,
       viewport
     } = this.state
@@ -216,11 +216,11 @@ export default class MapExplorer extends React.Component {
         children={this._renderTooltip()}
         viewport={viewport}
       />
-      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
+      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
         <Icon name='Ex' className={styles.closeDrawer} />
       </button>
-      { showDrawer ? (
+      { !hideDrawer ? (
         <MapDrawer
           currentUser={currentUser}
           fetchPostsParam={fetchPostsParam}
