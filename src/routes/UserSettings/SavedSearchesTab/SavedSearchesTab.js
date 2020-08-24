@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './SavedSearchesTab.scss'
-import { formatParams } from 'util/searchParams'
+import { formatParams, generateViewParams } from 'util/searchParams'
 import { info } from 'util/assets'
 import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
@@ -12,31 +12,36 @@ const { array, func } = PropTypes
 export default class SavedSearchesTab extends Component {
   static propTypes = {
     searches: array,
-    deleteSearch: func
+    deleteSearch: func,
+    viewSavedSearch: func
   }
 
   render () {
-    const { searches, deleteSearch } = this.props
+    const { searches, deleteSearch, viewSavedSearch } = this.props
     if (!searches) return <Loading />
 
     return <div>
       <div styleName='title'>Saved Searches</div>
       {searches.map(s =>
         <SearchControl
+          key={s.id}
           search={s}
           deleteSearch={deleteSearch}
-          key={s.id} />)}
+          viewSavedSearch={viewSavedSearch}
+        />)}
     </div>
   }
 }
 
-export function SearchControl ({ search, deleteSearch }) {
-  const params = formatParams(search)
+export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
+  const { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
 
   return <div styleName='search-control'>
     <div styleName='row'>
-      <Link to={'/all/map'} styleName='name'>{search.name}</Link>
-      <span styleName='params-icon' data-tip={params} data-for='params'><img src={info} /></span>
+      <span styleName='name' onClick={() => {
+        viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath)}
+      }>{search.name}</span>
+      <span styleName='params-icon' data-tip={formatParams(search)} data-for='params'><img src={info} /></span>
       <ReactTooltip place='right'
         type='dark'
         id='params'

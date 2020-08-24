@@ -45,7 +45,8 @@ export default class UserSettings extends Component {
       queryParams,
       registerStripeAccount,
       searches,
-      deleteSearch
+      deleteSearch,
+      viewSavedSearch
     } = this.props
 
     const content = [
@@ -92,8 +93,9 @@ export default class UserSettings extends Component {
         path: '/settings/saved-searches',
         component: <SavedSearchesTab
           searches={searches}
-          deleteSearch={deleteSearch} />
-      }
+          deleteSearch={deleteSearch}
+          viewSavedSearch={viewSavedSearch} />
+      },
     ]
 
     if (currentUser && !isEmpty(currentUser.blockedUsers.toRefArray())) {

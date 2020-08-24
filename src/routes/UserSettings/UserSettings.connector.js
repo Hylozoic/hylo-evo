@@ -1,10 +1,14 @@
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import {
   fetchSavedSearches, deleteSearch,
   updateUserSettings, leaveCommunity, unlinkAccount,
   updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
+import { 
+  fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchPostsParam, storeClientFilterParams
+} from '../MapExplorer/MapExplorer.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -70,19 +74,30 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  fetchForCurrentUser,
-  fetchSavedSearches,
-  deleteSearch,
-  updateUserSettings,
-  unBlockUser,
-  leaveCommunity,
-  loginWithService,
-  unlinkAccount,
-  setConfirmBeforeClose,
-  updateMembershipSettings,
-  updateAllMemberships,
-  registerStripeAccount
+export function mapDispatchToProps (dispatch) {
+  return {
+    fetchForCurrentUser: (params) => dispatch(fetchForCurrentUser(params)),
+    fetchSavedSearches: (params) => dispatch(fetchSavedSearches(params)),
+    deleteSearch: (params) => dispatch(deleteSearch(params)),
+    updateUserSettings: (params) => dispatch(updateUserSettings(params)),
+    unBlockUser: (params) => dispatch(unBlockUser(params)),
+    leaveCommunity: (params) => dispatch(leaveCommunity(params)),
+    loginWithService: (params) => dispatch(loginWithService(params)),
+    unlinkAccount: (params) => dispatch(unlinkAccount(params)),
+    setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
+    updateMembershipSettings: (params) => dispatch(updateMembershipSettings(params)),
+    updateAllMemberships: (params) => dispatch(updateAllMemberships(params)),
+    registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
+    viewSavedSearch: (params, path) => {
+      const { boundingBox, featureTypes, search, topics } = params
+      dispatch(push(path))
+      dispatch(fetchMembers({ ...params }))
+      dispatch(fetchPosts({ ...params }))
+      dispatch(fetchPublicCommunities({ ...params}))
+      dispatch(storeFetchPostsParam({ boundingBox }))
+      dispatch(storeClientFilterParams({ featureTypes, search, topics }))
+    }
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

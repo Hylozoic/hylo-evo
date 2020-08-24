@@ -33,7 +33,7 @@ export function formatParams (search) {
   ].filter(p => p.length).join('<br/>')
 }
 
-export function paramPreview (search) {
+export function formatParamPreview (search) {
   const { context, community, network, postTypes } = search;
   const contextDetails = {
     community: community ? parseCommunity(community) : '',
@@ -42,4 +42,49 @@ export function paramPreview (search) {
     all: `All communities`
   }
   return `${contextDetails[context]} • ${parsePostTypes(postTypes)}`
+}
+
+export function generateViewParams (search) {
+  const { context, community, network, postTypes, searchText, topics } = search
+
+  let { boundingBox } = search
+  boundingBox[0] = { lat: parseFloat(boundingBox[0].lat), lng: parseFloat(boundingBox[0].lng) }
+  boundingBox[1] = { lat: parseFloat(boundingBox[1].lat), lng: parseFloat(boundingBox[1].lng) }
+
+  let mapPath, networkSlug, slug, subject
+  switch (context) {
+    case 'all': {
+      mapPath = `/all/map`
+      subject = 'all-communities'
+      break
+    }
+    case 'public': {
+      mapPath = `/public/map`
+      subject = 'public-communities'
+      break
+    }
+    case 'network': {
+      mapPath = `/n/${network.slug}/map`
+      subject = 'network'
+      networkSlug = network.slug
+      break
+    }
+    case 'community': {
+      mapPath = `/c/${community.slug}/map`
+      slug = community.slug
+      subject = 'community'
+      break
+    }
+    default: {
+      mapPath = `/public/map`
+      subject = 'public-communities'
+    }
+  }
+
+  const featureTypes = postTypes.reduce((map, type) => {
+    map[type] = true
+    return map
+  }, {})
+
+  return { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics }
 }
