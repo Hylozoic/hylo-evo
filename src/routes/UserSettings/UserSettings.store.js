@@ -74,6 +74,10 @@ export function fetchSavedSearches (userId) {
           items {
             id
             name
+            boundingBox {
+              lat
+              lng
+            }
             context
             community {
               name
