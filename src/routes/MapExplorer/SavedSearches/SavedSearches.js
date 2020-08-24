@@ -1,8 +1,7 @@
-import cx from 'classnames'
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+
+import { currentFilters, formatParams, paramPreview } from 'util/searchParams'
 import Icon from 'components/Icon'
-import { formatParams, paramPreview } from 'util/searchParams'
 import { info } from 'util/assets'
 import styles from './SavedSearches.scss'
 import ReactTooltip from 'react-tooltip'
@@ -13,7 +12,8 @@ function SavedSearches (props) {
     filters,
     saveSearch,
     searches,
-    toggle
+    toggle,
+    viewSavedSearch
   } = props
 
   const [name, setName] = useState('')
@@ -48,7 +48,7 @@ function SavedSearches (props) {
         <div styleName='savedViews'>
           <h2>Saved Views</h2>
           {searches.map((search, index) => {
-            return (<SavedSearch key={index} search={search} deleteSearch={deleteSearch}/>)
+            return (<SavedSearch key={index} search={search} deleteSearch={deleteSearch} viewSavedSearch={viewSavedSearch}/>)
           })}
         </div>
       </div>
@@ -56,39 +56,59 @@ function SavedSearches (props) {
   )
 }
 
-const currentFilters = (filters) => {
-  const { featureTypes, search, topics } = filters
+const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
+  const { name, count, context, community, network, postTypes, searchText, topics } = search;
+  let { boundingBox } = search
+  boundingBox[0] = { lat: parseFloat(boundingBox[0].lat), lng: parseFloat(boundingBox[0].lng) }
+  boundingBox[1] = { lat: parseFloat(boundingBox[1].lat), lng: parseFloat(boundingBox[1].lng) }
 
-  const postTypes = Object.keys(featureTypes).reduce((selected, type) => {
-    if (featureTypes[type]) selected.push(type)
-    return selected;
-  }, [])
+  let mapPath, networkSlug, slug, subject
+  switch (context) {
+    case 'all': {
+      mapPath = `/all/map`
+      subject = 'all-communities'
+      break
+    }
+    case 'public': {
+      mapPath = `/public/map`
+      subject = 'public-communities'
+      break
+    }
+    case 'network': {
+      mapPath = `/n/${network.slug}/map`
+      subject = 'network'
+      networkSlug = network.slug
+      break
+    }
+    case 'community': {
+      mapPath = `/c/${community.slug}/map`
+      slug = community.slug
+      subject = 'community'
+      break
+    }
+    default: {
+      mapPath = `/public/map`
+      subject = 'public-communities'
+    }
+  }
 
-  const topicNames = topics.map(t => t.name)
+  const featureTypes = postTypes.reduce((map, type) => {
+    map[type] = true
+    return map
+  }, {})
 
-  const parsedFilters = []
-  
-  if (postTypes.length) parsedFilters.push(`Post types: ${postTypes.join(', ')}`)
-  if (topicNames.length) parsedFilters.push(`Topics: ${topicNames.join(' ,')}`)
-  if (search.length) parsedFilters.push(`Search: ${search}`)
-
-  return parsedFilters.length ? parsedFilters.join(' • ') : 'No filters'
-}
-
-const SavedSearch = ({ deleteSearch, search }) => {
-  const { name, count } = search;
-  const params = formatParams(search)
-  //TODO: better parsing of params preview
   return (
     <div styleName='search'>
       <div styleName='row'>
         <div styleName='saved-name'>{name} {count && <span styleName='count'>{count}</span>} </div>
         <div styleName='actions'>
           <Icon name='Trash' styleName='delete' onClick={() => deleteSearch(search.id)}/>
-          <div styleName='view'>View</div>
+          <div styleName='view' onClick={() => {
+            viewSavedSearch({ subject, boundingBox, slug, networkSlug, search: searchText, featureTypes, topics }, mapPath)}
+          }>View</div>
         </div>
       </div>
-      <div styleName='row filters' data-tip={params} data-for='params'>
+      <div styleName='row filters' data-tip={formatParams(search)} data-for='params'>
       <img src={info} /><span styleName='saved-filters'>
         <span>{paramPreview(search)}</span>
         <ReactTooltip place='right'

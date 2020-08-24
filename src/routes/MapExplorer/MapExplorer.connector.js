@@ -105,7 +105,16 @@ export function mapDispatchToProps (dispatch, props) {
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
-    storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
+    storeClientFilterParams: params => dispatch(storeClientFilterParams(params)),
+    viewSavedSearch: (params, path) => {
+      const { boundingBox, featureTypes, search, topics } = params
+      dispatch(push(path))
+      dispatch(fetchMembers({ ...params }))
+      dispatch(fetchPosts({ ...params }))
+      dispatch(fetchPublicCommunities({ ...params}))
+      dispatch(storeFetchPostsParam({ boundingBox }))
+      dispatch(storeClientFilterParams({ featureTypes, search, topics }))
+    }
   }
 }
 
