@@ -209,13 +209,16 @@ export default class MapExplorer extends React.Component {
     } = this.state
 
     return <div styleName={cx('container', { 'noUser': !currentUser })}>
-      <Map
-        layers={[communityIconLayer, clusterLayer]}
-        afterViewportUpdate={this.afterViewportUpdate}
-        onViewportUpdate={this.mapViewPortUpdate}
-        children={this._renderTooltip()}
-        viewport={viewport}
-      />
+      <div styleName='mapContainer'>
+        { pending && <Loading className={styles.loading} /> }
+        <Map
+          layers={[communityIconLayer, clusterLayer]}
+          afterViewportUpdate={this.afterViewportUpdate}
+          onViewportUpdate={this.mapViewPortUpdate}
+          children={this._renderTooltip()}
+          viewport={viewport}
+        />
+      </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
         <Icon name='Ex' className={styles.closeDrawer} />

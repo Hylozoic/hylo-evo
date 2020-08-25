@@ -2,6 +2,7 @@
   position: relative;
   height: calc(100vh - 56px);
   overflow: hidden;
+  display: flex;
 
   &.noUser {
     height: 100%;
@@ -9,14 +10,18 @@
   }
 }
 
+.mapContainer {
+  flex: 1;
+  height: 100%;
+}
 .expanded {
   margin: 0 $space-2x $space-6x;
 }
 
 .toggleDrawerButton {
-  position: fixed;
+  position: absolute;
   right: 20px;
-  top: 75px;
+  top: 20px;
   border-radius: 20px;
   width: 40px;
   height: 40px;
