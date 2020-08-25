@@ -134,15 +134,6 @@ const networkMembersQuery = `query (
   }
 }`
 
-// TODO: this does not work
-const allCommunitiesMembersQuery = `query (
-  $sortBy: String,
-  $search: String,
-  $boundingBox: [PointInput]
-) {
-  ${membersFragment}
-}`
-
 const publicPostsQuery = `query (
   $sortBy: String,
   $offset: Int,
