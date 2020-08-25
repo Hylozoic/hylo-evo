@@ -43,13 +43,13 @@ export function mapStateToProps (state, props) {
 
   var subject
   if (context === 'public') {
-    subject = 'public-communities'
+    subject = 'public'
   } else if (slug) {
     subject = 'community'
   } else if (networkSlug) {
     subject = 'network'
   } else {
-    subject = 'all-communities'
+    subject = 'all'
   }
 
   const fetchMembersParam = {
@@ -81,7 +81,7 @@ export function mapStateToProps (state, props) {
       'topic'
     ], props),
     boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
-    isPublic: subject === 'public-communities' // only needed to track which query results to pull for the map
+    isPublic: subject === 'public' // only needed to track which query results to pull for the map
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time

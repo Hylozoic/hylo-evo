@@ -134,6 +134,7 @@ const networkMembersQuery = `query (
   }
 }`
 
+// TODO: this does not work
 const allCommunitiesMembersQuery = `query (
   $sortBy: String,
   $search: String,
@@ -176,11 +177,11 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
     query = networkPostsQuery
     extractModel = 'Network'
     getItems = get('payload.data.network.posts')
-  } else if (subject === 'all-communities') {
+  } else if (subject === 'all') {
     query = allCommunitiesPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
-  } else if (subject === 'public-communities') {
+  } else if (subject === 'public') {
     query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
@@ -224,11 +225,13 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
     query = networkMembersQuery
     extractModel = 'Network'
     getItems = get('payload.data.network.members')
-  } else if (subject === 'all-communities') {
-    query = allCommunitiesMembersQuery
-    extractModel = 'User'
-    getItems = get('payload.data.people')
-  } else if (subject === 'public-communities') {
+  } else if (subject === 'all') {
+    // query = allCommunitiesMembersQuery
+    // extractModel = 'User'
+    // getItems = get('payload.data.people')
+    // No Members in All Communities Context, yet
+    return { type: 'RETURN NO MEMBERS FOR ALL COMMUNITIES' }
+  } else if (subject === 'public') {
     // No Members in Public Context, yet
     return { type: 'RETURN NO MEMBERS FOR PUBLIC' }
   } else {
@@ -259,7 +262,7 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
 export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, networkSlugs }) {
   var query, extractModel, getItems
 
-  if (subject === 'public-communities') {
+  if (subject === 'public') {
     query = publicCommunitiesQuery
     extractModel = 'Community'
     getItems = get('payload.data.communities')
@@ -267,7 +270,7 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, 
     return { type: 'RETURN NULL FOR COMMUNITY' }
   } else if (subject === 'network') {
     return { type: 'RETURN NULL FOR NETWORK' }
-  } else if (subject === 'all-communities') {
+  } else if (subject === 'all') {
     return { type: 'RETURN NULL FOR ALL COMMUNITIES' }
   } else {
     throw new Error(`FETCH_COMMUNITIES_MAP with subject=${subject} is not implemented`)

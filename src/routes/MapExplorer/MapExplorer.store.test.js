@@ -12,7 +12,7 @@ it('works for a community', () => {
 
 it('works for all communities', () => {
   expect(fetchPosts({
-    subject: 'all-communities',
+    subject: 'all',
     offset: 20,
     search: 'graphic design',
     filter: 'request'
