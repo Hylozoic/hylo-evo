@@ -1,3 +1,5 @@
+import center from '@turf/center'
+import { featureCollection, point } from '@turf/helpers'
 import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
 import { debounce, groupBy } from 'lodash'
@@ -129,10 +131,14 @@ export default class MapExplorer extends React.Component {
       if (this.state.viewport.zoom >= 20 && this.state.hideDrawer) {
         this.setState({ hideDrawer: false })
       } else {
+        // Zoom to center of cluster
+        const features = featureCollection(info.objects.map(o => point([o.coordinates[0], o.coordinates[1]])))
+        const c = center(features)
+
         this.setState({ viewport: {
           ...this.state.viewport,
-          longitude: info.lngLat[0],
-          latitude: info.lngLat[1],
+          longitude: c.geometry.coordinates[0],
+          latitude: c.geometry.coordinates[1],
           zoom: info.expansionZoom,
           transitionDuration: 500,
           transitionInterpolator: new FlyToInterpolator()
