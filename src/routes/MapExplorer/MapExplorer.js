@@ -210,7 +210,6 @@ export default class MapExplorer extends React.Component {
 
     return <div styleName={cx('container', { 'noUser': !currentUser })}>
       <div styleName='mapContainer'>
-        { pending && <Loading className={styles.loading} /> }
         <Map
           layers={[communityIconLayer, clusterLayer]}
           afterViewportUpdate={this.afterViewportUpdate}
@@ -218,6 +217,7 @@ export default class MapExplorer extends React.Component {
           children={this._renderTooltip()}
           viewport={viewport}
         />
+        { pending && <Loading className={styles.loading} /> }
       </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
@@ -226,12 +226,13 @@ export default class MapExplorer extends React.Component {
       { !hideDrawer ? (
         <MapDrawer
           currentUser={currentUser}
+          features={features}
           fetchPostsParam={fetchPostsParam}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}
-          features={features}
-          topics={topics}
+          pending={pending}
           routeParams={routeParams}
+          topics={topics}
         />)
         : '' }
       <div styleName={cx('searchAutocomplete')}>
@@ -259,8 +260,6 @@ export default class MapExplorer extends React.Component {
         })}
         <div styleName={cx('pointer')} />
       </div>
-
-      { pending && <Loading /> }
     </div>
   }
 }

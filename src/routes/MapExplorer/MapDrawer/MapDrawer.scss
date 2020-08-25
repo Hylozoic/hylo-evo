@@ -49,6 +49,15 @@
   width: calc(50% - 5px);
 }
 
+.loading {
+  display: inline;
+  vertical-align: middle;
+
+  div {
+    display: inline;
+  }
+}
+
 .sorter {
   float: right;
   border: 1px solid #bfc5ce;

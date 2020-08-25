@@ -103,7 +103,6 @@ export function mapStateToProps (state, props) {
     fetchPublicCommunitiesParam,
     filters: state.MapExplorer.clientFilterParams,
     members,
-    // TODO: show loading spinner while pending
     pending: state.pending[FETCH_POSTS_MAP],
     posts,
     publicCommunities,

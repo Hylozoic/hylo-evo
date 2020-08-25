@@ -13,7 +13,22 @@
 .mapContainer {
   flex: 1;
   height: 100%;
+  position: relative;
 }
+
+.loading {
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+  display: inline;
+  width: 40px;
+  height: 40px;
+
+  div {
+    display: inline;
+  }
+}
+
 .expanded {
   margin: 0 $space-2x $space-6x;
 }
