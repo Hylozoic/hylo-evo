@@ -85,6 +85,7 @@ export function fetchSavedSearches (userId) {
               lat
               lng
             }
+            createdAt
             context
             community {
               name

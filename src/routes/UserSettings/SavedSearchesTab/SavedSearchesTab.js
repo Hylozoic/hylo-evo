@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './SavedSearchesTab.scss'
-import { formatParams, generateViewParams } from 'util/searchParams'
+import { formatParams, generateViewParams } from 'util/savedSearch'
 import { info } from 'util/assets'
-import { Link } from 'react-router-dom'
 import Loading from 'components/Loading'
 import ReactTooltip from 'react-tooltip'
 

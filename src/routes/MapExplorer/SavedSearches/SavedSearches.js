@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { currentFilters, formatParams, formatParamPreview } from 'util/searchParams'
+import { currentFilters, formatParams, formatParamPreview } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import { info } from 'util/assets'
 import styles from './SavedSearches.scss'

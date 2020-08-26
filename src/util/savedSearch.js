@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const parseCommunity = community => `Community: ${community.name}`
 const parseNetwork = network => `Network: ${network.name}`
 const parsePostTypes = postTypes => `Post types: ${postTypes.join(', ')}`
@@ -22,8 +24,9 @@ export function currentFilters (filters) {
 }
 
 export function formatParams (search) {
-  const { community, context, network, postTypes, searchText, topics  } = search;
+  const { community, context, createdAt, network, postTypes, searchText, topics  } = search;
   return [
+    `Created on ${moment(createdAt).format('MMMM Do YYYY')}`,
     ['all', 'public'].includes(context) ? `Context: ${context}` : '',
     community ? parseCommunity(community) : '',
     network ? parseNetwork(network) : '',
