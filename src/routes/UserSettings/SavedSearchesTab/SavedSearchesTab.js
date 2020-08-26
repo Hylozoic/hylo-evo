@@ -39,7 +39,7 @@ export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
   return <div styleName='search-control'>
     <div styleName='row'>
       <span styleName='name' onClick={() => {
-        viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath)}
+        viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath, search)}
       }>{search.name}</span>
       <span styleName='params-icon' data-tip={formatParams(search)} data-for='params'><img src={info} /></span>
       <ReactTooltip place='right'

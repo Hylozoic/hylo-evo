@@ -4,7 +4,7 @@ import { get, pick } from 'lodash/fp'
 import { FETCH_POSTS_MAP } from 'store/constants'
 import getRouteParam from 'store/selectors/getRouteParam'
 import {
-  fetchSavedSearches, deleteSearch, saveSearch
+  fetchSavedSearches, deleteSearch, saveSearch, viewSavedSearch
 } from '../UserSettings/UserSettings.store'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
@@ -85,6 +85,7 @@ export function mapStateToProps (state, props) {
     routeParams,
     hideDrawer,
     searches: state.SavedSearches.searches,
+    selectedSearch: state.SavedSearches.selectedSearch,
     topics,
     zoom: centerLocation ? 10 : 0
   }
@@ -106,14 +107,15 @@ export function mapDispatchToProps (dispatch, props) {
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params)),
-    viewSavedSearch: (params, path) => {
+    viewSavedSearch: (params, path, selectedSearch) => {
       const { boundingBox, featureTypes, search, topics } = params
-      dispatch(push(path))
       dispatch(fetchMembers({ ...params }))
       dispatch(fetchPosts({ ...params }))
       dispatch(fetchPublicCommunities({ ...params}))
       dispatch(storeFetchPostsParam({ boundingBox }))
       dispatch(storeClientFilterParams({ featureTypes, search, topics }))
+      dispatch(viewSavedSearch(selectedSearch))
+      dispatch(push(path))
     }
   }
 }

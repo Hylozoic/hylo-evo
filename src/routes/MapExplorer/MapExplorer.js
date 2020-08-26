@@ -8,6 +8,7 @@ import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
 import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
+import { generateViewParams } from 'util/searchParams'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { FEATURE_TYPES } from './MapExplorer.store'
@@ -51,14 +52,16 @@ export default class MapExplorer extends React.Component {
       showFeatureFilters: false,
       totalLoadedBoundingBox: null,
       viewport: {
+        width: 800,
+        height: 600,
         latitude: parseFloat(props.centerLocation.lat),
         longitude: parseFloat(props.centerLocation.lng),
         zoom: props.zoom,
         bearing: 0,
         pitch: 0
       }
-    }
   }
+}
 
   componentDidMount () {
     this.refs = {}
@@ -66,7 +69,12 @@ export default class MapExplorer extends React.Component {
       this.refs[featureType] = React.createRef()
     })
 
-    this.props.fetchSavedSearches();
+    this.props.fetchSavedSearches()
+    
+    if (this.props.selectedSearch) {
+      this.updateViewportWithBbox({ bbox: this.props.selectedSearch.boundingBox })
+    }
+
   }
 
   componentDidUpdate (prevProps) {
@@ -94,6 +102,10 @@ export default class MapExplorer extends React.Component {
          !isEqual(prevProps.members, members) ||
          !isEqual(prevProps.publicCommunities, publicCommunities))) {
       this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
+    }
+    
+    if (prevProps.selectedSearch !== this.props.selectedSearch ) {
+      this.updateViewportWithBbox({ bbox: this.props.selectedSearch.boundingBox })
     }
   }
 
@@ -146,8 +158,12 @@ export default class MapExplorer extends React.Component {
 
   handleLocationInputSelection = (value) => {
     if (value.mapboxId) {
-      this.setState({ viewport: locationObjectToViewport(this.state.viewport, value) })
+      this.updateViewportWithBbox(value)
     }
+  }
+
+  updateViewportWithBbox = ({ bbox }) => {
+    this.setState({ viewport: locationObjectToViewport(this.state.viewport, { bbox }) })
   }
 
   mapViewPortUpdate = (update) => {
@@ -295,6 +311,14 @@ export default class MapExplorer extends React.Component {
     this.props.saveSearch(attributes)
   }
 
+  handleViewSavedSearch = (search) => {
+    const { viewSavedSearch } = this.props
+
+    const { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
+
+    viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath, search)
+  }
+
   render () {
     const {
       currentUser,
@@ -305,8 +329,7 @@ export default class MapExplorer extends React.Component {
       pending,
       routeParams,
       searches,
-      topics,
-      viewSavedSearch
+      topics
     } = this.props
 
     const {
@@ -353,7 +376,7 @@ export default class MapExplorer extends React.Component {
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
       <img styleName={cx('savedSearchesButton')} onClick={this.toggleSavedSearches} src={heart} />
-      { showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={viewSavedSearch} />) : '' }
+      { showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {

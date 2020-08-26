@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { currentFilters, formatParams, formatParamPreview, generateViewParams } from 'util/searchParams'
+import { currentFilters, formatParams, formatParamPreview } from 'util/searchParams'
 import Icon from 'components/Icon'
 import { info } from 'util/assets'
 import styles from './SavedSearches.scss'
@@ -57,19 +57,13 @@ function SavedSearches (props) {
 }
 
 const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
-  const { name, count } = search;
-  
-  const { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
-
   return (
     <div styleName='search'>
       <div styleName='row'>
-        <div styleName='saved-name'>{name} {count && <span styleName='count'>{count}</span>} </div>
+        <div styleName='saved-name'>{search.name} {search.count && <span styleName='count'>{search.count}</span>} </div>
         <div styleName='actions'>
           <Icon name='Trash' styleName='delete' onClick={() => deleteSearch(search.id)}/>
-          <div styleName='view' onClick={() => {
-            viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath)}
-          }>View</div>
+          <div styleName='view' onClick={() => viewSavedSearch(search)}>View</div>
         </div>
       </div>
       <div styleName='row filters' data-tip={formatParams(search)} data-for='params'>

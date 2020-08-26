@@ -3,7 +3,8 @@ import {
   DELETE_SAVED_SEARCH,
   SAVE_SEARCH,
   LEAVE_COMMUNITY,
-  UNLINK_ACCOUNT
+  UNLINK_ACCOUNT,
+  VIEW_SAVED_SEARCH
 } from 'store/constants'
 
 export const MODULE_NAME = 'UserSettings'
@@ -37,6 +38,12 @@ export default function reducer (state = defaultState, action) {
       return {
         ...state,
         searches: state.searches.filter(s => s.id !== deletedId)
+      }
+    case VIEW_SAVED_SEARCH:
+      const search = payload.search
+      return {
+        ...state,
+        selectedSearch: search
       }
     default:
       return state
@@ -129,6 +136,13 @@ export function saveSearch ({ boundingBox, communitySlug, context, lastPostId, n
       boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId,
       optimistic: true
     }
+  }
+}
+
+export function viewSavedSearch(search) {
+  return {
+    type: VIEW_SAVED_SEARCH,
+    payload: { search }
   }
 }
 

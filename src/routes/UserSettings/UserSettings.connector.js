@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import {
-  fetchSavedSearches, deleteSearch,
+  fetchSavedSearches, deleteSearch, viewSavedSearch,
   updateUserSettings, leaveCommunity, unlinkAccount,
   updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
@@ -88,14 +88,15 @@ export function mapDispatchToProps (dispatch) {
     updateMembershipSettings: (params) => dispatch(updateMembershipSettings(params)),
     updateAllMemberships: (params) => dispatch(updateAllMemberships(params)),
     registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
-    viewSavedSearch: (params, path) => {
+    viewSavedSearch: (params, path, selectedSearch) => {
       const { boundingBox, featureTypes, search, topics } = params
-      dispatch(push(path))
       dispatch(fetchMembers({ ...params }))
       dispatch(fetchPosts({ ...params }))
       dispatch(fetchPublicCommunities({ ...params}))
       dispatch(storeFetchPostsParam({ boundingBox }))
       dispatch(storeClientFilterParams({ featureTypes, search, topics }))
+      dispatch(viewSavedSearch(selectedSearch))
+      dispatch(push(path))
     }
   }
 }
