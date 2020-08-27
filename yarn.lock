@@ -2082,7 +2082,7 @@
   dependencies:
     "@turf/helpers" "6.x"
 
-"@turf/bbox@6.x":
+"@turf/bbox@6.x", "@turf/bbox@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@turf/bbox/-/bbox-6.0.1.tgz#b966075771475940ee1c16be2a12cf389e6e923a"
   integrity sha512-EGgaRLettBG25Iyx7VyUINsPpVj1x3nFQFiGS3ER8KCI1MximzNLsam3eXRabqQDjyAKyAE1bJ4EZEpGvspQxw==
@@ -2124,6 +2124,14 @@
   dependencies:
     "@turf/bbox" "6.x"
     "@turf/helpers" "6.x"
+
+"@turf/combine@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@turf/combine/-/combine-6.0.1.tgz#8ad22f999ad8feb98730fff09e14d28564a67fc6"
+  integrity sha512-UOvxgut3juUiYhW/jHW8hHdGEVQ0LfiKzaMsVtauxFfge2Ryy9lr5Ne1DuTbxrdj3M/p7kubG0KLL5CxKe968g==
+  dependencies:
+    "@turf/helpers" "6.x"
+    "@turf/meta" "6.x"
 
 "@turf/helpers@6.x", "@turf/helpers@^6.1.4":
   version "6.1.4"

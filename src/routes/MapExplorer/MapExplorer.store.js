@@ -32,6 +32,10 @@ export const FEATURE_TYPES = {
   }
 }
 
+function formatBoundingBox(bbox) {
+  return [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }]
+}
+
 const communityPostsQuery = `query (
   $slug: String,
   $sortBy: String,
@@ -190,7 +194,7 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
         search,
         filter,
         topic,
-        boundingBox,
+        boundingBox: formatBoundingBox(boundingBox),
         networkSlug,
         networkSlugs,
         isPublic
@@ -238,7 +242,7 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
         networkSlug,
         sortBy,
         search,
-        boundingBox
+        boundingBox: formatBoundingBox(boundingBox)
       }
     },
     meta: {
@@ -274,7 +278,7 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, 
       variables: {
         sortBy,
         search,
-        boundingBox,
+        boundingBox: formatBoundingBox(boundingBox),
         networkSlugs
       }
     },
@@ -337,7 +341,7 @@ export const getPostsByBoundingBox = createSelector(
       return posts
     }
 
-    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    const bbox = bboxPolygon(boundingBox)
     return posts.filter(post => {
       const locationObject = post.locationObject
       if (locationObject) {
@@ -404,7 +408,7 @@ export const getMembersByBoundingBox = createSelector(
       return members
     }
 
-    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    const bbox = bboxPolygon(boundingBox)
     return members.filter(member => {
       const locationObject = member.locationObject
       if (locationObject) {
@@ -455,7 +459,7 @@ export const getPublicCommunitiesByBoundingBox = createSelector(
       return communities
     }
 
-    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    const bbox = bboxPolygon(boundingBox)
     return communities.filter(community => {
       const locationObject = community.locationObject
       if (locationObject) {

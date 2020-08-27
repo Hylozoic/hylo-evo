@@ -1,8 +1,11 @@
+import bbox from '@turf/bbox'
+import bboxPolygon from '@turf/bbox-polygon'
 import center from '@turf/center'
+import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, groupBy } from 'lodash'
+import { debounce, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -56,20 +59,18 @@ export default class MapExplorer extends React.Component {
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
-
-    // this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
 
-    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox) {
+    if (!isEqual(prevProps.fetchPostsParam.boundingBox, this.props.fetchPostsParam.boundingBox)) {
       this.fetchOrShowCached()
     }
 
-    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
-         prevProps.posts !== this.props.posts ||
-         prevProps.members !== this.props.members) {
+    if (!isEqual(prevProps.fetchPostsParam.boundingBox, this.props.fetchPostsParam.boundingBox) ||
+         prevProps.posts.length !== this.props.posts.length ||
+         prevProps.members.length !== this.props.members.length) {
       this.setState({
         clusterLayer: createIconLayerFromPostsAndMembers({
           members: this.props.members,
@@ -81,8 +82,8 @@ export default class MapExplorer extends React.Component {
       })
     }
 
-    // FIXME - Fetch for image url returns error
-    if (prevProps.publicCommunities !== this.props.publicCommunities) {
+    // TODO: Fetch for image url returns error
+    if (prevProps.publicCommunities.length !== this.props.publicCommunities.length) {
       this.setState({
         communityIconLayer: createIconLayerFromCommunities({
           communities: this.props.publicCommunities,
@@ -114,14 +115,27 @@ export default class MapExplorer extends React.Component {
   afterViewportUpdate = (update, mapRef) => {
     if (mapRef) {
       let bounds = mapRef.getBounds()
-      bounds = [{ ...bounds._sw }, { ...bounds._ne }]
+      bounds = [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat]
       this.updateBoundingBoxQuery(bounds)
     }
   }
 
   updateBoundingBoxQuery = debounce((boundingBox) => {
-    this.setState({ boundingBox })
-    this.props.storeFetchPostsParam({ boundingBox })
+    let finalBbox
+    if (this.state.boundingBox) {
+      const curBbox = bboxPolygon(this.state.boundingBox)
+      const newBbox = bboxPolygon(boundingBox)
+      const fc = featureCollection([curBbox, newBbox])
+      const combined = combine(fc)
+      finalBbox = bbox(combined)
+    } else {
+      finalBbox = boundingBox
+    }
+
+    if (!isEqual(finalBbox, this.state.boundingBox)) {
+      this.setState({ boundingBox })
+      this.props.storeFetchPostsParam({ boundingBox })
+    }
   }, 300)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
