@@ -1,5 +1,11 @@
 .wrapper {
   height: 100%;
+
+  p {
+    color: #808C9B;
+    padding: 15px 0px;
+  }
+
 }
 
 .default-topics {
@@ -11,11 +17,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-p {
-  color: #808C9B;
-  padding: 15px 0px;
 }
 
 .default-topic-list {

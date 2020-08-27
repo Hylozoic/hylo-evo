@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Opening map drawer shrinks map visible portion so it doesnt show posts that are not visible on the map
 - When clicking to zoom in on a cluster on the map don't zoom to a location where you cant see the posts in the cluster
 - Safari: Fixed gradient on about text for a community in the sidebar
+- Extra whitespace in posts and comments everywhere
 
 ## [2.1.2] - 2020-08-19
 ### Added
