@@ -46,6 +46,7 @@
   border: none;
   text-align: center;
   display: block;
+  z-index: 10;
 
   &.drawerOpen {
     right: calc(40% + 20px);
