@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When clicking to zoom in on a cluster on the map don't zoom to a location where you cant see the posts in the cluster
 - Safari: Fixed gradient on about text for a community in the sidebar
 - Extra whitespace in posts and comments everywhere
+- Remove duplicate topics showing at network level in nav drawer
 
 ## [2.1.2] - 2020-08-19
 ### Added
