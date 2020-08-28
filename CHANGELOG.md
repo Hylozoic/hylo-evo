@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Default to showing map drawer
 - Don't show not working Members link in All Communities or Public contexts
+- Make many less queries to the server while moving around the map
 
 ### Fixed
 - Clicking on a post in the All Communities map view works now

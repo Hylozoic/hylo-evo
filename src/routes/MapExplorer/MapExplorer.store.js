@@ -32,8 +32,8 @@ export const FEATURE_TYPES = {
   }
 }
 
-function formatBoundingBox(bbox) {
-  return [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }]
+function formatBoundingBox (bbox) {
+  return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
 const communityPostsQuery = `query (
