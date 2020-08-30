@@ -32,6 +32,10 @@ export const FEATURE_TYPES = {
   }
 }
 
+function formatBoundingBox (bbox) {
+  return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
+}
+
 const communityPostsQuery = `query (
   $slug: String,
   $sortBy: String,
@@ -134,14 +138,6 @@ const networkMembersQuery = `query (
   }
 }`
 
-const allCommunitiesMembersQuery = `query (
-  $sortBy: String,
-  $search: String,
-  $boundingBox: [PointInput]
-) {
-  ${membersFragment}
-}`
-
 const publicPostsQuery = `query (
   $sortBy: String,
   $offset: Int,
@@ -176,11 +172,11 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
     query = networkPostsQuery
     extractModel = 'Network'
     getItems = get('payload.data.network.posts')
-  } else if (subject === 'all-communities') {
+  } else if (subject === 'all') {
     query = allCommunitiesPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
-  } else if (subject === 'public-communities') {
+  } else if (subject === 'public') {
     query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
@@ -198,7 +194,7 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
         search,
         filter,
         topic,
-        boundingBox,
+        boundingBox: formatBoundingBox(boundingBox),
         networkSlug,
         networkSlugs,
         isPublic
@@ -224,11 +220,13 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
     query = networkMembersQuery
     extractModel = 'Network'
     getItems = get('payload.data.network.members')
-  } else if (subject === 'all-communities') {
-    query = allCommunitiesMembersQuery
-    extractModel = 'User'
-    getItems = get('payload.data.people')
-  } else if (subject === 'public-communities') {
+  } else if (subject === 'all') {
+    // query = allCommunitiesMembersQuery
+    // extractModel = 'User'
+    // getItems = get('payload.data.people')
+    // No Members in All Communities Context, yet
+    return { type: 'RETURN NO MEMBERS FOR ALL COMMUNITIES' }
+  } else if (subject === 'public') {
     // No Members in Public Context, yet
     return { type: 'RETURN NO MEMBERS FOR PUBLIC' }
   } else {
@@ -244,7 +242,7 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
         networkSlug,
         sortBy,
         search,
-        boundingBox
+        boundingBox: formatBoundingBox(boundingBox)
       }
     },
     meta: {
@@ -259,7 +257,7 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
 export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, networkSlugs }) {
   var query, extractModel, getItems
 
-  if (subject === 'public-communities') {
+  if (subject === 'public') {
     query = publicCommunitiesQuery
     extractModel = 'Community'
     getItems = get('payload.data.communities')
@@ -267,7 +265,7 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, 
     return { type: 'RETURN NULL FOR COMMUNITY' }
   } else if (subject === 'network') {
     return { type: 'RETURN NULL FOR NETWORK' }
-  } else if (subject === 'all-communities') {
+  } else if (subject === 'all') {
     return { type: 'RETURN NULL FOR ALL COMMUNITIES' }
   } else {
     throw new Error(`FETCH_COMMUNITIES_MAP with subject=${subject} is not implemented`)
@@ -280,7 +278,7 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, 
       variables: {
         sortBy,
         search,
-        boundingBox,
+        boundingBox: formatBoundingBox(boundingBox),
         networkSlugs
       }
     },
@@ -343,7 +341,7 @@ export const getPostsByBoundingBox = createSelector(
       return posts
     }
 
-    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    const bbox = bboxPolygon(boundingBox)
     return posts.filter(post => {
       const locationObject = post.locationObject
       if (locationObject) {
@@ -410,7 +408,7 @@ export const getMembersByBoundingBox = createSelector(
       return members
     }
 
-    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    const bbox = bboxPolygon(boundingBox)
     return members.filter(member => {
       const locationObject = member.locationObject
       if (locationObject) {
@@ -461,7 +459,7 @@ export const getPublicCommunitiesByBoundingBox = createSelector(
       return communities
     }
 
-    const bbox = bboxPolygon([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat])
+    const bbox = bboxPolygon(boundingBox)
     return communities.filter(community => {
       const locationObject = community.locationObject
       if (locationObject) {

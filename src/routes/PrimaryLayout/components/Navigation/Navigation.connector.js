@@ -17,7 +17,7 @@ export function mapStateToProps (state, props) {
   const rootPath = baseUrl(routeParams, allCommunitiesUrl())
   const projectsPath = `${rootPath}/project`
   const eventsPath = `${rootPath}/event`
-  const membersPath = `${rootPath}/members`
+  const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
   const mapPath = `${rootPath}/map`
 
   let communityMembership, badge

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import Loading from 'components/Loading'
 import Member from 'components/Member'
 import PostCard from 'components/PostCard'
 import { SORT_OPTIONS } from '../MapExplorer.store'
@@ -11,10 +12,11 @@ import styles from './MapDrawer.scss'
 function MapDrawer (props) {
   let {
     currentUser,
+    features,
     fetchPostsParam,
     filters,
     onUpdateFilters,
-    features,
+    pending,
     routeParams,
     topics
   } = props
@@ -123,7 +125,7 @@ function MapDrawer (props) {
         })}
       </div>
 
-      <h1>{features.length} result{features.length === 1 ? '' : 's'} in this area</h1>
+      <h1>{features.length} result{features.length === 1 ? '' : 's'} in this area { pending && <Loading type='inline' styleName='loading' /> }</h1>
       <Dropdown styleName='sorter'
         toggleChildren={<span styleName='sorter-label'>
           {SORT_OPTIONS.find(o => o.id === sortBy).label}

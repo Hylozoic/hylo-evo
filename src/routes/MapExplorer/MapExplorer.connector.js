@@ -39,17 +39,17 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
   const networkSlug = getRouteParam('networkSlug', state, props)
   const networkSlugs = getQuerystringParam('network', state, props)
-  const showDrawer = getQuerystringParam('showDrawer', state, props) === 'true'
+  const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
   var subject
   if (context === 'public') {
-    subject = 'public-communities'
+    subject = 'public'
   } else if (slug) {
     subject = 'community'
   } else if (networkSlug) {
     subject = 'network'
   } else {
-    subject = 'all-communities'
+    subject = 'all'
   }
 
   const fetchMembersParam = {
@@ -81,7 +81,7 @@ export function mapStateToProps (state, props) {
       'topic'
     ], props),
     boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
-    isPublic: subject === 'public-communities' // only needed to track which query results to pull for the map
+    isPublic: subject === 'public' // only needed to track which query results to pull for the map
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
@@ -103,12 +103,11 @@ export function mapStateToProps (state, props) {
     fetchPublicCommunitiesParam,
     filters: state.MapExplorer.clientFilterParams,
     members,
-    // TODO: show loading spinner while pending
     pending: state.pending[FETCH_POSTS_MAP],
     posts,
     publicCommunities,
     routeParams,
-    showDrawer,
+    hideDrawer,
     topics,
     zoom: centerLocation ? 10 : 0
   }
@@ -116,7 +115,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const routeParams = get('match.params', props)
-  const querystringParams = getQuerystringParam(['showDrawer', 't', 'network'], null, props)
+  const querystringParams = getQuerystringParam(['hideDrawer', 't', 'network'], null, props)
   return {
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
@@ -124,7 +123,7 @@ export function mapDispatchToProps (dispatch, props) {
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     showCommunityDetails: (communityId) => dispatch(push(communityMapDetailUrl(communityId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
-    toggleDrawer: (visible) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, showDrawer: visible }))),
+    toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }

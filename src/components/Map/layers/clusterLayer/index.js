@@ -65,7 +65,7 @@ export default class PostClusterLayer extends CompositeLayer {
     const z = Math.floor(this.context.viewport.zoom)
     if (rebuildIndex || z !== this.state.z) {
       this.setState({
-        data: this.state.index.getClusters([boundingBox[0].lng, boundingBox[0].lat, boundingBox[1].lng, boundingBox[1].lat], z),
+        data: this.state.index.getClusters(boundingBox, z),
         z
       })
     }

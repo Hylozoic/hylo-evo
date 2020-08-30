@@ -77,7 +77,7 @@ export function baseUrl ({
       networkSlug: networkSlug
     })
   } else if (view) {
-    return viewUrl(view, context, safeCommunitySlug, networkSlug)
+    return viewUrl(view, context, safeCommunitySlug, networkSlug, defaultUrl)
   } else if (networkSlug) {
     return networkUrl(networkSlug)
   } else if (safeCommunitySlug) {
@@ -98,9 +98,9 @@ export function communityDeleteConfirmationUrl () {
 // derived URL paths
 
 // For specific views of a community or network like 'map', or 'calendar'
-export function viewUrl (view, context, communitySlug, networkSlug) {
+export function viewUrl (view, context, communitySlug, networkSlug, defaultUrl) {
   if (!view) return '/'
-  const base = baseUrl({ context, networkSlug, communitySlug })
+  const base = baseUrl({ context, networkSlug, communitySlug, defaultUrl })
 
   return `${base}/${view}`
 }

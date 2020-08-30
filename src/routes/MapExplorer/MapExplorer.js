@@ -1,6 +1,11 @@
+import bbox from '@turf/bbox'
+import bboxPolygon from '@turf/bbox-polygon'
+import center from '@turf/center'
+import combine from '@turf/combine'
+import { featureCollection, point } from '@turf/helpers'
 import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, groupBy } from 'lodash'
+import { debounce, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -22,7 +27,7 @@ export default class MapExplorer extends React.Component {
     posts: [],
     publicCommunities: [],
     routeParams: {},
-    showDrawer: true,
+    hideDrawer: false,
     topics: [],
     zoom: 0
   }
@@ -37,7 +42,7 @@ export default class MapExplorer extends React.Component {
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
-      showDrawer: props.showDrawer,
+      hideDrawer: props.hideDrawer,
       showFeatureFilters: false,
       viewport: {
         latitude: parseFloat(props.centerLocation.lat),
@@ -54,49 +59,57 @@ export default class MapExplorer extends React.Component {
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
-
-    // this.fetchOrShowCached()
   }
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
 
-    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox) {
-      this.fetchOrShowCached()
+    const {
+      fetchMembers,
+      fetchPosts,
+      fetchPostsParam,
+      fetchPublicCommunities,
+      fetchPublicCommunitiesParam,
+      members,
+      posts,
+      publicCommunities
+    } = this.props
+
+    if (!isEqual(prevProps.fetchPostsParam, fetchPostsParam)) {
+      fetchMembers()
+      fetchPosts()
     }
 
-    if (prevProps.fetchPostsParam.boundingBox !== this.props.fetchPostsParam.boundingBox ||
-         prevProps.posts !== this.props.posts ||
-         prevProps.members !== this.props.members) {
+    if (!isEqual(prevProps.fetchPublicCommunitiesParam, fetchPublicCommunitiesParam)) {
+      fetchPublicCommunities()
+    }
+
+    if (!isEqual(prevProps.fetchPostsParam, fetchPostsParam) ||
+        !isEqual(prevProps.posts, posts) ||
+        !isEqual(prevProps.members, members)) {
       this.setState({
         clusterLayer: createIconLayerFromPostsAndMembers({
-          members: this.props.members,
-          posts: this.props.posts,
+          members: members,
+          posts: posts,
           onHover: this.onMapHover,
           onClick: this.onMapClick,
-          boundingBox: this.props.fetchPostsParam.boundingBox
+          boundingBox: fetchPostsParam.boundingBox
         })
       })
     }
 
-    // FIXME - Fetch for image url returns error
-    if (prevProps.publicCommunities !== this.props.publicCommunities) {
+    // TODO: Fetch for image url returns error
+    if (!isEqual(prevProps.fetchPublicCommunitiesParam, fetchPublicCommunitiesParam) ||
+        !isEqual(prevProps.publicCommunities, publicCommunities)) {
       this.setState({
         communityIconLayer: createIconLayerFromCommunities({
-          communities: this.props.publicCommunities,
+          communities: publicCommunities,
           onHover: this.onMapHover,
           onClick: this.onMapClick,
-          boundingBox: this.props.fetchPostsParam.boundingBox
+          boundingBox: fetchPostsParam.boundingBox
         })
       })
     }
-  }
-
-  fetchOrShowCached = () => {
-    const { fetchMembers, fetchPosts, fetchPublicCommunities } = this.props
-    fetchMembers()
-    fetchPosts()
-    fetchPublicCommunities()
   }
 
   handleLocationInputSelection = (value) => {
@@ -112,27 +125,44 @@ export default class MapExplorer extends React.Component {
   afterViewportUpdate = (update, mapRef) => {
     if (mapRef) {
       let bounds = mapRef.getBounds()
-      bounds = [{ ...bounds._sw }, { ...bounds._ne }]
+      bounds = [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat]
       this.updateBoundingBoxQuery(bounds)
     }
   }
 
   updateBoundingBoxQuery = debounce((boundingBox) => {
-    this.setState({ boundingBox })
-    this.props.storeFetchPostsParam({ boundingBox })
+    let finalBbox
+    if (this.state.boundingBox) {
+      const curBbox = bboxPolygon(this.state.boundingBox)
+      const newBbox = bboxPolygon(boundingBox)
+      const fc = featureCollection([curBbox, newBbox])
+      const combined = combine(fc)
+      finalBbox = bbox(combined)
+    } else {
+      finalBbox = boundingBox
+    }
+
+    if (!isEqual(finalBbox, this.state.boundingBox)) {
+      this.setState({ boundingBox: finalBbox })
+      this.props.storeFetchPostsParam({ boundingBox: finalBbox })
+    }
   }, 300)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
   onMapClick = (info, e) => {
     if (info.objects) {
-      if (this.state.viewport.zoom >= 20) {
-        this.setState({ showDrawer: true })
+      if (this.state.viewport.zoom >= 20 && this.state.hideDrawer) {
+        this.setState({ hideDrawer: false })
       } else {
+        // Zoom to center of cluster
+        const features = featureCollection(info.objects.map(o => point([o.coordinates[0], o.coordinates[1]])))
+        const c = center(features)
+
         this.setState({ viewport: {
           ...this.state.viewport,
-          longitude: info.lngLat[0],
-          latitude: info.lngLat[1],
+          longitude: c.geometry.coordinates[0],
+          latitude: c.geometry.coordinates[1],
           zoom: info.expansionZoom,
           transitionDuration: 500,
           transitionInterpolator: new FlyToInterpolator()
@@ -181,8 +211,8 @@ export default class MapExplorer extends React.Component {
   }
 
   toggleDrawer = (e) => {
-    this.setState({ showDrawer: !this.state.showDrawer })
-    this.props.toggleDrawer(!this.state.showDrawer)
+    this.setState({ hideDrawer: !this.state.hideDrawer })
+    this.props.toggleDrawer(!this.state.hideDrawer)
   }
 
   toggleFeatureFilters = (e) => {
@@ -203,32 +233,36 @@ export default class MapExplorer extends React.Component {
     const {
       clusterLayer,
       communityIconLayer,
-      showDrawer,
+      hideDrawer,
       showFeatureFilters,
       viewport
     } = this.state
 
     return <div styleName={cx('container', { 'noUser': !currentUser })}>
-      <Map
-        layers={[communityIconLayer, clusterLayer]}
-        afterViewportUpdate={this.afterViewportUpdate}
-        onViewportUpdate={this.mapViewPortUpdate}
-        children={this._renderTooltip()}
-        viewport={viewport}
-      />
-      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': showDrawer })} onClick={this.toggleDrawer}>
+      <div styleName='mapContainer'>
+        <Map
+          layers={[communityIconLayer, clusterLayer]}
+          afterViewportUpdate={this.afterViewportUpdate}
+          onViewportUpdate={this.mapViewPortUpdate}
+          children={this._renderTooltip()}
+          viewport={viewport}
+        />
+        { pending && <Loading className={styles.loading} /> }
+      </div>
+      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
         <Icon name='Ex' className={styles.closeDrawer} />
       </button>
-      { showDrawer ? (
+      { !hideDrawer ? (
         <MapDrawer
           currentUser={currentUser}
+          features={features}
           fetchPostsParam={fetchPostsParam}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}
-          features={features}
-          topics={topics}
+          pending={pending}
           routeParams={routeParams}
+          topics={topics}
         />)
         : '' }
       <div styleName={cx('searchAutocomplete')}>
@@ -256,8 +290,6 @@ export default class MapExplorer extends React.Component {
         })}
         <div styleName={cx('pointer')} />
       </div>
-
-      { pending && <Loading /> }
     </div>
   }
 }

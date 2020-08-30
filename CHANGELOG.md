@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Show a spinner while posts are loading on the map
+
+### Changed
+- Default to showing map drawer
+- Don't show not working Members link in All Communities or Public contexts
+- Make many less queries to the server while moving around the map
+
+### Fixed
+- Clicking on a post in the All Communities map view works now
+- Opening map drawer shrinks map visible portion so it doesnt show posts that are not visible on the map
+- When clicking to zoom in on a cluster on the map don't zoom to a location where you cant see the posts in the cluster
+- Safari: Fixed gradient on about text for a community in the sidebar
+- Extra whitespace in posts and comments everywhere
+- Remove duplicate topics showing at network level in nav drawer
 
 ## [2.1.2] - 2020-08-19
 ### Added
