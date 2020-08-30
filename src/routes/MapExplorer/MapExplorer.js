@@ -64,42 +64,52 @@ export default class MapExplorer extends React.Component {
   componentDidUpdate (prevProps) {
     if (!prevProps) return
 
-    if (!isEqual(prevProps.fetchPostsParam.boundingBox, this.props.fetchPostsParam.boundingBox)) {
-      this.fetchOrShowCached()
+    const {
+      fetchMembers,
+      fetchPosts,
+      fetchPostsParam,
+      fetchPublicCommunities,
+      fetchPublicCommunitiesParam,
+      members,
+      posts,
+      publicCommunities
+    } = this.props
+
+    if (!isEqual(prevProps.fetchPostsParam, fetchPostsParam)) {
+      fetchMembers()
+      fetchPosts()
     }
 
-    if (!isEqual(prevProps.fetchPostsParam.boundingBox, this.props.fetchPostsParam.boundingBox) ||
-         prevProps.posts.length !== this.props.posts.length ||
-         prevProps.members.length !== this.props.members.length) {
+    if (!isEqual(prevProps.fetchPublicCommunitiesParam, fetchPublicCommunitiesParam)) {
+      fetchPublicCommunities()
+    }
+
+    if (!isEqual(prevProps.fetchPostsParam, fetchPostsParam) ||
+        !isEqual(prevProps.posts, posts) ||
+        !isEqual(prevProps.members, members)) {
       this.setState({
         clusterLayer: createIconLayerFromPostsAndMembers({
-          members: this.props.members,
-          posts: this.props.posts,
+          members: members,
+          posts: posts,
           onHover: this.onMapHover,
           onClick: this.onMapClick,
-          boundingBox: this.props.fetchPostsParam.boundingBox
+          boundingBox: fetchPostsParam.boundingBox
         })
       })
     }
 
     // TODO: Fetch for image url returns error
-    if (prevProps.publicCommunities.length !== this.props.publicCommunities.length) {
+    if (!isEqual(prevProps.fetchPublicCommunitiesParam, fetchPublicCommunitiesParam) ||
+        !isEqual(prevProps.publicCommunities, publicCommunities)) {
       this.setState({
         communityIconLayer: createIconLayerFromCommunities({
-          communities: this.props.publicCommunities,
+          communities: publicCommunities,
           onHover: this.onMapHover,
           onClick: this.onMapClick,
-          boundingBox: this.props.fetchPostsParam.boundingBox
+          boundingBox: fetchPostsParam.boundingBox
         })
       })
     }
-  }
-
-  fetchOrShowCached = () => {
-    const { fetchMembers, fetchPosts, fetchPublicCommunities } = this.props
-    fetchMembers()
-    fetchPosts()
-    fetchPublicCommunities()
   }
 
   handleLocationInputSelection = (value) => {
@@ -133,8 +143,8 @@ export default class MapExplorer extends React.Component {
     }
 
     if (!isEqual(finalBbox, this.state.boundingBox)) {
-      this.setState({ boundingBox })
-      this.props.storeFetchPostsParam({ boundingBox })
+      this.setState({ boundingBox: finalBbox })
+      this.props.storeFetchPostsParam({ boundingBox: finalBbox })
     }
   }, 300)
 

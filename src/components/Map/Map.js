@@ -26,6 +26,22 @@ function Map (props) {
       attributionControl={false}
       mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}
+      onResize={dimensions => {
+        // XXX: hack needed because onViewportChange doesn't fire when map width changes
+        //      https://github.com/visgl/react-map-gl/issues/1157
+        if (mapRef.current) {
+          const center = mapRef.current.getCenter()
+          onViewportUpdate({
+            bearing: mapRef.current.getBearing(),
+            height: dimensions.height,
+            latitude: center.lat,
+            longitude: center.lng,
+            pitch: mapRef.current.getPitch(),
+            width: dimensions.width,
+            zoom: mapRef.current.getZoom()
+          })
+        }
+      }}
       mapboxApiAccessToken={mapbox.token}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
     >
