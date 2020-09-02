@@ -15,6 +15,7 @@ const staticPages = [
   '/about/careers',
   '/about/contact',
   '/about/team',
+  '/evolve',
   '/invite-expired',
   '/subscribe',
   '/styleguide',
