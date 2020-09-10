@@ -14,11 +14,11 @@ import {
   fetchPosts,
   fetchPublicCommunities,
   getPublicCommunities,
-  storeFetchPostsParam,
-  storeClientFilterParams,
   getSortedFilteredMembers,
   getSortedFilteredPosts,
-  getCurrentTopics
+  getCurrentTopics,
+  storeFetchParams,
+  storeClientFilterParams
 } from './MapExplorer.store.js'
 
 export function presentMember (person, communityId) {
@@ -52,44 +52,20 @@ export function mapStateToProps (state, props) {
     subject = 'all'
   }
 
-  const fetchMembersParam = {
-    subject,
-    slug,
-    networkSlug,
-    ...pick([
-      // TODO: these are actually not being queried by on the server, remove for now?
-      'sortBy',
-      'topic'
-    ], props),
-    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
-  }
-
-  const fetchPublicCommunitiesParam = {
-    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
-    subject,
-    networkSlugs
-  }
-
-  const fetchPostsParam = {
+  const fetchParams = {
     subject,
     slug,
     networkSlug,
     networkSlugs, // networkSlug used by network posts query, networkSlugs uses by public posts query
-    ...pick([
-      // TODO: these are actually not being queried by on the server, remove for now?
-      'sortBy',
-      'topic'
-    ], props),
-    boundingBox: state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null,
+    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
     isPublic: subject === 'public' // only needed to track which query results to pull for the map
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
-  const members = getSortedFilteredMembers(state, fetchMembersParam).map(m => presentMember(m, communityId))
-  const posts = getSortedFilteredPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
-  const features = posts.concat(members)
-  const topics = getCurrentTopics(state, fetchPostsParam)
-  const publicCommunities = getPublicCommunities(state, fetchPublicCommunitiesParam)
+  const members = getSortedFilteredMembers(state, fetchParams).map(m => presentMember(m, communityId))
+  const posts = getSortedFilteredPosts(state, fetchParams).map(p => presentPost(p, communityId))
+  const topics = getCurrentTopics(state, fetchParams)
+  const publicCommunities = getPublicCommunities(state, fetchParams)
 
   const me = getMe(state)
   const centerLocation = community && community.locationObject ? community.locationObject.center : me && me.locationObject ? me.locationObject.center : null
@@ -97,10 +73,7 @@ export function mapStateToProps (state, props) {
   return {
     centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },
     currentUser: me,
-    features,
-    fetchMembersParam,
-    fetchPostsParam,
-    fetchPublicCommunitiesParam,
+    fetchParams,
     filters: state.MapExplorer.clientFilterParams,
     members,
     pending: state.pending[FETCH_POSTS_MAP],
@@ -124,23 +97,23 @@ export function mapDispatchToProps (dispatch, props) {
     showCommunityDetails: (communityId) => dispatch(push(communityMapDetailUrl(communityId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
-    storeFetchPostsParam: param => opts => dispatch(storeFetchPostsParam({ ...param, ...opts })),
+    storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchMembersParam, fetchPostsParam, fetchPublicCommunitiesParam } = stateProps
-  const { fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchPostsParam } = dispatchProps
+  const { fetchParams } = stateProps
+  const { fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchParams } = dispatchProps
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchMembers: fetchMembers(fetchMembersParam),
-    fetchPublicCommunities: fetchPublicCommunities(fetchPublicCommunitiesParam),
-    fetchPosts: fetchPosts(fetchPostsParam),
-    storeFetchPostsParam: storeFetchPostsParam(fetchPostsParam)
+    fetchMembers: fetchMembers(fetchParams),
+    fetchPublicCommunities: fetchPublicCommunities(fetchParams),
+    fetchPosts: fetchPosts(fetchParams),
+    storeFetchParams: storeFetchParams(fetchParams)
   }
 }
 

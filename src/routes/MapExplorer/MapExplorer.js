@@ -1,5 +1,6 @@
 import bbox from '@turf/bbox'
 import bboxPolygon from '@turf/bbox-polygon'
+import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
@@ -35,15 +36,17 @@ export default class MapExplorer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      boundingBox: null,
       clusterLayer: null,
       communityIconLayer: null,
+      currentBoundingBox: null,
+      features: [],
+      hideDrawer: props.hideDrawer,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
       selectedObject: null,
-      hideDrawer: props.hideDrawer,
       showFeatureFilters: false,
+      totalLoadedBoundingBox: null,
       viewport: {
         latitude: parseFloat(props.centerLocation.lat),
         longitude: parseFloat(props.centerLocation.lng),
@@ -67,48 +70,72 @@ export default class MapExplorer extends React.Component {
     const {
       fetchMembers,
       fetchPosts,
-      fetchPostsParam,
+      fetchParams,
       fetchPublicCommunities,
-      fetchPublicCommunitiesParam,
       members,
       posts,
       publicCommunities
     } = this.props
 
-    if (!isEqual(prevProps.fetchPostsParam, fetchPostsParam)) {
+    if (!isEqual(prevProps.fetchParams, fetchParams)) {
       fetchMembers()
       fetchPosts()
-    }
-
-    if (!isEqual(prevProps.fetchPublicCommunitiesParam, fetchPublicCommunitiesParam)) {
       fetchPublicCommunities()
     }
 
-    if (!isEqual(prevProps.fetchPostsParam, fetchPostsParam) ||
-        !isEqual(prevProps.posts, posts) ||
-        !isEqual(prevProps.members, members)) {
-      this.setState({
-        clusterLayer: createIconLayerFromPostsAndMembers({
-          members: members,
-          posts: posts,
-          onHover: this.onMapHover,
-          onClick: this.onMapClick,
-          boundingBox: fetchPostsParam.boundingBox
-        })
-      })
+    if (this.state.currentBoundingBox &&
+        (!isEqual(prevProps.fetchParams, fetchParams) ||
+         !isEqual(prevProps.posts, posts) ||
+         !isEqual(prevProps.members, members) ||
+         !isEqual(prevProps.publicCommunities, publicCommunities))) {
+      this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
     }
+  }
 
-    // TODO: Fetch for image url returns error
-    if (!isEqual(prevProps.fetchPublicCommunitiesParam, fetchPublicCommunitiesParam) ||
-        !isEqual(prevProps.publicCommunities, publicCommunities)) {
-      this.setState({
-        communityIconLayer: createIconLayerFromCommunities({
-          communities: publicCommunities,
-          onHover: this.onMapHover,
-          onClick: this.onMapClick,
-          boundingBox: fetchPostsParam.boundingBox
-        })
-      })
+  updatedMapFeatures (boundingBox) {
+    const bbox = bboxPolygon(boundingBox)
+    const viewMembers = this.props.members.filter(member => {
+      const locationObject = member.locationObject
+      if (locationObject) {
+        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
+        return booleanWithin(centerPoint, bbox)
+      }
+      return false
+    })
+    const viewPosts = this.props.posts.filter(post => {
+      const locationObject = post.locationObject
+      if (locationObject) {
+        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
+        return booleanWithin(centerPoint, bbox)
+      }
+      return false
+    })
+    const viewCommunities = this.props.publicCommunities.filter(community => {
+      const locationObject = community.locationObject
+      if (locationObject) {
+        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
+        return booleanWithin(centerPoint, bbox)
+      }
+      return false
+    })
+
+    // TODO: update the existing layers instead of creating a new ones?
+    return {
+      clusterLayer: createIconLayerFromPostsAndMembers({
+        members: viewMembers,
+        posts: viewPosts,
+        onHover: this.onMapHover,
+        onClick: this.onMapClick,
+        boundingBox: this.state.currentBoundingBox
+      }),
+      communityIconLayer: createIconLayerFromCommunities({
+        communities: viewCommunities,
+        onHover: this.onMapHover,
+        onClick: this.onMapClick,
+        boundingBox: this.state.currentBoundingBox
+      }),
+      currentBoundingBox: boundingBox,
+      features: viewPosts.concat(viewMembers)
     }
   }
 
@@ -130,22 +157,27 @@ export default class MapExplorer extends React.Component {
     }
   }
 
-  updateBoundingBoxQuery = debounce((boundingBox) => {
+  updateBoundingBoxQuery = debounce((newBoundingBox) => {
     let finalBbox
-    if (this.state.boundingBox) {
-      const curBbox = bboxPolygon(this.state.boundingBox)
-      const newBbox = bboxPolygon(boundingBox)
+    if (this.state.totalLoadedBoundingBox) {
+      const curBbox = bboxPolygon(this.state.totalLoadedBoundingBox)
+      const newBbox = bboxPolygon(newBoundingBox)
       const fc = featureCollection([curBbox, newBbox])
       const combined = combine(fc)
       finalBbox = bbox(combined)
     } else {
-      finalBbox = boundingBox
+      finalBbox = newBoundingBox
     }
 
-    if (!isEqual(finalBbox, this.state.boundingBox)) {
-      this.setState({ boundingBox: finalBbox })
-      this.props.storeFetchPostsParam({ boundingBox: finalBbox })
+    // Check if we need to look for more posts and communities
+    if (!isEqual(finalBbox, this.state.totalLoadedBoundingBox)) {
+      this.props.storeFetchParams({ boundingBox: finalBbox })
     }
+
+    this.setState({
+      ...this.updatedMapFeatures(newBoundingBox),
+      totalLoadedBoundingBox: finalBbox
+    })
   }, 300)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
@@ -222,8 +254,7 @@ export default class MapExplorer extends React.Component {
   render () {
     const {
       currentUser,
-      features,
-      fetchPostsParam,
+      fetchParams,
       filters,
       pending,
       routeParams,
@@ -233,6 +264,7 @@ export default class MapExplorer extends React.Component {
     const {
       clusterLayer,
       communityIconLayer,
+      features,
       hideDrawer,
       showFeatureFilters,
       viewport
@@ -257,7 +289,7 @@ export default class MapExplorer extends React.Component {
         <MapDrawer
           currentUser={currentUser}
           features={features}
-          fetchPostsParam={fetchPostsParam}
+          fetchParams={fetchParams}
           filters={filters}
           onUpdateFilters={this.props.storeClientFilterParams}
           pending={pending}
