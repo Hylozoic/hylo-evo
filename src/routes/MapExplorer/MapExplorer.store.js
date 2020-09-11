@@ -19,12 +19,12 @@ export const SORT_OPTIONS = [
 export const FEATURE_TYPES = {
   ...POST_TYPES,
   member: {
-    primaryColor: 'rgba(201, 88, 172, 1.000)',
+    primaryColor: [201, 88, 172, 255],
     backgroundColor: 'rgba(201, 88, 172, 1.000)',
     map: true
   },
   community: {
-    primaryColor: 'rgba(201, 88, 172, 1.000)',
+    primaryColor: [201, 88, 172, 255],
     backgroundColor: 'rgba(201, 88, 172, 1.000)'
   }
 }

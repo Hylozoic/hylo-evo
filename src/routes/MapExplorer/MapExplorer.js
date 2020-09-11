@@ -195,7 +195,8 @@ export default class MapExplorer extends React.Component {
           ...this.state.viewport,
           longitude: c.geometry.coordinates[0],
           latitude: c.geometry.coordinates[1],
-          zoom: info.expansionZoom,
+          // Don't zoom out if already further in than expansionZoom
+          zoom: Math.max(this.state.viewport.zoom, info.expansionZoom),
           transitionDuration: 500,
           transitionInterpolator: new FlyToInterpolator()
         } })
@@ -306,13 +307,15 @@ export default class MapExplorer extends React.Component {
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {
+          let color = FEATURE_TYPES[featureType].primaryColor
+
           return <div
             key={featureType}
             ref={this.refs[featureType]}
             styleName='featureTypeSwitch'
           >
             <SwitchStyled
-              backgroundColor={FEATURE_TYPES[featureType].primaryColor}
+              backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3]/255})`}
               name={featureType}
               checked={filters.featureTypes[featureType]}
               onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
