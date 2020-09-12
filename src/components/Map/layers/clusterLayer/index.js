@@ -110,8 +110,8 @@ export default class PostClusterLayer extends CompositeLayer {
           getPixelOffset: [0, 15],
           getText: d => d.properties.cluster ? ' ' : d.properties.message.length > 20 ? d.properties.message.slice(0, 19) + '...' : d.properties.message,
           getSize: d => d.properties.cluster ? 0 : 20,
-          //wordBreak: 'break-word',
-          //maxWidth: 600,
+          // wordBreak: 'break-word',
+          // maxWidth: 600,
           sizeUnits: 'pixels'
         })
       ))
