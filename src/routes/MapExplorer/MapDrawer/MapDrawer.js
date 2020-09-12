@@ -13,7 +13,7 @@ function MapDrawer (props) {
   let {
     currentUser,
     features,
-    fetchPostsParam,
+    fetchParams,
     filters,
     onUpdateFilters,
     pending,
@@ -47,7 +47,7 @@ function MapDrawer (props) {
       member={f}
       key={f.id}
       slug={routeParams.networkSlug || routeParams.slug}
-      subject={fetchPostsParam.subject}
+      subject={fetchParams.subject}
     />
     : <PostCard
       routeParams={routeParams}

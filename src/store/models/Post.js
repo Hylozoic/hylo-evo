@@ -77,32 +77,32 @@ Post.fields = {
 
 export const POST_TYPES = {
   'discussion': {
-    primaryColor: 'rgba(0, 163, 227, 1)', // $color-picton-blue
+    primaryColor: [0, 163, 227, 255], // $color-picton-blue
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
     map: false
   },
   'event': {
-    primaryColor: 'rgba(254, 72, 80, 1)', // $color-medium-purple
+    primaryColor: [254, 72, 80, 255], // $color-medium-purple
     backgroundColor: 'rgba(254, 72, 80, .2)', // $color-moon-raker
     map: true
   },
   'offer': {
-    primaryColor: 'rgba(0, 199, 157, 1)', // $color-caribbean-green
+    primaryColor: [0, 199, 157, 255], // $color-caribbean-green
     backgroundColor: 'rgba(0, 199, 157, .2)', // $color-iceberg;
     map: true
   },
   'resource': {
-    primaryColor: 'rgba(255, 212, 3, 1)', // $color-mango-yellow;
+    primaryColor: [255, 212, 3, 255], // $color-mango-yellow;
     backgroundColor: 'rgba(255, 212, 3, .2)',
     map: true
   },
   'project': {
-    primaryColor: 'rgba(252, 128, 0, 1)', // $color-fuchsia-pink;
+    primaryColor: [252, 128, 0, 255], // $color-fuchsia-pink;
     backgroundColor: 'rgba(252, 128, 0, .2)', // $color-prim;
     map: false
   },
   'request': {
-    primaryColor: 'rgba(102, 75, 165, 1)', // $color-persimmon;
+    primaryColor: [102, 75, 165, 255], // $color-persimmon;
     backgroundColor: 'rgba(102, 75, 165, .2)', // $color-peach-schnapps;
     map: true
   }

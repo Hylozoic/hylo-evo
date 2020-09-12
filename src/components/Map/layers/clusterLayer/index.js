@@ -3,6 +3,7 @@ import { IconLayer, TextLayer } from '@deck.gl/layers'
 import Supercluster from 'supercluster'
 
 import mapSpriteData from 'components/Map/layers/clusterLayer/mapIconAtlas.js'
+import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer.store'
 
 const iconMapping = Object.keys(mapSpriteData).reduce((result, sprite) => {
   const data = mapSpriteData[sprite].frame
@@ -30,7 +31,7 @@ export function createIconLayerFromPostsAndMembers ({ boundingBox, members, post
     return {
       id: member.id,
       type: 'member',
-      message: 'Member: ' + member.name,
+      message: member.name,
       coordinates: [parseFloat(member.locationObject.center.lng), parseFloat(member.locationObject.center.lat)]
     }
   }))
@@ -91,7 +92,32 @@ export default class PostClusterLayer extends CompositeLayer {
       iconAtlas = '/mapIconAtlas.png'
     } = this.props
 
-    const iconSubLayer = new IconLayer(
+    const layers = []
+
+    // When zoomed in show the feature text on the map
+    if (this.context.viewport.zoom > 14) {
+      layers.push(new TextLayer(
+        this.getSubLayerProps({
+          id: 'text-feature-name',
+          data,
+          fontFamily: '"Circular Bold", sans-serif',
+          sizeScale: 1,
+          backgroundColor: [255, 255, 255],
+          getColor: d => d.properties.cluster ? [255, 255, 255, 255] : FEATURE_TYPES[d.properties.type].primaryColor,
+          getPosition: d => d.geometry.coordinates,
+          getTextAnchor: 'middle',
+          getAlignmentBaseline: 'top',
+          getPixelOffset: [0, 15],
+          getText: d => d.properties.cluster ? ' ' : d.properties.message.length > 20 ? d.properties.message.slice(0, 19) + '...' : d.properties.message,
+          getSize: d => d.properties.cluster ? 0 : 20,
+          // wordBreak: 'break-word',
+          // maxWidth: 600,
+          sizeUnits: 'pixels'
+        })
+      ))
+    }
+
+    layers.push(new IconLayer(
       this.getSubLayerProps({
         id: 'icon-cluster',
         data,
@@ -122,11 +148,12 @@ export default class PostClusterLayer extends CompositeLayer {
         sizeUnits: 'pixels',
         pickable: true
       })
-    )
+    ))
 
-    const textSubLayer = new TextLayer(
+    // Feature count inside of clusters
+    layers.push(new TextLayer(
       this.getSubLayerProps({
-        id: 'text-cluster',
+        id: 'text-cluster-count',
         data,
         fontFamily: '"Circular Bold", sans-serif',
         sizeScale: 1,
@@ -139,8 +166,8 @@ export default class PostClusterLayer extends CompositeLayer {
         sizeUnits: 'pixels',
         sizeMinPixels: 20
       })
-    )
+    ))
 
-    return [iconSubLayer, textSubLayer]
+    return layers
   }
 }

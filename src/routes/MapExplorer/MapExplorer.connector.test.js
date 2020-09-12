@@ -26,7 +26,7 @@ describe('mapStateToProps', () => {
       orm: session.state,
       pending: {},
       MapExplorer: {
-        fetchPostsParam: { },
+        fetchParams: { },
         clientFilterParams: {
           featureTypes: { request: true, offer: true },
           search: '',
@@ -46,10 +46,7 @@ describe('mapStateToProps', () => {
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         currentUser: undefined,
-        features: [],
-        fetchMembersParam: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined },
-        fetchPostsParam: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined, networkSlugs: undefined, isPublic: false },
-        fetchPublicCommunitiesParam: { boundingBox: undefined, subject: 'community', networkSlugs: undefined },
+        fetchParams: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined, networkSlugs: undefined, isPublic: false },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',

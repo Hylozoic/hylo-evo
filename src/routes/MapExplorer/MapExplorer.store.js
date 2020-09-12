@@ -1,8 +1,5 @@
 import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
-import bboxPolygon from '@turf/bbox-polygon'
-import booleanWithin from '@turf/boolean-within'
-import { point } from '@turf/helpers'
 import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_COMMUNITIES_MAP } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
@@ -11,7 +8,7 @@ import publicCommunitiesQueryFragment from 'graphql/fragments/publicCommunitiesQ
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
-export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
+export const STORE_FETCH_PARAMS = `${MODULE_NAME}/STORE_FETCH_PARAMS`
 export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
 
 export const SORT_OPTIONS = [
@@ -22,12 +19,12 @@ export const SORT_OPTIONS = [
 export const FEATURE_TYPES = {
   ...POST_TYPES,
   member: {
-    primaryColor: 'rgba(201, 88, 172, 1.000)',
+    primaryColor: [201, 88, 172, 255],
     backgroundColor: 'rgba(201, 88, 172, 1.000)',
     map: true
   },
   community: {
-    primaryColor: 'rgba(201, 88, 172, 1.000)',
+    primaryColor: [201, 88, 172, 255],
     backgroundColor: 'rgba(201, 88, 172, 1.000)'
   }
 }
@@ -209,7 +206,7 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
   }
 }
 
-export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy, search }) {
+export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy, search, isPublic }) {
   var query, extractModel, getItems
 
   if (subject === 'community') {
@@ -242,7 +239,8 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
         networkSlug,
         sortBy,
         search,
-        boundingBox: formatBoundingBox(boundingBox)
+        boundingBox: formatBoundingBox(boundingBox),
+        isPublic
       }
     },
     meta: {
@@ -254,7 +252,7 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
   }
 }
 
-export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, networkSlugs }) {
+export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, networkSlugs, isPublic }) {
   var query, extractModel, getItems
 
   if (subject === 'public') {
@@ -279,7 +277,8 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, 
         sortBy,
         search,
         boundingBox: formatBoundingBox(boundingBox),
-        networkSlugs
+        networkSlugs,
+        isPublic
       }
     },
     meta: {
@@ -291,9 +290,9 @@ export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, 
   }
 }
 
-export function storeFetchPostsParam (params) {
+export function storeFetchParams (params) {
   return {
-    type: STORE_FETCH_POSTS_PARAM,
+    type: STORE_FETCH_PARAMS,
     payload: params
   }
 }
@@ -307,7 +306,7 @@ export function storeClientFilterParams (params) {
 
 // selectors
 export const boundingBoxSelector = (state) => {
-  return state.MapExplorer.fetchPostsParam ? state.MapExplorer.fetchPostsParam.boundingBox : null
+  return state.MapExplorer.fetchParamS ? state.MapExplorer.fetchParamS.boundingBox : null
 }
 
 export const filterContentTypesSelector = (state) => {
@@ -333,28 +332,8 @@ export const getPosts = makeQueryResultsModelSelector(
   'Post'
 )
 
-export const getPostsByBoundingBox = createSelector(
-  getPosts,
-  boundingBoxSelector,
-  (posts, boundingBox) => {
-    if (!boundingBox) {
-      return posts
-    }
-
-    const bbox = bboxPolygon(boundingBox)
-    return posts.filter(post => {
-      const locationObject = post.locationObject
-      if (locationObject) {
-        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
-        return booleanWithin(centerPoint, bbox)
-      }
-      return false
-    })
-  }
-)
-
 export const getPostsFilteredByType = createSelector(
-  getPostsByBoundingBox,
+  getPosts,
   filterContentTypesSelector,
   (posts, filterContentTypes) => posts.filter(post => filterContentTypes[post.type])
 )
@@ -400,28 +379,8 @@ export const getMembers = makeQueryResultsModelSelector(
   'Person'
 )
 
-export const getMembersByBoundingBox = createSelector(
-  getMembers,
-  boundingBoxSelector,
-  (members, boundingBox) => {
-    if (!boundingBox) {
-      return members
-    }
-
-    const bbox = bboxPolygon(boundingBox)
-    return members.filter(member => {
-      const locationObject = member.locationObject
-      if (locationObject) {
-        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
-        return booleanWithin(centerPoint, bbox)
-      }
-      return false
-    })
-  }
-)
-
 export const getSortedFilteredMembers = createSelector(
-  getMembersByBoundingBox,
+  getMembers,
   filterContentTypesSelector,
   sortBySelector,
   (members, filterContentTypes, sortBy) => {
@@ -451,26 +410,6 @@ export const getPublicCommunities = makeQueryResultsModelSelector(
   'Community'
 )
 
-export const getPublicCommunitiesByBoundingBox = createSelector(
-  getPublicCommunities,
-  boundingBoxSelector,
-  (communities, boundingBox) => {
-    if (!boundingBox) {
-      return communities
-    }
-
-    const bbox = bboxPolygon(boundingBox)
-    return communities.filter(community => {
-      const locationObject = community.locationObject
-      if (locationObject) {
-        const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
-        return booleanWithin(centerPoint, bbox)
-      }
-      return false
-    })
-  }
-)
-
 // export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
 
 // reducer
@@ -481,17 +420,16 @@ const DEFAULT_STATE = {
     sortBy: SORT_OPTIONS[0].id,
     topics: []
   },
-  selectedPost: null,
-  fetchPostsParam: {
+  fetchParams: {
     boundingBox: null
   }
 }
 
 export default function (state = DEFAULT_STATE, action) {
-  if (action.type === STORE_FETCH_POSTS_PARAM) {
+  if (action.type === STORE_FETCH_PARAMS) {
     return {
       ...state,
-      fetchPostsParam: action.payload
+      fetchParams: action.payload
     }
   }
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
