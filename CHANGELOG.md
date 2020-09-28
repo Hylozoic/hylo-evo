@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Make it more obvious how to change avatar in settings, can now click on entire image to change it
+- Improve text on toggle to make a post public to make it more clear what is happening
 
 ## [2.1.4] - 2020-09-12
 ### Added

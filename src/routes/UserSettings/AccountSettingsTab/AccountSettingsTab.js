@@ -8,9 +8,10 @@ import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
-const { object, func } = PropTypes
 
 import './AccountSettingsTab.scss'
+
+const { object, func } = PropTypes
 
 const twitterPrompt = () => window.prompt('Please enter your twitter name.')
 export function linkedinPrompt (prompt) {
