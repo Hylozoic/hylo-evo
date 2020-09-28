@@ -22,11 +22,10 @@ export default class PublicToggle extends Component {
     return (
       <div styleName={cx('publicToggleContainer', { postIsPublic: isPublic })}>
         <div styleName='publicToggle'>
-          <Icon name='Public' styleName='publicToggleIcon' />
+          <Icon name='Public' styleName='publicToggleIcon' /> Make Public:
           <SwitchStyled checked={isPublic} onChange={togglePublic} backgroundColor={isPublic ? '#0DC39F' : '#8B96A4'} />
-          <span styleName='publicGuidance'>Allow the public to see this post.</span>
+          <span styleName='publicGuidance'>{isPublic ? 'Anyone on Hylo can see this post' : 'Currently, only communities you specify above will see this post'}</span>
         </div>
-        <span styleName='publicState'>{isPublic ? 'Yes' : 'No'}</span>
       </div>
     )
   }

@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
-import './AccountSettingsTab.scss'
 import Button from 'components/Button'
+import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
+
+import './AccountSettingsTab.scss'
+
 const { object, func } = PropTypes
 
 const twitterPrompt = () => window.prompt('Please enter your twitter name.')
@@ -121,13 +124,14 @@ export default class AccountSettingsTab extends Component {
           onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
           styleName='change-banner-button' />
       </div>
-      <div style={bgImageStyle(avatarUrl)} styleName='avatar'>
-        <UploadAttachmentButton
-          type='userAvatar'
-          id={currentUser.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-          styleName='change-avatar-button' />
-      </div>
+      <UploadAttachmentButton
+        type='userAvatar'
+        id={currentUser.id}
+        onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+        styleName='change-avatar-button'
+      >
+        <div style={bgImageStyle(avatarUrl)} styleName='avatar'><Icon name='AddImage' styleName='uploadIcon' /></div>
+      </UploadAttachmentButton>
       <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
       <SettingsControl label='About Me' onChange={this.updateSetting('bio')} value={bio} type='textarea' />
       <SettingsControl
