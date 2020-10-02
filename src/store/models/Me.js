@@ -4,16 +4,6 @@ import { attr, fk, many, Model } from 'redux-orm'
 import featureFlag from 'config/featureFlags'
 import { toRefArray } from 'util/reduxOrmMigration'
 
-export const MOCK_ME = {
-  memberships: {
-    count: () => 0,
-    items: []
-  },
-  firstName: () => 'Loren',
-  hasFeature: () => false,
-  canModerate: () => true
-}
-
 export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
 }
