@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './UserSettings.scss'
-import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
+import EditProfileTab from './EditProfileTab/EditProfileTab'
 import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
-import PasswordSettingsTab from './PasswordSettingsTab/PasswordSettingsTab'
+import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
 import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
@@ -44,9 +44,9 @@ export default class UserSettings extends Component {
 
     const content = [
       {
-        name: 'Account',
+        name: 'Edit Profile',
         path: '/settings',
-        component: <AccountSettingsTab
+        component: <EditProfileTab
           currentUser={currentUser}
           updateUserSettings={updateUserSettings}
           loginWithService={loginWithService}
@@ -82,9 +82,9 @@ export default class UserSettings extends Component {
           loading={fetchPending} />
       },
       {
-        name: 'Password',
-        path: '/settings/password',
-        component: <PasswordSettingsTab
+        name: 'Account',
+        path: '/settings/account',
+        component: <AccountSettingsTab
           currentUser={currentUser}
           updateUserSettings={updateUserSettings}
           setConfirm={setConfirm} />

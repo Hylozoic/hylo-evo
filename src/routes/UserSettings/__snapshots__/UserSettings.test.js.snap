@@ -5,7 +5,7 @@ exports[`UserSettings renders correctly 1`] = `
   content={
     Array [
       Object {
-        "component": <AccountSettingsTab
+        "component": <EditProfileTab
           currentUser={
             Object {
               "hasFeature": [Function],
@@ -18,7 +18,7 @@ exports[`UserSettings renders correctly 1`] = `
           unlinkAccount={[Function]}
           updateUserSettings={[Function]}
         />,
-        "name": "Account",
+        "name": "Edit Profile",
         "path": "/settings",
       },
       Object {
@@ -70,7 +70,7 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/blocked-users",
       },
       Object {
-        "component": <PasswordSettingsTab
+        "component": <AccountSettingsTab
           currentUser={
             Object {
               "hasFeature": [Function],
@@ -80,8 +80,8 @@ exports[`UserSettings renders correctly 1`] = `
           setConfirm={[Function]}
           updateUserSettings={[Function]}
         />,
-        "name": "Password",
-        "path": "/settings/password",
+        "name": "Account",
+        "path": "/settings/account",
       },
       Object {
         "component": <PaymentSettingsTab
