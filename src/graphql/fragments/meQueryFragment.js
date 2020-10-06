@@ -29,6 +29,8 @@ export default
   email
   bannerUrl
   bio
+  contactEmail
+  contactPhone
   tagline
   twitterName
   linkedinUrl
