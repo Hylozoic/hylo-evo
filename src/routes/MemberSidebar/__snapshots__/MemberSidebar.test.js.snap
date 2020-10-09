@@ -5,6 +5,5 @@ exports[`does something 1`] = `
   data-stylename="member-sidebar"
 >
   <Connect(MessageMember) />
-  <Connect(SkillsSection) />
 </div>
 `;

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
+import SkillsSection from 'components/SkillsSection'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -141,8 +142,9 @@ export default class EditProfileTab extends Component {
         locationObject={locationObject}
         type='location'
       />
-      <SettingsControl label='Email' onChange={this.updateSetting('email')} value={email} />
       <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
+      <SettingsControl label='My Skills &amp; Interests' renderControl={() =>
+        <SkillsSection personId={currentUser.id} />} />
       <label styleName='social-label'>Social Accounts</label>
       <SocialControl
         label='Facebook'

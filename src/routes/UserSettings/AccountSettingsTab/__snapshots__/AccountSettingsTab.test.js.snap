@@ -5,17 +5,24 @@ exports[`AccountSettingsTab renders correctly 1`] = `
   <div
     data-stylename="title"
   >
-    Update Password
+    Update Account
   </div>
+  <SettingsControl
+    label="Email"
+    onChange={[Function]}
+    value=""
+  />
   <SettingsControl
     label="New Password"
     onChange={[Function]}
     type="password"
+    value=""
   />
   <SettingsControl
-    label="Confirm"
+    label="New Password (Confirm)"
     onChange={[Function]}
     type="password"
+    value=""
   />
   <div
     data-stylename="help"

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import './UserSettings.scss'
+import { isEmpty } from 'lodash/fp'
 import EditProfileTab from './EditProfileTab/EditProfileTab'
 import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
@@ -9,6 +9,7 @@ import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
 import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import './UserSettings.scss'
 
 const { object, func } = PropTypes
 
@@ -74,14 +75,6 @@ export default class UserSettings extends Component {
           allCommunitiesSettings={allCommunitiesSettings} />
       },
       {
-        name: 'Blocked Users',
-        path: '/settings/blocked-users',
-        component: <BlockedUsersTab
-          blockedUsers={blockedUsers}
-          unBlockUser={unBlockUser}
-          loading={fetchPending} />
-      },
-      {
         name: 'Account',
         path: '/settings/account',
         component: <AccountSettingsTab
@@ -90,6 +83,17 @@ export default class UserSettings extends Component {
           setConfirm={setConfirm} />
       }
     ]
+
+    if (currentUser && !isEmpty(currentUser.blockedUsers.toRefArray())) {
+      content.push({
+        name: 'Blocked Users',
+        path: '/settings/blocked-users',
+        component: <BlockedUsersTab
+          blockedUsers={blockedUsers}
+          unBlockUser={unBlockUser}
+          loading={fetchPending} />
+      })
+    }
 
     if (currentUser && currentUser.hasFeature(PROJECT_CONTRIBUTIONS)) {
       content.push({

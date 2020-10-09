@@ -8,6 +8,9 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <EditProfileTab
           currentUser={
             Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
               "hasFeature": [Function],
               "id": 1,
             }
@@ -42,6 +45,9 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <NotificationSettingsTab
           currentUser={
             Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
               "hasFeature": [Function],
               "id": 1,
             }
@@ -63,16 +69,12 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/notifications",
       },
       Object {
-        "component": <BlockedUsersTab
-          loading={true}
-        />,
-        "name": "Blocked Users",
-        "path": "/settings/blocked-users",
-      },
-      Object {
         "component": <AccountSettingsTab
           currentUser={
             Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
               "hasFeature": [Function],
               "id": 1,
             }
@@ -84,9 +86,19 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/account",
       },
       Object {
+        "component": <BlockedUsersTab
+          loading={true}
+        />,
+        "name": "Blocked Users",
+        "path": "/settings/blocked-users",
+      },
+      Object {
         "component": <PaymentSettingsTab
           currentUser={
             Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
               "hasFeature": [Function],
               "id": 1,
             }

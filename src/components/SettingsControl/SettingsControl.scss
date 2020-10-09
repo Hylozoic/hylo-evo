@@ -1,6 +1,9 @@
 .control {
   margin-bottom: $space-4x;
   border-bottom: 1px solid $color-ghost;
+  &.error {
+    border-bottom: 1px solid red;
+  }
 }
 
 .control-label {
@@ -8,6 +11,9 @@
   composes: tag from 'css/typography.scss';
   color: $color-rhino-30;
   margin-bottom: $space-1x;
+  &.error {
+    color: red;
+  }
 }
 
 .control-input {

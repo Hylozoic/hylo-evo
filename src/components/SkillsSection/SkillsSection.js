@@ -48,26 +48,18 @@ export default class SkillsSection extends Component {
       skills
     } = this.props
 
-    return (
-      <div>
-        <div styleName='header'>
-          My Skills &amp; Interests
-        </div>
-        <div
-          styleName={cx('pill-container', 'expanded')}>
-          <Pillbox
-            pills={map(skills, skill => ({ ...skill, label: skill.name }))}
-            handleInputChange={this.handleInputChange}
-            handleClick={this.handleClick}
-            handleAddition={this.handleAddition}
-            handleDelete={this.handleDelete}
-            editable={isMe}
-            addLabel='Add a Skill or Interest'
-            placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills and interests do you have?`}
-            suggestions={skillSuggestions}
-          />
-        </div>
-      </div>
-    )
+    return <div styleName={cx('pill-container', 'expanded')}>
+      <Pillbox
+        pills={map(skills, skill => ({ ...skill, label: skill.name }))}
+        handleInputChange={this.handleInputChange}
+        handleClick={this.handleClick}
+        handleAddition={this.handleAddition}
+        handleDelete={this.handleDelete}
+        editable={isMe}
+        addLabel='Add a Skill or Interest'
+        placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills and interests do you have?`}
+        suggestions={skillSuggestions}
+      />
+    </div>
   }
 }
