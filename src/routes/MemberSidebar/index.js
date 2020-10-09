@@ -1,3 +1,4 @@
 import component from './MemberSidebar'
+import connector from './MemberSidebar.connector'
 
-export default component
+export default connector(component)
