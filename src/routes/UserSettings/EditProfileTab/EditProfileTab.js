@@ -54,7 +54,7 @@ export default class EditProfileTab extends Component {
     if (!currentUser) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, locationId, location, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, locationId, location, url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
 
     this.setState({
@@ -66,7 +66,6 @@ export default class EditProfileTab extends Component {
         bio: bio || '',
         location: location || '',
         locationId: locationId || null,
-        email: email || '',
         url: url || '',
         facebookUrl,
         twitterName,
@@ -112,7 +111,7 @@ export default class EditProfileTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio, location, url, facebookUrl, twitterName, linkedinUrl
     } = edits
     const locationObject = currentUser.locationObject
 

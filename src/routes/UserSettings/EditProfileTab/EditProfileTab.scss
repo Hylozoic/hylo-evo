@@ -84,6 +84,6 @@
 }
 
 .link-button {
-  margin-left: auto;
   composes: text-button from 'css/typography.scss';
+  margin-left: auto;
 }
