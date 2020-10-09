@@ -168,6 +168,10 @@ export function communitySettingsUrl (communitySlug) {
   return `${communityUrl(communitySlug)}/settings`
 }
 
+export function currentUserSettingsUrl () {
+  return `/settings`
+}
+
 export function networkSettingsUrl (networkSlug) {
   return `${networkUrl(networkSlug)}/settings`
 }
