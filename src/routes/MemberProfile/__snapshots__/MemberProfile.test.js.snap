@@ -386,6 +386,9 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       >
         I like wombats.
       </div>
+      <Connect(SkillsSection)
+        personId="1"
+      />
       <Connect(RecentActivity)
         routeParams={
           Object {

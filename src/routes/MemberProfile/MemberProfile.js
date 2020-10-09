@@ -11,6 +11,7 @@ import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
+import SkillsSection from 'components/SkillsSection'
 import './MemberProfile.scss'
 
 export default class MemberProfile extends React.Component {
@@ -53,10 +54,11 @@ export default class MemberProfile extends React.Component {
       tagline
     } = person
     const { currentTab } = this.state
-    const isMe = currentUser && currentUser.id === routeParams.personId
-    const isAxolotl = AXOLOTL_ID === routeParams.personId
+    const personId = routeParams.personId
+    const isMe = currentUser && currentUser.id === personId
+    const isAxolotl = AXOLOTL_ID === personId
     const itemsMenuItems = [
-      { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(routeParams.personId), hide: isMe || isAxolotl }
+      { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(personId), hide: isMe || isAxolotl }
     ]
 
     return <div styleName='member-profile'>
@@ -70,7 +72,8 @@ export default class MemberProfile extends React.Component {
         </ProfileControls>
         {currentTab === 'Overview' && <div>
           <h2 styleName='subhead'>About Me</h2>
-          <div styleName='bio'>{bio}</div>
+          {bio && <div styleName='bio'>{bio}</div>}
+          <SkillsSection personId={personId} />
           <RecentActivity routeParams={routeParams} loading={loading} />
         </div>}
         {currentTab === 'Posts' &&
