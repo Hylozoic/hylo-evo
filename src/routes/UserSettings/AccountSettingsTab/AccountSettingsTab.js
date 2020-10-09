@@ -51,13 +51,15 @@ export default class AccountSettingsTab extends Component {
     const { setConfirm } = this.props
     const { changed, edits } = this.state
 
-    if (newValue === this.state.initialValues[key]) return this.setState({
-      changed: omit(key, this.state.changed),
-      edits: {
-        ...edits,
-        [key]: newValue
-      }
-    })
+    if (newValue === this.state.initialValues[key]) {
+      return this.setState({
+        changed: omit(key, this.state.changed),
+        edits: {
+          ...edits,
+          [key]: newValue
+        }
+      })
+    }
 
     setConfirm('You have unsaved changes. Are you sure you want to leave?')
     this.setState({
@@ -127,6 +129,7 @@ export default class AccountSettingsTab extends Component {
   }
 }
 
+/* eslint-disable */
 export const validateEmail = email => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(email.toLowerCase())
