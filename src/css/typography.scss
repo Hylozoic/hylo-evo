@@ -131,6 +131,7 @@
   letter-spacing: 0;
   line-height: 20px;
   &:hover {
+    text-decoration: none;
     color: $color-gossamer;
     cursor: pointer;
   }

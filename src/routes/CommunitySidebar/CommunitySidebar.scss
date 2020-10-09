@@ -47,9 +47,6 @@ $about-height: 116px;
   display: block;
   margin-bottom: 20px;
   composes: text-button from 'css/typography.scss';
-  &:hover{
-    text-decoration: none;
-  }
 }
 
 // MemberSection
