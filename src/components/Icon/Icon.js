@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import './component.scss'
+import './Icon.scss'
 
 export default function Icon ({ name, className, green, children, onClick, dataTip, dataTipFor }) {
   const iconClassName = `icon-${name}`
