@@ -46,3 +46,17 @@
     }
   }
 }
+
+.remove-label {
+  font-size: 12px;
+  font-weight: bold;
+  content: '\2715';
+  cursor: pointer;
+  color: transparent;
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  padding: 4px;
+  border-radius: 4px;
+  vertical-align: top;
+}

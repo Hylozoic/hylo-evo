@@ -36,12 +36,12 @@ export default function Pill ({
     styleName={pillStyles}
     className={className}
     onMouseLeave={mouseOut}
-    onClick={onClick}
   >
     <span
       data-tip='Click to Search'
       data-for='pill-label'
       styleName='display-label'
+      onClick={onClick}
     >
       {label}
     </span>
