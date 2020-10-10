@@ -146,55 +146,6 @@ $search-width: 266px;
   vertical-align: top;
 }
 
-.pill {
-  composes: label from 'components/SkillLabel/component.scss';
-  position: relative;
-
-  // Prevent highlighting of text on click/doubleclick
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
-
-  margin-right: 8px;
-  margin-bottom: 8px;
-
-  .display-label {
-    color: $color-slate-gray-80;
-  }
-  // onclick bump word to left to make room for X
-  // click again to actually remove it
-
-  &.clickable {
-    cursor: pointer;
-  }
-
-  &.removable {
-    cursor: pointer;
-
-    &:hover {
-      .remove-label {
-        color: $color-slate-gray-80;
-        background: #fff;
-      }
-    }
-  }
-
-  &.removing {
-    .display-label {
-      color: #FFF;
-    }
-
-    border: 1px solid $color-amaranth;
-    background-color: $color-amaranth;
-    color: #FFF;
-
-    .remove-label {
-      color: #FFF !important;
-      background-color: $color-amaranth !important;
-    }
-  }
-}
-
 .enter {
   opacity: 0.01;
 }

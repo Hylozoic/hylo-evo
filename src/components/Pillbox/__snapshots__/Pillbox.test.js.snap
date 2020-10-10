@@ -1,63 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Pill renders 1`] = `
-<Pill
-  id={1}
-  label="mountain climbing"
->
-  <div
-    data-stylename="styles.pill"
-    onMouseLeave={[Function]}
-  >
-    <span
-      data-for="pill-label"
-      data-stylename="styles.display-label"
-      data-tip="Click to Search"
-      onClick={[Function]}
-    >
-      mountain climbing
-    </span>
-  </div>
-</Pill>
-`;
-
-exports[`Pill renders when editable 1`] = `
-<Pill
-  editable={true}
-  id={1}
-  label="mountain climbing"
->
-  <div
-    data-stylename="styles.pill"
-    onMouseLeave={[Function]}
-  >
-    <span
-      data-for="pill-label"
-      data-stylename="styles.display-label"
-      data-tip="Click to Search"
-      onClick={[Function]}
-    >
-      mountain climbing
-    </span>
-    <Icon
-      data-stylename="styles.remove-label"
-      dataTip="Double click to delete"
-      dataTipFor="pill-label"
-      name="Ex"
-      onClick={[Function]}
-    >
-      <span
-        className="icon-Ex"
-        data-for="pill-label"
-        data-stylename="icon"
-        data-tip="Double click to delete"
-        onClick={[Function]}
-      />
-    </Icon>
-  </div>
-</Pill>
-`;
-
 exports[`Pillbox renders 1`] = `
 <div
   data-stylename="styles.root"
@@ -83,13 +25,12 @@ exports[`Pillbox renders 1`] = `
       <Pill
         id={1}
         key="1"
-        label="clickable"
-        onClick={[Function]}
+        label="a pill"
       />
       <Pill
         id={2}
         key="2"
-        label="unclickable"
+        label="another pill"
       />
     </CSSTransitionGroup>
   </div>
