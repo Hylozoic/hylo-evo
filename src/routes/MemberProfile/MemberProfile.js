@@ -95,7 +95,7 @@ export default class MemberProfile extends React.Component {
         </div>
         {/* TODO: Add way to route navigate / go to URL for these action items */}
         <div styleName='action-icons'>
-          <Icon styleName='action-icon-button' name='Reply' onClick={() => goToUrl(isCurrentUser ? messagesUrl() : messageThreadUrl(member))} />
+          <Icon styleName='action-icon-button' name='Reply' onClick={() => goToUrl(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
           <Icon styleName='action-icon-button' name='Phone' onClick={() => goToUrl('')} />
           <Icon styleName='action-icon-button' name='Email' onClick={() => goToUrl('')} />
           <Icon styleName='action-icon-button' name='Facebook' onClick={() => goToUrl(person.facebookUrl)} />
