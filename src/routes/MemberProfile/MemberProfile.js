@@ -42,6 +42,7 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return <Error>this.props.error</Error>
     if (!this.props.person) return <Loading />
+
     const {
       loading,
       person,
@@ -59,8 +60,8 @@ export default class MemberProfile extends React.Component {
     } = person
     const { currentTab } = this.state
     const personId = routeParams.personId
-    // TODO: Re-introduce Block this Member / action dropdown
-    // const isCurrentUser = currentUser && currentUser.id === personId
+    // TODO: Re-introduce Block this Member and Profile setting action dropdown
+    const isCurrentUser = currentUser && currentUser.id === personId
     // const isAxolotl = AXOLOTL_ID === personId
     // const actionMenuItems = [
     //   { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(personId), hide: isCurrentUser || isAxolotl }
@@ -86,7 +87,7 @@ export default class MemberProfile extends React.Component {
             <Icon name='Location' styleName='header-member-location-icon' />
             {location}
           </div>}
-          {/* TODO: Do still want "Community manager" role label? */}
+          {/* TODO: Do we still want to show the "Community manager" role? */}
           {/* {role && <div styleName='location'>
             <Icon styleName='star' name='StarCircle' />
             {role}
@@ -105,18 +106,12 @@ export default class MemberProfile extends React.Component {
           {/* <Icon name='Ellipses' styleName='action-icon-button' onClick={() => goToUrl(person.facebookUrl)} /> */}
           {/* <MemberActionsMenu items={actionMenuItems} /> */}
         </div>
+        <div styleName='tagline'>{bio || tagline}</div>
         <div styleName='member-details'>
-          <div styleName='tagline'>{tagline}</div>
-          <hr styleName='separator' />
-          {bio && <React.Frament>
-            <div styleName='bio'>{bio}</div>
-            <hr styleName='separator' />
-          </React.Frament>}
           <div styleName='profile-subhead'>
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
-          <hr styleName='separator' />
         </div>
       </div>
       <div styleName='content'>

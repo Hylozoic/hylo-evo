@@ -8,7 +8,6 @@ $pill-height: 216px;
 .pill-container {
   position: relative;
   max-height: $pill-height;
-  margin-bottom: 5px;
   transition: max-height 0.50s ease-out;
 }
 

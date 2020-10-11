@@ -25,7 +25,7 @@ import Feed from 'routes/Feed'
 import MapExplorer from 'routes/MapExplorer'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
-import MemberSidebar from 'routes/MemberSidebar'
+// import MemberSidebar from 'routes/MemberSidebar'
 import Members from 'routes/Members'
 import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
@@ -160,11 +160,11 @@ export default class PrimaryLayout extends Component {
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
             <Route path={`/:context(c)/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+            {/* <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} /> */}
             <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/:context(n)/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
-            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
-            <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+            {/* <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+            <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
           </Switch>
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>

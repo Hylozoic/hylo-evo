@@ -1,3 +1,7 @@
+@mixin column-margins {
+  margin: 0 $space-10x 0 $space-10x;
+}
+
 @mixin column-padding {
   padding: 0 $space-10x 0 $space-10x;
 }
@@ -55,7 +59,7 @@
 }
 
 .action-icons {
-  @include column-padding();
+  @include column-margins();
   display: flex;
   justify-content: flex-end;
   margin-top: -$space-5x;
@@ -76,7 +80,14 @@
   font-size: $space-4x;
   &:first-child {
     margin-right: auto;
+    background-color: $color-caribbean-green;
+    color: white;
   }
+  &:first-child:hover {
+    background-color: white;
+    color: $color-caribbean-green;
+  }
+
   &:last-child {
     margin-right: 0
   }
@@ -86,22 +97,29 @@
   }
 }
 
-// Member Details
+// Tagline area
+
+.tagline {
+  @include column-margins();
+  composes: bdy-lt-lg from 'css/typography.scss';
+  font-size: 18px;
+  margin-top: $space-6x;
+  margin-bottom: $space-6x;
+}
+
+// Member Details area
 
 .member-details {
-  @include column-padding();
+  @include column-margins();
+  padding: $space-3x;
+  margin-bottom: $space-5x;
+  border-top: solid 1px $color-rhino-10;
+  border-bottom: solid 1px $color-rhino-10;
 }
 
 .bio {
   composes: bdy-lt-lg from 'css/typography.scss';
   margin-bottom: $space-5x;
-}
-
-.tagline {
-  composes: bdy-lt-lg from 'css/typography.scss';
-  font-size: 18px;
-  margin-top: $space-6x;
-  margin-bottom: $space-6x;
 }
 
 .profile-subhead {
@@ -114,6 +132,7 @@
 
 .content {
   @include column-padding();
+  width: 100%;
   justify-content: center;
   .activity-item {
     margin: $space-5x 0;
@@ -149,7 +168,6 @@
     margin-left: $space-1x;
   }
 }
-
 
 .separator {
   margin: $space-2x 0 $space-4x 0;
