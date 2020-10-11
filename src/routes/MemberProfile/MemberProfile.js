@@ -1,12 +1,12 @@
 import React from 'react'
 import { filter, isFunction } from 'lodash'
-import { AXOLOTL_ID } from 'store/models/Person'
+import { AXOLOTL_ID, firstName } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
+import { messageThreadUrl, messagesUrl } from 'util/navigation'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import Loading from 'components/Loading'
-import SimpleTabBar from 'components/SimpleTabBar'
 import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
@@ -49,42 +49,93 @@ export default class MemberProfile extends React.Component {
       routeParams
     } = this.props
     const {
+      avatarUrl,
       bannerUrl,
+      name,
+      location,
+      // role,
       bio,
       tagline
     } = person
     const { currentTab } = this.state
     const personId = routeParams.personId
-    const isMe = currentUser && currentUser.id === personId
-    const isAxolotl = AXOLOTL_ID === personId
-    const itemsMenuItems = [
-      { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(personId), hide: isMe || isAxolotl }
+    // TODO: Re-introduce Block this Member / action dropdown
+    // const isCurrentUser = currentUser && currentUser.id === personId
+    // const isAxolotl = AXOLOTL_ID === personId
+    // const actionMenuItems = [
+    //   { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(personId), hide: isCurrentUser || isAxolotl }
+    // ]
+    const contentMap = [
+      { label: 'Overview', title: `${firstName(person)}'s recent activity`, component: RecentActivity },
+      { label: 'Posts', title: `${firstName(person)}'s posts`, component: MemberPosts },
+      { label: 'Comments', title: `${firstName(person)}'s comments`, component: MemberComments },
+      { label: 'Upvotes', title: `${firstName(person)}'s upvotes`, component: MemberVotes }
     ]
+    const contentDropDownItems = contentMap.map(({ label }) => ({
+      label, onClick: () => this.selectTab(label)
+    }))
+    const currentContent = contentMap.find(contentItem => contentItem.label === currentTab)
+    const CurrentContentComponent = currentContent.component
 
     return <div styleName='member-profile'>
-      <ProfileBanner bannerUrl={bannerUrl}>
-        <ProfileNamePlate {...person} rightSideContent={<MemberActionsMenu items={itemsMenuItems} />} />
-      </ProfileBanner>
+      <div styleName='header'>
+        <div styleName='header-banner' style={bgImageStyle(bannerUrl)}>
+          <RoundImage styleName='header-member-avatar' url={avatarUrl} xlarge />
+          <h1 styleName='header-member-name'>{name}</h1>
+          {location && <div styleName='header-member-location'>
+            <Icon name='Location' styleName='header-member-location-icon' />
+            {location}
+          </div>}
+          {/* TODO: Do still want "Community manager" role label? */}
+          {/* {role && <div styleName='location'>
+            <Icon styleName='star' name='StarCircle' />
+            {role}
+          </div>} */}
+        </div>
+        {/* TODO: Add way to route navigate / go to URL for these action items */}
+        <div styleName='action-icons'>
+          <Icon styleName='action-icon-button' name='Reply' onClick={() => goToUrl(isCurrentUser ? messagesUrl() : messageThreadUrl(member))} />
+          <Icon styleName='action-icon-button' name='Phone' onClick={() => goToUrl('')} />
+          <Icon styleName='action-icon-button' name='Email' onClick={() => goToUrl('')} />
+          <Icon styleName='action-icon-button' name='Facebook' onClick={() => goToUrl(person.facebookUrl)} />
+          <Icon styleName='action-icon-button' name='LinkedIn' onClick={() => goToUrl(person.linkedinUrl)} />
+          <Icon styleName='action-icon-button' name='Twitter' onClick={() => goToUrl(`https://twitter.com/${person.twitterName}`)} />
+          <Icon styleName='action-icon-button' name='Globe' onClick={() => goToUrl(person.url)} />
+          {/* Edit Profile and Block user menu ? */}
+          {/* <Icon name='Ellipses' styleName='action-icon-button' onClick={() => goToUrl(person.facebookUrl)} /> */}
+          {/* <MemberActionsMenu items={actionMenuItems} /> */}
+        </div>
+        <div styleName='member-details'>
+          <div styleName='tagline'>{tagline}</div>
+          <hr styleName='separator' />
+          {bio && <React.Frament>
+            <div styleName='bio'>{bio}</div>
+            <hr styleName='separator' />
+          </React.Frament>}
+          <div styleName='profile-subhead'>
+            Skills &amp; Interests
+          </div>
+          <SkillsSection personId={personId} editable={false} />
+          <hr styleName='separator' />
+        </div>
+      </div>
       <div styleName='content'>
-        <ProfileControls currentTab={currentTab} selectTab={this.selectTab}>
-          <span styleName='tagline'>{tagline}</span>
-          <SocialButtons {...person} />
-        </ProfileControls>
-        {currentTab === 'Overview' && <div>
-          <h2 styleName='subhead'>About Me</h2>
-          {bio && <div styleName='bio'>{bio}</div>}
-          <SkillsSection personId={personId} />
-          <RecentActivity routeParams={routeParams} loading={loading} />
-        </div>}
-        {currentTab === 'Posts' &&
-          <MemberPosts routeParams={routeParams} loading={loading} />}
-        {currentTab === 'Comments' &&
-          <MemberComments routeParams={routeParams} loading={loading} />}
-        {currentTab === 'Upvotes' &&
-          <MemberVotes routeParams={routeParams} loading={loading} />}
+        <div styleName='content-controls'>
+          <h2 styleName='content-header'>{currentContent.title}</h2>
+          <Dropdown
+            styleName='content-dropdown'
+            items={contentDropDownItems}
+            toggleChildren={<span>{currentTab} <Icon styleName='content-dropdown-icon' name='ArrowDown' /></span>}
+          />
+        </div>
+        <CurrentContentComponent routeParams={routeParams} loading={loading} />
       </div>
     </div>
   }
+}
+
+function goToUrl (url) {
+  console.log('!!! url:', url)
 }
 
 const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
@@ -100,67 +151,6 @@ export function MemberActionsMenu ({ items }) {
 
   return activeItems.length > 0 &&
     <Dropdown items={activeItems} toggleChildren={<Icon name='More' />} />
-}
-
-export function ProfileBanner ({ bannerUrl, children }) {
-  return <div styleName='banner'>
-    {children}
-    {bannerUrl && <div style={bgImageStyle(bannerUrl)} styleName='banner-image' />}
-  </div>
-}
-
-export function ProfileNamePlate ({ avatarUrl, name, location, role, rightSideContent }) {
-  return <div styleName='name-plate-container'>
-    <div styleName='name-plate'>
-      <RoundImage styleName='avatar' url={avatarUrl} xlarge />
-      <div styleName='details'>
-        <h1 styleName='name'>{name}</h1>
-        <div styleName='fine-details'>
-          {location && <span styleName='location'>{location}</span>}
-          {role && <span styleName='role-bling'>
-            {location && <span styleName='spacer'>•</span>}
-            <Icon styleName='star' name='StarCircle' />
-            <span styleName='role'>{role}</span>
-          </span>}
-        </div>
-      </div>
-    </div>
-    {rightSideContent && <div styleName='name-plate-right-side'>{rightSideContent}</div>}
-  </div>
-}
-
-export function ProfileControls ({ children, currentTab, selectTab }) {
-  return <div styleName='controls'>
-    <div styleName='controls-children'>
-      {children}
-    </div>
-    <hr styleName='separator' />
-    <SimpleTabBar
-      currentTab={currentTab}
-      selectTab={selectTab}
-      tabNames={['Overview', 'Posts', 'Comments', 'Upvotes']} />
-  </div>
-}
-
-export function SocialButtons ({ facebookUrl, linkedinUrl, twitterName, url }) {
-  return <div styleName='social-buttons'>
-    {twitterName &&
-      <a styleName='social-link' href={`https://twitter.com/${twitterName}`} target='_blank'>
-        <Icon name='ProfileTwitter' styleName='icon icon-twitter' />
-      </a>}
-    {facebookUrl &&
-      <a styleName='social-link' href={facebookUrl} target='_blank'>
-        <Icon name='ProfileFacebook' styleName='icon icon-facebook' />
-      </a>}
-    {linkedinUrl &&
-      <a styleName='social-link' href={linkedinUrl} target='_blank'>
-        <Icon name='ProfileLinkedin' styleName='icon icon-linkedin' />
-      </a>}
-    {url &&
-      <a styleName='social-link' href={url} target='_blank'>
-        <Icon name='ProfileUrl' green styleName='icon' />
-      </a>}
-  </div>
 }
 
 export function Error ({ children }) {

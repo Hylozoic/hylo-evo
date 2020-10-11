@@ -21,9 +21,8 @@ export default class RecentActivity extends React.Component {
     const { activityItems, routeParams } = this.props
 
     return <div>
-      <h2 styleName='subhead'>Recent Activity</h2>
-      {activityItems && activityItems.map((item, i) => {
-        return <div styleName='activity-item' key={i}>
+      {activityItems && activityItems.map((item, i) =>
+        <div styleName='activity-item' key={i}>
           {item.hasOwnProperty('title')
             ? <PostCard
               post={item}
@@ -34,7 +33,7 @@ export default class RecentActivity extends React.Component {
               routeParams={routeParams}
               expanded={this.itemSelected(item.post.id)} />}
         </div>
-      })}
+      )}
     </div>
   }
 }
