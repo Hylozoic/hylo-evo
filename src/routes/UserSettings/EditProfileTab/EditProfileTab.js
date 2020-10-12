@@ -54,7 +54,9 @@ export default class EditProfileTab extends Component {
     if (!currentUser) return
 
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, locationId, location, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio,
+      contactEmail, contactPhone, locationId, location,
+      url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
 
     this.setState({
@@ -64,6 +66,8 @@ export default class EditProfileTab extends Component {
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         tagline: tagline || '',
         bio: bio || '',
+        contactPhone: contactPhone || '',
+        contactEmail: contactEmail || '',
         location: location || '',
         locationId: locationId || null,
         url: url || '',
@@ -111,7 +115,9 @@ export default class EditProfileTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, url, facebookUrl, twitterName, linkedinUrl
+      name, avatarUrl, bannerUrl, tagline, bio,
+      contactEmail, contactPhone, location, url,
+      facebookUrl, twitterName, linkedinUrl
     } = edits
     const locationObject = currentUser.locationObject
 
@@ -144,6 +150,8 @@ export default class EditProfileTab extends Component {
       <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
       <SettingsControl label='My Skills &amp; Interests' renderControl={() =>
         <SkillsSection personId={currentUser.id} />} />
+      <SettingsControl label='Contact Email' onChange={this.updateSetting('contactEmail')} value={contactEmail} />
+      <SettingsControl label='Contact Phone' onChange={this.updateSetting('contactPhone')} value={contactPhone} />
       <label styleName='social-label'>Social Accounts</label>
       <SocialControl
         label='Facebook'
