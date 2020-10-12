@@ -91,13 +91,14 @@ export default class PrimaryLayout extends Component {
     if (isCommunityRoute) {
       if (!community && !communityPending) return <NotFound />
     }
+
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
+    const signupInProgress = get('settings.signupInProgress', currentUser)
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path, exact: true }),
       detailRoutes
     )
-
     const routesWithNavigation = [
       { path: '/:context(all|public)' },
       { path: '/:context(n)/:networkSlug' },
@@ -119,10 +120,11 @@ export default class PrimaryLayout extends Component {
           />
         )}
         <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
-          <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />
-          <RedirectToCommunity path='/' currentUser={currentUser} />
-          <RedirectToCommunity path='/app' currentUser={currentUser} />
           <Switch>
+            {signupInProgress &&
+              <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />}
+            {!signupInProgress &&
+              <RedirectToCommunity path='/(|app)' currentUser={currentUser} />}
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/:context(all)/topics' component={AllTopics} />
             {/* <Route path='/:context(tag)/:topicName' exact component={TopicSupportComingSoon} /> */}
@@ -257,26 +259,22 @@ const redirectRoutes = [
   { from: '/c/:slug/events', to: '/c/:slug' }
 ]
 
-export function RedirectToSignupFlow ({ currentUser, pathname }) {
-  if (!currentUser || !currentUser.settings || !currentUser.settings.signupInProgress) return null
+export function RedirectToSignupFlow ({ pathname }) {
   if (isSignupPath(pathname)) return null
-  const destination = '/signup/upload-photo'
-  return <Redirect to={destination} />
+
+  return <Redirect to='/signup/upload-photo' />
 }
 
 export function RedirectToCommunity ({ path, currentUser }) {
-  return <Route path={path} exact render={redirectIfCommunity(currentUser)} />
-}
+  let redirectToPath = '/all'
 
-export function redirectIfCommunity (currentUser) {
-  return () => {
-    if (currentUser.memberships.count() === 0) return <Redirect to={`/all`} />
-
+  if (currentUser.memberships.count() > 0) {
     const mostRecentCommunity = currentUser.memberships
       .orderBy(m => new Date(m.lastViewedAt), 'desc')
       .first()
       .community
-
-    return <Redirect to={`/c/${mostRecentCommunity.slug}`} />
+    redirectToPath = `/c/${mostRecentCommunity.slug}`
   }
+
+  return <Redirect exact from={path} to={redirectToPath} />
 }

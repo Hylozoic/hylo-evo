@@ -33,6 +33,7 @@ export default class UploadPhoto extends Component {
   render () {
     const { currentUser, uploadImagePending } = this.props
     const currentAvatarUrl = this.state.edits.avatarUrl
+
     if (!currentUser) return <Loading />
 
     return <div styleName='flex-wrapper'>
