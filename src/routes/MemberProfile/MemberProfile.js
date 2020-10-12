@@ -1,7 +1,6 @@
 import React from 'react'
 import { filter, isFunction } from 'lodash'
-import { Link } from 'react-router-dom'
-import { AXOLOTL_ID, firstName as getFirstName } from 'store/models/Person'
+import { firstName as getFirstName } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import { messageThreadUrl, messagesUrl } from 'util/navigation'
 import Dropdown from 'components/Dropdown'
@@ -54,6 +53,7 @@ export default class MemberProfile extends React.Component {
     const { currentTab } = this.state
     const personId = routeParams.personId
     const firstName = getFirstName(person)
+    const locationWithoutUsa = person.location && person.location.replace(', United States', '')
     // TODO: Re-introduce Block this Member and Profile setting action dropdown
     const isCurrentUser = currentUser && currentUser.id === personId
     // const isAxolotl = AXOLOTL_ID === personId
@@ -79,7 +79,7 @@ export default class MemberProfile extends React.Component {
           <h1 styleName='header-member-name'>{person.name}</h1>
           {person.location && <div styleName='header-member-location'>
             <Icon name='Location' styleName='header-member-location-icon' />
-            {person.location}
+            {locationWithoutUsa}
           </div>}
           {/* TODO: Do we still want to show the "Community manager" role? */}
           {/* {role && <div styleName='location'>
@@ -88,7 +88,7 @@ export default class MemberProfile extends React.Component {
           </div>} */}
         </div>
         <div styleName='action-icons'>
-          <Icon styleName='action-icon-button' name='Messages' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
+          <Icon styleName='action-icon-button' name='Letter' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
           {/* TODO: Edit Profile and Block user menu ? */}
           {/* <Icon name='Ellipses' styleName='action-icon-button' onClick={() => gotoExternalUrl(person.facebookUrl)} /> */}
           {/* <MemberActionsMenu items={actionMenuItems} /> */}
@@ -101,9 +101,9 @@ export default class MemberProfile extends React.Component {
           {person.linkedinUrl &&
             <Icon styleName='action-icon-button' name='LinkedIn' onClick={() => gotoExternalUrl(person.linkedinUrl)} />}
           {person.twitterName &&
-            <Icon styleName='action-icon-button' name='ProfileTwitter' onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
+            <Icon styleName='action-icon-button' name='Twitter' onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
           {person.url &&
-            <Icon styleName='action-icon-button' name='Globe' onClick={() => gotoExternalUrl(person.url)} />}
+            <Icon styleName='action-icon-button' name='Public' onClick={() => gotoExternalUrl(person.url)} />}
         </div>
         <div styleName='tagline'>{person.bio || person.tagline}</div>
         <div styleName='member-details'>

@@ -28,7 +28,7 @@
   justify-content: center;
   align-items: center;
   height: 3 * $space-18x;
-  background: linear-gradient($color-caribbean-green, $color-rhino-30);
+  background: linear-gradient($color-rhino-30, $color-caribbean-green);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -89,7 +89,6 @@
     background-color: white;
     color: $color-caribbean-green;
   }
-
   &:last-child {
     margin-right: 0
   }
