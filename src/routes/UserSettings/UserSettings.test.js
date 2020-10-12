@@ -4,7 +4,7 @@ import React from 'react'
 
 describe('UserSettings', () => {
   it('renders correctly', () => {
-    const currentUser = { id: 1, hasFeature: () => true }
+    const currentUser = { id: 1, hasFeature: () => true, blockedUsers: { toRefArray: () => ['a user'] } }
     const memberships = [{ id: 2 }, { id: 3 }]
     const updateUserSettings = () => {}
     const leaveCommunity = () => {}

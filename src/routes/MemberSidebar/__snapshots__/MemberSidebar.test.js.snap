@@ -4,7 +4,24 @@ exports[`does something 1`] = `
 <div
   data-stylename="member-sidebar"
 >
-  <Connect(MessageMember) />
-  <Connect(SkillsSection) />
+  <div
+    data-stylename="message-member-container"
+  >
+    <Link
+      replace={false}
+      to="/t"
+    >
+      <Button>
+        Messages
+      </Button>
+    </Link>
+  </div>
+  <Link
+    data-stylename="sidebar-link"
+    replace={false}
+    to="/settings"
+  >
+    Profile Settings
+  </Link>
 </div>
 `;

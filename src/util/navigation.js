@@ -168,6 +168,10 @@ export function communitySettingsUrl (communitySlug) {
   return `${communityUrl(communitySlug)}/settings`
 }
 
+export function currentUserSettingsUrl () {
+  return `/settings`
+}
+
 export function networkSettingsUrl (networkSlug) {
   return `${networkUrl(networkSlug)}/settings`
 }
@@ -178,6 +182,15 @@ export function networkCommunitySettingsUrl (networkSlug, communitySlug) {
 
 export function newMessageUrl () {
   return `${messagesUrl()}/new`
+}
+
+export function messageThreadUrl (person) {
+  // TODO: messageThreadId doesn't seem to be currently ever coming-in from the backend
+  const { id: participantId, messageThreadId } = person
+
+  return messageThreadId
+    ? `/t/${messageThreadId}`
+    : `/t/new?participants=${participantId}`
 }
 
 export function topicsUrl (opts, defaultUrl = allCommunitiesUrl()) {

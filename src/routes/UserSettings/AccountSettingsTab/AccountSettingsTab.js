@@ -1,31 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { trim, pick, keys, omit, find, isEmpty } from 'lodash/fp'
 import SettingsControl from 'components/SettingsControl'
-import Button from 'components/Button'
-import Icon from 'components/Icon'
-import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import Loading from 'components/Loading'
-import { bgImageStyle } from 'util/index'
-import cx from 'classnames'
-import { DEFAULT_BANNER } from 'store/models/Me'
-
 import './AccountSettingsTab.scss'
-
+import Button from 'components/Button'
+import Loading from 'components/Loading'
 const { object, func } = PropTypes
-
-const twitterPrompt = () => window.prompt('Please enter your twitter name.')
-export function linkedinPrompt (prompt) {
-  var url = window.prompt(prompt || 'Please enter the full url for your LinkedIn page.')
-  if (url) {
-    if (validateLinkedin(url)) {
-      return url
-    } else {
-      return linkedinPrompt('Invalid url. Please enter full url for your LinkedIn page.')
-    }
-  }
-}
-
-export const validateLinkedin = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
 
 export default class AccountSettingsTab extends Component {
   static propTypes = {
@@ -33,9 +13,10 @@ export default class AccountSettingsTab extends Component {
     updateUserSettings: func,
     loginWithService: func
   }
+
   constructor (props) {
     super(props)
-    this.state = { edits: {}, changed: false }
+    this.state = { edits: {}, changed: {} }
   }
 
   componentDidMount () {
@@ -50,168 +31,106 @@ export default class AccountSettingsTab extends Component {
 
   setEditState () {
     const { currentUser } = this.props
+
     if (!currentUser) return
 
-    const {
-      name, avatarUrl, bannerUrl, tagline, bio, locationId, location, email, url, facebookUrl, twitterName, linkedinUrl
-    } = currentUser
+    const initialValues = {
+      email: currentUser.email || '',
+      password: '',
+      confirm: ''
+    }
 
     this.setState({
+      initialValues,
+      edits: initialValues
+    })
+  }
+
+  updateSetting = key => event => {
+    const newValue = trim(event.target.value)
+    const { setConfirm } = this.props
+    const { changed, edits } = this.state
+
+    if (newValue === this.state.initialValues[key]) {
+      return this.setState({
+        changed: omit(key, this.state.changed),
+        edits: {
+          ...edits,
+          [key]: newValue
+        }
+      })
+    }
+
+    setConfirm('You have unsaved changes. Are you sure you want to leave?')
+    this.setState({
+      changed: {
+        ...changed,
+        [key]: true
+      },
       edits: {
-        name: name || '',
-        avatarUrl: avatarUrl || '',
-        bannerUrl: bannerUrl || DEFAULT_BANNER,
-        tagline: tagline || '',
-        bio: bio || '',
-        location: location || '',
-        locationId: locationId || null,
-        email: email || '',
-        url: url || '',
-        facebookUrl,
-        twitterName,
-        linkedinUrl
+        ...edits,
+        [key]: newValue
       }
     })
   }
 
-  updateSetting = (key, setChanged = true) => event => {
-    const { edits, changed } = this.state
-    setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
+  hasChanges = () => find(c => c, this.state.changed)
 
-    if (key === 'location') {
-      edits['location'] = event.target.value.fullText
-      edits['locationId'] = event.target.value.id
-    } else {
-      edits[key] = event.target.value
-    }
+  formErrors = () => {
+    const { edits } = this.state
+    const { email, password, confirm } = edits
+    const hasChanges = this.hasChanges()
+    const errors = []
 
-    this.setState({
-      changed: setChanged ? true : changed,
-      edits: { ...edits }
-    })
+    if (!hasChanges) return errors
+
+    const passwordConfirmed = password === confirm
+
+    if (!validateEmail(email)) errors.push('Email address is not in a valid format')
+    if (password.length > 0 && password.length < 9) errors.push('Passwords must be at least 9 characters long')
+    if (!passwordConfirmed && confirm.length > 8) errors.push('Passwords don\'t match')
+
+    return errors
   }
 
-  updateSettingDirectly = (key, changed) => value =>
-    this.updateSetting(key, changed)({ target: { value } })
+  canSave = () => this.hasChanges() && isEmpty(this.formErrors())
 
   save = () => {
-    this.setState({ changed: false })
-    this.props.setConfirm(false)
-    this.props.updateUserSettings(this.state.edits)
+    const { changed, edits } = this.state
+    const { updateUserSettings, setConfirm } = this.props
+
+    this.setState({ changed: {} })
+    setConfirm(false)
+    updateUserSettings(pick(keys(omit('confirm', changed)), edits))
   }
 
   render () {
-    const {
-      currentUser,
-      updateUserSettings,
-      loginWithService,
-      unlinkAccount
-    } = this.props
-    if (!currentUser) return <Loading />
+    if (!this.props.currentUser) return <Loading />
 
-    const { edits, changed } = this.state
-    const {
-      name, avatarUrl, bannerUrl, tagline, bio, location, email, url, facebookUrl, twitterName, linkedinUrl
-    } = edits
-    const locationObject = currentUser.locationObject
+    const { edits } = this.state
+    const { email, password, confirm } = edits
+    const formErrors = this.formErrors()
+    const canSave = this.canSave()
 
     return <div>
-      <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
-      <div style={bgImageStyle(bannerUrl)} styleName='banner'>
-        <UploadAttachmentButton
-          type='userBanner'
-          id={currentUser.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-          styleName='change-banner-button' />
-      </div>
-      <UploadAttachmentButton
-        type='userAvatar'
-        id={currentUser.id}
-        onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-        styleName='change-avatar-button'
-      >
-        <div style={bgImageStyle(avatarUrl)} styleName='avatar'><Icon name='AddImage' styleName='uploadIcon' /></div>
-      </UploadAttachmentButton>
-      <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
-      <SettingsControl label='About Me' onChange={this.updateSetting('bio')} value={bio} type='textarea' />
-      <SettingsControl
-        label='Location'
-        onChange={this.updateSettingDirectly('location', true)}
-        location={location}
-        locationObject={locationObject}
-        type='location'
-      />
+      <div styleName='title'>Update Account</div>
+      {formErrors.map((formErrorText, i) =>
+        <div styleName='error' key={i}>{formErrorText}</div>)}
       <SettingsControl label='Email' onChange={this.updateSetting('email')} value={email} />
-      <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
-      <label styleName='social-label'>Social Accounts</label>
-      <SocialControl
-        label='Facebook'
-        onLink={() => loginWithService('facebook')}
-        onChange={this.updateSettingDirectly('facebookUrl', false)}
-        unlinkAccount={unlinkAccount}
-        provider='facebook'
-        value={facebookUrl} />
-      <SocialControl
-        label='Twitter'
-        onLink={() => twitterPrompt()}
-        onChange={this.updateSettingDirectly('twitterName', false)}
-        unlinkAccount={unlinkAccount}
-        provider='twitter'
-        value={twitterName}
-        updateUserSettings={updateUserSettings} />
-      <SocialControl
-        label='LinkedIn'
-        onLink={() => linkedinPrompt()}
-        unlinkAccount={unlinkAccount}
-        onChange={this.updateSettingDirectly('linkedinUrl', false)}
-        provider='linkedin'
-        value={linkedinUrl}
-        updateUserSettings={updateUserSettings} />
+      <SettingsControl label='New Password' onChange={this.updateSetting('password')} value={password} type='password' />
+      <SettingsControl label='New Password (Confirm)' onChange={this.updateSetting('confirm')} value={confirm} type='password' />
+      <div styleName='help'>
+        Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.
+      </div>
       <div styleName='button-row'>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
+        <Button label='Save Changes' color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />
       </div>
     </div>
   }
 }
 
-export const socialLinkClicked = provider => {}
-
-export class SocialControl extends Component {
-  linkClicked () {
-    const { provider, onLink, updateUserSettings, onChange } = this.props
-
-    if (provider === 'twitter' || provider === 'linkedin') {
-      const key = provider === 'twitter' ? 'twitterName' : 'linkedinUrl'
-      const value = onLink()
-      if (!value) return onChange(false)
-      updateUserSettings({ [key]: value })
-      return onChange(true)
-    } else {
-      return onLink()
-        .then(({ error }) => {
-          if (error) return onChange(false)
-          return onChange(true)
-        })
-    }
-  }
-
-  unlinkClicked () {
-    const { provider, unlinkAccount, onChange } = this.props
-    unlinkAccount(provider)
-    return onChange(false)
-  }
-
-  render () {
-    const { label, value = '' } = this.props
-    const linked = !!value
-
-    const linkButton = <span
-      styleName='link-button'
-      onClick={linked ? () => this.unlinkClicked() : () => this.linkClicked()}>
-      {linked ? 'Unlink' : 'Link'}
-    </span>
-    return <div styleName='control'>
-      <div styleName={cx('social-control-label', { linked })}>{label}{linkButton}</div>
-    </div>
-  }
+/* eslint-disable */
+export const validateEmail = email => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(email.toLowerCase())
 }

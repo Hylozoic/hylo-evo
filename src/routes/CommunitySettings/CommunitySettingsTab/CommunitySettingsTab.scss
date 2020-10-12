@@ -95,7 +95,8 @@
 
 label {
   color: $color-regent-70;
-  margin-left: 10px;
+  // LEJ: Commenting-out as has global impact
+  // margin-left: 10px;
   transition: color .25s ease;
 }
 
