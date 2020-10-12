@@ -15,7 +15,7 @@
   align-items: center;
 }
 
-// Header
+// HEADER
 
 .header {
   width: 100%;
@@ -60,6 +60,8 @@
   }  
 }
 
+// ACTION ICONS
+
 .action-icons {
   @include column-margins();
   display: flex;
@@ -80,26 +82,30 @@
   height: $space-1x;
   width: $space-1x;
   font-size: $space-4x;
-  &:first-child {
-    margin-right: auto;
-    background-color: $color-caribbean-green;
-    color: white;
-  }
-  &:first-child:hover {
-    background-color: white;
-    color: $color-caribbean-green;
-  }
-  &:last-child {
-    margin-right: 0
-  }
   &:hover {
     cursor: pointer;
     background-color: $color-caribbean-green;
     color: white;
   }
+  &:first-child:not(.action-menu) {
+    margin-right: auto;
+    background-color: $color-caribbean-green;
+    color: white;
+    &:hover {
+      background-color: white;
+      color: $color-caribbean-green;
+    }
+  }
+  &:last-child:not(.action-menu) {
+    margin-right: 0;
+  }
+  &.action-menu {
+    // Correction of global style particular to "More" icon
+    top: 0px;
+  }
 }
 
-// Tagline area
+// TAGLINE AREA
 
 .tagline {
   @include column-margins();
@@ -109,7 +115,7 @@
   margin-bottom: $space-6x;
 }
 
-// Member Details area
+// MEMBER DETAILS
 
 .member-details {
   @include column-margins();
@@ -131,6 +137,7 @@
   margin-bottom: $space-3x;
 }
 
+// CONTENT
 
 .content {
   @include column-padding();
@@ -171,9 +178,6 @@
   }
 }
 
-.separator {
-  margin: $space-2x 0 $space-4x 0;
-  opacity: 0.3;
-}
+// ERROR
 
 .error { color: $color-amaranth; }

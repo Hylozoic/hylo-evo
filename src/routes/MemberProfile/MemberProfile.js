@@ -1,8 +1,8 @@
 import React from 'react'
 import { filter, isFunction } from 'lodash'
-import { firstName as getFirstName } from 'store/models/Person'
+import { firstName as getFirstName, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
-import { messageThreadUrl, messagesUrl } from 'util/navigation'
+import { currentUserSettingsUrl, messageThreadUrl, messagesUrl } from 'util/navigation'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -54,22 +54,22 @@ export default class MemberProfile extends React.Component {
     const personId = routeParams.personId
     const firstName = getFirstName(person)
     const locationWithoutUsa = person.location && person.location.replace(', United States', '')
-    // TODO: Re-introduce Block this Member and Profile setting action dropdown
     const isCurrentUser = currentUser && currentUser.id === personId
-    // const isAxolotl = AXOLOTL_ID === personId
-    // const actionMenuItems = [
-    //   { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(personId), hide: isCurrentUser || isAxolotl }
-    // ]
-    const contentMap = [
+    const isAxolotl = AXOLOTL_ID === personId
+    const actionMenuItems = [
+      { icon: 'Edit', label: 'Edit Profile Settings', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
+      { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
+    ]
+    const contentDropDownItems = [
       { label: 'Overview', title: `${firstName}'s recent activity`, component: RecentActivity },
       { label: 'Posts', title: `${firstName}'s posts`, component: MemberPosts },
       { label: 'Comments', title: `${firstName}'s comments`, component: MemberComments },
       { label: 'Upvotes', title: `${firstName}'s upvotes`, component: MemberVotes }
-    ]
-    const contentDropDownItems = contentMap.map(({ label }) => ({
-      label, onClick: () => this.selectTab(label)
+    ].map(contentDropDownitem => ({
+      ...contentDropDownitem,
+      onClick: () => this.selectTab(label)
     }))
-    const currentContent = contentMap.find(contentItem => contentItem.label === currentTab)
+    const currentContent = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
     const CurrentContentComponent = currentContent.component
 
     return <div styleName='member-profile'>
@@ -89,9 +89,7 @@ export default class MemberProfile extends React.Component {
         </div>
         <div styleName='action-icons'>
           <Icon styleName='action-icon-button' name='Letter' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
-          {/* TODO: Edit Profile and Block user menu ? */}
-          {/* <Icon name='Ellipses' styleName='action-icon-button' onClick={() => gotoExternalUrl(person.facebookUrl)} /> */}
-          {/* <MemberActionsMenu items={actionMenuItems} /> */}
+          <MemberActionsMenu items={actionMenuItems} />
           {person.contactPhone &&
             <Icon styleName='action-icon-button' name='Phone' onClick={() => gotoExternalUrl(`tel:${person.contactPhone}`)} />}
           {person.contactEmail &&
@@ -142,7 +140,12 @@ export function MemberActionsMenu ({ items }) {
     isFunction(item.onClick) && !item.hide)
 
   return activeItems.length > 0 &&
-    <Dropdown items={activeItems} toggleChildren={<Icon name='More' />} />
+    <Dropdown
+      items={activeItems}
+      toggleChildren={
+        <Icon styleName='action-icon-button action-menu' name='More' />
+      }
+    />
 }
 
 export function Error ({ children }) {
