@@ -34,13 +34,14 @@ export default class SavedSearchesTab extends Component {
 
 export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
   const { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
+  const { newPosts } = search
 
   return <div styleName='search-control'>
     <div styleName='row'>
       <span styleName='name' onClick={() => {
         viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath, search)}
       }>{search.name}</span>
-      <span styleName='params-icon' data-tip={formatParams(search)} data-for='params'><img src={info} /></span>
+      <span styleName='params-icon' data-tip={formatParams(search)} data-for='params'><img src={info} /> {newPosts ? newPosts.length : ''}</span>
       <ReactTooltip place='right'
         type='dark'
         id='params'

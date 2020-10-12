@@ -102,6 +102,9 @@ export function fetchSavedSearches (userId) {
               name
             }
             postTypes
+            newPosts {
+              id
+            }
           }
         }
       }`,
