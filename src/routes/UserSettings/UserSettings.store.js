@@ -95,7 +95,7 @@ export function fetchSavedSearches (userId) {
               name
               slug
             }
-            active
+            isActive
             searchText
             topics {
               id

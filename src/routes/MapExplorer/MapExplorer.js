@@ -70,7 +70,7 @@ export default class MapExplorer extends React.Component {
     })
 
     this.props.fetchSavedSearches()
-    
+
     if (this.props.selectedSearch) {
       this.updateViewportWithBbox({ bbox: this.props.selectedSearch.boundingBox })
     }
@@ -278,7 +278,7 @@ export default class MapExplorer extends React.Component {
   }
 
   saveSearch = (name) => {
-    const { boundingBox } = this.state
+    const { currentBoundingBox } = this.state
     const { currentUser, filters, location, posts } = this.props
     const { featureTypes, search: searchText, topics } = filters
     const { pathname } = location;
@@ -306,9 +306,14 @@ export default class MapExplorer extends React.Component {
 
     const topicIds = topics.map(t => t.id)
 
+    const boundingBox = [
+      {lat: currentBoundingBox[1], lng: currentBoundingBox[0]},
+      {lat: currentBoundingBox[3], lng: currentBoundingBox[2]},
+    ]
+
     const attributes = { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
 
-    this.props.saveSearch(attributes)
+    this.props.saveSearch(attributes).then(_ => this.props.fetchSavedSearches())
   }
 
   handleViewSavedSearch = (search) => {
@@ -324,7 +329,6 @@ export default class MapExplorer extends React.Component {
       currentUser,
       fetchParams,
       deleteSearch,
-      features,
       filters,
       pending,
       routeParams,
