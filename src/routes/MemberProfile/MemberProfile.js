@@ -66,8 +66,7 @@ export default class MemberProfile extends React.Component {
       { label: 'Comments', title: `${firstName}'s comments`, component: MemberComments },
       { label: 'Upvotes', title: `${firstName}'s upvotes`, component: MemberVotes }
     ].map(contentDropDownitem => ({
-      ...contentDropDownitem,
-      onClick: () => this.selectTab(label)
+      ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const currentContent = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
     const CurrentContentComponent = currentContent.component
