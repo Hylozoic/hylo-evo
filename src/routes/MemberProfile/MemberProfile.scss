@@ -27,8 +27,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // 
   height: 3 * $space-18x;
+  background: linear-gradient($color-caribbean-green, $color-rhino-30);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -38,10 +38,14 @@
   box-shadow: 0 0 3px $color-rhino-80;
   margin-bottom: $space-1x;
 }
+.header-member-name,
+.header-member-location,
+.header-member-location-icon {
+  color:white;
+}
 .header-member-name {
   composes: hdr-display from 'css/typography.scss';
   text-shadow: 0 2px 4px rgba(0,0,0,0.50);
-  color:white;
 }
 .header-member-location {
   composes: caption-lt-lg from 'css/typography.scss';
@@ -50,9 +54,7 @@
   align-items: center;
   justify-content: center;
   font-size: $space-4x;
-  color:white;
   &-icon {
-    color:white;
     margin-right: $space-1x;
     font-size: $space-5x;
   }  
@@ -92,6 +94,7 @@
     margin-right: 0
   }
   &:hover {
+    cursor: pointer;
     background-color: $color-caribbean-green;
     color: white;
   }

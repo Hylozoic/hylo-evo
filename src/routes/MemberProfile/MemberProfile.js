@@ -1,6 +1,7 @@
 import React from 'react'
 import { filter, isFunction } from 'lodash'
-import { AXOLOTL_ID, firstName } from 'store/models/Person'
+import { Link } from 'react-router-dom'
+import { AXOLOTL_ID, firstName as getFirstName } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import { messageThreadUrl, messagesUrl } from 'util/navigation'
 import Dropdown from 'components/Dropdown'
@@ -41,25 +42,18 @@ export default class MemberProfile extends React.Component {
 
   render () {
     if (this.props.error) return <Error>this.props.error</Error>
-    if (!this.props.person) return <Loading />
+    if (this.props.personLoading) return <Loading />
 
     const {
-      loading,
+      contentLoading,
       person,
       currentUser,
-      routeParams
+      routeParams,
+      push
     } = this.props
-    const {
-      avatarUrl,
-      bannerUrl,
-      name,
-      location,
-      // role,
-      bio,
-      tagline
-    } = person
     const { currentTab } = this.state
     const personId = routeParams.personId
+    const firstName = getFirstName(person)
     // TODO: Re-introduce Block this Member and Profile setting action dropdown
     const isCurrentUser = currentUser && currentUser.id === personId
     // const isAxolotl = AXOLOTL_ID === personId
@@ -67,10 +61,10 @@ export default class MemberProfile extends React.Component {
     //   { icon: 'Ex', label: 'Block this Member', onClick: this.blockUser(personId), hide: isCurrentUser || isAxolotl }
     // ]
     const contentMap = [
-      { label: 'Overview', title: `${firstName(person)}'s recent activity`, component: RecentActivity },
-      { label: 'Posts', title: `${firstName(person)}'s posts`, component: MemberPosts },
-      { label: 'Comments', title: `${firstName(person)}'s comments`, component: MemberComments },
-      { label: 'Upvotes', title: `${firstName(person)}'s upvotes`, component: MemberVotes }
+      { label: 'Overview', title: `${firstName}'s recent activity`, component: RecentActivity },
+      { label: 'Posts', title: `${firstName}'s posts`, component: MemberPosts },
+      { label: 'Comments', title: `${firstName}'s comments`, component: MemberComments },
+      { label: 'Upvotes', title: `${firstName}'s upvotes`, component: MemberVotes }
     ]
     const contentDropDownItems = contentMap.map(({ label }) => ({
       label, onClick: () => this.selectTab(label)
@@ -80,12 +74,12 @@ export default class MemberProfile extends React.Component {
 
     return <div styleName='member-profile'>
       <div styleName='header'>
-        <div styleName='header-banner' style={bgImageStyle(bannerUrl)}>
-          <RoundImage styleName='header-member-avatar' url={avatarUrl} xlarge />
-          <h1 styleName='header-member-name'>{name}</h1>
-          {location && <div styleName='header-member-location'>
+        <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
+          <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
+          <h1 styleName='header-member-name'>{person.name}</h1>
+          {person.location && <div styleName='header-member-location'>
             <Icon name='Location' styleName='header-member-location-icon' />
-            {location}
+            {person.location}
           </div>}
           {/* TODO: Do we still want to show the "Community manager" role? */}
           {/* {role && <div styleName='location'>
@@ -93,20 +87,25 @@ export default class MemberProfile extends React.Component {
             {role}
           </div>} */}
         </div>
-        {/* TODO: Add way to route navigate / go to URL for these action items */}
         <div styleName='action-icons'>
-          <Icon styleName='action-icon-button' name='Reply' onClick={() => goToUrl(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
-          <Icon styleName='action-icon-button' name='Phone' onClick={() => goToUrl('')} />
-          <Icon styleName='action-icon-button' name='Email' onClick={() => goToUrl('')} />
-          <Icon styleName='action-icon-button' name='Facebook' onClick={() => goToUrl(person.facebookUrl)} />
-          <Icon styleName='action-icon-button' name='LinkedIn' onClick={() => goToUrl(person.linkedinUrl)} />
-          <Icon styleName='action-icon-button' name='Twitter' onClick={() => goToUrl(`https://twitter.com/${person.twitterName}`)} />
-          <Icon styleName='action-icon-button' name='Globe' onClick={() => goToUrl(person.url)} />
-          {/* Edit Profile and Block user menu ? */}
-          {/* <Icon name='Ellipses' styleName='action-icon-button' onClick={() => goToUrl(person.facebookUrl)} /> */}
+          <Icon styleName='action-icon-button' name='Messages' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
+          {/* TODO: Edit Profile and Block user menu ? */}
+          {/* <Icon name='Ellipses' styleName='action-icon-button' onClick={() => gotoExternalUrl(person.facebookUrl)} /> */}
           {/* <MemberActionsMenu items={actionMenuItems} /> */}
+          {person.contactPhone &&
+            <Icon styleName='action-icon-button' name='Phone' onClick={() => gotoExternalUrl(`tel:${person.contactPhone}`)} />}
+          {person.contactEmail &&
+            <Icon styleName='action-icon-button' name='Email' onClick={() => gotoExternalUrl(`email:${person.contactEmail}`)} />}
+          {person.facebookUrl &&
+            <Icon styleName='action-icon-button' name='Facebook' onClick={() => gotoExternalUrl(person.facebookUrl)} />}
+          {person.linkedinUrl &&
+            <Icon styleName='action-icon-button' name='LinkedIn' onClick={() => gotoExternalUrl(person.linkedinUrl)} />}
+          {person.twitterName &&
+            <Icon styleName='action-icon-button' name='ProfileTwitter' onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
+          {person.url &&
+            <Icon styleName='action-icon-button' name='Globe' onClick={() => gotoExternalUrl(person.url)} />}
         </div>
-        <div styleName='tagline'>{bio || tagline}</div>
+        <div styleName='tagline'>{person.bio || person.tagline}</div>
         <div styleName='member-details'>
           <div styleName='profile-subhead'>
             Skills &amp; Interests
@@ -123,15 +122,13 @@ export default class MemberProfile extends React.Component {
             toggleChildren={<span>{currentTab} <Icon styleName='content-dropdown-icon' name='ArrowDown' /></span>}
           />
         </div>
-        <CurrentContentComponent routeParams={routeParams} loading={loading} />
+        <CurrentContentComponent routeParams={routeParams} loading={contentLoading} />
       </div>
     </div>
   }
 }
 
-function goToUrl (url) {
-  console.log('!!! url:', url)
-}
+const gotoExternalUrl = url => window.open(url, null, 'noopener,noreferrer')
 
 const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
 You will no longer see this member's activity
