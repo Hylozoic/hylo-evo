@@ -7,13 +7,13 @@ exports[`Pill renders 1`] = `
 >
   <div
     data-stylename="pill clickable"
-    onClick={[Function]}
     onMouseLeave={[Function]}
   >
     <span
       data-for="pill-label"
       data-stylename="display-label"
       data-tip="Click to Search"
+      onClick={[Function]}
     >
       mountain climbing
     </span>
@@ -29,13 +29,13 @@ exports[`Pill renders when editable 1`] = `
 >
   <div
     data-stylename="pill clickable"
-    onClick={[Function]}
     onMouseLeave={[Function]}
   >
     <span
       data-for="pill-label"
       data-stylename="display-label"
       data-tip="Click to Search"
+      onClick={[Function]}
     >
       mountain climbing
     </span>
