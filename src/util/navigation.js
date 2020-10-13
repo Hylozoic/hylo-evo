@@ -255,7 +255,11 @@ export function getNetworkSlugInPath (pathname) {
   return get('params.networkSlug', match)
 }
 
-// more utility path functions (relocated from PrimaryLayout)
+export function gotoExternalUrl (url) {
+  return window.open(url, null, 'noopener,noreferrer')
+}
+
+// Utility path functions
 
 export function isSignupPath (path) {
   return (path.startsWith('/signup'))

@@ -2,7 +2,12 @@ import React from 'react'
 import { filter, isFunction } from 'lodash'
 import { firstName as getFirstName, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
-import { currentUserSettingsUrl, messageThreadUrl, messagesUrl } from 'util/navigation'
+import {
+  currentUserSettingsUrl,
+  messageThreadUrl,
+  messagesUrl,
+  gotoExternalUrl
+} from 'util/navigation'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -90,9 +95,9 @@ export default class MemberProfile extends React.Component {
           <Icon styleName='action-icon-button' name='Letter' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
           <MemberActionsMenu items={actionMenuItems} />
           {person.contactPhone &&
-            <Icon styleName='action-icon-button' name='Phone' onClick={() => gotoExternalUrl(`tel:${person.contactPhone}`)} />}
+            <Icon styleName='action-icon-button' name='Phone' onClick={() => handleContactPhone(person.contactPhone)} />}
           {person.contactEmail &&
-            <Icon styleName='action-icon-button' name='Email' onClick={() => gotoExternalUrl(`email:${person.contactEmail}`)} />}
+            <Icon styleName='action-icon-button' name='Email' onClick={() => handleContactEmail(person.contactEmail)} />}
           {person.facebookUrl &&
             <Icon styleName='action-icon-button' name='Facebook' onClick={() => gotoExternalUrl(person.facebookUrl)} />}
           {person.linkedinUrl &&
@@ -125,7 +130,13 @@ export default class MemberProfile extends React.Component {
   }
 }
 
-const gotoExternalUrl = url => window.open(url, null, 'noopener,noreferrer')
+export function handleContactPhone (contactPhone) {
+  return window.location.assign(`mailto:${contactPhone}`)
+}
+
+export function handleContactEmail (contactEmail) {
+  return window.location.assign(`mailto:${contactEmail}`)
+}
 
 const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
 You will no longer see this member's activity
