@@ -3,8 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import orm from 'store/models'
 import PrimaryLayout, {
-  redirectIfCommunity
-  // RedirectToCommunity
+  RedirectToCommunity
 } from './PrimaryLayout'
 
 it('shows NotFound if a currentUser is loaded and the community does not exist', () => {
@@ -40,11 +39,11 @@ describe('RedirectToCommunity', () => {
   })
 
   it('sets `to` prop of Redirect correctly if currentUser has no memberships', () => {
-    const me = session.Me.first()
+    const currentUser = session.Me.first()
+    const path = '/'
     const wrapper = shallow(<MemoryRouter>
-      {redirectIfCommunity(me)()}
+      {RedirectToCommunity({ path, currentUser })}
     </MemoryRouter>)
-
     const expected = '/all'
     const actual = wrapper.find(Redirect).props().to
     expect(actual).toBe(expected)
@@ -53,15 +52,14 @@ describe('RedirectToCommunity', () => {
   it('sets `to` prop of Redirect correctly', () => {
     session.Community.create({ id: '1', slug: 'foo' })
     session.Membership.create({ id: '1', community: '1' })
-    const me = session.Me.first()
-    me.set('memberships', ['1'])
-
+    const currentUser = session.Me.first()
+    currentUser.set('memberships', ['1'])
+    const path = '/'
     const wrapper = shallow(<MemoryRouter>
-      {redirectIfCommunity(me)()}
+      {RedirectToCommunity({ path, currentUser })}
     </MemoryRouter>)
-
-    const expected = '/c/foo'
     const actual = wrapper.find(Redirect).props().to
+    const expected = '/c/foo'
     expect(actual).toBe(expected)
   })
 })
