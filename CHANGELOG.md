@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 - Pinned posts with Pin icon at top of feeds show once again
 
+## [2.1.6] - 2020-10-10
+### Added
+- Adds contactEmail and contactPhone to Person
+
+### Changed
+- Improves Member Profile formatting
+- Re-organizes organizes Profile and Account settings and related menus items
+
+### Fixed
+- Returns to sign-up wizard on page reload if incomplete
+
 ## [2.1.5] - 2020-09-28
 ### Changed
 - Make it more obvious how to change avatar in settings, can now click on entire image to change it
@@ -41,7 +52,7 @@ Make sure map drawer updates as viewport changes
 ### Added
 - Beta verison of CSV post importing
 
-### Bugs Fixed
+### Fixed
 - Bring upvoting back
 
 ## [2.1.1] - 2020-08-17
