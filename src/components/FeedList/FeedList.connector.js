@@ -2,8 +2,6 @@ import { connect } from 'react-redux'
 import { pick } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-
 import {
   fetchPosts,
   storeFetchPostsParam,
@@ -12,9 +10,7 @@ import {
 } from './FeedList.store.js'
 
 export function mapStateToProps (state, props) {
-  const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const communityId = currentCommunity && currentCommunity.id
-
+  const { communityId } = props
   const fetchPostsParam = {
     filter: props.postTypeFilter,
     ...pick([
