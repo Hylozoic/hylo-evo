@@ -87,7 +87,29 @@ export default class Pillbox extends Component {
     }
 
     return <div styleName='styles.root'>
-      {editable && <div styleName={cx('styles.adding-root', { adding })}>
+      <div styleName='styles.pill-container'>
+        <CSSTransitionGroup
+          transitionName={{
+            enter: styles['enter'],
+            enterActive: styles['enter-active'],
+            leave: styles['leave'],
+            leaveActive: styles['leave-active']
+          }}
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={300}>
+          {pills.map(pill =>
+            <Pill
+              key={pill.id}
+              {...pill}
+              onClick={handleClick}
+              editable={editable}
+              onRemove={handleDelete} />)}
+        </CSSTransitionGroup>
+        {editable && <span styleName='styles.add-btn' onClick={addOnClick}>
+          {addLabel}
+        </span>}
+      </div>
+      {adding && <div styleName={cx('styles.adding-root')}>
         <div styleName='styles.search-wrapper'>
           <input
             ref={this.input}
@@ -111,31 +133,7 @@ export default class Pillbox extends Component {
           onChange={this.select}
           ref={this.list} />
         }
-      </div>
-      }
-      <div styleName='styles.pill-container'>
-        {editable &&
-          <span styleName='styles.add-btn' onClick={addOnClick}>
-            {addLabel}
-          </span>}
-        <CSSTransitionGroup
-          transitionName={{
-            enter: styles['enter'],
-            enterActive: styles['enter-active'],
-            leave: styles['leave'],
-            leaveActive: styles['leave-active']
-          }}
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={300}>
-          {pills.map(pill =>
-            <Pill
-              key={pill.id}
-              {...pill}
-              onClick={handleClick}
-              editable={editable}
-              onRemove={handleDelete} />)}
-        </CSSTransitionGroup>
-      </div>
+      </div>}
       <ReactTooltip place='top'
         type='dark'
         id='pill-label'

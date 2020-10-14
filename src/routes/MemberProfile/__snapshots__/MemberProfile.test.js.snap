@@ -43,24 +43,6 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         name="Letter"
         onClick={[Function]}
       />
-      <MemberActionsMenu
-        items={
-          Array [
-            Object {
-              "hide": true,
-              "icon": "Edit",
-              "label": "Edit Profile Settings",
-              "onClick": [Function],
-            },
-            Object {
-              "hide": false,
-              "icon": "Ex",
-              "label": "Block this Member",
-              "onClick": [Function],
-            },
-          ]
-        }
-      />
       <Icon
         data-stylename="action-icon-button"
         name="Facebook"
@@ -80,6 +62,24 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         data-stylename="action-icon-button"
         name="Public"
         onClick={[Function]}
+      />
+      <MemberActionsMenu
+        items={
+          Array [
+            Object {
+              "hide": true,
+              "icon": "Edit",
+              "label": "Edit Profile Settings",
+              "onClick": [Function],
+            },
+            Object {
+              "hide": false,
+              "icon": "Ex",
+              "label": "Block this Member",
+              "onClick": [Function],
+            },
+          ]
+        }
       />
     </div>
     <div
