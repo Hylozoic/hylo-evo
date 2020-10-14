@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Improves Member Profile formatting
-- Re-organizes organizes Profile and Account settings and related menus items
+- Re-organizes Profile and Account settings and related menus items
 
 ### Fixed
 - Returns to sign-up wizard on page reload if incomplete
