@@ -29,7 +29,7 @@ export const FEATURE_TYPES = {
   }
 }
 
-function formatBoundingBox (bbox) {
+export function formatBoundingBox (bbox) {
   return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
@@ -342,7 +342,7 @@ export const getSearchedPosts = createSelector(
   getPostsFilteredByType,
   searchTextSelector,
   (posts, searchText) => {
-    const trimmedText = searchText.trim()
+    const trimmedText = searchText ? searchText.trim() : ''
     if (trimmedText === '') return posts
     return posts.filter(post => {
       return post.title.toLowerCase().includes(searchText) ||

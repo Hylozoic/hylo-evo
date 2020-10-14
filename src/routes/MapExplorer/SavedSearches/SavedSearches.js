@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import { currentFilters, formatParams, formatParamPreview } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import { info } from 'util/assets'
-import styles from './SavedSearches.scss'
+// eslint-disable-next-line
+import styles from './SavedSearches.scss' 
 import ReactTooltip from 'react-tooltip'
 
 function SavedSearches (props) {
@@ -27,28 +28,28 @@ function SavedSearches (props) {
       <div styleName='innerContainer'>
         <div styleName='title'>
           <span>
-          <h2>Save this view</h2>
+            <h2>Save this view</h2>
           Get updates about this map view</span>
-          <Icon name="Ex" styleName='close' onClick={toggle}/>
+          <Icon name='Ex' styleName='close' onClick={toggle} />
         </div>
 
         <div styleName='searchName'>
           <div styleName='searchBox'>
-              <input
+            <input
               type='text'
               onChange={e => setName(e.target.value)}
               placeholder='Name this view'
               value={name}
             />
-            <span styleName={`save ${canSave ? '' :  'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>Save</span>
+            <span styleName={`save ${canSave ? '' : 'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>Save</span>
           </div>
           <div styleName='filters'><img src={info} />&nbsp;&nbsp;{currentFilters(filters)} </div>
         </div>
-        
+
         <div styleName='savedViews'>
           <h2>Saved Views</h2>
           {searches.map((search, index) => {
-            return (<SavedSearch key={index} search={search} deleteSearch={deleteSearch} viewSavedSearch={viewSavedSearch}/>)
+            return (<SavedSearch key={index} search={search} deleteSearch={deleteSearch} viewSavedSearch={viewSavedSearch} />)
           })}
         </div>
       </div>
@@ -62,19 +63,19 @@ const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
       <div styleName='row'>
         <div styleName='saved-name'>{search.name} {search.count && <span styleName='count'>{search.count}</span>} </div>
         <div styleName='actions'>
-          <Icon name='Trash' styleName='delete' onClick={() => deleteSearch(search.id)}/>
+          <Icon name='Trash' styleName='delete' onClick={() => deleteSearch(search.id)} />
           <div styleName='view' onClick={() => viewSavedSearch(search)}>View</div>
         </div>
       </div>
       <div styleName='row filters' data-tip={formatParams(search)} data-for='params'>
-      <img src={info} /><span styleName='saved-filters'>
-        <span>{formatParamPreview(search)}</span>
-        <ReactTooltip place='right'
-        id='params'
-        effect='solid'
-        multiline
-        delayShow={200}
-        styleName='params' />
+        <img src={info} /><span styleName='saved-filters'>
+          <span>{formatParamPreview(search)}</span>
+          <ReactTooltip place='right'
+            id='params'
+            effect='solid'
+            multiline
+            delayShow={200}
+            styleName='params' />
         </span>
       </div>
     </div>

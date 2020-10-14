@@ -111,8 +111,8 @@ export function mapDispatchToProps (dispatch, props) {
       const { boundingBox, featureTypes, search, topics } = params
       dispatch(fetchMembers({ ...params }))
       dispatch(fetchPosts({ ...params }))
-      dispatch(fetchPublicCommunities({ ...params}))
-      dispatch(storeFetchPostsParam({ boundingBox }))
+      dispatch(fetchPublicCommunities({ ...params }))
+      dispatch(storeFetchParams({ boundingBox }))
       dispatch(storeClientFilterParams({ featureTypes, search, topics }))
       dispatch(viewSavedSearch(selectedSearch))
       dispatch(push(path))

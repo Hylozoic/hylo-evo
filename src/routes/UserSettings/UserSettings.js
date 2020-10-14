@@ -95,7 +95,7 @@ export default class UserSettings extends Component {
           searches={searches}
           deleteSearch={deleteSearch}
           viewSavedSearch={viewSavedSearch} />
-      },
+      }
     ]
 
     if (currentUser && !isEmpty(currentUser.blockedUsers.toRefArray())) {

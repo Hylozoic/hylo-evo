@@ -6,6 +6,7 @@ import {
   UNLINK_ACCOUNT,
   VIEW_SAVED_SEARCH
 } from 'store/constants'
+import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation.graphql'
 
 export const MODULE_NAME = 'UserSettings'
 
@@ -16,8 +17,6 @@ export const UPDATE_MEMBERSHIP_SETTINGS_PENDING = UPDATE_MEMBERSHIP_SETTINGS + '
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS = `${MODULE_NAME}/UPDATE_ALL_MEMBERSHIP_SETTINGS`
 export const UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING = `${UPDATE_ALL_MEMBERSHIP_SETTINGS}_PENDING`
 export const REGISTER_STRIPE_ACCOUNT = `${MODULE_NAME}/REGISTER_STRIPE_ACCOUNT`
-
-import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation.graphql'
 
 const defaultState = {
   searches: []
@@ -81,10 +80,7 @@ export function fetchSavedSearches (userId) {
           items {
             id
             name
-            boundingBox {
-              lat
-              lng
-            }
+            boundingBox
             createdAt
             context
             community {
@@ -102,9 +98,6 @@ export function fetchSavedSearches (userId) {
               name
             }
             postTypes
-            newPosts {
-              id
-            }
           }
         }
       }`,
@@ -137,13 +130,12 @@ export function saveSearch ({ boundingBox, communitySlug, context, lastPostId, n
       variables: { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
     },
     meta: {
-      boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId,
-      optimistic: true
+      boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId, optimistic: true
     }
   }
 }
 
-export function viewSavedSearch(search) {
+export function viewSavedSearch (search) {
   return {
     type: VIEW_SAVED_SEARCH,
     payload: { search }

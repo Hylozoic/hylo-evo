@@ -11,7 +11,7 @@ import cx from 'classnames'
 import { generateViewParams } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { FEATURE_TYPES } from './MapExplorer.store'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
@@ -60,8 +60,8 @@ export default class MapExplorer extends React.Component {
         bearing: 0,
         pitch: 0
       }
+    }
   }
-}
 
   componentDidMount () {
     this.refs = {}
@@ -72,9 +72,8 @@ export default class MapExplorer extends React.Component {
     this.props.fetchSavedSearches()
 
     if (this.props.selectedSearch) {
-      this.updateViewportWithBbox({ bbox: this.props.selectedSearch.boundingBox })
+      this.updateViewportWithBbox({ bbox: formatBoundingBox(this.props.selectedSearch.boundingBox) })
     }
-
   }
 
   componentDidUpdate (prevProps) {
@@ -103,9 +102,10 @@ export default class MapExplorer extends React.Component {
          !isEqual(prevProps.publicCommunities, publicCommunities))) {
       this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
     }
-    
-    if (prevProps.selectedSearch !== this.props.selectedSearch ) {
-      this.updateViewportWithBbox({ bbox: this.props.selectedSearch.boundingBox })
+
+    if (prevProps.selectedSearch !== this.props.selectedSearch) {
+      this.updateBoundingBoxQuery(this.props.selectedSearch.boundingBox)
+      this.updateViewportWithBbox({ bbox: formatBoundingBox(this.props.selectedSearch.boundingBox) })
     }
   }
 
@@ -281,7 +281,7 @@ export default class MapExplorer extends React.Component {
     const { currentBoundingBox } = this.state
     const { currentUser, filters, location, posts } = this.props
     const { featureTypes, search: searchText, topics } = filters
-    const { pathname } = location;
+    const { pathname } = location
 
     let context
     if (isAllCommunitiesPath(pathname)) context = 'all'
@@ -291,7 +291,7 @@ export default class MapExplorer extends React.Component {
 
     let communitySlug
     let networkSlug
-    
+
     if (context === 'community') communitySlug = getCommunitySlug(pathname)
     if (context === 'network') networkSlug = getNetworkSlug(pathname)
 
@@ -299,7 +299,7 @@ export default class MapExplorer extends React.Component {
 
     const postTypes = Object.keys(featureTypes).reduce((selected, type) => {
       if (featureTypes[type]) selected.push(type)
-      return selected;
+      return selected
     }, [])
 
     const lastPostId = get(posts, '[0].id')
@@ -307,8 +307,8 @@ export default class MapExplorer extends React.Component {
     const topicIds = topics.map(t => t.id)
 
     const boundingBox = [
-      {lat: currentBoundingBox[1], lng: currentBoundingBox[0]},
-      {lat: currentBoundingBox[3], lng: currentBoundingBox[2]},
+      { lat: currentBoundingBox[1], lng: currentBoundingBox[0] },
+      { lat: currentBoundingBox[3], lng: currentBoundingBox[2] }
     ]
 
     const attributes = { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }

@@ -6,8 +6,8 @@ import {
   updateUserSettings, leaveCommunity, unlinkAccount,
   updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
-import { 
-  fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchPostsParam, storeClientFilterParams
+import {
+  fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchParams, storeClientFilterParams
 } from '../MapExplorer/MapExplorer.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
@@ -92,8 +92,8 @@ export function mapDispatchToProps (dispatch) {
       const { boundingBox, featureTypes, search, topics } = params
       dispatch(fetchMembers({ ...params }))
       dispatch(fetchPosts({ ...params }))
-      dispatch(fetchPublicCommunities({ ...params}))
-      dispatch(storeFetchPostsParam({ boundingBox }))
+      dispatch(fetchPublicCommunities({ ...params }))
+      dispatch(storeFetchParams({ boundingBox }))
       dispatch(storeClientFilterParams({ featureTypes, search, topics }))
       dispatch(viewSavedSearch(selectedSearch))
       dispatch(push(path))
