@@ -38,7 +38,7 @@ export default class MemberProfile extends React.Component {
 
   selectTab = currentTab => this.setState({ currentTab })
 
-  blockUser = (personId) => () => {
+  blockUser = personId => {
     if (window.confirm(BLOCK_CONFIRM_MESSAGE)) {
       this.props.blockUser(personId).then(this.props.goToPreviousLocation)
     }
@@ -93,7 +93,6 @@ export default class MemberProfile extends React.Component {
         </div>
         <div styleName='action-icons'>
           <Icon styleName='action-icon-button' name='Letter' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
-          <MemberActionsMenu items={actionMenuItems} />
           {person.contactPhone &&
             <Icon styleName='action-icon-button' name='Phone' onClick={() => handleContactPhone(person.contactPhone)} />}
           {person.contactEmail &&
@@ -106,6 +105,7 @@ export default class MemberProfile extends React.Component {
             <Icon styleName='action-icon-button' name='Twitter' onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
           {person.url &&
             <Icon styleName='action-icon-button' name='Public' onClick={() => gotoExternalUrl(person.url)} />}
+          <MemberActionsMenu items={actionMenuItems} />
         </div>
         <div styleName='tagline'>{person.bio || person.tagline}</div>
         <div styleName='member-details'>

@@ -96,12 +96,13 @@
       color: $color-caribbean-green;
     }
   }
-  &:last-child:not(.action-menu) {
+  &:last-child {
     margin-right: 0;
   }
   &.action-menu {
     // Correction of global style particular to "More" icon
     top: 0px;
+    margin-right: 0;
   }
 }
 
