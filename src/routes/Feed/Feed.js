@@ -59,6 +59,7 @@ export default class Feed extends Component {
       routeParams,
       querystringParams,
       topic: get('id', this.props.topic),
+      communityId: get('community.id', this.props),
       ...pick([
         'postTypeFilter',
         'sortBy',

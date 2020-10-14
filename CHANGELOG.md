@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Fixed
 - Fixes issue with returning signing-up users getting stuck on blank screen
+- Pinned posts with Pin icon at top of feeds show once again
 
 ## [2.1.6] - 2020-10-10
 ### Added
@@ -13,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Improves Member Profile formatting
-- Re-organizes organizes Profile and Account settings and related menus items
+- Re-organizes Profile and Account settings and related menus items
 
 ### Fixed
 - Returns to sign-up wizard on page reload if incomplete
