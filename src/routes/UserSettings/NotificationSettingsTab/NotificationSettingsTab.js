@@ -90,7 +90,7 @@ export default class NotificationSettingsTab extends Component {
     return <div>
       <div styleName='title'>Notifications</div>
       <div styleName='prompt'>How often would you like to receive email digests
-        for new posts in your communities?</div>
+        for new posts in your communities and saved searches?</div>
       <Select
         onChange={updateSetting('digestFrequency')}
         selected={settings['digestFrequency']}
