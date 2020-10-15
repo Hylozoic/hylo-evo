@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Add SavedSearches menu on MapExplorer and SavedSearchesTab in UserSettings. Users can view a list of their saved searches and delete a saved search from either of these locations. Users can create a saved search from the MapExplorer view.
+- Add two new assets (heart and info) used in saved searches additions
+
+### Changed
+- Notification opt-in prompt covers saved searches too (in addition to communities)
 
 ## [2.1.5] - 2020-09-28
 ### Changed
