@@ -107,7 +107,8 @@ export default class MemberProfile extends React.Component {
             <Icon styleName='action-icon-button' name='Public' onClick={() => gotoExternalUrl(person.url)} />}
           <MemberActionsMenu items={actionMenuItems} />
         </div>
-        <div styleName='tagline'>{person.bio || person.tagline}</div>
+        {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
+        {person.bio && <div styleName='bio'>{person.bio}</div>}
         <div styleName='member-details'>
           <div styleName='profile-subhead'>
             Skills &amp; Interests

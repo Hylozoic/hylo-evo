@@ -106,13 +106,20 @@
   }
 }
 
-// TAGLINE AREA
+// BIO/TAGLINE AREA
 
 .tagline {
   @include column-margins();
-  composes: bdy-lt-lg from 'css/typography.scss';
-  font-size: 18px;
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-rhino-60;
+  text-align: center;
   margin-top: $space-6x;
+  margin-bottom: $space-6x;
+}
+
+.bio {
+  @include column-margins();
+  composes: bdy-lt-lg from 'css/typography.scss';
   margin-bottom: $space-6x;
 }
 
