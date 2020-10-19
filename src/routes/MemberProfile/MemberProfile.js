@@ -131,7 +131,7 @@ export default class MemberProfile extends React.Component {
 }
 
 export function handleContactPhone (contactPhone) {
-  return window.location.assign(`mailto:${contactPhone}`)
+  return window.location.assign(`tel:${contactPhone}`)
 }
 
 export function handleContactEmail (contactEmail) {
