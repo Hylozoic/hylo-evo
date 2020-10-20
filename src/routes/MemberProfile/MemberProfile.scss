@@ -17,6 +17,31 @@
 
 // HEADER
 
+.edit-profile-button {
+  position: absolute;
+  right: $space-4x;
+  top: $space-4x;
+  display: flex;
+  height: unset;
+  line-height: $space-6x;
+  color: white;
+  background-color: rgba(0,0,0,0.6);
+  padding: 0 $space-2x 0 $space-2x;
+  border: unset;
+  font-size: $space-3x;
+  border-radius: 4px;
+  & > span {
+    display: flex;
+    font-size: $space-5x;
+    margin-right: $space-1x;
+    align-items: center;
+    color: white;
+  }
+  &:hover {
+    background-color: $color-caribbean-green;
+  }
+}
+
 .header {
   width: 100%;
 }

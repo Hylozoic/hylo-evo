@@ -8,6 +8,7 @@ import {
   messagesUrl,
   gotoExternalUrl
 } from 'util/navigation'
+import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -62,7 +63,7 @@ export default class MemberProfile extends React.Component {
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const actionMenuItems = [
-      { icon: 'Edit', label: 'Edit Profile Settings', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
+      { icon: 'Edit', label: 'Edit Profile', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
       { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
     ]
     const contentDropDownItems = [
@@ -78,6 +79,9 @@ export default class MemberProfile extends React.Component {
 
     return <div styleName='member-profile'>
       <div styleName='header'>
+        {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
+            <Icon name='Edit' /> Edit Profile
+        </Button>}
         <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
           <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
           <h1 styleName='header-member-name'>{person.name}</h1>
