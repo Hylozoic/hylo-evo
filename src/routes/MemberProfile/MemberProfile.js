@@ -1,5 +1,7 @@
 import React from 'react'
 import { filter, isFunction } from 'lodash'
+import CopyToClipboard from 'react-copy-to-clipboard'
+import ReactTooltip from 'react-tooltip'
 import { firstName as getFirstName, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
@@ -78,6 +80,14 @@ export default class MemberProfile extends React.Component {
     const CurrentContentComponent = currentContent.component
 
     return <div styleName='member-profile'>
+      <ReactTooltip
+        place='bottom'
+        type='light'
+        // effect='solid'
+        clickable
+        delayHide={1000}
+        delayShow={500} 
+        getContent={content => <ActionTooltip content={content} /> } />
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
             <Icon name='Edit' /> Edit Profile
@@ -96,19 +106,39 @@ export default class MemberProfile extends React.Component {
           </div>} */}
         </div>
         <div styleName='action-icons'>
-          <Icon styleName='action-icon-button' name='Letter' onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
-          {person.contactPhone &&
-            <Icon styleName='action-icon-button' name='Phone' onClick={() => handleContactPhone(person.contactPhone)} />}
-          {person.contactEmail &&
-            <Icon styleName='action-icon-button' name='Email' onClick={() => handleContactEmail(person.contactEmail)} />}
-          {person.facebookUrl &&
-            <Icon styleName='action-icon-button' name='Facebook' onClick={() => gotoExternalUrl(person.facebookUrl)} />}
-          {person.linkedinUrl &&
-            <Icon styleName='action-icon-button' name='LinkedIn' onClick={() => gotoExternalUrl(person.linkedinUrl)} />}
-          {person.twitterName &&
-            <Icon styleName='action-icon-button' name='Twitter' onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
-          {person.url &&
-            <Icon styleName='action-icon-button' name='Public' onClick={() => gotoExternalUrl(person.url)} />}
+          <Icon
+            styleName='action-icon-button'
+            name='Letter'
+            onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
+          {person.contactPhone && <Icon
+            styleName='action-icon-button'
+            name='Phone'
+            dataTip={person.contactPhone}
+            onClick={() => handleContactPhone(person.contactPhone)} />}
+          {person.contactEmail && <Icon
+            styleName='action-icon-button'
+            name='Email'
+            dataTip={person.contactEmail}
+            onClick={() => handleContactEmail(person.contactEmail)} />}
+          {person.facebookUrl && <Icon
+            styleName='action-icon-button'
+            name='Facebook'
+            dataTip={person.facebookUrl}
+            onClick={() => gotoExternalUrl(person.facebookUrl)} />}
+          {person.linkedinUrl && <Icon
+            styleName='action-icon-button'
+            name='LinkedIn'
+            dataTip={person.linkedinUrl}
+            onClick={() => gotoExternalUrl(person.linkedinUrl)} />}
+          {person.twitterName && <Icon
+            styleName='action-icon-button'
+            name='Twitter'
+            dataTip={`https://twitter.com/${person.twitterName}`}
+            onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
+          {person.url && <Icon
+            styleName='action-icon-button'
+            name='Public'
+            onClick={() => gotoExternalUrl(person.url)} />}
           <MemberActionsMenu items={actionMenuItems} />
         </div>
         {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
@@ -133,6 +163,15 @@ export default class MemberProfile extends React.Component {
       </div>
     </div>
   }
+}
+
+export function ActionTooltip ({ content }) {
+  return <div styleName='action-icon-tip'>
+    {content}
+    <CopyToClipboard text={content}>
+      <Button><Icon name='Edit' /></Button>
+    </CopyToClipboard>
+  </div>
 }
 
 export function handleContactPhone (contactPhone) {
