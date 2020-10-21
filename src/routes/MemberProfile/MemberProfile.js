@@ -86,8 +86,8 @@ export default class MemberProfile extends React.Component {
         effect='solid'
         clickable
         delayHide={10000}
-        delayShow={500} 
-        getContent={content => <ActionTooltip content={content} /> } />
+        delayShow={500}
+        getContent={content => <ActionTooltip content={content} />} />
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
           <Icon name='Edit' /> Edit Profile
