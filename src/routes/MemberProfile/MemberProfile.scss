@@ -131,10 +131,34 @@
   }
 }
 
-.action-icon-tip {
-  border: solid 1px $color-rhino-80;
+.action-icon-tooltip {
+  display: flex;
+  border: solid 1px $color-rhino-40;
   padding: $space-2x;
   color: $color-caribbean-green;
+  border-radius: 4px;
+  align-items: center;
+  font-size: 16px;
+  .action-icon-tooltip-button {
+    display: flex;
+    font-size: 12px;
+    margin-left: $space-2x;
+    height: unset;
+    line-height: unset;
+    padding: $space-1x $space-2x $space-1x $space-2x;
+    background-color: white;
+    color: $color-rhino-60;
+    border-color: $color-rhino-60;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    > span {
+      padding: unset;
+      font-size: 18px;
+      margin-right: $space-1x;
+    }
+  }
 }
 
 // BIO/TAGLINE AREA

@@ -83,14 +83,14 @@ export default class MemberProfile extends React.Component {
       <ReactTooltip
         place='bottom'
         type='light'
-        // effect='solid'
+        effect='solid'
         clickable
-        delayHide={1000}
+        delayHide={10000}
         delayShow={500} 
         getContent={content => <ActionTooltip content={content} /> } />
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
-            <Icon name='Edit' /> Edit Profile
+          <Icon name='Edit' /> Edit Profile
         </Button>}
         <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
           <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
@@ -166,10 +166,10 @@ export default class MemberProfile extends React.Component {
 }
 
 export function ActionTooltip ({ content }) {
-  return <div styleName='action-icon-tip'>
+  return <div styleName='action-icon-tooltip'>
     {content}
     <CopyToClipboard text={content}>
-      <Button><Icon name='Edit' /></Button>
+      <Button styleName='action-icon-tooltip-button'><Icon name='Edit' /> Copy</Button>
     </CopyToClipboard>
   </div>
 }
