@@ -106,12 +106,13 @@ export default class EditProfileTab extends Component {
 
   render () {
     const {
+      fetchPending,
       currentUser,
       updateUserSettings,
       loginWithService,
       unlinkAccount
     } = this.props
-    if (!currentUser) return <Loading />
+    if (fetchPending || !currentUser) return <Loading />
 
     const { edits, changed } = this.state
     const {
