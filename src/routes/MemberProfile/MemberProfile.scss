@@ -107,7 +107,7 @@
   height: $space-1x;
   width: $space-1x;
   font-size: $space-4x;
-  &:hover {
+  &:hover, &-hover {
     cursor: pointer;
     background-color: $color-caribbean-green;
     color: white;
@@ -116,7 +116,7 @@
     margin-right: auto;
     background-color: $color-caribbean-green;
     color: white;
-    &:hover {
+    &:hover, &-hover {
       background-color: white;
       color: $color-caribbean-green;
     }
@@ -133,7 +133,7 @@
 
 .action-icon-tooltip {
   display: flex;
-  border: solid 1px $color-rhino-40;
+  border: solid 1px $color-rhino-10;
   padding: $space-2x;
   color: $color-caribbean-green;
   border-radius: 4px;
@@ -142,13 +142,13 @@
   .action-icon-tooltip-button {
     display: flex;
     font-size: 12px;
-    margin-left: $space-2x;
+    margin-left: $space-3x;
     height: unset;
     line-height: unset;
     padding: $space-1x $space-2x $space-1x $space-2x;
     background-color: white;
     color: $color-rhino-60;
-    border-color: $color-rhino-60;
+    border-color: $color-rhino-40;
     border-radius: 4px;
     align-items: center;
     justify-content: center;
@@ -157,6 +157,14 @@
       padding: unset;
       font-size: 18px;
       margin-right: $space-1x;
+    }
+    &:hover {
+      background-color: $color-caribbean-green;
+      border-color: $color-caribbean-green;
+      color: white;
+      > span {
+        color: white;
+      }
     }
   }
 }

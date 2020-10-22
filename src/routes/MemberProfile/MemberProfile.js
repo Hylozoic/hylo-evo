@@ -2,7 +2,7 @@ import React from 'react'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import ReactTooltip from 'react-tooltip'
-import { firstName as getFirstName, AXOLOTL_ID } from 'store/models/Person'
+import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
@@ -20,7 +20,7 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 import SkillsSection from 'components/SkillsSection'
-import './MemberProfile.scss'
+import styles from './MemberProfile.scss'
 
 export default class MemberProfile extends React.Component {
   static defaultProps = {
@@ -64,10 +64,6 @@ export default class MemberProfile extends React.Component {
     const locationWithoutUsa = person.location && person.location.replace(', United States', '')
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
-    const actionMenuItems = [
-      { icon: 'Edit', label: 'Edit Profile', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
-      { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
-    ]
     const contentDropDownItems = [
       { label: 'Overview', title: `${firstName}'s recent activity`, component: RecentActivity },
       { label: 'Posts', title: `${firstName}'s posts`, component: MemberPosts },
@@ -76,6 +72,19 @@ export default class MemberProfile extends React.Component {
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
+    const actionIconItems = [
+      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person)), hideTooltip: true },
+      { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
+      { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
+      { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },
+      { iconName: 'LinkedIn', value: person.linkedinUrl, onClick: () => gotoExternalUrl(person.linkedinUrl) },
+      { iconName: 'Twitter', value: twitterUrl(person.twitterName), onClick: () => gotoExternalUrl(twitterUrl(person.twitterName)) },
+      { iconName: 'Public', value: person.url, onClick: () => gotoExternalUrl(person.url) }
+    ]
+    const actionDropdownItems = [
+      { icon: 'Edit', label: 'Edit Profile', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
+      { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
+    ]
     const currentContent = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
     const CurrentContentComponent = currentContent.component
 
@@ -85,8 +94,20 @@ export default class MemberProfile extends React.Component {
         type='light'
         effect='solid'
         clickable
-        delayHide={10000}
+        delayHide={500}
         delayShow={500}
+        afterShow={e => {
+          const hoverClassName = styles['action-icon-button-hover']
+          e.target.classList.add(hoverClassName)
+        }}
+        afterHide={e => {
+          const hoverClassName = styles['action-icon-button-hover']
+          // const elements = document.getElementsByClassName(hoverClassName)
+          // while(elements.length > 0) {
+          //   elements[0].classList.remove(hoverClassName)
+          // }
+          e.target.classList.remove(hoverClassName)
+        }}
         getContent={content => <ActionTooltip content={content} />} />
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
@@ -106,40 +127,8 @@ export default class MemberProfile extends React.Component {
           </div>} */}
         </div>
         <div styleName='action-icons'>
-          <Icon
-            styleName='action-icon-button'
-            name='Letter'
-            onClick={() => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person))} />
-          {person.contactPhone && <Icon
-            styleName='action-icon-button'
-            name='Phone'
-            dataTip={person.contactPhone}
-            onClick={() => handleContactPhone(person.contactPhone)} />}
-          {person.contactEmail && <Icon
-            styleName='action-icon-button'
-            name='Email'
-            dataTip={person.contactEmail}
-            onClick={() => handleContactEmail(person.contactEmail)} />}
-          {person.facebookUrl && <Icon
-            styleName='action-icon-button'
-            name='Facebook'
-            dataTip={person.facebookUrl}
-            onClick={() => gotoExternalUrl(person.facebookUrl)} />}
-          {person.linkedinUrl && <Icon
-            styleName='action-icon-button'
-            name='LinkedIn'
-            dataTip={person.linkedinUrl}
-            onClick={() => gotoExternalUrl(person.linkedinUrl)} />}
-          {person.twitterName && <Icon
-            styleName='action-icon-button'
-            name='Twitter'
-            dataTip={`https://twitter.com/${person.twitterName}`}
-            onClick={() => gotoExternalUrl(`https://twitter.com/${person.twitterName}`)} />}
-          {person.url && <Icon
-            styleName='action-icon-button'
-            name='Public'
-            onClick={() => gotoExternalUrl(person.url)} />}
-          <MemberActionsMenu items={actionMenuItems} />
+          <ActionButtons items={actionIconItems} />
+          <ActionDropdown items={actionDropdownItems} />
         </div>
         {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
         {person.bio && <div styleName='bio'>{person.bio}</div>}
@@ -169,7 +158,7 @@ export function ActionTooltip ({ content }) {
   return <div styleName='action-icon-tooltip'>
     {content}
     <CopyToClipboard text={content}>
-      <Button styleName='action-icon-tooltip-button'><Icon name='Edit' /> Copy</Button>
+      <Button styleName='action-icon-tooltip-button'><Icon name='Copy' /> Copy</Button>
     </CopyToClipboard>
   </div>
 }
@@ -189,7 +178,21 @@ and they won't see yours.
 You can unblock this member at any time.
 Go to Settings > Blocked Users.`
 
-export function MemberActionsMenu ({ items }) {
+export function ActionButtons ({ items }) {
+  return items.map((actionIconItem, index) => {
+    const { iconName, value, onClick, hideTooltip } = actionIconItem
+    const dataTipProp = hideTooltip ? {} : { dataTip: value }
+
+    return value && <Icon
+      key={index}
+      styleName='action-icon-button'
+      name={iconName}
+      onClick={onClick}
+      {...dataTipProp} />
+  })
+}
+
+export function ActionDropdown ({ items }) {
   const activeItems = filter(items, item =>
     isFunction(item.onClick) && !item.hide)
 
