@@ -6,6 +6,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import {
   fetchSavedSearches, deleteSearch, saveSearch, viewSavedSearch
 } from '../UserSettings/UserSettings.store'
+import { generateViewParams } from 'util/savedSearch'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -75,6 +76,7 @@ export function mapStateToProps (state, props) {
 
   return {
     centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },
+    context: subject,
     currentUser: me,
     fetchParams,
     filters: state.MapExplorer.clientFilterParams,
@@ -107,15 +109,10 @@ export function mapDispatchToProps (dispatch, props) {
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params)),
-    viewSavedSearch: (params, path, selectedSearch) => {
-      const { boundingBox, featureTypes, search, topics } = params
-      dispatch(fetchMembers({ ...params }))
-      dispatch(fetchPosts({ ...params }))
-      dispatch(fetchPublicCommunities({ ...params }))
-      dispatch(storeFetchParams({ boundingBox }))
-      dispatch(storeClientFilterParams({ featureTypes, search, topics }))
-      dispatch(viewSavedSearch(selectedSearch))
-      dispatch(push(path))
+    viewSavedSearch: (search) => {
+      const { mapPath } = generateViewParams(search)
+      dispatch(viewSavedSearch(search))
+      dispatch(push(mapPath))
     }
   }
 }

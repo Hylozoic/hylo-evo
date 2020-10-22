@@ -22,7 +22,7 @@ import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
-import { isPublicPath, isAllCommunitiesPath, isNetworkPath, isCommunityPath, getCommunitySlugInPath as getCommunitySlug, getNetworkSlugInPath as getNetworkSlug } from 'util/navigation'
+import { getCommunitySlugInPath as getCommunitySlug, getNetworkSlugInPath as getNetworkSlug } from 'util/navigation'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -72,7 +72,7 @@ export default class MapExplorer extends React.Component {
     this.props.fetchSavedSearches()
 
     if (this.props.selectedSearch) {
-      this.updateViewportWithBbox({ bbox: formatBoundingBox(this.props.selectedSearch.boundingBox) })
+      this.updateSavedSearch(this.props.selectedSearch)
     }
   }
 
@@ -104,9 +104,20 @@ export default class MapExplorer extends React.Component {
     }
 
     if (prevProps.selectedSearch !== this.props.selectedSearch) {
-      this.updateBoundingBoxQuery(this.props.selectedSearch.boundingBox)
-      this.updateViewportWithBbox({ bbox: formatBoundingBox(this.props.selectedSearch.boundingBox) })
+      this.updateSavedSearch(this.props.selectedSearch)
     }
+  }
+
+  updateSavedSearch (search) {
+    const { boundingBox, featureTypes, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
+    const params = { featureTypes, networkSlug, search: searchText, slug, subject, topics }
+    this.updateBoundingBoxQuery(boundingBox)
+    this.props.fetchMembers(params)
+    this.props.fetchPosts(params)
+    this.props.fetchPublicCommunities(params)
+    this.props.storeFetchParams({ boundingBox })
+    this.props.storeClientFilterParams({ featureTypes, searchText, topics })
+    this.updateViewportWithBbox({ bbox: formatBoundingBox(boundingBox) })
   }
 
   updatedMapFeatures (boundingBox) {
@@ -279,15 +290,9 @@ export default class MapExplorer extends React.Component {
 
   saveSearch = (name) => {
     const { currentBoundingBox } = this.state
-    const { currentUser, filters, location, posts } = this.props
+    const { context, currentUser, filters, location, posts } = this.props
     const { featureTypes, search: searchText, topics } = filters
     const { pathname } = location
-
-    let context
-    if (isAllCommunitiesPath(pathname)) context = 'all'
-    if (isPublicPath(pathname)) context = 'public'
-    if (isCommunityPath(pathname)) context = 'community'
-    if (isNetworkPath(pathname)) context = 'network'
 
     let communitySlug
     let networkSlug
@@ -317,11 +322,7 @@ export default class MapExplorer extends React.Component {
   }
 
   handleViewSavedSearch = (search) => {
-    const { viewSavedSearch } = this.props
-
-    const { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
-
-    viewSavedSearch({ boundingBox, featureTypes, networkSlug, search: searchText, slug, subject, topics }, mapPath, search)
+    this.props.viewSavedSearch(search)
   }
 
   render () {

@@ -6,9 +6,7 @@ import {
   updateUserSettings, leaveCommunity, unlinkAccount,
   updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
-import {
-  fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchParams, storeClientFilterParams
-} from '../MapExplorer/MapExplorer.store'
+import { generateViewParams } from 'util/savedSearch'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -88,15 +86,10 @@ export function mapDispatchToProps (dispatch) {
     updateMembershipSettings: (params) => dispatch(updateMembershipSettings(params)),
     updateAllMemberships: (params) => dispatch(updateAllMemberships(params)),
     registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
-    viewSavedSearch: (params, path, selectedSearch) => {
-      const { boundingBox, featureTypes, search, topics } = params
-      dispatch(fetchMembers({ ...params }))
-      dispatch(fetchPosts({ ...params }))
-      dispatch(fetchPublicCommunities({ ...params }))
-      dispatch(storeFetchParams({ boundingBox }))
-      dispatch(storeClientFilterParams({ featureTypes, search, topics }))
-      dispatch(viewSavedSearch(selectedSearch))
-      dispatch(push(path))
+    viewSavedSearch: (search) => {
+      const { mapPath } = generateViewParams(search)
+      dispatch(viewSavedSearch(search))
+      dispatch(push(mapPath))
     }
   }
 }

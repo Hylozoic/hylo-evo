@@ -48,9 +48,7 @@ export function formatParamPreview (search) {
 }
 
 export function generateViewParams (search) {
-  const { context, community, network, postTypes, searchText, topics } = search
-
-  let { boundingBox } = search
+  const { boundingBox, context, community, network, postTypes, searchText, topics } = search
 
   let mapPath, networkSlug, slug, subject
   switch (context) {

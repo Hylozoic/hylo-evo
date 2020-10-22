@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import { currentFilters, formatParams, formatParamPreview } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import { info } from 'util/assets'
-// eslint-disable-next-line
-import styles from './SavedSearches.scss' 
+import './SavedSearches.scss'
 import ReactTooltip from 'react-tooltip'
 
 function SavedSearches (props) {
-  let {
+  const {
     deleteSearch,
     filters,
     saveSearch,
@@ -43,7 +42,7 @@ function SavedSearches (props) {
             />
             <span styleName={`save ${canSave ? '' : 'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>Save</span>
           </div>
-          <div styleName='filters'><img src={info} />&nbsp;&nbsp;{currentFilters(filters)} </div>
+          <div styleName='filters'><img styleName='info' src={info} />{currentFilters(filters)} </div>
         </div>
 
         <div styleName='savedViews'>
