@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - New Member Profile layout including contact phone and email
 
+## [2.1.7] - 2020-10-14
 ## Fixed
 - Fixes issue with returning signing-up users getting stuck on blank screen
 - Pinned posts with Pin icon at top of feeds show once again
