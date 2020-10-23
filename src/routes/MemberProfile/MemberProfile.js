@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import ReactTooltip from 'react-tooltip'
+import cx from 'classnames'
 import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
@@ -20,7 +21,7 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 import SkillsSection from 'components/SkillsSection'
-import styles from './MemberProfile.scss'
+import './MemberProfile.scss'
 
 export default class MemberProfile extends React.Component {
   static defaultProps = {
@@ -96,19 +97,8 @@ export default class MemberProfile extends React.Component {
         clickable
         delayHide={500}
         delayShow={500}
-        afterShow={e => {
-          const hoverClassName = styles['action-icon-button-hover']
-          e.target.classList.add(hoverClassName)
-        }}
-        afterHide={e => {
-          const hoverClassName = styles['action-icon-button-hover']
-          // const elements = document.getElementsByClassName(hoverClassName)
-          // while(elements.length > 0) {
-          //   elements[0].classList.remove(hoverClassName)
-          // }
-          e.target.classList.remove(hoverClassName)
-        }}
-        getContent={content => <ActionTooltip content={content} />} />
+        getContent={content =>
+          <ActionTooltip content={content} key={content} />} />
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
           <Icon name='Edit' /> Edit Profile
@@ -155,10 +145,15 @@ export default class MemberProfile extends React.Component {
 }
 
 export function ActionTooltip ({ content }) {
+  const [copied, setCopied] = useState(false)
+
   return <div styleName='action-icon-tooltip'>
     {content}
-    <CopyToClipboard text={content}>
-      <Button styleName='action-icon-tooltip-button'><Icon name='Copy' /> Copy</Button>
+    <CopyToClipboard text={content} onCopy={() => setCopied(true)}>
+      <Button styleName={cx('action-icon-tooltip-button', { copied })}>
+        <Icon name='Copy' />
+        {copied ? 'Copied!' : 'Copy'}
+      </Button>
     </CopyToClipboard>
   </div>
 }
@@ -182,8 +177,9 @@ export function ActionButtons ({ items }) {
   return items.map((actionIconItem, index) => {
     const { iconName, value, onClick, hideTooltip } = actionIconItem
     const dataTipProp = hideTooltip ? {} : { dataTip: value }
-
+    const onHover = e => console.log('!!!! onHover e:', e)
     return value && <Icon
+      onHover={e => onHover(e)}
       key={index}
       styleName='action-icon-button'
       name={iconName}

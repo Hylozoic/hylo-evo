@@ -158,7 +158,8 @@
       font-size: 18px;
       margin-right: $space-1x;
     }
-    &:hover {
+    &:hover,
+    &.copied {
       background-color: $color-caribbean-green;
       border-color: $color-caribbean-green;
       color: white;
