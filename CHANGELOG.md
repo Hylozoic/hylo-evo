@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.9] - 2020-10-23
+## Fixed
+- Member Profile Action icons remaining in hover state after hover is gone
+- Member Profile copy links copying object, not plain text
+- Member Profile bio without tagline formatting
+
 ## [2.1.8] - 2020-10-23
 ### Changed
 - New Member Profile layout including contact phone and email
