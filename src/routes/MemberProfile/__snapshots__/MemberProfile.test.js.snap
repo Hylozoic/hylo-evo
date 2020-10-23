@@ -4,6 +4,18 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
   data-stylename="member-profile"
 >
+  <ReactTooltip
+    clickable={true}
+    delayHide={500}
+    delayShow={500}
+    effect="solid"
+    getContent={[Function]}
+    insecure={true}
+    place="bottom"
+    resizeHide={true}
+    type="light"
+    wrapper="div"
+  />
   <div
     data-stylename="header"
   >
@@ -38,38 +50,55 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     <div
       data-stylename="action-icons"
     >
-      <Icon
-        data-stylename="action-icon-button"
-        name="Letter"
-        onClick={[Function]}
+      <ActionButtons
+        items={
+          Array [
+            Object {
+              "hideTooltip": true,
+              "iconName": "Letter",
+              "onClick": [Function],
+              "value": "Message Member",
+            },
+            Object {
+              "iconName": "Phone",
+              "onClick": [Function],
+              "value": undefined,
+            },
+            Object {
+              "iconName": "Email",
+              "onClick": [Function],
+              "value": undefined,
+            },
+            Object {
+              "iconName": "Facebook",
+              "onClick": [Function],
+              "value": "https://www.facebook.com/rich.churcher",
+            },
+            Object {
+              "iconName": "LinkedIn",
+              "onClick": [Function],
+              "value": "https://www.linkedin.com/in/richchurcher/",
+            },
+            Object {
+              "iconName": "Twitter",
+              "onClick": [Function],
+              "value": "https://twitter.com/richchurcher",
+            },
+            Object {
+              "iconName": "Public",
+              "onClick": [Function],
+              "value": "https://eloquentgeek.com",
+            },
+          ]
+        }
       />
-      <Icon
-        data-stylename="action-icon-button"
-        name="Facebook"
-        onClick={[Function]}
-      />
-      <Icon
-        data-stylename="action-icon-button"
-        name="LinkedIn"
-        onClick={[Function]}
-      />
-      <Icon
-        data-stylename="action-icon-button"
-        name="Twitter"
-        onClick={[Function]}
-      />
-      <Icon
-        data-stylename="action-icon-button"
-        name="Public"
-        onClick={[Function]}
-      />
-      <MemberActionsMenu
+      <ActionDropdown
         items={
           Array [
             Object {
               "hide": true,
               "icon": "Edit",
-              "label": "Edit Profile Settings",
+              "label": "Edit Profile",
               "onClick": [Function],
             },
             Object {
@@ -83,7 +112,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       />
     </div>
     <div
-      data-stylename="tagline"
+      data-stylename="bio"
     >
       I like wombats.
     </div>

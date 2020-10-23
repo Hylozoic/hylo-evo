@@ -73,7 +73,7 @@ export default class MemberProfile extends React.Component {
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
-    const actionIconItems = [
+    const actionButtonsItems = [
       { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person)), hideTooltip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
@@ -86,8 +86,10 @@ export default class MemberProfile extends React.Component {
       { icon: 'Edit', label: 'Edit Profile', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
       { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
     ]
-    const currentContent = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
-    const CurrentContentComponent = currentContent.component
+    const {
+      title: currentContentTitle,
+      component: CurrentContentComponent
+    } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
 
     return <div styleName='member-profile'>
       <ReactTooltip
@@ -117,7 +119,7 @@ export default class MemberProfile extends React.Component {
           </div>} */}
         </div>
         <div styleName='action-icons'>
-          <ActionButtons items={actionIconItems} />
+          <ActionButtons items={actionButtonsItems} />
           <ActionDropdown items={actionDropdownItems} />
         </div>
         {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
@@ -131,12 +133,12 @@ export default class MemberProfile extends React.Component {
       </div>
       <div styleName='content'>
         <div styleName='content-controls'>
-          <h2 styleName='content-header'>{currentContent.title}</h2>
+          <h2 styleName='content-header'>{currentContentTitle}</h2>
           <Dropdown
             styleName='content-dropdown'
             items={contentDropDownItems}
-            toggleChildren={<span>{currentTab} <Icon styleName='content-dropdown-icon' name='ArrowDown' /></span>}
-          />
+            toggleChildren={
+              <span>{currentTab} <Icon styleName='content-dropdown-icon' name='ArrowDown' /></span>} />
         </div>
         <CurrentContentComponent routeParams={routeParams} loading={contentLoading} />
       </div>
@@ -158,28 +160,12 @@ export function ActionTooltip ({ content }) {
   </div>
 }
 
-export function handleContactPhone (contactPhone) {
-  return window.location.assign(`tel:${contactPhone}`)
-}
-
-export function handleContactEmail (contactEmail) {
-  return window.location.assign(`mailto:${contactEmail}`)
-}
-
-const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
-You will no longer see this member's activity
-and they won't see yours.
-
-You can unblock this member at any time.
-Go to Settings > Blocked Users.`
-
 export function ActionButtons ({ items }) {
   return items.map((actionIconItem, index) => {
     const { iconName, value, onClick, hideTooltip } = actionIconItem
     const dataTipProp = hideTooltip ? {} : { dataTip: value }
-    const onHover = e => console.log('!!!! onHover e:', e)
+
     return value && <Icon
-      onHover={e => onHover(e)}
       key={index}
       styleName='action-icon-button'
       name={iconName}
@@ -206,3 +192,18 @@ export function Error ({ children }) {
     <span styleName='error'>{children}</span>
   </div>
 }
+
+export function handleContactPhone (contactPhone) {
+  return window.location.assign(`tel:${contactPhone}`)
+}
+
+export function handleContactEmail (contactEmail) {
+  return window.location.assign(`mailto:${contactEmail}`)
+}
+
+const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
+You will no longer see this member's activity
+and they won't see yours.
+
+You can unblock this member at any time.
+Go to Settings > Blocked Users.`

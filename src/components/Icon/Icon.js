@@ -8,7 +8,6 @@ export default function Icon ({
   green,
   children,
   onClick,
-  onHover,
   dataTip,
   dataTipFor
 }) {
@@ -18,7 +17,6 @@ export default function Icon ({
     styleName={cx('icon', { green })}
     className={cx(iconClassName, className)}
     onClick={onClick}
-    onHover={onHover}
     data-tip={dataTip}
     data-for={dataTipFor}>
     {children}
