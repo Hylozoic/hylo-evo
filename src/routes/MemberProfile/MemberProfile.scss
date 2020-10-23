@@ -92,6 +92,7 @@
   display: flex;
   justify-content: flex-end;
   margin-top: -$space-5x;
+  margin-bottom: $space-6x;
 }
 
 .action-icon-button {
@@ -183,7 +184,6 @@
   composes: hdr-headline from 'css/typography.scss';
   color: $color-rhino-60;
   text-align: center;
-  margin-top: $space-6x;
   margin-bottom: $space-6x;
 }
 
@@ -198,6 +198,7 @@
 .member-details {
   @include column-margins();
   padding: $space-3x;
+  margin-top: $space-6x;
   margin-bottom: $space-5x;
   border-top: solid 1px $color-rhino-10;
   border-bottom: solid 1px $color-rhino-10;

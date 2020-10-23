@@ -137,11 +137,13 @@ export default class MemberProfile extends React.Component {
   }
 }
 
-export function ActionTooltip ({ content }) {
+export function ActionTooltip ({ content, onClick }) {
   const [copied, setCopied] = useState(false)
 
   return <div styleName='action-icon-tooltip'>
-    <span styleName='action-icon-tooltip-content'>{content}</span>
+    <span styleName='action-icon-tooltip-content' onClick={onClick}>
+      {content}
+    </span>
     <CopyToClipboard text={content} onCopy={() => setCopied(true)}>
       <Button styleName={cx('action-icon-tooltip-button', { copied })}>
         <Icon name='Copy' />
@@ -164,7 +166,6 @@ export function ActionButtons ({ items }) {
         dataTip: value,
         dataTipFor: tooltipId
       }
-    const tooltipContent = <span onClick={onClick}>{value}</span>
 
     return <React.Fragment>
       <Icon
@@ -173,7 +174,7 @@ export function ActionButtons ({ items }) {
         name={iconName}
         onClick={onClick}
         {...tooltipProps} />
-      <ReactTooltip
+      {!hideTooltip && <ReactTooltip
         id={tooltipId}
         place='bottom'
         type='light'
@@ -191,11 +192,15 @@ export function ActionButtons ({ items }) {
         }}
         afterHide={e => {
           const hoverClassName = styles['action-icon-button-hover']
+          const elements = document.getElementsByClassName(hoverClassName)
+          while(elements.length > 0) {
+            elements[0].classList.remove(hoverClassName)
+          }
           e.target.classList.remove(hoverClassName)
         }}
         getContent={() =>
-          <ActionTooltip content={tooltipContent} onClick={onClick} key={index} />}
-      />
+          <ActionTooltip content={value} onClick={onClick} key={index} />}
+      />}
     </React.Fragment>
   })
 }
