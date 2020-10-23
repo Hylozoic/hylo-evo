@@ -6,6 +6,8 @@ export default
     avatarUrl
     bannerUrl
     bio
+    contactPhone
+    contactEmail
     twitterName
     linkedinUrl
     facebookUrl

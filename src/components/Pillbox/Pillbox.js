@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import styles from './Pillbox.scss'
-import { getKeyCode, keyMap } from 'util/textInput'
-import { debounce, includes, isEmpty, delay } from 'lodash'
-import { KeyControlledItemList } from 'components/KeyControlledList'
-import cx from 'classnames'
-import Icon from 'components/Icon'
 import ReactTooltip from 'react-tooltip'
 import { CSSTransitionGroup } from 'react-transition-group'
+import { debounce, includes, isEmpty, delay } from 'lodash'
+import cx from 'classnames'
+import { getKeyCode, keyMap } from 'util/textInput'
+import { KeyControlledItemList } from 'components/KeyControlledList'
+import Pill from 'components/Pill'
+import styles from './Pillbox.scss'
 
 // keys that can be pressed to create a new pill
 const creationKeyCodes = [keyMap.ENTER]
@@ -87,7 +87,29 @@ export default class Pillbox extends Component {
     }
 
     return <div styleName='styles.root'>
-      {editable && <div styleName={cx('styles.adding-root', { adding })}>
+      <div styleName='styles.pill-container'>
+        <CSSTransitionGroup
+          transitionName={{
+            enter: styles['enter'],
+            enterActive: styles['enter-active'],
+            leave: styles['leave'],
+            leaveActive: styles['leave-active']
+          }}
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={300}>
+          {pills.map(pill =>
+            <Pill
+              key={pill.id}
+              {...pill}
+              onClick={handleClick}
+              editable={editable}
+              onRemove={handleDelete} />)}
+        </CSSTransitionGroup>
+        {editable && <span styleName='styles.add-btn' onClick={addOnClick}>
+          {addLabel}
+        </span>}
+      </div>
+      {adding && <div styleName={cx('styles.adding-root')}>
         <div styleName='styles.search-wrapper'>
           <input
             ref={this.input}
@@ -111,92 +133,13 @@ export default class Pillbox extends Component {
           onChange={this.select}
           ref={this.list} />
         }
-      </div>
-      }
-      <div styleName='styles.pill-container'>
-        {editable &&
-          <span styleName='styles.add-btn' onClick={addOnClick}>
-            {addLabel}
-          </span>}
-        <CSSTransitionGroup
-          transitionName={{
-            enter: styles['enter'],
-            enterActive: styles['enter-active'],
-            leave: styles['leave'],
-            leaveActive: styles['leave-active']
-          }}
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={300}>
-          {pills.map(pill =>
-            <Pill key={pill.id}
-              {...pill}
-              handleClick={handleClick}
-              editable={editable}
-              onRemove={handleDelete} />)}
-        </CSSTransitionGroup>
-      </div>
+      </div>}
       <ReactTooltip place='top'
         type='dark'
         id='pill-label'
         effect='solid'
         disable={!editable}
         delayShow={500} />
-    </div>
-  }
-}
-
-/**
- * @param id unique ID
- * @param label pill label
- * @param onRemove called when removing a pill.  Function is passed the ID and LABEL
- * @param className a custom classname to apply
- * @param editable allow removing of pills
- */
-export class Pill extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = { removing: false }
-  }
-
-  render () {
-    const { id, label, onRemove, className, editable, handleClick } = this.props
-    const { removing } = this.state
-
-    const deletePill = () => {
-      if (editable && onRemove) {
-        if (removing) {
-          onRemove(id, label)
-        } else {
-          this.setState({ removing: true })
-        }
-      }
-    }
-
-    const search = () => {
-      if (handleClick) {
-        handleClick(id, label)
-      }
-    }
-
-    const mouseOut = () => {
-      this.setState({ removing: false })
-    }
-
-    const pillStyles = cx(
-      'styles.pill',
-      {
-        'styles.clickable': !!handleClick,
-        'styles.removable': editable && onRemove,
-        'styles.removing': editable && onRemove && removing
-      }
-    )
-
-    return <div styleName={pillStyles}
-      className={className}
-      onMouseLeave={mouseOut}>
-      <span data-tip='Click to Search' data-for='pill-label' styleName='styles.display-label' onClick={search}>{label}</span>
-      {editable && <Icon styleName='styles.remove-label' dataTip='Double click to delete' dataTipFor='pill-label' name='Ex' onClick={deletePill} />}
     </div>
   }
 }

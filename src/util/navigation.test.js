@@ -1,7 +1,8 @@
 import {
   removePostFromUrl,
   postUrl,
-  networkCommunitySettingsUrl
+  networkCommunitySettingsUrl,
+  gotoExternalUrl
 } from './navigation'
 
 describe('postUrl', () => {
@@ -65,5 +66,16 @@ describe('removePostFromUrl', () => {
   it('should remove default Post route', () => {
     const result = removePostFromUrl('/c/somecommunity/p/1234')
     expect(result).toEqual('/c/somecommunity')
+  })
+})
+
+describe('gotoExternalUrl', () => {
+  it('should keep Post Module in URL', () => {
+    const jsDomWindowOpen = window.open
+    window.open = jest.fn()
+    const testUrl = 'https://google.com'
+    gotoExternalUrl(testUrl)
+    expect(open).toHaveBeenCalledWith(testUrl, null, "noopener,noreferrer")
+    window.open = jsDomWindowOpen
   })
 })

@@ -1,150 +1,206 @@
+@mixin column-margins {
+  margin: 0 $space-10x 0 $space-10x;
+}
+
+@mixin column-padding {
+  padding: 0 $space-10x 0 $space-10x;
+}
+
+// MEMBER PROFILE
+
 .member-profile {
-  padding-top: $space-6x;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .avatar {
-    margin-left: $space-2x;
-    border: none;
-  }
-}
-
-.error { color: $color-amaranth; }
-
-.banner {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.name-plate-container {
-  width: 100%;
+// HEADER
+
+.edit-profile-button {
+  position: absolute;
+  right: $space-4x;
+  top: $space-4x;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  background-color: $color-athens-gray;
-  height: 2 * $space-20x;
-  border-radius: $space-1x;
-  padding: $space-7x $space-4x;
-}
-
-.name-plate {
-  display: flex;
-}
-
-.details {
-  padding: $space-1x $space-5x;
-}
-
-.fine-details {
-  display: flex;
-  align-items: center;
-  .spacer {
-    margin: 0 7px;
-    font-size: 8px;
-    top: -2px;
-  }
-
-  .star {
+  height: unset;
+  line-height: $space-6x;
+  color: white;
+  background-color: rgba(0,0,0,0.6);
+  padding: 0 $space-2x 0 $space-2x;
+  border: unset;
+  font-size: $space-3x;
+  border-radius: 4px;
+  & > span {
     display: flex;
+    font-size: $space-5x;
+    margin-right: $space-1x;
+    align-items: center;
+    color: white;
+  }
+  &:hover {
+    background-color: $color-caribbean-green;
+  }
+}
+
+.header {
+  width: 100%;
+}
+
+.header-banner {
+  @include column-padding();
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 3 * $space-18x;
+  background: linear-gradient($color-caribbean-green, $color-rhino-30);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header-member-avatar {
+  border: unset;
+  box-shadow: 0 0 3px $color-rhino-80;
+  margin-bottom: $space-1x;
+}
+.header-member-name,
+.header-member-location,
+.header-member-location-icon {
+  color:white;
+}
+.header-member-name {
+  composes: hdr-display from 'css/typography.scss';
+  text-shadow: 0 2px 4px rgba(0,0,0,0.50);
+}
+.header-member-location {
+  composes: caption-lt-lg from 'css/typography.scss';
+  text-shadow: 0 2px 4px rgba(0,0,0,0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $space-4x;
+  &-icon {
+    margin-right: $space-1x;
+    font-size: $space-5x;
+  }  
+}
+
+// ACTION ICONS
+
+.action-icons {
+  @include column-margins();
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -$space-5x;
+}
+
+.action-icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border-width: 1px;
+  box-shadow: 0 0 3px $color-rhino-80;
+  padding: $space-5x;
+  background-color: white;
+  margin-right: $space-3x;
+  height: $space-1x;
+  width: $space-1x;
+  font-size: $space-4x;
+  &:hover, &-hover {
+    cursor: pointer;
+    background-color: $color-caribbean-green;
+    color: white;
+  }
+  &:first-child:not(.action-menu) {
+    margin-right: auto;
+    background-color: $color-caribbean-green;
+    color: white;
+    &:hover, &-hover {
+      background-color: white;
+      color: $color-caribbean-green;
+    }
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+  &.action-menu {
+    // Correction of global style particular to "More" icon
+    top: 0px;
+    margin-right: 0;
+  }
+}
+
+.action-icon-tooltip {
+  display: flex;
+  border: solid 1px $color-rhino-10;
+  padding: $space-2x;
+  color: $color-caribbean-green;
+  cursor: pointer;
+  border-radius: 4px;
+  align-items: center;
+  font-size: 16px;
+  .action-icon-tooltip-content {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 250px;
+  }
+  .action-icon-tooltip-button {
+    display: flex;
+    font-size: 12px;
+    margin-left: $space-3x;
+    height: unset;
+    line-height: unset;
+    padding: $space-1x $space-2x $space-1x $space-2x;
+    background-color: white;
+    color: $color-rhino-60;
+    border-color: $color-rhino-40;
+    border-radius: 4px;
     align-items: center;
     justify-content: center;
-    margin: $space-1x;
-    font-size: 18px;
-    width: 15px;
-    height: 15px;
-    color: $color-link-water;
-    background-color: $color-rhino-80;
-    border-radius: 50%;
-    border: 1px solid white;
-  }
-}
-
-.name {
-  composes: hdr-display from 'css/typography.scss';
-}
-
-.name-plate-right-side {
-  padding-top: 0.25rem;
-}
-
-.location {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
-.role-bling {
-  display: flex;
-  align-items: center;
-}
-
-.role {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
-.content {
-  width: 93%;
-  justify-content: center;
-
-  .activity-item {
-    margin: $space-5x 0;
-
-    a:first-child {
-      text-decoration: none;
+    text-transform: uppercase;
+    > span {
+      padding: unset;
+      font-size: 18px;
+      margin-right: $space-1x;
+    }
+    &:hover,
+    &.copied {
+      background-color: $color-caribbean-green;
+      border-color: $color-caribbean-green;
+      color: white;
+      > span {
+        color: white;
+      }
     }
   }
 }
 
+// BIO/TAGLINE AREA
+
 .tagline {
-  composes: bdy-lt-lg from 'css/typography.scss';
-  font-size: 18px;
-  position: relative;
-  top: 3px;
-}
-
-.subhead {
+  @include column-margins();
   composes: hdr-headline from 'css/typography.scss';
-  margin: $space-8x 0 $space-6x 0;
+  color: $color-rhino-60;
+  text-align: center;
+  margin-top: $space-6x;
+  margin-bottom: $space-6x;
 }
 
-.banner-image {
-  width: 93%;
-  height: 4 * $space-18x;
-  margin-top: -$space-10x;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: $space-1x;
-  border: 1px solid black;
+.bio {
+  @include column-margins();
+  composes: bdy-lt-lg from 'css/typography.scss';
+  margin-bottom: $space-6x;
 }
 
-.controls {
-  margin: $space-2x 0;
-  flex-direction: row;
-  justify-content: flex-start;
-}
+// MEMBER DETAILS
 
-.controls-children {
-  display: flex;
-  align-items: center;
-  height: $space-11x;
-  position: relative;
-  top: 5px;
-}
-
-.separator {
-  margin: $space-4x 0 $space-8x 0;
-  opacity: 0.3;
-}
-
-.social-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin: $space-6x 0 $space-3x auto;
+.member-details {
+  @include column-margins();
+  padding: $space-3x;
+  margin-bottom: $space-5x;
+  border-top: solid 1px $color-rhino-10;
+  border-bottom: solid 1px $color-rhino-10;
 }
 
 .bio {
@@ -152,22 +208,53 @@
   margin-bottom: $space-5x;
 }
 
-.social-link {
-  &:focus, &:hover {
-    text-decoration: none;
+.profile-subhead {
+  text-transform: uppercase;
+  color: $color-rhino-30;
+  font-size: $space-3x;
+  margin-bottom: $space-3x;
+}
+
+// CONTENT
+
+.content {
+  @include column-padding();
+  width: 100%;
+  justify-content: center;
+  .activity-item {
+    margin: $space-5x 0;
+    a:first-child {
+      text-decoration: none;
+    }
   }
 }
 
-.icon {
-  margin: $space-1x;
+.content-controls {
+  margin: $space-2x 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
-  &-facebook {
-    color: #3b5998;
+.content-header {
+  composes: hdr-headline from 'css/typography.scss';
+  font-size: $space-6x;
+  // margin: 0 0 $space-6x 0;
+}
+
+.content-dropdown {
+  composes: label from 'components/SkillLabel/component.scss';
+  color: $color-rhino-60;
+  text-transform: unset;
+  &, &-icon {
+    font-size: 14px;
   }
-  &-linkedin {
-    color: #007BB6;
-  }
-  &-twitter {
-    color: #4099FF;
+  &-icon {
+    vertical-align: middle;
+    margin-left: $space-1x;
   }
 }
+
+// ERROR
+
+.error { color: $color-amaranth; }
