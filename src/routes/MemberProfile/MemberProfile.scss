@@ -136,9 +136,15 @@
   border: solid 1px $color-rhino-10;
   padding: $space-2x;
   color: $color-caribbean-green;
+  cursor: pointer;
   border-radius: 4px;
   align-items: center;
   font-size: 16px;
+  .action-icon-tooltip-content {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 250px;
+  }
   .action-icon-tooltip-button {
     display: flex;
     font-size: 12px;

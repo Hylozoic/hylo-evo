@@ -4,18 +4,6 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
   data-stylename="member-profile"
 >
-  <ReactTooltip
-    clickable={true}
-    delayHide={500}
-    delayShow={500}
-    effect="solid"
-    getContent={[Function]}
-    insecure={true}
-    place="bottom"
-    resizeHide={true}
-    type="light"
-    wrapper="div"
-  />
   <div
     data-stylename="header"
   >
