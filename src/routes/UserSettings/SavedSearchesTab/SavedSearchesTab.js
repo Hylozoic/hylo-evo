@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './SavedSearchesTab.scss'
 import { formatParams } from 'util/savedSearch'
-import { info } from 'util/assets'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import ReactTooltip from 'react-tooltip'
 
@@ -36,7 +36,7 @@ export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
   return <div styleName='search-control'>
     <div styleName='row'>
       <span styleName='name' onClick={() => viewSavedSearch(search)}>{search.name}</span>
-      <span styleName='params-icon' data-tip={formatParams(search)} data-for='params'><img src={info} /></span>
+      <span data-tip={formatParams(search)} data-for='params'><Icon name='Info' styleName='params-icon' /></span>
       <ReactTooltip place='right'
         type='dark'
         id='params'

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import { currentFilters, formatParams, formatParamPreview } from 'util/savedSearch'
 import Icon from 'components/Icon'
-import { info } from 'util/assets'
 import './SavedSearches.scss'
 import ReactTooltip from 'react-tooltip'
 
@@ -42,7 +41,7 @@ function SavedSearches (props) {
             />
             <span styleName={`save ${canSave ? '' : 'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>Save</span>
           </div>
-          <div styleName='filters'><img styleName='info' src={info} />{currentFilters(filters)} </div>
+          <div styleName='filters'><Icon name='Info' styleName='info' /><span styleName='currentFilters'>{currentFilters(filters)}</span></div>
         </div>
 
         <div styleName='savedViews'>
@@ -67,7 +66,7 @@ const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
         </div>
       </div>
       <div styleName='row filters' data-tip={formatParams(search)} data-for='params'>
-        <img src={info} /><span styleName='saved-filters'>
+        <Icon name='Info' styleName='info' /><span styleName='saved-filters'>
           <span>{formatParamPreview(search)}</span>
           <ReactTooltip place='right'
             id='params'
