@@ -25,7 +25,7 @@ import Feed from 'routes/Feed'
 import MapExplorer from 'routes/MapExplorer'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
-import MemberSidebar from 'routes/MemberSidebar'
+// import MemberSidebar from 'routes/MemberSidebar'
 import Members from 'routes/Members'
 import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
@@ -121,13 +121,18 @@ export default class PrimaryLayout extends Component {
         )}
         <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <Switch>
+            {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
+            {signupRoutes.map(({ path, child }) =>
+              <Route path={path} key={path} render={props =>
+                <SignupModal {...props} child={child} />} />)}
+            {createCommunityRoutes.map(({ path, component }) =>
+              <Route path={path} key={path} render={props =>
+                <CreateCommunity {...props} component={component} />} />)}
             {signupInProgress &&
-              <RedirectToSignupFlow currentUser={currentUser} pathname={this.props.location.pathname} />}
+              <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToCommunity path='/(|app)' currentUser={currentUser} />}
-            {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             <Route path='/:context(all)/topics' component={AllTopics} />
-            {/* <Route path='/:context(tag)/:topicName' exact component={TopicSupportComingSoon} /> */}
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
@@ -151,22 +156,17 @@ export default class PrimaryLayout extends Component {
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
-            {signupRoutes.map(({ path, child }) =>
-              <Route path={path} key={path} render={props =>
-                <SignupModal {...props} child={child} />} />)}
-            {createCommunityRoutes.map(({ path, component }) =>
-              <Route path={path} key={path} render={props =>
-                <CreateCommunity {...props} component={component} />} />)}
           </Switch>
         </div>
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
             <Route path={`/:context(c)/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} />
+            {/* LEJ: Leaving MemberSidebar vestiage here for now as new sidebar content is likely coming soon */}
+            {/* <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} /> */}
             <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             <Route path={`/:context(n)/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
-            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
-            <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} />
+            {/* <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
+            {/* <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
           </Switch>
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>

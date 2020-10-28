@@ -2,11 +2,6 @@
 
 exports[`RecentActivity renders the same as the last snapshot 1`] = `
 <div>
-  <h2
-    data-stylename="subhead"
-  >
-    Recent Activity
-  </h2>
   <div
     data-stylename="activity-item"
     key="0"

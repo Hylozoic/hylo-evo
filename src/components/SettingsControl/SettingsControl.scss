@@ -1,5 +1,6 @@
 .control {
-  margin-bottom: $space-4x;
+  margin-bottom: $space-2x;
+  padding-bottom: $space-2x;
   border-bottom: 1px solid $color-ghost;
   &.error {
     border-bottom: 1px solid red;
@@ -21,7 +22,6 @@
   border: none;
   composes: bdy-drk-sm from 'css/typography.scss';
   font-size: 16px;
-  padding-bottom: $space-2x;
   resize: none;
   &:focus {
     outline: none;

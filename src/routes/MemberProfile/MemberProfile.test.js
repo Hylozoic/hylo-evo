@@ -84,12 +84,3 @@ describe('MemberProfile', () => {
     expect(wrapper.text().includes('MemberVotes')).toBe(true)
   })
 })
-
-describe('SocialButtons', () => {
-  it('only renders buttons where there is a set value', () => {
-    const wrapper = shallow(
-      <SocialButtons facebookUrl='foo' twitterName={'bar'} />
-    )
-    expect(wrapper.find('Icon').length).toBe(2)
-  })
-})

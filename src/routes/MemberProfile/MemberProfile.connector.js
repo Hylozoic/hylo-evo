@@ -21,16 +21,19 @@ export function mapStateToProps (state, props) {
   const error = Number.isSafeInteger(Number(props.match.params.personId)) ? null : MESSAGES.invalid
   const routeParams = props.match.params
   const person = getPresentedPerson(state, { ...routeParams, ...props })
-  const loading = isPendingFor([
+  const contentLoading = isPendingFor([
     FETCH_RECENT_ACTIVITY,
     FETCH_MEMBER_POSTS,
     FETCH_MEMBER_COMMENTS,
     FETCH_MEMBER_VOTES
   ], state)
+  const personLoading = isPendingFor(fetchPerson, state)
+
   return {
     routeParams,
     error,
-    loading,
+    personLoading,
+    contentLoading,
     person,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)

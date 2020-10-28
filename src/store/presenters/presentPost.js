@@ -2,8 +2,9 @@ import presentTopic from 'store/presenters/presentTopic'
 
 export default function presentPost (post, communityId) {
   if (!post) return null
-  const postMembership = post.postMemberships.filter(p =>
-    Number(p.community) === Number(communityId)).toRefArray()[0]
+
+  const postMembership = post.postMemberships.toRefArray().find(p =>
+    Number(p.community) === Number(communityId))
   const pinned = postMembership && postMembership.pinned
 
   return {

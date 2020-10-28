@@ -9,7 +9,7 @@ import CommentCard from 'components/CommentCard'
 import RoundImage from 'components/RoundImage'
 import Highlight from 'components/Highlight'
 import Loading from 'components/Loading'
-import { Pill } from 'components/Pillbox/Pillbox'
+import Pill from 'components/Pill'
 import { get, intersection } from 'lodash/fp'
 
 const { arrayOf, bool, func, shape, string, object } = PropTypes

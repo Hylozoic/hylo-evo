@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import './SkillsSection.scss'
-import Pillbox from 'components/Pillbox'
 import { isEmpty, map } from 'lodash'
 import cx from 'classnames'
+import Pillbox from 'components/Pillbox'
 import Loading from 'components/Loading'
+import './SkillsSection.scss'
 
 export default class SkillsSection extends Component {
+  static defaultProps = {
+    editable: true
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -45,7 +49,8 @@ export default class SkillsSection extends Component {
     const {
       skillSuggestions,
       isMe,
-      skills
+      skills,
+      editable
     } = this.props
 
     return <div styleName={cx('pill-container', 'expanded')}>
@@ -55,7 +60,7 @@ export default class SkillsSection extends Component {
         handleClick={this.handleClick}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
-        editable={isMe}
+        editable={editable && isMe}
         addLabel='Add a Skill or Interest'
         placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills and interests do you have?`}
         suggestions={skillSuggestions}
