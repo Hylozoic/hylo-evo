@@ -317,7 +317,7 @@ export default class MapExplorer extends React.Component {
 
     const attributes = { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
 
-    this.props.saveSearch(attributes).then(_ => this.props.fetchSavedSearches())
+    this.props.saveSearch(attributes)
   }
 
   handleViewSavedSearch = (search) => {

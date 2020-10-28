@@ -86,7 +86,7 @@ export function mapStateToProps (state, props) {
     publicCommunities,
     routeParams,
     hideDrawer,
-    searches: state.SavedSearches.searches,
+    searches: state.MapExplorer.searches,
     selectedSearch: state.SavedSearches.selectedSearch,
     topics,
     zoom: centerLocation ? 10 : 0

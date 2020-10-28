@@ -22,6 +22,27 @@ mutation CreateSavedSearchMutation(
     topicIds: $topicIds,
     userId: $userId
   }) {
-    id
+    savedSearch {
+      id
+      name
+      boundingBox
+      createdAt
+      context
+      community {
+        name
+        slug
+      }
+      network {
+        name
+        slug
+      }
+      isActive
+      searchText
+      topics {
+        id
+        name
+      }
+      postTypes
+    }
   }
 }
