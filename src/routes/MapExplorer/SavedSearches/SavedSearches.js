@@ -5,7 +5,7 @@ import Icon from 'components/Icon'
 import './SavedSearches.scss'
 import ReactTooltip from 'react-tooltip'
 
-function SavedSearches (props) {
+export default function SavedSearches (props) {
   const {
     deleteSearch,
     filters,
@@ -79,5 +79,3 @@ const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
     </div>
   )
 }
-
-export default SavedSearches
