@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { get } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
+import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
@@ -91,14 +92,14 @@ export default class Review extends Component {
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>
-          {currentUser && <div style={bgImageStyle(currentAvatarUrl)} styleName='avatar'>
-            <UploadAttachmentButton
-              styleName='change-avatar-button'
-              type='userAvatar'
-              id={currentUser.id}
-              onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-              loading={uploadImagePending} />
-          </div>}
+          {currentUser && <UploadAttachmentButton
+            type='userAvatar'
+            id={currentUser.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
+            <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
+              <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
+            </div>
+          </UploadAttachmentButton>}
         </div>
         <div styleName='final-edit'>
           <div styleName='three-column-input gray-bottom-border'>
