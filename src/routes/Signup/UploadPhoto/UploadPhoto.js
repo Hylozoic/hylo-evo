@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import LeftSidebar from '../LeftSidebar'
+import { get } from 'lodash/fp'
+import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
+import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
-import UploadImageSection from '../UploadImageSection'
 import '../Signup.scss'
 
 export default class UploadPhoto extends Component {
@@ -30,11 +32,16 @@ export default class UploadPhoto extends Component {
     })
   }
 
+  getValue = (field) => {
+    return this.state.edits[field] || get(field, this.props.currentUser)
+  }
+
   render () {
     const { currentUser, uploadImagePending } = this.props
-    const currentAvatarUrl = this.state.edits.avatarUrl
-
+    
     if (!currentUser) return <Loading />
+
+    const currentAvatarUrl = this.getValue('avatarUrl')
 
     return <div styleName='flex-wrapper'>
       <LeftSidebar
@@ -45,12 +52,14 @@ export default class UploadPhoto extends Component {
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='center'>
-          <UploadImageSection
-            avatarUrl={currentAvatarUrl}
-            updateSettingDirectly={this.updateSettingDirectly}
-            currentUser={currentUser}
-            loading={uploadImagePending}
-          />
+          <div style={bgImageStyle(currentAvatarUrl)} styleName='avatar'>
+            <UploadAttachmentButton
+              styleName='change-avatar-button'
+              type='userAvatar'
+              id={currentUser.id}
+              onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+              loading={uploadImagePending} />
+          </div>
         </div>
         <div styleName='center'>
           <input

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { get } from 'lodash/fp'
+import { bgImageStyle } from 'util/index'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
-import UploadImageSection from '../UploadImageSection'
-
 import '../Signup.scss'
 
-export default class AddLocation extends Component {
+export default class Review extends Component {
   constructor () {
     super()
     this.state = {
@@ -79,8 +79,9 @@ export default class AddLocation extends Component {
   }
 
   render () {
-    const currentAvatarUrl = this.state.edits.avatarUrl
     const { currentUser, uploadImagePending } = this.props
+    const currentAvatarUrl = this.getValue('avatarUrl')
+
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Everything looking good?'
@@ -90,12 +91,14 @@ export default class AddLocation extends Component {
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>
-          {currentUser && <UploadImageSection
-            avatarUrl={currentAvatarUrl}
-            updateSettingDirectly={this.updateSettingDirectly}
-            currentUser={currentUser}
-            loading={uploadImagePending}
-          />}
+          {currentUser && <div style={bgImageStyle(currentAvatarUrl)} styleName='avatar'>
+            <UploadAttachmentButton
+              styleName='change-avatar-button'
+              type='userAvatar'
+              id={currentUser.id}
+              onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+              loading={uploadImagePending} />
+          </div>}
         </div>
         <div styleName='final-edit'>
           <div styleName='three-column-input gray-bottom-border'>
