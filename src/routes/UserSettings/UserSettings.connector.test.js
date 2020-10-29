@@ -4,7 +4,10 @@ describe('mapStateToProps', () => {
   it('returns the right keys', () => {
     const state = {
       FullPageModal: {},
-      pending: {}
+      pending: {},
+      SavedSearches: {
+        searches: []
+      }
     }
     const props = {
       location: {
