@@ -106,9 +106,9 @@ export default class PostHeader extends PureComponent {
         <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
         <div styleName='headerText'>
           <Highlight {...highlightProps}>
-            <Link to={creatorUrl} styleName='userName'>{creator.name}{creator.tagline && ', '}</Link>
+            <Link to={creatorUrl} styleName='userName'>{creator.name}{creator.tagline && !constrained && ', '}</Link>
           </Highlight>
-          {creator.tagline && <span styleName='userTitle'>{creator.tagline}</span>}
+          {creator.tagline && !constrained ? <span styleName='userTitle'>{creator.tagline}</span> : ''}
           <div styleName='timestampRow'>
             <span styleName='timestamp'>
               {humanDate(createdAt)}

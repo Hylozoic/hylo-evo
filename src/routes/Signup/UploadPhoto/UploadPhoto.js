@@ -38,7 +38,7 @@ export default class UploadPhoto extends Component {
 
   render () {
     const { currentUser, uploadImagePending } = this.props
-    
+
     if (!currentUser) return <Loading />
 
     const currentAvatarUrl = this.getValue('avatarUrl')
