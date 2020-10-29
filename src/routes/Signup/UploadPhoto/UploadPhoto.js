@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { get } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
+import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
@@ -38,7 +39,7 @@ export default class UploadPhoto extends Component {
 
   render () {
     const { currentUser, uploadImagePending } = this.props
-    
+
     if (!currentUser) return <Loading />
 
     const currentAvatarUrl = this.getValue('avatarUrl')
@@ -52,14 +53,14 @@ export default class UploadPhoto extends Component {
         <span styleName='white-text step-count'>STEP 1/4</span>
         <br />
         <div styleName='center'>
-          <div style={bgImageStyle(currentAvatarUrl)} styleName='avatar'>
-            <UploadAttachmentButton
-              styleName='change-avatar-button'
-              type='userAvatar'
-              id={currentUser.id}
-              onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-              loading={uploadImagePending} />
-          </div>
+          <UploadAttachmentButton
+            type='userAvatar'
+            id={currentUser.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
+            <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
+              <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
+            </div>
+          </UploadAttachmentButton>
         </div>
         <div styleName='center'>
           <input
