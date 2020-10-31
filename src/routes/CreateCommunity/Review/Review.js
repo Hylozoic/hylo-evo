@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import '../CreateCommunity.scss'
 import ModalSidebar from 'components/ModalSidebar'
 import TextInput from 'components/TextInput'
@@ -17,18 +17,20 @@ import {
 export default class Review extends Component {
   constructor () {
     super()
-
+    const fields = ['communityName', 'communityDomain']
+    this.inputRefs = fields.reduce((acc, name) => {
+      acc[name] = createRef()
+      return acc
+    }, {})
     this.state = {
-      readOnly: {
-        communityName: true,
-        communityDomain: true
-      },
-      edits: {
-        communityName: '',
-        communityDomain: '',
-        communityPrivacy: null,
-        changed: false
-      }
+      edits: fields.reduce((acc, name) => {
+        acc[name] = null
+        return acc
+      }, {}),
+      readOnly: fields.reduce((acc, name) => {
+        acc[name] = true
+        return acc
+      }, {})
     }
   }
 
@@ -39,7 +41,7 @@ export default class Review extends Component {
         [name]: false
       }
     })
-    this[name].select()
+    this.inputRefs[name].current.select()
   }
 
   handleInputChange = (event, name) => {
@@ -157,6 +159,7 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityName')}
+            inputRef={this.inputRefs['communityName']}
           />
           <ReviewTextInput
             label={'URL'}
@@ -165,6 +168,7 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
+            inputRef={this.inputRefs['communityDomain']}
           />
           {networkName && <ReviewTextInput
             label={'Network'}

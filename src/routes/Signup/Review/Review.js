@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { get } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
@@ -10,17 +10,20 @@ import '../Signup.scss'
 export default class Review extends Component {
   constructor () {
     super()
+    const fields = ['name', 'email', 'location']
+    this.inputRefs = fields.reduce((acc, name) => {
+      acc[name] = createRef()
+      return acc
+    }, {})
     this.state = {
-      edits: {
-        name: null,
-        email: null,
-        location: null
-      },
-      readOnly: {
-        name: true,
-        email: true,
-        location: true
-      }
+      edits: fields.reduce((acc, name) => {
+        acc[name] = null
+        return acc
+      }, {}),
+      readOnly: fields.reduce((acc, name) => {
+        acc[name] = true
+        return acc
+      }, {})
     }
   }
 
@@ -37,12 +40,11 @@ export default class Review extends Component {
   makeEditable = (name) => {
     this.setState({
       readOnly: {
-        ...this.state.edits,
+        ...this.state.readOnly,
         [name]: false
       }
     })
-    console.log('!!! this', this)
-    this[name].select()
+    this.inputRefs[name].current.select()
   }
 
   submit = () => {
@@ -117,8 +119,9 @@ export default class Review extends Component {
                   }
                 }}
                 autoFocus
+                ref={this.inputRefs['name']}
                 value={this.getValue('name')}
-                readOnly={this.state.readOnly.name}
+                readOnly={this.state.readOnly['name']}
               />
             </div>
             <div styleName='right-input-column'>
@@ -140,8 +143,9 @@ export default class Review extends Component {
                   }
                 }}
                 autoFocus
+                ref={this.inputRefs['email']}
                 value={this.getValue('email')}
-                readOnly={this.state.readOnly.email}
+                readOnly={this.state.readOnly['email']}
               />
             </div>
             <div styleName='right-input-column'>
@@ -164,11 +168,11 @@ export default class Review extends Component {
                 }}
                 autoFocus
                 value={this.getValue('location')}
-                readOnly={this.state.readOnly.location}
+                readOnly
               />
             </div>
             <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('location')}>Edit</span>
+              <span styleName='edit-button text-opacity' onClick={() => this.props.push('/signup/add-location')}>Edit</span>
             </div>
           </div>
           <div styleName='three-column-input gray-bottom-border'>
