@@ -20,14 +20,10 @@ export default class Review extends Component {
 
     this.state = {
       readOnly: {
-        name: true,
-        email: true,
         communityName: true,
         communityDomain: true
       },
       edits: {
-        name: '',
-        email: '',
         communityName: '',
         communityDomain: '',
         communityPrivacy: null,
@@ -70,11 +66,7 @@ export default class Review extends Component {
   }
 
   submit = () => {
-    const { name, email, communityName, communityDomain, communityNetworkId } = this.state.edits
-    this.state.edits.changed && this.props.updateUserSettings({
-      name,
-      email
-    })
+    const { communityName, communityDomain, communityNetworkId } = this.state.edits
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
@@ -93,8 +85,8 @@ export default class Review extends Component {
   }
 
   errorCheckAndSubmit = () => {
-    const { name, email, communityName, communityDomain } = this.state.edits
-    if (name === '' || email === '' || communityName === '' || communityDomain === '') {
+    const { communityName, communityDomain } = this.state.edits
+    if ( communityName === '' || communityDomain === '') {
       this.setState({
         error: 'Please fill in each field.'
       })
@@ -118,8 +110,6 @@ export default class Review extends Component {
     const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
     this.setState({
       edits: {
-        name: get('name', this.props.currentUser) || '',
-        email: get('email', this.props.currentUser) || '',
         communityName: get('communityName', this.props) || '',
         communityDomain: get('communityDomain', this.props) || '',
         communityNetworkId: get('communityNetworkId', this.props) || '',
@@ -160,22 +150,6 @@ export default class Review extends Component {
           <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
         </div>
         <div styleName='center-review'>
-          <ReviewTextInput
-            label={'Your Name'}
-            value={this.state.edits.name || ''}
-            readOnly={this.state.readOnly.name}
-            editHandler={(event) => this.editHandler('name')}
-            onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'name')}
-          />
-          <ReviewTextInput
-            label={'Your Email'}
-            value={this.state.edits.email || ''}
-            readOnly={this.state.readOnly.email}
-            editHandler={() => this.editHandler('email')}
-            onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'email')}
-          />
           <ReviewTextInput
             label={'Community Name'}
             value={this.state.edits.communityName || ''}

@@ -41,6 +41,7 @@ export default class Review extends Component {
         [name]: false
       }
     })
+    console.log('!!! this', this)
     this[name].select()
   }
 
