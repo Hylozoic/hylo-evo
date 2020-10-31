@@ -88,7 +88,7 @@ export default class Review extends Component {
 
   errorCheckAndSubmit = () => {
     const { communityName, communityDomain } = this.state.edits
-    if ( communityName === '' || communityDomain === '') {
+    if (communityName === '' || communityDomain === '') {
       this.setState({
         error: 'Please fill in each field.'
       })
