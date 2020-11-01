@@ -33,6 +33,9 @@ describe('mapStateToProps', () => {
           topics: []
         }
       },
+      SavedSearches: {
+        selectedSearch: {}
+      },
       queryResults: {
         [buildKey(FETCH_POSTS_MAP, { slug: 'foo' })]: {
           ids: ['1', '3', '2']

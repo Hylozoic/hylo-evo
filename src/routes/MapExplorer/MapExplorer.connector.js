@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import { get, pick } from 'lodash/fp'
 import { FETCH_POSTS_MAP } from 'store/constants'
 import getRouteParam from 'store/selectors/getRouteParam'
+import {
+  fetchSavedSearches, deleteSearch, saveSearch, viewSavedSearch
+} from '../UserSettings/UserSettings.store'
+import { generateViewParams } from 'util/savedSearch'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
@@ -72,6 +76,7 @@ export function mapStateToProps (state, props) {
 
   return {
     centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },
+    context: subject,
     currentUser: me,
     fetchParams,
     filters: state.MapExplorer.clientFilterParams,
@@ -81,6 +86,8 @@ export function mapStateToProps (state, props) {
     publicCommunities,
     routeParams,
     hideDrawer,
+    searches: state.MapExplorer.searches,
+    selectedSearch: state.SavedSearches.selectedSearch,
     topics,
     zoom: centerLocation ? 10 : 0
   }
@@ -93,18 +100,26 @@ export function mapDispatchToProps (dispatch, props) {
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
     fetchPublicCommunities: (params) => () => dispatch(fetchPublicCommunities({ ...params })),
+    fetchSavedSearches: (userId) => () => dispatch(fetchSavedSearches(userId)),
+    deleteSearch: (searchId) => dispatch(deleteSearch(searchId)),
+    saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     showCommunityDetails: (communityId) => dispatch(push(communityMapDetailUrl(communityId, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug, routeParams.networkSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
-    storeClientFilterParams: params => dispatch(storeClientFilterParams(params))
+    storeClientFilterParams: params => dispatch(storeClientFilterParams(params)),
+    viewSavedSearch: (search) => {
+      const { mapPath } = generateViewParams(search)
+      dispatch(viewSavedSearch(search))
+      dispatch(push(mapPath))
+    }
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchParams } = stateProps
-  const { fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchParams } = dispatchProps
+  const { fetchParams, currentUser } = stateProps
+  const { fetchMembers, fetchPosts, fetchPublicCommunities, storeFetchParams, fetchSavedSearches } = dispatchProps
 
   return {
     ...ownProps,
@@ -113,6 +128,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fetchMembers: fetchMembers(fetchParams),
     fetchPublicCommunities: fetchPublicCommunities(fetchParams),
     fetchPosts: fetchPosts(fetchParams),
+    fetchSavedSearches: fetchSavedSearches(currentUser.id),
     storeFetchParams: storeFetchParams(fetchParams)
   }
 }

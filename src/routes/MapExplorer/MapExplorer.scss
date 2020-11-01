@@ -173,7 +173,7 @@ button.toggleFeatureFiltersButton {
 .searchAutocomplete {
   position: absolute;
   top: 25px;
-  left: 20px;
+  left: 140px;
   color: rgba(125, 140, 157, 1.000);
   background-color: rgba(255, 255, 255, 1);
   border: none;
@@ -194,6 +194,40 @@ button.toggleFeatureFiltersButton {
   bottom: -5px;
   left: 55px;
   background-color: white;
+}
+
+.savedSearches {
+  position: absolute;
+  top: 0px;
+  display: none;
+
+  &.savedSearchesOpen {
+    display: block;
+  }
+}
+
+.savedSearchesButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px;
+  background-color: white;
+  color: #0DC39F;
+  font-size: 20px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.savedSearchesButton-open, .savedSearchesButton:hover {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px;
+  background-color: #0DC39F;
+  color: white;
+  font-size: 20px;
+  border-radius: 50px;
+  cursor: pointer;
 }
 
 .featureTypeFilters {

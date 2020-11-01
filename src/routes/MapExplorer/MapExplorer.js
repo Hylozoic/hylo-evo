@@ -6,19 +6,22 @@ import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, groupBy, isEqual } from 'lodash'
+import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
+import { generateViewParams } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { FEATURE_TYPES } from './MapExplorer.store'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
+import SavedSearches from './SavedSearches'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
+import { getCommunitySlugInPath as getCommunitySlug, getNetworkSlugInPath as getNetworkSlug } from 'util/navigation'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -48,6 +51,8 @@ export default class MapExplorer extends React.Component {
       showFeatureFilters: false,
       totalLoadedBoundingBox: null,
       viewport: {
+        width: 800,
+        height: 600,
         latitude: parseFloat(props.centerLocation.lat),
         longitude: parseFloat(props.centerLocation.lng),
         zoom: props.zoom,
@@ -62,6 +67,12 @@ export default class MapExplorer extends React.Component {
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
+
+    this.props.fetchSavedSearches()
+
+    if (this.props.selectedSearch) {
+      this.updateSavedSearch(this.props.selectedSearch)
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -90,6 +101,22 @@ export default class MapExplorer extends React.Component {
          !isEqual(prevProps.publicCommunities, publicCommunities))) {
       this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
     }
+
+    if (prevProps.selectedSearch !== this.props.selectedSearch) {
+      this.updateSavedSearch(this.props.selectedSearch)
+    }
+  }
+
+  updateSavedSearch (search) {
+    const { boundingBox, featureTypes, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
+    const params = { featureTypes, networkSlug, search: searchText, slug, subject, topics }
+    this.updateBoundingBoxQuery(boundingBox)
+    this.props.fetchMembers(params)
+    this.props.fetchPosts(params)
+    this.props.fetchPublicCommunities(params)
+    this.props.storeFetchParams({ boundingBox })
+    this.props.storeClientFilterParams({ featureTypes, searchText, topics })
+    this.updateViewportWithBbox({ bbox: formatBoundingBox(boundingBox) })
   }
 
   updatedMapFeatures (boundingBox) {
@@ -141,8 +168,12 @@ export default class MapExplorer extends React.Component {
 
   handleLocationInputSelection = (value) => {
     if (value.mapboxId) {
-      this.setState({ viewport: locationObjectToViewport(this.state.viewport, value) })
+      this.updateViewportWithBbox(value)
     }
+  }
+
+  updateViewportWithBbox = ({ bbox }) => {
+    this.setState({ viewport: locationObjectToViewport(this.state.viewport, { bbox }) })
   }
 
   mapViewPortUpdate = (update) => {
@@ -252,13 +283,56 @@ export default class MapExplorer extends React.Component {
     this.setState({ showFeatureFilters: !this.state.showFeatureFilters })
   }
 
+  toggleSavedSearches = (e) => {
+    this.setState({ showSavedSearches: !this.state.showSavedSearches })
+  }
+
+  saveSearch = (name) => {
+    const { currentBoundingBox } = this.state
+    const { context, currentUser, filters, location, posts } = this.props
+    const { featureTypes, search: searchText, topics } = filters
+    const { pathname } = location
+
+    let communitySlug
+    let networkSlug
+
+    if (context === 'community') communitySlug = getCommunitySlug(pathname)
+    if (context === 'network') networkSlug = getNetworkSlug(pathname)
+
+    const userId = currentUser.id
+
+    const postTypes = Object.keys(featureTypes).reduce((selected, type) => {
+      if (featureTypes[type]) selected.push(type)
+      return selected
+    }, [])
+
+    const lastPostId = get(posts, '[0].id')
+
+    const topicIds = topics.map(t => t.id)
+
+    const boundingBox = [
+      { lat: currentBoundingBox[1], lng: currentBoundingBox[0] },
+      { lat: currentBoundingBox[3], lng: currentBoundingBox[2] }
+    ]
+
+    const attributes = { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
+
+    this.props.saveSearch(attributes)
+  }
+
+  handleViewSavedSearch = (search) => {
+    this.props.viewSavedSearch(search)
+  }
+
   render () {
     const {
       currentUser,
       fetchParams,
+      deleteSearch,
       filters,
       pending,
       routeParams,
+      searches,
       topics
     } = this.props
 
@@ -268,6 +342,7 @@ export default class MapExplorer extends React.Component {
       features,
       hideDrawer,
       showFeatureFilters,
+      showSavedSearches,
       viewport
     } = this.state
 
@@ -304,6 +379,8 @@ export default class MapExplorer extends React.Component {
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
       </button>
+      <Icon name='Heart' styleName={`savedSearchesButton${showSavedSearches ? '-open' : ''}`} onClick={this.toggleSavedSearches} />
+      { showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {

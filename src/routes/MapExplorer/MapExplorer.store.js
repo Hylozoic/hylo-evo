@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
-import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_COMMUNITIES_MAP } from 'store/constants'
+import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_COMMUNITIES_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
@@ -29,7 +29,7 @@ export const FEATURE_TYPES = {
   }
 }
 
-function formatBoundingBox (bbox) {
+export function formatBoundingBox (bbox) {
   return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
@@ -342,7 +342,7 @@ export const getSearchedPosts = createSelector(
   getPostsFilteredByType,
   searchTextSelector,
   (posts, searchText) => {
-    const trimmedText = searchText.trim()
+    const trimmedText = searchText ? searchText.trim() : ''
     if (trimmedText === '') return posts
     return posts.filter(post => {
       return post.title.toLowerCase().includes(searchText) ||
@@ -392,12 +392,15 @@ export const getCurrentTopics = createSelector(
   getFilteredPosts,
   (posts) => {
     const topics = (posts ? posts.reduce((topics, post) => {
-      post.topics.toModelArray().forEach((topic) => { topics[topic.name] = topics[topic.name] ? topics[topic.name] + 1 : 1 })
+      post.topics.toModelArray().forEach((topic) => {
+        const count = topics[topic.name] ? topics[topic.name] + 1 : 1
+        topics[topic.name] = { count, id: topic.id }
+      })
       return topics
     }, {}) : {})
     const orderedTopics = []
     Object.keys(topics).forEach(key => {
-      orderedTopics.push({ 'name': key, 'count': topics[key] })
+      orderedTopics.push({ 'id': topics[key].id, 'name': key, 'count': topics[key].count })
     })
     return orderedTopics.sort((a, b) => b.count - a.count)
   }
@@ -436,6 +439,24 @@ export default function (state = DEFAULT_STATE, action) {
     return {
       ...state,
       clientFilterParams: { ...state.clientFilterParams, ...action.payload, featureTypes: action.payload.featureTypes ? { ...action.payload.featureTypes } : state.clientFilterParams.featureTypes }
+    }
+  }
+  if (action.type === FETCH_SAVED_SEARCHES) {
+    return {
+      ...state,
+      searches: action.payload.data.savedSearches.items
+    }
+  }
+  if (action.type === SAVE_SEARCH) {
+    return {
+      ...state,
+      searches: state.searches.concat(action.payload.data.createSavedSearch)
+    }
+  }
+  if (action.type === DELETE_SAVED_SEARCH) {
+    return {
+      ...state,
+      searches: state.searches.filter(s => s.id !== action.payload.data.deleteSavedSearch)
     }
   }
   return state

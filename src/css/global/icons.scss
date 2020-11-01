@@ -1,7 +1,7 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'hylo-evo-icons' !important;
-  speak: never;
+  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -85,14 +85,14 @@
 .icon-Reply:before {
   content: "\e917";
 }
-.icon-Facebook:before {
-  content: "\e91a";
-}
 .icon-LinkedIn:before {
   content: "\e918";
 }
 .icon-Google:before {
   content: "\e919";
+}
+.icon-Facebook:before {
+  content: "\e91a";
 }
 .icon-Ex:before {
   content: "\e91b";
@@ -187,9 +187,6 @@
 .icon-Eye:before {
   content: "\e939";
 }
-.icon-Edit:before {
-  content: "\1f323";
-}
 .icon-Letter:before {
   content: "\e93a";
 }
@@ -199,9 +196,18 @@
 .icon-Email:before {
   content: "\e93c";
 }
+.icon-Copy:before {
+  content: "\e93d";
+}
 .icon-Twitter:before {
   content: "\ea96";
 }
-.icon-Copy:before {
-  content: "\e93d";
+.icon-Edit:before {
+  content: "\1f323";
+}
+.icon-Heart:before {
+  content: "\e93e";
+}
+.icon-Info:before {
+  content: "\e93f";
 }
