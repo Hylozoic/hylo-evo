@@ -15,7 +15,8 @@ const tabs = [
 ]
 
 const sortOptions = [
-  { id: 'updated', label: 'Latest' },
+  { id: 'updated', label: 'Latest Activity' },
+  { id: 'created', label: 'Post Date' },
   { id: 'votes', label: 'Popular' }
 ]
 

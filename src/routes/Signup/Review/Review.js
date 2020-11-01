@@ -1,25 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { get } from 'lodash/fp'
+import { bgImageStyle } from 'util/index'
+import Icon from 'components/Icon'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
-import UploadImageSection from '../UploadImageSection'
-
 import '../Signup.scss'
 
-export default class AddLocation extends Component {
+export default class Review extends Component {
   constructor () {
     super()
+    const fields = ['name', 'email', 'location']
+    this.inputRefs = fields.reduce((acc, name) => {
+      acc[name] = createRef()
+      return acc
+    }, {})
     this.state = {
-      edits: {
-        name: null,
-        email: null,
-        location: null
-      },
-      readOnly: {
-        name: true,
-        email: true,
-        location: true
-      }
+      edits: fields.reduce((acc, name) => {
+        acc[name] = null
+        return acc
+      }, {}),
+      readOnly: fields.reduce((acc, name) => {
+        acc[name] = true
+        return acc
+      }, {})
     }
   }
 
@@ -36,11 +40,11 @@ export default class AddLocation extends Component {
   makeEditable = (name) => {
     this.setState({
       readOnly: {
-        ...this.state.edits,
+        ...this.state.readOnly,
         [name]: false
       }
     })
-    this[name].select()
+    this.inputRefs[name].current.select()
   }
 
   submit = () => {
@@ -79,8 +83,9 @@ export default class AddLocation extends Component {
   }
 
   render () {
-    const currentAvatarUrl = this.state.edits.avatarUrl
     const { currentUser, uploadImagePending } = this.props
+    const currentAvatarUrl = this.getValue('avatarUrl')
+
     return <div styleName='flex-wrapper'>
       <LeftSidebar
         header='Everything looking good?'
@@ -90,12 +95,14 @@ export default class AddLocation extends Component {
         <span styleName='white-text step-count'>STEP 4/4</span>
         <br />
         <div styleName='center'>
-          {currentUser && <UploadImageSection
-            avatarUrl={currentAvatarUrl}
-            updateSettingDirectly={this.updateSettingDirectly}
-            currentUser={currentUser}
-            loading={uploadImagePending}
-          />}
+          {currentUser && <UploadAttachmentButton
+            type='userAvatar'
+            id={currentUser.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
+            <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
+              <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
+            </div>
+          </UploadAttachmentButton>}
         </div>
         <div styleName='final-edit'>
           <div styleName='three-column-input gray-bottom-border'>
@@ -112,8 +119,9 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
+                ref={this.inputRefs['name']}
                 value={this.getValue('name')}
-                readOnly={this.state.readOnly.name}
+                readOnly={this.state.readOnly['name']}
               />
             </div>
             <div styleName='right-input-column'>
@@ -135,8 +143,9 @@ export default class AddLocation extends Component {
                   }
                 }}
                 autoFocus
+                ref={this.inputRefs['email']}
                 value={this.getValue('email')}
-                readOnly={this.state.readOnly.email}
+                readOnly={this.state.readOnly['email']}
               />
             </div>
             <div styleName='right-input-column'>
@@ -159,11 +168,11 @@ export default class AddLocation extends Component {
                 }}
                 autoFocus
                 value={this.getValue('location')}
-                readOnly={this.state.readOnly.location}
+                readOnly
               />
             </div>
             <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('location')}>Edit</span>
+              <span styleName='edit-button text-opacity' onClick={() => this.props.push('/signup/add-location')}>Edit</span>
             </div>
           </div>
           <div styleName='three-column-input gray-bottom-border'>

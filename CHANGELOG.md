@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Add SavedSearches menu on MapExplorer and SavedSearchesTab in UserSettings. Users can view a list of their saved searches and delete a saved search from either of these locations. Users can create a saved search from the MapExplorer view.
-- Add two new font icons (Heart and Info) used in saved searches additions
 
 ### Changed
 - Notification opt-in prompt covers saved searches too (in addition to communities)
+- Fix editing of values on user sign-up and community create review screens (fixes #685)
+- Remove editing of user name and email from Community Creation flow (fixes #579, #582)
 
 ## [2.1.9] - 2020-10-23
 ## Fixed

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import '../CreateCommunity.scss'
 import ModalSidebar from 'components/ModalSidebar'
 import TextInput from 'components/TextInput'
@@ -17,22 +17,20 @@ import {
 export default class Review extends Component {
   constructor () {
     super()
-
+    const fields = ['communityName', 'communityDomain']
+    this.inputRefs = fields.reduce((acc, name) => {
+      acc[name] = createRef()
+      return acc
+    }, {})
     this.state = {
-      readOnly: {
-        name: true,
-        email: true,
-        communityName: true,
-        communityDomain: true
-      },
-      edits: {
-        name: '',
-        email: '',
-        communityName: '',
-        communityDomain: '',
-        communityPrivacy: null,
-        changed: false
-      }
+      edits: fields.reduce((acc, name) => {
+        acc[name] = null
+        return acc
+      }, {}),
+      readOnly: fields.reduce((acc, name) => {
+        acc[name] = true
+        return acc
+      }, {})
     }
   }
 
@@ -43,7 +41,7 @@ export default class Review extends Component {
         [name]: false
       }
     })
-    this[name].select()
+    this.inputRefs[name].current.select()
   }
 
   handleInputChange = (event, name) => {
@@ -70,11 +68,7 @@ export default class Review extends Component {
   }
 
   submit = () => {
-    const { name, email, communityName, communityDomain, communityNetworkId } = this.state.edits
-    this.state.edits.changed && this.props.updateUserSettings({
-      name,
-      email
-    })
+    const { communityName, communityDomain, communityNetworkId } = this.state.edits
     this.props.createCommunity(
       // communityPrivacy,
       communityName,
@@ -93,8 +87,8 @@ export default class Review extends Component {
   }
 
   errorCheckAndSubmit = () => {
-    const { name, email, communityName, communityDomain } = this.state.edits
-    if (name === '' || email === '' || communityName === '' || communityDomain === '') {
+    const { communityName, communityDomain } = this.state.edits
+    if (communityName === '' || communityDomain === '') {
       this.setState({
         error: 'Please fill in each field.'
       })
@@ -118,8 +112,6 @@ export default class Review extends Component {
     const selectedCommunityPrivacy = get('label', privacyOption) // set to Private by default
     this.setState({
       edits: {
-        name: get('name', this.props.currentUser) || '',
-        email: get('email', this.props.currentUser) || '',
         communityName: get('communityName', this.props) || '',
         communityDomain: get('communityDomain', this.props) || '',
         communityNetworkId: get('communityNetworkId', this.props) || '',
@@ -161,28 +153,13 @@ export default class Review extends Component {
         </div>
         <div styleName='center-review'>
           <ReviewTextInput
-            label={'Your Name'}
-            value={this.state.edits.name || ''}
-            readOnly={this.state.readOnly.name}
-            editHandler={(event) => this.editHandler('name')}
-            onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'name')}
-          />
-          <ReviewTextInput
-            label={'Your Email'}
-            value={this.state.edits.email || ''}
-            readOnly={this.state.readOnly.email}
-            editHandler={() => this.editHandler('email')}
-            onEnter={this.onEnter}
-            onChange={(e) => this.handleInputChange(e, 'email')}
-          />
-          <ReviewTextInput
             label={'Community Name'}
             value={this.state.edits.communityName || ''}
             readOnly={this.state.readOnly.communityName}
             editHandler={() => this.editHandler('communityName')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityName')}
+            inputRef={this.inputRefs['communityName']}
           />
           <ReviewTextInput
             label={'URL'}
@@ -191,6 +168,7 @@ export default class Review extends Component {
             editHandler={() => this.editHandler('communityDomain')}
             onEnter={this.onEnter}
             onChange={(e) => this.handleInputChange(e, 'communityDomain')}
+            inputRef={this.inputRefs['communityDomain']}
           />
           {networkName && <ReviewTextInput
             label={'Network'}
