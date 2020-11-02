@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import Moment from 'moment'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
@@ -15,6 +16,7 @@ import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import RoundImageRow from 'components/RoundImageRow'
 import Loading from 'components/Loading'
 import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
@@ -37,7 +39,9 @@ export default class MemberProfile extends React.Component {
 
   componentDidMount () {
     const { personId } = this.props.routeParams
+    const { currentUser } = this.props
     if (personId) this.props.fetchPerson(personId)
+    this.props.fetchProjects('MEMBER_PROFILE', personId, currentUser.id)
   }
 
   selectTab = currentTab => this.setState({ currentTab })
@@ -56,7 +60,9 @@ export default class MemberProfile extends React.Component {
       contentLoading,
       person,
       currentUser,
+      projects,
       routeParams,
+      showDetails,
       push
     } = this.props
     const { currentTab } = this.state
@@ -120,6 +126,7 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
+          {projects.length && <ProjectsSection projects={projects} showDetails={showDetails} />}
         </div>
       </div>
       <div styleName='content'>
@@ -135,6 +142,19 @@ export default class MemberProfile extends React.Component {
       </div>
     </div>
   }
+}
+
+const ProjectsSection = ({ projects, showDetails }) => {
+  return (
+    <div>
+      <div styleName='profile-subhead'>
+        Projects
+      </div>
+      {projects.map((p, index) => {
+        return (<Project key={index} project={p} showDetails={showDetails} />)
+      })}
+    </div>
+  )
 }
 
 export function ActionTooltip ({ content, onClick }) {
@@ -216,6 +236,20 @@ export function ActionDropdown ({ items }) {
         <Icon styleName='action-icon-button action-menu' name='More' />
       }
     />
+}
+
+export function Project ({ project, showDetails }) {
+  const { title, id, createdAt, creator, members } = project
+  const MEMBER_CAP = 3
+  return (
+    <div styleName='project' onClick={() => showDetails(id)}>
+      <div>
+        <div styleName='title'>{title} </div>
+        <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
+      </div>
+      <RoundImageRow styleName={`members${members.items.length > MEMBER_CAP ? '-plus' : ''}`} onProfile imageUrls={members.items.map(m => m.avatarUrl)} cap={MEMBER_CAP} />
+    </div>
+  )
 }
 
 export function Error ({ children }) {
