@@ -158,6 +158,39 @@
         }
       ],
       "votesTotal": 2
-    }
+    },
+    "currentUser": {
+      "id": 1
+    },
+    "projects": [
+      {
+        "id":"1210",
+        "title":"Document bird species in Santa Cruz",
+        "createdAt":"Thu Oct 29 2020 19:55:58 GMT-0700 (PDT)",
+        "creator":{"name":"Test Account"},
+        "members":{
+          "items":[
+            {"avatarUrl":"https://member1.jpg"},
+            {"avatarUrl":"https://member2.jpg"},
+            {"avatarUrl":"https://member3.jpg"},
+            {"avatarUrl":"https://member4.jpg"},
+            {"avatarUrl":"https://member5.jpg"}
+          ]
+        }
+      },
+      {
+        "id":"1211",
+        "title":"Fundraise for Audubon Society",
+        "createdAt":"Mon Nov 02 2020 13:40:01 GMT-0800 (PST)",
+        "creator":{"name":"Test Account"},
+        "members":{
+          "items":[
+            {"avatarUrl":"https://member1.jpg"},
+            {"avatarUrl":"https://member2.jpg"},
+            {"avatarUrl":"https://member3.jpg"}
+          ]
+        }
+      }
+    ]
   }
 }

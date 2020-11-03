@@ -6,8 +6,11 @@ import MemberProfile, { SocialButtons } from './MemberProfile'
 describe('MemberProfile', () => {
   const defaultTestProps = {
     routeParams: { personId: '1' },
+    currentUser: denormalized.data.currentUser,
     person: denormalized.data.person,
-    fetchPerson: jest.fn()
+    projects: denormalized.data.projects,
+    fetchPerson: jest.fn(),
+    fetchProjects: jest.fn()
   }
 
   it('renders the same as the last snapshot', () => {

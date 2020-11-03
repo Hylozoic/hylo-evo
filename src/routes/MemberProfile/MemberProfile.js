@@ -126,7 +126,7 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
-          {projects.length && <ProjectsSection projects={projects} showDetails={showDetails} />}
+          {projects.length > 0 && <ProjectsSection projects={projects} showDetails={showDetails} />}
         </div>
       </div>
       <div styleName='content'>
@@ -142,19 +142,6 @@ export default class MemberProfile extends React.Component {
       </div>
     </div>
   }
-}
-
-const ProjectsSection = ({ projects, showDetails }) => {
-  return (
-    <div>
-      <div styleName='profile-subhead'>
-        Projects
-      </div>
-      {projects.map((p, index) => {
-        return (<Project key={index} project={p} showDetails={showDetails} />)
-      })}
-    </div>
-  )
 }
 
 export function ActionTooltip ({ content, onClick }) {
@@ -236,6 +223,19 @@ export function ActionDropdown ({ items }) {
         <Icon styleName='action-icon-button action-menu' name='More' />
       }
     />
+}
+
+export function ProjectsSection ({ projects, showDetails }) {
+  return (
+    <div>
+      <div styleName='profile-subhead'>
+        Projects
+      </div>
+      {projects.map((p, index) => {
+        return (<Project key={index} project={p} showDetails={showDetails} />)
+      })}
+    </div>
+  )
 }
 
 export function Project ({ project, showDetails }) {
