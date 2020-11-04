@@ -40,8 +40,10 @@ export default class MemberProfile extends React.Component {
   componentDidMount () {
     const { personId } = this.props.routeParams
     const { currentUser } = this.props
-    if (personId) this.props.fetchPerson(personId)
-    this.props.fetchProjects('MEMBER_PROFILE', personId, currentUser.id)
+    if (personId) {
+      this.props.fetchPerson(personId)
+      this.props.fetchProjects('MEMBER_PROFILE', personId, currentUser.id)
+    }
   }
 
   selectTab = currentTab => this.setState({ currentTab })
