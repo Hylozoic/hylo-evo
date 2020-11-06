@@ -8,7 +8,7 @@ export default function fetchForCurrentUser (slug) {
     graphql: {
       query: MeQuery,
       variables: {
-        includeCommunity: slug,
+        includeCommunity: !!slug,
         ...queryVariables(slug)
       }
     },

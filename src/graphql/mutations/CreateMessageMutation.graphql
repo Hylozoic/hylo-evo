@@ -1,7 +1,7 @@
 mutation CreateMessageMutation (
   $messageThreadId: String,
   $text: String,
-  $createdAt: String
+  $createdAt: Date
 ) {
   createMessage(data: {
     messageThreadId: $messageThreadId,
