@@ -128,7 +128,7 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
-          {projects.length > 0 && <ProjectsSection projects={projects} showDetails={showDetails} />}
+          {projects.length > 0 && <ProjectsSection memberCap={3} projects={projects} showDetails={showDetails} />}
         </div>
       </div>
       <div styleName='content'>
@@ -227,29 +227,28 @@ export function ActionDropdown ({ items }) {
     />
 }
 
-export function ProjectsSection ({ projects, showDetails }) {
+export function ProjectsSection ({ memberCap, projects, showDetails }) {
   return (
     <div>
       <div styleName='profile-subhead'>
         Projects
       </div>
       {projects.map((p, index) => {
-        return (<Project key={index} project={p} showDetails={showDetails} />)
+        return (<Project key={index} memberCap={memberCap} project={p} showDetails={showDetails} />)
       })}
     </div>
   )
 }
 
-export function Project ({ project, showDetails }) {
+export function Project ({ memberCap, project, showDetails }) {
   const { title, id, createdAt, creator, members } = project
-  const MEMBER_CAP = 3
   return (
     <div styleName='project' onClick={() => showDetails(id)}>
       <div>
         <div styleName='title'>{title} </div>
         <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
       </div>
-      <RoundImageRow styleName={`members${members.items.length > MEMBER_CAP ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={MEMBER_CAP} />
+      <RoundImageRow styleName={`members${members.items.length > memberCap ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={memberCap} />
     </div>
   )
 }

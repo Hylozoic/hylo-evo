@@ -240,43 +240,43 @@
   padding: 8px 11px;
   margin: 7px auto;
 
-    .title {
-      font-style: normal;
-      font-weight: bold;
-      font-size: 14px;
-      line-height: 18px;
-      font-family: 'Circular Bold';
-      color: $color-black;
-    }
+  .title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: 'Circular Bold';
+    color: $color-black;
+  }
 
-    .meta {
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 18px;
-      font-family: 'Circular Book';
-      color: $color-ghost;
-    }
+  .meta {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: 'Circular Book';
+    color: $color-ghost;
+  }
 
-    .members {
-      display: inline-flex;
-    }
+  .members {
+    display: inline-flex;
+  }
 
-    .members-plus {
-      display: inline-flex !important;
-      position: relative;
-      left: 15px;
-    }
+  .members-plus {
+    display: inline-flex !important;
+    position: relative;
+    left: 15px;
+  }
 
-    .member {
-      border-radius: 50px;
-      padding: 10px 15px;
-      border: 1px solid $color-black;
-    }
+  .member {
+    border-radius: 50px;
+    padding: 10px 15px;
+    border: 1px solid $color-black;
+  }
 
-    .plus {
-      margin-top: 0;
-    }
+  .plus {
+    margin-top: 0;
+  }
 }
 
 .project:hover {
