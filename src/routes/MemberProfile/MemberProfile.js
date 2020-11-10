@@ -249,7 +249,7 @@ export function Project ({ project, showDetails }) {
         <div styleName='title'>{title} </div>
         <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
       </div>
-      <RoundImageRow styleName={`members${members.items.length > MEMBER_CAP ? '-plus' : ''}`} onProfile imageUrls={members.items.map(m => m.avatarUrl)} cap={MEMBER_CAP} />
+      <RoundImageRow styleName={`members${members.items.length > MEMBER_CAP ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={MEMBER_CAP} />
     </div>
   )
 }

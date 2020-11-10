@@ -5,7 +5,7 @@ import './RoundImageRow.scss'
 
 const { array, string, bool } = PropTypes
 
-export default function RoundImageRow ({ imageUrls = [], onProfile = false, className, vertical, cap, ascending, ...rest }) {
+export default function RoundImageRow ({ imageUrls = [], inline = false, className, vertical, cap, ascending, ...rest }) {
   var capped
   var extra
   if (cap && cap < imageUrls.length) {
@@ -26,7 +26,7 @@ export default function RoundImageRow ({ imageUrls = [], onProfile = false, clas
       styleName='image'
       style={zIndexStyle(i)} />)
 
-  const plus = <div styleName={onProfile ? 'plus-profile' : 'plus-default'} key='plus' style={zIndexStyle(imageUrls.length)} >
+  const plus = <div styleName={!inline ? 'plus' : 'plus-inline'} key='plus' style={zIndexStyle(imageUrls.length)} >
     +{extra}
   </div>
 

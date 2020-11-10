@@ -1,26 +1,22 @@
-.plus-default {
+@mixin plus {
   position: relative;
   width: $space-9x;
   height: $space-9x;
   line-height: $space-7x;
   border-radius: 50%;
   border: 3px solid $color-white;
-  composes: caption-lt-lg from 'css/typography.scss';
   text-align: center;
+}
+
+.plus { 
+  @include plus();
   margin-top: -$space-4x;
   background: $color-caribbean-green;
   color: $color-white;
 }
 
-.plus-profile {
-  position: relative;
-  width: $space-9x;
-  height: $space-9x;
-  line-height: $space-7x;
-  border-radius: 50%;
-  border: 3px solid $color-white;
-  composes: caption-lt-lg from 'css/typography.scss';
-  text-align: center;
+.plus-inline {
+  @include plus();
   left: -15px;
   font-size: 0.8rem;
   margin-top: 0;
