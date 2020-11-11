@@ -128,7 +128,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fetchMembers: fetchMembers(fetchParams),
     fetchPublicCommunities: fetchPublicCommunities(fetchParams),
     fetchPosts: fetchPosts(fetchParams),
-    fetchSavedSearches: fetchSavedSearches(currentUser.id),
+    fetchSavedSearches: currentUser ? fetchSavedSearches(currentUser.id) : () => {},
     storeFetchParams: storeFetchParams(fetchParams)
   }
 }
