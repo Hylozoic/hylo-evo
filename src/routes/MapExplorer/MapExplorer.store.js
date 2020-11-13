@@ -393,7 +393,7 @@ export const getCurrentTopics = createSelector(
   (posts) => {
     const topics = (posts ? posts.reduce((topics, post) => {
       post.topics.toModelArray().forEach((topic) => {
-        const count = topics[topic.name] ? topics[topic.name] + 1 : 1
+        const count = topics[topic.name] ? topics[topic.name].count + 1 : 1
         topics[topic.name] = { count, id: topic.id }
       })
       return topics
