@@ -61,68 +61,30 @@ $third-party-icon-size: 14px;
   width: 100%;
   text-align: center;
   cursor: pointer;
-  margin-bottom: 10px;
 }
 
 .forgot-password {
   composes: text-button from 'css/typography.scss';
   font-size: 12px;
+  float: right;
+  clear: both;
+  display: inline-block;
 }
 
 .connect-label {
   composes: caption-lt-lg from 'css/typography.scss';
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: $space-4x;
+  margin-bottom: $space-4x;
   text-align: center;
 }
 
 .auth-buttons {
-  composes: caption-lt-lg from 'css/typography.scss';
-  background-color: $color-seashell;
-  border-radius: 42px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  > a {
-    display: block;
-    text-align: center;
-    height: 42px;
-    line-height: 40px;
-    vertical-align: middle;
-    flex: 1;
-    cursor: pointer;
+  :not(:last-child) {
+    margin-bottom: $space-4x;
   }
-}
-
-.auth-icon {
-  margin-right: 11px;
-  font-size: $third-party-icon-size;
-}
-
-.facebook {
-  span {
-    position: relative;
-    top: 1px;
-  }
-  color: inherit;
-  text-decoration: none !important;
-}
-.facebook:hover, .facebook:focus {
-  color: inherit;
-}
-
-.google {
-  border-left: 2px solid white;
-  border-right: 2px solid white;
-  span {
-    position: relative;
-    top: 1px;
-  }
-  color: inherit;
-  text-decoration: none !important;
-}
-.google:hover, .google:focus {
-  color: inherit;
 }
 
 .error {

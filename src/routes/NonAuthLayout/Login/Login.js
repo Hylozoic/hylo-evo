@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { formatError } from '../util'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-import Icon from 'components/Icon'
 import DownloadAppModal from 'components/DownloadAppModal'
-
-import { formatError } from '../util'
+import FacebookButton from 'components/FacebookButton'
+import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
 
 export default class Login extends React.Component {
@@ -38,35 +38,19 @@ export default class Login extends React.Component {
       </div>
 
       <div styleName='field'>
+        <Link to='/reset-password' styleName='forgot-password'>
+          <span styleName='forgot-password'>Forgot password?</span>
+        </Link>
         <label htmlFor='password' styleName='field-label'>Password</label>
         <TextInput aria-label='password' label='password' type='password' name='password'
           onChange={setState('password')}
           onEnter={this.submit} />
       </div>
       <Button styleName='submit' label='Log In' onClick={this.submit} />
-      <Link to='/reset-password' styleName='forgot-password'>
-        <p styleName='forgot-password'>Forgot password?</p>
-      </Link>
-      <p styleName='connect-label'>Or connect with:</p>
+      <p styleName='connect-label'>Or:</p>
       <div styleName='auth-buttons'>
-        <a
-          aria-label='Log in with Facebook'
-          tabIndex={0}
-          styleName='facebook'
-          onClick={() => this.loginAndRedirect('facebook')}
-        >
-          <Icon name='Facebook' styleName='auth-icon' />
-          Facebook
-        </a>
-        <a
-          aria-label='Log in with Google'
-          tabIndex={0}
-          styleName='google'
-          onClick={() => this.loginAndRedirect('google')}
-        >
-          <Icon name='Google' styleName='auth-icon' />
-          Google
-        </a>
+        <FacebookButton onClick={() => this.loginAndRedirect('facebook')} />
+        <GoogleButton onClick={() => this.loginAndRedirect('google')} />
       </div>
     </div>
   }

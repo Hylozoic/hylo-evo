@@ -1,0 +1,26 @@
+.facebook-button {
+  cursor: pointer;
+  text-decoration: none !important;
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background-color:#4267B2;
+  border-radius: 3%;
+  font-size: 16px;
+  padding: 0px 16px 0px 10px;
+  &:hover,
+  &:focus {
+    color: white;
+  }
+  > span {
+    background-color: white;
+    color: #4267B2;
+    font-size: 19px;
+    margin-right: 12px;
+    padding: 3px 3px 0px 11px;
+    justify-content: center;
+    border-radius: 5%;
+    display: flex;
+  }
+}
