@@ -10,13 +10,13 @@ import Invitation from './Invitation'
 import JoinRequest from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
-import Me from './Me'
+import Me, { MySkillsToLearn } from './Me'
 import Membership from './Membership'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Network, { NetworkModerator } from './Network'
 import Notification from './Notification'
-import Person from './Person'
+import Person, { PersonSkillsToLearn } from './Person'
 import PersonConnection from './PersonConnection'
 import Post, { PostFollower, PostCommenter, ProjectMember } from './Post'
 import PostMembership from './PostMembership'
@@ -43,11 +43,13 @@ orm.register(
   Membership,
   Message,
   MessageThread,
+  MySkillsToLearn,
   Network,
   NetworkModerator,
   Notification,
   Person,
   PersonConnection,
+  PersonSkillsToLearn,
   Post,
   PostCommenter,
   PostFollower,

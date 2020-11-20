@@ -26,6 +26,7 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
           items {
             id
             name
+            type
           }
         }
       }
@@ -54,6 +55,7 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
           items {
             id
             name
+            type
           }
         }
       }

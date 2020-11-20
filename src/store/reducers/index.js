@@ -12,6 +12,7 @@ import intercom from './intercom'
 // generator-marker-local-store-import
 import AuthRoute from 'router/AuthRoute/AuthRoute.store'
 import SkillsSection from 'components/SkillsSection/SkillsSection.store'
+import SkillsToLearnSection from 'components/SkillsToLearnSection/SkillsToLearnSection.store'
 import NetworkCommunities from 'routes/NetworkCommunities/NetworkCommunities.store'
 import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
 import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
@@ -76,6 +77,7 @@ export const combinedReducers = combineReducers({
   SavedSearches,
   Search,
   SkillsSection,
+  SkillsToLearnSection,
   TopicsSettings
 })
 

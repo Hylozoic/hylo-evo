@@ -21,6 +21,7 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 import SkillsSection from 'components/SkillsSection'
+import SkillsToLearnSection from 'components/SkillsToLearnSection'
 import styles from './MemberProfile.scss'
 
 export default class MemberProfile extends React.Component {
@@ -120,6 +121,10 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
+          <div styleName='profile-subhead'>
+            What I&apos;m Learning
+          </div>
+          <SkillsToLearnSection personId={personId} editable={false} />
         </div>
       </div>
       <div styleName='content'>

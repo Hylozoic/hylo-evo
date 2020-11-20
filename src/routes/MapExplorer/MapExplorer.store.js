@@ -100,6 +100,7 @@ const membersFragment = `
         items {
           id
           name
+          type
         }
       }
     }

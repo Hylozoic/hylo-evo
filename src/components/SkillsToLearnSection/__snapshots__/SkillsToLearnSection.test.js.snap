@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows basic pills 1`] = `
+<div
+  data-stylename="pill-container expanded"
+>
+  <Pillbox
+    addLabel="Add a Skill or Interest"
+    handleAddition={[Function]}
+    handleClick={[Function]}
+    handleDelete={[Function]}
+    handleInputChange={[Function]}
+    pills={
+      Array [
+        Object {
+          "id": 1,
+          "label": "test",
+          "name": "test",
+        },
+        Object {
+          "id": 2,
+          "label": "unclickable",
+          "name": "unclickable",
+        },
+      ]
+    }
+    placeholder="What other skills and interests do you have?"
+  />
+</div>
+`;
+
+exports[`shows editable fields when isMe = true 1`] = `
+<div
+  data-stylename="pill-container expanded"
+>
+  <Pillbox
+    addLabel="Add a Skill or Interest"
+    editable={true}
+    handleAddition={[Function]}
+    handleClick={[Function]}
+    handleDelete={[Function]}
+    handleInputChange={[Function]}
+    pills={
+      Array [
+        Object {
+          "id": 1,
+          "label": "test",
+          "name": "test",
+        },
+        Object {
+          "id": 2,
+          "label": "unclickable",
+          "name": "unclickable",
+        },
+      ]
+    }
+    placeholder="What other skills and interests do you have?"
+  />
+</div>
+`;

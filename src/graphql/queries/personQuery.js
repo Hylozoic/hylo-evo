@@ -50,6 +50,7 @@ export default
       items {
         id
         name
+        type
       }
     }
   }

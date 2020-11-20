@@ -1,5 +1,13 @@
 import PropTypes from 'prop-types'
 import { attr, fk, many, Model } from 'redux-orm'
+import { SKILL_TYPE } from './Skill'
+
+export const PersonSkillsToLearn = Model.createClass({})
+PersonSkillsToLearn.modelName = 'PersonSkillsToLearn'
+PersonSkillsToLearn.fields = {
+  person: fk('Person', 'personSkillsToLearn'),
+  skillToLearn: fk('Skill', 'personSkillsToLearn')
+}
 
 const Person = Model.createClass({
   toString () {
@@ -26,7 +34,13 @@ Person.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
-  skills: many('Skill'),
+  skills: many({ to: 'Skill', as: 'skills', relatedName: 'peopleHaving' }),
+  skillsToLearn: many({
+    to: 'Skill',
+    relatedName: 'peopleLearning',
+    through: 'PersonSkillsToLearn',
+    throughFields: [ 'person', 'skillToLearn' ]
+  }),
   postsTotal: attr(),
   votesTotal: attr()
 }

@@ -1,0 +1,39 @@
+$pill-height: 216px;
+
+.header {
+  composes: bdy-drk-lg from 'css/typography.scss';
+  margin-bottom: $space-1x;
+}
+
+.pill-container {
+  position: relative;
+  max-height: $pill-height;
+  transition: max-height 0.50s ease-out;
+}
+
+.collapsed {
+  overflow: hidden;
+
+  &:after {
+    content  : "";
+    position : absolute;
+    z-index  : 1;
+    bottom   : 0;
+    left     : 0;
+    pointer-events   : none;
+    background-image : linear-gradient(to bottom,
+            rgba(255,255,255, 0),
+            rgba(255,255,255, 1) 90%);
+    width    : 100%;
+    height   : 4em;
+  }
+}
+
+.expanded {
+  height: auto;
+  max-height: 1000px;
+}
+
+.expand-button {
+  composes: text-button from 'css/typography.scss';
+}
