@@ -59,7 +59,6 @@ export function removeSkill (skillId) {
 }
 
 export function setSearch (search) {
-  console.log("set search", search)
   return {
     type: SET_SEARCH,
     payload: search
@@ -91,7 +90,6 @@ export function fetchMemberSkills (id, limit = 20) {
 }
 
 export function fetchSkillSuggestions (search) {
-  console.log("fetch fetchSkillSuggestions")
   return {
     type: FETCH_SKILL_SUGGESTIONS,
     graphql: {

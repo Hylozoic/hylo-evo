@@ -21,7 +21,6 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const search = getSearch(state)
 
-  console.log("getskills toleanr", getMemberSkills(state, props))
   return {
     loading: isPendingFor(fetchMemberSkills, state),
     search,

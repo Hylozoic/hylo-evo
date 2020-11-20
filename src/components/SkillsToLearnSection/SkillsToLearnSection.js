@@ -10,18 +10,12 @@ export default class SkillsToLearnSection extends Component {
     editable: true
   }
 
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {
     this.props.fetchMemberSkills()
   }
 
   componentDidUpdate (prevProps) {
-    console.log("props update skills to learn", this.props)
     if (!isEmpty(this.props.search) && prevProps.search !== this.props.search) {
-      console.log("fetch")
       this.props.fetchSkillSuggestions()
     }
     if (prevProps.personId !== this.props.personId) {
@@ -49,9 +43,7 @@ export default class SkillsToLearnSection extends Component {
       skillSuggestions,
       isMe,
       skills,
-      editable,
-      label,
-      placeholder
+      editable
     } = this.props
 
     return <div styleName={cx('pill-container', 'expanded')}>
@@ -63,7 +55,7 @@ export default class SkillsToLearnSection extends Component {
         handleDelete={this.handleDelete}
         editable={editable && isMe}
         addLabel='Add a skill you want to learn'
-        placeholder={placeholder || `What ${!isEmpty(skills) ? 'other ' : ''}skills do you want to learn?`}
+        placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills do you want to learn?`}
         suggestions={skillSuggestions}
       />
     </div>

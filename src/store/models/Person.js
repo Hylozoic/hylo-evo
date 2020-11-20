@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import { attr, fk, many, Model } from 'redux-orm'
-import { SKILL_TYPE } from './Skill'
 
 export const PersonSkillsToLearn = Model.createClass({})
 PersonSkillsToLearn.modelName = 'PersonSkillsToLearn'
