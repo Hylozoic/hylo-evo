@@ -1,9 +1,10 @@
 import React from 'react'
+import { formatError } from '../util'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-import Icon from 'components/Icon'
-import { formatError } from '../util'
 import DownloadAppModal from 'components/DownloadAppModal'
+import FacebookButton from 'components/FacebookButton'
+import GoogleButton from 'components/GoogleButton'
 import './Signup.scss'
 
 export default class Signup extends React.Component {
@@ -19,6 +20,7 @@ export default class Signup extends React.Component {
   render () {
     const { className, downloadAppUrl } = this.props
     const setState = key => event => this.setState({ [key]: event.target.value })
+
     return <div className={className}>
       {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
       <h1 styleName='title'>Welcome to Hylo</h1>
@@ -41,26 +43,10 @@ export default class Signup extends React.Component {
           onEnter={this.submit} />
       </div>
       <Button styleName='submit' label='Sign Up' onClick={this.submit} />
-      <p styleName='connect-label'>Or connect with:</p>
+      <p styleName='connect-label'>Or:</p>
       <div styleName='auth-buttons'>
-        <a
-          tabIndex={0}
-          styleName='facebook'
-          onClick={this.submit}
-          aria-label='Log in with Facebook'
-        >
-          <Icon name='Facebook' styleName='auth-icon' />
-          Facebook
-        </a>
-        <a
-          tabIndex={0}
-          styleName='google'
-          onClick={this.submit}
-          aria-label='Log in with Google'
-        >
-          <Icon name='Google' styleName='auth-icon' />
-          Google
-        </a>
+        <FacebookButton signUp onClick={this.submit} />
+        <GoogleButton signUp onClick={this.submit} />
       </div>
     </div>
   }

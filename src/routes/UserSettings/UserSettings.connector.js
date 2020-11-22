@@ -1,9 +1,12 @@
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import {
+  fetchSavedSearches, deleteSearch, viewSavedSearch,
   updateUserSettings, leaveCommunity, unlinkAccount,
   updateMembershipSettings, updateAllMemberships, registerStripeAccount
 } from './UserSettings.store'
+import { generateViewParams } from 'util/savedSearch'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -12,7 +15,7 @@ import orm from 'store/models'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import unBlockUser from 'store/actions/unBlockUser'
 import getBlockedUsers from 'store/selectors/getBlockedUsers'
-import { FETCH_FOR_CURRENT_USER } from 'store/constants'
+import { FETCH_FOR_CURRENT_USER, FETCH_SAVED_SEARCHES } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
@@ -48,9 +51,10 @@ export function mapStateToProps (state, props) {
   const blockedUsers = getBlockedUsers(state, props)
   const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
   const messageSettings = getMessageSettings(state, props)
+  const searches = state.SavedSearches.searches
 
   const confirm = get('FullPageModal.confirm', state)
-  const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
+  const fetchPending = state.pending[FETCH_FOR_CURRENT_USER] || state.pending[FETCH_SAVED_SEARCHES]
   const queryParams = {
     registered: getQuerystringParam('registered', null, props)
   }
@@ -63,21 +67,31 @@ export function mapStateToProps (state, props) {
     fetchPending,
     allCommunitiesSettings,
     messageSettings,
+    searches,
     queryParams
   }
 }
 
-export const mapDispatchToProps = {
-  fetchForCurrentUser,
-  updateUserSettings,
-  unBlockUser,
-  leaveCommunity,
-  loginWithService,
-  unlinkAccount,
-  setConfirmBeforeClose,
-  updateMembershipSettings,
-  updateAllMemberships,
-  registerStripeAccount
+export function mapDispatchToProps (dispatch) {
+  return {
+    fetchForCurrentUser: (params) => dispatch(fetchForCurrentUser(params)),
+    fetchSavedSearches: (params) => dispatch(fetchSavedSearches(params)),
+    deleteSearch: (params) => dispatch(deleteSearch(params)),
+    updateUserSettings: (params) => dispatch(updateUserSettings(params)),
+    unBlockUser: (params) => dispatch(unBlockUser(params)),
+    leaveCommunity: (params) => dispatch(leaveCommunity(params)),
+    loginWithService: (params) => dispatch(loginWithService(params)),
+    unlinkAccount: (params) => dispatch(unlinkAccount(params)),
+    setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
+    updateMembershipSettings: (params) => dispatch(updateMembershipSettings(params)),
+    updateAllMemberships: (params) => dispatch(updateAllMemberships(params)),
+    registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
+    viewSavedSearch: (search) => {
+      const { mapPath } = generateViewParams(search)
+      dispatch(viewSavedSearch(search))
+      dispatch(push(mapPath))
+    }
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

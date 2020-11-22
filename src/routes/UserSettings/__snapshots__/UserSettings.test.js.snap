@@ -86,6 +86,11 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/account",
       },
       Object {
+        "component": <SavedSearchesTab />,
+        "name": "Saved Searches",
+        "path": "/settings/saved-searches",
+      },
+      Object {
         "component": <BlockedUsersTab
           loading={true}
         />,

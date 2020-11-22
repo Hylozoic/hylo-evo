@@ -185,7 +185,7 @@ export function ActionButtons ({ items }) {
         afterShow={e => {
           const hoverClassName = styles['action-icon-button-hover']
           const elements = document.getElementsByClassName(hoverClassName)
-          while(elements.length > 0) {
+          while (elements.length > 0) {
             elements[0].classList.remove(hoverClassName)
           }
           e.target.classList.add(hoverClassName)
@@ -193,7 +193,7 @@ export function ActionButtons ({ items }) {
         afterHide={e => {
           const hoverClassName = styles['action-icon-button-hover']
           const elements = document.getElementsByClassName(hoverClassName)
-          while(elements.length > 0) {
+          while (elements.length > 0) {
             elements[0].classList.remove(hoverClassName)
           }
           e.target.classList.remove(hoverClassName)

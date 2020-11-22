@@ -1,0 +1,46 @@
+mutation CreateSavedSearchMutation(
+  $boundingBox: [PointInput],
+  $communitySlug: String,
+  $context: String,
+  $lastPostId: ID,
+  $name: String,
+  $networkSlug: String,
+  $postTypes: [String],
+  $searchText: String,
+  $topicIds: [ID],
+  $userId: ID
+) {
+  createSavedSearch(data: {
+    boundingBox: $boundingBox,
+    communitySlug: $communitySlug,
+    context: $context,
+    lastPostId: $lastPostId,
+    name: $name,
+    networkSlug: $networkSlug,
+    postTypes: $postTypes,
+    searchText: $searchText,
+    topicIds: $topicIds,
+    userId: $userId
+  }) {
+    id
+    name
+    boundingBox
+    createdAt
+    context
+    community {
+      name
+      slug
+    }
+    network {
+      name
+      slug
+    }
+    isActive
+    searchText
+    topics {
+      id
+      name
+    }
+    postTypes
+  }
+}

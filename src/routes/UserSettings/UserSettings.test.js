@@ -12,6 +12,7 @@ describe('UserSettings', () => {
     const unlinkAccount = () => {}
     const setConfirm = () => {}
     const updateMembershipSettings = () => {}
+    const fetchSavedSearches = () => {}
     const fetchPending = true
 
     const wrapper = shallow(<UserSettings
@@ -24,6 +25,7 @@ describe('UserSettings', () => {
       setConfirm={setConfirm}
       fetchForCurrentUser={jest.fn()}
       updateMembershipSettings={updateMembershipSettings}
+      fetchSavedSearches={fetchSavedSearches}
       fetchPending={fetchPending} />)
     expect(wrapper).toMatchSnapshot()
   })

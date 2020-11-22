@@ -75,35 +75,19 @@ exports[`Signup renders correctly 1`] = `
   <p
     data-stylename="connect-label"
   >
-    Or connect with:
+    Or:
   </p>
   <div
     data-stylename="auth-buttons"
   >
-    <a
-      aria-label="Log in with Facebook"
-      data-stylename="facebook"
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Facebook"
-      />
-      Facebook
-    </a>
-    <a
-      aria-label="Log in with Google"
-      data-stylename="google"
+      signUp={true}
+    />
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Google"
-      />
-      Google
-    </a>
+      signUp={true}
+    />
   </div>
 </div>
 `;
@@ -186,35 +170,19 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
   <p
     data-stylename="connect-label"
   >
-    Or connect with:
+    Or:
   </p>
   <div
     data-stylename="auth-buttons"
   >
-    <a
-      aria-label="Log in with Facebook"
-      data-stylename="facebook"
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Facebook"
-      />
-      Facebook
-    </a>
-    <a
-      aria-label="Log in with Google"
-      data-stylename="google"
+      signUp={true}
+    />
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Google"
-      />
-      Google
-    </a>
+      signUp={true}
+    />
   </div>
 </div>
 `;

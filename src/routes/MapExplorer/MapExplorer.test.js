@@ -7,6 +7,7 @@ describe('MapExplorer', () => {
     const wrapper = shallow(<MapExplorer
       storeFetchPostsParam={jest.fn()}
       fetchPosts={jest.fn()}
+      fetchSavedSearches={jest.fn()}
       match={{ params: {} }}
       filters={{ featureTypes: { request: true, offer: true } }}
     />)

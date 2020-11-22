@@ -13,11 +13,11 @@ export default
   $topicNames: [String],
   $acceptContributions: Boolean,
   $eventInviteeIds: [ID],
-  $startTime: String,
-  $endTime: String,
+  $startTime: Date,
+  $endTime: Date,
   $location: String,
   $locationId: ID,
-  $isPublic: Boolean,
+  $isPublic: Boolean
 ) {
   createPost(data: {
     type: $type,
