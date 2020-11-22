@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add SavedSearches menu on MapExplorer and SavedSearchesTab in UserSettings. Users can view a list of their saved searches and delete a saved search from either of these locations. Users can create a saved search from the MapExplorer view.
 
 ### Changed
+- Updates required for 1.4.0 hylo-node update and heroku stack-18
 - Update Facebook and Google login and sign-up buttons to brand compliance #700
 - Notification opt-in prompt covers saved searches too (in addition to communities)
 - Fix editing of values on user sign-up and community create review screens (fixes #685)
