@@ -233,35 +233,35 @@ export default function ormReducer (state = {}, action) {
       break
 
     case REMOVE_SKILL_PENDING:
-      person = Me.first()
+      person = Person.withId(Me.first().id)
       person.skills.remove(meta.skillId)
       break
 
     case REMOVE_SKILL_TO_LEARN_PENDING:
-      person = Me.first()
+      person = Person.withId(Me.first().id)
       person.skillsToLearn.remove(meta.skillId)
       break
 
     case SIGNUP_REMOVE_SKILL_PENDING:
-      me = Me.first()
+      me = Me.withId(Me.first().id)
       me.skills.remove(meta.skillId)
       break
 
     case ADD_SKILL:
       const skill = payload.data.addSkill
-      person = Me.first()
+      person = Person.withId(Me.first().id)
       person.updateAppending({ skills: [Skill.create(skill)] })
       break
 
     case ADD_SKILL_TO_LEARN:
       const skillToLearn = payload.data.addSkill
-      person = Me.first()
+      person = Person.withId(Me.first().id)
       person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
       break
 
     case SIGNUP_ADD_SKILL:
       const mySkill = payload.data.addSkill
-      me = Me.first()
+      me = Me.withId(Me.first().id)
       me.updateAppending({ skills: [Skill.create(mySkill)] })
       break
 

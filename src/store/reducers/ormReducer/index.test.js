@@ -704,7 +704,9 @@ describe('on UPDATE_COMMENT_PENDING', () => {
 
 describe('on ADD_SKILL', () => {
   const session = orm.session(orm.getEmptyState())
-  const me = session.Me.create({ id: 'meId' })
+  const meId = 'meId'
+  const me = session.Me.create({ id: meId })
+  const person = session.Person.create({ id: meId })
 
   const action = {
     type: ADD_SKILL,
@@ -715,17 +717,14 @@ describe('on ADD_SKILL', () => {
           name: 'Sneezing'
         }
       }
-    },
-    meta: {
-      skillId: '1'
     }
   }
 
   it('adds the skill', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const me = newSession.Me.first()
-    expect(me.skills.toModelArray().length).toEqual(1)
+    const person = newSession.Person.withId(meId)
+    expect(person.skills.toModelArray().length).toEqual(1)
   })
 })
 
@@ -734,7 +733,7 @@ describe('on SIGNUP_ADD_SKILL', () => {
   const me = session.Me.create({ id: 'meId' })
 
   const action = {
-    type: ADD_SKILL,
+    type: SIGNUP_ADD_SKILL,
     payload: {
       data: {
         addSkill: {
@@ -742,9 +741,6 @@ describe('on SIGNUP_ADD_SKILL', () => {
           name: 'Sneezing'
         }
       }
-    },
-    meta: {
-      skillId: '1'
     }
   }
 
@@ -758,7 +754,9 @@ describe('on SIGNUP_ADD_SKILL', () => {
 
 describe('on ADD_SKILL_TO_LEARN', () => {
   const session = orm.session(orm.getEmptyState())
-  const me = session.Me.create({ id: 'meId' })
+  const meId = 'meId'
+  const me = session.Me.create({ id: meId })
+  const person = session.Person.create({ id: meId })
 
   const action = {
     type: ADD_SKILL_TO_LEARN,
@@ -769,24 +767,23 @@ describe('on ADD_SKILL_TO_LEARN', () => {
           name: 'Sneezing'
         }
       }
-    },
-    meta: {
-      skillId: '1'
     }
   }
 
   it('adds the skill to learn', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const me = newSession.Me.first()
-    expect(me.skillsToLearn.toModelArray().length).toEqual(1)
+    const person = newSession.Person.withId(meId)
+    expect(person.skillsToLearn.toModelArray().length).toEqual(1)
   })
 })
 
 describe('on REMOVE_SKILL_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
   const skill = session.Skill.create({ id: '1', name: 'Snowboarding' })
-  const me = session.Me.create({ id: 'meId', skills: [skill] })
+  const meId = 'meId'
+  const me = session.Me.create({ id: meId })
+  const person = session.Person.create({ id: meId, skills: [skill] })
 
   const action = {
     type: REMOVE_SKILL_PENDING,
@@ -798,15 +795,17 @@ describe('on REMOVE_SKILL_PENDING', () => {
   it('removes the skill', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const me = newSession.Me.first()
-    expect(me.skills.toModelArray().length).toEqual(0)
+    const person = newSession.Person.withId(meId)
+    expect(person.skills.toModelArray().length).toEqual(0)
   })
 })
 
 describe('on REMOVE_SKILL_TO_LEARN_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  const skill = session.Skill.create({ id: '1', name: 'Showboating' })
-  const me = session.Me.create({ id: 'meId', skillsToLearn: [skill] })
+  const skill = session.Skill.create({ id: '1', name: 'Snowboarding' })
+  const meId = 'meId'
+  const me = session.Me.create({ id: meId })
+  const person = session.Person.create({ id: meId, skillsToLearn: [skill] })
 
   const action = {
     type: REMOVE_SKILL_TO_LEARN_PENDING,
@@ -818,8 +817,8 @@ describe('on REMOVE_SKILL_TO_LEARN_PENDING', () => {
   it('removes the skill to learn', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const me = newSession.Me.first()
-    expect(me.skillsToLearn.toModelArray().length).toEqual(0)
+    const person = newSession.Person.withId(meId)
+    expect(person.skillsToLearn.toModelArray().length).toEqual(0)
   })
 })
 
