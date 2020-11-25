@@ -5,7 +5,7 @@ exports[`shows basic pills 1`] = `
   data-stylename="pill-container expanded"
 >
   <Pillbox
-    addLabel="Add a Skill or Interest"
+    addLabel="Add a skill you want to learn"
     handleAddition={[Function]}
     handleClick={[Function]}
     handleDelete={[Function]}
@@ -24,7 +24,7 @@ exports[`shows basic pills 1`] = `
         },
       ]
     }
-    placeholder="What other skills and interests do you have?"
+    placeholder="What other skills do you want to learn?"
   />
 </div>
 `;
@@ -34,7 +34,7 @@ exports[`shows editable fields when isMe = true 1`] = `
   data-stylename="pill-container expanded"
 >
   <Pillbox
-    addLabel="Add a Skill or Interest"
+    addLabel="Add a skill you want to learn"
     editable={true}
     handleAddition={[Function]}
     handleClick={[Function]}
@@ -54,7 +54,7 @@ exports[`shows editable fields when isMe = true 1`] = `
         },
       ]
     }
-    placeholder="What other skills and interests do you have?"
+    placeholder="What other skills do you want to learn?"
   />
 </div>
 `;

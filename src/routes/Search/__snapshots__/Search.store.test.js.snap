@@ -16,6 +16,7 @@ Object {
       "id": 0,
       "name": "Ron",
       "skills": undefined,
+      "skillsToLearn": undefined,
     },
     "id": 21,
     "post": Object {

@@ -26,7 +26,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-
+    
 posts(
   first: $first,
   offset: $offset,
@@ -39,7 +39,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -63,7 +63,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
@@ -197,7 +197,7 @@ Object {
   $first: Int
   $boundingBox: [PointInput]
 ) {
-
+  
 posts(
   first: $first,
   offset: $offset,
@@ -210,7 +210,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -234,7 +234,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title

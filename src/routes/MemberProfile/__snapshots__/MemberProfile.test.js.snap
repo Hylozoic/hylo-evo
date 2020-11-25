@@ -116,6 +116,15 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         editable={false}
         personId="1"
       />
+      <div
+        data-stylename="profile-subhead"
+      >
+        What I'm Learning
+      </div>
+      <Connect(SkillsToLearnSection)
+        editable={false}
+        personId="1"
+      />
     </div>
   </div>
   <div

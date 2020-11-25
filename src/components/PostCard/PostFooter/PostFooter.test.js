@@ -66,7 +66,7 @@ describe('PostFooter', () => {
       voteOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
-      currentUser={false}
+      currentUser={null}
       votesTotal={0}
       type='event' />)
     expect(wrapper).toMatchSnapshot()
