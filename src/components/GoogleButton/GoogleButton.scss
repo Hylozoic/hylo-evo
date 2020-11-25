@@ -1,0 +1,20 @@
+.google-button {
+  cursor: pointer;
+  text-decoration: none !important;
+  background: white;
+  color: #666;
+  border-radius: 5px;
+  border: thin solid #DDD;
+  box-shadow: 1px 1px 1px #CCC;
+  white-space: nowrap;
+  padding-right: 16px;
+  img {
+    border: 0px;
+    height: 40px;
+    margin-right: 8px;
+  }
+  &:hover,
+  &:focus {
+    color: #666;
+  }
+}

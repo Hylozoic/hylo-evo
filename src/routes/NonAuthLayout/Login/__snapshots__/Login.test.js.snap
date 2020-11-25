@@ -29,6 +29,17 @@ exports[`renders correctly 1`] = `
   <div
     data-stylename="field"
   >
+    <Link
+      data-stylename="forgot-password"
+      replace={false}
+      to="/reset-password"
+    >
+      <span
+        data-stylename="forgot-password"
+      >
+        Forgot password?
+      </span>
+    </Link>
     <label
       data-stylename="field-label"
       htmlFor="password"
@@ -49,49 +60,20 @@ exports[`renders correctly 1`] = `
     label="Log In"
     onClick={[Function]}
   />
-  <Link
-    data-stylename="forgot-password"
-    replace={false}
-    to="/reset-password"
-  >
-    <p
-      data-stylename="forgot-password"
-    >
-      Forgot password?
-    </p>
-  </Link>
   <p
     data-stylename="connect-label"
   >
-    Or connect with:
+    Or:
   </p>
   <div
     data-stylename="auth-buttons"
   >
-    <a
-      aria-label="Log in with Facebook"
-      data-stylename="facebook"
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Facebook"
-      />
-      Facebook
-    </a>
-    <a
-      aria-label="Log in with Google"
-      data-stylename="google"
+    />
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Google"
-      />
-      Google
-    </a>
+    />
   </div>
 </div>
 `;
@@ -128,6 +110,17 @@ exports[`renders correctly with mobile redirect 1`] = `
   <div
     data-stylename="field"
   >
+    <Link
+      data-stylename="forgot-password"
+      replace={false}
+      to="/reset-password"
+    >
+      <span
+        data-stylename="forgot-password"
+      >
+        Forgot password?
+      </span>
+    </Link>
     <label
       data-stylename="field-label"
       htmlFor="password"
@@ -148,49 +141,20 @@ exports[`renders correctly with mobile redirect 1`] = `
     label="Log In"
     onClick={[Function]}
   />
-  <Link
-    data-stylename="forgot-password"
-    replace={false}
-    to="/reset-password"
-  >
-    <p
-      data-stylename="forgot-password"
-    >
-      Forgot password?
-    </p>
-  </Link>
   <p
     data-stylename="connect-label"
   >
-    Or connect with:
+    Or:
   </p>
   <div
     data-stylename="auth-buttons"
   >
-    <a
-      aria-label="Log in with Facebook"
-      data-stylename="facebook"
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Facebook"
-      />
-      Facebook
-    </a>
-    <a
-      aria-label="Log in with Google"
-      data-stylename="google"
+    />
+    <FacebookButton
       onClick={[Function]}
-      tabIndex={0}
-    >
-      <Icon
-        data-stylename="auth-icon"
-        name="Google"
-      />
-      Google
-    </a>
+    />
   </div>
 </div>
 `;
