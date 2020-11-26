@@ -39,11 +39,7 @@ export default class MemberProfile extends React.Component {
 
   componentDidMount () {
     const { personId } = this.props.routeParams
-    const { currentUser } = this.props
-    if (personId) {
-      this.props.fetchPerson(personId)
-      this.props.fetchProjects('MEMBER_PROFILE', personId, currentUser.id)
-    }
+    if (personId) this.props.fetchPerson(personId)
   }
 
   selectTab = currentTab => this.setState({ currentTab })
@@ -62,11 +58,11 @@ export default class MemberProfile extends React.Component {
       contentLoading,
       person,
       currentUser,
-      projects,
       routeParams,
       showDetails,
       push
     } = this.props
+    const { projects } = person
     const { currentTab } = this.state
     const personId = routeParams.personId
     const firstName = getFirstName(person)
@@ -128,7 +124,7 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
-          {projects.length > 0 && <ProjectsSection memberCap={3} projects={projects} showDetails={showDetails} />}
+          {projects && projects.length > 0 && <ProjectsSection memberCap={3} projects={projects} showDetails={showDetails} />}
         </div>
       </div>
       <div styleName='content'>

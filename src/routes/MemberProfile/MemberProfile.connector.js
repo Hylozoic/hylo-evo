@@ -11,8 +11,6 @@ import {
   FETCH_MEMBER_POSTS,
   FETCH_MEMBER_COMMENTS,
   FETCH_MEMBER_VOTES,
-  FETCH_PROJECTS,
-  fetchProjects,
   getPresentedPerson
 } from './MemberProfile.store'
 
@@ -28,8 +26,7 @@ export function mapStateToProps (state, props) {
     FETCH_RECENT_ACTIVITY,
     FETCH_MEMBER_POSTS,
     FETCH_MEMBER_COMMENTS,
-    FETCH_MEMBER_VOTES,
-    FETCH_PROJECTS
+    FETCH_MEMBER_VOTES
   ], state)
   const personLoading = isPendingFor(fetchPerson, state)
 
@@ -39,7 +36,6 @@ export function mapStateToProps (state, props) {
     personLoading,
     contentLoading,
     person,
-    projects: state.MemberProfile.projects,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)
   }
@@ -50,7 +46,6 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchPerson: (id) => dispatch(fetchPerson(id)),
-    fetchProjects: (context, contextId, viewerId) => dispatch(fetchProjects(context, contextId, viewerId)),
     blockUser: (id) => dispatch(blockUser(id)),
     push,
     showDetails: (id) => dispatch(push(postUrl(id, routeParams, querystringParams)))

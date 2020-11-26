@@ -9,13 +9,12 @@ describe('connector', () => {
   beforeEach(() => {
     const {
       communities,
-      person,
-      projects
+      person
     } = testData
     session = orm.mutableSession(orm.getEmptyState())
     session.Person.create(person)
     session.Community.create(communities[0])
-    state = { orm: session.state, MemberProfile: { projects } }
+    state = { orm: session.state }
     selectorProps = {
       personId: '46816',
       slug: 'wombats'

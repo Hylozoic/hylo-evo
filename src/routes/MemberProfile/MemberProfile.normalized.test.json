@@ -16,6 +16,36 @@
     "membershipsTotal": 1,
     "posts": [ "30003", "30002" ],
     "postsTotal": 2,
+    "projects": [
+      {
+        "id":"1210",
+        "title":"Document bird species in Santa Cruz",
+        "createdAt":"Thu Oct 29 2020 19:55:58 GMT-0700 (PDT)",
+        "creator":{"name":"Test Account"},
+        "members":{
+          "items":[
+            {"avatarUrl":"https://member1.jpg"},
+            {"avatarUrl":"https://member2.jpg"},
+            {"avatarUrl":"https://member3.jpg"},
+            {"avatarUrl":"https://member4.jpg"},
+            {"avatarUrl":"https://member5.jpg"}
+          ]
+        }
+      },
+      {
+        "id":"1211",
+        "title":"Fundraise for Audubon Society",
+        "createdAt":"Mon Nov 02 2020 13:40:01 GMT-0800 (PST)",
+        "creator":{"name":"Test Account"},
+        "members":{
+          "items":[
+            {"avatarUrl":"https://member1.jpg"},
+            {"avatarUrl":"https://member2.jpg"},
+            {"avatarUrl":"https://member3.jpg"}
+          ]
+        }
+      }
+    ],
     "votes": [ "2" ],
     "votesTotal": 1
   },
@@ -76,36 +106,6 @@
       "commentersTotal": 1,
       "communities": [ "1836" ],
       "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
-    }
-  ],
-  "projects": [
-    {
-      "id":"1210",
-      "title":"Document bird species in Santa Cruz",
-      "createdAt":"Thu Oct 29 2020 19:55:58 GMT-0700 (PDT)",
-      "creator":{"name":"Test Account"},
-      "members":{
-        "items":[
-          {"avatarUrl":"https://member1.jpg"},
-          {"avatarUrl":"https://member2.jpg"},
-          {"avatarUrl":"https://member3.jpg"},
-          {"avatarUrl":"https://member4.jpg"},
-          {"avatarUrl":"https://member5.jpg"}
-        ]
-      }
-    },
-    {
-      "id":"1211",
-      "title":"Fundraise for Audubon Society",
-      "createdAt":"Mon Nov 02 2020 13:40:01 GMT-0800 (PST)",
-      "creator":{"name":"Test Account"},
-      "members":{
-        "items":[
-          {"avatarUrl":"https://member1.jpg"},
-          {"avatarUrl":"https://member2.jpg"},
-          {"avatarUrl":"https://member3.jpg"}
-        ]
-      }
     }
   ],
   "votes": [

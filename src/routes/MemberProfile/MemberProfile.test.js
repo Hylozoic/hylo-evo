@@ -8,9 +8,7 @@ describe('MemberProfile', () => {
     routeParams: { personId: '1' },
     currentUser: denormalized.data.currentUser,
     person: denormalized.data.person,
-    projects: denormalized.data.projects,
-    fetchPerson: jest.fn(),
-    fetchProjects: jest.fn()
+    fetchPerson: jest.fn()
   }
 
   it('renders the same as the last snapshot', () => {

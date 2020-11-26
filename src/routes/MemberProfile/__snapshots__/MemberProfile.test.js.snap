@@ -117,6 +117,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         personId="1"
       />
       <ProjectsSection
+        memberCap={3}
         projects={
           Array [
             Object {

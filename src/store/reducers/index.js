@@ -17,7 +17,6 @@ import NetworkSettings from 'routes/NetworkSettings/NetworkSettings.store'
 import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
 import Messages from 'routes/Messages/Messages.store'
 import Members from 'routes/Members/Members.store'
-import MemberProfile from 'routes/MemberProfile/MemberProfile.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
@@ -66,7 +65,6 @@ export const combinedReducers = combineReducers({
   CommunityDetail,
   MapExplorer,
   Members,
-  MemberProfile,
   MemberSelector,
   Messages,
   ModeratorsSettings,
