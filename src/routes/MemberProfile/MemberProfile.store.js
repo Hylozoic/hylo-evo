@@ -20,7 +20,6 @@ export function getRoleForCommunity (person, communitySlug) {
 export function presentPerson (person, selectedCommunitySlug) {
   return {
     ...person.ref,
-    projects: person.projects && person.projects.items,
     role: getRoleForCommunity(person, selectedCommunitySlug),
     skills: person.skills && person.skills.toRefArray()
   }

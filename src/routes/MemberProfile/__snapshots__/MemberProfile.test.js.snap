@@ -116,61 +116,11 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         editable={false}
         personId="1"
       />
-      <ProjectsSection
-        memberCap={3}
-        projects={
-          Array [
-            Object {
-              "createdAt": "Thu Oct 29 2020 19:55:58 GMT-0700 (PDT)",
-              "creator": Object {
-                "name": "Test Account",
-              },
-              "id": "1210",
-              "members": Object {
-                "items": Array [
-                  Object {
-                    "avatarUrl": "https://member1.jpg",
-                  },
-                  Object {
-                    "avatarUrl": "https://member2.jpg",
-                  },
-                  Object {
-                    "avatarUrl": "https://member3.jpg",
-                  },
-                  Object {
-                    "avatarUrl": "https://member4.jpg",
-                  },
-                  Object {
-                    "avatarUrl": "https://member5.jpg",
-                  },
-                ],
-              },
-              "title": "Document bird species in Santa Cruz",
-            },
-            Object {
-              "createdAt": "Mon Nov 02 2020 13:40:01 GMT-0800 (PST)",
-              "creator": Object {
-                "name": "Test Account",
-              },
-              "id": "1211",
-              "members": Object {
-                "items": Array [
-                  Object {
-                    "avatarUrl": "https://member1.jpg",
-                  },
-                  Object {
-                    "avatarUrl": "https://member2.jpg",
-                  },
-                  Object {
-                    "avatarUrl": "https://member3.jpg",
-                  },
-                ],
-              },
-              "title": "Fundraise for Audubon Society",
-            },
-          ]
-        }
-      />
+      <div
+        data-stylename="profile-subhead"
+      >
+        Projects
+      </div>
     </div>
   </div>
   <div

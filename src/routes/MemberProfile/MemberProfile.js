@@ -62,7 +62,7 @@ export default class MemberProfile extends React.Component {
       showDetails,
       push
     } = this.props
-    const { projects } = person
+    const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
     const firstName = getFirstName(person)
@@ -124,7 +124,10 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
-          {projects && projects.length > 0 && <ProjectsSection memberCap={3} projects={projects} showDetails={showDetails} />}
+          <div styleName='profile-subhead'>
+            Projects
+          </div>
+          {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} showDetails={showDetails} />)}
         </div>
       </div>
       <div styleName='content'>
@@ -221,19 +224,6 @@ export function ActionDropdown ({ items }) {
         <Icon styleName='action-icon-button action-menu' name='More' />
       }
     />
-}
-
-export function ProjectsSection ({ memberCap, projects, showDetails }) {
-  return (
-    <div>
-      <div styleName='profile-subhead'>
-        Projects
-      </div>
-      {projects.map((p, index) => {
-        return (<Project key={index} memberCap={memberCap} project={p} showDetails={showDetails} />)
-      })}
-    </div>
-  )
 }
 
 export function Project ({ memberCap, project, showDetails }) {
