@@ -63,6 +63,7 @@ export default class MemberProfile extends React.Component {
       showDetails,
       push
     } = this.props
+    const events = person.eventsAttending && person.eventsAttending.items
     const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
@@ -129,10 +130,11 @@ export default class MemberProfile extends React.Component {
             What I&apos;m Learning
           </div>
           <SkillsToLearnSection personId={personId} editable={false} />
-          { projects && projects.length > 0 && <div styleName='profile-subhead subhead-border-top'>
-            Projects
-          </div>
-          }
+
+          {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
+          {events && events.length > 0 && events.map((e) => <Event memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
+
+          {projects && projects.length > 0 && <div styleName='profile-subhead'>Projects</div>}
           {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
         </div>
       </div>
@@ -241,6 +243,24 @@ export function Project ({ memberCap, project, routeParams, showDetails }) {
         <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
       </div>
       <RoundImageRow styleName={`members${members.items.length > memberCap ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={memberCap} />
+    </div>
+  )
+}
+
+export function Event ({ memberCap, event, routeParams, showDetails }) {
+  const { id, communities, location, eventInvitations, startTime, title } = event
+  const postTypeContext = communities.map(c => c.slug).includes(routeParams.slug) ? 'event' : undefined
+  return (
+    <div styleName='event' onClick={() => showDetails(id, { ...routeParams, postTypeContext })}>
+      <div styleName='date'>
+        <div styleName='month'>{Moment(startTime).format('MMM')}</div>
+        <div styleName='day'>{Moment(startTime).format('DD')}</div>
+      </div>
+      <div styleName='details'>
+        <div styleName='title'>{title}</div>
+        <div styleName='meta'><Icon name='Location' />{location}</div>
+      </div>
+      <RoundImageRow styleName={`members${eventInvitations.items.length > memberCap ? '-plus' : ''}`} inline imageUrls={eventInvitations.items.map(e => e.person.avatarUrl)} cap={memberCap} />
     </div>
   )
 }

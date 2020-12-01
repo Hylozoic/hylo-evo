@@ -125,6 +125,154 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         editable={false}
         personId="1"
       />
+      <div
+        data-stylename="profile-subhead"
+      >
+        Upcoming Events
+      </div>
+      <Event
+        event={
+          Object {
+            "communities": Array [
+              Object {
+                "slug": "psychedelics",
+              },
+            ],
+            "eventInvitations": Object {
+              "items": Array [
+                Object {
+                  "person": Object {
+                    "avatarUrl": "https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29846/userAvatar/29846/shen-shen5.jpg",
+                  },
+                  "response": "yes",
+                },
+              ],
+            },
+            "id": "1212",
+            "location": "https://us02web.zoom.us/j/2896940440?pwd=YnB2QWZVVzRhbXNmWWVzZUw2MHcxUT09",
+            "startTime": "2020-12-01T08:00:00.000Z",
+            "title": "Ceremony",
+          }
+        }
+        memberCap={3}
+        routeParams={
+          Object {
+            "personId": "1",
+          }
+        }
+      />
+      <Event
+        event={
+          Object {
+            "communities": Array [
+              Object {
+                "slug": "bb",
+              },
+            ],
+            "eventInvitations": Object {
+              "items": Array [
+                Object {
+                  "person": Object {
+                    "avatarUrl": "https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29846/userAvatar/29846/shen-shen5.jpg",
+                  },
+                  "response": "yes",
+                },
+                Object {
+                  "person": Object {
+                    "avatarUrl": "https://www.gravatar.com/avatar/94a2d9255a468695b90d00fa691ee05b?d=mm&s=140",
+                  },
+                  "response": "yes",
+                },
+              ],
+            },
+            "id": "1213",
+            "location": "Scotts Valley, California, United States",
+            "startTime": "2020-12-09T08:00:00.000Z",
+            "title": "Chickadees United",
+          }
+        }
+        memberCap={3}
+        routeParams={
+          Object {
+            "personId": "1",
+          }
+        }
+      />
+      <div
+        data-stylename="profile-subhead"
+      >
+        Projects
+      </div>
+      <Project
+        key="0"
+        memberCap={3}
+        project={
+          Object {
+            "createdAt": "Thu Oct 29 2020 19:55:58 GMT-0700 (PDT)",
+            "creator": Object {
+              "name": "Test Account",
+            },
+            "id": "1210",
+            "members": Object {
+              "items": Array [
+                Object {
+                  "avatarUrl": "https://member1.jpg",
+                },
+                Object {
+                  "avatarUrl": "https://member2.jpg",
+                },
+                Object {
+                  "avatarUrl": "https://member3.jpg",
+                },
+                Object {
+                  "avatarUrl": "https://member4.jpg",
+                },
+                Object {
+                  "avatarUrl": "https://member5.jpg",
+                },
+              ],
+            },
+            "title": "Document bird species in Santa Cruz",
+          }
+        }
+        routeParams={
+          Object {
+            "personId": "1",
+          }
+        }
+      />
+      <Project
+        key="1"
+        memberCap={3}
+        project={
+          Object {
+            "createdAt": "Mon Nov 02 2020 13:40:01 GMT-0800 (PST)",
+            "creator": Object {
+              "name": "Test Account",
+            },
+            "id": "1211",
+            "members": Object {
+              "items": Array [
+                Object {
+                  "avatarUrl": "https://member1.jpg",
+                },
+                Object {
+                  "avatarUrl": "https://member2.jpg",
+                },
+                Object {
+                  "avatarUrl": "https://member3.jpg",
+                },
+              ],
+            },
+            "title": "Fundraise for Audubon Society",
+          }
+        }
+        routeParams={
+          Object {
+            "personId": "1",
+          }
+        }
+      />
     </div>
   </div>
   <div
