@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import Moment from 'moment'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
@@ -15,6 +16,7 @@ import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import RoundImageRow from 'components/RoundImageRow'
 import Loading from 'components/Loading'
 import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
@@ -57,8 +59,10 @@ export default class MemberProfile extends React.Component {
       person,
       currentUser,
       routeParams,
+      showDetails,
       push
     } = this.props
+    const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
     const firstName = getFirstName(person)
@@ -120,6 +124,10 @@ export default class MemberProfile extends React.Component {
             Skills &amp; Interests
           </div>
           <SkillsSection personId={personId} editable={false} />
+          <div styleName='profile-subhead'>
+            Projects
+          </div>
+          {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} showDetails={showDetails} />)}
         </div>
       </div>
       <div styleName='content'>
@@ -216,6 +224,19 @@ export function ActionDropdown ({ items }) {
         <Icon styleName='action-icon-button action-menu' name='More' />
       }
     />
+}
+
+export function Project ({ memberCap, project, showDetails }) {
+  const { title, id, createdAt, creator, members } = project
+  return (
+    <div styleName='project' onClick={() => showDetails(id)}>
+      <div>
+        <div styleName='title'>{title} </div>
+        <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
+      </div>
+      <RoundImageRow styleName={`members${members.items.length > memberCap ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={memberCap} />
+    </div>
+  )
 }
 
 export function Error ({ children }) {

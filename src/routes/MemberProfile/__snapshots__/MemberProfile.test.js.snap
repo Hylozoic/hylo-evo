@@ -116,6 +116,11 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         editable={false}
         personId="1"
       />
+      <div
+        data-stylename="profile-subhead"
+      >
+        Projects
+      </div>
     </div>
   </div>
   <div

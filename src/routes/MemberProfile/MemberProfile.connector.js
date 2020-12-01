@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { postUrl } from 'util/navigation'
 import blockUser from 'store/actions/blockUser'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
@@ -40,10 +41,15 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  fetchPerson,
-  blockUser,
-  push
+export function mapDispatchToProps (dispatch, props) {
+  const { routeParams, querystringParams } = props
+
+  return {
+    fetchPerson: (id) => dispatch(fetchPerson(id)),
+    blockUser: (id) => dispatch(blockUser(id)),
+    push,
+    showDetails: (id) => dispatch(push(postUrl(id, routeParams, querystringParams)))
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
