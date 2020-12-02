@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.0] - 2020-11-22
 ### Added
 - Add SavedSearches menu on MapExplorer and SavedSearchesTab in UserSettings. Users can view a list of their saved searches and delete a saved search from either of these locations. Users can create a saved search from the MapExplorer view.
+- Projects section to member profile
 
 ### Changed
 - Updates required for 1.4.0 hylo-node update and heroku stack-18

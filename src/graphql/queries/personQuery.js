@@ -44,6 +44,21 @@ export default
         slug
       }
     }
+    projects {
+      items {
+        id
+        title
+        createdAt
+        creator {
+          name
+        }
+        members {
+          items {
+            avatarUrl
+          }
+        }
+      }
+    }
     skills (first: 100) {
       total
       hasMore
