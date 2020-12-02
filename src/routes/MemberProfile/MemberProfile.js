@@ -181,7 +181,7 @@ export function ActionButtons ({ items }) {
         dataTipFor: tooltipId
       }
 
-    return <React.Fragment>
+    return <React.Fragment key={index}>
       <Icon
         key={index}
         styleName='action-icon-button'

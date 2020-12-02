@@ -23,7 +23,7 @@ export default function CommentCard ({
   }
   const commentText = present(sanitize(comment.text), commentPresentOpts)
 
-  return <a onClick={() => showDetails(comment.post.id)} styleName='link'>
+  return <span onClick={() => showDetails(comment.post.id)} styleName='link'>
     <div styleName={cx('comment-card', { expanded })}>
       <div styleName='comment-header'>
         <RoundImage url={creator.avatarUrl} large />
@@ -44,5 +44,5 @@ export default function CommentCard ({
       </ClickCatcher>
       <div styleName='comment-footer' />
     </div>
-  </a>
+  </span>
 }
