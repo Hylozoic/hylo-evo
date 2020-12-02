@@ -762,7 +762,7 @@ describe('on ADD_SKILL_TO_LEARN', () => {
     type: ADD_SKILL_TO_LEARN,
     payload: {
       data: {
-        addSkill: {
+        addSkillToLearn: {
           id: '1',
           name: 'Sneezing'
         }

@@ -33,7 +33,6 @@ const searchQuery =
             items {
               id
               name
-              type
             }
           }
         }

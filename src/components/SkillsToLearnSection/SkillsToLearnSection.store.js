@@ -18,16 +18,14 @@ export function addSkill (skillName) {
   return {
     type: ADD_SKILL,
     graphql: {
-      query: `mutation ($name: String, $type: Int) {
-        addSkill(name: $name, type: $type) {
+      query: `mutation ($name: String) {
+        addSkillToLearn(name: $name) {
           id
           name
-          type
         }
       }`,
       variables: {
-        name: skillName,
-        type: 1
+        name: skillName
       }
     },
     meta: {
@@ -42,13 +40,12 @@ export function removeSkill (skillId) {
     type: REMOVE_SKILL,
     graphql: {
       query: `mutation ($id: ID) {
-        removeSkill(id: $id) {
+        removeSkillToLearn(id: $id) {
           success
         }
       }`,
       variables: {
-        id: skillId,
-        type: 1
+        id: skillId
       }
     },
     meta: {
@@ -76,7 +73,6 @@ export function fetchMemberSkills (id, limit = 20) {
             items {
               id
               name
-              type
             }
           }
         }
@@ -98,7 +94,6 @@ export function fetchSkillSuggestions (search) {
           items {
             id
             name
-            type
           }
         }
       }`,

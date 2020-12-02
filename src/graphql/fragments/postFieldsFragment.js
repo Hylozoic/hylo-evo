@@ -110,7 +110,6 @@ const postFieldsFragment = withComments => `
         items {
           id
           name
-          type
         }
       }
     }
@@ -132,7 +131,6 @@ const postFieldsFragment = withComments => `
           items {
             id
             name
-            type
           }
         }
       }

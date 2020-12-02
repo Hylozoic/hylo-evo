@@ -126,7 +126,6 @@ posts(
         items {
           id
           name
-          type
         }
       }
     }
@@ -148,7 +147,6 @@ posts(
           items {
             id
             name
-            type
           }
         }
       }
@@ -298,7 +296,6 @@ posts(
         items {
           id
           name
-          type
         }
       }
     }
@@ -320,7 +317,6 @@ posts(
           items {
             id
             name
-            type
           }
         }
       }

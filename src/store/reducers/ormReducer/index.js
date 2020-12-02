@@ -254,7 +254,7 @@ export default function ormReducer (state = {}, action) {
       break
 
     case ADD_SKILL_TO_LEARN:
-      const skillToLearn = payload.data.addSkill
+      const skillToLearn = payload.data.addSkillToLearn
       person = Person.withId(Me.first().id)
       person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
       break
