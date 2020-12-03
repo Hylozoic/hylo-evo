@@ -57,6 +57,9 @@ export default
             avatarUrl
           }
         }
+        communities {
+          slug
+        }
       }
     }
     skills (first: 100) {
