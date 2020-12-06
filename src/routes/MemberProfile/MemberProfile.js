@@ -127,7 +127,7 @@ export default class MemberProfile extends React.Component {
           <div styleName='profile-subhead'>
             Projects
           </div>
-          {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} showDetails={showDetails} />)}
+          {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
         </div>
       </div>
       <div styleName='content'>
@@ -226,10 +226,11 @@ export function ActionDropdown ({ items }) {
     />
 }
 
-export function Project ({ memberCap, project, showDetails }) {
-  const { title, id, createdAt, creator, members } = project
+export function Project ({ memberCap, project, routeParams, showDetails }) {
+  const { title, id, communities, createdAt, creator, members } = project
+  const postTypeContext = communities.map(c => c.slug).includes(routeParams.slug) ? 'project' : undefined
   return (
-    <div styleName='project' onClick={() => showDetails(id)}>
+    <div styleName='project' onClick={() => showDetails(id, { ...routeParams, postTypeContext })}>
       <div>
         <div styleName='title'>{title} </div>
         <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
