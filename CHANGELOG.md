@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Adjusted signup wizard css to show Onwards button when creating an account on Hylo (web) while using a mobile device.
 
-
 ## [2.2.0] - 2020-11-22
 ### Added
 - Add SavedSearches menu on MapExplorer and SavedSearchesTab in UserSettings. Users can view a list of their saved searches and delete a saved search from either of these locations. Users can create a saved search from the MapExplorer view.
