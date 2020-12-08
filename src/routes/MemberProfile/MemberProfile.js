@@ -52,7 +52,7 @@ export default class MemberProfile extends React.Component {
   }
 
   render () {
-    if (this.props.error) return <Error>this.props.error</Error>
+    if (this.props.error) return <Error>{this.props.error}</Error>
     if (this.props.personLoading) return <Loading />
 
     const {
@@ -233,10 +233,9 @@ export function ActionDropdown ({ items }) {
 }
 
 export function Project ({ memberCap, project, routeParams, showDetails }) {
-  const { title, id, communities, createdAt, creator, members } = project
-  const postTypeContext = communities.map(c => c.slug).includes(routeParams.slug) ? 'project' : undefined
+  const { title, id, createdAt, creator, members } = project
   return (
-    <div styleName='project' onClick={() => showDetails(id, { ...routeParams, postTypeContext })}>
+    <div styleName='project' onClick={() => showDetails(id, { ...routeParams })}>
       <div>
         <div styleName='title'>{title} </div>
         <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
