@@ -405,3 +405,21 @@
     right: 37px;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .signup-modal-footer {
+    position: static;
+    margin: 20px auto 100px;
+    width: 100%;
+  }
+
+  .press-enter {
+    opacity: 0;
+  }
+
+  .skills {
+    height: 145px;
+    overflow-y: scroll;
+    padding: 0px 20px 0px 20px;
+  }
+}

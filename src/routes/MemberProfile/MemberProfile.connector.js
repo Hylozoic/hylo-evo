@@ -41,14 +41,12 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
-  const { routeParams, querystringParams } = props
-
+export function mapDispatchToProps (dispatch) {
   return {
     fetchPerson: (id) => dispatch(fetchPerson(id)),
     blockUser: (id) => dispatch(blockUser(id)),
     push: (url) => dispatch(push(url)),
-    showDetails: (id) => dispatch(push(postUrl(id, routeParams, querystringParams)))
+    showDetails: (id, routeParams) => dispatch(push(postUrl(id, routeParams)))
   }
 }
 
