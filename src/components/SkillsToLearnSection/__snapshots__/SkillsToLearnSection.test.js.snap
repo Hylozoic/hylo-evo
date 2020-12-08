@@ -1,60 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`shows basic pills 1`] = `
-<div
-  data-stylename="pill-container expanded"
->
-  <Pillbox
-    addLabel="Add a skill you want to learn"
-    handleAddition={[Function]}
-    handleClick={[Function]}
-    handleDelete={[Function]}
-    handleInputChange={[Function]}
-    pills={
-      Array [
-        Object {
-          "id": 1,
-          "label": "test",
-          "name": "test",
-        },
-        Object {
-          "id": 2,
-          "label": "unclickable",
-          "name": "unclickable",
-        },
-      ]
-    }
-    placeholder="What other skills do you want to learn?"
-  />
-</div>
+<SkillsSection
+  editable={true}
+  fetchMemberSkills={[MockFunction]}
+  label="Add a skill you want to learn"
+  placeholder="skills do you want to learn?"
+  skills={
+    Array [
+      Object {
+        "id": 1,
+        "name": "test",
+      },
+      Object {
+        "id": 2,
+        "name": "unclickable",
+      },
+    ]
+  }
+/>
 `;
 
 exports[`shows editable fields when isMe = true 1`] = `
-<div
-  data-stylename="pill-container expanded"
->
-  <Pillbox
-    addLabel="Add a skill you want to learn"
-    editable={true}
-    handleAddition={[Function]}
-    handleClick={[Function]}
-    handleDelete={[Function]}
-    handleInputChange={[Function]}
-    pills={
-      Array [
-        Object {
-          "id": 1,
-          "label": "test",
-          "name": "test",
-        },
-        Object {
-          "id": 2,
-          "label": "unclickable",
-          "name": "unclickable",
-        },
-      ]
-    }
-    placeholder="What other skills do you want to learn?"
-  />
-</div>
+<SkillsSection
+  editable={true}
+  fetchMemberSkills={[MockFunction]}
+  isMe={true}
+  label="Add a skill you want to learn"
+  placeholder="skills do you want to learn?"
+  skills={
+    Array [
+      Object {
+        "id": 1,
+        "name": "test",
+      },
+      Object {
+        "id": 2,
+        "name": "unclickable",
+      },
+    ]
+  }
+/>
 `;

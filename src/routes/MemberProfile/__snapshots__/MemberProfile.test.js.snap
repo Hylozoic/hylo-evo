@@ -121,7 +121,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       >
         What I'm Learning
       </div>
-      <Connect(SkillsToLearnSection)
+      <Connect(_default)
         editable={false}
         personId="1"
       />
