@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.2.2] - 2020-12-05
+## [2.2.2] - 2020-12-09
 ### Added
 - Added Skills to Learn to user profiles
 
