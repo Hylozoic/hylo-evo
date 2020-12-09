@@ -12,6 +12,7 @@ Object {
       "name": "Mr Person",
       "response": "yes",
       "skills": undefined,
+      "skillsToLearn": undefined,
     },
   ],
   "fileAttachments": Array [],

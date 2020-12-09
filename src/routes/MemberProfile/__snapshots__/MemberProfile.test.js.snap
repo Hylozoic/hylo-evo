@@ -119,8 +119,12 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <div
         data-stylename="profile-subhead"
       >
-        Projects
+        What I'm Learning
       </div>
+      <Connect(_default)
+        editable={false}
+        personId="1"
+      />
     </div>
   </div>
   <div

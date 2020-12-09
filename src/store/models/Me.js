@@ -67,6 +67,13 @@ const Me = Model.createClass({
   }
 })
 
+export const MySkillsToLearn = Model.createClass({})
+MySkillsToLearn.modelName = 'MySkillsToLearn'
+MySkillsToLearn.fields = {
+  me: fk('Me', 'mySkillsToLearn'),
+  skillToLearn: fk('Skill', 'mySkillsToLearn')
+}
+
 export default Me
 
 Me.modelName = 'Me'
@@ -90,5 +97,11 @@ Me.fields = {
   messageThreads: many('MessageThread'),
   notifications: many('Notification'),
   skills: many('Skill'),
+  skillsToLearn: many({
+    to: 'Skill',
+    relatedName: 'personLearning',
+    through: 'MySkillsToLearn',
+    throughFields: [ 'me', 'skillToLearn' ]
+  }),
   blockedUsers: many('Person')
 }

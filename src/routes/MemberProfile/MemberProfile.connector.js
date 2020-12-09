@@ -45,7 +45,7 @@ export function mapDispatchToProps (dispatch) {
   return {
     fetchPerson: (id) => dispatch(fetchPerson(id)),
     blockUser: (id) => dispatch(blockUser(id)),
-    push,
+    push: (url) => dispatch(push(url)),
     showDetails: (id, routeParams) => dispatch(push(postUrl(id, routeParams)))
   }
 }

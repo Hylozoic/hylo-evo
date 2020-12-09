@@ -82,7 +82,7 @@
   &-icon {
     margin-right: $space-1x;
     font-size: $space-5x;
-  }  
+  }
 }
 
 // ACTION ICONS
@@ -216,6 +216,10 @@
   padding-top: $space-3x;
   margin-top: $space-3x;
   margin-bottom: $space-3x;
+  margin-top: $space-3x;
+}
+
+.subhead-border-top {
   border-top: solid 1px $color-rhino-10;
 }
 

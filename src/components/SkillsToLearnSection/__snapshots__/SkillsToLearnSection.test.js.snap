@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows basic pills 1`] = `
+<SkillsSection
+  editable={true}
+  fetchMemberSkills={[MockFunction]}
+  label="Add a skill you want to learn"
+  placeholder="skills do you want to learn?"
+  skills={
+    Array [
+      Object {
+        "id": 1,
+        "name": "test",
+      },
+      Object {
+        "id": 2,
+        "name": "unclickable",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`shows editable fields when isMe = true 1`] = `
+<SkillsSection
+  editable={true}
+  fetchMemberSkills={[MockFunction]}
+  isMe={true}
+  label="Add a skill you want to learn"
+  placeholder="skills do you want to learn?"
+  skills={
+    Array [
+      Object {
+        "id": 1,
+        "name": "test",
+      },
+      Object {
+        "id": 2,
+        "name": "unclickable",
+      },
+    ]
+  }
+/>
+`;

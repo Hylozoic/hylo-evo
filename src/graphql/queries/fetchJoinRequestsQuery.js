@@ -6,7 +6,7 @@ export default
     items {
       id
       status
-      createdAt    
+      createdAt
       user {
         id
         avatarUrl

@@ -7,14 +7,9 @@ import './SkillsSection.scss'
 
 export default class SkillsSection extends Component {
   static defaultProps = {
-    editable: true
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      skillSuggestions: []
-    }
+    editable: true,
+    label: 'Add a Skill or Interest',
+    placeholder: 'skills and interests do you have?'
   }
 
   componentDidMount () {
@@ -47,10 +42,12 @@ export default class SkillsSection extends Component {
     if (this.props.loading) return <Loading />
 
     const {
-      skillSuggestions,
+      editable,
       isMe,
+      label,
+      placeholder,
       skills,
-      editable
+      skillSuggestions
     } = this.props
 
     return <div styleName={cx('pill-container', 'expanded')}>
@@ -61,8 +58,8 @@ export default class SkillsSection extends Component {
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
         editable={editable && isMe}
-        addLabel='Add a Skill or Interest'
-        placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}skills and interests do you have?`}
+        addLabel={label}
+        placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}${placeholder}`}
         suggestions={skillSuggestions}
       />
     </div>

@@ -23,6 +23,7 @@ import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
 import MemberVotes from './MemberVotes'
 import SkillsSection from 'components/SkillsSection'
+import SkillsToLearnSection from 'components/SkillsToLearnSection'
 import styles from './MemberProfile.scss'
 
 export default class MemberProfile extends React.Component {
@@ -51,7 +52,7 @@ export default class MemberProfile extends React.Component {
   }
 
   render () {
-    if (this.props.error) return <Error>this.props.error</Error>
+    if (this.props.error) return <Error>{this.props.error}</Error>
     if (this.props.personLoading) return <Loading />
 
     const {
@@ -125,8 +126,13 @@ export default class MemberProfile extends React.Component {
           </div>
           <SkillsSection personId={personId} editable={false} />
           <div styleName='profile-subhead'>
+            What I&apos;m Learning
+          </div>
+          <SkillsToLearnSection personId={personId} editable={false} />
+          { projects && projects.length > 0 && <div styleName='profile-subhead subhead-border-top'>
             Projects
           </div>
+          }
           {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
         </div>
       </div>
@@ -175,7 +181,7 @@ export function ActionButtons ({ items }) {
         dataTipFor: tooltipId
       }
 
-    return <React.Fragment>
+    return <React.Fragment key={index}>
       <Icon
         key={index}
         styleName='action-icon-button'
@@ -227,10 +233,9 @@ export function ActionDropdown ({ items }) {
 }
 
 export function Project ({ memberCap, project, routeParams, showDetails }) {
-  const { title, id, communities, createdAt, creator, members } = project
-  const postTypeContext = communities.map(c => c.slug).includes(routeParams.slug) ? 'project' : undefined
+  const { title, id, createdAt, creator, members } = project
   return (
-    <div styleName='project' onClick={() => showDetails(id, { ...routeParams, postTypeContext })}>
+    <div styleName='project' onClick={() => showDetails(id, { ...routeParams })}>
       <div>
         <div styleName='title'>{title} </div>
         <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
