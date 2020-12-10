@@ -6,6 +6,27 @@
   padding: 0 $space-10x 0 $space-10x;
 }
 
+@mixin post-tile {
+  background: #FFFFFF;
+  border: 1px solid #E1E5E9;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 7px auto;
+}
+
+@mixin post-meta {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: 'Circular Book';
+  color: $color-ghost;
+}
+
 // MEMBER PROFILE
 
 .member-profile {
@@ -216,11 +237,6 @@
   padding-top: $space-3x;
   margin-top: $space-3x;
   margin-bottom: $space-3x;
-  margin-top: $space-3x;
-}
-
-.subhead-border-top {
-  border-top: solid 1px $color-rhino-10;
 }
 
 .profile-subhead:first-of-type {
@@ -228,21 +244,10 @@
   border-top: 0;
 }
 
-// PROJECTS
+// EVENTS & PROJECTS
 
-.project {
-  background: #FFFFFF;
-  border: 1px solid #E1E5E9;
-  box-sizing: border-box;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 60px;
-  padding: 8px 11px;
-  margin: 7px auto;
+.event, .project {
+  @include post-tile();
 
   .title {
     font-style: normal;
@@ -254,12 +259,7 @@
   }
 
   .meta {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 18px;
-    font-family: 'Circular Book';
-    color: $color-ghost;
+    @include post-meta();
   }
 
   .members {
@@ -281,6 +281,79 @@
   .plus {
     margin-top: 0;
   }
+}
+
+.event {
+  justify-content: left;
+  padding-right: 11px;
+
+  .date {
+    background-color: $color-events-50;
+    color: white;
+    border-radius: 4px 0px 0px 4px;
+    padding: 5px 8px;
+    text-align: center;
+    text-transform: uppercase;
+    min-width: 50px;
+
+    .month {
+      font-size: 14px;
+    }
+
+    .day {
+      font-size: 28px;
+      line-height: 23px;
+    }
+  }
+
+  .details {
+    text-align: left;
+    padding: 0 11px;
+    display: block;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .meta {
+    max-width: 350px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    > span {
+      font-size: 12px;
+      margin-right: 2px;
+    }
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  .event > .details > .meta {
+      max-width: 250px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .event > .details > .meta {
+      max-width: 200px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .event > .details > .meta {
+      max-width: 100px;
+  }
+}
+
+.event:hover {
+  border: 1px solid $color-events-50;
+}
+
+.project {
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  padding: 8px 11px;
 }
 
 .project:hover {

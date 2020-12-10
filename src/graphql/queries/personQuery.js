@@ -33,6 +33,25 @@ export default
       neighborhood
       region
     }
+    eventsAttending {
+      items {
+        id
+        title
+        location
+        startTime
+        eventInvitations {
+          items {
+            response
+            person {
+              avatarUrl
+            }
+          }
+        }
+        communities {
+          slug
+        }
+      }
+    }
     messageThreadId
     memberships {
       id
