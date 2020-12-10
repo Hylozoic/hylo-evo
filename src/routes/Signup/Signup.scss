@@ -407,9 +407,22 @@
 }
 
 @media screen and (max-width: 425px) {
+
+  .panel {
+    min-height: 100vh !important;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .signup-padding {
+    padding-top: 25px;
+  }
+
   .signup-modal-footer {
+    height: 200px;
     position: static;
-    margin: 20px auto 100px;
+    overflow-y: scroll;
+    margin: 20px auto;
     width: 100%;
   }
 
@@ -420,6 +433,24 @@
   .skills {
     height: 145px;
     overflow-y: scroll;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 10px 0px 10px;
+  }
+
+  .your-skills {
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  .your-skills-label {
+    display: block;
+    padding-top: 0;
+    width: 100%;
+  }
+
+  .your-skills-list {
+    margin-top: 10px;
+    padding: 0px 10px 0px 10px;
+    width: 100%;
   }
 }
