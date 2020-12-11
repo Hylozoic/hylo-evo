@@ -1,0 +1,33 @@
+.affiliation {
+  border: 0;
+  font-weight: 100;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  min-height: 42px;
+  font-size: 14px;
+
+  .role {
+    font-weight: bold;
+    font-family: 'Circular Bold';
+    padding: 0 5px 0 10px;
+  }
+
+  .orgName {
+    padding-left: 5px;
+    font-family: 'Circular Bold';
+    color: $color-regent;
+
+    a {
+      color: $color-regent;
+    }
+  }
+}
+
+.odd {
+  background-color: $color-white;
+}
+
+.even {
+  background-color: $color-athens-gray;
+}

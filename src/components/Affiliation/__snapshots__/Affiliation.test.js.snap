@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Affiliation matches last snapshot 1`] = `
+<div
+  data-stylename="affiliation undefined"
+>
+  <div
+    data-stylename="role"
+  >
+    Cheesemongress
+  </div>
+   at 
+  <div
+    data-stylename="orgName"
+  >
+    La Fromagerie
+  </div>
+</div>
+`;

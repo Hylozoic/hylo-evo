@@ -128,6 +128,27 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <div
         data-stylename="profile-subhead"
       >
+        Hylo Communities
+      </div>
+      <Membership
+        className="even"
+        key="0"
+        membership={
+          Object {
+            "community": Object {
+              "id": "1836",
+              "name": "Wombats",
+              "slug": "wombats",
+            },
+            "hasModeratorRole": true,
+            "id": "3",
+            "role": 1,
+          }
+        }
+      />
+      <div
+        data-stylename="profile-subhead"
+      >
         Upcoming Events
       </div>
       <Event
