@@ -4,7 +4,7 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  min-height: 42px;
+  min-height: 54px;
   font-size: 14px;
 
   .role {
@@ -32,4 +32,17 @@
 
 .even {
   background-color: $color-athens-gray;
+}
+
+.leave-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  border: 1px solid $color-amaranth;
+  padding: 2px 7px;
+  @include font-regular;
+  &:hover {
+    color: $color-white;
+    background-color: $color-amaranth;
+  }
 }

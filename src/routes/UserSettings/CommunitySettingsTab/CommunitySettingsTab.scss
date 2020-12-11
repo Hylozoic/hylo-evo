@@ -1,55 +1,25 @@
-// CommunityControl
-.community-control {
-  min-height: 52px;
-  border-bottom: 1px solid $color-ghost;
+.title {
+  min-height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  margin: 8px 0px;
+.description {
+  color: $color-regent;
+  margin-bottom: 30px;
 }
 
-.settings-row {
-  composes: row;
-  margin-bottom: 16px;
-}
-
-.avatar {
-  margin-right: $space-4x;
-}
-
-.name {
-  composes: bdy-drk-sm from 'css/typography.scss';
-  font-size: 16px;
-  &:hover {
-    color: $color-rhino;
-    text-decoration: none;
-  }
-}
-
-.leave-button {
-  margin-left: auto;
-  composes: text-button from 'css/typography.scss';
-  color: $color-amaranth;
-  @include font-regular;
-  &:hover {
-    color: $color-maroon-flush;
-  }
-}
-
-.settings-label {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
-.settings {
-  composes: caption-lt-lg from 'css/typography.scss';
-  margin-left: auto;
-  margin-right: -12px;
-  display: flex;
-  align-items: center;
-}
-
-.checkbox-label {
-  margin-right: 5px;
+.subhead {
+  text-transform: uppercase;
+  color: $color-rhino-30;
+  font-size: $space-3x;
+  padding-top: $space-3x;
+  margin-top: $space-3x;
+  margin-bottom: $space-3x;
 }

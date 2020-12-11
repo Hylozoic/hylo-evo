@@ -1,51 +1,47 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './CommunitySettingsTab.scss'
-import { Link } from 'react-router-dom'
-import { DEFAULT_AVATAR } from 'store/models/Community'
-import { communityUrl } from 'util/navigation'
+import Affiliation from 'components/Affiliation'
 import Loading from 'components/Loading'
-import RoundImage from 'components/RoundImage'
+import Membership from 'components/Membership'
 
 const { array, func } = PropTypes
 
 export default class CommunitySettingsTab extends Component {
   static propTypes = {
+    affiliations: array,
     memberships: array,
-    updateMembershipSettings: func
+    leaveCommunity: func,
+    deleteAffiliation: func
   }
 
   render () {
-    const { memberships, leaveCommunity, updateMembershipSettings } = this.props
-    if (!memberships) return <Loading />
+    const { affiliations, deleteAffiliation, memberships, leaveCommunity } = this.props
+    if (!memberships || !affiliations) return <Loading />
 
     return <div>
-      {memberships.map(m =>
-        <CommunityControl
+      <div styleName='title'>Your affiliations with organizations</div>
+
+      <div styleName='description'>This list automatically shows which communities on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
+
+      <div styleName='subhead'>Hylo Communities</div>
+      {memberships.map((m, index) =>
+        <Membership
           membership={m}
-          leaveCommunity={leaveCommunity}
-          updateMembershipSettings={updateMembershipSettings}
-          key={m.id} />)}
+          archive={leaveCommunity}
+          key={m.id}
+          index={index}
+        />)}
+
+      <div styleName='subhead'>Other Affiliations</div>
+      {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
+        <Affiliation
+          affiliation={a}
+          archive={deleteAffiliation}
+          key={a.id}
+          index={index}
+        />
+      )}
     </div>
   }
-}
-
-export function CommunityControl ({ membership, leaveCommunity }) {
-  const leave = () => {
-    if (window.confirm(`Are you sure you want to leave ${community.name}?`)) {
-      leaveCommunity(community.id)
-    }
-  }
-
-  const { community } = membership
-
-  return <div styleName='community-control'>
-    <div styleName='row'>
-      <Link to={communityUrl(community.slug)}>
-        <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='avatar' />
-      </Link>
-      <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
-      <span onClick={leave} styleName='leave-button'>Leave</span>
-    </div>
-  </div>
 }

@@ -4,7 +4,8 @@ import getMe from 'store/selectors/getMe'
 import {
   fetchSavedSearches, deleteSearch, viewSavedSearch,
   updateUserSettings, leaveCommunity, unlinkAccount,
-  updateMembershipSettings, updateAllMemberships, registerStripeAccount
+  updateMembershipSettings, updateAllMemberships, registerStripeAccount,
+  deleteAffiliation
 } from './UserSettings.store'
 import { generateViewParams } from 'util/savedSearch'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
@@ -47,6 +48,7 @@ export const getMessageSettings = createSelector(
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
+  const affiliations = currentUser.affiliations // TODO: How to make Affiliations a Redux Model?
   const memberships = getCurrentUserMemberships(state, props)
   const blockedUsers = getBlockedUsers(state, props)
   const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
@@ -61,6 +63,7 @@ export function mapStateToProps (state, props) {
 
   return {
     currentUser,
+    affiliations,
     memberships,
     blockedUsers,
     confirm,
@@ -76,6 +79,7 @@ export function mapDispatchToProps (dispatch) {
   return {
     fetchForCurrentUser: (params) => dispatch(fetchForCurrentUser(params)),
     fetchSavedSearches: (params) => dispatch(fetchSavedSearches(params)),
+    deleteAffiliation: (params) => dispatch(deleteAffiliation(params)),
     deleteSearch: (params) => dispatch(deleteSearch(params)),
     updateUserSettings: (params) => dispatch(updateUserSettings(params)),
     unBlockUser: (params) => dispatch(unBlockUser(params)),

@@ -136,10 +136,10 @@ export default class MemberProfile extends React.Component {
           <SkillsToLearnSection personId={personId} editable={false} />
 
           { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Communities</div> }
-          { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={index} className={index % 2 === 0 ? 'even' : 'odd'} membership={m} />) }
+          { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />) }
 
           { affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>Other Affiliations</div> }
-          { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={index} className={index % 2 === 0 ? 'even' : 'odd'} affiliation={a} />) }
+          { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />) }
 
           {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
           {events && events.length > 0 && events.map((e) => <Event memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}

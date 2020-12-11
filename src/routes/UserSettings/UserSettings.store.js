@@ -4,7 +4,9 @@ import {
   SAVE_SEARCH,
   LEAVE_COMMUNITY,
   UNLINK_ACCOUNT,
-  VIEW_SAVED_SEARCH
+  VIEW_SAVED_SEARCH,
+  CREATE_AFFILIATION,
+  DELETE_AFFILIATION
 } from 'store/constants'
 import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation.graphql'
 
@@ -139,6 +141,26 @@ export function viewSavedSearch (search) {
   return {
     type: VIEW_SAVED_SEARCH,
     payload: { search }
+  }
+}
+
+export function createAffiliation () {
+
+}
+
+export function deleteAffiliation (id) {
+  return {
+    type: DELETE_AFFILIATION,
+    graphql: {
+      query: `mutation ($id: ID) {
+        deleteAffiliation(id: $id)
+      }`,
+      variables: { id }
+    },
+    meta: {
+      id,
+      optimistic: true
+    }
   }
 }
 

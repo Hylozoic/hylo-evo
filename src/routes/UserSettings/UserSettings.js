@@ -46,7 +46,9 @@ export default class UserSettings extends Component {
       registerStripeAccount,
       searches,
       deleteSearch,
-      viewSavedSearch
+      viewSavedSearch,
+      affiliations,
+      deleteAffiliation
     } = this.props
 
     const content = [
@@ -62,9 +64,11 @@ export default class UserSettings extends Component {
           fetchPending={fetchPending} />
       },
       {
-        name: 'Communities',
+        name: 'Affiliations',
         path: '/settings/communities',
         component: <CommunitySettingsTab
+          affiliations={affiliations}
+          deleteAffiliation={deleteAffiliation}
           memberships={memberships}
           leaveCommunity={leaveCommunity} />
       },
