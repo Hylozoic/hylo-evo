@@ -23,3 +23,26 @@
   margin-top: $space-3x;
   margin-bottom: $space-3x;
 }
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  > span {
+    cursor: pointer;
+  }
+}
+
+.error {
+  background-color: $color-pale-pink;
+  color: $color-amaranth;
+}
+
+.success {
+  background-color: $color-iceberg;
+  color: $color-mountain-meadow;
+}

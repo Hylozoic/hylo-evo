@@ -11,7 +11,7 @@ export default function Membership ({ membership, index, archive }) {
 
   const leave = () => {
     if (window.confirm(`Are you sure you want to leave ${community.name}?`)) {
-      archive(community.id)
+      archive(community)
     }
   }
 
