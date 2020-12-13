@@ -48,6 +48,7 @@ export default class UserSettings extends Component {
       deleteSearch,
       viewSavedSearch,
       affiliations,
+      createAffiliation,
       deleteAffiliation
     } = this.props
 
@@ -68,6 +69,7 @@ export default class UserSettings extends Component {
         path: '/settings/communities',
         component: <CommunitySettingsTab
           affiliations={affiliations}
+          createAffiliation={createAffiliation}
           deleteAffiliation={deleteAffiliation}
           memberships={memberships}
           leaveCommunity={leaveCommunity} />

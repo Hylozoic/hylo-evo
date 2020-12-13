@@ -5,7 +5,7 @@ import {
   fetchSavedSearches, deleteSearch, viewSavedSearch,
   updateUserSettings, leaveCommunity, unlinkAccount,
   updateMembershipSettings, updateAllMemberships, registerStripeAccount,
-  deleteAffiliation
+  createAffiliation, deleteAffiliation
 } from './UserSettings.store'
 import { generateViewParams } from 'util/savedSearch'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
@@ -79,6 +79,7 @@ export function mapDispatchToProps (dispatch) {
   return {
     fetchForCurrentUser: (params) => dispatch(fetchForCurrentUser(params)),
     fetchSavedSearches: (params) => dispatch(fetchSavedSearches(params)),
+    createAffiliation: (params) => dispatch(createAffiliation(params)),
     deleteAffiliation: (params) => dispatch(deleteAffiliation(params)),
     deleteSearch: (params) => dispatch(deleteSearch(params)),
     updateUserSettings: (params) => dispatch(updateUserSettings(params)),

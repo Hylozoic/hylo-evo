@@ -144,8 +144,28 @@ export function viewSavedSearch (search) {
   }
 }
 
-export function createAffiliation () {
-
+export function createAffiliation ({ role, preposition, orgName, url}) {
+  return {
+    type: CREATE_AFFILIATION,
+    graphql: {
+      query: `mutation ($role: String, $preposition: String, $orgName: String, $url: String) {
+        createAffiliation(data: { role: $role, preposition: $preposition, orgName: $orgName, url: $url }) {
+          id
+          role
+          preposition
+          orgName
+          url
+          createdAt
+          updatedAt
+          isActive
+        }
+      }`,
+      variables: { role, preposition, orgName, url }
+    },
+    meta: {
+      role, preposition, orgName, url, optimistic: true
+    }
+  }
 }
 
 export function deleteAffiliation (id) {
