@@ -108,13 +108,13 @@ export default class CommunitySettingsTab extends Component {
     this.props.createAffiliation({ role, preposition, orgName, url })
       .then(res => {
         let errorMessage, successMessage
-        if (res.error) errorMessage = `Error adding your affiliation.`
+        if (res.error) errorMessage = get(res, 'payload.message', 'Error adding your affiliation.')
         const affiliation = get(res, 'payload.data.createAffiliation')
         if (affiliation) {
           successMessage = `Your affiliation was added`
           affiliations.items.push(affiliation)
         }
-        return this.setState({ affiliations, errorMessage, successMessage, showAddAffiliations: false })
+        return this.setState({ affiliations, errorMessage, successMessage, showAddAffiliations: !!errorMessage })
       })
   }
 
@@ -128,7 +128,6 @@ export default class CommunitySettingsTab extends Component {
 }
 
 export function AddAffiliation ({ close, save }) {
-
   const PREPOSITIONS = [
     { id: 'of', label: 'of' },
     { id: 'at', label: 'at' },
@@ -141,8 +140,11 @@ export function AddAffiliation ({ close, save }) {
   const [url, setUrl] = useState('')
 
   const canSave = role.length && orgName.length
-
+  
+  const URL_PROTOCOL = 'http://'
   const CHAR_LIMIT = 30
+
+  const formatUrl = url => `${URL_PROTOCOL}${url}`
 
   return (
   <div styleName='affiliation-form'>
@@ -188,14 +190,14 @@ export function AddAffiliation ({ close, save }) {
       <div>
         <input
           type='text'
-          onChange={e => setUrl(e.target.value)}
+          onChange={e => setUrl(e.target.value.substring(URL_PROTOCOL.length))}
           placeholder='URL of organization'
-          value={url}
+          value={formatUrl(url)}
         />
       </div>
       
       <div styleName={`save ${canSave ? '' : 'disabled'}`}>
-        <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>Add Affiliation</span>
+        <span onClick={canSave ? () => save({ role, preposition, orgName, url: formatUrl(url) }) : undefined}>Add Affiliation</span>
       </div>
 
     </div>
