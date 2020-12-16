@@ -248,10 +248,9 @@ export function Project ({ memberCap, project, routeParams, showDetails }) {
 }
 
 export function Event ({ memberCap, event, routeParams, showDetails }) {
-  const { id, communities, location, eventInvitations, startTime, title } = event
-  const postTypeContext = communities.map(c => c.slug).includes(routeParams.slug) ? 'event' : undefined
+  const { id, location, eventInvitations, startTime, title } = event
   return (
-    <div styleName='event' onClick={() => showDetails(id, { ...routeParams, postTypeContext })}>
+    <div styleName='event' onClick={() => showDetails(id, { ...routeParams })}>
       <div styleName='date'>
         <div styleName='month'>{Moment(startTime).format('MMM')}</div>
         <div styleName='day'>{Moment(startTime).format('DD')}</div>

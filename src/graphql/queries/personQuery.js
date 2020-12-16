@@ -47,9 +47,6 @@ export default
             }
           }
         }
-        communities {
-          slug
-        }
       }
     }
     messageThreadId
