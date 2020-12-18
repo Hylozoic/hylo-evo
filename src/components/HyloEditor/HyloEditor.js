@@ -139,6 +139,9 @@ export default class HyloEditor extends Component {
   handleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
     if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
+      if (this.isEmpty()) {
+        return 'handled'
+      }
       if (!event.shiftKey) {
         submitOnReturnHandler(this.getContentHTML())
         this.setState({
