@@ -73,6 +73,7 @@ export default class PrimaryLayout extends Component {
     const {
       community,
       network,
+      viewContext,
       currentUser,
       isDrawerOpen,
       location,
@@ -107,7 +108,7 @@ export default class PrimaryLayout extends Component {
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
 
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
-      <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
+      <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network, viewContext }} />
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
         {routesWithNavigation.map(({ path }) =>

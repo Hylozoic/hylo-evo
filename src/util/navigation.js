@@ -255,6 +255,13 @@ export function getNetworkSlugInPath (pathname) {
   return get('params.networkSlug', match)
 }
 
+export function getViewContextInPath (pathname) {
+  const match = matchPath(pathname, {
+    path: '/(c|n)/:slug/:viewContext'
+  })
+  return get('params.viewContext', match)
+}
+
 export function gotoExternalUrl (url) {
   return window.open(url, null, 'noopener,noreferrer')
 }

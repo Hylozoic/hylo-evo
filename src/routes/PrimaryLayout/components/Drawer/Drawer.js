@@ -15,6 +15,7 @@ const { string, number, arrayOf, shape } = PropTypes
 
 export default class Drawer extends React.PureComponent {
   static propTypes = {
+    viewContext: string,
     community: shape({
       id: string,
       name: string,
@@ -48,7 +49,7 @@ export default class Drawer extends React.PureComponent {
   }
 
   render () {
-    const { currentLocation, community, network, communities, networks, defaultNetworks, className, toggleDrawer, canModerate } = this.props
+    const { currentLocation, viewContext, community, network, communities, networks, defaultNetworks, className, toggleDrawer, canModerate } = this.props
 
     return <div className={className} styleName='s.communityDrawer'>
       <div styleName={cx({ 's.currentCommunity': community !== null || network !== null })}>
@@ -74,7 +75,7 @@ export default class Drawer extends React.PureComponent {
             )}</div> : ''}
           <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Communities</li>
           {communities.map(community =>
-            <CommunityRow {...community} key={community.id} />
+            <CommunityRow {...community} viewContext={viewContext} key={community.id} />
           )}
         </ul>
         <div styleName='s.newCommunity'>
@@ -90,11 +91,11 @@ export default class Drawer extends React.PureComponent {
   }
 }
 
-export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount, isMember = true }) {
+export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount, viewContext, isMember = true }) {
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
-    <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name}>
+    <Link to={(path || `/c/${slug}`) + (viewContext ? `/${viewContext}` : '')} styleName='s.communityRowLink' title={name}>
       <div styleName='s.communityRowAvatar' style={imageStyle} />
       <span styleName={cx('s.community-name', { 's.is-member': isMember })}>{name}</span>
       {showBadge && <Badge expanded number={newPostCount} />}
@@ -128,9 +129,9 @@ export class NetworkRow extends React.Component {
   }
 
   render () {
-    const { network, currentLocation } = this.props
+    const { network, currentLocation, viewContext } = this.props
     const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
-    const path = network.path || `/n/${slug}`
+    const path = (network.path || `/n/${slug}`) + (viewContext ? `/${viewContext}` : '')
     const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
@@ -152,9 +153,9 @@ export class NetworkRow extends React.Component {
       </Link>
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
-          <CommunityRow {...community} key={community.id} />)}
+          <CommunityRow {...community} viewContext={viewContext} key={community.id} />)}
         {(seeAllExpanded && !isEmpty(nonMemberCommunities)) && nonMemberCommunities.map(community =>
-          <CommunityRow {...community} key={community.id} isMember={false} />)}
+          <CommunityRow {...community} viewContext={viewContext} key={community.id} isMember={false} />)}
         {!isEmpty(nonMemberCommunities) && <li styleName='s.seeAllBtn' onClick={this.toggleSeeAll}>
           {seeAllExpanded ? 'See less' : 'See all'}
         </li>}

@@ -6,6 +6,7 @@ import { FETCH_FOR_COMMUNITY } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
+import getViewContextForCurrentRoute from 'store/selectors/getViewContextForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
 import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
@@ -22,6 +23,7 @@ export function mapStateToProps (state, props) {
     isCommunityRoute: isCommunityRoute(state, props),
     community: getCommunityForCurrentRoute(state, props),
     network: getNetworkForCurrentRoute(state, props),
+    viewContext: getViewContextForCurrentRoute(state, props),
     currentUser: getMe(state),
     isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
     showLogoBadge,
