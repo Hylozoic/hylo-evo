@@ -65,13 +65,13 @@ export default class Drawer extends React.PureComponent {
       <div>
         <ul styleName='s.communitiesList'>
           {defaultNetworks && defaultNetworks.map(network =>
-            <NetworkRow network={network} key={network.id} currentLocation={currentLocation} />
+            <NetworkRow network={network} viewContext={viewContext} key={network.id} currentLocation={currentLocation} />
           )}
         </ul>
         <ul styleName='s.communitiesList'>
           {networks.length ? <div><li styleName='s.sectionTitle'>My Networks</li>
             {networks.map(network =>
-              <NetworkRow network={network} key={network.id} currentLocation={currentLocation} />
+              <NetworkRow network={network} viewContext={viewContext} key={network.id} currentLocation={currentLocation} />
             )}</div> : ''}
           <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Communities</li>
           {communities.map(community =>
