@@ -259,7 +259,23 @@ export function getViewContextInPath (pathname) {
   const match = matchPath(pathname, {
     path: '/(c|n)/:slug/:viewContext'
   })
-  return get('params.viewContext', match)
+  const match2 = matchPath(pathname, {
+    path: '/(all|public)/:viewContext'
+  })
+  const res = get('params.viewContext', match) || get('params.viewContext', match2)
+  switch (res) {
+    // route disjoint sub-paths back to parent section
+    case 'm':
+      return 'members'
+    // whitelist of possible view contexts; avoids :topicName being detected and 'topics' modal nav interfering
+    case 'map':
+    case 'project':
+    case 'event':
+    case 'members':
+      return res
+    default:
+      return undefined
+  }
 }
 
 export function gotoExternalUrl (url) {
