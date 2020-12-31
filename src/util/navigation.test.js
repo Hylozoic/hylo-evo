@@ -2,7 +2,8 @@ import {
   removePostFromUrl,
   postUrl,
   networkCommunitySettingsUrl,
-  gotoExternalUrl
+  gotoExternalUrl,
+  getViewContextInPath,
 } from './navigation'
 
 describe('postUrl', () => {
@@ -46,6 +47,48 @@ describe('postUrl', () => {
     const expected = '/all/p/123/action'
     const actual = postUrl('123', { action: 'action' })
     expect(actual).toEqual(expected)
+  })
+})
+
+describe('pageViewContext', () => {
+  it('should detect post types as view context', () => {
+    expect(getViewContextInPath('/c/awesome-team')).toEqual(undefined)
+
+    expect(getViewContextInPath('/c/awesome-team/project')).toEqual('project')
+    expect(getViewContextInPath('/c/awesome-team/event')).toEqual('event')
+
+    expect(getViewContextInPath('/c/awesome-team/project/2')).toEqual('project')
+    expect(getViewContextInPath('/c/awesome-team/event/2')).toEqual('event')
+
+    expect(getViewContextInPath('/n/awesome-network')).toEqual(undefined)
+
+    expect(getViewContextInPath('/n/awesome-network/project')).toEqual('project')
+    expect(getViewContextInPath('/n/awesome-network/event')).toEqual('event')
+
+    expect(getViewContextInPath('/n/awesome-network/project/2')).toEqual('project')
+    expect(getViewContextInPath('/n/awesome-network/event/2')).toEqual('event')
+  })
+
+  it('should detect sub-sections view context', () => {
+    expect(getViewContextInPath('/c/awesome-team/members')).toEqual('members')
+    expect(getViewContextInPath('/c/awesome-team/map')).toEqual('map')
+
+    expect(getViewContextInPath('/c/awesome-team/m/1')).toEqual('members')
+
+    expect(getViewContextInPath('/n/awesome-network/members')).toEqual('members')
+    expect(getViewContextInPath('/n/awesome-network/map')).toEqual('map')
+
+    expect(getViewContextInPath('/n/awesome-network/m/1')).toEqual('members')
+
+    expect(getViewContextInPath('/all/map')).toEqual('map')
+    expect(getViewContextInPath('/public/map')).toEqual('map')
+  })
+
+  it('should exclude topics pages from view context', () => {
+    expect(getViewContextInPath('/c/awesome-team/topics')).toEqual(undefined)
+    expect(getViewContextInPath('/c/awesome-team/some-topic')).toEqual(undefined)
+    expect(getViewContextInPath('/all/topics')).toEqual(undefined)
+    expect(getViewContextInPath('/all/some-topic')).toEqual(undefined)
   })
 })
 
