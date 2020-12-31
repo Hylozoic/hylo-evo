@@ -99,7 +99,7 @@ export default class AllTopics extends Component {
     } = this.props
     const { totalTopicsCached } = this.state
 
-    return <FullPageModal fullWidth goToOnClose={`/${routeParams.context}/${routeParams.slug || ''}`}>
+    return <FullPageModal fullWidth>
       <div styleName='all-topics'>
         <div styleName='title'>{community ? community.name : network ? network.name : 'All'} Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
