@@ -57,6 +57,24 @@ export function messagesUrl () {
 export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
 
+// Doesn't currently cover all or public contexts cases
+export function contextSwitchingUrl (newContext, routeParams) {
+  const newRouteParams = {
+    ...routeParams,
+    ...newContext
+  }
+  const base = baseUrl(newRouteParams)
+  // TODO: This is repeated in post(s)Url helpers and dry'd up into baseUrl
+  //       alternatively postTypes could potentially be deprecated to something
+  //       simpler.
+  const postTypeContext = get('postTypeContext', routeParams)
+  const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
+
+  return inPostTypeContext
+    ? `${base}/${postTypeContext}`
+    : `${base}`
+}
+  
 export function baseUrl ({
   context,
   personId, memberId,

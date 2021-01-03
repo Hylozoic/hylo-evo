@@ -104,10 +104,46 @@ export default class PrimaryLayout extends Component {
       { path: '/:context(n)/:networkSlug' },
       { path: '/:context(c)/:slug' }
     ]
+    const routesWithDrawer = [
+      { path: '/:context(all)/topics' },
+      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}` },
+      { path: '/:context(all|public)/:topicName' },
+      // {/* Network Routes */}
+      { path: `/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}` },
+      { path: '/:context(n)/:networkSlug/members' },
+      { path: `/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}` },
+      { path: '/:context(n)/:networkSlug/settings' },
+      { path: '/:context(n)/:networkSlug/communities' },
+      { path: '/:context(n)/:networkSlug/topics' },
+      { path: `/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}` },
+      // {/* Community Routes */}
+      { path: '/:context(c)/:slug/members' },
+      { path: `/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(c)/:slug/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}` },
+      { path: '/:context(c)/:slug/settings' },
+      { path: '/:context(c)/:slug/topics' },
+      { path: `/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}` },
+      // {/* Member Routes */}
+      { path: `/:context(m)/:personId/${OPTIONAL_POST_MATCH}` },
+      // {/* Other Routes */}
+      { path: '/settings' },
+      { path: '/search' },
+      { path: '/confirm-community-delete' }
+    ]
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
 
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
-      <Drawer styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
+      <Switch>
+        {routesWithDrawer.map(({ path }) => (
+          <Route path={path} render={props => (
+            <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
+          )} />
+        ))}
+      </Switch>
       <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
         {routesWithNavigation.map(({ path }) =>
@@ -132,11 +168,13 @@ export default class PrimaryLayout extends Component {
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToCommunity path='/(|app)' currentUser={currentUser} />}
+            {/* All and Public Routes */}
             <Route path='/:context(all)/topics' component={AllTopics} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(all|public)/:topicName' exact component={Feed} />
+            {/* Network Routes */}
             <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(n)/:networkSlug/members' component={Members} />
@@ -145,14 +183,17 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(n)/:networkSlug/communities' component={NetworkCommunities} />
             <Route path='/:context(n)/:networkSlug/topics' component={AllTopics} />
             <Route path={`/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            {/* Community Routes */}
             <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/:context(c)/:slug/members' component={Members} />
+            <Route path={`/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path='/:context(c)/:slug/settings' component={CommunitySettings} />
             <Route path='/:context(c)/:slug/topics' component={AllTopics} />
-            <Route path={`/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            {/* Member Routes */}
             <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
             <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
