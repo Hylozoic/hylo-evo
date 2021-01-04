@@ -277,7 +277,7 @@ const createCommunityRoutes = [
 ]
 
 const redirectRoutes = [
-  { from: '/tag/:topicName', to: '/all/topics/:topicName' },
+  { from: '/tag/:topicName', to: '/all/:topicName' },
   { from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName' },
   { from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName' },
   { from: '/p/:postId', to: '/all/p/:postId' },
