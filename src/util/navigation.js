@@ -13,6 +13,18 @@ export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
+export const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
+export const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
+export const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
+export const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
+
+export const REQUIRED_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
+export const REQUIRED_EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
+
+export const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
+export const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
+export const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})/:action(edit)?`
+
 // Community Context
 export const DEFAULT_COMMUNITY_CONTEXT = 'c'
 export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]

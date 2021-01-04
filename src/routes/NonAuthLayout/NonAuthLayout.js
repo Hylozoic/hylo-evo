@@ -12,7 +12,7 @@ import CommunityDetail from 'routes/CommunityDetail'
 import MapExplorer from 'routes/MapExplorer'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import PostDetail from 'routes/PostDetail'
-import { HYLO_ID_MATCH, POST_ID_MATCH, VALID_POST_TYPE_CONTEXTS_MATCH } from 'util/navigation'
+import { OPTIONAL_POST_MATCH, OPTIONAL_COMMUNITY_MATCH, POST_DETAIL_MATCH, COMMUNITY_DETAIL_MATCH } from 'util/navigation'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './NonAuthLayout.scss'
 
@@ -100,14 +100,6 @@ export default class NonAuthLayout extends React.Component {
     </div>
   }
 }
-
-const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
-const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?`
-const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})`
-
-const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
-const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?`
-const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})`
 
 const detailRoutes = [
   { path: `/:context(|public)/${POST_DETAIL_MATCH}`, component: PostDetail },

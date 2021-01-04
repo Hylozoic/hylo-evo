@@ -45,10 +45,9 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
-  POST_ID_MATCH,
-  HYLO_ID_MATCH,
-  VALID_POST_TYPE_CONTEXTS_MATCH,
-  // VALID_COMMUNITY_CONTEXTS_MATCH,
+  OPTIONAL_POST_MATCH, OPTIONAL_COMMUNITY_MATCH,
+  OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, COMMUNITY_DETAIL_MATCH,
+  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
@@ -230,15 +229,6 @@ export default class PrimaryLayout extends Component {
   }
 }
 
-const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
-const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
-const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
-const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
-
-const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
-const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
-const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})/:action(edit)?`
-
 const detailRoutes = [
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
@@ -254,24 +244,22 @@ const detailRoutes = [
   { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
 ]
 
-const NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
-const EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 const postEditorRoutes = [
-  { path: `/:context(all|public)/${NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/${EDIT_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${EDIT_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/${NEW_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/${EDIT_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/m/:personId/${EDIT_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/:topicName/${NEW_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/:topicName/${EDIT_POST_MATCH}` },
-  { path: `/:context(c)/:slug/${NEW_POST_MATCH}` },
-  { path: `/:context(c)/:slug/${EDIT_POST_MATCH}` },
-  { path: `/:context(c)/:slug/m/:personId/${EDIT_POST_MATCH}` },
-  { path: `/:context(c)/:slug/:topicName/${NEW_POST_MATCH}` },
-  { path: `/:context(c)/:slug/:topicName/${EDIT_POST_MATCH}` },
-  { path: `/:context(m)/:personId/${EDIT_POST_MATCH}` }
+  { path: `/:context(all|public)/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(all|public)/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(all|public)/:topicName/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(all|public)/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(n)/:networkSlug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(c)/:slug/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(c)/:slug/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(c)/:slug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(c)/:slug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(c)/:slug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(m)/:personId/${REQUIRED_EDIT_POST_MATCH}` }
 ]
 
 const signupRoutes = [
