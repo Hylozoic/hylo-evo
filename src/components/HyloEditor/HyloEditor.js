@@ -122,7 +122,7 @@ export default class HyloEditor extends Component {
     const contentStateChanged =
       this.state.editorState.getCurrentContent() !== editorState.getCurrentContent()
     if (this.props.onChange) this.props.onChange(editorState, contentStateChanged)
-    this.setState({ editorState, error: null })
+    this.setState({ editorState })
   }
 
   handleMentionsSearch = ({ value }) => {
@@ -209,7 +209,6 @@ export default class HyloEditor extends Component {
         suggestions={topicSuggestions}
         onOpen={this.disableSubmitOnReturn}
         onClose={this.handleTopicsClose} />
-      { this.state.error && <span styleName='error'>{this.state.error}</span>}
     </div>
   }
 }
