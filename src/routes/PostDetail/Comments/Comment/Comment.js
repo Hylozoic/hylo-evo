@@ -9,6 +9,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
+import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import './Comment.scss'
@@ -32,9 +33,9 @@ export default class Comment extends Component {
     this.setState({ editing: true })
   }
 
-  saveComment = text => {
+  saveComment = editorState => {
     this.setState({ editing: false })
-    this.props.updateComment(text)
+    this.props.updateComment(contentStateToHTML(editorState.getCurrentContent()))
   }
 
   render () {
