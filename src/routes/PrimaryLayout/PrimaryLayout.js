@@ -104,27 +104,27 @@ export default class PrimaryLayout extends Component {
       { path: '/:context(c)/:slug' }
     ]
     const routesWithDrawer = [
-      { path: '/:context(all)/topics' },
-      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
+      { path: '/:context(all)/:view(topics)' },
       { path: `/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}` },
+      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
       { path: '/:context(all|public)/:topicName' },
       // {/* Network Routes */}
+      { path: '/:context(n)/:networkSlug/communities' },
+      { path: '/:context(n)/:networkSlug/:view(topics)' },
       { path: `/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: '/:context(n)/:networkSlug/members' },
+      { path: '/:context(n)/:networkSlug/:view(members)' },
+      { path: '/:context(n)/:networkSlug/:view(settings)' },
       { path: `/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}` },
-      { path: '/:context(n)/:networkSlug/settings' },
-      { path: '/:context(n)/:networkSlug/communities' },
-      { path: '/:context(n)/:networkSlug/topics' },
       { path: `/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}` },
       // {/* Community Routes */}
-      { path: '/:context(c)/:slug/members' },
+      { path: '/:context(c)/:slug/:view(topics)' },
       { path: `/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}` },
+      { path: '/:context(c)/:slug/:view(members)' },
+      { path: '/:context(c)/:slug/:view(settings)' },
       { path: `/:context(c)/:slug/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}` },
-      { path: '/:context(c)/:slug/settings' },
-      { path: '/:context(c)/:slug/topics' },
       { path: `/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}` },
       // {/* Member Routes */}
       { path: `/:context(m)/:personId/${OPTIONAL_POST_MATCH}` },
@@ -168,27 +168,27 @@ export default class PrimaryLayout extends Component {
             {!signupInProgress &&
               <RedirectToCommunity path='/(|app)' currentUser={currentUser} />}
             {/* All and Public Routes */}
-            <Route path='/:context(all)/topics' component={AllTopics} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/:context(all|public)/:topicName' exact component={Feed} />
             {/* Network Routes */}
-            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path='/:context(n)/:networkSlug/members' component={Members} />
-            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/:context(n)/:networkSlug/settings' component={NetworkSettings} />
             <Route path='/:context(n)/:networkSlug/communities' component={NetworkCommunities} />
-            <Route path='/:context(n)/:networkSlug/topics' component={AllTopics} />
+            <Route path='/:context(n)/:networkSlug/:view(topics)' component={AllTopics} />
+            <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path='/:context(n)/:networkSlug/:view(members)' component={Members} />
+            <Route path='/:context(n)/:networkSlug/:view(settings)' component={NetworkSettings} />
+            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path={`/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             {/* Community Routes */}
-            <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/:context(c)/:slug/members' component={Members} />
+            <Route path='/:context(c)/:slug/:view(topics)' component={AllTopics} />
             <Route path={`/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
+            <Route path='/:context(c)/:slug/:view(members)' component={Members} />
+            <Route path='/:context(c)/:slug/:view(settings)' component={CommunitySettings} />
+            <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path='/:context(c)/:slug/settings' component={CommunitySettings} />
-            <Route path='/:context(c)/:slug/topics' component={AllTopics} />
             <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Member Routes */}
             <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -283,8 +283,8 @@ const redirectRoutes = [
   { from: '/p/:postId', to: '/all/p/:postId' },
   { from: '/u/:personId', to: '/m/:personId' },
   { from: '/c/:slug/about', to: '/c/:slug' },
-  { from: '/c/:slug/people', to: '/c/:slug/members' },
-  { from: '/c/:slug/invite', to: '/c/:slug/settings/invite' },
+  { from: '/c/:slug/people', to: '/c/:slug/:view(members)' },
+  { from: '/c/:slug/invite', to: '/c/:slug/:view(settings)/invite' },
   { from: '/c/:slug/events', to: '/c/:slug' }
 ]
 
