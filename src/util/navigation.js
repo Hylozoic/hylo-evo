@@ -118,7 +118,8 @@ export function baseUrl ({
   } else if (topicName) {
     return topicUrl(topicName, {
       communitySlug: safeCommunitySlug,
-      networkSlug: networkSlug
+      networkSlug,
+      context
     })
   } else if (view) {
     return viewUrl(view, context, safeCommunitySlug, networkSlug, defaultUrl)
