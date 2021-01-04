@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { filter, isFunction } from 'lodash/fp'
+import { filter, isEmpty, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
@@ -34,6 +34,12 @@ export default class Comment extends Component {
   }
 
   saveComment = editorState => {
+    const { comment } = this.props
+    if (!editorState.getCurrentContent().hasText() && isEmpty(comment.attachments)) {
+      // Don't accept empty comments.
+      return
+    }
+
     this.setState({ editing: false })
     this.props.updateComment(contentStateToHTML(editorState.getCurrentContent()))
   }
