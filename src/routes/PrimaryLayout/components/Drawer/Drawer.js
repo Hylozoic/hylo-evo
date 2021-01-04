@@ -155,9 +155,9 @@ export class NetworkRow extends React.Component {
       </Link>
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
-          <CommunityRow {...community} key={community.id} />)}
+          <CommunityRow community={community} key={community.id} />)}
         {(seeAllExpanded && !isEmpty(nonMemberCommunities)) && nonMemberCommunities.map(community =>
-          <CommunityRow {...community} key={community.id} isMember={false} />)}
+          <CommunityRow community={community} key={community.id} isMember={false} />)}
         {!isEmpty(nonMemberCommunities) && <li styleName='s.seeAllBtn' onClick={this.toggleSeeAll}>
           {seeAllExpanded ? 'See less' : 'See all'}
         </li>}
