@@ -30,6 +30,11 @@ export const DEFAULT_COMMUNITY_CONTEXT = 'c'
 export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]
 export const VALID_COMMUNITY_CONTEXTS_MATCH = VALID_COMMUNITY_CONTEXTS.join('|')
 
+// View context
+
+const NON_GLOBAL_CONTEXTS = ['members', 'settings']
+const NON_PUBLIC_CONTEXTS = ['topics', 'members', 'settings']
+
 // Fundamental URL paths
 
 export function allCommunitiesUrl () {
@@ -69,24 +74,33 @@ export function messagesUrl () {
 export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
 
-// Doesn't currently cover all or public contexts cases
 export function contextSwitchingUrl (newContext, routeParams) {
   const newRouteParams = {
     ...routeParams,
+    // -------------------------------------------------
+    // These params are cleared from the old route,
+    // and at least one must be specified in newContext
+    networkSlug: undefined,
+    slug: undefined,
+    communitySlug: undefined,
+    context: undefined,
+    // -------------------------------------------------
     ...newContext
+  }
+  // some view contexts aren't available globally
+  if ((newRouteParams.context === 'all' && NON_GLOBAL_CONTEXTS.includes(newRouteParams.view)) ||
+      (newRouteParams.context === 'public' && NON_PUBLIC_CONTEXTS.includes(newRouteParams.view))) {
+    delete newRouteParams.view
   }
   const base = baseUrl(newRouteParams)
   // TODO: This is repeated in post(s)Url helpers and dry'd up into baseUrl
   //       alternatively postTypes could potentially be deprecated to something
   //       simpler.
-  const postTypeContext = get('postTypeContext', routeParams)
-  const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
+  const viewContext = get('postTypeContext', routeParams)
 
-  return inPostTypeContext
-    ? `${base}/${postTypeContext}`
-    : `${base}`
+  return `${base}${viewContext ? `/${viewContext}` : ''}`
 }
-  
+
 export function baseUrl ({
   context,
   personId, memberId,
