@@ -142,7 +142,7 @@ export default class MemberProfile extends React.Component {
           { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />) }
 
           {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
-          {events && events.length > 0 && events.map((e) => <Event memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
+          {events && events.length > 0 && events.map((e, index) => <Event key={index} memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
 
           {projects && projects.length > 0 && <div styleName='profile-subhead'>Projects</div>}
           {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}

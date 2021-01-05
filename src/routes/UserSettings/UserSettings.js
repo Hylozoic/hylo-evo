@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash/fp'
 import EditProfileTab from './EditProfileTab/EditProfileTab'
-import CommunitySettingsTab from './CommunitySettingsTab/CommunitySettingsTab'
+import CommunitySettingsTab from './CommunitySettingsTab'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
@@ -33,7 +33,6 @@ export default class UserSettings extends Component {
       blockedUsers,
       unBlockUser,
       updateUserSettings,
-      leaveCommunity,
       loginWithService,
       unlinkAccount,
       setConfirm,
@@ -46,10 +45,7 @@ export default class UserSettings extends Component {
       registerStripeAccount,
       searches,
       deleteSearch,
-      viewSavedSearch,
-      affiliations,
-      createAffiliation,
-      deleteAffiliation
+      viewSavedSearch
     } = this.props
 
     const content = [
@@ -67,12 +63,7 @@ export default class UserSettings extends Component {
       {
         name: 'Affiliations',
         path: '/settings/communities',
-        component: <CommunitySettingsTab
-          affiliations={affiliations}
-          createAffiliation={createAffiliation}
-          deleteAffiliation={deleteAffiliation}
-          memberships={memberships}
-          leaveCommunity={leaveCommunity} />
+        component: <CommunitySettingsTab personId={currentUser.id} />
       },
       {
         name: 'Notifications',

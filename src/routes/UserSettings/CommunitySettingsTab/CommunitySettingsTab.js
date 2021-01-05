@@ -28,44 +28,48 @@ export default class CommunitySettingsTab extends Component {
     showAddAffiliations: undefined
   }
 
+  componentDidMount () {
+    this.props.fetchForCurrentUser()
+  }
+
   render () {
     const { affiliations, memberships, errorMessage, successMessage, showAddAffiliations } = this.state
     if (!memberships || !affiliations) return <Loading />
 
     return (
-    <div styleName='container'>
-      <h1 styleName='title'>Your affiliations with organizations</h1>
+      <div styleName='container'>
+        <h1 styleName='title'>Your affiliations with organizations</h1>
 
-      <div styleName='description'>This list automatically shows which communities on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
+        <div styleName='description'>This list automatically shows which communities on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
 
-      { errorMessage || successMessage ? <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={this.resetMessage}>{errorMessage || successMessage }</div> : <></>}
+        { errorMessage || successMessage ? <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={this.resetMessage}>{errorMessage || successMessage }</div> : <></>}
 
-      <h2 styleName='subhead'>Hylo Communities</h2>
-      {memberships.map((m, index) =>
-        <Membership
-          membership={m}
-          archive={this.leaveCommunity}
-          key={m.id}
-          index={index}
-        />)}
+        <h2 styleName='subhead'>Hylo Communities</h2>
+        {memberships.map((m, index) =>
+          <Membership
+            membership={m}
+            archive={this.leaveCommunity}
+            key={m.id}
+            index={index}
+          />)}
 
-      <h2 styleName='subhead'>Other Affiliations</h2>
-      {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
-        <Affiliation
-          affiliation={a}
-          archive={this.deleteAffiliation}
-          key={a.id}
-          index={index}
-        />
-      )}
+        <h2 styleName='subhead'>Other Affiliations</h2>
+        {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
+          <Affiliation
+            affiliation={a}
+            archive={this.deleteAffiliation}
+            key={a.id}
+            index={index}
+          />
+        )}
 
-      {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
-        <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
-          <div styleName='plus'>+</div>
-          <div>Add new affiliation</div>
-        </div>
-      )}
-    </div>
+        {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
+          <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
+            <div styleName='plus'>+</div>
+            <div>Add new affiliation</div>
+          </div>
+        )}
+      </div>
     )
   }
 
@@ -128,79 +132,75 @@ export default class CommunitySettingsTab extends Component {
 }
 
 export function AddAffiliation ({ close, save }) {
-  const PREPOSITIONS = [
-    { id: 'of', label: 'of' },
-    { id: 'at', label: 'at' },
-    { id: 'for', label: 'for' },
-  ]
+  const PREPOSITIONS = ['of', 'at', 'for']
 
   const [role, setRole] = useState('')
-  const [preposition, setPreposition] = useState(PREPOSITIONS[0].id)
+  const [preposition, setPreposition] = useState(PREPOSITIONS[0])
   const [orgName, setOrgName] = useState('')
   const [url, setUrl] = useState('')
 
   const canSave = role.length && orgName.length
-  
-  const URL_PROTOCOL = 'http://'
+
+  const URL_PROTOCOL = 'https://'
   const CHAR_LIMIT = 30
 
   const formatUrl = url => `${URL_PROTOCOL}${url}`
 
   return (
-  <div styleName='affiliation-form'>
-    <div styleName='header'>
-      <h3>Add new affiliation</h3>
-      <div styleName='close' onClick={close}>x</div>
+    <div styleName='affiliation-form'>
+      <div styleName='header'>
+        <h3>Add new affiliation</h3>
+        <div styleName='close' onClick={close}>x</div>
+      </div>
+
+      <div styleName='body'>
+
+        <div>
+          <input
+            type='text'
+            onChange={e => setRole(e.target.value.substring(0, CHAR_LIMIT))}
+            placeholder='Name of role'
+            value={role}
+          />
+          <div styleName='chars'>{role.length}/{CHAR_LIMIT}</div>
+        </div>
+
+        <Dropdown
+          toggleChildren={<span >
+            {PREPOSITIONS.find(p => p === preposition)}
+            <Icon name='ArrowDown' />
+          </span>}
+          items={PREPOSITIONS.map(p => ({
+            label: p,
+            onClick: () => setPreposition(p)
+          }))}
+          alignLeft
+          styleName='dropdown' />
+
+        <div>
+          <input
+            type='text'
+            onChange={e => setOrgName(e.target.value.substring(0, CHAR_LIMIT))}
+            placeholder='Name of organization'
+            value={orgName}
+          />
+          <div styleName='chars'>{orgName.length}/{CHAR_LIMIT}</div>
+        </div>
+
+        <div>
+          <input
+            type='text'
+            onChange={e => setUrl(e.target.value.substring(URL_PROTOCOL.length))}
+            placeholder='URL of organization'
+            value={formatUrl(url)}
+          />
+        </div>
+
+        <div styleName={`save ${canSave ? '' : 'disabled'}`}>
+          <span onClick={canSave ? () => save({ role, preposition, orgName, url: formatUrl(url) }) : undefined}>Add Affiliation</span>
+        </div>
+
+      </div>
     </div>
-
-    <div styleName='body'>
-
-      <div>
-        <input
-          type='text'
-          onChange={e => setRole(e.target.value.substring(0, CHAR_LIMIT))}
-          placeholder='Name of role'
-          value={role}
-        />
-        <div styleName='chars'>{role.length}/{CHAR_LIMIT}</div>
-      </div>
-
-      <Dropdown
-        toggleChildren={<span >
-          {PREPOSITIONS.find(o => o.id === preposition).label}
-          <Icon name='ArrowDown' />
-        </span>}
-        items={PREPOSITIONS.map(({ id, label }) => ({
-          label,
-          onClick: () => setPreposition(id)
-        }))}
-        alignLeft
-        styleName='dropdown' />
-      
-      <div>
-        <input
-          type='text'
-          onChange={e => setOrgName(e.target.value.substring(0, CHAR_LIMIT))}
-          placeholder='Name of organization'
-          value={orgName}
-        />
-        <div styleName='chars'>{orgName.length}/{CHAR_LIMIT}</div>
-      </div>
-      
-      <div>
-        <input
-          type='text'
-          onChange={e => setUrl(e.target.value.substring(URL_PROTOCOL.length))}
-          placeholder='URL of organization'
-          value={formatUrl(url)}
-        />
-      </div>
-      
-      <div styleName={`save ${canSave ? '' : 'disabled'}`}>
-        <span onClick={canSave ? () => save({ role, preposition, orgName, url: formatUrl(url) }) : undefined}>Add Affiliation</span>
-      </div>
-
-    </div>
-  </div>
   )
 }
