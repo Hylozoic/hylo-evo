@@ -131,8 +131,8 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         Hylo Communities
       </div>
       <Membership
-        className="even"
-        key="0"
+        index={0}
+        key="3"
         membership={
           Object {
             "community": Object {
@@ -175,6 +175,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
             "title": "Ceremony",
           }
         }
+        key="0"
         memberCap={3}
         routeParams={
           Object {
@@ -212,6 +213,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
             "title": "Chickadees United",
           }
         }
+        key="1"
         memberCap={3}
         routeParams={
           Object {

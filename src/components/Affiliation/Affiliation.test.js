@@ -8,7 +8,8 @@ describe('Affiliation', () => {
       affiliation: { 
         id: "1",
         orgName: "La Fromagerie",
-        role: "Cheesemongress",
+        preposition: "at",
+        role: "Cheesemonger",
         url: null,
         createdAt: "2020-12-09T23:01:17.431Z",
         updatedAt: "2020-12-09T23:01:17.431Z",

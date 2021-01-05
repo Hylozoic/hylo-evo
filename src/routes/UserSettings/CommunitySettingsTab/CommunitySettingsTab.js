@@ -9,11 +9,11 @@ import Membership from 'components/Membership'
 
 import get from 'lodash/get'
 
-const { array, func } = PropTypes
+const { array, func, object } = PropTypes
 
 export default class CommunitySettingsTab extends Component {
   static propTypes = {
-    affiliations: array,
+    affiliations: object,
     memberships: array,
     leaveCommunity: func,
     createAffiliation: func,

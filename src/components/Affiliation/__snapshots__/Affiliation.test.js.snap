@@ -2,14 +2,16 @@
 
 exports[`Affiliation matches last snapshot 1`] = `
 <div
-  data-stylename="affiliation undefined"
+  data-stylename="affiliation odd"
 >
   <div
     data-stylename="role"
   >
-    Cheesemongress
+    Cheesemonger
   </div>
-   at 
+  <div>
+    at
+  </div>
   <div
     data-stylename="orgName"
   >

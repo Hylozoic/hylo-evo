@@ -2,7 +2,7 @@
 
 exports[`Membership matches last snapshot 1`] = `
 <div
-  data-stylename="membership undefined"
+  data-stylename="membership odd"
 >
   <div
     data-stylename="role"

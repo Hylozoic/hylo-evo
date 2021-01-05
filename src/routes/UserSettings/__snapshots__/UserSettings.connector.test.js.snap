@@ -10,7 +10,6 @@ Object {
   "confirm": undefined,
   "currentUser": undefined,
   "fetchPending": undefined,
-  "memberships": Array [],
   "messageSettings": undefined,
   "queryParams": Object {
     "registered": undefined,
