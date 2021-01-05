@@ -38,6 +38,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const blockedUsers = getBlockedUsers(state, props)
   const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
+  const memberships = getCurrentUserMemberships(state, props)
   const messageSettings = getMessageSettings(state, props)
   const searches = state.SavedSearches.searches
 
@@ -53,6 +54,7 @@ export function mapStateToProps (state, props) {
     confirm,
     fetchPending,
     allCommunitiesSettings,
+    memberships,
     messageSettings,
     searches,
     queryParams
