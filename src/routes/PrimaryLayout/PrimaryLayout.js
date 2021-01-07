@@ -280,7 +280,10 @@ const redirectRoutes = [
   { from: '/c/:slug/about', to: '/c/:slug' },
   { from: '/c/:slug/people', to: '/c/:slug/:view(members)' },
   { from: '/c/:slug/invite', to: '/c/:slug/:view(settings)/invite' },
-  { from: '/c/:slug/events', to: '/c/:slug' }
+  { from: '/c/:slug/events', to: '/c/:slug' },
+  // redirects for context switching into global contexts
+  { from: '/all/members', to: '/all' },
+  { from: '/public/(members|topics)', to: '/public' }
 ]
 
 export function RedirectToSignupFlow ({ pathname }) {

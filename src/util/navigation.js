@@ -30,11 +30,6 @@ export const DEFAULT_COMMUNITY_CONTEXT = 'c'
 export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]
 export const VALID_COMMUNITY_CONTEXTS_MATCH = VALID_COMMUNITY_CONTEXTS.join('|')
 
-// View context
-
-const NON_GLOBAL_CONTEXTS = ['members', 'settings']
-const NON_PUBLIC_CONTEXTS = ['topics', 'members', 'settings']
-
 // Fundamental URL paths
 
 export function allCommunitiesUrl () {
@@ -86,11 +81,6 @@ export function contextSwitchingUrl (newContext, routeParams) {
     context: undefined,
     // -------------------------------------------------
     ...newContext
-  }
-  // some view contexts aren't available globally
-  if ((newRouteParams.context === 'all' && NON_GLOBAL_CONTEXTS.includes(newRouteParams.view)) ||
-      (newRouteParams.context === 'public' && NON_PUBLIC_CONTEXTS.includes(newRouteParams.view))) {
-    delete newRouteParams.view
   }
   const base = baseUrl(newRouteParams)
   // TODO: This is repeated in post(s)Url helpers and dry'd up into baseUrl
