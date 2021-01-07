@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { push, replace } from 'connected-react-router'
+import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
@@ -13,7 +13,7 @@ import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
-import { newPostUrl, topicsUrl } from 'util/navigation'
+import { newPostUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
 
 export function mapStateToProps (state, props) {
@@ -80,12 +80,6 @@ export function mapDispatchToProps (dispatch, props) {
     fetchTopic: () => {
       if (communitySlug && topicName) {
         return dispatch(fetchCommunityTopic(topicName, communitySlug))
-          .then(action => {
-          // redirect if no topic found
-            if (!action.payload.data.communityTopic) {
-              dispatch(replace(topicsUrl({ communitySlug })))
-            }
-          })
       } else if (topicName) {
         return dispatch(fetchTopic(topicName))
       }
