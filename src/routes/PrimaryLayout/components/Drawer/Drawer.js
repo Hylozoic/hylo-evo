@@ -132,8 +132,8 @@ export class NetworkRow extends React.Component {
 
   render () {
     const { network, routeParams, currentLocation } = this.props
-    const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
-    const path = contextSwitchingUrl({ networkSlug: slug }, routeParams)
+    const { communities, name, slug, context, avatarUrl, nonMemberCommunities } = network
+    const path = contextSwitchingUrl({ networkSlug: slug, context }, routeParams)
     const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
