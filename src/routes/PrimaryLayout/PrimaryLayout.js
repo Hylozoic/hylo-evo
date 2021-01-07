@@ -107,20 +107,20 @@ export default class PrimaryLayout extends Component {
       { path: '/:context(all)/:view(topics)' },
       { path: `/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}` },
-      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
       { path: '/:context(all|public)/:topicName' },
+      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
       // {/* Network Routes */}
       { path: '/:context(n)/:networkSlug/:view(members|settings|communities|topics)' },
       { path: `/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}` },
       // {/* Community Routes */}
       { path: '/:context(c)/:slug/:view(members|settings|topics)' },
       { path: `/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(c)/:slug/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}` },
+      { path: `/:context(c)/:slug/${OPTIONAL_POST_MATCH}` },
       // {/* Member Routes */}
       { path: `/:context(m)/:personId/${OPTIONAL_POST_MATCH}` },
       // {/* Other Routes */}
@@ -166,25 +166,25 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/:context(all|public)/:topicName' exact component={Feed} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             {/* Network Routes */}
-            <Route path='/:context(n)/:networkSlug/communities' component={NetworkCommunities} />
+            <Route path='/:context(n)/:networkSlug/:view(communities)' component={NetworkCommunities} />
             <Route path='/:context(n)/:networkSlug/:view(topics)' component={AllTopics} />
             <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(n)/:networkSlug/:view(members)' component={Members} />
             <Route path='/:context(n)/:networkSlug/:view(settings)' component={NetworkSettings} />
-            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path={`/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             {/* Community Routes */}
             <Route path='/:context(c)/:slug/:view(topics)' component={AllTopics} />
             <Route path={`/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(c)/:slug/:view(members)' component={Members} />
             <Route path='/:context(c)/:slug/:view(settings)' component={CommunitySettings} />
-            <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             {/* Member Routes */}
             <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             {/* Other Routes */}
