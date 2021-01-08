@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
+import { contextSwitchingUrl } from 'util/navigation'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -49,6 +50,7 @@ export default class Drawer extends React.PureComponent {
 
   render () {
     const { currentLocation, community, network, communities, networks, defaultNetworks, className, toggleDrawer, canModerate } = this.props
+    const routeParams = this.props.match.params
 
     return <div className={className} styleName='s.communityDrawer'>
       <div styleName={cx({ 's.currentCommunity': community !== null || network !== null })}>
@@ -64,17 +66,17 @@ export default class Drawer extends React.PureComponent {
       <div>
         <ul styleName='s.communitiesList'>
           {defaultNetworks && defaultNetworks.map(network =>
-            <NetworkRow network={network} key={network.id} currentLocation={currentLocation} />
+            <NetworkRow network={network} routeParams={routeParams} currentLocation={currentLocation} key={network.id} />
           )}
         </ul>
         <ul styleName='s.communitiesList'>
           {networks.length ? <div><li styleName='s.sectionTitle'>My Networks</li>
             {networks.map(network =>
-              <NetworkRow network={network} key={network.id} currentLocation={currentLocation} />
+              <NetworkRow network={network} routeParams={routeParams} currentLocation={currentLocation} key={network.id} />
             )}</div> : ''}
           <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Communities</li>
           {communities.map(community =>
-            <CommunityRow {...community} key={community.id} />
+            <CommunityRow community={community} routeParams={routeParams} key={community.id} />
           )}
         </ul>
         <div styleName='s.newCommunity'>
@@ -90,11 +92,12 @@ export default class Drawer extends React.PureComponent {
   }
 }
 
-export function CommunityRow ({ id, name, slug, path, avatarUrl, newPostCount, isMember = true }) {
+export function CommunityRow ({ community, routeParams, avatarUrl, newPostCount, isMember = true }) {
+  const { name, slug } = community
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
-    <Link to={path || `/c/${slug}`} styleName='s.communityRowLink' title={name}>
+    <Link to={contextSwitchingUrl({ slug }, routeParams)} styleName='s.communityRowLink' title={name}>
       <div styleName='s.communityRowAvatar' style={imageStyle} />
       <span styleName={cx('s.community-name', { 's.is-member': isMember })}>{name}</span>
       {showBadge && <Badge expanded number={newPostCount} />}
@@ -128,9 +131,9 @@ export class NetworkRow extends React.Component {
   }
 
   render () {
-    const { network, currentLocation } = this.props
-    const { communities, name, slug, avatarUrl, nonMemberCommunities } = network
-    const path = network.path || `/n/${slug}`
+    const { network, routeParams, currentLocation } = this.props
+    const { communities, name, slug, context, avatarUrl, nonMemberCommunities } = network
+    const path = contextSwitchingUrl({ networkSlug: slug, context }, routeParams)
     const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.communities.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
@@ -152,9 +155,9 @@ export class NetworkRow extends React.Component {
       </Link>
       {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
         {communities.map(community =>
-          <CommunityRow {...community} key={community.id} />)}
+          <CommunityRow community={community} routeParams={routeParams} key={community.id} />)}
         {(seeAllExpanded && !isEmpty(nonMemberCommunities)) && nonMemberCommunities.map(community =>
-          <CommunityRow {...community} key={community.id} isMember={false} />)}
+          <CommunityRow community={community} routeParams={routeParams} key={community.id} isMember={false} />)}
         {!isEmpty(nonMemberCommunities) && <li styleName='s.seeAllBtn' onClick={this.toggleSeeAll}>
           {seeAllExpanded ? 'See less' : 'See all'}
         </li>}

@@ -13,14 +13,14 @@ const defaultNetworks = [
     id: PUBLIC_CONTEXT_ID,
     name: 'Public Communities & Posts',
     communities: [],
-    path: '/public',
+    context: 'public',
     avatarUrl: PUBLIC_CONTEXT_AVATAR_PATH
   },
   {
     id: ALL_COMMUNITIES_ID,
     name: 'All My Communities',
     communities: [],
-    path: '/all',
+    context: 'all',
     avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
   }
 ]

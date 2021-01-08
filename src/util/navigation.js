@@ -13,6 +13,18 @@ export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
 
+export const POST_TYPE_CONTEXT_MATCH = `:postTypeContext(${VALID_POST_TYPE_CONTEXTS_MATCH})`
+export const OPTIONAL_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
+export const OPTIONAL_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}?/:action(new)?`
+export const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_MATCH})/:action(edit)?`
+
+export const REQUIRED_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
+export const REQUIRED_EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
+
+export const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
+export const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
+export const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})/:action(edit)?`
+
 // Community Context
 export const DEFAULT_COMMUNITY_CONTEXT = 'c'
 export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]
@@ -57,6 +69,28 @@ export function messagesUrl () {
 export const origin = () =>
   typeof window !== 'undefined' ? window.location.origin : host
 
+export function contextSwitchingUrl (newContext, routeParams) {
+  const newRouteParams = {
+    ...routeParams,
+    // -------------------------------------------------
+    // These params are cleared from the old route,
+    // and at least one must be specified in newContext
+    networkSlug: undefined,
+    slug: undefined,
+    communitySlug: undefined,
+    context: undefined,
+    // -------------------------------------------------
+    ...newContext
+  }
+  const base = baseUrl(newRouteParams)
+  // TODO: This is repeated in post(s)Url helpers and dry'd up into baseUrl
+  //       alternatively postTypes could potentially be deprecated to something
+  //       simpler.
+  const viewContext = get('postTypeContext', routeParams)
+
+  return `${base}${viewContext ? `/${viewContext}` : ''}`
+}
+
 export function baseUrl ({
   context,
   personId, memberId,
@@ -74,7 +108,8 @@ export function baseUrl ({
   } else if (topicName) {
     return topicUrl(topicName, {
       communitySlug: safeCommunitySlug,
-      networkSlug: networkSlug
+      networkSlug,
+      context
     })
   } else if (view) {
     return viewUrl(view, context, safeCommunitySlug, networkSlug, defaultUrl)
