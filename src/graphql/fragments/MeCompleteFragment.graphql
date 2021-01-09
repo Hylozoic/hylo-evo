@@ -69,13 +69,13 @@ fragment MeCompleteFragment on Me {
       sendEmail
       sendPushNotifications
     }
-    community {
+    group {
       id
       name
       slug
       memberCount
       avatarUrl
-      communityTopics(subscribed: true) {
+      groupTopics(subscribed: true) {
         total
         hasMore
         items {
@@ -90,20 +90,19 @@ fragment MeCompleteFragment on Me {
           isSubscribed
         }
       }
-      network {
-        id
-        slug
-        name
-        avatarUrl
-        communities(first: 300) {
-          items {
-            id
-            name
-            slug
-            memberCount
-            avatarUrl
-            network {
+      parentGroups {
+        items {
+          id
+          slug
+          name
+          avatarUrl
+          childGroups(first: 300) {
+            items {
               id
+              name
+              slug
+              memberCount
+              avatarUrl
             }
           }
         }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import updateComment from 'store/actions/updateComment'
 import deleteComment from 'store/actions/deleteComment'
 import getMe from 'store/selectors/getMe'
@@ -7,9 +7,9 @@ import getMe from 'store/selectors/getMe'
 export function mapStateToProps (state, props) {
   const { comment } = props
   const currentUser = getMe(state, props)
-  const community = getCommunityForCurrentRoute(state, props)
+  const group = getGroupForCurrentRoute(state, props)
   const isCreator = currentUser && (comment.creator.id === currentUser.id)
-  const canModerate = currentUser && currentUser.canModerate(community)
+  const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
     canModerate,

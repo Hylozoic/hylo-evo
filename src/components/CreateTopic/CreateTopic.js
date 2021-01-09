@@ -15,12 +15,12 @@ import './CreateTopic.scss'
 export default class CreateTopic extends Component {
   static propTypes = {
     buttonText: string,
-    communityId: any,
-    communitySlug: string,
-    communityTopicExists: object,
+    groupId: any,
+    groupSlug: string,
+    groupTopicExists: object,
     topics: arrayOf(object),
     createTopic: func,
-    fetchCommunityTopic: func,
+    fetchGroupTopic: func,
     subscribeAfterCreate: bool
   }
 
@@ -55,10 +55,10 @@ export default class CreateTopic extends Component {
       styleName='create-button' />
 
   componentDidUpdate (prevProps) {
-    const { communitySlug } = this.props
+    const { groupSlug } = this.props
     const name = this.safeTopicName()
     // This syntax handles topic names with dots in 'em
-    const topicPath = [ 'communityTopicExists', encodeURI(name), communitySlug ]
+    const topicPath = [ 'groupTopicExists', encodeURI(name), groupSlug ]
     if (!has(topicPath, prevProps) && has(topicPath, this.props)) {
       return get(topicPath, this.props)
         ? this.subscribeAndRedirect(name)
@@ -69,7 +69,7 @@ export default class CreateTopic extends Component {
   ignoreHash = name => name[0] === '#' ? name.slice(1) : name
 
   createAndNotify = name => {
-    this.props.createTopic(name, this.props.communityId, false, !!this.props.subscribeAfterCreate)
+    this.props.createTopic(name, this.props.groupId, false, !!this.props.subscribeAfterCreate)
 
     // Note: assumes success
     this.setState({
@@ -86,10 +86,10 @@ export default class CreateTopic extends Component {
 
   submitButtonAction = () => {
     const {
-      communitySlug,
-      communityTopicExists,
+      groupSlug,
+      groupTopicExists,
       topics,
-      fetchCommunityTopic,
+      fetchGroupTopic,
       subscribeAfterCreate } = this.props
 
     const name = this.safeTopicName()
@@ -105,9 +105,9 @@ export default class CreateTopic extends Component {
     }
 
     // No existing topic client-side, but it might be on the server
-    if (!this.state.loading && !has(`${name}.${communitySlug}`, communityTopicExists)) {
+    if (!this.state.loading && !has(`${name}.${groupSlug}`, groupTopicExists)) {
       this.setState({ loading: true })
-      return fetchCommunityTopic(name, communitySlug)
+      return fetchGroupTopic(name, groupSlug)
     }
 
     // Just close if no topic exists by this stage.
@@ -122,7 +122,7 @@ export default class CreateTopic extends Component {
   subscribeAndRedirect = name => {
     // The simplest way to subscribe is to 'abuse' createTopic, since it will
     // ensure topic exists in the client, and silently subscribes user.
-    this.props.createTopic(name, this.props.communityId, false, !!this.props.subscribeAfterCreate)
+    this.props.createTopic(name, this.props.groupId, false, !!this.props.subscribeAfterCreate)
     return this.toggleTopicModal(name)
   }
 
@@ -160,7 +160,7 @@ export default class CreateTopic extends Component {
     const { subscribeAfterCreate } = this.props
 
     if (redirectTopic && subscribeAfterCreate) {
-      const url = topicUrl(encodeURI(redirectTopic), { communitySlug: this.props.communitySlug })
+      const url = topicUrl(encodeURI(redirectTopic), { groupSlug: this.props.groupSlug })
       if (url !== window.location.pathname) return <RedirectRoute to={url} />
     }
 

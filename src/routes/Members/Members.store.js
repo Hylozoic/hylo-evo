@@ -7,9 +7,9 @@ export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 export const REMOVE_MEMBER = 'REMOVE_MEMBER'
 export const REMOVE_MEMBER_PENDING = REMOVE_MEMBER + '_PENDING'
 
-export const communityMembersQuery = `
+export const groupMembersQuery = `
 query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
-  community (slug: $slug) {
+  group (slug: $slug) {
     id
     name
     avatarUrl
@@ -34,89 +34,43 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
   }
 }`
 
-export const networkMembersQuery = `
-query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
-  network (slug: $slug) {
-    id
-    name
-    slug
-    avatarUrl
-    memberCount
-    members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
-      items {
-        id
-        name
-        avatarUrl
-        location
-        tagline
-        skills {
-          hasMore
-          items {
-            id
-            name
-          }
-        }
-      }
-      hasMore
-    }
-  }
-}`
-
-export function fetchNetworkMembers (slug, sortBy, offset, search) {
+export function fetchGroupMembers (slug, sortBy, offset, search) {
   return {
     type: FETCH_MEMBERS,
     graphql: {
-      query: networkMembersQuery,
+      query: groupMembersQuery,
       variables: { slug, first: 20, offset, sortBy, search }
     },
     meta: {
-      extractModel: 'Network',
+      extractModel: 'Group',
       extractQueryResults: {
-        getItems: get('payload.data.network.members')
+        getItems: get('payload.data.group.members')
       }
     }
   }
 }
 
-export function fetchCommunityMembers (slug, sortBy, offset, search) {
-  return {
-    type: FETCH_MEMBERS,
-    graphql: {
-      query: communityMembersQuery,
-      variables: { slug, first: 20, offset, sortBy, search }
-    },
-    meta: {
-      extractModel: 'Community',
-      extractQueryResults: {
-        getItems: get('payload.data.community.members')
-      }
-    }
-  }
-}
-
-export function removeMember (personId, communityId) {
+export function removeMember (personId, groupId) {
   return {
     type: REMOVE_MEMBER,
     graphql: {
-      query: `mutation($personId: ID, $communityId: ID) {
-        removeMember(personId: $personId, communityId: $communityId) {
+      query: `mutation($personId: ID, $groupId: ID) {
+        removeMember(personId: $personId, groupId: $groupId) {
           id
           memberCount
         }
       }`,
-      variables: { personId, communityId }
+      variables: { personId, groupId }
     },
     meta: {
-      communityId,
+      groupId,
       personId
     }
   }
 }
 
-export function fetchMembers ({ subject, slug, sortBy, offset, search }) {
-  return subject === 'network'
-    ? fetchNetworkMembers(slug, sortBy, offset, search)
-    : fetchCommunityMembers(slug, sortBy, offset, search)
+export function fetchMembers ({ slug, sortBy, offset, search }) {
+  return fetchGroupMembers(slug, sortBy, offset, search)
 }
 
 export default function reducer (state = {}, action) {
@@ -139,11 +93,11 @@ export const getHasMoreMembers = createSelector(
   get('hasMore')
 )
 
-export function ormSessionReducer ({ Community }, { meta, type }) {
+export function ormSessionReducer ({ Group }, { meta, type }) {
   if (type === REMOVE_MEMBER_PENDING) {
-    const community = Community.withId(meta.communityId)
-    const members = community.members.filter(m => m.id !== meta.personId)
+    const group = Group.withId(meta.groupId)
+    const members = group.members.filter(m => m.id !== meta.personId)
       .toModelArray()
-    community.update({ members, memberCount: community.memberCount - 1 })
+    group.update({ members, memberCount: group.memberCount - 1 })
   }
 }

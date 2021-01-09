@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import AuthRoute from './AuthRoute'
 import LoginCheck from 'routes/NonAuthLayout/LoginCheck'
-import JoinCommunity from 'routes/JoinCommunity'
+import JoinGroup from 'routes/JoinGroup'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import '../css/global/index.scss'
 import ErrorBoundary from 'components/ErrorBoundary'
@@ -33,8 +33,8 @@ function rootRoutes () {
   return <ErrorBoundary>
     <LoginCheck>
       <Switch>
-        <AuthRoute returnToOnAuth path='/c/:slug/join/:accessCode' component={JoinCommunity} />
-        <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinCommunity} />
+        <AuthRoute returnToOnAuth path='/g/:slug/join/:accessCode' component={JoinGroup} />
+        <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinGroup} />
         <AuthRoute path='/login' component={NonAuthLayout} />
         <AuthRoute path='/signup' exact component={NonAuthLayout} />
         <AuthRoute path='/reset-password' exact component={NonAuthLayout} />

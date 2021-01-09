@@ -3,7 +3,7 @@ import ModelExtractor from './index'
 import orm from '../../models'
 
 const payload = testPayloads['FETCH_POSTS for me']
-const payload2 = testPayloads['FETCH_POSTS for community']
+const payload2 = testPayloads['FETCH_POSTS for group']
 
 it('produces a flat list from a "separate-totals-style" response', () => {
   const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
@@ -13,7 +13,7 @@ it('produces a flat list from a "separate-totals-style" response', () => {
 
 it('produces a flat list from a "nested-totals-style" response', () => {
   const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
-  extractor.walk(payload2.data.community, 'Community')
+  extractor.walk(payload2.data.group, 'group')
   expect(extractor.mergedNodes()).toMatchSnapshot()
 })
 
@@ -150,18 +150,18 @@ describe('append option', () => {
 
   beforeEach(() => {
     session = orm.session(orm.getEmptyState())
-    session.Community.create({ id: '1', name: 'One' })
-    session.Community.create({ id: '2', name: 'Two' })
-    session.Community.create({ id: '3', name: 'Three' })
+    session.group.create({ id: '1', name: 'One' })
+    session.group.create({ id: '2', name: 'Two' })
+    session.group.create({ id: '3', name: 'Three' })
     session.Post.create({
       id: '1',
-      communities: ['1', '2', '3']
+      groups: ['1', '2', '3']
     })
 
     root = {
       id: '1',
       title: 'well then!',
-      communities: [
+      groups: [
         { id: '3', name: 'Three' },
         { id: '4', name: 'Four' },
         { id: '5', name: 'Five' }
@@ -172,14 +172,14 @@ describe('append option', () => {
   it('appends data when set', () => {
     ModelExtractor.addAll({ session, root, modelName: 'Post', append: true })
     const post = session.Post.withId('1')
-    expect(post.communities.toRefArray().map(c => c.id))
+    expect(post.groups.toRefArray().map(c => c.id))
       .toEqual(['1', '2', '3', '4', '5'])
   })
 
   it('does not append data when not set', () => {
     ModelExtractor.addAll({ session, root, modelName: 'Post', append: false })
     const post = session.Post.withId('1')
-    expect(post.communities.toRefArray().map(c => c.id))
+    expect(post.groups.toRefArray().map(c => c.id))
       .toEqual(['3', '4', '5'])
   })
 })

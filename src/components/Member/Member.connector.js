@@ -8,12 +8,7 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   return {
-    goToPerson: (id, slug) => () => {
-      const url = props.subject === 'network'
-        ? personUrl(id, null, slug)
-        : personUrl(id, slug)
-      return dispatch(push(url))
-    }
+    goToPerson: (id, slug) => () => dispatch(push(personUrl(id, slug)))
   }
 }
 

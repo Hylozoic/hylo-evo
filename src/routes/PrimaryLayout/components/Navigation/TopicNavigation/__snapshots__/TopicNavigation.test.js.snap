@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly for All Communities 1`] = `
+exports[`renders correctly for All Groups 1`] = `
 <div
   data-stylename="s.topicNavigation"
 >

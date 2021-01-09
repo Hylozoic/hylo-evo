@@ -21,41 +21,37 @@ export const POST_DETAIL_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:postId(${POST_ID_M
 export const REQUIRED_NEW_POST_MATCH = `${POST_TYPE_CONTEXT_MATCH}/:action(new)`
 export const REQUIRED_EDIT_POST_MATCH = `${POST_DETAIL_MATCH}/:action(edit)`
 
-export const COMMUNITY_CONTEXT_MATCH = `:communityContext(c)`
-export const OPTIONAL_COMMUNITY_MATCH = `${COMMUNITY_CONTEXT_MATCH}?/:communityId(${HYLO_ID_MATCH})?/:action(new|edit)?`
-export const COMMUNITY_DETAIL_MATCH = `${COMMUNITY_CONTEXT_MATCH}/:communityId(${HYLO_ID_MATCH})/:action(edit)?`
+export const GROUP_CONTEXT_MATCH = `:groupContext(g)`
+export const OPTIONAL_GROUP_MATCH = `${GROUP_CONTEXT_MATCH}?/:groupId(${HYLO_ID_MATCH})?/:action(new|edit)?`
+export const GROUP_DETAIL_MATCH = `${GROUP_CONTEXT_MATCH}/:groupId(${HYLO_ID_MATCH})/:action(edit)?`
 
-// Community Context
-export const DEFAULT_COMMUNITY_CONTEXT = 'c'
-export const VALID_COMMUNITY_CONTEXTS = [DEFAULT_COMMUNITY_CONTEXT]
-export const VALID_COMMUNITY_CONTEXTS_MATCH = VALID_COMMUNITY_CONTEXTS.join('|')
+// Group Context
+export const DEFAULT_GROUP_CONTEXT = 'g'
+export const VALID_GROUP_CONTEXTS = [DEFAULT_GROUP_CONTEXT]
+export const VALID_GROUP_CONTEXTS_MATCH = VALID_GROUP_CONTEXTS.join('|')
 
 // Fundamental URL paths
 
-export function allCommunitiesUrl () {
+export function allGroupsUrl () {
   return '/all'
 }
 
-export function publicCommunitiesUrl () {
+export function publicGroupsUrl () {
   return '/public'
 }
 
-export function defaultCommunityUrl () {
-  return allCommunitiesUrl()
+export function defaultGroupUrl () {
+  return allGroupsUrl()
 }
 
-export function communityUrl (slug, defaultUrl = defaultCommunityUrl()) {
+export function groupUrl (slug, defaultUrl = defaultGroupUrl()) {
   if (slug === 'public') {
-    return publicCommunitiesUrl()
+    return publicGroupsUrl()
   } else if (slug) {
-    return `/c/${slug}`
+    return `/g/${slug}`
   } else {
     return defaultUrl
   }
-}
-
-export function networkUrl (slug) {
-  return slug ? `/n/${slug}` : ''
 }
 
 export function threadUrl (id) {
@@ -95,65 +91,61 @@ export function baseUrl ({
   context,
   personId, memberId,
   topicName,
-  networkSlug,
-  communitySlug, slug,
+  groupSlug, slug,
   view,
   defaultUrl = ''
 }) {
   const safeMemberId = memberId || personId
-  const safeCommunitySlug = communitySlug || slug
+  const safeGroupSlug = groupSlug || slug
 
   if (safeMemberId) {
-    return personUrl(safeMemberId, safeCommunitySlug, networkSlug)
+    return personUrl(safeMemberId, safeGroupSlug)
   } else if (topicName) {
     return topicUrl(topicName, {
-      communitySlug: safeCommunitySlug,
-      networkSlug,
+      groupSlug: safeGroupSlug,
       context
     })
   } else if (view) {
-    return viewUrl(view, context, safeCommunitySlug, networkSlug, defaultUrl)
-  } else if (networkSlug) {
-    return networkUrl(networkSlug)
-  } else if (safeCommunitySlug) {
-    return communityUrl(safeCommunitySlug)
+    return viewUrl(view, context, safeGroupSlug, defaultUrl)
+  } else if (safeGroupSlug) {
+    return groupUrl(safeGroupSlug)
   } else if (context === 'all') {
-    return allCommunitiesUrl()
+    return allGroupsUrl()
   } else if (context === 'public') {
-    return publicCommunitiesUrl()
+    return publicGroupsUrl()
   } else {
     return defaultUrl
   }
 }
 
-export function communityDeleteConfirmationUrl () {
-  return '/confirm-community-delete'
+export function groupDeleteConfirmationUrl () {
+  return '/confirm-group-delete'
 }
 
 // derived URL paths
 
-// For specific views of a community or network like 'map', or 'calendar'
-export function viewUrl (view, context, communitySlug, networkSlug, defaultUrl) {
+// For specific views of a group like 'map', or 'calendar'
+export function viewUrl (view, context, groupSlug, defaultUrl) {
   if (!view) return '/'
-  const base = baseUrl({ context, networkSlug, communitySlug, defaultUrl })
+  const base = baseUrl({ context, groupSlug, defaultUrl })
 
   return `${base}/${view}`
 }
 
-export function personUrl (id, communitySlug, networkSlug) {
+export function personUrl (id, groupSlug) {
   if (!id) return '/'
-  const base = baseUrl({ networkSlug, communitySlug })
+  const base = baseUrl({ groupSlug })
 
   return `${base}/m/${id}`
 }
 
 export function topicUrl (topicName, opts) {
-  const base = baseUrl({ ...opts, defaultUrl: allCommunitiesUrl() })
+  const base = baseUrl({ ...opts, defaultUrl: allGroupsUrl() })
 
   return `${base}/${topicName}`
 }
 
-export function postsUrl (opts = {}, querystringParams, defaultUrl = allCommunitiesUrl()) {
+export function postsUrl (opts = {}, querystringParams, defaultUrl = allGroupsUrl()) {
   const postTypeContext = get('postTypeContext', opts)
   const inPostTypeContext = POST_TYPE_CONTEXTS.includes(postTypeContext)
   const base = baseUrl({ ...opts, defaultUrl })
@@ -178,10 +170,10 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
   return addQuerystringToPath(result, querystringParams)
 }
 
-export function communityMapDetailUrl (id, opts = {}, querystringParams = {}) {
+export function groupMapDetailUrl (id, opts = {}, querystringParams = {}) {
   const action = get('action', opts)
-  let result = publicCommunitiesUrl()
-  result = `${result}/map/${DEFAULT_COMMUNITY_CONTEXT}/${id}`
+  let result = publicGroupsUrl()
+  result = `${result}/map/${DEFAULT_GROUP_CONTEXT}/${id}`
   if (action) result = `${result}/${action}`
 
   return addQuerystringToPath(result, querystringParams)
@@ -199,20 +191,12 @@ export function commentUrl (postId, commentId, opts = {}, querystringParams = {}
   return `${postUrl(postId, opts, querystringParams)}#comment_${commentId}`
 }
 
-export function communitySettingsUrl (communitySlug) {
-  return `${communityUrl(communitySlug)}/settings`
+export function groupSettingsUrl (groupSlug) {
+  return `${groupUrl(groupSlug)}/settings`
 }
 
 export function currentUserSettingsUrl () {
   return `/settings`
-}
-
-export function networkSettingsUrl (networkSlug) {
-  return `${networkUrl(networkSlug)}/settings`
-}
-
-export function networkCommunitySettingsUrl (networkSlug, communitySlug) {
-  return `${networkUrl(networkSlug)}/settings/communities/${communitySlug}`
 }
 
 export function newMessageUrl () {
@@ -228,12 +212,12 @@ export function messageThreadUrl (person) {
     : `/t/new?participants=${participantId}`
 }
 
-export function topicsUrl (opts, defaultUrl = allCommunitiesUrl()) {
+export function topicsUrl (opts, defaultUrl = allGroupsUrl()) {
   return baseUrl({ ...opts, defaultUrl }) + '/topics'
 }
 
-export const communityJoinUrl = ({ slug, accessCode }) =>
-  slug && accessCode && `${origin()}/c/${slug}/join/${accessCode}`
+export const groupJoinUrl = ({ slug, accessCode }) =>
+  slug && accessCode && `${origin()}/g/${slug}/join/${accessCode}`
 
 // URL utility functions
 
@@ -259,14 +243,14 @@ export function removePostFromUrl (url) {
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
-export function removeCommunityFromUrl (url) {
+export function removeGroupFromUrl (url) {
   let matchForReplaceRegex
 
   // Remove default context and post id otherwise
   // remove current post id and stay in the current post
   // context.
-  if (url.match(`/${DEFAULT_COMMUNITY_CONTEXT}/`)) {
-    matchForReplaceRegex = `/${DEFAULT_COMMUNITY_CONTEXT}/${HYLO_ID_MATCH}`
+  if (url.match(`/${DEFAULT_GROUP_CONTEXT}/`)) {
+    matchForReplaceRegex = `/${DEFAULT_GROUP_CONTEXT}/${HYLO_ID_MATCH}`
   } else {
     matchForReplaceRegex = `/${HYLO_ID_MATCH}`
   }
@@ -276,18 +260,11 @@ export function removeCommunityFromUrl (url) {
 
 // n.b.: use getRouteParam instead of this where possible.
 
-export function getCommunitySlugInPath (pathname) {
+export function getGroupSlugInPath (pathname) {
   const match = matchPath(pathname, {
-    path: '/c/:slug'
+    path: '/g/:slug'
   })
   return get('params.slug', match)
-}
-
-export function getNetworkSlugInPath (pathname) {
-  const match = matchPath(pathname, {
-    path: '/n/:networkSlug'
-  })
-  return get('params.networkSlug', match)
 }
 
 export function gotoExternalUrl (url) {
@@ -300,11 +277,11 @@ export function isSignupPath (path) {
   return (path.startsWith('/signup'))
 }
 
-export function isCreateCommunityPath (path) {
-  return (path.startsWith('/create-community'))
+export function isCreateGroupPath (path) {
+  return (path.startsWith('/create-group'))
 }
 
-export function isJoinCommunityPath (path) {
+export function isJoinGroupPath (path) {
   return (path.startsWith('/h/use-invitation'))
 }
 
@@ -312,12 +289,8 @@ export function isPublicPath (path) {
   return (path.startsWith('/public'))
 }
 
-export function isAllCommunitiesPath (path) {
+export function isAllGroupsPath (path) {
   return (path.startsWith('/all'))
-}
-
-export function isNetworkPath (path) {
-  return (path.startsWith('/n/'))
 }
 
 export function isTopicPath (path) {

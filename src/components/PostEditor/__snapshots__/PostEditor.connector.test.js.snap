@@ -19,7 +19,7 @@ exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
   "announcementSelected": undefined,
   "canModerate": true,
-  "communityOptions": Array [
+  "groupOptions": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
@@ -33,8 +33,8 @@ Object {
       },
     },
   ],
-  "communitySlug": "foo",
-  "currentCommunity": SessionBoundModel {
+  "groupSlug": "foo",
+  "currentGroup": SessionBoundModel {
     "_fields": Object {
       "id": "99",
       "slug": "foo",
@@ -57,7 +57,7 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": false,
-  "myModeratedCommunities": Array [
+  "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
@@ -82,7 +82,7 @@ exports[`mapStateToProps returns the right keys for a new post while pending 1`]
 Object {
   "announcementSelected": undefined,
   "canModerate": true,
-  "communityOptions": Array [
+  "groupOptions": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
@@ -96,8 +96,8 @@ Object {
       },
     },
   ],
-  "communitySlug": "foo",
-  "currentCommunity": SessionBoundModel {
+  "groupSlug": "foo",
+  "currentGroup": SessionBoundModel {
     "_fields": Object {
       "id": "99",
       "slug": "foo",
@@ -120,7 +120,7 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": true,
-  "myModeratedCommunities": Array [
+  "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
@@ -141,7 +141,7 @@ Object {
 }
 `;
 
-exports[`mergeProps goToPost redirects to community feed with no topicName 1`] = `
+exports[`mergeProps goToPost redirects to group feed with no topicName 1`] = `
 Array [
   Array [
     "/c/theslug/p/123",

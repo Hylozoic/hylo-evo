@@ -4,52 +4,53 @@ import getMemberships from 'store/selectors/getMemberships'
 import { push } from 'connected-react-router'
 import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
-import { ALL_COMMUNITIES_ID, ALL_COMMUNITIES_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Community'
+import { ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Group'
 import getMe from 'store/selectors/getMe'
 import { createSelector } from 'reselect'
 
 const defaultNetworks = [
   {
     id: PUBLIC_CONTEXT_ID,
-    name: 'Public Communities & Posts',
-    communities: [],
+    name: 'Public Groups & Posts',
+    groups: [],
     context: 'public',
     avatarUrl: PUBLIC_CONTEXT_AVATAR_PATH
   },
   {
-    id: ALL_COMMUNITIES_ID,
-    name: 'All My Communities',
-    communities: [],
+    id: ALL_GROUPS_ID,
+    name: 'All My Groups',
+    groups: [],
     context: 'all',
-    avatarUrl: ALL_COMMUNITIES_AVATAR_PATH
+    avatarUrl: ALL_GROUPS_AVATAR_PATH
   }
 ]
 
-export function partitionCommunities (memberships) {
-  const allCommunities = memberships.map(m => ({
-    ...m.community.ref,
-    network: m.community.network && {
-      ...get('network.ref', m.community),
-      communities: get('network.communities', m.community).toRefArray()
+export function partitionGroups (memberships) {
+  const allGroups = memberships.map(m => ({
+    ...m.group.ref,
+    // TODO: fix up to work with child groups
+    network: m.group.network && {
+      ...get('network.ref', m.group),
+      groups: get('network.groups', m.group).toRefArray()
     },
     newPostCount: m.newPostCount
   }))
 
-  const reduced = allCommunities.reduce((acc, community) => {
-    if (community.network) {
-      if (acc[community.network.id]) {
-        acc[community.network.id].communities = acc[community.network.id].communities.concat([community])
+  const reduced = allGroups.reduce((acc, group) => {
+    if (group.network) {
+      if (acc[group.network.id]) {
+        acc[group.network.id].groups = acc[group.network.id].groups.concat([group])
         return acc
       } else {
-        acc[community.network.id] = {
-          ...community.network,
-          communities: [community],
-          nonMemberCommunities: community.network.communities
+        acc[group.network.id] = {
+          ...group.network,
+          groups: [group],
+          nonMemberGroups: group.network.groups
         }
         return acc
       }
     } else {
-      acc['independent'] = acc['independent'].concat([community])
+      acc['independent'] = acc['independent'].concat([group])
       return acc
     }
   }, {
@@ -58,32 +59,32 @@ export function partitionCommunities (memberships) {
 
   const networks = values(omit('independent', reduced))
 
-  // pulls out the communities that are already a member of from the nonMemberCommunities array
+  // pulls out the groups that are already a member of from the nonMemberGroups array
   each(n => {
-    pullAllBy(n.nonMemberCommunities, n.communities, 'id')
+    pullAllBy(n.nonMemberGroups, n.groups, 'id')
   })(networks)
 
   return {
     networks,
-    communities: reduced.independent
+    groups: reduced.independent
   }
 }
 
-const getPartitionCommunities = createSelector(
+const getPartitionGroups = createSelector(
   getMemberships,
-  (memberships) => partitionCommunities(memberships)
+  (memberships) => partitionGroups(memberships)
 )
 
 export function mapStateToProps (state, props) {
   const { currentLocation } = state.locationHistory
-  const { networks, communities } = getPartitionCommunities(state)
-  const canModerate = props.community && getMe(state, props).canModerate(props.community)
+  const { networks, groups } = getPartitionGroups(state)
+  const canModerate = props.group && getMe(state, props).canModerate(props.group)
 
   return {
     currentLocation,
     networks,
     defaultNetworks,
-    communities,
+    groups,
     canModerate
   }
 }
@@ -91,7 +92,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     toggleDrawer: () => dispatch(toggleDrawer()),
-    goToCreateCommunity: () => dispatch(push('/create-community/name'))
+    goToCreateGroup: () => dispatch(push('/create-group/name'))
   }
 }
 

@@ -7,15 +7,15 @@ describe('CreateTopic', () => {
 
   beforeEach(() => {
     props = {
-      communityId: '1',
-      communitySlug: 'wombat-community',
-      communityTopicExists: {
+      groupId: '1',
+      groupSlug: 'wombat-group',
+      groupTopicExists: {
         wombats: {
-          'wombat-community': false,
-          'other-community': true
+          'wombat-group': false,
+          'other-group': true
         },
         xylophones: {
-          'wombat-community': true
+          'wombat-group': true
         }
       },
       subscribeAfterCreate: true,
@@ -27,7 +27,7 @@ describe('CreateTopic', () => {
         }
       ],
       createTopic: () => {},
-      fetchCommunityTopic: jest.fn()
+      fetchGroupTopic: jest.fn()
     }
     wrapper = shallow(
       <CreateTopic {...props}>
@@ -92,9 +92,9 @@ describe('CreateTopic', () => {
     it('subscribes and redirects to existing topics', () => {
       wrapper.setProps({
         subscribeAfterCreate: true,
-        communityTopicExists: {
+        groupTopicExists: {
           aardvark: {
-            'wombat-community': true
+            'wombat-group': true
           }
         }
       })
@@ -103,9 +103,9 @@ describe('CreateTopic', () => {
 
     it('creates a topic if it does not exist', () => {
       wrapper.setProps({
-        communityTopicExists: {
+        groupTopicExists: {
           aardvark: {
-            'wombat-community': false
+            'wombat-group': false
           }
         }
       })
@@ -117,9 +117,9 @@ describe('CreateTopic', () => {
     it('allows leading `#` characters', () => {
       instance.updateTopicName({ target: { value: '#flargle' } })
       wrapper.setProps({
-        communityTopicExists: {
+        groupTopicExists: {
           flargle: {
-            'wombat-community': false
+            'wombat-group': false
           }
         }
       })
@@ -138,13 +138,13 @@ describe('CreateTopic', () => {
       instance.updateTopicName({ target: { value: 'flarglebargles' } })
       instance.submitButtonAction()
       expect(subscribeAndRedirect).toHaveBeenCalled()
-      expect(props.fetchCommunityTopic).not.toHaveBeenCalled()
+      expect(props.fetchGroupTopic).not.toHaveBeenCalled()
     })
 
     it('goes looking on the server if topic not in client', () => {
       instance.updateTopicName({ target: { value: 'florfle' } })
       instance.submitButtonAction()
-      expect(props.fetchCommunityTopic).toHaveBeenCalled()
+      expect(props.fetchGroupTopic).toHaveBeenCalled()
     })
   })
 

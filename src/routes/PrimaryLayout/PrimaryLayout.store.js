@@ -3,7 +3,7 @@ import { pick } from 'lodash/fp'
 import rollbar from 'client/rollbar'
 import {
   FETCH_FOR_CURRENT_USER,
-  FETCH_FOR_COMMUNITY_PENDING
+  FETCH_FOR_GROUP_PENDING
 } from 'store/constants'
 import clearCacheFor from 'store/reducers/ormReducer/clearCacheFor'
 
@@ -50,13 +50,13 @@ export function toggleDrawer () {
 }
 
 export function ormSessionReducer (
-  { Community, Membership, Network, Person },
+  { Group, Membership, Network, Person },
   { type, meta, payload }
 ) {
-  if (type === FETCH_FOR_COMMUNITY_PENDING) {
-    let community = Community.safeGet({ slug: meta.slug })
-    if (!community) return
-    let membership = Membership.safeGet({ community: community.id })
+  if (type === FETCH_FOR_GROUP_PENDING) {
+    let group = Group.safeGet({ slug: meta.slug })
+    if (!group) return
+    let membership = Membership.safeGet({ group: group.id })
     if (!membership) return
     membership.update({ newPostCount: 0 })
   }
@@ -66,7 +66,9 @@ export function ormSessionReducer (
     if (!Person.idExists(me.id)) {
       Person.create(pick(['id', 'name', 'avatarUrl'], me))
     }
+
     // Clear Network for selectors
-    Network.all().toRefArray().forEach(n => clearCacheFor(Network, n.id))
+    // TODO: ??
+    // Network.all().toRefArray().forEach(n => clearCacheFor(Network, n.id))
   }
 }

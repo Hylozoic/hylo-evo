@@ -1,6 +1,6 @@
 export default
-`query ($communityId: ID) {
-  joinRequests (communityId: $communityId) {
+`query ($groupId: ID) {
+  joinRequests (groupId: $groupId) {
     total
     hasMore
     items {

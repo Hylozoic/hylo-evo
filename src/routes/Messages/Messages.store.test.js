@@ -245,9 +245,9 @@ describe('getParticipantsFromQuerystring', () => {
       session.Membership.create({
         ...person.memberships[0],
         person: person.id,
-        community: person.memberships[0].community.id
+        group: person.memberships[0].group.id
       })
-      session.Community.create(person.memberships[0].community)
+      session.Group.create(person.memberships[0].group)
     })
 
     state = { orm: session.state }
@@ -289,9 +289,9 @@ describe('connector', () => {
       session.Membership.create({
         ...person.memberships[0],
         person: person.id,
-        community: person.memberships[0].community.id
+        group: person.memberships[0].group.id
       })
-      session.Community.create(person.memberships[0].community)
+      session.Group.create(person.memberships[0].group)
     })
     const me = { id: '999', name: 'Break Wind' }
     session.Person.create(me)

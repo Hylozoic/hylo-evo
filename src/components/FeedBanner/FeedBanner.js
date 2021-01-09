@@ -1,16 +1,16 @@
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import './FeedBanner.scss'
-import { whiteMerkaba, allCommunitiesBanner, publicGlobe } from 'util/assets'
+import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
 export default function FeedBanner ({
   all,
   publicContext,
-  community,
+  group,
   currentUser,
   newPost,
   type,
@@ -19,23 +19,23 @@ export default function FeedBanner ({
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (all) {
-    name = 'All My Communities'
+    name = 'All My Groups'
     avatarUrl = whiteMerkaba
-    bannerUrl = allCommunitiesBanner
-    subtitle = currentUser && `${currentUser.memberships.count()} Communities`
+    bannerUrl = allGroupsBanner
+    subtitle = currentUser && `${currentUser.memberships.count()} Groups`
   } else if (publicContext) {
-    name = 'Public Communities & Posts'
+    name = 'Public Groups & Posts'
     avatarUrl = publicGlobe
-    bannerUrl = allCommunitiesBanner
-    // TODO list count of public posts and public communities in subtitle
+    bannerUrl = allGroupsBanner
+    // TODO list count of public posts and public groups in subtitle
     subtitle = `All Posts Marked Public`
-  } else if (!community) {
+  } else if (!group) {
     return null
   } else {
-    ({ bannerUrl, avatarUrl, name, location } = community)
+    ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
-  return <div styleName={cx('banner', { 'all-communities': all })}>
+  return <div styleName={cx('banner', { 'all-groups': all })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>

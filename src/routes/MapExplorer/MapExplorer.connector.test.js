@@ -12,7 +12,7 @@ describe('mapStateToProps', () => {
     const session = orm.session(orm.getEmptyState())
 
     times(i => {
-      session.Post.create({ id: i.toString(), communities: ['1'] })
+      session.Post.create({ id: i.toString(), groups: ['1'] })
     }, 5)
 
     props = {
@@ -49,7 +49,7 @@ describe('mapStateToProps', () => {
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         currentUser: undefined,
-        fetchParams: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined, networkSlugs: undefined, isPublic: false },
+        fetchParams: { boundingBox: undefined, slug: 'foo', subject: 'group', groupSlugs: undefined, isPublic: false },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
@@ -58,7 +58,7 @@ describe('mapStateToProps', () => {
         members: [],
         pending: undefined,
         posts: [],
-        publicCommunities: [],
+        publicGroups: [],
         hideDrawer: false,
         routeParams: { slug: 'foo' },
         topics: [],
@@ -67,7 +67,7 @@ describe('mapStateToProps', () => {
     )
   })
 
-  // TODO: one with posts and members and communities
+  // TODO: one with posts and members and groups
 
   it('checks if FETCH_POSTS_MAP is pending', () => {
     state = {

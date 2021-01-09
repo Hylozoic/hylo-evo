@@ -10,7 +10,7 @@ exports[`Signup renders correctly 1`] = `
   <p
     data-stylename="blurb"
   >
-    Stay connected, organized, and engaged with your community.
+    Stay connected, organized, and engaged with your group.
   </p>
   <div
     data-stylename="field"
@@ -105,7 +105,7 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
   <p
     data-stylename="blurb"
   >
-    Stay connected, organized, and engaged with your community.
+    Stay connected, organized, and engaged with your group.
   </p>
   <div
     data-stylename="field"

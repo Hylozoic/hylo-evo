@@ -15,7 +15,7 @@ const defaultProps = {
 it('matches the last snapshot', () => {
   const matchingPeople = people.map(p => ({
     ...pick([ 'id', 'name', 'avatarUrl' ], p),
-    community: p.memberships[0].community.name
+    group: p.memberships[0].group.name
   }))
   const wrapper = shallow(
     <MatchingPeopleList

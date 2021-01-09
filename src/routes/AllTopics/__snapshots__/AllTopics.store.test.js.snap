@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`deleteCommunityTopic should match latest snapshot 1`] = `
+exports[`deleteGroupTopic should match latest snapshot 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation ($id: ID) {
-        deleteCommunityTopic(id: $id) {
+        deleteGroupTopic(id: $id) {
           success
         }
       }",
@@ -16,6 +16,6 @@ Object {
     "id": 135,
     "optimistic": true,
   },
-  "type": "AllTopics/DELETE_COMMUNITY_TOPIC",
+  "type": "AllTopics/DELETE_GROUP_TOPIC",
 }
 `;

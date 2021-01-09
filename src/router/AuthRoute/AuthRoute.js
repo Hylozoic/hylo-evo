@@ -24,7 +24,7 @@ export default function AuthRoute ({
   // On mobile we want to only store the intended URL and forward to the
   // download app modal (which is currently on the Login component/page)
   // Specifically we don't want any components to do any work but this,
-  // namely JoinCommunity which utilizes returnToOnAuth) and may attempt
+  // namely JoinGroup which utilizes returnToOnAuth) and may attempt
   // to auth the user with a token and send them into sign-up.
   if (
     (!isLoggedIn && (requireAuth || returnToOnAuth))

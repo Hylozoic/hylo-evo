@@ -8,15 +8,15 @@ import {
   DELETE_COMMENT_PENDING,
   FETCH_MESSAGES_PENDING,
   JOIN_PROJECT_PENDING,
-  LEAVE_COMMUNITY,
+  LEAVE_GROUP,
   LEAVE_PROJECT_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
   REMOVE_MODERATOR_PENDING,
   RESET_NEW_POST_COUNT_PENDING,
   RESPOND_TO_EVENT_PENDING,
-  TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING,
+  TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_COMMENT_PENDING,
-  UPDATE_COMMUNITY_TOPIC_PENDING,
+  UPDATE_GROUP_TOPIC_PENDING,
   UPDATE_POST_PENDING,
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
@@ -41,17 +41,17 @@ import {
 } from 'routes/Signup/AddSkills/AddSkills.store'
 
 import {
-  UPDATE_COMMUNITY_SETTINGS_PENDING
-} from 'routes/CommunitySettings/CommunitySettings.store'
+  UPDATE_GROUP_SETTINGS_PENDING
+} from 'routes/GroupSettings/GroupSettings.store'
 import {
-  CREATE_COMMUNITY
-} from 'routes/CreateCommunity/Review/Review.store'
+  CREATE_GROUP
+} from 'routes/CreateGroup/Review/Review.store'
 import {
   USE_INVITATION
-} from 'routes/JoinCommunity/JoinCommunity.store'
+} from 'routes/JoinGroup/JoinGroup.store'
 
 import {
-  DELETE_COMMUNITY_TOPIC_PENDING
+  DELETE_GROUP_TOPIC_PENDING
 } from 'routes/AllTopics/AllTopics.store'
 import {
   INVITE_PEOPLE_TO_EVENT_PENDING
@@ -70,8 +70,8 @@ export default function ormReducer (state = {}, action) {
 
   const {
     Comment,
-    Community,
-    CommunityTopic,
+    Group,
+    GroupTopic,
     EventInvitation,
     Me,
     Membership,
@@ -88,7 +88,7 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, community, person, post, comment, communityTopic
+  let me, membership, group, person, post, comment, groupTopic
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -137,24 +137,24 @@ export default function ormReducer (state = {}, action) {
       MessageThread.withId(meta.id).markAsRead()
       break
 
-    case LEAVE_COMMUNITY:
+    case LEAVE_GROUP:
       me = Me.first()
-      membership = find(m => m.community.id === meta.id, me.memberships.toModelArray())
+      membership = find(m => m.group.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
       break
 
-    case TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING:
-      communityTopic = CommunityTopic.get({ topic: meta.topicId, community: meta.communityId })
-      communityTopic.update({
-        followersTotal: communityTopic.followersTotal + (meta.isSubscribing ? 1 : -1),
+    case TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING:
+      groupTopic = GroupTopic.get({ topic: meta.topicId, group: meta.groupId })
+      groupTopic.update({
+        followersTotal: groupTopic.followersTotal + (meta.isSubscribing ? 1 : -1),
         isSubscribed: !!meta.isSubscribing
       })
       break
 
-    case UPDATE_COMMUNITY_TOPIC_PENDING:
-      communityTopic = CommunityTopic.withId(meta.id)
-      communityTopic.update(meta.data)
-      clearCacheFor(CommunityTopic, meta.id)
+    case UPDATE_GROUP_TOPIC_PENDING:
+      groupTopic = GroupTopic.withId(meta.id)
+      groupTopic.update(meta.data)
+      clearCacheFor(GroupTopic, meta.id)
       break
 
     case VOTE_ON_POST_PENDING:
@@ -167,37 +167,37 @@ export default function ormReducer (state = {}, action) {
       break
 
     case RESET_NEW_POST_COUNT_PENDING:
-      if (meta.type === 'CommunityTopic') {
-        session.CommunityTopic.withId(meta.id).update({ newPostCount: 0 })
+      if (meta.type === 'GroupTopic') {
+        session.GroupTopic.withId(meta.id).update({ newPostCount: 0 })
       } else if (meta.type === 'Membership') {
-        const membership = session.Membership.safeGet({ community: meta.id })
+        const membership = session.Membership.safeGet({ group: meta.id })
         membership && membership.update({ newPostCount: 0 })
       }
       break
 
     case ADD_MODERATOR_PENDING:
       person = Person.withId(meta.personId)
-      Community.withId(meta.communityId).updateAppending({ moderators: [person] })
+      Group.withId(meta.groupId).updateAppending({ moderators: [person] })
       break
 
     case REMOVE_MODERATOR_PENDING:
-      community = Community.withId(meta.communityId)
-      const moderators = community.moderators.filter(m =>
+      group = Group.withId(meta.groupId)
+      const moderators = group.moderators.filter(m =>
         m.id !== meta.personId)
         .toModelArray()
-      community.update({ moderators })
+      group.update({ moderators })
       break
 
-    case UPDATE_COMMUNITY_SETTINGS_PENDING:
-      community = Community.withId(meta.id)
-      community.update(meta.changes)
+    case UPDATE_GROUP_SETTINGS_PENDING:
+      group = Group.withId(meta.id)
+      group.update(meta.changes)
 
       // Triggers an update to redux-orm for the membership
-      membership = session.Membership.safeGet({ community: meta.id }).update({ forceUpdate: new Date() })
+      membership = session.Membership.safeGet({ group: meta.id }).update({ forceUpdate: new Date() })
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
-      membership = Membership.safeGet({ community: meta.communityId })
+      membership = Membership.safeGet({ group: meta.groupId })
       if (!membership) break
       membership.update({
         settings: {
@@ -277,9 +277,9 @@ export default function ormReducer (state = {}, action) {
       post.update({ topics: [] })
       break
 
-    case CREATE_COMMUNITY:
+    case CREATE_GROUP:
       me = Me.withId(Me.first().id)
-      me.updateAppending({ memberships: [payload.data.createCommunity.id] })
+      me.updateAppending({ memberships: [payload.data.createGroup.id] })
       break
 
     case JOIN_PROJECT_PENDING:
@@ -304,9 +304,9 @@ export default function ormReducer (state = {}, action) {
       Me.first().updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
       break
 
-    case DELETE_COMMUNITY_TOPIC_PENDING:
-      communityTopic = CommunityTopic.withId(meta.id)
-      communityTopic.delete()
+    case DELETE_GROUP_TOPIC_PENDING:
+      groupTopic = GroupTopic.withId(meta.id)
+      groupTopic.delete()
       break
 
     case UPDATE_COMMENT_PENDING:

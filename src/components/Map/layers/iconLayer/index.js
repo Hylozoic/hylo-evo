@@ -1,18 +1,18 @@
 import { CompositeLayer } from '@deck.gl/core'
 import { IconLayer } from '@deck.gl/layers'
 
-const defaultCommunityUrl = '/assets/default_community_avatar.png'
+const defaultGroupUrl = '/assets/default_group_avatar.png'
 
-// Icon Layer for Communities
-export function createIconLayerFromCommunities ({ boundingBox, communities, onHover, onClick }) {
-  let data = communities.filter(community => community.locationObject && community.locationObject.center)
-    .map(community => {
+// Icon Layer for Groups
+export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onClick }) {
+  let data = groups.filter(group => group.locationObject && group.locationObject.center)
+    .map(group => {
       return {
-        id: community.id,
-        type: 'community',
-        message: 'Community: ' + community.name,
-        avatarUrl: community.avatarUrl,
-        coordinates: [parseFloat(community.locationObject.center.lng), parseFloat(community.locationObject.center.lat)]
+        id: group.id,
+        type: 'group',
+        message: 'Group: ' + group.name,
+        avatarUrl: group.avatarUrl,
+        coordinates: [parseFloat(group.locationObject.center.lng), parseFloat(group.locationObject.center.lat)]
       }
     })
 
@@ -25,14 +25,14 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
         'Origin': 'bloop'
       }
     },
-    id: 'community-icon-layer',
+    id: 'group-icon-layer',
     data,
     sizeScale: 1,
     getPosition: d => d.coordinates,
     // getIcon return an object which contains url to fetch icon of each data point
-    // d.avatarUrl || defaultCommunityUrl
+    // d.avatarUrl || defaultGroupUrl
     getIcon: d => ({
-      url: defaultCommunityUrl, // process.env.NODE_ENV === 'development' ? defaultCommunityUrl : d.avatarUrl,
+      url: defaultGroupUrl, // process.env.NODE_ENV === 'development' ? defaultGroupUrl : d.avatarUrl,
       width: 48,
       height: 48,
       anchorY: 0
@@ -44,10 +44,10 @@ export function createIconLayerFromCommunities ({ boundingBox, communities, onHo
     onHover,
     onClick
   })
-  // return new CommunityIconLayer({ boundingBox, data, onHover, onClick, getPosition: d => d.coordinates })
+  // return new GroupIconLayer({ boundingBox, data, onHover, onClick, getPosition: d => d.coordinates })
 }
 
-export default class CommunityIconLayer extends CompositeLayer {
+export default class GroupIconLayer extends CompositeLayer {
   getPickingInfo ({ info, mode }) {
     const pickedObject = info.object && info.object.properties
     if (pickedObject) {
@@ -59,19 +59,19 @@ export default class CommunityIconLayer extends CompositeLayer {
   renderLayers () {
     const { data, onHover, onClick } = this.props
 
-    const communityIconLayer = new IconLayer({
+    const groupIconLayer = new IconLayer({
       loadOptions: {
         mode: 'no-cors',
         headers: {
           'Access-Control-Allow-Origin': '*'
         }
       },
-      id: 'community-icon-layer',
+      id: 'group-icon-layer',
       data,
       sizeScale: 1,
       getPosition: d => d.coordinates,
       // getIcon return an object which contains url to fetch icon of each data point
-      //  || '/assets/all-communities-avatar.png'
+      //  || '/assets/all-groups-avatar.png'
       getIcon: d => ({
         url: d.avatarUrl,
         width: 40,
@@ -86,6 +86,6 @@ export default class CommunityIconLayer extends CompositeLayer {
       onClick
     })
 
-    return [communityIconLayer]
+    return [groupIconLayer]
   }
 }

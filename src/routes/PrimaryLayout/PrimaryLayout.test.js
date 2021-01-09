@@ -3,34 +3,34 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import orm from 'store/models'
 import PrimaryLayout, {
-  RedirectToCommunity
+  RedirectToGroup
 } from './PrimaryLayout'
 
-it('shows NotFound if a currentUser is loaded and the community does not exist', () => {
+it('shows NotFound if a currentUser is loaded and the group does not exist', () => {
   const wrapper = shallow(<PrimaryLayout
-    isCommunityRoute
+    isGroupRoute
     currentUser={{}}
     location={{ pathname: '' }} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
-it('shows nothing for a community route if the community and currentUser are not loaded', () => {
+it('shows nothing for a group route if the group and currentUser are not loaded', () => {
   const wrapper = shallow(<PrimaryLayout
-    isCommunityRoute
-    communityPending />, { disableLifecycleMethods: true })
+    isGroupRoute
+    groupPending />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
 
-it('shows normal children for a community route if the community is loaded', () => {
+it('shows normal children for a group route if the group is loaded', () => {
   const wrapper = shallow(<PrimaryLayout
-    isCommunityRoute
+    isGroupRoute
     location={{ pathname: '/', search: '' }}
-    community={{ id: '1' }}
+    group={{ id: '1' }}
     currentUser={{}} />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('div')
 })
 
-describe('RedirectToCommunity', () => {
+describe('RedirectToGroup', () => {
   let session
 
   beforeEach(() => {
@@ -42,7 +42,7 @@ describe('RedirectToCommunity', () => {
     const currentUser = session.Me.first()
     const path = '/'
     const wrapper = shallow(<MemoryRouter>
-      {RedirectToCommunity({ path, currentUser })}
+      {RedirectToGroup({ path, currentUser })}
     </MemoryRouter>)
     const expected = '/all'
     const actual = wrapper.find(Redirect).props().to
@@ -50,16 +50,16 @@ describe('RedirectToCommunity', () => {
   })
 
   it('sets `to` prop of Redirect correctly', () => {
-    session.Community.create({ id: '1', slug: 'foo' })
-    session.Membership.create({ id: '1', community: '1' })
+    session.Group.create({ id: '1', slug: 'foo' })
+    session.Membership.create({ id: '1', group: '1' })
     const currentUser = session.Me.first()
     currentUser.set('memberships', ['1'])
     const path = '/'
     const wrapper = shallow(<MemoryRouter>
-      {RedirectToCommunity({ path, currentUser })}
+      {RedirectToGroup({ path, currentUser })}
     </MemoryRouter>)
     const actual = wrapper.find(Redirect).props().to
-    const expected = '/c/foo'
+    const expected = '/g/foo'
     expect(actual).toBe(expected)
   })
 })

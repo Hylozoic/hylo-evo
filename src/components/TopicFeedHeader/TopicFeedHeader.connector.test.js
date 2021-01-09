@@ -1,17 +1,17 @@
 import { mergeProps } from './TopicFeedHeader.connector'
 
 describe('mergeProps', () => {
-  it('should set up toggleCommunityTopicSubscribe with no arguments', () => {
+  it('should set up toggleGroupTopicSubscribe with no arguments', () => {
     const ownProps = {
       topic: { id: '1' },
-      community: { id: '10' },
-      communityTopic: { isSubscribed: true }
+      group: { id: '10' },
+      groupTopic: { isSubscribed: true }
     }
     const dispatchProps = {
-      toggleCommunityTopicSubscribe: jest.fn()
+      toggleGroupTopicSubscribe: jest.fn()
     }
     const mergedProps = mergeProps(null, dispatchProps, ownProps)
     mergedProps.toggleSubscribe()
-    expect(dispatchProps.toggleCommunityTopicSubscribe).toBeCalledWith({ isSubscribed: true })
+    expect(dispatchProps.toggleGroupTopicSubscribe).toBeCalledWith({ isSubscribed: true })
   })
 })

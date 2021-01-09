@@ -15,10 +15,18 @@ Object {
     "creator": Object {
       "id": 0,
       "name": "Ron",
+      "skills": undefined,
+      "skillsToLearn": undefined,
     },
     "id": 21,
     "post": Object {
+      "commenters": undefined,
+      "groups": undefined,
+      "followers": undefined,
       "id": "commentpost",
+      "members": undefined,
+      "postMemberships": undefined,
+      "topics": undefined,
     },
     "slug": undefined,
   },

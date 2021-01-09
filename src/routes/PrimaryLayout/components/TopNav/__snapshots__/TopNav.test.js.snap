@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected with no community 1`] = `
+exports[`renders as expected with no group 1`] = `
 <div
   data-stylename="topNavWrapper"
 >

@@ -8,22 +8,18 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ subject, slug, sortBy, offset, search, filter, topic }) {
   var query, extractModel, getItems
 
-  if (subject === 'community') {
-    query = communityQuery
-    extractModel = 'Community'
-    getItems = get('payload.data.community.posts')
-  } else if (subject === 'network') {
-    query = networkQuery
-    extractModel = 'Network'
-    getItems = get('payload.data.network.posts')
-  } else if (subject === 'all-communities') {
-    query = allCommunitiesQuery
+  if (subject === 'group') {
+    query = groupQuery
+    extractModel = 'Group'
+    getItems = get('payload.data.group.posts')
+  } else if (subject === 'all-groups') {
+    query = allGroupsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
-  } else if (subject === 'public-communities') {
+  } else if (subject === 'public-groups') {
     query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
@@ -37,7 +33,6 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
       query,
       variables: {
         slug,
-        networkSlug,
         sortBy,
         offset,
         search,
@@ -55,7 +50,7 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
   }
 }
 
-const communityQuery = `query (
+const groupQuery = `query (
   $slug: String,
   $sortBy: String,
   $offset: Int,
@@ -65,7 +60,7 @@ const communityQuery = `query (
   $first: Int,
   $boundingBox: [PointInput]
 ) {
-  community(slug: $slug, updateLastViewed: true) {
+  group(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
@@ -82,23 +77,7 @@ const communityQuery = `query (
   }
 }`
 
-const networkQuery = `query (
-  $networkSlug: String,
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
-) {
-  network(slug: $networkSlug) {
-    id
-    ${postsQueryFragment}
-  }
-}`
-
-const allCommunitiesQuery = `query (
+const allGroupsQuery = `query (
   $sortBy: String,
   $offset: Int,
   $search: String,
@@ -118,7 +97,7 @@ const publicPostsQuery = `query (
   $topic: ID,
   $first: Int,
   $boundingBox: [PointInput],
-  $networkSlugs: [String]
+  $groupSlugs: [String]
 ) {
   ${publicPostsQueryFragment}
 }`

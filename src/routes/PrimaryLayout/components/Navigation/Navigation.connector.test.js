@@ -4,8 +4,8 @@ import orm from 'store/models'
 describe('mapStateToProps', () => {
   it('picks up changes to membership.newPostCount', () => {
     const s1 = orm.session(orm.getEmptyState())
-    s1.Community.create({ id: '1', slug: 'foo', name: 'Foo' })
-    s1.Membership.create({ id: '2', community: '1', newPostCount: 5 })
+    s1.Group.create({ id: '1', slug: 'foo', name: 'Foo' })
+    s1.Membership.create({ id: '2', group: '1', newPostCount: 5 })
 
     const props = {
       match: {
@@ -23,7 +23,7 @@ describe('mapStateToProps', () => {
 
     const s2 = orm.session(s1.state)
 
-    s2.Community.withId('1').memberships.first().update({ newPostCount: 0 })
+    s2.Group.withId('1').memberships.first().update({ newPostCount: 0 })
 
     const stateProps2 = mapStateToProps({ orm: s2.state, FeedList }, props)
     expect(stateProps2.badge).toEqual(0)
@@ -33,7 +33,7 @@ describe('mapStateToProps', () => {
 describe('mergeProps', () => {
   it('merges all the right props', () => {
     const dropPostResultsMaker = jest.fn()
-    const stateProps = { badge: 1, communityMembership: { id: 77, community: { id: 2 } } }
+    const stateProps = { badge: 1, groupMembership: { id: 77, group: { id: 2 } } }
     const ownProps = { foo: 1, bar: 2 }
     const resetNewPostCount = jest.fn()
     const dispatchProps = { resetNewPostCount, dropPostResultsMaker }

@@ -154,7 +154,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <Event
         event={
           Object {
-            "communities": Array [
+            "groups": Array [
               Object {
                 "slug": "psychedelics",
               },
@@ -186,7 +186,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <Event
         event={
           Object {
-            "communities": Array [
+            "groups": Array [
               Object {
                 "slug": "bb",
               },
@@ -342,7 +342,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         toggleChildren={
           <span>
             Overview
-             
+
             <Icon
               data-stylename="content-dropdown-icon"
               name="ArrowDown"

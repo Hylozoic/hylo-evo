@@ -43,12 +43,12 @@ export function clearMentions (searchText) {
 
 export function findTopics (topicsSearchTerm) {
   const collectTopics = results =>
-    results.communityTopics.items.map(get('topic'))
+    results.groupTopics.items.map(get('topic'))
   return {
     type: FIND_TOPICS,
     graphql: {
       query: `query ($topicsSearchTerm: String) {
-        communityTopics(autocomplete: $topicsSearchTerm, first: 8) {
+        groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
           items {
             topic {
               id
@@ -142,8 +142,8 @@ export const getTopicResults = ormCreateSelector(
   (session, searchTerm) => {
     if (!searchTerm) return []
 
-    // FIXME: if the user has been browsing multiple communities, this will
-    // include results that don't belong to the current community
+    // FIXME: if the user has been browsing multiple groups, this will
+    // include results that don't belong to the current group
     return session.Topic.all()
       .filter(topic => {
         return includes(

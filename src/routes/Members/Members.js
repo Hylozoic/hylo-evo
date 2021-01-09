@@ -53,7 +53,7 @@ export default class Members extends Component {
 
     return <div>
       <div styleName='header'>
-        {canModerate && <Link to={`/c/${slug}/settings/invite`}>
+        {canModerate && <Link to={`/g/${slug}/settings/invite`}>
           <Button styleName='invite'
             label='Invite People'
             color='green-white-green-border'
@@ -123,7 +123,6 @@ function sortKeysFactory (subject) {
     name: 'Name',
     location: 'Location'
   }
-  if (subject !== 'network') sortKeys['join'] = 'Newest'
   return sortKeys
 }
 

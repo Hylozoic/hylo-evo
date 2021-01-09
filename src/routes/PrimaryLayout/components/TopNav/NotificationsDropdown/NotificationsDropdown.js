@@ -199,7 +199,7 @@ export function NotificationHeader ({ notification }) {
 }
 
 export function NotificationBody ({ notification }) {
-  const { activity: { action, actor, post, comment, community, contributionAmount } } = notification
+  const { activity: { action, actor, post, comment, group, contributionAmount } } = notification
 
   const truncateForBody = text =>
     text && textLength(text) > 76 ? truncate(text, 76) : text
@@ -221,13 +221,13 @@ export function NotificationBody ({ notification }) {
       return <div styleName='body'>
         <span styleName='bold'>{actor.name} </span>
         asked to join
-        <span styleName='bold'> {community.name}</span>
+        <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_APPROVED_JOIN_REQUEST:
       return <div styleName='body'>
         <span styleName='bold'>{actor.name} </span>
         approved your request to join
-        <span styleName='bold'> {community.name}</span>
+        <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_ANNOUNCEMENT:
       text = truncateForBody(post.title)

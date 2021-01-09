@@ -15,10 +15,10 @@ const defaultTestProps = {
 it('matches the latest snapshot', () => {
   const props = {
     ...defaultTestProps,
-    community: {
+    group: {
       bannerUrl
     },
-    communityTopic: {
+    groupTopic: {
       isSubscribed: true
     }
   }
@@ -29,7 +29,7 @@ it('matches the latest snapshot', () => {
 it('displays the topic name', () => {
   const props = {
     ...defaultTestProps,
-    communityTopic: {
+    groupTopic: {
       isSubscribed: true
     }
   }
@@ -41,7 +41,7 @@ describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {
+      groupTopic: {
         isSubscribed: true
       }
     }
@@ -54,7 +54,7 @@ describe('meta', () => {
       ...defaultTestProps,
       followersTotal: 0,
       postsTotal: 0,
-      communityTopic: {
+      groupTopic: {
         isSubscribed: true
       }
     }
@@ -67,7 +67,7 @@ describe('meta', () => {
       ...defaultTestProps,
       followersTotal: 1,
       postsTotal: 1,
-      communityTopic: {
+      groupTopic: {
         isSubscribed: true
       }
     }
@@ -80,7 +80,7 @@ describe('meta', () => {
       ...defaultTestProps,
       followersTotal: 2,
       postsTotal: 10,
-      communityTopic: {
+      groupTopic: {
         isSubscribed: true
       }
     }
@@ -90,11 +90,11 @@ describe('meta', () => {
 })
 
 describe('subscribe', () => {
-  it('shows sub/unsub if community prop is present', () => {
+  it('shows sub/unsub if group prop is present', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {},
-      community: {
+      groupTopic: {},
+      group: {
         slug: 'monkeys',
         name: 'Monkey Gang',
         bannerUrl
@@ -104,10 +104,10 @@ describe('subscribe', () => {
     expect(wrapper.find('[data-stylename="subscribe"]')).toHaveLength(1)
   })
 
-  it('does not show sub/unsub if community prop is not present', () => {
+  it('does not show sub/unsub if group prop is not present', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {
+      groupTopic: {
         isSubscribed: false
       }
     }
@@ -118,8 +118,8 @@ describe('subscribe', () => {
   it('should say Subscribe when not subscribed', () => {
     const props = {
       ...defaultTestProps,
-      community: {},
-      communityTopic: { isSubscribed: false }
+      group: {},
+      groupTopic: { isSubscribed: false }
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="subscribe"]').render().text()).toEqual('Subscribe')
@@ -128,8 +128,8 @@ describe('subscribe', () => {
   it('should say Unsubscribe when subscribed', () => {
     const props = {
       ...defaultTestProps,
-      community: {},
-      communityTopic: { isSubscribed: true }
+      group: {},
+      groupTopic: { isSubscribed: true }
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="unsubscribe"]').render().text()).toEqual('Unsubscribe')
@@ -138,8 +138,8 @@ describe('subscribe', () => {
   it('calls toggleSubscribe when sub/unsub button is clicked', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {},
-      community: { bannerUrl },
+      groupTopic: {},
+      group: { bannerUrl },
       toggleSubscribe: jest.fn()
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)

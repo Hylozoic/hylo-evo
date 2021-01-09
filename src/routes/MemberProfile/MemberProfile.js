@@ -4,7 +4,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Moment from 'moment'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
-import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
+import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
@@ -71,15 +71,14 @@ export default class MemberProfile extends React.Component {
     const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
-    const firstName = getFirstName(person)
     const locationWithoutUsa = person.location && person.location.replace(', United States', '')
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const contentDropDownItems = [
-      { label: 'Overview', title: `${firstName}'s recent activity`, component: RecentActivity },
-      { label: 'Posts', title: `${firstName}'s posts`, component: MemberPosts },
-      { label: 'Comments', title: `${firstName}'s comments`, component: MemberComments },
-      { label: 'Upvotes', title: `${firstName}'s upvotes`, component: MemberVotes }
+      { label: 'Overview', title: `${person.name}'s recent activity`, component: RecentActivity },
+      { label: 'Posts', title: `${person.name}'s posts`, component: MemberPosts },
+      { label: 'Comments', title: `${person.name}'s comments`, component: MemberComments },
+      { label: 'Upvotes', title: `${person.name}'s upvotes`, component: MemberVotes }
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
@@ -113,7 +112,7 @@ export default class MemberProfile extends React.Component {
             <Icon name='Location' styleName='header-member-location-icon' />
             {locationWithoutUsa}
           </div>}
-          {/* TODO: Do we still want to show the "Community manager" role? */}
+          {/* TODO: Do we still want to show the "Group manager" role? */}
           {/* {role && <div styleName='location'>
             <Icon styleName='star' name='StarCircle' />
             {role}

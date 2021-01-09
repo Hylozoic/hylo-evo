@@ -12,7 +12,7 @@ export const RecentContactsQuery = gql`
           avatarUrl
           memberships (first: 1) {
             id
-            community {
+            group {
               id
               name
             }

@@ -64,7 +64,7 @@
   composes: tag from 'css/typography.scss';
 }
 
-.communityName {
+.groupName {
   composes: hdr-subheadline from 'css/typography.scss';
   font-size: 16px !important;
   position: relative;
@@ -133,7 +133,7 @@
 }
 
 @media screen and (max-width: 375px) {
-  .communityName, .label {
+  .groupName, .label {
     display: none;
   }
 }

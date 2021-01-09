@@ -3,8 +3,8 @@ import { get } from 'lodash/fp'
 import {
   commentUrl,
   postUrl,
-  communityUrl,
-  communitySettingsUrl
+  groupUrl,
+  groupSettingsUrl
 } from 'util/navigation'
 
 export const ACTION_NEW_COMMENT = 'newComment'
@@ -17,28 +17,28 @@ export const ACTION_ANNOUNCEMENT = 'announcement'
 export const ACTION_DONATION_TO = 'donation to'
 export const ACTION_DONATION_FROM = 'donation from'
 export const ACTION_EVENT_INVITATION = 'eventInvitation'
-export function urlForNotification ({ activity: { action, post, comment, community } }) {
-  const communitySlug = get('slug', community) ||
+export function urlForNotification ({ activity: { action, post, comment, group } }) {
+  const groupSlug = get('slug', group) ||
     // 2020-06-03 - LEJ
     // Some notifications (i.e. new comment and comment mention)
-    // didn't have a community available on the activity object,
+    // didn't have a group available on the activity object,
     // so pulling from the post object for those cases.
     // Once all legacy notifications are purged, or migrated,
     // this line can be removed.
-    get('0.slug', post.communities.toRefArray())
+    get('0.slug', post.groups.toRefArray())
 
   switch (action) {
     case ACTION_TAG:
     case ACTION_MENTION:
     case ACTION_ANNOUNCEMENT:
-      return postUrl(post.id, { communitySlug })
+      return postUrl(post.id, { groupSlug })
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
-      return commentUrl(post.id, comment.id, { communitySlug })
+      return commentUrl(post.id, comment.id, { groupSlug })
     case ACTION_JOIN_REQUEST:
-      return communitySettingsUrl(community.slug)
+      return groupSettingsUrl(group.slug)
     case ACTION_APPROVED_JOIN_REQUEST:
-      return communityUrl(communitySlug)
+      return groupUrl(groupSlug)
   }
 }
 

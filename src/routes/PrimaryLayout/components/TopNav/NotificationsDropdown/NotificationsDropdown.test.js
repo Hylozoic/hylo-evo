@@ -51,7 +51,7 @@ const joinRequestNotification = {
     actor: u2,
     action: ACTION_JOIN_REQUEST,
     meta: {},
-    community: { name: 'Foomunity' },
+    group: { name: 'Foomunity' },
     unread: true
   },
   createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))
@@ -63,7 +63,7 @@ const approvedJoinRequestNotification = {
     actor: u2,
     action: ACTION_APPROVED_JOIN_REQUEST,
     meta: {},
-    community: { name: 'Foomunity' },
+    group: { name: 'Foomunity' },
     unread: true
   },
   createdAt: new Date(Date.UTC(1995, 11, 17, 3, 23, 0))

@@ -225,9 +225,9 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -294,7 +294,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
     <ActionsBar
-      communities={
+      groups={
         Array [
           Object {
             "id": "1",
@@ -460,9 +460,9 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -529,7 +529,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
     <ActionsBar
-      communities={
+      groups={
         Array [
           Object {
             "id": "1",
@@ -559,7 +559,7 @@ Array [
   Array [
     Object {
       "acceptContributions": undefined,
-      "communities": Array [
+      "groups": Array [
         Object {
           "id": "1",
           "name": "test community 1",
@@ -725,9 +725,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -741,7 +741,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       togglePublic={[Function]}
     />
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -883,9 +883,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -941,7 +941,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -1083,9 +1083,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -1141,7 +1141,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -1283,9 +1283,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -1341,7 +1341,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -1484,9 +1484,9 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -1500,7 +1500,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -1517,7 +1517,7 @@ Array [
   Array [
     Object {
       "acceptContributions": undefined,
-      "communities": Array [
+      "groups": Array [
         Object {
           "id": "1",
           "name": "test community 1",
@@ -1681,9 +1681,9 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -1697,7 +1697,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={true}
       save={[Function]}
@@ -1840,9 +1840,9 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -1856,7 +1856,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={true}
       save={[Function]}
@@ -1999,9 +1999,9 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -2016,7 +2016,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     />
     <ActionsBar
       canModerate={true}
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -2111,10 +2111,10 @@ exports[`PostEditor renders contribution button 1`] = `
         Project Members
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
         <Connect(MemberSelector)
-          forCommunities={Array []}
+          forGroups={Array []}
           initialMembers={Array []}
           onChange={[Function]}
           readOnly={false}
@@ -2146,9 +2146,9 @@ exports[`PostEditor renders contribution button 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -2170,7 +2170,7 @@ exports[`PostEditor renders contribution button 1`] = `
         Accept Contributions
       </div>
       <div
-        data-stylename="footerSection-communities accept-contributions"
+        data-stylename="footerSection-groups accept-contributions"
       >
         <Switch
           data-stylename="accept-contributions-switch"
@@ -2184,7 +2184,7 @@ exports[`PostEditor renders contribution button 1`] = `
       </div>
     </div>
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -2327,9 +2327,9 @@ exports[`PostEditor renders with min props 1`] = `
         Post in
       </div>
       <div
-        data-stylename="footerSection-communities"
+        data-stylename="footerSection-groups"
       >
-        <CommunitiesSelector
+        <GroupsSelector
           onChange={[Function]}
           options={Array []}
           placeholder="Type community name..."
@@ -2343,7 +2343,7 @@ exports[`PostEditor renders with min props 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
-      communities={Array []}
+      groups={Array []}
       communityCount={0}
       loading={false}
       save={[Function]}
@@ -2360,7 +2360,7 @@ Array [
   Array [
     Object {
       "acceptContributions": undefined,
-      "communities": Array [
+      "groups": Array [
         Object {
           "id": "1",
           "name": "test community 1",

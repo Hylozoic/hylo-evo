@@ -18,7 +18,7 @@ import { FETCH_FOR_CURRENT_USER, FETCH_SAVED_SEARCHES } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
-export const getAllCommunitiesSettings = createSelector(
+export const getAllGroupsSettings = createSelector(
   getCurrentUserMemberships,
   memberships => ({
     sendEmail: every(m => m.settings && m.settings.sendEmail, memberships),
@@ -37,7 +37,7 @@ export const getMessageSettings = createSelector(
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const blockedUsers = getBlockedUsers(state, props)
-  const allCommunitiesSettings = getAllCommunitiesSettings(state, props)
+  const allGroupsSettings = getAllGroupsSettings(state, props)
   const memberships = getCurrentUserMemberships(state, props)
   const messageSettings = getMessageSettings(state, props)
   const searches = state.SavedSearches.searches
@@ -53,7 +53,7 @@ export function mapStateToProps (state, props) {
     blockedUsers,
     confirm,
     fetchPending,
-    allCommunitiesSettings,
+    allGroupsSettings,
     memberships,
     messageSettings,
     searches,
@@ -71,8 +71,8 @@ export function mapDispatchToProps (dispatch) {
     loginWithService: (params) => dispatch(loginWithService(params)),
     unlinkAccount: (params) => dispatch(unlinkAccount(params)),
     setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
-    updateMembershipSettings: (communityId, settings) => dispatch(updateMembershipSettings(communityId, settings)),
-    updateAllMemberships: (communityIds, settings) => dispatch(updateAllMemberships(communityIds, settings)),
+    updateMembershipSettings: (groupId, settings) => dispatch(updateMembershipSettings(groupId, settings)),
+    updateAllMemberships: (groupIds, settings) => dispatch(updateAllMemberships(groupIds, settings)),
     registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
     viewSavedSearch: (search) => {
       const { mapPath } = generateViewParams(search)

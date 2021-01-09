@@ -17,7 +17,7 @@ export default function Navigation (props) {
     rootPath,
     membersPath,
     projectsPath,
-    communityId,
+    groupId,
     eventsPath,
     mapPath,
     mapView,
@@ -84,7 +84,7 @@ export default function Navigation (props) {
         collapsed={collapsed}
         backUrl={rootPath}
         routeParams={routeParams}
-        communityId={communityId} />}
+        groupId={groupId} />}
     </div>
   </div>
 }

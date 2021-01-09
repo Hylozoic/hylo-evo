@@ -48,13 +48,13 @@ export function receiveThread (thread) {
   }
 }
 
-export function receivePost (data, communityId) {
+export function receivePost (data, groupId) {
   return {
     type: RECEIVE_POST,
     payload: {
       topics: data.tags,
       creatorId: data.creatorId,
-      communityId
+      groupId
     }
   }
 }
@@ -74,7 +74,7 @@ export function receiveNotification (notification) {
 }
 
 export function ormSessionReducer (session, { meta, type, payload }) {
-  const { MessageThread, Membership, CommunityTopic, Me } = session
+  const { MessageThread, Membership, GroupTopic, Me } = session
   let currentUser
 
   switch (type) {
@@ -100,13 +100,13 @@ export function ormSessionReducer (session, { meta, type, payload }) {
           })
 
         payload.topics.forEach(topicId => {
-          increment(CommunityTopic.safeGet({
-            topic: topicId, community: payload.communityId
+          increment(GroupTopic.safeGet({
+            topic: topicId, group: payload.groupId
           }))
         })
 
         increment(Membership.filter(m =>
-          !m.person && m.community === payload.communityId).first())
+          !m.person && m.group === payload.groupId).first())
       }
       break
 

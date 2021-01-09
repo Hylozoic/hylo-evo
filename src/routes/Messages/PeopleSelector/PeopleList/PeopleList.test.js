@@ -9,19 +9,19 @@ it('does something', () => {
       id: '1',
       name: 'Wombat',
       avatarUrl: 'https://flargle.com',
-      community: 'Wombats'
+      group: 'Wombats'
     },
     {
       id: '2',
       name: 'Aardvark',
       avatarUrl: 'https://argle.com',
-      community: 'Aardvarks'
+      group: 'Aardvarks'
     },
     {
       id: '3',
       name: 'Ocelot',
       avatarUrl: 'https://wargle.com',
-      community: 'Ocelots'
+      group: 'Ocelots'
     }
   ]
   const wrapper = shallow(<PeopleList people={people} />)

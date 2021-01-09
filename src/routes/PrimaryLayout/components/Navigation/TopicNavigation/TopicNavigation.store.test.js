@@ -1,7 +1,7 @@
 import orm from 'store/models'
-import { getSubscribedCommunityTopics, mergeCommunityTopics } from './TopicNavigation.store'
+import { getSubscribedGroupTopics, mergeGroupTopics } from './TopicNavigation.store'
 
-describe('getSubscribedCommunityTopics', () => {
+describe('getSubscribedGroupTopics', () => {
   const session = orm.session(orm.getEmptyState())
 
   ;[{
@@ -32,38 +32,38 @@ describe('getSubscribedCommunityTopics', () => {
       name: 'Barmunity',
       slug: 'bar'
     }
-  ].forEach(attrs => session.Community.create(attrs))
+  ].forEach(attrs => session.Group.create(attrs))
 
   ;[
-    { topic: '1', newPostCount: 5, community: '1', isSubscribed: true, visibility: 1 },
-    { topic: '2', community: '1' },
-    { topic: '2', newPostCount: 5, community: '2', isSubscribed: true, visibility: 1 },
-    { topic: '3', newPostCount: 7, community: '1', isSubscribed: true, visibility: 2 },
-    { topic: '4', newPostCount: 7, community: '1', isSubscribed: true, visibility: 0 }
-  ].map(attrs => session.CommunityTopic.create(attrs))
+    { topic: '1', newPostCount: 5, group: '1', isSubscribed: true, visibility: 1 },
+    { topic: '2', group: '1' },
+    { topic: '2', newPostCount: 5, group: '2', isSubscribed: true, visibility: 1 },
+    { topic: '3', newPostCount: 7, group: '1', isSubscribed: true, visibility: 2 },
+    { topic: '4', newPostCount: 7, group: '1', isSubscribed: true, visibility: 0 }
+  ].map(attrs => session.GroupTopic.create(attrs))
 
   const state = {
     orm: session.state
   }
 
   it('returns the expected value', () => {
-    const communityTopics = getSubscribedCommunityTopics(state, { slug: 'foo' })
-    expect(communityTopics).toMatchSnapshot()
+    const groupTopics = getSubscribedGroupTopics(state, { slug: 'foo' })
+    expect(groupTopics).toMatchSnapshot()
   })
 })
 
-describe('mergeCommunityTopics', () => {
+describe('mergeGroupTopics', () => {
   const data = [
-    { community: '1', topic: { name: 'foo' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
-    { community: '2', topic: { name: 'foo' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
-    { community: '3', topic: { name: 'foo' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
-    { community: '1', topic: { name: 'bar' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
-    { community: '2', topic: { name: 'bar' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
-    { community: '3', topic: { name: 'baz' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 }
+    { group: '1', topic: { name: 'foo' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
+    { group: '2', topic: { name: 'foo' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
+    { group: '3', topic: { name: 'foo' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
+    { group: '1', topic: { name: 'bar' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
+    { group: '2', topic: { name: 'bar' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 },
+    { group: '3', topic: { name: 'baz' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 }
   ]
 
   it('works as expected', () => {
-    expect(mergeCommunityTopics(data)).toEqual([
+    expect(mergeGroupTopics(data)).toEqual([
       { topic: { name: 'foo' }, newPostCount: 3, postsTotal: 6, followersTotal: 9 },
       { topic: { name: 'bar' }, newPostCount: 2, postsTotal: 4, followersTotal: 6 },
       { topic: { name: 'baz' }, newPostCount: 1, postsTotal: 2, followersTotal: 3 }
@@ -71,6 +71,6 @@ describe('mergeCommunityTopics', () => {
   })
 
   it('works on an empty list', () => {
-    expect(mergeCommunityTopics([])).toEqual([])
+    expect(mergeGroupTopics([])).toEqual([])
   })
 })

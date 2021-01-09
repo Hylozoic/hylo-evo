@@ -1,0 +1,15 @@
+fragment GroupTopicsFragment on GroupTopicQuerySet {
+  hasMore
+  total
+  items {
+    id
+    postsTotal
+    followersTotal
+    isSubscribed
+    newPostCount
+    topic {
+      id
+      name
+    }
+  }
+}

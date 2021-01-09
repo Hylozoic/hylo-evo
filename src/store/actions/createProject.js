@@ -9,18 +9,17 @@ export default function createProject (postParams) {
     type,
     title,
     details,
-    communities,
+    groups,
     linkPreview,
     imageUrls,
     fileUrls,
     topicNames,
     sendAnnouncement,
     memberIds = [],
-    networkSlug,
     acceptContributions
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
-  const communityIds = communities.map(c => c.id)
+  const groupIds = groups.map(c => c.id)
 
   return {
     type: CREATE_PROJECT,
@@ -29,7 +28,7 @@ export default function createProject (postParams) {
         $title: String,
         $details: String,
         $linkPreviewId: String,
-        $communityIds: [String],
+        $groupIds: [String],
         $imageUrls: [String],
         $fileUrls: [String],
         $announcement: Boolean
@@ -41,7 +40,7 @@ export default function createProject (postParams) {
           title: $title,
           details: $details,
           linkPreviewId: $linkPreviewId,
-          communityIds: $communityIds,
+          groupIds: $groupIds,
           imageUrls: $imageUrls,
           fileUrls: $fileUrls,
           announcement: $announcement
@@ -55,7 +54,7 @@ export default function createProject (postParams) {
         title,
         details,
         linkPreviewId,
-        communityIds,
+        groupIds,
         imageUrls,
         fileUrls,
         announcement: sendAnnouncement,
@@ -69,7 +68,6 @@ export default function createProject (postParams) {
         modelName: 'Post',
         getRoot: get('createProject')
       },
-      networkSlug,
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
         detailsLength: textLength(details),

@@ -1,7 +1,7 @@
-import { deleteCommunityTopic } from './AllTopics.store'
+import { deleteGroupTopic } from './AllTopics.store'
 
-describe('deleteCommunityTopic', () => {
+describe('deleteGroupTopic', () => {
   it('should match latest snapshot', () => {
-    expect(deleteCommunityTopic(135)).toMatchSnapshot()
+    expect(deleteGroupTopic(135)).toMatchSnapshot()
   })
 })

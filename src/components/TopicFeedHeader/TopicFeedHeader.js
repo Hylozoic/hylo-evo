@@ -5,7 +5,7 @@ import Icon from 'components/Icon'
 import Button from 'components/Button'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
 import { inflectedTotal, bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER } from 'store/models/Community'
+import { DEFAULT_BANNER } from 'store/models/Group'
 
 import './TopicFeedHeader.scss'
 
@@ -15,19 +15,19 @@ export default function TopicFeedHeader ({
   topic,
   postsTotal,
   followersTotal,
-  community,
-  communityTopic,
+  group,
+  groupTopic,
   toggleSubscribe,
   currentUser,
   newPost,
   type
 }) {
-  const bannerUrl = get('bannerUrl', community)
+  const bannerUrl = get('bannerUrl', group)
   let buttonText, iconStyle, buttonStyle
-  if (community) {
-    buttonText = communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
-    iconStyle = communityTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
-    buttonStyle = communityTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
+  if (group) {
+    buttonText = groupTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'
+    iconStyle = groupTopic.isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
+    buttonStyle = groupTopic.isSubscribed ? 'unsubscribe' : 'subscribe'
   }
   postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
@@ -42,7 +42,7 @@ export default function TopicFeedHeader ({
         <Icon name='Post' styleName='post-icon' />
         {inflectedTotal('post', postsTotal)}
       </div>
-      {community && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
+      {group && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
       <PostPrompt
@@ -63,7 +63,7 @@ TopicFeedHeader.propTypes = {
     id: string,
     name: string
   }).isRequired,
-  community: shape({
+  group: shape({
     id: string,
     name: string,
     slug: string

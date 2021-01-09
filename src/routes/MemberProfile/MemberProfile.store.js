@@ -9,22 +9,22 @@ export const FETCH_MEMBER_VOTES = 'FETCH_MEMBER_VOTES'
 export function getMemberships (person) {
   return person.memberships.toModelArray().map(membership => ({
     ...membership.ref,
-    community: membership.community.ref
+    group: membership.group.ref
   }))
 }
 
-export function getRoleForCommunity (person, communitySlug) {
+export function getRoleForGroup (person, groupSlug) {
   const memberships = getMemberships(person)
 
-  return memberships.find(m => m.community.slug === communitySlug && m.hasModeratorRole)
-    ? 'Community Manager'
+  return memberships.find(m => m.group.slug === groupSlug && m.hasModeratorRole)
+    ? 'Group Moderator'
     : null
 }
 
-export function presentPerson (person, selectedCommunitySlug) {
+export function presentPerson (person, selectedGroupSlug) {
   return {
     ...person.ref,
-    role: getRoleForCommunity(person, selectedCommunitySlug),
+    role: getRoleForGroup(person, selectedGroupSlug),
     skills: person.skills && person.skills.toRefArray(),
     memberships: getMemberships(person)
   }

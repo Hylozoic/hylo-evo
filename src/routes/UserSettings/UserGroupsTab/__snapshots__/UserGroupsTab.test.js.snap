@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupControl renders correctly 1`] = `
+<div
+  data-stylename="group-control"
+>
+  <div
+    data-stylename="row"
+  >
+    <Link
+      replace={false}
+      to="/all"
+    >
+      <RoundImage
+        data-stylename="avatar"
+        medium={true}
+        url="https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png"
+      />
+    </Link>
+    <Link
+      data-stylename="name"
+      replace={false}
+      to="/all"
+    >
+      Foomunity
+    </Link>
+    <span
+      data-stylename="leave-button"
+      onClick={[Function]}
+    >
+      Leave
+    </span>
+  </div>
+</div>
+`;
+
+exports[`UserGroupsTab renders a list of GroupControls 1`] = `
+<div>
+  <GroupControl
+    key="1"
+    membership={
+      Object {
+        "id": 1,
+      }
+    }
+  />
+  <GroupControl
+    key="2"
+    membership={
+      Object {
+        "id": 2,
+      }
+    }
+  />
+  <GroupControl
+    key="3"
+    membership={
+      Object {
+        "id": 3,
+      }
+    }
+  />
+  <GroupControl
+    key="4"
+    membership={
+      Object {
+        "id": 4,
+      }
+    }
+  />
+</div>
+`;

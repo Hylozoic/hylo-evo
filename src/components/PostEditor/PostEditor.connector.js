@@ -11,7 +11,7 @@ import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import {
   CREATE_POST,
   CREATE_PROJECT,
@@ -39,10 +39,10 @@ import {
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
-  const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const communityOptions = props.communityOptions ||
-    (currentUser && currentUser.memberships.toModelArray().map((m) => m.community))
-  const myModeratedCommunities = (currentUser && communityOptions.filter(c => currentUser.canModerate(c)))
+  const currentGroup = getGroupForCurrentRoute(state, props)
+  const groupOptions = props.groupOptions ||
+    (currentUser && currentUser.memberships.toModelArray().map((m) => m.group))
+  const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c)))
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
@@ -58,21 +58,20 @@ export function mapStateToProps (state, props) {
   const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending
   const showFiles = !isEmpty(fileAttachments) || uploadFileAttachmentPending
-  const communitySlug = getRouteParam('slug', null, props)
-  const networkSlug = getRouteParam('networkSlug', null, props)
+  const groupSlug = getRouteParam('slug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
   const postTypeContext = getPostTypeContext(null, props) || getQuerystringParam('t', null, props)
   const isProject = postTypeContext === 'project' || get('type', post) === 'project'
   const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
-  const canModerate = currentUser && currentUser.canModerate(currentCommunity)
-  const defaultTopics = getDefaultTopics(state, { communitySlug: communitySlug, sortBy: 'name' })
+  const canModerate = currentUser && currentUser.canModerate(currentGroup)
+  const defaultTopics = getDefaultTopics(state, { groupSlug: groupSlug, sortBy: 'name' })
 
   return {
     currentUser,
-    currentCommunity,
-    communityOptions,
+    currentGroup,
+    groupOptions,
     defaultTopics,
     postTypeContext,
     isProject,
@@ -91,11 +90,10 @@ export function mapStateToProps (state, props) {
     fetchLinkPreviewPending,
     topic,
     topicName,
-    communitySlug,
-    networkSlug,
+    groupSlug,
     announcementSelected,
     canModerate,
-    myModeratedCommunities,
+    myModeratedGroups,
     uploadFileAttachmentPending,
     uploadImageAttachmentPending
   }
@@ -120,13 +118,13 @@ export const mapDispatchToProps = (dispatch) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    fetchLinkPreviewPending, topicName, communitySlug, networkSlug, postTypeContext
+    fetchLinkPreviewPending, topicName, groupSlug, postTypeContext
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, { communitySlug, networkSlug, postTypeContext, topicName })
+    const url = postUrl(id, { groupSlug, postTypeContext, topicName })
 
     return goToUrl(url)
   }
@@ -134,10 +132,10 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)
   const createPost = postParams =>
-    dispatchProps.createPost({ networkSlug, ...postParams })
+    dispatchProps.createPost({ ...postParams })
   const createProject = projectParams =>
-    dispatchProps.createProject({ networkSlug, ...projectParams })
-  const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ networkSlug, communitySlug })
+    dispatchProps.createProject({ ...projectParams })
+  const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ groupSlug })
 
   return {
     ...stateProps,

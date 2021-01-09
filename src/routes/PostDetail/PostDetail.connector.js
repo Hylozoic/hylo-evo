@@ -7,7 +7,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getMe from 'store/selectors/getMe'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
@@ -20,8 +20,8 @@ export function mapStateToProps (state, props) {
   const id = getRouteParam('postId', state, props)
   const routeParams = props.match.params
   // everything else
-  const currentCommunity = getCommunityForCurrentRoute(state, props)
-  const post = presentPost(getPost(state, props), get('id', currentCommunity))
+  const currentGroup = getGroupForCurrentRoute(state, props)
+  const post = presentPost(getPost(state, props), get('id', currentGroup))
   const currentUser = getMe(state)
   const isProjectMember = find(({ id }) => id === get('id', currentUser), get('members', post))
 

@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapStateToProps returns the right keys, adding All Communities link 1`] = `
+exports[`mapStateToProps returns the right keys, adding All Groups link 1`] = `
 Object {
   "canModerate": true,
-  "communities": Array [
+  "groups": Array [
     Object {
       "id": "99",
       "network": null,
@@ -32,9 +32,9 @@ Object {
 }
 `;
 
-exports[`partitionCommunities separates independent communities from networked communities 1`] = `
+exports[`partitionGroups separates independent groups from networked groups 1`] = `
 Object {
-  "communities": Array [
+  "groups": Array [
     Object {
       "id": "2",
       "name": "two",
@@ -44,12 +44,12 @@ Object {
   ],
   "networks": Array [
     Object {
-      "communities": Array [
+      "groups": Array [
         Object {
           "id": "1",
           "name": "one",
           "network": Object {
-            "communities": Array [
+            "groups": Array [
               Object {
                 "id": "100",
                 "name": "nonMemberCommunity",
@@ -64,7 +64,7 @@ Object {
       ],
       "id": "1111",
       "name": "networkOne",
-      "nonMemberCommunities": Array [
+      "nonMemberGroups": Array [
         Object {
           "id": "100",
           "name": "nonMemberCommunity",

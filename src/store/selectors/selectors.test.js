@@ -1,6 +1,6 @@
 import orm from '../models'
 import getMe from './getMe'
-import getCommunityTopicForCurrentRoute from './getCommunityTopicForCurrentRoute'
+import getGroupTopicForCurrentRoute from './getGroupTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
 import getMemberships from './getMemberships'
 import getCanModerate from './getCanModerate'
@@ -23,29 +23,29 @@ describe('getMe', () => {
 describe('getMemberships', () => {
   it('returns expected values', () => {
     const session = orm.session(orm.getEmptyState())
-    const community1 = session.Community.create({ id: 'c1' })
-    const community2 = session.Community.create({ id: 'c2' })
-    const membership = session.Membership.create({ id: 'm1', community: community1.id })
-    session.Membership.create({ id: 'm2', community: community2.id })
+    const group1 = session.Group.create({ id: 'c1' })
+    const group2 = session.Group.create({ id: 'c2' })
+    const membership = session.Membership.create({ id: 'm1', group: group1.id })
+    session.Membership.create({ id: 'm2', group: group2.id })
     const me = session.Me.create({})
     me.updateAppending({ memberships: [membership.id] })
     expect(getMemberships({ orm: session.state }, {}).length).toEqual(1)
   })
 })
 
-describe('getCommunityTopicForCurrentRoute', () => {
-  it('returns CommunityTopic', () => {
+describe('getGroupTopicForCurrentRoute', () => {
+  it('returns GroupTopic', () => {
     const session = orm.session(orm.getEmptyState())
-    session.Community.create({ id: '1', slug: 'goteam', postCount: 10 })
+    session.Group.create({ id: '1', slug: 'goteam', postCount: 10 })
     session.Topic.create({
       id: '2',
       name: 'petitions',
       postsTotal: '100',
       followersTotal: '200'
     })
-    session.CommunityTopic.create({
+    session.GroupTopic.create({
       id: '3',
-      community: '1',
+      group: '1',
       topic: '2',
       postsTotal: '10',
       followersTotal: '20'
@@ -58,7 +58,7 @@ describe('getCommunityTopicForCurrentRoute', () => {
         }
       }
     }
-    const result = getCommunityTopicForCurrentRoute({ orm: session.state }, props)
+    const result = getGroupTopicForCurrentRoute({ orm: session.state }, props)
     expect(result.postsTotal).toEqual('10')
     expect(result.id).toEqual('3')
   })
@@ -73,7 +73,7 @@ describe('getCommunityTopicForCurrentRoute', () => {
         }
       }
     }
-    const result = getCommunityTopicForCurrentRoute({ orm: session.state }, props)
+    const result = getGroupTopicForCurrentRoute({ orm: session.state }, props)
     expect(result).toBeNull()
   })
 })
@@ -119,18 +119,18 @@ describe('getCanModerate', () => {
     })
   })
   it('returns true when user can moderate', () => {
-    const community = session.Community.create({ id: 1 })
-    const membership = session.Membership.create({ id: 1, community: community.id, hasModeratorRole: true })
+    const group = session.Group.create({ id: 1 })
+    const membership = session.Membership.create({ id: 1, group: group.id, hasModeratorRole: true })
     const me = session.Me.first()
     me.updateAppending({ memberships: [membership.id] })
     const state = { orm: session.state }
-    const props = { community }
+    const props = { group }
     expect(getCanModerate(state, props)).toEqual(true)
   })
   it('returns false when user cannot moderate', () => {
-    const community = session.Community.create({ id: 2 })
+    const group = session.Group.create({ id: 2 })
     const state = { orm: session.state }
-    const props = { community }
+    const props = { group }
     expect(getCanModerate(state, props)).toBeFalsy()
   })
 })

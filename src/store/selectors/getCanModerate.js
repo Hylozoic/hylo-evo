@@ -4,12 +4,12 @@ import { find, get } from 'lodash/fp'
 
 const getCanModerate = ormCreateSelector(
   orm,
-  (state, props) => props.community,
-  ({ Me }, community) => {
+  (state, props) => props.group,
+  ({ Me }, group) => {
     const me = Me.first()
     const memberships = me.memberships.toRefArray()
     const membership = find(m =>
-      m.community === get('id', community), memberships)
+      m.group === get('id', group), memberships)
     return get('hasModeratorRole', membership)
   }
 )

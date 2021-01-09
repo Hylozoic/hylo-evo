@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`findTopics queries communityTopics at the top level 1`] = `
+exports[`findTopics queries groupTopics at the top level 1`] = `
 Object {
   "graphql": Object {
     "query": "query ($topicsSearchTerm: String) {
-        communityTopics(autocomplete: $topicsSearchTerm, first: 8) {
+        groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
           items {
             topic {
               id

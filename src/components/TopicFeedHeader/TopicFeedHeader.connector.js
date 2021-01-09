@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
-import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 
 const mapDispatchToProps = {
-  toggleCommunityTopicSubscribe
+  toggleGroupTopicSubscribe
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return {
     ...dispatchProps,
     ...ownProps,
-    toggleSubscribe: () => dispatchProps.toggleCommunityTopicSubscribe(ownProps.communityTopic)
+    toggleSubscribe: () => dispatchProps.toggleGroupTopicSubscribe(ownProps.groupsTopic)
   }
 }
 

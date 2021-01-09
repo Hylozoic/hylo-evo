@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapDispatchToProps goToPerson is correct for "community" subject 1`] = `
+exports[`mapDispatchToProps goToPerson is correct for "group" subject 1`] = `
 Object {
   "payload": Object {
     "args": Array [

@@ -17,7 +17,7 @@ jest.mock('./MemberSelector.store', () => ({
 describe('mapStateToProps', () => {
   it('returns the expected keys', () => {
     const state = { [MODULE_NAME]: {} }
-    const props = { forCommunities: [] }
+    const props = { forGroups: [] }
     const stateProps = mapStateToProps(state, props)
     expect(stateProps).toMatchSnapshot()
   })

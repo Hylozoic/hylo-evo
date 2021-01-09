@@ -6,14 +6,14 @@ describe('mapStateToProps', () => {
     let state, myComment, otherComment
     beforeAll(() => {
       const session = orm.session(orm.getEmptyState())
-      const community = session.Community.create({ id: '99', slug: 'foo' })
-      session.Community.create({ id: '88', slug: 'bar' })
+      const group = session.Group.create({ id: '99', slug: 'foo' })
+      session.Group.create({ id: '88', slug: 'bar' })
 
       session.Me.create({
         id: '1',
         memberships: [session.Membership.create({
           id: '345',
-          community: community.id,
+          group: group.id,
           hasModeratorRole: true
         })]
       })
@@ -47,14 +47,14 @@ describe('mapStateToProps', () => {
     let state, myComment, otherComment
     beforeAll(() => {
       const session = orm.session(orm.getEmptyState())
-      const community = session.Community.create({ id: '99', slug: 'foo' })
-      session.Community.create({ id: '88', slug: 'bar' })
+      const group = session.Group.create({ id: '99', slug: 'foo' })
+      session.Group.create({ id: '88', slug: 'bar' })
 
       session.Me.create({
         id: '1',
         memberships: [session.Membership.create({
           id: '345',
-          community: community.id,
+          group: group.id,
           hasModeratorRole: true
         })]
       })

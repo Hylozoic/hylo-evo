@@ -21,7 +21,7 @@ export default function samplePost () {
     votesTotal: faker.random.number(),
     tags: ['activism', 'petition'],
     attachments: [{ url: 'animage', attachmentType: 'image' }],
-    communities: [{ id: '1', slug: 'great', name: 'Great Cause' }],
+    groups: [{ id: '1', slug: 'great', name: 'Great Cause' }],
     commenters: fakePerson(3),
     commentersTotal: faker.random.number(),
     creator: fakePerson(),
@@ -29,7 +29,7 @@ export default function samplePost () {
   }
 }
 
-export const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/community/1944/banner/1489687099172_ggbridge.jpg'
+export const SAMPLE_IMAGE_URL = 'https://d3ngex8q79bk55.cloudfront.net/group/1944/banner/1489687099172_ggbridge.jpg'
 
 export function sampleComment () {
   return {

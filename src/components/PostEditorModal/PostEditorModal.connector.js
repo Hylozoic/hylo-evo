@@ -11,7 +11,7 @@ export const mapDispatchToProps = (dispatch, props) => {
   const { postId, slug } = routeParams
   const context = props.match.url.includes('public') ? 'public' : ''
   const urlParams = {
-    communitySlug: slug,
+    groupSlug: slug,
     ...omit(['postId', 'action', 'slug'], routeParams),
     context
   }

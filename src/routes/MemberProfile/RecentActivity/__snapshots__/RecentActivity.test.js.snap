@@ -58,7 +58,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
         Object {
           "commenters": Array [],
           "commentersTotal": 0,
-          "communities": Array [
+          "groups": Array [
             Object {
               "id": "1836",
               "name": "Wombats",
@@ -94,7 +94,7 @@ exports[`RecentActivity renders the same as the last snapshot 1`] = `
             },
           ],
           "commentersTotal": 1,
-          "communities": Array [
+          "groups": Array [
             Object {
               "id": "1836",
               "name": "Wombats",

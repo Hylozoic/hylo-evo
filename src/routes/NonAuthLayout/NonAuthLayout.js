@@ -8,11 +8,11 @@ import Button from 'components/Button'
 import Login from './Login'
 import Signup from './Signup'
 import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
-import CommunityDetail from 'routes/CommunityDetail'
+import GroupDetail from 'routes/GroupDetail'
 import MapExplorer from 'routes/MapExplorer'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import PostDetail from 'routes/PostDetail'
-import { OPTIONAL_POST_MATCH, OPTIONAL_COMMUNITY_MATCH, POST_DETAIL_MATCH, COMMUNITY_DETAIL_MATCH } from 'util/navigation'
+import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './NonAuthLayout.scss'
 
@@ -77,7 +77,7 @@ export default class NonAuthLayout extends React.Component {
       <Switch>
         <Redirect from={`/public/${OPTIONAL_POST_MATCH}`} exact to='/public/map' key='streamToMap' />
         <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-        <Route path={`/:context(public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
+        <Route path={`/:context(public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
         <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
       </Switch>
 
@@ -104,5 +104,5 @@ export default class NonAuthLayout extends React.Component {
 const detailRoutes = [
   { path: `/:context(|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(|public)/:view(map)/${COMMUNITY_DETAIL_MATCH}`, component: CommunityDetail }
+  { path: `/:context(|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail }
 ]

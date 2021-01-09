@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InviteSettingsTab.store.ormSessionReducer matches the last snapshot for allowGroupInvites 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($groupId: ID, $data: Boolean) {
+        allowGroupInvites(groupId: $groupId, data: $data) {
+          id
+        }
+      }",
+    "variables": Object {
+      "groupId": "1",
+      "data": false,
+    },
+  },
+  "meta": Object {
+    "groupId": "1",
+    "optimistic": true,
+  },
+  "type": "InviteSettingsTab/ALLOW_GROUP_INVITES",
+}
+`;

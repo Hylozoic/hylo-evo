@@ -15,13 +15,13 @@ exports[`matches the snapshot for an orphan user 1`] = `
   currentUserHasMemberships={false}
 >
   <div
-    data-stylename="banner all-communities"
+    data-stylename="banner all-groups"
   >
     <div
       data-stylename="image"
       style={
         Object {
-          "backgroundImage": "url(/all-communities-banner.png)",
+          "backgroundImage": "url(/all-groups-banner.png)",
         }
       }
     >
@@ -52,12 +52,12 @@ exports[`matches the snapshot for an orphan user 1`] = `
             <span
               data-stylename="header-name"
             >
-              All My Communities
+              All My Groups
             </span>
             <div
               data-stylename="header-subtitle"
             >
-              18 Communities
+              18 Groups
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ exports[`postPromptString renders a post prompt string 1`] = `"Hi anybody, what 
 
 exports[`postPromptString renders a post prompt string 2`] = `"Hi anybody, what's on your mind?"`;
 
-exports[`renders for all communities 1`] = `
+exports[`renders for all groups 1`] = `
 <FeedBanner
   all={true}
   currentUser={
@@ -86,13 +86,13 @@ exports[`renders for all communities 1`] = `
   currentUserHasMemberships={true}
 >
   <div
-    data-stylename="banner all-communities"
+    data-stylename="banner all-groups"
   >
     <div
       data-stylename="image"
       style={
         Object {
-          "backgroundImage": "url(/all-communities-banner.png)",
+          "backgroundImage": "url(/all-groups-banner.png)",
         }
       }
     >
@@ -123,12 +123,12 @@ exports[`renders for all communities 1`] = `
             <span
               data-stylename="header-name"
             >
-              All My Communities
+              All My Groups
             </span>
             <div
               data-stylename="header-subtitle"
             >
-              18 Communities
+              18 Groups
             </div>
           </div>
         </div>
@@ -172,9 +172,9 @@ exports[`renders for all communities 1`] = `
 </FeedBanner>
 `;
 
-exports[`renders with a community 1`] = `
+exports[`renders with a group 1`] = `
 <FeedBanner
-  community={
+  group={
     Object {
       "avatarUrl": "avatar.png",
       "bannerUrl": "banner.png",

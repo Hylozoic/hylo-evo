@@ -73,7 +73,7 @@ export default class PostHeader extends PureComponent {
 
     if (!creator) return null
 
-    const creatorUrl = personUrl(creator.id, routeParams.slug, routeParams.networkSlug)
+    const creatorUrl = personUrl(creator.id, routeParams.slug)
     const { flaggingVisible } = this.state
     // Used to generate a link to this post from the backend.
     const flagPostData = {
@@ -86,7 +86,7 @@ export default class PostHeader extends PureComponent {
       { icon: 'Edit', label: 'Edit', onClick: editPost },
       { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
       { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
-      { icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true }
+      { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
     const canHaveTimes = type === 'offer' || type === 'request' || type === 'resource'
@@ -152,6 +152,6 @@ export function TopicsLine ({ topics, slug, newLine }) {
   return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
     {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>
-      <Link styleName='topic' to={topicUrl(t.name, { communitySlug: slug })} key={t.name}>#{t.name}</Link>)}
+      <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
   </div>
 }

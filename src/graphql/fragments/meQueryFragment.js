@@ -58,26 +58,25 @@ export default
       sendEmail
       sendPushNotifications
     }
-    community {
+    group {
       id
       name
       slug
       memberCount
       avatarUrl
-      network {
-        id
-        slug
-        name
-        avatarUrl
-        communities(first: 300) {
-          items {
-            id
-            name
-            slug
-            avatarUrl
-            memberCount
-            network {
+      parentGroups {
+        items {
+          id
+          slug
+          name
+          avatarUrl
+          childGroups(first: 300) {
+            items {
               id
+              name
+              slug
+              avatarUrl
+              memberCount
             }
           }
         }

@@ -1,10 +1,9 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-// import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { baseUrl, allCommunitiesUrl, isPublicPath } from 'util/navigation'
+import { baseUrl, allGroupsUrl, isPublicPath } from 'util/navigation'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
@@ -12,32 +11,29 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 export function mapStateToProps (state, props) {
   const routeParams = props.match.params
 
-  const community = getCommunityForCurrentRoute(state, props)
-  // const network = getNetworkForCurrentRoute(state, props) // TODO: do we need this?
-  const rootPath = baseUrl(routeParams, allCommunitiesUrl())
+  const group = getGroupForCurrentRoute(state, props)
+  const rootPath = baseUrl(routeParams, allGroupsUrl())
   const projectsPath = `${rootPath}/project`
   const eventsPath = `${rootPath}/event`
   const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
   const mapPath = `${rootPath}/map`
 
-  let communityMembership, badge
+  let groupMembership, badge
 
-  // TODO: what about all communities path? as default?
+  // TODO: what about all groups path? as default?
 
-  if (community) {
-    // we have to select the Community Membership from the ORM separately. we can't just
-    // call `community.Memberships.first()` because that will be cached so long as
-    // the community doesn't change, which will mask changes to the Community Membership's
+  if (group) {
+    // we have to select the Group Membership from the ORM separately. we can't just
+    // call `group.Memberships.first()` because that will be cached so long as
+    // the group doesn't change, which will mask changes to the Group Membership's
     // newPostCount.
-    communityMembership = getCommunityMembership(state, { communityId: community.id })
-    badge = get('newPostCount', communityMembership)
+    groupMembership = getGroupMembership(state, { groupId: group.id })
+    badge = get('newPostCount', groupMembership)
   }
-
-  // TODO: show badges for networks?
 
   return {
     routeParams,
-    communityId: get('id', community),
+    groupId: get('id', group),
     hideTopics: isPublicPath(props.location.pathname),
     rootPath,
     membersPath,
@@ -46,7 +42,7 @@ export function mapStateToProps (state, props) {
     mapPath,
     badge,
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
-    communityMembership
+    groupMembership
   }
 }
 
@@ -63,7 +59,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
     badge,
     feedListFetchPostsParam,
-    communityMembership
+    groupMembership
   } = stateProps
 
   return {
@@ -72,15 +68,15 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     clearFeedList: dispatchProps.dropPostResultsMaker(feedListFetchPostsParam),
     clearBadge: badge
-      ? () => dispatchProps.resetNewPostCount(communityMembership.community.id, 'Membership')
+      ? () => dispatchProps.resetNewPostCount(groupMembership.group.id, 'Membership')
       : () => {}
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
-const getCommunityMembership = ormCreateSelector(
+const getGroupMembership = ormCreateSelector(
   orm,
-  (state, { communityId }) => communityId,
-  (session, id) => session.Membership.safeGet({ community: id })
+  (state, { groupId }) => groupId,
+  (session, id) => session.Membership.filter({ group: id }).first()
 )

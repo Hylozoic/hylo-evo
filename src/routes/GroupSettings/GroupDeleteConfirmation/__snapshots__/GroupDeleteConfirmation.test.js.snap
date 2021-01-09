@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<withRouter(Connect(FullPageModal))
+  content={
+    <div
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      Your group has been deleted.
+    </div>
+  }
+/>
+`;
