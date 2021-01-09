@@ -94,7 +94,7 @@
       color: $color-ghost;
     }
   }
-  
+
   .body {
     display: block;
     text-align: center;
@@ -104,7 +104,7 @@
       margin: 10px 0;
 
       > input {
-        color: $color-ghost;
+        color: $color-cod-gray-dark;
         border: none;
         border-bottom: 1px dashed $color-athens-gray-dark;
         width: 100%;
@@ -157,7 +157,7 @@
       font-size: 12px;
     }
   }
-  
+
   .disabled > span {
     color: $color-alto;
     border-color: $color-alto;
