@@ -10,7 +10,7 @@ import Icon from 'components/Icon'
 import ScrollListener from 'components/ScrollListener'
 import TextInput from 'components/TextInput'
 import { inflectedTotal } from 'util/index'
-import { topicUrl } from 'util/navigation'
+import { topicUrl, baseUrl } from 'util/navigation'
 import './AllTopics.scss'
 
 const sortOptions = [
@@ -99,7 +99,7 @@ export default class AllTopics extends Component {
     } = this.props
     const { totalTopicsCached } = this.state
 
-    return <FullPageModal fullWidth>
+    return <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
       <div styleName='all-topics'>
         <div styleName='title'>{community ? community.name : network ? network.name : 'All'} Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>

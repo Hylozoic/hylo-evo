@@ -2,7 +2,8 @@ import {
   removePostFromUrl,
   postUrl,
   networkCommunitySettingsUrl,
-  gotoExternalUrl
+  gotoExternalUrl,
+  contextSwitchingUrl,
 } from './navigation'
 
 describe('postUrl', () => {
@@ -66,6 +67,39 @@ describe('removePostFromUrl', () => {
   it('should remove default Post route', () => {
     const result = removePostFromUrl('/c/somecommunity/p/1234')
     expect(result).toEqual('/c/somecommunity')
+  })
+})
+
+describe('contextSwitchingUrl', () => {
+  it('should switch group contexts, preserving view', () => {
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old' })).toEqual('/c/newcomm')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postId: 2 })).toEqual('/c/newcomm')
+
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', view: 'map' })).toEqual('/c/newcomm/map')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'project' })).toEqual('/c/newcomm/project')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'event' })).toEqual('/c/newcomm/event')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'project', postId: 2 })).toEqual('/c/newcomm/project')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'event', postId: 2 })).toEqual('/c/newcomm/event')
+
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'old' })).toEqual('/c/newcomm')
+    expect(contextSwitchingUrl({ networkSlug: 'newnet' }, { slug: 'old' })).toEqual('/n/newnet')
+
+    expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet' })).toEqual('/all')
+    expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', postTypeContext: 'project' })).toEqual('/all/project')
+    expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', view: 'topics' })).toEqual('/all/topics')
+    expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', view: 'map' })).toEqual('/all/map')
+
+    // :NOTE: this is handled by separate <Redirect> definitions
+    // expect(contextSwitchingUrl({ context: 'all' }, { slug: 'newnet', view: 'members' })).toEqual('/all')
+    // expect(contextSwitchingUrl({ context: 'public' }, { slug: 'newnet', view: 'members' })).toEqual('/public')
+    // expect(contextSwitchingUrl({ context: 'public' }, { networkSlug: 'newnet', view: 'topics' })).toEqual('/public')
+
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'newnet', topicName: 'stuff' })).toEqual('/c/newcomm/stuff')
+    expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', topicName: 'stuff' })).toEqual('/all/stuff')
+    expect(contextSwitchingUrl({ context: 'public' }, { slug: 'newnet', topicName: 'stuff' })).toEqual('/public/stuff')
+
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'newnet', personId: 2 })).toEqual('/c/newcomm/m/2')
+    expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', personId: 2 })).toEqual('/m/2')
   })
 })
 
