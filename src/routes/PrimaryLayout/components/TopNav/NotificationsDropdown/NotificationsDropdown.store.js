@@ -99,7 +99,6 @@ export function markAllActivitiesRead () {
 
 export const getNotifications = ormCreateSelector(
   orm,
-  state => state.orm,
   (session) => {
     return session.Notification
       .all()

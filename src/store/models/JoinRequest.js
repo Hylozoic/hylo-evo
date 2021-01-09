@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const JoinRequest = Model.createClass({
+class JoinRequest extends Model {
   toString () {
     return `JoinRequest: ${this.id}`
   }
-})
+}
 
 export default JoinRequest
 

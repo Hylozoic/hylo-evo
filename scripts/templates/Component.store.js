@@ -37,7 +37,6 @@ export const moduleSelector = (state) => state[MODULE_NAME]
 
 /* export const getSomethingFromOrm = ormCreateSelector(
   orm,
-  state => state.orm,
   session => {
     return session.Me.first()
   }

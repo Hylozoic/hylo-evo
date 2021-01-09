@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const Message = Model.createClass({
+class Message extends Model {
   toString () {
     return `Message: ${this.id}`
   }
-})
+}
 
 export default Message
 

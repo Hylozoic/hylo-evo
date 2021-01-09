@@ -49,25 +49,25 @@ export const CURRENT_USER_PROP_TYPES = {
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg'
 
-const Me = Model.createClass({
+class Me extends Model {
   toString () {
     return `Me: ${this.name}`
-  },
+  }
 
   firstName () {
     return firstName(this)
-  },
+  }
 
-  canModerate (community) {
-    return canModerate(this.memberships, community)
-  },
+  canModerate (group) {
+    return canModerate(this.memberships, group)
+  }
 
   hasFeature (key) {
     return hasFeature(key, isTester(this.id))
   }
-})
+}
 
-export const MySkillsToLearn = Model.createClass({})
+export class MySkillsToLearn extends Model {}
 MySkillsToLearn.modelName = 'MySkillsToLearn'
 MySkillsToLearn.fields = {
   me: fk('Me', 'mySkillsToLearn'),

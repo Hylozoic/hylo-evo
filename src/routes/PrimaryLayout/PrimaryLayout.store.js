@@ -63,7 +63,7 @@ export function ormSessionReducer (
 
   if (type === FETCH_FOR_CURRENT_USER) {
     const { me } = payload.data
-    if (!Person.hasId(me.id)) {
+    if (!Person.idExists(me.id)) {
       Person.create(pick(['id', 'name', 'avatarUrl'], me))
     }
     // Clear Network for selectors

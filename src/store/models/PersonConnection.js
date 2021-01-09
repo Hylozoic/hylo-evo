@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const PersonConnection = Model.createClass({
+class PersonConnection extends Model {
   toString () {
     return `PersonConnection: ${this.type}`
   }
-})
+}
 
 export default PersonConnection
 

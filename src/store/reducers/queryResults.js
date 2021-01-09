@@ -306,7 +306,6 @@ export const queryParamWhitelist = [
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {
   return ormCreateSelector(
     orm,
-    state => state.orm,
     resultsSelector,
     (session, results) => {
       if (isEmpty(results) || isEmpty(results.ids)) return []

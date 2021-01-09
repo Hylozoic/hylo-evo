@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const Attachment = Model.createClass({
+class Attachment extends Model {
   toString () {
     return `Attachment (${this.type}): ${this.name}`
   }
-})
+}
 
 export default Attachment
 

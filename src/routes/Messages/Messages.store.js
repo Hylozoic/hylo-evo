@@ -183,7 +183,6 @@ export function updateThreadReadTime (id) {
 
 export const getParticipantsFromQuerystring = ormCreateSelector(
   orm,
-  state => state.orm,
   (_, props) => props,
   ({ Person }, props) => {
     const participantsQuerystringParam = getQuerystringParam('participants', null, props)
@@ -205,13 +204,11 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
 
 export const getAllContacts = ormCreateSelector(
   orm,
-  state => state.orm,
   session => session.Person.all().toRefArray()
 )
 
 export const getRecentContacts = ormCreateSelector(
   orm,
-  state => state.orm,
   ({ PersonConnection }) => {
     const recentContacts = PersonConnection
       .all()
@@ -224,7 +221,6 @@ export const getRecentContacts = ormCreateSelector(
 
 export const getMatchingContacts = ormCreateSelector(
   orm,
-  state => state.orm,
   getContactsSearch,
   ({ Person }, contactsSearch) => {
     if (!contactsSearch) return null
@@ -252,15 +248,10 @@ export const getTextForCurrentMessageThread = createSelector(
 
 export const getCurrentMessageThread = ormCreateSelector(
   orm,
-  state => state.orm,
   getCurrentMessageThreadId,
   (session, messageThreadId) => {
-    var thread
-    try {
-      thread = session.MessageThread.get({ id: messageThreadId })
-    } catch (e) {
-      return null
-    }
+    const thread = session.MessageThread.withId(messageThreadId)
+    if (!thread) return null
     return {
       ...thread.ref,
       participants: thread.participants.toModelArray()
@@ -274,7 +265,6 @@ export const getThreadsHasMore = createSelector(getThreadResults, get('hasMore')
 
 export const getThreads = ormCreateSelector(
   orm,
-  state => state.orm,
   getThreadSearch,
   getThreadResults,
   (session, threadSearch, searchResults) => {
@@ -291,12 +281,8 @@ export const getMessages = createSelector(
   state => orm.session(state.orm),
   getCurrentMessageThreadId,
   (session, messageThreadId) => {
-    let messageThread
-    try {
-      messageThread = session.MessageThread.get({ id: messageThreadId })
-    } catch (e) {
-      return []
-    }
+    const messageThread = session.MessageThread.withId( messageThreadId )
+    if (!messageThread) return []
     return messageThread.messages.orderBy(c => Number(c.id)).toModelArray()
   }
 )

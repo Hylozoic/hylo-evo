@@ -166,7 +166,6 @@ export function presentSearchResult (searchResult, session) {
 
 export const getSearchResults = ormCreateSelector(
   orm,
-  state => state.orm,
   getSearchResultResults,
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []

@@ -81,7 +81,6 @@ const getTopicsForCurrentUserResults = makeGetQueryResults(FETCH_TOPICS)
 
 export const getTopics = ormCreateSelector(
   orm,
-  state => state.orm,
   getTopicsForCurrentUserResults,
   (_, props) => props,
   (session, results, props) => {

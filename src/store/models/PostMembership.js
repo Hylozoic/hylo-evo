@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const PostMembership = Model.createClass({
+class PostMembership extends Model {
   toString () {
     return `PostMembership: ${this.id}`
   }
-})
+}
 
 export default PostMembership
 
