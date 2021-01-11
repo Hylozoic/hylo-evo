@@ -3,6 +3,7 @@
 exports[`AllTopics matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))
   fullWidth={true}
+  goToOnClose="/c/goteam"
 >
   <div
     data-stylename="all-topics"

@@ -23,6 +23,7 @@ const networks = [
 describe('Drawer', () => {
   it('renders with a current community', () => {
     const wrapper = shallow(<Drawer
+      match={{ params: {} }}
       community={communities[0]}
       communities={communities}
       networks={[]} />)
@@ -30,12 +31,12 @@ describe('Drawer', () => {
   })
 
   it('renders without a current community', () => {
-    const wrapper = shallow(<Drawer communities={communities} networks={[]} />)
+    const wrapper = shallow(<Drawer match={{ params: {} }} communities={communities} networks={[]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders a community list if networks are present', () => {
-    const wrapper = shallow(<Drawer communities={communities} networks={networks} />)
+    const wrapper = shallow(<Drawer match={{ params: {} }} communities={communities} networks={networks} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

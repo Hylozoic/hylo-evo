@@ -1,3 +1,5 @@
+import orm from 'store/models'
+
 import { MODULE_NAME } from './JoinCommunity.store'
 import {
   mapStateToProps,
@@ -24,19 +26,29 @@ const defaultProps = {
 
 describe('JoinCommunity.connector', () => {
   describe('mapStateToProps', () => {
-    it('hasCheckedValidInvite false when there is not a validInvite key', () => {
-      const state = {
-        [MODULE_NAME]: {}
+    let state
+
+    beforeAll(() => {
+      const session = orm.session(orm.getEmptyState())
+
+      session.Me.create({
+        id: '1',
+      })
+
+      state = {
+        orm: session.state
       }
+    })
+
+    it('hasCheckedValidInvite false when there is not a validInvite key', () => {
+      state[MODULE_NAME] = {}
       const actual = mapStateToProps(state, defaultProps)
       expect(actual.hasCheckedValidInvite).toBeFalsy()
     })
 
     it('hasCheckedValidInvite false when there is a null validInvite key', () => {
-      const state = {
-        [MODULE_NAME]: {
-          valid: null
-        }
+      state[MODULE_NAME] = {
+        valid: null
       }
       const actual = mapStateToProps(state, defaultProps)
       expect(actual.hasCheckedValidInvite).toBeFalsy()
@@ -44,12 +56,10 @@ describe('JoinCommunity.connector', () => {
 
     it('gets the new newCommunitySlug from the newMembership', () => {
       const newCommunitySlug = 'newcommunity'
-      const state = {
-        [MODULE_NAME]: {
-          membership: {
-            community: {
-              slug: newCommunitySlug
-            }
+      state[MODULE_NAME] = {
+        membership: {
+          community: {
+            slug: newCommunitySlug
           }
         }
       }
@@ -58,10 +68,8 @@ describe('JoinCommunity.connector', () => {
     })
 
     it('isValidInvite gets set', () => {
-      const state = {
-        [MODULE_NAME]: {
-          valid: true
-        }
+      state[MODULE_NAME] = {
+        valid: true
       }
       const actual = mapStateToProps(state, defaultProps)
       expect(actual.isValidInvite).toEqual(true)

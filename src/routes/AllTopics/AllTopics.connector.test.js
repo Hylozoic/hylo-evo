@@ -1,3 +1,4 @@
+import orm from 'store/models'
 import { mapStateToProps, mergeProps } from './AllTopics.connector'
 import { MODULE_NAME } from './AllTopics.store'
 
@@ -5,7 +6,9 @@ jest.mock('util/debounced', () => (fun, params) => fun(params))
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
+    const session = orm.session(orm.getEmptyState())
     const state = {
+      orm: session.state,
       [MODULE_NAME]: {},
       pending: {},
       queryResults: {}

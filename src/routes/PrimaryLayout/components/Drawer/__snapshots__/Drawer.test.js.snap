@@ -7,7 +7,8 @@ exports[`CommunityRow renders with new posts 1`] = `
   <Link
     data-stylename="s.communityRowLink"
     replace={false}
-    to="/c/undefined"
+    title="Foomunity"
+    to="/c/foo"
   >
     <div
       data-stylename="s.communityRowAvatar"
@@ -19,7 +20,9 @@ exports[`CommunityRow renders with new posts 1`] = `
     />
     <span
       data-stylename="s.community-name s.is-member"
-    />
+    >
+      Foomunity
+    </span>
   </Link>
 </li>
 `;
@@ -31,7 +34,8 @@ exports[`CommunityRow renders with zero new posts 1`] = `
   <Link
     data-stylename="s.communityRowLink"
     replace={false}
-    to="/c/undefined"
+    title="Foomunity"
+    to="/c/foo"
   >
     <div
       data-stylename="s.communityRowAvatar"
@@ -43,7 +47,9 @@ exports[`CommunityRow renders with zero new posts 1`] = `
     />
     <span
       data-stylename="s.community-name s.is-member"
-    />
+    >
+      Foomunity
+    </span>
   </Link>
 </li>
 `;
@@ -107,6 +113,7 @@ exports[`Drawer renders a community list if networks are present 1`] = `
               "name": "Wombat Network",
             }
           }
+          routeParams={Object {}}
         />
       </div>
       <li
@@ -115,20 +122,30 @@ exports[`Drawer renders a community list if networks are present 1`] = `
         My Communities
       </li>
       <CommunityRow
-        avatarUrl="/foo.png"
-        id="11"
+        community={
+          Object {
+            "avatarUrl": "/foo.png",
+            "id": "11",
+            "name": "Foomunity",
+            "newPostCount": 0,
+            "slug": "foo",
+          }
+        }
         key="11"
-        name="Foomunity"
-        newPostCount={0}
-        slug="foo"
+        routeParams={Object {}}
       />
       <CommunityRow
-        avatarUrl="/bar.png"
-        id="22"
+        community={
+          Object {
+            "avatarUrl": "/bar.png",
+            "id": "22",
+            "name": "Barmunity",
+            "newPostCount": 7,
+            "slug": "bar",
+          }
+        }
         key="22"
-        name="Barmunity"
-        newPostCount={7}
-        slug="bar"
+        routeParams={Object {}}
       />
     </ul>
     <div
@@ -188,20 +205,30 @@ exports[`Drawer renders with a current community 1`] = `
         My Communities
       </li>
       <CommunityRow
-        avatarUrl="/foo.png"
-        id="11"
+        community={
+          Object {
+            "avatarUrl": "/foo.png",
+            "id": "11",
+            "name": "Foomunity",
+            "newPostCount": 0,
+            "slug": "foo",
+          }
+        }
         key="11"
-        name="Foomunity"
-        newPostCount={0}
-        slug="foo"
+        routeParams={Object {}}
       />
       <CommunityRow
-        avatarUrl="/bar.png"
-        id="22"
+        community={
+          Object {
+            "avatarUrl": "/bar.png",
+            "id": "22",
+            "name": "Barmunity",
+            "newPostCount": 7,
+            "slug": "bar",
+          }
+        }
         key="22"
-        name="Barmunity"
-        newPostCount={7}
-        slug="bar"
+        routeParams={Object {}}
       />
     </ul>
     <div
@@ -251,20 +278,30 @@ exports[`Drawer renders without a current community 1`] = `
         My Communities
       </li>
       <CommunityRow
-        avatarUrl="/foo.png"
-        id="11"
+        community={
+          Object {
+            "avatarUrl": "/foo.png",
+            "id": "11",
+            "name": "Foomunity",
+            "newPostCount": 0,
+            "slug": "foo",
+          }
+        }
         key="11"
-        name="Foomunity"
-        newPostCount={0}
-        slug="foo"
+        routeParams={Object {}}
       />
       <CommunityRow
-        avatarUrl="/bar.png"
-        id="22"
+        community={
+          Object {
+            "avatarUrl": "/bar.png",
+            "id": "22",
+            "name": "Barmunity",
+            "newPostCount": 7,
+            "slug": "bar",
+          }
+        }
         key="22"
-        name="Barmunity"
-        newPostCount={7}
-        slug="bar"
+        routeParams={Object {}}
       />
     </ul>
     <div
@@ -321,14 +358,22 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
     data-stylename="s.networkCommunitiesList"
   >
     <CommunityRow
-      id={1}
+      community={
+        Object {
+          "id": 1,
+          "newPostCount": 7,
+        }
+      }
       key="1"
-      newPostCount={7}
     />
     <CommunityRow
-      id={2}
+      community={
+        Object {
+          "id": 2,
+          "newPostCount": 6,
+        }
+      }
       key="2"
-      newPostCount={6}
     />
   </ul>
 </li>
@@ -375,14 +420,22 @@ exports[`NetworkRow matches last snapshot 1`] = `
     data-stylename="s.networkCommunitiesList"
   >
     <CommunityRow
-      id={1}
+      community={
+        Object {
+          "id": 1,
+          "newPostCount": 7,
+        }
+      }
       key="1"
-      newPostCount={7}
     />
     <CommunityRow
-      id={2}
+      community={
+        Object {
+          "id": 2,
+          "newPostCount": 6,
+        }
+      }
       key="2"
-      newPostCount={6}
     />
   </ul>
 </li>
@@ -429,14 +482,22 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
     data-stylename="s.networkCommunitiesList"
   >
     <CommunityRow
-      id={1}
+      community={
+        Object {
+          "id": 1,
+          "newPostCount": 7,
+        }
+      }
       key="1"
-      newPostCount={7}
     />
     <CommunityRow
-      id={2}
+      community={
+        Object {
+          "id": 2,
+          "newPostCount": 6,
+        }
+      }
       key="2"
-      newPostCount={6}
     />
     <li
       data-stylename="s.seeAllBtn"
@@ -489,14 +550,22 @@ exports[`NetworkRow see all button shows "see all" button when there are non mem
     data-stylename="s.networkCommunitiesList"
   >
     <CommunityRow
-      id={1}
+      community={
+        Object {
+          "id": 1,
+          "newPostCount": 7,
+        }
+      }
       key="1"
-      newPostCount={7}
     />
     <CommunityRow
-      id={2}
+      community={
+        Object {
+          "id": 2,
+          "newPostCount": 6,
+        }
+      }
       key="2"
-      newPostCount={6}
     />
     <li
       data-stylename="s.seeAllBtn"

@@ -1,13 +1,15 @@
+import orm from 'store/models'
 import { mapStateToProps, mapDispatchToProps, mergeProps } from './NetworkCommunitySettings.connector'
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
+    const session = orm.session(orm.getEmptyState())
     const props = {
       network: {
         slug: 'nslug'
       }
     }
-    expect(mapStateToProps({}, props)).toMatchSnapshot()
+    expect(mapStateToProps({ orm: session.state }, props)).toMatchSnapshot()
   })
 })
 

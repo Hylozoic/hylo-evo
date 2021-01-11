@@ -17,7 +17,7 @@ Dog.fields = {
 let orm
 
 beforeAll(() => {
-  orm = new ORM()
+  orm = new ORM({ stateSelector: state => state.orm })
   orm.register(Dog, Limb)
 })
 

@@ -1,3 +1,4 @@
+import orm from 'store/models'
 import { mapDispatchToProps, mapStateToProps } from './Review.connector'
 
 const dispatch = jest.fn(x => x)
@@ -5,6 +6,15 @@ const props = {}
 const dispatchProps = mapDispatchToProps(dispatch, props)
 
 describe('Domain', () => {
+  let state
+
+  beforeAll(() => {
+    const session = orm.session(orm.getEmptyState())
+    state = {
+      orm: session.state
+    }
+  })
+
   it('should call updateUserSettings from mapDispatchToProps', () => {
     const changes = {
       name: 'name',
@@ -38,33 +48,33 @@ describe('Domain', () => {
   it('should have communityName in mapStateToProps', () => {
     const name = 'name'
 
-    const state = {
+    state = Object.assign(state, {
       CreateCommunity: {
         name
       }
-    }
+    })
     expect(mapStateToProps(state, props).communityName).toBe(name)
   })
 
   it('should have communityDomain in mapStateToProps', () => {
     const domain = 'domain'
 
-    const state = {
+    state = Object.assign(state, {
       CreateCommunity: {
         domain
       }
-    }
+    })
     expect(mapStateToProps(state, props).communityDomain).toBe(domain)
   })
 
   it('should have communityPrivacy in mapStateToProps', () => {
     const privacy = 'privacy'
 
-    const state = {
+    state = Object.assign(state, {
       CreateCommunity: {
         privacy
       }
-    }
+    })
     expect(mapStateToProps(state, props).communityPrivacy).toBe(privacy)
   })
 })
