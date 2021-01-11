@@ -169,7 +169,7 @@ exports[`NonAuthLayout renders correctly 1`] = `
   <Switch>
     <Redirect
       exact={true}
-      from="/public/:postTypeContext(project|event|p)?/:postId(\\\\d+)?"
+      from="/public/:postTypeContext(project|event|p)?/:postId(\\\\d+)?/:action(new|edit)?"
       key="streamToMap"
       push={false}
       to="/public/map"
@@ -177,12 +177,12 @@ exports[`NonAuthLayout renders correctly 1`] = `
     <Route
       component={[Function]}
       exact={true}
-      path="/:context(public)/:view(map)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?"
+      path="/:context(public)/:view(map)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?/:action(new|edit)?"
     />
     <Route
       component={[Function]}
       exact={true}
-      path="/:context(public)/:view(map)/:communityContext(c)?/:communityId(\\\\d+)?"
+      path="/:context(public)/:view(map)/:communityContext(c)?/:communityId(\\\\d+)?/:action(new|edit)?"
     />
     <Route
       component={[Function]}
@@ -197,18 +197,18 @@ exports[`NonAuthLayout renders correctly 1`] = `
     <Switch>
       <Route
         component={[Function]}
-        key="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
-        path="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
+        key="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
+        path="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
       />
       <Route
         component={[Function]}
-        key="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
-        path="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)"
+        key="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
+        path="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
       />
       <Route
         component={[Function]}
-        key="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)"
-        path="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)"
+        key="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"
+        path="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"
       />
     </Switch>
   </div>
