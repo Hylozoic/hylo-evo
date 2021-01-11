@@ -128,6 +128,27 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <div
         data-stylename="profile-subhead"
       >
+        Hylo Communities
+      </div>
+      <Membership
+        index={0}
+        key="3"
+        membership={
+          Object {
+            "community": Object {
+              "id": "1836",
+              "name": "Wombats",
+              "slug": "wombats",
+            },
+            "hasModeratorRole": true,
+            "id": "3",
+            "role": 1,
+          }
+        }
+      />
+      <div
+        data-stylename="profile-subhead"
+      >
         Upcoming Events
       </div>
       <Event
@@ -154,6 +175,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
             "title": "Ceremony",
           }
         }
+        key="0"
         memberCap={3}
         routeParams={
           Object {
@@ -191,6 +213,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
             "title": "Chickadees United",
           }
         }
+        key="1"
         memberCap={3}
         routeParams={
           Object {

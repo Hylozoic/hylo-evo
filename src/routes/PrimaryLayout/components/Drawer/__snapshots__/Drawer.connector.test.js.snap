@@ -19,16 +19,16 @@ Object {
     Object {
       "avatarUrl": "/public.svg",
       "communities": Array [],
+      "context": "public",
       "id": "public-context",
       "name": "Public Communities & Posts",
-      "path": "/public",
     },
     Object {
       "avatarUrl": "/assets/white-merkaba.png",
       "communities": Array [],
+      "context": "all",
       "id": "all-communities",
       "name": "All My Communities",
-      "path": "/all",
     },
   ],
   "networks": Array [],

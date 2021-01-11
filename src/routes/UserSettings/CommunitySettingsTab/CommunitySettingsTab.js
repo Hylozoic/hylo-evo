@@ -1,51 +1,222 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import './CommunitySettingsTab.scss'
-import { Link } from 'react-router-dom'
-import { DEFAULT_AVATAR } from 'store/models/Community'
-import { communityUrl } from 'util/navigation'
+import {
+  CREATE_AFFILIATION,
+  DELETE_AFFILIATION,
+  LEAVE_COMMUNITY
+} from 'store/constants'
+import Affiliation from 'components/Affiliation'
+import Dropdown from 'components/Dropdown'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import RoundImage from 'components/RoundImage'
+import Membership from 'components/Membership'
 
-const { array, func } = PropTypes
+import get from 'lodash/get'
+
+const { array, func, object, string } = PropTypes
 
 export default class CommunitySettingsTab extends Component {
   static propTypes = {
+    action: string,
+    affiliations: object,
     memberships: array,
-    updateMembershipSettings: func
+    leaveCommunity: func,
+    createAffiliation: func,
+    deleteAffiliation: func
+  }
+
+  state = {
+    affiliations: this.props.affiliations,
+    memberships: this.props.memberships,
+    errorMessage: undefined,
+    successMessage: undefined,
+    showAddAffiliations: undefined
+  }
+
+  componentDidMount () {
+    this.props.fetchForCurrentUser()
   }
 
   render () {
-    const { memberships, leaveCommunity, updateMembershipSettings } = this.props
-    if (!memberships) return <Loading />
+    const { action } = this.props
+    const { affiliations, memberships, errorMessage, successMessage, showAddAffiliations } = this.state
+    const displayMessage = errorMessage || successMessage
+    if (!memberships || !affiliations) return <Loading />
 
-    return <div>
-      {memberships.map(m =>
-        <CommunityControl
-          membership={m}
-          leaveCommunity={leaveCommunity}
-          updateMembershipSettings={updateMembershipSettings}
-          key={m.id} />)}
-    </div>
+    return (
+      <div styleName='container'>
+        <h1 styleName='title'>Your affiliations with organizations</h1>
+
+        <div styleName='description'>This list automatically shows which communities on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
+
+        <h2 styleName='subhead'>Hylo Communities</h2>
+        { action === LEAVE_COMMUNITY && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
+        {memberships.map((m, index) =>
+          <Membership
+            membership={m}
+            archive={this.leaveCommunity}
+            key={m.id}
+            index={index}
+          />)}
+
+        <h2 styleName='subhead'>Other Affiliations</h2>
+        { action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
+        {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
+          <Affiliation
+            affiliation={a}
+            archive={this.deleteAffiliation}
+            key={a.id}
+            index={index}
+          />
+        )}
+
+        { action === CREATE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
+
+        {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
+          <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
+            <div styleName='plus'>+</div>
+            <div>Add new affiliation</div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  deleteAffiliation = (affiliationId) => {
+    const { deleteAffiliation } = this.props
+    const { affiliations } = this.state
+
+    deleteAffiliation(affiliationId)
+      .then(res => {
+        let errorMessage, successMessage
+        if (res.error) errorMessage = `Error deleting this affiliation.`
+        const deletedAffiliationId = get(res, 'payload.data.deleteAffiliation')
+        if (deletedAffiliationId) {
+          successMessage = `Your affiliation was deleted.`
+          affiliations.items = affiliations.items.filter((a) => a.id !== deletedAffiliationId)
+        }
+        return this.setState({ affiliations, errorMessage, successMessage })
+      })
+  }
+
+  leaveCommunity = (community) => {
+    const { leaveCommunity } = this.props
+    let { memberships } = this.state
+
+    leaveCommunity(community.id)
+      .then(res => {
+        let errorMessage, successMessage
+        if (res.error) errorMessage = `Error leaving ${community.name || 'this community'}.`
+        const deletedCommunityId = get(res, 'payload.data.leaveCommunity')
+        if (deletedCommunityId) {
+          successMessage = `You left ${community.name || 'this community'}.`
+          memberships = memberships.filter((m) => m.community.id !== deletedCommunityId)
+        }
+        return this.setState({ memberships, errorMessage, successMessage })
+      })
+  }
+
+  saveAffiliation = ({ role, preposition, orgName, url }) => {
+    const { affiliations } = this.state
+    this.props.createAffiliation({ role, preposition, orgName, url })
+      .then(res => {
+        let errorMessage, successMessage
+        if (res.error) errorMessage = get(res, 'payload.message', 'Error adding your affiliation.')
+        const affiliation = get(res, 'payload.data.createAffiliation')
+        if (affiliation) {
+          successMessage = `Your affiliation was added`
+          affiliations.items.push(affiliation)
+        }
+        return this.setState({ affiliations, errorMessage, successMessage, showAddAffiliations: !!errorMessage })
+      })
+  }
+
+  resetMessage = () => {
+    this.setState({ action: undefined, errorMessage: undefined, successMessage: undefined })
+  }
+
+  toggleAddAffiliations = () => {
+    this.setState({ showAddAffiliations: !this.state.showAddAffiliations })
   }
 }
 
-export function CommunityControl ({ membership, leaveCommunity }) {
-  const leave = () => {
-    if (window.confirm(`Are you sure you want to leave ${community.name}?`)) {
-      leaveCommunity(community.id)
-    }
-  }
+export function AddAffiliation ({ close, save }) {
+  const PREPOSITIONS = ['of', 'at', 'for']
 
-  const { community } = membership
+  const [role, setRole] = useState('')
+  const [preposition, setPreposition] = useState(PREPOSITIONS[0])
+  const [orgName, setOrgName] = useState('')
+  const [url, setUrl] = useState('')
 
-  return <div styleName='community-control'>
-    <div styleName='row'>
-      <Link to={communityUrl(community.slug)}>
-        <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} medium styleName='avatar' />
-      </Link>
-      <Link to={communityUrl(community.slug)} styleName='name'>{community.name}</Link>
-      <span onClick={leave} styleName='leave-button'>Leave</span>
+  const canSave = role.length && orgName.length
+
+  const URL_PROTOCOL = 'https://'
+  const CHAR_LIMIT = 30
+
+  const formatUrl = url => `${URL_PROTOCOL}${url}`
+
+  return (
+    <div styleName='affiliation-form'>
+      <div styleName='header'>
+        <h3>Add new affiliation</h3>
+        <div styleName='close' onClick={close}>x</div>
+      </div>
+
+      <div styleName='body'>
+
+        <div>
+          <input
+            type='text'
+            onChange={e => setRole(e.target.value.substring(0, CHAR_LIMIT))}
+            placeholder='Name of role'
+            value={role}
+          />
+          <div styleName='chars'>{role.length}/{CHAR_LIMIT}</div>
+        </div>
+
+        <Dropdown
+          toggleChildren={<span >
+            {PREPOSITIONS.find(p => p === preposition)}
+            <Icon name='ArrowDown' />
+          </span>}
+          items={PREPOSITIONS.map(p => ({
+            label: p,
+            onClick: () => setPreposition(p)
+          }))}
+          alignLeft
+          styleName='dropdown' />
+
+        <div>
+          <input
+            type='text'
+            onChange={e => setOrgName(e.target.value.substring(0, CHAR_LIMIT))}
+            placeholder='Name of organization'
+            value={orgName}
+          />
+          <div styleName='chars'>{orgName.length}/{CHAR_LIMIT}</div>
+        </div>
+
+        <div>
+          <input
+            type='text'
+            onChange={e => setUrl(e.target.value.substring(URL_PROTOCOL.length))}
+            placeholder='URL of organization'
+            value={formatUrl(url)}
+          />
+        </div>
+
+        <div styleName={`save ${canSave ? '' : 'disabled'}`}>
+          <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>Add Affiliation</span>
+        </div>
+
+      </div>
     </div>
-  </div>
+  )
+}
+
+export function Message ({ errorMessage, successMessage, reset }) {
+  return (
+    <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={reset}>{errorMessage || successMessage }</div>
+  )
 }

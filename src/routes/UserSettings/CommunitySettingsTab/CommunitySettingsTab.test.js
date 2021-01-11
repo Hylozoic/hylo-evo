@@ -1,35 +1,44 @@
-import CommunitySettingsTab, { CommunityControl } from './CommunitySettingsTab'
+import Affiliation from 'components/Affiliation'
+import CommunitySettingsTab from './CommunitySettingsTab'
+import Membership from 'components/Membership'
 import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('CommunitySettingsTab', () => {
-  it('renders a list of CommunityControls', () => {
-    const memberships = [
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
-      { id: 4 }
-    ]
-    const wrapper = shallow(<CommunitySettingsTab memberships={memberships} />)
-    expect(wrapper.find('CommunityControl').length).toEqual(4)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('CommunityControl', () => {
-  it('renders correctly', () => {
-    const membership = {
-      settings: {
-        sendEmail: false,
-        sendPushNotifications: true
+  it('renders a list of Memberships', () => {
+    const props = {
+      memberships: [
+        { id: "1", hasModeratorRole: true }, 
+        { id: "2", hasModeratorRole: true }, 
+        { id: "3", hasModeratorRole: true }, 
+        ],
+      affiliations: {
+        items: [
+          {
+            id: "1",
+            role: "Cheesemonger",
+            preposition: "at",
+            orgName: "La Fromagerie",
+            url: "https://www.lafromagerie.com",
+            isActive: true
+          },
+          {
+            id: "2",
+            role: "Organizer",
+            preposition: "of",
+            orgName: "Rights of Nature Santa Cruz",
+            url: "https://rightsofnaturesc.org",
+            isActive: true
+          }
+        ]
       },
-      community: {
-        name: 'Foomunity'
-      }
+      updateAllCommunities: () => {},
+      fetchForCurrentUser: jest.fn(() => Promise.resolve({ id: 'validUser' }))
     }
-    const wrapper = shallow(<CommunityControl membership={membership} />)
-    expect(wrapper.find('Link').length).toEqual(2)
-    expect(wrapper.find('Link').get(1).props.children).toEqual(membership.community.name)
+
+    const wrapper = shallow(<CommunitySettingsTab {...props } />)
+    expect(wrapper.find('Membership').length).toEqual(3)
+    expect(wrapper.find('Affiliation').length).toEqual(2)
     expect(wrapper).toMatchSnapshot()
   })
 })

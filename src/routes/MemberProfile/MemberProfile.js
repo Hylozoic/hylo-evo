@@ -12,6 +12,7 @@ import {
   messagesUrl,
   gotoExternalUrl
 } from 'util/navigation'
+import Affiliation from 'components/Affiliation'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -21,6 +22,7 @@ import Loading from 'components/Loading'
 import RecentActivity from './RecentActivity'
 import MemberPosts from './MemberPosts'
 import MemberComments from './MemberComments'
+import Membership from 'components/Membership'
 import MemberVotes from './MemberVotes'
 import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
@@ -63,7 +65,9 @@ export default class MemberProfile extends React.Component {
       showDetails,
       push
     } = this.props
+    const affiliations = person.affiliations && person.affiliations.items
     const events = person.eventsAttending && person.eventsAttending.items
+    const memberships = person.memberships
     const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
@@ -131,8 +135,14 @@ export default class MemberProfile extends React.Component {
           </div>
           <SkillsToLearnSection personId={personId} editable={false} />
 
+          { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Communities</div> }
+          { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />) }
+
+          { affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>Other Affiliations</div> }
+          { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />) }
+
           {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
-          {events && events.length > 0 && events.map((e) => <Event memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
+          {events && events.length > 0 && events.map((e, index) => <Event key={index} memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
 
           {projects && projects.length > 0 && <div styleName='profile-subhead'>Projects</div>}
           {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
