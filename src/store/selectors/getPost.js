@@ -6,11 +6,7 @@ const getPost = ormCreateSelector(
   orm,
   (state, props) => getRouteParam('postId', state, props),
   ({ Post }, id) => {
-    try {
-      return Post.get({ id })
-    } catch (e) {
-      return null
-    }
+    return Post.withId(id)
   }
 )
 

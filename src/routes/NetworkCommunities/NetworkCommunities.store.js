@@ -95,7 +95,6 @@ export const moduleSelector = (state) => state[MODULE_NAME]
 
 export const getNetwork = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, { slug }) => slug,
   (session, slug) => {
     return session.Network.safeGet({ slug })

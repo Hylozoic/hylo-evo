@@ -81,7 +81,6 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getCommunityMembership = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, { communityId }) => communityId,
   (session, id) => session.Membership.safeGet({ community: id })
 )

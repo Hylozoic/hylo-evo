@@ -24,7 +24,6 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 // see https://github.com/tommikaikkonen/redux-orm/issues/117
 export const getCurrentUserMemberships = ormCreateSelector(
   orm,
-  state => state.orm,
   (session) =>
     session.Membership.all().toModelArray()
 )

@@ -4,7 +4,6 @@ import { getSlugFromLocation } from './isCommunityRoute'
 
 const getCommunityForCurrentRoute = ormCreateSelector(
   orm,
-  state => state.orm,
   getSlugFromLocation,
   (session, slug) => session.Community.safeGet({ slug })
 )

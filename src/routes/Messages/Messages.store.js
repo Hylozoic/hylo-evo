@@ -281,7 +281,7 @@ export const getMessages = createSelector(
   state => orm.session(state.orm),
   getCurrentMessageThreadId,
   (session, messageThreadId) => {
-    const messageThread = session.MessageThread.withId( messageThreadId )
+    const messageThread = session.MessageThread.withId(messageThreadId)
     if (!messageThread) return []
     return messageThread.messages.orderBy(c => Number(c.id)).toModelArray()
   }

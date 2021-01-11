@@ -1,24 +1,24 @@
 import { attr, many, Model, fk } from 'redux-orm'
 
-export const CommunityModerator = Model.createClass({})
+export class CommunityModerator extends Model {}
 CommunityModerator.modelName = 'CommunityModerator'
 CommunityModerator.fields = {
   community: fk('Community', 'communitymoderators'),
   moderator: fk('Person', 'communitymoderators')
 }
 
-export const CommunityTopic = Model.createClass({})
+export class CommunityTopic extends Model {}
 CommunityTopic.modelName = 'CommunityTopic'
 CommunityTopic.fields = {
   community: fk('Community', 'communitytopics'),
   topic: fk('Topic', 'communitytopics')
 }
 
-const Community = Model.createClass({
+class Community extends Model {
   toString () {
     return `Community: ${this.name}`
   }
-})
+}
 
 export default Community
 

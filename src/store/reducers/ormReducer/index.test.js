@@ -255,8 +255,8 @@ describe('on CREATE_MESSAGE', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.Message.hasId('temp')).toBeFalsy()
-    expect(newSession.Message.hasId('2')).toBeTruthy()
+    expect(newSession.Message.idExists('temp')).toBeFalsy()
+    expect(newSession.Message.idExists('2')).toBeTruthy()
     const thread = newSession.MessageThread.withId('1')
     expect(Date.now() - new Date(thread.updatedAt).getTime()).toBeLessThan(1000)
   })
@@ -275,8 +275,8 @@ describe('on DELETE_POST_PENDING', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.Post.hasId('2')).toBeFalsy()
-    expect(newSession.Post.hasId('1')).toBeTruthy()
+    expect(newSession.Post.idExists('2')).toBeFalsy()
+    expect(newSession.Post.idExists('1')).toBeTruthy()
   })
 })
 
@@ -643,8 +643,8 @@ describe('on DELETE_COMMUNITY_TOPIC_PENDING', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.CommunityTopic.hasId('1')).toBeFalsy()
-    expect(newSession.CommunityTopic.hasId('2')).toBeTruthy()
+    expect(newSession.CommunityTopic.idExists('1')).toBeFalsy()
+    expect(newSession.CommunityTopic.idExists('2')).toBeTruthy()
   })
 })
 
