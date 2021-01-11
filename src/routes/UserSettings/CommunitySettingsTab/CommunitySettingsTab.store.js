@@ -1,10 +1,20 @@
-import { get } from 'lodash/fp'
 import {
   CREATE_AFFILIATION,
   DELETE_AFFILIATION,
-  FETCH_FOR_CURRENT_USER,
   LEAVE_COMMUNITY
 } from 'store/constants'
+
+export default function reducer (state = {}, action) {
+  const { type } = action
+  switch (type) {
+    case CREATE_AFFILIATION:
+    case DELETE_AFFILIATION:
+    case LEAVE_COMMUNITY:
+      return { ...state, action: type }
+    default:
+      return state
+  }
+}
 
 export function createAffiliation ({ role, preposition, orgName, url }) {
   return {
@@ -42,50 +52,6 @@ export function deleteAffiliation (id) {
     meta: {
       id,
       optimistic: true
-    }
-  }
-}
-
-export default function fetchAffiliationsAndMemberships () {
-  return {
-    type: FETCH_FOR_CURRENT_USER,
-    graphql: {
-      query: `query {
-        me {
-          id
-          affiliations {
-            items {
-              id
-              role
-              preposition
-              orgName
-              url
-              createdAt
-              updatedAt
-              isActive
-            }
-          }
-          memberships {
-            id
-            hasModeratorRole
-            community {
-              id
-              name
-              slug
-              avatarUrl
-            }
-          }
-        }
-      }`
-    },
-    meta: {
-      extractModel: [
-        {
-          getRoot: get('me'),
-          modelName: 'Me',
-          append: true
-        }
-      ]
     }
   }
 }

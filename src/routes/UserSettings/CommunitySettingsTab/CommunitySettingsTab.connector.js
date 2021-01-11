@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 import { connect } from 'react-redux'
 import { createAffiliation, deleteAffiliation, leaveCommunity } from './CommunitySettingsTab.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -14,10 +15,12 @@ export const getCurrentUserAffiliations = ormCreateSelector(
 )
 
 export function mapStateToProps (state, props) {
+  const action = get(state, 'CommunitySettingsTab.action')
   const affiliations = getCurrentUserAffiliations(state, props)
   const memberships = getCurrentUserMemberships(state, props)
 
   return {
+    action,
     affiliations,
     memberships
   }

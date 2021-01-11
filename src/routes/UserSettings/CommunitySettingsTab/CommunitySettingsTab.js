@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
 import './CommunitySettingsTab.scss'
+import {
+  CREATE_AFFILIATION,
+  DELETE_AFFILIATION,
+  LEAVE_COMMUNITY
+} from 'store/constants'
 import Affiliation from 'components/Affiliation'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -9,10 +14,11 @@ import Membership from 'components/Membership'
 
 import get from 'lodash/get'
 
-const { array, func, object } = PropTypes
+const { array, func, object, string } = PropTypes
 
 export default class CommunitySettingsTab extends Component {
   static propTypes = {
+    action: string,
     affiliations: object,
     memberships: array,
     leaveCommunity: func,
@@ -33,7 +39,9 @@ export default class CommunitySettingsTab extends Component {
   }
 
   render () {
+    const { action } = this.props
     const { affiliations, memberships, errorMessage, successMessage, showAddAffiliations } = this.state
+    const displayMessage = errorMessage || successMessage
     if (!memberships || !affiliations) return <Loading />
 
     return (
@@ -42,9 +50,8 @@ export default class CommunitySettingsTab extends Component {
 
         <div styleName='description'>This list automatically shows which communities on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
 
-        { errorMessage || successMessage ? <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={this.resetMessage}>{errorMessage || successMessage }</div> : <></>}
-
         <h2 styleName='subhead'>Hylo Communities</h2>
+        { action === LEAVE_COMMUNITY && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {memberships.map((m, index) =>
           <Membership
             membership={m}
@@ -54,6 +61,7 @@ export default class CommunitySettingsTab extends Component {
           />)}
 
         <h2 styleName='subhead'>Other Affiliations</h2>
+        { action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
           <Affiliation
             affiliation={a}
@@ -62,6 +70,8 @@ export default class CommunitySettingsTab extends Component {
             index={index}
           />
         )}
+
+        { action === CREATE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
 
         {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
           <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
@@ -123,7 +133,7 @@ export default class CommunitySettingsTab extends Component {
   }
 
   resetMessage = () => {
-    this.setState({ errorMessage: undefined, successMessage: undefined })
+    this.setState({ action: undefined, errorMessage: undefined, successMessage: undefined })
   }
 
   toggleAddAffiliations = () => {
@@ -197,10 +207,16 @@ export function AddAffiliation ({ close, save }) {
         </div>
 
         <div styleName={`save ${canSave ? '' : 'disabled'}`}>
-          <span onClick={canSave ? () => save({ role, preposition, orgName, url: formatUrl(url) }) : undefined}>Add Affiliation</span>
+          <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>Add Affiliation</span>
         </div>
 
       </div>
     </div>
+  )
+}
+
+export function Message ({ errorMessage, successMessage, reset }) {
+  return (
+    <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={reset}>{errorMessage || successMessage }</div>
   )
 }
