@@ -15,7 +15,8 @@ export default function RoundImage ({
   className,
   square,
   size,
-  onClick
+  onClick,
+  withBorder = true
 }) {
   let styleName = cx(
     'image', {
@@ -31,6 +32,9 @@ export default function RoundImage ({
   var style = bgImageStyle(url)
   if (size) {
     style = { ...style, width: size, height: size }
+  }
+  if (!withBorder) {
+    style = { ...style, borderWidth: 0 }
   }
   return <div
     style={style}

@@ -42,5 +42,11 @@ export default
       avatarUrl
     }
   }
+  widgets {
+    id
+    name
+    isVisible
+    order
+  }
   ${groupTopicsQueryFragment}
 }`

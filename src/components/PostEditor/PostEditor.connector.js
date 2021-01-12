@@ -6,7 +6,6 @@ import { postUrl } from 'util/navigation'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getPostTypeContext from 'store/selectors/getPostTypeContext'
-import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
@@ -61,7 +60,7 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('slug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-  const postTypeContext = getPostTypeContext(null, props) || getQuerystringParam('t', null, props)
+  const postTypeContext = getPostTypeContext(null, props)
   const isProject = postTypeContext === 'project' || get('type', post) === 'project'
   const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement

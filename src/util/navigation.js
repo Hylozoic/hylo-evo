@@ -8,7 +8,8 @@ import { host } from 'config'
 
 export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HYLO_ID_MATCH
-export const DEFAULT_POST_TYPE_CONTEXT = 'p'
+export const SLUG_MATCH = '.+'
+export const DEFAULT_POST_TYPE_CONTEXT = 'stream'
 export const POST_TYPE_CONTEXTS = ['project', 'event']
 export const VALID_POST_TYPE_CONTEXTS = [...POST_TYPE_CONTEXTS, DEFAULT_POST_TYPE_CONTEXT]
 export const VALID_POST_TYPE_CONTEXTS_MATCH = VALID_POST_TYPE_CONTEXTS.join('|')
@@ -248,12 +249,13 @@ export function removeGroupFromUrl (url) {
   // Remove default context and post id otherwise
   // remove current post id and stay in the current post
   // context.
-  if (url.match(`/${DEFAULT_GROUP_CONTEXT}/`)) {
+  if (url.match(`/${DEFAULT_GROUP_CONTEXT}/${SLUG_MATCH}/about`)) {
+    matchForReplaceRegex = `/about`
+  } else if (url.match(`/${DEFAULT_GROUP_CONTEXT}/`)) {
     matchForReplaceRegex = `/${DEFAULT_GROUP_CONTEXT}/${HYLO_ID_MATCH}`
   } else {
     matchForReplaceRegex = `/${HYLO_ID_MATCH}`
   }
-
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
@@ -292,10 +294,18 @@ export function isAllGroupsPath (path) {
   return (path.startsWith('/all'))
 }
 
+export function isGroupPath (path) {
+  return (path.startsWith('/g/'))
+}
+
 export function isTopicPath (path) {
   return (path.startsWith('/tag/'))
 }
 
 export function isMapViewPath (path) {
   return (path.includes('/map'))
+}
+
+export function isAboutPath (path) {
+  return (path.includes('/about'))
 }

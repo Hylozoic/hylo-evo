@@ -24,6 +24,7 @@ import Domain from 'routes/CreateGroup/Domain'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
 import MapExplorer from 'routes/MapExplorer'
+import LandingPage from 'routes/LandingPage'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
 // import MemberSidebar from 'routes/MemberSidebar'
@@ -46,6 +47,7 @@ import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
   REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH,
+  isAboutPath,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
@@ -133,6 +135,7 @@ export default class PrimaryLayout extends Component {
         {routesWithNavigation.map(({ path }) =>
           <Route path={path} key={path} component={props =>
             <Navigation {...props}
+              group={group}
               collapsed={collapsedState}
               styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })}
               mapView={isMapViewPath(location.pathname)}
@@ -156,7 +159,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(all|public)/:view(stream|event|project)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/:context(all|public)/:topicName' exact component={Feed} />
             {/* Group Routes */}
             <Route path='/:context(g)/:slug/:view(topics)' component={AllTopics} />
@@ -165,8 +168,10 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(g)/:slug/:view(groups)' component={Groups} />
             <Route path='/:context(g)/:slug/:view(settings)' component={GroupSettings} />
             <Route path={`/:context(g)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path={`/:context(g)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(g)/:slug/:view(stream|event|project)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(g)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(g)/:slug/:view(about)`} exact component={LandingPage} />
+            <Route path={`/:context(g)/:slug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
             {/* Member Routes */}
             <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             {/* Other Routes */}
@@ -186,8 +191,11 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
-            {detailRoutes.map(({ path, component }) =>
-              <Route path={path} component={component} key={path} />)}
+            {detailRoutes.map(({ path, component }) => {
+              return isAboutPath(location.pathname)
+                ? <Route path={path} render={props => <CommunityDetail {...props} communityId={community.id} />} key={path} />
+                : <Route path={path} component={component} key={path} />
+            })}
           </Switch>
         </div>
       </div>
@@ -212,12 +220,15 @@ const detailRoutes = [
   { path: `/:context(g)/:slug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(g)/:slug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(g)/:slug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(g)/:slug/:view(about)` },
   { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
 ]
 
 const postEditorRoutes = [
   { path: `/:context(all|public)/${REQUIRED_NEW_POST_MATCH}` },
   { path: `/:context(all|public)/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(project|event|stream)/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(project|event|stream)/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(all|public)/:topicName/${REQUIRED_NEW_POST_MATCH}` },
   { path: `/:context(all|public)/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(g)/:slug/${REQUIRED_NEW_POST_MATCH}` },
@@ -225,6 +236,8 @@ const postEditorRoutes = [
   { path: `/:context(g)/:slug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(g)/:slug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
   { path: `/:context(g)/:slug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(g)/:slug/:view(project|event|stream)/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(g)/:slug/:view(project|event|stream)/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(m)/:personId/${REQUIRED_EDIT_POST_MATCH}` }
 ]
 
@@ -250,10 +263,12 @@ const redirectRoutes = [
   { from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/g/:slug/join/:accessCode/:topicName' },
   { from: '/p/:postId', to: '/all/p/:postId' },
   { from: '/u/:personId', to: '/m/:personId' },
-  { from: '/c/:slug/about', to: '/g/:slug' },
   { from: '/c/:slug/people', to: '/g/:slug/:view(members)' },
   { from: '/c/:slug/invite', to: '/g/:slug/:view(settings)/invite' },
   { from: '/c/:slug/events', to: '/g/:slug' },
+  // redirects to stream for all and public root paths TODO: add homepage for all and public
+  { from: '/all', to: 'all/stream' },
+  { from: '/public', to: 'public/stream' },
   // redirects for context switching into global contexts
   { from: '/all/members', to: '/all' },
   { from: '/public/(members|topics)', to: '/public' }

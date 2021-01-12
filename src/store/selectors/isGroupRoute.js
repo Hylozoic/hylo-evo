@@ -10,9 +10,10 @@ const isGroupRoute = createSelector(
 export default isGroupRoute
 
 export function getSlugFromLocation (state, props) {
-  return getRouteParam('slug', state, props, false) ||
+  const result = getRouteParam('slug', state, props, false) ||
     tryLocation(props) ||
     props.slug
+  return result
 }
 
 // this is a workaround for fetching the slug from the current path when you are

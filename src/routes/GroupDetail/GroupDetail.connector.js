@@ -14,7 +14,7 @@ import {
 } from './GroupDetail.store'
 
 export function mapStateToProps (state, props) {
-  const id = getRouteParam('groupId', state, props)
+  const id = props.groupId || getRouteParam('groupId', state, props)
   const routeParams = props.match.params
   const group = presentGroup(getGroup(state, props), id)
   const currentUser = getMe(state)

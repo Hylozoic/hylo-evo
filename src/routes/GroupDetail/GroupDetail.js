@@ -75,6 +75,7 @@ export default class GroupDetail extends Component {
 
   render () {
     const {
+      canClose,
       group,
       currentUser,
       location,
@@ -91,7 +92,7 @@ export default class GroupDetail extends Component {
 
     return <div styleName='g.group'>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
-        {onClose &&
+        {onClose && canClose !== false &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
           <img src={group.avatarUrl} height='50px' width='50px' />
