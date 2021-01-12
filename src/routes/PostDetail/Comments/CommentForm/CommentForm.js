@@ -43,8 +43,8 @@ export default class CommentForm extends Component {
       attachments,
       clearAttachments
     } = this.props
-
-    if (!editorState.getCurrentContent().hasText() && isEmpty(attachments)) {
+    const contentState = editorState.getCurrentContent()
+    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(attachments)) {
       // Don't accept empty comments.
       return
     }

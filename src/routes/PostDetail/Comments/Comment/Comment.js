@@ -35,7 +35,8 @@ export default class Comment extends Component {
 
   saveComment = editorState => {
     const { comment } = this.props
-    if (!editorState.getCurrentContent().hasText() && isEmpty(comment.attachments)) {
+    const contentState = editorState.getCurrentContent()
+    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(comment.attachments)) {
       // Don't accept empty comments.
       return
     }
