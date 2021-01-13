@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
- - Doesn't allow posting of an empty comment.
+- Doesn't allow posting of an empty comment.
+- Not being able to turn on or off notifications for communities
 
 ## [2.2.3] - 2020-12-16
 ### Fixed
