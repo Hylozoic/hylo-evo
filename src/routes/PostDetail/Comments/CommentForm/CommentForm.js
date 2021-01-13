@@ -16,7 +16,6 @@ import './CommentForm.scss'
 
 export default class CommentForm extends Component {
   static propTypes = {
-    postId: PropTypes.string.isRequired,
     createComment: PropTypes.func.isRequired,
     currentUser: PropTypes.object,
     className: PropTypes.string,
