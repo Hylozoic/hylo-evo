@@ -5,9 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.2.4] - 2021-01-12
 ### Fixed
-- Doesn't allow posting of an empty comment.
+- Don't allow posting of an empty comment.
 - Not being able to turn on or off notifications for communities
+
+### Added
+- Add sections for a person's Hylo communities and other custom affiliations on their member profile
+- Update settings page Affiliations to allow listing custom org affiliations
 
 ## [2.2.3] - 2020-12-16
 ### Fixed
@@ -15,8 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add events section to member profile, showing upcoming events the person is attending
-- Add sections for Hylo communities and other affiliations on member profile
-- Update CommunitySettingsTab to list custom org affiliations and include a form to add new affiliations
 
 ## [2.2.2] - 2020-12-09
 ### Added
