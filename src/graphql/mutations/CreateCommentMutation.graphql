@@ -1,12 +1,14 @@
 mutation CreateCommentMutation (
   $postId: String,
-  $text: String
-  $attachments: [AttachmentInput]
+  $parentCommentId: String,
+  $text: String,
+  $attachments: [AttachmentInput],
 ) {
   createComment(data: {
     postId: $postId,
-    text: $text
-    attachments: $attachments
+    parentCommentId: $parentCommentId,
+    text: $text,
+    attachments: $attachments,
   }) {
     id
     text
@@ -21,6 +23,9 @@ mutation CreateCommentMutation (
       url
       position
       id
+    }
+    comment {
+      id # this is equivalent to parentCommentId
     }
     createdAt
   }

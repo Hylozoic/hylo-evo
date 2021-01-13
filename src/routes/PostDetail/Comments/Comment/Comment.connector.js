@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import createComment from 'store/actions/createComment'
 import updateComment from 'store/actions/updateComment'
 import deleteComment from 'store/actions/deleteComment'
 import getMe from 'store/selectors/getMe'
@@ -17,9 +19,19 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = {
-  deleteComment,
-  updateComment
+export const mapDispatchToProps = (dispatch, props) => {
+  const { postId, comment } = props
+  return {
+    ...bindActionCreators({
+      deleteComment,
+      updateComment
+    }, dispatch),
+    createComment: commentParams => dispatch(createComment({
+      postId,
+      parentCommentId: comment.id,
+      ...commentParams
+    }))
+  }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
