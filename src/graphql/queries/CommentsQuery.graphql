@@ -20,6 +20,9 @@ query CommentsQuery (
           position
           id
         }
+        comment {
+          id
+        }
       }
       total
       hasMore

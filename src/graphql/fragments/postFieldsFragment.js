@@ -37,6 +37,9 @@ const postFieldsFragment = withComments => `
         type
         url
       }
+      comment {
+        id
+      }
       createdAt
     }
     total
