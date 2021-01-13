@@ -82,8 +82,8 @@ export function mapDispatchToProps (dispatch) {
     loginWithService: (params) => dispatch(loginWithService(params)),
     unlinkAccount: (params) => dispatch(unlinkAccount(params)),
     setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
-    updateMembershipSettings: (params) => dispatch(updateMembershipSettings(params)),
-    updateAllMemberships: (params) => dispatch(updateAllMemberships(params)),
+    updateMembershipSettings: (communityId, settings) => dispatch(updateMembershipSettings(communityId, settings)),
+    updateAllMemberships: (communityIds, settings) => dispatch(updateAllMemberships(communityIds, settings)),
     registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
     viewSavedSearch: (search) => {
       const { mapPath } = generateViewParams(search)
