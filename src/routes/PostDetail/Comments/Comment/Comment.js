@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { filter, isFunction } from 'lodash/fp'
+import { filter, isEmpty, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
@@ -9,6 +9,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
+import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import './Comment.scss'
@@ -32,9 +33,16 @@ export default class Comment extends Component {
     this.setState({ editing: true })
   }
 
-  saveComment = text => {
+  saveComment = editorState => {
+    const { comment } = this.props
+    const contentState = editorState.getCurrentContent()
+    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(comment.attachments)) {
+      // Don't accept empty comments.
+      return
+    }
+
     this.setState({ editing: false })
-    this.props.updateComment(text)
+    this.props.updateComment(contentStateToHTML(editorState.getCurrentContent()))
   }
 
   render () {

@@ -1,10 +1,11 @@
 import cx from 'classnames'
-import { throttle } from 'lodash'
+import { throttle, isEmpty } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import AttachmentManager from 'components/AttachmentManager'
 import HyloEditor from 'components/HyloEditor'
+import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
@@ -29,19 +30,25 @@ export default class CommentForm extends Component {
 
   editor = React.createRef()
 
-  startTyping = throttle((editorState, stateChanged) => {
+  startTyping = throttle(STARTED_TYPING_INTERVAL, (editorState, stateChanged) => {
     if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
       this.props.sendIsTyping(true)
     }
-  }, STARTED_TYPING_INTERVAL)
+  })
 
-  save = text => {
+  save = editorState => {
     const {
       createComment,
       sendIsTyping,
       attachments,
       clearAttachments
     } = this.props
+    const contentState = editorState.getCurrentContent()
+    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(attachments)) {
+      // Don't accept empty comments.
+      return
+    }
+    const text = contentStateToHTML(editorState.getCurrentContent())
 
     this.startTyping.cancel()
     sendIsTyping(false)
