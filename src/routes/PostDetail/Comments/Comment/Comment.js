@@ -12,13 +12,16 @@ import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
+import CommentForm from '../CommentForm'
 import './Comment.scss'
 
-const { object } = PropTypes
+const { object, func, string } = PropTypes
 
 export default class Comment extends Component {
   static propTypes = {
-    comment: object
+    comment: object.isRequired,
+    postId: string.isRequired,
+    createComment: func.isRequired
   }
 
   static defaultProps = {
@@ -26,11 +29,16 @@ export default class Comment extends Component {
   }
 
   state = {
-    editing: false
+    editing: false,
+    replying: false
   }
 
   editComment = () => {
     this.setState({ editing: true })
+  }
+
+  toggleReplyComment = () => {
+    this.setState({ replying: !this.state.replying })
   }
 
   saveComment = text => {
@@ -39,8 +47,8 @@ export default class Comment extends Component {
   }
 
   render () {
-    const { comment, slug, isCreator, deleteComment, removeComment } = this.props
-    const { editing } = this.state
+    const { comment, slug, isCreator, createComment, deleteComment, removeComment } = this.props
+    const { editing, replying } = this.state
     const { id, creator, createdAt, text, attachments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
@@ -62,7 +70,7 @@ export default class Comment extends Component {
           {!editing && humanDate(createdAt)}
         </span>
         <div styleName='upperRight'>
-          <div styleName='commentAction' data-tip='Reply' data-for={`reply-tip-${id}`}>
+          <div styleName='commentAction' onClick={this.toggleReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
             <Icon name='Replies' />
           </div>
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
@@ -79,6 +87,7 @@ export default class Comment extends Component {
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
       </ClickCatcher>
+      {replying && <CommentForm createComment={createComment} />}
       <ReactTooltip
         id={`reply-tip-${id}`}
         effect='solid'
