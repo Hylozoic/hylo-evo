@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
 import { filter, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
@@ -40,7 +41,7 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, isCreator, deleteComment, removeComment } = this.props
     const { editing } = this.state
-    const { creator, createdAt, text, attachments } = comment
+    const { id, creator, createdAt, text, attachments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -56,11 +57,14 @@ export default class Comment extends Component {
       <div styleName='header'>
         <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
         <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
+        <span styleName='timestamp'>
+          {editing && 'Editing now'}
+          {!editing && humanDate(createdAt)}
+        </span>
         <div styleName='upperRight'>
-          <span styleName='timestamp'>
-            {editing && 'Editing now'}
-            {!editing && humanDate(createdAt)}
-          </span>
+          <div styleName='commentAction' data-tip='Reply' data-for={`reply-tip-${id}`}>
+            <Icon name='Replies' />
+          </div>
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
@@ -75,6 +79,18 @@ export default class Comment extends Component {
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
       </ClickCatcher>
+      <ReactTooltip
+        id={`reply-tip-${id}`}
+        effect='solid'
+        style='light'
+        border
+        // :TODO: de-duplicate these colour values
+        textColor='#2A4059'
+        borderColor='#40A1DD'
+        backgroundColor='white'
+        offset={{ 'top': -2 }}
+        delayShow={500}
+        styleName='actionsTooltip' />
     </div>
   }
 }

@@ -27,11 +27,46 @@ $comment-left-margin: 69px;
   margin-left: auto;
 }
 
+.commentAction {
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 0.6em;
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  padding: 3px 4px;
+
+  &:hover {
+    background: $color-picton-blue;
+    [class^="icon-"], [class*=" icon-"] {
+      color: $color-white;
+    }
+  }
+}
+
+.actionsTooltip {
+  font-size: 0.75em;
+  padding: 5px 12px;
+  border-radius: 24px;
+  font-weight: bold;
+  // @see Comment.js - styles are applied as props
+  // background: $color-white !important;
+  // color: $color-member !important;
+  // border: 1px solid $color-picton-blue !important;
+  // box-shadow: 0px 4px 15px 0px $color-black 15% !important;
+
+  /* :TODO: consider adding these adjustments as browser-specific styles for Gecko
+  &::after {
+    bottom: -5px !important;
+  }
+  &::before {
+    bottom: -7px !important;
+  }*/
+}
+
 .timestamp {
   composes: timestamp from 'css/typography.scss';
   margin-right: 10px;
-  position: relative;
-  top: -3px;
 }
 
 .dropdown {
