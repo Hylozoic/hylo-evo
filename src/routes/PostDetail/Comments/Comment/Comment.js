@@ -95,7 +95,9 @@ export default class Comment extends Component {
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
       </ClickCatcher>
-      {replying && <CommentForm createComment={createComment} />}
+      {replying && <div styleName='reply'>
+        <CommentForm createComment={createComment} placeholder={`Reply to ${creator.name}`} />
+      </div>}
       <ReactTooltip
         id={`reply-tip-${id}`}
         effect='solid'

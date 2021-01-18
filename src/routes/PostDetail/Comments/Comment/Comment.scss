@@ -107,6 +107,10 @@ $comment-left-margin: 69px;
   margin-left: $comment-left-margin
 }
 
+.reply {
+  margin-left: $comment-left-margin;
+}
+
 .editor {
   composes: bdy-lt-sm from 'css/typography.scss';
   margin-left: $comment-left-margin;
