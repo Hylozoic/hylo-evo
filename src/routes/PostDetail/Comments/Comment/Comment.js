@@ -56,7 +56,7 @@ export default class Comment extends Component {
   }
 
   render () {
-    const { comment, slug, isCreator, createComment, deleteComment, removeComment } = this.props
+    const { comment, slug, postId, isCreator, createComment, deleteComment, removeComment } = this.props
     const { editing, replying } = this.state
     const { id, creator, createdAt, text, attachments, childComments } = comment
     const profileUrl = personUrl(creator.id, slug)
