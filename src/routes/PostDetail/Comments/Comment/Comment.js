@@ -104,7 +104,7 @@ export default class Comment extends Component {
         {reverse(childComments.items).map(c => <BoundComment comment={c} key={c.id} slug={slug} postId={postId} />)}
       </div>}
       {replying && <div styleName='replybox'>
-        <CommentForm createComment={createComment} placeholder={`Reply to ${creator.name}`} />
+        <CommentForm createComment={createComment} placeholder={`Reply to ${creator.name}`} focusOnRender />
       </div>}
       <ReactTooltip
         id={`reply-tip-${id}`}

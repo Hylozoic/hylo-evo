@@ -23,7 +23,8 @@ export default class HyloEditor extends Component {
     findTopics: PropTypes.func.isRequired,
     clearTopics: PropTypes.func.isRequired,
     mentionResults: PropTypes.array,
-    topicResults: PropTypes.array
+    topicResults: PropTypes.array,
+    focusOnRender: PropTypes.bool
   }
 
   static defaultProps = {
@@ -31,6 +32,7 @@ export default class HyloEditor extends Component {
     readOnly: false,
     mentionResults: [],
     topicResults: [],
+    focusOnRender: false,
     themes: {
       base: {
         mention: styles.mention,
@@ -52,6 +54,7 @@ export default class HyloEditor extends Component {
   defaultState = ({ contentHTML }) => {
     return {
       editorState: this.getEditorStateFromHTML(contentHTML),
+      didInitialFocus: false,
       submitOnReturnEnabled: true
     }
   }
@@ -81,8 +84,18 @@ export default class HyloEditor extends Component {
   }
 
   componentDidUpdate (prevProps) {
+    // regenerate state from content if HTML changes
     if (this.props.contentHTML !== prevProps.contentHTML) {
       this.setState(this.defaultState(this.props))
+    }
+
+    // handle initial focus behaviour
+    if (this.props.focusOnRender !== prevProps.focusOnRender) {
+      this.setState({ didInitialFocus: false })
+    }
+    if (this.props.focusOnRender && !this.state.didInitialFocus) {
+      this.focus()
+      this.setState({ didInitialFocus: true })
     }
   }
 

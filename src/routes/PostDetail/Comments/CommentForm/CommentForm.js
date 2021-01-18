@@ -21,6 +21,7 @@ export default class CommentForm extends Component {
     currentUser: PropTypes.object,
     className: PropTypes.string,
     placeholder: PropTypes.string,
+    focusOnRender: PropTypes.bool,
     // provided by connector
     sendIsTyping: PropTypes.func.isRequired,
     addAttachment: PropTypes.func.isRequired,
@@ -60,7 +61,7 @@ export default class CommentForm extends Component {
   }
 
   render () {
-    const { currentUser, className, addAttachment } = this.props
+    const { currentUser, className, addAttachment, focusOnRender } = this.props
 
     const placeholder = this.props.placeholder || (currentUser ? `Hi ${currentUser.firstName()}, what's on your mind?` : "Hi! What's on your mind?")
 
@@ -80,6 +81,7 @@ export default class CommentForm extends Component {
           styleName='editor'
           readOnly={!currentUser}
           onChange={this.startTyping}
+          focusOnRender={focusOnRender}
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save}
