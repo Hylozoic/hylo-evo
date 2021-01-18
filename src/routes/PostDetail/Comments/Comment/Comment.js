@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { filter, isEmpty, isFunction } from 'lodash/fp'
+import { filter, isEmpty, isFunction, reverse } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
@@ -97,7 +97,7 @@ export default class Comment extends Component {
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
       </ClickCatcher>
       {childComments && childComments.items && <div styleName='subreply'>
-        {childComments.items.map(c => <BoundComment comment={c} key={c.id} slug={slug} />)}
+        {reverse(childComments.items).map(c => <BoundComment comment={c} key={c.id} slug={slug} postId={postId} />)}
       </div>}
       {replying && <div styleName='replybox'>
         <CommentForm createComment={createComment} placeholder={`Reply to ${creator.name}`} />
