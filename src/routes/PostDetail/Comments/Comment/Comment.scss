@@ -1,7 +1,8 @@
 $comment-left-margin: 69px;
+$comment-row-padding: 25px;
 
 .comment {
-  padding: 0px 25px;
+  padding: 0px $comment-row-padding;
   margin-bottom: $space-6x;
  }
 
@@ -107,8 +108,13 @@ $comment-left-margin: 69px;
   margin-left: $comment-left-margin
 }
 
-.reply {
+.replybox {
   margin-left: $comment-left-margin;
+}
+
+.subreply {
+  margin-left: $comment-left-margin - $comment-row-padding;
+  margin-right: -$comment-row-padding;
 }
 
 .editor {

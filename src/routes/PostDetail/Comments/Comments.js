@@ -46,7 +46,7 @@ export default class Comments extends Component {
         total={total}
         hasMore={hasMore}
         fetchComments={fetchComments} />
-      {comments.map(c => <Comment comment={c} key={c.id} slug={slug} postId={postId} />)}
+      {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
       <div styleName='form-wrapper' style={style}>
         <CommentForm
           currentUser={currentUser}

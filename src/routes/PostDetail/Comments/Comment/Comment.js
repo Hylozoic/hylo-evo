@@ -16,13 +16,14 @@ import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
 import './Comment.scss'
 
-const { object, func, string } = PropTypes
+import BoundComment from './'
+
+const { object, func } = PropTypes
 
 export default class Comment extends Component {
   static propTypes = {
     comment: object.isRequired,
-    postId: string.isRequired,
-    createComment: func.isRequired
+    createComment: func.isRequired // bound by Comments.connector & Comment.connector
   }
 
   static defaultProps = {
@@ -57,7 +58,7 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, isCreator, createComment, deleteComment, removeComment } = this.props
     const { editing, replying } = this.state
-    const { id, creator, createdAt, text, attachments } = comment
+    const { id, creator, createdAt, text, attachments, childComments } = comment
     const profileUrl = personUrl(creator.id, slug)
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -95,7 +96,10 @@ export default class Comment extends Component {
           submitOnReturnHandler={this.saveComment} />}
         {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
       </ClickCatcher>
-      {replying && <div styleName='reply'>
+      {childComments && childComments.items && <div styleName='subreply'>
+        {childComments.items.map(c => <BoundComment comment={c} key={c.id} slug={slug} />)}
+      </div>}
+      {replying && <div styleName='replybox'>
         <CommentForm createComment={createComment} placeholder={`Reply to ${creator.name}`} />
       </div>}
       <ReactTooltip
