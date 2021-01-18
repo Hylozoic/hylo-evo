@@ -16,31 +16,20 @@ import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
 import './Comment.scss'
 
-import BoundComment from './'
-
 const { object, func } = PropTypes
 
-export default class Comment extends Component {
+class Comment extends Component {
   static propTypes = {
     comment: object.isRequired,
-    createComment: func.isRequired // bound by Comments.connector & Comment.connector
-  }
-
-  static defaultProps = {
-    attachments: []
+    toggleReplyComment: func.isRequired
   }
 
   state = {
-    editing: false,
-    replying: false
+    editing: false
   }
 
   editComment = () => {
     this.setState({ editing: true })
-  }
-
-  toggleReplyComment = () => {
-    this.setState({ replying: !this.state.replying })
   }
 
   saveComment = editorState => {
@@ -56,11 +45,11 @@ export default class Comment extends Component {
   }
 
   render () {
-    const { comment, slug, postId, isCreator, createComment, deleteComment, removeComment } = this.props
-    const { editing, replying } = this.state
-    const { id, creator, createdAt, text, attachments, childComments, parentComment } = comment
+    const { comment, slug, isCreator, toggleReplyComment, deleteComment, removeComment } = this.props
+    const { id, creator, createdAt, text, attachments } = comment
+    const { editing } = this.state
     const profileUrl = personUrl(creator.id, slug)
-    const isToplevelComment = !(parentComment && parentComment.id)
+    const presentedText = present(sanitize(text), { slug })
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
@@ -69,45 +58,78 @@ export default class Comment extends Component {
       { icon: 'Trash', label: 'Remove', onClick: removeComment }
     ])
 
-    const presentedText = present(sanitize(text), { slug })
-
-    return <div styleName='comment'>
-      <div styleName='header'>
-        <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
-        <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
-        <span styleName='timestamp'>
-          {editing && 'Editing now'}
-          {!editing && humanDate(createdAt)}
-        </span>
-        <div styleName='upperRight'>
-          {// :NOTE: Hiding this UI is the only thing functionally disabling further threading,
-          //         other than rebinding connector components to trigger subrequests.
-            isToplevelComment && <div styleName='commentAction' onClick={this.toggleReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+    return (
+      <div>
+        <div styleName='header'>
+          <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
+          <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
+          <span styleName='timestamp'>
+            {editing && 'Editing now'}
+            {!editing && humanDate(createdAt)}
+          </span>
+          <div styleName='upperRight'>
+            <div styleName='commentAction' onClick={toggleReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
             </div>
-          }
-          {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+            {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+          </div>
         </div>
+        <CardImageAttachments attachments={attachments} linked styleName='images' />
+        <CardFileAttachments attachments={attachments} styleName='files' />
+        <ClickCatcher>
+          {editing && <HyloEditor
+            styleName='editor'
+            onChange={this.startTyping}
+            contentHTML={text}
+            parentComponent={'CommentForm'}
+            submitOnReturnHandler={this.saveComment} />}
+          {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
+        </ClickCatcher>
       </div>
-      <CardImageAttachments attachments={attachments} linked styleName='images' />
-      <CardFileAttachments attachments={attachments} styleName='files' />
-      <ClickCatcher>
-        {editing && <HyloEditor
-          styleName='editor'
-          onChange={this.startTyping}
-          contentHTML={text}
-          parentComponent={'CommentForm'}
-          submitOnReturnHandler={this.saveComment} />}
-        {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
-      </ClickCatcher>
+    )
+  }
+}
+
+export default class CommentWithReplies extends Component {
+  static propTypes = {
+    comment: object.isRequired,
+    createComment: func.isRequired // bound by Comments.connector & Comment.connector
+  }
+
+  static defaultProps = {
+    attachments: []
+  }
+
+  state = {
+    replying: false
+  }
+
+  toggleReplyComment = () => {
+    this.setState({ replying: !this.state.replying })
+  }
+
+  render () {
+    const { comment, createComment } = this.props
+    const { childComments } = comment
+    const { replying } = this.state
+
+    return <div styleName='comment'>
+      <Comment {...this.props} toggleReplyComment={this.toggleReplyComment} />
       {childComments && childComments.items && <div styleName='subreply'>
-        {reverse(childComments.items).map(c => <BoundComment comment={c} key={c.id} slug={slug} postId={postId} />)}
+        {reverse(childComments.items).map(c =>
+          <Comment key={c.id}
+            {...this.props}
+            comment={c}
+            // sets child comments to toggle reply box one level deep, rather than allowing recursion
+            toggleReplyComment={this.toggleReplyComment}
+          />)
+        }
       </div>}
       {replying && <div styleName='replybox'>
-        <CommentForm createComment={createComment} placeholder={`Reply to ${creator.name}`} focusOnRender />
+        <CommentForm createComment={createComment} placeholder={`Reply to ${comment.creator.name}`} focusOnRender />
       </div>}
       <ReactTooltip
-        id={`reply-tip-${id}`}
+        id={`reply-tip-${comment.id}`}
         effect='solid'
         style='light'
         border
