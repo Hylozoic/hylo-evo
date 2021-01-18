@@ -133,7 +133,7 @@ export default class PrimaryLayout extends Component {
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
       <Switch>
         {routesWithDrawer.map(({ path }) => (
-          <Route path={path} render={props => (
+          <Route path={path} key={path} render={props => (
             <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
           )} />
         ))}
