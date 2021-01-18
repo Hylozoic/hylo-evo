@@ -20,6 +20,7 @@ export default class CommentForm extends Component {
     createComment: PropTypes.func.isRequired,
     currentUser: PropTypes.object,
     className: PropTypes.string,
+    placeholder: PropTypes.string,
     // provided by connector
     sendIsTyping: PropTypes.func.isRequired,
     addAttachment: PropTypes.func.isRequired,
@@ -61,7 +62,7 @@ export default class CommentForm extends Component {
   render () {
     const { currentUser, className, addAttachment } = this.props
 
-    const placeholder = currentUser ? `Hi ${currentUser.firstName()}, what's on your mind?` : "Hi! What's on your mind?"
+    const placeholder = this.props.placeholder || (currentUser ? `Hi ${currentUser.firstName()}, what's on your mind?` : "Hi! What's on your mind?")
 
     return <div
       styleName='commentForm'
