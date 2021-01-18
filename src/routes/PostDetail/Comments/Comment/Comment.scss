@@ -113,8 +113,7 @@ $comment-row-padding: 25px;
 }
 
 .subreply {
-  margin-left: $comment-left-margin - $comment-row-padding;
-  margin-right: -$comment-row-padding;
+  margin-left: $comment-left-margin;
 }
 
 .editor {
