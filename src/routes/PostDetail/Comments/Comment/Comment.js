@@ -58,8 +58,9 @@ export default class Comment extends Component {
   render () {
     const { comment, slug, postId, isCreator, createComment, deleteComment, removeComment } = this.props
     const { editing, replying } = this.state
-    const { id, creator, createdAt, text, attachments, childComments } = comment
+    const { id, creator, createdAt, text, attachments, childComments, parentComment } = comment
     const profileUrl = personUrl(creator.id, slug)
+    const isToplevelComment = !(parentComment && parentComment.id)
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
@@ -79,9 +80,12 @@ export default class Comment extends Component {
           {!editing && humanDate(createdAt)}
         </span>
         <div styleName='upperRight'>
-          <div styleName='commentAction' onClick={this.toggleReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
-            <Icon name='Replies' />
-          </div>
+          {// :NOTE: Hiding this UI is the only thing functionally disabling further threading,
+          //         other than rebinding connector components to trigger subrequests.
+            isToplevelComment && <div styleName='commentAction' onClick={this.toggleReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+              <Icon name='Replies' />
+            </div>
+          }
           {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
         </div>
       </div>
