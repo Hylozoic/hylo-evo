@@ -24,8 +24,8 @@ mutation CreateCommentMutation (
       position
       id
     }
-    comment {
-      id # this is equivalent to parentCommentId
+    parentComment {
+      id
     }
     createdAt
   }
