@@ -125,7 +125,7 @@
     "mock-fs": "^4.2.0",
     "moment": "^2.24.0",
     "newrelic": "^7.0.2",
-    "node-sass": "^4.11.0",
+    "node-sass": "^5.0.0",
     "normalize.css": "^7.0.0",
     "object-assign": "4.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
