@@ -175,12 +175,30 @@ exports[`NonAuthLayout renders correctly 1`] = `
       to="/public/map"
     />
     <Route
-      component={[Function]}
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(MapExplorer)",
+          "type": [Function],
+          Symbol(Symbol.hasInstance): [Function],
+        }
+      }
       exact={true}
       path="/:context(public)/:view(map)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?/:action(new|edit)?"
     />
     <Route
-      component={[Function]}
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(MapExplorer)",
+          "type": [Function],
+          Symbol(Symbol.hasInstance): [Function],
+        }
+      }
       exact={true}
       path="/:context(public)/:view(map)/:communityContext(c)?/:communityId(\\\\d+)?/:action(new|edit)?"
     />
@@ -196,17 +214,44 @@ exports[`NonAuthLayout renders correctly 1`] = `
   >
     <Switch>
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(PostDetail)",
+            "type": [Function],
+            Symbol(Symbol.hasInstance): [Function],
+          }
+        }
         key="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
         path="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
       />
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(PostDetail)",
+            "type": [Function],
+            Symbol(Symbol.hasInstance): [Function],
+          }
+        }
         key="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
         path="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
       />
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(CommunityDetail)",
+            "type": [Function],
+            Symbol(Symbol.hasInstance): [Function],
+          }
+        }
         key="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"
         path="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"
       />

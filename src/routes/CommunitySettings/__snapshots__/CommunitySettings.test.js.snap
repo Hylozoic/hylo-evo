@@ -25,7 +25,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings",
       },
       Object {
-        "component": <Connect(ModeratorsSettingsTab)
+        "component": <UNDEFINED
           communityId={1}
           slug="foo"
         />,
@@ -33,7 +33,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/moderators",
       },
       Object {
-        "component": <Connect(TopicsSettingsTab)
+        "component": <UNDEFINED
           community={
             Object {
               "id": 1,
@@ -46,7 +46,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/topics",
       },
       Object {
-        "component": <Connect(InviteSettingsTab)
+        "component": <UNDEFINED
           community={
             Object {
               "id": 1,
@@ -59,7 +59,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/invite",
       },
       Object {
-        "component": <Connect(MembershipRequestsTab)
+        "component": <UNDEFINED
           community={
             Object {
               "id": 1,
