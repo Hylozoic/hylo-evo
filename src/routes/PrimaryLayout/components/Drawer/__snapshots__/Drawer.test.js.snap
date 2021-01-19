@@ -113,7 +113,6 @@ exports[`Drawer renders a community list if networks are present 1`] = `
               "name": "Wombat Network",
             }
           }
-          routeParams={Object {}}
         />
       </div>
       <li
