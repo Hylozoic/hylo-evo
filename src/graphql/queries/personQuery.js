@@ -50,6 +50,18 @@ export default
       }
     }
     messageThreadId
+    affiliations {
+      items {
+        id
+        role
+        preposition
+        orgName
+        url
+        createdAt
+        updatedAt
+        isActive
+      }
+    }
     memberships {
       id
       role

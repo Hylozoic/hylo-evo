@@ -1,0 +1,48 @@
+.membership {
+  border: 0;
+  font-weight: 100;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  min-height: 54px;
+  font-size: 14px;
+
+  .role {
+    font-weight: bold;
+    font-family: 'Circular Bold';
+    padding: 0 5px 0 10px;
+  }
+
+  .community {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px 4px 6px;
+
+    a {
+      color: #808C9B;
+      text-decoration: none;
+    }
+  }
+}
+
+.odd {
+  background-color: $color-white;
+}
+
+.even {
+  background-color: $color-athens-gray;
+}
+
+.leave-button {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  border: 1px solid $color-amaranth;
+  padding: 2px 7px;
+  @include font-regular;
+  &:hover {
+    color: $color-white;
+    background-color: $color-amaranth;
+  }
+}

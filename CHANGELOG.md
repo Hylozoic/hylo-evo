@@ -8,12 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Not being able to turn on or off notifications for communities
 
+## [2.2.4] - 2021-01-12
+### Fixed
+- Don't allow posting of an empty comment.
+- Not being able to turn on or off notifications for communities
+
+### Added
+- Add sections for a person's Hylo communities and other custom affiliations on their member profile
+- Update settings page Affiliations to allow listing custom org affiliations
+
 ## [2.2.3] - 2020-12-16
 ### Fixed
 - Adjusted signup wizard Skills slide so styles work on mobile web.
 
 ### Added
-- Events section to member profile, showing upcoming events the person is attending
+- Add events section to member profile, showing upcoming events the person is attending
 
 ## [2.2.2] - 2020-12-09
 ### Added

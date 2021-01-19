@@ -138,9 +138,10 @@ export default class HyloEditor extends Component {
 
   handleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
+    const { editorState } = this.state
     if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
       if (!event.shiftKey) {
-        submitOnReturnHandler(this.getContentHTML())
+        submitOnReturnHandler(editorState)
         this.setState({
           editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
         })

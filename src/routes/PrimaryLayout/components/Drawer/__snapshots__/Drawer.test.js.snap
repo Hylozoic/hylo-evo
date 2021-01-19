@@ -132,7 +132,6 @@ exports[`Drawer renders a community list if networks are present 1`] = `
           }
         }
         key="11"
-        routeParams={Object {}}
       />
       <CommunityRow
         community={
@@ -145,7 +144,6 @@ exports[`Drawer renders a community list if networks are present 1`] = `
           }
         }
         key="22"
-        routeParams={Object {}}
       />
     </ul>
     <div
@@ -215,7 +213,6 @@ exports[`Drawer renders with a current community 1`] = `
           }
         }
         key="11"
-        routeParams={Object {}}
       />
       <CommunityRow
         community={
@@ -228,7 +225,6 @@ exports[`Drawer renders with a current community 1`] = `
           }
         }
         key="22"
-        routeParams={Object {}}
       />
     </ul>
     <div
@@ -288,7 +284,6 @@ exports[`Drawer renders without a current community 1`] = `
           }
         }
         key="11"
-        routeParams={Object {}}
       />
       <CommunityRow
         community={
@@ -301,7 +296,6 @@ exports[`Drawer renders without a current community 1`] = `
           }
         }
         key="22"
-        routeParams={Object {}}
       />
     </ul>
     <div

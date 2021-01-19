@@ -25,20 +25,10 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings",
       },
       Object {
-        "component": <CommunitySettingsTab
-          leaveCommunity={[Function]}
-          memberships={
-            Array [
-              Object {
-                "id": 2,
-              },
-              Object {
-                "id": 3,
-              },
-            ]
-          }
+        "component": <Connect(CommunitySettingsTab)
+          personId={1}
         />,
-        "name": "Communities",
+        "name": "Affiliations",
         "path": "/settings/communities",
       },
       Object {

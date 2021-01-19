@@ -2,7 +2,6 @@ import {
   FETCH_SAVED_SEARCHES,
   DELETE_SAVED_SEARCH,
   SAVE_SEARCH,
-  LEAVE_COMMUNITY,
   UNLINK_ACCOUNT,
   VIEW_SAVED_SEARCH
 } from 'store/constants'
@@ -139,22 +138,6 @@ export function viewSavedSearch (search) {
   return {
     type: VIEW_SAVED_SEARCH,
     payload: { search }
-  }
-}
-
-export function leaveCommunity (id) {
-  return {
-    type: LEAVE_COMMUNITY,
-    graphql: {
-      query: `mutation ($id: ID) {
-        leaveCommunity(id: $id)
-      }`,
-      variables: { id }
-    },
-    meta: {
-      id,
-      optimistic: true
-    }
   }
 }
 

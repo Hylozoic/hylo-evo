@@ -48,6 +48,18 @@ fragment MeCompleteFragment on Me {
     dmNotifications
     commentNotifications
   }
+  affiliations {
+    items {
+      id
+      role
+      preposition
+      orgName
+      url
+      createdAt
+      updatedAt
+      isActive
+    }
+  }
   memberships {
     id
     lastViewedAt
