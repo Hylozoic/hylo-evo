@@ -88,17 +88,15 @@ export function setAnnouncement (bool) {
 
 export const getLinkPreview = ormCreateSelector(
   orm,
-  state => state.orm,
   state => state[MODULE_NAME],
   ({ LinkPreview }, { linkPreviewId }) =>
-    LinkPreview.hasId(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
+    LinkPreview.idExists(linkPreviewId) ? LinkPreview.withId(linkPreviewId).ref : null
 )
 
 const getDefaultTopicsResults = makeGetQueryResults(FETCH_DEFAULT_TOPICS)
 
 export const getDefaultTopics = ormCreateSelector(
   orm,
-  state => state.orm,
   getDefaultTopicsResults,
   (_, props) => props,
   (session, results, props) => {

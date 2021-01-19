@@ -1,8 +1,11 @@
+import orm from 'store/models'
 import { mapStateToProps, mergeProps } from './UserSettings.connector'
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
+    const session = orm.session(orm.getEmptyState())
     const state = {
+      orm: session.state,
       FullPageModal: {},
       pending: {},
       SavedSearches: {

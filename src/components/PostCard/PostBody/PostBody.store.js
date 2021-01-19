@@ -52,7 +52,6 @@ export function unfulfillPost (postId) {
 
 export const getCommunity = ormCreateSelector(
   orm,
-  state => state.orm,
   (_, { routeParams }) => routeParams,
   (session, { slug }) => session.Community.safeGet({ slug })
 )

@@ -114,7 +114,6 @@ export const getTopicsSearchTerm = (state) => {
 
 export const getMentionResults = ormCreateSelector(
   orm,
-  state => state.orm,
   moduleSelector,
   (session, moduleNode) => {
     const { mentionSearchTerm } = moduleNode
@@ -139,7 +138,6 @@ export const getMentionResults = ormCreateSelector(
 
 export const getTopicResults = ormCreateSelector(
   orm,
-  state => state.orm,
   getTopicsSearchTerm,
   (session, searchTerm) => {
     if (!searchTerm) return []

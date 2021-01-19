@@ -4,7 +4,6 @@ import { find, get } from 'lodash/fp'
 
 const getCanModerate = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, props) => props.community,
   ({ Me }, community) => {
     const me = Me.first()

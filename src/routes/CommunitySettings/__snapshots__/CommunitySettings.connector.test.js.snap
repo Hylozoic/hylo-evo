@@ -6,21 +6,12 @@ Object {
   "community": SessionBoundModel {
     "_fields": Object {
       "id": "99",
-      "members": undefined,
-      "moderators": undefined,
-      "posts": undefined,
       "slug": "foo",
     },
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
-      "blockedUsers": undefined,
       "id": "1",
-      "messageThreads": undefined,
-      "notifications": undefined,
-      "posts": undefined,
-      "skills": undefined,
-      "skillsToLearn": undefined,
     },
     "id": "1",
   },
@@ -105,21 +96,12 @@ Object {
   "community": SessionBoundModel {
     "_fields": Object {
       "id": "99",
-      "members": undefined,
-      "moderators": undefined,
-      "posts": undefined,
       "slug": "foo",
     },
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
-      "blockedUsers": undefined,
       "id": "1",
-      "messageThreads": undefined,
-      "notifications": undefined,
-      "posts": undefined,
-      "skills": undefined,
-      "skillsToLearn": undefined,
     },
     "id": "1",
   },

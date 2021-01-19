@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const EventInvitation = Model.createClass({
+class EventInvitation extends Model {
   toString () {
     return `EventInvitation: ${this.id}`
   }
-})
+}
 
 EventInvitation.modelName = 'EventInvitation'
 EventInvitation.fields = {

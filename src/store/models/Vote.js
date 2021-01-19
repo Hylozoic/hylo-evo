@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const Vote = Model.createClass({
+class Vote extends Model {
   toString () {
     return `Vote: ${this.id}`
   }
-})
+}
 
 export default Vote
 

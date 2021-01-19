@@ -29,7 +29,6 @@ export const getTopicsFromSubscribedCommunityTopics = (state, props) => {
 
 export const getSubscribedCommunityTopics = ormCreateSelector(
   orm,
-  state => state.orm,
   getCommunityForCurrentRoute,
   getNetworkForCurrentRoute,
   (session, community, network) => {

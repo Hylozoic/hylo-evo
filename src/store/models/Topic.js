@@ -6,11 +6,11 @@ export const TOPIC_VISIBILITY = {
   2: 'Pinned'
 }
 
-const Topic = Model.createClass({
+class Topic extends Model {
   toString () {
     return `Topic: ${this.name}`
   }
-})
+}
 
 export default Topic
 

@@ -1,17 +1,17 @@
 import { attr, many, Model, fk } from 'redux-orm'
 
-export const NetworkModerator = Model.createClass({})
+export class NetworkModerator extends Model {}
 NetworkModerator.modelName = 'NetworkModerator'
 NetworkModerator.fields = {
   network: fk('Network', 'networkmoderators'),
   moderator: fk('Person', 'networkmoderators')
 }
 
-const Network = Model.createClass({
+class Network extends Model {
   toString () {
     return `Network: ${this.name}`
   }
-})
+}
 
 export default Network
 

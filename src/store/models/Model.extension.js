@@ -1,19 +1,11 @@
-import { Model } from 'redux-orm'
-import { ManyToMany } from 'redux-orm/lib/fields'
+import { Model, ManyToMany } from 'redux-orm'
 import { normalizeEntity } from 'redux-orm/lib/utils'
 import { mapValues, uniq, isEmpty, isNull, isUndefined, omitBy, overSome } from 'lodash'
 
 Model.safeGet = function (matchObj) {
   const omittedMatchObj = omitBy(matchObj, overSome([isNull, isUndefined]))
   if (isEmpty(omittedMatchObj)) return null
-
-  let result
-  try {
-    result = this.get(omittedMatchObj)
-  } catch (e) {
-    result = null
-  }
-  return result
+  return this.get(omittedMatchObj)
 }
 
 Model.prototype.updateAppending = function (attrs) {

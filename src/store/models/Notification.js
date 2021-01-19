@@ -42,11 +42,11 @@ export function urlForNotification ({ activity: { action, post, comment, communi
   }
 }
 
-const Notification = Model.createClass({
+class Notification extends Model {
   toString () {
     return `Message: ${this.id}`
   }
-})
+}
 
 export default Notification
 
