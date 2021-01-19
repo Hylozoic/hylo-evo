@@ -21,7 +21,7 @@ exports[`NetworkSettings doesnt have the moderators tab if only a moderator 1`] 
         "path": "/n/mycelium/settings",
       },
       Object {
-        "component": <UNDEFINED
+        "component": <Memo(Connect(NetworkCommunitiesTab))
           isAdmin={false}
           isModerator={true}
           network={
@@ -68,7 +68,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
         "path": "/n/mycelium/settings",
       },
       Object {
-        "component": <UNDEFINED
+        "component": <Memo(Connect(NetworkModeratorsTab))
           network={
             Object {
               "communities": Array [],
@@ -82,7 +82,7 @@ exports[`NetworkSettings matches the previous snapshot 1`] = `
         "path": "/n/mycelium/settings/moderators",
       },
       Object {
-        "component": <UNDEFINED
+        "component": <Memo(Connect(NetworkCommunitiesTab))
           isAdmin={true}
           isModerator={false}
           network={

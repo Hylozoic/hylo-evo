@@ -182,7 +182,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
           "compare": null,
           "displayName": "Connect(MapExplorer)",
           "type": [Function],
-          Symbol(Symbol.hasInstance): [Function],
         }
       }
       exact={true}
@@ -196,7 +195,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
           "compare": null,
           "displayName": "Connect(MapExplorer)",
           "type": [Function],
-          Symbol(Symbol.hasInstance): [Function],
         }
       }
       exact={true}
@@ -221,7 +219,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
             "compare": null,
             "displayName": "Connect(PostDetail)",
             "type": [Function],
-            Symbol(Symbol.hasInstance): [Function],
           }
         }
         key="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
@@ -235,7 +232,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
             "compare": null,
             "displayName": "Connect(PostDetail)",
             "type": [Function],
-            Symbol(Symbol.hasInstance): [Function],
           }
         }
         key="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
@@ -249,7 +245,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
             "compare": null,
             "displayName": "Connect(CommunityDetail)",
             "type": [Function],
-            Symbol(Symbol.hasInstance): [Function],
           }
         }
         key="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"

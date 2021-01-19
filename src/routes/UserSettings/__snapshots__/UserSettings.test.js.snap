@@ -25,7 +25,7 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings",
       },
       Object {
-        "component": <UNDEFINED
+        "component": <Memo(Connect(CommunitySettingsTab))
           personId={1}
         />,
         "name": "Affiliations",
