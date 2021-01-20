@@ -15,6 +15,7 @@ export function mapStateToProps (state, props) {
   const rootPath = baseUrl(routeParams, allGroupsUrl())
   const projectsPath = `${rootPath}/project`
   const eventsPath = `${rootPath}/event`
+  const groupsPath = `${rootPath}/groups`
   const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
   const mapPath = `${rootPath}/map`
 
@@ -39,6 +40,7 @@ export function mapStateToProps (state, props) {
     membersPath,
     projectsPath,
     eventsPath,
+    groupsPath,
     mapPath,
     badge,
     feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),

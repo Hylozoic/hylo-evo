@@ -1,0 +1,104 @@
+.container { /* !empty */ }
+
+// Banner
+.banner {
+  background-color: $color-athens-gray;
+  height: 120px;
+  width: 100%;
+  display: flex;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
+
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  justify-content: center;
+  margin-left: 25px;
+}
+
+.name {
+  composes: hdr-display from 'css/typography.scss';
+  margin-bottom: 5px;
+}
+
+.stats {
+  composes: caption-lt-lg from 'css/typography.scss';
+  font-size: 13px;
+}
+
+.icon {
+  margin: 15px 15px 0 auto;
+  align-self: flex-start;
+}
+
+.content-margins {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+// SearchBar
+.search-bar {
+  composes: content-margins;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  margin-right: $space-4x;
+}
+
+.search-order {
+  min-width: 80px;
+}
+
+.search-sorter-label {
+  font-size: 15px;
+  line-height: 28px;
+  composes: caption-lt-lg from 'css/typography.scss';
+  > span {
+    vertical-align: middle;
+    margin-left: $space-1x;
+  }
+}
+
+// GroupList
+.group-list {
+  composes: content-margins;
+}
+
+// GroupCard
+.group-card {
+  display: flex;
+  border-bottom: 1px solid $color-rhino-10;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.group-image {
+  margin-right: 10px;
+}
+
+.group-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.group-name {
+  color: $color-rhino;
+  @include font-regular;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.group-stats {
+  color: $color-rhino-60;
+  @include font-regular;
+  font-size: 14px;
+}

@@ -18,6 +18,7 @@ export default function Navigation (props) {
     membersPath,
     projectsPath,
     groupId,
+    groupsPath,
     eventsPath,
     mapPath,
     mapView,
@@ -57,6 +58,11 @@ export default function Navigation (props) {
       label: 'Members',
       icon: 'Members',
       to: membersPath
+    },
+    groupsPath && {
+      label: 'Groups',
+      icon: 'Groups',
+      to: groupsPath
     },
     mapPath && {
       label: 'Map',

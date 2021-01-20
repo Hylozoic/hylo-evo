@@ -71,9 +71,8 @@ export function contextSwitchingUrl (newContext, routeParams) {
     // -------------------------------------------------
     // These params are cleared from the old route,
     // and at least one must be specified in newContext
-    networkSlug: undefined,
     slug: undefined,
-    communitySlug: undefined,
+    groupSlug: undefined,
     context: undefined,
     // -------------------------------------------------
     ...newContext

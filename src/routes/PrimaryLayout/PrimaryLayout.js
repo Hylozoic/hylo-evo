@@ -19,6 +19,7 @@ import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmatio
 import GroupReview from 'routes/CreateGroup/Review'
 import GroupSettings from 'routes/GroupSettings'
 import GroupSidebar from 'routes/GroupSidebar'
+import Groups from 'routes/Groups'
 import Domain from 'routes/CreateGroup/Domain'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
@@ -105,7 +106,7 @@ export default class PrimaryLayout extends Component {
       { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
       { path: '/:context(all|public)/:topicName' },
       // {/* Group Routes */}
-      { path: '/:context(g)/:slug/:view(members|settings|topics)' },
+      { path: '/:context(g)/:slug/:view(members|settings|topics|groups)' },
       { path: `/:context(g)/:slug/:view(map)/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(g)/:slug/m/:personId/${OPTIONAL_POST_MATCH}` },
       { path: `/:context(g)/:slug/${OPTIONAL_POST_MATCH}` },
@@ -161,6 +162,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(g)/:slug/:view(topics)' component={AllTopics} />
             <Route path={`/:context(g)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path='/:context(g)/:slug/:view(members)' component={Members} />
+            <Route path='/:context(g)/:slug/:view(groups)' component={Groups} />
             <Route path='/:context(g)/:slug/:view(settings)' component={GroupSettings} />
             <Route path={`/:context(g)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
             <Route path={`/:context(g)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
@@ -179,7 +181,6 @@ export default class PrimaryLayout extends Component {
             {/* LEJ: Leaving MemberSidebar vestiage here for now as new sidebar content is likely coming soon */}
             {/* <Route path={`/:context(g)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} /> */}
             <Route path={`/:context(g)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={GroupSidebar} />
-            {/* <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
             {/* <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
           </Switch>
         </div>
@@ -207,10 +208,6 @@ const detailRoutes = [
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
-  // { path: `/:context(n)/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  // { path: `/:context(n)/:networkSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
-  // { path: `/:context(n)/:networkSlug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  // { path: `/:context(n)/:networkSlug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(g)/:slug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(g)/:slug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(g)/:slug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
