@@ -209,7 +209,7 @@
     "standard": "12.0.1"
   },
   "engines": {
-    "node": "^15",
+    "node": "15.x",
     "yarn": "^1.2.0"
   },
   "browserslist": [
