@@ -183,27 +183,3 @@ export default class Review extends Component {
     </div>
   }
 }
-
-// FIXME Skills Component
-
-// export function Pill ({ skill }) {
-//   return <span styleName='review-skill'>
-//     {skill.name}
-//   </span>
-// }
-
-// <div styleName='three-column-input gray-bottom-border'>
-//   <div styleName='left-input-column'>
-//     <span styleName='text-opacity'>SKILLS</span>
-//   </div>
-//   <div styleName='center-input-column-scrollable'>
-//     {this.props.skills.map((skill, index) =>
-//       <div key={index}>
-//         <Pill skill={skill} handlerArg={'name'} />
-//       </div>
-//     )}
-//   </div>
-//   <div styleName='right-input-column'>
-//     <span styleName='edit-button text-opacity' onClick={this.props.goBack}>Edit</span>
-//   </div>
-// </div>
