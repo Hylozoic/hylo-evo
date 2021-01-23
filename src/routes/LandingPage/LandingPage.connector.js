@@ -2,16 +2,16 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { communityUrl } from 'util/navigation'
 import fetchCommunity from 'store/actions/fetchCommunityBySlug'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
-import presentCommunity from 'store/presenters/presentCommunity'
+import presentGroup from 'store/presenters/presentGroup'
 
 export function mapStateToProps (state, props) {
   let community, communityTopic
   const communitySlug = getRouteParam('slug', state, props)
 
   if (communitySlug) {
-    community = presentCommunity(getCommunityForCurrentRoute(state, props))
+    community = presentGroup(getGroupForCurrentRoute(state, props))
     // communityTopic = getCommunityTopicForCurrentRoute(state, props)
     // communityTopic = communityTopic && { ...communityTopic.ref, community: communityTopic.community, topic: communityTopic.topic }
   }
