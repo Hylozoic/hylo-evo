@@ -70,10 +70,9 @@ export function indexActivityItems (comments, posts) {
 
 export const getRecentActivity = ormCreateSelector(
   orm,
-  state => state.orm,
   (_, { routeParams }) => routeParams,
   ({ Person }, { personId, slug }) => {
-    if (!Person.hasId(personId)) return
+    if (!Person.idExists(personId)) return
     const person = Person.withId(personId)
     const comments = compact(person.comments.toModelArray().map(comment =>
       presentComment(comment, slug)))

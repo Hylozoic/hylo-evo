@@ -47,7 +47,6 @@ export function createCommunity (name, slug, networkId) {
 
 export const getNetwork = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, { networkId }) => networkId,
   (session, networkId) => {
     const network = session.Network.safeGet({ id: networkId })

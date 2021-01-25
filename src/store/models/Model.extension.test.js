@@ -2,13 +2,13 @@ import { ORM, Model, attr, many } from 'redux-orm'
 import './Model.extension'
 import { times } from 'lodash'
 
-const Limb = Model.createClass({})
+class Limb extends Model {}
 Limb.modelName = 'Limb'
 Limb.fields = {
   id: attr()
 }
 
-const Dog = Model.createClass({})
+class Dog extends Model {}
 Dog.modelName = 'Dog'
 Dog.fields = {
   id: attr(),
@@ -17,7 +17,7 @@ Dog.fields = {
 let orm
 
 beforeAll(() => {
-  orm = new ORM()
+  orm = new ORM({ stateSelector: state => state.orm })
   orm.register(Dog, Limb)
 })
 

@@ -23,18 +23,12 @@ Object {
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
         "slug": "foo",
       },
     },
     SessionBoundModel {
       "_fields": Object {
         "id": "100",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
         "slug": "bar",
       },
     },
@@ -43,21 +37,12 @@ Object {
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
       "id": "99",
-      "members": undefined,
-      "moderators": undefined,
-      "posts": undefined,
       "slug": "foo",
     },
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
-      "blockedUsers": undefined,
       "id": "1",
-      "messageThreads": undefined,
-      "notifications": undefined,
-      "posts": undefined,
-      "skills": undefined,
-      "skillsToLearn": undefined,
     },
     "id": "1",
   },
@@ -76,9 +61,6 @@ Object {
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
         "slug": "foo",
       },
     },
@@ -104,18 +86,12 @@ Object {
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
         "slug": "foo",
       },
     },
     SessionBoundModel {
       "_fields": Object {
         "id": "100",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
         "slug": "bar",
       },
     },
@@ -124,21 +100,12 @@ Object {
   "currentCommunity": SessionBoundModel {
     "_fields": Object {
       "id": "99",
-      "members": undefined,
-      "moderators": undefined,
-      "posts": undefined,
       "slug": "foo",
     },
   },
   "currentUser": SessionBoundModel {
     "_fields": Object {
-      "blockedUsers": undefined,
       "id": "1",
-      "messageThreads": undefined,
-      "notifications": undefined,
-      "posts": undefined,
-      "skills": undefined,
-      "skillsToLearn": undefined,
     },
     "id": "1",
   },
@@ -157,9 +124,6 @@ Object {
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
-        "members": undefined,
-        "moderators": undefined,
-        "posts": undefined,
         "slug": "foo",
       },
     },

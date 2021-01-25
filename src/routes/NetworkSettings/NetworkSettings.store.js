@@ -70,21 +70,21 @@ export default function reducer (state = defaultState, action) {
 
 export function ormSessionReducer ({ Network, Community, Person }, { meta, type }) {
   if (type === REMOVE_COMMUNITY_FROM_NETWORK_PENDING) {
-    if (Network.hasId(meta.networkId)) {
+    if (Network.idExists(meta.networkId)) {
       const network = Network.withId(meta.networkId)
       network.update({
         communities: network.communities.toModelArray()
           .filter(c => c.id !== meta.communityId)
       })
     }
-    if (Community.hasId(meta.communityId)) {
+    if (Community.idExists(meta.communityId)) {
       const community = Community.withId(meta.communityId)
       community.update({ network: null })
     }
   }
 
   if (type === REMOVE_NETWORK_MODERATOR_ROLE_PENDING) {
-    if (Network.hasId(meta.networkId)) {
+    if (Network.idExists(meta.networkId)) {
       const network = Network.withId(meta.networkId)
       network.update({
         moderators: network.moderators.toModelArray()
@@ -94,14 +94,14 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
   }
 
   if (type === ADD_NETWORK_MODERATOR_ROLE) {
-    if (Network.hasId(meta.networkId)) {
+    if (Network.idExists(meta.networkId)) {
       const person = Person.withId(meta.personId)
       Network.withId(meta.networkId).updateAppending({ moderators: [person] })
     }
   }
 
   if (type === ADD_COMMUNITY_TO_NETWORK) {
-    if (Network.hasId(meta.networkId) && Community.hasId(meta.communityId)) {
+    if (Network.idExists(meta.networkId) && Community.idExists(meta.communityId)) {
       const network = Network.withId(meta.networkId)
       const community = Community.withId(meta.communityId)
       network.updateAppending({ communities: [community] })
@@ -110,7 +110,7 @@ export function ormSessionReducer ({ Network, Community, Person }, { meta, type 
   }
 
   if (type === UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING) {
-    if (Community.hasId(meta.id)) {
+    if (Community.idExists(meta.id)) {
       const community = Community.withId(meta.id)
       community.update({ hidden: meta.hidden })
     }
@@ -460,7 +460,6 @@ export function updateCommunityHiddenSetting (id, hidden) {
 // Selectors
 export const getNetwork = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, { slug }) => slug,
   (session, slug) => {
     const network = session.Network.safeGet({ slug })
@@ -498,7 +497,6 @@ export const getCommunitiesHasMore = createSelector(
 
 export const getCommunities = ormCreateSelector(
   orm,
-  state => state.orm,
   getCommunitiesResults,
   (session, results) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []

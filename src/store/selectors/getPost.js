@@ -4,14 +4,9 @@ import getRouteParam from 'store/selectors/getRouteParam'
 
 const getPost = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, props) => getRouteParam('postId', state, props),
   ({ Post }, id) => {
-    try {
-      return Post.get({ id })
-    } catch (e) {
-      return null
-    }
+    return Post.withId(id)
   }
 )
 

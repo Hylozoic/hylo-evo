@@ -25,7 +25,7 @@ import Skill from './Skill'
 import Topic from './Topic'
 import Vote from './Vote'
 
-export const orm = new ORM()
+export const orm = new ORM({ stateSelector: state => state.orm })
 
 orm.register(
   Activity,

@@ -34,10 +34,9 @@ export function fetchMemberPosts (id, first = 20, query = memberPostsQuery) {
 
 export const getMemberPosts = ormCreateSelector(
   orm,
-  state => state.orm,
   (_, { routeParams }) => routeParams,
   ({ Person }, { personId }) => {
-    if (!Person.hasId(personId)) return
+    if (!Person.idExists(personId)) return
     return Person.withId(personId).posts.toModelArray().map(post =>
       presentPost(post))
   }

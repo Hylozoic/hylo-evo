@@ -1,32 +1,32 @@
 import { attr, fk, many, Model } from 'redux-orm'
 import PropTypes from 'prop-types'
 
-export const PostFollower = Model.createClass({})
+export class PostFollower extends Model {}
 PostFollower.modelName = 'PostFollower'
 PostFollower.fields = {
   post: fk('Post', 'postfollowers'),
   follower: fk('Person', 'postfollowers')
 }
 
-export const PostCommenter = Model.createClass({})
+export class PostCommenter extends Model {}
 PostCommenter.modelName = 'PostCommenter'
 PostCommenter.fields = {
   post: fk('Post', 'postcommenters'),
   commenter: fk('Person', 'postcommenters')
 }
 
-export const ProjectMember = Model.createClass({})
+export class ProjectMember extends Model {}
 ProjectMember.modelName = 'ProjectMember'
 ProjectMember.fields = {
   post: fk('Post', 'projectmembers'),
   member: fk('Person', 'projectmembers')
 }
 
-const Post = Model.createClass({
+class Post extends Model {
   toString () {
     return `Post: ${this.name}`
   }
-})
+}
 
 export default Post
 

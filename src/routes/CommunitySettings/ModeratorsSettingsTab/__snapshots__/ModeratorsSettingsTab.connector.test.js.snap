@@ -101,15 +101,11 @@ Object {
     SessionBoundModel {
       "_fields": Object {
         "id": "1",
-        "skills": undefined,
-        "skillsToLearn": undefined,
       },
     },
     SessionBoundModel {
       "_fields": Object {
         "id": "2",
-        "skills": undefined,
-        "skillsToLearn": undefined,
       },
     },
   ],

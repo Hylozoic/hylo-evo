@@ -1,8 +1,12 @@
+import orm from 'store/models'
+
 import { mapStateToProps, mapDispatchToProps } from './PostDetail.connector'
 
 describe('mapStateToProps', () => {
   it('returns the right keys', () => {
+    const session = orm.session(orm.getEmptyState())
     const state = {
+      orm: session.state,
       pending: {}
     }
     const props = {

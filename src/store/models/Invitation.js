@@ -1,10 +1,10 @@
 import { attr, fk, Model } from 'redux-orm'
 
-const Invitation = Model.createClass({
+class Invitation extends Model {
   toString () {
     return `Invitation: ${this.id}`
   }
-})
+}
 
 export default Invitation
 

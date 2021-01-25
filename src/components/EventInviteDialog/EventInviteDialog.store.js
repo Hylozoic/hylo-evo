@@ -9,7 +9,6 @@ export const INVITE_PEOPLE_TO_EVENT_PENDING = `${INVITE_PEOPLE_TO_EVENT}_PENDING
 
 export const peopleSelector = createSelector(
   orm,
-  state => state.orm,
   getMe,
   (_, props) => props.forCommunities,
   (

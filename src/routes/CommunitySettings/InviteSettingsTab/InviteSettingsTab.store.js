@@ -144,7 +144,6 @@ export function allowCommunityInvites (communityId, data) {
 // expects props to be of the form {communityId}
 export const getPendingInvites = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, props) => props.communityId,
   ({ Invitation }, id) =>
     Invitation.filter(i => i.community === id)

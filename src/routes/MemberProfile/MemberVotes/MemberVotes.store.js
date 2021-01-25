@@ -36,7 +36,6 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery)
 
 export const getMemberVotes = ormCreateSelector(
   orm,
-  state => state.orm,
   (_, { routeParams }) => routeParams,
   ({ Vote }, { personId }) => {
     const votes = Vote.filter(v => String(v.voter) === String(personId)).toModelArray()

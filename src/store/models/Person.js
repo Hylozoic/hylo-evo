@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types'
 import { attr, fk, many, Model } from 'redux-orm'
 
-export const PersonSkillsToLearn = Model.createClass({})
+export class PersonSkillsToLearn extends Model {}
 PersonSkillsToLearn.modelName = 'PersonSkillsToLearn'
 PersonSkillsToLearn.fields = {
   person: fk('Person', 'personSkillsToLearn'),
   skillToLearn: fk('Skill', 'personSkillsToLearn')
 }
 
-const Person = Model.createClass({
+class Person extends Model {
   toString () {
     return `Person: ${this.name}`
   }
-})
+}
 
 export default Person
 

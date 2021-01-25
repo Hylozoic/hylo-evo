@@ -1,10 +1,10 @@
 import { attr, Model } from 'redux-orm'
 
-const Skill = Model.createClass({
+class Skill extends Model {
   toString () {
     return `Skill: ${this.name}`
   }
-})
+}
 
 export default Skill
 

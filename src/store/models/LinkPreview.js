@@ -1,10 +1,10 @@
 import { attr, Model } from 'redux-orm'
 
-const LinkPreview = Model.createClass({
+class LinkPreview extends Model {
   toString () {
     return `LinkPreview: ${this.title}`
   }
-})
+}
 
 export default LinkPreview
 
