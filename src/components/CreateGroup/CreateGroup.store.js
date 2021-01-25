@@ -1,9 +1,13 @@
-import { CREATE_GROUP } from './Review/Review.store'
-export const MODULE_NAME = `CreateGroupOld`
+import orm from 'store/models'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { AnalyticsEvents } from 'hylo-utils/constants'
+
+export const MODULE_NAME = `CreateGroup`
 export const ADD_GROUP_NAME = `${MODULE_NAME}/ADD_GROUP_NAME`
 export const ADD_GROUP_DOMAIN = `${MODULE_NAME}/ADD_GROUP_DOMAIN`
 export const ADD_GROUP_PRIVACY = `${MODULE_NAME}/ADD_GROUP_PRIVACY`
 export const ADD_PARENT_IDS = `${MODULE_NAME}/ADD_PARENT_IDS`
+export const CREATE_GROUP = `${MODULE_NAME}/CREATE_GROUP`
 
 export const FETCH_GROUP_EXISTS = `${MODULE_NAME}/FETCH_GROUP_EXISTS`
 
@@ -23,7 +27,7 @@ export default function reducer (state = defaultState, action) {
     return { ...state, parentIds: action.payload }
   }
   if (action.type === FETCH_GROUP_EXISTS) {
-    return { ...state, domainExists: action.payload.data.groupExists.exists }
+    return { ...state, slugExists: action.payload.data.groupExists.exists }
   }
   if (action.type === CREATE_GROUP) {
     if (!action.error) {
@@ -78,3 +82,50 @@ export function fetchGroupExists (slug) {
     }
   }
 }
+
+export function createGroup (name, slug, parentIds) {
+  const data = {
+    name,
+    slug,
+    parentIds
+  }
+
+  return {
+    type: CREATE_GROUP,
+    graphql: {
+      query: `mutation ($data: GroupInput) {
+        createGroup(data: $data) {
+          id
+          hasModeratorRole
+          group {
+            id
+            name
+            slug
+            parentGroups {
+              items {
+                id
+              }
+            }
+          }
+        }
+      }
+      `,
+      variables: {
+        data
+      }
+    },
+    meta: {
+      extractModel: 'Membership',
+      ...data,
+      analytics: AnalyticsEvents.GROUP_CREATED
+    }
+  }
+}
+
+export const getParents = ormCreateSelector(
+  orm,
+  (state, { parentIds }) => parentIds,
+  (session, parentIds) => {
+    return parentIds && parentIds.length > 0 ? session.Group.filter(g => parentIds.includes(g.id)).toModelArray() : []
+  }
+)

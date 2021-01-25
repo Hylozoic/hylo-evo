@@ -12,6 +12,7 @@ import './Navigation.scss'
 export default function Navigation (props) {
   const {
     className,
+    createPath,
     collapsed,
     routeParams,
     rootPath,
@@ -36,6 +37,11 @@ export default function Navigation (props) {
   }
 
   const links = compact([
+    createPath && {
+      label: 'Create',
+      icon: 'Create',
+      to: createPath
+    },
     rootPath && {
       label: 'Home',
       icon: 'Home',

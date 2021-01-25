@@ -18,6 +18,7 @@ export function mapStateToProps (state, props) {
   const groupsPath = `${rootPath}/groups`
   const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
   const mapPath = `${rootPath}/map`
+  const createPath = `${props.location.pathname}/create/`
 
   let groupMembership, badge
 
@@ -33,6 +34,7 @@ export function mapStateToProps (state, props) {
   }
 
   return {
+    createPath,
     routeParams,
     groupId: get('id', group),
     hideTopics: isPublicPath(props.location.pathname),

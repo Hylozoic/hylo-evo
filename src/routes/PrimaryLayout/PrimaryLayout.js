@@ -14,6 +14,7 @@ import AddLocation from 'routes/Signup/AddLocation'
 import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
 import CreateGroup from 'routes/CreateGroup'
+import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
 import GroupReview from 'routes/CreateGroup/Review'
@@ -33,7 +34,6 @@ import Navigation from './components/Navigation'
 import Name from 'routes/CreateGroup/Name'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
-import PostEditorModal from 'components/PostEditorModal'
 import Review from 'routes/Signup/Review'
 import Search from 'routes/Search'
 import SignupModal from 'routes/Signup/SignupModal'
@@ -157,6 +157,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(all|public)/:view(stream|event|project)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path='/:context(all|public)/:topicName' exact component={Feed} />
             {/* Group Routes */}
             <Route path='/:context(g)/:slug/:view(topics)' component={AllTopics} />
@@ -165,7 +166,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(g)/:slug/:view(groups)' component={Groups} />
             <Route path='/:context(g)/:slug/:view(settings)' component={GroupSettings} />
             <Route path={`/:context(g)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path={`/:context(g)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(g)/:slug/:view(stream|event|project)?/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
             <Route path={`/:context(g)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Member Routes */}
             <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
@@ -193,9 +194,9 @@ export default class PrimaryLayout extends Component {
       </div>
       <Route path='/t/:messageThreadId?' render={props => <Messages {...props} />} />
       <Switch>
-        {postEditorRoutes.map(({ path }) =>
-          <Route path={path} exact key={path} children={({ match, location }) =>
-            <PostEditorModal match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path} key={path} children={({ match, location }) =>
+            <CreateModal match={match} location={location} />} />)}
       </Switch>
       <SocketListener location={location} />
       <SocketSubscriber type='group' id={get('slug', group)} />
@@ -215,16 +216,20 @@ const detailRoutes = [
   { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
 ]
 
-const postEditorRoutes = [
-  { path: `/:context(all|public)/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(g)/:slug/${REQUIRED_NEW_POST_MATCH}` },
+const createRoutes = [
+  { path: `/:context(all|public)/create` },
+  { path: `/:context(all|public)/create` },
+  { path: `/:context(all|public)/:view(project|event|stream|groups|map)/create` },
+  { path: `/:context(all|public)/:view(project|event|stream|groups)/create/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(all|public)/:topicName/create/${REQUIRED_NEW_POST_MATCH}` },
+  { path: `/:context(all|public)/:topicName/create/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(g)/:slug/create` },
   { path: `/:context(g)/:slug/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(g)/:slug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(g)/:slug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
   { path: `/:context(g)/:slug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
+  { path: `/:context(g)/:slug/:view(project|event|stream|groups|map)/create` },
+  { path: `/:context(g)/:slug/:view(project|event|stream|groups)/${REQUIRED_EDIT_POST_MATCH}` },
   { path: `/:context(m)/:personId/${REQUIRED_EDIT_POST_MATCH}` }
 ]
 

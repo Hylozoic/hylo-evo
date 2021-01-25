@@ -42,14 +42,14 @@ export default class GroupSettingsTab extends Component {
 
     this.setState({
       edits: {
-        accessibility: accessibility || GROUP_ACCESSIBILITY.RESTRICTED,
+        accessibility: accessibility || GROUP_ACCESSIBILITY.Restricted,
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
         location: location || '',
         name: name || '',
         settings: settings || { allowGroupInvites: false, publicMemberDirectory: false },
-        visibility: visibility || GROUP_VISIBILITY.PROTECTED
+        visibility: visibility || GROUP_ACCESSIBILITY.Protected
       }
     })
   }
@@ -126,22 +126,22 @@ export default class GroupSettingsTab extends Component {
         <div styleName='groupPrivacySection'>
           <h3>Visibility</h3>
           <p styleName='privacy-detail'>Who is able to see {group.name}?</p>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.PUBLIC })}>
+          <div styleName={cx({ on: visibility === GROUP_ACCESSIBILITY.Public })}>
             <label>
-              <input type='radio' name='visibility' value={GROUP_VISIBILITY.PUBLIC} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.PUBLIC} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.PUBLIC })}>Anyone can find and see {group.name}</span>
+              <input type='radio' name='visibility' value={GROUP_ACCESSIBILITY.Public} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_ACCESSIBILITY.Public} />
+              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_ACCESSIBILITY.Public })}>Anyone can find and see {group.name}</span>
             </label>
           </div>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.PROTECTED })}>
+          <div styleName={cx({ on: visibility === GROUP_ACCESSIBILITY.Protected })}>
             <label>
-              <input type='radio' name='visibility' value={GROUP_VISIBILITY.PROTECTED} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.PROTECTED} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.PROTECTED })}>Only members of parent groups can see {group.name}</span>
+              <input type='radio' name='visibility' value={GROUP_ACCESSIBILITY.Protected} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_ACCESSIBILITY.Protected} />
+              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_ACCESSIBILITY.Protected })}>Only members of parent groups can see {group.name}</span>
             </label>
           </div>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.HIDDEN })}>
+          <div styleName={cx({ on: visibility === GROUP_ACCESSIBILITY.Hidden })}>
             <label>
-              <input type='radio' name='visibility' value={GROUP_VISIBILITY.HIDDEN} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.HIDDEN} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.HIDDEN })}>Only members of {group.name} can see this group</span>
+              <input type='radio' name='visibility' value={GROUP_ACCESSIBILITY.Hidden} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_ACCESSIBILITY.Hidden} />
+              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_ACCESSIBILITY.Hidden })}>Only members of {group.name} can see this group</span>
             </label>
           </div>
         </div>
@@ -149,22 +149,22 @@ export default class GroupSettingsTab extends Component {
         <div styleName='groupPrivacySection'>
           <h3>Access</h3>
           <p styleName='privacy-detail'>How can people become members of {group.name}</p>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.OPEN })}>
+          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Open })}>
             <label>
-              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.OPEN} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.OPEN} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.OPEN })}>Anyone who can see {group.name} can automatically join it</span>
+              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Open} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Open} />
+              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Open })}>Anyone who can see {group.name} can automatically join it</span>
             </label>
           </div>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.RESTRICTED })}>
+          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Restricted })}>
             <label>
-              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.RESTRICTED} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.RESTRICTED} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.RESTRICTED })}>Anyone can apply to join but must be approved by a moderator</span>
+              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Restricted} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Restricted} />
+              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Restricted })}>Anyone can apply to join but must be approved by a moderator</span>
             </label>
           </div>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.CLOSED })}>
+          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Closed })}>
             <label>
-              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.CLOSED} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.CLOSED} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.CLOSED })}>Membership in {group.name} is invite only</span>
+              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Closed} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Closed} />
+              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Closed })}>Membership in {group.name} is invite only</span>
             </label>
           </div>
         </div>
