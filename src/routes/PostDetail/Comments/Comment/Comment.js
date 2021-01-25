@@ -101,13 +101,17 @@ export default class CommentWithReplies extends Component {
   }
 
   state = {
-    replying: false
+    replying: false,
+    prefillEditor: null
   }
 
-  onReplyComment = () => {
+  onReplyComment = (e, toMemberSlug) => {
     // On any interaction, relevant comment box shows & only leaves
     // naturally once the component is cleared from view.
-    this.setState({ replying: true })
+    this.setState({
+      replying: true,
+      prefillEditor: toMemberSlug ? `<p>@${toMemberSlug} </p>` : ''
+    })
   }
 
   render () {
@@ -123,12 +127,16 @@ export default class CommentWithReplies extends Component {
             {...this.props}
             comment={c}
             // sets child comments to toggle reply box one level deep, rather than allowing recursion
-            onReplyComment={this.onReplyComment}
+            onReplyComment={(e) => this.onReplyComment(e, c.creator.name)}
           />)
         }
       </div>}
       {replying && <div styleName='replybox'>
-        <CommentForm createComment={createComment} placeholder={`Reply to ${comment.creator.name}`} focusOnRender />
+        <CommentForm
+          createComment={createComment}
+          placeholder={`Reply to ${comment.creator.name}`}
+          editorContent={this.state.prefillEditor}
+          focusOnRender />
       </div>}
       <ReactTooltip
         id={`reply-tip-${comment.id}`}
