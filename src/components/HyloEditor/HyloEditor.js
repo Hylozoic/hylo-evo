@@ -188,6 +188,7 @@ export default class HyloEditor extends Component {
     if (!this.editor.current) {
       return
     }
+    this.editor.current.focus()
     this.setState({
       editorState: EditorState.moveFocusToEnd(this.state.editorState)
     })
