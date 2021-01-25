@@ -184,7 +184,14 @@ export default class HyloEditor extends Component {
     return true
   }
 
-  focus = () => this.editor.current && this.editor.current.focus()
+  focus = () => {
+    if (!this.editor.current) {
+      return
+    }
+    this.setState({
+      editorState: EditorState.moveFocusToEnd(this.state.editorState)
+    })
+  }
 
   render () {
     const { MentionSuggestions } = this._mentionsPlugin
