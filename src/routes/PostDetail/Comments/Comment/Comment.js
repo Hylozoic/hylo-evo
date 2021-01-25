@@ -21,7 +21,7 @@ const { object, func } = PropTypes
 class Comment extends Component {
   static propTypes = {
     comment: object.isRequired,
-    toggleReplyComment: func.isRequired
+    onReplyComment: func.isRequired
   }
 
   state = {
@@ -45,7 +45,7 @@ class Comment extends Component {
   }
 
   render () {
-    const { comment, slug, isCreator, toggleReplyComment, deleteComment, removeComment } = this.props
+    const { comment, slug, isCreator, onReplyComment, deleteComment, removeComment } = this.props
     const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
     const profileUrl = personUrl(creator.id, slug)
@@ -68,7 +68,7 @@ class Comment extends Component {
             {!editing && humanDate(createdAt)}
           </span>
           <div styleName='upperRight'>
-            <div styleName='commentAction' onClick={toggleReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+            <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
             </div>
             {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
@@ -104,8 +104,10 @@ export default class CommentWithReplies extends Component {
     replying: false
   }
 
-  toggleReplyComment = () => {
-    this.setState({ replying: !this.state.replying })
+  onReplyComment = () => {
+    // On any interaction, relevant comment box shows & only leaves
+    // naturally once the component is cleared from view.
+    this.setState({ replying: true })
   }
 
   render () {
@@ -114,14 +116,14 @@ export default class CommentWithReplies extends Component {
     const { replying } = this.state
 
     return <div styleName='comment'>
-      <Comment {...this.props} toggleReplyComment={this.toggleReplyComment} />
+      <Comment {...this.props} onReplyComment={this.onReplyComment} />
       {childComments && childComments.items && <div styleName='subreply'>
         {reverse(childComments.items).map(c =>
           <Comment key={c.id}
             {...this.props}
             comment={c}
             // sets child comments to toggle reply box one level deep, rather than allowing recursion
-            toggleReplyComment={this.toggleReplyComment}
+            onReplyComment={this.onReplyComment}
           />)
         }
       </div>}
