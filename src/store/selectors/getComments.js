@@ -10,12 +10,17 @@ export const getComments = createSelector(
   ({ Post }, id) => {
     const post = Post.withId(id)
     if (!post) return []
-    return post.comments.orderBy(c => Number(c.id)).toModelArray()
+
+    const naturalOrdering = c => Number(c.id)
+
+    return post.comments.filter({ parentComment: null }).orderBy(naturalOrdering).toModelArray()
       .map(comment => ({
         ...comment.ref,
         creator: comment.creator,
         attachments: comment.attachments
-          .orderBy('position').toRefArray()
+          .orderBy('position').toRefArray(),
+        childComments: post.comments.filter({ parentComment: comment.id })
+          .orderBy(naturalOrdering).toRefArray()
       }))
   }
 )

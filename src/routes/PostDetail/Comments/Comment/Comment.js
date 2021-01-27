@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { filter, isEmpty, isFunction, reverse } from 'lodash/fp'
+import { filter, isEmpty, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
@@ -136,8 +136,8 @@ export default class CommentWithReplies extends Component {
 
     return <div styleName='comment'>
       <Comment {...this.props} onReplyComment={this.onReplyComment} />
-      {childComments && childComments.items && <div styleName='subreply'>
-        {reverse(childComments.items).map(c =>
+      {childComments && childComments && <div styleName='subreply'>
+        {childComments.map(c =>
           <Comment key={c.id}
             {...this.props}
             comment={c}
