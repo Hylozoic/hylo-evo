@@ -10,6 +10,9 @@ query CommentsQuery (
         childComments {
           items {
             ...CommentFields
+            post {
+              id
+            }
           }
           total
           hasMore

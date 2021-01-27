@@ -49,6 +49,9 @@ const postFieldsFragment = withComments => `
       childComments(first: 10, order: "desc") {
         items {
           ${CommentFieldsFragment}
+          post {
+            id
+          }
         }
         total
         hasMore
