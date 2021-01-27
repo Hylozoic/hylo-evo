@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import scrollIntoView from 'scroll-into-view-if-needed'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import PeopleTyping from 'components/PeopleTyping'
@@ -21,6 +22,12 @@ export default class Comments extends Component {
 
   static defaultProps = {
     comments: []
+  }
+
+  primaryReplyInput = React.createRef()
+
+  scrollToReplyInput (elem) {
+    scrollIntoView(elem, { behavior: 'smooth', scrollMode: 'if-needed' })
   }
 
   render () {
@@ -46,8 +53,15 @@ export default class Comments extends Component {
         total={total}
         hasMore={hasMore}
         fetchComments={fetchComments} />
-      {comments.map(c => <Comment comment={c} key={c.id} slug={slug} postId={postId} />)}
-      <div styleName='form-wrapper' style={style}>
+      {comments.map(c => (
+        <Comment
+          key={c.id}
+          comment={c}
+          slug={slug}
+          postId={postId}
+          onReplyThread={this.scrollToReplyInput.bind(this)} />
+      ))}
+      <div styleName='form-wrapper' style={style} ref={this.primaryReplyInput}>
         <CommentForm
           currentUser={currentUser}
           createComment={createComment}

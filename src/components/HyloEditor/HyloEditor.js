@@ -188,7 +188,9 @@ export default class HyloEditor extends Component {
     if (!this.editor.current) {
       return
     }
-    this.editor.current.focus()
+
+    // Focus and ensure editor caret is at the end, in case of injected content.
+    // Note this does not scroll the page, use `react-scroll-into-view` if you need that.
     this.setState({
       editorState: EditorState.moveFocusToEnd(this.state.editorState)
     })

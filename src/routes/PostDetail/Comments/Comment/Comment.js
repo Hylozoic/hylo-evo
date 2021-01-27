@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { filter, isEmpty, isFunction, reverse } from 'lodash/fp'
@@ -93,7 +94,8 @@ class Comment extends Component {
 export default class CommentWithReplies extends Component {
   static propTypes = {
     comment: object.isRequired,
-    createComment: func.isRequired // bound by Comments.connector & Comment.connector
+    createComment: func.isRequired, // bound by Comments.connector & Comment.connector
+    onReplyThread: func
   }
 
   static defaultProps = {
@@ -102,18 +104,29 @@ export default class CommentWithReplies extends Component {
 
   state = {
     replying: false,
+    triggerReplyFocus: false,
     prefillEditor: null
   }
+
+  replyBox = React.createRef()
 
   onReplyComment = (e, toMember) => {
     // On any interaction, relevant comment box shows & only leaves
     // naturally once the component is cleared from view.
     this.setState({
       replying: true,
+      triggerReplyFocus: true,
       prefillEditor: toMember
         ? `<p><a data-entity-type="mention" data-user-id="${toMember.id}">${toMember.name}</a> </p>`
         : ''
     })
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.onReplyThread && !prevState.triggerReplyFocus && this.state.triggerReplyFocus && this.replyBox.current) {
+      this.props.onReplyThread(ReactDOM.findDOMNode(this.replyBox.current))
+      this.setState({ triggerReplyFocus: false })
+    }
   }
 
   render () {
@@ -133,7 +146,7 @@ export default class CommentWithReplies extends Component {
           />)
         }
       </div>}
-      {replying && <div styleName='replybox'>
+      {replying && <div styleName='replybox' ref={this.replyBox}>
         <CommentForm
           createComment={createComment}
           placeholder={`Reply to ${comment.creator.name}`}
