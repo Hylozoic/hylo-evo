@@ -104,7 +104,7 @@ export default class CommentWithReplies extends Component {
 
   state = {
     replying: false,
-    triggerReplyFocus: false,
+    triggerReplyAction: false,
     prefillEditor: null
   }
 
@@ -115,7 +115,7 @@ export default class CommentWithReplies extends Component {
     // naturally once the component is cleared from view.
     this.setState({
       replying: true,
-      triggerReplyFocus: true,
+      triggerReplyAction: true,
       prefillEditor: toMember
         ? `<p><a data-entity-type="mention" data-user-id="${toMember.id}">${toMember.name}</a> </p>`
         : ''
@@ -123,9 +123,9 @@ export default class CommentWithReplies extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (this.props.onReplyThread && !prevState.triggerReplyFocus && this.state.triggerReplyFocus && this.replyBox.current) {
+    if (this.props.onReplyThread && !prevState.triggerReplyAction && this.state.triggerReplyAction && this.replyBox.current) {
       this.props.onReplyThread(ReactDOM.findDOMNode(this.replyBox.current))
-      this.setState({ triggerReplyFocus: false })
+      this.setState({ triggerReplyAction: false })
     }
   }
 
