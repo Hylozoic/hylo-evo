@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash/fp'
 import EditProfileTab from './EditProfileTab/EditProfileTab'
@@ -12,20 +11,7 @@ import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import './UserSettings.scss'
 
-const { object, func } = PropTypes
-
 export default class UserSettings extends Component {
-  static propTypes = {
-    currentUser: object,
-    onClose: func
-  }
-
-  componentDidMount () {
-    const { currentUser } = this.props
-    this.props.fetchForCurrentUser()
-    this.props.fetchSavedSearches(currentUser.id)
-  }
-
   render () {
     const {
       currentUser,
@@ -42,10 +28,7 @@ export default class UserSettings extends Component {
       allCommunitiesSettings,
       fetchPending,
       queryParams,
-      registerStripeAccount,
-      searches,
-      deleteSearch,
-      viewSavedSearch
+      registerStripeAccount
     } = this.props
 
     const content = [
@@ -88,10 +71,7 @@ export default class UserSettings extends Component {
       {
         name: 'Saved Searches',
         path: '/settings/saved-searches',
-        component: <SavedSearchesTab
-          searches={searches}
-          deleteSearch={deleteSearch}
-          viewSavedSearch={viewSavedSearch} />
+        component: <SavedSearchesTab />
       }
     ]
 
