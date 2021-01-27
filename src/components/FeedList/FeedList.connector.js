@@ -15,7 +15,8 @@ export function mapStateToProps (state, props) {
     filter: props.postTypeFilter,
     ...pick([
       'slug',
-      'networkSlug'
+      'networkSlug',
+      'topicName'
     ], props.routeParams),
     ...pick([
       'subject',
@@ -40,7 +41,11 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
+    fetchPosts: param => offset => {
+      // The topic was not found in this case
+      if (param.topicName && !param.topic) return
+      return dispatch(fetchPosts({ offset, ...param }))
+    },
     storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
   }
 }

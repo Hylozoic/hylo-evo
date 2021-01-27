@@ -2,7 +2,10 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
-import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
+import {
+  FETCH_POSTS, FETCH_FOR_CURRENT_USER,
+  FETCH_TOPIC, FETCH_COMMUNITY_TOPIC
+} from 'store/constants'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
 import getCommunityTopicForCurrentRoute from 'store/selectors/getCommunityTopicForCurrentRoute'
@@ -13,8 +16,10 @@ import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
 import { newPostUrl } from 'util/navigation'
 import { fetchTopic, fetchCommunityTopic, fetchNetwork } from './Feed.store'
+import isPendingFor from 'store/selectors/isPendingFor'
 
 export function mapStateToProps (state, props) {
   let community, communityTopic, topic, network
@@ -27,6 +32,7 @@ export function mapStateToProps (state, props) {
   const networkSlug = getRouteParam('networkSlug', state, props)
   const topicName = getRouteParam('topicName', state, props)
   const postTypeContext = getPostTypeContext(state, props)
+  const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_COMMUNITY_TOPIC], state)
 
   if (communitySlug) {
     community = getCommunityForCurrentRoute(state, props)
@@ -54,6 +60,7 @@ export function mapStateToProps (state, props) {
     communityTopic,
     communitySlug,
     community,
+    topicLoading,
     topicName,
     topic,
     postsTotal: get('postsTotal', communitySlug ? communityTopic : topic),
@@ -85,6 +92,8 @@ export function mapDispatchToProps (dispatch, props) {
       }
     },
     fetchNetwork: () => dispatch(fetchNetwork(networkSlug)),
+    toggleCommunityTopicSubscribe: communityTopic =>
+      dispatch(toggleCommunityTopicSubscribe(communityTopic)),
     goToCreateCommunity: () => dispatch(push('/create-community/name')),
     newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams)))
   }
