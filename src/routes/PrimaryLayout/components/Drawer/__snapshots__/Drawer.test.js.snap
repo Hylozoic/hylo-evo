@@ -14,7 +14,7 @@ exports[`CommunityRow renders with new posts 1`] = `
       data-stylename="s.communityRowAvatar"
       style={
         Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+          "backgroundImage": "url(/foo.png)",
         }
       }
     />
@@ -41,7 +41,7 @@ exports[`CommunityRow renders with zero new posts 1`] = `
       data-stylename="s.communityRowAvatar"
       style={
         Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+          "backgroundImage": "url(/foo.png)",
         }
       }
     />
