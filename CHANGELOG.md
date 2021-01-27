@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * React Testing Library
 
 ### Changed
-
 * Upgrade Redux 3.x < 4.x
 * Upgrade React Router 4.x > 5.x
 * Upgrade Jest v23 > v26 (including enzyme, etc)
@@ -18,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Not being able to turn on or off notifications for communities
+- Initial load of Member Profile Edit takes too long #706
+- Navigating to a topic from All Topics goes nowhere #747
+- Navigating to a topic that doesn't exists goes into infinite loading state #744
 
 ## [2.2.4] - 2021-01-12
 ### Fixed
