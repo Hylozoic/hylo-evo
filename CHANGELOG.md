@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Not being able to turn on or off notifications for communities
 
+### Added
+- Removed Skills slide from account signup wizard.
+
 ## [2.2.4] - 2021-01-12
 ### Fixed
 - Don't allow posting of an empty comment.
