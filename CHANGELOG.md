@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+* React Testing Library
+
+### Changed
+
+* Upgrade Redux 3.x < 4.x
+* Upgrade React Router 4.x > 5.x
+* Upgrade Jest v23 > v26 (including enzyme, etc)
+* Upgrade Node v12 > v15
+* Applies latest heroku-buildpack-nodejs
+
 ### Fixed
 - Not being able to turn on or off notifications for communities
 
