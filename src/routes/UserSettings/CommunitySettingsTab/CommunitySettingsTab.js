@@ -34,10 +34,6 @@ export default class CommunitySettingsTab extends Component {
     showAddAffiliations: undefined
   }
 
-  componentDidMount () {
-    this.props.fetchForCurrentUser()
-  }
-
   render () {
     const { action } = this.props
     const { affiliations, memberships, errorMessage, successMessage, showAddAffiliations } = this.state
