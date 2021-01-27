@@ -171,7 +171,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
       exact={true}
       from="/public/:postTypeContext(project|event|p)?/:postId(\\\\d+)?/:action(new|edit)?"
       key="streamToMap"
-      push={false}
       to="/public/map"
     />
     <Route

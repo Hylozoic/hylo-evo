@@ -2,7 +2,6 @@
 
 exports[`renders a redirect if you can not moderate 1`] = `
 <Redirect
-  push={false}
   to="/c/foo"
 />
 `;

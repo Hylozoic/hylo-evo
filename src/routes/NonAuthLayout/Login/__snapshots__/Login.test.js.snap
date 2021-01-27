@@ -31,7 +31,6 @@ exports[`renders correctly 1`] = `
   >
     <Link
       data-stylename="forgot-password"
-      replace={false}
       to="/reset-password"
     >
       <span
@@ -112,7 +111,6 @@ exports[`renders correctly with mobile redirect 1`] = `
   >
     <Link
       data-stylename="forgot-password"
-      replace={false}
       to="/reset-password"
     >
       <span

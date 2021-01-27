@@ -8,7 +8,6 @@ exports[`does something 1`] = `
     data-stylename="message-member-container"
   >
     <Link
-      replace={false}
       to="/t"
     >
       <Button>
@@ -18,7 +17,6 @@ exports[`does something 1`] = `
   </div>
   <Link
     data-stylename="sidebar-link"
-    replace={false}
     to="/settings"
   >
     Profile Settings

@@ -16,7 +16,6 @@ exports[`Membership matches last snapshot 1`] = `
     small={true}
   >
     <Link
-      replace={false}
       to="/c/bb"
     >
       <RoundImage
