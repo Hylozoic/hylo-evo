@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Navigating to a topic from All Topics goes nowhere #747
 - Navigating to a topic that doesn't exists goes into infinite loading state #744
 
+### Added
+- Removed Skills slide from account signup wizard.
+
 ## [2.2.4] - 2021-01-12
 ### Fixed
 - Don't allow posting of an empty comment.

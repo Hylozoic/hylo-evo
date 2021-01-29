@@ -92,8 +92,8 @@ export default class Drawer extends React.PureComponent {
   }
 }
 
-export function CommunityRow ({ community, routeParams, avatarUrl, newPostCount, isMember = true }) {
-  const { name, slug } = community
+export function CommunityRow ({ community, routeParams, isMember = true }) {
+  const { avatarUrl, name, newPostCount, slug } = community
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.communityRow'>
