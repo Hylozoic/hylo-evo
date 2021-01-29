@@ -12,7 +12,6 @@ exports[`CommunityModerator matches the previous snapshot 1`] = `
   />
   <Link
     data-stylename="moderator-name"
-    replace={false}
     to="/c/cslug/m/1"
   >
     Jar

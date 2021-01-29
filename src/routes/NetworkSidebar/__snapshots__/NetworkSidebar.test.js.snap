@@ -12,7 +12,6 @@ exports[`NetworkSidebar shows the settings link if a admin 1`] = `
 >
   <Link
     data-stylename="settings-link"
-    replace={false}
     to="/n/networky-network/settings"
   >
     Settings
@@ -26,7 +25,6 @@ exports[`NetworkSidebar shows the settings link if a moderator 1`] = `
 >
   <Link
     data-stylename="settings-link"
-    replace={false}
     to="/n/networky-network/settings"
   >
     Settings

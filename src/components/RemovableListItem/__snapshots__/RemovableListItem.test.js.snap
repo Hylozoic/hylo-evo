@@ -26,7 +26,6 @@ exports[`RemovableListItem doesnt render a remove link 1`] = `
   data-stylename="item"
 >
   <Link
-    replace={false}
     to="/happy/place"
   >
     <RoundImage
@@ -37,7 +36,6 @@ exports[`RemovableListItem doesnt render a remove link 1`] = `
   </Link>
   <Link
     data-stylename="name"
-    replace={false}
     to="/happy/place"
   >
     Zeus
@@ -50,7 +48,6 @@ exports[`RemovableListItem renders correctly 1`] = `
   data-stylename="item"
 >
   <Link
-    replace={false}
     to="/happy/place"
   >
     <RoundImage
@@ -61,7 +58,6 @@ exports[`RemovableListItem renders correctly 1`] = `
   </Link>
   <Link
     data-stylename="name"
-    replace={false}
     to="/happy/place"
   >
     Zeus

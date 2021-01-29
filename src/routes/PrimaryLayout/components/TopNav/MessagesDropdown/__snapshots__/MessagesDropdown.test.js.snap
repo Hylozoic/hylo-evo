@@ -51,7 +51,6 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       <Link
         data-stylename="open"
         onClick={[Function]}
-        replace={false}
         to="/t/2?inbox=1"
       >
         Open Messages
@@ -59,7 +58,6 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       <Link
         data-stylename="new"
         onClick={[Function]}
-        replace={false}
         to="/t/new"
       >
         New
@@ -89,7 +87,6 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       <Link
         data-stylename="open"
         onClick={[Function]}
-        replace={false}
         to="/t/new"
       >
         Open Messages
@@ -97,7 +94,6 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       <Link
         data-stylename="new"
         onClick={[Function]}
-        replace={false}
         to="/t/new"
       >
         New

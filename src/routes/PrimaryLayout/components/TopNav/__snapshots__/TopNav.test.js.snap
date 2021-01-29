@@ -17,7 +17,6 @@ exports[`renders as expected with no community 1`] = `
       data-stylename="navIcons"
     >
       <Link
-        replace={false}
         to="/search"
       >
         <Icon
@@ -43,7 +42,6 @@ exports[`renders as expected with no community 1`] = `
         <li>
           <Link
             data-stylename="hover-highlight"
-            replace={false}
             to="/"
           >
             Profile
@@ -52,7 +50,6 @@ exports[`renders as expected with no community 1`] = `
         <li>
           <Link
             data-stylename="hover-highlight"
-            replace={false}
             to="/settings"
           >
             Settings
