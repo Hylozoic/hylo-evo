@@ -2,11 +2,11 @@ import TopicFeedHeader from './TopicFeedHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-const topic = { name: 'Petitions' }
+const topicName = 'Petitions'
 const bannerUrl = 'some.url'
 
 const defaultTestProps = {
-  topic,
+  topicName,
   currentUser: {
     firstName: () => 'anybody'
   }
@@ -15,12 +15,9 @@ const defaultTestProps = {
 it('matches the latest snapshot', () => {
   const props = {
     ...defaultTestProps,
-    community: {
-      bannerUrl
-    },
-    communityTopic: {
-      isSubscribed: true
-    }
+    bannerUrl,
+    toggleSubscribe: () => {},
+    isSubscribed: true
   }
   const wrapper = shallow(<TopicFeedHeader {...props} postsTotal={11} followersTotal={3} />)
   expect(wrapper).toMatchSnapshot()
@@ -29,21 +26,17 @@ it('matches the latest snapshot', () => {
 it('displays the topic name', () => {
   const props = {
     ...defaultTestProps,
-    communityTopic: {
-      isSubscribed: true
-    }
+    isSubscribed: true
   }
   const wrapper = shallow(<TopicFeedHeader {...props} />)
-  expect(wrapper.find('[data-stylename="topic-name"]').text()).toEqual('#' + defaultTestProps.topic.name)
+  expect(wrapper.find('[data-stylename="topic-name"]').text()).toEqual('#' + defaultTestProps.topicName)
 })
 
 describe('meta', () => {
   it('uses values of 0 if the meta info is not passed in', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {
-        isSubscribed: true
-      }
+      isSubscribed: true
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />0 subscribers<Icon />0 posts')
@@ -54,9 +47,7 @@ describe('meta', () => {
       ...defaultTestProps,
       followersTotal: 0,
       postsTotal: 0,
-      communityTopic: {
-        isSubscribed: true
-      }
+      isSubscribed: true
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />0 subscribers<Icon />0 posts')
@@ -67,9 +58,7 @@ describe('meta', () => {
       ...defaultTestProps,
       followersTotal: 1,
       postsTotal: 1,
-      communityTopic: {
-        isSubscribed: true
-      }
+      isSubscribed: true
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />1 subscriber<Icon />1 post')
@@ -80,9 +69,7 @@ describe('meta', () => {
       ...defaultTestProps,
       followersTotal: 2,
       postsTotal: 10,
-      communityTopic: {
-        isSubscribed: true
-      }
+      isSubscribed: true
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="meta"]').text()).toEqual('<Icon />2 subscribers<Icon />10 posts')
@@ -90,26 +77,20 @@ describe('meta', () => {
 })
 
 describe('subscribe', () => {
-  it('shows sub/unsub if community prop is present', () => {
+  it('shows sub/unsub if toggleSubscribe prop is present', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {},
-      community: {
-        slug: 'monkeys',
-        name: 'Monkey Gang',
-        bannerUrl
-      }
+      toggleSubscribe: () => {},
+      bannerUrl
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="subscribe"]')).toHaveLength(1)
   })
 
-  it('does not show sub/unsub if community prop is not present', () => {
+  it('does not show sub/unsub if toggleSubscribe prop is not present', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {
-        isSubscribed: false
-      }
+      isSubscribed: false
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="subscribe"]')).toHaveLength(0)
@@ -118,8 +99,8 @@ describe('subscribe', () => {
   it('should say Subscribe when not subscribed', () => {
     const props = {
       ...defaultTestProps,
-      community: {},
-      communityTopic: { isSubscribed: false }
+      toggleSubscribe: () => {},
+      isSubscribed: false
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="subscribe"]').render().text()).toEqual('Subscribe')
@@ -128,8 +109,8 @@ describe('subscribe', () => {
   it('should say Unsubscribe when subscribed', () => {
     const props = {
       ...defaultTestProps,
-      community: {},
-      communityTopic: { isSubscribed: true }
+      toggleSubscribe: () => {},
+      isSubscribed: true
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)
     expect(wrapper.find('[data-stylename="unsubscribe"]').render().text()).toEqual('Unsubscribe')
@@ -138,8 +119,7 @@ describe('subscribe', () => {
   it('calls toggleSubscribe when sub/unsub button is clicked', () => {
     const props = {
       ...defaultTestProps,
-      communityTopic: {},
-      community: { bannerUrl },
+      bannerUrl,
       toggleSubscribe: jest.fn()
     }
     const wrapper = shallow(<TopicFeedHeader {...props} />)

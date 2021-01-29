@@ -157,7 +157,7 @@
     "react-dnd-html5-backend": "^7.4.4",
     "react-dom": "^16.8.6",
     "react-flip-move": "^3.0.4",
-    "react-intercom": "^1.0.14",
+    "react-intercom": "^1.0.15",
     "react-map-gl": "^5.2.3",
     "react-particles-js": "^2.1.0",
     "react-redux": "^7.0.0",

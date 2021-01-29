@@ -41,6 +41,7 @@ exports[`matches the latest snapshot 1`] = `
     </div>
     <Button
       data-stylename="unsubscribe"
+      onClick={[Function]}
     >
       <Icon
         data-stylename="subscribe-star-icon-green"

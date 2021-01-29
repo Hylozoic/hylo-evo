@@ -1,35 +1,42 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import './SavedSearchesTab.scss'
-import { formatParams } from 'util/savedSearch'
+import React, { useCallback, useEffect } from 'react'
+import { push } from 'connected-react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import getMe from 'store/selectors/getMe'
+import { fetchSavedSearches, deleteSearch as deleteSearchAction } from '../UserSettings.store'
+import { FETCH_SAVED_SEARCHES } from 'store/constants'
+import { formatParams, generateViewParams } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import ReactTooltip from 'react-tooltip'
+import './SavedSearchesTab.scss'
 
-const { array, func } = PropTypes
+export default function SavedSearchesTab () {
+  const dispatch = useDispatch()
+  const viewSavedSearch = useCallback(search => {
+    const { mapPath } = generateViewParams(search)
+    dispatch(viewSavedSearch(search))
+    dispatch(push(mapPath))
+  })
+  const deleteSearch = useCallback(searchId => dispatch(deleteSearchAction(searchId)))
+  const currentUser = useSelector(getMe)
+  const loading = useSelector(state => state.pending[FETCH_SAVED_SEARCHES])
+  const searches = useSelector(state => state.SavedSearches.searches)
 
-export default class SavedSearchesTab extends Component {
-  static propTypes = {
-    searches: array,
-    deleteSearch: func,
-    viewSavedSearch: func
-  }
+  useEffect(() => { dispatch(fetchSavedSearches(currentUser.id)) }, [])
 
-  render () {
-    const { searches, deleteSearch, viewSavedSearch } = this.props
-    if (!searches) return <Loading />
+  if (!searches || loading) return <Loading />
 
-    return <div>
-      <div styleName='title'>Saved Searches</div>
-      {searches.map(s =>
-        <SearchControl
-          key={s.id}
-          search={s}
-          deleteSearch={deleteSearch}
-          viewSavedSearch={viewSavedSearch}
-        />)}
-    </div>
-  }
+  return <div>
+    <div styleName='title'>Saved Searches</div>
+    {searches.map(s =>
+      <SearchControl
+        key={s.id}
+        search={s}
+        viewSavedSearch={viewSavedSearch}
+        deleteSearch={deleteSearch}
+      />
+    )}
+  </div>
 }
 
 export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {

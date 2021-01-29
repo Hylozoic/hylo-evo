@@ -43,9 +43,7 @@ describe('Feed', () => {
     const feed = wrapper.find('Connect(Component)')
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
-      routeParams: {
-        networkSlug: 'bar'
-      },
+      routeParams: { networkSlug: 'bar' },
       querystringParams: {},
       subject: 'network',
       postTypeFilter: 'request',
@@ -73,7 +71,7 @@ describe('Feed', () => {
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
-    expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
+    expect(wrapper.find('TopicFeedHeader')).toHaveLength(1)
   })
 })
 
