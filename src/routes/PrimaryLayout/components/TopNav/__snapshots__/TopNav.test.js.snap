@@ -64,6 +64,15 @@ exports[`renders as expected with no community 1`] = `
           </span>
         </li>
         <li>
+          <Link
+            data-stylename="hover-highlight"
+            replace={false}
+            to="/terms"
+          >
+            Terms & Privacy
+          </Link>
+        </li>
+        <li>
           <span
             data-stylename="hover-highlight isntMobileDevice"
             onClick={[Function]}
