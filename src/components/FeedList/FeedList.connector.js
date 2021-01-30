@@ -14,9 +14,7 @@ export function mapStateToProps (state, props) {
   const fetchPostsParam = {
     filter: props.postTypeFilter,
     slug: props.routeParams.groupSlug,
-    ...pick([
-      'context'
-    ], props.routeParams),
+    context: props.routeParams.context,
     ...pick([
       'sortBy',
       'topic'

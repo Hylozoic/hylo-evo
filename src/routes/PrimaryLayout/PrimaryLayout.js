@@ -164,7 +164,7 @@ export default class PrimaryLayout extends Component {
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
     const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, { path, exact: true }),
+      ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
@@ -199,25 +199,25 @@ export default class PrimaryLayout extends Component {
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
             {/* All and Public Routes */}
-            <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
-            <Route path='/:context(all|public)/:view(topics)/:topicName' exact component={Feed} />
+            <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Group Routes */}
-            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
-            <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
             <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Member Routes */}
-            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -226,8 +226,9 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
-            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={GroupSidebar} />
-            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events|map|groups|projects)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
           </Switch>
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>

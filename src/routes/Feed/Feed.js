@@ -86,8 +86,7 @@ export default class Feed extends Component {
           group={group}
           currentUser={currentUser}
           type={postTypeFilter}
-          all={context && context === 'all'}
-          publicContext={context && context === 'public'}
+          context={context}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}

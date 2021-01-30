@@ -7,6 +7,7 @@ import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
 import { find } from 'lodash/fp'
 import { Link } from 'react-router-dom'
+import { groupUrl } from 'util/navigation'
 
 import './Groups.scss'
 
