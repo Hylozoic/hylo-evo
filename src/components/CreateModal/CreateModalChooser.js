@@ -10,7 +10,7 @@ export default class CreateModalChooser extends Component {
     return <div styleName='chooser'>
       {Object.keys(POST_TYPES).map(postType =>
         <div key={postType}>
-          <Link to={location.pathname + postType}>{postType}</Link>
+          <Link to={location.pathname + 'post?t=' + postType}>{postType}</Link>
         </div>
       )}
       <div key='group'>

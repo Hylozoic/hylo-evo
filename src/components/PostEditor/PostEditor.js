@@ -84,9 +84,9 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentGroup, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
+  buildStateFromProps = ({ editing, currentGroup, post, topic, initialPrompt, announcementSelected, postType }) => {
     const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
-      type: postTypeContext || PostEditor.defaultProps.post.type,
+      type: postType || PostEditor.defaultProps.post.type,
       groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
       topics: topic ? [topic] : [],
       detailsTopics: [],

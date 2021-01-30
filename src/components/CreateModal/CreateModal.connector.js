@@ -8,13 +8,8 @@ export const mapDispatchToProps = (dispatch, props) => {
 
   if (!routeParams) return {}
 
-  const { postId, slug } = routeParams
-  const context = props.match.url.includes('public') ? 'public' : ''
-  const urlParams = {
-    groupSlug: slug,
-    ...omit(['postId', 'action', 'groupSlug'], routeParams),
-    context
-  }
+  const { postId } = routeParams
+  const urlParams = omit(['postId', 'action'], routeParams)
   const closeUrl = postId
     ? postUrl(postId, urlParams)
     : baseUrl(urlParams)

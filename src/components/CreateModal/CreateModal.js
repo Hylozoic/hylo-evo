@@ -6,7 +6,7 @@ import {
   Switch
 } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
-import { baseUrl } from 'util/navigation'
+import { baseUrl, removeCreateFromUrl } from 'util/navigation'
 import { POST_TYPES } from 'store/models/Post'
 import CreateGroup from 'components/CreateGroup'
 import CreateModalChooser from './CreateModalChooser'
@@ -19,7 +19,7 @@ export default class CreateModal extends Component {
 
     if (!match) return null
 
-    const rootUrl = baseUrl(match.params)
+    const rootUrl = removeCreateFromUrl(location.pathname)
 
     return <CSSTransitionGroup
       transitionName='create-modal'
@@ -31,7 +31,7 @@ export default class CreateModal extends Component {
         <div styleName='create-modal-wrapper' className='create-modal-wrapper'>
           <span styleName='close-button' onClick={closeModal}>X</span>
           <Switch>
-            <Route path={`${rootUrl}/create/:postTypeContext(${Object.keys(POST_TYPES).join('|')})`} children={({ match, location }) =>
+            <Route path={`${rootUrl}/create/post`} children={({ match, location }) =>
               <PostEditor match={match} location={location} onClose={closeModal} />} />
             <Route path={`${rootUrl}/create/group`} children={({ match, location }) =>
               <CreateGroup match={match} location={location} onClose={closeModal} />} />

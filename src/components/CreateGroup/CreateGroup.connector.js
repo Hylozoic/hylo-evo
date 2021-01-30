@@ -22,12 +22,8 @@ export const mapDispatchToProps = (dispatch, props) => {
   const routeParams = get('match.params', props)
   if (!routeParams) return {}
 
-  const { postId, groupSlug, context } = routeParams
-  const urlParams = {
-    groupSlug,
-    ...omit(['postId', 'action', 'groupSlug'], routeParams),
-    context
-  }
+  const { postId } = routeParams
+  const urlParams = omit(['postId', 'action'], routeParams)
   const closeUrl = postId
     ? postUrl(postId, urlParams)
     : baseUrl(urlParams)

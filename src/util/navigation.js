@@ -171,6 +171,11 @@ export function addQuerystringToPath (path, querystringParams) {
   return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
 }
 
+export function removeCreateFromUrl (url) {
+  const matchForReplaceRegex = `/create/.*`
+  return url.replace(new RegExp(matchForReplaceRegex), '')
+}
+
 export function removePostFromUrl (url) {
   const matchForReplaceRegex = `/post/${POST_ID_MATCH}`
   return url.replace(new RegExp(matchForReplaceRegex), '')
