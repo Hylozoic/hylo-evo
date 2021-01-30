@@ -5,7 +5,7 @@ import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
 export function mapStateToProps (state, props) {
   const { currentLocation } = state.locationHistory
   let isPublic = false
-  if (currentLocation.includes('public')) {
+  if (currentLocation.includes('/public')) {
     isPublic = true
   }
 

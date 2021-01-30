@@ -98,8 +98,10 @@ export default class CreateGroup extends Component {
   }
 
   render () {
-    const { closeModal, parentGroupOptions } = this.props
+    const { closeModal, match, parentGroupOptions } = this.props
     const { accessibility, errors, name, parentGroups, slug, visibility } = this.state
+
+    if (!match) return null
 
     return <div styleName='wrapper'>
       <div styleName='header'>Create group</div>
@@ -117,7 +119,7 @@ export default class CreateGroup extends Component {
         />
         {errors.name && <span styleName='error'>{errors.name}</span>}
         <span styleName='slug'>
-          https://hylo.com/g/
+          https://hylo.com/groups/
           <TextInput
             type='text'
             name='name'

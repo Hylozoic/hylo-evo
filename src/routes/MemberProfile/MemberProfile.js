@@ -8,7 +8,7 @@ import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
-  messageThreadUrl,
+  messagePersonUrl,
   messagesUrl,
   gotoExternalUrl
 } from 'util/navigation'
@@ -83,7 +83,7 @@ export default class MemberProfile extends React.Component {
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const actionButtonsItems = [
-      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person)), hideTooltip: true },
+      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideTooltip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
       { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },

@@ -21,7 +21,6 @@ import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
-import { getGroupSlugInPath as getGroupSlug } from 'util/navigation'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -108,8 +107,8 @@ export default class MapExplorer extends React.Component {
   }
 
   updateSavedSearch (search) {
-    const { boundingBox, featureTypes, searchText, slug, subject, topics } = generateViewParams(search)
-    const params = { featureTypes, search: searchText, slug, subject, topics }
+    const { boundingBox, featureTypes, searchText, groupSlug, context, topics } = generateViewParams(search)
+    const params = { featureTypes, search: searchText, groupSlug, context, topics }
     this.updateBoundingBoxQuery(boundingBox)
     this.props.fetchMembers(params)
     this.props.fetchPosts(params)
@@ -289,11 +288,10 @@ export default class MapExplorer extends React.Component {
 
   saveSearch = (name) => {
     const { currentBoundingBox } = this.state
-    const { context, currentUser, filters, location, posts } = this.props
+    const { context, currentUser, filters, posts, routeParams } = this.props
     const { featureTypes, search: searchText, topics } = filters
-    const { pathname } = location
 
-    let groupSlug = getGroupSlug(pathname)
+    let groupSlug = routeParams.groupSlug
 
     const userId = currentUser.id
 

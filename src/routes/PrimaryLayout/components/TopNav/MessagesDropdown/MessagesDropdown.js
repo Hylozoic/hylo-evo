@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
-import { newMessageUrl, threadUrl } from 'util/navigation'
+import { newMessageUrl, messageThreadUrl } from 'util/navigation'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
@@ -82,7 +82,7 @@ export default class MessagesDropdown extends Component {
     }
 
     const firstThreadUrl = !isEmpty(threads)
-      ? threadUrl(threads[0].id) + '?inbox=1'
+      ? messageThreadUrl(threads[0].id) + '?inbox=1'
       : newMessageUrl()
 
     return <TopNavDropdown

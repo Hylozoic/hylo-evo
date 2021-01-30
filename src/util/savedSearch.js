@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { groupUrl } from 'util/navigation'
 
 const parsegroup = group => `Group: ${group.name}`
 const parsePostTypes = postTypes => `Post types: ${postTypes.join(', ')}`
@@ -37,7 +38,7 @@ export function formatParams (search) {
 export function formatParamPreview (search) {
   const { context, group, postTypes } = search
   const contextDetails = {
-    group: group ? parsegroup(group) : '',
+    groups: group ? parsegroup(group) : '',
     public: `Public Groups`,
     all: `All Groups`
   }
@@ -47,27 +48,19 @@ export function formatParamPreview (search) {
 export function generateViewParams (search) {
   const { boundingBox, context, group, postTypes, searchText, topics } = search
 
-  let mapPath, slug, subject
+  let mapPath, groupSlug
   switch (context) {
     case 'all': {
       mapPath = `/all/map`
-      subject = 'all'
       break
     }
-    case 'public': {
-      mapPath = `/public/map`
-      subject = 'public'
-      break
-    }
-    case 'group': {
-      mapPath = `/g/${group.slug}/map`
-      slug = group.slug
-      subject = 'group'
+    case 'groups': {
+      mapPath = groupUrl(group.slug, 'map')
+      groupSlug = group.slug
       break
     }
     default: {
       mapPath = `/public/map`
-      subject = 'public-groups'
     }
   }
 
@@ -76,5 +69,5 @@ export function generateViewParams (search) {
     return map
   }, {})
 
-  return { boundingBox, featureTypes, mapPath, searchText, slug, subject, topics }
+  return { boundingBox, featureTypes, mapPath, searchText, groupSlug, context, topics }
 }

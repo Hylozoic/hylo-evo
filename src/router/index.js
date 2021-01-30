@@ -33,7 +33,7 @@ function rootRoutes () {
   return <ErrorBoundary>
     <LoginCheck>
       <Switch>
-        <AuthRoute returnToOnAuth path='/g/:slug/join/:accessCode' component={JoinGroup} />
+        <AuthRoute returnToOnAuth path='/groups/:groupSlug/join/:accessCode' component={JoinGroup} />
         <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinGroup} />
         <AuthRoute path='/login' component={NonAuthLayout} />
         <AuthRoute path='/signup' exact component={NonAuthLayout} />

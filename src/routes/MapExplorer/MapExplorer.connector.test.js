@@ -18,7 +18,7 @@ describe('mapStateToProps', () => {
     props = {
       location: { search: '' },
       match: {
-        params: { 'slug': 'foo' }
+        params: { groupSlug: 'foo' }
       }
     }
 
@@ -37,7 +37,7 @@ describe('mapStateToProps', () => {
         selectedSearch: {}
       },
       queryResults: {
-        [buildKey(FETCH_POSTS_MAP, { slug: 'foo' })]: {
+        [buildKey(FETCH_POSTS_MAP, { groupSlug: 'foo' })]: {
           ids: ['1', '3', '2']
         }
       }
@@ -49,7 +49,7 @@ describe('mapStateToProps', () => {
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         currentUser: undefined,
-        fetchParams: { boundingBox: undefined, slug: 'foo', subject: 'group', groupSlugs: undefined, isPublic: false },
+        fetchParams: { boundingBox: undefined, groupSlug: 'foo', context: 'groups', groupSlugs: undefined },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
@@ -60,7 +60,7 @@ describe('mapStateToProps', () => {
         posts: [],
         publicGroups: [],
         hideDrawer: false,
-        routeParams: { slug: 'foo' },
+        routeParams: { groupSlug: 'foo' },
         topics: [],
         zoom: 0
       })

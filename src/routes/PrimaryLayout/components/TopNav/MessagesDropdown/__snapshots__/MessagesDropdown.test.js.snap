@@ -52,7 +52,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
         data-stylename="open"
         onClick={[Function]}
         replace={false}
-        to="/t/2?inbox=1"
+        to="/messages/2?inbox=1"
       >
         Open Messages
       </Link>
@@ -60,7 +60,7 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
         data-stylename="new"
         onClick={[Function]}
         replace={false}
-        to="/t/new"
+        to="/messages/new"
       >
         New
       </Link>
@@ -90,7 +90,7 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
         data-stylename="open"
         onClick={[Function]}
         replace={false}
-        to="/t/new"
+        to="/messages/new"
       >
         Open Messages
       </Link>
@@ -98,7 +98,7 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
         data-stylename="new"
         onClick={[Function]}
         replace={false}
-        to="/t/new"
+        to="/messages/new"
       >
         New
       </Link>

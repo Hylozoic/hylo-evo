@@ -9,17 +9,17 @@ import {
 } from './RelatedGroupsTab.store'
 
 export function mapStateToProps (state, props) {
-  const slug = props.group.slug
+  const groupSlug = props.group.slug
   const search = getSearch(state, props)
   const sortBy = getSort(state, props)
-  const queryProps = { slug, sortBy, search }
+  const queryProps = { groupSlug, sortBy, search }
 
   return {
     parentGroups: getParentGroups(state, queryProps),
     childGroups: getChildGroups(state, queryProps),
     search,
     sortBy,
-    slug
+    groupSlug
   }
 }
 

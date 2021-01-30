@@ -24,7 +24,7 @@ export function mapStateToProps (state, props) {
   const selectedSort = getSort(state)
   const search = getSearch(state)
   const fetchTopicsParams = {
-    groupSlug: routeParams.slug,
+    groupSlug: routeParams.groupSlug,
     sortBy: selectedSort,
     autocomplete: search
   }

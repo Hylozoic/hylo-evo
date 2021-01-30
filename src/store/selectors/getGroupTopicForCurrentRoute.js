@@ -4,7 +4,7 @@ import getRouteParam from './getRouteParam'
 
 const getGroupTopicForCurrentRoute = ormCreateSelector(
   orm,
-  (state, props) => getRouteParam('slug', state, props),
+  (state, props) => getRouteParam('groupSlug', state, props),
   (state, props) => getRouteParam('topicName', state, props),
   (session, slug, topicName) => {
     const group = session.Group.get({ slug })

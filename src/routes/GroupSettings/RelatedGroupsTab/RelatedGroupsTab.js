@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
+import { find } from 'lodash/fp'
 import PropTypes from 'prop-types'
-import './RelatedGroupsTab.scss'
-import { DEFAULT_AVATAR } from 'store/models/Group'
+import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
-import { find } from 'lodash/fp'
-import { Link } from 'react-router-dom'
+import { DEFAULT_AVATAR } from 'store/models/Group'
+import { groupUrl } from 'util/navigation'
+
+import './RelatedGroupsTab.scss'
 
 // import ScrollListener from 'components/ScrollListener'
 // import { CENTER_COLUMN_ID } from 'util/scrolling'
@@ -117,7 +120,7 @@ export function GroupsList ({ groups, fetchMoreGroups }) {
 
 export function GroupCard ({ group }) {
   return <div styleName='group-card'>
-    <Link to={`/g/${group.slug}`}>
+    <Link to={groupUrl(group.slug)}>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>

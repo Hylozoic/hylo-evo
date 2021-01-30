@@ -130,23 +130,23 @@ const publicGroupsQuery = `query (
 }`
 
 // actions
-export function fetchPosts ({ subject, slug, sortBy, search, filter, topic, boundingBox, isPublic }) {
+export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boundingBox }) {
   var query, extractModel, getItems
 
-  if (subject === 'group') {
+  if (context === 'groups') {
     query = groupPostsQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
-  } else if (subject === 'all') {
+  } else if (context === 'all') {
     query = allGroupsPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
-  } else if (subject === 'public') {
+  } else if (context === 'public') {
     query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
-    throw new Error(`FETCH_POSTS_MAP with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_POSTS_MAP with context=${context} is not implemented`)
   }
 
   return {
@@ -160,7 +160,7 @@ export function fetchPosts ({ subject, slug, sortBy, search, filter, topic, boun
         filter,
         topic,
         boundingBox: formatBoundingBox(boundingBox),
-        isPublic
+        isPublic: context === 'public'
       }
     },
     meta: {
@@ -172,24 +172,24 @@ export function fetchPosts ({ subject, slug, sortBy, search, filter, topic, boun
   }
 }
 
-export function fetchMembers ({ boundingBox, subject, slug, sortBy, search, isPublic }) {
+export function fetchMembers ({ boundingBox, context, slug, sortBy, search }) {
   var query, extractModel, getItems
 
-  if (subject === 'group') {
+  if (context === 'groups') {
     query = groupMembersQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.members')
-  } else if (subject === 'all') {
+  } else if (context === 'all') {
     // query = allGroupsMembersQuery
     // extractModel = 'User'
     // getItems = get('payload.data.people')
     // No Members in All Groups Context, yet
     return { type: 'RETURN NO MEMBERS FOR ALL GROUPS' }
-  } else if (subject === 'public') {
+  } else if (context === 'public') {
     // No Members in Public Context, yet
     return { type: 'RETURN NO MEMBERS FOR PUBLIC' }
   } else {
-    throw new Error(`FETCH_MEMBERS_MAP with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_MEMBERS_MAP with context=${context} is not implemented`)
   }
 
   return {
@@ -201,7 +201,7 @@ export function fetchMembers ({ boundingBox, subject, slug, sortBy, search, isPu
         sortBy,
         search,
         boundingBox: formatBoundingBox(boundingBox),
-        isPublic
+        isPublic: context === 'public'
       }
     },
     meta: {
@@ -213,19 +213,19 @@ export function fetchMembers ({ boundingBox, subject, slug, sortBy, search, isPu
   }
 }
 
-export function fetchPublicGroups ({ boundingBox, subject, sortBy, search, groupSlugs, isPublic }) {
+export function fetchPublicGroups ({ boundingBox, context, sortBy, search, groupSlugs }) {
   var query, extractModel, getItems
 
-  if (subject === 'public') {
+  if (context === 'public') {
     query = publicGroupsQuery
     extractModel = 'Group'
     getItems = get('payload.data.groups')
-  } else if (subject === 'group') {
+  } else if (context === 'groups') {
     return { type: 'RETURN NULL FOR GROUP' }
-  } else if (subject === 'all') {
+  } else if (context === 'all') {
     return { type: 'RETURN NULL FOR ALL GROUPS' }
   } else {
-    throw new Error(`FETCH_GROUPS_MAP with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_GROUPS_MAP with context=${context} is not implemented`)
   }
 
   return {
@@ -237,7 +237,7 @@ export function fetchPublicGroups ({ boundingBox, subject, sortBy, search, group
         search,
         boundingBox: formatBoundingBox(boundingBox),
         groupSlugs,
-        isPublic
+        isPublic: context === 'public'
       }
     },
     meta: {

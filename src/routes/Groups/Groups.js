@@ -118,11 +118,11 @@ export function GroupsList ({ groups, fetchMoreGroups }) {
 
 export function GroupCard ({ group }) {
   return <div styleName='group-card'>
-    <Link to={`/g/${group.slug}/groups`}>
+    <Link to={groupUrl(group.slug, 'groups')}>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
-        <span styleName='group-stats'>{group.numMembers} Members</span>
+        <span styleName='group-stats'>{group.memberCount} Members</span>
       </div>
     </Link>
   </div>

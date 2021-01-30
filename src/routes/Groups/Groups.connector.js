@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
 import getRouteParam from 'store/selectors/getRouteParam'
 import {
@@ -10,17 +11,19 @@ import {
 } from './Groups.store'
 
 export function mapStateToProps (state, props) {
-  const slug = getRouteParam('slug', state, props)
+  const group = getGroupForCurrentRoute(state, props)
+  const groupSlug = getRouteParam('groupSlug', state, props)
   const search = getSearch(state, props)
   const sortBy = getSort(state, props)
-  const queryProps = { slug, sortBy, search }
+  const queryProps = { groupSlug, sortBy, search }
 
   return {
-    parentGroups: getParentGroups(state, queryProps),
+    group,
     childGroups: getChildGroups(state, queryProps),
+    parentGroups: getParentGroups(state, queryProps),
     search,
     sortBy,
-    slug
+    groupSlug
   }
 }
 

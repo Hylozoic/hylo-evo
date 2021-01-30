@@ -3,7 +3,7 @@ import { push } from 'connected-react-router'
 import { get, omit } from 'lodash/fp'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMe from 'store/selectors/getMe'
-import { postsUrl, postUrl } from 'util/navigation'
+import { baseUrl, groupUrl, postUrl } from 'util/navigation'
 import { createGroup, fetchGroupExists } from './CreateGroup.store'
 
 export function mapStateToProps (state, props) {
@@ -20,21 +20,23 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   const routeParams = get('match.params', props)
-  const { postId, slug, context } = routeParams
+  if (!routeParams) return {}
+
+  const { postId, groupSlug, context } = routeParams
   const urlParams = {
-    groupSlug: slug,
-    ...omit(['postId', 'action', 'slug'], routeParams),
+    groupSlug,
+    ...omit(['postId', 'action', 'groupSlug'], routeParams),
     context
   }
   const closeUrl = postId
     ? postUrl(postId, urlParams)
-    : postsUrl(urlParams)
+    : baseUrl(urlParams)
 
   return {
     closeModal: () => dispatch(push(closeUrl)),
     createGroup: (name, slug, parentIds) => dispatch(createGroup(name, slug, parentIds)),
     fetchGroupExists: (slug) => dispatch(fetchGroupExists(slug)),
-    goToGroup: (slug) => dispatch(push(`/g/${slug}`)),
+    goToGroup: (slug) => dispatch(push(groupUrl(slug)))
   }
 }
 

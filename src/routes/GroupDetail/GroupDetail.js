@@ -8,6 +8,7 @@ import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import { GROUP_ACCESSIBILITY } from 'store/models/Group'
 import { inIframe } from 'util/index'
+import { groupUrl } from 'util/navigation'
 
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
@@ -119,7 +120,7 @@ export default class GroupDetail extends Component {
         { !currentUser
           ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to post in <span styleName='g.requestGroup'>{group.name}</span></Link></div>
           : isMember
-            ? <div styleName='g.existingMember'>You are already a member of <Link to={`/g/${group.slug}`}>{group.name}</Link>!</div>
+            ? <div styleName='g.existingMember'>You are already a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
             : this.renderGroupDetails()
         }
       </div>

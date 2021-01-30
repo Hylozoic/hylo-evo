@@ -31,27 +31,18 @@ export default class Feed extends Component {
 
   componentDidUpdate (prevProps) {
     const { routeParams, fetchTopic } = this.props
-    const { slug, topicName } = routeParams
+    const { groupSlug, topicName } = routeParams
     const topicChanged = topicName && get('routeParams.topicName', prevProps) !== topicName
-    const slugChanged = slug && get('routeParams.slug', prevProps) !== slug
+    const slugChanged = groupSlug && get('routeParams.groupSlug', prevProps) !== groupSlug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
   }
 
   getFeedProps () {
     const { routeParams, querystringParams } = this.props
-    const { slug, context } = routeParams
-
-    var subject
-    if (slug) {
-      subject = 'group'
-    } else if (context && context === 'public') {
-      subject = 'public-groups'
-    } else {
-      subject = 'all-groups'
-    }
+    const { context } = routeParams
 
     return {
-      subject,
+      context,
       routeParams,
       querystringParams,
       topic: get('id', this.props.topic),

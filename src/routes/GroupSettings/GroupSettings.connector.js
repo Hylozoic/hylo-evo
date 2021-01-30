@@ -11,7 +11,7 @@ import {
 import { groupDeleteConfirmationUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
-  const slug = getRouteParam('slug', state, props, false)
+  const slug = getRouteParam('groupSlug', state, props, false)
   const group = getGroupForCurrentRoute(state, props)
   const canModerate = getCanModerate(state, { group })
 

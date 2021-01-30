@@ -205,7 +205,7 @@ function appendIds (state, type, params, data) {
 
 export function makeGetQueryResults (actionType) {
   return (state, props) => {
-    // TBD: Sometimes parameters like 'id' and 'slug' are to be found in the
+    // TBD: Sometimes parameters like 'id' and 'groupSlug' are to be found in the
     // URL, in which case they are in e.g. props.match.params.id; and sometimes
     // they are passed directly to a component. Should buildKey handle both
     // cases?

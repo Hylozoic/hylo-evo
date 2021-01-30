@@ -7,7 +7,6 @@ import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -22,9 +21,8 @@ export function mapStateToProps (state, props) {
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
-  const groupSlug = getRouteParam('slug', state, props)
+  const groupSlug = getRouteParam('groupSlug', state, props)
   const topicName = getRouteParam('topicName', state, props)
-  const postTypeContext = getPostTypeContext(state, props)
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -35,9 +33,9 @@ export function mapStateToProps (state, props) {
     topic = getTopicForCurrentRoute(state, props)
   }
 
-  // * TBD - consolidate this getQuerystringParam('t', ...) into getPostTypeContext
-  const postTypeFilter = postTypeContext || getQuerystringParam('t', state, props)
+  const postTypeFilter = getQuerystringParam('t', state, props)
   const sortBy = getQuerystringParam('s', state, props)
+
 
   return {
     routeParams,
@@ -61,7 +59,7 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const groupSlug = getRouteParam('slug', null, props)
+  const groupSlug = getRouteParam('groupSlug', null, props)
   const topicName = getRouteParam('topicName', null, props)
   const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
