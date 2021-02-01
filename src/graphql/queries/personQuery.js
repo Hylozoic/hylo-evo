@@ -71,6 +71,9 @@ export default
         name
         slug
       }
+      person {
+        id
+      }
     }
     projects {
       items {

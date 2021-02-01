@@ -50,13 +50,15 @@ export function toggleDrawer () {
 }
 
 export function ormSessionReducer (
-  { Community, Membership, Network, Person },
+  { Community, Me, Membership, Network, Person },
   { type, meta, payload }
 ) {
   if (type === FETCH_FOR_COMMUNITY_PENDING) {
     let community = Community.safeGet({ slug: meta.slug })
     if (!community) return
-    let membership = Membership.safeGet({ community: community.id })
+    const me = Me.first()
+    if (!me) return
+    let membership = Membership.safeGet({ community: community.id, person: me.id })
     if (!membership) return
     membership.update({ newPostCount: 0 })
   }

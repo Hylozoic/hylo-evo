@@ -58,6 +58,9 @@ export default
       sendEmail
       sendPushNotifications
     }
+    person {
+      id
+    }
     community {
       id
       name

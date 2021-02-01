@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
 // import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
+import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { baseUrl, allCommunitiesUrl, isPublicPath } from 'util/navigation'
@@ -81,6 +82,7 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getCommunityMembership = ormCreateSelector(
   orm,
+  getMe,
   (state, { communityId }) => communityId,
-  (session, id) => session.Membership.safeGet({ community: id })
+  (session, currentUser, id) => session.Membership.safeGet({ community: id, person: currentUser.id })
 )
