@@ -112,7 +112,7 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
 
 export function CommunityLeaderSection ({ leaders, slug }) {
   return <div styleName='leader-section'>
-    <div styleName='header leader-header'>Community Leaders</div>
+    <div styleName='header leader-header'>Community Moderators</div>
     {leaders.map(l => <CommunityLeader leader={l} slug={slug} key={l.id} />)}
   </div>
 }

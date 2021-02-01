@@ -66,7 +66,6 @@ exports[`renders as expected with no community 1`] = `
         <li>
           <Link
             data-stylename="hover-highlight"
-            replace={false}
             to="/terms"
           >
             Terms & Privacy
