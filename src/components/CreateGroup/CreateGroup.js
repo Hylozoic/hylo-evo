@@ -1,23 +1,16 @@
 import { trim } from 'lodash/fp'
 import React, { Component } from 'react'
-import {
-  matchPath,
-  Route,
-  Switch
-} from 'react-router-dom'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import GroupsSelector from 'components/GroupsSelector'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
-import { baseUrl } from 'util/navigation'
 import { accessibilityString, visibilityString, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
 import styles from './CreateGroup.scss'
 
 const slugValidatorRegex = /^[0-9a-z-]{2,40}$/
 
 export default class CreateGroup extends Component {
-
   constructor (props) {
     super(props)
 
@@ -39,7 +32,7 @@ export default class CreateGroup extends Component {
     this.groupsSelector = React.createRef()
   }
 
-  componentDidUpdate(oldProps) {
+  componentDidUpdate (oldProps) {
     if (oldProps.groupSlugExists !== this.props.groupSlugExists) {
       this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? 'This URL already exists. Try another.' : false } })
     }
@@ -50,8 +43,8 @@ export default class CreateGroup extends Component {
   }
 
   updateField = (field) => (value) => {
-    let newValue = typeof(value.target) !== 'undefined' ? value.target.value : value
-    typeof(newValue) === 'string' ? trim(newValue) : newValue
+    let newValue = typeof value.target !== 'undefined' ? value.target.value : value
+    newValue = typeof newValue === 'string' ? trim(newValue) : newValue
 
     const updates = {
       [field]: newValue,
@@ -85,20 +78,20 @@ export default class CreateGroup extends Component {
   onSubmit = () => {
     if (this.isValid()) {
       this.props.createGroup(this.state.name, this.state.slug, this.state.parentGroups.map(g => g.id))
-      .then(({ error }) => {
-        if (error) {
-          this.setState({
-            error: 'There was an error, please try again.'
-          })
-        } else {
-          this.props.goToGroup(this.state.slug)
-        }
-      })
+        .then(({ error }) => {
+          if (error) {
+            this.setState({
+              error: 'There was an error, please try again.'
+            })
+          } else {
+            this.props.goToGroup(this.state.slug)
+          }
+        })
     }
   }
 
   render () {
-    const { closeModal, match, parentGroupOptions } = this.props
+    const { match, parentGroupOptions } = this.props
     const { accessibility, errors, name, parentGroups, slug, visibility } = this.state
 
     if (!match) return null
@@ -167,7 +160,7 @@ export default class CreateGroup extends Component {
         <GroupsSelector
           options={parentGroupOptions}
           selected={parentGroups}
-          onChange={(newGroups) => { this.updateField('parentGroups')(newGroups)}}
+          onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
           readOnly={false}
           ref={this.groupsSelector}
         />

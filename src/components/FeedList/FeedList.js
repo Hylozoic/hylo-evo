@@ -104,20 +104,20 @@ export default class FeedList extends React.Component {
         elementId={CENTER_COLUMN_ID}
         onScroll={this.handleScrollEvents} />
       {showSortAndFilters && <React.Fragment>
-      <div>
-        <TabBar
-          ref={this.tabBar}
-          onChangeTab={changeTab}
-          selectedTab={postTypeFilter}
-          onChangeSort={changeSort}
-          selectedSort={sortBy} />
-      </div>
-      {atTabBar && <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
-        <TabBar onChangeTab={changeTab}
-          selectedTab={postTypeFilter}
-          onChangeSort={changeSort}
-          selectedSort={sortBy} />
-      </div>}
+        <div>
+          <TabBar
+            ref={this.tabBar}
+            onChangeTab={changeTab}
+            selectedTab={postTypeFilter}
+            onChangeSort={changeSort}
+            selectedSort={sortBy} />
+        </div>
+        {atTabBar && <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
+          <TabBar onChangeTab={changeTab}
+            selectedTab={postTypeFilter}
+            onChangeSort={changeSort}
+            selectedSort={sortBy} />
+        </div>}
       </React.Fragment>}
       <div styleName={cx('FeedListItems', { collapsedState })}>
         {!pending && posts.length === 0 ? <div styleName='no-posts'>

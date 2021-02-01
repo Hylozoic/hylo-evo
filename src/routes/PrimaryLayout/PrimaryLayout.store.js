@@ -5,7 +5,6 @@ import {
   FETCH_FOR_CURRENT_USER,
   FETCH_FOR_GROUP_PENDING
 } from 'store/constants'
-import clearCacheFor from 'store/reducers/ormReducer/clearCacheFor'
 
 export const MODULE_NAME = 'PrimaryLayout'
 

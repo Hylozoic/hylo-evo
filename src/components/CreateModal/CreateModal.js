@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import {
-  matchPath,
-  Redirect,
-  Route,
-  Switch
-} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { CSSTransitionGroup } from 'react-transition-group'
-import { baseUrl, removeCreateFromUrl } from 'util/navigation'
-import { POST_TYPES } from 'store/models/Post'
+import { removeCreateFromUrl } from 'util/navigation'
 import CreateGroup from 'components/CreateGroup'
 import CreateModalChooser from './CreateModalChooser'
 import PostEditor from 'components/PostEditor'

@@ -5,7 +5,6 @@ import './GroupSettingsTab.scss'
 import Button from 'components/Button'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
-import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
@@ -49,7 +48,7 @@ export default class GroupSettingsTab extends Component {
         location: location || '',
         name: name || '',
         settings: settings || { allowGroupInvites: false, publicMemberDirectory: false },
-        visibility: visibility || GROUP_ACCESSIBILITY.Protected
+        visibility: visibility || GROUP_VISIBILITY.Protected
       }
     })
   }
@@ -86,7 +85,7 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject

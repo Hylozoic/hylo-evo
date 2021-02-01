@@ -14,7 +14,7 @@ import './Groups.scss'
 // import ScrollListener from 'components/ScrollListener'
 // import { CENTER_COLUMN_ID } from 'util/scrolling'
 
-const { string, array, func } = PropTypes
+const { array } = PropTypes
 
 const sortOptions = [
   { id: 'name', label: 'Alphabetical' },
@@ -25,7 +25,7 @@ const sortOptions = [
 export default class Groups extends Component {
   static propTypes = {
     childGroups: array,
-    parentGroups: array,
+    parentGroups: array
     // search: string,
     // setSearch: func,
     // sortBy: string,
