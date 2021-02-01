@@ -170,7 +170,8 @@ export default function ormReducer (state = {}, action) {
       if (meta.type === 'CommunityTopic') {
         session.CommunityTopic.withId(meta.id).update({ newPostCount: 0 })
       } else if (meta.type === 'Membership') {
-        const membership = session.Membership.safeGet({ community: meta.id })
+        me = Me.first()
+        const membership = Membership.safeGet({ community: meta.id, person: me.id })
         membership && membership.update({ newPostCount: 0 })
       }
       break
@@ -191,13 +192,15 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_COMMUNITY_SETTINGS_PENDING:
       community = Community.withId(meta.id)
       community.update(meta.changes)
+      me = Me.first()
 
       // Triggers an update to redux-orm for the membership
-      membership = session.Membership.safeGet({ community: meta.id }).update({ forceUpdate: new Date() })
+      membership = Membership.safeGet({ community: meta.id, person: me.id }).update({ forceUpdate: new Date() })
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
-      membership = Membership.safeGet({ community: meta.communityId })
+      me = Me.first()
+      membership = Membership.safeGet({ community: meta.communityId, person: me.id })
       if (!membership) break
       membership.update({
         settings: {

@@ -6,11 +6,8 @@ Object {
   "communities": Array [
     Object {
       "id": "99",
-      "members": undefined,
-      "moderators": undefined,
-      "network": undefined,
+      "network": null,
       "newPostCount": undefined,
-      "posts": undefined,
       "slug": "foo",
     },
   ],
@@ -40,12 +37,9 @@ Object {
   "communities": Array [
     Object {
       "id": "2",
-      "members": undefined,
-      "moderators": undefined,
       "name": "two",
-      "network": undefined,
+      "network": null,
       "newPostCount": 3,
-      "posts": undefined,
     },
   ],
   "networks": Array [
@@ -53,45 +47,30 @@ Object {
       "communities": Array [
         Object {
           "id": "1",
-          "members": undefined,
-          "moderators": undefined,
           "name": "one",
           "network": Object {
             "communities": Array [
               Object {
                 "id": "100",
-                "members": undefined,
-                "moderators": undefined,
                 "name": "nonMemberCommunity",
                 "network": "1111",
-                "posts": undefined,
               },
             ],
             "id": "1111",
-            "members": undefined,
-            "moderators": undefined,
             "name": "networkOne",
-            "posts": undefined,
           },
           "newPostCount": 5,
-          "posts": undefined,
         },
       ],
       "id": "1111",
-      "members": undefined,
-      "moderators": undefined,
       "name": "networkOne",
       "nonMemberCommunities": Array [
         Object {
           "id": "100",
-          "members": undefined,
-          "moderators": undefined,
           "name": "nonMemberCommunity",
           "network": "1111",
-          "posts": undefined,
         },
       ],
-      "posts": undefined,
     },
   ],
 }

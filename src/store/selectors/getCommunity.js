@@ -4,7 +4,6 @@ import getRouteParam from 'store/selectors/getRouteParam'
 
 const getCommunity = ormCreateSelector(
   orm,
-  state => state.orm,
   (state, props) => getRouteParam('communityId', state, props),
   ({ Community }, id) => {
     try {

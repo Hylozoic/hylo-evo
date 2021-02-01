@@ -1,10 +1,10 @@
 import { attr, Model, fk } from 'redux-orm'
 
-const CommunityTopic = Model.createClass({
+class CommunityTopic extends Model {
   toString () {
     return `CommunityTopic: ${this.topic}`
   }
-})
+}
 
 export default CommunityTopic
 

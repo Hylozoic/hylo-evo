@@ -110,7 +110,6 @@ const getDefaultTopicsForCurrentUserResults = makeGetQueryResults(FETCH_DEFAULT_
 
 export const getDefaultTopics = ormCreateSelector(
   orm,
-  state => state.orm,
   getDefaultTopicsForCurrentUserResults,
   (_, props) => props,
   (session, results, props) => {
@@ -130,7 +129,6 @@ export const getDefaultTopics = ormCreateSelector(
 
 export const getTopics = ormCreateSelector(
   orm,
-  state => state.orm,
   getTopicsForCurrentUserResults,
   (_, props) => props,
   (session, results, props) => {

@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import PostBody from './index'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
 it('matches last snapshot', () => {
   const props = {
@@ -27,6 +29,10 @@ it('matches last snapshot', () => {
       }
     ]
   }
-  const wrapper = shallow(<PostBody {...props} />)
+  const wrapper = shallow(
+    <Provider store={createStore(() => {})}>
+      <PostBody {...props} />
+    </Provider>
+  )
   expect(wrapper).toMatchSnapshot()
 })

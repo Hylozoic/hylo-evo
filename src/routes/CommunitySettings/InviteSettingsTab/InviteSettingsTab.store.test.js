@@ -64,7 +64,7 @@ describe('InviteSettingsTab.store.ormSessionReducer', () => {
       meta: { invitationToken: '3' }
     }
     ormSessionReducer(session, action)
-    expect(session.Invitation.hasId('3')).toBeFalsy()
+    expect(session.Invitation.idExists('3')).toBeFalsy()
   })
 
   it('responds to REINVITE_ALL_PENDING', () => {

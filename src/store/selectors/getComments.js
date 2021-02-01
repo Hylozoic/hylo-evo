@@ -8,12 +8,8 @@ export const getComments = createSelector(
   state => orm.session(state.orm),
   (_, props) => props.postId,
   ({ Post }, id) => {
-    var post
-    try {
-      post = Post.get({ id })
-    } catch (e) {
-      return []
-    }
+    const post = Post.withId(id)
+    if (!post) return []
     return post.comments.orderBy(c => Number(c.id)).toModelArray()
       .map(comment => ({
         ...comment.ref,

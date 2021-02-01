@@ -2,7 +2,6 @@
 
 exports[`renders a redirect if you can not moderate 1`] = `
 <Redirect
-  push={false}
   to="/c/foo"
 />
 `;
@@ -25,7 +24,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings",
       },
       Object {
-        "component": <Connect(ModeratorsSettingsTab)
+        "component": <Memo(Connect(ModeratorsSettingsTab))
           communityId={1}
           slug="foo"
         />,
@@ -33,7 +32,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/moderators",
       },
       Object {
-        "component": <Connect(TopicsSettingsTab)
+        "component": <Memo(Connect(TopicsSettingsTab))
           community={
             Object {
               "id": 1,
@@ -46,7 +45,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/topics",
       },
       Object {
-        "component": <Connect(InviteSettingsTab)
+        "component": <Memo(Connect(InviteSettingsTab))
           community={
             Object {
               "id": 1,
@@ -59,7 +58,7 @@ exports[`renders correctly with a community 1`] = `
         "path": "/c/foo/settings/invite",
       },
       Object {
-        "component": <Connect(MembershipRequestsTab)
+        "component": <Memo(Connect(MembershipRequestsTab))
           community={
             Object {
               "id": 1,

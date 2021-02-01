@@ -1,10 +1,10 @@
 import { attr, Model } from 'redux-orm'
 
-const Location = Model.createClass({
+class Location extends Model {
   toString () {
     return `Location: ${this.full_text}`
   }
-})
+}
 
 export default Location
 

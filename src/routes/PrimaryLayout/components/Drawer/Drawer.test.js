@@ -29,6 +29,7 @@ const match = {
 describe('Drawer', () => {
   it('renders with a current community', () => {
     const wrapper = shallow(<Drawer
+      match={{ params: {} }}
       community={communities[0]}
       communities={communities}
       networks={[]}

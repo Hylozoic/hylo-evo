@@ -90,7 +90,6 @@ exports[`CommunityCell matches last snapshot with 1 community 1`] = `
 <Fragment>
   <Link
     data-stylename="communityCell"
-    replace={false}
     to="/all"
   >
     <div

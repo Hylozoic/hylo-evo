@@ -1,15 +1,15 @@
 import { attr, Model } from 'redux-orm'
 
-const SearchResult = Model.createClass({
+class SearchResult extends Model {
   toString () {
     return `SearchResult: ${this.id}`
-  },
+  }
 
   getContent (session) {
     const [ type, id ] = this.content.split('-')
     return session[type].withId(id)
   }
-})
+}
 
 export default SearchResult
 

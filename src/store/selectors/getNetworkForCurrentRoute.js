@@ -20,7 +20,6 @@ function tryLocation (props) {
 
 const getNetworkForCurrentRoute = ormCreateSelector(
   orm,
-  state => state.orm,
   getNetworkSlugFromLocation,
   (session, slug) => {
     return session.Network.safeGet({ slug })

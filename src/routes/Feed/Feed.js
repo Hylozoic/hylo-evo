@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { get, pick } from 'lodash/fp'
-
-import './Feed.scss'
+import { bgImageStyle } from 'util/index'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
-import { bgImageStyle } from 'util/index'
+import './Feed.scss'
 
 export default class Feed extends Component {
   static propTypes = {
@@ -72,28 +71,32 @@ export default class Feed extends Component {
 
   render () {
     const {
-      routeParams, topic, community, currentUser, postsTotal, followersTotal,
+      routeParams, community, currentUser, postsTotal, followersTotal,
       communityTopic, newPost, network, currentUserHasMemberships,
-      goToCreateCommunity, membershipsPending, postTypeFilter
+      goToCreateCommunity, membershipsPending, postTypeFilter, topicLoading,
+      toggleCommunityTopicSubscribe
     } = this.props
     const { topicName, context } = routeParams
 
-    if (topicName && !topic) return <Loading />
-    if (community && topicName && !communityTopic) return <Loading />
+    if (topicLoading) return <Loading />
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
     return <div>
       {topicName
         ? <TopicFeedHeader
-          communityTopic={communityTopic}
+          isSubscribed={communityTopic && communityTopic.isSubscribed}
+          toggleSubscribe={
+            communityTopic
+              ? () => toggleCommunityTopicSubscribe(communityTopic)
+              : null
+          }
           topicName={topicName}
           postsTotal={postsTotal}
           followersTotal={followersTotal}
-          topic={topic}
           type={postTypeFilter}
-          community={community}
           currentUser={currentUser}
+          bannerUrl={community && community.bannerUrl}
           newPost={newPost} />
         : <FeedBanner
           community={community || network}

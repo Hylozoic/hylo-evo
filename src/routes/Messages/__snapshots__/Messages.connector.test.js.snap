@@ -24,14 +24,10 @@ Object {
     Object {
       "id": "1",
       "name": "Alice",
-      "skills": undefined,
-      "skillsToLearn": undefined,
     },
     Object {
       "id": "2",
       "name": "Bob",
-      "skills": undefined,
-      "skillsToLearn": undefined,
     },
   ],
   "currentUser": undefined,

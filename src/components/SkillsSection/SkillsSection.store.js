@@ -139,7 +139,6 @@ const getSkillSuggestionsFromCache = makeGetQueryResults(FETCH_SKILL_SUGGESTIONS
 
 export const getSkillSuggestions = ormCreateSelector(
   orm,
-  state => state.orm,
   getSkillSuggestionsFromCache,
   (_, props) => props.personId,
   (session, results, personId) => {
@@ -156,10 +155,9 @@ export const getSkillSuggestions = ormCreateSelector(
 
 export const getMemberSkills = ormCreateSelector(
   orm,
-  state => state.orm,
   (_, props) => props.personId,
   (session, personId) => {
-    if (session.Person.hasId(personId)) {
+    if (session.Person.idExists(personId)) {
       const person = session.Person.withId(personId)
       return person.skills.toRefArray()
     }

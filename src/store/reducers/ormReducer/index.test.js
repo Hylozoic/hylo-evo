@@ -255,8 +255,8 @@ describe('on CREATE_MESSAGE', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.Message.hasId('temp')).toBeFalsy()
-    expect(newSession.Message.hasId('2')).toBeTruthy()
+    expect(newSession.Message.idExists('temp')).toBeFalsy()
+    expect(newSession.Message.idExists('2')).toBeTruthy()
     const thread = newSession.MessageThread.withId('1')
     expect(Date.now() - new Date(thread.updatedAt).getTime()).toBeLessThan(1000)
   })
@@ -275,8 +275,8 @@ describe('on DELETE_POST_PENDING', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.Post.hasId('2')).toBeFalsy()
-    expect(newSession.Post.hasId('1')).toBeTruthy()
+    expect(newSession.Post.idExists('2')).toBeFalsy()
+    expect(newSession.Post.idExists('1')).toBeTruthy()
   })
 })
 
@@ -339,6 +339,8 @@ describe('on PIN_POST_PENDING', () => {
 describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
   const id = '1'
   const session = orm.session(orm.getEmptyState())
+  const me = session.Me.create({ id: '1' })
+
   const community = session.Community.create({
     id,
     name: 'Old Name',
@@ -346,6 +348,7 @@ describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
   })
   session.Membership.create({
     community: community.id,
+    person: me.id,
     settings: {
       sendFoo: true,
       sendEmail: false
@@ -395,10 +398,13 @@ describe('on FETCH_NOTIFICATIONS', () => {
 
 describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
+  session.Me.create({ id: 1 })
+
   const communityId = 3
 
   session.Membership.create({
     community: communityId,
+    person: 1,
     settings: {
       sendFoo: true,
       sendEmail: false
@@ -469,6 +475,7 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
 
 describe('on FETCH_FOR_COMMUNITY_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
+  const me = session.Me.create({ id: '1' })
 
   const community = session.Community.create({
     id: '1',
@@ -478,7 +485,8 @@ describe('on FETCH_FOR_COMMUNITY_PENDING', () => {
   session.Membership.create({
     id: '2',
     newPostCount: 99,
-    community
+    community: community.id,
+    person: me.id
   })
 
   const action = {
@@ -643,8 +651,8 @@ describe('on DELETE_COMMUNITY_TOPIC_PENDING', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.CommunityTopic.hasId('1')).toBeFalsy()
-    expect(newSession.CommunityTopic.hasId('2')).toBeTruthy()
+    expect(newSession.CommunityTopic.idExists('1')).toBeFalsy()
+    expect(newSession.CommunityTopic.idExists('2')).toBeTruthy()
   })
 })
 

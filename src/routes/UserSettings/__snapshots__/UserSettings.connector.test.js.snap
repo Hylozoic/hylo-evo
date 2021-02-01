@@ -15,6 +15,5 @@ Object {
   "queryParams": Object {
     "registered": undefined,
   },
-  "searches": Array [],
 }
 `;

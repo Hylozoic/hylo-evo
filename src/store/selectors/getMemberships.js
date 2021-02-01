@@ -3,7 +3,6 @@ import orm from 'store/models'
 
 const getMemberships = ormCreateSelector(
   orm,
-  state => state.orm,
   ({ Me }) => {
     const me = Me.first()
     if (!me) return []

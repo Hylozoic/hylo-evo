@@ -11,7 +11,6 @@ import qs from 'querystring'
 import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
-import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
 import CreateCommunity from 'routes/CreateCommunity'
 import CommunityDetail from 'routes/CommunityDetail'
@@ -133,7 +132,7 @@ export default class PrimaryLayout extends Component {
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
       <Switch>
         {routesWithDrawer.map(({ path }) => (
-          <Route path={path} render={props => (
+          <Route path={path} key={path} render={props => (
             <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
           )} />
         ))}
@@ -260,7 +259,6 @@ const postEditorRoutes = [
 const signupRoutes = [
   { path: '/signup/upload-photo', child: UploadPhoto },
   { path: '/signup/add-location', child: AddLocation },
-  { path: '/signup/add-skills', child: AddSkills },
   { path: '/signup/review', child: Review }
 ]
 

@@ -80,7 +80,7 @@ export function ormSessionReducer (session, { meta, type, payload }) {
   switch (type) {
     case RECEIVE_MESSAGE:
       const id = payload.data.message.messageThread
-      if (!MessageThread.hasId(id)) {
+      if (!MessageThread.idExists(id)) {
         MessageThread.create({
           id,
           updatedAt: new Date().toString(),

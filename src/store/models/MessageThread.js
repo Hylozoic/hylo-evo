@@ -50,31 +50,31 @@ export function newMessageReceived (messageThreadInstance, bumpUnreadCount) {
 
 // ReduxORM Model
 
-const MessageThread = Model.createClass({
+class MessageThread extends Model {
   isUnread () {
     return isUnread(this)
-  },
+  }
 
   isUpdatedSince (date) {
     return isUpdatedSince(this, date)
-  },
+  }
 
   toString () {
     return `MessageThread: ${this.id}`
-  },
+  }
 
   newMessageReceived (bumpUnreadCount) {
     return newMessageReceived(this, bumpUnreadCount)
-  },
+  }
 
   markAsRead () {
     return markAsRead(this)
-  },
+  }
 
   participantAttributes (currentUser, maxShown) {
     return participantAttributes(this, currentUser, maxShown)
   }
-})
+}
 
 export default MessageThread
 

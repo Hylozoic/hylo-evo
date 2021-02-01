@@ -47,7 +47,6 @@ export const getMembers = (state, _) => state[MODULE_NAME].members
 
 export const getMemberMatches = createSelector(
   orm,
-  state => state.orm,
   getMembers,
   getMe,
   (_, props) => props.forCommunities,

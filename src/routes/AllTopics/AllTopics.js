@@ -189,7 +189,7 @@ export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubs
 
   return <div styleName='topic'>
     <div styleName='communitiesList'>
-      <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
+      <Link styleName='topic-details' to={topicUrl(name, { ...routeParams, view: null })}>
         <div styleName='topic-name'>#{name}</div>
       </Link>
       {communityTopicContent}

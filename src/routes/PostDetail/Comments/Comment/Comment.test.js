@@ -2,6 +2,8 @@ import Comment from './Comment'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+jest.mock('components/HyloEditor/contentStateToHTML', () => any => any)
+
 describe('Comment', () => {
   const props = {
     comment: {
@@ -76,11 +78,17 @@ describe('Comment', () => {
       const updateComment = jest.fn()
       const wrapper = shallow(<Comment {...props} updateComment={updateComment} />)
       const theText = 'lalala'
+      const editorState = {        
+        getCurrentContent: () => ({
+          hasText: () => true,
+          getPlainText: () => theText
+        })
+      }
       const instance = wrapper.instance()
       instance.setState({ editing: true })
-      instance.saveComment(theText)
+      instance.saveComment(editorState)
       expect(instance.state.editing).toEqual(false)
-      expect(updateComment).toHaveBeenCalledWith(theText)
+      expect(updateComment).toHaveBeenCalled()
     })
   })
 })
