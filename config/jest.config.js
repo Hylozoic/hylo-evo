@@ -2,6 +2,7 @@ const paths = require('./paths')
 
 module.exports = {
   rootDir: paths.rootPath,
+  timers: 'modern',
   transform: {
     '\\.(gql|graphql)$': 'jest-transform-graphql',
     '^.+\\.jsx?$': '<rootDir>/config/jest/transformer.js'
@@ -18,7 +19,9 @@ module.exports = {
     'react-app-polyfill/jsdom',
     '<rootDir>/config/jest/beforeTestEnvSetup.js'
   ],
-  setupTestFrameworkScriptFile: '<rootDir>/config/jest/afterTestEnvSetup.js',
+  setupFilesAfterEnv: [
+    '<rootDir>/config/jest/afterTestEnvSetup.js'
+  ],
   testPathIgnorePatterns: [
     '<rootDir>[/\\\\](build|docs|node_modules|scripts|es5)[/\\\\]'
   ],

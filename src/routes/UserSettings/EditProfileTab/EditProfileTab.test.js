@@ -108,7 +108,7 @@ describe('SocialControl', () => {
       expect(onChange).toHaveBeenCalledWith(false)
     })
 
-    it('calls the right things when provider is not twitter', done => {
+    it('calls the right things when provider is not twitter', async () => {
       const provider = 'facebook'
       const onLink = () => Promise.resolve({ error: false })
       const updateUserSettings = jest.fn()
@@ -120,15 +120,12 @@ describe('SocialControl', () => {
         updateUserSettings={updateUserSettings}
         onChange={onChange} />)
 
-      wrapper.instance().linkClicked()
+      await wrapper.instance().linkClicked()
       expect(updateUserSettings).not.toHaveBeenCalledWith()
-      setTimeout(() => {
-        expect(onChange).toHaveBeenCalledWith(true)
-        done()
-      }, 10)
+      expect(onChange).toHaveBeenCalledWith(true)
     })
 
-    it('calls onChange with false on error when provider is not twitter', done => {
+    it('calls onChange with false on error when provider is not twitter', async () => {
       const provider = 'facebook'
       const onLink = () => Promise.resolve({ error: true })
       const updateUserSettings = jest.fn()
@@ -140,12 +137,9 @@ describe('SocialControl', () => {
         updateUserSettings={updateUserSettings}
         onChange={onChange} />)
 
-      wrapper.instance().linkClicked()
+      await wrapper.instance().linkClicked()
       expect(updateUserSettings).not.toHaveBeenCalledWith()
-      setTimeout(() => {
-        expect(onChange).toHaveBeenCalledWith(false)
-        done()
-      }, 10)
+      expect(onChange).toHaveBeenCalledWith(false)
     })
   })
 

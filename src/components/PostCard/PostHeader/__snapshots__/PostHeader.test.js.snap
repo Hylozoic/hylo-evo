@@ -7,7 +7,6 @@ exports[`TopicsLine matches last snapshot 1`] = `
   <Link
     data-stylename="topic"
     key="one"
-    replace={false}
     to="/c/hay/one"
   >
     #
@@ -16,7 +15,6 @@ exports[`TopicsLine matches last snapshot 1`] = `
   <Link
     data-stylename="topic"
     key="two"
-    replace={false}
     to="/c/hay/two"
   >
     #
@@ -46,7 +44,6 @@ exports[`matches announcement snapshot 1`] = `
       >
         <Link
           data-stylename="userName"
-          replace={false}
           to="/m/123"
         >
           JJ
@@ -115,7 +112,6 @@ exports[`matches announcement snapshot 2`] = `
       >
         <Link
           data-stylename="userName"
-          replace={false}
           to="/m/123"
         >
           JJ
@@ -192,7 +188,6 @@ exports[`matches announcement snapshot 3`] = `
       >
         <Link
           data-stylename="userName"
-          replace={false}
           to="/m/123"
         >
           JJ
@@ -291,7 +286,6 @@ exports[`matches snapshot 1`] = `
       >
         <Link
           data-stylename="userName"
-          replace={false}
           to="/m/123"
         >
           JJ
@@ -333,7 +327,6 @@ exports[`matches snapshot 2`] = `
       >
         <Link
           data-stylename="userName"
-          replace={false}
           to="/m/123"
         >
           JJ
@@ -383,7 +376,6 @@ exports[`matches snapshot 3`] = `
       >
         <Link
           data-stylename="userName"
-          replace={false}
           to="/m/123"
         >
           JJ

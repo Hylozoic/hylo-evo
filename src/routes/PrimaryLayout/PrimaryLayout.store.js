@@ -50,13 +50,15 @@ export function toggleDrawer () {
 }
 
 export function ormSessionReducer (
-  { Group, Membership, Network, Person },
+  { Group, Me, Membership, Network, Person },
   { type, meta, payload }
 ) {
   if (type === FETCH_FOR_GROUP_PENDING) {
     let group = Group.safeGet({ slug: meta.slug })
     if (!group) return
-    let membership = Membership.safeGet({ group: group.id })
+    const me = Me.first()
+    if (!me) return
+    let membership = Membership.safeGet({ group: group.id, person: me.id })
     if (!membership) return
     membership.update({ newPostCount: 0 })
   }

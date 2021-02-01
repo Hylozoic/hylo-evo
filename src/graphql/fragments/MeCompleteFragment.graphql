@@ -69,6 +69,9 @@ fragment MeCompleteFragment on Me {
       sendEmail
       sendPushNotifications
     }
+    person {
+      id
+    }
     group {
       id
       name

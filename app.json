@@ -42,7 +42,7 @@
   ],
   "buildpacks": [
     {
-      "url": "https://github.com/Hylozoic/heroku-buildpack-nodejs.git#run-webpack-build"
+      "url": "https://github.com/Hylozoic/heroku-buildpack-nodejs.git#run-webpack-build-v182"
     }
   ],
   "stack": "heroku-18"

@@ -186,7 +186,7 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
 
   return <div styleName='topic'>
     <div styleName='groupsList'>
-      <Link styleName='topic-details' to={topicUrl(name, routeParams)}>
+      <Link styleName='topic-details' to={topicUrl(name, { ...routeParams, view: null })}>
         <div styleName='topic-name'>#{name}</div>
       </Link>
       {groupTopicContent}

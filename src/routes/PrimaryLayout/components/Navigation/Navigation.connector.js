@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { baseUrl, isPublicPath } from 'util/navigation'
@@ -81,6 +82,7 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getGroupMembership = ormCreateSelector(
   orm,
+  getMe,
   (state, { groupId }) => groupId,
-  (session, id) => session.Membership.filter({ group: id }).first()
+  (session, currentUser, id) => session.Membership.filter({ group: id, person: currentUser }).first()
 )

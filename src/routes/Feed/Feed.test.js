@@ -47,7 +47,7 @@ describe('Feed', () => {
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
-    expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
+    expect(wrapper.find('TopicFeedHeader')).toHaveLength(1)
   })
 })
 

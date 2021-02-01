@@ -13,7 +13,6 @@ exports[`ThreadList matches the last snapshot 1`] = `
       <CloseMessages />
     </div>
     <Link
-      replace={false}
       to="/messages/new"
     >
       <Button
@@ -56,7 +55,6 @@ exports[`ThreadListItem matches the last snapshot 1`] = `
   data-stylename="list-item"
 >
   <Link
-    replace={false}
     to="/messages/undefined"
   >
     <ThreadAvatars
@@ -93,7 +91,6 @@ exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
   data-stylename="list-item"
 >
   <Link
-    replace={false}
     to="/messages/undefined"
   >
     <ThreadAvatars
@@ -129,7 +126,6 @@ exports[`ThreadListItem matches the last snapshot with just you 1`] = `
   data-stylename="list-item"
 >
   <Link
-    replace={false}
     to="/messages/undefined"
   >
     <ThreadAvatars

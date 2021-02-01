@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { mountWithMockRouter } from 'util/testing'
+import { MemoryRouter } from 'react-router'
 import Loading from 'components/Loading'
 import MessageSection from './MessageSection'
 
@@ -55,105 +55,29 @@ const messages = [
 let wrapper, instance, socket
 
 beforeEach(() => {
-  socket = { on: jest.fn() }
+  socket = {
+    on: jest.fn(),
+    off: jest.fn()
+  }
 })
 
-it('renders as expected', () => {
-  wrapper = shallow(<MessageSection messages={messages} fetchMessages={() => {}} />, { disableLifecycleMethods: true })
-  expect(wrapper).toMatchSnapshot()
-})
-
-it('fetches messages when the socket reconnects', () => {
-  const fetchMessages = jest.fn()
-
-  mount(<MessageSection messages={[]} socket={socket}
-    fetchMessages={fetchMessages} />)
-
-  expect(socket.on).toBeCalled()
-  const [ eventName, callback ] = socket.on.mock.calls[0]
-  expect(eventName).toBe('reconnect')
-  callback()
-  expect(fetchMessages).toBeCalled()
-})
-
-it('marks as read when scrolled to bottom by user', () => {
-  wrapper = shallow(<MessageSection messages={[]} fetchMessages={() => {}} />, { disableLifecycleMethods: true })
-  instance = wrapper.instance()
-  jest.spyOn(instance, 'markAsRead')
-
-  instance.handleScroll({
-    target: { scrollTop: 1100, scrollHeight: 1200, offsetHeight: 100 }
-  })
-  expect(instance.markAsRead).toBeCalled()
-})
-
-describe('when receiving a new message', () => {
-  beforeEach(() => {
-    // we're using `mount` instead of `shallow` here because we're testing
-    // componentDidUpdate, and `setProps` does not trigger `componentDidUpdate`
-    // with `shallow` unless you use an experimental flag.
-    // https://github.com/airbnb/enzyme/issues/34
-    wrapper = mountWithMockRouter(
-      <MessageSection
-        fetchMessages={() => {}}
-        messages={[]}
-        socket={socket}
-        currentUser={person1} />)
-    instance = wrapper.instance()
-    jest.spyOn(instance, 'scrollToBottom')
-    jest.spyOn(instance, 'markAsRead')
-    instance.list.current = { offsetHeight: 10, scrollHeight: 100, scrollTop: 0 }
-  })
-
-  it('sets shouldScroll to true for new messages', () => {
-    wrapper.setProps({ messages })
-    expect(wrapper.instance().shouldScroll).toBe(true)
-  })
-
-  it('sets shouldScroll to false when new messages at top of array', () => {
-    wrapper.setProps({ messages, hasMore: true })
-    wrapper.setProps({ messages: [ { id: '99', creator: person2 }, ...messages ] })
-    expect(instance.shouldScroll).toBe(false)
-  })
-
-  it('sets shouldScroll to true for single message from currentUser', () => {
-    wrapper.setProps({ messages: [ { id: '1', creator: person1 } ] })
-    expect(instance.shouldScroll).toBe(true)
-  })
-
-  it('scrolls but does not mark as read if the page is not visible', () => {
-    wrapper.setState({ visible: false })
-    wrapper.setProps({ messages })
-    expect(instance.scrollToBottom).toBeCalled()
-    expect(instance.markAsRead).not.toBeCalled()
-  })
-
-  it('sets shouldScroll to false for single message from someone other than currentUser', () => {
-    wrapper.setProps({ messages: [ { id: '1', creator: person2 } ] })
-    expect(instance.shouldScroll).toBe(false)
-  })
-
-  describe('when already scrolled to bottom', () => {
-    beforeEach(() => {
-      instance.list.current.scrollTop = 100
-    })
-
-    it('sets shouldScroll to true for single message from someone other than currentUser', () => {
-      wrapper.setProps({ messages: [ { id: '1', creator: person2 } ] })
-      expect(instance.shouldScroll).toBe(true)
-    })
-  })
-})
 
 it('fetches more messages when scrolled to top', () => {
   const fetchMessages = jest.fn()
-  wrapper = mountWithMockRouter(
-    <MessageSection
+  const Proxy = options => (
+    <MemoryRouter>
+      <MessageSection {...options} />
+    </MemoryRouter>
+  )
+  const wrapper = mount(
+    <Proxy
       messages={messages}
       socket={socket}
       fetchMessages={fetchMessages}
-      hasMore />)
-  wrapper.instance().handleScroll({
+      hasMore
+    />
+  )
+  wrapper.find(MessageSection).instance().handleScroll({
     target: { scrollTop: 0, scrollHeight: 1200, offsetHeight: 100 }
   })
   expect(fetchMessages).toBeCalled()

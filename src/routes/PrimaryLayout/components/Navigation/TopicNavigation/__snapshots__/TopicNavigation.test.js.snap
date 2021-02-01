@@ -12,7 +12,6 @@ exports[`renders correctly for All Groups 1`] = `
       name="Topics"
     />
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       <span
@@ -53,7 +52,6 @@ exports[`renders correctly for All Groups 1`] = `
     data-stylename="s.addTopic"
   >
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       see all
@@ -74,7 +72,6 @@ exports[`renders correctly for a community 1`] = `
       name="Topics"
     />
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       <span
@@ -115,7 +112,6 @@ exports[`renders correctly for a community 1`] = `
     data-stylename="s.addTopic"
   >
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       see all

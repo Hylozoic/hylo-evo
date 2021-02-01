@@ -99,8 +99,6 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         data-stylename="left-sidebar-fixed border"
       >
         <NavLink
-          activeClassName="active"
-          aria-current="page"
           data-stylename="nav-link"
           exact={true}
           key="/settings"
@@ -110,8 +108,6 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
           Account
         </NavLink>
         <NavLink
-          activeClassName="active"
-          aria-current="page"
           data-stylename="nav-link"
           exact={true}
           key="/settings/groups"

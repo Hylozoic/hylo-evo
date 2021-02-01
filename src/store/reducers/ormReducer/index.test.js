@@ -339,6 +339,7 @@ describe('on PIN_POST_PENDING', () => {
 describe('on UPDATE_GROUP_SETTINGS_PENDING', () => {
   const id = '1'
   const session = orm.session(orm.getEmptyState())
+  const me = session.Me.create({ id: '1' })
   const group = session.Group.create({
     id,
     name: 'Old Name',
@@ -346,6 +347,7 @@ describe('on UPDATE_GROUP_SETTINGS_PENDING', () => {
   })
   session.Membership.create({
     group: group.id,
+    person: me.id,
     settings: {
       sendFoo: true,
       sendEmail: false
@@ -395,10 +397,12 @@ describe('on FETCH_NOTIFICATIONS', () => {
 
 describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
+  session.Me.create({ id: 1 })
   const groupId = 3
 
   session.Membership.create({
     group: groupId,
+    person: 1,
     settings: {
       sendFoo: true,
       sendEmail: false
@@ -469,6 +473,7 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
 
 describe('on FETCH_FOR_GROUP_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
+  const me = session.Me.create({ id: '1' })
 
   const group = session.Group.create({
     id: '1',
@@ -478,7 +483,8 @@ describe('on FETCH_FOR_GROUP_PENDING', () => {
   session.Membership.create({
     id: '2',
     newPostCount: 99,
-    group
+    group,
+    person: me.id
   })
 
   const action = {

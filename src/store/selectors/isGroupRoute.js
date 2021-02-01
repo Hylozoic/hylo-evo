@@ -19,4 +19,4 @@ export function getSlugFromLocation (state, props) {
 function tryLocation (props) {
   if (!props.location) return null
   return getGroupSlugInPath(props.location.pathname)
- }
+}

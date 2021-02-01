@@ -16,6 +16,7 @@ import Affiliation from 'components/Affiliation'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import NotFound from 'components/NotFound'
 import RoundImage from 'components/RoundImage'
 import RoundImageRow from 'components/RoundImageRow'
 import Loading from 'components/Loading'
@@ -56,6 +57,7 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return <Error>{this.props.error}</Error>
     if (this.props.personLoading) return <Loading />
+    if (!this.props.person) return <NotFound />
 
     const {
       contentLoading,

@@ -75,7 +75,7 @@ export default class Drawer extends React.PureComponent {
 }
 
 export function GroupRow ({ group, isMember = true, routeParams }) {
-  const { avatarUrl, newPostCount, name, slug } = group
+  const { avatarUrl, name, newPostCount, slug } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.groupRow'>

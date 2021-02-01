@@ -17,7 +17,6 @@ exports[`renders 1`] = `
     group to see posts from that group.
   </p>
   <Link
-    replace={false}
     to="/all"
   >
     <Button

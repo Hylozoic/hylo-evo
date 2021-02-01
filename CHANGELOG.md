@@ -5,8 +5,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.2.5] - 2021-02-01
+### Added
+- Link to Terms of Service and Privacy policy in the account menu
+- React Testing Library (internal)
+
+### Changed
+- Upgrade Redux 3.x < 4.x (internal)
+- Upgrade React Router 4.x > 5.x (internal)
+- Upgrade Jest v23 > v26 (including enzyme, etc) (internal)
+- Upgrade Node v12 > v15 (internal)
+- Applies latest heroku-buildpack-nodejs (internal)
+- Community Leaders now called Community Moderators in the community sidebar
+
 ### Fixed
 - Not being able to turn on or off notifications for communities
+- Initial load of Member Profile Edit takes too long #706
+- Navigating to a topic from All Topics goes nowhere #747
+- Navigating to a topic that doesn't exists goes into infinite loading state #744
+- Avatar images not appearing for communities in the navigation drawer
+- Error when trying to view profile of member you aren't allowed to see
+
+### Added
+- Removed Skills slide from account signup wizard.
 
 ## [2.2.4] - 2021-01-12
 ### Fixed

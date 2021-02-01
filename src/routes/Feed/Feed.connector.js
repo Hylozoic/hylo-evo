@@ -2,7 +2,10 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
-import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
+import {
+  FETCH_POSTS, FETCH_FOR_CURRENT_USER,
+  FETCH_TOPIC, FETCH_GROUP_TOPIC
+} from 'store/constants'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
@@ -11,8 +14,10 @@ import getMe from 'store/selectors/getMe'
 import getMemberships from 'store/selectors/getMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 import { newPostUrl } from 'util/navigation'
 import { fetchTopic, fetchGroupTopic } from './Feed.store'
+import isPendingFor from 'store/selectors/isPendingFor'
 
 export function mapStateToProps (state, props) {
   let group, groupTopic, topic
@@ -23,6 +28,7 @@ export function mapStateToProps (state, props) {
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
   const groupSlug = getRouteParam('groupSlug', state, props)
   const topicName = getRouteParam('topicName', state, props)
+  const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -36,7 +42,6 @@ export function mapStateToProps (state, props) {
   const postTypeFilter = getQuerystringParam('t', state, props)
   const sortBy = getQuerystringParam('s', state, props)
 
-
   return {
     routeParams,
     querystringParams,
@@ -47,6 +52,7 @@ export function mapStateToProps (state, props) {
     groupTopic,
     groupSlug,
     group,
+    topicLoading,
     topicName,
     topic,
     postsTotal: get('postsTotal', groupSlug ? groupTopic : topic),
@@ -74,6 +80,8 @@ export function mapDispatchToProps (dispatch, props) {
         return dispatch(fetchTopic(topicName))
       }
     },
+    toggleCommunityTopicSubscribe: groupTopic =>
+      dispatch(toggleGroupTopicSubscribe(groupTopic)),
     goToCreateGroup: () => dispatch(push('/create-group/name')),
     newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams)))
   }

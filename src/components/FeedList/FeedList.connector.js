@@ -13,8 +13,11 @@ export function mapStateToProps (state, props) {
   const { groupId } = props
   const fetchPostsParam = {
     filter: props.postTypeFilter,
-    slug: props.routeParams.groupSlug,
-    context: props.routeParams.context,
+    ...pick([
+      'slug',
+      'context',
+      'topicName'
+    ], props.routeParams),
     ...pick([
       'sortBy',
       'topic'
@@ -37,7 +40,11 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
+    fetchPosts: param => offset => {
+      // The topic was not found in this case
+      if (param.topicName && !param.topic) return
+      return dispatch(fetchPosts({ offset, ...param }))
+    },
     storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
   }
 }

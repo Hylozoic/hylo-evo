@@ -170,7 +170,8 @@ export default function ormReducer (state = {}, action) {
       if (meta.type === 'GroupTopic') {
         session.GroupTopic.withId(meta.id).update({ newPostCount: 0 })
       } else if (meta.type === 'Membership') {
-        const membership = session.Membership.safeGet({ group: meta.id })
+        me = Me.first()
+        const membership = Membership.safeGet({ group: meta.id, person: me.id })
         membership && membership.update({ newPostCount: 0 })
       }
       break
@@ -191,13 +192,16 @@ export default function ormReducer (state = {}, action) {
     case UPDATE_GROUP_SETTINGS_PENDING:
       group = Group.withId(meta.id)
       group.update(meta.changes)
+      me = Me.first()
 
       // Triggers an update to redux-orm for the membership
-      membership = session.Membership.safeGet({ group: meta.id }).update({ forceUpdate: new Date() })
+      membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
-      membership = Membership.safeGet({ group: meta.groupId })
+      me = Me.first()
+      membership = Membership.safeGet({ group: meta.groupId, person: me.id })
+
       if (!membership) break
       membership.update({
         settings: {
