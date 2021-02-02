@@ -6,12 +6,12 @@ Object {
     "query": "All the lonely people / Where do they all come from?",
     "variables": Object {
       "autocomplete": "Tchaikovs",
-      "communityIds": Array [],
+      "groupIds": Array [],
       "first": 100,
     },
   },
   "meta": Object {
-    "extractModel": "Community",
+    "extractModel": "Group",
     "extractQueryResults": Object {
       "getItems": [Function],
     },

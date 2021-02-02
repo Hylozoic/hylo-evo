@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`works for CommunityTopic 1`] = `
+exports[`works for GroupTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation($id: ID, $data: CommunityTopicInput) {
-    updateCommunityTopicFollow(id: $id, data: $data) {
+    "query": "mutation($id: ID, $data: GroupTopicInput) {
+    updateGroupTopicFollow(id: $id, data: $data) {
       success
     }
   }",
@@ -18,7 +18,7 @@ Object {
   "meta": Object {
     "id": 5,
     "optimistic": true,
-    "type": "CommunityTopic",
+    "type": "GroupTopic",
   },
   "type": "RESET_NEW_POST_COUNT",
 }
@@ -28,7 +28,7 @@ exports[`works for Membership 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation($id: ID, $data: MembershipInput) {
-    updateMembership(communityId: $id, data: $data) {
+    updateMembership(groupId: $id, data: $data) {
       id
     }
   }",

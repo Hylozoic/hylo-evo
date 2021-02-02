@@ -12,5 +12,5 @@ PostMembership.modelName = 'PostMembership'
 PostMembership.fields = {
   id: attr(),
   pinned: attr(),
-  community: fk('Community', 'postMemberships')
+  group: fk('Group', 'postMemberships')
 }

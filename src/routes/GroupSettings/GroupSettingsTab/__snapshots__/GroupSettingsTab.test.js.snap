@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupSettingsTab renders correctly 1`] = `
+<div
+  data-stylename="groupSettings"
+>
+  <input
+    data-stylename="name"
+    onChange={[Function]}
+    type="text"
+    value="Foomunity"
+  />
+  <div
+    data-stylename="banner"
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
+  >
+    <Connect(UploadAttachmentButton)
+      data-stylename="change-banner-button"
+      id={1}
+      onSuccess={[Function]}
+      type="groupBanner"
+    />
+  </div>
+  <div
+    data-stylename="avatar"
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
+  >
+    <Connect(UploadAttachmentButton)
+      data-stylename="change-avatar-button"
+      id={1}
+      onSuccess={[Function]}
+      type="groupAvatar"
+    />
+  </div>
+  <SettingsControl
+    label="Description"
+    onChange={[Function]}
+    type="textarea"
+    value="Great group"
+  />
+  <SettingsControl
+    label="Location"
+    location=""
+    locationObject="Fuji"
+    onChange={[Function]}
+    type="location"
+  />
+  <div
+    data-stylename="privacy-settings"
+  >
+    <div
+      data-stylename="control-label"
+    >
+      Group Privacy
+    </div>
+    <div
+      data-stylename="privacy-detail"
+    >
+      By default, your group is not listed in the public directory. Only people invited to your group can join it, and only members of your group can see posts.
+    </div>
+    <div>
+      <div
+        data-stylename="privacy-option-container"
+      >
+        <div>
+          <SwitchStyled
+            backgroundColor="#808C9B"
+            checked={false}
+            disabled={false}
+            onChange={[Function]}
+          />
+          <span
+            data-stylename="privacy-option"
+          >
+            Allow anyone to see
+            Foomunity
+          </span>
+        </div>
+        <span
+          data-stylename="privacy-state"
+        >
+          OFF
+        </span>
+      </div>
+      <div
+        data-stylename="groupPublicToggle request-setting"
+      >
+        <div
+          data-stylename="settingDisabled"
+        >
+          Disabled
+        </div>
+        <h3>
+          Who can join
+          Foomunity
+          ?
+        </h3>
+        <p>
+          By default, members must be invited to join a group. When a group is public, it can choose to allow anyone to join, or for anyone to apply to become a member.
+        </p>
+        <div
+          data-stylename=""
+        >
+          <label>
+            <input
+              checked={false}
+              disabled={true}
+              id="isRequestable"
+              name="requestSetting"
+              onChange={[Function]}
+              type="radio"
+              value="isRequestable"
+            />
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Anyone can request to become a member of
+              Foomunity
+            </span>
+          </label>
+        </div>
+        <div
+          data-stylename=""
+        >
+          <label>
+            <input
+              checked={false}
+              disabled={true}
+              id="isAutoJoinable"
+              name="requestSetting"
+              onChange={[Function]}
+              type="radio"
+              value="isAutoJoinable"
+            />
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Anyone can automatically join
+              Foomunity
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        data-stylename="groupPublicToggle"
+      >
+        <div
+          data-stylename="settingDisabled"
+        >
+          Disabled
+        </div>
+        <h3>
+          Can people outside of
+          Foomunity
+           see who is a member?
+        </h3>
+        <p>
+          By default, member information will not be visible to the public.
+        </p>
+        <div
+          data-stylename="privacy-option-container"
+        >
+          <div
+            data-stylename="member-visibility"
+          >
+            <SwitchStyled
+              backgroundColor="#808C9B"
+              checked={false}
+              disabled={false}
+              onChange={[Function]}
+            />
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Anyone can see who is a member of
+              Foomunity
+            </span>
+          </div>
+          <span
+            data-stylename="privacy-state"
+          >
+            OFF
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="button-row"
+  >
+    <Button
+      color="gray"
+      data-stylename="save-button"
+      label="Save Changes"
+      onClick={null}
+    />
+  </div>
+</div>
+`;

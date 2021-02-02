@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
 import { toggleDrawer } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
-import fetchForCommunity from 'store/actions/fetchForCommunity'
-import { FETCH_FOR_COMMUNITY } from 'store/constants'
+import fetchForGroup from 'store/actions/fetchForGroup'
+import { FETCH_FOR_GROUP } from 'store/constants'
 import getMe from 'store/selectors/getMe'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMemberships from 'store/selectors/getMemberships'
-import isCommunityRoute, { getSlugFromLocation } from 'store/selectors/isCommunityRoute'
+import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
@@ -19,14 +18,13 @@ export function mapStateToProps (state, props) {
   const slug = getSlugFromLocation(null, props)
 
   return {
-    isCommunityRoute: isCommunityRoute(state, props),
-    community: getCommunityForCurrentRoute(state, props),
-    network: getNetworkForCurrentRoute(state, props),
+    isGroupRoute: isGroupRoute(state, props),
+    group: getGroupForCurrentRoute(state, props),
     currentUser: getMe(state),
     isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
     showLogoBadge,
     hasMemberships,
-    communityPending: state.pending[FETCH_FOR_COMMUNITY],
+    groupPending: state.pending[FETCH_FOR_GROUP],
     returnToURL: getReturnToURL(state),
     downloadAppUrl: mobileRedirect(),
     slug
@@ -38,7 +36,7 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
-    fetchForCommunity: () => dispatch(fetchForCommunity(slug)),
+    fetchForGroup: () => dispatch(fetchForGroup(slug)),
     toggleDrawer: () => dispatch(toggleDrawer())
   }
 }

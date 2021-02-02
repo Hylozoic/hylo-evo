@@ -1,13 +1,10 @@
-export default function presentTopic (topic, { networkSlug }) {
+export default function presentTopic (topic) {
   if (!topic) return null
 
   return {
     ...topic.ref,
     label: topic.name,
     value: topic.name,
-    communityTopics: networkSlug
-      ? topic.communityTopics.toModelArray().filter(t =>
-        t.community.network && t.community.network.slug === networkSlug)
-      : topic.communityTopics.toModelArray()
+    groupTopics: topic.groupTopics.toModelArray()
   }
 }

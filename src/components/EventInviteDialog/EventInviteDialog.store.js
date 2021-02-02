@@ -10,15 +10,15 @@ export const INVITE_PEOPLE_TO_EVENT_PENDING = `${INVITE_PEOPLE_TO_EVENT}_PENDING
 export const peopleSelector = createSelector(
   orm,
   getMe,
-  (_, props) => props.forCommunities,
+  (_, props) => props.forGroups,
   (
-    { Community },
+    { Group },
     currentUser,
-    forCommunities
+    forGroups
   ) => {
-    const forCommunityIds = forCommunities.map(c => c.id)
-    const communities = Community
-      .filter(c => forCommunityIds ? forCommunityIds.includes(c.id) : true)
+    const forGroupIds = forGroups.map(c => c.id)
+    const groups = Group
+      .filter(c => forGroupIds ? forGroupIds.includes(c.id) : true)
       .toModelArray()
     const processors = [
       reduce((result, c) => result.concat(c.members.toModelArray()), []),
@@ -28,7 +28,7 @@ export const peopleSelector = createSelector(
       orderBy('name', 'asc')
     ]
 
-    return flow(processors)(communities)
+    return flow(processors)(groups)
   }
 )
 
@@ -49,9 +49,9 @@ export function invitePeopleToEvent (eventId, inviteeIds) {
                 id
                 name
                 avatarUrl
-              }      
-            }       
-          } 
+              }
+            }
+          }
         }
       }`,
       variables: { eventId, inviteeIds }

@@ -11,13 +11,12 @@ export default function createPost (postParams) {
     type,
     title,
     details,
-    communities,
+    groups,
     linkPreview,
     imageUrls,
     fileUrls,
     topicNames,
     sendAnnouncement,
-    networkSlug,
     acceptContributions,
     eventInviteeIds = [],
     startTime,
@@ -27,7 +26,7 @@ export default function createPost (postParams) {
     isPublic
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
-  const communityIds = communities.map(c => c.id)
+  const groupIds = groups.map(c => c.id)
 
   return {
     type: CREATE_POST,
@@ -38,7 +37,7 @@ export default function createPost (postParams) {
         title,
         details,
         linkPreviewId,
-        communityIds,
+        groupIds,
         imageUrls,
         fileUrls,
         announcement: sendAnnouncement,
@@ -57,7 +56,6 @@ export default function createPost (postParams) {
         modelName: 'Post',
         getRoot: get('createPost')
       },
-      networkSlug,
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
         detailsLength: textLength(details),

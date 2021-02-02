@@ -1,13 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Feed, { CreateCommunityPrompt } from './Feed'
+import Feed, { CreateGroupPrompt } from './Feed'
 
 describe('Feed', () => {
   it('renders a FeedList with correct props', () => {
     const wrapper = shallow(<Feed
-      routeParams={{ slug: 'foo' }}
+      routeParams={{ groupSlug: 'foo' }}
       postTypeFilter='request'
-      community={{}}
+      group={{}}
       selectedPostId='5'
       sortBy='votes'
       currentUser
@@ -17,39 +17,13 @@ describe('Feed', () => {
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
       routeParams: {
-        slug: 'foo'
+        groupSlug: 'foo'
       },
       querystringParams: {},
-      subject: 'community',
+      context: 'groups',
       postTypeFilter: 'request',
       sortBy: 'votes',
       selectedPostId: '5',
-      topic: undefined
-    })
-  })
-
-  it('with a network it renders a Feed with correct props', () => {
-    const wrapper = shallow(<Feed
-      routeParams={{ networkSlug: 'bar' }}
-      postTypeFilter='request'
-      network={{ id: 2 }}
-      fetchNetwork={jest.fn()}
-      sortBy='votes'
-      currentUser
-      currentUserHasMemberships />)
-
-    expect(wrapper).toMatchSnapshot()
-
-    const feed = wrapper.find('Connect(Component)')
-    expect(feed).toHaveLength(1)
-    expect(feed.props()).toEqual({
-      routeParams: {
-        networkSlug: 'bar'
-      },
-      querystringParams: {},
-      subject: 'network',
-      postTypeFilter: 'request',
-      sortBy: 'votes',
       topic: undefined
     })
   })
@@ -73,14 +47,14 @@ describe('Feed', () => {
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
-    expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
+    expect(wrapper.find('TopicFeedHeader')).toHaveLength(1)
   })
 })
 
-describe('CreateCommunityPrompt', () => {
+describe('CreateGroupPrompt', () => {
   it('matches the latest snapshot', () => {
-    const wrapper = shallow(<CreateCommunityPrompt
-      goToCreateCommunity={jest.fn()}
+    const wrapper = shallow(<CreateGroupPrompt
+      goToCreateGroup={jest.fn()}
     />)
     expect(wrapper).toMatchSnapshot()
   })

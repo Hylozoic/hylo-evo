@@ -3,14 +3,14 @@
 exports[`matches the last snapshot for createTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($topicName: String, $communityId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
-        createTopic(topicName: $topicName, communityId: $communityId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
+    "query": "mutation ($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+        createTopic(topicName: $topicName, groupId: $groupId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
           id
           name
-          communityTopics {
+          groupTopics {
             items {
               id
-              community {
+              group {
                 id
                 slug
               }
@@ -27,7 +27,7 @@ Object {
         }
       }",
     "variables": Object {
-      "communityId": "1",
+      "groupId": "1",
       "isDefault": false,
       "isSubscribing": false,
       "topicName": "wombats",
@@ -36,7 +36,7 @@ Object {
   "meta": Object {
     "analytics": "Topic Created",
     "data": Object {
-      "communityId": "1",
+      "groupId": "1",
       "isDefault": false,
       "topicName": "wombats",
     },
@@ -47,7 +47,7 @@ Object {
       },
       Object {
         "getRoot": [Function],
-        "modelName": "CommunityTopic",
+        "modelName": "GroupTopic",
       },
     ],
   },
@@ -55,23 +55,23 @@ Object {
 }
 `;
 
-exports[`matches the last snapshot for fetchCommunityTopic 1`] = `
+exports[`matches the last snapshot for fetchGroupTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($topicName: String, $communitySlug: String) {
-        communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
+    "query": "query ($topicName: String, $groupSlug: String) {
+        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
           id
         }
       }",
     "variables": Object {
-      "communitySlug": "wombat-community",
+      "groupSlug": "wombat-group",
       "topicName": "wombats",
     },
   },
   "meta": Object {
-    "communitySlug": "wombat-community",
+    "groupSlug": "wombat-group",
     "topicName": "wombats",
   },
-  "type": "CreateTopic/FETCH_COMMUNITY_TOPIC",
+  "type": "CreateTopic/FETCH_GROUP_TOPIC",
 }
 `;

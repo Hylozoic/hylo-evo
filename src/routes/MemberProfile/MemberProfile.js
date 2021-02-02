@@ -4,11 +4,11 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Moment from 'moment'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
-import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
+import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
-  messageThreadUrl,
+  messagePersonUrl,
   messagesUrl,
   gotoExternalUrl
 } from 'util/navigation'
@@ -16,6 +16,7 @@ import Affiliation from 'components/Affiliation'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import NotFound from 'components/NotFound'
 import RoundImage from 'components/RoundImage'
 import RoundImageRow from 'components/RoundImageRow'
 import Loading from 'components/Loading'
@@ -56,6 +57,7 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return <Error>{this.props.error}</Error>
     if (this.props.personLoading) return <Loading />
+    if (!this.props.person) return <NotFound />
 
     const {
       contentLoading,
@@ -71,20 +73,19 @@ export default class MemberProfile extends React.Component {
     const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
-    const firstName = getFirstName(person)
     const locationWithoutUsa = person.location && person.location.replace(', United States', '')
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const contentDropDownItems = [
-      { label: 'Overview', title: `${firstName}'s recent activity`, component: RecentActivity },
-      { label: 'Posts', title: `${firstName}'s posts`, component: MemberPosts },
-      { label: 'Comments', title: `${firstName}'s comments`, component: MemberComments },
-      { label: 'Upvotes', title: `${firstName}'s upvotes`, component: MemberVotes }
+      { label: 'Overview', title: `${person.name}'s recent activity`, component: RecentActivity },
+      { label: 'Posts', title: `${person.name}'s posts`, component: MemberPosts },
+      { label: 'Comments', title: `${person.name}'s comments`, component: MemberComments },
+      { label: 'Upvotes', title: `${person.name}'s upvotes`, component: MemberVotes }
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const actionButtonsItems = [
-      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person)), hideTooltip: true },
+      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideTooltip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
       { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },
@@ -113,7 +114,7 @@ export default class MemberProfile extends React.Component {
             <Icon name='Location' styleName='header-member-location-icon' />
             {locationWithoutUsa}
           </div>}
-          {/* TODO: Do we still want to show the "Community manager" role? */}
+          {/* TODO: Do we still want to show the "Group manager" role? */}
           {/* {role && <div styleName='location'>
             <Icon styleName='star' name='StarCircle' />
             {role}

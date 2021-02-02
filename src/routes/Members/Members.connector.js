@@ -2,8 +2,7 @@ import { connect } from 'react-redux'
 import {
   FETCH_MEMBERS, fetchMembers, getMembers, getHasMoreMembers, removeMember
 } from './Members.store'
-import getCommunityForCurrentRoute from 'store/selectors/getCommunityForCurrentRoute'
-import getNetworkForCurrentRoute from 'store/selectors/getNetworkForCurrentRoute'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { get } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
@@ -13,30 +12,24 @@ import getMe from 'store/selectors/getMe'
 const defaultSortBy = 'name'
 
 export function mapStateToProps (state, props) {
-  const community = getCommunityForCurrentRoute(state, props)
-  const network = getNetworkForCurrentRoute(state, props)
-  const communitySlug = getRouteParam('slug', state, props)
-  const networkSlug = getRouteParam('networkSlug', state, props)
-  const subject = networkSlug ? 'network' : 'community'
-  const slug = communitySlug || networkSlug
+  const group = getGroupForCurrentRoute(state, props)
+  const slug = getRouteParam('groupSlug', state, props)
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
   const search = getQuerystringParam('q', state, props)
-  const canModerate = community && getMe(state, props).canModerate(community)
+  const canModerate = group && getMe(state, props).canModerate(group)
   const extraProps = {
     ...props,
-    network,
     slug,
     search,
     sortBy
   }
   return {
-    subject,
     slug,
-    memberCount: get('memberCount', community || network),
+    memberCount: get('memberCount', group),
     sortBy,
     search,
     canModerate,
-    community,
+    group,
     members: getMembers(state, extraProps),
     hasMore: getHasMoreMembers(state, extraProps),
     pending: state.pending[FETCH_MEMBERS]
@@ -48,18 +41,18 @@ export function mapDispatchToProps (dispatch, props) {
     fetchMembers: params => dispatch(fetchMembers(params)),
     changeSearch: term => dispatch(changeQuerystringParam(props, 'q', term)),
     changeSort: sort => dispatch(changeQuerystringParam(props, 's', sort, 'name')),
-    removeMember: (personId, communityId) => dispatch(removeMember(personId, communityId))
+    removeMember: (personId, groupId) => dispatch(removeMember(personId, groupId))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { subject, slug } = stateProps
+  const { slug } = stateProps
   const params = getQuerystringParam(['s', 'q'], null, ownProps)
   var { s: sortBy = defaultSortBy, q: search } = params
 
-  const removeMember = (id) => dispatchProps.removeMember(id, stateProps.community.id)
+  const removeMember = (id) => dispatchProps.removeMember(id, stateProps.group.id)
   const fetchMembers = (offset = 0) =>
-    dispatchProps.fetchMembers({ subject, slug, sortBy, offset, search })
+    dispatchProps.fetchMembers({ slug, sortBy, offset, search })
 
   return {
     ...ownProps,

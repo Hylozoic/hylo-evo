@@ -1,15 +1,15 @@
 import { ScatterplotLayer } from '@deck.gl/layers'
 import { FEATURE_TYPES } from 'routes/MapExplorer/MapExplorer.store'
 
-export function createScatterplotLayerFromPublicCommunities (publicCommunities, onHover, onClick) {
-  return createScatterplotLayer('scatterplot-public-communities-layer', publicCommunities.filter(community => community.locationObject && community.locationObject.center)
-    .map(community => {
+export function createScatterplotLayerFromPublicGroups (publicGroups, onHover, onClick) {
+  return createScatterplotLayer('scatterplot-public-groups-layer', publicGroups.filter(group => group.locationObject && group.locationObject.center)
+    .map(group => {
       return {
-        id: community.id,
-        type: 'community',
-        message: 'Community: ' + community.name,
-        color: FEATURE_TYPES['community'].primaryColor,
-        coordinates: [parseFloat(community.locationObject.center.lng), parseFloat(community.locationObject.center.lat)]
+        id: group.id,
+        type: 'group',
+        message: 'Group: ' + group.name,
+        color: FEATURE_TYPES['group'].primaryColor,
+        coordinates: [parseFloat(group.locationObject.center.lng), parseFloat(group.locationObject.center.lat)]
       }
     }), onHover, onClick)
 }

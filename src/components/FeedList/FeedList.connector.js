@@ -10,15 +10,15 @@ import {
 } from './FeedList.store.js'
 
 export function mapStateToProps (state, props) {
-  const { communityId } = props
+  const { groupId } = props
   const fetchPostsParam = {
     filter: props.postTypeFilter,
+    slug: props.routeParams.groupSlug,
     ...pick([
-      'slug',
-      'networkSlug'
+      'context',
+      'topicName'
     ], props.routeParams),
     ...pick([
-      'subject',
       'sortBy',
       'topic'
     ], props)
@@ -27,7 +27,7 @@ export function mapStateToProps (state, props) {
   // NOTE: In effort to better seperate the query caching from component details
   //       it's better (and necessary) in this case to send the fetch param then
   //       the raw props of the component.
-  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, communityId))
+  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
@@ -40,7 +40,11 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchPosts: param => offset => dispatch(fetchPosts({ offset, ...param })),
+    fetchPosts: param => offset => {
+      // The topic was not found in this case
+      if (param.topicName && !param.topic) return
+      return dispatch(fetchPosts({ offset, ...param }))
+    },
     storeFetchPostsParam: param => () => dispatch(storeFetchPostsParam(param))
   }
 }

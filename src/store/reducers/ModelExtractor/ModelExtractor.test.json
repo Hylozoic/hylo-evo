@@ -24,7 +24,7 @@
               }
             ],
             "followersTotal": "1",
-            "communities": [
+            "groups": [
               {
                 "id": "1836",
                 "name": "Wombats",
@@ -37,7 +37,7 @@
                 ]
               }
             ],
-            "communitiesTotal": "1",
+            "groupsTotal": "1",
             "comments": [
               {
                 "id": "1",
@@ -75,13 +75,13 @@
               }
             ],
             "followersTotal": "1",
-            "communities": [
+            "groups": [
               {
                 "id": "1836",
                 "name": "Wombats"
               }
             ],
-            "communitiesTotal": "1",
+            "groupsTotal": "1",
             "comments": [
               {
                 "id": "2",
@@ -105,9 +105,9 @@
     }
   },
 
-  "FETCH_POSTS for community": {
+  "FETCH_POSTS for group": {
     "data": {
-      "community": {
+      "group": {
         "id": "1",
         "name": "foo",
         "slug": "foo",
@@ -119,7 +119,7 @@
             {
               "id": "2",
               "title": "Hello!",
-              "communities": [
+              "groups": [
                 {
                   "id": "1",
                   "name": "foo",
@@ -131,7 +131,7 @@
             {
               "id": "3",
               "title": "Hello Again!",
-              "communities": [
+              "groups": [
                 {
                   "id": "1",
                   "name": "foo",

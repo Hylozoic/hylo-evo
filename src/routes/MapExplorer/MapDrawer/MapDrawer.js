@@ -46,8 +46,8 @@ function MapDrawer (props) {
       className={cx({ [styles.contentCard]: true, [styles.member]: true })}
       member={f}
       key={f.id}
-      slug={routeParams.networkSlug || routeParams.slug}
-      subject={fetchParams.subject}
+      groupSlug={routeParams.groupSlug}
+      context={fetchParams.context}
     />
     : <PostCard
       routeParams={routeParams}

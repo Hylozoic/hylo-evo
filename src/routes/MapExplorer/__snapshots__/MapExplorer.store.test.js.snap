@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`works for a community 1`] = `
+exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
@@ -13,14 +13,14 @@ Object {
   $offset: Int,
   $boundingBox: [PointInput]
 ) {
-  community(slug: $slug, updateLastViewed: true) {
+  group(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
     avatarUrl
     bannerUrl
     postCount
-    
+
 posts(
   first: $first,
   offset: $offset,
@@ -33,7 +33,7 @@ posts(
 ) {
   hasMore
   items {
-    
+
   id
   announcement
   title
@@ -57,7 +57,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-  
+
   linkPreview {
     id
     title
@@ -88,7 +88,7 @@ posts(
   myVote
   acceptContributions
   totalContributions
-  communities {
+  groups {
     id
     name
     slug
@@ -102,7 +102,7 @@ posts(
   postMemberships {
     id
     pinned
-    community {
+    group {
       id
     }
   }
@@ -169,7 +169,7 @@ posts(
     },
   },
   "meta": Object {
-    "extractModel": "Community",
+    "extractModel": "Group",
     "extractQueryResults": Object {
       "getItems": [Function],
     },
@@ -178,7 +178,7 @@ posts(
 }
 `;
 
-exports[`works for all communities 1`] = `
+exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
@@ -190,7 +190,7 @@ Object {
   $offset: Int,
   $boundingBox: [PointInput]
 ) {
-  
+
 posts(
   first: $first,
   offset: $offset,
@@ -203,7 +203,7 @@ posts(
 ) {
   hasMore
   items {
-    
+
   id
   announcement
   title
@@ -227,7 +227,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-  
+
   linkPreview {
     id
     title
@@ -258,7 +258,7 @@ posts(
   myVote
   acceptContributions
   totalContributions
-  communities {
+  groups {
     id
     name
     slug
@@ -272,7 +272,7 @@ posts(
   postMemberships {
     id
     pinned
-    community {
+    group {
       id
     }
   }

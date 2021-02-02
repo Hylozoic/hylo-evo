@@ -1,7 +1,7 @@
 import React from 'react'
 import { get } from 'lodash/fp'
 import { Link } from 'react-router-dom'
-import { messageThreadUrl, messagesUrl, currentUserSettingsUrl } from 'util/navigation'
+import { messagePersonUrl, messagesUrl, currentUserSettingsUrl } from 'util/navigation'
 import Button from 'components/Button'
 import './MemberSidebar.scss'
 
@@ -10,7 +10,7 @@ export default function MemberSidebar ({ member, currentUser }) {
 
   return <div styleName='member-sidebar'>
     <div styleName='message-member-container'>
-      <Link to={isCurrentUser ? messagesUrl() : messageThreadUrl(member)}>
+      <Link to={isCurrentUser ? messagesUrl() : messagePersonUrl(member)}>
         <Button>Messages</Button>
       </Link>
     </div>

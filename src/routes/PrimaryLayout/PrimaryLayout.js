@@ -11,15 +11,14 @@ import qs from 'querystring'
 import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
-import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
-import CreateCommunity from 'routes/CreateCommunity'
-import CommunityDetail from 'routes/CommunityDetail'
-import CommunityDeleteConfirmation from 'routes/CommunitySettings/CommunityDeleteConfirmation'
-import CommunityReview from 'routes/CreateCommunity/Review'
-import CommunitySettings from 'routes/CommunitySettings'
-import CommunitySidebar from 'routes/CommunitySidebar'
-import Domain from 'routes/CreateCommunity/Domain'
+import CreateGroup from 'components/CreateGroup'
+import CreateModal from 'components/CreateModal'
+import GroupDetail from 'routes/GroupDetail'
+import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
+import GroupSettings from 'routes/GroupSettings'
+import GroupSidebar from 'routes/GroupSidebar'
+import Groups from 'routes/Groups'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
 import MapExplorer from 'routes/MapExplorer'
@@ -29,10 +28,6 @@ import MemberProfile from 'routes/MemberProfile'
 import Members from 'routes/Members'
 import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
-import Name from 'routes/CreateCommunity/Name'
-import NetworkCommunities from 'routes/NetworkCommunities'
-import NetworkSettings from 'routes/NetworkSettings'
-import NetworkSidebar from 'routes/NetworkSidebar'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
 import PostEditorModal from 'components/PostEditorModal'
@@ -45,39 +40,111 @@ import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
-  OPTIONAL_POST_MATCH, OPTIONAL_COMMUNITY_MATCH,
-  OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, COMMUNITY_DETAIL_MATCH,
-  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH,
+  OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
+  OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
+  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH, REQUIRED_NEW_GROUP_MATCH,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
 
+const routesWithNavigation = [
+  { path: '/:context(all|public)' },
+  { path: '/:context(groups)/:groupSlug' }
+]
+
+// In order of more specific to less specific
+const routesWithDrawer = [
+  { path: `/:context(all|public)/:view(events|map|projects)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}` },
+  { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
+  { path: '/:context(all)/:view(topics)/:topicName' },
+  { path: '/:context(all)/:view(topics)' },
+  // {/* Group Routes */}
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
+  // {/* Member Routes */}
+  { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  // {/* Other Routes */}
+  { path: '/settings' },
+  { path: '/search' },
+  { path: '/confirm-group-delete' }
+]
+
+const detailRoutes = [
+  { path: `/:context(all|public)/:view(events|map|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map|events|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
+]
+
+const createRoutes = [
+  { path: `/:context(all|public)/:view(events|groups|map|projects)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:views(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(projects|events|groups|map|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
+  { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` }
+]
+
+const signupRoutes = [
+  { path: '/signup/upload-photo', child: UploadPhoto },
+  { path: '/signup/add-location', child: AddLocation },
+  { path: '/signup/review', child: Review }
+]
+
+const redirectRoutes = [
+  { from: '/tag/:topicName', to: '/all/topics/:topicName' },
+  { from: '/c/:groupSlug/', to: '/groups/:groupSlug/' },
+  { from: '/n/:groupSlug/', to: '/groups/:groupSlug/' },
+  { from: '/c/:groupSlug/tag/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
+  // TODO: is this right?
+  { from: '/c/:groupSlug/join/:accessCode/tag/:topicName', to: '/groups/:groupSlug/join/:accessCode/topics/:topicName' },
+  { from: '/p/:postId', to: '/all/post/:postId' },
+  { from: '/u/:personId', to: '/members/:personId' },
+  { from: '/c/:groupSlug/about', to: '/groups/:groupSlug' },
+  { from: '/c/:groupSlug/people', to: '/groups/:groupSlug/members' },
+  { from: '/c/:groupSlug/invite', to: '/groups/:groupSlug/settings/invite' },
+  { from: '/c/:groupSlug/events', to: '/groups/:groupSlug/events' },
+  // redirects for context switching into global contexts
+  { from: '/all/members', to: '/all' },
+  { from: '/public/(members|topics)', to: '/public' }
+]
+
 export default class PrimaryLayout extends Component {
   componentDidMount () {
     this.props.fetchForCurrentUser()
     if (this.props.slug) {
-      this.props.fetchForCommunity()
+      this.props.fetchForGroup()
     }
   }
 
   componentDidUpdate (prevProps) {
-    if (get('community.id', this.props) !== get('community.id', prevProps)) {
-      this.props.fetchForCommunity()
+    if (get('group.id', this.props) !== get('group.id', prevProps)) {
+      this.props.fetchForGroup()
     }
   }
 
   render () {
     const {
-      community,
-      network,
+      group,
       currentUser,
       isDrawerOpen,
       location,
       toggleDrawer,
-      isCommunityRoute,
-      communityPending,
+      isGroupRoute,
+      groupPending,
       showLogoBadge
     } = this.props
 
@@ -87,58 +154,28 @@ export default class PrimaryLayout extends Component {
       </div>
     }
 
-    if (isCommunityRoute) {
-      if (!community && !communityPending) return <NotFound />
+    if (isGroupRoute) {
+      if (!group && !groupPending) return <NotFound />
     }
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
     const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, { path, exact: true }),
+      ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
-    const routesWithNavigation = [
-      { path: '/:context(all|public)' },
-      { path: '/:context(n)/:networkSlug' },
-      { path: '/:context(c)/:slug' }
-    ]
-    const routesWithDrawer = [
-      { path: '/:context(all)/:view(topics)' },
-      { path: `/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}` },
-      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
-      { path: '/:context(all|public)/:topicName' },
-      // {/* Network Routes */}
-      { path: '/:context(n)/:networkSlug/:view(members|settings|communities|topics)' },
-      { path: `/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}` },
-      // {/* Community Routes */}
-      { path: '/:context(c)/:slug/:view(members|settings|topics)' },
-      { path: `/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(c)/:slug/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}` },
-      // {/* Member Routes */}
-      { path: `/:context(m)/:personId/${OPTIONAL_POST_MATCH}` },
-      // {/* Other Routes */}
-      { path: '/settings' },
-      { path: '/search' },
-      { path: '/confirm-community-delete' }
-    ]
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
 
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
       <Switch>
         {routesWithDrawer.map(({ path }) => (
           <Route path={path} key={path} render={props => (
-            <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ community, network }} />
+            <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
           )} />
         ))}
       </Switch>
-      <TopNav styleName='top' onClick={closeDrawer} {...{ community, network, currentUser, showLogoBadge }} />
+      <TopNav styleName='top' onClick={closeDrawer} {...{ group, currentUser, showLogoBadge }} />
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
         {routesWithNavigation.map(({ path }) =>
           <Route path={path} key={path} component={props =>
@@ -155,53 +192,41 @@ export default class PrimaryLayout extends Component {
             {signupRoutes.map(({ path, child }) =>
               <Route path={path} key={path} render={props =>
                 <SignupModal {...props} child={child} />} />)}
-            {createCommunityRoutes.map(({ path, component }) =>
-              <Route path={path} key={path} render={props =>
-                <CreateCommunity {...props} component={component} />} />)}
             {signupInProgress &&
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
-              <RedirectToCommunity path='/(|app)' currentUser={currentUser} />}
+              <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
             {/* All and Public Routes */}
+            <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_COMMUNITY_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/:context(all|public)/:topicName' exact component={Feed} />
-            {/* Network Routes */}
-            <Route path='/:context(n)/:networkSlug/:view(communities)' component={NetworkCommunities} />
-            <Route path='/:context(n)/:networkSlug/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(n)/:networkSlug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path='/:context(n)/:networkSlug/:view(members)' component={Members} />
-            <Route path='/:context(n)/:networkSlug/:view(settings)' component={NetworkSettings} />
-            <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/:context(n)/:networkSlug/:topicName/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            {/* Community Routes */}
-            <Route path='/:context(c)/:slug/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(c)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path='/:context(c)/:slug/:view(members)' component={Members} />
-            <Route path='/:context(c)/:slug/:view(settings)' component={CommunitySettings} />
-            <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path={`/:context(c)/:slug/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            {/* Group Routes */}
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
+            <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
+            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
+            <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Member Routes */}
-            <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            <Route path='/confirm-community-delete' component={CommunityDeleteConfirmation} />
+            <Route path='/confirm-group-delete' component={GroupDeleteConfirmation} />
           </Switch>
         </div>
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
-            <Route path={`/:context(c)/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            {/* LEJ: Leaving MemberSidebar vestiage here for now as new sidebar content is likely coming soon */}
-            {/* <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} /> */}
-            <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
-            <Route path={`/:context(n)/:networkSlug/${OPTIONAL_NEW_POST_MATCH}`} exact component={NetworkSidebar} />
-            {/* <Route path={`/:context(n)/:networkSlug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
-            {/* <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
+            <Route path={`/:context(groups)/:groupSlug/:view(events|map|groups|projects)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
           </Switch>
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
@@ -211,80 +236,27 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} />} />
+      <Route path='/messages/:messageThreadId?' render={props => <Messages {...props} />} />
       <Switch>
-        {postEditorRoutes.map(({ path }) =>
-          <Route path={path} exact key={path} children={({ match, location }) =>
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/create'} key={path + 'create'} children={({ match, location }) =>
+            <CreateModal match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/' + REQUIRED_NEW_GROUP_MATCH} key={path + 'newgroup'} children={({ match, location }) =>
+            <CreateGroup match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/' + REQUIRED_NEW_POST_MATCH} key={path + 'newpost'} children={({ match, location }) =>
+            <PostEditorModal match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}
       </Switch>
       <SocketListener location={location} />
-      <SocketSubscriber type='community' id={get('slug', community)} />
+      <SocketSubscriber type='group' id={get('slug', group)} />
       <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
     </div>
   }
 }
-
-const detailRoutes = [
-  { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(all|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(all|public)/:view(map)/${COMMUNITY_DETAIL_MATCH}`, component: CommunityDetail },
-  { path: `/:context(n)/:networkSlug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(n)/:networkSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(n)/:networkSlug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(n)/:networkSlug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(c)/:slug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(c)/:slug/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(c)/:slug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(c)/:slug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
-]
-
-const postEditorRoutes = [
-  { path: `/:context(all|public)/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(n)/:networkSlug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(c)/:slug/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(c)/:slug/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(c)/:slug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(c)/:slug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(c)/:slug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(m)/:personId/${REQUIRED_EDIT_POST_MATCH}` }
-]
-
-const signupRoutes = [
-  { path: '/signup/upload-photo', child: UploadPhoto },
-  { path: '/signup/add-location', child: AddLocation },
-  { path: '/signup/add-skills', child: AddSkills },
-  { path: '/signup/review', child: Review }
-]
-
-const createCommunityRoutes = [
-  { path: '/create-community/name/:networkId', component: Name },
-  { path: '/create-community/name', component: Name },
-  { path: '/create-community/domain', component: Domain },
-  { path: '/create-community/review', component: CommunityReview }
-]
-
-const redirectRoutes = [
-  { from: '/tag/:topicName', to: '/all/:topicName' },
-  { from: '/c/:slug/tag/:topicName', to: '/c/:slug/:topicName' },
-  { from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/c/:slug/join/:accessCode/:topicName' },
-  { from: '/p/:postId', to: '/all/p/:postId' },
-  { from: '/u/:personId', to: '/m/:personId' },
-  { from: '/c/:slug/about', to: '/c/:slug' },
-  { from: '/c/:slug/people', to: '/c/:slug/:view(members)' },
-  { from: '/c/:slug/invite', to: '/c/:slug/:view(settings)/invite' },
-  { from: '/c/:slug/events', to: '/c/:slug' },
-  // redirects for context switching into global contexts
-  { from: '/all/members', to: '/all' },
-  { from: '/public/(members|topics)', to: '/public' }
-]
 
 export function RedirectToSignupFlow ({ pathname }) {
   if (isSignupPath(pathname)) return null
@@ -292,15 +264,15 @@ export function RedirectToSignupFlow ({ pathname }) {
   return <Redirect to='/signup/upload-photo' />
 }
 
-export function RedirectToCommunity ({ path, currentUser }) {
+export function RedirectToGroup ({ path, currentUser }) {
   let redirectToPath = '/all'
 
   if (currentUser.memberships.count() > 0) {
-    const mostRecentCommunity = currentUser.memberships
+    const mostRecentGroup = currentUser.memberships
       .orderBy(m => new Date(m.lastViewedAt), 'desc')
       .first()
-      .community
-    redirectToPath = `/c/${mostRecentCommunity.slug}`
+      .group
+    redirectToPath = `/groups/${mostRecentGroup.slug}`
   }
 
   return <Redirect exact from={path} to={redirectToPath} />

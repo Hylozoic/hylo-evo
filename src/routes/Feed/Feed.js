@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { get, pick } from 'lodash/fp'
-
-import './Feed.scss'
+import { bgImageStyle } from 'util/index'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
-import { bgImageStyle } from 'util/index'
+import './Feed.scss'
 
 export default class Feed extends Component {
   static propTypes = {
@@ -23,43 +22,30 @@ export default class Feed extends Component {
   }
 
   componentDidMount () {
-    const { routeParams, fetchTopic, fetchNetwork } = this.props
-    const { networkSlug, topicName } = routeParams
+    const { routeParams, fetchTopic } = this.props
+    const { topicName } = routeParams
 
     if (topicName) fetchTopic()
-    if (networkSlug) fetchNetwork()
   }
 
   componentDidUpdate (prevProps) {
-    const { routeParams, fetchTopic, fetchNetwork } = this.props
-    const { slug, topicName, networkSlug } = routeParams
+    const { routeParams, fetchTopic } = this.props
+    const { groupSlug, topicName } = routeParams
     const topicChanged = topicName && get('routeParams.topicName', prevProps) !== topicName
-    const slugChanged = slug && get('routeParams.slug', prevProps) !== slug
+    const slugChanged = groupSlug && get('routeParams.groupSlug', prevProps) !== groupSlug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
-    if (networkSlug && networkSlug !== prevProps.routeParams.networkSlug) fetchNetwork()
   }
 
   getFeedProps () {
     const { routeParams, querystringParams } = this.props
-    const { slug, networkSlug, context } = routeParams
-
-    var subject
-    if (slug) {
-      subject = 'community'
-    } else if (networkSlug) {
-      subject = 'network'
-    } else if (context && context === 'public') {
-      subject = 'public-communities'
-    } else {
-      subject = 'all-communities'
-    }
+    const { context } = routeParams
 
     return {
-      subject,
+      context,
       routeParams,
       querystringParams,
       topic: get('id', this.props.topic),
-      communityId: get('community.id', this.props),
+      groupId: get('group.id', this.props),
       ...pick([
         'postTypeFilter',
         'sortBy',
@@ -72,53 +58,55 @@ export default class Feed extends Component {
 
   render () {
     const {
-      routeParams, topic, community, currentUser, postsTotal, followersTotal,
-      communityTopic, newPost, network, currentUserHasMemberships,
-      goToCreateCommunity, membershipsPending, postTypeFilter
+      routeParams, group, currentUser, postsTotal, followersTotal,
+      groupTopic, newPost, currentUserHasMemberships,
+      goToCreateGroup, membershipsPending, postTypeFilter, topicLoading, toggleGroupTopicSubscribe
     } = this.props
     const { topicName, context } = routeParams
 
-    if (topicName && !topic) return <Loading />
-    if (community && topicName && !communityTopic) return <Loading />
+    if (topicLoading) return <Loading />
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
     return <div>
       {topicName
         ? <TopicFeedHeader
-          communityTopic={communityTopic}
+          isSubscribed={groupTopic && groupTopic.isSubscribed}
+          toggleSubscribe={
+            groupTopic
+              ? () => toggleGroupTopicSubscribe(groupTopic)
+              : null
+          }
           topicName={topicName}
           postsTotal={postsTotal}
           followersTotal={followersTotal}
-          topic={topic}
           type={postTypeFilter}
-          community={community}
           currentUser={currentUser}
+          bannerUrl={group && group.bannerUrl}
           newPost={newPost} />
         : <FeedBanner
-          community={community || network}
+          group={group}
           currentUser={currentUser}
           type={postTypeFilter}
-          all={context && context === 'all'}
-          publicContext={context && context === 'public'}
+          context={context}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
-      {!membershipsPending && !currentUserHasMemberships && <CreateCommunityPrompt
-        goToCreateCommunity={goToCreateCommunity}
+      {!membershipsPending && !currentUserHasMemberships && <CreateGroupPrompt
+        goToCreateGroup={goToCreateGroup}
       />}
       {membershipsPending && <Loading />}
     </div>
   }
 }
 
-export function CreateCommunityPrompt ({ goToCreateCommunity }) {
-  return <div styleName='create-community-prompt'>
-    <p>There's no posts yet, try starting a community!</p>
+export function CreateGroupPrompt ({ goToCreateGroup }) {
+  return <div styleName='create-group-prompt'>
+    <p>There's no posts yet, try starting a group!</p>
     <Button
       styleName='button'
-      label='Create a Community'
-      onClick={goToCreateCommunity}
+      label='Create a Group'
+      onClick={goToCreateGroup}
     />
     <div style={bgImageStyle('/assets/hey-axolotl.png')} styleName='sidebar-image' />
   </div>

@@ -12,7 +12,7 @@ JoinRequest.modelName = 'JoinRequest'
 JoinRequest.fields = {
   id: attr(),
   user: fk('Person'),
-  community: fk('Community'),
+  group: fk('Group'),
   createdAt: attr(),
   updatedAt: attr(),
   status: attr()

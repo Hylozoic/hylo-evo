@@ -19,11 +19,11 @@ import {
   FIND_OR_CREATE_THREAD,
   FETCH_THREADS
 } from 'store/constants'
-import {
-  FETCH_NETWORK_SETTINGS,
-  FETCH_MODERATORS,
-  FETCH_COMMUNITIES
-} from 'routes/NetworkSettings/NetworkSettings.store'
+// import {
+//   FETCH_NETWORK_SETTINGS,
+//   FETCH_MODERATORS,
+//   FETCH_GROUPS
+// } from 'routes/NetworkSettings/NetworkSettings.store'
 import {
   CREATE_TOPIC
 } from 'components/CreateTopic/CreateTopic.store'
@@ -40,24 +40,6 @@ export default function (state = {}, action) {
   const { type, payload, error, meta } = action
   if (error) return state
   let root
-
-  const addNetworkModerators = state => {
-    const params = { ...meta.graphql.variables, page: meta.page }
-    if (payload.data.network.moderators) {
-      return appendIds(state, FETCH_MODERATORS, params, payload.data.network.moderators)
-    } else {
-      return state
-    }
-  }
-
-  const addNetworkCommunities = state => {
-    const params = { ...meta.graphql.variables, page: meta.page }
-    if (payload.data.network.communities) {
-      return appendIds(state, FETCH_COMMUNITIES, params, payload.data.network.communities)
-    } else {
-      return state
-    }
-  }
 
   const { extractQueryResults } = meta || {}
   if (extractQueryResults && payload) {
@@ -77,7 +59,6 @@ export default function (state = {}, action) {
     case CREATE_PROJECT:
     case CREATE_POST:
       root = {
-        networkSlug: meta.networkSlug,
         ...payload.data[camelCase(type)]
       }
       return matchNewPostIntoQueryResults(state, root)
@@ -88,15 +69,6 @@ export default function (state = {}, action) {
 
     case RECEIVE_THREAD:
       return matchNewThreadIntoQueryResults(state, payload.data.thread)
-
-    case FETCH_NETWORK_SETTINGS:
-      return addNetworkCommunities(addNetworkModerators(state))
-
-    case FETCH_MODERATORS:
-      return addNetworkModerators(state)
-
-    case FETCH_COMMUNITIES:
-      return addNetworkCommunities(state)
 
     case REMOVE_POST_PENDING:
       return mapValues(state, (results, key) => {
@@ -124,7 +96,7 @@ export default function (state = {}, action) {
   return state
 }
 
-export function matchNewPostIntoQueryResults (state, { id, type, networkSlug, communities, topics = [] }) {
+export function matchNewPostIntoQueryResults (state, { id, type, groups, topics = [] }) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
       creation because we know that the post just created is the latest
@@ -133,70 +105,46 @@ export function matchNewPostIntoQueryResults (state, { id, type, networkSlug, co
   */
   const queriesToMatch = []
 
-  // All Communities feed w/ topics
+  // All Groups feed w/ topics
   queriesToMatch.push({})
   for (let topic of topics) {
     queriesToMatch.push(
       { topic: topic.id }
     )
   }
-  // Network feeds w/ topics
-  if (networkSlug) {
-    queriesToMatch.push(
-      { networkSlug },
-      { networkSlug, filter: type },
-      { networkSlug, sortBy: 'updated' },
-      { networkSlug, sortBy: 'updated', filter: type }
-    )
-    for (let topic of topics) {
-      queriesToMatch.push(
-        { networkSlug: networkSlug, topic: topic.id }
-      )
-    }
-  }
 
-  // Community feeds w/ topics
-  return reduce((memo, community) => {
+  // Group feeds w/ topics
+  return reduce((memo, group) => {
     queriesToMatch.push(
-      { slug: community.slug },
-      { slug: community.slug, filter: type },
-      { slug: community.slug, sortBy: 'updated' },
-      { slug: community.slug, sortBy: 'updated', filter: type }
+      { slug: group.slug },
+      { slug: group.slug, filter: type },
+      { slug: group.slug, sortBy: 'updated' },
+      { slug: group.slug, sortBy: 'updated', filter: type }
     )
     for (let topic of topics) {
       queriesToMatch.push(
-        { slug: community.slug, topic: topic.id }
+        { slug: group.slug, topic: topic.id }
       )
     }
     return reduce((innerMemo, params) => {
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
     }, memo, queriesToMatch)
-  }, state, communities)
+  }, state, groups)
 }
 
-export function matchNewTopicIntoQueryResults (state, { id, isDefault, networkSlug, communityTopics }) {
+export function matchNewTopicIntoQueryResults (state, { id, isDefault, groupTopics }) {
   const queriesToMatch = []
 
-  // All Communities topics
+  // All Groups topics
   queriesToMatch.push({ sortBy: 'name' })
 
-  // Network topics
-  if (networkSlug) {
+  // Group topics
+  return reduce((memo, groupTopic) => {
     queriesToMatch.push(
-      { networkSlug, autocomplete: '' },
-      { networkSlug, sortBy: 'name', autocomplete: '' },
-      { networkSlug, sortBy: 'updated_at', autocomplete: '' },
-      { networkSlug, sortBy: 'num_followers', autocomplete: '' }
-    )
-  }
-
-  // Community topics
-  return reduce((memo, communityTopic) => {
-    queriesToMatch.push(
-      { communitySlug: communityTopic.community.slug, autocomplete: '' },
-      { communitySlug: communityTopic.community.slug, sortBy: 'name', autocomplete: '' },
-      { communitySlug: communityTopic.community.slug, sortBy: 'updated_at', autocomplete: '' },
-      { communitySlug: communityTopic.community.slug, sortBy: 'num_followers', autocomplete: '' }
+      { groupSlug: groupTopic.group.slug, autocomplete: '' },
+      { groupSlug: groupTopic.group.slug, sortBy: 'name', autocomplete: '' },
+      { groupSlug: groupTopic.group.slug, sortBy: 'updated_at', autocomplete: '' },
+      { groupSlug: groupTopic.group.slug, sortBy: 'num_followers', autocomplete: '' }
     )
 
     return reduce((innerMemo, params) => {
@@ -205,7 +153,7 @@ export function matchNewTopicIntoQueryResults (state, { id, isDefault, networkSl
       }
       return prependIdForCreate(innerMemo, FETCH_TOPICS, params, id)
     }, memo, queriesToMatch)
-  }, state, communityTopics.items)
+  }, state, groupTopics.items)
 }
 
 export function matchNewThreadIntoQueryResults (state, { id, type }) {
@@ -257,7 +205,7 @@ function appendIds (state, type, params, data) {
 
 export function makeGetQueryResults (actionType) {
   return (state, props) => {
-    // TBD: Sometimes parameters like 'id' and 'slug' are to be found in the
+    // TBD: Sometimes parameters like 'id' and 'groupSlug' are to be found in the
     // URL, in which case they are in e.g. props.match.params.id; and sometimes
     // they are passed directly to a component. Should buildKey handle both
     // cases?
@@ -290,9 +238,8 @@ export function buildKey (type, params) {
 export const queryParamWhitelist = [
   'id',
   'slug',
-  'communitySlug',
-  'networkSlug',
-  'networkSlugs',
+  'groupSlug',
+  'groupSlugs',
   'sortBy',
   'search',
   'autocomplete',

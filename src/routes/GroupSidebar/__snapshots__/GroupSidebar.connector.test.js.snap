@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "canModerate": undefined,
+  "group": null,
+  "leaders": Array [],
+  "members": Array [],
+  "slug": undefined,
+}
+`;

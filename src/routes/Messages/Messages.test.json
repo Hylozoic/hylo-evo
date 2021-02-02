@@ -1,4 +1,4 @@
-{ 
+{
   "people": [
     {
       "id": "72297",
@@ -7,7 +7,7 @@
       "memberships": [
         {
           "id": "6654",
-          "community": {
+          "group": {
             "id": "2619",
             "name": "Associate"
           }
@@ -21,7 +21,7 @@
       "memberships": [
         {
           "id": "6904",
-          "community": {
+          "group": {
             "id": "2619",
             "name": "Associate"
           }
@@ -35,7 +35,7 @@
       "memberships": [
         {
           "id": "6613",
-          "community": {
+          "group": {
             "id": "2619",
             "name": "Associate"
           }
@@ -49,7 +49,7 @@
       "memberships": [
         {
           "id": "6397",
-          "community": {
+          "group": {
             "id": "2619",
             "name": "Associate"
           }

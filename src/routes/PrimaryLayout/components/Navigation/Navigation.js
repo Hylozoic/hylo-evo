@@ -12,12 +12,14 @@ import './Navigation.scss'
 export default function Navigation (props) {
   const {
     className,
+    createPath,
     collapsed,
     routeParams,
     rootPath,
     membersPath,
     projectsPath,
-    communityId,
+    groupId,
+    groupsPath,
     eventsPath,
     mapPath,
     mapView,
@@ -35,6 +37,11 @@ export default function Navigation (props) {
   }
 
   const links = compact([
+    createPath && {
+      label: 'Create',
+      icon: 'Create',
+      to: createPath
+    },
     rootPath && {
       label: 'Home',
       icon: 'Home',
@@ -57,6 +64,11 @@ export default function Navigation (props) {
       label: 'Members',
       icon: 'Members',
       to: membersPath
+    },
+    groupsPath && {
+      label: 'Groups',
+      icon: 'Groups',
+      to: groupsPath
     },
     mapPath && {
       label: 'Map',
@@ -84,7 +96,7 @@ export default function Navigation (props) {
         collapsed={collapsed}
         backUrl={rootPath}
         routeParams={routeParams}
-        communityId={communityId} />}
+        groupId={groupId} />}
     </div>
   </div>
 }

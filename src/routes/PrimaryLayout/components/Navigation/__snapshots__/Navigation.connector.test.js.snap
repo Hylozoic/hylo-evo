@@ -6,8 +6,8 @@ Object {
   "bar": 2,
   "clearBadge": [Function],
   "clearFeedList": undefined,
-  "communityMembership": Object {
-    "community": Object {
+  "groupMembership": Object {
+    "group": Object {
       "id": 2,
     },
     "id": 77,
@@ -20,7 +20,7 @@ Object {
     ],
     "results": Array [
       Object {
-        "isThrow": false,
+        "type": "return",
         "value": undefined,
       },
     ],

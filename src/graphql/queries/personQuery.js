@@ -66,10 +66,13 @@ export default
       id
       role
       hasModeratorRole
-      community {
+      group {
         id
         name
         slug
+      }
+      person {
+        id
       }
     }
     projects {

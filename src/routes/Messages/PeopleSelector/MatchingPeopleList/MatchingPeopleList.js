@@ -27,7 +27,7 @@ MatchingPeopleList.propTypes = {
       id: PropTypes.any,
       name: PropTypes.string,
       avatarUrl: PropTypes.string,
-      community: PropTypes.string
+      group: PropTypes.string
     })
   )
 }

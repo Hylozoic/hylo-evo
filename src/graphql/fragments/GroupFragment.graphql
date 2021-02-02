@@ -1,0 +1,59 @@
+#import '../fragments/GroupTopicsFragment.graphql'
+
+fragment GroupFragment on Group {
+  id
+  accessibility
+  avatarUrl
+  bannerUrl
+  description
+  memberCount
+  name
+  settings {
+    allowGroupInvites
+    publicMemberDirectory
+  }
+  slug
+  visibility
+  parentGroups {
+    items {
+      id
+      slug
+      name
+      avatarUrl
+      childGroups(first: 300) {
+        items {
+          id
+        }
+      }
+      memberCount
+      members(first: 8, sortBy: "name", order: "desc") {
+        items {
+          id
+          name
+          avatarUrl
+        }
+      }
+      moderators {
+        items {
+          id
+          name
+          avatarUrl
+        }
+      }
+    }
+  }
+  groupTopics(
+    first: $first,
+    offset: $offset,
+    sortBy: $sortBy,
+    order: $order,
+    subscribed: $subscribed,
+    autocomplete: $autocomplete
+  # * This is not yet worked-out, it may be working, it may not be
+  #   if it does what you need to do in the wrapping query call
+  #   send in the $skipTopics variable, which you can/should also
+  #   set as a default of false (e.g. '$skipTopics: Boolean = false')
+  ) @skip(if: $skipTopics) {
+    ...GroupTopicsFragment
+  }
+}

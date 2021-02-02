@@ -11,7 +11,7 @@ describe('mapStateToProps', () => {
     const session = orm.session(orm.getEmptyState())
 
     times(i => {
-      session.Post.create({ id: i.toString(), communities: ['1'] })
+      session.Post.create({ id: i.toString(), groups: ['1'] })
     }, 5)
 
     state = {

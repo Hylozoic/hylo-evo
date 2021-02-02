@@ -3,41 +3,41 @@ import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export const MODULE_NAME = 'CreateTopic'
 export const CREATE_TOPIC = `${MODULE_NAME}/CREATE_TOPIC`
-export const FETCH_COMMUNITY_TOPIC = `${MODULE_NAME}/FETCH_COMMUNITY_TOPIC`
+export const FETCH_GROUP_TOPIC = `${MODULE_NAME}/FETCH_GROUP_TOPIC`
 
-export function fetchCommunityTopic (topicName, communitySlug) {
+export function fetchGroupTopic (topicName, groupSlug) {
   return {
-    type: FETCH_COMMUNITY_TOPIC,
+    type: FETCH_GROUP_TOPIC,
     graphql: {
-      query: `query ($topicName: String, $communitySlug: String) {
-        communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
+      query: `query ($topicName: String, $groupSlug: String) {
+        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
           id
         }
       }`,
       variables: {
-        communitySlug,
+        groupSlug,
         topicName
       }
     },
     meta: {
-      communitySlug,
+      groupSlug,
       topicName
     }
   }
 }
 
-export function createTopic (topicName, communityId, isDefault = false, isSubscribing = false) {
+export function createTopic (topicName, groupId, isDefault = false, isSubscribing = false) {
   return {
     type: CREATE_TOPIC,
     graphql: {
-      query: `mutation ($topicName: String, $communityId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
-        createTopic(topicName: $topicName, communityId: $communityId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
+      query: `mutation ($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+        createTopic(topicName: $topicName, groupId: $groupId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
           id
           name
-          communityTopics {
+          groupTopics {
             items {
               id
-              community {
+              group {
                 id
                 slug
               }
@@ -54,7 +54,7 @@ export function createTopic (topicName, communityId, isDefault = false, isSubscr
         }
       }`,
       variables: {
-        communityId,
+        groupId,
         topicName,
         isDefault,
         isSubscribing
@@ -67,13 +67,13 @@ export function createTopic (topicName, communityId, isDefault = false, isSubscr
           getRoot: get('createTopic')
         },
         {
-          modelName: 'CommunityTopic',
-          getRoot: get('createTopic.communityTopics')
+          modelName: 'GroupTopic',
+          getRoot: get('createTopic.groupTopics')
         }
       ],
       data: {
         topicName,
-        communityId,
+        groupId,
         isDefault
       },
       analytics: AnalyticsEvents.TOPIC_CREATED
@@ -87,14 +87,14 @@ export default function reducer (state = {}, action) {
     case CREATE_TOPIC:
       const topicName = get('data.createTopic.name', payload)
       // Once '#foo' is created, reset store['foo'], even if it wipes out checks
-      // on the same topic for other communities... safer to start fresh.
+      // on the same topic for other groups... safer to start fresh.
       return omit(encodeURI(topicName), state)
 
-    case FETCH_COMMUNITY_TOPIC:
+    case FETCH_GROUP_TOPIC:
       return {
         ...state,
         [encodeURI(meta.topicName)]: {
-          [meta.communitySlug]: !!payload.data.communityTopic
+          [meta.groupSlug]: !!payload.data.groupTopic
         }
       }
   }

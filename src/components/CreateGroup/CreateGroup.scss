@@ -1,0 +1,69 @@
+.wrapper {
+  width: 100%;
+  max-width: 590px;
+  max-height: 100vh;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 30px;
+}
+
+.error {
+  color: red;
+}
+
+.center {
+  clear: both;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+}
+
+.name-and-slug {
+  background: lightgray;
+}
+
+.slug {
+  font-size: 10px;
+}
+
+.slug-wrapper {
+  display: inline;
+  border: none;
+  height: inherit;
+}
+
+.slug-input {
+  font-size: 10px;
+  line-height: inherit;
+  height: inherit;
+  background: lightgray;
+  padding: 0;
+}
+
+.privacy {
+  padding: 10px;
+  background: white;
+}
+
+.privacyDropdown {
+  text-align: left;
+}
+
+.invitePeople {
+  paddding: 10px;
+  background: lightgray;
+}
+
+.parentGroups {
+  padding: 10px;
+  background: white;
+}
+
+.submit-button {
+  text-align: center;
+}

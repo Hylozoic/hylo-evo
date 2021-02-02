@@ -12,13 +12,13 @@ describe('mapStateToProps', () => {
     const session = orm.session(orm.getEmptyState())
 
     times(i => {
-      session.Post.create({ id: i.toString(), communities: ['1'] })
+      session.Post.create({ id: i.toString(), groups: ['1'] })
     }, 5)
 
     props = {
       location: { search: '' },
       match: {
-        params: { 'slug': 'foo' }
+        params: { groupSlug: 'foo' }
       }
     }
 
@@ -37,7 +37,7 @@ describe('mapStateToProps', () => {
         selectedSearch: {}
       },
       queryResults: {
-        [buildKey(FETCH_POSTS_MAP, { slug: 'foo' })]: {
+        [buildKey(FETCH_POSTS_MAP, { groupSlug: 'foo' })]: {
           ids: ['1', '3', '2']
         }
       }
@@ -49,7 +49,7 @@ describe('mapStateToProps', () => {
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         currentUser: undefined,
-        fetchParams: { boundingBox: undefined, slug: 'foo', subject: 'community', networkSlug: undefined, networkSlugs: undefined, isPublic: false },
+        fetchParams: { boundingBox: undefined, groupSlug: 'foo', context: 'groups', groupSlugs: undefined },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
@@ -58,16 +58,16 @@ describe('mapStateToProps', () => {
         members: [],
         pending: undefined,
         posts: [],
-        publicCommunities: [],
+        publicGroups: [],
         hideDrawer: false,
-        routeParams: { slug: 'foo' },
+        routeParams: { groupSlug: 'foo' },
         topics: [],
         zoom: 0
       })
     )
   })
 
-  // TODO: one with posts and members and communities
+  // TODO: one with posts and members and groups
 
   it('checks if FETCH_POSTS_MAP is pending', () => {
     state = {

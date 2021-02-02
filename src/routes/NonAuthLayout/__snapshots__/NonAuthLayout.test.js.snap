@@ -7,7 +7,7 @@ exports[`NonAuthLayout renders correctly 1`] = `
   <div
     data-stylename="particlesBackgroundWrapper"
   >
-    <e
+    <t
       height="100%"
       params={
         Object {
@@ -171,18 +171,33 @@ exports[`NonAuthLayout renders correctly 1`] = `
       exact={true}
       from="/public/:postTypeContext(project|event|p)?/:postId(\\\\d+)?/:action(new|edit)?"
       key="streamToMap"
-      push={false}
       to="/public/map"
     />
     <Route
-      component={[Function]}
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(MapExplorer)",
+          "type": [Function],
+        }
+      }
       exact={true}
       path="/:context(public)/:view(map)/:postTypeContext(project|event|p)?/:postId(\\\\d+)?/:action(new|edit)?"
     />
     <Route
-      component={[Function]}
+      component={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(MapExplorer)",
+          "type": [Function],
+        }
+      }
       exact={true}
-      path="/:context(public)/:view(map)/:communityContext(c)?/:communityId(\\\\d+)?/:action(new|edit)?"
+      path="/:context(public)/:view(map)/:groupContext(g)?/:groupId(\\\\d+)?/:action(new|edit)?"
     />
     <Route
       component={[Function]}
@@ -196,19 +211,43 @@ exports[`NonAuthLayout renders correctly 1`] = `
   >
     <Switch>
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(PostDetail)",
+            "type": [Function],
+          }
+        }
         key="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
         path="/:context(|public)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
       />
       <Route
-        component={[Function]}
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(PostDetail)",
+            "type": [Function],
+          }
+        }
         key="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
         path="/:context(|public)/:view(map)/:postTypeContext(project|event|p)/:postId(\\\\d+)/:action(edit)?"
       />
       <Route
-        component={[Function]}
-        key="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"
-        path="/:context(|public)/:view(map)/:communityContext(c)/:communityId(\\\\d+)/:action(edit)?"
+        component={
+          Object {
+            "$$typeof": Symbol(react.memo),
+            "WrappedComponent": [Function],
+            "compare": null,
+            "displayName": "Connect(GroupDetail)",
+            "type": [Function],
+          }
+        }
+        key="/:context(|public)/:view(map)/:groupContext(c)/:groupId(\\\\d+)/:action(edit)?"
+        path="/:context(|public)/:view(map)/:groupContext(c)/:groupId(\\\\d+)/:action(edit)?"
       />
     </Switch>
   </div>

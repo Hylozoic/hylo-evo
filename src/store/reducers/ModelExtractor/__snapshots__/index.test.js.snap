@@ -36,7 +36,7 @@ Array [
 exports[`produces a flat list from a "nested-totals-style" response 1`] = `
 Array [
   Object {
-    "modelName": "Community",
+    "modelName": "group",
     "payload": Object {
       "avatarUrl": "http://foo.com/avatar.png",
       "bannerUrl": "http://foo.com/banner.png",
@@ -53,7 +53,7 @@ Array [
   Object {
     "modelName": "Post",
     "payload": Object {
-      "communities": Array [
+      "groups": Array [
         "1",
       ],
       "id": "2",
@@ -63,7 +63,7 @@ Array [
   Object {
     "modelName": "Post",
     "payload": Object {
-      "communities": Array [
+      "groups": Array [
         "1",
       ],
       "id": "3",
@@ -93,7 +93,7 @@ Array [
     },
   },
   Object {
-    "modelName": "Community",
+    "modelName": "group",
     "payload": Object {
       "id": "1836",
       "members": Array [
@@ -116,10 +116,10 @@ Array [
     "modelName": "Post",
     "payload": Object {
       "commentsTotal": "1",
-      "communities": Array [
+      "groups": Array [
         "1836",
       ],
-      "communitiesTotal": "1",
+      "groupsTotal": "1",
       "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
       "creator": "46816",
       "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
@@ -151,10 +151,10 @@ Array [
     "modelName": "Post",
     "payload": Object {
       "commentsTotal": "1",
-      "communities": Array [
+      "groups": Array [
         "1836",
       ],
-      "communitiesTotal": "1",
+      "groupsTotal": "1",
       "createdAt": "Sat Mar 18 2017 10:49:43 GMT+1300 (NZDT)",
       "creator": "46816",
       "details": "<p>So true.</p>",

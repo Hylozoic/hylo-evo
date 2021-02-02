@@ -94,7 +94,7 @@ exports[`AddSkills renders correctly 1`] = `
           key="6"
           skill={
             Object {
-              "name": "Community Organizing",
+              "name": "Group Organizing",
             }
           }
         />

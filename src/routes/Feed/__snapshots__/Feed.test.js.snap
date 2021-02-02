@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
+exports[`CreateGroupPrompt matches the latest snapshot 1`] = `
 <div
-  data-stylename="create-community-prompt"
+  data-stylename="create-group-prompt"
 >
   <p>
-    There's no posts yet, try starting a community!
+    There's no posts yet, try starting a group!
   </p>
   <Button
     data-stylename="button"
-    label="Create a Community"
+    label="Create a Group"
     onClick={[MockFunction]}
   />
   <div
@@ -26,7 +26,7 @@ exports[`CreateCommunityPrompt matches the latest snapshot 1`] = `
 exports[`Feed with a network it renders a Feed with correct props 1`] = `
 <div>
   <FeedBanner
-    community={
+    group={
       Object {
         "id": 2,
       }

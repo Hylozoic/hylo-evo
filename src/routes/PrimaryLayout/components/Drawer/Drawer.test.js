@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Drawer, { CommunityRow, NetworkRow } from './Drawer'
+import Drawer, { groupRow, NetworkRow } from './Drawer'
 
-const communities = [
+const groups = [
   {
     id: '11', slug: 'foo', name: 'Foomunity', avatarUrl: '/foo.png', newPostCount: 0
   },
@@ -16,7 +16,7 @@ const networks = [
     id: '1',
     name: 'Wombat Network',
     avatarUrl: '/wombat.png',
-    communities
+    groups
   }
 ]
 
@@ -27,35 +27,34 @@ const match = {
 }
 
 describe('Drawer', () => {
-  it('renders with a current community', () => {
+  it('renders with a current group', () => {
     const wrapper = shallow(<Drawer
-      match={{ params: {} }}
-      community={communities[0]}
-      communities={communities}
-      networks={[]}
-      match={match} />)
+      match={match}
+      group={groups[0]}
+      groups={groups}
+      networks={[]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders without a current community', () => {
-    const wrapper = shallow(<Drawer communities={communities} networks={[]} match={match} />)
+  it('renders without a current group', () => {
+    const wrapper = shallow(<Drawer groups={groups} networks={[]} match={match}/>)
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('renders a community list if networks are present', () => {
-    const wrapper = shallow(<Drawer communities={communities} networks={networks} match={match} />)
+  it('renders a group list if networks are present', () => {
+    const wrapper = shallow(<Drawer groups={groups} networks={networks} match={match} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
 
-describe('CommunityRow', () => {
+describe('groupRow', () => {
   it('renders with zero new posts', () => {
-    const wrapper = shallow(<CommunityRow community={communities[0]} />)
+    const wrapper = shallow(<groupRow group={groups[0]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders with new posts', () => {
-    const wrapper = shallow(<CommunityRow community={communities[0]} />)
+    const wrapper = shallow(<groupRow group={groups[0]} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -66,7 +65,7 @@ describe('NetworkRow', () => {
       name: 'Network One',
       slug: 'none',
       avatarUrl: 'foo.png',
-      communities: [
+      groups: [
         {
           id: 1,
           newPostCount: 7
@@ -88,7 +87,7 @@ describe('NetworkRow', () => {
   it('is not expanded when post counts are 0', () => {
     const props = {
       ...defaultProps,
-      communities: [
+      groups: [
         { id: 1, newPostCount: 0 },
         { id: 2, newPostCount: 0 }
       ]
@@ -114,7 +113,7 @@ describe('NetworkRow', () => {
     const seeAllProps = {
       network: {
         ...defaultProps.network,
-        nonMemberCommunities: [
+        nonMemberGroups: [
           {
             id: 3,
             name: 'non member 1'
@@ -123,7 +122,7 @@ describe('NetworkRow', () => {
       }
     }
 
-    it('shows "see all" button when there are non member communities', () => {
+    it('shows "see all" button when there are non member groups', () => {
       const wrapper = shallow(<NetworkRow {...seeAllProps} />)
       expect(wrapper).toMatchSnapshot()
       expect(wrapper.state('expanded')).toEqual(true)
@@ -137,12 +136,12 @@ describe('NetworkRow', () => {
 
       expect(wrapper).toMatchSnapshot()
       expect(wrapper.state('seeAllExpanded')).toEqual(false)
-      expect(wrapper.find(CommunityRow).length).toEqual(2)
+      expect(wrapper.find(groupRow).length).toEqual(2)
       expect(wrapper.find('[data-stylename="s.seeAllBtn"]').text()).toEqual('See all')
       wrapper.instance().toggleSeeAll(e)
       wrapper.update()
       expect(wrapper.state('seeAllExpanded')).toEqual(true)
-      expect(wrapper.find(CommunityRow).length).toEqual(3)
+      expect(wrapper.find(groupRow).length).toEqual(3)
       expect(wrapper.find('[data-stylename="s.seeAllBtn"]').text()).toEqual('See less')
       expect(e.preventDefault).toHaveBeenCalled()
     })

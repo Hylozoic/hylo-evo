@@ -30,7 +30,7 @@ const inputStyles = {
 
 export default class TopicSelector extends Component {
   static defaultProps = {
-    currentCommunity: null,
+    currentGroup: null,
     defaultTopics: [],
     detailsTopics: [],
     placeholder: 'Enter up to three topics...',
@@ -84,9 +84,9 @@ export default class TopicSelector extends Component {
         return []
       }
       await this.props.findTopics(input)
-      const { currentCommunity, defaultTopics, topicResults } = this.props
+      const { currentGroup, defaultTopics, topicResults } = this.props
       const sortedTopics = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
-      return defaultTopics ? [ { label: currentCommunity ? currentCommunity.name : 'Default' + ' Topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
+      return defaultTopics ? [ { label: currentGroup ? currentGroup.name : 'Default' + ' Topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
     } else {
       this.props.clearTopics()
       return []
@@ -106,11 +106,11 @@ export default class TopicSelector extends Component {
   }
 
   render () {
-    const { currentCommunity, defaultTopics, placeholder } = this.props
+    const { currentGroup, defaultTopics, placeholder } = this.props
     const { selected } = this.state
 
     // If at max # topics don't show more default topics to select
-    const defaultsToShow = selected.length >= MAX_TOPICS ? [] : defaultTopics ? [ { label: currentCommunity ? currentCommunity.name : 'Default' + ' Topics', options: defaultTopics } ] : []
+    const defaultsToShow = selected.length >= MAX_TOPICS ? [] : defaultTopics ? [ { label: currentGroup ? currentGroup.name : 'Default' + ' Topics', options: defaultTopics } ] : []
 
     return (
       <AsyncCreatableSelect

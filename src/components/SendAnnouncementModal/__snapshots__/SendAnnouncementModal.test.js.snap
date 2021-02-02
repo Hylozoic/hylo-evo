@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly with multiple communities 1`] = `
+exports[`renders correctly with multiple groups 1`] = `
 <div
   data-stylename="modal"
 >
@@ -32,7 +32,7 @@ exports[`renders correctly with multiple communities 1`] = `
 </div>
 `;
 
-exports[`renders correctly with multiple communities, where the current user is not always a moderator 1`] = `
+exports[`renders correctly with multiple groups, where the current user is not always a moderator 1`] = `
 <div
   data-stylename="modal"
 >
@@ -48,13 +48,13 @@ exports[`renders correctly with multiple communities, where the current user is 
       <p
         data-stylename="modal-paragraph"
       >
-        This means that all members of the 
-         communities selected will receive an instant email and push notification about this Post.
+        This means that all members of the
+         groups selected will receive an instant email and push notification about this Post.
       </p>
       <p
         data-stylename="modal-paragraph"
       >
-        This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.
+        This will only be sent as an Announcement to the groups where you are a Moderator. For other groups it will be shared as a regular Post.
       </p>
     </span>
     <a>
@@ -77,7 +77,7 @@ exports[`renders correctly with multiple communities, where the current user is 
 </div>
 `;
 
-exports[`renders correctly with one community 1`] = `
+exports[`renders correctly with one group 1`] = `
 <div
   data-stylename="modal"
 >

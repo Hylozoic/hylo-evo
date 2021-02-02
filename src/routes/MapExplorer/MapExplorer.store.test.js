@@ -1,8 +1,8 @@
 import { fetchPosts } from './MapExplorer.store'
 
-it('works for a community', () => {
+it('works for a group', () => {
   expect(fetchPosts({
-    subject: 'community',
+    context: 'groups',
     id: 'foo',
     offset: 20,
     search: 'gardening',
@@ -10,9 +10,9 @@ it('works for a community', () => {
   })).toMatchSnapshot()
 })
 
-it('works for all communities', () => {
+it('works for all groups', () => {
   expect(fetchPosts({
-    subject: 'all',
+    context: 'all',
     offset: 20,
     search: 'graphic design',
     filter: 'request'

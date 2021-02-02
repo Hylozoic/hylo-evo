@@ -1,10 +1,10 @@
 import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
-import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_COMMUNITIES_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
+import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_GROUPS_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
-import publicCommunitiesQueryFragment from 'graphql/fragments/publicCommunitiesQueryFragment'
+import publicGroupsQueryFragment from 'graphql/fragments/publicGroupsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
@@ -23,7 +23,7 @@ export const FEATURE_TYPES = {
     backgroundColor: 'rgba(201, 88, 172, 1.000)',
     map: true
   },
-  community: {
+  group: {
     primaryColor: [201, 88, 172, 255],
     backgroundColor: 'rgba(201, 88, 172, 1.000)'
   }
@@ -33,7 +33,7 @@ export function formatBoundingBox (bbox) {
   return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
-const communityPostsQuery = `query (
+const groupPostsQuery = `query (
   $slug: String,
   $sortBy: String,
   $filter: String,
@@ -43,7 +43,7 @@ const communityPostsQuery = `query (
   $offset: Int,
   $boundingBox: [PointInput]
 ) {
-  community(slug: $slug, updateLastViewed: true) {
+  group(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
@@ -54,23 +54,7 @@ const communityPostsQuery = `query (
   }
 }`
 
-const networkPostsQuery = `query (
-  $networkSlug: String,
-  $sortBy: String,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $offset: Int,
-  $boundingBox: [PointInput]
-) {
-  network(slug: $networkSlug) {
-    id
-    ${postsQueryFragment}
-  }
-}`
-
-const allCommunitiesPostsQuery = `query (
+const allGroupsPostsQuery = `query (
   $sortBy: String,
   $search: String,
   $filter: String,
@@ -106,31 +90,19 @@ const membersFragment = `
   }
 `
 
-const communityMembersQuery = `query (
+const groupMembersQuery = `query (
   $slug: String,
   $sortBy: String,
   $search: String,
   $boundingBox: [PointInput]
 ) {
-  community(slug: $slug, updateLastViewed: true) {
+  group(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
     avatarUrl
     bannerUrl
     postCount
-    ${membersFragment}
-  }
-}`
-
-const networkMembersQuery = `query (
-  $networkSlug: String,
-  $sortBy: String,
-  $search: String,
-  $boundingBox: [PointInput]
-) {
-  network(slug: $networkSlug) {
-    id
     ${membersFragment}
   }
 }`
@@ -142,43 +114,39 @@ const publicPostsQuery = `query (
   $filter: String,
   $topic: ID,
   $first: Int,
-  $networkSlugs: [String]
+  $groupSlugs: [String]
   $boundingBox: [PointInput]
 ) {
   ${publicPostsQueryFragment}
 }`
 
-const publicCommunitiesQuery = `query (
+const publicGroupsQuery = `query (
   $sortBy: String,
   $search: String,
   $boundingBox: [PointInput],
-  $networkSlugs: [String]
+  $groupSlugs: [String]
 ) {
-  ${publicCommunitiesQueryFragment}
+  ${publicGroupsQueryFragment}
 }`
 
 // actions
-export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, search, filter, topic, boundingBox, isPublic }) {
+export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boundingBox }) {
   var query, extractModel, getItems
 
-  if (subject === 'community') {
-    query = communityPostsQuery
-    extractModel = 'Community'
-    getItems = get('payload.data.community.posts')
-  } else if (subject === 'network') {
-    query = networkPostsQuery
-    extractModel = 'Network'
-    getItems = get('payload.data.network.posts')
-  } else if (subject === 'all') {
-    query = allCommunitiesPostsQuery
+  if (context === 'groups') {
+    query = groupPostsQuery
+    extractModel = 'Group'
+    getItems = get('payload.data.group.posts')
+  } else if (context === 'all') {
+    query = allGroupsPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
-  } else if (subject === 'public') {
+  } else if (context === 'public') {
     query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
-    throw new Error(`FETCH_POSTS_MAP with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_POSTS_MAP with context=${context} is not implemented`)
   }
 
   return {
@@ -192,9 +160,7 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
         filter,
         topic,
         boundingBox: formatBoundingBox(boundingBox),
-        networkSlug,
-        networkSlugs,
-        isPublic
+        isPublic: context === 'public'
       }
     },
     meta: {
@@ -206,28 +172,24 @@ export function fetchPosts ({ subject, slug, networkSlug, networkSlugs, sortBy, 
   }
 }
 
-export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy, search, isPublic }) {
+export function fetchMembers ({ boundingBox, context, slug, sortBy, search }) {
   var query, extractModel, getItems
 
-  if (subject === 'community') {
-    query = communityMembersQuery
-    extractModel = 'Community'
-    getItems = get('payload.data.community.members')
-  } else if (subject === 'network') {
-    query = networkMembersQuery
-    extractModel = 'Network'
-    getItems = get('payload.data.network.members')
-  } else if (subject === 'all') {
-    // query = allCommunitiesMembersQuery
+  if (context === 'groups') {
+    query = groupMembersQuery
+    extractModel = 'Group'
+    getItems = get('payload.data.group.members')
+  } else if (context === 'all') {
+    // query = allGroupsMembersQuery
     // extractModel = 'User'
     // getItems = get('payload.data.people')
-    // No Members in All Communities Context, yet
-    return { type: 'RETURN NO MEMBERS FOR ALL COMMUNITIES' }
-  } else if (subject === 'public') {
+    // No Members in All Groups Context, yet
+    return { type: 'RETURN NO MEMBERS FOR ALL GROUPS' }
+  } else if (context === 'public') {
     // No Members in Public Context, yet
     return { type: 'RETURN NO MEMBERS FOR PUBLIC' }
   } else {
-    throw new Error(`FETCH_MEMBERS_MAP with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_MEMBERS_MAP with context=${context} is not implemented`)
   }
 
   return {
@@ -236,11 +198,10 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
       query,
       variables: {
         slug,
-        networkSlug,
         sortBy,
         search,
         boundingBox: formatBoundingBox(boundingBox),
-        isPublic
+        isPublic: context === 'public'
       }
     },
     meta: {
@@ -252,33 +213,31 @@ export function fetchMembers ({ boundingBox, subject, slug, networkSlug, sortBy,
   }
 }
 
-export function fetchPublicCommunities ({ boundingBox, subject, sortBy, search, networkSlugs, isPublic }) {
+export function fetchPublicGroups ({ boundingBox, context, sortBy, search, groupSlugs }) {
   var query, extractModel, getItems
 
-  if (subject === 'public') {
-    query = publicCommunitiesQuery
-    extractModel = 'Community'
-    getItems = get('payload.data.communities')
-  } else if (subject === 'community') {
-    return { type: 'RETURN NULL FOR COMMUNITY' }
-  } else if (subject === 'network') {
-    return { type: 'RETURN NULL FOR NETWORK' }
-  } else if (subject === 'all') {
-    return { type: 'RETURN NULL FOR ALL COMMUNITIES' }
+  if (context === 'public') {
+    query = publicGroupsQuery
+    extractModel = 'Group'
+    getItems = get('payload.data.groups')
+  } else if (context === 'groups') {
+    return { type: 'RETURN NULL FOR GROUP' }
+  } else if (context === 'all') {
+    return { type: 'RETURN NULL FOR ALL GROUPS' }
   } else {
-    throw new Error(`FETCH_COMMUNITIES_MAP with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_GROUPS_MAP with context=${context} is not implemented`)
   }
 
   return {
-    type: FETCH_COMMUNITIES_MAP,
+    type: FETCH_GROUPS_MAP,
     graphql: {
       query,
       variables: {
         sortBy,
         search,
         boundingBox: formatBoundingBox(boundingBox),
-        networkSlugs,
-        isPublic
+        groupSlugs,
+        isPublic: context === 'public'
       }
     },
     meta: {
@@ -406,11 +365,11 @@ export const getCurrentTopics = createSelector(
   }
 )
 
-const getPublicCommunitiesResults = makeGetQueryResults(FETCH_COMMUNITIES_MAP)
+const getPublicGroupsResults = makeGetQueryResults(FETCH_GROUPS_MAP)
 
-export const getPublicCommunities = makeQueryResultsModelSelector(
-  getPublicCommunitiesResults,
-  'Community'
+export const getPublicGroups = makeQueryResultsModelSelector(
+  getPublicGroupsResults,
+  'Group'
 )
 
 // export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))

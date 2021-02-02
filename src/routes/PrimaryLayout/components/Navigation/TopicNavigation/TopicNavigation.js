@@ -13,8 +13,8 @@ export default class TopicNavigation extends Component {
   static propTypes = {
     topics: array,
     routeParams: object,
-    communitySlug: string,
-    communityId: string,
+    groupSlug: string,
+    groupId: string,
     seeAllUrl: string,
     backUrl: string,
     clearBadge: func,
@@ -23,13 +23,13 @@ export default class TopicNavigation extends Component {
     expand: func
   }
 
-  onClickTopic = communityTopic => {
+  onClickTopic = groupTopic => {
     const { clearBadge, clearFeedList } = this.props
-    const { id, topic } = communityTopic
+    const { id, topic } = groupTopic
 
     if (id) {
       this.currentTopic(topic.name) && clearFeedList()
-      communityTopic.newPostCount > 0 && clearBadge(id)
+      groupTopic.newPostCount > 0 && clearBadge(id)
     }
   }
 
@@ -45,9 +45,9 @@ export default class TopicNavigation extends Component {
           <span styleName='s.title'>Topics</span>
         </Link>
         {/* TODO: remove for now, probably for good?
-          {communityId && <CreateTopic
-          communityId={communityId}
-          communitySlug={slug}
+          {groupId && <CreateTopic
+          groupId={groupId}
+          groupSlug={slug}
           topics={topics}
         />} */}
       </div>

@@ -37,7 +37,7 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
-    communities={
+    groups={
       Array [
         Object {
           "id": "1",
@@ -115,7 +115,7 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
-    communities={
+    groups={
       Array [
         Object {
           "id": "1",
@@ -147,8 +147,8 @@ exports[`renders as expected 1`] = `
     updatedAt="2014-01-17T00:00:00.000Z"
     votesTotal={11519}
   />
-  <Connect(PostCommunities)
-    communities={
+  <Connect(PostGroups)
+    groups={
       Array [
         Object {
           "id": "1",
@@ -191,7 +191,7 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
-    communities={
+    groups={
       Array [
         Object {
           "id": "1",

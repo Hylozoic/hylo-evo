@@ -90,7 +90,7 @@ const postFieldsFragment = withComments => `
   myVote
   acceptContributions
   totalContributions
-  communities {
+  groups {
     id
     name
     slug
@@ -104,7 +104,7 @@ const postFieldsFragment = withComments => `
   postMemberships {
     id
     pinned
-    community {
+    group {
       id
     }
   }

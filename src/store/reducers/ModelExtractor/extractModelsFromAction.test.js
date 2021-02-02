@@ -89,7 +89,7 @@ it('handles an action with an array meta.extractModel', () => {
 const postData = {
   id: '1',
   title: 'Cat on the loose',
-  communities: [
+  groups: [
     {
       id: '1',
       name: 'Neighborhood'

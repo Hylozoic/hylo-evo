@@ -7,22 +7,21 @@ import {
   fulfillPost,
   removePost,
   pinPost,
-  getCommunity
+  getGroup
 } from './PostHeader.store'
 
 export function mapStateToProps (state, props) {
-  const community = getCommunity(state, props)
+  const group = getGroup(state, props)
 
   return {
     currentUser: getMe(state, props),
-    community
+    group
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   const { slug } = props.routeParams
   const closeUrl = removePostFromUrl(window.location.pathname)
-  const isPublic = window.location.pathname.includes('public')
   const deletePostWithConfirm = postId => {
     if (window.confirm('Are you sure you want to delete this post?')) {
       dispatch(deletePost(postId))
@@ -30,14 +29,10 @@ export function mapDispatchToProps (dispatch, props) {
     }
   }
 
-  const opts = Object.assign(props.routeParams, {
-    context: isPublic && 'public'
-  })
-
   return {
     editPost: postId => props.editPost
       ? props.editPost(postId)
-      : dispatch(push(editPostUrl(postId, opts))),
+      : dispatch(push(editPostUrl(postId, props.routeParams))),
     deletePost: postId => props.deletePost
       ? props.deletePost(postId)
       : deletePostWithConfirm(postId),
@@ -47,19 +42,19 @@ export function mapDispatchToProps (dispatch, props) {
     removePost: postId => props.removePost
       ? props.removePost(postId)
       : dispatch(removePost(postId, slug)),
-    pinPost: (postId, communityId) => props.pinPost
+    pinPost: (postId, groupId) => props.pinPost
       ? props.pinPost(postId)
-      : dispatch(pinPost(postId, communityId))
+      : dispatch(pinPost(postId, groupId))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { currentUser, community } = stateProps
+  const { currentUser, group } = stateProps
   const { id, creator } = ownProps
   const { deletePost, editPost, fulfillPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
-  const canModerate = currentUser && currentUser.canModerate(community)
+  const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
     ...stateProps,
@@ -69,7 +64,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     editPost: canEdit ? () => editPost(id) : undefined,
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     canFlag: !isCreator,
-    pinPost: canModerate && community ? () => pinPost(id, community.id) : undefined,
+    pinPost: canModerate && group ? () => pinPost(id, group.id) : undefined,
     removePost: !isCreator && canModerate ? () => removePost(id) : undefined,
     canEdit
   }

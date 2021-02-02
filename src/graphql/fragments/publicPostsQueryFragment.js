@@ -9,7 +9,7 @@ posts(
   search: $search,
   filter: $filter,
   boundingBox: $boundingBox,
-  networkSlugs: $networkSlugs,
+  groupSlugs: $groupSlugs,
   topic: $topic,
   order: "desc"
 ) {

@@ -32,9 +32,9 @@ describe('FullPageModal', () => {
         component: <div>Account Page</div>
       },
       {
-        name: 'Communities',
-        path: '/settings/communities',
-        component: <div>Communities Page</div>
+        name: 'Groups',
+        path: '/settings/groups',
+        component: <div>Groups Page</div>
       }
     ]
     const wrapper = shallow(<FullPageModal

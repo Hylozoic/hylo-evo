@@ -6,7 +6,7 @@ Object {
     "query": Object {},
     "variables": Object {
       "autocomplete": "searchstring",
-      "communityIds": Array [
+      "groupIds": Array [
         1,
         2,
       ],
@@ -14,7 +14,7 @@ Object {
     },
   },
   "meta": Object {
-    "extractModel": "Community",
+    "extractModel": "Group",
     "extractQueryResults": Object {
       "getItems": [Function],
     },

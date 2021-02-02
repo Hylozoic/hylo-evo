@@ -1,14 +1,14 @@
 import { RESET_NEW_POST_COUNT } from 'store/constants'
 
 export default function resetNewPostCount (id, type) {
-  if (!['CommunityTopic', 'Membership'].includes(type)) {
+  if (!['GroupTopic', 'Membership'].includes(type)) {
     throw new Error(`bad type for resetNewPostCount: ${type}`)
   }
 
   return {
     type: RESET_NEW_POST_COUNT,
     graphql: {
-      query: type === 'CommunityTopic' ? CommunityTopicQuery : MembershipQuery,
+      query: type === 'GroupTopic' ? GroupTopicQuery : MembershipQuery,
       variables: {
         id,
         data: {
@@ -20,14 +20,14 @@ export default function resetNewPostCount (id, type) {
   }
 }
 
-const CommunityTopicQuery = `mutation($id: ID, $data: CommunityTopicInput) {
-    updateCommunityTopicFollow(id: $id, data: $data) {
+const GroupTopicQuery = `mutation($id: ID, $data: GroupTopicInput) {
+    updateGroupTopicFollow(id: $id, data: $data) {
       success
     }
   }`
 
 const MembershipQuery = `mutation($id: ID, $data: MembershipInput) {
-    updateMembership(communityId: $id, data: $data) {
+    updateMembership(groupId: $id, data: $data) {
       id
     }
   }`

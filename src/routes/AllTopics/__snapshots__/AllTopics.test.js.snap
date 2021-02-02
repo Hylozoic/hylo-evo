@@ -35,7 +35,7 @@ exports[`AllTopics matches the latest snapshot 1`] = `
             "slug": "goteam",
           }
         }
-        singleCommunity={
+        singleGroup={
           Object {
             "id": "1",
             "slug": "goteam",
@@ -105,16 +105,15 @@ exports[`SearchBar matches the latest snapshot 1`] = `
 </div>
 `;
 
-exports[`TopicListItem when multiple communities matches the latest snapshot 1`] = `
+exports[`TopicListItem when multiple groups matches the latest snapshot 1`] = `
 <div
   data-stylename="topic"
 >
   <div
-    data-stylename="communitiesList"
+    data-stylename="groupsList"
   >
     <Link
       data-stylename="topic-details"
-      replace={false}
       to="/c/goteam/petitions"
     >
       <div
@@ -124,32 +123,32 @@ exports[`TopicListItem when multiple communities matches the latest snapshot 1`]
         petitions
       </div>
     </Link>
-    <CommunityCell
+    <GroupCell
       key="0"
     >
       <div
         data-stylename="topic-stats"
       >
         24 posts
-         • 
+         •
         52 subscribers
          •
       </div>
       <br />
-    </CommunityCell>
-    <CommunityCell
+    </GroupCell>
+    <GroupCell
       key="1"
     >
       <div
         data-stylename="topic-stats"
       >
         1 post
-         • 
+         •
         4 subscribers
          •
       </div>
       <br />
-    </CommunityCell>
+    </GroupCell>
   </div>
 </div>
 `;

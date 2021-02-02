@@ -1,14 +1,14 @@
 import orm from 'store/models' // this initializes redux-orm
 import ormReducer from './index'
-import toggleCommunityTopicSubscribe from 'store/actions/toggleCommunityTopicSubscribe'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 import {
   CREATE_MESSAGE,
   DELETE_COMMENT_PENDING,
-  FETCH_FOR_COMMUNITY_PENDING,
+  FETCH_FOR_GROUP_PENDING,
   FETCH_NOTIFICATIONS,
   MARK_ACTIVITY_READ_PENDING,
   MARK_ALL_ACTIVITIES_READ_PENDING,
-  TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING,
+  TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_COMMENT_PENDING,
   UPDATE_POST_PENDING,
   VOTE_ON_POST_PENDING
@@ -24,19 +24,19 @@ import {
   UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING
 } from 'routes/UserSettings/UserSettings.store'
 import {
-  UPDATE_COMMUNITY_SETTINGS_PENDING
-} from 'routes/CommunitySettings/CommunitySettings.store'
+  UPDATE_GROUP_SETTINGS_PENDING
+} from 'routes/GroupSettings/GroupSettings.store'
 import {
-  CREATE_COMMUNITY
-} from 'routes/CreateCommunity/Review/Review.store'
+  CREATE_GROUP
+} from 'routes/CreateGroup/Review/Review.store'
 import {
   REMOVE_MEMBER_PENDING
 } from 'routes/Members/Members.store'
 import {
-  UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING
+  UPDATE_GROUP
 } from 'routes/NetworkSettings/NetworkSettings.store'
 import {
-  DELETE_COMMUNITY_TOPIC_PENDING
+  DELETE_GROUP_TOPIC_PENDING
 } from 'routes/AllTopics/AllTopics.store'
 
 import {
@@ -61,7 +61,7 @@ it('responds to an action with meta.extractModel', () => {
         post: {
           id: '1',
           title: 'Cat on the loose',
-          communities: [
+          groups: [
             {
               id: '1',
               name: 'Neighborhood'
@@ -82,7 +82,7 @@ it('responds to an action with meta.extractModel', () => {
   const newState = ormReducer(state, action)
 
   expect(newState).toMatchObject({
-    Community: {
+    group: {
       items: ['1'],
       itemsById: { '1': { id: '1', name: 'Neighborhood' } }
     },
@@ -94,9 +94,9 @@ it('responds to an action with meta.extractModel', () => {
       items: ['1'],
       itemsById: { '1': { id: '1', title: 'Cat on the loose', creator: '2' } }
     },
-    PostCommunities: {
+    PostGroups: {
       items: [0],
-      itemsById: { '0': { fromPostId: '1', toCommunityId: '1', id: 0 } }
+      itemsById: { '0': { fromPostId: '1', toGroupId: '1', id: 0 } }
     }
   })
 })
@@ -188,22 +188,22 @@ describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
   })
 })
 
-describe('on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING', () => {
+describe('on TOGGLE_GROUP', () => {
   it('will set isSubscribed to false and decrement followersTotal', () => {
     const session = orm.session(orm.getEmptyState())
     session.Topic.create({ id: '2' })
-    session.Community.create({ id: '3' })
-    const communityTopic = session.CommunityTopic.create({
+    session.Group.create({ id: '3' })
+    const groupTopic = session.GroupTopic.create({
       id: '1',
       topic: '2',
-      community: '3',
+      group: '3',
       followersTotal: 10,
       isSubscribed: true
     })
     const state = session.state
     const action = {
-      ...toggleCommunityTopicSubscribe(communityTopic),
-      type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING
+      ...toggleGroupTopicSubscribe(groupTopic),
+      type: TOGGLE_GROUP
     }
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
@@ -212,17 +212,17 @@ describe('on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING', () => {
   it('will set isSubscribed to true and increment followersTotal', () => {
     const session = orm.session(orm.getEmptyState())
     session.Topic.create({ id: '2' })
-    session.Community.create({ id: '3' })
-    const communityTopic = session.CommunityTopic.create({
+    session.Group.create({ id: '3' })
+    const groupTopic = session.GroupTopic.create({
       id: '1',
       topic: '2',
-      community: '3',
+      group: '3',
       followersTotal: 10
     })
     const state = session.state
     const action = {
-      ...toggleCommunityTopicSubscribe(communityTopic),
-      type: TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING
+      ...toggleGroupTopicSubscribe(groupTopic),
+      type: TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING
     }
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
@@ -282,13 +282,13 @@ describe('on DELETE_POST_PENDING', () => {
 
 describe('on REMOVE_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  const community1 = session.Community.create({ id: '1', slug: 'foo' })
-  const community2 = session.Community.create({ id: '2', slug: 'bar' })
+  const group1 = session.Group.create({ id: '1', slug: 'foo' })
+  const group2 = session.Group.create({ id: '2', slug: 'bar' })
 
-  session.Post.create({ id: '1', communities: [community1, community2] })
-  session.Post.create({ id: '2', communities: [community1, community2] })
+  session.Post.create({ id: '1', groups: [group1, group2] })
+  session.Post.create({ id: '2', groups: [group1, group2] })
 
-  it('removes the post from the community', () => {
+  it('removes the post from the group', () => {
     const action = {
       type: REMOVE_POST_PENDING,
       meta: { postId: '1', slug: 'bar' }
@@ -296,26 +296,26 @@ describe('on REMOVE_POST_PENDING', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
 
-    const post1Communities = newSession.Post.withId('1').communities.toModelArray()
+    const post1Groups = newSession.Post.withId('1').groups.toModelArray()
 
-    expect(post1Communities.length).toEqual(1)
-    expect(post1Communities[0].id).toEqual('1')
-    expect(newSession.Post.withId('2').communities.toModelArray().length).toEqual(2)
+    expect(post1Groups.length).toEqual(1)
+    expect(post1Groups[0].id).toEqual('1')
+    expect(newSession.Post.withId('2').groups.toModelArray().length).toEqual(2)
   })
 })
 
 describe('on PIN_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({ id: '1', slug: 'foo' })
+  const group = session.Group.create({ id: '1', slug: 'foo' })
   const postId = 123
   const postMembership = session.PostMembership.create({
     pinned: false,
-    community: community
+    group: group
   })
 
   session.Post.create({
     id: postId,
-    communities: [community],
+    groups: [group],
     postMemberships: [postMembership]
   })
 
@@ -323,7 +323,7 @@ describe('on PIN_POST_PENDING', () => {
     type: PIN_POST_PENDING,
     meta: {
       postId,
-      communityId: community.id
+      groupId: group.id
     }
   }
 
@@ -336,27 +336,29 @@ describe('on PIN_POST_PENDING', () => {
   })
 })
 
-describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
+describe('on UPDATE_GROUP_SETTINGS_PENDING', () => {
   const id = '1'
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({
+  const me = session.Me.create({ id: '1' })
+  const group = session.Group.create({
     id,
     name: 'Old Name',
     description: 'Old description'
   })
   session.Membership.create({
-    community: community.id,
+    group: group.id,
+    person: me.id,
     settings: {
       sendFoo: true,
       sendEmail: false
     }
   })
 
-  it('updates the community settings', () => {
+  it('updates the group settings', () => {
     const name = 'New Name'
     const description = 'New description'
     const action = {
-      type: UPDATE_COMMUNITY_SETTINGS_PENDING,
+      type: UPDATE_GROUP_SETTINGS_PENDING,
       meta: {
         id,
         changes: {
@@ -367,9 +369,9 @@ describe('on UPDATE_COMMUNITY_SETTINGS_PENDING', () => {
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const community = newSession.Community.withId(id)
-    expect(community.name).toEqual(name)
-    expect(community.description).toEqual(description)
+    const group = newSession.Group.withId(id)
+    expect(group.name).toEqual(name)
+    expect(group.description).toEqual(description)
   })
 })
 
@@ -395,10 +397,12 @@ describe('on FETCH_NOTIFICATIONS', () => {
 
 describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  const communityId = 3
+  session.Me.create({ id: 1 })
+  const groupId = 3
 
   session.Membership.create({
-    community: communityId,
+    group: groupId,
+    person: 1,
     settings: {
       sendFoo: true,
       sendEmail: false
@@ -408,7 +412,7 @@ describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
   const action = {
     type: UPDATE_MEMBERSHIP_SETTINGS_PENDING,
     meta: {
-      communityId,
+      groupId,
       settings: {
         sendEmail: true,
         sendPushNotifications: false
@@ -419,7 +423,7 @@ describe(' on UPDATE_MEMBERSHIP_SETTINGS_PENDING', () => {
   it('updates membership settings, keeping current settings where unchanged', () => {
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    const membership = newSession.Membership.safeGet({ community: communityId })
+    const membership = newSession.Membership.safeGet({ group: groupId })
     expect(membership.settings).toEqual({
       sendFoo: true,
       sendEmail: true,
@@ -467,10 +471,11 @@ describe('on UPDATE_USER_SETTINGS_PENDING', () => {
   })
 })
 
-describe('on FETCH_FOR_COMMUNITY_PENDING', () => {
+describe('on FETCH_FOR_GROUP_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
+  const me = session.Me.create({ id: '1' })
 
-  const community = session.Community.create({
+  const group = session.Group.create({
     id: '1',
     slug: 'foo'
   })
@@ -478,13 +483,14 @@ describe('on FETCH_FOR_COMMUNITY_PENDING', () => {
   session.Membership.create({
     id: '2',
     newPostCount: 99,
-    community
+    group,
+    person: me.id
   })
 
   const action = {
-    type: FETCH_FOR_COMMUNITY_PENDING,
+    type: FETCH_FOR_GROUP_PENDING,
     meta: {
-      slug: community.slug
+      slug: group.slug
     }
   }
 
@@ -555,24 +561,24 @@ describe('on UPDATE_POST_PENDING', () => {
   })
 })
 
-describe('on CREATE_COMMUNITY', () => {
+describe('on CREATE_GROUP', () => {
   const session = orm.session(orm.getEmptyState())
-  const community1 = session.Community.create({ id: 'c1' })
-  const community2 = session.Community.create({ id: 'c2' })
+  const group1 = session.Group.create({ id: 'c1' })
+  const group2 = session.Group.create({ id: 'c2' })
   const hasModeratorRole = true
-  const membership = session.Membership.create({ id: 'm1', community: community1.id, hasModeratorRole })
-  session.Membership.create({ id: 'm2', community: community2.id, hasModeratorRole })
+  const membership = session.Membership.create({ id: 'm1', group: group1.id, hasModeratorRole })
+  session.Membership.create({ id: 'm2', group: group2.id, hasModeratorRole })
   session.Me.create({
     memberships: [membership.id]
   })
   const action = {
-    type: CREATE_COMMUNITY,
+    type: CREATE_GROUP,
     payload: {
       data: {
-        createCommunity: {
+        createGroup: {
           id: 'm2',
           hasModeratorRole: true,
-          community: {
+          group: {
             id: 'c2'
           }
         }
@@ -594,57 +600,57 @@ describe('on REMOVE_MEMBER_PENDING', () => {
     const action = {
       type: REMOVE_MEMBER_PENDING,
       meta: {
-        communityId: '3',
+        groupId: '3',
         personId: '4'
       }
     }
     const session = orm.session(orm.getEmptyState())
     session.Person.create({ id: '2', name: 'Foo' })
     session.Person.create({ id: '4', name: 'Bar' })
-    session.Community.create({ id: '3', memberCount: 8, members: ['2', '4'] })
+    session.Group.create({ id: '3', memberCount: 8, members: ['2', '4'] })
 
     const newState = ormReducer(session.state, action)
-    const community = orm.session(newState).Community.withId('3')
-    expect(community.memberCount).toBe(7)
-    const members = community.members.toRefArray()
+    const group = orm.session(newState).group.withId('3')
+    expect(group.memberCount).toBe(7)
+    const members = group.members.toRefArray()
     expect(members.length).toBe(1)
     expect(members[0].name).toBe('Foo')
   })
 })
 
-describe('on UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING', () => {
-  it('sets the community.hidden property', () => {
-    const communityId = 34
+describe('on UPDATE_GROUP_HIDDEN_SETTING_PENDING', () => {
+  it('sets the group.hidden property', () => {
+    const groupId = 34
     const action = {
-      type: UPDATE_COMMUNITY_HIDDEN_SETTING_PENDING,
+      type: UPDATE_GROUP_HIDDEN_SETTING_PENDING,
       meta: {
-        id: communityId,
+        id: groupId,
         hidden: true
       }
     }
     const session = orm.session(orm.getEmptyState())
-    session.Community.create({ id: communityId, hidden: false })
+    session.Group.create({ id: groupId, hidden: false })
 
     const newState = ormReducer(session.state, action)
-    const community = orm.session(newState).Community.withId(communityId)
-    expect(community.hidden).toBe(true)
+    const group = orm.session(newState).group.withId(groupId)
+    expect(group.hidden).toBe(true)
   })
 })
 
-describe('on DELETE_COMMUNITY_TOPIC_PENDING', () => {
+describe('on DELETE_GROUP_TOPIC_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
-  session.CommunityTopic.create({ id: '1' })
-  session.CommunityTopic.create({ id: '2' })
+  session.GroupTopic.create({ id: '1' })
+  session.GroupTopic.create({ id: '2' })
 
-  it('removes the communityTopic', () => {
+  it('removes the groupTopic', () => {
     const action = {
-      type: DELETE_COMMUNITY_TOPIC_PENDING,
+      type: DELETE_GROUP_TOPIC_PENDING,
       meta: { id: '1' }
     }
     const newState = ormReducer(session.state, action)
     const newSession = orm.session(newState)
-    expect(newSession.CommunityTopic.idExists('1')).toBeFalsy()
-    expect(newSession.CommunityTopic.idExists('2')).toBeTruthy()
+    expect(newSession.GroupTopic.idExists('1')).toBeFalsy()
+    expect(newSession.GroupTopic.idExists('2')).toBeTruthy()
   })
 })
 

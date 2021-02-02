@@ -43,13 +43,13 @@ Array [
 ]
 `;
 
-exports[`on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING will set isSubscribed to false and decrement followersTotal 1`] = `
+exports[`on TOGGLE_group_TOPIC_SUBSCRIBE_PENDING will set isSubscribed to false and decrement followersTotal 1`] = `
 Array [
   DiffEdit {
     "kind": "E",
     "lhs": 10,
     "path": Array [
-      "CommunityTopic",
+      "groupTopic",
       "itemsById",
       "1",
       "followersTotal",
@@ -60,7 +60,7 @@ Array [
     "kind": "E",
     "lhs": true,
     "path": Array [
-      "CommunityTopic",
+      "groupTopic",
       "itemsById",
       "1",
       "isSubscribed",
@@ -70,13 +70,13 @@ Array [
 ]
 `;
 
-exports[`on TOGGLE_COMMUNITY_TOPIC_SUBSCRIBE_PENDING will set isSubscribed to true and increment followersTotal 1`] = `
+exports[`on TOGGLE_group_TOPIC_SUBSCRIBE_PENDING will set isSubscribed to true and increment followersTotal 1`] = `
 Array [
   DiffEdit {
     "kind": "E",
     "lhs": 10,
     "path": Array [
-      "CommunityTopic",
+      "groupTopic",
       "itemsById",
       "1",
       "followersTotal",
@@ -86,7 +86,7 @@ Array [
   DiffNew {
     "kind": "N",
     "path": Array [
-      "CommunityTopic",
+      "groupTopic",
       "itemsById",
       "1",
       "isSubscribed",

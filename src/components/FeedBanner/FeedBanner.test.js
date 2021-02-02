@@ -10,21 +10,21 @@ const currentUser = {
   }
 }
 
-const community = {
+const group = {
   bannerUrl: 'banner.png',
   avatarUrl: 'avatar.png',
   name: 'Spacebase',
   location: 'space, duh'
 }
 
-it('renders with a community', () => {
+it('renders with a group', () => {
   const node = mount(<FeedBanner
-    community={community}
+    group={group}
   />)
   expect(node).toMatchSnapshot()
 })
 
-it('renders for all communities', () => {
+it('renders for all groups', () => {
   const node = mount(<FeedBanner
     all
     currentUser={currentUser}

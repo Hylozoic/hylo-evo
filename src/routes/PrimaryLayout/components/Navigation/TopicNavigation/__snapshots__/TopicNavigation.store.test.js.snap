@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getSubscribedCommunityTopics returns the expected value 1`] = `
+exports[`getSubscribedGroupTopics returns the expected value 1`] = `
 Array [
   SessionBoundModel {
     "_fields": Object {
-      "community": "1",
+      "group": "1",
       "id": 3,
       "isSubscribed": true,
       "newPostCount": 7,
@@ -17,7 +17,7 @@ Array [
   },
   SessionBoundModel {
     "_fields": Object {
-      "community": "1",
+      "group": "1",
       "id": 0,
       "isSubscribed": true,
       "newPostCount": 5,

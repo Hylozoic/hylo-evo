@@ -305,7 +305,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -326,7 +326,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -511,7 +511,7 @@ exports[`Notification renders correctly with an approved join request notificati
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -532,7 +532,7 @@ exports[`Notification renders correctly with an approved join request notificati
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -624,13 +624,13 @@ exports[`NotificationBody renders correctly with a join request notification 1`]
     data-stylename="bold"
   >
     Marie Curie
-     
+
   </span>
   asked to join
   <span
     data-stylename="bold"
   >
-     
+
     Foomunity
   </span>
 </div>
@@ -689,13 +689,13 @@ exports[`NotificationBody renders correctly with an approved join request notifi
     data-stylename="bold"
   >
     Marie Curie
-     
+
   </span>
   approved your request to join
   <span
     data-stylename="bold"
   >
-     
+
     Foomunity
   </span>
 </div>
@@ -709,13 +709,13 @@ exports[`NotificationHeader renders correctly with a comment mention notificatio
     data-stylename="bold"
   >
     Marie Curie
-     
+
   </span>
   mentioned you in a comment on
   <span
     data-stylename="bold"
   >
-     
+
     Our Oceans
   </span>
 </div>
@@ -725,7 +725,7 @@ exports[`NotificationHeader renders correctly with a comment notification 1`] = 
 <div
   data-stylename="header"
 >
-  New Comment on 
+  New Comment on
   <span
     data-stylename="bold"
   >
@@ -742,7 +742,7 @@ exports[`NotificationHeader renders correctly with a donation from notification 
     data-stylename="bold"
   >
     Marie Curie
-     
+
   </span>
   contributed to your project
 </div>
@@ -755,7 +755,7 @@ exports[`NotificationHeader renders correctly with a donation to notification 1`
   <span
     data-stylename="bold"
   >
-    You 
+    You
   </span>
   contributed to a project
 </div>
@@ -777,7 +777,7 @@ exports[`NotificationHeader renders correctly with a mention notification 1`] = 
     data-stylename="bold"
   >
     Marie Curie
-     
+
   </span>
   mentioned you
 </div>
@@ -787,7 +787,7 @@ exports[`NotificationHeader renders correctly with a tag notification 1`] = `
 <div
   data-stylename="header"
 >
-  New Post in 
+  New Post in
   <span
     data-stylename="bold"
   >
@@ -925,7 +925,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
                 "id": 2,
                 "name": "Marie Curie",
               },
-              "community": Object {
+              "group": Object {
                 "name": "Foomunity",
               },
               "meta": Object {},
@@ -947,7 +947,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
                 "id": 2,
                 "name": "Marie Curie",
               },
-              "community": Object {
+              "group": Object {
                 "name": "Foomunity",
               },
               "meta": Object {},

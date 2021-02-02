@@ -134,7 +134,7 @@ const defaultSkills = [
   { name: 'Photography' },
   { name: 'Facilitation' },
   { name: 'Media' },
-  { name: 'Community Organizing' },
+  { name: 'Group Organizing' },
   { name: 'Technology' },
   { name: 'Social Media' },
   { name: 'Event Planning' },

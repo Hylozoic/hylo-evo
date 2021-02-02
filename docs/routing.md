@@ -1,22 +1,20 @@
 ### routing
-- Initial branching of routes is between auth and non-auth views. 
-    - Non-auth views include login, signup, password-reset and the join-community invitation pages. In the future it will include a public map
+- Initial branching of routes is between auth and non-auth views.
+    - Non-auth views include login, signup, password-reset and the join-group invitation pages. In the future it will include a public map
 - Auth views are all routed through the PrimaryLayout component, which includes many sub-routes.
 - The PrimaryLayout includes
-    - the Drawer (for navigating between your communities and networks), 
-    - the TopNav (the top bar, Drawer toggle, user settings, search etc), 
+    - the Drawer (for navigating between your groups),
+    - the TopNav (the top bar, Drawer toggle, user settings, search etc),
     - the Navigation panel and
     - a 'center' div that contains all the sub-routes.
 - These routes are all wrapped in a redirect component, that redirects a small subset of all urls to different ones. _Perhaps there was a change in url patterns in the history of the project and it was easier to redirect old patterns to new than hunt down all the uses of old urls across the app?_
-- The bulk of routes use one or a combination of single-letter to represent different resources in the app. The main resources include 
-    - c for community, 
-    - n for network, 
+- The bulk of routes use one or a combination of single-letter to represent different resources in the app. The main resources include
+    - g for group,
     - p (?) for posts and
-    - m for members. 
-- These respectively have related url parameters, including 
-    - :slug for communities, 
-    - :networkSlug for networks, 
-    - :postId for posts and 
+    - m for members.
+- These respectively have related url parameters, including
+    - :slug for groups,
+    - :postId for posts and
     - :personId for members
 - There are a few uses of 'all' mixed into these and the plan for mapping views is to include a /map/  segment in the url where needed.
 - There are some other utility routes that are fairly self evident

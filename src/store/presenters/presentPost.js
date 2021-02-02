@@ -1,10 +1,10 @@
 import presentTopic from 'store/presenters/presentTopic'
 
-export default function presentPost (post, communityId) {
+export default function presentPost (post, groupId) {
   if (!post) return null
 
   const postMembership = post.postMemberships.toRefArray().find(p =>
-    Number(p.community) === Number(communityId))
+    Number(p.group) === Number(groupId))
   const pinned = postMembership && postMembership.pinned
 
   return {
@@ -14,7 +14,7 @@ export default function presentPost (post, communityId) {
     location: post.location,
     isPublic: post.isPublic,
     commenters: post.commenters.toModelArray(),
-    communities: post.communities.toModelArray(),
+    groups: post.groups.toModelArray(),
     attachments: post.attachments
       .orderBy('position').toModelArray(),
     fileAttachments: post.attachments

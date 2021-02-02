@@ -1,7 +1,7 @@
 import moment from 'moment'
+import { groupUrl } from 'util/navigation'
 
-const parseCommunity = community => `Community: ${community.name}`
-const parseNetwork = network => `Network: ${network.name}`
+const parsegroup = group => `Group: ${group.name}`
 const parsePostTypes = postTypes => `Post types: ${postTypes.join(', ')}`
 const parseSearch = searchText => `Search term: "${searchText}"`
 const parseTopics = topics => `Topics: ${topics.map(t => t.name).join(', ')}`
@@ -24,12 +24,11 @@ export function currentFilters (filters) {
 }
 
 export function formatParams (search) {
-  const { community, context, createdAt, network, postTypes, searchText, topics } = search
+  const { group, context, createdAt, postTypes, searchText, topics } = search
   return [
     `Created on ${moment(createdAt).format('MMMM Do YYYY')}`,
     ['all', 'public'].includes(context) ? `Context: ${context}` : '',
-    community ? parseCommunity(community) : '',
-    network ? parseNetwork(network) : '',
+    group ? parsegroup(group) : '',
     searchText ? parseSearch(searchText) : '',
     postTypes ? parsePostTypes(postTypes) : '',
     topics.length ? parseTopics(topics) : ''
@@ -37,46 +36,31 @@ export function formatParams (search) {
 }
 
 export function formatParamPreview (search) {
-  const { context, community, network, postTypes } = search
+  const { context, group, postTypes } = search
   const contextDetails = {
-    community: community ? parseCommunity(community) : '',
-    network: network ? parseNetwork(network) : '',
-    public: `Public communities`,
-    all: `All communities`
+    groups: group ? parsegroup(group) : '',
+    public: `Public Groups`,
+    all: `All Groups`
   }
   return `${contextDetails[context]} • ${parsePostTypes(postTypes)}`
 }
 
 export function generateViewParams (search) {
-  const { boundingBox, context, community, network, postTypes, searchText, topics } = search
+  const { boundingBox, context, group, postTypes, searchText, topics } = search
 
-  let mapPath, networkSlug, slug, subject
+  let mapPath, groupSlug
   switch (context) {
     case 'all': {
       mapPath = `/all/map`
-      subject = 'all'
       break
     }
-    case 'public': {
-      mapPath = `/public/map`
-      subject = 'public'
-      break
-    }
-    case 'network': {
-      mapPath = `/n/${network.slug}/map`
-      subject = 'network'
-      networkSlug = network.slug
-      break
-    }
-    case 'community': {
-      mapPath = `/c/${community.slug}/map`
-      slug = community.slug
-      subject = 'community'
+    case 'groups': {
+      mapPath = groupUrl(group.slug, 'map')
+      groupSlug = group.slug
       break
     }
     default: {
       mapPath = `/public/map`
-      subject = 'public-communities'
     }
   }
 
@@ -85,5 +69,5 @@ export function generateViewParams (search) {
     return map
   }, {})
 
-  return { boundingBox, featureTypes, mapPath, networkSlug, searchText, slug, subject, topics }
+  return { boundingBox, featureTypes, mapPath, searchText, groupSlug, context, topics }
 }

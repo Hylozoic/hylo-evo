@@ -34,7 +34,7 @@ const personType = shape({
   id: any,
   name: string,
   avatarUrl: string,
-  community: string
+  group: string
 })
 
 PeopleList.propTypes = {

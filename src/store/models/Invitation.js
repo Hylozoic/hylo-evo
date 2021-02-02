@@ -15,5 +15,5 @@ Invitation.fields = {
   createdAt: attr(),
   lastSentAt: attr(),
   resent: attr(),
-  community: fk('Community', 'pendingInvitations')
+  group: fk('Group', 'pendingInvitations')
 }

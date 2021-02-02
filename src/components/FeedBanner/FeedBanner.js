@@ -1,16 +1,15 @@
 import React from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Community'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import './FeedBanner.scss'
-import { whiteMerkaba, allCommunitiesBanner, publicGlobe } from 'util/assets'
+import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
 export default function FeedBanner ({
-  all,
-  publicContext,
-  community,
+  context,
+  group,
   currentUser,
   newPost,
   type,
@@ -18,28 +17,28 @@ export default function FeedBanner ({
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
 
-  if (all) {
-    name = 'All My Communities'
+  if (context === 'all') {
+    name = 'All My Groups'
     avatarUrl = whiteMerkaba
-    bannerUrl = allCommunitiesBanner
-    subtitle = currentUser && `${currentUser.memberships.count()} Communities`
-  } else if (publicContext) {
-    name = 'Public Communities & Posts'
+    bannerUrl = allGroupsBanner
+    subtitle = currentUser && `${currentUser.memberships.count()} Groups`
+  } else if (context === 'public') {
+    name = 'Public Groups & Posts'
     avatarUrl = publicGlobe
-    bannerUrl = allCommunitiesBanner
-    // TODO list count of public posts and public communities in subtitle
+    bannerUrl = allGroupsBanner
+    // TODO list count of public posts and public groups in subtitle
     subtitle = `All Posts Marked Public`
-  } else if (!community) {
+  } else if (!group) {
     return null
   } else {
-    ({ bannerUrl, avatarUrl, name, location } = community)
+    ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
-  return <div styleName={cx('banner', { 'all-communities': all })}>
+  return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName={cx('logo', { 'all-logo': all })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+        <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
           <div styleName='header-contents'>
             <span styleName='header-name'>{name}</span>

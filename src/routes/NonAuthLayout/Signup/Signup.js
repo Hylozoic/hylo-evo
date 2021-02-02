@@ -24,7 +24,7 @@ export default class Signup extends React.Component {
     return <div className={className}>
       {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
       <h1 styleName='title'>Welcome to Hylo</h1>
-      <p styleName='blurb'>Stay connected, organized, and engaged with your community.</p>
+      <p styleName='blurb'>Stay connected, organized, and engaged with your group.</p>
       {this.props.error && formatError(this.props.error, 'Signup')}
       <div styleName='field'>
         <label htmlFor='name' styleName='field-label'>Full name</label>

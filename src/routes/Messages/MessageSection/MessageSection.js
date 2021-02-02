@@ -58,7 +58,8 @@ export default class MessageSection extends React.Component {
     document && document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 
-  componentWillUpdate (nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate (nextProps) {
     const { currentUser, messages, pending } = nextProps
     if (pending) return
 

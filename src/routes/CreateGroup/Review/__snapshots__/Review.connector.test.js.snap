@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Domain should call clearDomainFromCreateGroup from mapDispatchToProps 1`] = `
+Object {
+  "payload": null,
+  "type": "CreateGroup/ADD_GROUP_DOMAIN",
+}
+`;
+
+exports[`Domain should call clearNameFromCreateGroup from mapDispatchToProps 1`] = `
+Object {
+  "payload": null,
+  "type": "CreateGroup/ADD_GROUP_NAME",
+}
+`;
+
+exports[`Domain should call fetchGroupExists from mapDispatchToProps 1`] = `
+Object {
+  "graphql": Object {
+    "query": "
+        query ($slug: String) {
+          groupExists (slug: $slug) {
+            exists
+          }
+        }
+      ",
+    "variables": Object {
+      "slug": "slug",
+    },
+  },
+  "type": "CreateGroup/FETCH_GROUP_EXISTS",
+}
+`;
+
+exports[`Domain should call goToNextStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/c/groupDomain",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Domain should call goToPrivacyStep from mapDispatchToProps 1`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/create-group/privacy",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`Domain should call updateUserSettings from mapDispatchToProps 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($changes: MeInput) {
+        updateMe(changes: $changes) {
+          id
+        }
+      }",
+    "variables": Object {
+      "changes": Object {
+        "email": "email",
+        "name": "name",
+      },
+    },
+  },
+  "meta": Object {
+    "changes": Object {
+      "email": "email",
+      "name": "name",
+    },
+    "optimistic": true,
+  },
+  "type": "UPDATE_USER_SETTINGS",
+}
+`;

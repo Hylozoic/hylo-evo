@@ -1,0 +1,27 @@
+.groupRow {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.groupCell {
+  flex: 1;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.groupCellName {
+  composes: text-button from 'css/typography.scss';
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+.groupCellAvatar {
+  @include image(20px);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: 10px;
+}

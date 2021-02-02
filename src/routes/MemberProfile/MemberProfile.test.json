@@ -54,7 +54,7 @@
                 }
               ]
             },
-            "communities": [
+            "groups": [
               {
                 "slug": "psychedelics"
               }
@@ -81,7 +81,7 @@
                 }
               ]
             },
-            "communities": [
+            "groups": [
               {
                 "slug": "bb"
               }
@@ -94,7 +94,7 @@
           "id": "3",
           "role": 1,
           "hasModeratorRole": true,
-          "community": {
+          "group": {
             "id": "1836",
             "name": "Wombats",
             "slug": "wombats"
@@ -113,7 +113,7 @@
           },
           "commenters": [],
           "commentersTotal": 0,
-          "communities": [
+          "groups": [
             {
               "id": "1836",
               "name": "Wombats",
@@ -138,7 +138,7 @@
             }
           ],
           "commentersTotal": 1,
-          "communities": [
+          "groups": [
             {
               "id": "1836",
               "name": "Wombats",
@@ -200,7 +200,7 @@
               }
             ],
             "commentersTotal": 1,
-            "communities": [
+            "groups": [
               {
                 "id": "1836",
                 "name": "Wombats",
@@ -226,7 +226,7 @@
             },
             "commenters": [],
             "commentersTotal": 0,
-            "communities": [
+            "groups": [
               {
                 "id": "1836",
                 "name": "Wombats",

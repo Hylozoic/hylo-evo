@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddModerator renders correctly when adding with suggestions 1`] = `
+<div
+  data-stylename="add-moderator adding"
+>
+  <div
+    data-stylename="help-text"
+  >
+    Search here for members to grant moderator powers
+  </div>
+  <div
+    data-stylename="input-row"
+  >
+    <input
+      data-stylename="input"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder="Type..."
+      type="text"
+    />
+    <span
+      data-stylename="cancel-button"
+      onClick={[Function]}
+    >
+      Cancel
+    </span>
+    <span
+      data-stylename="add-button"
+      onClick={[Function]}
+    >
+      Add
+    </span>
+  </div>
+  <div
+    style={
+      Object {
+        "width": NaN,
+      }
+    }
+  >
+    <KeyControlledItemList
+      items={
+        Array [
+          Object {
+            "id": 1,
+            "name": "Demeter",
+          },
+          Object {
+            "id": 2,
+            "name": "Ares",
+          },
+          Object {
+            "id": 1,
+            "name": "Hermes",
+          },
+        ]
+      }
+      onChange={[Function]}
+      theme={Object {}}
+    />
+  </div>
+</div>
+`;
+
+exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
+<div
+  data-stylename="add-moderator add-new"
+  onClick={[Function]}
+>
+  + Add New
+</div>
+`;
+
+exports[`AddModerator renders correctly, and transitions from not adding to adding 2`] = `
+<div
+  data-stylename="add-moderator adding"
+>
+  <div
+    data-stylename="help-text"
+  >
+    Search here for members to grant moderator powers
+  </div>
+  <div
+    data-stylename="input-row"
+  >
+    <input
+      data-stylename="input"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder="Type..."
+      type="text"
+    />
+    <span
+      data-stylename="cancel-button"
+      onClick={[Function]}
+    >
+      Cancel
+    </span>
+    <span
+      data-stylename="add-button"
+      onClick={[Function]}
+    >
+      Add
+    </span>
+  </div>
+</div>
+`;
+
+exports[`ModeratorsList renders correctly 1`] = `
+<div>
+  <div>
+    <RemovableListItem
+      item={
+        Object {
+          "id": 1,
+        }
+      }
+      key="1"
+      skipConfirm={true}
+      url="/c/foogroup/m/1"
+    />
+    <RemovableListItem
+      item={
+        Object {
+          "id": 2,
+        }
+      }
+      key="2"
+      skipConfirm={true}
+      url="/c/foogroup/m/2"
+    />
+    <RemovableListItem
+      item={
+        Object {
+          "id": 3,
+        }
+      }
+      key="3"
+      skipConfirm={true}
+      url="/c/foogroup/m/3"
+    />
+    <RemovableListItem
+      item={
+        Object {
+          "id": 4,
+        }
+      }
+      key="4"
+      skipConfirm={true}
+      url="/c/foogroup/m/4"
+    />
+  </div>
+  <AddModerator />
+</div>
+`;
+
+exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
+<Fragment>
+  <ModeratorsList
+    key="mList"
+    moderators={
+      Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ]
+    }
+    removeItem={[Function]}
+  />
+</Fragment>
+`;
+
+exports[`ModeratorsSettingsTab renders loading if no moderators 1`] = `<Loading />`;

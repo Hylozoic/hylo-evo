@@ -15,7 +15,7 @@ exports[`matches the last snapshot 1`] = `
     Wombat
   </span>
   <span
-    data-stylename="community"
+    data-stylename="group"
   />
 </li>
 `;

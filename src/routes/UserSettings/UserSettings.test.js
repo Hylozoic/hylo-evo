@@ -7,7 +7,7 @@ describe('UserSettings', () => {
     const currentUser = { id: 1, hasFeature: () => true, blockedUsers: { toRefArray: () => ['a user'] } }
     const memberships = [{ id: 2 }, { id: 3 }]
     const updateUserSettings = () => {}
-    const leaveCommunity = () => {}
+    const leaveGroup = () => {}
     const loginWithService = () => {}
     const unlinkAccount = () => {}
     const setConfirm = () => {}
@@ -19,7 +19,7 @@ describe('UserSettings', () => {
       currentUser={currentUser}
       memberships={memberships}
       updateUserSettings={updateUserSettings}
-      leaveCommunity={leaveCommunity}
+      leaveGroup={leaveGroup}
       loginWithService={loginWithService}
       unlinkAccount={unlinkAccount}
       setConfirm={setConfirm}

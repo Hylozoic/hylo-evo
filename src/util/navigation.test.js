@@ -1,27 +1,26 @@
 import {
   removePostFromUrl,
   postUrl,
-  networkCommunitySettingsUrl,
   gotoExternalUrl,
   contextSwitchingUrl,
 } from './navigation'
 
 describe('postUrl', () => {
-  it('should default to displaying the all communities context', () => {
+  it('should default to displaying the all groups context', () => {
     const expected = '/all/p/123'
     const actual = postUrl('123')
     expect(actual).toEqual(expected)
   })
 
-  it('should show a community context when community slug is passed', () => {
-    const expected = '/c/awesome-team/p/123'
-    const actual = postUrl('123', { communitySlug: 'awesome-team' })
+  it('should show a group context when group slug is passed', () => {
+    const expected = '/g/awesome-team/p/123'
+    const actual = postUrl('123', { groupSlug: 'awesome-team' })
     expect(actual).toEqual(expected)
   })
 
-  it('should show a community member context when memberId is passed in opts', () => {
-    const expected = '/c/awesome-team/m/321/p/123'
-    const actual = postUrl('123', { communitySlug: 'awesome-team', memberId: '321' })
+  it('should show a group member context when memberId is passed in opts', () => {
+    const expected = '/g/awesome-team/m/321/p/123'
+    const actual = postUrl('123', { groupSlug: 'awesome-team', memberId: '321' })
     expect(actual).toEqual(expected)
   })
 
@@ -31,9 +30,9 @@ describe('postUrl', () => {
     expect(actual).toEqual(expected)
   })
 
-  it('should show a community topic context when topicName is passed in opts', () => {
-    const expected = '/c/awesome-team/petitions/p/123'
-    const actual = postUrl('123', { communitySlug: 'awesome-team', topicName: 'petitions' })
+  it('should show a group topic context when topicName is passed in opts', () => {
+    const expected = '/g/awesome-team/petitions/p/123'
+    const actual = postUrl('123', { groupSlug: 'awesome-team', topicName: 'petitions' })
     expect(actual).toEqual(expected)
   })
 
@@ -50,38 +49,30 @@ describe('postUrl', () => {
   })
 })
 
-describe('networkCommunitySettingsUrl', () => {
-  it('should default to displaying the all communities context', () => {
-    const expected = '/n/nslug/settings/communities/cslug'
-    const actual = networkCommunitySettingsUrl('nslug', 'cslug')
-    expect(actual).toEqual(expected)
-  })
-})
-
 describe('removePostFromUrl', () => {
   it('should keep Post Module in URL', () => {
-    const result = removePostFromUrl('/c/somecommunity/project/1234')
-    expect(result).toEqual('/c/somecommunity/project')
+    const result = removePostFromUrl('/g/somegroup/project/1234')
+    expect(result).toEqual('/g/somegroup/project')
   })
 
   it('should remove default Post route', () => {
-    const result = removePostFromUrl('/c/somecommunity/p/1234')
-    expect(result).toEqual('/c/somecommunity')
+    const result = removePostFromUrl('/g/somegroup/p/1234')
+    expect(result).toEqual('/g/somegroup')
   })
 })
 
 describe('contextSwitchingUrl', () => {
   it('should switch group contexts, preserving view', () => {
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old' })).toEqual('/c/newcomm')
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postId: 2 })).toEqual('/c/newcomm')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old' })).toEqual('/g/newcomm')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postId: 2 })).toEqual('/g/newcomm')
 
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', view: 'map' })).toEqual('/c/newcomm/map')
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'project' })).toEqual('/c/newcomm/project')
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'event' })).toEqual('/c/newcomm/event')
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'project', postId: 2 })).toEqual('/c/newcomm/project')
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'event', postId: 2 })).toEqual('/c/newcomm/event')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', view: 'map' })).toEqual('/g/newcomm/map')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'project' })).toEqual('/g/newcomm/project')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'event' })).toEqual('/g/newcomm/event')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'project', postId: 2 })).toEqual('/g/newcomm/project')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { slug: 'old', postTypeContext: 'event', postId: 2 })).toEqual('/g/newcomm/event')
 
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'old' })).toEqual('/c/newcomm')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'old' })).toEqual('/g/newcomm')
     expect(contextSwitchingUrl({ networkSlug: 'newnet' }, { slug: 'old' })).toEqual('/n/newnet')
 
     expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet' })).toEqual('/all')
@@ -94,11 +85,11 @@ describe('contextSwitchingUrl', () => {
     // expect(contextSwitchingUrl({ context: 'public' }, { slug: 'newnet', view: 'members' })).toEqual('/public')
     // expect(contextSwitchingUrl({ context: 'public' }, { networkSlug: 'newnet', view: 'topics' })).toEqual('/public')
 
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'newnet', topicName: 'stuff' })).toEqual('/c/newcomm/stuff')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'newnet', topicName: 'stuff' })).toEqual('/g/newcomm/stuff')
     expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', topicName: 'stuff' })).toEqual('/all/stuff')
     expect(contextSwitchingUrl({ context: 'public' }, { slug: 'newnet', topicName: 'stuff' })).toEqual('/public/stuff')
 
-    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'newnet', personId: 2 })).toEqual('/c/newcomm/m/2')
+    expect(contextSwitchingUrl({ slug: 'newcomm' }, { networkSlug: 'newnet', personId: 2 })).toEqual('/g/newcomm/m/2')
     expect(contextSwitchingUrl({ context: 'all' }, { networkSlug: 'newnet', personId: 2 })).toEqual('/m/2')
   })
 })

@@ -14,7 +14,6 @@ exports[`Comment displays image attachments 1`] = `
     />
     <Link
       data-stylename="userName"
-      replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
@@ -80,7 +79,6 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     />
     <Link
       data-stylename="userName"
-      replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
@@ -149,7 +147,6 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     />
     <Link
       data-stylename="userName"
-      replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
@@ -218,7 +215,6 @@ exports[`Comment renders correctly 1`] = `
     />
     <Link
       data-stylename="userName"
-      replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith
@@ -270,7 +266,6 @@ exports[`Comment renders correctly when editing 1`] = `
     />
     <Link
       data-stylename="userName"
-      replace={false}
       to="/c/foo/m/1"
     >
       Joe Smith

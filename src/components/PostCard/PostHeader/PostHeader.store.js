@@ -56,24 +56,24 @@ export function removePost (postId, slug) {
   }
 }
 
-export function pinPost (postId, communityId) {
+export function pinPost (postId, groupId) {
   return {
     type: PIN_POST,
     graphql: {
-      query: `mutation ($postId: ID, $communityId: ID) {
-        pinPost(postId: $postId, communityId: $communityId) {
+      query: `mutation ($postId: ID, $groupId: ID) {
+        pinPost(postId: $postId, groupId: $groupId) {
           success
         }
       }`,
       variables: {
         postId,
-        communityId
+        groupId
       }
     },
     meta: {
       optimistic: true,
       postId,
-      communityId
+      groupId
     }
   }
 }
@@ -98,10 +98,10 @@ export function fulfillPost (postId) {
   }
 }
 
-export const getCommunity = ormCreateSelector(
+export const getGroup = ormCreateSelector(
   orm,
   (_, { routeParams }) => routeParams,
-  (session, { slug }) => session.Community.safeGet({ slug })
+  (session, { slug }) => session.Group.safeGet({ slug })
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {
@@ -113,9 +113,9 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
 
     case REMOVE_POST_PENDING:
       post = Post.withId(meta.postId)
-      const communities = post.communities.filter(c =>
+      const groups = post.groups.filter(c =>
         c.slug !== meta.slug).toModelArray()
-      post.update({ communities })
+      post.update({ groups })
       break
 
     case PIN_POST_PENDING:
@@ -123,7 +123,7 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
       // this line is to clear the selector memoization
       post.update({ _invalidate: (post._invalidate || 0) + 1 })
       let postMembership = post.postMemberships.filter(p =>
-        Number(p.community) === Number(meta.communityId)).toModelArray()[0]
+        Number(p.group) === Number(meta.groupId)).toModelArray()[0]
       postMembership && postMembership.update({ pinned: !postMembership.pinned })
   }
 }

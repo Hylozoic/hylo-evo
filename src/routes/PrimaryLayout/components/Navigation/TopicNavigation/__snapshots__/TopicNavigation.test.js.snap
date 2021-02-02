@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly for All Communities 1`] = `
+exports[`renders correctly for All Groups 1`] = `
 <div
   data-stylename="s.topicNavigation"
 >
@@ -12,7 +12,6 @@ exports[`renders correctly for All Communities 1`] = `
       name="Topics"
     />
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       <span
@@ -53,7 +52,6 @@ exports[`renders correctly for All Communities 1`] = `
     data-stylename="s.addTopic"
   >
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       see all
@@ -74,7 +72,6 @@ exports[`renders correctly for a community 1`] = `
       name="Topics"
     />
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       <span
@@ -115,7 +112,6 @@ exports[`renders correctly for a community 1`] = `
     data-stylename="s.addTopic"
   >
     <Link
-      replace={false}
       to="/seeAllTopics"
     >
       see all
