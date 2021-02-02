@@ -24,8 +24,6 @@ export default class Comments extends Component {
     comments: []
   }
 
-  primaryReplyInput = React.createRef()
-
   scrollToReplyInput (elem) {
     scrollIntoView(elem, { behavior: 'smooth', scrollMode: 'if-needed' })
   }
@@ -61,7 +59,7 @@ export default class Comments extends Component {
           postId={postId}
           onReplyThread={this.scrollToReplyInput.bind(this)} />
       ))}
-      <div styleName='form-wrapper' style={style} ref={this.primaryReplyInput}>
+      <div styleName='form-wrapper' style={style}>
         <CommentForm
           currentUser={currentUser}
           createComment={createComment}
