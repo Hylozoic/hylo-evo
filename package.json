@@ -210,7 +210,7 @@
     "standard": "12.0.1"
   },
   "engines": {
-    "node": "15.4.x",
+    "node": "15.5.0",
     "yarn": "^1.2.0"
   },
   "browserslist": [
