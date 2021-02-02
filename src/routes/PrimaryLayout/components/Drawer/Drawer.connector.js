@@ -34,7 +34,7 @@ export function partitionGroups (memberships) {
       groups: get('network.groups', m.group).toRefArray()
     },
     newPostCount: m.newPostCount
-  }))
+  })).sort((a, b) => a.name.localeCompare(b.name))
 
   const reduced = allGroups.reduce((acc, group) => {
     if (group.network) {
