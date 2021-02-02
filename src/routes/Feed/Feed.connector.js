@@ -23,6 +23,7 @@ export function mapStateToProps (state, props) {
   let group, groupTopic, topic
 
   const routeParams = get('match.params', props)
+  const view = routeParams.view
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMemberships(state))
@@ -39,7 +40,7 @@ export function mapStateToProps (state, props) {
     topic = getTopicForCurrentRoute(state, props)
   }
 
-  const postTypeFilter = getQuerystringParam('t', state, props)
+  const postTypeFilter = view === 'projects' ? 'project' : (view === 'events' ? 'event' : getQuerystringParam('t', state, props))
   const sortBy = getQuerystringParam('s', state, props)
 
   return {
