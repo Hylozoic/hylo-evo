@@ -39,16 +39,17 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const groupId = group && group.id
   const routeParams = get('match.params', props)
-  const groupSlug = getRouteParam('groupSlug', state, props)
+  const slug = getRouteParam('groupSlug', state, props)
   const context = getRouteParam('context', state, props)
   const groupSlugs = getQuerystringParam('group', state, props)
   const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
   const fetchParams = {
     context,
-    groupSlug,
+    slug,
     groupSlugs, // used to filter by multiple groups
-    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null
+    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
+    isPublic: context === 'public'
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
