@@ -13,8 +13,8 @@ export function mapStateToProps (state, props) {
   const { groupId } = props
   const fetchPostsParam = {
     filter: props.postTypeFilter,
+    slug: props.routeParams.groupSlug,
     ...pick([
-      'slug',
       'context',
       'topicName'
     ], props.routeParams),
