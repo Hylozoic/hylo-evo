@@ -6,7 +6,7 @@ query SubCommentsQuery (
 ) {
   comment(id: $id) {
     id
-    childComments {
+    childComments(first: 10, cursor: $cursor, order: "desc") {
       items {
         ...CommentFields
         post {
