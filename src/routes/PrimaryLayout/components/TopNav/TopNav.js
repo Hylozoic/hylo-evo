@@ -74,7 +74,7 @@ export default class TopNav extends Component {
             </li>
             <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
             <li><span styleName={'hover-highlight'} onClick={showIntercom}>Feedback & Support</span></li>
-            <li><Link styleName={'hover-highlight'} to='/terms'>Terms & Privacy</Link></li>
+            <li><a href='http://hylo.com/terms' target='_blank' styleName={'hover-highlight'}>Terms & Privacy</a></li>
             <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>Download App</span></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
