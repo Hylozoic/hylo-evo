@@ -1,9 +1,12 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { isEmpty } from 'lodash/fp'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import createComment from 'store/actions/createComment'
 import updateComment from 'store/actions/updateComment'
 import deleteComment from 'store/actions/deleteComment'
+import fetchChildComments from 'store/actions/fetchChildComments'
+import { getHasMoreChildComments, getTotalChildComments } from 'store/selectors/getChildComments'
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
@@ -14,6 +17,8 @@ export function mapStateToProps (state, props) {
   const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
+    childCommentsTotal: getTotalChildComments(state, { id: comment.id }),
+    hasMoreChildComments: getHasMoreChildComments(state, { id: comment.id }),
     canModerate,
     isCreator
   }
@@ -26,6 +31,7 @@ export const mapDispatchToProps = (dispatch, props) => {
       deleteComment,
       updateComment
     }, dispatch),
+    fetchCommentsMaker: cursor => () => dispatch(fetchChildComments(comment.id, { cursor })),
     createComment: commentParams => dispatch(createComment({
       postId,
       parentCommentId: comment.id,
@@ -36,7 +42,9 @@ export const mapDispatchToProps = (dispatch, props) => {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { canModerate, isCreator } = stateProps
+  const { fetchCommentsMaker } = dispatchProps
   const { comment } = ownProps
+
   const deleteCommentWithConfirm = isCreator
     ? () => window.confirm('Are you sure you want to delete this comment?') &&
       dispatchProps.deleteComment(comment.id)
@@ -44,12 +52,15 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
 
   const removeCommentWithConfirm = !isCreator && canModerate
     ? () => window.confirm('Are you sure you want to remove this comment?') &&
-    dispatchProps.deleteComment(comment.id)
+      dispatchProps.deleteComment(comment.id)
     : null
 
   const updateComment = isCreator
     ? text => dispatchProps.updateComment(comment.id, text)
     : null
+
+  const cursor = !isEmpty(comment.childComments) && comment.childComments[0].id
+  const fetchChildComments = fetchCommentsMaker(cursor)
 
   return {
     ...stateProps,
@@ -57,7 +68,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deleteComment: deleteCommentWithConfirm,
     removeComment: removeCommentWithConfirm,
-    updateComment
+    updateComment,
+    fetchChildComments
   }
 }
 
