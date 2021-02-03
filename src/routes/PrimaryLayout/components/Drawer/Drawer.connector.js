@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
-import getMemberships from 'store/selectors/getMemberships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import { push } from 'connected-react-router'
 import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
@@ -71,7 +71,7 @@ export function partitionGroups (memberships) {
 }
 
 const getPartitionGroups = createSelector(
-  getMemberships,
+  getMyMemberships,
   (memberships) => partitionGroups(memberships)
 )
 

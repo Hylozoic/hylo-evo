@@ -11,7 +11,7 @@ import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurren
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
-import getMemberships from 'store/selectors/getMemberships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
@@ -26,7 +26,7 @@ export function mapStateToProps (state, props) {
   const view = routeParams.view
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
-  const currentUserHasMemberships = !isEmpty(getMemberships(state))
+  const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const groupSlug = getRouteParam('groupSlug', state, props)
   const topicName = getRouteParam('topicName', state, props)
   const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
