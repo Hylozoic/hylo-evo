@@ -1,3 +1,5 @@
+#import "../fragments/CommentFieldsFragment.graphql"
+
 query CommentsQuery (
   $id: ID,
   $cursor: ID
@@ -22,24 +24,4 @@ query CommentsQuery (
       hasMore
     }
   }
-}
-
-fragment CommentFields on Comment {
-  id
-  text
-  creator {
-    id
-    name
-    avatarUrl
-  }
-  attachments {
-    id
-    position
-    type
-    url
-  }
-  parentComment {
-    id
-  }
-  createdAt
 }

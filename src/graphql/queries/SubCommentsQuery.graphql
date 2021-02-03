@@ -1,0 +1,20 @@
+#import "../fragments/CommentFieldsFragment.graphql"
+
+query SubCommentsQuery (
+  $id: ID,
+  $cursor: ID
+) {
+  comment(id: $id) {
+    id
+    childComments {
+      items {
+        ...CommentFields
+        post {
+          id
+        }
+      }
+      total
+      hasMore
+    }
+  }
+}
