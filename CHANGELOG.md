@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Removed Skills slide from account signup wizard.
+- Added Terms & Privacy link to menu.
 
 ## [2.2.4] - 2021-01-12
 ### Fixed
