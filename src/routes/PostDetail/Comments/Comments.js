@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import scrollIntoView from 'scroll-into-view-if-needed'
+import ShowMore from './ShowMore'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import PeopleTyping from 'components/PeopleTyping'
@@ -69,14 +70,4 @@ export default class Comments extends Component {
       </div>
     </div>
   }
-}
-
-export function ShowMore ({ commentsLength, total, hasMore, fetchComments }) {
-  if (!hasMore) return null
-
-  const extra = total - 10
-
-  return <div styleName='showMore' onClick={fetchComments}>
-    View {extra} previous comment{extra > 1 ? 's' : ''}
-  </div>
 }
