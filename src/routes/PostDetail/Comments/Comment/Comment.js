@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip'
 import { filter, isEmpty, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
+import ShowMore from '../ShowMore'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -18,6 +19,8 @@ import CommentForm from '../CommentForm'
 import './Comment.scss'
 
 const { object, func } = PropTypes
+
+const INITIAL_SUBCOMMENTS_DISPLAYED = 2
 
 class Comment extends Component {
   static propTypes = {
@@ -105,7 +108,8 @@ export default class CommentWithReplies extends Component {
   state = {
     replying: false,
     triggerReplyAction: false,
-    prefillEditor: null
+    prefillEditor: null,
+    showLatestOnly: true
   }
 
   replyBox = React.createRef()
@@ -130,13 +134,30 @@ export default class CommentWithReplies extends Component {
   }
 
   render () {
-    const { comment, createComment } = this.props
-    const { childComments } = comment
-    const { replying } = this.state
+    const { comment, createComment, fetchChildComments, childCommentsTotal, hasMoreChildComments } = this.props
+    let { childComments } = comment
+    const { replying, showLatestOnly } = this.state
+
+    if (showLatestOnly) {
+      childComments = childComments.slice(-1 * INITIAL_SUBCOMMENTS_DISPLAYED)
+    }
 
     return <div styleName='comment'>
       <Comment {...this.props} onReplyComment={this.onReplyComment} />
       {childComments && childComments && <div styleName='subreply'>
+        <div styleName='more-wrap'>
+          <ShowMore
+            commentsLength={childComments.length}
+            total={childCommentsTotal}
+            hasMore={hasMoreChildComments}
+            fetchComments={() => {
+              if (this.state.showLatestOnly) {
+                this.setState({ showLatestOnly: false })
+              } else {
+                fetchChildComments()
+              }
+            }} />
+        </div>
         {childComments.map(c =>
           <Comment key={c.id}
             {...this.props}

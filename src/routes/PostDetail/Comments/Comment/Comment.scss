@@ -90,6 +90,10 @@ $comment-row-padding: 25px;
   }
 }
 
+.more-wrap {
+  margin-left: -25px; // offsets internal margin of ShowMore component
+}
+
 .imageLink {
   display: block;
   margin-left: 69px;
