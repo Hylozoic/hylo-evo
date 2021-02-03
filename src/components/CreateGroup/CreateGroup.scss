@@ -4,8 +4,7 @@
   max-height: 100vh;
   background: white;
   border-radius: 5px;
-  border: 1px solid gray;
-  padding: 30px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .error {
@@ -21,28 +20,104 @@
 
 .header {
   text-align: center;
+  display: flex;
+
+  button {
+    border: none;
+    background: none;
+    padding-left: 15px;
+
+    .backIcon::before {
+      font-size: 16px;
+    }
+  }
+
+  .headerHeadline {
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    margin-right: 30px;
+    display: block;
+    color: rgba(128, 140, 156, 1.00);
+  }
 }
 
-.name-and-slug {
-  background: lightgray;
-}
+.nameAndSlug {
+  background: rgba(246, 248, 249, 1.00);
+  padding: 30px;
+  position: relative;
 
-.slug {
-  font-size: 10px;
+  .groupNameInput {
+
+    input {
+      font-size: 36px;
+      font-weight: bold;
+      width: 100%;
+      color: rgba(41, 64, 90, 1.00);
+      border-bottom: 1px dashed rgba(192, 197, 205, 1.00);
+
+      &::placeholder {
+        color: rgba(192, 197, 205, 1.00);
+      }
+    }
+  }
+
+  .characterCounter {
+    position: absolute;
+    right: 30px;
+    color: rgba(192, 197, 205, 1.00);
+    font-size: 12px;
+  }
+
+  .slug {
+    font-size: 10px;
+    color: rgba(192, 197, 205, 1.00);
+
+    .slugButton {
+      font-family: 'Circular Book';
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+      padding: 0;
+      line-height: 11px;
+
+      span::before {
+        font-size: 14px;
+        margin-right: 5px;
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+
+  .nameError {
+    color: rgba(237, 86, 83, 1.00);
+    position: absolute;
+    top: 18px;
+    font-size: 12px;
+  }
+
+  .slugError {
+    color: rgba(237, 86, 83, 1.00);
+    font-size: 12px;
+  }
+
+  .slugInput {
+    font-size: 11px;
+    border: none;
+    color: rgba(192, 197, 205, 1.00);
+    padding: 0;
+    font-family: 'Circular Book';
+    width: 150px;
+    background-color: transparent;
+  }
 }
 
 .slug-wrapper {
   display: inline;
   border: none;
   height: inherit;
-}
-
-.slug-input {
-  font-size: 10px;
-  line-height: inherit;
-  height: inherit;
-  background: lightgray;
-  padding: 0;
 }
 
 .privacy {
@@ -59,11 +134,54 @@
   background: lightgray;
 }
 
-.parentGroups {
-  padding: 10px;
-  background: white;
+.inviteMembers {
+  padding: 30px;
+  background-color: rgba(246, 248, 249, 1.00);
+
+  .memberSelector {
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba(225, 229, 233, 1.00);
+    background-color: white;
+
+    div {
+      border: 0;
+      padding: 0;
+
+      input {
+        padding: 0;
+      }
+    }
+    
+    .title {
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+    }
+  }
 }
 
-.submit-button {
-  text-align: center;
+.parentGroups {
+  padding: 30px;
+
+  .parentSelector {
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba(225, 229, 233, 1.00);
+    background-color: white;
+
+    .title {
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+    }
+  }
+}
+
+.createGroupBottom {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+
+  .submit-button {
+    text-align: center;
+  }
 }

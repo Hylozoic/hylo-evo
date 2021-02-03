@@ -16,6 +16,7 @@ export default class CreateGroup extends Component {
 
     this.state = {
       accessibility: 1,
+      characterCount: 0,
       invitees: [],
       name: '',
       parentGroups: this.props.parentGroups || [],
@@ -44,7 +45,6 @@ export default class CreateGroup extends Component {
 
   updateField = (field) => (value) => {
     let newValue = typeof value.target !== 'undefined' ? value.target.value : value
-    newValue = typeof newValue === 'string' ? trim(newValue) : newValue
 
     const updates = {
       [field]: newValue,
@@ -53,6 +53,7 @@ export default class CreateGroup extends Component {
 
     if (field === 'name') {
       updates.errors.name = newValue === '' ? 'Please enter a group name' : false
+      this.state.characterCount = newValue.length
     }
 
     if (field === 'slug') {
@@ -69,13 +70,17 @@ export default class CreateGroup extends Component {
 
     // TODO: generate slug
     if (field === 'name' && !this.state.slugCustomized) {
-
+      const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g,'').replace(/\s+/g, "-")
+      this.state.slug = slugString
     }
 
     this.setState(updates)
   }
 
   onSubmit = () => {
+
+    name = typeof name === 'string' ? trim(name) : name
+
     if (this.isValid()) {
       this.props.createGroup(this.state.name, this.state.slug, this.state.parentGroups.map(g => g.id))
         .then(({ error }) => {
@@ -92,13 +97,16 @@ export default class CreateGroup extends Component {
 
   render () {
     const { match, parentGroupOptions } = this.props
-    const { accessibility, errors, name, parentGroups, slug, visibility } = this.state
+    const { accessibility, characterCount, errors, name, parentGroups, slug, visibility } = this.state
 
     if (!match) return null
 
     return <div styleName='wrapper'>
-      <div styleName='header'>Create group</div>
-      <div styleName='name-and-slug'>
+      <div styleName='header'>
+        <button><Icon name='Back' styleName='backIcon'/></button>
+        <span styleName='headerHeadline'>Create Group</span>
+      </div>
+      <div styleName='nameAndSlug'>
         <TextInput
           autoFocus
           type='text'
@@ -106,24 +114,30 @@ export default class CreateGroup extends Component {
           onChange={this.updateField('name')}
           value={name}
           theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-          placeholder="What's the name of your group?"
+          placeholder="Your group's name"
           noClearButton
+          maxLength='30'
           onEnter={this.onSubmit}
+          styleName='groupNameInput'
         />
-        {errors.name && <span styleName='error'>{errors.name}</span>}
+        <span styleName='characterCounter'>{characterCount} / 30</span>
+        {errors.name && <span styleName='nameError'>{errors.name}</span>}
         <span styleName='slug'>
-          https://hylo.com/groups/
+          <button styleName='slugButton'>
+            <Icon name='SmallEdit'/>
+            https://hylo.com/groups/
+          </button>
           <TextInput
             type='text'
-            name='name'
+            name='slug'
             onChange={this.updateField('slug')}
             value={slug}
-            theme={{ input: styles['slug-input'], wrapper: styles['slug-wrapper'] }}
+            theme={{ input: styles['slugInput'], wrapper: styles['slug-wrapper'] }}
             noClearButton
             onEnter={this.onSubmit}
           />
         </span>
-        {errors.slug && <span styleName='error'>{errors.slug}</span>}
+        {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
       </div>
 
       <div styleName='privacy'>
@@ -154,28 +168,42 @@ export default class CreateGroup extends Component {
         </div>
       </div>
 
-      { this.props.parentGroups.length > 0 && <div styleName='parentGroups'>
-        <p>Is the group a member of other groups?</p>
-        {/* TODO: somehow show groups that are restricted and will be a join request differently */}
-        <GroupsSelector
-          options={parentGroupOptions}
-          selected={parentGroups}
-          onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
-          readOnly={false}
-          ref={this.groupsSelector}
-        />
-      </div>}
+      <div styleName='inviteMembers'>
+        <div styleName='memberSelector'>
+          <span styleName='title'>INVITE MEMBERS</span>
+          <TextInput
+            type='text'
+            name='memberInvites'
+            placeholder='Enter names & email addresses'
+          />
+        </div>
+      </div>
 
-      <Button
-        color='green-white-green-border'
-        key='create-button'
-        narrow
-        disabled={!this.isValid()}
-        onClick={this.onSubmit}
-        styleName='submit-button'
-      >
-        <Icon name='Plus' green />Create Group
-      </Button>
+      { this.props.parentGroups.length > 0 && <div styleName='parentGroups'>
+        <div styleName='parentSelector'>
+          <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
+          {/* TODO: somehow show groups that are restricted and will be a join request differently */}
+          <GroupsSelector
+            options={parentGroupOptions}
+            selected={parentGroups}
+            onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
+            readOnly={false}
+            ref={this.groupsSelector}
+          />
+        </div>
+      </div>}
+      <div styleName='createGroupBottom'>
+        <Button
+          color='green-white-green-border'
+          key='create-button'
+          narrow
+          disabled={!this.isValid()}
+          onClick={this.onSubmit}
+          styleName='submit-button'
+        >
+          <Icon name='Plus' green />Create Group
+        </Button>
+      </div>
     </div>
   }
 }
