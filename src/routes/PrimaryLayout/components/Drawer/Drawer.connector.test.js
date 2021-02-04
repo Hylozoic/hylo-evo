@@ -1,5 +1,5 @@
 import { partitionGroups, mapStateToProps } from './Drawer.connector'
-import getMemberships from 'store/selectors/getMemberships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import orm from 'store/models'
 
 describe('partitionGroups', () => {
@@ -16,7 +16,7 @@ describe('partitionGroups', () => {
     const me = session.Me.create({})
     me.updateAppending({ memberships: [membership.id, membership2.id] })
 
-    const partitionedGroups = partitionGroups(getMemberships({ orm: session.state }))
+    const partitionedGroups = partitionGroups(getMyMemberships({ orm: session.state }))
     expect(partitionedGroups).toMatchSnapshot()
     expect(partitionedGroups.networks[0].nonMemberGroups[0].id).toEqual('100')
   })

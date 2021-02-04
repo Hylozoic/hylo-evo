@@ -67,9 +67,5 @@ export function ormSessionReducer (
     if (!Person.idExists(me.id)) {
       Person.create(pick(['id', 'name', 'avatarUrl'], me))
     }
-
-    // Clear Network for selectors
-    // TODO: ??
-    // Network.all().toRefArray().forEach(n => clearCacheFor(Network, n.id))
   }
 }
