@@ -1,20 +1,17 @@
-import React, { Component } from 'react'
+import { find } from 'lodash/fp'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
+
 import { DEFAULT_AVATAR } from 'store/models/Group'
+import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
-import { find } from 'lodash/fp'
-import { Link } from 'react-router-dom'
 import { groupUrl } from 'util/navigation'
 
 import './Groups.scss'
-
-// import ScrollListener from 'components/ScrollListener'
-// import { CENTER_COLUMN_ID } from 'util/scrolling'
-
-const { array } = PropTypes
 
 const sortOptions = [
   { id: 'name', label: 'Alphabetical' },
@@ -24,96 +21,95 @@ const sortOptions = [
 
 export default class Groups extends Component {
   static propTypes = {
-    childGroups: array,
-    parentGroups: array
-    // search: string,
-    // setSearch: func,
-    // sortBy: string,
-    // setSort: func
+    childGroups: PropTypes.array,
+    group: PropTypes.object,
+    groupSlug: PropTypes.string,
+    parentGroups: PropTypes.array,
+    possibleChildren: PropTypes.array,
+    possibleParents: PropTypes.array
   }
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      showInviteAsChildPicker: false,
+      showRequestToJoinPicker: false
+    }
   }
 
-  componentDidUpdate (prevProps) {
-    // const { search, sortBy, fetchMoreGroups, groupsTotal } = this.props
-    // if (search !== prevProps.search || sortBy !== prevProps.sortBy) {
-    //   fetchMoreGroups()
-    // }
+  toggleInviteAsChildPicker = () => {
+    this.setState({ showInviteAsChildPicker: !this.state.showInviteAsChildPicker })
+  }
 
-    // if (groupsTotal && !this.state.groupsTotal) {
-    //   this.setState({ groupsTotal })
-    // }
+  toggleRequestToJoinPicker = () => {
+    this.setState({ showRequestoJoinPicker: !this.state.showRequestoJoinPicker })
   }
 
   render () {
-    const { childGroups, parentGroups } = this.props
-    // const { groupsTotal } = this.state
+    const {
+      canModerate,
+      childGroups,
+      group,
+      inviteGroupToJoinParent,
+      parentGroups,
+      possibleChildren,
+      possibleParents,
+      requestToAddGroupToParent
+    } = this.props
 
     return <div styleName='container'>
-      <Banner text='Parent Groups' groupsTotal={parentGroups.length} />
-      {/* <SearchBar
-        search={search}
-        setSearch={setSearch}
-        sortBy={sortBy}
-        setSort={setSort} /> */}
-      <GroupsList
-        groups={parentGroups}
-      />
-      <Banner text='Child Groups' groupsTotal={childGroups.length} />
-      {/* <SearchBar
-        search={search}
-        setSearch={setSearch}
-        sortBy={sortBy}
-        setSort={setSort} /> */}
-      <GroupsList
-        groups={childGroups}
-      />
+      <div styleName='section'>
+        <div styleName='banner'>
+          <div styleName='banner-text'>
+            {parentGroups.length} Parent Groups
+          </div>
+          <Button onClick={this.toggleInviteAsChildPicker}>Add Parent</Button>
+          { this.state.showInviteAsChildPicker && <div styleName='group-picker'>
+            <h3>Invite {group.name} to join group...</h3>
+            <div styleName='group-picker-list'>
+              {possibleParents.map(g => <div key={g.id}>
+                {g.name}
+                <span styleName='invite-button' onClick={inviteGroupToJoinParent(g.id, group.id)}>
+                  {canModerate ? 'Join' : 'Send Invite'}
+                </span>
+              </div>)}
+            </div>
+          </div>}
+        </div>
+        <GroupsList
+          groups={parentGroups}
+        />
+      </div>
+
+      <div styleName='section'>
+        <div styleName='banner'>
+          <div styleName='banner-text'>
+            {childGroups.length} Child Groups
+          </div>
+          <Button onClick={this.toggleRequestToJoinPicker}>Add Child</Button>
+        </div>
+        { this.state.showRequestoJoinPicker && <div styleName='group-picker'>
+          <h3>Request to join {group.name} as...</h3>
+          <div styleName='group-picker-list'>
+            {possibleChildren.map(g => <div key={g.id}>
+              {g.name}
+              <span styleName='invite-button' onClick={requestToAddGroupToParent(group.id, g.id)}>
+                {canModerate ? 'Add Child' : 'Send Request'}
+              </span>
+            </div>)}
+          </div>
+        </div>}
+        <GroupsList
+          groups={childGroups}
+        />
+      </div>
     </div>
   }
 }
 
-export function Banner ({ text, groupsTotal }) {
-  return <div styleName='banner'>
-    <div styleName='banner-text'>
-      <div styleName='stats'>
-        {groupsTotal} {text}
-      </div>
-    </div>
-    {/* <Icon name='More' styleName='icon' /> */}
-  </div>
-}
-
-export function SearchBar ({ search, setSearch, sortBy, setSort }) {
-  var selected = find(o => o.id === sortBy, sortOptions)
-
-  if (!selected) selected = sortOptions[0]
-
-  return <div styleName='search-bar'>
-    <TextInput styleName='search-input'
-      value={search}
-      placeholder='Search by name'
-      onChange={event => setSearch(event.target.value)} />
-    <Dropdown styleName='search-order'
-      toggleChildren={<span styleName='search-sorter-label'>
-        {selected.label}
-        <Icon name='ArrowDown' />
-      </span>}
-      items={sortOptions.map(({ id, label }) => ({
-        label,
-        onClick: () => setSort(id)
-      }))}
-      alignRight />
-  </div>
-}
-
-export function GroupsList ({ groups, fetchMoreGroups }) {
+export function GroupsList ({ groups }) {
   return <div styleName='group-list' >
     {groups.map(c => <GroupCard group={c} key={c.id} />)}
-    {/* <ScrollListener onBottom={() => fetchMoreGroups()}
-      elementId={CENTER_COLUMN_ID} /> */}
   </div>
 }
 

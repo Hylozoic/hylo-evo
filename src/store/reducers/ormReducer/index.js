@@ -56,6 +56,10 @@ import {
 import {
   INVITE_PEOPLE_TO_EVENT_PENDING
 } from 'components/EventInviteDialog/EventInviteDialog.store'
+import {
+  INVITE_CHILD_TO_JOIN_PARENT_GROUP,
+  REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP
+} from 'routes/Groups/Groups.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
@@ -71,6 +75,7 @@ export default function ormReducer (state = {}, action) {
   const {
     Comment,
     Group,
+    GroupRelationship,
     GroupTopic,
     EventInvitation,
     Me,
@@ -88,7 +93,7 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, group, person, post, comment, groupTopic
+  let me, membership, group, person, post, comment, groupTopic, childGroup
 
   switch (type) {
     case CREATE_COMMENT_PENDING:
@@ -339,6 +344,18 @@ export default function ormReducer (state = {}, action) {
         })
       })
       clearCacheFor(Post, meta.eventId)
+      break
+
+    case INVITE_CHILD_TO_JOIN_PARENT_GROUP:
+      childGroup = Group.withId(meta.childId)
+      Group.withId(meta.parentId).updateAppending({ childGroups: [childGroup] })
+      clearCacheFor(Group, meta.childId)
+      break
+
+    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP:
+      childGroup = Group.withId(meta.childId)
+      Group.withId(meta.parentId).updateAppending({ childGroups: [childGroup] })
+      clearCacheFor(Group, meta.childId)
       break
   }
 

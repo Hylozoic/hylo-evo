@@ -1,60 +1,67 @@
 import { createSelector } from 'reselect'
 
-export const MODULE_NAME = 'RelatedGroups'
+export const MODULE_NAME = 'Groups'
 
 // Constants
-export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
-export const SET_SORT = `${MODULE_NAME}/SET_SORT`
+export const INVITE_CHILD_TO_JOIN_PARENT_GROUP = `${MODULE_NAME}/INVITE_CHILD_TO_JOIN_PARENT_GROUP`
+export const REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP = `${MODULE_NAME}/REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP`
 
 // Reducer
-const defaultState = {
-  sort: 'name',
-  search: ''
-}
+const defaultState = {}
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload } = action
   if (error) return state
 
   switch (type) {
-    case SET_SEARCH:
+    case INVITE_CHILD_TO_JOIN_PARENT_GROUP:
       return {
         ...state,
-        search: payload
-      }
-    case SET_SORT:
-      return {
-        ...state,
-        sort: payload
       }
     default:
       return state
   }
 }
 
-export function setSearch (search) {
+// TODO: how do we know whether we are getting a request back or a new relationship?
+export function inviteGroupToJoinParent(parentId, childId) {
   return {
-    type: SET_SEARCH,
-    payload: search
+    type: INVITE_CHILD_TO_JOIN_PARENT_GROUP,
+    graphql: {
+      query: `mutation ($parentId: ID, $childId: ID) {
+        inviteGroupToJoinParent(parentId: $parentId, childId: $childId) {
+          success
+        }
+      }`,
+      variables: { parentId, childId }
+    },
+    meta: {
+      parentId,
+      childId,
+      optimistic: true
+    }
   }
 }
 
-export function setSort (sort) {
+export function requestToAddGroupToParent(parentId, childId) {
   return {
-    type: SET_SORT,
-    payload: sort
+    type: REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
+    graphql: {
+      query: `mutation ($parentId: ID, $childId: ID) {
+        requestToAddGroupToParent(parentId: $parentId, childId: $childId) {
+          success
+        }
+      }`,
+      variables: { parentId, childId }
+    },
+    meta: {
+      parentId,
+      childId,
+      optimistic: true
+    }
   }
 }
 
 // Selectors
 export const moduleSelector = (state) => state[MODULE_NAME]
 
-export const getSort = createSelector(
-  moduleSelector,
-  (state, props) => state.sort
-)
-
-export const getSearch = createSelector(
-  moduleSelector,
-  (state, props) => state.search
-)

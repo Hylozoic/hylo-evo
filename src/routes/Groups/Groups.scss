@@ -1,13 +1,16 @@
 .container { /* !empty */ }
 
+.section {
+  position: relative;
+}
+
 // Banner
 .banner {
   background-color: $color-athens-gray;
-  height: 120px;
   width: 100%;
   display: flex;
   margin-top: 25px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 .banner-text {
@@ -17,16 +20,12 @@
   height: 100%;
   justify-content: center;
   margin-left: 25px;
+  font-size: 2em;
 }
 
 .name {
   composes: hdr-display from 'css/typography.scss';
   margin-bottom: 5px;
-}
-
-.stats {
-  composes: caption-lt-lg from 'css/typography.scss';
-  font-size: 13px;
 }
 
 .icon {
@@ -39,30 +38,29 @@
   margin-right: 20px;
 }
 
-// SearchBar
-.search-bar {
-  composes: content-margins;
-  margin-bottom: 32px;
-  display: flex;
-  align-items: center;
+// Group invite/request picker
+.group-picker {
+  position: absolute;
+  width: 300px;
+  background: white;
+  border: 1px solid gray;
+  z-index: 1;
+  left: 300px;
+  top: 40px;
 }
 
-.search-input {
-  flex: 1;
-  margin-right: $space-4x;
+.group-picker-list {
+  height: 150px;
+  overflow-y: auto;
 }
 
-.search-order {
-  min-width: 80px;
-}
+.invite-button {
+  padding: 0px 10px;
+  color: green;
+  cursor: pointer;
 
-.search-sorter-label {
-  font-size: 15px;
-  line-height: 28px;
-  composes: caption-lt-lg from 'css/typography.scss';
-  > span {
-    vertical-align: middle;
-    margin-left: $space-1x;
+  &:hover {
+    color: darkgreen;
   }
 }
 
@@ -101,4 +99,8 @@
   color: $color-rhino-60;
   @include font-regular;
   font-size: 14px;
+}
+
+.button {
+  text-align: center
 }
