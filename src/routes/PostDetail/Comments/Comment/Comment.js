@@ -109,7 +109,8 @@ export default class CommentWithReplies extends Component {
     replying: false,
     triggerReplyAction: false,
     prefillEditor: null,
-    showLatestOnly: INITIAL_SUBCOMMENTS_DISPLAYED
+    showLatestOnly: true, // only show a few comments initially, rather than a whole page
+    newCommentsAdded: 0 // tracks number of comments added without a requery, to adjust ShowMore pagination totals
   }
 
   replyBox = React.createRef()
@@ -136,10 +137,10 @@ export default class CommentWithReplies extends Component {
   render () {
     const { comment, createComment, fetchChildComments, childCommentsTotal, hasMoreChildComments } = this.props
     let { childComments } = comment
-    const { replying, showLatestOnly } = this.state
+    const { replying, showLatestOnly, newCommentsAdded } = this.state
 
     if (showLatestOnly) {
-      childComments = childComments.slice(-1 * showLatestOnly)
+      childComments = childComments.slice(-1 * (INITIAL_SUBCOMMENTS_DISPLAYED + newCommentsAdded))
     }
 
     return <div styleName='comment'>
@@ -148,7 +149,7 @@ export default class CommentWithReplies extends Component {
         <div styleName='more-wrap'>
           <ShowMore
             commentsLength={childComments.length}
-            total={childCommentsTotal}
+            total={childCommentsTotal + newCommentsAdded}
             hasMore={hasMoreChildComments}
             fetchComments={() => {
               if (this.state.showLatestOnly) {
@@ -171,12 +172,7 @@ export default class CommentWithReplies extends Component {
         <CommentForm
           createComment={c => {
             createComment(c)
-              .then(() => {
-                // after creating commment, adjust truncation to make it visible
-                if (this.state.showLatestOnly) {
-                  this.setState({ showLatestOnly: this.state.showLatestOnly + 1 })
-                }
-              })
+              .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
           }}
           placeholder={`Reply to ${comment.creator.name}`}
           editorContent={this.state.prefillEditor}
