@@ -109,7 +109,7 @@ export default class CommentWithReplies extends Component {
     replying: false,
     triggerReplyAction: false,
     prefillEditor: null,
-    showLatestOnly: true
+    showLatestOnly: INITIAL_SUBCOMMENTS_DISPLAYED
   }
 
   replyBox = React.createRef()
@@ -139,7 +139,7 @@ export default class CommentWithReplies extends Component {
     const { replying, showLatestOnly } = this.state
 
     if (showLatestOnly) {
-      childComments = childComments.slice(-1 * INITIAL_SUBCOMMENTS_DISPLAYED)
+      childComments = childComments.slice(-1 * showLatestOnly)
     }
 
     return <div styleName='comment'>
@@ -169,7 +169,15 @@ export default class CommentWithReplies extends Component {
       </div>}
       {replying && <div styleName='replybox' ref={this.replyBox}>
         <CommentForm
-          createComment={createComment}
+          createComment={c => {
+            createComment(c)
+              .then(() => {
+                // after creating commment, adjust truncation to make it visible
+                if (this.state.showLatestOnly) {
+                  this.setState({ showLatestOnly: this.state.showLatestOnly + 1 })
+                }
+              })
+          }}
           placeholder={`Reply to ${comment.creator.name}`}
           editorContent={this.state.prefillEditor}
           focusOnRender />
