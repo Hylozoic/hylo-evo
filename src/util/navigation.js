@@ -68,7 +68,7 @@ export function contextSwitchingUrl (newParams, routeParams) {
   return baseUrl(newRouteParams)
 }
 
-export function createGroupUrl(opts) {
+export function createGroupUrl (opts) {
   return baseUrl(opts) + '/create/group'
 }
 
