@@ -15,7 +15,7 @@ import getMyMemberships from 'store/selectors/getMyMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
-import { newPostUrl } from 'util/navigation'
+import { createGroupUrl, newPostUrl } from 'util/navigation'
 import { fetchTopic, fetchGroupTopic } from './Feed.store'
 import isPendingFor from 'store/selectors/isPendingFor'
 
@@ -83,7 +83,7 @@ export function mapDispatchToProps (dispatch, props) {
     },
     toggleCommunityTopicSubscribe: groupTopic =>
       dispatch(toggleGroupTopicSubscribe(groupTopic)),
-    goToCreateGroup: () => dispatch(push('/create-group/name')),
+    goToCreateGroup: () => dispatch(push(createGroupUrl(routeParams))),
     newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams)))
   }
 }

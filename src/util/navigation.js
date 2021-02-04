@@ -68,6 +68,10 @@ export function contextSwitchingUrl (newParams, routeParams) {
   return baseUrl(newRouteParams)
 }
 
+export function createGroupUrl(opts) {
+  return baseUrl(opts) + '/create/group'
+}
+
 // For specific views of a group like 'map', or 'projects'
 export function viewUrl (view, context, groupSlug, defaultUrl) {
   if (!view) return '/'
