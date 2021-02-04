@@ -50,11 +50,14 @@ export default class Groups extends Component {
   }
 
   render () {
-    const { childGroups, parentGroups } = this.props
+    const { childGroups, parentGroups, group } = this.props
     // const { groupsTotal } = this.state
 
     return <div styleName='container'>
-      <Banner text='Parent Groups' groupsTotal={parentGroups.length} />
+      <div styleName='network-map'><span>Group network map in progress</span></div>
+
+      {parentGroups.length === 1 ? <h3>{group.name} is a part of 1 Group</h3> : '' }
+      {parentGroups.length > 1 ? <h3>{group.name} is a part of {parentGroups.length} Groups</h3> : '' }
       {/* <SearchBar
         search={search}
         setSearch={setSearch}
@@ -63,7 +66,9 @@ export default class Groups extends Component {
       <GroupsList
         groups={parentGroups}
       />
-      <Banner text='Child Groups' groupsTotal={childGroups.length} />
+
+      {childGroups.length === 1 ? <h3>1 Group is a part of {group.name}</h3> : ''}
+      {childGroups.length > 1 ? <h3>{childGroups.length} groups are a part of {group.name}</h3> : ''}
       {/* <SearchBar
         search={search}
         setSearch={setSearch}

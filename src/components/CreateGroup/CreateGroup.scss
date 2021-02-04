@@ -125,8 +125,56 @@
   background: white;
 }
 
+.dropdownContainer {
+  border: 1px solid rgba(225, 229, 233, 1.00);
+  border-radius: 100px;
+  padding: 15px;
+  position: relative;
+  margin: 15px;
+
+  .openDropdown {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -12px;
+  }
+}
+
 .privacyDropdown {
+  width: 100%;
   text-align: left;
+
+  .dropdownItem, .dropdownItemSelected {
+
+    b {
+      color: rgba(41, 64, 90, 1.00);
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    span {
+      font-size: 14px;
+      color: rgba(128, 140, 156, 1.00);
+    }
+  }
+
+  .dropdownItemSelected {
+    display: flex;
+
+    .dropdownDescription {
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+      line-height: 12px;
+      margin-top: 6px;
+    }
+
+    .selectedIcon {
+      font-size: 36px;
+      position: relative;
+      top: 6px;
+      margin-right: 5px;
+    }
+  }
 }
 
 .invitePeople {

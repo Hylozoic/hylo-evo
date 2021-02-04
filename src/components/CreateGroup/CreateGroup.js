@@ -5,7 +5,7 @@ import Dropdown from 'components/Dropdown'
 import GroupsSelector from 'components/GroupsSelector'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
-import { accessibilityString, visibilityString, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
+import { accessibilityString, visibilityString, groupVisibilityDescription, groupVisibilityIcon, groupAccessibilityDescription, groupAccessibilityIcon, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
 import styles from './CreateGroup.scss'
 
 const slugValidatorRegex = /^[0-9a-z-]{2,40}$/
@@ -141,27 +141,49 @@ export default class CreateGroup extends Component {
       </div>
 
       <div styleName='privacy'>
-        <div>
-          Visibility:
+        <div styleName='dropdownContainer'>
           <Dropdown styleName='privacyDropdown'
-            toggleChildren={<span>
-              {visibilityString(visibility)}
-              <Icon name='ArrowDown' />
-            </span>}
+            toggleChildren={
+              <span>
+                <div styleName='dropdownItemSelected'>
+                  <Icon name={groupVisibilityIcon(visibility)} styleName='selectedIcon'/>
+                  <div>
+                    <div styleName='dropdownDescription'>WHO CAN SEE THIS GROUP?</div>
+                    <b>{visibilityString(visibility)}</b>
+                    <span> - {groupVisibilityDescription(visibility)}</span>
+                  </div>
+                </div>
+                <Icon name='ArrowDown' styleName='openDropdown' />
+              </span>}
             items={Object.keys(GROUP_VISIBILITY).map(label => ({
-              label,
+              label: <div styleName='dropdownItem'>
+                      <Icon name={groupVisibilityIcon(GROUP_VISIBILITY[label])}/>
+                      <b>{label}</b>
+                      <span> - {groupVisibilityDescription(GROUP_VISIBILITY[label])}</span>
+                    </div>,
               onClick: () => this.updateField('visibility')(GROUP_VISIBILITY[label])
             }))}
             alignRight />
         </div>
-        <div>
-          Accessibility: <Dropdown styleName='privacyDropdown'
+        <div styleName='dropdownContainer'>
+          <Dropdown styleName='privacyDropdown'
             toggleChildren={<span>
-              {accessibilityString(accessibility)}
-              <Icon name='ArrowDown' />
+              <div styleName='dropdownItemSelected'>
+                <Icon name={groupAccessibilityIcon(accessibility)} styleName='selectedIcon'/>
+                <div>
+                  <div styleName='dropdownDescription'>WHO CAN JOIN THIS GROUP?</div>
+                  <b>{accessibilityString(accessibility)}</b>
+                  <span> - {groupAccessibilityDescription(accessibility)}</span>
+                </div>
+              </div>
+              <Icon name='ArrowDown' styleName='openDropdown' />
             </span>}
             items={Object.keys(GROUP_ACCESSIBILITY).map(label => ({
-              label,
+              label: <div styleName='dropdownItem'>
+                      <Icon name={groupAccessibilityIcon(GROUP_ACCESSIBILITY[label])}/>
+                      <b>{label}</b>
+                      <span> - {groupAccessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
+                    </div>,
               onClick: () => this.updateField('accessibility')(GROUP_ACCESSIBILITY[label])
             }))}
             alignRight />
