@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { DEFAULT_AVATAR } from 'store/models/Group'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import Dropdown from 'components/Dropdown'
+import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
@@ -119,12 +120,14 @@ export function GroupsList ({ groups, fetchMoreGroups }) {
 
 export function GroupCard ({ group }) {
   return <div styleName='group-card'>
-    <Link to={groupUrl(group.slug, 'groups')}>
+    <Link to={groupUrl(group.slug, 'groups')} styleName='groupLink'>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
         <span styleName='group-stats'>{group.memberCount} Members</span>
+        <span styleName='group-description'>{group.description}</span>
       </div>
     </Link>
+    <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div></div></div>
   </div>
 }
