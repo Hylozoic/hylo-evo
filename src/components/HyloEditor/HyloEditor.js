@@ -95,7 +95,6 @@ export default class HyloEditor extends Component {
     }
     if (this.props.focusOnRender && !this.state.didInitialFocus) {
       this.focus()
-      this.setState({ didInitialFocus: true })
     }
   }
 
@@ -192,7 +191,8 @@ export default class HyloEditor extends Component {
     // Focus and ensure editor caret is at the end, in case of injected content.
     // Note this does not scroll the page, use `react-scroll-into-view` if you need that.
     this.setState({
-      editorState: EditorState.moveFocusToEnd(this.state.editorState)
+      editorState: EditorState.moveFocusToEnd(this.state.editorState),
+      didInitialFocus: true
     })
   }
 
