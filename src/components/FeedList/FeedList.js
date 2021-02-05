@@ -7,7 +7,7 @@ import TabBar from './TabBar'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
-import { jollyAxolotl } from 'util/assets'
+import NoPosts from 'components/NoPosts'
 import './FeedList.scss'
 
 export default class FeedList extends React.Component {
@@ -120,11 +120,7 @@ export default class FeedList extends React.Component {
         </div>}
       </React.Fragment>}
       <div styleName={cx('FeedListItems', { collapsedState })}>
-        {!pending && posts.length === 0 ? <div styleName='no-posts'>
-          <img src={jollyAxolotl} />
-          <br />
-          <div><h2>Nothing to see here</h2></div>
-        </div> : ''}
+        {!pending && posts.length === 0 ? <NoPosts /> : ''}
 
         {posts.map(post => {
           const expanded = post.id === routeParams.postId
