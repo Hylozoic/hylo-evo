@@ -63,15 +63,15 @@ export default class Groups extends Component {
           <div styleName='banner-text'>
             {parentGroups.length} Parent Groups
           </div>
-          <Button onClick={this.toggleInviteAsChildPicker}>Add Parent</Button>
+          <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>Invite to</Button>
           { this.state.showInviteAsChildPicker && <div styleName='group-picker'>
-            <h3>Invite {group.name} to join group...</h3>
+            <h3>Invite {group.name} to one of your groups</h3>
             <div styleName='group-picker-list'>
               {possibleParents.map(g => <div key={g.id}>
-                {g.name}
                 <span styleName='invite-button' onClick={inviteGroupToJoinParent(g.id, group.id)}>
-                  {canModerate ? 'Join' : 'Send Invite'}
+                  {canModerate ? 'Add To' : 'Invite To'}
                 </span>
+                {g.name}
               </div>)}
             </div>
           </div>}
@@ -86,16 +86,16 @@ export default class Groups extends Component {
           <div styleName='banner-text'>
             {childGroups.length} Child Groups
           </div>
-          <Button onClick={this.toggleRequestToJoinPicker}>Add Child</Button>
+          <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>Request Membership</Button>
         </div>
         { this.state.showRequestoJoinPicker && <div styleName='group-picker'>
-          <h3>Request to join {group.name} as...</h3>
+          <h3>Request group membership in {group.name}</h3>
           <div styleName='group-picker-list'>
             {possibleChildren.map(g => <div key={g.id}>
-              {g.name}
               <span styleName='invite-button' onClick={requestToAddGroupToParent(group.id, g.id)}>
-                {canModerate ? 'Add Child' : 'Send Request'}
+                {canModerate ? 'Join As' : 'Request As'}
               </span>
+              {g.name}
             </div>)}
           </div>
         </div>}

@@ -23,14 +23,9 @@
   font-size: 2em;
 }
 
-.name {
-  composes: hdr-display from 'css/typography.scss';
-  margin-bottom: 5px;
-}
-
-.icon {
-  margin: 15px 15px 0 auto;
-  align-self: flex-start;
+.connect-button {
+  position: absolute;
+  right: 0;
 }
 
 .content-margins {
