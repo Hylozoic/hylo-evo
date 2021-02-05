@@ -14,6 +14,7 @@ export function mapStateToProps (state, props) {
 
   const group = getGroupForCurrentRoute(state, props)
   const rootPath = baseUrl(routeParams)
+  const streamPath = `${rootPath}/stream`
   const projectsPath = `${rootPath}/projects`
   const eventsPath = `${rootPath}/events`
   const groupsPath = `${rootPath}/groups`
@@ -40,6 +41,7 @@ export function mapStateToProps (state, props) {
     groupId: get('id', group),
     hideTopics: isPublicPath(props.location.pathname),
     rootPath,
+    streamPath,
     membersPath,
     projectsPath,
     eventsPath,

@@ -16,6 +16,7 @@ export default function Navigation (props) {
     collapsed,
     routeParams,
     rootPath,
+    streamPath,
     membersPath,
     projectsPath,
     groupId,
@@ -49,6 +50,11 @@ export default function Navigation (props) {
       badge: badge,
       onClick: homeOnClick,
       exact: true
+    },
+    streamPath && {
+      label: 'Stream',
+      icon: 'Stream',
+      to: streamPath
     },
     projectsPath && {
       label: 'Projects',
