@@ -1,0 +1,99 @@
+.post-row {
+  border-bottom: 1px solid $color-cape-cod-10;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  padding: 12px 20px;
+}
+
+.content-summary {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.votes {
+  flex: 0 0 64px;
+  padding-right: 14px;
+  text-align: center;
+  color: $color-caribbean-green;
+  font-weight: bold;
+}
+
+.meta {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  text-align: right;
+}
+
+.participants, .details, .timestamp, .topics {
+  font-size: 12px;
+}
+
+.participants {
+  color: $color-grey-keyline;
+}
+
+.avatar {
+  margin-right: 5px;
+}
+
+.title {
+  color: $color-grey-header;
+  font-size: 16px;
+  margin: 0;
+}
+
+.details {
+  color: $color-regent;
+  height: 1.5em;
+  width: 100%;
+}
+
+.title, .details p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.vote-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid $color-caribbean-green;
+  background: $color-white;
+  border-radius: 3px;
+}
+.vote-icon {
+  display: block;
+  margin: 6px 0 -4px 0;
+  color: $color-caribbean-green;
+}
+
+// button state when upvote is active
+.vote-button.voted {
+  background: $color-caribbean-green;
+
+  color: $color-white !important;
+  .vote-icon {
+    color: $color-white;
+  }
+}
+
+.topics, .timestamp {
+  display: inline-block;
+}
+.topic {
+  color: $color-caribbean-green;
+  margin-right: 10px;
+}
+
+.timestamp {
+  color: $color-grey-keyline;
+}
+
+// unread state overrides
+.unread {
+
+}

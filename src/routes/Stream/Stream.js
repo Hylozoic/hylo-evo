@@ -5,7 +5,7 @@ import { CENTER_COLUMN_ID } from 'util/scrolling'
 import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
-import PostCard from 'components/PostCard' // temporary, for testing
+import PostListRow from 'components/PostListRow'
 import './Stream.scss'
 
 const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== get(sel, prevProps)
@@ -59,7 +59,7 @@ export default class Stream extends Component {
         <div styleName='stream-items'>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
-            return <PostCard
+            return <PostListRow
               routeParams={routeParams}
               post={post}
               key={post.id} />
