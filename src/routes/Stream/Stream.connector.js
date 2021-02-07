@@ -20,6 +20,7 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
   const context = getRouteParam('context', state, props)
 
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props)
   const sortBy = getQuerystringParam('s', state, props)
 
@@ -40,6 +41,7 @@ export function mapStateToProps (state, props) {
 
   return {
     routeParams,
+    querystringParams,
     fetchPostsParam,
     group,
     context,
