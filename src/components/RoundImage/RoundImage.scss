@@ -55,6 +55,12 @@
   height: $space-7x;
 }
 
+.tiny {
+  width: $space-7x / 2;
+  height: $space-7x / 2;
+  border: 0;
+}
+
 .square {
   border-radius: 8px;
 }

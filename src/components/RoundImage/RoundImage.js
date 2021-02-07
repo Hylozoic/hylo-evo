@@ -6,6 +6,7 @@ import './RoundImage.scss'
 
 export default function RoundImage ({
   url,
+  tiny,
   small,
   medium,
   large,
@@ -21,6 +22,7 @@ export default function RoundImage ({
     'image', {
       square,
       overlaps,
+      tiny,
       small,
       medium,
       large,
@@ -41,6 +43,7 @@ export default function RoundImage ({
 }
 RoundImage.propTypes = {
   url: string,
+  tiny: bool,
   small: bool,
   medium: bool,
   large: bool,

@@ -45,7 +45,7 @@
   > span {
     font-size: 12px;
     line-height: 15px;
-    
+
     text {
       opacity: 0.5;
     }
@@ -63,7 +63,7 @@
 
   h2 {
     background-color: #F2F2F2;
-    color: #808C9B;
+    color: $color-regent;
     font-weight: bold;
     font-size: 16px;
     line-height: 20px;
@@ -74,7 +74,7 @@
 
 .search {
   padding: 9px;
-  border-bottom: 1px dashed #C0C5CD; 
+  border-bottom: 1px dashed $color-grey-keyline;
 }
 
 .search:last-of-type {
@@ -103,7 +103,7 @@
   white-space: nowrap;
   font-size: 10px;
   line-height: 13px;
-  color: #C0C5CD;
+  color: $color-grey-keyline;
 }
 
 .params {
@@ -116,7 +116,7 @@
   padding: 10px 10px 0px;
   font-size: 11px;
   line-height: 14px;
-  color: #C0C5CD;
+  color: $color-grey-keyline;
 
   .filters {
     line-height: 16px;

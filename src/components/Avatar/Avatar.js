@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 
 const { string, bool } = PropTypes
 
-export default function Avatar ({ url, avatarUrl, small, medium, className }) {
+export default function Avatar ({ url, avatarUrl, tiny, small, medium, className }) {
   return <Link to={url} className={className}>
-    <RoundImage url={avatarUrl} small={small} medium={medium} />
+    <RoundImage url={avatarUrl} small={small} medium={medium} tiny={tiny} />
   </Link>
 }
 Avatar.propTypes = {
