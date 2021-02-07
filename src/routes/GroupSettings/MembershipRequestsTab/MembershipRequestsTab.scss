@@ -62,7 +62,7 @@
   font-size: 12px;
   line-height: 15px;
   margin-right: 4px;
-  color: #0DC39F;
+  color: $color-caribbean-green;
 }
 
 .action-buttons {
@@ -101,5 +101,5 @@
 
 .icon-green {
   @extend %icon;
-  color: #0DC39F;
+  color: $color-caribbean-green;
 }

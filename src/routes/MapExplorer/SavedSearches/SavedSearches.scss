@@ -7,7 +7,7 @@
 
 .triangle {
   min-width: 0 !important;
-  @include is-top-triangle(#0DC39F, #0DC39F, 14px);
+  @include is-top-triangle($color-caribbean-green, $color-caribbean-green, 14px);
   margin-left: 20px;
   top: 70px;
   left: 6px;
@@ -28,7 +28,7 @@
 }
 
 .title {
-  background: #0DC39F;
+  background: $color-caribbean-green;
   color: white;
   padding: 9px;
   font-size: 16px;
