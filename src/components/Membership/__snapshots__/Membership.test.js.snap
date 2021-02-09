@@ -12,11 +12,11 @@ exports[`Membership matches last snapshot 1`] = `
    of
   <Button
     color="green-white"
-    data-stylename="community"
+    data-stylename="group"
     small={true}
   >
     <Link
-      to="/c/bb"
+      to="/groups/bb"
     >
       <RoundImage
         small={true}

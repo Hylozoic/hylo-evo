@@ -26,9 +26,8 @@ describe('getMyMemberships', () => {
     const group1 = session.Group.create({ id: 'c1' })
     const group2 = session.Group.create({ id: 'c2' })
     const membership = session.Membership.create({ id: 'm1', group: group1.id })
-    session.Membership.create({ id: 'm2', group: group2.id })
-    const me = session.Me.create({})
-    me.updateAppending({ memberships: [membership.id] })
+    const me = session.Me.create({ id: 1 })
+    session.Membership.create({ id: 'm2', group: group2.id, person: me.id })
     expect(getMyMemberships({ orm: session.state }, {}).length).toEqual(1)
   })
 })
@@ -53,7 +52,7 @@ describe('getGroupTopicForCurrentRoute', () => {
     const props = {
       match: {
         params: {
-          slug: 'goteam',
+          groupSlug: 'goteam',
           topicName: 'petitions'
         }
       }
@@ -68,7 +67,7 @@ describe('getGroupTopicForCurrentRoute', () => {
     const props = {
       match: {
         params: {
-          slug: 'goteam',
+          groupSlug: 'goteam',
           topicName: 'petitions'
         }
       }
