@@ -1,23 +1,14 @@
-import { find } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import Button from 'components/Button'
-import Dropdown from 'components/Dropdown'
-import Icon from 'components/Icon'
-import TextInput from 'components/TextInput'
+// import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { groupUrl } from 'util/navigation'
 
 import './Groups.scss'
-
-const sortOptions = [
-  { id: 'name', label: 'Alphabetical' },
-  { id: 'num_members', label: 'Popular' },
-  { id: 'created_at', label: 'Newest' }
-]
 
 export default class Groups extends Component {
   static propTypes = {

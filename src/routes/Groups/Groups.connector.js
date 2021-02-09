@@ -1,6 +1,4 @@
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import presentGroup from 'store/presenters/presentGroup'
 import getCanModerate from 'store/selectors/getCanModerate'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
@@ -19,7 +17,6 @@ export function mapStateToProps (state, props) {
   const parentGroups = getParentGroups(state, queryProps)
   const parentGroupIds = parentGroups.map(g => g.id)
 
-  console.log("can mod = ", canModerate)
   return {
     canModerate,
     childGroups,

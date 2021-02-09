@@ -75,7 +75,6 @@ export default function ormReducer (state = {}, action) {
   const {
     Comment,
     Group,
-    GroupRelationship,
     GroupTopic,
     EventInvitation,
     Me,

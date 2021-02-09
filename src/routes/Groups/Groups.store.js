@@ -1,30 +1,11 @@
-import { createSelector } from 'reselect'
-
 export const MODULE_NAME = 'Groups'
 
 // Constants
 export const INVITE_CHILD_TO_JOIN_PARENT_GROUP = `${MODULE_NAME}/INVITE_CHILD_TO_JOIN_PARENT_GROUP`
 export const REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP = `${MODULE_NAME}/REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP`
 
-// Reducer
-const defaultState = {}
-
-export default function reducer (state = defaultState, action) {
-  const { error, type, payload } = action
-  if (error) return state
-
-  switch (type) {
-    case INVITE_CHILD_TO_JOIN_PARENT_GROUP:
-      return {
-        ...state,
-      }
-    default:
-      return state
-  }
-}
-
 // TODO: how do we know whether we are getting a request back or a new relationship?
-export function inviteGroupToJoinParent(parentId, childId) {
+export function inviteGroupToJoinParent (parentId, childId) {
   return {
     type: INVITE_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
@@ -43,7 +24,7 @@ export function inviteGroupToJoinParent(parentId, childId) {
   }
 }
 
-export function requestToAddGroupToParent(parentId, childId) {
+export function requestToAddGroupToParent (parentId, childId) {
   return {
     type: REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
@@ -64,4 +45,3 @@ export function requestToAddGroupToParent(parentId, childId) {
 
 // Selectors
 export const moduleSelector = (state) => state[MODULE_NAME]
-

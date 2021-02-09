@@ -1,6 +1,6 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import { find, get } from 'lodash/fp'
+import { get } from 'lodash/fp'
 
 const getCanModerate = ormCreateSelector(
   orm,
