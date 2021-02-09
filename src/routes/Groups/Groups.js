@@ -133,6 +133,6 @@ export function GroupCard ({ group }) {
         <span styleName='group-description'>{group.description}</span>
       </div>
     </Link>
-    <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div></div></div>
+    <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div /></div>
   </div>
 }

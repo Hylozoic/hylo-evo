@@ -24,7 +24,7 @@ export default class CreateModal extends Component {
       transitionLeaveTimeout={300}>
       <div styleName='create-modal' key='create-modal'>
         <div styleName='create-modal-wrapper' className='create-modal-wrapper'>
-          <span styleName='close-button' onClick={closeModal}><Icon name='Ex'/></span>
+          <span styleName='close-button' onClick={closeModal}><Icon name='Ex' /></span>
           <Switch>
             <Route path={`${rootUrl}/create/post`} children={({ match, location }) =>
               <PostEditor match={match} location={location} onClose={closeModal} />} />

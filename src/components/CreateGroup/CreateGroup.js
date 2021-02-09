@@ -70,7 +70,7 @@ export default class CreateGroup extends Component {
 
     // TODO: generate slug
     if (field === 'name' && !this.state.slugCustomized) {
-      const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g,'').replace(/\s+/g, "-")
+      const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g, '').replace(/\s+/g, '-')
       this.state.slug = slugString
     }
 
@@ -78,18 +78,18 @@ export default class CreateGroup extends Component {
   }
 
   onSubmit = () => {
-
+    let { name, parentGroups, slug } = this.state
     name = typeof name === 'string' ? trim(name) : name
 
     if (this.isValid()) {
-      this.props.createGroup(this.state.name, this.state.slug, this.state.parentGroups.map(g => g.id))
+      this.props.createGroup(name, slug, parentGroups.map(g => g.id))
         .then(({ error }) => {
           if (error) {
             this.setState({
               error: 'There was an error, please try again.'
             })
           } else {
-            this.props.goToGroup(this.state.slug)
+            this.props.goToGroup(slug)
           }
         })
     }
@@ -103,7 +103,7 @@ export default class CreateGroup extends Component {
 
     return <div styleName='wrapper'>
       <div styleName='header'>
-        <button><Icon name='Back' styleName='backIcon'/></button>
+        <button><Icon name='Back' styleName='backIcon' /></button>
         <span styleName='headerHeadline'>Create Group</span>
       </div>
       <div styleName='nameAndSlug'>
@@ -124,7 +124,7 @@ export default class CreateGroup extends Component {
         {errors.name && <span styleName='nameError'>{errors.name}</span>}
         <span styleName='slug'>
           <button styleName='slugButton'>
-            <Icon name='SmallEdit'/>
+            <Icon name='SmallEdit' />
             https://hylo.com/groups/
           </button>
           <TextInput
@@ -146,7 +146,7 @@ export default class CreateGroup extends Component {
             toggleChildren={
               <span>
                 <div styleName='dropdownItemSelected'>
-                  <Icon name={groupVisibilityIcon(visibility)} styleName='selectedIcon'/>
+                  <Icon name={groupVisibilityIcon(visibility)} styleName='selectedIcon' />
                   <div>
                     <div styleName='dropdownDescription'>WHO CAN SEE THIS GROUP?</div>
                     <b>{visibilityString(visibility)}</b>
@@ -157,10 +157,10 @@ export default class CreateGroup extends Component {
               </span>}
             items={Object.keys(GROUP_VISIBILITY).map(label => ({
               label: <div styleName='dropdownItem'>
-                      <Icon name={groupVisibilityIcon(GROUP_VISIBILITY[label])}/>
-                      <b>{label}</b>
-                      <span> - {groupVisibilityDescription(GROUP_VISIBILITY[label])}</span>
-                    </div>,
+                <Icon name={groupVisibilityIcon(GROUP_VISIBILITY[label])} />
+                <b>{label}</b>
+                <span> - {groupVisibilityDescription(GROUP_VISIBILITY[label])}</span>
+              </div>,
               onClick: () => this.updateField('visibility')(GROUP_VISIBILITY[label])
             }))}
             alignRight />
@@ -169,7 +169,7 @@ export default class CreateGroup extends Component {
           <Dropdown styleName='privacyDropdown'
             toggleChildren={<span>
               <div styleName='dropdownItemSelected'>
-                <Icon name={groupAccessibilityIcon(accessibility)} styleName='selectedIcon'/>
+                <Icon name={groupAccessibilityIcon(accessibility)} styleName='selectedIcon' />
                 <div>
                   <div styleName='dropdownDescription'>WHO CAN JOIN THIS GROUP?</div>
                   <b>{accessibilityString(accessibility)}</b>
@@ -180,10 +180,10 @@ export default class CreateGroup extends Component {
             </span>}
             items={Object.keys(GROUP_ACCESSIBILITY).map(label => ({
               label: <div styleName='dropdownItem'>
-                      <Icon name={groupAccessibilityIcon(GROUP_ACCESSIBILITY[label])}/>
-                      <b>{label}</b>
-                      <span> - {groupAccessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
-                    </div>,
+                <Icon name={groupAccessibilityIcon(GROUP_ACCESSIBILITY[label])} />
+                <b>{label}</b>
+                <span> - {groupAccessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
+              </div>,
               onClick: () => this.updateField('accessibility')(GROUP_ACCESSIBILITY[label])
             }))}
             alignRight />
