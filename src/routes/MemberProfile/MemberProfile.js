@@ -8,7 +8,7 @@ import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
-  messageThreadUrl,
+  messagePersonUrl,
   messagesUrl,
   gotoExternalUrl
 } from 'util/navigation'
@@ -16,6 +16,7 @@ import Affiliation from 'components/Affiliation'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import NotFound from 'components/NotFound'
 import RoundImage from 'components/RoundImage'
 import RoundImageRow from 'components/RoundImageRow'
 import Loading from 'components/Loading'
@@ -56,6 +57,7 @@ export default class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return <Error>{this.props.error}</Error>
     if (this.props.personLoading) return <Loading />
+    if (!this.props.person) return <NotFound />
 
     const {
       contentLoading,
@@ -83,7 +85,7 @@ export default class MemberProfile extends React.Component {
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const actionButtonsItems = [
-      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person)), hideTooltip: true },
+      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideTooltip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
       { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },

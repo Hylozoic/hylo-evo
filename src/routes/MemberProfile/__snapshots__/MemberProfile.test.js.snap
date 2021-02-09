@@ -314,25 +314,49 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         items={
           Array [
             Object {
-              "component": [Function],
+              "component": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(RecentActivity)",
+                "type": [Function],
+              },
               "label": "Overview",
               "onClick": [Function],
               "title": "Rich's recent activity",
             },
             Object {
-              "component": [Function],
+              "component": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(MemberPosts)",
+                "type": [Function],
+              },
               "label": "Posts",
               "onClick": [Function],
               "title": "Rich's posts",
             },
             Object {
-              "component": [Function],
+              "component": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(MemberComments)",
+                "type": [Function],
+              },
               "label": "Comments",
               "onClick": [Function],
               "title": "Rich's comments",
             },
             Object {
-              "component": [Function],
+              "component": Object {
+                "$$typeof": Symbol(react.memo),
+                "WrappedComponent": [Function],
+                "compare": null,
+                "displayName": "Connect(MemberVotes)",
+                "type": [Function],
+              },
               "label": "Upvotes",
               "onClick": [Function],
               "title": "Rich's upvotes",

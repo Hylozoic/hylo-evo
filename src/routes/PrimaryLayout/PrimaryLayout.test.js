@@ -2,6 +2,8 @@ import { MemoryRouter, Redirect } from 'react-router'
 import React from 'react'
 import { shallow } from 'enzyme'
 import orm from 'store/models'
+import { groupUrl } from 'util/navigation'
+
 import PrimaryLayout, {
   RedirectToGroup
 } from './PrimaryLayout'
@@ -59,7 +61,7 @@ describe('RedirectToGroup', () => {
       {RedirectToGroup({ path, currentUser })}
     </MemoryRouter>)
     const actual = wrapper.find(Redirect).props().to
-    const expected = '/g/foo'
+    const expected = groupUrl('foo')
     expect(actual).toBe(expected)
   })
 })

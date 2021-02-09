@@ -125,31 +125,6 @@ exports[`Review renders correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        data-stylename="three-column-input gray-bottom-border"
-      >
-        <div
-          data-stylename="left-input-column"
-        >
-          <span
-            data-stylename="text-opacity"
-          >
-            SKILLS
-          </span>
-        </div>
-        <div
-          data-stylename="center-input-column-scrollable"
-        />
-        <div
-          data-stylename="right-input-column"
-        >
-          <span
-            data-stylename="edit-button text-opacity"
-          >
-            Edit
-          </span>
-        </div>
-      </div>
     </div>
     <div>
       <SignupModalFooter

@@ -8,23 +8,23 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ subject, slug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ context, slug, sortBy, offset, search, filter, topic }) {
   var query, extractModel, getItems
 
-  if (subject === 'group') {
+  if (context === 'groups') {
     query = groupQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
-  } else if (subject === 'all-groups') {
+  } else if (context === 'all') {
     query = allGroupsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
-  } else if (subject === 'public-groups') {
+  } else if (context === 'public') {
     query = publicPostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
-    throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_POSTS with context=${context} is not implemented`)
   }
 
   return {

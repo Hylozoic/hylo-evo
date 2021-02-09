@@ -142,7 +142,6 @@ describe('PeopleSelector', () => {
     let wrapper
 
     beforeEach(() => {
-      jest.useFakeTimers()
       setPeopleSearch = jest.fn()
       wrapper = mount(
         <MemoryRouter>

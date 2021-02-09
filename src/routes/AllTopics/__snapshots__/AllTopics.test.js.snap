@@ -114,7 +114,6 @@ exports[`TopicListItem when multiple groups matches the latest snapshot 1`] = `
   >
     <Link
       data-stylename="topic-details"
-      replace={false}
       to="/c/goteam/petitions"
     >
       <div

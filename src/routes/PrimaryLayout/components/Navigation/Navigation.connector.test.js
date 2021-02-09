@@ -4,8 +4,9 @@ import orm from 'store/models'
 describe('mapStateToProps', () => {
   it('picks up changes to membership.newPostCount', () => {
     const s1 = orm.session(orm.getEmptyState())
+    s1.Me.create({ id: '1' })
     s1.Group.create({ id: '1', slug: 'foo', name: 'Foo' })
-    s1.Membership.create({ id: '2', group: '1', newPostCount: 5 })
+    s1.Membership.create({ id: '2', group: '1', newPostCount: 5, person: '1' })
 
     const props = {
       match: {

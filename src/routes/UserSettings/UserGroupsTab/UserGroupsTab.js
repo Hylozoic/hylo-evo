@@ -35,10 +35,6 @@ export default class UserGroupsTab extends Component {
     showAddAffiliations: undefined
   }
 
-  componentDidMount () {
-    this.props.fetchForCurrentUser()
-  }
-
   render () {
     const { action } = this.props
     const { affiliations, memberships, errorMessage, successMessage, showAddAffiliations } = this.state

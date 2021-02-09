@@ -17,7 +17,6 @@ exports[`renders as expected with no group 1`] = `
       data-stylename="navIcons"
     >
       <Link
-        replace={false}
         to="/search"
       >
         <Icon
@@ -43,7 +42,6 @@ exports[`renders as expected with no group 1`] = `
         <li>
           <Link
             data-stylename="hover-highlight"
-            replace={false}
             to="/"
           >
             Profile
@@ -52,7 +50,6 @@ exports[`renders as expected with no group 1`] = `
         <li>
           <Link
             data-stylename="hover-highlight"
-            replace={false}
             to="/settings"
           >
             Settings
@@ -65,6 +62,15 @@ exports[`renders as expected with no group 1`] = `
           >
             Feedback & Support
           </span>
+        </li>
+        <li>
+          <a
+            data-stylename="hover-highlight"
+            href="http://hylo.com/terms"
+            target="_blank"
+          >
+            Terms & Privacy
+          </a>
         </li>
         <li>
           <span

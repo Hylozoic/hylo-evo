@@ -77,7 +77,7 @@ let newProps
 beforeAll(() => {
   timezoneMock.register('US/Pacific')
   const dispatch = jest.fn(x => x)
-  const props = { location: { pathname: '/t/77' } }
+  const props = { location: { pathname: '/messages/77' } }
   newProps = mapDispatchToProps(dispatch, props)
 })
 

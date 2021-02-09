@@ -1,25 +1,23 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import {
-  fetchSavedSearches, deleteSearch, viewSavedSearch,
   updateUserSettings, unlinkAccount,
-  updateMembershipSettings, updateAllMemberships, registerStripeAccount
+  updateMembershipSettings,
+  updateAllMemberships,
+  registerStripeAccount
 } from './UserSettings.store'
-import { generateViewParams } from 'util/savedSearch'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector } from 'reselect'
-import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import unBlockUser from 'store/actions/unBlockUser'
 import getBlockedUsers from 'store/selectors/getBlockedUsers'
-import getCurrentUserMemberships from 'store/selectors/getCurrentUserMemberships'
-import { FETCH_FOR_CURRENT_USER, FETCH_SAVED_SEARCHES } from 'store/constants'
+import getMyMemberships from 'store/selectors/getMyMemberships'
+import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export const getAllGroupsSettings = createSelector(
-  getCurrentUserMemberships,
+  getMyMemberships,
   memberships => ({
     sendEmail: every(m => m.settings && m.settings.sendEmail, memberships),
     sendPushNotifications: every(m => m.settings && m.settings.sendPushNotifications, memberships)
@@ -38,12 +36,10 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const blockedUsers = getBlockedUsers(state, props)
   const allGroupsSettings = getAllGroupsSettings(state, props)
-  const memberships = getCurrentUserMemberships(state, props)
+  const memberships = getMyMemberships(state, props)
   const messageSettings = getMessageSettings(state, props)
-  const searches = state.SavedSearches.searches
-
   const confirm = get('FullPageModal.confirm', state)
-  const fetchPending = state.pending[FETCH_FOR_CURRENT_USER] || state.pending[FETCH_SAVED_SEARCHES]
+  const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
   const queryParams = {
     registered: getQuerystringParam('registered', null, props)
   }
@@ -56,16 +52,12 @@ export function mapStateToProps (state, props) {
     allGroupsSettings,
     memberships,
     messageSettings,
-    searches,
     queryParams
   }
 }
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchForCurrentUser: (params) => dispatch(fetchForCurrentUser(params)),
-    fetchSavedSearches: (params) => dispatch(fetchSavedSearches(params)),
-    deleteSearch: (params) => dispatch(deleteSearch(params)),
     updateUserSettings: (params) => dispatch(updateUserSettings(params)),
     unBlockUser: (params) => dispatch(unBlockUser(params)),
     loginWithService: (params) => dispatch(loginWithService(params)),
@@ -73,12 +65,7 @@ export function mapDispatchToProps (dispatch) {
     setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
     updateMembershipSettings: (groupId, settings) => dispatch(updateMembershipSettings(groupId, settings)),
     updateAllMemberships: (groupIds, settings) => dispatch(updateAllMemberships(groupIds, settings)),
-    registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
-    viewSavedSearch: (search) => {
-      const { mapPath } = generateViewParams(search)
-      dispatch(viewSavedSearch(search))
-      dispatch(push(mapPath))
-    }
+    registerStripeAccount: (params) => dispatch(registerStripeAccount(params))
   }
 }
 

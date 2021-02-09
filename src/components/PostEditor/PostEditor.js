@@ -84,9 +84,9 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentGroup, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
+  buildStateFromProps = ({ editing, currentGroup, post, topic, initialPrompt, announcementSelected, postType }) => {
     const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
-      type: postTypeContext || PostEditor.defaultProps.post.type,
+      type: postType || PostEditor.defaultProps.post.type,
       groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
       topics: topic ? [topic] : [],
       detailsTopics: [],
@@ -266,14 +266,14 @@ export default class PostEditor extends React.Component {
 
   updateTopics = throttle(2000, (contentState) => {
     const html = contentStateToHTML(contentState)
-    const $ = cheerio.load(html)
+    const $ = cheerio.load(html, null, false)
     var topicNames = []
     $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
       topicNames.push($(el).text().replace('#', '')))
     const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
     if (hasChanged) {
       this.setState({
-        detailsTopics: topicNames.map(tn => ({ name: tn, id: tn }))
+        detailsTopics: topicNames.map(tn => ({ label: tn, name: tn, id: tn }))
       })
     }
   })

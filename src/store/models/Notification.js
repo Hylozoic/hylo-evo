@@ -3,8 +3,7 @@ import { get } from 'lodash/fp'
 import {
   commentUrl,
   postUrl,
-  groupUrl,
-  groupSettingsUrl
+  groupUrl
 } from 'util/navigation'
 
 export const ACTION_NEW_COMMENT = 'newComment'
@@ -36,7 +35,7 @@ export function urlForNotification ({ activity: { action, post, comment, group }
     case ACTION_COMMENT_MENTION:
       return commentUrl(post.id, comment.id, { groupSlug })
     case ACTION_JOIN_REQUEST:
-      return groupSettingsUrl(group.slug)
+      return groupUrl(group.slug, 'settings')
     case ACTION_APPROVED_JOIN_REQUEST:
       return groupUrl(groupSlug)
   }

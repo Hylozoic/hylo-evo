@@ -11,16 +11,14 @@ import qs from 'querystring'
 import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
-import AddSkills from 'routes/Signup/AddSkills'
 import AllTopics from 'routes/AllTopics'
-import CreateGroup from 'routes/CreateGroup'
+import CreateGroup from 'components/CreateGroup'
+import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
-import GroupReview from 'routes/CreateGroup/Review'
 import GroupSettings from 'routes/GroupSettings'
 import GroupSidebar from 'routes/GroupSidebar'
 import Groups from 'routes/Groups'
-import Domain from 'routes/CreateGroup/Domain'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
 import MapExplorer from 'routes/MapExplorer'
@@ -31,7 +29,6 @@ import MemberProfile from 'routes/MemberProfile'
 import Members from 'routes/Members'
 import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
-import Name from 'routes/CreateGroup/Name'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
 import PostEditorModal from 'components/PostEditorModal'
@@ -46,13 +43,86 @@ import UserSettings from 'routes/UserSettings'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
-  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH,
+  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH, REQUIRED_NEW_GROUP_MATCH,
   isAboutPath,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
+
+const routesWithNavigation = [
+  { path: '/:context(all|public)' },
+  { path: '/:context(groups)/:groupSlug' }
+]
+
+// In order of more specific to less specific
+const routesWithDrawer = [
+  { path: `/:context(all|public)/:view(events|map|projects)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}` },
+  { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
+  { path: '/:context(all)/:view(topics)/:topicName' },
+  { path: '/:context(all)/:view(topics)' },
+  // {/* Group Routes */}
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
+  // {/* Member Routes */}
+  { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  // {/* Other Routes */}
+  { path: '/settings' },
+  { path: '/search' },
+  { path: '/confirm-group-delete' }
+]
+
+const detailRoutes = [
+  { path: `/:context(all|public)/:view(events|map|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map|events|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
+]
+
+const createRoutes = [
+  { path: `/:context(all|public)/:view(events|groups|map|projects)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:views(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(projects|events|groups|map|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
+  { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` }
+]
+
+const signupRoutes = [
+  { path: '/signup/upload-photo', child: UploadPhoto },
+  { path: '/signup/add-location', child: AddLocation },
+  { path: '/signup/review', child: Review }
+]
+
+const redirectRoutes = [
+  { from: '/tag/:topicName', to: '/all/topics/:topicName' },
+  { from: '/c/:groupSlug/', to: '/groups/:groupSlug/' },
+  { from: '/n/:groupSlug/', to: '/groups/:groupSlug/' },
+  { from: '/c/:groupSlug/tag/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
+  // TODO: is this right?
+  { from: '/c/:groupSlug/join/:accessCode/tag/:topicName', to: '/groups/:groupSlug/join/:accessCode/topics/:topicName' },
+  { from: '/p/:postId', to: '/all/post/:postId' },
+  { from: '/u/:personId', to: '/members/:personId' },
+  { from: '/c/:groupSlug/about', to: '/groups/:groupSlug' },
+  { from: '/c/:groupSlug/people', to: '/groups/:groupSlug/members' },
+  { from: '/c/:groupSlug/invite', to: '/groups/:groupSlug/settings/invite' },
+  { from: '/c/:groupSlug/events', to: '/groups/:groupSlug/events' },
+  // redirects for context switching into global contexts
+  { from: '/all/members', to: '/all' },
+  { from: '/public/(members|topics)', to: '/public' }
+]
 
 export default class PrimaryLayout extends Component {
   componentDidMount () {
@@ -94,32 +164,9 @@ export default class PrimaryLayout extends Component {
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
     const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, { path, exact: true }),
+      ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
-    const routesWithNavigation = [
-      { path: '/:context(all|public)' },
-      { path: '/:context(g)/:slug' }
-    ]
-    const routesWithDrawer = [
-      { path: '/:context(all)/:view(topics)' },
-      { path: `/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}` },
-      { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
-      { path: '/:context(all|public)/:topicName' },
-      // {/* Group Routes */}
-      { path: '/:context(g)/:slug/:view(members|settings|topics|groups)' },
-      { path: `/:context(g)/:slug/:view(map)/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(g)/:slug/m/:personId/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(g)/:slug/${OPTIONAL_POST_MATCH}` },
-      { path: `/:context(g)/:slug/:topicName/${OPTIONAL_POST_MATCH}` },
-      // {/* Member Routes */}
-      { path: `/:context(m)/:personId/${OPTIONAL_POST_MATCH}` },
-      // {/* Other Routes */}
-      { path: '/settings' },
-      { path: '/search' },
-      { path: '/confirm-group-delete' }
-    ]
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
 
     return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
@@ -148,32 +195,32 @@ export default class PrimaryLayout extends Component {
             {signupRoutes.map(({ path, child }) =>
               <Route path={path} key={path} render={props =>
                 <SignupModal {...props} child={child} />} />)}
-            {createGroupRoutes.map(({ path, component }) =>
-              <Route path={path} key={path} render={props =>
-                <CreateGroup {...props} component={component} />} />)}
             {signupInProgress &&
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
             {/* All and Public Routes */}
+            <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
-            <Route path={`/:context(all|public)/:view(stream|event|project)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path='/:context(all|public)/:topicName' exact component={Feed} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Group Routes */}
-            <Route path='/:context(g)/:slug/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(g)/:slug/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-            <Route path='/:context(g)/:slug/:view(members)' component={Members} />
-            <Route path='/:context(g)/:slug/:view(groups)' component={Groups} />
-            <Route path='/:context(g)/:slug/:view(settings)' component={GroupSettings} />
-            <Route path={`/:context(g)/:slug/m/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
-            <Route path={`/:context(g)/:slug/:view(stream|event|project)/${OPTIONAL_POST_MATCH}`} exact component={Feed} />
-            <Route path={`/:context(g)/:slug/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            <Route path={`/:context(g)/:slug/:view(about)`} exact component={LandingPage} />
-            <Route path={`/:context(g)/:slug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
+            <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
+            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
+            <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/:view(about)`} exact component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
             {/* Member Routes */}
-            <Route path={`/:context(m)/:personId/${OPTIONAL_POST_MATCH}`} exact component={MemberProfile} />
+            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -182,11 +229,9 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
-            <Route path={`/:context(g)/:slug/${OPTIONAL_NEW_POST_MATCH}`} exact component={GroupSidebar} />
-            {/* LEJ: Leaving MemberSidebar vestiage here for now as new sidebar content is likely coming soon */}
-            {/* <Route path={`/:context(g)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} /> */}
-            <Route path={`/:context(g)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={GroupSidebar} />
-            {/* <Route path={`/:context(m)/:personId/${OPTIONAL_NEW_POST_MATCH}`} exact component={MemberSidebar} /> */}
+            <Route path={`/:context(groups)/:groupSlug/:view(events|map|groups|projects)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
           </Switch>
         </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
@@ -199,10 +244,19 @@ export default class PrimaryLayout extends Component {
           </Switch>
         </div>
       </div>
-      <Route path='/t/:messageThreadId?' render={props => <Messages {...props} />} />
+      <Route path='/messages/:messageThreadId?' render={props => <Messages {...props} />} />
       <Switch>
-        {postEditorRoutes.map(({ path }) =>
-          <Route path={path} exact key={path} children={({ match, location }) =>
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/create'} key={path + 'create'} children={({ match, location }) =>
+            <CreateModal match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/' + REQUIRED_NEW_GROUP_MATCH} key={path + 'newgroup'} children={({ match, location }) =>
+            <CreateGroup match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/' + REQUIRED_NEW_POST_MATCH} key={path + 'newpost'} children={({ match, location }) =>
+            <PostEditorModal match={match} location={location} />} />)}
+        {createRoutes.map(({ path }) =>
+          <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}
       </Switch>
       <SocketListener location={location} />
@@ -211,68 +265,6 @@ export default class PrimaryLayout extends Component {
     </div>
   }
 }
-
-const detailRoutes = [
-  { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(all|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
-  { path: `/:context(g)/:slug/m/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(g)/:slug/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(g)/:slug/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(g)/:slug/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(g)/:slug/:view(about)` },
-  { path: `/:context(m)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
-]
-
-const postEditorRoutes = [
-  { path: `/:context(all|public)/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(all|public)/:view(project|event|stream)/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/:view(project|event|stream)/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(all|public)/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(g)/:slug/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(g)/:slug/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(g)/:slug/m/:personId/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(g)/:slug/:topicName/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(g)/:slug/:topicName/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(g)/:slug/:view(project|event|stream)/${REQUIRED_NEW_POST_MATCH}` },
-  { path: `/:context(g)/:slug/:view(project|event|stream)/${REQUIRED_EDIT_POST_MATCH}` },
-  { path: `/:context(m)/:personId/${REQUIRED_EDIT_POST_MATCH}` }
-]
-
-const signupRoutes = [
-  { path: '/signup/upload-photo', child: UploadPhoto },
-  { path: '/signup/add-location', child: AddLocation },
-  { path: '/signup/add-skills', child: AddSkills },
-  { path: '/signup/review', child: Review }
-]
-
-const createGroupRoutes = [
-  { path: '/create-group/name/:groupId', component: Name },
-  { path: '/create-group/name', component: Name },
-  { path: '/create-group/domain', component: Domain },
-  { path: '/create-group/review', component: GroupReview }
-]
-
-const redirectRoutes = [
-  { from: '/tag/:topicName', to: '/all/:topicName' },
-  { from: '/c/:slug/', to: '/g/:slug/' },
-  { from: '/n/:slug/', to: '/g/:slug/' },
-  { from: '/c/:slug/tag/:topicName', to: '/g/:slug/:topicName' },
-  { from: '/c/:slug/join/:accessCode/tag/:topicName', to: '/g/:slug/join/:accessCode/:topicName' },
-  { from: '/p/:postId', to: '/all/p/:postId' },
-  { from: '/u/:personId', to: '/m/:personId' },
-  { from: '/c/:slug/people', to: '/g/:slug/:view(members)' },
-  { from: '/c/:slug/invite', to: '/g/:slug/:view(settings)/invite' },
-  { from: '/c/:slug/events', to: '/g/:slug' },
-  // redirects to stream for all and public root paths TODO: add homepage for all and public
-  { from: '/all', to: 'all/stream' },
-  { from: '/public', to: 'public/stream' },
-  // redirects for context switching into global contexts
-  { from: '/all/members', to: '/all' },
-  { from: '/public/(members|topics)', to: '/public' }
-]
 
 export function RedirectToSignupFlow ({ pathname }) {
   if (isSignupPath(pathname)) return null
@@ -288,7 +280,7 @@ export function RedirectToGroup ({ path, currentUser }) {
       .orderBy(m => new Date(m.lastViewedAt), 'desc')
       .first()
       .group
-    redirectToPath = `/g/${mostRecentGroup.slug}`
+    redirectToPath = `/groups/${mostRecentGroup.slug}`
   }
 
   return <Redirect exact from={path} to={redirectToPath} />

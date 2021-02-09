@@ -13,7 +13,7 @@ const defaultSortBy = 'name'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
-  const slug = getRouteParam('slug', state, props)
+  const slug = getRouteParam('groupSlug', state, props)
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
   const search = getQuerystringParam('q', state, props)
   const canModerate = group && getMe(state, props).canModerate(group)

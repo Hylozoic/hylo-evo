@@ -90,7 +90,6 @@ exports[`GroupCell matches last snapshot with 1 group 1`] = `
 <Fragment>
   <Link
     data-stylename="groupCell"
-    replace={false}
     to="/all"
   >
     <div

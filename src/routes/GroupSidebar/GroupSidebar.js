@@ -7,7 +7,7 @@ import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
 import './GroupSidebar.scss'
 import cx from 'classnames'
-import { personUrl, groupSettingsUrl } from 'util/navigation'
+import { personUrl, groupUrl } from 'util/navigation'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
 
@@ -16,7 +16,7 @@ const { object, string, array } = PropTypes
 export default class GroupSidebar extends Component {
   static propTypes = {
     slug: string,
-    commmunity: object,
+    group: object,
     members: array,
     leaders: array
   }
@@ -81,7 +81,7 @@ export class AboutSection extends Component {
 
 export function SettingsLink ({ canModerate, group }) {
   if (!canModerate) return null
-  return <Link styleName='settings-link' to={groupSettingsUrl(group.slug)}>
+  return <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
     Settings
   </Link>
 }
@@ -95,7 +95,7 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
   const showTotal = memberCount - members.length > 0
 
   return <div styleName='member-section'>
-    <Link to={`/g/${slug}/members`} styleName='members-link'>
+    <Link to={groupUrl(slug, 'members')} styleName='members-link'>
       <div styleName='header'>Members</div>
       <div styleName='images-and-count'>
         <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
@@ -104,7 +104,7 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
         </span>}
       </div>
     </Link>
-    {canModerate && <Link to={`/g/${slug}/settings/invite`} styleName='invite-link'>
+    {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
       <Button color='green-white-green-border'>Invite People</Button>
     </Link>}
   </div>
@@ -112,7 +112,7 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
 
 export function GroupLeaderSection ({ leaders, slug }) {
   return <div styleName='leader-section'>
-    <div styleName='header leader-header'>Group Leaders</div>
+    <div styleName='header leader-header'>Group Moderators</div>
     {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} />)}
   </div>
 }

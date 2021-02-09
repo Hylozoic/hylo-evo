@@ -1,6 +1,4 @@
-// import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
-import orm from 'store/models'
 
 export const MODULE_NAME = 'RelatedGroups'
 

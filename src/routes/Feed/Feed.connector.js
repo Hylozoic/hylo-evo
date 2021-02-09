@@ -2,29 +2,34 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { isEmpty } from 'lodash'
-import { FETCH_POSTS, FETCH_FOR_CURRENT_USER } from 'store/constants'
+import {
+  FETCH_POSTS, FETCH_FOR_CURRENT_USER,
+  FETCH_TOPIC, FETCH_GROUP_TOPIC
+} from 'store/constants'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getPostTypeContext from 'store/selectors/getPostTypeContext'
 import getMe from 'store/selectors/getMe'
-import getMemberships from 'store/selectors/getMemberships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
-import { newPostUrl } from 'util/navigation'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
+import { createGroupUrl, newPostUrl } from 'util/navigation'
 import { fetchTopic, fetchGroupTopic } from './Feed.store'
+import isPendingFor from 'store/selectors/isPendingFor'
 
 export function mapStateToProps (state, props) {
   let group, groupTopic, topic
 
   const routeParams = get('match.params', props)
+  const view = routeParams.view
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
-  const currentUserHasMemberships = !isEmpty(getMemberships(state))
-  const groupSlug = getRouteParam('slug', state, props)
+  const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
+  const groupSlug = getRouteParam('groupSlug', state, props)
   const topicName = getRouteParam('topicName', state, props)
-  const postTypeContext = getPostTypeContext(state, props)
+  const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -35,8 +40,7 @@ export function mapStateToProps (state, props) {
     topic = getTopicForCurrentRoute(state, props)
   }
 
-  // * TBD - consolidate this getQuerystringParam('t', ...) into getPostTypeContext
-  const postTypeFilter = postTypeContext || getQuerystringParam('t', state, props)
+  const postTypeFilter = view === 'projects' ? 'project' : (view === 'events' ? 'event' : getQuerystringParam('t', state, props))
   const sortBy = getQuerystringParam('s', state, props)
 
   return {
@@ -49,6 +53,7 @@ export function mapStateToProps (state, props) {
     groupTopic,
     groupSlug,
     group,
+    topicLoading,
     topicName,
     topic,
     postsTotal: get('postsTotal', groupSlug ? groupTopic : topic),
@@ -61,7 +66,7 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const groupSlug = getRouteParam('slug', null, props)
+  const groupSlug = getRouteParam('groupSlug', null, props)
   const topicName = getRouteParam('topicName', null, props)
   const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
@@ -76,7 +81,9 @@ export function mapDispatchToProps (dispatch, props) {
         return dispatch(fetchTopic(topicName))
       }
     },
-    goToCreateGroup: () => dispatch(push('/create-group/name')),
+    toggleCommunityTopicSubscribe: groupTopic =>
+      dispatch(toggleGroupTopicSubscribe(groupTopic)),
+    goToCreateGroup: () => dispatch(push(createGroupUrl(routeParams))),
     newPost: () => dispatch(push(newPostUrl(routeParams, querystringParams)))
   }
 }

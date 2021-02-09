@@ -15,6 +15,6 @@ describe('presentPost', () => {
   it('matches the snapshot', () => {
     const post = session.Post.withId(postId)
     const result = presentPost(post, groupId)
-    expect(result).toMatchSnapshot(true)
+    expect(result).toMatchSnapshot()
   })
 })

@@ -1,11 +1,12 @@
+import { push } from 'connected-react-router'
+import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
+import { groupUrl } from 'util/navigation'
 import {
   acceptJoinRequest,
   declineJoinRequest,
   fetchJoinRequests
 } from './MembershipRequestsTab.store'
-import { get } from 'lodash/fp'
-import { push } from 'connected-react-router'
 
 export function mapStateToProps (state, props) {
   const { group } = props
@@ -22,7 +23,7 @@ export function mapDispatchToProps (dispatch, props) {
     acceptJoinRequest: (joinRequestId, groupId, userId, moderatorId) => dispatch(acceptJoinRequest(joinRequestId, groupId, userId, moderatorId)),
     declineJoinRequest: (joinRequestId) => dispatch(declineJoinRequest(joinRequestId)),
     fetchJoinRequests: (groupId) => dispatch(fetchJoinRequests(groupId)),
-    viewMembers: (slug) => dispatch(push(`/g/${slug}/members`))
+    viewMembers: (slug) => dispatch(push(groupUrl(slug, 'members')))
   }
 }
 

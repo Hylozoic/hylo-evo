@@ -1,0 +1,91 @@
+:global .create-modal-enter, :global .create-modal-appear {
+  .create-modal-background {
+    opacity: 0;
+  }
+
+  .create-modal-wrapper {
+    opacity: 0;
+    transform: translate(50%, -50%);
+  }
+}
+
+:global .create-modal-enter.create-modal-enter-active, :global .create-modal-appear.create-modal-appear-active {
+  .create-modal-background {
+    opacity: 1;
+    transition: opacity 200ms ease-out;
+  }
+
+  .create-modal-wrapper {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: transform 300ms ease-out, opacity 400ms ease-out;
+  }
+}
+
+:global .create-modal-leave {
+  .create-modal-background {
+    opacity: 0;
+  }
+
+  .create-modal-wrapper {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+:global .create-modal-leave.create-modal-leave-active {
+  .create-modal-background {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+  }
+
+  .create-modal-wrapper {
+    opacity: 0;
+    transform: translate(0, -100px);
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+  }
+}
+
+.create-modal {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.create-modal-wrapper {
+  width: 100%;
+  max-width: 590px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  margin: 0 0 0 0;
+  transform: translate(-50%, -50%);
+  max-height: 100vh;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.chooser {
+  background: white;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .create-modal-wrapper {
+    width: 100%;
+  }
+}

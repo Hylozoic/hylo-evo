@@ -6,7 +6,6 @@ exports[`CommunityRow renders with new posts 1`] = `
 >
   <Link
     data-stylename="s.communityRowLink"
-    replace={false}
     title="Foomunity"
     to="/c/foo"
   >
@@ -14,7 +13,7 @@ exports[`CommunityRow renders with new posts 1`] = `
       data-stylename="s.communityRowAvatar"
       style={
         Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+          "backgroundImage": "url(/foo.png)",
         }
       }
     />
@@ -33,7 +32,6 @@ exports[`CommunityRow renders with zero new posts 1`] = `
 >
   <Link
     data-stylename="s.communityRowLink"
-    replace={false}
     title="Foomunity"
     to="/c/foo"
   >
@@ -41,7 +39,7 @@ exports[`CommunityRow renders with zero new posts 1`] = `
       data-stylename="s.communityRowAvatar"
       style={
         Object {
-          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+          "backgroundImage": "url(/foo.png)",
         }
       }
     />
@@ -316,7 +314,6 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
 >
   <Link
     data-stylename="s.networkRowLink"
-    replace={false}
     title="Network One"
     to="/n/none"
   >
@@ -378,7 +375,6 @@ exports[`NetworkRow matches last snapshot 1`] = `
 >
   <Link
     data-stylename="s.networkRowLink"
-    replace={false}
     title="Network One"
     to="/n/none"
   >
@@ -440,7 +436,6 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
 >
   <Link
     data-stylename="s.networkRowLink"
-    replace={false}
     title="Network One"
     to="/n/none"
   >
@@ -508,7 +503,6 @@ exports[`NetworkRow see all button shows "see all" button when there are non mem
 >
   <Link
     data-stylename="s.networkRowLink"
-    replace={false}
     title="Network One"
     to="/n/none"
   >

@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { baseUrl, allGroupsUrl, isPublicPath } from 'util/navigation'
+import { baseUrl, isPublicPath } from 'util/navigation'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
@@ -12,13 +13,14 @@ export function mapStateToProps (state, props) {
   const routeParams = props.match.params
 
   const group = getGroupForCurrentRoute(state, props)
-  const rootPath = baseUrl(routeParams, allGroupsUrl())
+  const rootPath = baseUrl(routeParams)
   const streamPath = `${rootPath}/stream`
-  const projectsPath = `${rootPath}/project`
-  const eventsPath = `${rootPath}/event`
+  const projectsPath = `${rootPath}/projects`
+  const eventsPath = `${rootPath}/events`
   const groupsPath = `${rootPath}/groups`
   const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
   const mapPath = `${rootPath}/map`
+  const createPath = `${props.location.pathname}/create/`
 
   let groupMembership, badge
 
@@ -34,6 +36,7 @@ export function mapStateToProps (state, props) {
   }
 
   return {
+    createPath,
     routeParams,
     groupId: get('id', group),
     hideTopics: isPublicPath(props.location.pathname),
@@ -81,6 +84,7 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 const getGroupMembership = ormCreateSelector(
   orm,
+  getMe,
   (state, { groupId }) => groupId,
-  (session, id) => session.Membership.filter({ group: id }).first()
+  (session, currentUser, id) => session.Membership.filter({ group: id, person: currentUser }).first()
 )

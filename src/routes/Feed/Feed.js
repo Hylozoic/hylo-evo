@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { get, pick } from 'lodash/fp'
-
-import './Feed.scss'
+import { bgImageStyle } from 'util/index'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
 import FeedBanner from 'components/FeedBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
-import { bgImageStyle } from 'util/index'
+import './Feed.scss'
 
 export default class Feed extends Component {
   static propTypes = {
@@ -31,27 +30,18 @@ export default class Feed extends Component {
 
   componentDidUpdate (prevProps) {
     const { routeParams, fetchTopic } = this.props
-    const { slug, topicName } = routeParams
+    const { groupSlug, topicName } = routeParams
     const topicChanged = topicName && get('routeParams.topicName', prevProps) !== topicName
-    const slugChanged = slug && get('routeParams.slug', prevProps) !== slug
+    const slugChanged = groupSlug && get('routeParams.groupSlug', prevProps) !== groupSlug
     if (topicChanged || (topicName && slugChanged)) fetchTopic()
   }
 
   getFeedProps () {
     const { routeParams, querystringParams } = this.props
-    const { slug, context } = routeParams
-
-    var subject
-    if (slug) {
-      subject = 'group'
-    } else if (context && context === 'public') {
-      subject = 'public-groups'
-    } else {
-      subject = 'all-groups'
-    }
+    const { context } = routeParams
 
     return {
-      subject,
+      context,
       routeParams,
       querystringParams,
       topic: get('id', this.props.topic),
@@ -68,35 +58,37 @@ export default class Feed extends Component {
 
   render () {
     const {
-      routeParams, topic, group, currentUser, postsTotal, followersTotal,
+      routeParams, group, currentUser, postsTotal, followersTotal,
       groupTopic, newPost, currentUserHasMemberships,
-      goToCreateGroup, membershipsPending, postTypeFilter
+      goToCreateGroup, membershipsPending, postTypeFilter, topicLoading, toggleGroupTopicSubscribe
     } = this.props
     const { topicName, context } = routeParams
 
-    if (topicName && !topic) return <Loading />
-    if (group && topicName && !groupTopic) return <Loading />
+    if (topicLoading) return <Loading />
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
     return <div>
       {topicName
         ? <TopicFeedHeader
-          groupTopic={groupTopic}
+          isSubscribed={groupTopic && groupTopic.isSubscribed}
+          toggleSubscribe={
+            groupTopic
+              ? () => toggleGroupTopicSubscribe(groupTopic)
+              : null
+          }
           topicName={topicName}
           postsTotal={postsTotal}
           followersTotal={followersTotal}
-          topic={topic}
           type={postTypeFilter}
-          group={group}
           currentUser={currentUser}
+          bannerUrl={group && group.bannerUrl}
           newPost={newPost} />
         : <FeedBanner
           group={group}
           currentUser={currentUser}
           type={postTypeFilter}
-          all={context && context === 'all'}
-          publicContext={context && context === 'public'}
+          context={context}
           newPost={newPost}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}

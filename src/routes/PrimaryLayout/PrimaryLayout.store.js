@@ -5,7 +5,6 @@ import {
   FETCH_FOR_CURRENT_USER,
   FETCH_FOR_GROUP_PENDING
 } from 'store/constants'
-import clearCacheFor from 'store/reducers/ormReducer/clearCacheFor'
 
 export const MODULE_NAME = 'PrimaryLayout'
 
@@ -50,13 +49,15 @@ export function toggleDrawer () {
 }
 
 export function ormSessionReducer (
-  { Group, Membership, Network, Person },
+  { Group, Me, Membership, Network, Person },
   { type, meta, payload }
 ) {
   if (type === FETCH_FOR_GROUP_PENDING) {
     let group = Group.safeGet({ slug: meta.slug })
     if (!group) return
-    let membership = Membership.safeGet({ group: group.id })
+    const me = Me.first()
+    if (!me) return
+    let membership = Membership.safeGet({ group: group.id, person: me.id })
     if (!membership) return
     membership.update({ newPostCount: 0 })
   }
@@ -66,9 +67,5 @@ export function ormSessionReducer (
     if (!Person.idExists(me.id)) {
       Person.create(pick(['id', 'name', 'avatarUrl'], me))
     }
-
-    // Clear Network for selectors
-    // TODO: ??
-    // Network.all().toRefArray().forEach(n => clearCacheFor(Network, n.id))
   }
 }

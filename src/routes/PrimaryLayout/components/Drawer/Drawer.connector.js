@@ -1,12 +1,14 @@
-import { connect } from 'react-redux'
-import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
-import getMemberships from 'store/selectors/getMemberships'
 import { push } from 'connected-react-router'
-import { get, values, omit, each } from 'lodash/fp'
 import { pullAllBy } from 'lodash'
-import { ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Group'
-import getMe from 'store/selectors/getMe'
+import { get, values, omit, each } from 'lodash/fp'
+import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
+
+import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import { ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Group'
+import getMyMemberships from 'store/selectors/getMyMemberships'
+import getMe from 'store/selectors/getMe'
+import { createGroupUrl } from 'util/navigation'
 
 const defaultNetworks = [
   {
@@ -34,7 +36,7 @@ export function partitionGroups (memberships) {
       groups: get('network.groups', m.group).toRefArray()
     },
     newPostCount: m.newPostCount
-  }))
+  })).sort((a, b) => a.name.localeCompare(b.name))
 
   const reduced = allGroups.reduce((acc, group) => {
     if (group.network) {
@@ -71,7 +73,7 @@ export function partitionGroups (memberships) {
 }
 
 const getPartitionGroups = createSelector(
-  getMemberships,
+  getMyMemberships,
   (memberships) => partitionGroups(memberships)
 )
 
@@ -92,7 +94,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     toggleDrawer: () => dispatch(toggleDrawer()),
-    goToCreateGroup: () => dispatch(push('/create-group/name'))
+    goToCreateGroup: () => dispatch(push(createGroupUrl(get('match.params', props))))
   }
 }
 

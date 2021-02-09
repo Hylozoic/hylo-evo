@@ -8,8 +8,7 @@ import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
 export default function FeedBanner ({
-  all,
-  publicContext,
+  context,
   group,
   currentUser,
   newPost,
@@ -18,12 +17,12 @@ export default function FeedBanner ({
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
 
-  if (all) {
+  if (context === 'all') {
     name = 'All My Groups'
     avatarUrl = whiteMerkaba
     bannerUrl = allGroupsBanner
     subtitle = currentUser && `${currentUser.memberships.count()} Groups`
-  } else if (publicContext) {
+  } else if (context === 'public') {
     name = 'Public Groups & Posts'
     avatarUrl = publicGlobe
     bannerUrl = allGroupsBanner
@@ -35,11 +34,11 @@ export default function FeedBanner ({
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
-  return <div styleName={cx('banner', { 'all-groups': all })}>
+  return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName={cx('logo', { 'all-logo': all })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+        <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
         <div styleName='header-text'>
           <div styleName='header-contents'>
             <span styleName='header-name'>{name}</span>

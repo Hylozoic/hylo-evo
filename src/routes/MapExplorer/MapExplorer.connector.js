@@ -39,26 +39,17 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const groupId = group && group.id
   const routeParams = get('match.params', props)
-  const slug = getRouteParam('slug', state, props)
+  const slug = getRouteParam('groupSlug', state, props)
   const context = getRouteParam('context', state, props)
   const groupSlugs = getQuerystringParam('group', state, props)
   const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
-  var subject
-  if (context === 'public') {
-    subject = 'public'
-  } else if (slug) {
-    subject = 'group'
-  } else {
-    subject = 'all'
-  }
-
   const fetchParams = {
-    subject,
+    context,
     slug,
     groupSlugs, // used to filter by multiple groups
     boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
-    isPublic: subject === 'public' // only needed to track which query results to pull for the map
+    isPublic: context === 'public'
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time
@@ -72,7 +63,7 @@ export function mapStateToProps (state, props) {
 
   return {
     centerLocation: centerLocation || { lat: 35.442845, lng: 7.916598 },
-    context: subject,
+    context,
     currentUser: me,
     fetchParams,
     filters: state.MapExplorer.clientFilterParams,
@@ -101,7 +92,7 @@ export function mapDispatchToProps (dispatch, props) {
     saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     showGroupDetails: (groupId) => dispatch(push(groupMapDetailUrl(groupId, { ...routeParams, view: 'map' }, querystringParams))),
-    gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug))),
+    gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.groupSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params)),

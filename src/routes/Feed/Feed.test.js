@@ -5,7 +5,7 @@ import Feed, { CreateGroupPrompt } from './Feed'
 describe('Feed', () => {
   it('renders a FeedList with correct props', () => {
     const wrapper = shallow(<Feed
-      routeParams={{ slug: 'foo' }}
+      routeParams={{ groupSlug: 'foo' }}
       postTypeFilter='request'
       group={{}}
       selectedPostId='5'
@@ -17,10 +17,10 @@ describe('Feed', () => {
     expect(feed).toHaveLength(1)
     expect(feed.props()).toEqual({
       routeParams: {
-        slug: 'foo'
+        groupSlug: 'foo'
       },
       querystringParams: {},
-      subject: 'group',
+      context: 'groups',
       postTypeFilter: 'request',
       sortBy: 'votes',
       selectedPostId: '5',
@@ -47,7 +47,7 @@ describe('Feed', () => {
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
     expect(wrapper.find('FeedBanner')).toHaveLength(0)
-    expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(1)
+    expect(wrapper.find('TopicFeedHeader')).toHaveLength(1)
   })
 })
 

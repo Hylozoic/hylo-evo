@@ -2,8 +2,7 @@ import get from 'lodash/get'
 import { connect } from 'react-redux'
 import { createAffiliation, deleteAffiliation, leaveGroup } from './UserGroupsTab.store'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
-import getCurrentUserMemberships from 'store/selectors/getCurrentUserMemberships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import orm from 'store/models'
 
 export const getCurrentUserAffiliations = ormCreateSelector(
@@ -16,7 +15,7 @@ export const getCurrentUserAffiliations = ormCreateSelector(
 export function mapStateToProps (state, props) {
   const action = get(state, 'UserGroupsTab.action')
   const affiliations = getCurrentUserAffiliations(state, props)
-  const memberships = getCurrentUserMemberships(state, props)
+  const memberships = getMyMemberships(state, props)
 
   return {
     action,
@@ -27,7 +26,6 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    fetchForCurrentUser: (params) => dispatch(fetchForCurrentUser(params)),
     createAffiliation: (params) => dispatch(createAffiliation(params)),
     deleteAffiliation: (params) => dispatch(deleteAffiliation(params)),
     leaveGroup: (params) => dispatch(leaveGroup(params))
@@ -38,8 +36,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   return {
     ...ownProps,
     ...stateProps,
-    ...dispatchProps,
-    fetchForCurrentUser: () => dispatchProps.fetchForCurrentUser(ownProps.personId)
+    ...dispatchProps
   }
 }
 

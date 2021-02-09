@@ -1,5 +1,5 @@
 import { CREATE_GROUP } from './Review/Review.store'
-export const MODULE_NAME = `CreateGroup`
+export const MODULE_NAME = `CreateGroupOld`
 export const ADD_GROUP_NAME = `${MODULE_NAME}/ADD_GROUP_NAME`
 export const ADD_GROUP_DOMAIN = `${MODULE_NAME}/ADD_GROUP_DOMAIN`
 export const ADD_GROUP_PRIVACY = `${MODULE_NAME}/ADD_GROUP_PRIVACY`

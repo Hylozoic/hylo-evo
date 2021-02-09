@@ -1,18 +1,21 @@
+import { debounce, isEmpty, some, times } from 'lodash/fp'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   bool, func, string, arrayOf, shape
 } from 'prop-types'
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
-import './Members.scss'
-import { debounce, isEmpty, some, times } from 'lodash/fp'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
+import { groupUrl } from 'util/navigation'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
+
+import './Members.scss'
 
 export default class Members extends Component {
   componentDidMount () {
@@ -46,14 +49,14 @@ export default class Members extends Component {
 
   render () {
     const {
-      memberCount, members, sortBy, changeSort, search, slug, subject, canModerate, removeMember
+      memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
     } = this.props
 
-    const sortKeys = sortKeysFactory(subject)
+    const sortKeys = sortKeysFactory(context)
 
     return <div>
       <div styleName='header'>
-        {canModerate && <Link to={`/g/${slug}/settings/invite`}>
+        {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
           <Button styleName='invite'
             label='Invite People'
             color='green-white-green-border'
@@ -83,7 +86,7 @@ export default class Members extends Component {
               removeMember={removeMember}
               member={m} key={m.id}
               slug={slug}
-              subject={subject}
+              context={context}
             />)}
             {pair.length === 1 && <div />}
           </div>)}
@@ -118,7 +121,7 @@ function SortLabel ({ text }) {
 }
 
 // these keys must match the values that hylo-node can handle
-function sortKeysFactory (subject) {
+function sortKeysFactory (context) {
   const sortKeys = {
     name: 'Name',
     location: 'Location'

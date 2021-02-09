@@ -7,13 +7,14 @@ import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
 import { find } from 'lodash/fp'
 import { Link } from 'react-router-dom'
+import { groupUrl } from 'util/navigation'
 
 import './Groups.scss'
 
 // import ScrollListener from 'components/ScrollListener'
 // import { CENTER_COLUMN_ID } from 'util/scrolling'
 
-const { string, array, func } = PropTypes
+const { array } = PropTypes
 
 const sortOptions = [
   { id: 'name', label: 'Alphabetical' },
@@ -24,7 +25,7 @@ const sortOptions = [
 export default class Groups extends Component {
   static propTypes = {
     childGroups: array,
-    parentGroups: array,
+    parentGroups: array
     // search: string,
     // setSearch: func,
     // sortBy: string,
@@ -118,11 +119,11 @@ export function GroupsList ({ groups, fetchMoreGroups }) {
 
 export function GroupCard ({ group }) {
   return <div styleName='group-card'>
-    <Link to={`/g/${group.slug}/groups`}>
+    <Link to={groupUrl(group.slug, 'groups')}>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
-        <span styleName='group-stats'>{group.numMembers} Members</span>
+        <span styleName='group-stats'>{group.memberCount} Members</span>
       </div>
     </Link>
   </div>

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
-import { contextSwitchingUrl } from 'util/navigation'
+import { contextSwitchingUrl, groupUrl } from 'util/navigation'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -45,7 +45,7 @@ export default class Drawer extends React.PureComponent {
           <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
         </div>
         <Logo group={group} />
-        {canModerate && <Link styleName='s.settingsLink' to={`/g/${group.slug}/settings`}>
+        {canModerate && <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
           <Icon name='Settings' styleName='s.settingsIcon' /> Settings
         </Link>}
       </div>
@@ -75,11 +75,11 @@ export default class Drawer extends React.PureComponent {
 }
 
 export function GroupRow ({ group, isMember = true, routeParams }) {
-  const { avatarUrl, newPostCount, name, slug } = group
+  const { avatarUrl, name, newPostCount, slug } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   return <li styleName='s.groupRow'>
-    <Link to={contextSwitchingUrl({ slug }, routeParams)} styleName='s.groupRowLink' title={name}>
+    <Link to={contextSwitchingUrl({ groupSlug: slug }, routeParams)} styleName='s.groupRowLink' title={name}>
       <div styleName='s.groupRowAvatar' style={imageStyle} />
       <span styleName={cx('s.group-name', { 's.is-member': isMember })}>{name}</span>
       {showBadge && <Badge expanded number={newPostCount} />}
@@ -115,7 +115,7 @@ export class NetworkRow extends React.Component {
   render () {
     const { network, routeParams, currentLocation } = this.props
     const { groups, name, slug, context, avatarUrl, nonMemberGroups } = network
-    const path = contextSwitchingUrl({ networkSlug: slug, context }, routeParams)
+    const path = contextSwitchingUrl({ groupSlug: slug, context }, routeParams)
     const { expanded, seeAllExpanded } = this.state
     const newPostCount = sum(network.groups.map(c => c.newPostCount))
     const imageStyle = bgImageStyle(avatarUrl)
@@ -151,8 +151,7 @@ export class NetworkRow extends React.Component {
 function Logo ({ group }) {
   if (!group) return null
   const { slug, name, location, avatarUrl } = group
-  const link = `/g/${slug}`
-  return <Link styleName='s.currentGroup' to={link}>
+  return <Link styleName='s.currentGroup' to={groupUrl(slug)}>
     <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
     <div className='drawer-inv-bd'>{name}</div>
     <div className='drawer-inv-sm'>{location}</div>

@@ -1,15 +1,15 @@
 import { attr, many, Model, fk } from 'redux-orm'
 
 export const GROUP_ACCESSIBILITY = {
-  CLOSED: 0,
-  RESTRICTED: 1,
-  OPEN: 2
+  Closed: 0,
+  Restricted: 1,
+  Open: 2
 }
 
 export const GROUP_VISIBILITY = {
-  HIDDEN: 0,
-  PROTECTED: 1,
-  PUBLIC: 2
+  Hidden: 0,
+  Protected: 1,
+  Public: 2
 }
 
 export class GroupModerator extends Model { }
@@ -90,3 +90,11 @@ export const ALL_GROUPS_AVATAR_PATH = '/assets/white-merkaba.png'
 
 export const PUBLIC_CONTEXT_ID = 'public-context'
 export const PUBLIC_CONTEXT_AVATAR_PATH = '/public.svg'
+
+export const accessibilityString = (accessibility) => {
+  return Object.keys(GROUP_ACCESSIBILITY).find(key => GROUP_ACCESSIBILITY[key] === accessibility)
+}
+
+export const visibilityString = (visibility) => {
+  return Object.keys(GROUP_VISIBILITY).find(key => GROUP_VISIBILITY[key] === visibility)
+}

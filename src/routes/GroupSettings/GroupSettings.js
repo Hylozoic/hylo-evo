@@ -50,11 +50,11 @@ export default class GroupSettings extends Component {
 
     const { slug } = group
 
-    return <FullPageModal goToOnClose={`/g/${slug}`}
+    return <FullPageModal goToOnClose={groupUrl(slug)}
       content={[
         {
           name: 'Settings',
-          path: `/g/${slug}/settings`,
+          path: groupUrl(slug, 'settings'),
           component: <GroupSettingsTab
             group={group}
             currentUser={currentUser}
@@ -63,22 +63,22 @@ export default class GroupSettings extends Component {
         },
         {
           name: 'Moderators',
-          path: `/g/${slug}/settings/moderators`,
+          path: groupUrl(slug, 'settings/moderators'),
           component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
         },
         {
           name: 'Topics',
-          path: `/g/${slug}/settings/topics`,
+          path: groupUrl(slug, 'settings/topics'),
           component: <TopicsSettingsTab group={group} />
         },
         {
           name: 'Invite',
-          path: `/g/${slug}/settings/invite`,
+          path: groupUrl(slug, 'settings/invite'),
           component: <InviteSettingsTab group={group} />
         },
         {
           name: 'Join Requests',
-          path: `/g/${slug}/settings/requests`,
+          path: groupUrl(slug, 'settings/requests'),
           component: <MembershipRequestsTab
             group={group}
             currentUser={currentUser}
@@ -86,7 +86,7 @@ export default class GroupSettings extends Component {
         },
         {
           name: 'Related Groups',
-          path: `/g/${slug}/settings/groups`,
+          path: groupUrl(slug, 'settings/relationships'),
           component: <RelatedGroupsTab
             group={group}
             currentUser={currentUser}
@@ -94,7 +94,7 @@ export default class GroupSettings extends Component {
         },
         {
           name: '',
-          path: `/g/${slug}/settings/import`,
+          path: groupUrl(slug, 'settings/import'),
           component: <ImportExportSettingsTab
             group={group}
             upload={upload}
@@ -102,7 +102,7 @@ export default class GroupSettings extends Component {
         },
         {
           name: 'Delete',
-          path: `/g/${slug}/settings/delete`,
+          path: groupUrl(slug, 'settings/delete'),
           component: <DeleteSettingsTab group={group} deleteGroup={deleteGroup} />
         }
       ]} />

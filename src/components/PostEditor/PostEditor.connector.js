@@ -5,7 +5,7 @@ import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getPostTypeContext from 'store/selectors/getPostTypeContext'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getMe from 'store/selectors/getMe'
 import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
@@ -57,22 +57,22 @@ export function mapStateToProps (state, props) {
   const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending
   const showFiles = !isEmpty(fileAttachments) || uploadFileAttachmentPending
-  const groupSlug = getRouteParam('slug', null, props)
+  const groupSlug = getRouteParam('groupSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-  const postTypeContext = getPostTypeContext(null, props)
-  const isProject = postTypeContext === 'project' || get('type', post) === 'project'
-  const isEvent = postTypeContext === 'event' || get('type', post) === 'event'
+  const postType = getQuerystringParam('t', null, props)
+  const isProject = postType === 'project' || get('type', post) === 'project'
+  const isEvent = postType === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentGroup)
-  const defaultTopics = getDefaultTopics(state, { groupSlug: groupSlug, sortBy: 'name' })
+  const defaultTopics = getDefaultTopics(state, { groupSlug, sortBy: 'name' })
 
   return {
     currentUser,
     currentGroup,
     groupOptions,
     defaultTopics,
-    postTypeContext,
+    postType,
     isProject,
     isEvent,
     editingPostId,
@@ -117,13 +117,13 @@ export const mapDispatchToProps = (dispatch) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    fetchLinkPreviewPending, topicName, groupSlug, postTypeContext
+    fetchLinkPreviewPending, topicName, groupSlug, postType
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, { groupSlug, postTypeContext, topicName })
+    const url = postUrl(id, { groupSlug, postType, topicName })
 
     return goToUrl(url)
   }

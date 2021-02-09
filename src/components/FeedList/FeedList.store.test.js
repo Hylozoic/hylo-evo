@@ -2,7 +2,7 @@ import { fetchPosts } from './FeedList.store'
 
 it('works for a group', () => {
   expect(fetchPosts({
-    subject: 'group',
+    context: 'groups',
     id: 'foo',
     offset: 20,
     search: 'gardening',
@@ -12,7 +12,7 @@ it('works for a group', () => {
 
 it('works for all groups', () => {
   expect(fetchPosts({
-    subject: 'all-groups',
+    contexts: 'all',
     offset: 20,
     search: 'graphic design',
     filter: 'request'
