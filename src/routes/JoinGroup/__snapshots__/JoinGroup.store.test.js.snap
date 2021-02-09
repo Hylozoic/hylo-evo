@@ -41,7 +41,7 @@ Object {
     },
   },
   "meta": Object {
-    "analytics": "Group Invitation Accepted",
+    "analytics": undefined,
     "extractModel": Object {
       "getRoot": [Function],
       "modelName": "Membership",

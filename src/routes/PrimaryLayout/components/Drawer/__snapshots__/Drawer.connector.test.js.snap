@@ -3,75 +3,24 @@
 exports[`mapStateToProps returns the right keys, adding All Groups link 1`] = `
 Object {
   "canModerate": true,
-  "groups": Array [
-    Object {
-      "id": "99",
-      "network": null,
-      "newPostCount": undefined,
-      "slug": "foo",
-    },
-  ],
   "currentLocation": "mock",
   "defaultNetworks": Array [
     Object {
       "avatarUrl": "/public.svg",
-      "communities": Array [],
       "context": "public",
+      "groups": Array [],
       "id": "public-context",
-      "name": "Public Communities & Posts",
+      "name": "Public Groups & Posts",
     },
     Object {
       "avatarUrl": "/assets/white-merkaba.png",
-      "communities": Array [],
       "context": "all",
-      "id": "all-communities",
-      "name": "All My Communities",
+      "groups": Array [],
+      "id": "all-groups",
+      "name": "All My Groups",
     },
   ],
+  "groups": Array [],
   "networks": Array [],
-}
-`;
-
-exports[`partitionGroups separates independent groups from networked groups 1`] = `
-Object {
-  "groups": Array [
-    Object {
-      "id": "2",
-      "name": "two",
-      "network": null,
-      "newPostCount": 3,
-    },
-  ],
-  "networks": Array [
-    Object {
-      "groups": Array [
-        Object {
-          "id": "1",
-          "name": "one",
-          "network": Object {
-            "groups": Array [
-              Object {
-                "id": "100",
-                "name": "nonMemberCommunity",
-                "network": "1111",
-              },
-            ],
-            "id": "1111",
-            "name": "networkOne",
-          },
-          "newPostCount": 5,
-        },
-      ],
-      "id": "1111",
-      "name": "networkOne",
-      "nonMemberGroups": Array [
-        Object {
-          "id": "100",
-          "name": "nonMemberCommunity",
-          "network": "1111",
-        },
-      ],
-    },
-  ],
 }
 `;

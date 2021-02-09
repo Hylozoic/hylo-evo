@@ -28,17 +28,17 @@ describe('mapStateToProps', () => {
     })
 
     it('sets canModerate to true if you are moderator', () => {
-      const props = mapStateToProps(state, { slug: 'foo', comment: myComment })
+      const props = mapStateToProps(state, { groupSlug: 'foo', comment: myComment })
       expect(props.canModerate).toBeTruthy()
     })
 
     it('sets canModerate to true if you can moderate someone elses comment', () => {
-      const props = mapStateToProps(state, { slug: 'foo', comment: otherComment })
+      const props = mapStateToProps(state, { groupSlug: 'foo', comment: otherComment })
       expect(props.canModerate).toBeTruthy()
     })
 
     it('sets canModerate to false otherwise if you can moderate someone elses comment', () => {
-      const props = mapStateToProps(state, { slug: 'boo', comment: myComment })
+      const props = mapStateToProps(state, { groupSlug: 'boo', comment: myComment })
       expect(props.canModerate).toBeFalsy()
     })
   })
@@ -69,13 +69,13 @@ describe('mapStateToProps', () => {
     })
 
     it('sets isCreator to true when my own comment', () => {
-      const props = mapStateToProps(state, { slug: 'bar', comment: myComment })
+      const props = mapStateToProps(state, { groupSlug: 'bar', comment: myComment })
       expect(props.canModerate).toBeFalsy()
       expect(props.isCreator).toBeTruthy()
     })
 
     it('sets isCreator to false otherwise', () => {
-      const props = mapStateToProps(state, { slug: 'bar', comment: otherComment })
+      const props = mapStateToProps(state, { groupSlug: 'bar', comment: otherComment })
       expect(props.canModerate).toBeFalsy()
       expect(props.isCreator).toBeFalsy()
     })
