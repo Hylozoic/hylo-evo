@@ -193,7 +193,7 @@ export default class PrimaryLayout extends Component {
           <Switch>
             {detailRoutes.map(({ path, component }) => {
               return isAboutPath(location.pathname)
-                ? <Route path={path} render={props => <CommunityDetail {...props} communityId={community.id} />} key={path} />
+                ? <Route path={path} render={props => <GroupDetail {...props} communityId={group.id} />} key={path} />
                 : <Route path={path} component={component} key={path} />
             })}
           </Switch>

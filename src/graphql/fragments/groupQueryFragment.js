@@ -43,10 +43,12 @@ export default
     }
   }
   widgets {
-    id
-    name
-    isVisible
-    order
+    items {
+      id
+      name
+      isVisible
+      order
+    }
   }
   ${groupTopicsQueryFragment}
 }`

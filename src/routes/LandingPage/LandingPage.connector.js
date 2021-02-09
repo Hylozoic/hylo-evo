@@ -1,34 +1,35 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { communityUrl } from 'util/navigation'
+import { groupUrl } from 'util/navigation'
 import fetchCommunity from 'store/actions/fetchCommunityBySlug'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import presentGroup from 'store/presenters/presentGroup'
+import presentPost from 'store/presenters/presentPost'
 
 export function mapStateToProps (state, props) {
-  let community, communityTopic
-  const communitySlug = getRouteParam('slug', state, props)
-
-  if (communitySlug) {
-    community = presentGroup(getGroupForCurrentRoute(state, props))
+  let group
+  const groupSlug = getRouteParam('slug', state, props)
+  
+  if (groupSlug) {
+    group = presentGroup(getGroupForCurrentRoute(state, props))
     // communityTopic = getCommunityTopicForCurrentRoute(state, props)
     // communityTopic = communityTopic && { ...communityTopic.ref, community: communityTopic.community, topic: communityTopic.topic }
   }
+
   return {
-    community,
-    communityTopic
+    group,
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const communitySlug = getRouteParam('slug', {}, props)
-  const url = `${communityUrl(communitySlug)}/about`
+  const groupSlug = getRouteParam('slug', {}, props)
+  const url = `${groupUrl(groupSlug)}/about`
 
   return {
-    fetchCommunity: () => dispatch(fetchCommunity(communitySlug)),
+    fetchCommunity: () => dispatch(fetchCommunity(groupSlug)),
     showAbout: async () => {
-      await fetchCommunity(communitySlug)
+      await fetchCommunity(groupSlug)
       dispatch(push(url))
     }
   }

@@ -33,6 +33,13 @@ GroupConnection.fields = {
   childGroup: fk({ to: 'Group', as: 'child', relatedName: 'parentConnections' })
 }
 
+export class GroupWidget extends Model {}
+GroupWidget.modelName = 'GroupWidget'
+GroupWidget.fields = {
+  group: fk({ to: 'Group', as: 'parent', relatedName: 'childConnections' }),
+  widget: fk({ to: 'Group', as: 'child', relatedName: 'parentConnections' })
+}
+
 class Group extends Model {
   toString () {
     return `Group: ${this.name}`
@@ -71,7 +78,8 @@ Group.fields = {
   postCount: attr(),
   settings: attr(),
   slug: attr(),
-  visibility: attr()
+  visibility: attr(),
+  widgets: many('Widget'),
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'

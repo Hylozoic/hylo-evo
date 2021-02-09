@@ -5,17 +5,18 @@ import GroupDetail from 'routes/GroupDetail'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
+import Widget from 'components/Widget'
 
 import './LandingPage.scss'
 
 export default class LandingPage extends Component {
   static propTypes = {
-    community: PropTypes.object,
+    group: PropTypes.object,
     showAbout: PropTypes.func
   }
 
   static defaultProps = {
-    community: {},
+    group: {},
     showAbout: () => {}
   }
 
@@ -26,19 +27,19 @@ export default class LandingPage extends Component {
   }
 
   render () {
-    const { community, location, match, showAbout } = this.props
+    const { group, location, match, showAbout } = this.props
 
-    if (!community) return <Loading />
+    if (!group) return <Loading />
 
-    const canView = community.memberCount > 0
-    const widgets = community.widgets.filter(w => w.isVisible).sort((a, b) => a.order - b.order)
-    const locationText = community.locationObject.fullText || `${community.locationObject.city}, ${community.locationObject.country}`
+    const canView = group.memberCount > 0
+    const widgets = (group.widgets || [])//.filter(w => w.isVisible).sort((a, b) => a.order - b.order)
+    const locationText = 'Placeholder' //group.locationObject.fullText || `${group.locationObject.city}, ${group.locationObject.country}`
 
-    if (!canView) return (<GroupDetail canClose={false} location={location} match={match} communityId={community.id} />)
+    if (!canView) return (<GroupDetail canClose={false} location={location} match={match} groupId={group.id} />)
 
     return (
       <div>
-        <div styleName='banner' style={{ backgroundImage: `url(${community.bannerUrl})` }}>
+        <div styleName='banner' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
           { canView && (
             <div styleName='right'>
               <span styleName='about' onClick={showAbout}><Icon name='Info' />About us</span>
@@ -46,18 +47,16 @@ export default class LandingPage extends Component {
           )}
 
           <div styleName='title'>
-            <RoundImage url={community.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} />
+            <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} />
             <div>
-              <div styleName='name'>{community.name}</div>
+              <div styleName='name'>{group.name}</div>
               <div styleName='location'><Icon name='Location' />{locationText}</div>
             </div>
           </div>
         </div>
 
-        { community.memberCount > 0 && widgets && widgets.map(props => (<Widget {...props} />)) }
+        { group.memberCount > 0 && widgets && widgets.map(props => (<Widget {...props}>{props.children}</Widget>)) }
       </div>
     )
   }
 }
-
-export const Widget = ({ name }) => (<div styleName='widget'>{name}</div>)

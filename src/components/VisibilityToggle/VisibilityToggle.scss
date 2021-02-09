@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 14px;
+}
+
+.containerDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.track {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border-radius: 8px;
+}
+
+.button {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  right: 15px;
+  left: 4px;
+  background-color: #fff;
+  border-radius: 12px;
+  transition: all 100ms ease
+}
+
+.buttonChecked {
+  right: 4px;
+  left: 15px;
+}
+
+
+@media screen and (max-width: 325px) {
+  .container {
+    margin-left: 6px;
+  }
+}
