@@ -73,11 +73,11 @@ export default class PostHeader extends PureComponent {
 
     if (!creator) return null
 
-    const creatorUrl = personUrl(creator.id, routeParams.slug)
+    const creatorUrl = personUrl(creator.id, routeParams.groupSlug)
     const { flaggingVisible } = this.state
     // Used to generate a link to this post from the backend.
     const flagPostData = {
-      slug: routeParams.slug,
+      slug: routeParams.groupSlug,
       id: id,
       type: 'post'
     }
@@ -123,7 +123,7 @@ export default class PostHeader extends PureComponent {
                 delayShow={550}
                 id='announcement-tt' />
             </span>}
-            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} />}
+            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
           </div>
         </div>
         <div styleName='upperRight'>
@@ -140,7 +140,7 @@ export default class PostHeader extends PureComponent {
           onClose={() => this.setState({ flaggingVisible: false })} />
         }
       </div>
-      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} newLine />}
+      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.groupSlug} newLine />}
       {canHaveTimes && <div styleName='timeWindow'>
         {timeWindow}
       </div>}

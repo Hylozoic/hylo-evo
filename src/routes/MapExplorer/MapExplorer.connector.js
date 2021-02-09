@@ -92,7 +92,7 @@ export function mapDispatchToProps (dispatch, props) {
     saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
     showGroupDetails: (groupId) => dispatch(push(groupMapDetailUrl(groupId, { ...routeParams, view: 'map' }, querystringParams))),
-    gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.slug))),
+    gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.groupSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
     storeClientFilterParams: params => dispatch(storeClientFilterParams(params)),
