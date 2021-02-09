@@ -6,7 +6,7 @@ describe('presentPost', () => {
   const postId = 324
   const session = orm.session(orm.getEmptyState())
 
-  const group = session.group.create({ id: groupId })
+  const group = session.Group.create({ id: groupId })
   const postMembership = session.PostMembership.create({ group, pinned: true })
   const person = session.Person.create({ name: 'Mr Person' })
   const eventInvitation = session.EventInvitation.create({ response: 'yes', person, event: postId })

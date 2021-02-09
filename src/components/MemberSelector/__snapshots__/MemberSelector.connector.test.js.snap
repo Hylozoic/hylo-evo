@@ -6,11 +6,11 @@ Object {
     "query": Object {},
     "variables": Object {
       "autocomplete": "searchstring",
+      "first": 20,
       "groupIds": Array [
         1,
         2,
       ],
-      "first": 20,
     },
   },
   "meta": Object {

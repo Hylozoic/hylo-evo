@@ -84,7 +84,7 @@ Array [
     Object {
       "payload": Object {
         "args": Array [
-          "/c/mygroup/p/10/edit",
+          "/groups/mygroup/post/10/edit",
         ],
         "method": "push",
       },

@@ -10,11 +10,11 @@ exports[`Comment displays image attachments 1`] = `
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
@@ -75,11 +75,11 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
@@ -143,11 +143,11 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
@@ -211,11 +211,11 @@ exports[`Comment renders correctly 1`] = `
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
@@ -262,11 +262,11 @@ exports[`Comment renders correctly when editing 1`] = `
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
