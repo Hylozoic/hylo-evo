@@ -2,7 +2,7 @@ import orm from '../models'
 import getMe from './getMe'
 import getGroupTopicForCurrentRoute from './getGroupTopicForCurrentRoute'
 import getTopicForCurrentRoute from './getTopicForCurrentRoute'
-import getMemberships from './getMemberships'
+import getMyMemberships from './getMyMemberships'
 import getCanModerate from './getCanModerate'
 
 describe('getMe', () => {
@@ -20,16 +20,15 @@ describe('getMe', () => {
   })
 })
 
-describe('getMemberships', () => {
+describe('getMyMemberships', () => {
   it('returns expected values', () => {
     const session = orm.session(orm.getEmptyState())
     const group1 = session.Group.create({ id: 'c1' })
     const group2 = session.Group.create({ id: 'c2' })
     const membership = session.Membership.create({ id: 'm1', group: group1.id })
-    session.Membership.create({ id: 'm2', group: group2.id })
-    const me = session.Me.create({})
-    me.updateAppending({ memberships: [membership.id] })
-    expect(getMemberships({ orm: session.state }, {}).length).toEqual(1)
+    const me = session.Me.create({ id: 1 })
+    session.Membership.create({ id: 'm2', group: group2.id, person: me.id })
+    expect(getMyMemberships({ orm: session.state }, {}).length).toEqual(1)
   })
 })
 
@@ -53,7 +52,7 @@ describe('getGroupTopicForCurrentRoute', () => {
     const props = {
       match: {
         params: {
-          slug: 'goteam',
+          groupSlug: 'goteam',
           topicName: 'petitions'
         }
       }
@@ -68,7 +67,7 @@ describe('getGroupTopicForCurrentRoute', () => {
     const props = {
       match: {
         params: {
-          slug: 'goteam',
+          groupSlug: 'goteam',
           topicName: 'petitions'
         }
       }

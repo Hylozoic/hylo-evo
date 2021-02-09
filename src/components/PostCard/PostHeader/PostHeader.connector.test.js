@@ -16,7 +16,7 @@ describe('mapStateToProps', () => {
       orm: session.state
     }
 
-    const ownProps = { creator: { id: 20 }, routeParams: { slug: 'mygroup' } }
+    const ownProps = { creator: { id: 20 }, routeParams: { groupSlug: 'mygroup' } }
     const { group, currentUser } = mapStateToProps(state, ownProps)
 
     expect(group.id).toBe(33)
@@ -30,7 +30,7 @@ describe('mapDispatchToProps', () => {
     const dispatch = jest.fn(val => val)
     const props = {
       routeParams: {
-        slug: 'mygroup'
+        groupSlug: 'mygroup'
       }
     }
     const dispatchProps = mapDispatchToProps(dispatch, props)
@@ -104,7 +104,7 @@ describe('mergeProps', () => {
       const state = {
         orm: session.state
       }
-      const ownProps = { id: 20, routeParams: { slug: 'mygroup' }, creator: { id: 20 } }
+      const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 20 } }
       const stateProps = mapStateToProps(state, ownProps)
       const { deletePost, removePost, editPost, canEdit, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
 
@@ -137,7 +137,7 @@ describe('mergeProps', () => {
         orm: session.state
       }
 
-      const ownProps = { id: 20, routeParams: { slug: 'mygroup' }, creator: { id: 33 } }
+      const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 33 } }
       const stateProps = mapStateToProps(state, ownProps)
 
       const { deletePost, removePost, editPost } = mergeProps(stateProps, dispatchProps, ownProps)
@@ -166,7 +166,7 @@ describe('mergeProps', () => {
         orm: session.state
       }
 
-      const ownProps = { id: 20, routeParams: { slug: 'mygroup' }, creator: { id: 20 } }
+      const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 20 } }
       const stateProps = mapStateToProps(state, ownProps)
 
       const { deletePost, removePost, editPost, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
@@ -195,7 +195,7 @@ describe('mergeProps', () => {
       orm: session.state
     }
 
-    const ownProps = { id: 20, routeParams: { slug: 'mygroup' }, creator: { id: 33 } }
+    const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 33 } }
     const stateProps = mapStateToProps(state, ownProps)
 
     const { deletePost, removePost, editPost } = mergeProps(stateProps, dispatchProps, ownProps)

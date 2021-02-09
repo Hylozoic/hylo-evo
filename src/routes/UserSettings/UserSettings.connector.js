@@ -11,13 +11,13 @@ import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector } from 'reselect'
 import unBlockUser from 'store/actions/unBlockUser'
 import getBlockedUsers from 'store/selectors/getBlockedUsers'
-import getCurrentUserMemberships from 'store/selectors/getCurrentUserMemberships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export const getAllGroupsSettings = createSelector(
-  getCurrentUserMemberships,
+  getMyMemberships,
   memberships => ({
     sendEmail: every(m => m.settings && m.settings.sendEmail, memberships),
     sendPushNotifications: every(m => m.settings && m.settings.sendPushNotifications, memberships)
@@ -36,7 +36,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const blockedUsers = getBlockedUsers(state, props)
   const allGroupsSettings = getAllGroupsSettings(state, props)
-  const memberships = getCurrentUserMemberships(state, props)
+  const memberships = getMyMemberships(state, props)
   const messageSettings = getMessageSettings(state, props)
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]

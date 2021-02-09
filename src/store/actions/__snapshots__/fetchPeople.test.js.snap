@@ -6,8 +6,8 @@ Object {
     "query": "All the lonely people / Where do they all come from?",
     "variables": Object {
       "autocomplete": "Tchaikovs",
-      "groupIds": Array [],
       "first": 100,
+      "groupIds": Array [],
     },
   },
   "meta": Object {

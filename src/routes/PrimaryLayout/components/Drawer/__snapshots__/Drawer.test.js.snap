@@ -1,63 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommunityRow renders with new posts 1`] = `
-<li
-  data-stylename="s.communityRow"
->
-  <Link
-    data-stylename="s.communityRowLink"
-    title="Foomunity"
-    to="/c/foo"
-  >
-    <div
-      data-stylename="s.communityRowAvatar"
-      style={
-        Object {
-          "backgroundImage": "url(/foo.png)",
-        }
-      }
-    />
-    <span
-      data-stylename="s.community-name s.is-member"
-    >
-      Foomunity
-    </span>
-  </Link>
-</li>
-`;
-
-exports[`CommunityRow renders with zero new posts 1`] = `
-<li
-  data-stylename="s.communityRow"
->
-  <Link
-    data-stylename="s.communityRowLink"
-    title="Foomunity"
-    to="/c/foo"
-  >
-    <div
-      data-stylename="s.communityRowAvatar"
-      style={
-        Object {
-          "backgroundImage": "url(/foo.png)",
-        }
-      }
-    />
-    <span
-      data-stylename="s.community-name s.is-member"
-    >
-      Foomunity
-    </span>
-  </Link>
-</li>
-`;
-
-exports[`Drawer renders a community list if networks are present 1`] = `
+exports[`Drawer renders a group list if networks are present 1`] = `
 <div
-  data-stylename="s.communityDrawer"
+  data-stylename="s.groupDrawer"
 >
   <div
-    data-stylename="s.currentCommunity"
+    data-stylename="s.currentGroup"
   >
     <div
       data-stylename="s.hyloLogoBar"
@@ -75,51 +23,18 @@ exports[`Drawer renders a community list if networks are present 1`] = `
   </div>
   <div>
     <ul
-      data-stylename="s.communitiesList"
+      data-stylename="s.groupsList"
     />
     <ul
-      data-stylename="s.communitiesList"
+      data-stylename="s.groupsList"
     >
-      <div>
-        <li
-          data-stylename="s.sectionTitle"
-        >
-          My Networks
-        </li>
-        <NetworkRow
-          key="1"
-          network={
-            Object {
-              "avatarUrl": "/wombat.png",
-              "communities": Array [
-                Object {
-                  "avatarUrl": "/foo.png",
-                  "id": "11",
-                  "name": "Foomunity",
-                  "newPostCount": 0,
-                  "slug": "foo",
-                },
-                Object {
-                  "avatarUrl": "/bar.png",
-                  "id": "22",
-                  "name": "Barmunity",
-                  "newPostCount": 7,
-                  "slug": "bar",
-                },
-              ],
-              "id": "1",
-              "name": "Wombat Network",
-            }
-          }
-        />
-      </div>
       <li
         data-stylename="s.sectionTitle s.sectionTitleSeparator"
       >
-        My Communities
+        My Groups
       </li>
-      <CommunityRow
-        community={
+      <GroupRow
+        group={
           Object {
             "avatarUrl": "/foo.png",
             "id": "11",
@@ -130,8 +45,8 @@ exports[`Drawer renders a community list if networks are present 1`] = `
         }
         key="11"
       />
-      <CommunityRow
-        community={
+      <GroupRow
+        group={
           Object {
             "avatarUrl": "/bar.png",
             "id": "22",
@@ -144,24 +59,24 @@ exports[`Drawer renders a community list if networks are present 1`] = `
       />
     </ul>
     <div
-      data-stylename="s.newCommunity"
+      data-stylename="s.newGroup"
     >
       <Button
         color="white"
-        data-stylename="s.newCommunityBtn"
-        label="Start a Community"
+        data-stylename="s.newGroupBtn"
+        label="Start a Group"
       />
     </div>
   </div>
 </div>
 `;
 
-exports[`Drawer renders with a current community 1`] = `
+exports[`Drawer renders with a current group 1`] = `
 <div
-  data-stylename="s.communityDrawer"
+  data-stylename="s.groupDrawer"
 >
   <div
-    data-stylename="s.currentCommunity"
+    data-stylename="s.currentGroup"
   >
     <div
       data-stylename="s.hyloLogoBar"
@@ -176,7 +91,7 @@ exports[`Drawer renders with a current community 1`] = `
       />
     </div>
     <Logo
-      community={
+      group={
         Object {
           "avatarUrl": "/foo.png",
           "id": "11",
@@ -189,18 +104,18 @@ exports[`Drawer renders with a current community 1`] = `
   </div>
   <div>
     <ul
-      data-stylename="s.communitiesList"
+      data-stylename="s.groupsList"
     />
     <ul
-      data-stylename="s.communitiesList"
+      data-stylename="s.groupsList"
     >
       <li
         data-stylename="s.sectionTitle s.sectionTitleSeparator"
       >
-        My Communities
+        My Groups
       </li>
-      <CommunityRow
-        community={
+      <GroupRow
+        group={
           Object {
             "avatarUrl": "/foo.png",
             "id": "11",
@@ -211,8 +126,8 @@ exports[`Drawer renders with a current community 1`] = `
         }
         key="11"
       />
-      <CommunityRow
-        community={
+      <GroupRow
+        group={
           Object {
             "avatarUrl": "/bar.png",
             "id": "22",
@@ -225,24 +140,24 @@ exports[`Drawer renders with a current community 1`] = `
       />
     </ul>
     <div
-      data-stylename="s.newCommunity"
+      data-stylename="s.newGroup"
     >
       <Button
         color="white"
-        data-stylename="s.newCommunityBtn"
-        label="Start a Community"
+        data-stylename="s.newGroupBtn"
+        label="Start a Group"
       />
     </div>
   </div>
 </div>
 `;
 
-exports[`Drawer renders without a current community 1`] = `
+exports[`Drawer renders without a current group 1`] = `
 <div
-  data-stylename="s.communityDrawer"
+  data-stylename="s.groupDrawer"
 >
   <div
-    data-stylename="s.currentCommunity"
+    data-stylename="s.currentGroup"
   >
     <div
       data-stylename="s.hyloLogoBar"
@@ -260,18 +175,18 @@ exports[`Drawer renders without a current community 1`] = `
   </div>
   <div>
     <ul
-      data-stylename="s.communitiesList"
+      data-stylename="s.groupsList"
     />
     <ul
-      data-stylename="s.communitiesList"
+      data-stylename="s.groupsList"
     >
       <li
         data-stylename="s.sectionTitle s.sectionTitleSeparator"
       >
-        My Communities
+        My Groups
       </li>
-      <CommunityRow
-        community={
+      <GroupRow
+        group={
           Object {
             "avatarUrl": "/foo.png",
             "id": "11",
@@ -282,8 +197,8 @@ exports[`Drawer renders without a current community 1`] = `
         }
         key="11"
       />
-      <CommunityRow
-        community={
+      <GroupRow
+        group={
           Object {
             "avatarUrl": "/bar.png",
             "id": "22",
@@ -296,16 +211,68 @@ exports[`Drawer renders without a current community 1`] = `
       />
     </ul>
     <div
-      data-stylename="s.newCommunity"
+      data-stylename="s.newGroup"
     >
       <Button
         color="white"
-        data-stylename="s.newCommunityBtn"
-        label="Start a Community"
+        data-stylename="s.newGroupBtn"
+        label="Start a Group"
       />
     </div>
   </div>
 </div>
+`;
+
+exports[`GroupRow renders with new posts 1`] = `
+<li
+  data-stylename="s.groupRow"
+>
+  <Link
+    data-stylename="s.groupRowLink"
+    title="Foomunity"
+    to="/groups/foo"
+  >
+    <div
+      data-stylename="s.groupRowAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(/foo.png)",
+        }
+      }
+    />
+    <span
+      data-stylename="s.group-name s.is-member"
+    >
+      Foomunity
+    </span>
+  </Link>
+</li>
+`;
+
+exports[`GroupRow renders with zero new posts 1`] = `
+<li
+  data-stylename="s.groupRow"
+>
+  <Link
+    data-stylename="s.groupRowLink"
+    title="Foomunity"
+    to="/groups/foo"
+  >
+    <div
+      data-stylename="s.groupRowAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(/foo.png)",
+        }
+      }
+    />
+    <span
+      data-stylename="s.group-name s.is-member"
+    >
+      Foomunity
+    </span>
+  </Link>
+</li>
 `;
 
 exports[`NetworkRow is not expanded when post counts are 0 1`] = `
@@ -315,7 +282,7 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
   <Link
     data-stylename="s.networkRowLink"
     title="Network One"
-    to="/n/none"
+    to="/groups/none"
   >
     <div
       data-stylename="s.network-name-wrapper"
@@ -334,7 +301,7 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
         Network One
       </span>
       <span
-        data-stylename="s.communitiesButton"
+        data-stylename="s.groupsButton"
         onClick={[Function]}
       >
         <Icon
@@ -345,10 +312,10 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
     </div>
   </Link>
   <ul
-    data-stylename="s.networkCommunitiesList"
+    data-stylename="s.networkGroupsList"
   >
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 1,
           "newPostCount": 7,
@@ -356,8 +323,8 @@ exports[`NetworkRow is not expanded when post counts are 0 1`] = `
       }
       key="1"
     />
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 2,
           "newPostCount": 6,
@@ -376,7 +343,7 @@ exports[`NetworkRow matches last snapshot 1`] = `
   <Link
     data-stylename="s.networkRowLink"
     title="Network One"
-    to="/n/none"
+    to="/groups/none"
   >
     <div
       data-stylename="s.network-name-wrapper"
@@ -395,7 +362,7 @@ exports[`NetworkRow matches last snapshot 1`] = `
         Network One
       </span>
       <span
-        data-stylename="s.communitiesButton"
+        data-stylename="s.groupsButton"
         onClick={[Function]}
       >
         <Icon
@@ -406,10 +373,10 @@ exports[`NetworkRow matches last snapshot 1`] = `
     </div>
   </Link>
   <ul
-    data-stylename="s.networkCommunitiesList"
+    data-stylename="s.networkGroupsList"
   >
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 1,
           "newPostCount": 7,
@@ -417,8 +384,8 @@ exports[`NetworkRow matches last snapshot 1`] = `
       }
       key="1"
     />
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 2,
           "newPostCount": 6,
@@ -437,7 +404,7 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
   <Link
     data-stylename="s.networkRowLink"
     title="Network One"
-    to="/n/none"
+    to="/groups/none"
   >
     <div
       data-stylename="s.network-name-wrapper"
@@ -456,7 +423,7 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
         Network One
       </span>
       <span
-        data-stylename="s.communitiesButton"
+        data-stylename="s.groupsButton"
         onClick={[Function]}
       >
         <Icon
@@ -467,10 +434,10 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
     </div>
   </Link>
   <ul
-    data-stylename="s.networkCommunitiesList"
+    data-stylename="s.networkGroupsList"
   >
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 1,
           "newPostCount": 7,
@@ -478,8 +445,8 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
       }
       key="1"
     />
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 2,
           "newPostCount": 6,
@@ -497,14 +464,14 @@ exports[`NetworkRow see all button calls preventDefault and sets the state 1`] =
 </li>
 `;
 
-exports[`NetworkRow see all button shows "see all" button when there are non member communities 1`] = `
+exports[`NetworkRow see all button shows "see all" button when there are non member groups 1`] = `
 <li
   data-stylename="s.networkRow s.networkExpanded"
 >
   <Link
     data-stylename="s.networkRowLink"
     title="Network One"
-    to="/n/none"
+    to="/groups/none"
   >
     <div
       data-stylename="s.network-name-wrapper"
@@ -523,7 +490,7 @@ exports[`NetworkRow see all button shows "see all" button when there are non mem
         Network One
       </span>
       <span
-        data-stylename="s.communitiesButton"
+        data-stylename="s.groupsButton"
         onClick={[Function]}
       >
         <Icon
@@ -534,10 +501,10 @@ exports[`NetworkRow see all button shows "see all" button when there are non mem
     </div>
   </Link>
   <ul
-    data-stylename="s.networkCommunitiesList"
+    data-stylename="s.networkGroupsList"
   >
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 1,
           "newPostCount": 7,
@@ -545,8 +512,8 @@ exports[`NetworkRow see all button shows "see all" button when there are non mem
       }
       key="1"
     />
-    <CommunityRow
-      community={
+    <GroupRow
+      group={
         Object {
           "id": 2,
           "newPostCount": 6,

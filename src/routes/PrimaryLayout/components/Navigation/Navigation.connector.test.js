@@ -10,7 +10,7 @@ describe('mapStateToProps', () => {
 
     const props = {
       match: {
-        params: { slug: 'foo' }
+        params: { groupSlug: 'foo' }
       },
       location: {
         pathname: ''

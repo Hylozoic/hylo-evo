@@ -61,7 +61,7 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
 >
   <Link
     data-stylename="members-link"
-    to="/c/foo/members"
+    to="/groups/foo/members"
   >
     <div
       data-stylename="header"
@@ -90,7 +90,7 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
   </Link>
   <Link
     data-stylename="invite-link"
-    to="/c/foo/settings/invite"
+    to="/groups/foo/settings/invite"
   >
     <Button
       color="green-white-green-border"
@@ -107,7 +107,7 @@ exports[`MemberSection Formats total correctly if it's > 999 1`] = `
 >
   <Link
     data-stylename="members-link"
-    to="/c/foo/members"
+    to="/groups/foo/members"
   >
     <div
       data-stylename="header"
@@ -148,7 +148,7 @@ exports[`MemberSection Shows invite link if canModerate is true 1`] = `
 >
   <Link
     data-stylename="members-link"
-    to="/c/foo/members"
+    to="/groups/foo/members"
   >
     <div
       data-stylename="header"
@@ -182,7 +182,7 @@ exports[`MemberSection Shows invite link if canModerate is true 1`] = `
   </Link>
   <Link
     data-stylename="invite-link"
-    to="/c/foo/settings/invite"
+    to="/groups/foo/settings/invite"
   >
     <Button
       color="green-white-green-border"
