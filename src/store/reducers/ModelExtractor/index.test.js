@@ -13,7 +13,7 @@ it('produces a flat list from a "separate-totals-style" response', () => {
 
 it('produces a flat list from a "nested-totals-style" response', () => {
   const extractor = new ModelExtractor(orm.session(orm.getEmptyState()))
-  extractor.walk(payload2.data.group, 'group')
+  extractor.walk(payload2.data.group, 'Group')
   expect(extractor.mergedNodes()).toMatchSnapshot()
 })
 
@@ -150,9 +150,9 @@ describe('append option', () => {
 
   beforeEach(() => {
     session = orm.session(orm.getEmptyState())
-    session.group.create({ id: '1', name: 'One' })
-    session.group.create({ id: '2', name: 'Two' })
-    session.group.create({ id: '3', name: 'Three' })
+    session.Group.create({ id: '1', name: 'One' })
+    session.Group.create({ id: '2', name: 'Two' })
+    session.Group.create({ id: '3', name: 'Three' })
     session.Post.create({
       id: '1',
       groups: ['1', '2', '3']

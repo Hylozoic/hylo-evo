@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Drawer, { groupRow, NetworkRow } from './Drawer'
+import Drawer, { GroupRow, NetworkRow } from './Drawer'
 
 const groups = [
   {
@@ -47,14 +47,14 @@ describe('Drawer', () => {
   })
 })
 
-describe('groupRow', () => {
+describe('GroupRow', () => {
   it('renders with zero new posts', () => {
-    const wrapper = shallow(<groupRow group={groups[0]} />)
+    const wrapper = shallow(<GroupRow group={groups[0]} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('renders with new posts', () => {
-    const wrapper = shallow(<groupRow group={groups[0]} />)
+    const wrapper = shallow(<GroupRow group={groups[0]} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -136,12 +136,12 @@ describe('NetworkRow', () => {
 
       expect(wrapper).toMatchSnapshot()
       expect(wrapper.state('seeAllExpanded')).toEqual(false)
-      expect(wrapper.find(groupRow).length).toEqual(2)
+      expect(wrapper.find(GroupRow).length).toEqual(2)
       expect(wrapper.find('[data-stylename="s.seeAllBtn"]').text()).toEqual('See all')
       wrapper.instance().toggleSeeAll(e)
       wrapper.update()
       expect(wrapper.state('seeAllExpanded')).toEqual(true)
-      expect(wrapper.find(groupRow).length).toEqual(3)
+      expect(wrapper.find(GroupRow).length).toEqual(3)
       expect(wrapper.find('[data-stylename="s.seeAllBtn"]').text()).toEqual('See less')
       expect(e.preventDefault).toHaveBeenCalled()
     })

@@ -28,13 +28,10 @@ import {
 } from 'routes/GroupSettings/GroupSettings.store'
 import {
   CREATE_GROUP
-} from 'routes/CreateGroup/Review/Review.store'
+} from 'components/CreateGroup/CreateGroup.store'
 import {
   REMOVE_MEMBER_PENDING
 } from 'routes/Members/Members.store'
-import {
-  UPDATE_GROUP
-} from 'routes/NetworkSettings/NetworkSettings.store'
 import {
   DELETE_GROUP_TOPIC_PENDING
 } from 'routes/AllTopics/AllTopics.store'
@@ -82,7 +79,7 @@ it('responds to an action with meta.extractModel', () => {
   const newState = ormReducer(state, action)
 
   expect(newState).toMatchObject({
-    group: {
+    Group: {
       items: ['1'],
       itemsById: { '1': { id: '1', name: 'Neighborhood' } }
     },
@@ -188,7 +185,7 @@ describe('on MARK_ALL_ACTIVITIES_READ_PENDING', () => {
   })
 })
 
-describe('on TOGGLE_GROUP', () => {
+describe('on TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING', () => {
   it('will set isSubscribed to false and decrement followersTotal', () => {
     const session = orm.session(orm.getEmptyState())
     session.Topic.create({ id: '2' })
@@ -203,7 +200,7 @@ describe('on TOGGLE_GROUP', () => {
     const state = session.state
     const action = {
       ...toggleGroupTopicSubscribe(groupTopic),
-      type: TOGGLE_GROUP
+      type: TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING
     }
     const newState = ormReducer(state, action)
     expect(deep(state, newState)).toMatchSnapshot()
@@ -610,30 +607,11 @@ describe('on REMOVE_MEMBER_PENDING', () => {
     session.Group.create({ id: '3', memberCount: 8, members: ['2', '4'] })
 
     const newState = ormReducer(session.state, action)
-    const group = orm.session(newState).group.withId('3')
+    const group = orm.session(newState).Group.withId('3')
     expect(group.memberCount).toBe(7)
     const members = group.members.toRefArray()
     expect(members.length).toBe(1)
     expect(members[0].name).toBe('Foo')
-  })
-})
-
-describe('on UPDATE_GROUP_HIDDEN_SETTING_PENDING', () => {
-  it('sets the group.hidden property', () => {
-    const groupId = 34
-    const action = {
-      type: UPDATE_GROUP_HIDDEN_SETTING_PENDING,
-      meta: {
-        id: groupId,
-        hidden: true
-      }
-    }
-    const session = orm.session(orm.getEmptyState())
-    session.Group.create({ id: groupId, hidden: false })
-
-    const newState = ormReducer(session.state, action)
-    const group = orm.session(newState).group.withId(groupId)
-    expect(group.hidden).toBe(true)
   })
 })
 
@@ -642,7 +620,7 @@ describe('on DELETE_GROUP_TOPIC_PENDING', () => {
   session.GroupTopic.create({ id: '1' })
   session.GroupTopic.create({ id: '2' })
 
-  it('removes the groupTopic', () => {
+  it('removes the GroupTopic', () => {
     const action = {
       type: DELETE_GROUP_TOPIC_PENDING,
       meta: { id: '1' }

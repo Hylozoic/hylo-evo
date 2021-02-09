@@ -3,17 +3,17 @@
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
   "canModerate": true,
-  "group": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
-  },
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
     },
     "id": "1",
+  },
+  "group": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "slug": "foo",
+    },
   },
   "slug": "foo",
 }
@@ -25,19 +25,33 @@ Object {
     "query": "query ($slug: String) {
         group (slug: $slug) {
           id
-          name
-          slug
+          accessibility
           avatarUrl
           bannerUrl
           description
           location
-          settings
           invitePath
-          hidden
-          allowGroupInvites
-          isPublic
-          isAutoJoinable
-          publicMemberDirectory
+          name
+          settings {
+            allowGroupInvites
+            publicMemberDirectory
+          }
+          slug
+          visibility
+          childGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          parentGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
           pendingInvitations {
             hasMore
             items {
@@ -93,12 +107,6 @@ Object {
 exports[`mergeProps merges the props 3`] = `
 Object {
   "canModerate": true,
-  "group": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
-  },
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
@@ -109,6 +117,12 @@ Object {
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "goToGroupDeleteConfirmation": [Function],
+  "group": SessionBoundModel {
+    "_fields": Object {
+      "id": "99",
+      "slug": "foo",
+    },
+  },
   "slug": "foo",
   "updateGroupSettings": [Function],
   "updateGroupSettingsMaker": [Function],

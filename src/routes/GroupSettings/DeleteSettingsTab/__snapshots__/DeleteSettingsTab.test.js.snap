@@ -8,7 +8,7 @@ exports[`renders correctly 1`] = `
     <div
       data-stylename="title"
     >
-      Delete
+      Delete 
       Hylo
     </div>
   </div>

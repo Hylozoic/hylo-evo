@@ -12,7 +12,7 @@ it('works for a group', () => {
 
 it('works for all groups', () => {
   expect(fetchPosts({
-    contexts: 'all',
+    context: 'all',
     offset: 20,
     search: 'graphic design',
     filter: 'request'

@@ -56,10 +56,9 @@ describe('JoinGroup.connector', () => {
     it('gets the new newGroupSlug from the newMembership', () => {
       const newGroupSlug = 'newgroup'
       state[MODULE_NAME] = {
-          membership: {
-            group: {
-              slug: newGroupSlug
-            }
+        membership: {
+          group: {
+            slug: newGroupSlug
           }
         }
       }

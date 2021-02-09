@@ -7,7 +7,7 @@ exports[`TopicsLine matches last snapshot 1`] = `
   <Link
     data-stylename="topic"
     key="one"
-    to="/c/hay/one"
+    to="/groups/hay/topics/one"
   >
     #
     one
@@ -15,7 +15,7 @@ exports[`TopicsLine matches last snapshot 1`] = `
   <Link
     data-stylename="topic"
     key="two"
-    to="/c/hay/two"
+    to="/groups/hay/topics/two"
   >
     #
     two
@@ -33,7 +33,7 @@ exports[`matches announcement snapshot 1`] = `
     <Avatar
       avatarUrl="foo.png"
       data-stylename="avatar"
-      url="/m/123"
+      url="/all/members/123"
     />
     <div
       data-stylename="headerText"
@@ -44,7 +44,7 @@ exports[`matches announcement snapshot 1`] = `
       >
         <Link
           data-stylename="userName"
-          to="/m/123"
+          to="/all/members/123"
         >
           JJ
         </Link>
@@ -101,7 +101,7 @@ exports[`matches announcement snapshot 2`] = `
     <Avatar
       avatarUrl="foo.png"
       data-stylename="avatar"
-      url="/m/123"
+      url="/all/members/123"
     />
     <div
       data-stylename="headerText"
@@ -112,7 +112,7 @@ exports[`matches announcement snapshot 2`] = `
       >
         <Link
           data-stylename="userName"
-          to="/m/123"
+          to="/all/members/123"
         >
           JJ
         </Link>
@@ -177,7 +177,7 @@ exports[`matches announcement snapshot 3`] = `
     <Avatar
       avatarUrl="foo.png"
       data-stylename="avatar"
-      url="/m/123"
+      url="/all/members/123"
     />
     <div
       data-stylename="headerText"
@@ -188,7 +188,7 @@ exports[`matches announcement snapshot 3`] = `
       >
         <Link
           data-stylename="userName"
-          to="/m/123"
+          to="/all/members/123"
         >
           JJ
         </Link>
@@ -275,7 +275,7 @@ exports[`matches snapshot 1`] = `
     <Avatar
       avatarUrl="foo.png"
       data-stylename="avatar"
-      url="/m/123"
+      url="/all/members/123"
     />
     <div
       data-stylename="headerText"
@@ -286,7 +286,7 @@ exports[`matches snapshot 1`] = `
       >
         <Link
           data-stylename="userName"
-          to="/m/123"
+          to="/all/members/123"
         >
           JJ
         </Link>
@@ -316,7 +316,7 @@ exports[`matches snapshot 2`] = `
     <Avatar
       avatarUrl="foo.png"
       data-stylename="avatar"
-      url="/m/123"
+      url="/all/members/123"
     />
     <div
       data-stylename="headerText"
@@ -327,7 +327,7 @@ exports[`matches snapshot 2`] = `
       >
         <Link
           data-stylename="userName"
-          to="/m/123"
+          to="/all/members/123"
         >
           JJ
         </Link>
@@ -365,7 +365,7 @@ exports[`matches snapshot 3`] = `
     <Avatar
       avatarUrl="foo.png"
       data-stylename="avatar"
-      url="/m/123"
+      url="/all/members/123"
     />
     <div
       data-stylename="headerText"
@@ -376,7 +376,7 @@ exports[`matches snapshot 3`] = `
       >
         <Link
           data-stylename="userName"
-          to="/m/123"
+          to="/all/members/123"
         >
           JJ
         </Link>

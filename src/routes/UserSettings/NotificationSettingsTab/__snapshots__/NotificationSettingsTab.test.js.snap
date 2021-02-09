@@ -132,14 +132,14 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     <p
       data-stylename="help-paragraph"
     >
-      Download our
+      Download our 
       <a
         href="https://itunes.apple.com/app/appName/id1002185140"
         target="_blank"
       >
         iOS
       </a>
-        or
+        or 
       <a
         href="https://play.google.com/store/apps/details?id=com.hylo.hyloandroid"
         target="_blank"

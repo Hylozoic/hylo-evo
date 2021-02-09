@@ -3,7 +3,7 @@
 exports[`AllTopics matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))
   fullWidth={true}
-  goToOnClose="/c/goteam"
+  goToOnClose="/groups/goteam"
 >
   <div
     data-stylename="all-topics"
@@ -32,7 +32,7 @@ exports[`AllTopics matches the latest snapshot 1`] = `
         key="1"
         routeParams={
           Object {
-            "slug": "goteam",
+            "groupSlug": "goteam",
           }
         }
         singleGroup={
@@ -114,7 +114,7 @@ exports[`TopicListItem when multiple groups matches the latest snapshot 1`] = `
   >
     <Link
       data-stylename="topic-details"
-      to="/c/goteam/petitions"
+      to="/groups/goteam/topics/petitions"
     >
       <div
         data-stylename="topic-name"
@@ -130,7 +130,7 @@ exports[`TopicListItem when multiple groups matches the latest snapshot 1`] = `
         data-stylename="topic-stats"
       >
         24 posts
-         •
+         • 
         52 subscribers
          •
       </div>
@@ -143,7 +143,7 @@ exports[`TopicListItem when multiple groups matches the latest snapshot 1`] = `
         data-stylename="topic-stats"
       >
         1 post
-         •
+         • 
         4 subscribers
          •
       </div>

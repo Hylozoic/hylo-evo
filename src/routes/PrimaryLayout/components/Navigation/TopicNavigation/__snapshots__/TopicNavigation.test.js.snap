@@ -60,7 +60,7 @@ exports[`renders correctly for All Groups 1`] = `
 </div>
 `;
 
-exports[`renders correctly for a community 1`] = `
+exports[`renders correctly for a group 1`] = `
 <div
   data-stylename="s.topicNavigation"
 >

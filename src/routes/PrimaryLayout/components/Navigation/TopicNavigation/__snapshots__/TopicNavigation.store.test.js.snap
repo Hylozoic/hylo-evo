@@ -2,31 +2,41 @@
 
 exports[`getSubscribedGroupTopics returns the expected value 1`] = `
 Array [
-  SessionBoundModel {
-    "_fields": Object {
-      "group": "1",
-      "id": 3,
-      "isSubscribed": true,
-      "newPostCount": 7,
-      "topic": "3",
-      "visibility": 2,
-    },
-    "isSubscribed": true,
+  Object {
     "newPostCount": 7,
-    "visibility": 2,
-  },
-  SessionBoundModel {
-    "_fields": Object {
-      "group": "1",
-      "id": 0,
-      "isSubscribed": true,
-      "newPostCount": 5,
-      "topic": "1",
-      "visibility": 1,
+    "topic": SessionBoundModel {
+      "_fields": Object {
+        "id": "3",
+        "name": "criminals",
+      },
     },
-    "isSubscribed": true,
+  },
+  Object {
     "newPostCount": 5,
-    "visibility": 1,
+    "topic": SessionBoundModel {
+      "_fields": Object {
+        "id": "1",
+        "name": "fun",
+      },
+    },
+  },
+  Object {
+    "newPostCount": 5,
+    "topic": SessionBoundModel {
+      "_fields": Object {
+        "id": "2",
+        "name": "loving",
+      },
+    },
+  },
+  Object {
+    "newPostCount": 7,
+    "topic": SessionBoundModel {
+      "_fields": Object {
+        "id": "4",
+        "name": "yeah",
+      },
+    },
   },
 ]
 `;

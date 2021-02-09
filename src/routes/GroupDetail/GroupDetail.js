@@ -168,8 +168,8 @@ export default class GroupDetail extends Component {
 
 export function Request ({ group, joinGroup, requestToJoinGroup }) {
   return (
-    <div styleName={group.accessibility === GROUP_ACCESSIBILITY.OPEN ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
-      { group.accessibility === GROUP_ACCESSIBILITY.OPEN
+    <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
+      { group.accessibility === GROUP_ACCESSIBILITY.Open
         ? <div styleName='g.requestOption'>
           <div styleName='g.requestHint'>Anyone can join this group!</div>
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>

@@ -64,12 +64,13 @@ exports[`renders as expected with no group 1`] = `
           </span>
         </li>
         <li>
-          <Link
+          <a
             data-stylename="hover-highlight"
-            to="/terms"
+            href="http://hylo.com/terms"
+            target="_blank"
           >
             Terms & Privacy
-          </Link>
+          </a>
         </li>
         <li>
           <span

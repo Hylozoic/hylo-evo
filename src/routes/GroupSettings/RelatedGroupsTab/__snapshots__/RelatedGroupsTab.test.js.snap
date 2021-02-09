@@ -1,30 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Banner renders correctly 1`] = `
+exports[`GroupsCard renders correctly 1`] = `
 <div
-  data-stylename="banner"
+  data-stylename="group-card"
 >
-  <div
-    data-stylename="banner-text"
+  <Link
+    to="/all"
   >
+    <RoundImage
+      data-stylename="group-image"
+      size="50px"
+      square={true}
+      url="foom.png"
+    />
     <div
-      data-stylename="name"
+      data-stylename="group-details"
     >
-      Groups
+      <span
+        data-stylename="group-name"
+      >
+        Foom
+      </span>
+      <span
+        data-stylename="group-stats"
+      >
+        77
+         Members
+      </span>
     </div>
-    <div
-      data-stylename="stats"
-    >
-      12
-       Groups  •  
-      123
-       Total Members
-    </div>
-  </div>
-  <Icon
-    data-stylename="icon"
-    name="More"
-  />
+  </Link>
 </div>
 `;
 
@@ -56,57 +60,16 @@ exports[`GroupsList renders correctly 1`] = `
     }
     key="7"
   />
-  <ScrollListener
-    elementId="center-column"
-    onBottom={[Function]}
-  />
 </div>
 `;
 
-exports[`GroupsList renders correctly 2`] = `
-<div
-  data-stylename="group-card"
->
-  <RoundImage
-    data-stylename="group-image"
-    size="50px"
-    square={true}
-    url="foom.png"
-  />
-  <div
-    data-stylename="group-details"
-  >
-    <span
-      data-stylename="group-name"
-    >
-      Foom
-    </span>
-    <span
-      data-stylename="group-stats"
-    >
-      77
-       Members
-    </span>
-  </div>
-</div>
-`;
-
-exports[`NetworkGroups renders correctly 1`] = `
+exports[`RelatedGroupstab renders correctly 1`] = `
 <div
   data-stylename="container"
 >
   <Banner
-    network={
-      Object {
-        "id": 78,
-      }
-    }
-  />
-  <SearchBar
-    search="fo"
-    setSearch={[Function]}
-    setSort={[Function]}
-    sortBy="name"
+    groupsTotal={3}
+    text="Parent Groups"
   />
   <GroupsList
     groups={
@@ -122,49 +85,24 @@ exports[`NetworkGroups renders correctly 1`] = `
         },
       ]
     }
-    fetchMoreGroups={[Function]}
   />
-</div>
-`;
-
-exports[`SearchBar renders correctly 1`] = `
-<div
-  data-stylename="search-bar"
->
-  <TextInput
-    data-stylename="search-input"
-    onChange={[Function]}
-    placeholder="Search by name"
-    value="fo"
+  <Banner
+    groupsTotal={3}
+    text="Child Groups"
   />
-  <Dropdown
-    alignRight={true}
-    data-stylename="search-order"
-    items={
+  <GroupsList
+    groups={
       Array [
         Object {
-          "label": "Alphabetical",
-          "onClick": [Function],
+          "id": 6,
         },
         Object {
-          "label": "Popular",
-          "onClick": [Function],
+          "id": 5,
         },
         Object {
-          "label": "Newest",
-          "onClick": [Function],
+          "id": 4,
         },
       ]
-    }
-    toggleChildren={
-      <span
-        data-stylename="search-sorter-label"
-      >
-        Alphabetical
-        <Icon
-          name="ArrowDown"
-        />
-      </span>
     }
   />
 </div>

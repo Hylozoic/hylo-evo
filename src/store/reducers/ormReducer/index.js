@@ -45,7 +45,7 @@ import {
 } from 'routes/GroupSettings/GroupSettings.store'
 import {
   CREATE_GROUP
-} from 'routes/CreateGroup/Review/Review.store'
+} from 'components/CreateGroup/CreateGroup.store'
 import {
   USE_INVITATION
 } from 'routes/JoinGroup/JoinGroup.store'

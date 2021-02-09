@@ -101,7 +101,7 @@ export function fulfillPost (postId) {
 export const getGroup = ormCreateSelector(
   orm,
   (_, { routeParams }) => routeParams,
-  (session, { slug }) => session.Group.safeGet({ slug })
+  (session, { groupSlug }) => session.Group.safeGet({ slug: groupSlug })
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {

@@ -16,9 +16,9 @@ Object {
                 id
                 name
                 avatarUrl
-              }      
-            }       
-          } 
+              }
+            }
+          }
         }
       }",
     "variables": Object {

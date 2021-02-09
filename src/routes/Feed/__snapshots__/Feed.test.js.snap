@@ -22,29 +22,3 @@ exports[`CreateGroupPrompt matches the latest snapshot 1`] = `
   />
 </div>
 `;
-
-exports[`Feed with a network it renders a Feed with correct props 1`] = `
-<div>
-  <FeedBanner
-    group={
-      Object {
-        "id": 2,
-      }
-    }
-    currentUser={true}
-    currentUserHasMemberships={true}
-    type="request"
-  />
-  <Connect(Component)
-    postTypeFilter="request"
-    querystringParams={Object {}}
-    routeParams={
-      Object {
-        "networkSlug": "bar",
-      }
-    }
-    sortBy="votes"
-    subject="network"
-  />
-</div>
-`;
