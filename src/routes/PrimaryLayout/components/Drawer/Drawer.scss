@@ -205,7 +205,7 @@ a.currentGroup:hover {
   padding: 6px 0;
   transition: all .3s ease;
   &:hover {
-    background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, .3) 100%);
+    background: linear-gradient(0deg, $color-member 0%, rgba(42, 64, 89, .3) 100%);
   }
 }
 
