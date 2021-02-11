@@ -1,72 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GroupControl renders correctly 1`] = `
+exports[`UserGroupsTab renders a list of Memberships 1`] = `
 <div
-  data-stylename="group-control"
+  data-stylename="container"
 >
-  <div
-    data-stylename="row"
+  <h1
+    data-stylename="title"
   >
-    <Link
-      replace={false}
-      to="/all"
-    >
-      <RoundImage
-        data-stylename="avatar"
-        medium={true}
-        url="https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png"
-      />
-    </Link>
-    <Link
-      data-stylename="name"
-      replace={false}
-      to="/all"
-    >
-      Foomunity
-    </Link>
-    <span
-      data-stylename="leave-button"
-      onClick={[Function]}
-    >
-      Leave
-    </span>
+    Your affiliations with organizations
+  </h1>
+  <div
+    data-stylename="description"
+  >
+    This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.
   </div>
-</div>
-`;
-
-exports[`UserGroupsTab renders a list of GroupControls 1`] = `
-<div>
-  <GroupControl
+  <h2
+    data-stylename="subhead"
+  >
+    Hylo Groups
+  </h2>
+  <Membership
+    archive={[Function]}
+    index={0}
     key="1"
     membership={
       Object {
-        "id": 1,
+        "hasModeratorRole": true,
+        "id": "1",
       }
     }
   />
-  <GroupControl
+  <Membership
+    archive={[Function]}
+    index={1}
     key="2"
     membership={
       Object {
-        "id": 2,
+        "hasModeratorRole": true,
+        "id": "2",
       }
     }
   />
-  <GroupControl
+  <Membership
+    archive={[Function]}
+    index={2}
     key="3"
     membership={
       Object {
-        "id": 3,
+        "hasModeratorRole": true,
+        "id": "3",
       }
     }
   />
-  <GroupControl
-    key="4"
-    membership={
+  <h2
+    data-stylename="subhead"
+  >
+    Other Affiliations
+  </h2>
+  <Affiliation
+    affiliation={
       Object {
-        "id": 4,
+        "id": "1",
+        "isActive": true,
+        "orgName": "La Fromagerie",
+        "preposition": "at",
+        "role": "Cheesemonger",
+        "url": "https://www.lafromagerie.com",
       }
     }
+    archive={[Function]}
+    index={0}
+    key="1"
   />
+  <Affiliation
+    affiliation={
+      Object {
+        "id": "2",
+        "isActive": true,
+        "orgName": "Rights of Nature Santa Cruz",
+        "preposition": "of",
+        "role": "Organizer",
+        "url": "https://rightsofnaturesc.org",
+      }
+    }
+    archive={[Function]}
+    index={1}
+    key="2"
+  />
+  <div
+    data-stylename="add-affiliation"
+    onClick={[Function]}
+  >
+    <div
+      data-stylename="plus"
+    >
+      +
+    </div>
+    <div>
+      Add new affiliation
+    </div>
+  </div>
 </div>
 `;

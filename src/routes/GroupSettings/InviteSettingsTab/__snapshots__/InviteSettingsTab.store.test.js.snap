@@ -9,8 +9,8 @@ Object {
         }
       }",
     "variables": Object {
-      "groupId": "1",
       "data": false,
+      "groupId": "1",
     },
   },
   "meta": Object {

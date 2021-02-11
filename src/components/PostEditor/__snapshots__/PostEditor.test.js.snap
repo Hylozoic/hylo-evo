@@ -230,17 +230,17 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={
             Array [
               Object {
                 "id": "1",
-                "name": "test community 1",
+                "name": "test group 1",
               },
               Object {
                 "id": "2",
-                "name": "test community 2",
+                "name": "test group 2",
               },
             ]
           }
@@ -294,19 +294,19 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
     </div>
     <ActionsBar
+      groupCount={2}
       groups={
         Array [
           Object {
             "id": "1",
-            "name": "test community 1",
+            "name": "test group 1",
           },
           Object {
             "id": "2",
-            "name": "test community 2",
+            "name": "test group 2",
           },
         ]
       }
-      communityCount={2}
       id="test"
       loading={false}
       save={[Function]}
@@ -465,17 +465,17 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={
             Array [
               Object {
                 "id": "1",
-                "name": "test community 1",
+                "name": "test group 1",
               },
               Object {
                 "id": "2",
-                "name": "test community 2",
+                "name": "test group 2",
               },
             ]
           }
@@ -529,19 +529,19 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
     </div>
     <ActionsBar
+      groupCount={2}
       groups={
         Array [
           Object {
             "id": "1",
-            "name": "test community 1",
+            "name": "test group 1",
           },
           Object {
             "id": "2",
-            "name": "test community 2",
+            "name": "test group 2",
           },
         ]
       }
-      communityCount={2}
       id="test"
       loading={false}
       save={[Function]}
@@ -559,20 +559,20 @@ Array [
   Array [
     Object {
       "acceptContributions": undefined,
-      "groups": Array [
-        Object {
-          "id": "1",
-          "name": "test community 1",
-        },
-        Object {
-          "id": "2",
-          "name": "test community 2",
-        },
-      ],
       "details": undefined,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
       "fileUrls": undefined,
+      "groups": Array [
+        Object {
+          "id": "1",
+          "name": "test group 1",
+        },
+        Object {
+          "id": "2",
+          "name": "test group 2",
+        },
+      ],
       "id": "test",
       "imageUrls": undefined,
       "isPublic": undefined,
@@ -730,7 +730,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -741,8 +741,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       togglePublic={[Function]}
     />
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -888,7 +888,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -941,8 +941,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1088,7 +1088,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -1141,8 +1141,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1288,7 +1288,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -1341,8 +1341,8 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
     </div>
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1489,7 +1489,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -1500,8 +1500,8 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -1517,20 +1517,20 @@ Array [
   Array [
     Object {
       "acceptContributions": undefined,
-      "groups": Array [
-        Object {
-          "id": "1",
-          "name": "test community 1",
-        },
-        Object {
-          "id": "2",
-          "name": "test community 2",
-        },
-      ],
       "details": undefined,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
       "fileUrls": undefined,
+      "groups": Array [
+        Object {
+          "id": "1",
+          "name": "test group 1",
+        },
+        Object {
+          "id": "2",
+          "name": "test group 2",
+        },
+      ],
       "id": undefined,
       "imageUrls": undefined,
       "isPublic": undefined,
@@ -1686,7 +1686,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={true}
           selected={Array []}
         />
@@ -1697,8 +1697,8 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={true}
       save={[Function]}
       submitButtonLabel="Save"
@@ -1845,7 +1845,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={true}
           selected={Array []}
         />
@@ -1856,8 +1856,8 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={true}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2004,7 +2004,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -2016,8 +2016,8 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     />
     <ActionsBar
       canModerate={true}
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2151,7 +2151,7 @@ exports[`PostEditor renders contribution button 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -2184,8 +2184,8 @@ exports[`PostEditor renders contribution button 1`] = `
       </div>
     </div>
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2332,7 +2332,7 @@ exports[`PostEditor renders with min props 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type community name..."
+          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
         />
@@ -2343,8 +2343,8 @@ exports[`PostEditor renders with min props 1`] = `
       togglePublic={[Function]}
     />
     <ActionsBar
+      groupCount={0}
       groups={Array []}
-      communityCount={0}
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
@@ -2360,20 +2360,20 @@ Array [
   Array [
     Object {
       "acceptContributions": undefined,
-      "groups": Array [
-        Object {
-          "id": "1",
-          "name": "test community 1",
-        },
-        Object {
-          "id": "2",
-          "name": "test community 2",
-        },
-      ],
       "details": undefined,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
       "fileUrls": undefined,
+      "groups": Array [
+        Object {
+          "id": "1",
+          "name": "test group 1",
+        },
+        Object {
+          "id": "2",
+          "name": "test group 2",
+        },
+      ],
       "id": "test",
       "imageUrls": undefined,
       "isPublic": undefined,

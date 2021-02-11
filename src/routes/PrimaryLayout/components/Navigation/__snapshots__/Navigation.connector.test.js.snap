@@ -6,12 +6,6 @@ Object {
   "bar": 2,
   "clearBadge": [Function],
   "clearFeedList": undefined,
-  "groupMembership": Object {
-    "group": Object {
-      "id": 2,
-    },
-    "id": 77,
-  },
   "dropPostResultsMaker": [MockFunction] {
     "calls": Array [
       Array [
@@ -26,6 +20,12 @@ Object {
     ],
   },
   "foo": 1,
+  "groupMembership": Object {
+    "group": Object {
+      "id": 2,
+    },
+    "id": 77,
+  },
   "resetNewPostCount": [MockFunction],
 }
 `;
