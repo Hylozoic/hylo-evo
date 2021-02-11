@@ -25,7 +25,10 @@ const INITIAL_SUBCOMMENTS_DISPLAYED = 2
 class Comment extends Component {
   static propTypes = {
     comment: object.isRequired,
-    onReplyComment: func.isRequired
+    onReplyComment: func.isRequired,
+    updateComment: func,
+    deleteComment: func,
+    removeComment: func
   }
 
   state = {
@@ -45,7 +48,7 @@ class Comment extends Component {
     }
 
     this.setState({ editing: false })
-    this.props.updateComment(contentStateToHTML(editorState.getCurrentContent()))
+    this.props.updateComment(comment.id, contentStateToHTML(editorState.getCurrentContent()))
   }
 
   render () {
@@ -58,8 +61,8 @@ class Comment extends Component {
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
-      { icon: 'Trash', label: 'Delete', onClick: deleteComment },
-      { icon: 'Trash', label: 'Remove', onClick: removeComment }
+      { icon: 'Trash', label: 'Delete', onClick: deleteComment ? () => deleteComment(comment.id) : null },
+      { icon: 'Trash', label: 'Remove', onClick: removeComment ? () => removeComment(comment.id) : null }
     ])
 
     return (
@@ -98,6 +101,9 @@ export default class CommentWithReplies extends Component {
   static propTypes = {
     comment: object.isRequired,
     createComment: func.isRequired, // bound by Comments.connector & Comment.connector
+    updateComment: func,
+    deleteComment: func,
+    removeComment: func,
     onReplyThread: func
   }
 

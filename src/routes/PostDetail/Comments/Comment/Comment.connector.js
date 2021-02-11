@@ -46,17 +46,17 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { comment } = ownProps
 
   const deleteCommentWithConfirm = isCreator
-    ? () => window.confirm('Are you sure you want to delete this comment?') &&
-      dispatchProps.deleteComment(comment.id)
+    ? (commentId) => window.confirm('Are you sure you want to delete this comment?') &&
+      dispatchProps.deleteComment(commentId)
     : null
 
   const removeCommentWithConfirm = !isCreator && canModerate
-    ? () => window.confirm('Are you sure you want to remove this comment?') &&
-      dispatchProps.deleteComment(comment.id)
+    ? (commentId) => window.confirm('Are you sure you want to remove this comment?') &&
+      dispatchProps.deleteComment(commentId)
     : null
 
   const updateComment = isCreator
-    ? text => dispatchProps.updateComment(comment.id, text)
+    ? (commentId, text) => dispatchProps.updateComment(commentId, text)
     : null
 
   const cursor = !isEmpty(comment.childComments) && comment.childComments[0].id
