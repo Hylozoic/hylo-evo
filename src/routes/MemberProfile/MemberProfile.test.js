@@ -63,7 +63,7 @@ describe('MemberProfile', () => {
       currentTab: 'Posts'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes("Rich's posts")).toBe(true)
+    expect(wrapper.text().includes("Rich Churcher's posts")).toBe(true)
   })
 
   it('renders MemberComments on Comments', () => {
@@ -72,7 +72,7 @@ describe('MemberProfile', () => {
       currentTab: 'Comments'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes("Rich's comments")).toBe(true)
+    expect(wrapper.text().includes("Rich Churcher's comments")).toBe(true)
   })
 
   it('renders MemberVotes on Upvotes', () => {
@@ -81,6 +81,6 @@ describe('MemberProfile', () => {
       currentTab: 'Upvotes'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes("Rich's upvotes")).toBe(true)
+    expect(wrapper.text().includes("Rich Churcher's upvotes")).toBe(true)
   })
 })

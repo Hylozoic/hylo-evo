@@ -5,14 +5,14 @@ import Membership from './Membership'
 describe('Membership', () => {
   it('matches last snapshot', () => {
     const props = {
-      membership: { 
+      membership: {
         id: "1",
         lastViewedAt: "2020-12-11T01:21:22.424Z",
         newPostCount: null,
         hasModeratorRole: true,
         settings: { "sendEmail": null,
         sendPushNotifications: null },
-        community: {
+        group: {
           id: "53",
           name: "Backyard Birders",
           slug: "bb",

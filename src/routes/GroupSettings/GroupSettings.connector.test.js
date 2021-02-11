@@ -26,7 +26,7 @@ describe('mapStateToProps', () => {
     const props = {
       match: {
         params: {
-          slug: 'foo'
+          groupSlug: 'foo'
         }
       }
     }
@@ -36,10 +36,10 @@ describe('mapStateToProps', () => {
 
 describe('mergeProps', () => {
   it('merges the props', () => {
-    const slug = 'foo'
+    const groupSlug = 'foo'
     const dispatch = x => x
     const ownProps = {}
-    const stateProps = mapStateToProps(state, { match: { params: { slug } } })
+    const stateProps = mapStateToProps(state, { match: { params: { groupSlug } } })
     const dispatchProps = mapDispatchToProps(dispatch, stateProps)
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
     expect(mergedProps.fetchGroupSettings()).toMatchSnapshot()

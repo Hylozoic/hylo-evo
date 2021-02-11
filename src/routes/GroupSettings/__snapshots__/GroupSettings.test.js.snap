@@ -2,7 +2,7 @@
 
 exports[`renders a redirect if you can not moderate 1`] = `
 <Redirect
-  to="/c/foo"
+  to="/groups/foo"
 />
 `;
 
@@ -21,29 +21,19 @@ exports[`renders correctly with a group 1`] = `
           }
         />,
         "name": "Settings",
-        "path": "/c/foo/settings",
+        "path": "/groups/foo/settings",
       },
       Object {
-<<<<<<< HEAD:src/routes/GroupSettings/__snapshots__/GroupSettings.test.js.snap
-        "component": <Connect(ModeratorsSettingsTab)
-          groupId={1}
-=======
         "component": <Memo(Connect(ModeratorsSettingsTab))
-          communityId={1}
->>>>>>> dev:src/routes/CommunitySettings/__snapshots__/CommunitySettings.test.js.snap
+          groupId={1}
           slug="foo"
         />,
         "name": "Moderators",
-        "path": "/c/foo/settings/moderators",
+        "path": "/groups/foo/settings/moderators",
       },
       Object {
-<<<<<<< HEAD:src/routes/GroupSettings/__snapshots__/GroupSettings.test.js.snap
-        "component": <Connect(TopicsSettingsTab)
-          group={
-=======
         "component": <Memo(Connect(TopicsSettingsTab))
-          community={
->>>>>>> dev:src/routes/CommunitySettings/__snapshots__/CommunitySettings.test.js.snap
+          group={
             Object {
               "id": 1,
               "name": "Foomunity",
@@ -52,16 +42,11 @@ exports[`renders correctly with a group 1`] = `
           }
         />,
         "name": "Topics",
-        "path": "/c/foo/settings/topics",
+        "path": "/groups/foo/settings/topics",
       },
       Object {
-<<<<<<< HEAD:src/routes/GroupSettings/__snapshots__/GroupSettings.test.js.snap
-        "component": <Connect(InviteSettingsTab)
-          group={
-=======
         "component": <Memo(Connect(InviteSettingsTab))
-          community={
->>>>>>> dev:src/routes/CommunitySettings/__snapshots__/CommunitySettings.test.js.snap
+          group={
             Object {
               "id": 1,
               "name": "Foomunity",
@@ -70,16 +55,11 @@ exports[`renders correctly with a group 1`] = `
           }
         />,
         "name": "Invite",
-        "path": "/c/foo/settings/invite",
+        "path": "/groups/foo/settings/invite",
       },
       Object {
-<<<<<<< HEAD:src/routes/GroupSettings/__snapshots__/GroupSettings.test.js.snap
-        "component": <Connect(MembershipRequestsTab)
-          group={
-=======
         "component": <Memo(Connect(MembershipRequestsTab))
-          community={
->>>>>>> dev:src/routes/CommunitySettings/__snapshots__/CommunitySettings.test.js.snap
+          group={
             Object {
               "id": 1,
               "name": "Foomunity",
@@ -88,7 +68,20 @@ exports[`renders correctly with a group 1`] = `
           }
         />,
         "name": "Join Requests",
-        "path": "/c/foo/settings/requests",
+        "path": "/groups/foo/settings/requests",
+      },
+      Object {
+        "component": <Memo(Connect(RelatedGroupsTab))
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Related Groups",
+        "path": "/groups/foo/settings/relationships",
       },
       Object {
         "component": <ImportExportSettingsTab
@@ -101,7 +94,7 @@ exports[`renders correctly with a group 1`] = `
           }
         />,
         "name": "",
-        "path": "/c/foo/settings/import",
+        "path": "/groups/foo/settings/import",
       },
       Object {
         "component": <DeleteSettingsTab
@@ -114,11 +107,11 @@ exports[`renders correctly with a group 1`] = `
           }
         />,
         "name": "Delete",
-        "path": "/c/foo/settings/delete",
+        "path": "/groups/foo/settings/delete",
       },
     ]
   }
-  goToOnClose="/c/foo"
+  goToOnClose="/groups/foo"
 />
 `;
 

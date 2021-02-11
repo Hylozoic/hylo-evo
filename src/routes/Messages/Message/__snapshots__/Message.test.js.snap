@@ -10,7 +10,7 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
   >
     <Avatar
       avatarUrl="http://avatar.com/i.png"
-      url="/m/1"
+      url="/all/members/1"
     />
   </div>
   <div
@@ -79,7 +79,7 @@ exports[`to match the latest snapshot 1`] = `
   >
     <Avatar
       avatarUrl="http://avatar.com/i.png"
-      url="/m/1"
+      url="/all/members/1"
     />
   </div>
   <div

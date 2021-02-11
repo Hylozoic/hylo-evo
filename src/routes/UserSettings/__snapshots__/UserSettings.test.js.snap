@@ -25,11 +25,11 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings",
       },
       Object {
-        "component": <Memo(Connect(CommunitySettingsTab))
+        "component": <Memo(Connect(UserGroupsTab))
           personId={1}
         />,
         "name": "Affiliations",
-        "path": "/settings/communities",
+        "path": "/settings/groups",
       },
       Object {
         "component": <NotificationSettingsTab

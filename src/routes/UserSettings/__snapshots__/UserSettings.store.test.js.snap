@@ -23,7 +23,7 @@ exports[`updateAllMemberships matches snapshot 1`] = `
 Object {
   "graphql": Object {
     "query": "mutation {
-
+    
     alias1: updateMembership(groupId: 1, data: {settings: {sendEmail:true}}) {
       id
     }
@@ -35,7 +35,7 @@ Object {
     alias5: updateMembership(groupId: 5, data: {settings: {sendEmail:true}}) {
       id
     }
-
+  
   }",
   },
   "meta": Object {

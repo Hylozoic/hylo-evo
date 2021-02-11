@@ -34,7 +34,7 @@ describe('connector', () => {
 
     const { groups, person } = normalized
     session.Person.create(person)
-    session.group.create(groups[0])
+    session.Group.create(groups[0])
     session.Post.create(normalized.posts[1])
     session.Vote.create(normalized.votes[0])
     state = { orm: session.state }

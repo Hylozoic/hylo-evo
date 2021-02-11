@@ -8,7 +8,7 @@ describe('mapStateToProps', () => {
   }
   const matchProps = {
     params: {
-      slug: 'foo'
+      groupSlug: 'foo'
     }
   }
 
@@ -62,7 +62,7 @@ describe('mapStateToProps', () => {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           topicName: 'petitions'
         }
       }
@@ -77,7 +77,7 @@ describe('mapStateToProps', () => {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           topicName: 'petitions'
         }
       }
@@ -92,7 +92,7 @@ describe('mapStateToProps', () => {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           postId: '24'
         }
       }
@@ -107,7 +107,7 @@ describe('mapStateToProps', () => {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           topicName: 'petitions'
         }
       }
@@ -140,10 +140,10 @@ describe('mapDispatchToProps', () => {
     const props = {
       location: {
         search: '?s=votes&t=offer',
-        pathname: '/c/foo'
+        pathname: '/groups/foo'
       },
       match: {
-        params: { slug: 'foo' }
+        params: { groupSlug: 'foo' }
       }
     }
 
@@ -158,11 +158,11 @@ describe('mapDispatchToProps', () => {
       const props = {
         location: {
           search: '?s=votes&t=offer',
-          pathname: '/c/foo/petitions'
+          pathname: '/groups/foo/petitions'
         },
         match: {
           params: {
-            slug: 'foo',
+            groupSlug: 'foo',
             topicName: 'petitions'
           }
         }
