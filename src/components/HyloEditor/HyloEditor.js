@@ -23,7 +23,8 @@ export default class HyloEditor extends Component {
     findTopics: PropTypes.func.isRequired,
     clearTopics: PropTypes.func.isRequired,
     mentionResults: PropTypes.array,
-    topicResults: PropTypes.array
+    topicResults: PropTypes.array,
+    focusOnRender: PropTypes.bool
   }
 
   static defaultProps = {
@@ -31,6 +32,7 @@ export default class HyloEditor extends Component {
     readOnly: false,
     mentionResults: [],
     topicResults: [],
+    focusOnRender: false,
     themes: {
       base: {
         mention: styles.mention,
@@ -52,6 +54,7 @@ export default class HyloEditor extends Component {
   defaultState = ({ contentHTML }) => {
     return {
       editorState: this.getEditorStateFromHTML(contentHTML),
+      didInitialFocus: false,
       submitOnReturnEnabled: true
     }
   }
@@ -81,8 +84,17 @@ export default class HyloEditor extends Component {
   }
 
   componentDidUpdate (prevProps) {
+    // regenerate state from content if HTML changes
     if (this.props.contentHTML !== prevProps.contentHTML) {
       this.setState(this.defaultState(this.props))
+    }
+
+    // handle initial focus behaviour
+    if (this.props.focusOnRender !== prevProps.focusOnRender) {
+      this.setState({ didInitialFocus: false })
+    }
+    if (this.props.focusOnRender && !this.state.didInitialFocus) {
+      this.focus()
     }
   }
 
@@ -171,7 +183,18 @@ export default class HyloEditor extends Component {
     return true
   }
 
-  focus = () => this.editor.current && this.editor.current.focus()
+  focus = () => {
+    if (!this.editor.current) {
+      return
+    }
+
+    // Focus and ensure editor caret is at the end, in case of injected content.
+    // Note this does not scroll the page, use `react-scroll-into-view` if you need that.
+    this.setState({
+      editorState: EditorState.moveFocusToEnd(this.state.editorState),
+      didInitialFocus: true
+    })
+  }
 
   render () {
     const { MentionSuggestions } = this._mentionsPlugin

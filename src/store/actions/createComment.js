@@ -5,6 +5,7 @@ import CreateCommentMutation from 'graphql/mutations/CreateCommentMutation.graph
 
 export default function createComment ({
   postId,
+  parentCommentId,
   text,
   attachments
 }) {
@@ -14,6 +15,7 @@ export default function createComment ({
       query: CreateCommentMutation,
       variables: {
         postId,
+        parentCommentId,
         text,
         attachments
       }

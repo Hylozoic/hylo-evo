@@ -1,3 +1,24 @@
+// :TODO: clean this up and use proper query fragments?
+const CommentFieldsFragment = `
+  id
+  text
+  creator {
+    id
+    name
+    avatarUrl
+  }
+  attachments {
+    id
+    position
+    type
+    url
+  }
+  parentComment {
+    id
+  }
+  createdAt
+`
+
 const postFieldsFragment = withComments => `
   id
   announcement
@@ -24,20 +45,17 @@ const postFieldsFragment = withComments => `
   commentersTotal
   ${withComments ? `comments(first: 10, order: "desc") {
     items {
-      id
-      text
-      creator {
-        id
-        name
-        avatarUrl
+      ${CommentFieldsFragment}
+      childComments(first: 10, order: "desc") {
+        items {
+          ${CommentFieldsFragment}
+          post {
+            id
+          }
+        }
+        total
+        hasMore
       }
-      attachments {
-        id
-        position
-        type
-        url
-      }
-      createdAt
     }
     total
     hasMore
@@ -135,6 +153,7 @@ const postFieldsFragment = withComments => `
         }
       }
     }
-  }`
+  }
+`
 
 export default postFieldsFragment
