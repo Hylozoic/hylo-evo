@@ -2,3 +2,11 @@
   margin: 0 auto;
   overflow: auto; // prevent margin collapse
 }
+
+// :DUPE: @see FeedList.scss
+.card-item {
+  margin: 0 $space-4x $space-6x;
+}
+.expanded {
+  margin: 0 $space-2x $space-6x;
+}
