@@ -98,6 +98,7 @@ $color-catskill-white: #F9FAFC;
 $color-slate-gray-80: rgba(#67768A, .6);
 $color-saltpan: #FAFCFB;
 $color-loblolly: #BFC5CD;
+$color-box-shadow: rgba(0, 0, 0, 0.15);
 
 // post types
 
@@ -191,6 +192,9 @@ $color-pale-pink: #FFD6DF;
 
 // Member
 $color-member: #2A4059;
+
+// Shadows
+$box-shadow-default: 0px 4px 15px $color-box-shadow;
 
 // Fonts
 @mixin font-regular {
