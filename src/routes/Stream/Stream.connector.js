@@ -20,9 +20,10 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
   const context = getRouteParam('context', state, props)
 
-  const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props)
-  const sortBy = getQuerystringParam('s', state, props)
+  const sortBy = getQuerystringParam('s', state, props) || 'created'
+  const viewMode = getQuerystringParam('v', state, props) || 'list'
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -48,6 +49,7 @@ export function mapStateToProps (state, props) {
     selectedPostId: getRouteParam('postId', state, props),
     postTypeFilter,
     sortBy,
+    viewMode,
     posts,
     hasMore,
     pending: state.pending[FETCH_POSTS]
@@ -58,6 +60,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     changeTab: tab => dispatch(changeQuerystringParam(props, 't', tab, 'all')),
     changeSort: sort => dispatch(changeQuerystringParam(props, 's', sort, 'all')),
+    changeView: view => dispatch(changeQuerystringParam(props, 'v', view, 'all')),
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
     }
