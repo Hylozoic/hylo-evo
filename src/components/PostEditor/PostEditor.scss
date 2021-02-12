@@ -52,29 +52,27 @@ $wrapperBorderRadius: 8px;
 }
 
 .icon {
+  margin: 0 0 0 12px;
+}
+
+.icon {
   &-discussion {
     color: $color-discussions;
-    margin: 0 0 0 12px;
   }
   &-request {
     color: $color-requests;
-    margin: 0 0 0 12px;
   }
   &-offer {
     color: $color-offers;
-    margin: 0 0 0 12px;
   }
   &-resource {
     color: $color-resources;
-    margin: 0 0 0 12px;
   }
   &-project {
     color: $color-projects;
-    margin: 0 0 0 12px;
   }
   &-event {
     color: $color-events;
-    margin: 0 0 0 12px;
   }
 }
 

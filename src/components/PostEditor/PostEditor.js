@@ -201,7 +201,7 @@ export default class PostEditor extends React.Component {
         [styles[`selectable`]]: !loading && !active
       }
     )
-    const label = active ? <span styleName='initial-prompt'>Create {forPostType} <Icon styleName={`icon-${forPostType}`} name='ArrowDown' /></span> : forPostType
+    const label = active ? <span styleName='initial-prompt'>Create {forPostType} <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' /></span> : forPostType
     return {
       label,
       onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection,
