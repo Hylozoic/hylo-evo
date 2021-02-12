@@ -1,131 +1,203 @@
-import { find } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 
+import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import TextInput from 'components/TextInput'
 import RoundImage from 'components/RoundImage'
 import { DEFAULT_AVATAR } from 'store/models/Group'
+import { GROUP_RELATIONSHIP_TYPE } from 'store/models/GroupRelationshipInvite'
 import { groupUrl } from 'util/navigation'
 
 import './RelatedGroupsTab.scss'
 
-// import ScrollListener from 'components/ScrollListener'
-// import { CENTER_COLUMN_ID } from 'util/scrolling'
-
-const { string, array, func } = PropTypes
-
-const sortOptions = [
-  { id: 'name', label: 'Alphabetical' },
-  { id: 'num_members', label: 'Popular' },
-  { id: 'created_at', label: 'Newest' }
-]
-
 export default class RelatedGroupsTab extends Component {
   static propTypes = {
-    childGroups: array,
-    parentGroups: array,
-    search: string,
-    setSearch: func,
-    sortBy: string,
-    setSort: func
+    childGroups: PropTypes.array.isRequired,
+    deleteGroupRelationship: PropTypes.func.isRequired,
+    group: PropTypes.object.isRequired,
+    inviteGroupToJoinParent: PropTypes.func.isRequired,
+    parentGroups: PropTypes.array.isRequired,
+    possibleChildren: PropTypes.array.isRequired,
+    possibleParents: PropTypes.array.isRequired,
+    requestToAddGroupToParent: PropTypes.func.isRequired,
+    search: PropTypes.string,
+    setSearch: PropTypes.func
   }
 
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      showInviteAsChildPicker: false,
+      showRequestToJoinPicker: false
+    }
   }
 
-  componentDidUpdate (prevProps) {
-    // const { search, sortBy, fetchMoreGroups, groupsTotal } = this.props
-    // if (search !== prevProps.search || sortBy !== prevProps.sortBy) {
-    //   fetchMoreGroups()
-    // }
+  toggleInviteAsChildPicker = () => {
+    this.setState({ showInviteAsChildPicker: !this.state.showInviteAsChildPicker })
+  }
 
-    // if (groupsTotal && !this.state.groupsTotal) {
-    //   this.setState({ groupsTotal })
-    // }
+  toggleRequestToJoinPicker = () => {
+    this.setState({ showRequestoJoinPicker: !this.state.showRequestoJoinPicker })
   }
 
   render () {
-    const { childGroups, parentGroups } = this.props
-    // const { groupsTotal } = this.state
+    const {
+      acceptGroupRelationshipInvite,
+      cancelGroupRelationshipInvite,
+      deleteGroupRelationship,
+      group,
+      childGroups,
+      groupInvitesToJoinUs,
+      groupInvitesToJoinThem,
+      groupRequestsToJoinUs,
+      groupRequestsToJoinThem,
+      inviteGroupToJoinParent,
+      parentGroups,
+      possibleChildren,
+      possibleParents,
+      rejectGroupRelationshipInvite,
+      requestToAddGroupToParent
+    } = this.props
+
+    const relationshipDropdownItems = (fromGroup, toGroup, type) => [
+      {
+        icon: 'Trash',
+        label: type === GROUP_RELATIONSHIP_TYPE.ParentToChild ? 'Remove Child' : 'Leave Parent',
+        onClick: () => {
+          if (window.confirm(`Are you sure you want to ${GROUP_RELATIONSHIP_TYPE.ParentToChild ? 'remove' : 'leave'} ${group.name}?`)) {
+            deleteGroupRelationship(fromGroup.id, toGroup.id)
+          }
+        },
+        red: true
+      }
+    ]
 
     return <div styleName='container'>
-      <Banner text='Parent Groups' groupsTotal={parentGroups.length} />
       {/* <SearchBar
         search={search}
         setSearch={setSearch}
-        sortBy={sortBy}
-        setSort={setSort} /> */}
-      <GroupsList
-        groups={parentGroups}
-      />
-      <Banner text='Child Groups' groupsTotal={childGroups.length} />
-      {/* <SearchBar
-        search={search}
-        setSearch={setSearch}
-        sortBy={sortBy}
-        setSort={setSort} /> */}
-      <GroupsList
-        groups={childGroups}
-      />
+         /> */}
+
+      <h1>Parent Groups</h1>
+      <p>These are the {parentGroups.length} groups that {group.name} is a member of</p>
+      <div styleName='group-list' >
+        {parentGroups.map(p => <GroupCard
+          group={p}
+          key={p.id}
+          actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(p, group, GROUP_RELATIONSHIP_TYPE.ChildToParent)} />}
+        />)}
+      </div>
+
+      <h3>Open Invitations to Join Other Groups</h3>
+      {groupInvitesToJoinThem.map(invite => {
+        return <GroupCard
+          group={invite.fromGroup}
+          key={invite.id}
+          actionMenu={<div>
+            <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}>X</span>
+            <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}>Join</span>
+          </div>}
+        />
+      })}
+
+      <h3>Pending requests to join other groups</h3>
+      {groupRequestsToJoinThem.map(invite => {
+        return <GroupCard
+          group={invite.toGroup}
+          key={invite.id}
+          actionMenu={<div>
+            <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>Cancel Pending Request</span>
+          </div>}
+        />
+      })}
+      <div styleName='group-picker-container'>
+        <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>Request Membership</Button>
+        {this.state.showRequestoJoinPicker && <div styleName='group-picker'>
+          <h3>Request group membership in {group.name}</h3>
+          <div styleName='group-picker-list'>
+            {possibleParents.map(membership => <div key={membership.id}>
+              <span styleName='invite-button' onClick={requestToAddGroupToParent(membership.group.id, group.id)}>
+                {membership.hasModeratorRole ? 'Join' : 'Request'}
+              </span>
+              {membership.group.name}
+            </div>)}
+          </div>
+        </div>}
+      </div>
+
+      <h1>Child Groups</h1>
+      <p>These {childGroups.length} groups are members of {group.name}</p>
+      <div styleName='group-list' >
+        {childGroups.map(c =>
+          <GroupCard
+            group={c}
+            key={c.id}
+            actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(group, c, GROUP_RELATIONSHIP_TYPE.ParentToChild)} />}
+          />)}
+      </div>
+
+      <h3>Requests to join {group.name}</h3>
+      {groupRequestsToJoinUs.map(invite => {
+        return <GroupCard
+          group={invite.fromGroup}
+          key={invite.id}
+          actionMenu={<div>
+            <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}>X</span>
+            <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}>Approve</span>
+          </div>}
+        />
+      })}
+
+      <h3>Pending invites to join {group.name}</h3>
+      {groupInvitesToJoinUs.map(invite => {
+        return <GroupCard
+          group={invite.toGroup}
+          key={invite.id}
+          actionMenu={<div>
+            <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>Cancel Pending Invite</span>
+          </div>}
+        />
+      })}
+      <div styleName='group-picker-container'>
+        <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>Invite</Button>
+        {this.state.showInviteAsChildPicker && <div styleName='group-picker'>
+          <h3>Invite other groups to join {group.name} </h3>
+          <div styleName='group-picker-list'>
+            {possibleChildren.map(membership => <div key={membership.id}>
+              <span styleName='invite-button' onClick={inviteGroupToJoinParent(group.id, membership.group.id)}>
+                {membership.hasModeratorRole ? 'Add' : 'Invite'}
+              </span>
+              {membership.group.name}
+            </div>)}
+          </div>
+        </div>}
+      </div>
+
     </div>
   }
 }
 
-export function Banner ({ text, groupsTotal }) {
-  return <div styleName='banner'>
-    <div styleName='banner-text'>
-      <div styleName='stats'>
-        {groupsTotal} {text}
-      </div>
-    </div>
-    {/* <Icon name='More' styleName='icon' /> */}
-  </div>
-}
+// export function SearchBar ({ search, setSearch }) {
+//   var selected = find(o => o.id === sortBy, sortOptions)
 
-export function SearchBar ({ search, setSearch, sortBy, setSort }) {
-  var selected = find(o => o.id === sortBy, sortOptions)
+//   if (!selected) selected = sortOptions[0]
 
-  if (!selected) selected = sortOptions[0]
+//   return <div styleName='search-bar'>
+//     <TextInput styleName='search-input'
+//       value={search}
+//       placeholder='Search groups by name'
+//       onChange={event => setSearch(event.target.value)} />
+//   </div>
+// }
 
-  return <div styleName='search-bar'>
-    <TextInput styleName='search-input'
-      value={search}
-      placeholder='Search by name'
-      onChange={event => setSearch(event.target.value)} />
-    <Dropdown styleName='search-order'
-      toggleChildren={<span styleName='search-sorter-label'>
-        {selected.label}
-        <Icon name='ArrowDown' />
-      </span>}
-      items={sortOptions.map(({ id, label }) => ({
-        label,
-        onClick: () => setSort(id)
-      }))}
-      alignRight />
-  </div>
-}
-
-export function GroupsList ({ groups, fetchMoreGroups }) {
-  return <div styleName='group-list' >
-    {groups.map(c => <GroupCard group={c} key={c.id} />)}
-    {/* <ScrollListener onBottom={() => fetchMoreGroups()}
-      elementId={CENTER_COLUMN_ID} /> */}
-  </div>
-}
-
-export function GroupCard ({ group }) {
+export function GroupCard ({ group, type, actionMenu }) {
   return <div styleName='group-card'>
-    <Link to={groupUrl(group.slug)}>
+    <div styleName='group-details'>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
-      <div styleName='group-details'>
-        <span styleName='group-name'>{group.name}</span>
-        <span styleName='group-stats'>{group.numMembers} Members</span>
-      </div>
-    </Link>
+      <Link to={groupUrl(group.slug)}><span styleName='group-name'>{group.name}</span></Link>
+      {actionMenu}
+    </div>
   </div>
 }

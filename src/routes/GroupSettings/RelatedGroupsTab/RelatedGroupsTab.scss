@@ -1,32 +1,8 @@
 .container { /* !empty */ }
 
-// Banner
-.banner {
-  background-color: $color-athens-gray;
-  height: 120px;
-  width: 100%;
-  display: flex;
-  margin-top: 25px;
-  margin-bottom: 40px;
-}
-
-.banner-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 100%;
-  justify-content: center;
-  margin-left: 25px;
-}
-
-.name {
-  composes: hdr-display from 'css/typography.scss';
-  margin-bottom: 5px;
-}
-
-.stats {
-  composes: caption-lt-lg from 'css/typography.scss';
-  font-size: 13px;
+.content-margins {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .icon {
@@ -34,9 +10,37 @@
   align-self: flex-start;
 }
 
-.content-margins {
-  margin-left: 20px;
-  margin-right: 20px;
+// Group invite/request picker
+.group-picker-container {
+  position: relative;
+}
+
+.connect-button {
+}
+
+.group-picker {
+  position: absolute;
+  width: 300px;
+  background: white;
+  border: 1px solid gray;
+  z-index: 1;
+  left: 300px;
+  top: 40px;
+}
+
+.group-picker-list {
+  height: 150px;
+  overflow-y: auto;
+}
+
+.invite-button {
+  padding: 0px 10px;
+  color: green;
+  cursor: pointer;
+
+  &:hover {
+    color: darkgreen;
+  }
 }
 
 // SearchBar
@@ -85,7 +89,7 @@
 
 .group-details {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: center;
 }
@@ -101,4 +105,16 @@
   color: $color-rhino-60;
   @include font-regular;
   font-size: 14px;
+}
+
+.accept-button {
+  cursor: pointer;
+}
+
+.cancel-button {
+  cursor: pointer;
+}
+
+.reject-button {
+  cursor: pointer;
 }

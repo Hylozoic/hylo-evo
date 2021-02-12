@@ -1,47 +1,19 @@
-export const MODULE_NAME = 'Groups'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import { getCurrentlyRelatedGroupIds } from 'store/selectors/getGroupRelationships'
+import getMyModeratedGroups from 'store/selectors/getMyModeratedGroups'
+import getRouteParam from 'store/selectors/getRouteParam'
 
-// Constants
-export const INVITE_CHILD_TO_JOIN_PARENT_GROUP = `${MODULE_NAME}/INVITE_CHILD_TO_JOIN_PARENT_GROUP`
-export const REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP = `${MODULE_NAME}/REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP`
-
-// TODO: how do we know whether we are getting a request back or a new relationship?
-export function inviteGroupToJoinParent (parentId, childId) {
-  return {
-    type: INVITE_CHILD_TO_JOIN_PARENT_GROUP,
-    graphql: {
-      query: `mutation ($parentId: ID, $childId: ID) {
-        inviteGroupToJoinParent(parentId: $parentId, childId: $childId) {
-          success
-        }
-      }`,
-      variables: { parentId, childId }
-    },
-    meta: {
-      parentId,
-      childId,
-      optimistic: true
-    }
+export const getPossibleRelatedGroups = ormCreateSelector(
+  orm,
+  getGroupForCurrentRoute,
+  (session, props) => getCurrentlyRelatedGroupIds(session, { groupSlug: getRouteParam('groupSlug', session, props) }),
+  getMyModeratedGroups,
+  (session, group, currentRelationships, moderatedGroups) => {
+    // TODO: check for cycles, cant add a grandparent as a child
+    return moderatedGroups.filter(mg => {
+      return mg.id !== group.id && !currentRelationships.includes(mg.id)
+    }).sort((a, b) => a.name.localeCompare(b.name))
   }
-}
-
-export function requestToAddGroupToParent (parentId, childId) {
-  return {
-    type: REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
-    graphql: {
-      query: `mutation ($parentId: ID, $childId: ID) {
-        requestToAddGroupToParent(parentId: $parentId, childId: $childId) {
-          success
-        }
-      }`,
-      variables: { parentId, childId }
-    },
-    meta: {
-      parentId,
-      childId,
-      optimistic: true
-    }
-  }
-}
-
-// Selectors
-export const moduleSelector = (state) => state[MODULE_NAME]
+)

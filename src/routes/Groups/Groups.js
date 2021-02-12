@@ -14,7 +14,6 @@ export default class Groups extends Component {
   static propTypes = {
     childGroups: PropTypes.array,
     group: PropTypes.object,
-    groupSlug: PropTypes.string,
     parentGroups: PropTypes.array,
     possibleChildren: PropTypes.array,
     possibleParents: PropTypes.array
@@ -78,18 +77,18 @@ export default class Groups extends Component {
             {childGroups.length} Child Groups
           </div>
           <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>Request Membership</Button>
+          { this.state.showRequestoJoinPicker && <div styleName='group-picker'>
+            <h3>Request group membership in {group.name}</h3>
+            <div styleName='group-picker-list'>
+              {possibleChildren.map(g => <div key={g.id}>
+                <span styleName='invite-button' onClick={requestToAddGroupToParent(group.id, g.id)}>
+                  {canModerate ? 'Join As' : 'Request As'}
+                </span>
+                {g.name}
+              </div>)}
+            </div>
+          </div>}
         </div>
-        { this.state.showRequestoJoinPicker && <div styleName='group-picker'>
-          <h3>Request group membership in {group.name}</h3>
-          <div styleName='group-picker-list'>
-            {possibleChildren.map(g => <div key={g.id}>
-              <span styleName='invite-button' onClick={requestToAddGroupToParent(group.id, g.id)}>
-                {canModerate ? 'Join As' : 'Request As'}
-              </span>
-              {g.name}
-            </div>)}
-          </div>
-        </div>}
         <GroupsList
           groups={childGroups}
         />

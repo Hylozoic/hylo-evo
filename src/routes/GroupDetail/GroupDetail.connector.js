@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { removeGroupFromUrl } from 'util/navigation'
-import fetchGroup from 'store/actions/fetchGroupById'
+import fetchGroupDetails from 'store/actions/fetchGroupDetails'
 import presentGroup from 'store/presenters/presentGroup'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
@@ -40,7 +40,7 @@ export function mapDispatchToProps (dispatch, props) {
   }
 
   return {
-    fetchGroup: () => dispatch(fetchGroup(groupId)),
+    fetchGroup: () => dispatch(fetchGroupDetails(groupId)),
     fetchJoinRequests: () => { if (currentUser) return dispatch(fetchJoinRequests(groupId)) },
     onClose: () => dispatch(push(closeLocation)),
     joinGroup: (groupId, userId) => dispatch(joinGroup(groupId, userId)),

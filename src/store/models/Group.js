@@ -29,8 +29,8 @@ GroupTopic.fields = {
 export class GroupRelationship extends Model {}
 GroupRelationship.modelName = 'GroupRelationship'
 GroupRelationship.fields = {
-  parentGroup: fk({ to: 'Group', as: 'parent', relatedName: 'childRelationships' }),
-  childGroup: fk({ to: 'Group', as: 'child', relatedName: 'parentRelationships' })
+  parentGroup: fk({ to: 'Group', as: 'parentGroup', relatedName: 'childRelationships' }),
+  childGroup: fk({ to: 'Group', as: 'childGroup', relatedName: 'parentRelationships' })
 }
 
 class Group extends Model {
@@ -49,7 +49,7 @@ Group.fields = {
     to: 'Group',
     relatedName: 'parentGroups',
     through: 'GroupRelationship',
-    throughFields: [ 'parentGroup', 'childGroup' ]
+    throughFields: [ 'childGroup', 'parentGroup' ]
   }),
   feedOrder: attr(),
   id: attr(),
