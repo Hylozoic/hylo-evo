@@ -1,0 +1,51 @@
+.stream-view-ctrls {
+  height: 70px;
+  padding: 17px 20px;
+  border-bottom: 1px solid $color-cape-cod-10;
+}
+
+.dropdown {
+  color: $color-regent;
+  padding: 0 12px;
+  font-size: 12px;
+  border-radius: 30px;
+  margin-right: 1em;
+  border: 1px solid $color-grey-keyline-light;
+}
+
+.dropdown-label {
+  line-height: 2em;
+  position: relative;
+  top: -0.15em;
+
+  span { // icon positioning
+    top: 6px;
+    margin-right: 0.25em;
+    left: -2px;
+  }
+}
+
+.view-mode {
+  float: right;
+  background: $color-white;
+  color: $color-grey-filter-icon;
+  box-shadow: $box-shadow-default;
+  border-radius: 5px;
+  div {
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 3px;
+    width: 23px;
+    height: 23px;
+    margin: 4px;
+
+    &:first-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.mode-active {
+  background: $color-picton-blue;
+  color: $color-white;
+}
