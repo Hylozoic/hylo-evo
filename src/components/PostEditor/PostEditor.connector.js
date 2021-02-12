@@ -1,7 +1,7 @@
 import { get, isEmpty } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push, replace } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'
@@ -66,6 +66,7 @@ export function mapStateToProps (state, props) {
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentGroup)
   const defaultTopics = getDefaultTopics(state, { groupSlug, sortBy: 'name' })
+  const location = get('location', props)
 
   return {
     currentUser,
@@ -94,7 +95,8 @@ export function mapStateToProps (state, props) {
     canModerate,
     myModeratedGroups,
     uploadFileAttachmentPending,
-    uploadImageAttachmentPending
+    uploadImageAttachmentPending,
+    location
   }
 }
 
@@ -102,6 +104,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     goToUrl: url => dispatch(push(url)),
+    changeQueryString: url => dispatch(replace(url)),
     ...bindActionCreators({
       fetchDefaultTopics,
       setAnnouncement,

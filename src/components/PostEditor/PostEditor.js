@@ -158,6 +158,12 @@ export default class PostEditor extends React.Component {
 
   handlePostTypeSelection = event => {
     const type = event.target.textContent.toLowerCase()
+    const { changeQueryString, location } = this.props
+    changeQueryString({
+      pathname: location.pathname,
+      search: `?t=${type}`
+    })
+
     const showPostTypeMenu = this.state.showPostTypeMenu
     this.setState({
       post: { ...this.state.post, type },
@@ -401,8 +407,6 @@ export default class PostEditor extends React.Component {
     const canHaveTimes = type !== 'discussion'
     // Center location autocomplete either on post's current location, or current group's location, or current user's location
     const curLocation = locationObject || get('0.locationObject', groups) || get('locationObject', currentUser)
-    // <span styleName={`postType postType-${type}`}>Create {type}</span>
-    // <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
