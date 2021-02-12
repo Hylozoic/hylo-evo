@@ -50,7 +50,7 @@
 }
 
 .remove-suggested-topic-button {
-  border: 1px solid #E1E5E9;
+  border: 1px solid $color-grey-keyline-light;
   border-radius: 50%;
   position: absolute;
   right: 10px;
@@ -131,7 +131,7 @@
 
 .visibility-dropdown {
   composes: text-button from 'css/typography.scss';
-  border: 1px solid #E1E5E9;
+  border: 1px solid $color-grey-keyline-light;
   box-sizing: border-box;
   border-radius: 30px;
   font-size: 16px;

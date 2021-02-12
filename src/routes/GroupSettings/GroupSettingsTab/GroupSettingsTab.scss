@@ -27,7 +27,7 @@
 
 .groupPrivacySection {
   background: rgba(244, 247, 250, 0.56);
-  border: 1px dashed #E1E5E9;
+  border: 1px dashed $color-grey-keyline-light;
   padding: 25px;
   margin-bottom: 25px;
   position: relative;
@@ -151,7 +151,7 @@ label {
 
 .groupPrivacySection p {
   font-size: 12px;
-  border-bottom: 1px dashed #E1E5E9;
+  border-bottom: 1px dashed $color-grey-keyline-light;
   padding-bottom: 20px;
   margin-bottom: 30px;
 }

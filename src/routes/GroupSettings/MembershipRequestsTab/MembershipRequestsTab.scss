@@ -32,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   padding: 20px 0px;
-  border-bottom: 1px solid #E1E5E9;
+  border-bottom: 1px solid $color-grey-keyline-light;
 }
 
 .requestor {
@@ -73,7 +73,7 @@
 .action-buttons div {
   height: 40px;
   box-sizing: border-box;
-  border: 1px solid #E1E5E9;
+  border: 1px solid $color-grey-keyline-light;
   border-radius: 5px;
   font-size: 12px;
   line-height: 15px;
