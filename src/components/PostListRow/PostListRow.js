@@ -60,7 +60,7 @@ const PostListRow = (props) => {
         {!isEmpty(topics) && (
           <div styleName='topics'>
             {topics.slice(0, 3).map(t =>
-              <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name}>#{t.name}</Link>)}
+              <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={(e) => e.stopPropagation()}>#{t.name}</Link>)}
           </div>
         )}
         <div styleName='timestamp'>
