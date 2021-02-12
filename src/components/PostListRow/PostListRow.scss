@@ -23,7 +23,7 @@
 .meta {
   position: absolute;
   top: 10px;
-  right: 0;
+  right: 20px;
   text-align: right;
 }
 
@@ -96,4 +96,9 @@
 // unread state overrides
 .unread {
 
+}
+
+// active state overrides
+.expanded {
+  margin: 0 -1rem;
 }

@@ -13,7 +13,8 @@ const PostListRow = (props) => {
     routeParams,
     post,
     showDetails,
-    voteOnPost
+    voteOnPost,
+    expanded
   } = props
   const {
     title,
@@ -35,7 +36,7 @@ const PostListRow = (props) => {
   const unread = false
 
   return (
-    <div styleName={cx('post-row', { unread })} onClick={showDetails}>
+    <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
       <div styleName='votes'>
         <a onClick={voteOnPost} styleName={cx('vote-button', { voted: myVote })}
           data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
