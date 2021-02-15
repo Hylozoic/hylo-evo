@@ -6,7 +6,7 @@ groups(
   sortBy: $sortBy,
   boundingBox: $boundingBox,
   search: $search,
-  groupSlugs: $groupSlugs
+  parentSlugs: $parentSlugs
 ) {
   items {
     ${groupFieldsFragment(false)}

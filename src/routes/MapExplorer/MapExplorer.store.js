@@ -124,7 +124,7 @@ const publicGroupsQuery = `query (
   $sortBy: String,
   $search: String,
   $boundingBox: [PointInput],
-  $groupSlugs: [String]
+  $parentSlugs: [String]
 ) {
   ${publicGroupsQueryFragment}
 }`
@@ -236,7 +236,7 @@ export function fetchPublicGroups ({ boundingBox, context, sortBy, search, group
         sortBy,
         search,
         boundingBox: formatBoundingBox(boundingBox),
-        groupSlugs,
+        parentSlugs: groupSlugs,
         isPublic: context === 'public'
       }
     },

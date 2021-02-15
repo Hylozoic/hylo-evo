@@ -35,6 +35,10 @@ export function presentMember (person, groupId) {
   }
 }
 
+export function presentGroup (group) {
+  return group.ref
+}
+
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const groupId = group && group.id
@@ -56,7 +60,7 @@ export function mapStateToProps (state, props) {
   const members = getSortedFilteredMembers(state, fetchParams).map(m => presentMember(m, groupId))
   const posts = getSortedFilteredPosts(state, fetchParams).map(p => presentPost(p, groupId))
   const topics = getCurrentTopics(state, fetchParams)
-  const publicGroups = getPublicGroups(state, fetchParams)
+  const publicGroups = getPublicGroups(state, fetchParams).map(g => presentGroup(g))
 
   const me = getMe(state)
   const centerLocation = group && group.locationObject ? group.locationObject.center : me && me.locationObject ? me.locationObject.center : null
