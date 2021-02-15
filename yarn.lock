@@ -8590,9 +8590,9 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils#db1480710970":
+"hylo-utils@https://github.com/Hylozoic/hylo-utils#2ff4926":
   version "1.2.4"
-  resolved "https://github.com/Hylozoic/hylo-utils#db14807109706f3540cf49f9164e300e995faa3d"
+  resolved "https://github.com/Hylozoic/hylo-utils#2ff4926916472cd15c0459a5a7162b9984a4700e"
   dependencies:
     buffer "^5.0.6"
     cheerio "^1.0.0-rc.3"
