@@ -19,8 +19,8 @@ describe('mapStateToProps', () => {
       })
       const meUser = session.Person.create({ id: '1' })
       const otherUser = session.Person.create({ id: '2' })
-      myComment = session.Comment.create({ creator: meUser })
-      otherComment = session.Comment.create({ creator: otherUser })
+      myComment = session.Comment.create({ creator: meUser, parentComment: null })
+      otherComment = session.Comment.create({ creator: otherUser, parentComment: null })
 
       state = {
         orm: session.state
@@ -60,8 +60,8 @@ describe('mapStateToProps', () => {
       })
       const meUser = session.Person.create({ id: '1' })
       const otherUser = session.Person.create({ id: '2' })
-      myComment = session.Comment.create({ creator: meUser })
-      otherComment = session.Comment.create({ creator: otherUser })
+      myComment = session.Comment.create({ creator: meUser, parentComment: null})
+      otherComment = session.Comment.create({ creator: otherUser, parentComment: null })
 
       state = {
         orm: session.state
@@ -87,7 +87,7 @@ describe('mergeProps', () => {
     it('returns a function for deleteComment when canModerate is true and also the creator', () => {
       window.confirm = jest.fn()
       const stateProps = { canModerate: true, isCreator: true }
-      const props = mergeProps(stateProps, {}, {})
+      const props = mergeProps(stateProps, { fetchCommentsMaker: () => {} }, { comment: { childComments: [] } })
       props.deleteComment(1)
       expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to delete this comment?')
       expect(props.removeComment).toBeFalsy()
@@ -96,7 +96,7 @@ describe('mergeProps', () => {
     it('returns a function for removeComment when canModerate is true and not creator', () => {
       window.confirm = jest.fn()
       const stateProps = { canModerate: true, isCreator: false }
-      const props = mergeProps(stateProps, {}, {})
+      const props = mergeProps(stateProps, { fetchCommentsMaker: () => {} }, { comment: { childComments: [] } })
       props.removeComment(1)
       expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to remove this comment?')
       expect(props.deleteComment).toBeFalsy()
@@ -105,7 +105,7 @@ describe('mergeProps', () => {
 
   it('returns null for deleteComment when canModerate is false', () => {
     const stateProps = { canModerate: false }
-    const props = mergeProps(stateProps, {}, {})
+    const props = mergeProps(stateProps, { fetchCommentsMaker: () => {} }, { comment: { childComments: [] } })
     expect(props.deleteComment).toBeNull()
   })
 })

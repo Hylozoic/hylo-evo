@@ -41,7 +41,14 @@ export default class Comments extends Component {
       postId,
       width
     } = this.props
-
+    console.log("derp", comments, comments.map(c => (
+        <Comment
+          key={c.id}
+          comment={c}
+          slug={slug}
+          postId={postId}
+          onReplyThread={this.scrollToReplyInput.bind(this)} />
+      )))
     const style = {
       width: width + 'px'
     }
