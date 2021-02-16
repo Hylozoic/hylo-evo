@@ -15,7 +15,7 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const isCreator = currentUser && (comment.creator.id === currentUser.id)
   const canModerate = currentUser && currentUser.canModerate(group)
-  console.log("comment connector!", comment)
+
   return {
     childCommentsTotal: getTotalChildComments(state, { id: comment.id }),
     hasMoreChildComments: getHasMoreChildComments(state, { id: comment.id }),

@@ -10,7 +10,6 @@ import {
 import createComment from 'store/actions/createComment'
 
 export function mapStateToProps (state, props) {
-  console.log("sxxx", state, props, " copmments:", getComments(state, props))
   return {
     comments: getComments(state, props),
     total: getTotalComments(state, { id: props.postId }),
