@@ -2,6 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
+import Tooltip from 'components/Tooltip'
 import './StreamViewControls.scss'
 
 const sortOptions = [
@@ -37,15 +38,24 @@ const StreamViewControls = (props) => {
   return (
     <div styleName='stream-view-ctrls'>
       <div styleName='view-mode'>
-        <div styleName={cx({ 'mode-active': viewMode === 'cards' })} onClick={() => changeView('cards')}>
+        <div
+          styleName={cx({ 'mode-active': viewMode === 'cards' })}
+          onClick={() => changeView('cards')}
+          data-tip='Card view' data-for='stream-viewmode-tip'
+        >
           <Icon name='CardView' />
         </div>
-        <div styleName={cx({ 'mode-active': viewMode !== 'cards' })} onClick={() => changeView('list')}>
+        <div
+          styleName={cx({ 'mode-active': viewMode !== 'cards' })}
+          onClick={() => changeView('list')}
+          data-tip='List view' data-for='stream-viewmode-tip'
+        >
           <Icon name='ListView' />
         </div>
       </div>
       { makeDropdown(sortBy, sortOptions, changeSort) }
       { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
+      <Tooltip id='stream-viewmode-tip' />
     </div>
   )
 }
