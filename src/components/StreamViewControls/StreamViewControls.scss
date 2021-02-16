@@ -28,7 +28,6 @@
 .view-mode {
   float: right;
   background: $color-white;
-  color: $color-grey-filter-icon;
   box-shadow: $box-shadow-default;
   border-radius: 5px;
   div {
@@ -39,13 +38,38 @@
     height: 23px;
     margin: 4px;
 
+    // icon positioning
+    span {
+      position: relative;
+      line-height: 0;
+      &:global(.icon-CardView) {
+        font-size: 22px;
+        top: 3px;
+      }
+      &:global(.icon-ListView) {
+        font-size: 17px;
+        top: 1px;
+        left: 2px;
+      }
+
+    }
+
+    // button spacing for first element; margin's don't collapse
     &:first-child {
       margin-right: 0;
     }
   }
 }
-
+// icon colouring
+.view-mode {
+  span::before {
+    color: $color-grey-filter-icon;
+  }
+}
 .mode-active {
+  cursor: default;
   background: $color-picton-blue;
-  color: $color-white;
+  span::before {
+    color: $color-white;
+  }
 }

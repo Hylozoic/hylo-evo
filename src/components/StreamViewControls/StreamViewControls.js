@@ -38,10 +38,10 @@ const StreamViewControls = (props) => {
     <div styleName='stream-view-ctrls'>
       <div styleName='view-mode'>
         <div styleName={cx({ 'mode-active': viewMode === 'cards' })} onClick={() => changeView('cards')}>
-          &nbsp;
+          <Icon name='CardView' />
         </div>
         <div styleName={cx({ 'mode-active': viewMode !== 'cards' })} onClick={() => changeView('list')}>
-          &nbsp;
+          <Icon name='ListView' />
         </div>
       </div>
       { makeDropdown(sortBy, sortOptions, changeSort) }
