@@ -125,22 +125,22 @@ export default class GroupSettingsTab extends Component {
         <div styleName='groupPrivacySection'>
           <h3>Visibility</h3>
           <p styleName='privacy-detail'>Who is able to see {group.name}?</p>
-          <div styleName={cx({ on: visibility === GROUP_ACCESSIBILITY.Public })}>
+          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Public })}>
             <label>
-              <input type='radio' name='visibility' value={GROUP_ACCESSIBILITY.Public} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_ACCESSIBILITY.Public} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_ACCESSIBILITY.Public })}>Anyone can find and see {group.name}</span>
+              <input type='radio' name='visibility' value={GROUP_VISIBILITY.Public} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Public} />
+              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Public })}>Anyone can find and see {group.name}</span>
             </label>
           </div>
-          <div styleName={cx({ on: visibility === GROUP_ACCESSIBILITY.Protected })}>
+          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Protected })}>
             <label>
-              <input type='radio' name='visibility' value={GROUP_ACCESSIBILITY.Protected} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_ACCESSIBILITY.Protected} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_ACCESSIBILITY.Protected })}>Only members of parent groups can see {group.name}</span>
+              <input type='radio' name='visibility' value={GROUP_VISIBILITY.Protected} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Protected} />
+              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Protected })}>Only members of parent groups can see {group.name}</span>
             </label>
           </div>
-          <div styleName={cx({ on: visibility === GROUP_ACCESSIBILITY.Hidden })}>
+          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Hidden })}>
             <label>
-              <input type='radio' name='visibility' value={GROUP_ACCESSIBILITY.Hidden} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_ACCESSIBILITY.Hidden} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_ACCESSIBILITY.Hidden })}>Only members of {group.name} can see this group</span>
+              <input type='radio' name='visibility' value={GROUP_VISIBILITY.Hidden} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Hidden} />
+              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Hidden })}>Only members of {group.name} can see this group</span>
             </label>
           </div>
         </div>

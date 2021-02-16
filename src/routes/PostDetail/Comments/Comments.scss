@@ -3,19 +3,12 @@
   padding-bottom: 150px;
 }
 
-// ShowMore
-
-.showMore {
-  padding: 0 25px;
-  margin-bottom: 20px;
-  composes: text-button from 'css/typography.scss';
-}
-
 .form-wrapper {
   position: fixed;
   bottom: 0;
   background-color: #FFF;
   padding: 0 $space-6x;
+  z-index: 1;
 }
 
 .people-typing {
