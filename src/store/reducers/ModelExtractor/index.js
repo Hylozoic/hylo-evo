@@ -52,12 +52,11 @@ export default class ModelExtractor {
       }
 
       if (type instanceof ForeignKey) {
-        return this._walkOne(value, type.toModelName)
+        return this._walkOne(value, getModelName(type, modelName))
       }
 
       if (type instanceof ManyToMany) {
-        const typeModelName = type.toModelName === 'this' ? modelName : type.toModelName
-        return this._walkMany(value, typeModelName)
+        return this._walkMany(value, getModelName(type, modelName))
       }
 
       if (!type && key in model.prototype) {
@@ -67,7 +66,7 @@ export default class ModelExtractor {
         if (type instanceof ForeignKey) {
           // each of the related values needs to have a foreign key back to
           // the current value...
-          this._walkMany(value, type.toModelName, { [type.relatedName]: node.id })
+          this._walkMany(value, getModelName(type, modelName), { [type.relatedName]: node.id })
 
           // ...and because the related values store the foreign key, the
           // current value does not need to record anything about the relation,
@@ -76,8 +75,7 @@ export default class ModelExtractor {
         }
 
         if (type instanceof ManyToMany) {
-          const typeModelName = type.toModelName === 'this' ? modelName : type.toModelName
-          return this._walkMany(value, typeModelName)
+          return this._walkMany(value, getModelName(type, modelName))
         }
       }
 
@@ -111,6 +109,10 @@ export default class ModelExtractor {
       return x.id
     })
   }
+}
+
+function getModelName (type, parentModelName) {
+  return type.toModelName === 'this' ? parentModelName : type.toModelName
 }
 
 // This is more complicated than a simple groupBy(modelName + id).map(merge)

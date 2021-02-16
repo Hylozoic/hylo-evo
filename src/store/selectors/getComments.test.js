@@ -21,6 +21,7 @@ describe('getComments', () => {
                   {
                     id: 11,
                     text: 'eleven',
+                    parentComment: null,
                     attachments: [
                       {
                         id: 111,
@@ -31,6 +32,7 @@ describe('getComments', () => {
                   {
                     id: 12,
                     text: 'twelve',
+                    parentComment: null,
                     attachments: [
                       {
                         id: 121,
@@ -54,6 +56,7 @@ describe('getComments', () => {
                 items: [
                   {
                     id: 21,
+                    parentComment: null,
                     text: 'twentyone',
                     attachments: [
                       {
@@ -65,6 +68,7 @@ describe('getComments', () => {
                   {
                     id: 22,
                     text: 'twentytwo',
+                    parentComment: null,
                     attachments: [
                       {
                         id: 221,
@@ -87,6 +91,7 @@ describe('getComments', () => {
     const state = {
       orm: session.state
     }
+    console.log("xxx", state.orm.Comment)
     const comments = getComments(state, { postId: 1 })
     expect(comments.length).toEqual(2)
     expect(comments.map(c => c.text)).toEqual(['eleven', 'twelve'])
@@ -97,11 +102,11 @@ describe('getComments', () => {
     const session = orm.session(orm.getEmptyState())
     const { Post, Comment } = session;
     [
-      { model: Comment, attrs: { id: '4', post: '1' } },
-      { model: Comment, attrs: { id: '5', post: '2' } },
-      { model: Comment, attrs: { id: '1', post: '1' } },
-      { model: Comment, attrs: { id: '3', post: '2' } },
-      { model: Comment, attrs: { id: '2', post: '1' } },
+      { model: Comment, attrs: { id: '4', post: '1', parentComment: null } },
+      { model: Comment, attrs: { id: '5', post: '2', parentComment: null } },
+      { model: Comment, attrs: { id: '1', post: '1', parentComment: null } },
+      { model: Comment, attrs: { id: '3', post: '2', parentComment: null } },
+      { model: Comment, attrs: { id: '2', post: '1', parentComment: null } },
       { model: Post, attrs: { id: '1' } },
       { model: Post, attrs: { id: '2' } }
     ].forEach(({ model, attrs }) => model.create(attrs))
