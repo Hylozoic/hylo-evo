@@ -152,6 +152,7 @@ posts(
       }
     }
   }
+
   }
 }
   }
@@ -159,6 +160,7 @@ posts(
     "variables": Object {
       "boundingBox": undefined,
       "filter": "offer",
+      "groupSlugs": undefined,
       "isPublic": false,
       "search": "gardening",
       "slug": undefined,
@@ -320,12 +322,14 @@ posts(
       }
     }
   }
+
   }
 }
 }",
     "variables": Object {
       "boundingBox": undefined,
       "filter": "request",
+      "groupSlugs": undefined,
       "isPublic": false,
       "search": "graphic design",
       "slug": undefined,

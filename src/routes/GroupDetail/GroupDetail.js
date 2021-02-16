@@ -32,16 +32,16 @@ export default class GroupDetail extends Component {
   state = initialState
 
   componentDidMount () {
-    this.onGroupIdChange()
+    this.onGroupChange()
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.id && this.props.id !== prevProps.id) {
-      this.onGroupIdChange()
+    if (this.props.slug && this.props.slug !== prevProps.slug) {
+      this.onGroupChange()
     }
   }
 
-  onGroupIdChange = () => {
+  onGroupChange = () => {
     this.props.fetchGroup()
     this.props.fetchJoinRequests()
 
@@ -49,9 +49,9 @@ export default class GroupDetail extends Component {
   }
 
   joinGroup = () => {
-    const { group = {}, currentUser = {}, joinGroup } = this.props
+    const { group = {}, joinGroup } = this.props
 
-    joinGroup(group.id, currentUser.id)
+    joinGroup()
       .then(res => {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error joining ${group.name}.`
@@ -62,9 +62,9 @@ export default class GroupDetail extends Component {
   }
 
   requestToJoinGroup = () => {
-    const { group = {}, currentUser = {}, requestToJoinGroup } = this.props
+    const { requestToJoinGroup } = this.props
 
-    requestToJoinGroup(group.id, currentUser.id)
+    requestToJoinGroup()
       .then(res => {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error sending your join request.`
