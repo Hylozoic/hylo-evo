@@ -375,12 +375,35 @@ export default function ormReducer (state = {}, action) {
       clearCacheFor(Post, meta.eventId)
       break
 
-    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP:
-    case INVITE_CHILD_TO_JOIN_PARENT_GROUP:
-      childGroup = Group.withId(meta.childId)
-      Group.withId(meta.parentId).updateAppending({ childGroups: [childGroup] })
-      clearCacheFor(Group, meta.childId)
+    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.requestToAddGroupToParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.requestToAddGroupToParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
       break
+    }
+
+    case INVITE_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.inviteGroupToJoinParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.inviteGroupToJoinParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))
