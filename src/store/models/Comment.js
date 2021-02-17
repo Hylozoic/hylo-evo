@@ -15,5 +15,6 @@ Comment.fields = {
   text: attr(),
   creator: fk('Person', 'comments'),
   post: fk('Post', 'comments'),
+  parentComment: fk('Comment', 'childComments'),
   createdAt: attr()
 }

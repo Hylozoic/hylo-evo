@@ -60,6 +60,8 @@
   /* prevent autoresize overflowing the container */
   max-width: 100%;
   line-height: 1;
+  position: relative;
+  top: -8px;
 }
 
 @media screen and (min-width: 30em) {

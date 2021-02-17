@@ -1,11 +1,12 @@
-import Comments, { ShowMore } from './Comments'
+import Comments from './Comments'
+import ShowMore from './ShowMore'
 import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('Comments', () => {
   it('renders correctly', () => {
     const props = {
-      comments: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      comments: [{ id: 1, parentComment: null }, { id: 2, parentComment: null }, { id: 3, parentComment: null }],
       total: 9,
       hasMore: true,
       postId: '91',
@@ -14,8 +15,8 @@ describe('Comments', () => {
     const wrapper = shallow(<Comments {...props} />, { disableLifecycleMethods: true })
     expect(wrapper.find('ShowMore').length).toEqual(1)
     expect(wrapper.find('ShowMore').prop('commentsLength')).toEqual(3)
-    expect(wrapper.find('Connect(Comment)').length).toEqual(3)
-    const comment = wrapper.find('Connect(Comment)').at(0)
+    expect(wrapper.find('Connect(CommentWithReplies)').length).toEqual(3)
+    const comment = wrapper.find('Connect(CommentWithReplies)').at(0)
     expect(comment.prop('comment')).toEqual(props.comments[0])
     expect(comment.prop('slug')).toEqual(props.slug)
     expect(wrapper.find('Connect(CommentForm)').length).toEqual(1)
@@ -39,6 +40,6 @@ describe('ShowMore', () => {
     }
     const wrapper = shallow(<ShowMore {...props} />)
     expect(wrapper.find('div').length).toEqual(1)
-    expect(wrapper.find('div').text()).toEqual('View 1 previous comment')
+    expect(wrapper.find('div').text()).toEqual('View 7 previous comments')
   })
 })

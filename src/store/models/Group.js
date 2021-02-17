@@ -6,10 +6,54 @@ export const GROUP_ACCESSIBILITY = {
   Open: 2
 }
 
+export function groupAccessibilityDescription (a) {
+  switch (a) {
+    case GROUP_ACCESSIBILITY.Closed:
+      return 'Require new users to answer questions in order to join'
+    case GROUP_ACCESSIBILITY.Restricted:
+      return 'People who apply must be approved by moderators'
+    case GROUP_ACCESSIBILITY.Open:
+      return 'Anyone can join this group'
+  }
+}
+
+export function groupAccessibilityIcon (a) {
+  switch (a) {
+    case GROUP_ACCESSIBILITY.Closed:
+      return 'Search'
+    case GROUP_ACCESSIBILITY.Restricted:
+      return 'Search'
+    case GROUP_ACCESSIBILITY.Open:
+      return 'Search'
+  }
+}
+
 export const GROUP_VISIBILITY = {
   Hidden: 0,
   Protected: 1,
   Public: 2
+}
+
+export function groupVisibilityDescription (v) {
+  switch (v) {
+    case GROUP_VISIBILITY.Hidden:
+      return 'Only members of this group can see this group'
+    case GROUP_VISIBILITY.Protected:
+      return 'Only members of parent groups can see this group'
+    case GROUP_VISIBILITY.Public:
+      return 'Anyone can find and see this group'
+  }
+}
+
+export function groupVisibilityIcon (v) {
+  switch (v) {
+    case GROUP_VISIBILITY.Hidden:
+      return 'Search'
+    case GROUP_VISIBILITY.Protected:
+      return 'Search'
+    case GROUP_VISIBILITY.Public:
+      return 'Search'
+  }
 }
 
 export class GroupModerator extends Model { }

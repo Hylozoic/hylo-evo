@@ -56,10 +56,11 @@ describe('mapStateToProps', () => {
           search: '',
           topics: []
         },
+        group: null,
+        groups: [],
         members: [],
         pending: undefined,
         posts: [],
-        publicGroups: [],
         hideDrawer: false,
         searches: undefined,
         selectedSearch: {},
