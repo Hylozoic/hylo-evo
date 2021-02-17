@@ -78,6 +78,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             name="visibility"
             onChange={[Function]}
             type="radio"
+            value={2}
           />
           <span
             data-stylename="privacy-option disabled"
@@ -88,17 +89,18 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         </label>
       </div>
       <div
-        data-stylename=""
+        data-stylename="on"
       >
         <label>
           <input
-            checked={false}
+            checked={true}
             name="visibility"
             onChange={[Function]}
             type="radio"
+            value={1}
           />
           <span
-            data-stylename="privacy-option disabled"
+            data-stylename="privacy-option"
           >
             Only members of parent groups can see 
             Foomunity
@@ -114,6 +116,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             name="visibility"
             onChange={[Function]}
             type="radio"
+            value={0}
           />
           <span
             data-stylename="privacy-option disabled"

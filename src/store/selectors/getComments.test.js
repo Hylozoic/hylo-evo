@@ -91,7 +91,7 @@ describe('getComments', () => {
     const state = {
       orm: session.state
     }
-    console.log("xxx", state.orm.Comment)
+
     const comments = getComments(state, { postId: 1 })
     expect(comments.length).toEqual(2)
     expect(comments.map(c => c.text)).toEqual(['eleven', 'twelve'])
