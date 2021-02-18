@@ -1,0 +1,5 @@
+.showMore {
+  padding: 0 25px;
+  margin-bottom: 20px;
+  composes: text-button from 'css/typography.scss';
+}

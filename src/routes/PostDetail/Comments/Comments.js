@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import scrollIntoView from 'scroll-into-view-if-needed'
+import ShowMore from './ShowMore'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import PeopleTyping from 'components/PeopleTyping'
@@ -21,6 +23,10 @@ export default class Comments extends Component {
 
   static defaultProps = {
     comments: []
+  }
+
+  scrollToReplyInput (elem) {
+    scrollIntoView(elem, { behavior: 'smooth', scrollMode: 'if-needed' })
   }
 
   render () {
@@ -46,7 +52,14 @@ export default class Comments extends Component {
         total={total}
         hasMore={hasMore}
         fetchComments={fetchComments} />
-      {comments.map(c => <Comment comment={c} key={c.id} slug={slug} />)}
+      {comments.map(c => (
+        <Comment
+          key={c.id}
+          comment={c}
+          slug={slug}
+          postId={postId}
+          onReplyThread={this.scrollToReplyInput.bind(this)} />
+      ))}
       <div styleName='form-wrapper' style={style}>
         <CommentForm
           currentUser={currentUser}
@@ -57,14 +70,4 @@ export default class Comments extends Component {
       </div>
     </div>
   }
-}
-
-export function ShowMore ({ commentsLength, total, hasMore, fetchComments }) {
-  if (!hasMore) return null
-
-  const extra = total - 10
-
-  return <div styleName='showMore' onClick={fetchComments}>
-    View {extra} previous comment{extra > 1 ? 's' : ''}
-  </div>
 }

@@ -28,7 +28,7 @@ export default class MapExplorer extends React.Component {
     filters: {},
     members: [],
     posts: [],
-    publicGroups: [],
+    groups: [],
     routeParams: {},
     hideDrawer: false,
     topics: [],
@@ -78,26 +78,27 @@ export default class MapExplorer extends React.Component {
     if (!prevProps) return
 
     const {
+      context,
+      fetchGroups,
       fetchMembers,
       fetchPosts,
       fetchParams,
-      fetchPublicGroups,
       members,
       posts,
-      publicGroups
+      groups
     } = this.props
 
-    if (!isEqual(prevProps.fetchParams, fetchParams)) {
+    if (!isEqual(prevProps.fetchParams, fetchParams) || prevProps.context !== context) {
       fetchMembers()
       fetchPosts()
-      fetchPublicGroups()
+      fetchGroups()
     }
 
     if (this.state.currentBoundingBox &&
         (!isEqual(prevProps.fetchParams, fetchParams) ||
          !isEqual(prevProps.posts, posts) ||
          !isEqual(prevProps.members, members) ||
-         !isEqual(prevProps.publicGroups, publicGroups))) {
+         !isEqual(prevProps.groups, groups))) {
       this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
     }
 
@@ -112,15 +113,22 @@ export default class MapExplorer extends React.Component {
     this.updateBoundingBoxQuery(boundingBox)
     this.props.fetchMembers(params)
     this.props.fetchPosts(params)
-    this.props.fetchPublicGroups(params)
+    this.props.fetchGroups(params)
     this.props.storeFetchParams({ boundingBox })
     this.props.storeClientFilterParams({ featureTypes, searchText, topics })
     this.updateViewportWithBbox({ bbox: formatBoundingBox(boundingBox) })
   }
 
   updatedMapFeatures (boundingBox) {
+    const {
+      group,
+      groups,
+      members,
+      posts
+    } = this.props
+
     const bbox = bboxPolygon(boundingBox)
-    const viewMembers = this.props.members.filter(member => {
+    const viewMembers = members.filter(member => {
       const locationObject = member.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
@@ -128,7 +136,7 @@ export default class MapExplorer extends React.Component {
       }
       return false
     })
-    const viewPosts = this.props.posts.filter(post => {
+    const viewPosts = posts.filter(post => {
       const locationObject = post.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
@@ -136,14 +144,14 @@ export default class MapExplorer extends React.Component {
       }
       return false
     })
-    const viewGroups = this.props.publicGroups.filter(group => {
+    const viewGroups = groups.filter(group => {
       const locationObject = group.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    })
+    }).concat(group && group.locationObject ? group.ref : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
@@ -236,7 +244,7 @@ export default class MapExplorer extends React.Component {
       if (info.object.type === 'member') {
         this.props.gotoMember(info.object.id)
       } else if (info.object.type === 'group') {
-        this.props.showGroupDetails(info.object.id)
+        this.props.showGroupDetails(info.object.slug)
       } else {
         this.props.showDetails(info.object.id)
       }

@@ -2,9 +2,9 @@ import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_GROUPS_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
+import groupsQueryFragment from 'graphql/fragments/groupsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
-import publicGroupsQueryFragment from 'graphql/fragments/publicGroupsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
@@ -120,17 +120,18 @@ const publicPostsQuery = `query (
   ${publicPostsQueryFragment}
 }`
 
-const publicGroupsQuery = `query (
+const groupsQuery = `query (
+  $isPublic: Boolean,
   $sortBy: String,
   $search: String,
   $boundingBox: [PointInput],
-  $groupSlugs: [String]
+  $parentSlugs: [String]
 ) {
-  ${publicGroupsQueryFragment}
+  ${groupsQueryFragment}
 }`
 
 // actions
-export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boundingBox }) {
+export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boundingBox, groupSlugs }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -159,6 +160,7 @@ export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boun
         search,
         filter,
         topic,
+        groupSlugs,
         boundingBox: formatBoundingBox(boundingBox),
         isPublic: context === 'public'
       }
@@ -172,7 +174,7 @@ export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boun
   }
 }
 
-export function fetchMembers ({ boundingBox, context, slug, sortBy, search }) {
+export function fetchMembers ({ boundingBox, context, slug, sortBy, search, groupSlugs }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -200,6 +202,7 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search }) {
         slug,
         sortBy,
         search,
+        groupSlugs,
         boundingBox: formatBoundingBox(boundingBox),
         isPublic: context === 'public'
       }
@@ -213,37 +216,23 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search }) {
   }
 }
 
-export function fetchPublicGroups ({ boundingBox, context, sortBy, search, groupSlugs }) {
-  var query, extractModel, getItems
-
-  if (context === 'public') {
-    query = publicGroupsQuery
-    extractModel = 'Group'
-    getItems = get('payload.data.groups')
-  } else if (context === 'groups') {
-    return { type: 'RETURN NULL FOR GROUP' }
-  } else if (context === 'all') {
-    return { type: 'RETURN NULL FOR ALL GROUPS' }
-  } else {
-    throw new Error(`FETCH_GROUPS_MAP with context=${context} is not implemented`)
-  }
-
+export function fetchGroups ({ boundingBox, context, groupSlugs, search, slug, sortBy }) {
   return {
     type: FETCH_GROUPS_MAP,
     graphql: {
-      query,
+      query: groupsQuery,
       variables: {
         sortBy,
         search,
         boundingBox: formatBoundingBox(boundingBox),
-        groupSlugs,
+        parentSlugs: groupSlugs,
         isPublic: context === 'public'
       }
     },
     meta: {
-      extractModel,
+      extractModel: 'Group',
       extractQueryResults: {
-        getItems
+        getItems: get('payload.data.groups')
       }
     }
   }
@@ -365,10 +354,10 @@ export const getCurrentTopics = createSelector(
   }
 )
 
-const getPublicGroupsResults = makeGetQueryResults(FETCH_GROUPS_MAP)
+const getGroupsResults = makeGetQueryResults(FETCH_GROUPS_MAP)
 
-export const getPublicGroups = makeQueryResultsModelSelector(
-  getPublicGroupsResults,
+export const getGroups = makeQueryResultsModelSelector(
+  getGroupsResults,
   'Group'
 )
 

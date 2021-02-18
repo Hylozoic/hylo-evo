@@ -1,3 +1,5 @@
+#import "../fragments/CommentFieldsFragment.graphql"
+
 query CommentsQuery (
   $id: ID,
   $cursor: ID
@@ -6,19 +8,16 @@ query CommentsQuery (
     id
     comments(first: 10, cursor: $cursor, order: "desc") {
       items {
-        id
-        text
-        creator {
-          id
-          name
-          avatarUrl
-        }
-        createdAt
-        attachments {
-          type
-          url
-          position
-          id
+        ...CommentFields
+        childComments {
+          items {
+            ...CommentFields
+            post {
+              id
+            }
+          }
+          total
+          hasMore
         }
       }
       total

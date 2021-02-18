@@ -17,10 +17,12 @@ import './CommentForm.scss'
 
 export default class CommentForm extends Component {
   static propTypes = {
-    postId: PropTypes.string.isRequired,
     createComment: PropTypes.func.isRequired,
     currentUser: PropTypes.object,
     className: PropTypes.string,
+    placeholder: PropTypes.string,
+    focusOnRender: PropTypes.bool,
+    editorContent: PropTypes.string, // passed as HTML: wrap in <p></p>
     // provided by connector
     sendIsTyping: PropTypes.func.isRequired,
     addAttachment: PropTypes.func.isRequired,
@@ -60,9 +62,9 @@ export default class CommentForm extends Component {
   }
 
   render () {
-    const { currentUser, className, addAttachment } = this.props
+    const { currentUser, className, addAttachment, focusOnRender, editorContent } = this.props
 
-    const placeholder = currentUser ? `Hi ${currentUser.firstName()}, what's on your mind?` : "Hi! What's on your mind?"
+    const placeholder = this.props.placeholder || (currentUser ? `Hi ${currentUser.firstName()}, what's on your mind?` : "Hi! What's on your mind?")
 
     return <div
       styleName='commentForm'
@@ -80,9 +82,11 @@ export default class CommentForm extends Component {
           styleName='editor'
           readOnly={!currentUser}
           onChange={this.startTyping}
+          focusOnRender={focusOnRender}
           placeholder={placeholder}
           parentComponent={'CommentForm'}
           submitOnReturnHandler={this.save}
+          contentHTML={editorContent}
         />
 
         { !currentUser

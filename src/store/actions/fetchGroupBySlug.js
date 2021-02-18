@@ -1,12 +1,12 @@
 import { FETCH_GROUP } from 'store/constants'
 import fetchGroupQuery from 'graphql/queries/fetchGroupQuery'
 
-export default function fetchGroupById (id, query = fetchGroupQuery) {
+export default function fetchGroupBySlug (slug, query = fetchGroupQuery) {
   return {
     type: FETCH_GROUP,
     graphql: {
       query,
-      variables: { id }
+      variables: { slug }
     },
     meta: { extractModel: 'Group' }
   }

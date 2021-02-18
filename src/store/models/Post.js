@@ -79,32 +79,38 @@ export const POST_TYPES = {
   'discussion': {
     primaryColor: [0, 163, 227, 255], // $color-picton-blue
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
-    map: false
+    map: false,
+    description: 'Talk about what’s important with others'
   },
   'event': {
     primaryColor: [254, 72, 80, 255], // $color-medium-purple
     backgroundColor: 'rgba(254, 72, 80, .2)', // $color-moon-raker
-    map: true
+    map: true,
+    description: 'Invite people to your event'
   },
   'offer': {
     primaryColor: [0, 199, 157, 255], // $color-caribbean-green
     backgroundColor: 'rgba(0, 199, 157, .2)', // $color-iceberg;
-    map: true
+    map: true,
+    description: 'What do you have for others?'
   },
   'resource': {
     primaryColor: [255, 212, 3, 255], // $color-mango-yellow;
     backgroundColor: 'rgba(255, 212, 3, .2)',
-    map: true
+    map: true,
+    description: 'Let people know about available resources'
   },
   'project': {
     primaryColor: [252, 128, 0, 255], // $color-fuchsia-pink;
     backgroundColor: 'rgba(252, 128, 0, .2)', // $color-prim;
-    map: false
+    map: false,
+    description: 'Create a project that people can help with'
   },
   'request': {
     primaryColor: [102, 75, 165, 255], // $color-persimmon;
     backgroundColor: 'rgba(102, 75, 165, .2)', // $color-peach-schnapps;
-    map: true
+    map: true,
+    description: 'What can people help you with?'
   }
 }
 
