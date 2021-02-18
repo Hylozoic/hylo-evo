@@ -6,7 +6,6 @@ import CreateGroup from 'components/CreateGroup'
 import CreateModalChooser from './CreateModalChooser'
 import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
-import Icon from 'components/Icon'
 import './CreateModal.scss'
 
 export default class CreateModal extends Component {
