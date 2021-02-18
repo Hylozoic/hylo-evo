@@ -60,13 +60,13 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-  const postType = getQuerystringParam('t', null, props)
-  const isProject = postType === 'project' || get('type', post) === 'project'
-  const isEvent = postType === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentGroup)
   const defaultTopics = getDefaultTopics(state, { groupSlug, sortBy: 'name' })
   const location = get('location', props)
+  const postType = getQuerystringParam('newPostType', null, props)
+  const isProject = postType === 'project' || get('type', post) === 'project'
+  const isEvent = postType === 'event' || get('type', post) === 'event'
 
   return {
     currentUser,

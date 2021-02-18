@@ -161,7 +161,7 @@ export default class PostEditor extends React.Component {
     const { changeQueryString, location } = this.props
     changeQueryString({
       pathname: location.pathname,
-      search: `?t=${type}`
+      search: `?newPostType=${type}`
     })
 
     const showPostTypeMenu = this.state.showPostTypeMenu

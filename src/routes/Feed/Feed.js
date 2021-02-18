@@ -90,7 +90,7 @@ export default class Feed extends Component {
           type={postTypeFilter}
           context={context}
           newPost={newPost}
-          location={location}
+          urlLocation={location}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && <CreateGroupPrompt

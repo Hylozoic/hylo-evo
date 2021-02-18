@@ -14,10 +14,10 @@ export default function FeedBanner ({
   currentUser,
   newPost,
   type,
-  location,
+  urlLocation,
   currentUserHasMemberships
 }) {
-  let bannerUrl, avatarUrl, name, groupLocation, subtitle
+  let bannerUrl, avatarUrl, name, location, subtitle
 
   if (context === 'all') {
     name = 'All My Groups'
@@ -33,7 +33,7 @@ export default function FeedBanner ({
   } else if (!group) {
     return null
   } else {
-    ({ bannerUrl, avatarUrl, name, groupLocation } = group)
+    ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
@@ -44,9 +44,9 @@ export default function FeedBanner ({
         <div styleName='header-text'>
           <div styleName='header-contents'>
             <span styleName='header-name'>{name}</span>
-            {groupLocation && <div styleName='header-subtitle'>
+            {location && <div styleName='header-subtitle'>
               <Icon name='Location' styleName='header-icon' />
-              {groupLocation}
+              {location}
             </div>}
             {subtitle && <div styleName='header-subtitle'>
               {subtitle}
@@ -57,7 +57,7 @@ export default function FeedBanner ({
     </div>
     {currentUserHasMemberships && <PostPrompt
       type={type}
-      location={location}
+      location={urlLocation}
       firstName={currentUser.firstName()}
       avatarUrl={currentUser.avatarUrl}
       newPost={newPost} />}
@@ -98,7 +98,7 @@ export class PostPrompt extends React.Component {
     const { hover } = this.state
 
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-      <Link to={location.pathname + '/create/post?t=' + type}>
+      <Link to={location.pathname + '/create/post?newPostType=' + type}>
         <div styleName='postPrompt' className={className}>
           <RoundImage url={avatarUrl} small styleName='prompt-image' />
           {promptStringFunc(type, { firstName })}
