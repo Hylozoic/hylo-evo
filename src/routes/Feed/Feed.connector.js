@@ -23,6 +23,7 @@ export function mapStateToProps (state, props) {
   let group, groupTopic, topic
 
   const routeParams = get('match.params', props)
+  const location = get('location', props)
   const view = routeParams.view
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const currentUser = getMe(state)
@@ -46,6 +47,7 @@ export function mapStateToProps (state, props) {
   return {
     routeParams,
     querystringParams,
+    location,
     postTypeFilter,
     sortBy,
     currentUser,

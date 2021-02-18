@@ -40,12 +40,39 @@ $wrapperBorderRadius: 8px;
   align-items: center;
   line-height: normal;
   margin-bottom: $space-4x;
-  &-prompt {
-    color: $color-loblolly;
-    composes: bdy-lt-sm from 'css/typography.scss';
-  }
   &-closeButton {
     cursor: pointer;
+  }
+}
+
+.initial-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  margin: 0 0 0 12px;
+}
+
+.icon {
+  &-discussion {
+    color: $color-discussions;
+  }
+  &-request {
+    color: $color-requests;
+  }
+  &-offer {
+    color: $color-offers;
+  }
+  &-resource {
+    color: $color-resources;
+  }
+  &-project {
+    color: $color-projects;
+  }
+  &-event {
+    color: $color-events;
   }
 }
 
@@ -64,17 +91,14 @@ $wrapperBorderRadius: 8px;
   letter-spacing: 1.2px;
   line-height: 40px;
   display: inline-block;
-  width: 100%;
-  margin: 0 $space-2x;
-  padding: 0 $space-5x;
+  width: 225px;
+  margin: 0;
+  padding: 0;
   text-align: center;
   border-radius: $space-1x;
   background-color: $color-athens-gray-dark;
-  &:last-child {
-    margin-right: 0;
-  }
   &:first-child {
-    margin-left: 0;
+    padding-left: 5px;
   }
   &-discussion {
     &.selectable:hover, &:active, &.active {
@@ -101,12 +125,30 @@ $wrapperBorderRadius: 8px;
     }
   }
   &-project {
-    color: $color-projects;
-    background-color: $color-projects-20;
+    &.selectable:hover, &:active, &.active  {
+      color: $color-projects;
+      background-color: $color-projects-20;
+    }
   }
   &-event {
-    color: $color-events;
-    background-color: $color-events-20;
+    &.selectable:hover, &:active, &.active  {
+      color: $color-events;
+      background-color: $color-events-20;
+    }
+  }
+}
+
+.postTypeMenu {
+  background-color: $color-white;
+  -webkit-box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: 999;
+
+  .postType {
+    border-radius: 0;
+    display: block;
+    margin: 0;
   }
 }
 

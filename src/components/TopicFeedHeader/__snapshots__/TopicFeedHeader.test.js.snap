@@ -51,6 +51,7 @@ exports[`matches the latest snapshot 1`] = `
     </Button>
     <PostPrompt
       firstName="anybody"
+      location=""
       promptStringFunc={[Function]}
       type=""
     />
