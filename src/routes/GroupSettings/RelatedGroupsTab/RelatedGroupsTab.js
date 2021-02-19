@@ -100,8 +100,8 @@ export default class RelatedGroupsTab extends Component {
               group={invite.fromGroup}
               key={invite.id}
               actionMenu={<div>
-                <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon'/></span>
-                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Iccon name='Heart' styleName='accept-icon'/> <span>Join</span></span>
+                <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon' /></span>
+                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon' /> <span>Join</span></span>
               </div>}
             />
           })}
@@ -126,14 +126,14 @@ export default class RelatedGroupsTab extends Component {
       <div styleName='group-picker-container'>
         <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>
           <div>
-            <Icon name='Search' styleName='connect-icon'/>
+            <Icon name='Search' styleName='connect-icon' />
             Join {group.name} to another group
           </div>
           <span styleName='connect-label'>REQUEST</span>
         </Button>
         {this.state.showRequestoJoinPicker && <div styleName='group-picker'>
           <div styleName='group-picker-list'>
-            {possibleParents.map(membership => <div styleName='group-item' key={membership.id}>
+            {possibleParents.map(membership => <div key={membership.id}>
               <span styleName='invite-button' onClick={requestToAddGroupToParent(membership.group.id, group.id)}>
                 <b>{membership.hasModeratorRole ? 'Join' : 'Request'}</b>
                 {membership.group.name}
@@ -142,7 +142,6 @@ export default class RelatedGroupsTab extends Component {
           </div>
         </div>}
       </div>
-
 
       <h1>Child Groups</h1>
       {childGroups.length > 0 && <div>
@@ -166,7 +165,7 @@ export default class RelatedGroupsTab extends Component {
               key={invite.id}
               actionMenu={<div>
                 <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon' /></span>
-                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon'/> <span>Approve</span></span>
+                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon' /> <span>Approve</span></span>
               </div>}
             />
           })}
@@ -191,14 +190,14 @@ export default class RelatedGroupsTab extends Component {
       <div styleName='group-picker-container'>
         <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>
           <div>
-            <Icon name='Search' styleName='connect-icon'/>
+            <Icon name='Search' styleName='connect-icon' />
             Invite a group to join <strong>{group.name}</strong>
           </div>
           <span styleName='connect-label'>INVITE</span>
         </Button>
         {this.state.showInviteAsChildPicker && <div styleName='group-picker'>
           <div styleName='group-picker-list'>
-            {possibleChildren.map(membership => <div styleName='group-item' key={membership.id}>
+            {possibleChildren.map(membership => <div key={membership.id}>
               <span styleName='invite-button' onClick={inviteGroupToJoinParent(group.id, membership.group.id)}>
                 <b>{membership.hasModeratorRole ? 'Add' : 'Invite'}</b>
                 {membership.group.name}
