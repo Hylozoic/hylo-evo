@@ -81,95 +81,128 @@ export default class RelatedGroupsTab extends Component {
          /> */}
 
       <h1>Parent Groups</h1>
-      <p>These are the {parentGroups.length} groups that {group.name} is a member of</p>
-      <div styleName='group-list' >
-        {parentGroups.map(p => <GroupCard
-          group={p}
-          key={p.id}
-          actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(p, group, GROUP_RELATIONSHIP_TYPE.ChildToParent)} />}
-        />)}
-      </div>
+      {parentGroups.length > 0 && <div>
+        <h3>These are the {parentGroups.length} groups that {group.name} is a member of</h3>
+        <div styleName='group-list' >
+          {parentGroups.map(p => <GroupCard
+            group={p}
+            key={p.id}
+            actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(p, group, GROUP_RELATIONSHIP_TYPE.ChildToParent)} />}
+          />)}
+        </div>
+      </div> }
 
-      <h3>Open Invitations to Join Other Groups</h3>
-      {groupInvitesToJoinThem.map(invite => {
-        return <GroupCard
-          group={invite.fromGroup}
-          key={invite.id}
-          actionMenu={<div>
-            <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}>X</span>
-            <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}>Join</span>
-          </div>}
-        />
-      })}
+      {groupInvitesToJoinThem.length > 0 && <div>
+        <h3>Open Invitations to Join Other Groups</h3>
+        <div styleName='group-list'>
+          {groupInvitesToJoinThem.map(invite => {
+            return <GroupCard
+              group={invite.fromGroup}
+              key={invite.id}
+              actionMenu={<div>
+                <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon'/></span>
+                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Iccon name='Heart' styleName='accept-icon'/> <span>Join</span></span>
+              </div>}
+            />
+          })}
+        </div>
+      </div> }
 
-      <h3>Pending requests to join other groups</h3>
-      {groupRequestsToJoinThem.map(invite => {
-        return <GroupCard
-          group={invite.toGroup}
-          key={invite.id}
-          actionMenu={<div>
-            <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>Cancel Pending Request</span>
-          </div>}
-        />
-      })}
+      {groupRequestsToJoinThem.length > 0 && <div>
+        <h3>Pending requests to join other groups</h3>
+        <div styleName='group-list'>
+          {groupRequestsToJoinThem.map(invite => {
+            return <GroupCard
+              group={invite.toGroup}
+              key={invite.id}
+              actionMenu={<div>
+                <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>Cancel Request</span>
+              </div>}
+            />
+          })}
+        </div>
+      </div> }
+
       <div styleName='group-picker-container'>
-        <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>Request Membership</Button>
+        <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>
+          <div>
+            <Icon name='Search' styleName='connect-icon'/>
+            Join {group.name} to another group
+          </div>
+          <span styleName='connect-label'>REQUEST</span>
+        </Button>
         {this.state.showRequestoJoinPicker && <div styleName='group-picker'>
-          <h3>Request group membership in {group.name}</h3>
           <div styleName='group-picker-list'>
-            {possibleParents.map(membership => <div key={membership.id}>
+            {possibleParents.map(membership => <div styleName='group-item' key={membership.id}>
               <span styleName='invite-button' onClick={requestToAddGroupToParent(membership.group.id, group.id)}>
-                {membership.hasModeratorRole ? 'Join' : 'Request'}
+                <b>{membership.hasModeratorRole ? 'Join' : 'Request'}</b>
+                {membership.group.name}
               </span>
-              {membership.group.name}
             </div>)}
           </div>
         </div>}
       </div>
 
+
       <h1>Child Groups</h1>
-      <p>These {childGroups.length} groups are members of {group.name}</p>
-      <div styleName='group-list' >
-        {childGroups.map(c =>
-          <GroupCard
-            group={c}
-            key={c.id}
-            actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(group, c, GROUP_RELATIONSHIP_TYPE.ParentToChild)} />}
-          />)}
-      </div>
+      {childGroups.length > 0 && <div>
+        <h3>These {childGroups.length} groups are members of {group.name}</h3>
+        <div styleName='group-list'>
+          {childGroups.map(c =>
+            <GroupCard
+              group={c}
+              key={c.id}
+              actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(group, c, GROUP_RELATIONSHIP_TYPE.ParentToChild)} />}
+            />)}
+        </div>
+      </div> }
 
-      <h3>Requests to join {group.name}</h3>
-      {groupRequestsToJoinUs.map(invite => {
-        return <GroupCard
-          group={invite.fromGroup}
-          key={invite.id}
-          actionMenu={<div>
-            <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}>X</span>
-            <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}>Approve</span>
-          </div>}
-        />
-      })}
+      {groupRequestsToJoinUs.length > 0 && <div>
+        <h3>Requests to join {group.name}</h3>
+        <div styleName='group-list'>
+          {groupRequestsToJoinUs.map(invite => {
+            return <GroupCard
+              group={invite.fromGroup}
+              key={invite.id}
+              actionMenu={<div>
+                <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon' /></span>
+                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon'/> <span>Approve</span></span>
+              </div>}
+            />
+          })}
+        </div>
+      </div> }
 
-      <h3>Pending invites to join {group.name}</h3>
-      {groupInvitesToJoinUs.map(invite => {
-        return <GroupCard
-          group={invite.toGroup}
-          key={invite.id}
-          actionMenu={<div>
-            <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>Cancel Pending Invite</span>
-          </div>}
-        />
-      })}
+      {groupInvitesToJoinUs.length > 0 && <div>
+        <h3>Pending invites to join {group.name}</h3>
+        <div styleName='group-list'>
+          {groupInvitesToJoinUs.map(invite => {
+            return <GroupCard
+              group={invite.toGroup}
+              key={invite.id}
+              actionMenu={<div>
+                <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>Cancel Invite</span>
+              </div>}
+            />
+          })}
+        </div>
+      </div> }
+
       <div styleName='group-picker-container'>
-        <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>Invite</Button>
+        <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>
+          <div>
+            <Icon name='Search' styleName='connect-icon'/>
+            Invite a group to join <strong>{group.name}</strong>
+          </div>
+          <span styleName='connect-label'>INVITE</span>
+        </Button>
         {this.state.showInviteAsChildPicker && <div styleName='group-picker'>
-          <h3>Invite other groups to join {group.name} </h3>
           <div styleName='group-picker-list'>
-            {possibleChildren.map(membership => <div key={membership.id}>
+            {possibleChildren.map(membership => <div styleName='group-item' key={membership.id}>
               <span styleName='invite-button' onClick={inviteGroupToJoinParent(group.id, membership.group.id)}>
-                {membership.hasModeratorRole ? 'Add' : 'Invite'}
+                <b>{membership.hasModeratorRole ? 'Add' : 'Invite'}</b>
+                {membership.group.name}
               </span>
-              {membership.group.name}
             </div>)}
           </div>
         </div>}
@@ -195,9 +228,9 @@ export default class RelatedGroupsTab extends Component {
 export function GroupCard ({ group, type, actionMenu }) {
   return <div styleName='group-card'>
     <div styleName='group-details'>
-      <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
+      <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='30px' square />
       <Link to={groupUrl(group.slug)}><span styleName='group-name'>{group.name}</span></Link>
-      {actionMenu}
     </div>
+    {actionMenu}
   </div>
 }
