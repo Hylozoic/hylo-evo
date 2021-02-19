@@ -5,7 +5,7 @@ export default function fetchGroupBySlug (slug) {
   return {
     type: FETCH_GROUP,
     graphql: {
-      query: `query ($slug: Sring) {
+      query: `query ($slug: String) {
         group(slug: $slug) {
           ${groupFieldsFragment(true)}
         }
