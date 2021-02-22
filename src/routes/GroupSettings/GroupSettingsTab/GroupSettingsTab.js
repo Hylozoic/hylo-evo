@@ -1,3 +1,4 @@
+import { isEqual, trim } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import cx from 'classnames'
@@ -25,7 +26,7 @@ export default class GroupSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (prevProps.group !== this.props.group) {
+    if (!isEqual(prevProps.group, this.props.group)) {
       this.setEditState()
     }
   }
@@ -36,7 +37,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, questions, settings, visibility
     } = group
 
     this.setState({
@@ -47,10 +48,34 @@ export default class GroupSettingsTab extends Component {
         description: description || '',
         location: location || '',
         name: name || '',
+        questions: questions ? questions.concat({ text: '' }) : [{ text: '' }],
         settings: settings || { allowGroupInvites: false, publicMemberDirectory: false },
         visibility: visibility || GROUP_VISIBILITY.Protected
       }
     })
+  }
+
+  updateQuestion = (index) => event => {
+    const value = event.target.value
+    const newQuestions = this.state.edits.questions
+    let changed = false
+    if (trim(value) === '') {
+      newQuestions.splice(index, 1)
+      changed = true
+    } else if (newQuestions[index].text !== value) {
+      newQuestions[index] = { text: value }
+      changed = true
+    }
+    if (newQuestions[newQuestions.length - 1].text !== '') {
+      newQuestions.push({ text: '' })
+      changed = true
+    }
+    if (changed) {
+      this.setState({
+        changed,
+        edits: { ...this.state.edits, questions: newQuestions }
+      })
+    }
   }
 
   updateSetting = (key, setChanged = true) => event => {
@@ -85,7 +110,7 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, questions, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
@@ -159,6 +184,11 @@ export default class GroupSettingsTab extends Component {
               <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Restricted} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Restricted} />
               <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Restricted })}>Anyone can apply to join but must be approved by a moderator</span>
             </label>
+            {accessibility === GROUP_ACCESSIBILITY.Restricted && <div styleName='groupQuestions'>
+              {questions.map((q, i) => <div key={i} styleName='question'>
+                <input name='questions[]' value={q.text} placeholder='Add a new question' onChange={this.updateQuestion(i)} />
+              </div>)}
+            </div>}
           </div>
           <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Closed })}>
             <label>

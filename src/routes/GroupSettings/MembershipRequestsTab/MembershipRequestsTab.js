@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Avatar from 'components/Avatar'
@@ -28,9 +29,8 @@ export default class MembershipRequestsTab extends Component {
     this.props.fetchJoinRequests(groupId)
   }
 
-  submitAccept = (joinRequestId, userId) => {
-    const { group, currentUser } = this.props
-    this.props.acceptJoinRequest(joinRequestId, group.id, userId, currentUser.id)
+  submitAccept = (joinRequestId) => {
+    this.props.acceptJoinRequest(joinRequestId)
   }
 
   submitDecline = (joinRequestId) => {
@@ -51,6 +51,7 @@ export default class MembershipRequestsTab extends Component {
       ? <NewRequests
         accept={this.submitAccept}
         decline={this.submitDecline}
+        group={group}
         joinRequests={joinRequests} />
       : <NoRequests group={group} viewMembers={this.viewMembers} />
   }
@@ -76,7 +77,7 @@ export function NoRequests ({ group, viewMembers }) {
   )
 }
 
-export function NewRequests ({ accept, decline, joinRequests }) {
+export function NewRequests ({ accept, decline, group, joinRequests }) {
   return (
     <React.Fragment>
       <div styleName='header'>
@@ -89,15 +90,15 @@ export function NewRequests ({ accept, decline, joinRequests }) {
           key={r.id}
           accept={accept}
           decline={decline}
+          group={group}
           request={r} />)}
       </div>
     </React.Fragment>
   )
 }
 
-export function JoinRequest ({ accept, decline, request }) {
-  const { user } = request
-
+export function JoinRequest ({ accept, decline, group, request }) {
+  const { questionAnswers, user } = request
   return (
     <div styleName='request'>
       <div styleName='requestor'>
@@ -107,8 +108,15 @@ export function JoinRequest ({ accept, decline, request }) {
           <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div>
         </div>
       </div>
+      {/* TODO: base showing questions on new setting */}
+      {group.questions.map(q =>
+        <div key={q.id}>
+          <h3>{q.text}</h3>
+          {get('answer', questionAnswers.find(qa => qa.question.id === q.id)) || <i>Not answered</i>}
+        </div>
+      )}
       <div styleName='action-buttons'>
-        <div styleName='accept' onClick={() => accept(request.id, user.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
+        <div styleName='accept' onClick={() => accept(request.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
         <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />Decline</div>
       </div>
     </div>

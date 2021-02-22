@@ -1,4 +1,4 @@
-const groupFieldsFragment = (withTopics) => `
+const groupFieldsFragment = ({ withTopics, withQuestions }) => `
   id
   accessibility
   avatarUrl
@@ -75,6 +75,12 @@ const groupFieldsFragment = (withTopics) => `
         name
       }
       postsTotal
+    }
+  }` : ''}
+  ${withQuestions ? `questions {
+    items {
+      id
+      text
     }
   }` : ''}
 `

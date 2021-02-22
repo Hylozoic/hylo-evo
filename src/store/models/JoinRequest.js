@@ -1,4 +1,4 @@
-import { attr, fk, Model } from 'redux-orm'
+import { attr, fk, many, Model } from 'redux-orm'
 
 class JoinRequest extends Model {
   toString () {
@@ -11,9 +11,10 @@ export default JoinRequest
 JoinRequest.modelName = 'JoinRequest'
 JoinRequest.fields = {
   id: attr(),
-  user: fk('Person'),
-  group: fk('Group'),
   createdAt: attr(),
+  group: fk('Group'),
+  questionAnswers: many('GroupQuestionAnswer'),
+  status: attr(),
   updatedAt: attr(),
-  status: attr()
+  user: fk('Person')
 }

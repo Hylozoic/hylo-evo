@@ -7,6 +7,14 @@ export default
       id
       status
       createdAt
+      questionAnswers {
+        id
+        question {
+          id
+          text
+        }
+        answer
+      }
       user {
         id
         avatarUrl

@@ -9,6 +9,7 @@ export default function presentGroup (group) {
         ...groupTopic.ref,
         name: groupTopic.topic.name
       }
-    })
+    }),
+    questions: group.questions.toRefArray()
   }
 }

@@ -37,6 +37,14 @@ export function fetchGroupSettings (slug) {
               avatarUrl
             }
           }
+          moderators (first: 100) {
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
           parentGroups (first: 100) {
             items {
               id
@@ -53,12 +61,10 @@ export function fetchGroupSettings (slug) {
               lastSentAt
             }
           }
-          moderators (first: 100) {
-            hasMore
+          questions {
             items {
               id
-              name
-              avatarUrl
+              text
             }
           }
         }

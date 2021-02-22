@@ -1,7 +1,7 @@
 import groupFieldsFragment from '../fragments/groupFieldsFragment'
 
-export default `query ($id: ID, $slug: String) {
+export default (withQuestions = false) => `query ($id: ID, $slug: String) {
   group(id: $id, slug: $slug) {
-    ${groupFieldsFragment(true)}
+    ${groupFieldsFragment({ withTopics: true, withQuestions })}
   }
 }`

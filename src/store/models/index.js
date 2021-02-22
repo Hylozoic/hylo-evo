@@ -4,7 +4,7 @@ import Activity from './Activity'
 import Attachment from './Attachment'
 import Comment from './Comment'
 import EventInvitation from './EventInvitation'
-import Group, { GroupConnection, GroupModerator } from './Group'
+import Group, { GroupConnection, GroupModerator, GroupQuestion, GroupQuestionAnswer } from './Group'
 import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
 import JoinRequest from './JoinRequest'
@@ -34,6 +34,8 @@ orm.register(
   Group,
   GroupConnection,
   GroupModerator,
+  GroupQuestion,
+  GroupQuestionAnswer,
   GroupTopic,
   Invitation,
   LinkPreview,

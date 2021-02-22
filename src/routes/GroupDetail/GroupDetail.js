@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
@@ -61,10 +61,9 @@ export default class GroupDetail extends Component {
       })
   }
 
-  requestToJoinGroup = () => {
-    const { requestToJoinGroup } = this.props
-
-    requestToJoinGroup()
+  requestToJoinGroup = (questionAnswers) => {
+    const { createJoinRequest } = this.props
+    createJoinRequest(questionAnswers)
       .then(res => {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error sending your join request.`
@@ -167,6 +166,17 @@ export default class GroupDetail extends Component {
 }
 
 export function Request ({ group, joinGroup, requestToJoinGroup }) {
+  const [questionAnswers, setQuestionAnswers] = useState(group.questions.map(q => { return { questionId: q.id, text: q.text, answer: '' } }))
+
+  const setAnswer = (index) => (event) => {
+    const answerValue = event.target.value
+    setQuestionAnswers(prevAnswers => {
+      const newAnswers = [ ...prevAnswers ]
+      newAnswers[index].answer = answerValue
+      return newAnswers
+    })
+  }
+
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
       { group.accessibility === GROUP_ACCESSIBILITY.Open
@@ -174,7 +184,13 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestHint'>Anyone can join this group!</div>
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
-        : <div styleName='g.requestOption'><div styleName='g.requestButton' onClick={requestToJoinGroup}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div></div>
+        : <div styleName='g.requestOption'>
+          {questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+            <h3>{q.text}</h3>
+            <textarea name={`question_${q.id}`} onChange={setAnswer(index)} value={q.answer} />
+          </div>)}
+          <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+        </div>
       }
     </div>
   )

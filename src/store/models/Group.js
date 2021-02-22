@@ -63,6 +63,21 @@ GroupModerator.fields = {
   moderator: fk('Person', 'groupmoderators')
 }
 
+export class GroupQuestion extends Model { }
+GroupQuestion.modelName = 'GroupQuestion'
+GroupQuestion.fields = {
+  group: fk('Group', 'groupQuestions'),
+  moderator: attr('text')
+}
+
+export class GroupQuestionAnswer extends Model { }
+GroupQuestionAnswer.modelName = 'GroupQuestionAnswer'
+GroupQuestionAnswer.fields = {
+  answer: attr(),
+  question: fk('GroupQuestion', 'answers'),
+  user: fk('Person')
+}
+
 export class GroupTopic extends Model {}
 GroupTopic.modelName = 'GroupTopic'
 GroupTopic.fields = {
@@ -113,6 +128,7 @@ Group.fields = {
   name: attr(),
   posts: many('Post'),
   postCount: attr(),
+  questions: many('GroupQuestion'),
   settings: attr(),
   slug: attr(),
   visibility: attr()

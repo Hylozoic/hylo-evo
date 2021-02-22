@@ -156,6 +156,19 @@ label {
   margin-bottom: 30px;
 }
 
+.groupQuestions {
+  margin-left: 10px;
+
+  .question {
+    margin-bottom: 8px;
+    width: 80%;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
 .member-visibility {
   display: flex;
   align-items: center;
