@@ -194,7 +194,7 @@ export default class PrimaryLayout extends Component {
         </div>
         <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
           <Switch>
-            <Route path={`/:context(c)/:slug${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
+            <Route path={`/:context(c)/:slug/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
             {/* LEJ: Leaving MemberSidebar vestiage here for now as new sidebar content is likely coming soon */}
             {/* <Route path={`/:context(c)/:slug/m/:personId/${OPTIONAL_NEW_POST_MATCH}`} component={MemberSidebar} /> */}
             <Route path={`/:context(c)/:slug/:topicName/${OPTIONAL_NEW_POST_MATCH}`} exact component={CommunitySidebar} />
