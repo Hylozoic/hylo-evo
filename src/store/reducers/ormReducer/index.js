@@ -41,6 +41,7 @@ import {
 } from 'routes/Signup/AddSkills/AddSkills.store'
 
 import {
+  UPDATE_GROUP_SETTINGS,
   UPDATE_GROUP_SETTINGS_PENDING
 } from 'routes/GroupSettings/GroupSettings.store'
 import {
@@ -196,6 +197,14 @@ export default function ormReducer (state = {}, action) {
 
       // Triggers an update to redux-orm for the membership
       membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
+      break
+
+    case UPDATE_GROUP_SETTINGS:
+      // Set new join questions in the ORM
+      if (payload.data.updateGroupSettings && payload.data.updateGroupSettings.joinQuestions) {
+        group = Group.withId(meta.id)
+        clearCacheFor(Group, meta.id)
+      }
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:

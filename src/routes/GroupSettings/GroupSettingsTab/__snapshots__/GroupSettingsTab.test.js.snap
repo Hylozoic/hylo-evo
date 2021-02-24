@@ -177,6 +177,28 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             Anyone can apply to join but must be approved by a moderator
           </span>
         </label>
+        <div
+          data-stylename="groupQuestions"
+        >
+          <SwitchStyled
+            backgroundColor="#8B96A4"
+            checked={false}
+            disabled={false}
+            onChange={[Function]}
+          />
+          Require groups to answer questions when joining this group
+          <div
+            data-stylename="question"
+            key="0"
+          >
+            <input
+              name="joinQuestions[]"
+              onChange={[Function]}
+              placeholder="Add a new question"
+              value=""
+            />
+          </div>
+        </div>
       </div>
       <div
         data-stylename=""

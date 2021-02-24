@@ -1,4 +1,4 @@
-import { isEqual, trim } from 'lodash/fp'
+import { isEqual, set, trim } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import cx from 'classnames'
@@ -6,6 +6,7 @@ import './GroupSettingsTab.scss'
 import Button from 'components/Button'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
+import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
@@ -37,7 +38,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, questions, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, settings, visibility
     } = group
 
     this.setState({
@@ -48,32 +49,32 @@ export default class GroupSettingsTab extends Component {
         description: description || '',
         location: location || '',
         name: name || '',
-        questions: questions ? questions.concat({ text: '' }) : [{ text: '' }],
-        settings: settings || { allowGroupInvites: false, publicMemberDirectory: false },
+        joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
+        settings: settings || { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
         visibility: visibility || GROUP_VISIBILITY.Protected
       }
     })
   }
 
-  updateQuestion = (index) => event => {
+  updateJoinQuestion = (index) => event => {
     const value = event.target.value
-    const newQuestions = this.state.edits.questions
+    const newJoinQuestions = this.state.edits.joinQuestions
     let changed = false
     if (trim(value) === '') {
-      newQuestions.splice(index, 1)
+      newJoinQuestions.splice(index, 1)
       changed = true
-    } else if (newQuestions[index].text !== value) {
-      newQuestions[index] = { text: value }
+    } else if (newJoinQuestions[index].text !== value) {
+      newJoinQuestions[index] = { text: value }
       changed = true
     }
-    if (newQuestions[newQuestions.length - 1].text !== '') {
-      newQuestions.push({ text: '' })
+    if (newJoinQuestions[newJoinQuestions.length - 1].text !== '') {
+      newJoinQuestions.push({ text: '' })
       changed = true
     }
     if (changed) {
       this.setState({
         changed,
-        edits: { ...this.state.edits, questions: newQuestions }
+        edits: { ...this.state.edits, joinQuestions: newJoinQuestions }
       })
     }
   }
@@ -87,7 +88,7 @@ export default class GroupSettingsTab extends Component {
     } else if (key === 'accessibility' || key === 'visibility') {
       edits[key] = parseInt(event.target.value)
     } else {
-      edits[key] = event.target.value
+      set(edits, key, event.target.value)
     }
 
     this.setState({
@@ -110,7 +111,7 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, questions, visibility
+      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, settings, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
@@ -185,8 +186,14 @@ export default class GroupSettingsTab extends Component {
               <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Restricted })}>Anyone can apply to join but must be approved by a moderator</span>
             </label>
             {accessibility === GROUP_ACCESSIBILITY.Restricted && <div styleName='groupQuestions'>
-              {questions.map((q, i) => <div key={i} styleName='question'>
-                <input name='questions[]' value={q.text} placeholder='Add a new question' onChange={this.updateQuestion(i)} />
+              <SwitchStyled
+                checked={settings.askJoinQuestions}
+                onChange={() => this.updateSettingDirectly('settings.askJoinQuestions')(!settings.askJoinQuestions)}
+                backgroundColor={settings.askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+              Require groups to answer questions when joining this group
+
+              {joinQuestions.map((q, i) => <div key={i} styleName='question'>
+                <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={this.updateJoinQuestion(i)} />
               </div>)}
             </div>}
           </div>

@@ -1,4 +1,3 @@
-import { get } from 'lodash/fp'
 import {
   FETCH_JOIN_REQUESTS,
   FETCH_JOIN_REQUESTS_PENDING,
@@ -39,17 +38,7 @@ export function fetchJoinRequests (groupId) {
       variables: { groupId }
     },
     meta: {
-      groupId,
-      extractModel: [
-        {
-          modelName: 'JoinRequest',
-          getRoot: get('joinRequests')
-        },
-        {
-          modelName: 'GroupQuestionAnswer',
-          getRoot: get('joinRequests.questionAnswers')
-        }
-      ]
+      groupId
     }
   }
 }

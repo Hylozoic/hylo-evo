@@ -10,6 +10,6 @@ export default function presentGroup (group) {
         name: groupTopic.topic.name
       }
     }),
-    questions: group.questions.toRefArray()
+    joinQuestions: group.joinQuestions.toRefArray()
   }
 }

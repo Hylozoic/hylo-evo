@@ -26,6 +26,7 @@ export function fetchGroupSettings (slug) {
           name
           settings {
             allowGroupInvites
+            askJoinQuestions
             publicMemberDirectory
           }
           slug
@@ -61,9 +62,10 @@ export function fetchGroupSettings (slug) {
               lastSentAt
             }
           }
-          questions {
+          joinQuestions {
             items {
               id
+              questionId
               text
             }
           }
@@ -86,6 +88,13 @@ export function updateGroupSettings (id, changes) {
       query: `mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
         }
       }`,
       variables: {
@@ -95,6 +104,7 @@ export function updateGroupSettings (id, changes) {
     meta: {
       id,
       changes,
+      extractModel: 'Group',
       optimistic: true
     }
   }

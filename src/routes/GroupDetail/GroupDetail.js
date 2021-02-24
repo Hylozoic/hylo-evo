@@ -166,7 +166,7 @@ export default class GroupDetail extends Component {
 }
 
 export function Request ({ group, joinGroup, requestToJoinGroup }) {
-  const [questionAnswers, setQuestionAnswers] = useState(group.questions.map(q => { return { questionId: q.id, text: q.text, answer: '' } }))
+  const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
   const setAnswer = (index) => (event) => {
     const answerValue = event.target.value
@@ -185,9 +185,9 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
         : <div styleName='g.requestOption'>
-          {questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+          {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
             <h3>{q.text}</h3>
-            <textarea name={`question_${q.id}`} onChange={setAnswer(index)} value={q.answer} />
+            <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} />
           </div>)}
           <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>

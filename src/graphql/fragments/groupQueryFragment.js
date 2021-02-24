@@ -10,6 +10,7 @@ export default
   name
   settings {
     allowGroupInvites
+    askJoinQuestions
     publicMemberDirectory
   }
   slug

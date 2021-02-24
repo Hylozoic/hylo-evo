@@ -99,6 +99,10 @@ export function NewRequests ({ accept, decline, group, joinRequests }) {
 
 export function JoinRequest ({ accept, decline, group, request }) {
   const { questionAnswers, user } = request
+
+  // Answers to questions no longer being asked by the group
+  const otherAnswers = questionAnswers.filter(qa => !group.joinQuestions.find(jq => jq.questionId === qa.question.id))
+
   return (
     <div styleName='request'>
       <div styleName='requestor'>
@@ -108,11 +112,16 @@ export function JoinRequest ({ accept, decline, group, request }) {
           <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div>
         </div>
       </div>
-      {/* TODO: base showing questions on new setting */}
-      {group.questions.map(q =>
+      {group.joinQuestions.map(q =>
         <div key={q.id}>
           <h3>{q.text}</h3>
-          {get('answer', questionAnswers.find(qa => qa.question.id === q.id)) || <i>Not answered</i>}
+          {get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}
+        </div>
+      )}
+      {otherAnswers.map(qa =>
+        <div key={qa.question.id}>
+          <h3>{qa.question.text}</h3>
+          {qa.answer}
         </div>
       )}
       <div styleName='action-buttons'>

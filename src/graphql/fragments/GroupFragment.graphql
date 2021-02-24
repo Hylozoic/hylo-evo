@@ -10,6 +10,7 @@ fragment GroupFragment on Group {
   name
   settings {
     allowGroupInvites
+    askJoinQuestions
     publicMemberDirectory
   }
   slug
