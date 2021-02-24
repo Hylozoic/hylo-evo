@@ -5,22 +5,26 @@ exports[`renders correctly if fulfilled 1`] = `
   data-stylename="postCompletion"
 >
   <div>
-    Is this still available?
+    Is this still active?
   </div>
   <DropdownButton
     choices={
       Array [
         Object {
-          "label": "Available",
+          "label": "Active",
           "value": false,
         },
         Object {
-          "label": "Unavailable",
+          "label": "Inactive",
+          "value": "expired",
+        },
+        Object {
+          "label": "Completed",
           "value": true,
         },
       ]
     }
-    label="Unvailable"
+    label="Completed"
     onChoose={[Function]}
   />
 </div>

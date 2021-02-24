@@ -89,7 +89,8 @@ export default class PostHeader extends PureComponent {
       { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
-    const canHaveTimes = type === 'offer' || type === 'request' || type === 'resource'
+    const typesWithTimes = ['offer', 'request', 'resource', 'project']
+    const canHaveTimes = typesWithTimes.includes(type)
     let timeWindow = ''
     const startDate = startTime && formatStartDate(startTime)
     const endDate = endTime && formatEndDate(endTime)
