@@ -227,16 +227,6 @@ describe('PostEditor', () => {
     })
   })
 
-  test('onClose is attached to the close button', () => {
-    const props = {
-      ...baseProps,
-      onClose: jest.fn()
-    }
-    const wrapper = shallow(<PostEditor {...props} />)
-    expect(wrapper.find('[data-stylename="initial-closeButton"]').props().onClick)
-      .toEqual(props.onClose)
-  })
-
   test('saving a valid post will update a post', () => {
     const props = {
       ...baseProps,
