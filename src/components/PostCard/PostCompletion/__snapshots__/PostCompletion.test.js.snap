@@ -45,6 +45,10 @@ exports[`renders correctly if not fulfilled 1`] = `
           "value": false,
         },
         Object {
+          "label": "Expired",
+          "value": "expired",
+        },
+        Object {
           "label": "Unavailable",
           "value": true,
         },

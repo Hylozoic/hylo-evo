@@ -2,38 +2,35 @@ import React from 'react'
 import './PostCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
+const promptOptions = {
+  request: 'Is this still needed?',
+  offer: 'Is this still available?',
+  resource: 'Is this still available?',
+  project: 'Is this still active?'
+}
+
+const otherMessageOptions = [
+  { label: 'Available', value: false },
+  { label: 'Expired', value: 'expired' },
+  { label: 'Unavailable', value: true }
+]
+const messages = {
+  request: [
+    { label: 'This is still needed', value: false },
+    { label: 'No longer needed', value: 'expired' },
+    { label: 'This request was completed', value: true }
+  ],
+  offer: otherMessageOptions,
+  resource: otherMessageOptions,
+  project: [
+    { label: 'Active', value: false },
+    { label: 'Inactive', value: 'expired' },
+    { label: 'Completed', value: true }
+  ]
+}
+
 export default function PostCompletion ({ type, startTime, endTime, isFulfilled, fulfillPost, unfulfillPost }) {
   var label
-
-  const promptOptions = {
-    request: 'Do you still need this?',
-    offer: 'Is this still available?',
-    resource: 'Is this still available?',
-    project: 'Is this still active?'
-  }
-
-  const messages = {
-    request: [
-      { label: 'I still need this', value: false },
-      { label: 'I no longer need this', value: 'expired' },
-      { label: 'This request was completed', value: true }
-    ],
-    offer: [
-      { label: 'Available', value: false },
-      { label: 'Unavailable', value: 'expired' },
-      { label: 'Unavailable', value: true }
-    ],
-    resource: [
-      { label: 'Available', value: false },
-      { label: 'Unavailable', value: 'expired' },
-      { label: 'Unavailable', value: true }
-    ],
-    project: [
-      { label: 'Active', value: false },
-      { label: 'Inactive', value: 'expired' },
-      { label: 'Completed', value: true }
-    ]
-  }
 
   switch (isFulfilled) {
     case false:
@@ -46,23 +43,11 @@ export default function PostCompletion ({ type, startTime, endTime, isFulfilled,
       label = messages[type].find(choice => choice.value === 'expired').label
       break
     default:
-      label = 'I still need this'
+      label = 'This is still needed'
   }
 
   const prompt = promptOptions[type]
-  const choiceOptions = {
-    request: messages['request'],
-    offer: [
-      { label: 'Available', value: false },
-      { label: 'Unavailable', value: true }
-    ],
-    resource: [
-      { label: 'Available', value: false },
-      { label: 'Unavailable', value: true }
-    ],
-    project: messages['project']
-  }
-  const choices = choiceOptions[type]
+  const choices = messages[type]
 
   return <div styleName='postCompletion'>
     <div>{prompt}</div>
