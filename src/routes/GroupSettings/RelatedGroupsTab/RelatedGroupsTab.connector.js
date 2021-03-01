@@ -6,7 +6,7 @@ import {
   inviteGroupToJoinParent,
   rejectGroupRelationshipInvite,
   requestToAddGroupToParent
-} from 'store/actions/groupActions'
+} from 'store/actions/groupRelationshipActions'
 import {
   getChildGroups,
   getGroupInvitesToJoinThem,
