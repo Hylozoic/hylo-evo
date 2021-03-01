@@ -3,9 +3,9 @@
 exports[`mapDispatchToProps returns the right keys 1`] = `
 Object {
   "addAttachment": [Function],
+  "changeQueryString": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
-  "createProject": [Function],
   "fetchDefaultTopics": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
@@ -52,6 +52,9 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": false,
+  "location": Object {
+    "search": "",
+  },
   "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
@@ -109,6 +112,9 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": true,
+  "location": Object {
+    "search": "",
+  },
   "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {

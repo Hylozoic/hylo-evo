@@ -6,7 +6,7 @@ import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
-import { POST_PROP_TYPES } from 'store/models/Post'
+import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
@@ -39,7 +39,6 @@ export default class PostEditor extends React.Component {
     detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
     fetchDefaultTopics: PropTypes.func,
-    initialPromptForPostType: PropTypes.object,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
@@ -52,11 +51,6 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    initialPromptForPostType: {
-      project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
-      event: <span styleName='postType postType-event'>CREATE EVENT</span>,
-      default: 'What are you looking to post?'
-    },
     titlePlaceholderForPostType: {
       offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
@@ -80,11 +74,12 @@ export default class PostEditor extends React.Component {
       groups: [],
       location: ''
     },
+    postTypes: Object.keys(POST_TYPES),
     editing: false,
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentGroup, post, topic, initialPrompt, announcementSelected, postType }) => {
+  buildStateFromProps = ({ editing, currentGroup, post, topic, announcementSelected, postType }) => {
     const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postType || PostEditor.defaultProps.post.type,
       groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
@@ -101,12 +96,12 @@ export default class PostEditor extends React.Component {
 
     return {
       post: currentPost,
-      initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
+      showPostTypeMenu: false,
       titleLengthError: false,
       dateError: false
     }
@@ -156,11 +151,19 @@ export default class PostEditor extends React.Component {
 
   handlePostTypeSelection = event => {
     const type = event.target.textContent.toLowerCase()
+    const { changeQueryString, location } = this.props
+    changeQueryString({
+      pathname: location.pathname,
+      search: `?newPostType=${type}`
+    })
+
+    const showPostTypeMenu = this.state.showPostTypeMenu
     this.setState({
       post: { ...this.state.post, type },
       titlePlaceholder: this.titlePlaceholderForPostType(type),
       detailPlaceholder: this.detailPlaceholderForPostType(type),
-      valid: this.isValid({ type })
+      valid: this.isValid({ type }),
+      showPostTypeMenu: !showPostTypeMenu
     })
   }
 
@@ -172,11 +175,6 @@ export default class PostEditor extends React.Component {
   detailPlaceholderForPostType (type) {
     const { detailPlaceholderForPostType } = this.props
     return detailPlaceholderForPostType[type] || detailPlaceholderForPostType['default']
-  }
-
-  initialPromptForPostType (type) {
-    const { initialPromptForPostType } = this.props
-    return initialPromptForPostType[type] || initialPromptForPostType['default']
   }
 
   postTypeButtonProps = (forPostType) => {
@@ -191,12 +189,14 @@ export default class PostEditor extends React.Component {
         [styles[`selectable`]]: !loading && !active
       }
     )
+    const label = active ? <span styleName='initial-prompt'>Create {forPostType} <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' /></span> : forPostType
     return {
-      label: forPostType,
-      onClick: this.handlePostTypeSelection,
+      label,
+      onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection,
       disabled: loading,
       color: '',
-      className
+      className,
+      key: forPostType
     }
   }
 
@@ -327,8 +327,8 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const {
-      editing, createPost, createProject, updatePost, onClose,
-      goToPost, setAnnouncement, announcementSelected, isProject,
+      editing, createPost, updatePost, onClose,
+      goToPost, setAnnouncement, announcementSelected,
       imageAttachments, fileAttachments
     } = this.props
     const {
@@ -346,7 +346,7 @@ export default class PostEditor extends React.Component {
     const postToSave = {
       id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
-    const saveFunc = editing ? updatePost : isProject ? createProject : createPost
+    const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
@@ -366,10 +366,18 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  togglePostTypeMenu = () => {
+    const { showPostTypeMenu } = this.state
+    this.setState({
+      ...this.state,
+      showPostTypeMenu: !showPostTypeMenu
+    })
+  }
+
   render () {
     const {
-      initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError,
-      dateError, valid, post, detailsTopics = [], showAnnouncementModal
+      titlePlaceholder, detailPlaceholder, titleLengthError,
+      dateError, valid, post, detailsTopics = [], showAnnouncementModal, showPostTypeMenu
     } = this.state
     const {
       id, type, title, details, groups, linkPreview, topics, members,
@@ -377,14 +385,13 @@ export default class PostEditor extends React.Component {
       locationObject
     } = post
     const {
-      onClose, currentGroup, currentUser, groupOptions, defaultTopics, loading, setAnnouncement,
+      currentGroup, currentUser, groupOptions, defaultTopics, loading, setAnnouncement,
       announcementSelected, canModerate, myModeratedGroups, isProject,
-      isEvent, showFiles, showImages, addAttachment
+      isEvent, showFiles, showImages, addAttachment, postTypes
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-    const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
-    const showPostTypes = !isProject && !isEvent
+    const hasLocation = ['event', 'offer', 'request', 'resource', 'project'].includes(type)
     const canHaveTimes = type !== 'discussion'
     // Center location autocomplete either on post's current location, or current group's location, or current user's location
     const curLocation = locationObject || get('0.locationObject', groups) || get('locationObject', currentUser)
@@ -392,15 +399,15 @@ export default class PostEditor extends React.Component {
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
         <div styleName='initial'>
-          <div styleName='initial-prompt'>{initialPrompt}</div>
-          <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
+          <div>
+            <Button {...this.postTypeButtonProps(type)} />
+            {showPostTypeMenu && <div styleName='postTypeMenu'>
+              {postTypes.filter(postType => postType !== type).map(postType =>
+                <Button {...this.postTypeButtonProps(postType)} />
+              )}
+            </div>}
+          </div>
         </div>
-        {showPostTypes && <div styleName='postTypes'>
-          <Button {...this.postTypeButtonProps('discussion')} />
-          <Button {...this.postTypeButtonProps('request')} />
-          <Button {...this.postTypeButtonProps('offer')} />
-          <Button {...this.postTypeButtonProps('resource')} />
-        </div>}
       </div>
       <div styleName='body'>
         <div styleName='body-column'>

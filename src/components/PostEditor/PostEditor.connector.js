@@ -1,7 +1,7 @@
 import { get, isEmpty } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
+import { push, replace } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'
@@ -17,7 +17,6 @@ import {
   FETCH_POST
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
-import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import {
@@ -60,12 +59,13 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
-  const postType = getQuerystringParam('t', null, props)
-  const isProject = postType === 'project' || get('type', post) === 'project'
-  const isEvent = postType === 'event' || get('type', post) === 'event'
   const announcementSelected = state[MODULE_NAME].announcement
   const canModerate = currentUser && currentUser.canModerate(currentGroup)
   const defaultTopics = getDefaultTopics(state, { groupSlug, sortBy: 'name' })
+  const location = get('location', props)
+  const postType = getQuerystringParam('newPostType', null, props)
+  const isProject = postType === 'project' || get('type', post) === 'project'
+  const isEvent = postType === 'event' || get('type', post) === 'event'
 
   return {
     currentUser,
@@ -94,7 +94,8 @@ export function mapStateToProps (state, props) {
     canModerate,
     myModeratedGroups,
     uploadFileAttachmentPending,
-    uploadImageAttachmentPending
+    uploadImageAttachmentPending,
+    location
   }
 }
 
@@ -102,6 +103,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     goToUrl: url => dispatch(push(url)),
+    changeQueryString: url => dispatch(replace(url)),
     ...bindActionCreators({
       fetchDefaultTopics,
       setAnnouncement,
@@ -109,7 +111,6 @@ export const mapDispatchToProps = (dispatch) => {
       clearLinkPreview,
       updatePost,
       createPost,
-      createProject,
       addAttachment
     }, dispatch)
   }
@@ -132,8 +133,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     : url => pollingFetchLinkPreviewRaw(url)
   const createPost = postParams =>
     dispatchProps.createPost({ ...postParams })
-  const createProject = projectParams =>
-    dispatchProps.createProject({ ...projectParams })
   const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ groupSlug })
 
   return {
@@ -141,7 +140,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...dispatchProps,
     ...ownProps,
     createPost,
-    createProject,
     fetchDefaultTopics,
     goToPost,
     pollingFetchLinkPreview

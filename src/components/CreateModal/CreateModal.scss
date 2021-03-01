@@ -72,10 +72,10 @@
 }
 
 .close-button {
+  cursor: pointer;
   position: absolute;
   top: 15px;
   right: 15px;
-
   &:hover {
     cursor: pointer;
   }
@@ -181,7 +181,6 @@
     width: 100%;
   }
 }
-
 
 @media screen and (max-width: 320px) {
   .chooser a div {

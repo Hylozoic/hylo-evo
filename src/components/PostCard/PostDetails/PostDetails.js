@@ -31,7 +31,8 @@ export default function PostDetails ({
   }
 
   const postType = get('type', post)
-  const canBeCompleted = postType === 'request' || postType === 'offer' || postType === 'resource'
+  const typesWithCompletion = ['offer', 'request', 'resource', 'project']
+  const canBeCompleted = typesWithCompletion.includes(postType)
   const isFulfilled = get('fulfilledAt', post) !== null
 
   return <Highlight {...highlightProps}>
