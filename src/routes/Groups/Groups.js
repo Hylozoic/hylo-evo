@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { bgImageStyle } from 'util/index'
-import Button from 'components/Button'
 import RoundImage from 'components/RoundImage'
 import { groupUrl } from 'util/navigation'
 
@@ -13,37 +12,14 @@ export default class Groups extends Component {
   static propTypes = {
     childGroups: PropTypes.array,
     group: PropTypes.object,
-    parentGroups: PropTypes.array,
-    possibleChildren: PropTypes.array,
-    possibleParents: PropTypes.array
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      showInviteAsChildPicker: false,
-      showRequestToJoinPicker: false
-    }
-  }
-
-  toggleInviteAsChildPicker = () => {
-    this.setState({ showInviteAsChildPicker: !this.state.showInviteAsChildPicker })
-  }
-
-  toggleRequestToJoinPicker = () => {
-    this.setState({ showRequestoJoinPicker: !this.state.showRequestoJoinPicker })
+    parentGroups: PropTypes.array
   }
 
   render () {
     const {
-      canModerate,
       childGroups,
       group,
-      inviteGroupToJoinParent,
-      parentGroups,
-      possibleChildren,
-      possibleParents,
-      requestToAddGroupToParent
+      parentGroups
     } = this.props
 
     return <div styleName='container'>
@@ -59,18 +35,6 @@ export default class Groups extends Component {
         <div styleName='banner'>
           {parentGroups.length === 1 ? <h3>{group.name} is a part of 1 Group</h3> : '' }
           {parentGroups.length > 1 ? <h3>{group.name} is a part of {parentGroups.length} Groups</h3> : '' }
-          <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>Invite to</Button>
-          { this.state.showInviteAsChildPicker && <div styleName='group-picker'>
-            <h3>Invite {group.name} to one of your groups</h3>
-            <div styleName='group-picker-list'>
-              {possibleParents.map(g => <div key={g.id}>
-                <span styleName='invite-button' onClick={inviteGroupToJoinParent(g.id, group.id)}>
-                  {canModerate ? 'Add To' : 'Invite To'}
-                </span>
-                {g.name}
-              </div>)}
-            </div>
-          </div>}
         </div>
         <GroupsList
           groups={parentGroups}
@@ -81,18 +45,6 @@ export default class Groups extends Component {
         <div styleName='banner'>
           {childGroups.length === 1 ? <h3>1 Group is a part of {group.name}</h3> : ''}
           {childGroups.length > 1 ? <h3>{childGroups.length} groups are a part of {group.name}</h3> : ''}
-          <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>Request Membership</Button>
-          { this.state.showRequestoJoinPicker && <div styleName='group-picker'>
-            <h3>Request group membership in {group.name}</h3>
-            <div styleName='group-picker-list'>
-              {possibleChildren.map(g => <div key={g.id}>
-                <span styleName='invite-button' onClick={requestToAddGroupToParent(group.id, g.id)}>
-                  {canModerate ? 'Join As' : 'Request As'}
-                </span>
-                {g.name}
-              </div>)}
-            </div>
-          </div>}
         </div>
         <GroupsList
           groups={childGroups}
