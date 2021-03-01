@@ -151,7 +151,7 @@ export default class MapExplorer extends React.Component {
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    }).concat(group && group.locationObject ? group.ref : [])
+    }).concat(group && group.locationObject ? group : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
