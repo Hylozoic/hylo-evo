@@ -70,12 +70,22 @@ export default
       }
     }
   }
+  childGroups {
+    items {
+      id
+      slug
+      name
+      avatarUrl
+      description
+    }
+  }
   parentGroups {
     items {
       id
       slug
       name
       avatarUrl
+      description
       childGroups(first: 300) {
         items {
           id
