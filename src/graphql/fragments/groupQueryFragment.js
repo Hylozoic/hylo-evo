@@ -34,6 +34,42 @@ export default
   }
   slug
   visibility
+  groupRelationshipInvitesFrom {
+    items {
+      id
+      toGroup {
+        id
+        name
+        slug
+      }
+      fromGroup {
+        id
+      }
+      type
+      createdBy {
+        id
+        name
+      }
+    }
+  }
+  groupRelationshipInvitesTo {
+    items {
+      id
+      fromGroup {
+        id
+        name
+        slug
+      }
+      toGroup {
+        id
+      }
+      type
+      createdBy {
+        id
+        name
+      }
+    }
+  }
   childGroups {
     items {
       id

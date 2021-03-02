@@ -12,7 +12,8 @@ beforeAll(() => {
     memberships: [session.Membership.create({
       id: '345',
       group: group.id,
-      hasModeratorRole: true
+      hasModeratorRole: true,
+      person: 1
     })]
   })
 

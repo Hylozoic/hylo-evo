@@ -1,17 +1,24 @@
+/* eslint-disable no-fallthrough */
 import * as sessionReducers from './sessionReducers'
 import {
+  ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_MODERATOR_PENDING,
+  CANCEL_GROUP_RELATIONSHIP_INVITE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
+  DELETE_GROUP_RELATIONSHIP,
   FETCH_MESSAGES_PENDING,
+  INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
   LEAVE_PROJECT_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
   REMOVE_MODERATOR_PENDING,
+  REJECT_GROUP_RELATIONSHIP_INVITE,
+  REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
   RESET_NEW_POST_COUNT_PENDING,
   RESPOND_TO_EVENT_PENDING,
   TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
@@ -71,6 +78,8 @@ export default function ormReducer (state = {}, action) {
   const {
     Comment,
     Group,
+    GroupRelationship,
+    GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
     Me,
@@ -88,9 +97,22 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, group, person, post, comment, groupTopic
+  let me, membership, group, person, post, comment, groupTopic, childGroup
 
   switch (type) {
+    case ACCEPT_GROUP_RELATIONSHIP_INVITE:
+      const newGroupRelationship = payload.data.acceptGroupRelationshipInvite.groupRelationship
+      if (newGroupRelationship) {
+        childGroup = Group.withId(newGroupRelationship.childGroup.id)
+        Group.withId(newGroupRelationship.parentGroup.id).updateAppending({ childGroups: [childGroup] })
+        clearCacheFor(Group, childGroup.id)
+      }
+    case CANCEL_GROUP_RELATIONSHIP_INVITE:
+    case REJECT_GROUP_RELATIONSHIP_INVITE:
+      const invite = GroupRelationshipInvite.withId(meta.id)
+      invite.delete()
+      break
+
     case CREATE_COMMENT_PENDING:
       Comment.create({
         id: meta.tempId,
@@ -274,6 +296,18 @@ export default function ormReducer (state = {}, action) {
       comment.delete()
       break
 
+    case DELETE_GROUP_RELATIONSHIP: {
+      if (payload.data.deleteGroupRelationship.success) {
+        const gr = GroupRelationship.safeGet({ parentGroup: meta.parentId, childGroup: meta.childId })
+        if (gr) {
+          gr.delete()
+          clearCacheFor(Group, meta.parentId)
+          clearCacheFor(Group, meta.childId)
+        }
+      }
+      break
+    }
+
     case UPDATE_POST_PENDING:
       // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
       post = Post.withId(meta.id)
@@ -340,6 +374,36 @@ export default function ormReducer (state = {}, action) {
       })
       clearCacheFor(Post, meta.eventId)
       break
+
+    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.requestToAddGroupToParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.requestToAddGroupToParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
+
+    case INVITE_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.inviteGroupToJoinParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.inviteGroupToJoinParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))
