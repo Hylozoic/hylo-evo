@@ -9,7 +9,7 @@ exports[`GroupsCard renders correctly 1`] = `
   >
     <RoundImage
       data-stylename="group-image"
-      size="50px"
+      size="30px"
       square={true}
       url="foom.png"
     />
@@ -33,104 +33,100 @@ exports[`RelatedGroupstab renders correctly 1`] = `
   <h1>
     Parent Groups
   </h1>
-  <p>
-    These are the 
-    3
-     groups that 
-    Best Group
-     is a member of
-  </p>
-  <div
-    data-stylename="group-list"
-  >
-    <GroupCard
-      actionMenu={
-        <Dropdown
-          items={
-            Array [
-              Object {
-                "icon": "Trash",
-                "label": "Leave Parent",
-                "onClick": [Function],
-                "red": true,
-              },
-            ]
-          }
-          toggleChildren={
-            <Icon
-              name="More"
-            />
-          }
-        />
-      }
-      group={
-        Object {
-          "id": 9,
+  <div>
+    <h3>
+      These are the 
+      3
+       groups that 
+      Best Group
+       is a member of
+    </h3>
+    <div
+      data-stylename="group-list"
+    >
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Leave Parent",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
         }
-      }
-      key="9"
-    />
-    <GroupCard
-      actionMenu={
-        <Dropdown
-          items={
-            Array [
-              Object {
-                "icon": "Trash",
-                "label": "Leave Parent",
-                "onClick": [Function],
-                "red": true,
-              },
-            ]
+        group={
+          Object {
+            "id": 9,
           }
-          toggleChildren={
-            <Icon
-              name="More"
-            />
-          }
-        />
-      }
-      group={
-        Object {
-          "id": 8,
         }
-      }
-      key="8"
-    />
-    <GroupCard
-      actionMenu={
-        <Dropdown
-          items={
-            Array [
-              Object {
-                "icon": "Trash",
-                "label": "Leave Parent",
-                "onClick": [Function],
-                "red": true,
-              },
-            ]
-          }
-          toggleChildren={
-            <Icon
-              name="More"
-            />
-          }
-        />
-      }
-      group={
-        Object {
-          "id": 7,
+        key="9"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Leave Parent",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
         }
-      }
-      key="7"
-    />
+        group={
+          Object {
+            "id": 8,
+          }
+        }
+        key="8"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Leave Parent",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 7,
+          }
+        }
+        key="7"
+      />
+    </div>
   </div>
-  <h3>
-    Open Invitations to Join Other Groups
-  </h3>
-  <h3>
-    Pending requests to join other groups
-  </h3>
   <div
     data-stylename="group-picker-container"
   >
@@ -138,111 +134,118 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       data-stylename="connect-button"
       onClick={[Function]}
     >
-      Request Membership
+      <div>
+        <Icon
+          data-stylename="connect-icon"
+          name="Search"
+        />
+        Join 
+        Best Group
+         to another group
+      </div>
+      <span
+        data-stylename="connect-label"
+      >
+        REQUEST
+      </span>
     </Button>
   </div>
   <h1>
     Child Groups
   </h1>
-  <p>
-    These 
-    3
-     groups are members of 
-    Best Group
-  </p>
-  <div
-    data-stylename="group-list"
-  >
-    <GroupCard
-      actionMenu={
-        <Dropdown
-          items={
-            Array [
-              Object {
-                "icon": "Trash",
-                "label": "Remove Child",
-                "onClick": [Function],
-                "red": true,
-              },
-            ]
-          }
-          toggleChildren={
-            <Icon
-              name="More"
-            />
-          }
-        />
-      }
-      group={
-        Object {
-          "id": 6,
+  <div>
+    <h3>
+      These 
+      3
+       groups are members of 
+      Best Group
+    </h3>
+    <div
+      data-stylename="group-list"
+    >
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Remove Child",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
         }
-      }
-      key="6"
-    />
-    <GroupCard
-      actionMenu={
-        <Dropdown
-          items={
-            Array [
-              Object {
-                "icon": "Trash",
-                "label": "Remove Child",
-                "onClick": [Function],
-                "red": true,
-              },
-            ]
+        group={
+          Object {
+            "id": 6,
           }
-          toggleChildren={
-            <Icon
-              name="More"
-            />
-          }
-        />
-      }
-      group={
-        Object {
-          "id": 5,
         }
-      }
-      key="5"
-    />
-    <GroupCard
-      actionMenu={
-        <Dropdown
-          items={
-            Array [
-              Object {
-                "icon": "Trash",
-                "label": "Remove Child",
-                "onClick": [Function],
-                "red": true,
-              },
-            ]
-          }
-          toggleChildren={
-            <Icon
-              name="More"
-            />
-          }
-        />
-      }
-      group={
-        Object {
-          "id": 4,
+        key="6"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Remove Child",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
         }
-      }
-      key="4"
-    />
+        group={
+          Object {
+            "id": 5,
+          }
+        }
+        key="5"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Remove Child",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 4,
+          }
+        }
+        key="4"
+      />
+    </div>
   </div>
-  <h3>
-    Requests to join 
-    Best Group
-  </h3>
-  <h3>
-    Pending invites to join 
-    Best Group
-  </h3>
   <div
     data-stylename="group-picker-container"
   >
@@ -250,7 +253,21 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       data-stylename="connect-button"
       onClick={[Function]}
     >
-      Invite
+      <div>
+        <Icon
+          data-stylename="connect-icon"
+          name="Search"
+        />
+        Invite a group to join 
+        <strong>
+          Best Group
+        </strong>
+      </div>
+      <span
+        data-stylename="connect-label"
+      >
+        INVITE
+      </span>
     </Button>
   </div>
 </div>
