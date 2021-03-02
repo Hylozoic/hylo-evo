@@ -74,24 +74,21 @@ export default
   childGroups {
     items {
       id
-      slug
-      name
       avatarUrl
+      bannerUrl
       description
+      name
+      slug
     }
   }
   parentGroups {
     items {
       id
-      slug
-      name
       avatarUrl
+      bannerUrl
       description
-      childGroups(first: 300) {
-        items {
-          id
-        }
-      }
+      name
+      slug
     }
   }
   memberCount

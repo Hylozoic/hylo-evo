@@ -93,26 +93,6 @@ fragment MeCompleteFragment on Me {
           isSubscribed
         }
       }
-      parentGroups {
-        items {
-          id
-          avatarUrl
-          memberCount
-          name
-          slug
-          description
-        }
-      }
-      childGroups(first: 300) {
-        items {
-          id
-          avatarUrl
-          memberCount
-          name
-          slug
-          description
-        }
-      }
     }
   }
 }
