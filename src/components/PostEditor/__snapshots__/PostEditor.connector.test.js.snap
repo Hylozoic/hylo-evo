@@ -6,7 +6,6 @@ Object {
   "changeQueryString": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
-  "createProject": [Function],
   "fetchDefaultTopics": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],

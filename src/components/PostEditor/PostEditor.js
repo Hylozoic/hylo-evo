@@ -39,7 +39,6 @@ export default class PostEditor extends React.Component {
     detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
     fetchDefaultTopics: PropTypes.func,
-    initialPromptForPostType: PropTypes.object,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
@@ -52,11 +51,6 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    initialPromptForPostType: {
-      project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
-      event: <span styleName='postType postType-event'>CREATE EVENT</span>,
-      default: 'What are you looking to post?'
-    },
     titlePlaceholderForPostType: {
       offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
@@ -85,7 +79,7 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentGroup, post, topic, initialPrompt, announcementSelected, postType }) => {
+  buildStateFromProps = ({ editing, currentGroup, post, topic, announcementSelected, postType }) => {
     const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postType || PostEditor.defaultProps.post.type,
       groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
@@ -102,7 +96,6 @@ export default class PostEditor extends React.Component {
 
     return {
       post: currentPost,
-      initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
@@ -182,11 +175,6 @@ export default class PostEditor extends React.Component {
   detailPlaceholderForPostType (type) {
     const { detailPlaceholderForPostType } = this.props
     return detailPlaceholderForPostType[type] || detailPlaceholderForPostType['default']
-  }
-
-  initialPromptForPostType (type) {
-    const { initialPromptForPostType } = this.props
-    return initialPromptForPostType[type] || initialPromptForPostType['default']
   }
 
   postTypeButtonProps = (forPostType) => {
@@ -339,8 +327,8 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const {
-      editing, createPost, createProject, updatePost, onClose,
-      goToPost, setAnnouncement, announcementSelected, isProject,
+      editing, createPost, updatePost, onClose,
+      goToPost, setAnnouncement, announcementSelected,
       imageAttachments, fileAttachments
     } = this.props
     const {
@@ -358,7 +346,7 @@ export default class PostEditor extends React.Component {
     const postToSave = {
       id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
-    const saveFunc = editing ? updatePost : isProject ? createProject : createPost
+    const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
@@ -403,7 +391,7 @@ export default class PostEditor extends React.Component {
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-    const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
+    const hasLocation = ['event', 'offer', 'request', 'resource', 'project'].includes(type)
     const canHaveTimes = type !== 'discussion'
     // Center location autocomplete either on post's current location, or current group's location, or current user's location
     const curLocation = locationObject || get('0.locationObject', groups) || get('locationObject', currentUser)

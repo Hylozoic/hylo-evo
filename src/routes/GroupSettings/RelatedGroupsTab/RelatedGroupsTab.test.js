@@ -10,21 +10,21 @@ describe('RelatedGroupstab', () => {
     const childGroups = [
       { id: 6 }, { id: 5 }, { id: 4 }
     ]
+    const group = { id: 1, name: 'Best Group' }
     const wrapper = shallow(<RelatedGroupsTab
+      group={group}
       parentGroups={parentGroups}
-      childGroups={childGroups} />)
-    expect(wrapper).toMatchSnapshot()
-  })
-})
-
-describe('GroupsList', () => {
-  it('renders correctly', () => {
-    const groups = [
-      { id: 9 }, { id: 8 }, { id: 7 }
-    ]
-    const wrapper = shallow(<GroupsList
-      groups={groups}
-      fetchMoreGroups={() => {}} />)
+      childGroups={childGroups}
+      groupInvitesToJoinUs={[]}
+      groupRequestsToJoinUs={[]}
+      groupInvitesToJoinThem={[]}
+      groupRequestsToJoinThem={[]}
+      possibleParents={[]}
+      possibleChildren={[]}
+      deleteGroupRelationship={() => {}}
+      inviteGroupToJoinParent={() => {}}
+      requestToAddGroupToParent={() => {}}
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 })

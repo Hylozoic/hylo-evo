@@ -7,6 +7,26 @@ export default
   avatarUrl
   bannerUrl
   description
+  location
+    locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
   name
   settings {
     allowGroupInvites
@@ -15,12 +35,58 @@ export default
   }
   slug
   visibility
+  groupRelationshipInvitesFrom {
+    items {
+      id
+      toGroup {
+        id
+        name
+        slug
+      }
+      fromGroup {
+        id
+      }
+      type
+      createdBy {
+        id
+        name
+      }
+    }
+  }
+  groupRelationshipInvitesTo {
+    items {
+      id
+      fromGroup {
+        id
+        name
+        slug
+      }
+      toGroup {
+        id
+      }
+      type
+      createdBy {
+        id
+        name
+      }
+    }
+  }
+  childGroups {
+    items {
+      id
+      slug
+      name
+      avatarUrl
+      description
+    }
+  }
   parentGroups {
     items {
       id
       slug
       name
       avatarUrl
+      description
       childGroups(first: 300) {
         items {
           id

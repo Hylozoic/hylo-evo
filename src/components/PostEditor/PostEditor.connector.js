@@ -17,7 +17,6 @@ import {
   FETCH_POST
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
-import createProject from 'store/actions/createProject'
 import updatePost from 'store/actions/updatePost'
 import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import {
@@ -112,7 +111,6 @@ export const mapDispatchToProps = (dispatch) => {
       clearLinkPreview,
       updatePost,
       createPost,
-      createProject,
       addAttachment
     }, dispatch)
   }
@@ -135,8 +133,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     : url => pollingFetchLinkPreviewRaw(url)
   const createPost = postParams =>
     dispatchProps.createPost({ ...postParams })
-  const createProject = projectParams =>
-    dispatchProps.createProject({ ...projectParams })
   const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ groupSlug })
 
   return {
@@ -144,7 +140,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...dispatchProps,
     ...ownProps,
     createPost,
-    createProject,
     fetchDefaultTopics,
     goToPost,
     pollingFetchLinkPreview

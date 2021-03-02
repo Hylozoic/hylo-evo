@@ -151,7 +151,7 @@ export default class MapExplorer extends React.Component {
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    }).concat(group && group.locationObject ? group.ref : [])
+    }).concat(group && group.locationObject ? group : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
@@ -379,13 +379,13 @@ export default class MapExplorer extends React.Component {
         <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
-        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
+        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/6</strong>
       </button>
       { currentUser ? <Icon name='Heart' styleName={`savedSearchesButton${showSavedSearches ? '-open' : ''}`} onClick={this.toggleSavedSearches} /> : '' }
       { currentUser && showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
-        {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {
+        {['member', 'request', 'offer', 'resource', 'event', 'project'].map(featureType => {
           let color = FEATURE_TYPES[featureType].primaryColor
 
           return <div

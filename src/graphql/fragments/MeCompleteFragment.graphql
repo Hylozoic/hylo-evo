@@ -100,6 +100,7 @@ fragment MeCompleteFragment on Me {
           memberCount
           name
           slug
+          description
         }
       }
       childGroups(first: 300) {
@@ -109,6 +110,7 @@ fragment MeCompleteFragment on Me {
           memberCount
           name
           slug
+          description
         }
       }
     }

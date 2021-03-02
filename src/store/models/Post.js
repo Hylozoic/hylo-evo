@@ -103,7 +103,7 @@ export const POST_TYPES = {
   'project': {
     primaryColor: [252, 128, 0, 255], // $color-fuchsia-pink;
     backgroundColor: 'rgba(252, 128, 0, .2)', // $color-prim;
-    map: false,
+    map: true,
     description: 'Create a project that people can help with'
   },
   'request': {
