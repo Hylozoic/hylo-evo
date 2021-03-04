@@ -100,6 +100,8 @@ export function NewRequests ({ accept, decline, group, joinRequests }) {
 export function JoinRequest ({ accept, decline, group, request }) {
   const { questionAnswers, user } = request
 
+  console.log(user)
+
   // Answers to questions no longer being asked by the group
   const otherAnswers = questionAnswers.filter(qa => !group.joinQuestions.find(jq => jq.questionId === qa.question.id))
 
@@ -109,19 +111,19 @@ export function JoinRequest ({ accept, decline, group, request }) {
         <Avatar avatarUrl={user.avatarUrl} url={`/m/${user.id}`} styleName='requestorAvatar' />
         <div styleName='requestorInfo'>
           <div styleName='name'>{user.name}</div>
-          <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div>
+          {user.skills.items.length > 0 ? <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div> : <div>{user.location}</div>}
         </div>
       </div>
       {group.joinQuestions.map(q =>
-        <div key={q.id}>
+        <div styleName='answer' key={q.id}>
           <h3>{q.text}</h3>
-          {get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}
+          <p>{get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}</p>
         </div>
       )}
       {otherAnswers.map(qa =>
-        <div key={qa.question.id}>
+        <div styleName='answer' key={qa.question.id}>
           <h3>{qa.question.text}</h3>
-          {qa.answer}
+          <p>{qa.answer}</p>
         </div>
       )}
       <div styleName='action-buttons'>
