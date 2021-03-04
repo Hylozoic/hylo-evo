@@ -109,10 +109,7 @@
   color: $color-regent;
   align-items: center;
   display: flex;
-  height: 50px;
-  position: sticky;
-  bottom: -120px;
-  right: 2%;
+  padding-bottom: 10px;
   z-index: 5;
 }
 
@@ -129,6 +126,8 @@
   @extend %requestBar;
   border-width: 0px;
   justify-content: center;
+  height: auto;
+  padding-bbottom: 100px;
 }
 
 .requestBarBorderless .requestButton {
@@ -138,7 +137,6 @@
 .requestOption {
   align-items: center;
   justify-content: space-between;
-  height: 50px;
   width: 100%;
 }
 
@@ -148,10 +146,26 @@
 }
 
 .joinQuestion {
+  background-color: rgba(249, 250, 251, 1.000);
+  border: 1px solid rgba(224, 229, 233, 1.000);
+  border-radius: 5px;
+  padding: 15px;
   width: 100%;
+  margin-bottom: 25px;
 
   textarea {
     width: 100%;
+    background-color: transparent;
+    border: none;
+    color: rgba(35, 64, 91, 1.000);
+
+    &::placeholder {
+      font-style: italic;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
@@ -163,6 +177,11 @@
   font-size: 14px;
   margin: 0 15px;
   padding: 5px 15px;
+
+  h3 {
+    font-size: 16px;
+    color: rgba(35, 64, 91, 1.000);
+  }
 
   &:hover {
     text-decoration: none;
