@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
-
+import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { bgImageStyle } from 'util/index'
@@ -67,18 +67,18 @@ export function GroupsList ({ groups, routeParams }) {
 
 export function GroupCard ({ group, routeParams }) {
   return <div styleName='group-card'>
-    <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='groupLink'>
+    <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
         <span styleName='group-stats'>{group.memberCount} Members</span>
-        <span styleName='group-description'>{group.description}</span>
-        <span>{
-          group.memberStatus === 'member' ? 'Already a member'
-            : group.memberStatus === 'requested' ? 'Requested to Join'
-              : 'Join'
+        <div styleName='group-description'><span>{group.description}</span></div>
+      </div>
+      <div styleName='membership-status'>{
+        group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete'/> <b>Member</b></div>
+          : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>Membership Requested</b></div>
+            : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group'/> <b>Join</b></div>
         }
-        </span>
       </div>
     </Link>
     <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div /></div>
