@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import { GROUP_ACCESSIBILITY } from 'store/models/Group'
+import { DEFAULT_AVATAR, DEFAULT_BANNER, GROUP_ACCESSIBILITY } from 'store/models/Group'
 import { inIframe } from 'util/index'
 import { groupUrl } from 'util/navigation'
 
@@ -90,11 +90,11 @@ export default class GroupDetail extends Component {
     const isMember = (currentUser && currentUser.memberships) ? currentUser.memberships.toModelArray().find(m => m.group.id === group.id) : false
 
     return <div styleName='g.group'>
-      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
+      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
-          <img src={group.avatarUrl} height='50px' width='50px' />
+          <img src={group.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
           <div styleName='g.groupTitle'>{group.name}</div>
         </div>
       </div>
