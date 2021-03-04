@@ -218,10 +218,10 @@ export default class GroupSettingsTab extends Component {
               <div styleName='questionList'>
                 <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
 
-              {joinQuestions.map((q, i) => <div key={i} styleName='question'>
-              {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' /></div> : <span styleName='createInput'>+</span>}
-                <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={this.updateJoinQuestion(i)} />
-              </div>)}
+                {joinQuestions.map((q, i) => <div key={i} styleName='question'>
+                  {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' /></div> : <span styleName='createInput'>+</span>}
+                  <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={this.updateJoinQuestion(i)} />
+                </div>)}
               </div>
             </div>}
           </div>
