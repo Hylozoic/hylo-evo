@@ -20,11 +20,11 @@ export function groupAccessibilityDescription (a) {
 export function groupAccessibilityIcon (a) {
   switch (a) {
     case GROUP_ACCESSIBILITY.Closed:
-      return 'Search'
+      return 'Lock'
     case GROUP_ACCESSIBILITY.Restricted:
-      return 'Search'
+      return 'Hand'
     case GROUP_ACCESSIBILITY.Open:
-      return 'Search'
+      return 'Enter-Door'
   }
 }
 
@@ -48,11 +48,11 @@ export function groupVisibilityDescription (v) {
 export function groupVisibilityIcon (v) {
   switch (v) {
     case GROUP_VISIBILITY.Hidden:
-      return 'Search'
+      return 'Hidden'
     case GROUP_VISIBILITY.Protected:
-      return 'Search'
+      return 'Shield'
     case GROUP_VISIBILITY.Public:
-      return 'Search'
+      return 'Public'
   }
 }
 

@@ -150,6 +150,7 @@
       color: rgba(41, 64, 90, 1.00);
       font-weight: bold;
       font-size: 18px;
+      margin-left: 8px;
     }
 
     span {
@@ -200,7 +201,7 @@
         padding: 0;
       }
     }
-    
+
     .title {
       font-size: 12px;
       color: rgba(192, 197, 205, 1.00);
@@ -227,9 +228,17 @@
 .createGroupBottom {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-bottom: 30px;
 
   .submit-button {
     text-align: center;
+    display: flex;
+    align-items: center;
+
+    .create-group-icon {
+      margin-right: 5px;
+    }
   }
+
 }
