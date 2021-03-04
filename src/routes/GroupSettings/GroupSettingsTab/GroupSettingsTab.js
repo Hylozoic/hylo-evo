@@ -2,6 +2,7 @@ import { isEqual, set, trim } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import cx from 'classnames'
+import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
 import Button from 'components/Button'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -150,57 +151,88 @@ export default class GroupSettingsTab extends Component {
         </div> */}
         <div styleName='groupPrivacySection'>
           <h3>Visibility</h3>
-          <p styleName='privacy-detail'>Who is able to see {group.name}?</p>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Public })}>
+          <p styleName='privacyDetail'>Who is able to see <strong>{group.name}</strong>?</p>
+          <div styleName={'privacySetting' + ' ' + cx({ on: visibility === GROUP_VISIBILITY.Public })}>
             <label>
               <input type='radio' name='visibility' value={GROUP_VISIBILITY.Public} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Public} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Public })}>Anyone can find and see {group.name}</span>
+              <Icon name='Public' styleName='settingIcon' />
+              <div styleName='settingDescription'>
+                <h4>Public</h4>
+                <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Public })}>Anyone can find and see {group.name}</span>
+              </div>
             </label>
           </div>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Protected })}>
+          <div styleName={'privacySetting' + ' ' + cx({ on: visibility === GROUP_VISIBILITY.Protected })}>
             <label>
               <input type='radio' name='visibility' value={GROUP_VISIBILITY.Protected} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Protected} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Protected })}>Only members of parent groups can see {group.name}</span>
+              <Icon name='Shield' styleName='settingIcon' />
+              <div styleName='settingDescription'>
+                <h4>Protected</h4>
+                <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Protected })}>Only members of parent groups can see {group.name}</span>
+              </div>
             </label>
           </div>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Hidden })}>
+          <div styleName={'privacySetting' + ' ' + cx({ on: visibility === GROUP_VISIBILITY.Hidden })}>
             <label>
               <input type='radio' name='visibility' value={GROUP_VISIBILITY.Hidden} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Hidden} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Hidden })}>Only members of {group.name} can see this group</span>
+              <Icon name='Hidden' styleName='settingIcon' />
+              <div styleName='settingDescription'>
+                <h4>Hidden</h4>
+                <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Hidden })}>Only members of {group.name} can see this group</span>
+              </div>
             </label>
           </div>
         </div>
 
         <div styleName='groupPrivacySection'>
           <h3>Access</h3>
-          <p styleName='privacy-detail'>How can people become members of {group.name}</p>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Open })}>
+          <p styleName='privacyDetail'>How can people become members of <strong>{group.name}</strong>?</p>
+          <div styleName={'privacySetting' + ' ' + cx({ on: accessibility === GROUP_ACCESSIBILITY.Open })}>
             <label>
               <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Open} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Open} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Open })}>Anyone who can see {group.name} can automatically join it</span>
+              <Icon name='Enter-Door' styleName='settingIcon' />
+              <div styleName='settingDescription'>
+                <h4>Open</h4>
+                <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Open })}>Anyone who can see {group.name} can automatically join it</span>
+              </div>
             </label>
           </div>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Restricted })}>
+          <div styleName={'privacySetting' + ' ' + cx({ on: accessibility === GROUP_ACCESSIBILITY.Restricted })}>
             <label>
               <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Restricted} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Restricted} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Restricted })}>Anyone can apply to join but must be approved by a moderator</span>
+              <Icon name='Hand' styleName='settingIcon' />
+              <div styleName='settingDescription'>
+                <h4>Restricted</h4>
+                <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Restricted })}>Anyone can apply to join but must be approved by a moderator</span>
+              </div>
             </label>
-            {accessibility === GROUP_ACCESSIBILITY.Restricted && <div styleName='groupQuestions'>
+            {accessibility === GROUP_ACCESSIBILITY.Restricted && <div styleName={'groupQuestions' + ' ' + cx({ on: settings.askJoinQuestions })}>
               <SwitchStyled
                 checked={settings.askJoinQuestions}
                 onChange={() => this.updateSettingDirectly('settings.askJoinQuestions')(!settings.askJoinQuestions)}
                 backgroundColor={settings.askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-              Require groups to answer questions when joining this group
+              <div styleName='onOff'>
+                <div styleName='off'>OFF</div>
+                <div styleName='on'>ON</div>
+              </div>
+              <div styleName='questionList'>
+                <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
 
               {joinQuestions.map((q, i) => <div key={i} styleName='question'>
+              {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' /></div> : <span styleName='createInput'>+</span>}
                 <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={this.updateJoinQuestion(i)} />
               </div>)}
+              </div>
             </div>}
           </div>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Closed })}>
+          <div styleName={'privacySetting' + ' ' + cx({ on: accessibility === GROUP_ACCESSIBILITY.Closed })}>
             <label>
               <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Closed} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Closed} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Closed })}>Membership in {group.name} is invite only</span>
+              <Icon name='Lock' styleName='settingIcon' />
+              <div styleName='settingDescription'>
+                <h4>Closed</h4>
+                <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Closed })}>Membership in {group.name} is invite only</span>
+              </div>
             </label>
           </div>
         </div>
