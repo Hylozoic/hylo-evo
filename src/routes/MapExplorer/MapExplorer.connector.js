@@ -11,7 +11,7 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMe from 'store/selectors/getMe'
-import { addQuerystringToPath, baseUrl, personUrl, postUrl, groupMapDetailUrl } from 'util/navigation'
+import { addQuerystringToPath, baseUrl, personUrl, postUrl, groupDetailUrl } from 'util/navigation'
 
 import {
   fetchMembers,
@@ -107,7 +107,7 @@ export function mapDispatchToProps (dispatch, props) {
     deleteSearch: (searchId) => dispatch(deleteSearch(searchId)),
     saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
-    showGroupDetails: (groupId) => dispatch(push(groupMapDetailUrl(groupId, { ...routeParams, view: 'map' }, querystringParams))),
+    showGroupDetails: (groupSlug) => dispatch(push(groupDetailUrl(groupSlug, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.groupSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),

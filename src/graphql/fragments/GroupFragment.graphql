@@ -15,34 +15,6 @@ fragment GroupFragment on Group {
   }
   slug
   visibility
-  parentGroups {
-    items {
-      id
-      slug
-      name
-      avatarUrl
-      childGroups(first: 300) {
-        items {
-          id
-        }
-      }
-      memberCount
-      members(first: 8, sortBy: "name", order: "desc") {
-        items {
-          id
-          name
-          avatarUrl
-        }
-      }
-      moderators {
-        items {
-          id
-          name
-          avatarUrl
-        }
-      }
-    }
-  }
   groupTopics(
     first: $first,
     offset: $offset,

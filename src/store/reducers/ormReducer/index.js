@@ -6,6 +6,7 @@ import {
   CANCEL_GROUP_RELATIONSHIP_INVITE,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
+  CREATE_JOIN_REQUEST,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
@@ -83,6 +84,7 @@ export default function ormReducer (state = {}, action) {
     GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
+    JoinRequest,
     Me,
     Membership,
     Message,
@@ -327,6 +329,14 @@ export default function ormReducer (state = {}, action) {
     case CREATE_GROUP:
       me = Me.withId(Me.first().id)
       me.updateAppending({ memberships: [payload.data.createGroup.id] })
+      break
+
+    case CREATE_JOIN_REQUEST:
+      if (payload.data.createJoinRequest.request) {
+        me = Me.first()
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id })
+        me.updateAppending({ joinRequests: [jr] })
+      }
       break
 
     case JOIN_PROJECT_PENDING:

@@ -81,7 +81,7 @@ const detailRoutes = [
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(map|events|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(groups)/:groupSlug/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map|groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }

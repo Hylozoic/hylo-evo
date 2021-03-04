@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
+
+import RoundImage from 'components/RoundImage'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { bgImageStyle } from 'util/index'
-import RoundImage from 'components/RoundImage'
-import { groupUrl } from 'util/navigation'
+import { groupUrl, groupDetailUrl } from 'util/navigation'
 
 import './Groups.scss'
 
@@ -12,14 +13,16 @@ export default class Groups extends Component {
   static propTypes = {
     childGroups: PropTypes.array,
     group: PropTypes.object,
-    parentGroups: PropTypes.array
+    parentGroups: PropTypes.array,
+    routeParams: PropTypes.object
   }
 
   render () {
     const {
       childGroups,
       group,
-      parentGroups
+      parentGroups,
+      routeParams
     } = this.props
 
     return <div styleName='container'>
@@ -38,6 +41,7 @@ export default class Groups extends Component {
         </div>
         <GroupsList
           groups={parentGroups}
+          routeParams={routeParams}
         />
       </div>
 
@@ -48,26 +52,33 @@ export default class Groups extends Component {
         </div>
         <GroupsList
           groups={childGroups}
+          routeParams={routeParams}
         />
       </div>
     </div>
   }
 }
 
-export function GroupsList ({ groups }) {
+export function GroupsList ({ groups, routeParams }) {
   return <div styleName='group-list' >
-    {groups.map(c => <GroupCard group={c} key={c.id} />)}
+    {groups.map(c => <GroupCard group={c} key={c.id} routeParams={routeParams} />)}
   </div>
 }
 
-export function GroupCard ({ group }) {
+export function GroupCard ({ group, routeParams }) {
   return <div styleName='group-card'>
-    <Link to={groupUrl(group.slug, 'groups')} styleName='groupLink'>
+    <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='groupLink'>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
         <span styleName='group-stats'>{group.memberCount} Members</span>
         <span styleName='group-description'>{group.description}</span>
+        <span>{
+          group.memberStatus === 'member' ? 'Already a member'
+            : group.memberStatus === 'requested' ? 'Requested to Join'
+              : 'Join'
+        }
+        </span>
       </div>
     </Link>
     <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div /></div>

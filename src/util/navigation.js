@@ -91,7 +91,7 @@ export function groupUrl (slug, view = '', defaultUrl = allGroupsUrl()) {
   }
 }
 
-export function groupMapDetailUrl (slug, opts = {}, querystringParams = {}) {
+export function groupDetailUrl (slug, opts = {}, querystringParams = {}) {
   let result = baseUrl(opts)
   result = `${result}/group/${slug}`
 

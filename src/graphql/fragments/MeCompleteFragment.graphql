@@ -60,6 +60,16 @@ fragment MeCompleteFragment on Me {
       isActive
     }
   }
+  joinRequests {
+    items {
+      id
+      status
+      createdAt
+      group {
+        id
+      }
+    }
+  }
   memberships {
     id
     lastViewedAt
@@ -78,6 +88,11 @@ fragment MeCompleteFragment on Me {
       slug
       memberCount
       avatarUrl
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
       groupTopics(subscribed: true) {
         total
         hasMore
