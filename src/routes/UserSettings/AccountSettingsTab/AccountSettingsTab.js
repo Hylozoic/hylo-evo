@@ -123,7 +123,6 @@ export default class AccountSettingsTab extends Component {
         Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.
       </div>
 
-
       <div styleName='saveChanges'>
         <span styleName={canSave ? 'settingChanged' : ''}>{canSave ? 'Changes not saved' : 'Current settings up to date'}</span>
         <Button label='Save Changes' color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />

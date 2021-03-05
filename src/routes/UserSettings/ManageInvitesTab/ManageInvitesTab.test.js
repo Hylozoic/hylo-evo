@@ -5,6 +5,7 @@ import React from 'react'
 describe('ManageInvitesTab', () => {
   it('renders a list of pending join requests', () => {
     const props = {
+      canceledJoinRequests: [],
       pendingJoinRequests: [
         { id: "1", group: { id: 1, name: 'group1', avatarUrl: null } },
         { id: "2", group: { id: 2, name: 'group2', avatarUrl: null } },

@@ -13,6 +13,7 @@ const { array, bool, func } = PropTypes
 
 export default class ManageInvitesTab extends Component {
   static propTypes = {
+    canceledJoinRequests: array,
     cancelJoinRequest: func,
     loading: bool,
     pendingJoinRequests: array,
@@ -24,7 +25,7 @@ export default class ManageInvitesTab extends Component {
   }
 
   render () {
-    const { cancelJoinRequest, loading, pendingJoinRequests, rejectedJoinRequests } = this.props
+    const { canceledJoinRequests, cancelJoinRequest, loading, pendingJoinRequests, rejectedJoinRequests } = this.props
 
     if (loading) return <Loading />
 
@@ -56,6 +57,12 @@ export default class ManageInvitesTab extends Component {
             key={jr.id}
           />
         )}
+        {canceledJoinRequests.length > 0 && canceledJoinRequests.map((jr) =>
+          <JoinRequest
+            joinRequest={jr}
+            key={jr.id}
+          />
+        )}
 
       </div>
     )
@@ -77,7 +84,8 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
       <span styleName='createdDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
       {joinRequest.status === JOIN_REQUEST_STATUS.Pending ? <span onClick={cancel} styleName='cancelButton'>Cancel</span>
         : joinRequest.status === JOIN_REQUEST_STATUS.Rejected ? 'Declined'
-          : ''
+          : joinRequest.status === JOIN_REQUEST_STATUS.Canceled ? 'You Canceled'
+            : ''
       }
     </div>
   )
