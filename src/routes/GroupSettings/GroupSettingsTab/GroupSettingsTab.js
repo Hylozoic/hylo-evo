@@ -57,6 +57,11 @@ export default class GroupSettingsTab extends Component {
     })
   }
 
+  clearField = (index) => event => {
+    event.target.value = ''
+    this.updateJoinQuestion(index)(event)
+  }
+
   updateJoinQuestion = (index) => event => {
     const value = event.target.value
     const newJoinQuestions = this.state.edits.joinQuestions
@@ -219,7 +224,7 @@ export default class GroupSettingsTab extends Component {
                 <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
 
                 {joinQuestions.map((q, i) => <div key={i} styleName='question'>
-                  {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' /></div> : <span styleName='createInput'>+</span>}
+                  {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={this.clearField(i)} /></div> : <span styleName='createInput'>+</span>}
                   <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={this.updateJoinQuestion(i)} />
                 </div>)}
               </div>
