@@ -10,12 +10,11 @@
 
 .title {
   min-height: 60px;
-  line-height: 60px;
+  line-height: 40px;
   text-align: center;
   border-radius: 4px;
   margin-bottom: 25px;
   composes: hdr-display from 'css/typography.scss';
-  background-color: $color-catskill-white;
   border: none;
   width: 100%;
 }
@@ -47,6 +46,11 @@
   }
 }
 
+.requestGroup div a {
+  position: relative;
+  top: -5px;
+}
+
 .error {
   background-color: $color-pale-pink;
   color: $color-amaranth;
@@ -57,23 +61,50 @@
   color: $color-mountain-meadow;
 }
 
-.joinRequest {
-  margin-bottom: 2px;
+.requestList {
+
+  .joinRequest {
+    margin-bottom: 2px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+
+    .requestDetail {
+      display: flex;
+
+      .createdDate {
+        font-size: 12px;
+        color: rgba(191, 197, 206, 1.000);
+        position: relative;
+        top: 5px;
+      }
+    }
+  }
+
+  .joinRequest:nth-child(odd) {
+    background-color: rgba(249, 250, 250, 1.000);
+    padding: 5px;
+  }
 }
 
-.createdDate {
-  float: right;
-}
-
-.cancelButton {
+.cancelButton, .declinedCanceled {
   margin-left: auto;
   composes: text-button from 'css/typography.scss';
-  color: $color-amaranth;
-  border: 1px solid $color-amaranth;
-  padding: 2px 7px;
+  color: rgba(125, 140, 157, 1.000);
+  border: 1px solid rgba(191, 197, 206, 1.000);
+  padding: 4px 7px;
+  margin-left: 10px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 1);
   @include font-regular;
   &:hover {
     color: $color-white;
     background-color: $color-amaranth;
   }
+}
+
+.declinedCanceled {
+  background-color: transparent;
+  border: 1px dashed rgba(191, 197, 206, .5);
 }

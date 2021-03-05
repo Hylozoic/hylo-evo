@@ -42,27 +42,31 @@ export default class ManageInvitesTab extends Component {
         TODO
 
         <h2 styleName='subhead'>Your Open Requests to Join Groups</h2>
-        {pendingJoinRequests.length > 0 && pendingJoinRequests.map((jr) =>
-          <JoinRequest
-            joinRequest={jr}
-            cancelJoinRequest={cancelJoinRequest}
-            key={jr.id}
-          />
-        )}
+        <div styleName='requestList'>
+          {pendingJoinRequests.length > 0 && pendingJoinRequests.map((jr) =>
+            <JoinRequest
+              joinRequest={jr}
+              cancelJoinRequest={cancelJoinRequest}
+              key={jr.id}
+            />
+          )}
+        </div>
 
-        <h2 styleName='subhead'>Decline Invitations &amp; Requests</h2>
-        {rejectedJoinRequests.length > 0 && rejectedJoinRequests.map((jr) =>
-          <JoinRequest
-            joinRequest={jr}
-            key={jr.id}
-          />
-        )}
-        {canceledJoinRequests.length > 0 && canceledJoinRequests.map((jr) =>
-          <JoinRequest
-            joinRequest={jr}
-            key={jr.id}
-          />
-        )}
+        <h2 styleName='subhead'>Declined Invitations &amp; Requests</h2>
+        <div styleName='requestList'>
+          {rejectedJoinRequests.length > 0 && rejectedJoinRequests.map((jr) =>
+            <JoinRequest
+              joinRequest={jr}
+              key={jr.id}
+            />
+          )}
+          {canceledJoinRequests.length > 0 && canceledJoinRequests.map((jr) =>
+            <JoinRequest
+              joinRequest={jr}
+              key={jr.id}
+            />
+          )}
+        </div>
 
       </div>
     )
@@ -80,13 +84,17 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
 
   return (
     <div styleName='joinRequest'>
-      <GroupButton group={group} />
-      <span styleName='createdDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
-      {joinRequest.status === JOIN_REQUEST_STATUS.Pending ? <span onClick={cancel} styleName='cancelButton'>Cancel</span>
-        : joinRequest.status === JOIN_REQUEST_STATUS.Rejected ? 'Declined'
-          : joinRequest.status === JOIN_REQUEST_STATUS.Canceled ? 'You Canceled'
-            : ''
-      }
+      <div styleName='requestGroup'>
+        <GroupButton group={group}/>
+      </div>
+      <div styleName='requestDetail'>
+        <span styleName='createdDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
+        {joinRequest.status === JOIN_REQUEST_STATUS.Pending ? <span onClick={cancel} styleName='cancelButton'>Cancel</span>
+          : joinRequest.status === JOIN_REQUEST_STATUS.Rejected ? <span styleName='declinedCanceled'>Declined</span>
+            : joinRequest.status === JOIN_REQUEST_STATUS.Canceled ? <span styleName='declinedCanceled'>Canceled</span>
+              : ''
+        }
+      </div>
     </div>
   )
 }
