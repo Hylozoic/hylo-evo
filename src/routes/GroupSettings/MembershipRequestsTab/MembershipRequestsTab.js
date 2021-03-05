@@ -80,18 +80,20 @@ export function NoRequests ({ group, viewMembers }) {
 export function NewRequests ({ accept, decline, group, joinRequests }) {
   return (
     <React.Fragment>
-      <div styleName='header'>
-        <h2>People want to join your group!</h2>
-        {/* TODO: For later implementation
-        <span styleName='response-time'>Your average response time: 1 day</span> */}
-      </div>
-      <div styleName='request-list'>
-        {joinRequests.map(r => <JoinRequest
-          key={r.id}
-          accept={accept}
-          decline={decline}
-          group={group}
-          request={r} />)}
+      <div>
+        <div styleName='header'>
+          <h2>People want to join your group!</h2>
+          {/* TODO: For later implementation
+          <span styleName='response-time'>Your average response time: 1 day</span> */}
+        </div>
+        <div styleName='request-list'>
+          {joinRequests.map(r => <JoinRequest
+            key={r.id}
+            accept={accept}
+            decline={decline}
+            group={group}
+            request={r} />)}
+        </div>
       </div>
     </React.Fragment>
   )
