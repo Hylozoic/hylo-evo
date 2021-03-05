@@ -85,7 +85,7 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
   return (
     <div styleName='joinRequest'>
       <div styleName='requestGroup'>
-        <GroupButton group={group}/>
+        <GroupButton group={group} />
       </div>
       <div styleName='requestDetail'>
         <span styleName='createdDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
