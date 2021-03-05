@@ -15,7 +15,7 @@ export const getCurrentUserAffiliations = ormCreateSelector(
 export function mapStateToProps (state, props) {
   const action = get(state, 'UserGroupsTab.action')
   const affiliations = getCurrentUserAffiliations(state, props)
-  const memberships = getMyMemberships(state, props)
+  const memberships = getMyMemberships(state, props).sort((a, b) => a.group.name.localeCompare(b.group.name))
 
   return {
     action,

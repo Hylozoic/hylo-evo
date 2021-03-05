@@ -16,7 +16,6 @@ $current-name-margin-bottom: 13px;
 
 $ul-vertical-spacing: 10px;
 $ul-horizontal-spacing: 14px;
-$ul-network-group-indent: 25px;
 $li-padding: 4px;
 $li-spacing: 14px;
 $li-height: 40px;
@@ -66,10 +65,6 @@ $new-group-spacing: 16px;
   color: $color-white;
   cursor: pointer;
   font-size: $close-dimension;
-}
-
-.currentNetwork {
-  border-left: 5px solid rgba(13, 195, 159, 1.000);
 }
 
 .groupDrawer > .currentGroup {
@@ -153,14 +148,7 @@ a.currentGroup:hover {
   }
 }
 
-.networkGroupsList {
-  padding: 0;
-  li {
-    list-style: none;
-  }
-}
-
-.groupRowAvatar {
+.contextRowAvatar {
   @include image($group-list-avatar-size);
   display: inline-block;
   vertical-align: middle;
@@ -168,7 +156,7 @@ a.currentGroup:hover {
   margin-right: $li-spacing;
 }
 
-.groupRow {
+.contextRow {
   padding: 6px $ul-horizontal-spacing 6px 28px;
   transition: all .3s ease;
   background: rgba(35, 57, 87, 0);
@@ -178,11 +166,11 @@ a.currentGroup:hover {
   }
 }
 
-.nonMember {
-  color: $color-iceberg;
+.currentContext {
+  border-left: 5px solid rgba(13, 195, 159, 1.000);
 }
 
-.groupRowLink {
+.contextRowLink {
   display: flex;
   align-items: center;
   &:hover {
@@ -201,30 +189,7 @@ a.currentGroup:hover {
   text-align: center;
 }
 
-.networkRow {
-  padding: 6px 0;
-  transition: all .3s ease;
-  &:hover {
-    background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, .3) 100%);
-  }
-}
-
-.networkRowLink {
-  &:hover, &:visited, &:focus {
-    text-decoration: none;
-  }
-  padding-right: 0 !important;
-  li {
-    list-style: none;
-  }
-}
-
-.networkExpanded {
-  background: linear-gradient(0deg, rgba(42, 64, 89, .6) 0%, rgba(42, 64, 89, 0) 100%);
-  padding: 10px 0;
-}
-
-.group-name, .network-name {
+.group-name {
   composes: drawer-inv-li from 'css/typography.scss';
   flex: 2;
   vertical-align: middle;
@@ -233,25 +198,6 @@ a.currentGroup:hover {
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
-}
-
-.is-member {
-  @include font-bold;
-  opacity: 1 !important;
-  color: $color-white;
-}
-
-.network-name-wrapper {
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  padding: 5px 0px 5px 20px;
-}
-
-.network-name {
-  font-weight: 600;
-  opacity: 1;
-  color: $color-white;
 }
 
 .groupsButton {
