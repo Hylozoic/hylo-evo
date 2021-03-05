@@ -1,5 +1,12 @@
 import { attr, fk, many, Model } from 'redux-orm'
 
+export const JOIN_REQUEST_STATUS = {
+  Pending: 0,
+  Accepted: 1,
+  Rejected: 2,
+  Canceled: 3
+}
+
 class JoinRequest extends Model {
   toString () {
     return `JoinRequest: ${this.id}`

@@ -60,7 +60,7 @@ fragment MeCompleteFragment on Me {
       isActive
     }
   }
-  joinRequests {
+  joinRequests(status: 0) {
     items {
       id
       status

@@ -148,8 +148,8 @@ export function messagePersonUrl (person) {
 }
 
 // Person URLs
-export function currentUserSettingsUrl () {
-  return `/settings`
+export function currentUserSettingsUrl (view = '') {
+  return '/settings' + (view ? '/' + view : '')
 }
 
 export function personUrl (id, groupSlug) {

@@ -63,14 +63,16 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         Visibility
       </h3>
       <p
-        data-stylename="privacy-detail"
+        data-stylename="privacyDetail"
       >
         Who is able to see 
-        Foomunity
+        <strong>
+          Foomunity
+        </strong>
         ?
       </p>
       <div
-        data-stylename=""
+        data-stylename="privacySetting "
       >
         <label>
           <input
@@ -80,16 +82,27 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             type="radio"
             value={2}
           />
-          <span
-            data-stylename="privacy-option disabled"
+          <Icon
+            data-stylename="settingIcon"
+            name="Public"
+          />
+          <div
+            data-stylename="settingDescription"
           >
-            Anyone can find and see 
-            Foomunity
-          </span>
+            <h4>
+              Public
+            </h4>
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Anyone can find and see 
+              Foomunity
+            </span>
+          </div>
         </label>
       </div>
       <div
-        data-stylename="on"
+        data-stylename="privacySetting on"
       >
         <label>
           <input
@@ -99,16 +112,27 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             type="radio"
             value={1}
           />
-          <span
-            data-stylename="privacy-option"
+          <Icon
+            data-stylename="settingIcon"
+            name="Shield"
+          />
+          <div
+            data-stylename="settingDescription"
           >
-            Only members of parent groups can see 
-            Foomunity
-          </span>
+            <h4>
+              Protected
+            </h4>
+            <span
+              data-stylename="privacy-option"
+            >
+              Only members of parent groups can see 
+              Foomunity
+            </span>
+          </div>
         </label>
       </div>
       <div
-        data-stylename=""
+        data-stylename="privacySetting "
       >
         <label>
           <input
@@ -118,13 +142,24 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             type="radio"
             value={0}
           />
-          <span
-            data-stylename="privacy-option disabled"
+          <Icon
+            data-stylename="settingIcon"
+            name="Hidden"
+          />
+          <div
+            data-stylename="settingDescription"
           >
-            Only members of 
-            Foomunity
-             can see this group
-          </span>
+            <h4>
+              Hidden
+            </h4>
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Only members of 
+              Foomunity
+               can see this group
+            </span>
+          </div>
         </label>
       </div>
     </div>
@@ -135,13 +170,16 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         Access
       </h3>
       <p
-        data-stylename="privacy-detail"
+        data-stylename="privacyDetail"
       >
         How can people become members of 
-        Foomunity
+        <strong>
+          Foomunity
+        </strong>
+        ?
       </p>
       <div
-        data-stylename=""
+        data-stylename="privacySetting "
       >
         <label>
           <input
@@ -151,17 +189,28 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             type="radio"
             value={2}
           />
-          <span
-            data-stylename="privacy-option disabled"
+          <Icon
+            data-stylename="settingIcon"
+            name="Enter-Door"
+          />
+          <div
+            data-stylename="settingDescription"
           >
-            Anyone who can see 
-            Foomunity
-             can automatically join it
-          </span>
+            <h4>
+              Open
+            </h4>
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Anyone who can see 
+              Foomunity
+               can automatically join it
+            </span>
+          </div>
         </label>
       </div>
       <div
-        data-stylename="on"
+        data-stylename="privacySetting on"
       >
         <label>
           <input
@@ -171,14 +220,25 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             type="radio"
             value={1}
           />
-          <span
-            data-stylename="privacy-option"
+          <Icon
+            data-stylename="settingIcon"
+            name="Hand"
+          />
+          <div
+            data-stylename="settingDescription"
           >
-            Anyone can apply to join but must be approved by a moderator
-          </span>
+            <h4>
+              Restricted
+            </h4>
+            <span
+              data-stylename="privacy-option"
+            >
+              Anyone can apply to join but must be approved by a moderator
+            </span>
+          </div>
         </label>
         <div
-          data-stylename="groupQuestions"
+          data-stylename="groupQuestions "
         >
           <SwitchStyled
             backgroundColor="#8B96A4"
@@ -186,22 +246,49 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             disabled={false}
             onChange={[Function]}
           />
-          Require groups to answer questions when joining this group
           <div
-            data-stylename="question"
-            key="0"
+            data-stylename="onOff"
           >
-            <input
-              name="joinQuestions[]"
-              onChange={[Function]}
-              placeholder="Add a new question"
-              value=""
-            />
+            <div
+              data-stylename="off"
+            >
+              OFF
+            </div>
+            <div
+              data-stylename="on"
+            >
+              ON
+            </div>
+          </div>
+          <div
+            data-stylename="questionList"
+          >
+            <span
+              data-stylename="questionDescription"
+            >
+              Require groups to answer questions when joining this group
+            </span>
+            <div
+              data-stylename="question"
+              key="0"
+            >
+              <span
+                data-stylename="createInput"
+              >
+                +
+              </span>
+              <input
+                name="joinQuestions[]"
+                onChange={[Function]}
+                placeholder="Add a new question"
+                value=""
+              />
+            </div>
           </div>
         </div>
       </div>
       <div
-        data-stylename=""
+        data-stylename="privacySetting "
       >
         <label>
           <input
@@ -211,20 +298,36 @@ exports[`GroupSettingsTab renders correctly 1`] = `
             type="radio"
             value={0}
           />
-          <span
-            data-stylename="privacy-option disabled"
+          <Icon
+            data-stylename="settingIcon"
+            name="Lock"
+          />
+          <div
+            data-stylename="settingDescription"
           >
-            Membership in 
-            Foomunity
-             is invite only
-          </span>
+            <h4>
+              Closed
+            </h4>
+            <span
+              data-stylename="privacy-option disabled"
+            >
+              Membership in 
+              Foomunity
+               is invite only
+            </span>
+          </div>
         </label>
       </div>
     </div>
   </div>
   <div
-    data-stylename="button-row"
+    data-stylename="saveChanges"
   >
+    <span
+      data-stylename=""
+    >
+      Current settings up to date
+    </span>
     <Button
       color="gray"
       data-stylename="save-button"

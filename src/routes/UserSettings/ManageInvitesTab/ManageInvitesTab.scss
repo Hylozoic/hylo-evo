@@ -1,0 +1,79 @@
+.container {
+  padding-bottom: 40px;
+}
+
+// GroupControl
+.group-control {
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.title {
+  min-height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
+}
+
+.description {
+  color: $color-regent;
+  margin-bottom: 30px;
+}
+
+.subhead {
+  text-transform: uppercase;
+  color: $color-rhino-30;
+  font-size: $space-3x;
+  padding-top: $space-3x;
+  margin-top: $space-3x;
+  margin-bottom: $space-3x;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  > span {
+    cursor: pointer;
+  }
+}
+
+.error {
+  background-color: $color-pale-pink;
+  color: $color-amaranth;
+}
+
+.success {
+  background-color: $color-iceberg;
+  color: $color-mountain-meadow;
+}
+
+.joinRequest {
+  margin-bottom: 2px;
+}
+
+.createdDate {
+  float: right;
+}
+
+.cancelButton {
+  margin-left: auto;
+  composes: text-button from 'css/typography.scss';
+  color: $color-amaranth;
+  border: 1px solid $color-amaranth;
+  padding: 2px 7px;
+  @include font-regular;
+  &:hover {
+    color: $color-white;
+    background-color: $color-amaranth;
+  }
+}
