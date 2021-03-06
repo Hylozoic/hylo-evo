@@ -32,6 +32,21 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/groups",
       },
       Object {
+        "component": <Memo(Connect(ManageInvitesTab))
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+        />,
+        "name": "Invites & Requests",
+        "path": "/settings/invitations",
+      },
+      Object {
         "component": <NotificationSettingsTab
           currentUser={
             Object {

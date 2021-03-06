@@ -23,19 +23,20 @@
   position: relative;
 }
 
-// Banner
 .banner {
-  background-color: $color-athens-gray;
   width: 100%;
   display: flex;
   margin-top: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+  padding-left: 20px;
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 0;
+    color: rgba(41, 64, 90, 1.00);
+  }
 }
 
-h3 {
-  font-size: 18px;
-  color: rgba(41, 64, 90, 1.00);
-}
 
 .connect-button {
   position: absolute;
@@ -90,21 +91,31 @@ h3 {
   padding: 15px;
   filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.15));
   margin-bottom: 15px;
+  min-width: 0;
 
   .group-description {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     display: block;
+    width: 100%;
     text-decoration: none;
     color: white;
-    width: 90%;
-    font-size: 14px;
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+    }
   }
 }
 
 .group-image {
-  margin-right: 10px;
+  margin-right: 15px;
+  min-width: 50px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  margin-left: -25px;
 }
 
 .group-details {
@@ -112,26 +123,67 @@ h3 {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  min-width: 0;
+}
+
+.membership-status {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 5;
+  font-size: 14px;
+
+  .member-complete {
+    color: rgba(255,255,255,1);
+    margin-left: 1px;
+  }
+
+  .join-group {
+    font-size: 18px;
+    color: rgba(255,255,255,1);
+    margin-left: 1px;
+  }
+
+  .status-tag {
+    border: 1px solid rgba(255,255,255,.3);
+    background-color: rgba(35, 64, 91, .2);
+    height: 26px;
+    line-height: 20px;
+    border-radius: 20px;
+    padding: 0 8px 0 2px;
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,1);
+
+    b {
+      margin-left: 5px;
+      color: rgba(255,255,255,1);
+    }
+  }
 }
 
 .group-name {
   color: white;
-  @include font-regular;
-  font-size: 24px;
-  line-height: 24px;
+  @include font-bold;
+  font-size: 20px;
+  line-height: 20px;
+  text-decoration: none;
 }
 
 .group-stats {
+  text-decoration: none;
   color: white;
   @include font-regular;
-  font-size: 14px;
+  font-size: 12px;
   opacity: .5;
 }
 
-.groupLink {
-  position: relative;
+.group-link {
+  text-decoration: none;
   z-index: 1;
   display: flex;
+  min-width: 0;
+  align-items: center;
 
   &:hover {
     text-decoration: none;

@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Avatar from 'components/Avatar'
@@ -28,9 +29,8 @@ export default class MembershipRequestsTab extends Component {
     this.props.fetchJoinRequests(groupId)
   }
 
-  submitAccept = (joinRequestId, userId) => {
-    const { group, currentUser } = this.props
-    this.props.acceptJoinRequest(joinRequestId, group.id, userId, currentUser.id)
+  submitAccept = (joinRequestId) => {
+    this.props.acceptJoinRequest(joinRequestId)
   }
 
   submitDecline = (joinRequestId) => {
@@ -51,6 +51,7 @@ export default class MembershipRequestsTab extends Component {
       ? <NewRequests
         accept={this.submitAccept}
         decline={this.submitDecline}
+        group={group}
         joinRequests={joinRequests} />
       : <NoRequests group={group} viewMembers={this.viewMembers} />
   }
@@ -76,27 +77,33 @@ export function NoRequests ({ group, viewMembers }) {
   )
 }
 
-export function NewRequests ({ accept, decline, joinRequests }) {
+export function NewRequests ({ accept, decline, group, joinRequests }) {
   return (
     <React.Fragment>
-      <div styleName='header'>
-        <h2>People want to join your group!</h2>
-        {/* TODO: For later implementation
-        <span styleName='response-time'>Your average response time: 1 day</span> */}
-      </div>
-      <div styleName='request-list'>
-        {joinRequests.map(r => <JoinRequest
-          key={r.id}
-          accept={accept}
-          decline={decline}
-          request={r} />)}
+      <div>
+        <div styleName='header'>
+          <h2>People want to join your group!</h2>
+          {/* TODO: For later implementation
+          <span styleName='response-time'>Your average response time: 1 day</span> */}
+        </div>
+        <div styleName='request-list'>
+          {joinRequests.map(r => <JoinRequest
+            key={r.id}
+            accept={accept}
+            decline={decline}
+            group={group}
+            request={r} />)}
+        </div>
       </div>
     </React.Fragment>
   )
 }
 
-export function JoinRequest ({ accept, decline, request }) {
-  const { user } = request
+export function JoinRequest ({ accept, decline, group, request }) {
+  const { questionAnswers, user } = request
+
+  // Answers to questions no longer being asked by the group
+  const otherAnswers = questionAnswers.filter(qa => !group.joinQuestions.find(jq => jq.questionId === qa.question.id))
 
   return (
     <div styleName='request'>
@@ -104,11 +111,23 @@ export function JoinRequest ({ accept, decline, request }) {
         <Avatar avatarUrl={user.avatarUrl} url={`/m/${user.id}`} styleName='requestorAvatar' />
         <div styleName='requestorInfo'>
           <div styleName='name'>{user.name}</div>
-          <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div>
+          {user.skills.items.length > 0 ? <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div> : <div>{user.location}</div>}
         </div>
       </div>
+      {group.joinQuestions.map(q =>
+        <div styleName='answer' key={q.id}>
+          <h3>{q.text}</h3>
+          <p>{get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}</p>
+        </div>
+      )}
+      {otherAnswers.map(qa =>
+        <div styleName='answer' key={qa.question.id}>
+          <h3>{qa.question.text}</h3>
+          <p>{qa.answer}</p>
+        </div>
+      )}
       <div styleName='action-buttons'>
-        <div styleName='accept' onClick={() => accept(request.id, user.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
+        <div styleName='accept' onClick={() => accept(request.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
         <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />Decline</div>
       </div>
     </div>

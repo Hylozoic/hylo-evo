@@ -20,7 +20,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    acceptJoinRequest: (joinRequestId, groupId, userId, moderatorId) => dispatch(acceptJoinRequest(joinRequestId, groupId, userId, moderatorId)),
+    acceptJoinRequest: (joinRequestId) => dispatch(acceptJoinRequest(joinRequestId)),
     declineJoinRequest: (joinRequestId) => dispatch(declineJoinRequest(joinRequestId)),
     fetchJoinRequests: (groupId) => dispatch(fetchJoinRequests(groupId)),
     viewMembers: (slug) => dispatch(push(groupUrl(slug, 'members')))

@@ -223,7 +223,7 @@ export default class CreateGroup extends Component {
           onClick={this.onSubmit}
           styleName='submit-button'
         >
-          <Icon name='Plus' green />Create Group
+          <Icon name='Plus' green styleName='create-group-icon' />Create Group
         </Button>
       </div>
     </div>

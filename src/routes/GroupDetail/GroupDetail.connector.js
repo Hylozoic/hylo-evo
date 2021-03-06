@@ -45,21 +45,21 @@ export function mapDispatchToProps (dispatch, props) {
     fetchJoinRequests: (groupId) => () => dispatch(fetchJoinRequests(groupId)),
     onClose: () => dispatch(push(closeLocation)),
     joinGroup: (groupId, userId) => () => dispatch(joinGroup(groupId, userId)),
-    requestToJoinGroup: (groupId, userId) => () => dispatch(createJoinRequest(groupId, userId))
+    createJoinRequest: (groupId) => (questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, group } = stateProps
-  const { fetchJoinRequests, joinGroup, requestToJoinGroup } = dispatchProps
+  const { fetchJoinRequests, joinGroup, createJoinRequest } = dispatchProps
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     fetchJoinRequests: currentUser && group ? fetchJoinRequests(group.id) : () => {},
-    joinGroup: currentUser && group ? joinGroup(group.id, currentUser.id) : () => {},
-    requestToJoinGroup: currentUser && group ? requestToJoinGroup(group.id, currentUser.id) : () => {}
+    joinGroup: currentUser && group ? joinGroup(group.id) : () => {},
+    createJoinRequest: currentUser && group ? createJoinRequest(group.id) : () => {}
   }
 }
 

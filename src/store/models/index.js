@@ -4,11 +4,11 @@ import Activity from './Activity'
 import Attachment from './Attachment'
 import Comment from './Comment'
 import EventInvitation from './EventInvitation'
-import Group, { GroupRelationship, GroupModerator } from './Group'
+import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion } from './Group'
 import GroupRelationshipInvite from './GroupRelationshipInvite'
 import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
-import JoinRequest from './JoinRequest'
+import JoinRequest, { JoinRequestQuestionAnswer, Question } from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
 import Me, { MySkillsToLearn } from './Me'
@@ -33,6 +33,7 @@ orm.register(
   Comment,
   EventInvitation,
   Group,
+  GroupJoinQuestion,
   GroupModerator,
   GroupRelationship,
   GroupRelationshipInvite,
@@ -41,6 +42,7 @@ orm.register(
   LinkPreview,
   Location,
   JoinRequest,
+  JoinRequestQuestionAnswer,
   Me,
   Membership,
   Message,
@@ -55,6 +57,7 @@ orm.register(
   PostFollower,
   PostMembership,
   ProjectMember,
+  Question,
   SearchResult,
   Skill,
   Topic,

@@ -7,7 +7,7 @@ export default function fetchGroupBySlug (slug) {
     graphql: {
       query: `query ($slug: String) {
         group(slug: $slug) {
-          ${groupFieldsFragment(true)}
+          ${groupFieldsFragment({ withTopics: true, withJoinQuestions: true })}
         }
       }`,
       variables: { slug }

@@ -1,4 +1,4 @@
-const groupFieldsFragment = (withTopics) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   id
   accessibility
   avatarUrl
@@ -7,6 +7,7 @@ const groupFieldsFragment = (withTopics) => `
   name
   settings {
     allowGroupInvites
+    askJoinQuestions
     publicMemberDirectory
   }
   slug
@@ -75,6 +76,13 @@ const groupFieldsFragment = (withTopics) => `
         name
       }
       postsTotal
+    }
+  }` : ''}
+  ${withJoinQuestions ? `joinQuestions {
+    items {
+      id
+      questionId
+      text
     }
   }` : ''}
 `

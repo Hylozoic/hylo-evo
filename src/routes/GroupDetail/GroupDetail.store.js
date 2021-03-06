@@ -1,9 +1,7 @@
-import { FETCH_JOIN_REQUESTS } from 'store/constants'
+import { CREATE_JOIN_REQUEST, FETCH_JOIN_REQUESTS } from 'store/constants'
 import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
 
 export const MODULE_NAME = 'GroupDetail'
-export const CREATE_JOIN_REQUEST = `${MODULE_NAME}/CREATE_JOIN_REQUEST`
-export const CREATE_JOIN_REQUEST_PENDING = `${MODULE_NAME}/CREATE_JOIN_REQUEST_PENDING`
 
 export const JOIN_GROUP = `${MODULE_NAME}/JOIN_GROUP`
 export const JOIN_GROUP_PENDING = `${MODULE_NAME}/JOIN_GROUP_PENDING`
@@ -35,12 +33,12 @@ export function fetchJoinRequests (groupId) {
   }
 }
 
-export function joinGroup (groupId, userId) {
+export function joinGroup (groupId) {
   return {
     type: JOIN_GROUP,
     graphql: {
-      query: `mutation ($groupId: ID, $userId: ID) {
-        joinGroup(groupId: $groupId, userId: $userId) {
+      query: `mutation ($groupId: ID) {
+        joinGroup(groupId: $groupId) {
           membership {
             id
             role
@@ -54,8 +52,7 @@ export function joinGroup (groupId, userId) {
         }
       }`,
       variables: {
-        groupId,
-        userId
+        groupId
       }
     },
     meta: {
@@ -65,12 +62,12 @@ export function joinGroup (groupId, userId) {
   }
 }
 
-export function createJoinRequest (groupId, userId) {
+export function createJoinRequest (groupId, questionAnswers) {
   return {
     type: CREATE_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($groupId: ID, $userId: ID) {
-        createJoinRequest(groupId: $groupId, userId: $userId) {
+      query: `mutation ($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
+        createJoinRequest(groupId: $groupId, questionAnswers: $questionAnswers) {
           request {
             id
             user {
@@ -85,7 +82,7 @@ export function createJoinRequest (groupId, userId) {
           }
         }
       }`,
-      variables: { groupId, userId }
+      variables: { groupId, questionAnswers }
     },
     meta: {
       groupId,

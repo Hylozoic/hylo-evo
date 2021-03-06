@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash/fp'
 import EditProfileTab from './EditProfileTab/EditProfileTab'
 import UserGroupsTab from './UserGroupsTab/'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
+import ManageInvitesTab from './ManageInvitesTab/'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
@@ -47,6 +48,11 @@ export default class UserSettings extends Component {
         name: 'Affiliations',
         path: '/settings/groups',
         component: <UserGroupsTab personId={currentUser.id} />
+      },
+      {
+        name: 'Invites & Requests',
+        path: '/settings/invitations',
+        component: <ManageInvitesTab currentUser={currentUser} />
       },
       {
         name: 'Notifications',

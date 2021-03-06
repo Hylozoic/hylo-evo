@@ -30,6 +30,7 @@ export default
   name
   settings {
     allowGroupInvites
+    askJoinQuestions
     publicMemberDirectory
   }
   slug
@@ -78,6 +79,11 @@ export default
       description
       name
       slug
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
     }
   }
   parentGroups {
@@ -88,6 +94,11 @@ export default
       description
       name
       slug
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
     }
   }
   memberCount

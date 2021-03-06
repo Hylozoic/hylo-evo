@@ -4,13 +4,16 @@ import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_MODERATOR_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
+  CANCEL_JOIN_REQUEST,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
+  CREATE_JOIN_REQUEST,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
   FETCH_MESSAGES_PENDING,
+  FETCH_MY_JOIN_REQUESTS,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
@@ -48,6 +51,7 @@ import {
 } from 'routes/Signup/AddSkills/AddSkills.store'
 
 import {
+  UPDATE_GROUP_SETTINGS,
   UPDATE_GROUP_SETTINGS_PENDING
 } from 'routes/GroupSettings/GroupSettings.store'
 import {
@@ -82,6 +86,7 @@ export default function ormReducer (state = {}, action) {
     GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
+    JoinRequest,
     Me,
     Membership,
     Message,
@@ -220,6 +225,14 @@ export default function ormReducer (state = {}, action) {
       membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
       break
 
+    case UPDATE_GROUP_SETTINGS:
+      // Set new join questions in the ORM
+      if (payload.data.updateGroupSettings && payload.data.updateGroupSettings.joinQuestions) {
+        group = Group.withId(meta.id)
+        clearCacheFor(Group, meta.id)
+      }
+      break
+
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
       me = Me.first()
       membership = Membership.safeGet({ group: meta.groupId, person: me.id })
@@ -320,6 +333,19 @@ export default function ormReducer (state = {}, action) {
       me.updateAppending({ memberships: [payload.data.createGroup.id] })
       break
 
+    case CREATE_JOIN_REQUEST:
+      if (payload.data.createJoinRequest.request) {
+        me = Me.first()
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id })
+        me.updateAppending({ joinRequests: [jr] })
+      }
+      break
+
+    case CANCEL_JOIN_REQUEST:
+      const jr = JoinRequest.withId(meta.id)
+      jr.delete()
+      break
+
     case JOIN_PROJECT_PENDING:
       me = Me.first()
       ProjectMember.create({ post: meta.id, member: me.id })
@@ -404,6 +430,11 @@ export default function ormReducer (state = {}, action) {
       }
       break
     }
+
+    case FETCH_MY_JOIN_REQUESTS:
+      me = Me.first()
+      clearCacheFor(Me, me.id)
+      break
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

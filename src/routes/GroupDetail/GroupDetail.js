@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import { GROUP_ACCESSIBILITY } from 'store/models/Group'
+import { DEFAULT_AVATAR, DEFAULT_BANNER, GROUP_ACCESSIBILITY } from 'store/models/Group'
 import { inIframe } from 'util/index'
 import { groupUrl } from 'util/navigation'
 
@@ -61,10 +61,9 @@ export default class GroupDetail extends Component {
       })
   }
 
-  requestToJoinGroup = () => {
-    const { requestToJoinGroup } = this.props
-
-    requestToJoinGroup()
+  requestToJoinGroup = (questionAnswers) => {
+    const { createJoinRequest } = this.props
+    createJoinRequest(questionAnswers)
       .then(res => {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error sending your join request.`
@@ -91,11 +90,11 @@ export default class GroupDetail extends Component {
     const isMember = (currentUser && currentUser.memberships) ? currentUser.memberships.toModelArray().find(m => m.group.id === group.id) : false
 
     return <div styleName='g.group'>
-      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
+      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
-          <img src={group.avatarUrl} height='50px' width='50px' />
+          <img src={group.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
           <div styleName='g.groupTitle'>{group.name}</div>
         </div>
       </div>
@@ -167,6 +166,17 @@ export default class GroupDetail extends Component {
 }
 
 export function Request ({ group, joinGroup, requestToJoinGroup }) {
+  const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
+
+  const setAnswer = (index) => (event) => {
+    const answerValue = event.target.value
+    setQuestionAnswers(prevAnswers => {
+      const newAnswers = [ ...prevAnswers ]
+      newAnswers[index].answer = answerValue
+      return newAnswers
+    })
+  }
+
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
       { group.accessibility === GROUP_ACCESSIBILITY.Open
@@ -174,7 +184,13 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestHint'>Anyone can join this group!</div>
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
-        : <div styleName='g.requestOption'><div styleName='g.requestButton' onClick={requestToJoinGroup}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div></div>
+        : <div styleName='g.requestOption'>
+          {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+            <h3>{q.text}</h3>
+            <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+          </div>)}
+          <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+        </div>
       }
     </div>
   )
