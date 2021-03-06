@@ -31,38 +31,45 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
   >
     Your Open Requests to Join Groups
   </h2>
-  <JoinRequest
-    cancelJoinRequest={[Function]}
-    joinRequest={
-      Object {
-        "group": Object {
-          "avatarUrl": null,
-          "id": 1,
-          "name": "group1",
-        },
-        "id": "1",
+  <div
+    data-stylename="requestList"
+  >
+    <JoinRequest
+      cancelJoinRequest={[Function]}
+      joinRequest={
+        Object {
+          "group": Object {
+            "avatarUrl": null,
+            "id": 1,
+            "name": "group1",
+          },
+          "id": "1",
+        }
       }
-    }
-    key="1"
-  />
-  <JoinRequest
-    cancelJoinRequest={[Function]}
-    joinRequest={
-      Object {
-        "group": Object {
-          "avatarUrl": null,
-          "id": 2,
-          "name": "group2",
-        },
-        "id": "2",
+      key="1"
+    />
+    <JoinRequest
+      cancelJoinRequest={[Function]}
+      joinRequest={
+        Object {
+          "group": Object {
+            "avatarUrl": null,
+            "id": 2,
+            "name": "group2",
+          },
+          "id": "2",
+        }
       }
-    }
-    key="2"
-  />
+      key="2"
+    />
+  </div>
   <h2
     data-stylename="subhead"
   >
-    Decline Invitations & Requests
+    Declined Invitations & Requests
   </h2>
+  <div
+    data-stylename="requestList"
+  />
 </div>
 `;
