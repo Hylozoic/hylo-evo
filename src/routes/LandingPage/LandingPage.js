@@ -38,7 +38,7 @@ export default class LandingPage extends Component {
     if (!group) return <Loading />
 
     const canView = group.memberCount > 0
-    const widgets = (group.widgets || [])
+    const widgets = (group.widgets || []).filter(w => w.name !== 'Community map')
     const locationText = group && group.locationObject && (group.locationObject.fullText || `${group.locationObject.city}, ${group.locationObject.country}`)
 
     if (!canView) return (<GroupDetail canClose={false} location={location} match={match} groupId={group.id} />)
