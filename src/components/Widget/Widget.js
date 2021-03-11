@@ -66,7 +66,7 @@ const ChildWidget = ({
   if (!isVisible) return <HiddenWidget isVisible={isVisible} name={name}/>
   const announcements = group && group.announcements && group.announcements.items
   const events = group && group.events && group.events.items
-  const members = group && group.members
+  const members = group && group.recentlyActiveMembers
   const offersAndRequests = group && group.offersAndRequests && group.offersAndRequests.items
   const projects = group && group.projects && group.projects.items
   const topics = group && group.groupTopics
