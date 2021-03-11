@@ -4,16 +4,49 @@ export default
 `group(slug: $slug, updateLastViewed: $updateLastViewed) {
   id
   accessibility
+  announcements {
+    items {
+      id
+      title
+      createdAt
+      creator {
+        id
+        name
+      }
+      attachments {
+        position
+        url
+      }
+    }
+  }
   avatarUrl
   bannerUrl
   description
   name
+  locationObject {
+    fullText
+    city
+    country
+  }
   settings {
     allowGroupInvites
     publicMemberDirectory
   }
   slug
   visibility
+  childGroups {
+    items {
+      id
+      slug
+      name
+      avatarUrl
+      childGroups(first: 300) {
+        items {
+          id
+        }
+      }
+    }
+  }
   parentGroups {
     items {
       id
@@ -48,6 +81,46 @@ export default
       name
       isVisible
       order
+    }
+  }
+  events {
+    items {
+      id
+      title
+      createdAt
+      creator {
+        name
+      }
+      members {
+        items {
+          avatarUrl
+        }
+      }
+    }
+  }
+  projects {
+    items {
+      id
+      title
+      createdAt
+      creator {
+        name
+      }
+      members {
+        items {
+          avatarUrl
+        }
+      }
+    }
+  }
+  offersAndRequests {
+    items {
+      id
+      title
+      creator {
+        name
+      }
+      commentersTotal
     }
   }
   ${groupTopicsQueryFragment}

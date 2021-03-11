@@ -1,10 +1,18 @@
 import { connect } from 'react-redux'
 import { toggleWidgetVisibility } from './Widget.store'
 
-export function mapDispatchToProps (dispatch) {
+export function mapStateToProps (state, props) {
   return {
-    toggleVisibility: (params) => dispatch(toggleWidgetVisibility(params)),
+    isVisible: props.isVisible
   }
 }
 
-export default connect(mapDispatchToProps)
+export function mapDispatchToProps (dispatch) {
+  return {
+    toggleVisibility: (params) => {
+      dispatch(toggleWidgetVisibility(params))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)

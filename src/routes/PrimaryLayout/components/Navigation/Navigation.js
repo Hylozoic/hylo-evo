@@ -3,7 +3,7 @@ import { compact } from 'lodash/fp'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
-import { isGroupPath, topicsUrl } from 'util/navigation'
+import { topicsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 
@@ -85,8 +85,6 @@ export default function Navigation (props) {
       to: mapPath
     }
   ])
-
-  if (!isGroupPath(location.pathname)) links.shift()
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
 

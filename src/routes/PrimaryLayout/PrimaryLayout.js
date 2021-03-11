@@ -216,9 +216,9 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
             <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/:context(groups)/:groupSlug/:view(about)`} exact component={LandingPage} />
-            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
             {/* Member Routes */}
             <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}

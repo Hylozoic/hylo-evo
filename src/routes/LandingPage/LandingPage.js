@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import GroupDetail from 'routes/GroupDetail'
 import Icon from 'components/Icon'
+import { isEmpty } from 'lodash/fp'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 import Widget from 'components/Widget'
@@ -21,19 +22,24 @@ export default class LandingPage extends Component {
   }
 
   componentDidMount () {
+    this.fetchOrShowCached()
   }
 
   componentDidUpdate () {
   }
 
-  render () {
-    const { group, location, match, showAbout } = this.props
+  fetchOrShowCached = () => {
+    const { posts, fetchPosts } = this.props
+    if (isEmpty(posts)) fetchPosts()
+  }
 
+  render () {
+    const { group, posts, location, match, routeParams, showAbout, showDetails } = this.props
     if (!group) return <Loading />
 
     const canView = group.memberCount > 0
-    const widgets = (group.widgets || [])//.filter(w => w.isVisible).sort((a, b) => a.order - b.order)
-    const locationText = 'Placeholder' //group.locationObject.fullText || `${group.locationObject.city}, ${group.locationObject.country}`
+    const widgets = (group.widgets || [])
+    const locationText = group && group.locationObject && (group.locationObject.fullText || `${group.locationObject.city}, ${group.locationObject.country}`)
 
     if (!canView) return (<GroupDetail canClose={false} location={location} match={match} groupId={group.id} />)
 
@@ -55,7 +61,7 @@ export default class LandingPage extends Component {
           </div>
         </div>
 
-        { group.memberCount > 0 && widgets && widgets.map(props => (<Widget {...props}>{props.children}</Widget>)) }
+        {widgets && widgets.map(props => (<Widget {...props} group={group} posts={posts} routeParams={routeParams} showDetails={showDetails}/>)) }
       </div>
     )
   }
