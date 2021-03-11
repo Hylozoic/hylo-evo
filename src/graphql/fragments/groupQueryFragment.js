@@ -66,6 +66,7 @@ export default
       id
       name
       avatarUrl
+      contactEmail
     }
   }
   moderators {
@@ -87,10 +88,9 @@ export default
     items {
       id
       title
-      createdAt
-      creator {
-        name
-      }
+      startTime
+      endTime
+      location
       members {
         items {
           avatarUrl
@@ -119,6 +119,7 @@ export default
       title
       creator {
         name
+        avatarUrl
       }
       commentersTotal
     }
