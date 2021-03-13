@@ -197,6 +197,9 @@ export default class PrimaryLayout extends Component {
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
+            {/* Member Routes */}
+            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* All and Public Routes */}
             <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
@@ -215,8 +218,6 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
             <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            {/* Member Routes */}
-            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
