@@ -70,6 +70,7 @@ const routesWithDrawer = [
   // {/* Member Routes */}
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   // {/* Other Routes */}
+  { path: '/messages' },
   { path: '/settings' },
   { path: '/search' },
   { path: '/confirm-group-delete' }
