@@ -92,8 +92,6 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -128,12 +126,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -149,12 +141,6 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
@@ -261,8 +247,6 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -297,12 +281,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -318,12 +296,6 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
