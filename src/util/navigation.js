@@ -63,6 +63,7 @@ export function contextSwitchingUrl (newParams, routeParams) {
     groupSlug: undefined,
     context: undefined,
     // -------------------------------------------------
+    personId: undefined,
     ...newParams
   }
   return baseUrl(newRouteParams)
