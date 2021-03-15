@@ -244,12 +244,6 @@ export default class PrimaryLayout extends Component {
           <Route path={path + '/create'} key={path + 'create'} children={({ match, location }) =>
             <CreateModal match={match} location={location} />} />)}
         {createRoutes.map(({ path }) =>
-          <Route path={path + '/' + REQUIRED_NEW_GROUP_MATCH} key={path + 'newgroup'} children={({ match, location }) =>
-            <CreateGroup match={match} location={location} />} />)}
-        {createRoutes.map(({ path }) =>
-          <Route path={path + '/' + REQUIRED_NEW_POST_MATCH} key={path + 'newpost'} children={({ match, location }) =>
-            <PostEditorModal match={match} location={location} />} />)}
-        {createRoutes.map(({ path }) =>
           <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}
       </Switch>

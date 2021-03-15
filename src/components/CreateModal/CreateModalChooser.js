@@ -18,8 +18,8 @@ export default class CreateModalChooser extends Component {
         const postTypeUppercase = postType.charAt(0).toUpperCase() + postType.slice(1)
         const iconName = postType === 'request' ? 'Heart' : postTypeUppercase
 
-        return <Link to={location.pathname + 'post?newPostType=' + postType}>
-          <div key={postType}>
+        return <Link to={location.pathname + 'post?newPostType=' + postType} key={postType}>
+          <div>
             <Icon name={iconName} styleName='postIcon' />
             <b>
               <span styleName='postTypeName'>{postType}</span>
