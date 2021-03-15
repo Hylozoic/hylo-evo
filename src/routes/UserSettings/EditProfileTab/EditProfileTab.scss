@@ -73,13 +73,13 @@
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   display: flex;
+  align-items: center;
   width: inherit;
   margin-top: $space-9x;
 
   span {
     display: inline-block;
     color: rgba(35, 64, 91, .5);
-    padding: 10px 0 0 10px;
     margin-right: 30px;
     font-size: 14px;
   }
@@ -105,9 +105,24 @@
 .social-control-label {
   composes: control-input from 'components/SettingsControl/SettingsControl.scss';
   display: flex;
+  align-items: center;
 }
 
 .link-button {
   composes: text-button from 'css/typography.scss';
   margin-left: auto;
+}
+
+
+@media screen and (max-width: 320px) {
+  .saveChanges {
+    span {
+      padding: 0;
+      font-size: 12px;
+      line-height: 12px;
+    }
+  }
+  .save-button {
+    font-size: 12px;
+  }
 }

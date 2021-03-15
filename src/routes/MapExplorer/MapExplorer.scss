@@ -36,7 +36,7 @@
 .toggleDrawerButton {
   position: absolute;
   right: 20px;
-  top: 20px;
+  top: 10px;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -172,8 +172,8 @@ button.toggleFeatureFiltersButton {
 
 .searchAutocomplete {
   position: absolute;
-  top: 25px;
-  left: 140px;
+  top: 15px;
+  left: 60px;
   color: rgba(125, 140, 157, 1.000);
   background-color: rgba(255, 255, 255, 1);
   border: none;
@@ -183,7 +183,8 @@ button.toggleFeatureFiltersButton {
   text-align: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
   padding: 0 10px;
-  padding-top: 4px;
+  line-height: 30px;
+  font-size: 14px;
 }
 
 .pointer {
@@ -208,8 +209,8 @@ button.toggleFeatureFiltersButton {
 
 .savedSearchesButton {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 10px;
+  left: 10px;
   padding: 10px;
   background-color: white;
   color: #0DC39F;

@@ -32,3 +32,10 @@ textarea.control-input {
   resize: vertical;
   height: $space-20x;
 }
+
+@media screen and (max-width: 320px) {
+  .control-input {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}

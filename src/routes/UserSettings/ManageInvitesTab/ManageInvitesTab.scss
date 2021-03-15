@@ -46,9 +46,16 @@
   }
 }
 
-.requestGroup div a {
-  position: relative;
-  top: -5px;
+.requestGroup {
+  max-width: 50%;
+
+  div a {
+    position: relative;
+    top: -5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 .error {

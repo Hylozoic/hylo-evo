@@ -163,7 +163,7 @@
         .indicator {
           background-color: rgba(0, 196, 159, 1.00);
         }
-        
+
         .postTypeDescription {
           color: rgba(128,140,155,1);
         }
@@ -183,15 +183,20 @@
 }
 
 @media screen and (max-width: 320px) {
-  .chooser a div {
-    padding: 10px 40px 10px 55px;
+  .chooser {
+    h1 {
+      font-size: 16px;
+    }
+    a div {
+      padding: 10px 40px 10px 55px;
 
-    b {
-      .postTypeName {
-        font-size: 16px;
-      }
-      .postTypeDescription {
-        font-size: 12px;
+      b {
+        .postTypeName {
+          font-size: 16px;
+        }
+        .postTypeDescription {
+          font-size: 12px;
+        }
       }
     }
   }
