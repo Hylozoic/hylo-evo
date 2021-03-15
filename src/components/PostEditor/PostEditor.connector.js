@@ -39,7 +39,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentGroup = getGroupForCurrentRoute(state, props)
   const groupOptions = props.groupOptions ||
-    (currentUser && currentUser.memberships.toModelArray().map((m) => m.group))
+    (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
   const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c)))
   let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
