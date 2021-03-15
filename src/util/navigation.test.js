@@ -78,8 +78,8 @@ describe('contextSwitchingUrl', () => {
     expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'topics', topicName: 'stuff' })).toEqual('/all/topics/stuff')
     expect(contextSwitchingUrl({ context: 'public' }, { context: 'groups', groupSlug: 'old', view: 'topics', topicName: 'stuff' })).toEqual('/public/topics/stuff')
 
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'members', personId: 2 })).toEqual('/groups/newcomm/members/2')
-    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'members', personId: 2 })).toEqual('/all/members/2')
+    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'members', personId: 2 })).toEqual('/groups/newcomm/members')
+    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'members', personId: 2 })).toEqual('/all/members')
   })
 })
 
