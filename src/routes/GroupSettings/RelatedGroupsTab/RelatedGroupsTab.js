@@ -126,7 +126,7 @@ export default class RelatedGroupsTab extends Component {
       <div styleName='group-picker-container'>
         <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>
           <div>
-            <Icon name='Search' styleName='connect-icon' />
+            <Icon name='Handshake' styleName='connect-icon' />
             Join {group.name} to another group
           </div>
           <span styleName='connect-label'>REQUEST</span>
@@ -190,7 +190,7 @@ export default class RelatedGroupsTab extends Component {
       <div styleName='group-picker-container'>
         <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>
           <div>
-            <Icon name='Search' styleName='connect-icon' />
+            <Icon name='Handshake' styleName='connect-icon' />
             Invite a group to join <strong>{group.name}</strong>
           </div>
           <span styleName='connect-label'>INVITE</span>
