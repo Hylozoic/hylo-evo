@@ -12,7 +12,6 @@ import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
-import CreateGroup from 'components/CreateGroup'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
@@ -42,7 +41,7 @@ import UserSettings from 'routes/UserSettings'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
-  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH, REQUIRED_NEW_GROUP_MATCH,
+  REQUIRED_EDIT_POST_MATCH,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
