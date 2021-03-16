@@ -66,6 +66,27 @@
   }
 }
 
+@media screen and (max-width: 425px) {
+  .icon {
+    font-size: 24px;
+  }
+
+  .item {
+    padding: 0 8px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .icon {
+    font-size: 22px;
+  }
+
+  .item {
+    padding: 0 6px;
+  }
+}
+
+
 @media screen and (max-width: 320px) {
   .icon {
     font-size: 20px;
