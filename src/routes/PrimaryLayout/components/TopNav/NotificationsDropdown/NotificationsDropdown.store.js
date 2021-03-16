@@ -45,6 +45,11 @@ export function fetchNotifications () {
                 name
                 slug
               }
+              otherGroup {
+                id
+                name
+                slug
+              }
               meta {
                 reasons
               }

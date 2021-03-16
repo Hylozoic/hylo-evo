@@ -77,7 +77,6 @@ export default class LocationInput extends Component {
           proximity={centerAt ? centerAt.lng + ',' + centerAt.lat : ''}
           bbox=''
           types=''
-          focusOnMount
         />
       </div>
     )

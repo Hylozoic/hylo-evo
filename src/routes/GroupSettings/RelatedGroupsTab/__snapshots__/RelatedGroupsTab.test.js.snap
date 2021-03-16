@@ -137,7 +137,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <div>
         <Icon
           data-stylename="connect-icon"
-          name="Search"
+          name="Handshake"
         />
         Join 
         Best Group
@@ -256,7 +256,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <div>
         <Icon
           data-stylename="connect-icon"
-          name="Search"
+          name="Handshake"
         />
         Invite a group to join 
         <strong>

@@ -31,6 +31,7 @@ export default class CreateGroup extends Component {
     }
 
     this.groupsSelector = React.createRef()
+    this.slugRef = React.createRef()
   }
 
   componentDidUpdate (oldProps) {
@@ -39,8 +40,23 @@ export default class CreateGroup extends Component {
     }
   }
 
+  focusSlug = () => {
+    this.slugRef.current.focus()
+  }
+
   isValid = () => {
     return Object.values(this.state.errors).every(v => v === false) && this.state.name && this.state.slug
+  }
+
+  validateSlug (val) {
+    if (val === '') {
+      return 'Please enter a URL slug'
+    } else if (!slugValidatorRegex.test(val)) {
+      return 'URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.'
+    } else {
+      this.props.fetchGroupExists(val)
+      return false
+    }
   }
 
   updateField = (field) => (value) => {
@@ -53,25 +69,18 @@ export default class CreateGroup extends Component {
 
     if (field === 'name') {
       updates.errors.name = newValue === '' ? 'Please enter a group name' : false
-      this.state.characterCount = newValue.length
+      updates.characterCount = newValue.length
     }
 
     if (field === 'slug') {
-      if (newValue === '') {
-        updates.errors.slug = 'Please enter a URL slug'
-      } else if (!slugValidatorRegex.test(newValue)) {
-        updates.errors.slug = 'URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.'
-      } else {
-        updates.errors.slug = false
-        this.props.fetchGroupExists(newValue)
-      }
+      updates.errors.slug = this.validateSlug(newValue)
       updates.slugCustomized = true
     }
 
-    // TODO: generate slug
     if (field === 'name' && !this.state.slugCustomized) {
       const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g, '').replace(/\s+/g, '-')
-      this.state.slug = slugString
+      updates.errors.slug = this.validateSlug(slugString)
+      updates.slug = slugString
     }
 
     this.setState(updates)
@@ -123,7 +132,7 @@ export default class CreateGroup extends Component {
         <span styleName='characterCounter'>{characterCount} / 30</span>
         {errors.name && <span styleName='nameError'>{errors.name}</span>}
         <span styleName='slug'>
-          <button styleName='slugButton'>
+          <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
             <Icon name='SmallEdit' />
             https://hylo.com/groups/
           </button>
@@ -136,6 +145,7 @@ export default class CreateGroup extends Component {
             noClearButton
             onEnter={this.onSubmit}
             maxLength='30'
+            inputRef={this.slugRef}
           />
         </span>
         {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
