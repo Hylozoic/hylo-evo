@@ -1,20 +1,34 @@
 .google-button {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   text-decoration: none !important;
-  background: white;
-  color: #666;
-  border-radius: 5px;
-  border: thin solid #DDD;
-  box-shadow: 1px 1px 1px #CCC;
+  background: rgba(62, 130, 247, 1.00);
+  color: white;
+  height: 40px;
+  border-radius: 20px;
   white-space: nowrap;
-  padding-right: 16px;
+  padding: 0 15px 0 10px;
+  transition: all .25s ease;
+  width: 240px;
+
   img {
     border: 0px;
     height: 40px;
-    margin-right: 8px;
+    position: relative;
+    top: -8px;
+    left: -8px;
   }
   &:hover,
   &:focus {
-    color: #666;
+    color: white;
+    background: rgba(62, 130, 247, .8);
   }
+}
+.google-icon {
+  background-color: white;
+  height: 24px;
+  border-radius: 24px;
+  width: 24px;
+  margin-right: 12px;
 }

@@ -46,16 +46,6 @@ export default class NonAuthLayout extends React.Component {
         <a href='/'>
           <img styleName='logo' src='assets/hylo.svg' alt='Hylo logo' />
         </a>
-        <Route path='/login' component={() =>
-          <Link tabIndex={-1} to='/signup'>
-            <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-          </Link>
-        } />
-        <Route path='/reset-password' component={() =>
-          <Link to='/login'>
-            <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
-          </Link>
-        } />
       </div>
 
       <Route path='/login' component={() =>
@@ -71,7 +61,9 @@ export default class NonAuthLayout extends React.Component {
       } />
 
       <Route path='/reset-password' component={() =>
-        <PasswordReset {...this.props} styleName='form' />
+        <div styleName='signupRow'>
+          <PasswordReset {...this.props} styleName='form' />
+        </div>
       } />
 
       <Switch>
@@ -88,14 +80,28 @@ export default class NonAuthLayout extends React.Component {
         </Switch>
       </div>
 
-      <div styleName='signupToggle'>
-        <p styleName='below-container'>
-          <Route path='/signup' component={() =>
-            <Link to='/login'>
-              Already have an account? <span styleName='green-text'>Sign in</span>
+      <div styleName='below-container'>
+        <Route path='/signup' component={() =>
+          <Link to='/login'>
+            Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
+          </Link>
+        } />
+        <Route path='/login' component={() =>
+          <Link tabIndex={-1} to='/signup'>
+            Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+          </Link>
+        } />
+        <Route path='/reset-password' component={() =>
+          <div styleName='resetPasswordBottom'>
+            <Link tabIndex={-1} to='/signup'>
+              <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
             </Link>
-          } />
-        </p>
+            or
+            <Link to='/login'>
+              <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
+            </Link>
+          </div>
+        } />
       </div>
     </div>
   }

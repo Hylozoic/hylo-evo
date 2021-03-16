@@ -1,184 +1,60 @@
-import React, { Component, createRef } from 'react'
-import { get } from 'lodash/fp'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
-import Icon from 'components/Icon'
-import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import LeftSidebar from '../LeftSidebar'
-import SignupModalFooter from '../SignupModalFooter'
+import { get } from 'lodash/fp'
 import '../Signup.scss'
 
 export default class Review extends Component {
-  constructor () {
-    super()
-    const fields = ['name', 'email', 'location']
-    this.inputRefs = fields.reduce((acc, name) => {
-      acc[name] = createRef()
-      return acc
-    }, {})
-    this.state = {
-      edits: fields.reduce((acc, name) => {
-        acc[name] = null
-        return acc
-      }, {}),
-      readOnly: fields.reduce((acc, name) => {
-        acc[name] = true
-        return acc
-      }, {})
-    }
-  }
-
-  handleInputChange = (event, name) => {
-    const value = event.target.value
-    this.setState({
-      edits: {
-        ...this.state.edits,
-        [name]: value
-      }
-    })
-  }
-
-  makeEditable = (name) => {
-    this.setState({
-      readOnly: {
-        ...this.state.readOnly,
-        [name]: false
-      }
-    })
-    this.inputRefs[name].current.select()
-  }
-
-  submit = () => {
-    const { edits } = this.state
-    Object.keys(edits).forEach((key) => (edits[key] == null) && delete edits[key])
-    const changes = Object.assign(edits, { settings: { signupInProgress: false } })
-    this.props.updateUserSettings(changes)
-      .then(() => {
-        this.props.trackAnalyticsEvent('Signup Complete')
-        this.props.goToNextStep()
-      })
-  }
-
-  previous = () => {
-    this.props.goToPreviousStep()
-  }
-
-  updateSettingDirectly = (key, setChanged) => value => {
-    const { edits, changed } = this.state
-    // setChanged && setConfirm('You have unsaved changes, are you sure you want to leave?')
-    this.setState({
-      changed: setChanged ? true : changed,
-      edits: {
-        ...edits,
-        [key]: value
-      }
-    })
-  }
-
-  componentDidMount = () => {
-    // this.props.fetchMySkills()
-  }
-
   getValue = (field) => {
-    return this.state.edits[field] || get(field, this.props.currentUser)
+    return get(field, this.props.currentUser)
   }
 
   render () {
-    const { currentUser, uploadImagePending } = this.props
+    const { currentUser } = this.props
     const currentAvatarUrl = this.getValue('avatarUrl')
 
-    return <div styleName='flex-wrapper'>
-      <LeftSidebar
-        header='Everything looking good?'
-        body='You can always come back and change your details at any time.'
-      />
-      <div styleName='panel'>
-        <span styleName='white-text step-count'>STEP 4/4</span>
-        <br />
-        <div styleName='center'>
-          {currentUser && <UploadAttachmentButton
-            type='userAvatar'
-            id={currentUser.id}
-            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
-            <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
-              <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
-            </div>
-          </UploadAttachmentButton>}
+    return <div styleName='flex-wrapper final-wrapper'>
+      <div styleName='panel final-panel'>
+        <div styleName='instructions'>
+          <h3>Welcome to Hylo!</h3>
+          <p>We're glad you're here, {currentUser.name.split(' ')[0]}. To get started, explore public groups and posts, or create your own group!</p>
         </div>
-        <div styleName='final-edit'>
-          <div styleName='three-column-input gray-bottom-border'>
-            <div styleName='left-input-column'>
-              <span styleName='text-opacity'>YOUR NAME</span>
-            </div>
-            <div styleName='center-input-column'>
-              <input
-                styleName='signup-input review-input-padding'
-                onChange={(e) => this.handleInputChange(e, 'name')}
-                onKeyPress={event => {
-                  if (event.key === 'Enter') {
-                    this.submit()
-                  }
-                }}
-                autoFocus
-                ref={this.inputRefs['name']}
-                value={this.getValue('name')}
-                readOnly={this.state.readOnly['name']}
-              />
-            </div>
-            <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('name')}>Edit</span>
+        <Link to='/public/map?hideDrawer=true'>
+          <div styleName='final-step'>
+            <div styleName='step-image map' style={bgImageStyle('/signup-globe.png')} />
+            <div>
+              <h4>View the public map</h4>
+              <p>Find out what's happening around you, and groups you can join</p>
             </div>
           </div>
-          <div styleName='three-column-input gray-bottom-border'>
-            <div styleName='left-input-column'>
-              <span styleName='text-opacity'>YOUR EMAIL</span>
-            </div>
-            <div styleName='center-input-column'>
-              <input
-                styleName='signup-input review-input-padding'
-                onChange={(e) => this.handleInputChange(e, 'email')}
-                onKeyPress={event => {
-                  if (event.key === 'Enter') {
-                    this.submit()
-                    this.props.goToNextStep()
-                  }
-                }}
-                autoFocus
-                ref={this.inputRefs['email']}
-                value={this.getValue('email')}
-                readOnly={this.state.readOnly['email']}
-              />
-            </div>
-            <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.makeEditable('email')}>Edit</span>
+        </Link>
+        <Link to='/public'>
+          <div styleName='final-step'>
+            <div styleName='step-image stream' style={bgImageStyle('/signup-stream.png')} />
+            <div>
+              <h4>Public stream</h4>
+              <p>View and participate in public discussions, projects, events & more</p>
             </div>
           </div>
-          <div styleName='three-column-input gray-bottom-border'>
-            <div styleName='left-input-column'>
-              <span styleName='text-opacity'>LOCATION</span>
-            </div>
-            <div styleName='center-input-column'>
-              <input
-                styleName='signup-input review-input-padding'
-                onChange={(e) => this.handleInputChange(e, 'location')}
-                onKeyPress={event => {
-                  if (event.key === 'Enter') {
-                    this.submit()
-                    this.props.goToNextStep()
-                  }
-                }}
-                autoFocus
-                value={this.getValue('location')}
-                readOnly
-              />
-            </div>
-            <div styleName='right-input-column'>
-              <span styleName='edit-button text-opacity' onClick={() => this.props.push('/signup/add-location')}>Edit</span>
+        </Link>
+        <Link to='/all/create/group'>
+          <div styleName='final-step'>
+            <div styleName='step-image group' style={bgImageStyle('/signup-group.png')} />
+            <div>
+              <h4>Create a group</h4>
+              <p>Gather your collaborators & people who share your interests</p>
             </div>
           </div>
-        </div>
-        <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} showPrevious={false} continueText={"Let's do this!"} />
-        </div>
+        </Link>
+        <Link to='/settings'>
+          <div styleName='final-step'>
+            <div styleName='step-image profile' style={bgImageStyle(currentAvatarUrl)}><div styleName='profile-cover' /></div>
+            <div>
+              <h4>Complete your profile</h4>
+              <p>Share about who you are, your skills & interests</p>
+            </div>
+          </div>
+        </Link>
       </div>
     </div>
   }
