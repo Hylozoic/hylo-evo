@@ -107,6 +107,9 @@ export function createGroup (name, slug, parentIds) {
               }
             }
           }
+          person {
+            id
+          }
         }
       }
       `,
