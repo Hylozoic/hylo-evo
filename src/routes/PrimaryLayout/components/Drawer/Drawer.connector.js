@@ -8,7 +8,6 @@ import orm from 'store/models'
 import { ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Group'
 import getCanModerate from 'store/selectors/getCanModerate'
 import getMyMemberships from 'store/selectors/getMyMemberships'
-import getMe from 'store/selectors/getMe'
 import { createGroupUrl } from 'util/navigation'
 
 const defaultContexts = [
