@@ -56,7 +56,7 @@ export default class GroupDetail extends Component {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error joining ${group.name}.`
         const membership = get(res, 'payload.data')
-        if (membership) successMessage = `You have joined ${group.name}.`
+        if (membership) successMessage = <span>You have joined <Link to={groupUrl(group.slug)}>{group.name}</Link></span>
         return this.setState({ errorMessage, successMessage, membership })
       })
   }
@@ -77,6 +77,7 @@ export default class GroupDetail extends Component {
     const {
       group,
       currentUser,
+      isMember,
       location,
       pending,
       onClose
@@ -86,8 +87,6 @@ export default class GroupDetail extends Component {
     if (pending) return <Loading />
 
     const topics = group && group.groupTopics
-
-    const isMember = (currentUser && currentUser.memberships) ? currentUser.memberships.toModelArray().find(m => m.group.id === group.id) : false
 
     return <div styleName='g.group'>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
@@ -119,7 +118,7 @@ export default class GroupDetail extends Component {
         { !currentUser
           ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to post in <span styleName='g.requestGroup'>{group.name}</span></Link></div>
           : isMember
-            ? <div styleName='g.existingMember'>You are already a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+            ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
             : this.renderGroupDetails()
         }
       </div>

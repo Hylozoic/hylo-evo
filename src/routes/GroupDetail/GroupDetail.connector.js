@@ -5,6 +5,7 @@ import fetchGroupBySlug from 'store/actions/fetchGroupBySlug'
 import presentGroup from 'store/presenters/presentGroup'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import getGroupForDetails from 'store/selectors/getGroupForDetails'
 import { FETCH_GROUP, FETCH_JOIN_REQUESTS } from 'store/constants'
 import {
@@ -19,14 +20,16 @@ export function mapStateToProps (state, props) {
   const group = presentGroup(getGroupForDetails(state, props))
   const currentUser = getMe(state)
   const { GroupDetail } = state
+  const isMember = group && currentUser ? getMyMemberships(state, props).find(m => m.group.id === group.id) : false
 
   return {
-    slug,
-    routeParams,
-    group,
     currentUser,
+    group,
+    isMember,
+    joinRequests: GroupDetail,
     pending: state.pending[FETCH_GROUP] || state.pending[FETCH_JOIN_REQUESTS],
-    joinRequests: GroupDetail
+    routeParams,
+    slug
   }
 }
 

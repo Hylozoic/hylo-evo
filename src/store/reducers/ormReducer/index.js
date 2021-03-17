@@ -168,6 +168,8 @@ export default function ormReducer (state = {}, action) {
       me = Me.first()
       membership = find(m => m.group.id === meta.id, me.memberships.toModelArray())
       if (membership) membership.delete()
+      membership = Membership.safeGet({ group: meta.id, person: me.id })
+      if (membership) membership.delete()
       break
 
     case TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING:
