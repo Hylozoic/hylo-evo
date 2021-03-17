@@ -44,7 +44,7 @@ export default class GroupSettingsTab extends Component {
 
     this.setState({
       edits: {
-        accessibility: accessibility || GROUP_ACCESSIBILITY.Restricted,
+        accessibility: typeof accessibility !== undefined ? accessibility : GROUP_ACCESSIBILITY.Restricted,
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
@@ -52,7 +52,7 @@ export default class GroupSettingsTab extends Component {
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
         settings: settings || { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
-        visibility: visibility || GROUP_VISIBILITY.Protected
+        visibility: typeof visibility !== undefined ? visibility : GROUP_VISIBILITY.Protected
       }
     })
   }
