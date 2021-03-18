@@ -15,9 +15,11 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   parentGroups {
     items {
       id
-      slug
-      name
+      accessibility
       avatarUrl
+      name
+      slug
+      visibility
       childGroups(first: 300) {
         items {
           id
@@ -28,9 +30,11 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   childGroups {
     items {
       id
-      slug
-      name
+      accessibility
       avatarUrl
+      name
+      slug
+      visibility
     }
   }
   memberCount
