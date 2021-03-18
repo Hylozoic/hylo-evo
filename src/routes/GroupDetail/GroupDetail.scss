@@ -203,3 +203,28 @@
   color: #FFFFFF;
   padding: 14px 0px;
 }
+
+@media screen and (max-width: 600px) {
+  .groupDetails {
+    display: block;
+  }
+
+  .detailContainer {
+    margin-bottom: 15px;
+  }
+
+  .groupDetailBody {
+    padding: 25px 15px;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .groupDescription {
+    font-size: 14px;
+  }
+
+  .detail {
+    font-size: 12px;
+  }
+}

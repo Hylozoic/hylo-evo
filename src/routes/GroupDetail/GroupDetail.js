@@ -196,6 +196,6 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
 }
 
 export function Message ({ errorMessage, successMessage, request }) {
-  const message = request ? 'You have already requested to join this group.' : (errorMessage || successMessage)
+  const message = request ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
   return (<div styleName='g.message'>{message}</div>)
 }

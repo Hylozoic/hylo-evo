@@ -71,14 +71,16 @@ export function GroupCard ({ group, routeParams }) {
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
-        <span styleName='group-stats'>{group.memberCount} Members</span>
+        <div styleName='group-stats'>
+          {group.memberCount ? <span styleName='member-count'>{group.memberCount} Members</span> : ' '}
+          <div styleName='membership-status'>{
+            group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete' /> <b>Member</b></div>
+              : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>Membership Requested</b></div>
+                : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>Join</b></div>
+          }
+          </div>
+        </div>
         <div styleName='group-description'><span>{group.description}</span></div>
-      </div>
-      <div styleName='membership-status'>{
-        group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete' /> <b>Member</b></div>
-          : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>Membership Requested</b></div>
-            : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>Join</b></div>
-      }
       </div>
     </Link>
     <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div /></div>
