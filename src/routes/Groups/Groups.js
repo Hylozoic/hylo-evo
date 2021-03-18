@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
+import { DEFAULT_BANNER, DEFAULT_AVATAR, accessibilityString, visibilityString, groupVisibilityDescription, groupVisibilityIcon, groupAccessibilityDescription, groupAccessibilityIcon } from 'store/models/Group'
 import { bgImageStyle } from 'util/index'
 import { groupUrl, groupDetailUrl } from 'util/navigation'
 
@@ -73,11 +73,24 @@ export function GroupCard ({ group, routeParams }) {
         <span styleName='group-name'>{group.name}</span>
         <div styleName='group-stats'>
           {group.memberCount ? <span styleName='member-count'>{group.memberCount} Members</span> : ' '}
-          <div styleName='membership-status'>{
-            group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete' /> <b>Member</b></div>
-              : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>Membership Requested</b></div>
-                : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>Join</b></div>
-          }
+          <div styleName='membership-status'>
+            <div styleName='group-privacy'>
+              <Icon name={groupVisibilityIcon(group.visibility)} styleName='privacy-icon' />
+              <div styleName='privacy-tooltip'>
+                <div><strong>{visibilityString(group.visibility)}</strong> - {groupVisibilityDescription(group.visibility)}</div>
+              </div>
+            </div>
+            <div styleName='group-privacy'>
+              <Icon name={groupAccessibilityIcon(group.accessibility)} styleName='privacy-icon' />
+              <div styleName='privacy-tooltip'>
+                <div><strong>{accessibilityString(group.accessibility)}</strong> - {groupAccessibilityDescription(group.accessibility)}</div>
+              </div>
+            </div>
+            {
+              group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete' /> <b>Member</b></div>
+                : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>Membership Requested</b></div>
+                  : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>Join</b></div>
+            }
           </div>
         </div>
         <div styleName='group-description'><span>{group.description}</span></div>

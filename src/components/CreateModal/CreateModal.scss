@@ -77,6 +77,7 @@
   position: absolute;
   top: 24px;
   right: 20px;
+  z-index: 1000;
   &:hover {
     cursor: pointer;
   }

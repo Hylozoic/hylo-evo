@@ -132,7 +132,7 @@
   font-size: 20px;
   line-height: 20px;
   text-decoration: none;
-  padding-right: 100px;
+  padding-right: 140px;
 }
 
 .group-stats {
@@ -141,6 +141,11 @@
   @include font-regular;
   font-size: 12px;
   opacity: .7;
+  transition: opacity .25s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 
   .member-count {
     margin-right: 6px;
@@ -152,6 +157,37 @@
     right: 15px;
     z-index: 5;
     font-size: 14px;
+    display: flex;
+
+    .group-privacy {
+      margin-right: 8px;
+
+      .privacy-icon {
+        color: $color-white;
+        font-size: 18px;
+        position: relative;
+        top: 3px;
+      }
+
+      .privacy-tooltip {
+        display: none;
+        position: absolute;
+        width: 240px;
+        top: 0;
+        right: 0;
+        background-color: $color-black-80;
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 5px;
+        top: 20px;
+      }
+
+      &:hover {
+        .privacy-tooltip {
+          display: block;
+        }
+      }
+    }
 
     .member-complete {
       color: rgba(255,255,255,1);
@@ -174,6 +210,7 @@
       display: flex;
       align-items: center;
       color: rgba(255,255,255,1);
+      font-size: 12px;
 
       b {
         margin-left: 5px;
@@ -233,11 +270,19 @@
 
     .membership-status {
       position: relative;
-      display: inline-block;
+      display: flex;
       font-size: 10px;
       top: 0;
       right: initial;
       left: 0;
+
+      .group-privacy {
+
+        .privacy-icon {
+          top: 2px;
+          font-size: 14px;
+        }
+      }
 
       .status-tag {
         height: 18px;
@@ -267,6 +312,10 @@
   .group-name {
     line-height: 18px;
     font-size: 16px;
+  }
+
+  .content-margins {
+    margin-right: 10px;
   }
 
   .group-card .group-description {
