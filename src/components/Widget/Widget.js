@@ -51,7 +51,7 @@ const EditForm = ({ id, editSettings, viewMore, newSettings, updateSettings, sav
       <div>
         <input
           type='text'
-          onChange={e => updateSettings({...newSettings, title: e.target.value})}
+          onChange={e => updateSettings({...newSettings, title: e.target.value.substring(0,50)})}
           placeholder='Enter a title'
           value={newSettings.title}
         />
@@ -61,7 +61,7 @@ const EditForm = ({ id, editSettings, viewMore, newSettings, updateSettings, sav
       <div>
         <input
           type='text'
-          onChange={e => updateSettings({...newSettings, text: e.target.value})}
+          onChange={e => updateSettings({...newSettings, text: e.target.value.substring(0,500)})}
           placeholder='Enter your message here'
           value={newSettings.text}
         />
