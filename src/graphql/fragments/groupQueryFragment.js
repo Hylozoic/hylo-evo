@@ -61,6 +61,15 @@ export default
     }
   }
   memberCount
+  activeMembers(first: 8, sortBy: "last_active_at", order: "desc") {
+    items {
+      id
+      name
+      lastActiveAt
+      avatarUrl
+      contactEmail
+    }
+  }
   members(first: 8, sortBy: "name", order: "desc") {
     items {
       id
