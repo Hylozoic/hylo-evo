@@ -82,6 +82,10 @@ export default
       name
       isVisible
       order
+      settings {
+        text
+        title
+      }
     }
   }
   events {

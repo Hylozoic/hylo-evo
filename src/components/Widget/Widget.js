@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Icon from 'components/Icon'
 import AffiliationsWidget from 'components/Widget/AffiliationsWidget'
 import AnnouncementWidget from 'components/Widget/AnnouncementWidget'
@@ -13,40 +13,74 @@ import WelcomeWidget from 'components/Widget/WelcomeWidget'
 import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 
-export default class Widget extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { editing: false }
-  }
-
-  setEditing = () => this.setState({ editing: !this.state.editing })
+export default function Widget (props) {
+  const { toggleVisibility, id, isVisible, name, settings, updateWidgetSettings } = props
   
-  render() {
-    const { toggleVisibility, id, isVisible, name } = this.props
-    const { editing } = this.state
+  const [viewingMore, viewMore] = useState(false)
+  const [editingSettings, editSettings] = useState(false)
+  const [newSettings, updateSettings] = useState(settings)
 
-    return (
-      <div styleName='widget'>
-        <div styleName='header'>
-          <div>{name}</div>
-          <div styleName='more'>
-            <Icon name='More' styleName={`more ${editing ? 'selected' : ''}`} onClick={this.setEditing} />
-            <div styleName={`edit-section ${editing ? 'visible' : ''}`}>
-              <span styleName='triangle'>&nbsp;</span>
-              <VisibilityToggle id={id} checked={isVisible} onChange={toggleVisibility} backgroundColor={isVisible ? '#0DC39F' : '#8B96A4'} /> Visibility: Visible
-            </div>
-          </div>
-        </div>
+  return (
+    <div styleName='widget'>
+      <div styleName='header'>
+        <div>{settings && settings.title || name}</div>
+        <div styleName='more'>
 
-        <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
-          <ChildWidget {...this.props} />
+          <Icon name='More' styleName={`more ${viewingMore ? 'selected' : ''}`} onClick={() => {viewMore(!viewingMore); editSettings(false) }} />
+          {editingSettings && <EditForm id={id} editSettings={editSettings} viewMore={viewMore} newSettings={newSettings} updateSettings={updateSettings} save={updateWidgetSettings}/>}
+        
+          {!editingSettings && <div styleName={`edit-section ${viewingMore ? 'visible' : ''}`}>
+            <span styleName='triangle'>&nbsp;</span>
+            {settings && <div styleName='edit-settings'><Icon name='Edit' onClick={() => editSettings(!editingSettings)}/> Edit welcome message</div>}
+            <VisibilityToggle id={id} checked={isVisible} onChange={toggleVisibility} backgroundColor={isVisible ? '#0DC39F' : '#8B96A4'} /> Visibility: {isVisible ? 'Visible' : 'Hidden'}
+          </div>}
         </div>
       </div>
-    )
+
+      <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
+        <ChildWidget {...props} />
+      </div>
+    </div>
+  )
   }
+
+const EditForm = ({ id, editSettings, viewMore, newSettings, updateSettings, save }) => {
+  return (
+    <div styleName='edit-form'>
+
+      <div>
+        <input
+          type='text'
+          onChange={e => updateSettings({...newSettings, title: e.target.value})}
+          placeholder='Enter a title'
+          value={newSettings.title}
+        />
+        <div styleName='chars'>{newSettings.title && newSettings.title.length || 0}/{50}</div>
+      </div>
+      
+      <div>
+        <input
+          type='text'
+          onChange={e => updateSettings({...newSettings, text: e.target.value})}
+          placeholder='Enter your message here'
+          value={newSettings.text}
+        />
+        <div styleName='chars'>{newSettings.text && newSettings.text.length || 0}/{500}</div>
+      </div>
+
+      <div styleName='buttons'>
+        <span styleName='cancel' onClick={() => {
+          editSettings(false)
+          viewMore(true)
+        }}>Cancel</span>
+        <span styleName='save' onClick={() => save({ id, data: newSettings })}>Save</span>
+      </div>
+      
+    </div> 
+  )
 }
 
-const HiddenWidget = ({ isVisible, name }) => {
+const HiddenWidget = ({ isVisible, name}) => {
   return (
     <div>
       <div>Visibility: {!!isVisible ? 'Visible' : 'Hidden'}</div>
@@ -61,7 +95,8 @@ const ChildWidget = ({
   group,
   posts = [],
   routeParams,
-  showDetails
+  showDetails,
+  settings
   }) => {
   if (!isVisible) return <HiddenWidget isVisible={isVisible} name={name}/>
   const announcements = group && group.announcements && group.announcements.items
@@ -72,7 +107,7 @@ const ChildWidget = ({
   const topics = group && group.groupTopics
   switch(name) {
     case 'Welcome message': {
-      return <WelcomeWidget />
+      return <WelcomeWidget settings={settings}/>
     }
     case 'Announcement': {
       return <AnnouncementWidget announcements={announcements} />

@@ -1,5 +1,6 @@
 import {
   TOGGLE_GROUP_WIDGET_VISIBILITY,
+  UPDATE_WIDGET_SETTINGS
 } from 'store/constants'
 
 export function toggleWidgetVisibility ({ id, isVisible }) {
@@ -12,6 +13,20 @@ export function toggleWidgetVisibility ({ id, isVisible }) {
         }
       }`,
       variables: { id, isVisible }
+    }
+  }
+}
+
+export function updateWidgetSettings ({ id, data }) {
+  return {
+    type: UPDATE_WIDGET_SETTINGS,
+    graphql: {
+      query: `mutation ($id: ID, $data: WidgetSettingsInput) {
+        updateWidgetSettings(id: $id, data: $data) {
+          success
+        }
+      }`,
+      variables: { id, data }
     }
   }
 }

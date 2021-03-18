@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleWidgetVisibility } from './Widget.store'
+import { toggleWidgetVisibility, updateWidgetSettings } from './Widget.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -9,9 +9,8 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    toggleVisibility: (params) => {
-      dispatch(toggleWidgetVisibility(params))
-    }
+    toggleVisibility: (params) => dispatch(toggleWidgetVisibility(params)),
+    updateWidgetSettings: (params) => dispatch(updateWidgetSettings(params))
   }
 }
 

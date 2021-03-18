@@ -33,10 +33,10 @@
 .edit-section {
   visibility: hidden;
   z-index: 2;
-  height: 50px;
+  height: auto;
   background: $color-caribbean-green;
   position: relative;
-  padding: 3px 10px;
+  padding: 10px;
   margin-top: 15px;
   color: white;
 }
@@ -49,6 +49,7 @@
   position: relative;
   top: -50px;
   text-align: center;
+  z-index: 1;
 }
 
 .hidden > div {
@@ -60,3 +61,60 @@
   padding: 20px 40px;
   border-radius: 3px;
 }
+
+.edit-settings {
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.edit-form {
+  background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  margin-top: 1em;
+  padding: 20px;
+  z-index: 2;
+  height: auto;
+  position: relative;
+  width: 400px;
+
+  input {
+    font-family: 'Circular Book';
+    color: $color-regent;
+    border: none;
+    border-bottom: 1px dashed $color-athens-gray-dark;
+    width: 100%;
+  }
+
+  input::placeholder {
+    color: $color-ghost;
+  }
+
+  .chars {
+    text-align: right;
+    color: $color-ghost;
+    font-size: 10px;
+  }
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.save, .cancel {
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.save {
+  background-color: $color-caribbean-green;
+  color: #FFFFFF;
+}
+
+.cancel {
+  background-color: #E1E5E9;
+  color: #808C9B;
+  margin-right: 5px;
+}
+
