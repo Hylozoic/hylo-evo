@@ -71,6 +71,16 @@
     max-height: 100vh;
 }
 
+.close-button {
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .post-editor-wrapper {
     width: 100%;

@@ -18,7 +18,7 @@ describe('mapStateToProps', () => {
     props = {
       location: { search: '' },
       match: {
-        params: { groupSlug: 'foo' }
+        params: { context: 'groups', groupSlug: 'foo' }
       }
     }
 
@@ -49,18 +49,22 @@ describe('mapStateToProps', () => {
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         currentUser: undefined,
-        fetchParams: { boundingBox: undefined, groupSlug: 'foo', context: 'groups', groupSlugs: undefined },
+        context: 'groups',
+        fetchParams: { boundingBox: undefined, slug: 'foo', context: 'groups', groupSlugs: undefined, isPublic: false },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
           topics: []
         },
+        group: null,
+        groups: [],
         members: [],
         pending: undefined,
         posts: [],
-        publicGroups: [],
         hideDrawer: false,
-        routeParams: { groupSlug: 'foo' },
+        searches: undefined,
+        selectedSearch: {},
+        routeParams: { context: 'groups', groupSlug: 'foo' },
         topics: [],
         zoom: 0
       })

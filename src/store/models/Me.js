@@ -82,6 +82,7 @@ Me.fields = {
   name: attr(),
   posts: many('Post'),
   intercomHash: attr(),
+  joinRequests: many('JoinRequest'),
   location: attr(),
   locationId: fk({
     to: 'Location',

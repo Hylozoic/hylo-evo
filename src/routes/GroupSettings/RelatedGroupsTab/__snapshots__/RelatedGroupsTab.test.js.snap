@@ -1,171 +1,274 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Banner renders correctly 1`] = `
-<div
-  data-stylename="banner"
->
-  <div
-    data-stylename="banner-text"
-  >
-    <div
-      data-stylename="name"
-    >
-      Groups
-    </div>
-    <div
-      data-stylename="stats"
-    >
-      12
-       Groups  •  
-      123
-       Total Members
-    </div>
-  </div>
-  <Icon
-    data-stylename="icon"
-    name="More"
-  />
-</div>
-`;
-
-exports[`GroupsList renders correctly 1`] = `
-<div
-  data-stylename="group-list"
->
-  <GroupCard
-    group={
-      Object {
-        "id": 9,
-      }
-    }
-    key="9"
-  />
-  <GroupCard
-    group={
-      Object {
-        "id": 8,
-      }
-    }
-    key="8"
-  />
-  <GroupCard
-    group={
-      Object {
-        "id": 7,
-      }
-    }
-    key="7"
-  />
-  <ScrollListener
-    elementId="center-column"
-    onBottom={[Function]}
-  />
-</div>
-`;
-
-exports[`GroupsList renders correctly 2`] = `
+exports[`GroupsCard renders correctly 1`] = `
 <div
   data-stylename="group-card"
 >
-  <RoundImage
-    data-stylename="group-image"
-    size="50px"
-    square={true}
-    url="foom.png"
-  />
   <div
     data-stylename="group-details"
   >
-    <span
-      data-stylename="group-name"
+    <RoundImage
+      data-stylename="group-image"
+      size="30px"
+      square={true}
+      url="foom.png"
+    />
+    <Link
+      to="/all"
     >
-      Foom
-    </span>
-    <span
-      data-stylename="group-stats"
-    >
-      77
-       Members
-    </span>
+      <span
+        data-stylename="group-name"
+      >
+        Foom
+      </span>
+    </Link>
   </div>
 </div>
 `;
 
-exports[`NetworkGroups renders correctly 1`] = `
+exports[`RelatedGroupstab renders correctly 1`] = `
 <div
   data-stylename="container"
 >
-  <Banner
-    network={
-      Object {
-        "id": 78,
-      }
-    }
-  />
-  <SearchBar
-    search="fo"
-    setSearch={[Function]}
-    setSort={[Function]}
-    sortBy="name"
-  />
-  <GroupsList
-    groups={
-      Array [
-        Object {
-          "id": 9,
-        },
-        Object {
-          "id": 8,
-        },
-        Object {
-          "id": 7,
-        },
-      ]
-    }
-    fetchMoreGroups={[Function]}
-  />
-</div>
-`;
-
-exports[`SearchBar renders correctly 1`] = `
-<div
-  data-stylename="search-bar"
->
-  <TextInput
-    data-stylename="search-input"
-    onChange={[Function]}
-    placeholder="Search by name"
-    value="fo"
-  />
-  <Dropdown
-    alignRight={true}
-    data-stylename="search-order"
-    items={
-      Array [
-        Object {
-          "label": "Alphabetical",
-          "onClick": [Function],
-        },
-        Object {
-          "label": "Popular",
-          "onClick": [Function],
-        },
-        Object {
-          "label": "Newest",
-          "onClick": [Function],
-        },
-      ]
-    }
-    toggleChildren={
-      <span
-        data-stylename="search-sorter-label"
-      >
-        Alphabetical
+  <h1>
+    Parent Groups
+  </h1>
+  <div>
+    <h3>
+      These are the 
+      3
+       groups that 
+      Best Group
+       is a member of
+    </h3>
+    <div
+      data-stylename="group-list"
+    >
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Leave Parent",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 9,
+          }
+        }
+        key="9"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Leave Parent",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 8,
+          }
+        }
+        key="8"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Leave Parent",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 7,
+          }
+        }
+        key="7"
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="group-picker-container"
+  >
+    <Button
+      data-stylename="connect-button"
+      onClick={[Function]}
+    >
+      <div>
         <Icon
-          name="ArrowDown"
+          data-stylename="connect-icon"
+          name="Handshake"
         />
+        Join 
+        Best Group
+         to another group
+      </div>
+      <span
+        data-stylename="connect-label"
+      >
+        REQUEST
       </span>
-    }
-  />
+    </Button>
+  </div>
+  <h1>
+    Child Groups
+  </h1>
+  <div>
+    <h3>
+      These 
+      3
+       groups are members of 
+      Best Group
+    </h3>
+    <div
+      data-stylename="group-list"
+    >
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Remove Child",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 6,
+          }
+        }
+        key="6"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Remove Child",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 5,
+          }
+        }
+        key="5"
+      />
+      <GroupCard
+        actionMenu={
+          <Dropdown
+            items={
+              Array [
+                Object {
+                  "icon": "Trash",
+                  "label": "Remove Child",
+                  "onClick": [Function],
+                  "red": true,
+                },
+              ]
+            }
+            toggleChildren={
+              <Icon
+                name="More"
+              />
+            }
+          />
+        }
+        group={
+          Object {
+            "id": 4,
+          }
+        }
+        key="4"
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="group-picker-container"
+  >
+    <Button
+      data-stylename="connect-button"
+      onClick={[Function]}
+    >
+      <div>
+        <Icon
+          data-stylename="connect-icon"
+          name="Handshake"
+        />
+        Invite a group to join 
+        <strong>
+          Best Group
+        </strong>
+      </div>
+      <span
+        data-stylename="connect-label"
+      >
+        INVITE
+      </span>
+    </Button>
+  </div>
 </div>
 `;

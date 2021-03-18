@@ -47,6 +47,15 @@ $preview-height: 80px;
   color: $color-dove-gray-50;
   font-size: 12px;
 }
+@media screen and (max-width: 425px) {
+  .wrapper {
+    padding: 0;
+  }
+
+  .linkPreview {
+    margin-bottom: 0;
+  }
+}
 
 @media screen and (max-width: 325px) {
   .previewTitle {

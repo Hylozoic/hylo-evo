@@ -1,7 +1,7 @@
 query PeopleQuery (
   $first: Int,
   $autocomplete: String,
-  $groupIds: [String]
+  $groupIds: [ID]
 ) {
   groups(groupIds: $groupIds) {
     items {

@@ -1,12 +1,11 @@
 .publicToggleContainer {
   background-color: $color-rhino-10;
   color: $color-rhino-50;
-  height: 33px;
   align-items: center;
   justify-content: space-between;
   display: flex;
   font-size: 12px;
-  padding: $space-5x;
+  padding: 12px;
 }
 
 .publicToggleIcon {
@@ -27,14 +26,9 @@
 .publicToggle {
   align-items: center;
   display: flex;
+  line-height: 14px;
 }
 
 .publicGuidance {
   margin-left: 10px;
-}
-
-@media screen and (max-width: 325px) {
-  .publicGuidance {
-    padding-right: 28px;
-  }
 }

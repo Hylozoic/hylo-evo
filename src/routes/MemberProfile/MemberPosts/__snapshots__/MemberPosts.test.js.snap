@@ -12,6 +12,11 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
         Object {
           "commenters": Array [],
           "commentersTotal": 0,
+          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+          "creator": Object {
+            "id": "46816",
+          },
+          "details": "<p>With nothing of importance in it.</p>",
           "groups": Array [
             Object {
               "id": "1836",
@@ -19,11 +24,6 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
               "slug": "wombats",
             },
           ],
-          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
-          "creator": Object {
-            "id": "46816",
-          },
-          "details": "<p>With nothing of importance in it.</p>",
           "id": "30003",
           "title": "Some other post",
           "type": "discussion",
@@ -48,13 +48,6 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
             },
           ],
           "commentersTotal": 1,
-          "groups": Array [
-            Object {
-              "id": "1836",
-              "name": "Wombats",
-              "slug": "slug",
-            },
-          ],
           "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
           "creator": Object {
             "id": "46816",
@@ -62,6 +55,13 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
           "details": "<p><a href=\\"https://wombat.life\\">https://wombat.life</a></p>
 <p></p>
 <p></p>",
+          "groups": Array [
+            Object {
+              "id": "1836",
+              "name": "Wombats",
+              "slug": "slug",
+            },
+          ],
           "id": "30002",
           "title": "0123456789 0123456789 0123456789",
           "type": "discussion",

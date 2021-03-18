@@ -4,7 +4,7 @@ exports[`mapDispatchToProps correctly sets up changeTab and changeSort 1`] = `
 Object {
   "payload": Object {
     "args": Array [
-      "/c/foo?s=votes&t=request",
+      "/groups/foo?s=votes&t=request",
     ],
     "method": "push",
   },
@@ -16,7 +16,7 @@ exports[`mapDispatchToProps correctly sets up changeTab and changeSort 2`] = `
 Object {
   "payload": Object {
     "args": Array [
-      "/c/foo?s=updated&t=offer",
+      "/groups/foo?s=updated&t=offer",
     ],
     "method": "push",
   },

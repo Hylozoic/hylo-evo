@@ -1,7 +1,7 @@
 .container {
   position: relative;
   display: inline-block;
-  width: 30px;
+  min-width: 30px;
   height: 16px;
   vertical-align: middle;
   cursor: pointer;
@@ -28,15 +28,16 @@
   top: 2px;
   bottom: 2px;
   right: 15px;
-  left: 4px;
+  left: 2px;
   background-color: #fff;
   border-radius: 12px;
-  transition: all 100ms ease
+  width: 12px;
+  transition: all 100ms ease;
 }
 
 .buttonChecked {
-  right: 4px;
-  left: 15px;
+  right: 2px;
+  left: initial;
 }
 
 

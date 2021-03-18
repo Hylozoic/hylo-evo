@@ -56,7 +56,7 @@ describe('SocialControl', () => {
 
   it('renders correctly with a value', () => {
     const wrapper = shallow(<SocialControl label='A Social Control' value='someurl.com' />)
-    expect(wrapper.text()).toEqual('A Social ControlUnlink')
+    expect(wrapper.text()).toEqual('<Icon />A Social ControlUnlink')
   })
 
   it('calls linkClicked when link is clicked', () => {

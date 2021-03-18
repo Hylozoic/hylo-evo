@@ -20,7 +20,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-
+    
 posts(
   first: $first,
   offset: $offset,
@@ -33,7 +33,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -57,7 +57,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
@@ -86,8 +86,6 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -122,12 +120,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -143,15 +135,10 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
+
   }
 }
   }
@@ -159,9 +146,8 @@ posts(
     "variables": Object {
       "boundingBox": undefined,
       "filter": "offer",
-      "isPublic": undefined,
-      "networkSlug": undefined,
-      "networkSlugs": undefined,
+      "groupSlugs": undefined,
+      "isPublic": false,
       "search": "gardening",
       "slug": undefined,
       "sortBy": undefined,
@@ -190,7 +176,7 @@ Object {
   $offset: Int,
   $boundingBox: [PointInput]
 ) {
-
+  
 posts(
   first: $first,
   offset: $offset,
@@ -203,7 +189,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -227,7 +213,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
@@ -256,8 +242,6 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -292,12 +276,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -313,24 +291,18 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
+
   }
 }
 }",
     "variables": Object {
       "boundingBox": undefined,
       "filter": "request",
-      "isPublic": undefined,
-      "networkSlug": undefined,
-      "networkSlugs": undefined,
+      "groupSlugs": undefined,
+      "isPublic": false,
       "search": "graphic design",
       "slug": undefined,
       "sortBy": undefined,

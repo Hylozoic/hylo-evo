@@ -9,7 +9,7 @@ import { createGroup, fetchGroupExists } from './CreateGroup.store'
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const parent = getGroupForCurrentRoute(state, props)
-  const parentGroupOptions = (currentUser && currentUser.memberships.toModelArray().map((m) => m.group))
+  const parentGroupOptions = (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
 
   return {
     groupSlugExists: get('slugExists', state.CreateGroup),

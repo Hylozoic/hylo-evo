@@ -5,8 +5,8 @@ import { CREATE_POST } from 'store/constants'
 let state, requiredProps
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
-  const group = session.Group.create({ id: '99', slug: 'foo' })
-  const group2 = session.Group.create({ id: '100', slug: 'bar' })
+  const group = session.Group.create({ id: '99', slug: 'foo', name: 'foo' })
+  const group2 = session.Group.create({ id: '100', slug: 'bar', name: 'bar' })
 
   session.LinkPreview.create({
     id: 1

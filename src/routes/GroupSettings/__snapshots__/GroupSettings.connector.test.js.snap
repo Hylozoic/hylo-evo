@@ -3,17 +3,18 @@
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
   "canModerate": true,
-  "group": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
-  },
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
     },
     "id": "1",
+  },
+  "group": Object {
+    "groupTopics": Array [],
+    "id": "99",
+    "joinQuestions": Array [],
+    "members": Array [],
+    "slug": "foo",
   },
   "slug": "foo",
 }
@@ -25,19 +26,42 @@ Object {
     "query": "query ($slug: String) {
         group (slug: $slug) {
           id
-          name
-          slug
+          accessibility
           avatarUrl
           bannerUrl
           description
           location
-          settings
           invitePath
-          hidden
-          allowGroupInvites
-          isPublic
-          isAutoJoinable
-          publicMemberDirectory
+          name
+          settings {
+            allowGroupInvites
+            askJoinQuestions
+            publicMemberDirectory
+          }
+          slug
+          visibility
+          childGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          moderators (first: 100) {
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          parentGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
           pendingInvitations {
             hasMore
             items {
@@ -47,12 +71,11 @@ Object {
               lastSentAt
             }
           }
-          moderators (first: 100) {
-            hasMore
+          joinQuestions {
             items {
               id
-              name
-              avatarUrl
+              questionId
+              text
             }
           }
         }
@@ -74,6 +97,13 @@ Object {
     "query": "mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
         }
       }",
     "variables": Object {
@@ -83,6 +113,7 @@ Object {
   },
   "meta": Object {
     "changes": undefined,
+    "extractModel": "Group",
     "id": "99",
     "optimistic": true,
   },
@@ -93,12 +124,6 @@ Object {
 exports[`mergeProps merges the props 3`] = `
 Object {
   "canModerate": true,
-  "group": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
-  },
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
@@ -109,6 +134,13 @@ Object {
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "goToGroupDeleteConfirmation": [Function],
+  "group": Object {
+    "groupTopics": Array [],
+    "id": "99",
+    "joinQuestions": Array [],
+    "members": Array [],
+    "slug": "foo",
+  },
   "slug": "foo",
   "updateGroupSettings": [Function],
   "updateGroupSettingsMaker": [Function],

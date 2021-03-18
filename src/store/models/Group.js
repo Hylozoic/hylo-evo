@@ -6,10 +6,54 @@ export const GROUP_ACCESSIBILITY = {
   Open: 2
 }
 
+export function groupAccessibilityDescription (a) {
+  switch (a) {
+    case GROUP_ACCESSIBILITY.Closed:
+      return 'Require new users to answer questions in order to join'
+    case GROUP_ACCESSIBILITY.Restricted:
+      return 'People who apply must be approved by moderators'
+    case GROUP_ACCESSIBILITY.Open:
+      return 'Anyone can join this group'
+  }
+}
+
+export function groupAccessibilityIcon (a) {
+  switch (a) {
+    case GROUP_ACCESSIBILITY.Closed:
+      return 'Lock'
+    case GROUP_ACCESSIBILITY.Restricted:
+      return 'Hand'
+    case GROUP_ACCESSIBILITY.Open:
+      return 'Enter-Door'
+  }
+}
+
 export const GROUP_VISIBILITY = {
   Hidden: 0,
   Protected: 1,
   Public: 2
+}
+
+export function groupVisibilityDescription (v) {
+  switch (v) {
+    case GROUP_VISIBILITY.Hidden:
+      return 'Only members of this group can see this group'
+    case GROUP_VISIBILITY.Protected:
+      return 'Only members of parent groups can see this group'
+    case GROUP_VISIBILITY.Public:
+      return 'Anyone can find and see this group'
+  }
+}
+
+export function groupVisibilityIcon (v) {
+  switch (v) {
+    case GROUP_VISIBILITY.Hidden:
+      return 'Hidden'
+    case GROUP_VISIBILITY.Protected:
+      return 'Shield'
+    case GROUP_VISIBILITY.Public:
+      return 'Public'
+  }
 }
 
 export class GroupModerator extends Model { }
@@ -19,6 +63,15 @@ GroupModerator.fields = {
   moderator: fk('Person', 'groupmoderators')
 }
 
+export class GroupJoinQuestion extends Model { }
+GroupJoinQuestion.modelName = 'GroupJoinQuestion'
+GroupJoinQuestion.fields = {
+  id: attr(),
+  questionId: attr(),
+  text: attr(),
+  group: fk('Group')
+}
+
 export class GroupTopic extends Model {}
 GroupTopic.modelName = 'GroupTopic'
 GroupTopic.fields = {
@@ -26,11 +79,11 @@ GroupTopic.fields = {
   topic: fk('Topic', 'grouptopics')
 }
 
-export class GroupConnection extends Model {}
-GroupConnection.modelName = 'GroupConnection'
-GroupConnection.fields = {
-  parentGroup: fk({ to: 'Group', as: 'parent', relatedName: 'childConnections' }),
-  childGroup: fk({ to: 'Group', as: 'child', relatedName: 'parentConnections' })
+export class GroupRelationship extends Model {}
+GroupRelationship.modelName = 'GroupRelationship'
+GroupRelationship.fields = {
+  parentGroup: fk({ to: 'Group', as: 'parentGroup', relatedName: 'childRelationships' }),
+  childGroup: fk({ to: 'Group', as: 'childGroup', relatedName: 'parentRelationships' })
 }
 
 export class GroupWidget extends Model {}
@@ -55,8 +108,8 @@ Group.fields = {
   childGroups: many({
     to: 'Group',
     relatedName: 'parentGroups',
-    through: 'GroupConnection',
-    throughFields: [ 'parentGroup', 'childGroup' ]
+    through: 'GroupRelationship',
+    throughFields: [ 'childGroup', 'parentGroup' ]
   }),
   feedOrder: attr(),
   id: attr(),
@@ -76,6 +129,7 @@ Group.fields = {
   name: attr(),
   posts: many('Post'),
   postCount: attr(),
+  joinQuestions: many('GroupJoinQuestion'),
   settings: attr(),
   slug: attr(),
   visibility: attr(),

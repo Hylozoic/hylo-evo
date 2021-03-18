@@ -41,6 +41,10 @@
 
 /* Body */
 
+input, textarea {
+  font-family: 'Circular Book';
+}
+
 .bdy-drk-lg {
   @include font-regular;
   color: $color-rhino-80;

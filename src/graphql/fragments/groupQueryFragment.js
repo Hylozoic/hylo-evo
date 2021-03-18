@@ -22,6 +22,26 @@ export default
   avatarUrl
   bannerUrl
   description
+  location
+    locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
   name
   locationObject {
     fullText
@@ -30,33 +50,78 @@ export default
   }
   settings {
     allowGroupInvites
+    askJoinQuestions
     publicMemberDirectory
   }
   slug
   visibility
+  groupRelationshipInvitesFrom {
+    items {
+      id
+      toGroup {
+        id
+        name
+        slug
+      }
+      fromGroup {
+        id
+      }
+      type
+      createdBy {
+        id
+        name
+      }
+    }
+  }
+  groupRelationshipInvitesTo {
+    items {
+      id
+      fromGroup {
+        id
+        name
+        slug
+      }
+      toGroup {
+        id
+      }
+      type
+      createdBy {
+        id
+        name
+      }
+    }
+  }
   childGroups {
     items {
       id
-      slug
-      name
+      accessibility
       avatarUrl
-      childGroups(first: 300) {
-        items {
-          id
-        }
+      bannerUrl
+      description
+      name
+      slug
+      visibility
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
       }
     }
   }
   parentGroups {
     items {
       id
-      slug
-      name
+      accessibility
       avatarUrl
-      childGroups(first: 300) {
-        items {
-          id
-        }
+      bannerUrl
+      description
+      name
+      slug
+      visibility
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
       }
     }
   }

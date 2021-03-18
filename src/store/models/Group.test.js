@@ -5,7 +5,7 @@ it('can be created', () => {
   const session = orm.session(orm.getEmptyState())
   session.Group.create(group)
 
-  const { group: { items, itemsById } } = session.state
+  const { Group: { items, itemsById } } = session.state
   expect(items).toEqual([group.id])
   expect(itemsById[group.id]).toEqual(group)
 })
@@ -18,9 +18,9 @@ it('can have moderators added', () => {
   const moderators = [{ id: 1, name: 'Joe' }, { id: 2, name: 'Sue' }].map(p =>
     session.Person.create(p))
 
-  session.group.withId('1').update({ moderators })
+  session.Group.withId('1').update({ moderators })
 
-  const retrievedMods = session.group.withId('1').moderators.toModelArray()
+  const retrievedMods = session.Group.withId('1').moderators.toModelArray()
 
   expect(retrievedMods).toHaveLength(2)
   expect(retrievedMods[0].name).toEqual('Joe')

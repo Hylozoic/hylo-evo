@@ -60,6 +60,16 @@ fragment MeCompleteFragment on Me {
       isActive
     }
   }
+  joinRequests(status: 0) {
+    items {
+      id
+      status
+      createdAt
+      group {
+        id
+      }
+    }
+  }
   memberships {
     id
     lastViewedAt
@@ -78,6 +88,11 @@ fragment MeCompleteFragment on Me {
       slug
       memberCount
       avatarUrl
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
       groupTopics(subscribed: true) {
         total
         hasMore
@@ -91,24 +106,6 @@ fragment MeCompleteFragment on Me {
           postsTotal
           followersTotal
           isSubscribed
-        }
-      }
-      parentGroups {
-        items {
-          id
-          avatarUrl
-          memberCount
-          name
-          slug
-        }
-      }
-      childGroups(first: 300) {
-        items {
-          id
-          avatarUrl
-          memberCount
-          name
-          slug
         }
       }
     }

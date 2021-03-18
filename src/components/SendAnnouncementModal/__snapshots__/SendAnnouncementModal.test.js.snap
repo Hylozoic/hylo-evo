@@ -48,7 +48,7 @@ exports[`renders correctly with multiple groups, where the current user is not a
       <p
         data-stylename="modal-paragraph"
       >
-        This means that all members of the
+        This means that all members of the 
          groups selected will receive an instant email and push notification about this Post.
       </p>
       <p

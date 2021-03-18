@@ -11,13 +11,13 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import presentPost from 'store/presenters/presentPost'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMe from 'store/selectors/getMe'
-import { addQuerystringToPath, baseUrl, personUrl, postUrl, groupMapDetailUrl } from 'util/navigation'
+import { addQuerystringToPath, baseUrl, personUrl, postUrl, groupDetailUrl } from 'util/navigation'
 
 import {
   fetchMembers,
   fetchPosts,
-  fetchPublicGroups,
-  getPublicGroups,
+  fetchGroups,
+  getGroups,
   getSortedFilteredMembers,
   getSortedFilteredPosts,
   getCurrentTopics,
@@ -35,19 +35,34 @@ export function presentMember (person, groupId) {
   }
 }
 
+export function presentGroup (group) {
+  return group.ref
+}
+
 export function mapStateToProps (state, props) {
-  const group = getGroupForCurrentRoute(state, props)
-  const groupId = group && group.id
+  let group = getGroupForCurrentRoute(state, props)
   const routeParams = get('match.params', props)
   const slug = getRouteParam('groupSlug', state, props)
   const context = getRouteParam('context', state, props)
-  const groupSlugs = getQuerystringParam('group', state, props)
+  let groupSlugs = getQuerystringParam('group', state, props)
   const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
+  let groupId
+  if (group) {
+    group = group.ref
+    groupSlugs = (groupSlugs || []).concat(slug)
+    groupId = group.id
+  }
 
   const fetchParams = {
     context,
     slug,
-    groupSlugs, // used to filter by multiple groups
+    groupSlugs, // used to filter posts by multiple groups
+    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
+    isPublic: context === 'public'
+  }
+
+  const fetchGroupParams = {
+    parentSlugs: groupSlugs, // used to filter posts by multiple groups
     boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
     isPublic: context === 'public'
   }
@@ -56,7 +71,7 @@ export function mapStateToProps (state, props) {
   const members = getSortedFilteredMembers(state, fetchParams).map(m => presentMember(m, groupId))
   const posts = getSortedFilteredPosts(state, fetchParams).map(p => presentPost(p, groupId))
   const topics = getCurrentTopics(state, fetchParams)
-  const publicGroups = getPublicGroups(state, fetchParams)
+  const groups = getGroups(state, fetchGroupParams).map(g => presentGroup(g))
 
   const me = getMe(state)
   const centerLocation = group && group.locationObject ? group.locationObject.center : me && me.locationObject ? me.locationObject.center : null
@@ -67,10 +82,11 @@ export function mapStateToProps (state, props) {
     currentUser: me,
     fetchParams,
     filters: state.MapExplorer.clientFilterParams,
+    group,
+    groups,
     members,
     pending: state.pending[FETCH_POSTS_MAP],
     posts,
-    publicGroups,
     routeParams,
     hideDrawer,
     searches: state.MapExplorer.searches,
@@ -86,12 +102,12 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params })),
-    fetchPublicGroups: (params) => () => dispatch(fetchPublicGroups({ ...params })),
+    fetchGroups: (params) => () => dispatch(fetchGroups({ ...params })),
     fetchSavedSearches: (userId) => () => dispatch(fetchSavedSearches(userId)),
     deleteSearch: (searchId) => dispatch(deleteSearch(searchId)),
     saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, querystringParams))),
-    showGroupDetails: (groupId) => dispatch(push(groupMapDetailUrl(groupId, { ...routeParams, view: 'map' }, querystringParams))),
+    showGroupDetails: (groupSlug) => dispatch(push(groupDetailUrl(groupSlug, { ...routeParams, view: 'map' }, querystringParams))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.groupSlug))),
     toggleDrawer: (hidden) => dispatch(push(addQuerystringToPath(baseUrl({ ...routeParams, view: 'map' }), { ...querystringParams, hideDrawer: hidden }))),
     storeFetchParams: param => opts => dispatch(storeFetchParams({ ...param, ...opts })),
@@ -106,14 +122,14 @@ export function mapDispatchToProps (dispatch, props) {
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { fetchParams, currentUser } = stateProps
-  const { fetchMembers, fetchPosts, fetchPublicGroups, storeFetchParams, fetchSavedSearches } = dispatchProps
+  const { fetchMembers, fetchPosts, fetchGroups, storeFetchParams, fetchSavedSearches } = dispatchProps
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     fetchMembers: fetchMembers(fetchParams),
-    fetchPublicGroups: fetchPublicGroups(fetchParams),
+    fetchGroups: fetchGroups(fetchParams),
     fetchPosts: fetchPosts(fetchParams),
     fetchSavedSearches: currentUser ? fetchSavedSearches(currentUser.id) : () => {},
     storeFetchParams: storeFetchParams(fetchParams)

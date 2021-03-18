@@ -1,31 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Comment displays image attachments 1`] = `
-<div
-  data-stylename="comment"
->
+<div>
   <div
     data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      just now
+    </span>
     <div
       data-stylename="upperRight"
     >
-      <span
-        data-stylename="timestamp"
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
       >
-        just now
-      </span>
+        <Icon
+          name="Replies"
+        />
+      </div>
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
     </div>
   </div>
   <CardImageAttachments
@@ -66,31 +96,39 @@ exports[`Comment displays image attachments 1`] = `
 `;
 
 exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
-<div
-  data-stylename="comment"
->
+<div>
   <div
     data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      just now
+    </span>
     <div
       data-stylename="upperRight"
     >
-      <span
-        data-stylename="timestamp"
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
       >
-        just now
-      </span>
+        <Icon
+          name="Replies"
+        />
+      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
@@ -98,6 +136,11 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
             Object {
               "icon": "Trash",
               "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
               "onClick": [Function],
             },
           ]
@@ -134,35 +177,48 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 `;
 
 exports[`Comment displays the remove menu when removeComment is defined 1`] = `
-<div
-  data-stylename="comment"
->
+<div>
   <div
     data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      just now
+    </span>
     <div
       data-stylename="upperRight"
     >
-      <span
-        data-stylename="timestamp"
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
       >
-        just now
-      </span>
+        <Icon
+          name="Replies"
+        />
+      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
           Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
             Object {
               "icon": "Trash",
               "label": "Remove",
@@ -202,31 +258,61 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
 `;
 
 exports[`Comment renders correctly 1`] = `
-<div
-  data-stylename="comment"
->
+<div>
   <div
     data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      just now
+    </span>
     <div
       data-stylename="upperRight"
     >
-      <span
-        data-stylename="timestamp"
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
       >
-        just now
-      </span>
+        <Icon
+          name="Replies"
+        />
+      </div>
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
     </div>
   </div>
   <CardImageAttachments
@@ -253,31 +339,61 @@ exports[`Comment renders correctly 1`] = `
 `;
 
 exports[`Comment renders correctly when editing 1`] = `
-<div
-  data-stylename="comment"
->
+<div>
   <div
     data-stylename="header"
   >
     <Avatar
       avatarUrl="foo.jpg"
       data-stylename="avatar"
-      url="/c/foo/m/1"
+      url="/groups/foo/members/1"
     />
     <Link
       data-stylename="userName"
-      to="/c/foo/m/1"
+      to="/groups/foo/members/1"
     >
       Joe Smith
     </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      Editing now
+    </span>
     <div
       data-stylename="upperRight"
     >
-      <span
-        data-stylename="timestamp"
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
       >
-        Editing now
-      </span>
+        <Icon
+          name="Replies"
+        />
+      </div>
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
     </div>
   </div>
   <CardImageAttachments

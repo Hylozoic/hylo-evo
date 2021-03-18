@@ -197,7 +197,8 @@ export default class PostDetail extends Component {
         {showPeopleDialog && <PostPeopleDialog
           title={postPeopleDialogTitle}
           members={people}
-          onClose={togglePeopleDialog} />}
+          onClose={togglePeopleDialog}
+          slug={routeParams.groupSlug} />}
         {atActivity && <div styleName='activity-sticky' style={activityStyle}>
           <div styleName='activity-header'>ACTIVITY</div>
           {postFooter}

@@ -3,9 +3,9 @@
 exports[`mapDispatchToProps returns the right keys 1`] = `
 Object {
   "addAttachment": [Function],
+  "changeQueryString": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
-  "createProject": [Function],
   "fetchDefaultTopics": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
@@ -18,28 +18,8 @@ Object {
 exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
   "announcementSelected": undefined,
-  "canModerate": true,
-  "groupOptions": Array [
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "99",
-        "slug": "foo",
-      },
-    },
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "100",
-        "slug": "bar",
-      },
-    },
-  ],
-  "groupSlug": "foo",
-  "currentGroup": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
-  },
+  "canModerate": undefined,
+  "currentGroup": null,
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
@@ -51,24 +31,44 @@ Object {
   "editingPostId": undefined,
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],
+  "groupOptions": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "100",
+        "name": "bar",
+        "slug": "bar",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "name": "foo",
+        "slug": "foo",
+      },
+    },
+  ],
+  "groupSlug": undefined,
   "imageAttachments": Array [],
   "isEvent": false,
   "isProject": false,
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": false,
+  "location": Object {
+    "search": "",
+  },
   "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
+        "name": "foo",
         "slug": "foo",
       },
     },
   ],
-  "networkSlug": undefined,
   "post": null,
   "postPending": false,
-  "postTypeContext": undefined,
+  "postType": undefined,
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -81,28 +81,8 @@ Object {
 exports[`mapStateToProps returns the right keys for a new post while pending 1`] = `
 Object {
   "announcementSelected": undefined,
-  "canModerate": true,
-  "groupOptions": Array [
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "99",
-        "slug": "foo",
-      },
-    },
-    SessionBoundModel {
-      "_fields": Object {
-        "id": "100",
-        "slug": "bar",
-      },
-    },
-  ],
-  "groupSlug": "foo",
-  "currentGroup": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
-  },
+  "canModerate": undefined,
+  "currentGroup": null,
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
@@ -114,24 +94,44 @@ Object {
   "editingPostId": undefined,
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],
+  "groupOptions": Array [
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "100",
+        "name": "bar",
+        "slug": "bar",
+      },
+    },
+    SessionBoundModel {
+      "_fields": Object {
+        "id": "99",
+        "name": "foo",
+        "slug": "foo",
+      },
+    },
+  ],
+  "groupSlug": undefined,
   "imageAttachments": Array [],
   "isEvent": false,
   "isProject": false,
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": true,
+  "location": Object {
+    "search": "",
+  },
   "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
+        "name": "foo",
         "slug": "foo",
       },
     },
   ],
-  "networkSlug": undefined,
   "post": null,
   "postPending": true,
-  "postTypeContext": undefined,
+  "postType": undefined,
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -144,7 +144,7 @@ Object {
 exports[`mergeProps goToPost redirects to group feed with no topicName 1`] = `
 Array [
   Array [
-    "/c/theslug/p/123",
+    "/groups/theslug/post/123",
   ],
 ]
 `;
@@ -152,7 +152,7 @@ Array [
 exports[`mergeProps goToPost redirects to topic with topicName 1`] = `
 Array [
   Array [
-    "/c/theslug/thetopicname/p/123",
+    "/groups/theslug/topics/thetopicname/post/123",
   ],
 ]
 `;

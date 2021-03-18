@@ -8,7 +8,7 @@ exports[`does something 1`] = `
     data-stylename="message-member-container"
   >
     <Link
-      to="/t"
+      to="/messages"
     >
       <Button>
         Messages

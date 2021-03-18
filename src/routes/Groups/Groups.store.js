@@ -1,60 +1,19 @@
-import { createSelector } from 'reselect'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import { getCurrentlyRelatedGroupIds } from 'store/selectors/getGroupRelationships'
+import getMyModeratedGroups from 'store/selectors/getMyModeratedGroups'
+import getRouteParam from 'store/selectors/getRouteParam'
 
-export const MODULE_NAME = 'RelatedGroups'
-
-// Constants
-export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
-export const SET_SORT = `${MODULE_NAME}/SET_SORT`
-
-// Reducer
-const defaultState = {
-  sort: 'name',
-  search: ''
-}
-
-export default function reducer (state = defaultState, action) {
-  const { error, type, payload } = action
-  if (error) return state
-
-  switch (type) {
-    case SET_SEARCH:
-      return {
-        ...state,
-        search: payload
-      }
-    case SET_SORT:
-      return {
-        ...state,
-        sort: payload
-      }
-    default:
-      return state
+export const getPossibleRelatedGroups = ormCreateSelector(
+  orm,
+  getGroupForCurrentRoute,
+  (session, props) => getCurrentlyRelatedGroupIds(session, { groupSlug: getRouteParam('groupSlug', session, props) }),
+  getMyModeratedGroups,
+  (session, group, currentRelationships, moderatedGroups) => {
+    // TODO: check for cycles, cant add a grandparent as a child
+    return moderatedGroups.filter(mg => {
+      return mg.id !== group.id && !currentRelationships.includes(mg.id)
+    }).sort((a, b) => a.name.localeCompare(b.name))
   }
-}
-
-export function setSearch (search) {
-  return {
-    type: SET_SEARCH,
-    payload: search
-  }
-}
-
-export function setSort (sort) {
-  return {
-    type: SET_SORT,
-    payload: sort
-  }
-}
-
-// Selectors
-export const moduleSelector = (state) => state[MODULE_NAME]
-
-export const getSort = createSelector(
-  moduleSelector,
-  (state, props) => state.sort
-)
-
-export const getSearch = createSelector(
-  moduleSelector,
-  (state, props) => state.search
 )

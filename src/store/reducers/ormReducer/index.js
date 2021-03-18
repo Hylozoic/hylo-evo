@@ -1,17 +1,27 @@
+/* eslint-disable no-fallthrough */
 import * as sessionReducers from './sessionReducers'
 import {
+  ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_MODERATOR_PENDING,
+  CANCEL_GROUP_RELATIONSHIP_INVITE,
+  CANCEL_JOIN_REQUEST,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
+  CREATE_JOIN_REQUEST,
   CREATE_MESSAGE,
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
+  DELETE_GROUP_RELATIONSHIP,
   FETCH_MESSAGES_PENDING,
+  FETCH_MY_JOIN_REQUESTS,
+  INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
   LEAVE_PROJECT_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
   REMOVE_MODERATOR_PENDING,
+  REJECT_GROUP_RELATIONSHIP_INVITE,
+  REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
   RESET_NEW_POST_COUNT_PENDING,
   RESPOND_TO_EVENT_PENDING,
   TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
@@ -41,11 +51,12 @@ import {
 } from 'routes/Signup/AddSkills/AddSkills.store'
 
 import {
+  UPDATE_GROUP_SETTINGS,
   UPDATE_GROUP_SETTINGS_PENDING
 } from 'routes/GroupSettings/GroupSettings.store'
 import {
   CREATE_GROUP
-} from 'routes/CreateGroup/Review/Review.store'
+} from 'components/CreateGroup/CreateGroup.store'
 import {
   USE_INVITATION
 } from 'routes/JoinGroup/JoinGroup.store'
@@ -71,8 +82,11 @@ export default function ormReducer (state = {}, action) {
   const {
     Comment,
     Group,
+    GroupRelationship,
+    GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
+    JoinRequest,
     Me,
     Membership,
     Message,
@@ -88,9 +102,22 @@ export default function ormReducer (state = {}, action) {
     extractModelsFromAction(action, session)
   }
 
-  let me, membership, group, person, post, comment, groupTopic
+  let me, membership, group, person, post, comment, groupTopic, childGroup
 
   switch (type) {
+    case ACCEPT_GROUP_RELATIONSHIP_INVITE:
+      const newGroupRelationship = payload.data.acceptGroupRelationshipInvite.groupRelationship
+      if (newGroupRelationship) {
+        childGroup = Group.withId(newGroupRelationship.childGroup.id)
+        Group.withId(newGroupRelationship.parentGroup.id).updateAppending({ childGroups: [childGroup] })
+        clearCacheFor(Group, childGroup.id)
+      }
+    case CANCEL_GROUP_RELATIONSHIP_INVITE:
+    case REJECT_GROUP_RELATIONSHIP_INVITE:
+      const invite = GroupRelationshipInvite.withId(meta.id)
+      invite.delete()
+      break
+
     case CREATE_COMMENT_PENDING:
       Comment.create({
         id: meta.tempId,
@@ -140,6 +167,8 @@ export default function ormReducer (state = {}, action) {
     case LEAVE_GROUP:
       me = Me.first()
       membership = find(m => m.group.id === meta.id, me.memberships.toModelArray())
+      if (membership) membership.delete()
+      membership = Membership.safeGet({ group: meta.id, person: me.id })
       if (membership) membership.delete()
       break
 
@@ -196,6 +225,14 @@ export default function ormReducer (state = {}, action) {
 
       // Triggers an update to redux-orm for the membership
       membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
+      break
+
+    case UPDATE_GROUP_SETTINGS:
+      // Set new join questions in the ORM
+      if (payload.data.updateGroupSettings && payload.data.updateGroupSettings.joinQuestions) {
+        group = Group.withId(meta.id)
+        clearCacheFor(Group, meta.id)
+      }
       break
 
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
@@ -274,6 +311,18 @@ export default function ormReducer (state = {}, action) {
       comment.delete()
       break
 
+    case DELETE_GROUP_RELATIONSHIP: {
+      if (payload.data.deleteGroupRelationship.success) {
+        const gr = GroupRelationship.safeGet({ parentGroup: meta.parentId, childGroup: meta.childId })
+        if (gr) {
+          gr.delete()
+          clearCacheFor(Group, meta.parentId)
+          clearCacheFor(Group, meta.childId)
+        }
+      }
+      break
+    }
+
     case UPDATE_POST_PENDING:
       // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
       post = Post.withId(meta.id)
@@ -284,6 +333,19 @@ export default function ormReducer (state = {}, action) {
     case CREATE_GROUP:
       me = Me.withId(Me.first().id)
       me.updateAppending({ memberships: [payload.data.createGroup.id] })
+      break
+
+    case CREATE_JOIN_REQUEST:
+      if (payload.data.createJoinRequest.request) {
+        me = Me.first()
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id })
+        me.updateAppending({ joinRequests: [jr] })
+      }
+      break
+
+    case CANCEL_JOIN_REQUEST:
+      const jr = JoinRequest.withId(meta.id)
+      jr.delete()
       break
 
     case JOIN_PROJECT_PENDING:
@@ -339,6 +401,41 @@ export default function ormReducer (state = {}, action) {
         })
       })
       clearCacheFor(Post, meta.eventId)
+      break
+
+    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.requestToAddGroupToParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.requestToAddGroupToParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
+
+    case INVITE_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.inviteGroupToJoinParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.inviteGroupToJoinParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
+
+    case FETCH_MY_JOIN_REQUESTS:
+      me = Me.first()
+      clearCacheFor(Me, me.id)
       break
   }
 

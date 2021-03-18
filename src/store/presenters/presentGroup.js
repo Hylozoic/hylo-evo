@@ -1,4 +1,4 @@
-export default function presentGroup (group, groupId) {
+export default function presentGroup (group) {
   if (!group) return null
   return {
     ...group.ref,
@@ -8,11 +8,12 @@ export default function presentGroup (group, groupId) {
     widgets: group.widgets.toModelArray().map(widget => {
       return {...widget.ref}
     }),
-    groupTopics: group.groupTopics.toModelArray().map(groupTopic => {
+    groupTopics: group.groupTopics ? group.groupTopics.toModelArray().map(groupTopic => {
       return {
         ...groupTopic.ref,
         name: groupTopic.topic.name
       }
-    })
+    }) : [],
+    joinQuestions: group.joinQuestions.toRefArray()
   }
 }

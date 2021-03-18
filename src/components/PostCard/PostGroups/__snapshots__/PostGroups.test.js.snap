@@ -13,6 +13,7 @@ exports[`PostGroups matches last snapshot 1`] = `
       Posted In: 
     </span>
     <LinkedGroupNameList
+      expandFunc={[Function]}
       groups={
         Array [
           Object {
@@ -32,7 +33,6 @@ exports[`PostGroups matches last snapshot 1`] = `
           },
         ]
       }
-      expandFunc={[Function]}
       maxShown={2}
     />
     <a

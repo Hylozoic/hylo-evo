@@ -26,7 +26,7 @@ Object {
     avatarUrl
     bannerUrl
     postCount
-
+    
 posts(
   first: $first,
   offset: $offset,
@@ -39,7 +39,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -63,7 +63,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
@@ -92,8 +92,6 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -128,12 +126,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -149,15 +141,10 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
+
   }
 }
   }
@@ -165,7 +152,6 @@ posts(
     "variables": Object {
       "filter": "offer",
       "first": 20,
-      "networkSlug": undefined,
       "offset": 20,
       "search": "gardening",
       "slug": undefined,
@@ -195,7 +181,7 @@ Object {
   $first: Int
   $boundingBox: [PointInput]
 ) {
-
+  
 posts(
   first: $first,
   offset: $offset,
@@ -208,7 +194,7 @@ posts(
 ) {
   hasMore
   items {
-
+    
   id
   announcement
   title
@@ -232,7 +218,7 @@ posts(
     avatarUrl
   }
   commentersTotal
-
+  
   linkPreview {
     id
     title
@@ -261,8 +247,6 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -297,12 +281,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -318,22 +296,16 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
+
   }
 }
 }",
     "variables": Object {
       "filter": "request",
       "first": 20,
-      "networkSlug": undefined,
       "offset": 20,
       "search": "graphic design",
       "slug": undefined,

@@ -118,7 +118,7 @@ exports[`ModeratorsList renders correctly 1`] = `
       }
       key="1"
       skipConfirm={true}
-      url="/c/foogroup/m/1"
+      url="/groups/foogroup/members/1"
     />
     <RemovableListItem
       item={
@@ -128,7 +128,7 @@ exports[`ModeratorsList renders correctly 1`] = `
       }
       key="2"
       skipConfirm={true}
-      url="/c/foogroup/m/2"
+      url="/groups/foogroup/members/2"
     />
     <RemovableListItem
       item={
@@ -138,7 +138,7 @@ exports[`ModeratorsList renders correctly 1`] = `
       }
       key="3"
       skipConfirm={true}
-      url="/c/foogroup/m/3"
+      url="/groups/foogroup/members/3"
     />
     <RemovableListItem
       item={
@@ -148,7 +148,7 @@ exports[`ModeratorsList renders correctly 1`] = `
       }
       key="4"
       skipConfirm={true}
-      url="/c/foogroup/m/4"
+      url="/groups/foogroup/members/4"
     />
   </div>
   <AddModerator />

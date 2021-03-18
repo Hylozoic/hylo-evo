@@ -113,5 +113,14 @@
 @media screen and (max-width: 320px) {
   .editor {
     font-size: 12px;
+    padding: 0 10px 30px 0;
+  }
+
+  .image {
+    margin-left: 10px;
+  }
+
+  .commentForm {
+    margin-bottom: 10px;
   }
 }

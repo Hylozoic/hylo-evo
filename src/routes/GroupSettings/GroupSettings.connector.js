@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
+import presentGroup from 'store/presenters/presentGroup'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
@@ -17,7 +18,7 @@ export function mapStateToProps (state, props) {
 
   return {
     canModerate,
-    group,
+    group: group ? presentGroup(group) : null,
     currentUser: getMe(state),
     slug
   }

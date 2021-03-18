@@ -7,13 +7,13 @@ exports[`renders correctly for All Groups 1`] = `
   <div
     data-stylename="s.header"
   >
-    <Icon
-      data-stylename="s.icon"
-      name="Topics"
-    />
     <Link
       to="/seeAllTopics"
     >
+      <Icon
+        data-stylename="s.icon"
+        name="Topics"
+      />
       <span
         data-stylename="s.title"
       >
@@ -60,20 +60,20 @@ exports[`renders correctly for All Groups 1`] = `
 </div>
 `;
 
-exports[`renders correctly for a community 1`] = `
+exports[`renders correctly for a group 1`] = `
 <div
   data-stylename="s.topicNavigation"
 >
   <div
     data-stylename="s.header"
   >
-    <Icon
-      data-stylename="s.icon"
-      name="Topics"
-    />
     <Link
       to="/seeAllTopics"
     >
+      <Icon
+        data-stylename="s.icon"
+        name="Topics"
+      />
       <span
         data-stylename="s.title"
       >

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import GroupsList, { groupRow, groupCell } from './GroupsList'
+import GroupsList, { GroupRow, GroupCell } from './GroupsList'
 
 describe('GroupsList', () => {
   it('matches last snapshot with 1 group', () => {
@@ -77,7 +77,7 @@ describe('GroupsList', () => {
   })
 })
 
-describe('groupRow', () => {
+describe('GroupRow', () => {
   it('matches last snapshot with 1 group', () => {
     const props = {
       groups: [
@@ -94,12 +94,12 @@ describe('groupRow', () => {
       ]
     }
 
-    const wrapper = shallow(<groupRow {...props} />)
+    const wrapper = shallow(<GroupRow {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
 
-describe('groupCell', () => {
+describe('GroupCell', () => {
   it('matches last snapshot with 1 group', () => {
     const props = {
       group: [
@@ -112,7 +112,7 @@ describe('groupCell', () => {
       ]
     }
 
-    const wrapper = shallow(<groupCell {...props} />)
+    const wrapper = shallow(<GroupCell {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

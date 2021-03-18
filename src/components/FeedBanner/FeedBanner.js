@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import './FeedBanner.scss'
@@ -13,6 +14,7 @@ export default function FeedBanner ({
   currentUser,
   newPost,
   type,
+  urlLocation,
   currentUserHasMemberships
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -55,6 +57,7 @@ export default function FeedBanner ({
     </div>
     {currentUserHasMemberships && <PostPrompt
       type={type}
+      location={urlLocation}
       firstName={currentUser.firstName()}
       avatarUrl={currentUser.avatarUrl}
       newPost={newPost} />}
@@ -76,6 +79,7 @@ export function postPromptString (type = '', { firstName }) {
 export class PostPrompt extends React.Component {
   static defaultProps = {
     type: '',
+    location: '',
     firstName: '',
     promptStringFunc: postPromptString
   }
@@ -90,14 +94,16 @@ export class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({ hover: false })
 
   render () {
-    const { type, avatarUrl, firstName, newPost, promptStringFunc, className } = this.props
+    const { type, location, avatarUrl, firstName, promptStringFunc, className } = this.props
     const { hover } = this.state
 
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-      <div styleName='postPrompt' className={className} onClick={newPost}>
-        <RoundImage url={avatarUrl} small styleName='prompt-image' />
-        {promptStringFunc(type, { firstName })}
-      </div>
+      <Link to={location.pathname + '/create/post?newPostType=' + type}>
+        <div styleName='postPrompt' className={className}>
+          <RoundImage url={avatarUrl} small styleName='prompt-image' />
+          {promptStringFunc(type, { firstName })}
+        </div>
+      </Link>
       <div styleName={cx('shadow', { hover })} />
     </div>
   }

@@ -1,4 +1,4 @@
-import Comment from './Comment'
+import { Comment } from './Comment'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -14,9 +14,14 @@ describe('Comment', () => {
         avatarUrl: 'foo.jpg'
       },
       attachments: [],
-      createdAt: new Date()
+      createdAt: new Date(),
+      childComments: []
     },
-    slug: 'foo'
+    slug: 'foo',
+    updateComment: jest.fn(),
+    deleteComment: jest.fn(),
+    removeComment: jest.fn(),
+    onReplyComment: jest.fn()
   }
 
   it('renders correctly', () => {
@@ -38,7 +43,7 @@ describe('Comment', () => {
         { url: 'foo.png', attachmentType: 'image' }
       ]
     }
-    const wrapper = shallow(<Comment comment={comment} slug={props.slug} />)
+    const wrapper = shallow(<Comment {...props} comment={comment} />)
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -47,7 +52,7 @@ describe('Comment', () => {
       ...props.comment,
       text: '<p>Nice text<script>a sneaky script</script></p>'
     }
-    const wrapper = shallow(<Comment comment={comment} />)
+    const wrapper = shallow(<Comment {...props} comment={comment} />)
     expect(wrapper.find('div #text').prop('dangerouslySetInnerHTML')).toEqual({
       __html: '<p>Nice text</p>'
     })
@@ -75,10 +80,9 @@ describe('Comment', () => {
 
   describe('saveComment', () => {
     it('sets state.editing to false and calls props.updateComment', () => {
-      const updateComment = jest.fn()
-      const wrapper = shallow(<Comment {...props} updateComment={updateComment} />)
+      const wrapper = shallow(<Comment {...props} />)
       const theText = 'lalala'
-      const editorState = {        
+      const editorState = {
         getCurrentContent: () => ({
           hasText: () => true,
           getPlainText: () => theText
@@ -88,7 +92,7 @@ describe('Comment', () => {
       instance.setState({ editing: true })
       instance.saveComment(editorState)
       expect(instance.state.editing).toEqual(false)
-      expect(updateComment).toHaveBeenCalled()
+      expect(props.updateComment).toHaveBeenCalled()
     })
   })
 })

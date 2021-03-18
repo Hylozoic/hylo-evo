@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import { GROUP_ACCESSIBILITY } from 'store/models/Group'
+import { DEFAULT_AVATAR, DEFAULT_BANNER, GROUP_ACCESSIBILITY } from 'store/models/Group'
 import { inIframe } from 'util/index'
 import { groupUrl } from 'util/navigation'
 
@@ -32,16 +32,16 @@ export default class GroupDetail extends Component {
   state = initialState
 
   componentDidMount () {
-    this.onGroupIdChange()
+    this.onGroupChange()
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.id && this.props.id !== prevProps.id) {
-      this.onGroupIdChange()
+    if (this.props.slug && this.props.slug !== prevProps.slug) {
+      this.onGroupChange()
     }
   }
 
-  onGroupIdChange = () => {
+  onGroupChange = () => {
     this.props.fetchGroup()
     this.props.fetchJoinRequests()
 
@@ -49,22 +49,21 @@ export default class GroupDetail extends Component {
   }
 
   joinGroup = () => {
-    const { group = {}, currentUser = {}, joinGroup } = this.props
+    const { group = {}, joinGroup } = this.props
 
-    joinGroup(group.id, currentUser.id)
+    joinGroup()
       .then(res => {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error joining ${group.name}.`
         const membership = get(res, 'payload.data')
-        if (membership) successMessage = `You have joined ${group.name}.`
+        if (membership) successMessage = <span>You have joined <Link to={groupUrl(group.slug)}>{group.name}</Link></span>
         return this.setState({ errorMessage, successMessage, membership })
       })
   }
 
-  requestToJoinGroup = () => {
-    const { group = {}, currentUser = {}, requestToJoinGroup } = this.props
-
-    requestToJoinGroup(group.id, currentUser.id)
+  requestToJoinGroup = (questionAnswers) => {
+    const { createJoinRequest } = this.props
+    createJoinRequest(questionAnswers)
       .then(res => {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error sending your join request.`
@@ -79,6 +78,7 @@ export default class GroupDetail extends Component {
       canClose,
       group,
       currentUser,
+      isMember,
       location,
       pending,
       onClose
@@ -89,14 +89,12 @@ export default class GroupDetail extends Component {
 
     const topics = group && group.groupTopics
 
-    const isMember = (currentUser && currentUser.memberships) ? currentUser.memberships.toModelArray().find(m => m.group.id === group.id) : false
-
     return <div styleName='g.group'>
-      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
-        {onClose && canClose !== false &&
+      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
+        {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
-          <img src={group.avatarUrl} height='50px' width='50px' />
+          <img src={group.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
           <div styleName='g.groupTitle'>{group.name}</div>
         </div>
       </div>
@@ -121,7 +119,7 @@ export default class GroupDetail extends Component {
         { !currentUser
           ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to post in <span styleName='g.requestGroup'>{group.name}</span></Link></div>
           : isMember
-            ? <div styleName='g.existingMember'>You are already a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+            ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
             : this.renderGroupDetails()
         }
       </div>
@@ -168,6 +166,17 @@ export default class GroupDetail extends Component {
 }
 
 export function Request ({ group, joinGroup, requestToJoinGroup }) {
+  const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
+
+  const setAnswer = (index) => (event) => {
+    const answerValue = event.target.value
+    setQuestionAnswers(prevAnswers => {
+      const newAnswers = [ ...prevAnswers ]
+      newAnswers[index].answer = answerValue
+      return newAnswers
+    })
+  }
+
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
       { group.accessibility === GROUP_ACCESSIBILITY.Open
@@ -175,13 +184,19 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestHint'>Anyone can join this group!</div>
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
-        : <div styleName='g.requestOption'><div styleName='g.requestButton' onClick={requestToJoinGroup}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div></div>
+        : <div styleName='g.requestOption'>
+          {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+            <h3>{q.text}</h3>
+            <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+          </div>)}
+          <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+        </div>
       }
     </div>
   )
 }
 
 export function Message ({ errorMessage, successMessage, request }) {
-  const message = request ? 'You have already requested to join this group.' : (errorMessage || successMessage)
+  const message = request ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
   return (<div styleName='g.message'>{message}</div>)
 }

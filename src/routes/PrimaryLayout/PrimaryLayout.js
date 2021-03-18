@@ -12,7 +12,6 @@ import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
-import CreateGroup from 'components/CreateGroup'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
@@ -43,8 +42,7 @@ import UserSettings from 'routes/UserSettings'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
-  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH, REQUIRED_NEW_GROUP_MATCH,
-  isAboutPath,
+  REQUIRED_EDIT_POST_MATCH,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
@@ -72,6 +70,7 @@ const routesWithDrawer = [
   // {/* Member Routes */}
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   // {/* Other Routes */}
+  { path: '/messages' },
   { path: '/settings' },
   { path: '/search' },
   { path: '/confirm-group-delete' }
@@ -83,7 +82,7 @@ const detailRoutes = [
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(map|events|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(groups)/:groupSlug/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map|groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
@@ -199,6 +198,9 @@ export default class PrimaryLayout extends Component {
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
+            {/* Member Routes */}
+            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* All and Public Routes */}
             <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
@@ -218,9 +220,6 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
             <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
             <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            <Route path={`/:context(groups)/:groupSlug/:view(about)`} exact component={LandingPage} />
-            {/* Member Routes */}
-            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -249,12 +248,6 @@ export default class PrimaryLayout extends Component {
         {createRoutes.map(({ path }) =>
           <Route path={path + '/create'} key={path + 'create'} children={({ match, location }) =>
             <CreateModal match={match} location={location} />} />)}
-        {createRoutes.map(({ path }) =>
-          <Route path={path + '/' + REQUIRED_NEW_GROUP_MATCH} key={path + 'newgroup'} children={({ match, location }) =>
-            <CreateGroup match={match} location={location} />} />)}
-        {createRoutes.map(({ path }) =>
-          <Route path={path + '/' + REQUIRED_NEW_POST_MATCH} key={path + 'newpost'} children={({ match, location }) =>
-            <PostEditorModal match={match} location={location} />} />)}
         {createRoutes.map(({ path }) =>
           <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}
