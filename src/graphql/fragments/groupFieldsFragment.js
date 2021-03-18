@@ -1,6 +1,21 @@
 const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   id
   accessibility
+  announcements {
+    items {
+      id
+      title
+      createdAt
+      creator {
+        id
+        name
+      }
+      attachments {
+        position
+        url
+      }
+    }
+  }
   avatarUrl
   bannerUrl
   description
@@ -38,6 +53,15 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
     }
   }
   memberCount
+  activeMembers(first: 8, sortBy: "last_active_at", order: "desc") {
+    items {
+      id
+      name
+      lastActiveAt
+      avatarUrl
+      contactEmail
+    }
+  }
   members(first: 8, sortBy: "name", order: "desc") {
     items {
       id
@@ -71,6 +95,58 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
     locality
     neighborhood
     region
+  }
+  widgets {
+    items {
+      id
+      name
+      isVisible
+      order
+      settings {
+        text
+        title
+      }
+    }
+  }
+  events {
+    items {
+      id
+      title
+      startTime
+      endTime
+      location
+      members {
+        items {
+          avatarUrl
+        }
+      }
+    }
+  }
+  projects {
+    items {
+      id
+      title
+      createdAt
+      creator {
+        name
+      }
+      members {
+        items {
+          avatarUrl
+        }
+      }
+    }
+  }
+  offersAndRequests {
+    items {
+      id
+      title
+      creator {
+        name
+        avatarUrl
+      }
+      commentersTotal
+    }
   }
   ${withTopics ? `groupTopics(first: 8) {
     items {

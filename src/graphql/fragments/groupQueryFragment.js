@@ -23,7 +23,7 @@ export default
   bannerUrl
   description
   location
-    locationObject {
+  locationObject {
     id
     addressNumber
     addressStreet
@@ -43,11 +43,6 @@ export default
     region
   }
   name
-  locationObject {
-    fullText
-    city
-    country
-  }
   settings {
     allowGroupInvites
     askJoinQuestions
