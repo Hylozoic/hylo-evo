@@ -216,14 +216,11 @@ button.toggleFeatureFiltersButton {
   color: #0DC39F;
   font-size: 20px;
   border-radius: 50px;
+  transition: all .25s ease;
   cursor: pointer;
 }
 
 .savedSearchesButton-open, .savedSearchesButton:hover {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px;
   background-color: #0DC39F;
   color: white;
   font-size: 20px;
