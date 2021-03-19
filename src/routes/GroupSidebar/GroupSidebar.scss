@@ -1,9 +1,22 @@
 $about-height: 116px;
 
 // GroupSidebar
+.group-sidebar::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.group-sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5   );
+  outline: none;
+  border-radius: 3px;
+}
 
 .group-sidebar {
-  padding-top: $space-6x;
+  padding: 25px 0;
+  overflow: scroll;
+  height: 100vh;
 }
 
 // AboutSection
