@@ -43,6 +43,7 @@ import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
   REQUIRED_EDIT_POST_MATCH,
+  isAboutPath,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
