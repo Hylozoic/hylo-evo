@@ -87,11 +87,11 @@ export default class CreateGroup extends Component {
   }
 
   onSubmit = () => {
-    let { name, parentGroups, slug } = this.state
+    let { accessibility, name, parentGroups, slug, visibility } = this.state
     name = typeof name === 'string' ? trim(name) : name
 
     if (this.isValid()) {
-      this.props.createGroup(name, slug, parentGroups.map(g => g.id))
+      this.props.createGroup({ accessibility, name, slug, parentIds: parentGroups.map(g => g.id), visibility })
         .then(({ error }) => {
           if (error) {
             this.setState({

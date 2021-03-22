@@ -30,7 +30,7 @@ export const mapDispatchToProps = (dispatch, props) => {
 
   return {
     closeModal: () => dispatch(push(closeUrl)),
-    createGroup: (name, slug, parentIds) => dispatch(createGroup(name, slug, parentIds)),
+    createGroup: (data) => dispatch(createGroup(data)),
     fetchGroupExists: (slug) => dispatch(fetchGroupExists(slug)),
     goToGroup: (slug) => dispatch(push(groupUrl(slug)))
   }
