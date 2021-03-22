@@ -3,7 +3,16 @@ import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { DEFAULT_BANNER, DEFAULT_AVATAR, accessibilityString, visibilityString, groupVisibilityDescription, groupVisibilityIcon, groupAccessibilityDescription, groupAccessibilityIcon } from 'store/models/Group'
+import {
+  DEFAULT_BANNER,
+  DEFAULT_AVATAR,
+  accessibilityDescription,
+  accessibilityIcon,
+  accessibilityString,
+  visibilityDescription,
+  visibilityIcon,
+  visibilityString
+} from 'store/models/Group'
 import { bgImageStyle } from 'util/index'
 import { groupUrl, groupDetailUrl } from 'util/navigation'
 
@@ -75,15 +84,15 @@ export function GroupCard ({ group, routeParams }) {
           {group.memberCount ? <span styleName='member-count'>{group.memberCount} Members</span> : ' '}
           <div styleName='membership-status'>
             <div styleName='group-privacy'>
-              <Icon name={groupVisibilityIcon(group.visibility)} styleName='privacy-icon' />
+              <Icon name={visibilityIcon(group.visibility)} styleName='privacy-icon' />
               <div styleName='privacy-tooltip'>
-                <div><strong>{visibilityString(group.visibility)}</strong> - {groupVisibilityDescription(group.visibility)}</div>
+                <div><strong>{visibilityString(group.visibility)}</strong> - {visibilityDescription(group.visibility)}</div>
               </div>
             </div>
             <div styleName='group-privacy'>
-              <Icon name={groupAccessibilityIcon(group.accessibility)} styleName='privacy-icon' />
+              <Icon name={accessibilityIcon(group.accessibility)} styleName='privacy-icon' />
               <div styleName='privacy-tooltip'>
-                <div><strong>{accessibilityString(group.accessibility)}</strong> - {groupAccessibilityDescription(group.accessibility)}</div>
+                <div><strong>{accessibilityString(group.accessibility)}</strong> - {accessibilityDescription(group.accessibility)}</div>
               </div>
             </div>
             {
