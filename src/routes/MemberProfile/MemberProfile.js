@@ -240,7 +240,7 @@ export function ActionDropdown ({ items }) {
     <Dropdown
       items={activeItems}
       toggleChildren={
-        <Icon styleName='action-icon-button action-menu' name='More' />
+        <Icon styleName='action-icon-button action-menu' name='More' alignRight />
       }
     />
 }

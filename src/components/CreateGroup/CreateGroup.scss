@@ -151,7 +151,6 @@
 
     .selectedString {
       line-height: 24px;
-      padding-right: 15px;
     }
 
     b {
@@ -170,6 +169,10 @@
   .dropdownItemSelected {
     display: flex;
     align-items: center;
+
+    .selectedString {
+      padding-right: 20px;
+    }
 
     .dropdownDescription {
       font-size: 12px;

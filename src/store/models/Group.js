@@ -11,7 +11,7 @@ export function accessibilityDescription (a) {
     case GROUP_ACCESSIBILITY.Closed:
       return 'This group is invitation only'
     case GROUP_ACCESSIBILITY.Restricted:
-      return 'Anyone can apply to join this group and must be approved by a moderator'
+      return 'People can apply to join this group and must be approved'
     case GROUP_ACCESSIBILITY.Open:
       return 'Anyone who can see this group can join it'
   }

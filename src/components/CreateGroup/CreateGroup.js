@@ -183,12 +183,12 @@ export default class CreateGroup extends Component {
                 <Icon name={visibilityIcon(GROUP_VISIBILITY[label])} />
                 <div styleName='selectedString'>
                   <b>{label}</b>
-                  <span> - {visibilityDescription(GROUP_VISIBILITY[label])}</span>
+                  <span> {visibilityDescription(GROUP_VISIBILITY[label])}</span>
                 </div>
               </div>,
               onClick: () => this.updateField('visibility')(GROUP_VISIBILITY[label])
             }))}
-            alignLeft />
+          />
         </div>
         <div styleName='dropdownContainer'>
           <Dropdown styleName='privacyDropdown'
@@ -211,12 +211,12 @@ export default class CreateGroup extends Component {
                 <Icon name={accessibilityIcon(GROUP_ACCESSIBILITY[label])} />
                 <div styleName='selectedString'>
                   <b>{label}</b>
-                  <span> - {accessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
+                  <span> {accessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
                 </div>
               </div>,
               onClick: () => this.updateField('accessibility')(GROUP_ACCESSIBILITY[label])
             }))}
-            alignRight />
+          />
         </div>
       </div>
 
