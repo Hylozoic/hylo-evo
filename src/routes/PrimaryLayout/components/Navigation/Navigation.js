@@ -65,6 +65,7 @@ export default function Navigation (props) {
       icon: 'Members',
       to: membersPath
     },
+    // TODO: hide if no groups
     groupsPath && {
       label: 'Groups',
       icon: 'Groups',
