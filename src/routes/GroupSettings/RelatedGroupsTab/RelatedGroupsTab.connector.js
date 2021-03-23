@@ -45,8 +45,8 @@ export function mapDispatchToProps (dispatch, props) {
     cancelGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(cancelGroupRelationshipInvite(groupRelationshipInviteId)),
     rejectGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(rejectGroupRelationshipInvite(groupRelationshipInviteId)),
     deleteGroupRelationship: (parentId, childId) => dispatch(deleteGroupRelationship(parentId, childId)),
-    inviteGroupToJoinParent: (parentId, childId) => () => dispatch(inviteGroupToJoinParent(parentId, childId)),
-    requestToAddGroupToParent: (parentId, childId) => () => dispatch(requestToAddGroupToParent(parentId, childId))
+    inviteGroupToJoinParent: (parentId, childId) => dispatch(inviteGroupToJoinParent(parentId, childId)),
+    requestToAddGroupToParent: (parentId, childId) => dispatch(requestToAddGroupToParent(parentId, childId))
   }
 }
 

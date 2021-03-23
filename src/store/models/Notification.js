@@ -42,7 +42,7 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
     case ACTION_COMMENT_MENTION:
       return commentUrl(post.id, comment.id, { groupSlug })
     case ACTION_JOIN_REQUEST:
-      return groupUrl(group.slug, 'settings')
+      return groupUrl(groupSlug, 'settings/requests')
     case ACTION_APPROVED_JOIN_REQUEST:
       return groupUrl(groupSlug)
     case ACTION_GROUP_CHILD_GROUP_INVITE:

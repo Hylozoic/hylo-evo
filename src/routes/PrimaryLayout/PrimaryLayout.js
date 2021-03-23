@@ -106,6 +106,7 @@ const signupRoutes = [
   { path: '/signup/review', child: Review }
 ]
 
+// TODO: look at all production routes
 const redirectRoutes = [
   { from: '/tag/:topicName', to: '/all/topics/:topicName' },
   { from: '/c/:groupSlug/', to: '/groups/:groupSlug/' },
@@ -140,14 +141,15 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const {
-      group,
       currentUser,
-      isDrawerOpen,
-      location,
-      toggleDrawer,
-      isGroupRoute,
+      group,
       groupPending,
-      showLogoBadge
+      isDrawerOpen,
+      isGroupRoute,
+      location,
+      memberOfCurrentGroup,
+      showLogoBadge,
+      toggleDrawer
     } = this.props
 
     if (!currentUser) {
@@ -210,6 +212,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Group Routes */}
+            {group && !memberOfCurrentGroup &&
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />

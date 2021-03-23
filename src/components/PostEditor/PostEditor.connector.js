@@ -41,7 +41,6 @@ export function mapStateToProps (state, props) {
   const groupOptions = props.groupOptions ||
     (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
   const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c)))
-  let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
@@ -51,7 +50,12 @@ export function mapStateToProps (state, props) {
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
-  const editing = !!post || loading
+  let post = null
+  let editing = false
+  if (getRouteParam('action', null, props) === 'edit') {
+    post = props.post || presentPost(getPost(state, props))
+    editing = !!post || loading
+  }
   const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending

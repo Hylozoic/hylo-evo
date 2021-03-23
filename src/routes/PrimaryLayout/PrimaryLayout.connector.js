@@ -16,17 +16,19 @@ export function mapStateToProps (state, props) {
   const showLogoBadge = some(m => m.newPostCount > 0, memberships)
   const hasMemberships = memberships.length > 0
   const slug = getSlugFromLocation(null, props)
-
+  const group = getGroupForCurrentRoute(state, props)
+  const memberOfCurrentGroup = memberships.find(m => m.group.id === group.id)
   return {
-    isGroupRoute: isGroupRoute(state, props),
-    group: getGroupForCurrentRoute(state, props),
     currentUser: getMe(state),
-    isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
-    showLogoBadge,
-    hasMemberships,
-    groupPending: state.pending[FETCH_FOR_GROUP],
-    returnToURL: getReturnToURL(state),
     downloadAppUrl: mobileRedirect(),
+    isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
+    isGroupRoute: isGroupRoute(state, props),
+    group,
+    groupPending: state.pending[FETCH_FOR_GROUP],
+    hasMemberships,
+    memberOfCurrentGroup,
+    returnToURL: getReturnToURL(state),
+    showLogoBadge,
     slug
   }
 }

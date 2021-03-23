@@ -25,7 +25,7 @@ const inputStyles = {
   clearIndicator: styles => ({ ...styles, cursor: 'pointer' }),
   dropdownIndicator: styles => ({ display: 'none' }),
   indicatorSeparator: styles => ({ display: 'none' }),
-  placeholder: styles => ({ color: 'rgb(192, 197, 205)' })
+  placeholder: styles => ({ color: 'rgb(192, 197, 205)', position: 'absolute', marginLeft: '2px' })
 }
 
 export default class TopicSelector extends Component {

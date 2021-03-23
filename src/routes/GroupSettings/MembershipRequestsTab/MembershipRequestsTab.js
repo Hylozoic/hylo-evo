@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -108,7 +109,7 @@ export function JoinRequest ({ accept, decline, group, request }) {
   return (
     <div styleName='request'>
       <div styleName='requestor'>
-        <Avatar avatarUrl={user.avatarUrl} url={`/m/${user.id}`} styleName='requestorAvatar' />
+        <Avatar avatarUrl={user.avatarUrl} url={personUrl(user.id)} styleName='requestorAvatar' />
         <div styleName='requestorInfo'>
           <div styleName='name'>{user.name}</div>
           {user.skills.items.length > 0 ? <div styleName='skills'>{user.skills.items.map(({ name }) => <span key={user.id + '-' + name}>#{name}</span>)}</div> : <div>{user.location}</div>}
