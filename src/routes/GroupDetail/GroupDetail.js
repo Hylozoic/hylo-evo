@@ -146,7 +146,7 @@ export default class GroupDetail extends Component {
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
             {group.settings.publicMemberDirectory
               ? <div>{group.members.map(member => {
-                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} url={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
+                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
               : <div styleName='g.detail'>
                 <Icon name='Unlock' />
