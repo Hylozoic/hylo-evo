@@ -22,6 +22,19 @@ const mapSocialProviderToKey = {
   "linkedin": "linkedinUrl",
   "facebook": "facebookUrl"
 }
+
+/** LinkedIn Url */
+export const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
+
+export const linkedinPrompt = () => {
+  let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
+
+  while (!validateLinkedinUrl(linkedinUrl)){
+    linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.');
+  }
+
+  return linkedinUrl;
+}
 export  class SocialControl extends Component {
   static propTypes = {
     label: string,
@@ -43,16 +56,8 @@ export  class SocialControl extends Component {
         break;
       }
       case "linkedin": {
-        const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
-
-        let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
-        if (linkedinUrl) {
-          while (!validateLinkedinUrl(linkedinUrl)){
-            linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.');
-          }
-          updateSocialSetting({ key: mapSocialProviderToKey[provider], value: linkedinUrl })
-        }
-        break;
+        const linkedinUrl = linkedinPrompt();
+        updateSocialSetting({ key: mapSocialProviderToKey[provider], value: linkedinUrl })
       }
       // case "facebook": {
       //   return onLink()
