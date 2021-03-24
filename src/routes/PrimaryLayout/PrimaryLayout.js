@@ -78,6 +78,7 @@ const routesWithDrawer = [
 const detailRoutes = [
   { path: `/:context(all|public)/:view(events|map|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(map|events|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
@@ -105,19 +106,29 @@ const signupRoutes = [
 ]
 
 const redirectRoutes = [
-  { from: '/tag/:topicName', to: '/all/topics/:topicName' },
-  { from: '/c/:groupSlug/', to: '/groups/:groupSlug/' },
-  { from: '/n/:groupSlug/', to: '/groups/:groupSlug/' },
-  { from: '/c/:groupSlug/tag/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
-  // TODO: is this right?
-  { from: '/c/:groupSlug/join/:accessCode/tag/:topicName', to: '/groups/:groupSlug/join/:accessCode/topics/:topicName' },
+  // Redirects from old routes
+  { from: '/:context(public|all)/p/:postId', to: '/:context/post/:postId' },
+  { from: '/:context(public|all)/project', to: '/:context/projects' },
+  { from: '/:context(public|all)/event', to: '/:context/events' },
   { from: '/p/:postId', to: '/all/post/:postId' },
-  { from: '/u/:personId', to: '/members/:personId' },
-  { from: '/c/:groupSlug/about', to: '/groups/:groupSlug' },
-  { from: '/c/:groupSlug/people', to: '/groups/:groupSlug/members' },
-  { from: '/c/:groupSlug/invite', to: '/groups/:groupSlug/settings/invite' },
-  { from: '/c/:groupSlug/events', to: '/groups/:groupSlug/events' },
-  // redirects for context switching into global contexts
+  { from: '/m/:personId', to: '/all/members/:personId' },
+  { from: '/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
+  { from: '/all/m/:personId', to: '/all/members/:personId' },
+  { from: '/all/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
+  { from: '/(c|n)/:groupSlug/', to: '/groups/:groupSlug/' },
+  { from: '/(c|n)/:groupSlug/event', to: '/groups/:groupSlug/events' },
+  { from: '/(c|n)/:groupSlug/event/:postId', to: '/groups/:groupSlug/events/post/:postId' },
+  { from: '/(c|n)/:groupSlug/project', to: '/groups/:groupSlug/projects' },
+  { from: '/(c|n)/:groupSlug/project/:postId', to: '/groups/:groupSlug/projects/post/:postId' },
+  { from: '/(c|n)/:groupSlug/:view(members|map|settings|topics)', to: '/groups/:groupSlug/:view' },
+  { from: '/(c|n)/:groupSlug/map/p/:postId', to: '/groups/:groupSlug/map/post/:postId' },
+  { from: '/(c|n)/:groupSlug/p/:postId', to: '/groups/:groupSlug/post/:postId' },
+  { from: '/(c|n)/:groupSlug/m/:personId', to: '/groups/:groupSlug/members/:personId' },
+  { from: '/(c|n)/:groupSlug/m/:personId/p/:postId', to: '/groups/:groupSlug/members/:personId/post/:postId' },
+  { from: '/(c|n)/:groupSlug/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
+  { from: '/(c|n)/:groupSlug/:topicName/p/:postId', to: '/groups/:groupSlug/topics/:topicName/post/:postId' },
+
+  // redirects for context switching into global contexts, since these pages don't exist yet
   { from: '/all/members', to: '/all' },
   { from: '/public/(members|topics)', to: '/public' }
 ]
