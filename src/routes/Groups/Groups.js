@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import GroupNetworkMap from 'components/GroupNetworkMap'
 import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
@@ -16,6 +17,27 @@ import {
 import { bgImageStyle } from 'util/index'
 import { groupUrl, groupDetailUrl } from 'util/navigation'
 import './Groups.scss'
+
+const networkData = {
+  nodes: [
+    { id: 'Terran', group: 1, name: 'Terran', slug: '/terran' },
+    { id: 'Hylo', group: 1, name: 'Hylo' },
+    { id: 'PHA', group: 1, name: 'PHA' },
+    { id: 'PHA Next Gen', group: 1, name: 'PHA Next Gen' },
+    { id: 'Common Vision', group: 2, name: 'Common Vision' },
+    { id: 'Norcal', group: 2, name: 'Norcal' },
+    { id: 'Project Vesta', group: 2, name: 'Project Vesta' }
+  ],
+  links: [
+    { source: 'Terran', target: 'Hylo', value: 5 },
+    { source: 'Hylo', target: 'PHA', value: 3 },
+    { source: 'Terran', target: 'Common Vision', value: 3 },
+    { source: 'PHA', target: 'PHA Next Gen', value: 5 },
+    { source: 'Terran', target: 'Project Vesta', value: 2 },
+    { source: 'Hylo', target: 'Norcal', value: 4 },
+    { source: 'Norcal', target: 'Terran', value: 4 }
+  ]
+}
 
 export default class Groups extends Component {
   static propTypes = {
@@ -34,7 +56,13 @@ export default class Groups extends Component {
     } = this.props
 
     return <div styleName='container'>
+<<<<<<< HEAD
       {/* <div styleName='network-map'><span>Group network map in progress</span></div> */}
+=======
+      <div styleName='network-map'>
+        <GroupNetworkMap linksData={networkData.links} nodesData={networkData.nodes} />
+      </div>
+>>>>>>> groups network map viz basic
 
       {/* <SearchBar
         search={search}
