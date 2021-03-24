@@ -26,11 +26,20 @@ export function fetchGroupSettings (slug) {
           name
           settings {
             allowGroupInvites
+            askJoinQuestions
             publicMemberDirectory
           }
           slug
           visibility
           childGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          moderators (first: 100) {
+            hasMore
             items {
               id
               name
@@ -53,12 +62,11 @@ export function fetchGroupSettings (slug) {
               lastSentAt
             }
           }
-          moderators (first: 100) {
-            hasMore
+          joinQuestions {
             items {
               id
-              name
-              avatarUrl
+              questionId
+              text
             }
           }
         }
@@ -80,6 +88,13 @@ export function updateGroupSettings (id, changes) {
       query: `mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
         }
       }`,
       variables: {
@@ -89,6 +104,7 @@ export function updateGroupSettings (id, changes) {
     meta: {
       id,
       changes,
+      extractModel: 'Group',
       optimistic: true
     }
   }

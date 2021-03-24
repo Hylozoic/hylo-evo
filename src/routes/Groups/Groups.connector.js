@@ -1,49 +1,36 @@
+import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
-import getRouteParam from 'store/selectors/getRouteParam'
-import {
-  getSearch,
-  getSort,
-  setSearch,
-  setSort
-} from './Groups.store'
+import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 
 export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
-  const groupSlug = getRouteParam('groupSlug', state, props)
-  const search = getSearch(state, props)
-  const sortBy = getSort(state, props)
-  const queryProps = { groupSlug, sortBy, search }
+  const queryProps = { groupSlug: group.slug }
+  const memberships = getMyMemberships(state, props)
+  const joinRequests = getMyJoinRequests(state, props)
+  const childGroups = getChildGroups(state, queryProps).map(g => {
+    g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
+    return g
+  })
+  const parentGroups = getParentGroups(state, queryProps).map(g => {
+    g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
+    return g
+  })
 
   return {
+    childGroups,
     group,
-    childGroups: getChildGroups(state, queryProps),
-    parentGroups: getParentGroups(state, queryProps),
-    search,
-    sortBy,
-    groupSlug
+    memberships,
+    parentGroups,
+    routeParams: get('match.params', props)
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   return {
-    ...bindActionCreators({
-      setSearch,
-      setSort
-    }, dispatch)
   }
 }
 
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  // const { slug, groups, sortBy, search } = stateProps
-
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps)

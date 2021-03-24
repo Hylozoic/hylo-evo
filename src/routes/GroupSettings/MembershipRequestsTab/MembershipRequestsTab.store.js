@@ -43,16 +43,16 @@ export function fetchJoinRequests (groupId) {
   }
 }
 
-export function acceptJoinRequest (joinRequestId, groupId, userId, moderatorId) {
+export function acceptJoinRequest (joinRequestId) {
   return {
     type: ACCEPT_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($joinRequestId: ID, $groupId: ID, $userId: ID, $moderatorId: ID) {
-        acceptJoinRequest(joinRequestId: $joinRequestId, groupId: $groupId, userId: $userId, moderatorId: $moderatorId) {
+      query: `mutation ($joinRequestId: ID) {
+        acceptJoinRequest(joinRequestId: $joinRequestId) {
           id
         }
       }`,
-      variables: { joinRequestId, groupId, userId, moderatorId }
+      variables: { joinRequestId }
     },
     meta: {
       joinRequestId,

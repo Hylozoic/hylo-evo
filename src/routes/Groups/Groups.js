@@ -1,130 +1,110 @@
-import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { DEFAULT_AVATAR } from 'store/models/Group'
-import Dropdown from 'components/Dropdown'
-import Icon from 'components/Icon'
-import TextInput from 'components/TextInput'
-import RoundImage from 'components/RoundImage'
-import { find } from 'lodash/fp'
 import { Link } from 'react-router-dom'
-import { groupUrl } from 'util/navigation'
+import React, { Component } from 'react'
+import Icon from 'components/Icon'
+import RoundImage from 'components/RoundImage'
+import {
+  DEFAULT_BANNER,
+  DEFAULT_AVATAR,
+  accessibilityDescription,
+  accessibilityIcon,
+  accessibilityString,
+  visibilityDescription,
+  visibilityIcon,
+  visibilityString
+} from 'store/models/Group'
+import { bgImageStyle } from 'util/index'
+import { groupUrl, groupDetailUrl } from 'util/navigation'
 
 import './Groups.scss'
 
-// import ScrollListener from 'components/ScrollListener'
-// import { CENTER_COLUMN_ID } from 'util/scrolling'
-
-const { array } = PropTypes
-
-const sortOptions = [
-  { id: 'name', label: 'Alphabetical' },
-  { id: 'num_members', label: 'Popular' },
-  { id: 'created_at', label: 'Newest' }
-]
-
 export default class Groups extends Component {
   static propTypes = {
-    childGroups: array,
-    parentGroups: array
-    // search: string,
-    // setSearch: func,
-    // sortBy: string,
-    // setSort: func
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
-  componentDidUpdate (prevProps) {
-    // const { search, sortBy, fetchMoreGroups, groupsTotal } = this.props
-    // if (search !== prevProps.search || sortBy !== prevProps.sortBy) {
-    //   fetchMoreGroups()
-    // }
-
-    // if (groupsTotal && !this.state.groupsTotal) {
-    //   this.setState({ groupsTotal })
-    // }
+    childGroups: PropTypes.array,
+    group: PropTypes.object,
+    parentGroups: PropTypes.array,
+    routeParams: PropTypes.object
   }
 
   render () {
-    const { childGroups, parentGroups } = this.props
-    // const { groupsTotal } = this.state
+    const {
+      childGroups,
+      group,
+      parentGroups,
+      routeParams
+    } = this.props
 
     return <div styleName='container'>
-      <Banner text='Parent Groups' groupsTotal={parentGroups.length} />
+      <div styleName='network-map'><span>Group network map in progress</span></div>
+
       {/* <SearchBar
         search={search}
         setSearch={setSearch}
         sortBy={sortBy}
         setSort={setSort} /> */}
-      <GroupsList
-        groups={parentGroups}
-      />
-      <Banner text='Child Groups' groupsTotal={childGroups.length} />
-      {/* <SearchBar
-        search={search}
-        setSearch={setSearch}
-        sortBy={sortBy}
-        setSort={setSort} /> */}
-      <GroupsList
-        groups={childGroups}
-      />
+
+      <div styleName='section'>
+        <div styleName='banner'>
+          {parentGroups.length === 1 ? <h3>{group.name} is a part of 1 Group</h3> : '' }
+          {parentGroups.length > 1 ? <h3>{group.name} is a part of {parentGroups.length} Groups</h3> : '' }
+        </div>
+        <GroupsList
+          groups={parentGroups}
+          routeParams={routeParams}
+        />
+      </div>
+
+      <div styleName='section'>
+        <div styleName='banner'>
+          {childGroups.length === 1 ? <h3>1 Group is a part of {group.name}</h3> : ''}
+          {childGroups.length > 1 ? <h3>{childGroups.length} groups are a part of {group.name}</h3> : ''}
+        </div>
+        <GroupsList
+          groups={childGroups}
+          routeParams={routeParams}
+        />
+      </div>
     </div>
   }
 }
 
-export function Banner ({ text, groupsTotal }) {
-  return <div styleName='banner'>
-    <div styleName='banner-text'>
-      <div styleName='stats'>
-        {groupsTotal} {text}
-      </div>
-    </div>
-    {/* <Icon name='More' styleName='icon' /> */}
-  </div>
-}
-
-export function SearchBar ({ search, setSearch, sortBy, setSort }) {
-  var selected = find(o => o.id === sortBy, sortOptions)
-
-  if (!selected) selected = sortOptions[0]
-
-  return <div styleName='search-bar'>
-    <TextInput styleName='search-input'
-      value={search}
-      placeholder='Search by name'
-      onChange={event => setSearch(event.target.value)} />
-    <Dropdown styleName='search-order'
-      toggleChildren={<span styleName='search-sorter-label'>
-        {selected.label}
-        <Icon name='ArrowDown' />
-      </span>}
-      items={sortOptions.map(({ id, label }) => ({
-        label,
-        onClick: () => setSort(id)
-      }))}
-      alignRight />
-  </div>
-}
-
-export function GroupsList ({ groups, fetchMoreGroups }) {
+export function GroupsList ({ groups, routeParams }) {
   return <div styleName='group-list' >
-    {groups.map(c => <GroupCard group={c} key={c.id} />)}
-    {/* <ScrollListener onBottom={() => fetchMoreGroups()}
-      elementId={CENTER_COLUMN_ID} /> */}
+    {groups.map(c => <GroupCard group={c} key={c.id} routeParams={routeParams} />)}
   </div>
 }
 
-export function GroupCard ({ group }) {
+export function GroupCard ({ group, routeParams }) {
   return <div styleName='group-card'>
-    <Link to={groupUrl(group.slug, 'groups')}>
+    <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
       <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
       <div styleName='group-details'>
         <span styleName='group-name'>{group.name}</span>
-        <span styleName='group-stats'>{group.memberCount} Members</span>
+        <div styleName='group-stats'>
+          {group.memberCount ? <span styleName='member-count'>{group.memberCount} Members</span> : ' '}
+          <div styleName='membership-status'>
+            <div styleName='group-privacy'>
+              <Icon name={visibilityIcon(group.visibility)} styleName='privacy-icon' />
+              <div styleName='privacy-tooltip'>
+                <div><strong>{visibilityString(group.visibility)}</strong> - {visibilityDescription(group.visibility)}</div>
+              </div>
+            </div>
+            <div styleName='group-privacy'>
+              <Icon name={accessibilityIcon(group.accessibility)} styleName='privacy-icon' />
+              <div styleName='privacy-tooltip'>
+                <div><strong>{accessibilityString(group.accessibility)}</strong> - {accessibilityDescription(group.accessibility)}</div>
+              </div>
+            </div>
+            {
+              group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete' /> <b>Member</b></div>
+                : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>Membership Requested</b></div>
+                  : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>Join</b></div>
+            }
+          </div>
+        </div>
+        <div styleName='group-description'><span>{group.description}</span></div>
       </div>
     </Link>
+    <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div /></div>
   </div>
 }

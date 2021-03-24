@@ -5,7 +5,16 @@ import Dropdown from 'components/Dropdown'
 import GroupsSelector from 'components/GroupsSelector'
 import Icon from 'components/Icon'
 import TextInput from 'components/TextInput'
-import { accessibilityString, visibilityString, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
+import {
+  accessibilityDescription,
+  accessibilityIcon,
+  accessibilityString,
+  GROUP_ACCESSIBILITY,
+  GROUP_VISIBILITY,
+  visibilityString,
+  visibilityDescription,
+  visibilityIcon
+} from 'store/models/Group'
 import styles from './CreateGroup.scss'
 
 const slugValidatorRegex = /^[0-9a-z-]{2,40}$/
@@ -16,6 +25,7 @@ export default class CreateGroup extends Component {
 
     this.state = {
       accessibility: 1,
+      characterCount: 0,
       invitees: [],
       name: '',
       parentGroups: this.props.parentGroups || [],
@@ -30,6 +40,7 @@ export default class CreateGroup extends Component {
     }
 
     this.groupsSelector = React.createRef()
+    this.slugRef = React.createRef()
   }
 
   componentDidUpdate (oldProps) {
@@ -38,13 +49,27 @@ export default class CreateGroup extends Component {
     }
   }
 
+  focusSlug = () => {
+    this.slugRef.current.focus()
+  }
+
   isValid = () => {
     return Object.values(this.state.errors).every(v => v === false) && this.state.name && this.state.slug
   }
 
+  validateSlug (val) {
+    if (val === '') {
+      return 'Please enter a URL slug'
+    } else if (!slugValidatorRegex.test(val)) {
+      return 'URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.'
+    } else {
+      this.props.fetchGroupExists(val)
+      return false
+    }
+  }
+
   updateField = (field) => (value) => {
     let newValue = typeof value.target !== 'undefined' ? value.target.value : value
-    newValue = typeof newValue === 'string' ? trim(newValue) : newValue
 
     const updates = {
       [field]: newValue,
@@ -53,38 +78,36 @@ export default class CreateGroup extends Component {
 
     if (field === 'name') {
       updates.errors.name = newValue === '' ? 'Please enter a group name' : false
+      updates.characterCount = newValue.length
     }
 
     if (field === 'slug') {
-      if (newValue === '') {
-        updates.errors.slug = 'Please enter a URL slug'
-      } else if (!slugValidatorRegex.test(newValue)) {
-        updates.errors.slug = 'URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.'
-      } else {
-        updates.errors.slug = false
-        this.props.fetchGroupExists(newValue)
-      }
+      updates.errors.slug = this.validateSlug(newValue)
       updates.slugCustomized = true
     }
 
-    // TODO: generate slug
     if (field === 'name' && !this.state.slugCustomized) {
-
+      const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g, '').replace(/\s+/g, '-')
+      updates.errors.slug = this.validateSlug(slugString)
+      updates.slug = slugString
     }
 
     this.setState(updates)
   }
 
   onSubmit = () => {
+    let { accessibility, name, parentGroups, slug, visibility } = this.state
+    name = typeof name === 'string' ? trim(name) : name
+
     if (this.isValid()) {
-      this.props.createGroup(this.state.name, this.state.slug, this.state.parentGroups.map(g => g.id))
+      this.props.createGroup({ accessibility, name, slug, parentIds: parentGroups.map(g => g.id), visibility })
         .then(({ error }) => {
           if (error) {
             this.setState({
               error: 'There was an error, please try again.'
             })
           } else {
-            this.props.goToGroup(this.state.slug)
+            this.props.goToGroup(slug)
           }
         })
     }
@@ -92,13 +115,16 @@ export default class CreateGroup extends Component {
 
   render () {
     const { match, parentGroupOptions } = this.props
-    const { accessibility, errors, name, parentGroups, slug, visibility } = this.state
+    const { accessibility, characterCount, errors, name, parentGroups, slug, visibility } = this.state
 
     if (!match) return null
 
     return <div styleName='wrapper'>
-      <div styleName='header'>Create group</div>
-      <div styleName='name-and-slug'>
+      <div styleName='header'>
+        <button><Icon name='Back' styleName='backIcon' /></button>
+        <span styleName='headerHeadline'>Create Group</span>
+      </div>
+      <div styleName='nameAndSlug'>
         <TextInput
           autoFocus
           type='text'
@@ -106,76 +132,130 @@ export default class CreateGroup extends Component {
           onChange={this.updateField('name')}
           value={name}
           theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-          placeholder="What's the name of your group?"
+          placeholder="Your group's name"
           noClearButton
+          maxLength='30'
           onEnter={this.onSubmit}
+          styleName='groupNameInput'
         />
-        {errors.name && <span styleName='error'>{errors.name}</span>}
+        <span styleName='characterCounter'>{characterCount} / 30</span>
+        {errors.name && <span styleName='nameError'>{errors.name}</span>}
         <span styleName='slug'>
-          https://hylo.com/groups/
+          <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
+            <Icon name='SmallEdit' />
+            https://hylo.com/groups/
+          </button>
           <TextInput
             type='text'
-            name='name'
+            name='slug'
             onChange={this.updateField('slug')}
             value={slug}
-            theme={{ input: styles['slug-input'], wrapper: styles['slug-wrapper'] }}
+            theme={{ input: styles['slugInput'], wrapper: styles['slug-wrapper'] }}
             noClearButton
             onEnter={this.onSubmit}
+            maxLength='30'
+            inputRef={this.slugRef}
           />
         </span>
-        {errors.slug && <span styleName='error'>{errors.slug}</span>}
+        {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
       </div>
 
       <div styleName='privacy'>
-        <div>
-          Visibility:
+        <div styleName='dropdownContainer'>
           <Dropdown styleName='privacyDropdown'
-            toggleChildren={<span>
-              {visibilityString(visibility)}
-              <Icon name='ArrowDown' />
-            </span>}
+            toggleChildren={
+              <span>
+                <div styleName='dropdownItemSelected'>
+                  <Icon name={visibilityIcon(visibility)} styleName='selectedIcon' />
+                  <div>
+                    <div styleName='dropdownDescription'>WHO CAN SEE THIS GROUP?</div>
+                    <div styleName='selectedString'>
+                      <b>{visibilityString(visibility)}</b>
+                      <span>{visibilityDescription(visibility)}</span>
+                    </div>
+                  </div>
+                </div>
+                <Icon name='ArrowDown' styleName='openDropdown' />
+              </span>}
             items={Object.keys(GROUP_VISIBILITY).map(label => ({
-              label,
+              key: label,
+              label: <div styleName='dropdownItem'>
+                <Icon name={visibilityIcon(GROUP_VISIBILITY[label])} />
+                <div styleName='selectedString'>
+                  <b>{label}</b>
+                  <span> {visibilityDescription(GROUP_VISIBILITY[label])}</span>
+                </div>
+              </div>,
               onClick: () => this.updateField('visibility')(GROUP_VISIBILITY[label])
             }))}
-            alignRight />
+          />
         </div>
-        <div>
-          Accessibility: <Dropdown styleName='privacyDropdown'
+        <div styleName='dropdownContainer'>
+          <Dropdown styleName='privacyDropdown'
             toggleChildren={<span>
-              {accessibilityString(accessibility)}
-              <Icon name='ArrowDown' />
+              <div styleName='dropdownItemSelected'>
+                <Icon name={accessibilityIcon(accessibility)} styleName='selectedIcon' />
+                <div>
+                  <div styleName='dropdownDescription'>WHO CAN JOIN THIS GROUP?</div>
+                  <div styleName='selectedString'>
+                    <b>{accessibilityString(accessibility)}</b>
+                    <span>{accessibilityDescription(accessibility)}</span>
+                  </div>
+                </div>
+              </div>
+              <Icon name='ArrowDown' styleName='openDropdown' />
             </span>}
             items={Object.keys(GROUP_ACCESSIBILITY).map(label => ({
-              label,
+              key: label,
+              label: <div styleName='dropdownItem' key={label}>
+                <Icon name={accessibilityIcon(GROUP_ACCESSIBILITY[label])} />
+                <div styleName='selectedString'>
+                  <b>{label}</b>
+                  <span> {accessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
+                </div>
+              </div>,
               onClick: () => this.updateField('accessibility')(GROUP_ACCESSIBILITY[label])
             }))}
-            alignRight />
+          />
+        </div>
+      </div>
+
+      <div styleName='inviteMembers'>
+        <div styleName='memberSelector'>
+          <span styleName='title'>INVITE MEMBERS</span>
+          <TextInput
+            type='text'
+            name='memberInvites'
+            placeholder='Enter names & email addresses'
+          />
         </div>
       </div>
 
       { this.props.parentGroups.length > 0 && <div styleName='parentGroups'>
-        <p>Is the group a member of other groups?</p>
-        {/* TODO: somehow show groups that are restricted and will be a join request differently */}
-        <GroupsSelector
-          options={parentGroupOptions}
-          selected={parentGroups}
-          onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
-          readOnly={false}
-          ref={this.groupsSelector}
-        />
+        <div styleName='parentSelector'>
+          <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
+          {/* TODO: somehow show groups that are restricted and will be a join request differently */}
+          <GroupsSelector
+            options={parentGroupOptions}
+            selected={parentGroups}
+            onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
+            readOnly={false}
+            ref={this.groupsSelector}
+          />
+        </div>
       </div>}
-
-      <Button
-        color='green-white-green-border'
-        key='create-button'
-        narrow
-        disabled={!this.isValid()}
-        onClick={this.onSubmit}
-        styleName='submit-button'
-      >
-        <Icon name='Plus' green />Create Group
-      </Button>
+      <div styleName='createGroupBottom'>
+        <Button
+          color='green-white-green-border'
+          key='create-button'
+          narrow
+          disabled={!this.isValid()}
+          onClick={this.onSubmit}
+          styleName='submit-button'
+        >
+          <Icon name='Plus' green styleName='create-group-icon' />Create Group
+        </Button>
+      </div>
     </div>
   }
 }

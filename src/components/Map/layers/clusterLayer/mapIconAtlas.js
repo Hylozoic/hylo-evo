@@ -41,7 +41,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"events-members-offers-discussion.png":
+	"events-members-offers-discussions.png":
 	{
 		"frame": {"x":1,"y":301,"w":98,"h":98},
 		"rotated": false,
@@ -52,14 +52,6 @@ const data = {
 	"events-members-offers-discussions.png":
 	{
 		"frame": {"x":1,"y":301,"w":98,"h":98},
-		"rotated": false,
-		"trimmed": true,
-		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
-		"sourceSize": {"w":100,"h":100}
-	},
-	"events-members-offers-projects-1.png":
-	{
-		"frame": {"x":1,"y":401,"w":98,"h":98},
 		"rotated": false,
 		"trimmed": true,
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
@@ -97,7 +89,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"events-members-offers-requests-resources-projects-dicsussions.png":
+	"events-members-offers-requests-resources-projects-discussions.png":
 	{
 		"frame": {"x":1,"y":801,"w":98,"h":98},
 		"rotated": false,
@@ -137,14 +129,6 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"events-members-offers-resources-1.png":
-	{
-		"frame": {"x":401,"y":1,"w":98,"h":98},
-		"rotated": false,
-		"trimmed": true,
-		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
-		"sourceSize": {"w":100,"h":100}
-	},
 	"events-members-offers-resources-discussions.png":
 	{
 		"frame": {"x":501,"y":1,"w":98,"h":98},
@@ -153,7 +137,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"events-members-offers-resources-proejcts.png":
+	"events-members-offers-resources-projects.png":
 	{
 		"frame": {"x":601,"y":1,"w":98,"h":98},
 		"rotated": false,
@@ -161,7 +145,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"events-members-offers-resources-projects-dicsussions.png":
+	"events-members-offers-resources-projects-discussions.png":
 	{
 		"frame": {"x":701,"y":1,"w":98,"h":98},
 		"rotated": false,
@@ -361,7 +345,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"events-offers-resources-projects-dicsussions.png":
+	"events-offers-resources-projects-discussions.png":
 	{
 		"frame": {"x":201,"y":401,"w":98,"h":98},
 		"rotated": false,
@@ -553,7 +537,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"members-offers-requests-resources-proejcts-discussions.png":
+	"members-offers-requests-resources-projects-discussions.png":
 	{
 		"frame": {"x":601,"y":301,"w":98,"h":98},
 		"rotated": false,
@@ -617,7 +601,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"members-projeccts.png":
+	"members-projects.png":
 	{
 		"frame": {"x":401,"y":701,"w":98,"h":98},
 		"rotated": false,
@@ -641,7 +625,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"members-requests-proejcts.png":
+	"members-requests-projects.png":
 	{
 		"frame": {"x":501,"y":401,"w":98,"h":98},
 		"rotated": false,
@@ -657,7 +641,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"members-resources-discussion.png":
+	"members-resources-discussions.png":
 	{
 		"frame": {"x":701,"y":401,"w":98,"h":98},
 		"rotated": false,
@@ -689,7 +673,7 @@ const data = {
 		"spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
 		"sourceSize": {"w":100,"h":100}
 	},
-	"membersrequests-resources-projects-discussions.png":
+	"members-requests-resources-projects-discussions.png":
 	{
 		"frame": {"x":501,"y":501,"w":98,"h":98},
 		"rotated": false,

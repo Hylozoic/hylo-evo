@@ -9,11 +9,12 @@ Object {
     },
     "id": "1",
   },
-  "group": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
+  "group": Object {
+    "groupTopics": Array [],
+    "id": "99",
+    "joinQuestions": Array [],
+    "members": Array [],
+    "slug": "foo",
   },
   "slug": "foo",
 }
@@ -34,11 +35,20 @@ Object {
           name
           settings {
             allowGroupInvites
+            askJoinQuestions
             publicMemberDirectory
           }
           slug
           visibility
           childGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          moderators (first: 100) {
+            hasMore
             items {
               id
               name
@@ -61,12 +71,11 @@ Object {
               lastSentAt
             }
           }
-          moderators (first: 100) {
-            hasMore
+          joinQuestions {
             items {
               id
-              name
-              avatarUrl
+              questionId
+              text
             }
           }
         }
@@ -88,6 +97,13 @@ Object {
     "query": "mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
         }
       }",
     "variables": Object {
@@ -97,6 +113,7 @@ Object {
   },
   "meta": Object {
     "changes": undefined,
+    "extractModel": "Group",
     "id": "99",
     "optimistic": true,
   },
@@ -117,11 +134,12 @@ Object {
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "goToGroupDeleteConfirmation": [Function],
-  "group": SessionBoundModel {
-    "_fields": Object {
-      "id": "99",
-      "slug": "foo",
-    },
+  "group": Object {
+    "groupTopics": Array [],
+    "id": "99",
+    "joinQuestions": Array [],
+    "members": Array [],
+    "slug": "foo",
   },
   "slug": "foo",
   "updateGroupSettings": [Function],

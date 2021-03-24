@@ -20,7 +20,8 @@ export default function Membership ({ membership, index, archive }) {
       <div styleName='role'>{hasModeratorRole ? 'Moderator' : 'Member'}</div> of
       <Button styleName='group' small color={'green-white'}>
         <Link to={groupUrl(group.slug)}>
-          <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} small /> {group.name}
+          <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} small />
+          {group.name}
         </Link>
       </Button>
       { archive && <span onClick={leave} styleName='leave-button'>Leave</span> }

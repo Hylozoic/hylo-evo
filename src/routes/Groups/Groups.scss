@@ -1,37 +1,46 @@
-.container { /* !empty */ }
+.container {
+}
 
-// Banner
+.network-map {
+  background-color: rgba(243, 243, 243, 1.00);
+  height: 320px;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+
+  span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    opacity: .3;
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.section {
+  position: relative;
+}
+
 .banner {
-  background-color: $color-athens-gray;
-  height: 120px;
   width: 100%;
   display: flex;
   margin-top: 25px;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
+  padding-left: 20px;
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 0;
+    color: rgba(41, 64, 90, 1.00);
+  }
 }
 
-.banner-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 100%;
-  justify-content: center;
-  margin-left: 25px;
-}
 
-.name {
-  composes: hdr-display from 'css/typography.scss';
-  margin-bottom: 5px;
-}
-
-.stats {
-  composes: caption-lt-lg from 'css/typography.scss';
-  font-size: 13px;
-}
-
-.icon {
-  margin: 15px 15px 0 auto;
-  align-self: flex-start;
+.connect-button {
+  position: absolute;
+  right: 0;
 }
 
 .content-margins {
@@ -39,30 +48,29 @@
   margin-right: 20px;
 }
 
-// SearchBar
-.search-bar {
-  composes: content-margins;
-  margin-bottom: 32px;
-  display: flex;
-  align-items: center;
+// Group invite/request picker
+.group-picker {
+  position: absolute;
+  width: 300px;
+  background: white;
+  border: 1px solid gray;
+  z-index: 1;
+  left: 300px;
+  top: 40px;
 }
 
-.search-input {
-  flex: 1;
-  margin-right: $space-4x;
+.group-picker-list {
+  height: 150px;
+  overflow-y: auto;
 }
 
-.search-order {
-  min-width: 80px;
-}
+.invite-button {
+  padding: 0px 10px;
+  color: green;
+  cursor: pointer;
 
-.search-sorter-label {
-  font-size: 15px;
-  line-height: 28px;
-  composes: caption-lt-lg from 'css/typography.scss';
-  > span {
-    vertical-align: middle;
-    margin-left: $space-1x;
+  &:hover {
+    color: darkgreen;
   }
 }
 
@@ -76,11 +84,38 @@
   display: flex;
   border-bottom: 1px solid $color-rhino-10;
   padding-top: 6px;
+  position: relative;
   padding-bottom: 6px;
+  border-radius: 5px;
+  color: white;
+  padding: 15px;
+  filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.15));
+  margin-bottom: 15px;
+  min-width: 0;
+
+  .group-description {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: white;
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+    }
+  }
 }
 
 .group-image {
-  margin-right: 10px;
+  margin-right: 15px;
+  min-width: 50px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  margin-left: -25px;
 }
 
 .group-details {
@@ -88,17 +123,219 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  min-width: 0;
 }
 
 .group-name {
-  color: $color-rhino;
-  @include font-regular;
-  font-size: 24px;
-  line-height: 24px;
+  color: white;
+  @include font-bold;
+  font-size: 20px;
+  line-height: 20px;
+  text-decoration: none;
+  padding-right: 140px;
 }
 
 .group-stats {
-  color: $color-rhino-60;
+  text-decoration: none;
+  color: white;
   @include font-regular;
-  font-size: 14px;
+  font-size: 12px;
+  opacity: .7;
+  transition: opacity .25s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .member-count {
+    margin-right: 6px;
+  }
+
+  .membership-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 5;
+    font-size: 14px;
+    display: flex;
+
+    .group-privacy {
+      margin-right: 8px;
+
+      .privacy-icon {
+        color: $color-white;
+        font-size: 18px;
+        position: relative;
+        top: 3px;
+      }
+
+      .privacy-tooltip {
+        display: none;
+        position: absolute;
+        width: 240px;
+        top: 0;
+        right: 0;
+        background-color: $color-black-80;
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 5px;
+        top: 20px;
+      }
+
+      &:hover {
+        .privacy-tooltip {
+          display: block;
+        }
+      }
+    }
+
+    .member-complete {
+      color: rgba(255,255,255,1);
+      margin-left: 1px;
+    }
+
+    .join-group {
+      font-size: 18px;
+      color: rgba(255,255,255,1);
+      margin-left: 1px;
+    }
+
+    .status-tag {
+      border: 1px solid rgba(255,255,255,.3);
+      background-color: rgba(35, 64, 91, .2);
+      height: 26px;
+      line-height: 20px;
+      border-radius: 20px;
+      padding: 0 8px 0 2px;
+      display: flex;
+      align-items: center;
+      color: rgba(255,255,255,1);
+      font-size: 12px;
+
+      b {
+        margin-left: 5px;
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
+}
+
+.group-link {
+  text-decoration: none;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.button {
+  text-align: center
+}
+
+.groupCardBackground {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 100%;
+  background-size: cover;
+  border-radius: 5px;
+
+  div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #2A4059 -6.16%, rgba(42, 64, 89, 0.23) 109.19%);
+    opacity: 0.89;
+    border-radius: 5px;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .group-name {
+    padding-right: 0;
+    font-size: 18px;
+  }
+
+  .group-stats {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+
+    .membership-status {
+      position: relative;
+      display: flex;
+      font-size: 10px;
+      top: 0;
+      right: initial;
+      left: 0;
+
+      .group-privacy {
+
+        .privacy-icon {
+          top: 2px;
+          font-size: 14px;
+        }
+      }
+
+      .status-tag {
+        height: 18px;
+        line-height: 18px;
+      }
+
+      .join-group {
+        font-size: 12px;
+      }
+
+      .member-complete {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .group-card .group-description {
+    padding-top: 5px;
+
+    span {
+      font-size: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .group-name {
+    line-height: 18px;
+    font-size: 16px;
+  }
+
+  .content-margins {
+    margin-right: 10px;
+  }
+
+  .group-card .group-description {
+
+    span {
+      font-size: 11px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .group-name {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .group-card .group-description {
+
+    span {
+      font-size: 10px;
+    }
+  }
 }

@@ -9,6 +9,7 @@ export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onCli
     .map(group => {
       return {
         id: group.id,
+        slug: group.slug,
         type: 'group',
         message: 'Group: ' + group.name,
         avatarUrl: group.avatarUrl,

@@ -63,67 +63,32 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         Visibility
       </h3>
       <p
-        data-stylename="privacy-detail"
+        data-stylename="privacyDetail"
       >
         Who is able to see 
-        Foomunity
+        <strong>
+          Foomunity
+        </strong>
         ?
       </p>
-      <div
-        data-stylename=""
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-          />
-          <span
-            data-stylename="privacy-option disabled"
-          >
-            Anyone can find and see 
-            Foomunity
-          </span>
-        </label>
-      </div>
-      <div
-        data-stylename=""
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-          />
-          <span
-            data-stylename="privacy-option disabled"
-          >
-            Only members of parent groups can see 
-            Foomunity
-          </span>
-        </label>
-      </div>
-      <div
-        data-stylename=""
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-          />
-          <span
-            data-stylename="privacy-option disabled"
-          >
-            Only members of 
-            Foomunity
-             can see this group
-          </span>
-        </label>
-      </div>
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={0}
+        key="0"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={1}
+        key="1"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={2}
+        key="2"
+        updateSetting={[Function]}
+      />
     </div>
     <div
       data-stylename="groupPrivacySection"
@@ -132,74 +97,75 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         Access
       </h3>
       <p
-        data-stylename="privacy-detail"
+        data-stylename="privacyDetail"
       >
         How can people become members of 
-        Foomunity
+        <strong>
+          Foomunity
+        </strong>
+        ?
       </p>
-      <div
-        data-stylename=""
-      >
-        <label>
-          <input
-            checked={false}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={2}
-          />
-          <span
-            data-stylename="privacy-option disabled"
-          >
-            Anyone who can see 
-            Foomunity
-             can automatically join it
-          </span>
-        </label>
-      </div>
-      <div
-        data-stylename="on"
-      >
-        <label>
-          <input
-            checked={true}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={1}
-          />
-          <span
-            data-stylename="privacy-option"
-          >
-            Anyone can apply to join but must be approved by a moderator
-          </span>
-        </label>
-      </div>
-      <div
-        data-stylename=""
-      >
-        <label>
-          <input
-            checked={false}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={0}
-          />
-          <span
-            data-stylename="privacy-option disabled"
-          >
-            Membership in 
-            Foomunity
-             is invite only
-          </span>
-        </label>
-      </div>
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={0}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="0"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={1}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="1"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={2}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="2"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
     </div>
   </div>
   <div
-    data-stylename="button-row"
+    data-stylename="saveChanges"
   >
+    <span
+      data-stylename=""
+    >
+      Current settings up to date
+    </span>
     <Button
       color="gray"
       data-stylename="save-button"

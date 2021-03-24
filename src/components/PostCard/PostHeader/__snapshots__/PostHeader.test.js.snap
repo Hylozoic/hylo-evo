@@ -236,6 +236,7 @@ exports[`matches announcement snapshot 3`] = `
         type="request"
       />
       <Dropdown
+        alignRight={true}
         items={
           Array [
             Object {
@@ -397,6 +398,7 @@ exports[`matches snapshot 3`] = `
         type="request"
       />
       <Dropdown
+        alignRight={true}
         items={
           Array [
             Object {

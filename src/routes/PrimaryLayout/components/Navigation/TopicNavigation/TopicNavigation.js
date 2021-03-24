@@ -40,8 +40,8 @@ export default class TopicNavigation extends Component {
 
     return <div styleName={cx('s.topicNavigation', { 's.collapsed': collapsed })}>
       <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
-        <Icon name='Topics' styleName='s.icon' />
         <Link to={seeAllUrl}>
+          <Icon name='Topics' styleName='s.icon' />
           <span styleName='s.title'>Topics</span>
         </Link>
         {/* TODO: remove for now, probably for good?

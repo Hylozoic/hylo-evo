@@ -1,16 +1,16 @@
 import groupFieldsFragment from 'graphql/fragments/groupFieldsFragment'
 
-const publicGroupsQueryFragment = `
+const groupsQueryFragment = `
 groups(
-  isPublic: true,
+  isPublic: $isPublic,
   sortBy: $sortBy,
   boundingBox: $boundingBox,
   search: $search,
-  groupSlugs: $groupSlugs
+  parentSlugs: $parentSlugs
 ) {
   items {
     ${groupFieldsFragment(false)}
   }
 }`
 
-export default publicGroupsQueryFragment
+export default groupsQueryFragment

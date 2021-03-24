@@ -9,13 +9,10 @@ export const OPTIONAL_POST_MATCH = `:detail(post)?/:postId(${POST_ID_MATCH})?/:a
 export const OPTIONAL_NEW_POST_MATCH = `:detail(post)?/:action(new)?` // TODO: need this?
 export const POST_DETAIL_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit)?`
 
-export const REQUIRED_NEW_POST_MATCH = `:detail(post)/:action(new)`
 export const REQUIRED_EDIT_POST_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit)`
 
-// TODO: Only place where we show a group id in the URL, do we want to do that? use slug here too?
 export const GROUP_DETAIL_MATCH = `:detail(group)/:detailGroupSlug`
 export const OPTIONAL_GROUP_MATCH = `:detail(group)?/(:detailGroupSlug)?`
-export const REQUIRED_NEW_GROUP_MATCH = `:detail(group)/:action(new)`
 
 // Fundamental URL paths
 
@@ -63,6 +60,7 @@ export function contextSwitchingUrl (newParams, routeParams) {
     groupSlug: undefined,
     context: undefined,
     // -------------------------------------------------
+    personId: undefined,
     ...newParams
   }
   return baseUrl(newRouteParams)
@@ -91,7 +89,7 @@ export function groupUrl (slug, view = '', defaultUrl = allGroupsUrl()) {
   }
 }
 
-export function groupMapDetailUrl (slug, opts = {}, querystringParams = {}) {
+export function groupDetailUrl (slug, opts = {}, querystringParams = {}) {
   let result = baseUrl(opts)
   result = `${result}/group/${slug}`
 
@@ -148,8 +146,8 @@ export function messagePersonUrl (person) {
 }
 
 // Person URLs
-export function currentUserSettingsUrl () {
-  return `/settings`
+export function currentUserSettingsUrl (view = '') {
+  return '/settings' + (view ? '/' + view : '')
 }
 
 export function personUrl (id, groupSlug) {
@@ -173,11 +171,6 @@ export function topicUrl (topicName, opts) {
 export function addQuerystringToPath (path, querystringParams) {
   querystringParams = omitBy(x => !x, querystringParams)
   return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
-}
-
-export function removeCreateFromUrl (url) {
-  const matchForReplaceRegex = `/create/.*`
-  return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
 export function removePostFromUrl (url) {

@@ -63,3 +63,26 @@ $skill-vertical-margin: 8px;
   margin-right: 4px;
   margin-bottom: $skill-vertical-margin;
 }
+
+
+@media screen and (max-width: 425px) {
+  .avatar {
+    @include image(100px);
+  }
+}
+
+
+@media screen and (max-width: 320px) {
+  .member {
+    margin-bottom: 10px;
+  }
+
+  .avatar {
+    @include image(50px);
+  }
+
+  .name {
+    margin-top: 0;
+    margin-right: 0;
+  }
+}

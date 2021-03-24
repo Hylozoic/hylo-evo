@@ -12,7 +12,6 @@ import Intercom from 'react-intercom'
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
-import CreateGroup from 'components/CreateGroup'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
@@ -43,7 +42,7 @@ import UserSettings from 'routes/UserSettings'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
-  REQUIRED_EDIT_POST_MATCH, REQUIRED_NEW_POST_MATCH, REQUIRED_NEW_GROUP_MATCH,
+  REQUIRED_EDIT_POST_MATCH,
   isSignupPath,
   isMapViewPath
 } from 'util/navigation'
@@ -71,6 +70,7 @@ const routesWithDrawer = [
   // {/* Member Routes */}
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   // {/* Other Routes */}
+  { path: '/messages' },
   { path: '/settings' },
   { path: '/search' },
   { path: '/confirm-group-delete' }
@@ -79,10 +79,11 @@ const routesWithDrawer = [
 const detailRoutes = [
   { path: `/:context(all|public)/:view(stream|events|map|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(map|stream|events|projects)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(groups)/:groupSlug/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(groups)/:groupSlug/:view(map|groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
@@ -106,19 +107,29 @@ const signupRoutes = [
 ]
 
 const redirectRoutes = [
-  { from: '/tag/:topicName', to: '/all/topics/:topicName' },
-  { from: '/c/:groupSlug/', to: '/groups/:groupSlug/' },
-  { from: '/n/:groupSlug/', to: '/groups/:groupSlug/' },
-  { from: '/c/:groupSlug/tag/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
-  // TODO: is this right?
-  { from: '/c/:groupSlug/join/:accessCode/tag/:topicName', to: '/groups/:groupSlug/join/:accessCode/topics/:topicName' },
+  // Redirects from old routes
+  { from: '/:context(public|all)/p/:postId', to: '/:context/post/:postId' },
+  { from: '/:context(public|all)/project', to: '/:context/projects' },
+  { from: '/:context(public|all)/event', to: '/:context/events' },
   { from: '/p/:postId', to: '/all/post/:postId' },
-  { from: '/u/:personId', to: '/members/:personId' },
-  { from: '/c/:groupSlug/about', to: '/groups/:groupSlug' },
-  { from: '/c/:groupSlug/people', to: '/groups/:groupSlug/members' },
-  { from: '/c/:groupSlug/invite', to: '/groups/:groupSlug/settings/invite' },
-  { from: '/c/:groupSlug/events', to: '/groups/:groupSlug/events' },
-  // redirects for context switching into global contexts
+  { from: '/m/:personId', to: '/all/members/:personId' },
+  { from: '/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
+  { from: '/all/m/:personId', to: '/all/members/:personId' },
+  { from: '/all/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
+  { from: '/(c|n)/:groupSlug/', to: '/groups/:groupSlug/' },
+  { from: '/(c|n)/:groupSlug/event', to: '/groups/:groupSlug/events' },
+  { from: '/(c|n)/:groupSlug/event/:postId', to: '/groups/:groupSlug/events/post/:postId' },
+  { from: '/(c|n)/:groupSlug/project', to: '/groups/:groupSlug/projects' },
+  { from: '/(c|n)/:groupSlug/project/:postId', to: '/groups/:groupSlug/projects/post/:postId' },
+  { from: '/(c|n)/:groupSlug/:view(members|map|settings|topics)', to: '/groups/:groupSlug/:view' },
+  { from: '/(c|n)/:groupSlug/map/p/:postId', to: '/groups/:groupSlug/map/post/:postId' },
+  { from: '/(c|n)/:groupSlug/p/:postId', to: '/groups/:groupSlug/post/:postId' },
+  { from: '/(c|n)/:groupSlug/m/:personId', to: '/groups/:groupSlug/members/:personId' },
+  { from: '/(c|n)/:groupSlug/m/:personId/p/:postId', to: '/groups/:groupSlug/members/:personId/post/:postId' },
+  { from: '/(c|n)/:groupSlug/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
+  { from: '/(c|n)/:groupSlug/:topicName/p/:postId', to: '/groups/:groupSlug/topics/:topicName/post/:postId' },
+
+  // redirects for context switching into global contexts, since these pages don't exist yet
   { from: '/all/members', to: '/all' },
   { from: '/public/(members|topics)', to: '/public' }
 ]
@@ -197,6 +208,9 @@ export default class PrimaryLayout extends Component {
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
+            {/* Member Routes */}
+            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* All and Public Routes */}
             <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
             <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
@@ -217,8 +231,6 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
             <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            {/* Member Routes */}
-            <Route path={`/:context(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -244,12 +256,6 @@ export default class PrimaryLayout extends Component {
         {createRoutes.map(({ path }) =>
           <Route path={path + '/create'} key={path + 'create'} children={({ match, location }) =>
             <CreateModal match={match} location={location} />} />)}
-        {createRoutes.map(({ path }) =>
-          <Route path={path + '/' + REQUIRED_NEW_GROUP_MATCH} key={path + 'newgroup'} children={({ match, location }) =>
-            <CreateGroup match={match} location={location} />} />)}
-        {createRoutes.map(({ path }) =>
-          <Route path={path + '/' + REQUIRED_NEW_POST_MATCH} key={path + 'newpost'} children={({ match, location }) =>
-            <PostEditorModal match={match} location={location} />} />)}
         {createRoutes.map(({ path }) =>
           <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
             <PostEditorModal match={match} location={location} />} />)}

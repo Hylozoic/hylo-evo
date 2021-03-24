@@ -1,6 +1,6 @@
 .comments {
   padding-top: 25px;
-  padding-bottom: 150px;
+  padding-bottom: 50px;
 }
 
 .form-wrapper {
@@ -14,4 +14,12 @@
 .people-typing {
   position: fixed;
   bottom: -3px;
+}
+
+
+
+@media screen and (max-width: 320px) {
+  .form-wrapper {
+    padding: 0 10px;
+  }
 }

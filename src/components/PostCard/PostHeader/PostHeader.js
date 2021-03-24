@@ -89,7 +89,8 @@ export default class PostHeader extends PureComponent {
       { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
-    const canHaveTimes = type === 'offer' || type === 'request' || type === 'resource'
+    const typesWithTimes = ['offer', 'request', 'resource', 'project']
+    const canHaveTimes = typesWithTimes.includes(type)
     let timeWindow = ''
     const startDate = startTime && formatStartDate(startTime)
     const endDate = endTime && formatEndDate(endTime)
@@ -131,7 +132,7 @@ export default class PostHeader extends PureComponent {
           {fulfilledAt && <PostLabel type={'completed'} styleName='label' />}
           {type && <PostLabel type={type} styleName='label' />}
           {dropdownItems.length > 0 &&
-            <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+            <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
           {close &&
             <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
         </div>

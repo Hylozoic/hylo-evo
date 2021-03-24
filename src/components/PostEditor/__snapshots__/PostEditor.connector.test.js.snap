@@ -3,9 +3,9 @@
 exports[`mapDispatchToProps returns the right keys 1`] = `
 Object {
   "addAttachment": [Function],
+  "changeQueryString": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
-  "createProject": [Function],
   "fetchDefaultTopics": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
@@ -34,14 +34,16 @@ Object {
   "groupOptions": Array [
     SessionBoundModel {
       "_fields": Object {
-        "id": "99",
-        "slug": "foo",
+        "id": "100",
+        "name": "bar",
+        "slug": "bar",
       },
     },
     SessionBoundModel {
       "_fields": Object {
-        "id": "100",
-        "slug": "bar",
+        "id": "99",
+        "name": "foo",
+        "slug": "foo",
       },
     },
   ],
@@ -52,10 +54,14 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": false,
+  "location": Object {
+    "search": "",
+  },
   "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
+        "name": "foo",
         "slug": "foo",
       },
     },
@@ -84,21 +90,23 @@ Object {
     "id": "1",
   },
   "defaultTopics": Array [],
-  "editing": true,
+  "editing": false,
   "editingPostId": undefined,
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],
   "groupOptions": Array [
     SessionBoundModel {
       "_fields": Object {
-        "id": "99",
-        "slug": "foo",
+        "id": "100",
+        "name": "bar",
+        "slug": "bar",
       },
     },
     SessionBoundModel {
       "_fields": Object {
-        "id": "100",
-        "slug": "bar",
+        "id": "99",
+        "name": "foo",
+        "slug": "foo",
       },
     },
   ],
@@ -109,10 +117,14 @@ Object {
   "linkPreview": null,
   "linkPreviewStatus": false,
   "loading": true,
+  "location": Object {
+    "search": "",
+  },
   "myModeratedGroups": Array [
     SessionBoundModel {
       "_fields": Object {
         "id": "99",
+        "name": "foo",
         "slug": "foo",
       },
     },

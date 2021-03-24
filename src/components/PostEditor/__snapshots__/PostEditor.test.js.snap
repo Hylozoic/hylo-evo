@@ -94,50 +94,29 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="request"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                request
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-request"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -329,50 +308,29 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="request"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                request
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-request"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -605,50 +563,29 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -763,50 +700,29 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="offer"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                offer
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-offer"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -963,50 +879,29 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="request"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                request
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-request"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -1163,50 +1058,29 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="resource"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                resource
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-resource"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -1363,50 +1237,29 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        a test prompt
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -1560,50 +1413,29 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={true}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -1719,50 +1551,29 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={true}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className=""
-        color=""
-        disabled={true}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -1878,50 +1689,29 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div
@@ -2038,18 +1828,29 @@ exports[`PostEditor renders contribution button 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
+      </div>
     </div>
   </div>
   <div
@@ -2206,50 +2007,29 @@ exports[`PostEditor renders with min props 1`] = `
     <div
       data-stylename="initial"
     >
-      <div
-        data-stylename="initial-prompt"
-      >
-        What are you looking to post?
-      </div>
-      <a
-        data-stylename="initial-closeButton"
-      >
-        <Icon
-          name="Ex"
+      <div>
+        <Button
+          className=""
+          color=""
+          disabled={false}
+          key="discussion"
+          label={
+            <span
+              data-stylename="initial-prompt"
+            >
+              <span>
+                discussion
+              </span>
+               
+              <Icon
+                data-stylename="icon icon-discussion"
+                name="ArrowDown"
+              />
+            </span>
+          }
+          onClick={[Function]}
         />
-      </a>
-    </div>
-    <div
-      data-stylename="postTypes"
-    >
-      <Button
-        className=""
-        color=""
-        disabled={false}
-        label="discussion"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="request"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="offer"
-        onClick={[Function]}
-      />
-      <Button
-        className="undefined"
-        color=""
-        disabled={false}
-        label="resource"
-        onClick={[Function]}
-      />
+      </div>
     </div>
   </div>
   <div

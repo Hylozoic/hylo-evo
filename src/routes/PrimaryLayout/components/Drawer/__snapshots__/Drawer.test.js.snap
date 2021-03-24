@@ -1,74 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Drawer renders a group list if networks are present 1`] = `
-<div
-  data-stylename="s.groupDrawer"
+exports[`ContextRow renders with new posts 1`] = `
+<li
+  data-stylename="s.contextRow"
 >
-  <div
-    data-stylename="s.currentGroup"
+  <Link
+    data-stylename="s.contextRowLink"
+    title="Foomunity"
+    to="/groups/foo"
   >
     <div
-      data-stylename="s.hyloLogoBar"
-    >
-      <img
-        src="/hylo.svg"
-        width="50px"
-      />
-      <Icon
-        data-stylename="s.closeDrawer"
-        name="Ex"
-      />
-    </div>
-    <Logo />
-  </div>
-  <div>
-    <ul
-      data-stylename="s.groupsList"
+      data-stylename="s.contextRowAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(/foo.png)",
+        }
+      }
     />
-    <ul
-      data-stylename="s.groupsList"
+    <span
+      data-stylename="s.group-name"
     >
-      <li
-        data-stylename="s.sectionTitle s.sectionTitleSeparator"
-      >
-        My Groups
-      </li>
-      <GroupRow
-        group={
-          Object {
-            "avatarUrl": "/foo.png",
-            "id": "11",
-            "name": "Foomunity",
-            "newPostCount": 0,
-            "slug": "foo",
-          }
-        }
-        key="11"
-      />
-      <GroupRow
-        group={
-          Object {
-            "avatarUrl": "/bar.png",
-            "id": "22",
-            "name": "Barmunity",
-            "newPostCount": 7,
-            "slug": "bar",
-          }
-        }
-        key="22"
-      />
-    </ul>
+      Foomunity
+    </span>
+  </Link>
+</li>
+`;
+
+exports[`ContextRow renders with zero new posts 1`] = `
+<li
+  data-stylename="s.contextRow"
+>
+  <Link
+    data-stylename="s.contextRowLink"
+    title="Foomunity"
+    to="/groups/foo"
+  >
     <div
-      data-stylename="s.newGroup"
+      data-stylename="s.contextRowAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(/foo.png)",
+        }
+      }
+    />
+    <span
+      data-stylename="s.group-name"
     >
-      <Button
-        color="white"
-        data-stylename="s.newGroupBtn"
-        label="Start a Group"
-      />
-    </div>
-  </div>
-</div>
+      Foomunity
+    </span>
+  </Link>
+</li>
 `;
 
 exports[`Drawer renders with a current group 1`] = `
@@ -114,7 +95,7 @@ exports[`Drawer renders with a current group 1`] = `
       >
         My Groups
       </li>
-      <GroupRow
+      <ContextRow
         group={
           Object {
             "avatarUrl": "/foo.png",
@@ -126,7 +107,7 @@ exports[`Drawer renders with a current group 1`] = `
         }
         key="11"
       />
-      <GroupRow
+      <ContextRow
         group={
           Object {
             "avatarUrl": "/bar.png",
@@ -185,7 +166,7 @@ exports[`Drawer renders without a current group 1`] = `
       >
         My Groups
       </li>
-      <GroupRow
+      <ContextRow
         group={
           Object {
             "avatarUrl": "/foo.png",
@@ -197,7 +178,7 @@ exports[`Drawer renders without a current group 1`] = `
         }
         key="11"
       />
-      <GroupRow
+      <ContextRow
         group={
           Object {
             "avatarUrl": "/bar.png",
@@ -221,312 +202,4 @@ exports[`Drawer renders without a current group 1`] = `
     </div>
   </div>
 </div>
-`;
-
-exports[`GroupRow renders with new posts 1`] = `
-<li
-  data-stylename="s.groupRow"
->
-  <Link
-    data-stylename="s.groupRowLink"
-    title="Foomunity"
-    to="/groups/foo"
-  >
-    <div
-      data-stylename="s.groupRowAvatar"
-      style={
-        Object {
-          "backgroundImage": "url(/foo.png)",
-        }
-      }
-    />
-    <span
-      data-stylename="s.group-name s.is-member"
-    >
-      Foomunity
-    </span>
-  </Link>
-</li>
-`;
-
-exports[`GroupRow renders with zero new posts 1`] = `
-<li
-  data-stylename="s.groupRow"
->
-  <Link
-    data-stylename="s.groupRowLink"
-    title="Foomunity"
-    to="/groups/foo"
-  >
-    <div
-      data-stylename="s.groupRowAvatar"
-      style={
-        Object {
-          "backgroundImage": "url(/foo.png)",
-        }
-      }
-    />
-    <span
-      data-stylename="s.group-name s.is-member"
-    >
-      Foomunity
-    </span>
-  </Link>
-</li>
-`;
-
-exports[`NetworkRow is not expanded when post counts are 0 1`] = `
-<li
-  data-stylename="s.networkRow s.networkExpanded"
->
-  <Link
-    data-stylename="s.networkRowLink"
-    title="Network One"
-    to="/groups/none"
-  >
-    <div
-      data-stylename="s.network-name-wrapper"
-    >
-      <div
-        data-stylename="s.avatar"
-        style={
-          Object {
-            "backgroundImage": "url(foo.png)",
-          }
-        }
-      />
-      <span
-        data-stylename="s.network-name"
-      >
-        Network One
-      </span>
-      <span
-        data-stylename="s.groupsButton"
-        onClick={[Function]}
-      >
-        <Icon
-          data-stylename="s.arrowDown"
-          name="ArrowDown"
-        />
-      </span>
-    </div>
-  </Link>
-  <ul
-    data-stylename="s.networkGroupsList"
-  >
-    <GroupRow
-      group={
-        Object {
-          "id": 1,
-          "newPostCount": 7,
-        }
-      }
-      key="1"
-    />
-    <GroupRow
-      group={
-        Object {
-          "id": 2,
-          "newPostCount": 6,
-        }
-      }
-      key="2"
-    />
-  </ul>
-</li>
-`;
-
-exports[`NetworkRow matches last snapshot 1`] = `
-<li
-  data-stylename="s.networkRow s.networkExpanded"
->
-  <Link
-    data-stylename="s.networkRowLink"
-    title="Network One"
-    to="/groups/none"
-  >
-    <div
-      data-stylename="s.network-name-wrapper"
-    >
-      <div
-        data-stylename="s.avatar"
-        style={
-          Object {
-            "backgroundImage": "url(foo.png)",
-          }
-        }
-      />
-      <span
-        data-stylename="s.network-name"
-      >
-        Network One
-      </span>
-      <span
-        data-stylename="s.groupsButton"
-        onClick={[Function]}
-      >
-        <Icon
-          data-stylename="s.arrowDown"
-          name="ArrowDown"
-        />
-      </span>
-    </div>
-  </Link>
-  <ul
-    data-stylename="s.networkGroupsList"
-  >
-    <GroupRow
-      group={
-        Object {
-          "id": 1,
-          "newPostCount": 7,
-        }
-      }
-      key="1"
-    />
-    <GroupRow
-      group={
-        Object {
-          "id": 2,
-          "newPostCount": 6,
-        }
-      }
-      key="2"
-    />
-  </ul>
-</li>
-`;
-
-exports[`NetworkRow see all button calls preventDefault and sets the state 1`] = `
-<li
-  data-stylename="s.networkRow s.networkExpanded"
->
-  <Link
-    data-stylename="s.networkRowLink"
-    title="Network One"
-    to="/groups/none"
-  >
-    <div
-      data-stylename="s.network-name-wrapper"
-    >
-      <div
-        data-stylename="s.avatar"
-        style={
-          Object {
-            "backgroundImage": "url(foo.png)",
-          }
-        }
-      />
-      <span
-        data-stylename="s.network-name"
-      >
-        Network One
-      </span>
-      <span
-        data-stylename="s.groupsButton"
-        onClick={[Function]}
-      >
-        <Icon
-          data-stylename="s.arrowDown"
-          name="ArrowDown"
-        />
-      </span>
-    </div>
-  </Link>
-  <ul
-    data-stylename="s.networkGroupsList"
-  >
-    <GroupRow
-      group={
-        Object {
-          "id": 1,
-          "newPostCount": 7,
-        }
-      }
-      key="1"
-    />
-    <GroupRow
-      group={
-        Object {
-          "id": 2,
-          "newPostCount": 6,
-        }
-      }
-      key="2"
-    />
-    <li
-      data-stylename="s.seeAllBtn"
-      onClick={[Function]}
-    >
-      See all
-    </li>
-  </ul>
-</li>
-`;
-
-exports[`NetworkRow see all button shows "see all" button when there are non member groups 1`] = `
-<li
-  data-stylename="s.networkRow s.networkExpanded"
->
-  <Link
-    data-stylename="s.networkRowLink"
-    title="Network One"
-    to="/groups/none"
-  >
-    <div
-      data-stylename="s.network-name-wrapper"
-    >
-      <div
-        data-stylename="s.avatar"
-        style={
-          Object {
-            "backgroundImage": "url(foo.png)",
-          }
-        }
-      />
-      <span
-        data-stylename="s.network-name"
-      >
-        Network One
-      </span>
-      <span
-        data-stylename="s.groupsButton"
-        onClick={[Function]}
-      >
-        <Icon
-          data-stylename="s.arrowDown"
-          name="ArrowDown"
-        />
-      </span>
-    </div>
-  </Link>
-  <ul
-    data-stylename="s.networkGroupsList"
-  >
-    <GroupRow
-      group={
-        Object {
-          "id": 1,
-          "newPostCount": 7,
-        }
-      }
-      key="1"
-    />
-    <GroupRow
-      group={
-        Object {
-          "id": 2,
-          "newPostCount": 6,
-        }
-      }
-      key="2"
-    />
-    <li
-      data-stylename="s.seeAllBtn"
-      onClick={[Function]}
-    >
-      See all
-    </li>
-  </ul>
-</li>
 `;

@@ -88,8 +88,6 @@ const postFieldsFragment = withComments => `
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
   groups {
     id
     name
@@ -124,12 +122,6 @@ const postFieldsFragment = withComments => `
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -145,12 +137,6 @@ const postFieldsFragment = withComments => `
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }

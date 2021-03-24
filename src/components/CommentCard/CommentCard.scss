@@ -24,7 +24,7 @@
   }
 
   .comment-body {
-    padding-left: $padding-left;
+    padding-left: 15px;
     margin-top: 10px;
   }
 
@@ -33,7 +33,7 @@
     width: 50%;
     border-radius: 20px;
   }
-  
+
   .comment-files {
     padding-left: $padding-left;
   }
@@ -70,6 +70,9 @@
 
 .person-name {
   composes: person-name from 'css/typography.scss';
+  font-size: 12px;
+  line-height: 14px;
+
   &:hover {
     color: $color-rhino;
     text-decoration: none;
@@ -83,9 +86,26 @@
 
 .date {
   color: $color-rhino-30;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .reply-button {
   font-size: $space-3x;
   margin-right: $space-3x;
+}
+
+.profileImage {
+  min-width: 2.75rem;
+}
+
+
+@media screen and (max-width: 425px) {
+  .comment-card {
+    padding: 10px;
+
+    .comment-body {
+      padding-left: 10px;
+    }
+  }
 }

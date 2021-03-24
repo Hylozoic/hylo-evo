@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupButton matches last snapshot 1`] = `
+<Button
+  color="green-white"
+  data-stylename="button"
+  small={true}
+>
+  <Link
+    to="/groups/bb"
+  >
+    <RoundImage
+      small={true}
+      url="https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png"
+    />
+     
+    Backyard Birders
+  </Link>
+</Button>
+`;

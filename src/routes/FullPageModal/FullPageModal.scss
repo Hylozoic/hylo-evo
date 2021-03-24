@@ -58,6 +58,10 @@ $size-sidebar-width: 13rem;
 .center {
   width: $center-column-width;
   padding-top: 72px;
+
+  > div {
+    padding-bottom: 150px;
+  }
 }
 
 .narrow {

@@ -180,7 +180,8 @@ export default class EditProfileTab extends Component {
         provider='linkedin'
         value={linkedinUrl}
         updateUserSettings={updateUserSettings} />
-      <div styleName='button-row'>
+      <div styleName='saveChanges'>
+        <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
       </div>
     </div>
@@ -224,7 +225,10 @@ export class SocialControl extends Component {
       {linked ? 'Unlink' : 'Link'}
     </span>
     return <div styleName='control'>
-      <div styleName={cx('social-control-label', { linked })}>{label}{linkButton}</div>
+      <div styleName={cx('social-control-label')}>
+        {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
+        {label}{linkButton}
+      </div>
     </div>
   }
 }

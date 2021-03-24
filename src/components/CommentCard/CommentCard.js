@@ -26,7 +26,7 @@ export default function CommentCard ({
   return <span onClick={() => showDetails(comment.post.id)} styleName='link'>
     <div styleName={cx('comment-card', { expanded })}>
       <div styleName='comment-header'>
-        <RoundImage url={creator.avatarUrl} large />
+        <RoundImage url={creator.avatarUrl} styleName='profileImage' />
         <Highlight {...highlightProps}>
           <div styleName='comment-meta'>
             <span styleName='person-name'>{creator.name}</span> commented on&nbsp;

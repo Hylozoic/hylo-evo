@@ -26,13 +26,29 @@
 
 .request-list {
   margin: 57px 5px;
+  padding-bottom: 100px;
 }
 
 .request {
-  display: flex;
   justify-content: space-between;
   padding: 20px 0px;
   border-bottom: 1px solid $color-grey-keyline-light;
+
+  .answer {
+    padding-left: 70px;
+    margin: 20px 0;
+
+    h3 {
+      font-size: 14px;
+      color: rgba(125, 140, 157, 1.000);
+      margin-bottom: 0;
+    }
+
+    p {
+      font-size: 14px;
+      color: rgba(35, 64, 91, 1.000);
+    }
+  }
 }
 
 .requestor {

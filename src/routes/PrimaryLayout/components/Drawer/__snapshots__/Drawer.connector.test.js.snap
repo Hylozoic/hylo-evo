@@ -2,9 +2,9 @@
 
 exports[`mapStateToProps returns the right keys, adding All Groups link 1`] = `
 Object {
-  "canModerate": true,
+  "canModerate": undefined,
   "currentLocation": "mock",
-  "defaultNetworks": Array [
+  "defaultContexts": Array [
     Object {
       "avatarUrl": "/public.svg",
       "context": "public",
@@ -21,6 +21,5 @@ Object {
     },
   ],
   "groups": Array [],
-  "networks": Array [],
 }
 `;

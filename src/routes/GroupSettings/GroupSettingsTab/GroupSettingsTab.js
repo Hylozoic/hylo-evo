@@ -1,13 +1,27 @@
+import { isEqual, set, trim } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import cx from 'classnames'
+import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
 import Button from 'components/Button'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
+import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER, DEFAULT_AVATAR, GROUP_ACCESSIBILITY, GROUP_VISIBILITY } from 'store/models/Group'
+import {
+  accessibilityDescription,
+  accessibilityIcon,
+  accessibilityString,
+  DEFAULT_BANNER,
+  DEFAULT_AVATAR,
+  GROUP_ACCESSIBILITY,
+  GROUP_VISIBILITY,
+  visibilityDescription,
+  visibilityIcon,
+  visibilityString
+} from 'store/models/Group'
 const { object } = PropTypes
 
 export default class GroupSettingsTab extends Component {
@@ -15,42 +29,69 @@ export default class GroupSettingsTab extends Component {
     currentUser: object,
     group: object
   }
+
   constructor (props) {
     super(props)
-    this.state = { edits: {}, changed: false }
-  }
-
-  componentDidMount () {
-    this.setEditState()
+    this.state = this.defaultEditState()
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (prevProps.group !== this.props.group) {
-      this.setEditState()
+    if (!isEqual(prevProps.group, this.props.group)) {
+      this.setState(this.defaultEditState())
     }
   }
 
-  setEditState () {
+  defaultEditState () {
     const { group } = this.props
 
-    if (!group) return
+    if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, settings, visibility
     } = group
 
-    this.setState({
+    return {
       edits: {
-        accessibility: accessibility || GROUP_ACCESSIBILITY.Restricted,
+        accessibility: typeof accessibility !== 'undefined' ? accessibility : GROUP_ACCESSIBILITY.Restricted,
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
         location: location || '',
         name: name || '',
-        settings: settings || { allowGroupInvites: false, publicMemberDirectory: false },
-        visibility: visibility || GROUP_VISIBILITY.Protected
-      }
-    })
+        joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
+        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
+        visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
+      },
+      changed: false
+    }
+  }
+
+  clearField = (index) => event => {
+    event.target.value = ''
+    this.updateJoinQuestion(index)(event)
+  }
+
+  updateJoinQuestion = (index) => event => {
+    const value = event.target.value
+    const newJoinQuestions = this.state.edits.joinQuestions
+    let changed = false
+    if (trim(value) === '') {
+      newJoinQuestions.splice(index, 1)
+      changed = true
+    } else if (newJoinQuestions[index].text !== value) {
+      newJoinQuestions[index] = { text: value }
+      changed = true
+    }
+    if (newJoinQuestions[newJoinQuestions.length - 1].text !== '') {
+      newJoinQuestions.push({ text: '' })
+      changed = true
+    }
+    if (changed) {
+      this.setState({
+        changed,
+        edits: { ...this.state.edits, joinQuestions: newJoinQuestions }
+      })
+    }
   }
 
   updateSetting = (key, setChanged = true) => event => {
@@ -62,7 +103,7 @@ export default class GroupSettingsTab extends Component {
     } else if (key === 'accessibility' || key === 'visibility') {
       edits[key] = parseInt(event.target.value)
     } else {
-      edits[key] = event.target.value
+      set(edits, key, event.target.value)
     }
 
     this.setState({
@@ -85,7 +126,7 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, visibility
+      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, settings, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
@@ -115,63 +156,86 @@ export default class GroupSettingsTab extends Component {
         type='location'
       />
       <div styleName='privacy-settings'>
-        {/* <div styleName={cx('privacy-option-container', { on: isPublic })}>
-          <div>
-            <SwitchStyled checked={isPublic} onChange={this.updateSetting('isPublic')} backgroundColor={isPublic ? '#40A1DD' : '#808C9B'} />
-            <span styleName='privacy-option'>Allow anyone to see {group.name}</span>
-          </div>
-          <span styleName='privacy-state'>{isPublic ? 'ON' : 'OFF'}</span>
-        </div> */}
         <div styleName='groupPrivacySection'>
           <h3>Visibility</h3>
-          <p styleName='privacy-detail'>Who is able to see {group.name}?</p>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Public })}>
-            <label>
-              <input type='radio' name='visibility' value={GROUP_VISIBILITY.Public} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Public} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Public })}>Anyone can find and see {group.name}</span>
-            </label>
-          </div>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Protected })}>
-            <label>
-              <input type='radio' name='visibility' value={GROUP_VISIBILITY.Protected} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Protected} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Protected })}>Only members of parent groups can see {group.name}</span>
-            </label>
-          </div>
-          <div styleName={cx({ on: visibility === GROUP_VISIBILITY.Hidden })}>
-            <label>
-              <input type='radio' name='visibility' value={GROUP_VISIBILITY.Hidden} onChange={this.updateSetting('visibility')} checked={visibility === GROUP_VISIBILITY.Hidden} />
-              <span styleName={cx('privacy-option', { disabled: visibility !== GROUP_VISIBILITY.Hidden })}>Only members of {group.name} can see this group</span>
-            </label>
-          </div>
+          <p styleName='privacyDetail'>Who is able to see <strong>{group.name}</strong>?</p>
+          {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
+            <VisibilitySettingRow
+              key={visibilitySetting}
+              forSetting={visibilitySetting}
+              currentSetting={visibility}
+              updateSetting={this.updateSetting}
+            />
+          )}
         </div>
 
         <div styleName='groupPrivacySection'>
           <h3>Access</h3>
-          <p styleName='privacy-detail'>How can people become members of {group.name}</p>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Open })}>
-            <label>
-              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Open} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Open} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Open })}>Anyone who can see {group.name} can automatically join it</span>
-            </label>
-          </div>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Restricted })}>
-            <label>
-              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Restricted} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Restricted} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Restricted })}>Anyone can apply to join but must be approved by a moderator</span>
-            </label>
-          </div>
-          <div styleName={cx({ on: accessibility === GROUP_ACCESSIBILITY.Closed })}>
-            <label>
-              <input type='radio' name='accessibility' value={GROUP_ACCESSIBILITY.Closed} onChange={this.updateSetting('accessibility')} checked={accessibility === GROUP_ACCESSIBILITY.Closed} />
-              <span styleName={cx('privacy-option', { disabled: accessibility !== GROUP_ACCESSIBILITY.Closed })}>Membership in {group.name} is invite only</span>
-            </label>
-          </div>
+          <p styleName='privacyDetail'>How can people become members of <strong>{group.name}</strong>?</p>
+          {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
+            <AccessibilitySettingRow
+              key={accessSetting}
+              forSetting={accessSetting}
+              clearField={this.clearField}
+              currentSetting={accessibility}
+              askJoinQuestions={settings && settings.askJoinQuestions}
+              joinQuestions={joinQuestions}
+              updateJoinQuestion={this.updateJoinQuestion}
+              updateSetting={this.updateSetting}
+              updateSettingDirectly={this.updateSettingDirectly}
+            />
+          )}
         </div>
       </div>
 
-      <div styleName='button-row'>
+      <div styleName='saveChanges'>
+        <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
       </div>
     </div>
   }
+}
+
+function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting }) {
+  return <div styleName={'privacySetting' + ' ' + cx({ on: currentSetting === forSetting })}>
+    <label>
+      <input type='radio' name='Visibility' value={forSetting} onChange={updateSetting('visibility')} checked={currentSetting === forSetting} />
+      <Icon name={visibilityIcon(forSetting)} styleName='settingIcon' />
+      <div styleName='settingDescription'>
+        <h4>{visibilityString(forSetting)}</h4>
+        <span styleName={cx('privacy-option', { disabled: currentSetting !== forSetting })}>{visibilityDescription(forSetting)}</span>
+      </div>
+    </label>
+  </div>
+}
+
+function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting, forSetting, joinQuestions, updateJoinQuestion, updateSetting, updateSettingDirectly }) {
+  return <div styleName={'privacySetting' + ' ' + cx({ on: currentSetting === forSetting })}>
+    <label>
+      <input type='radio' name='accessibility' value={forSetting} onChange={updateSetting('accessibility')} checked={currentSetting === forSetting} />
+      <Icon name={accessibilityIcon(forSetting)} styleName='settingIcon' />
+      <div styleName='settingDescription'>
+        <h4>{accessibilityString(forSetting)}</h4>
+        <span styleName={cx('privacy-option', { disabled: currentSetting !== forSetting })}>{accessibilityDescription(forSetting)}</span>
+      </div>
+    </label>
+    {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted && <div styleName={'groupQuestions' + ' ' + cx({ on: askJoinQuestions })}>
+      <SwitchStyled
+        checked={askJoinQuestions}
+        onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
+        backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+      <div styleName='onOff'>
+        <div styleName='off'>OFF</div>
+        <div styleName='on'>ON</div>
+      </div>
+      <div styleName='questionList'>
+        <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
+
+        {joinQuestions.map((q, i) => <div key={i} styleName='question'>
+          {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
+          <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
+        </div>)}
+      </div>
+    </div>}
+  </div>
 }

@@ -20,8 +20,13 @@ $dropdown-border-color: $color-box-shadow;
 
 .wrapper {
   position: absolute;
+  left: 0;
+  z-index: 2;
+}
+
+.wrapper.alignRight {
+  left: auto;
   right: 0;
-  z-index: 1;
 }
 
 .dropdown-menu {
@@ -95,7 +100,3 @@ $dropdown-border-color: $color-box-shadow;
   @include is-top-triangle(#fff, $dropdown-border-color, 7px);
 }
 
-.alignRight {
-  left: auto;
-  right: 0;
-}
