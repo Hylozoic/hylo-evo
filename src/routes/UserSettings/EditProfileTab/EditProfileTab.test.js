@@ -27,10 +27,10 @@ describe('linkedinPrompt', () => {
         return 'a bad url'
       } else {
         count += 1
-        return null
+        return 'https://www.linkedin.com/in/username/'
       }
     })
-    expect(linkedinPrompt()).toEqual(undefined)
+    expect(linkedinPrompt()).toEqual('https://www.linkedin.com/in/username/')
     expect(count).toEqual(2)
     expect(window.prompt.mock.calls).toMatchSnapshot()
   })
@@ -59,101 +59,121 @@ describe('SocialControl', () => {
     expect(wrapper.text()).toEqual('<Icon />A Social ControlUnlink')
   })
 
-  it('calls linkClicked when link is clicked', () => {
+  it('calls handleLinkClick when link is clicked', () => {
     const wrapper = shallow(<SocialControl label='A Social Control' />)
-    wrapper.instance().linkClicked = jest.fn()
-    wrapper.find('[data-stylename="link-button"]').simulate('click')
-    expect(wrapper.instance().linkClicked).toHaveBeenCalled()
+    wrapper.instance().handleLinkClick = jest.fn()
+    wrapper.find("[data-stylename='link-button']").simulate('click')
+    expect(wrapper.instance().handleLinkClick).toHaveBeenCalled()
   })
 
-  it('calls unlinkClicked when unlink is clicked', () => {
+  it('calls handleUnlinkClick when unlink is clicked', () => {
     const wrapper = shallow(<SocialControl label='A Social Control' value='someurl.com' />)
-    wrapper.instance().unlinkClicked = jest.fn()
-    wrapper.find('[data-stylename="link-button"]').simulate('click')
-    expect(wrapper.instance().unlinkClicked).toHaveBeenCalled()
+    wrapper.instance().handleUnlinkClick = jest.fn()
+    wrapper.find("[data-stylename='link-button']").simulate('click')
+    expect(wrapper.instance().handleUnlinkClick).toHaveBeenCalled()
   })
 
-  describe('linkClicked', () => {
-    it('calls the right things when provider is twitter', () => {
-      const provider = 'twitter'
-      const onLink = () => 'thetwittername'
-      const updateUserSettings = jest.fn()
-      const onChange = jest.fn()
-      const wrapper = shallow(<SocialControl
-        label='A Social Control'
-        provider={provider}
-        onLink={onLink}
-        updateUserSettings={updateUserSettings}
-        onChange={onChange} />)
+  describe('handleLinkClick', () => {
+    describe('when provider is twitter', () => {
+      it('and handle is entered, it updates the twitterName', () => {
+        window.prompt = jest.fn(() => 'twitterhandle')
+        const updateSocialSetting = jest.fn()
+        const handleUnlinkAccount = jest.fn()
 
-      wrapper.instance().linkClicked()
-      expect(updateUserSettings).toHaveBeenCalledWith({ twitterName: 'thetwittername' })
-      expect(onChange).toHaveBeenCalledWith(true)
+        const wrapper = shallow(
+          <SocialControl
+            label='Twitter'
+            provider='twitter'
+            value='twitterhandle'
+            updateSocialSetting={updateSocialSetting}
+            handleUnlinkAccount={handleUnlinkAccount}
+          />
+        )
+
+        wrapper.instance().handleLinkClick()
+        expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
+        expect(updateSocialSetting).toHaveBeenCalledWith({ key: 'twitterName', value: 'twitterhandle' })
+      })
+
+      it('and handle is NOT entered, it does NOT update the twitterName', () => {
+        window.prompt = jest.fn(() => false)
+        const updateSocialSetting = jest.fn()
+        const handleUnlinkAccount = jest.fn()
+
+        const wrapper = shallow(
+          <SocialControl
+            label='Twitter'
+            provider='twitter'
+            value='twitterhandle'
+            updateSocialSetting={updateSocialSetting}
+            handleUnlinkAccount={handleUnlinkAccount}
+          />
+        )
+
+        wrapper.instance().handleLinkClick()
+        expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
+        expect(updateSocialSetting).not.toHaveBeenCalled()
+      })
     })
 
-    it('calls exits if onLink returns null when provider is twitter', () => {
-      const provider = 'twitter'
-      const onLink = () => null
-      const updateUserSettings = jest.fn()
-      const onChange = jest.fn()
-      const wrapper = shallow(<SocialControl
-        label='A Social Control'
-        provider={provider}
-        onLink={onLink}
-        updateUserSettings={updateUserSettings}
-        onChange={onChange} />)
+    describe('when provider is linkedin', () => {
+      it('and valid linkedinUrl is provided, it updates the linkedinUrl', () => {
+        window.prompt = jest.fn(() => 'linkedin.com/test')
+        const updateSocialSetting = jest.fn()
+        const handleUnlinkAccount = jest.fn()
 
-      wrapper.instance().linkClicked()
-      expect(updateUserSettings).not.toHaveBeenCalledWith()
-      expect(onChange).toHaveBeenCalledWith(false)
+        const wrapper = shallow(
+          <SocialControl
+            label='LinkedIn'
+            provider='linkedin'
+            value='linkedin.com/test'
+            updateSocialSetting={updateSocialSetting}
+            handleUnlinkAccount={handleUnlinkAccount}
+          />
+        )
+
+        wrapper.instance().handleLinkClick()
+        expect(window.prompt).toBeCalledWith('Please enter the full url for your LinkedIn page.');
+        expect(updateSocialSetting).toHaveBeenCalledWith({ key: 'linkedinUrl', value: 'linkedin.com/test' })
+      })
     })
 
-    it('calls the right things when provider is not twitter', async () => {
-      const provider = 'facebook'
-      const onLink = () => Promise.resolve({ error: false })
-      const updateUserSettings = jest.fn()
-      const onChange = jest.fn()
-      const wrapper = shallow(<SocialControl
-        label='A Social Control'
-        provider={provider}
-        onLink={onLink}
-        updateUserSettings={updateUserSettings}
-        onChange={onChange} />)
+    // describe('when provider is facebook', () => {
+    //   it('calls the right things when provider is facebook', async () => {
+    //     const provider = 'facebook'
+    //     const onLink = () => Promise.resolve({ error: false })
+    //     const updateUserSettings = jest.fn()
+    //     const onChange = jest.fn()
+    //     const wrapper = shallow(<SocialControl
+    //       label='A Social Control'
+    //       provider={provider}
+    //       onLink={onLink}
+    //       updateUserSettings={updateUserSettings}
+    //       onChange={onChange} />)
 
-      await wrapper.instance().linkClicked()
-      expect(updateUserSettings).not.toHaveBeenCalledWith()
-      expect(onChange).toHaveBeenCalledWith(true)
-    })
-
-    it('calls onChange with false on error when provider is not twitter', async () => {
-      const provider = 'facebook'
-      const onLink = () => Promise.resolve({ error: true })
-      const updateUserSettings = jest.fn()
-      const onChange = jest.fn()
-      const wrapper = shallow(<SocialControl
-        label='A Social Control'
-        provider={provider}
-        onLink={onLink}
-        updateUserSettings={updateUserSettings}
-        onChange={onChange} />)
-
-      await wrapper.instance().linkClicked()
-      expect(updateUserSettings).not.toHaveBeenCalledWith()
-      expect(onChange).toHaveBeenCalledWith(false)
-    })
+    //     await wrapper.instance().linkClicked()
+    //     expect(updateUserSettings).not.toHaveBeenCalledWith()
+    //     expect(onChange).toHaveBeenCalledWith(true)
+    //   })
+    // })
   })
 
-  describe('unlinkClicked', () => {
-    const provider = 'linkedin'
-    const unlinkAccount = jest.fn()
-    const onChange = jest.fn()
-    const wrapper = shallow(<SocialControl
-      label='A Social Control'
-      provider={provider}
-      unlinkAccount={unlinkAccount}
-      onChange={onChange} />)
-    wrapper.instance().unlinkClicked()
-    expect(unlinkAccount).toHaveBeenCalledWith(provider)
-    expect(onChange).toHaveBeenCalledWith(false)
+  describe('handleUnlinkClick', () => {
+    const handleUnlinkAccount = jest.fn()
+    const updateSocialSetting = jest.fn()
+
+    const wrapper = shallow(
+      <SocialControl
+        label='LinkedIn'
+        provider='linkedin'
+        value='linkedin.com/test'
+        updateSocialSetting={updateSocialSetting}
+        handleUnlinkAccount={handleUnlinkAccount}
+      />
+    )
+
+    wrapper.instance().handleUnlinkClick()
+    expect(handleUnlinkAccount).toHaveBeenCalled()
+    expect(updateSocialSetting).toHaveBeenCalledWith({ key: 'linkedinUrl', value: '' })
   })
 })
