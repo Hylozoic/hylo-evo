@@ -13,28 +13,92 @@ import { DEFAULT_BANNER } from 'store/models/Me'
 
 import './EditProfileTab.scss'
 
-const { object, func } = PropTypes
+const { object, func, string } = PropTypes
 
-const twitterPrompt = () => window.prompt('Please enter your twitter name.')
-export function linkedinPrompt (prompt) {
-  var url = window.prompt(prompt || 'Please enter the full url for your LinkedIn page.')
-  if (url) {
-    if (validateLinkedin(url)) {
-      return url
-    } else {
-      return linkedinPrompt('Invalid url. Please enter full url for your LinkedIn page.')
+export const socialLinkClicked = provider => {}
+
+const mapSocialProviderToKey = {
+  "twitter": "twitterName",
+  "linkedin": "linkedinUrl",
+  "facebook": "facebookUrl"
+}
+export  class SocialControl extends Component {
+  static propTypes = {
+    label: string,
+    provider: string,
+    value: string | null,
+    updateSocialSettings: func,
+    handleUnlink: func,
+  }
+
+  handleLinkClick () {
+    const { provider, updateSocialSetting, onLink } = this.props
+
+    switch (provider) {
+      case "twitter": {
+        const twitterHandle = window.prompt('Please enter your twitter name.')
+        if (twitterHandle) {
+          updateSocialSetting({ key: mapSocialProviderToKey[provider], value: twitterHandle })
+        }
+        break;
+      }
+      case "linkedin": {
+        const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
+
+        let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
+        if (linkedinUrl) {
+          while (!validateLinkedinUrl(linkedinUrl)){
+            linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.');
+          }
+          updateSocialSetting({ key: mapSocialProviderToKey[provider], value: linkedinUrl })
+        }
+        break;
+      }
+      // case "facebook": {
+      //   return onLink()
+      //   .then(({ error }) => {
+      //     if (error) return onChange(false)
+      //     return onChange(true)
+      //   })
+      // }
     }
   }
+
+  handleUnlinkClick () {
+    const { handleUnlink, updateSocialSetting, provider } = this.props
+
+    handleUnlink();
+    updateSocialSetting({ key: mapSocialProviderToKey[provider], value: "" })
+  }
+
+  render () {
+    const { label, value = '', key } = this.props
+    const linked = !!value
+
+    const linkButton =
+      <span
+        styleName='link-button'
+        onClick={linked ? () => this.handleUnlinkClick() : () => this.handleLinkClick()}>
+        {linked ? 'Unlink' : 'Link'}
+      </span>
+
+    return (
+      <div styleName='control'>
+        <div styleName={cx('social-control-label')}>
+          {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
+          {label}{linkButton}
+        </div>
+      </div>
+    )
+  }
 }
-
-export const validateLinkedin = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
-
 export default class EditProfileTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func,
     loginWithService: func
   }
+
   constructor (props) {
     super(props)
     this.state = { edits: {}, changed: false }
@@ -99,6 +163,13 @@ export default class EditProfileTab extends Component {
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
 
+  updateSocialSetting = ({key, value}) => {
+    this.setState({
+      changed: true,
+      edits: {...this.state.edits, [key]: value }
+    });
+  }
+
   save = () => {
     this.setState({ changed: false })
     this.props.setConfirm(false)
@@ -109,7 +180,6 @@ export default class EditProfileTab extends Component {
     const {
       fetchPending,
       currentUser,
-      updateUserSettings,
       loginWithService,
       unlinkAccount
     } = this.props
@@ -121,6 +191,7 @@ export default class EditProfileTab extends Component {
       contactEmail, contactPhone, location, url,
       facebookUrl, twitterName, linkedinUrl
     } = edits
+
     const locationObject = currentUser.locationObject
 
     return <div>
@@ -159,27 +230,26 @@ export default class EditProfileTab extends Component {
       <label styleName='social-label'>Social Accounts</label>
       <SocialControl
         label='Facebook'
-        onLink={() => loginWithService('facebook')}
-        onChange={this.updateSettingDirectly('facebookUrl', false)}
-        unlinkAccount={unlinkAccount}
         provider='facebook'
-        value={facebookUrl} />
+        value={facebookUrl}
+        onLink={() => loginWithService('facebook')}
+        updateSocialSetting={this.updateSocialSetting}
+        handleUnlink={() => unlinkAccount("facebook")}
+      />
       <SocialControl
         label='Twitter'
-        onLink={() => twitterPrompt()}
-        onChange={this.updateSettingDirectly('twitterName', false)}
-        unlinkAccount={unlinkAccount}
         provider='twitter'
         value={twitterName}
-        updateUserSettings={updateUserSettings} />
+        updateSocialSetting={this.updateSocialSetting}
+        handleUnlink={() => unlinkAccount("twitter")}
+      />
       <SocialControl
         label='LinkedIn'
-        onLink={() => linkedinPrompt()}
-        unlinkAccount={unlinkAccount}
-        onChange={this.updateSettingDirectly('linkedinUrl', false)}
         provider='linkedin'
         value={linkedinUrl}
-        updateUserSettings={updateUserSettings} />
+        updateSocialSetting={this.updateSocialSetting}
+        handleUnlink={() => unlinkAccount("linkedin")}
+      />
       <div styleName='saveChanges'>
         <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
@@ -188,47 +258,3 @@ export default class EditProfileTab extends Component {
   }
 }
 
-export const socialLinkClicked = provider => {}
-
-export class SocialControl extends Component {
-  linkClicked () {
-    const { provider, onLink, updateUserSettings, onChange } = this.props
-
-    if (provider === 'twitter' || provider === 'linkedin') {
-      const key = provider === 'twitter' ? 'twitterName' : 'linkedinUrl'
-      const value = onLink()
-      if (!value) return onChange(false)
-      updateUserSettings({ [key]: value })
-      return onChange(true)
-    } else {
-      return onLink()
-        .then(({ error }) => {
-          if (error) return onChange(false)
-          return onChange(true)
-        })
-    }
-  }
-
-  unlinkClicked () {
-    const { provider, unlinkAccount, onChange } = this.props
-    unlinkAccount(provider)
-    return onChange(false)
-  }
-
-  render () {
-    const { label, value = '' } = this.props
-    const linked = !!value
-
-    const linkButton = <span
-      styleName='link-button'
-      onClick={linked ? () => this.unlinkClicked() : () => this.linkClicked()}>
-      {linked ? 'Unlink' : 'Link'}
-    </span>
-    return <div styleName='control'>
-      <div styleName={cx('social-control-label')}>
-        {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
-        {label}{linkButton}
-      </div>
-    </div>
-  }
-}
