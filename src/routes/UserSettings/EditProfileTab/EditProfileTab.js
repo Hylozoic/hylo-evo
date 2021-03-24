@@ -65,9 +65,9 @@ export  class SocialControl extends Component {
   }
 
   handleUnlinkClick () {
-    const { handleUnlink, updateSocialSetting, provider } = this.props
+    const { handleUnlinkAccount, updateSocialSetting, provider } = this.props
 
-    handleUnlink();
+    handleUnlinkAccount();
     updateSocialSetting({ key: mapSocialProviderToKey[provider], value: "" })
   }
 
@@ -234,21 +234,21 @@ export default class EditProfileTab extends Component {
         value={facebookUrl}
         onLink={() => loginWithService('facebook')}
         updateSocialSetting={this.updateSocialSetting}
-        handleUnlink={() => unlinkAccount("facebook")}
+        handleUnlinkAccount={() => unlinkAccount("facebook")}
       />
       <SocialControl
         label='Twitter'
         provider='twitter'
         value={twitterName}
         updateSocialSetting={this.updateSocialSetting}
-        handleUnlink={() => unlinkAccount("twitter")}
+        handleUnlinkAccount={() => unlinkAccount("twitter")}
       />
       <SocialControl
         label='LinkedIn'
         provider='linkedin'
         value={linkedinUrl}
         updateSocialSetting={this.updateSocialSetting}
-        handleUnlink={() => unlinkAccount("linkedin")}
+        handleUnlinkAccount={() => unlinkAccount("linkedin")}
       />
       <div styleName='saveChanges'>
         <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
