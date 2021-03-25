@@ -11,22 +11,23 @@ import './Navigation.scss'
 
 export default function Navigation (props) {
   const {
-    className,
-    createPath,
-    collapsed,
-    routeParams,
-    rootPath,
-    membersPath,
-    projectsPath,
-    groupId,
-    groupsPath,
-    eventsPath,
-    mapPath,
-    mapView,
     badge,
+    className,
     clearBadge,
     clearFeedList,
-    hideTopics
+    createPath,
+    collapsed,
+    eventsPath,
+    groupId,
+    groupsPath,
+    hasRelatedGroups,
+    hideTopics,
+    mapPath,
+    mapView,
+    membersPath,
+    projectsPath,
+    routeParams,
+    rootPath
   } = props
 
   const homeOnClick = () => {
@@ -65,7 +66,7 @@ export default function Navigation (props) {
       icon: 'Members',
       to: membersPath
     },
-    groupsPath && {
+    hasRelatedGroups && groupsPath && {
       label: 'Groups',
       icon: 'Groups',
       to: groupsPath

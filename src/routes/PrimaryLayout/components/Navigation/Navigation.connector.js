@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
 import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
@@ -21,9 +22,7 @@ export function mapStateToProps (state, props) {
   const mapPath = `${rootPath}/map`
   const createPath = `${props.location.pathname}/create/`
 
-  let groupMembership, badge
-
-  // TODO: what about all groups path? as default?
+  let badge, groupMembership, hasRelatedGroups
 
   if (group) {
     // we have to select the Group Membership from the ORM separately. we can't just
@@ -32,12 +31,16 @@ export function mapStateToProps (state, props) {
     // newPostCount.
     groupMembership = getGroupMembership(state, { groupId: group.id })
     badge = get('newPostCount', groupMembership)
+    const childGroups = getChildGroups(state, { groupSlug: group.slug })
+    const parentGroups = getParentGroups(state, { groupSlug: group.slug })
+    hasRelatedGroups = childGroups.length > 0 || parentGroups.length > 0
   }
 
   return {
     createPath,
     routeParams,
     groupId: get('id', group),
+    hasRelatedGroups,
     hideTopics: isPublicPath(props.location.pathname),
     rootPath,
     membersPath,
