@@ -124,8 +124,8 @@ const redirectRoutes = [
   { from: '/(c|n)/:groupSlug/:topicName/p/:postId', to: '/groups/:groupSlug/topics/:topicName/post/:postId' },
 
   // redirects for context switching into global contexts, since these pages don't exist yet
-  { from: '/all/members', to: '/all' },
-  { from: '/public/(members|topics)', to: '/public' }
+  { from: '/all/(members|settings)', to: '/all' },
+  { from: '/public/(members|topics|settings)', to: '/public' }
 ]
 
 export default class PrimaryLayout extends Component {
