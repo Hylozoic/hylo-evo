@@ -35,8 +35,18 @@ export function useInvitation (userId, inviteCodes = {}) {
             role
             group {
               id
+              accessibility
               name
+              settings {
+                allowGroupInvites
+                askJoinQuestions
+                publicMemberDirectory
+              }
               slug
+              visibility
+            }
+            person {
+              id
             }
           }
           error
