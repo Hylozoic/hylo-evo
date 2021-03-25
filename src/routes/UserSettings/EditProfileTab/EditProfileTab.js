@@ -37,7 +37,7 @@ export const linkedinPrompt = () => {
     return linkedinUrl
   }
 }
-export  class SocialControl extends Component {
+export class SocialControl extends Component {
   static propTypes = {
     label: string,
     provider: string,
@@ -55,11 +55,12 @@ export  class SocialControl extends Component {
         if (twitterHandle) {
           updateSocialSetting({ key: mapSocialProviderToKey[provider], value: twitterHandle })
         }
-        break;
+        break
       }
       case 'linkedin': {
         const linkedinUrl = linkedinPrompt()
         updateSocialSetting({ key: mapSocialProviderToKey[provider], value: linkedinUrl })
+        break
       }
       // case 'facebook': {
       //   return onLink()
@@ -79,7 +80,7 @@ export  class SocialControl extends Component {
   }
 
   render () {
-    const { label, value = '', key } = this.props
+    const { label, value = '' } = this.props
     const linked = !!value
 
     const linkButton =
