@@ -173,8 +173,9 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
+    const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
 
-    return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
+    return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn })}>
       {/* Context navigation drawer */}
       <Switch>
         {routesWithDrawer.map(({ path }) => (
@@ -216,7 +217,7 @@ export default class PrimaryLayout extends Component {
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
             {/* Member Routes */}
-            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
             <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* All and Public Routes */}
             <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />

@@ -99,6 +99,18 @@ $drawer-z-index: 51;
   }
 }
 
+.singleColumn .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-right: 0;
+  height: calc(100vh - 58px);
+  padding-left: 0;
+}
+
 .center.collapsedState {
   width: 43%;
   flex: 0 0 43%;

@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -88,7 +89,7 @@ export default class GroupDetail extends Component {
 
     const topics = group && group.groupTopics
 
-    return <div styleName='g.group'>
+    return <div className={cx({ [g.group]: true, [g.fullPage]: !onClose })}>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
