@@ -16,7 +16,7 @@ $about-height: 116px;
 .group-sidebar {
   padding: 25px 0;
   overflow: scroll;
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
 
 // AboutSection
@@ -37,6 +37,7 @@ $about-height: 116px;
   overflow: hidden;
   margin-top: $space-3x;
   margin-bottom: 5px;
+  position: relative;
 }
 
 .gradient {
@@ -44,6 +45,7 @@ $about-height: 116px;
   background-image: linear-gradient(0, white, rgba(255,255,255,0) 50%, rgba(255,255,255,0));
   height: $about-height;
   width: 100%;
+  bottom: -1px;
 }
 
 .expanded {

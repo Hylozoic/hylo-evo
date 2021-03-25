@@ -163,7 +163,7 @@ $drawer-z-index: 51;
   z-index: 30;
   top: 58px;
   right: 0px;
-  height: 100%;
+  height: calc(100vh - 58px);
   width: $detail-column-width;
   box-shadow: 0px 4px 56px 0px $shadow-color;
   transition-delay: 0.1s;
