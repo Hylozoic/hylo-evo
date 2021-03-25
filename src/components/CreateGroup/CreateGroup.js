@@ -231,7 +231,7 @@ export default class CreateGroup extends Component {
         </div>
       </div>
 
-      { this.props.parentGroups.length > 0 && <div styleName='parentGroups'>
+      <div styleName='parentGroups'>
         <div styleName='parentSelector'>
           <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
           {/* TODO: somehow show groups that are restricted and will be a join request differently */}
@@ -243,7 +243,8 @@ export default class CreateGroup extends Component {
             ref={this.groupsSelector}
           />
         </div>
-      </div>}
+      </div>
+
       <div styleName='createGroupBottom'>
         <Button
           color='green-white-green-border'
