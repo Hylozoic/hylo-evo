@@ -84,15 +84,17 @@ fragment MeCompleteFragment on Me {
     }
     group {
       id
+      accessibility
+      avatarUrl
+      memberCount
       name
       slug
-      memberCount
-      avatarUrl
       settings {
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
       }
+      visibility
       groupTopics(subscribed: true) {
         total
         hasMore
