@@ -18,9 +18,9 @@ const { object, func, string } = PropTypes
 export const socialLinkClicked = provider => {}
 
 const mapSocialProviderToKey = {
-  "twitter": "twitterName",
-  "linkedin": "linkedinUrl",
-  "facebook": "facebookUrl"
+  'twitter': 'twitterName',
+  'linkedin': 'linkedinUrl',
+  'facebook': 'facebookUrl'
 }
 
 /** LinkedIn Url */
@@ -29,11 +29,13 @@ export const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?
 export const linkedinPrompt = () => {
   let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
 
-  while (!validateLinkedinUrl(linkedinUrl)){
-    linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.');
-  }
+  if (linkedinUrl) {
+    while (!validateLinkedinUrl(linkedinUrl)) {
+      linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
+    }
 
-  return linkedinUrl;
+    return linkedinUrl
+  }
 }
 export  class SocialControl extends Component {
   static propTypes = {
@@ -41,25 +43,25 @@ export  class SocialControl extends Component {
     provider: string,
     value: string | null,
     updateSocialSettings: func,
-    handleUnlink: func,
+    handleUnlink: func
   }
 
   handleLinkClick () {
-    const { provider, updateSocialSetting, onLink } = this.props
+    const { provider, updateSocialSetting } = this.props
 
     switch (provider) {
-      case "twitter": {
+      case 'twitter': {
         const twitterHandle = window.prompt('Please enter your twitter name.')
         if (twitterHandle) {
           updateSocialSetting({ key: mapSocialProviderToKey[provider], value: twitterHandle })
         }
         break;
       }
-      case "linkedin": {
-        const linkedinUrl = linkedinPrompt();
+      case 'linkedin': {
+        const linkedinUrl = linkedinPrompt()
         updateSocialSetting({ key: mapSocialProviderToKey[provider], value: linkedinUrl })
       }
-      // case "facebook": {
+      // case 'facebook': {
       //   return onLink()
       //   .then(({ error }) => {
       //     if (error) return onChange(false)
@@ -72,8 +74,8 @@ export  class SocialControl extends Component {
   handleUnlinkClick () {
     const { handleUnlinkAccount, updateSocialSetting, provider } = this.props
 
-    handleUnlinkAccount();
-    updateSocialSetting({ key: mapSocialProviderToKey[provider], value: "" })
+    handleUnlinkAccount()
+    updateSocialSetting({ key: mapSocialProviderToKey[provider], value: '' })
   }
 
   render () {
@@ -168,11 +170,11 @@ export default class EditProfileTab extends Component {
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
 
-  updateSocialSetting = ({key, value}) => {
+  updateSocialSetting = ({ key, value }) => {
     this.setState({
       changed: true,
-      edits: {...this.state.edits, [key]: value }
-    });
+      edits: { ...this.state.edits, [key]: value }
+    })
   }
 
   save = () => {
@@ -239,21 +241,21 @@ export default class EditProfileTab extends Component {
         value={facebookUrl}
         onLink={() => loginWithService('facebook')}
         updateSocialSetting={this.updateSocialSetting}
-        handleUnlinkAccount={() => unlinkAccount("facebook")}
+        handleUnlinkAccount={() => unlinkAccount('facebook')}
       />
       <SocialControl
         label='Twitter'
         provider='twitter'
         value={twitterName}
         updateSocialSetting={this.updateSocialSetting}
-        handleUnlinkAccount={() => unlinkAccount("twitter")}
+        handleUnlinkAccount={() => unlinkAccount('twitter')}
       />
       <SocialControl
         label='LinkedIn'
         provider='linkedin'
         value={linkedinUrl}
         updateSocialSetting={this.updateSocialSetting}
-        handleUnlinkAccount={() => unlinkAccount("linkedin")}
+        handleUnlinkAccount={() => unlinkAccount('linkedin')}
       />
       <div styleName='saveChanges'>
         <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
@@ -262,4 +264,3 @@ export default class EditProfileTab extends Component {
     </div>
   }
 }
-
