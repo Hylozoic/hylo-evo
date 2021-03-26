@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
+import getMe from 'store/selectors/getMe'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
@@ -10,6 +11,7 @@ import {
   getPosts,
   getHasMorePosts
 } from 'components/FeedList/FeedList.store'
+import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import presentPost from 'store/presenters/presentPost'
 
 export function mapStateToProps (state, props) {
@@ -20,10 +22,14 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
   const context = getRouteParam('context', state, props)
 
+  const currentUser = getMe(state, props)
+  const defaultSortBy = get('settings.streamSortBy', currentUser) || 'created'
+  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'list'
+
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || 'created'
-  const viewMode = getQuerystringParam('v', state, props) || 'list'
+  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
+  const viewMode = getQuerystringParam('v', state, props) || defaultViewMode
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -57,10 +63,18 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const updateSettings = (params) => dispatch(updateUserSettings(params))
   return {
+    updateUserSettings: updateSettings,
     changeTab: tab => dispatch(changeQuerystringParam(props, 't', tab, 'all')),
-    changeSort: sort => dispatch(changeQuerystringParam(props, 's', sort, 'all')),
-    changeView: view => dispatch(changeQuerystringParam(props, 'v', view, 'all')),
+    changeSort: sort => {
+      updateSettings({ settings: { streamSortBy: sort } })
+      return dispatch(changeQuerystringParam(props, 's', sort, 'all'))
+    },
+    changeView: view => {
+      updateSettings({ settings: { streamViewMode: view } })
+      return dispatch(changeQuerystringParam(props, 'v', view, 'all'))
+    },
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
     }

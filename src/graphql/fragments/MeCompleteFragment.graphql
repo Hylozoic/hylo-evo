@@ -47,6 +47,8 @@ fragment MeCompleteFragment on Me {
     digestFrequency
     dmNotifications
     commentNotifications
+    streamViewMode
+    streamSortBy
   }
   affiliations {
     items {
