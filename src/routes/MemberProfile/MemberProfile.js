@@ -63,6 +63,7 @@ export default class MemberProfile extends React.Component {
       contentLoading,
       person,
       currentUser,
+      isSingleColumn,
       routeParams,
       showDetails,
       push
@@ -102,7 +103,7 @@ export default class MemberProfile extends React.Component {
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
 
-    return <div styleName='member-profile'>
+    return <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
           <Icon name='Edit' /> Edit Profile
@@ -276,7 +277,7 @@ export function Event ({ memberCap, event, routeParams, showDetails }) {
 }
 
 export function Error ({ children }) {
-  return <div styleName='member-profile'>
+  return <div styleName='memberProfile'>
     <span styleName='error'>{children}</span>
   </div>
 }

@@ -49,11 +49,6 @@ import {
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
 
-const routesWithNavigation = [
-  { path: '/:context(all|public)' },
-  { path: '/:context(groups)/:groupSlug' }
-]
-
 // In order of more specific to less specific
 const routesWithDrawer = [
   { path: `/:context(all|public)/:view(stream|events|map|projects)/${OPTIONAL_POST_MATCH}` },
@@ -130,8 +125,8 @@ const redirectRoutes = [
   { from: '/(c|n)/:groupSlug/:topicName/p/:postId', to: '/groups/:groupSlug/topics/:topicName/post/:postId' },
 
   // redirects for context switching into global contexts, since these pages don't exist yet
-  { from: '/all/members', to: '/all' },
-  { from: '/public/(members|topics)', to: '/public' }
+  { from: '/all/(members|settings)', to: '/all' },
+  { from: '/public/(members|topics|settings)', to: '/public' }
 ]
 
 export default class PrimaryLayout extends Component {
@@ -150,14 +145,15 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const {
-      group,
       currentUser,
-      isDrawerOpen,
-      location,
-      toggleDrawer,
-      isGroupRoute,
+      group,
       groupPending,
-      showLogoBadge
+      isDrawerOpen,
+      isGroupRoute,
+      location,
+      memberOfCurrentGroup,
+      showLogoBadge,
+      toggleDrawer
     } = this.props
 
     if (!currentUser) {
@@ -178,8 +174,10 @@ export default class PrimaryLayout extends Component {
       detailRoutes
     )
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
+    const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
 
-    return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname) })}>
+    return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn })}>
+      {/* Context navigation drawer */}
       <Switch>
         {routesWithDrawer.map(({ path }) => (
           <Route path={path} key={path} render={props => (
@@ -187,17 +185,28 @@ export default class PrimaryLayout extends Component {
           )} />
         ))}
       </Switch>
+
       <TopNav styleName='top' onClick={closeDrawer} {...{ group, currentUser, showLogoBadge }} />
+
       <div styleName={cx('main', { 'map-view': isMapViewPath(location.pathname) })} onClick={closeDrawer}>
-        {routesWithNavigation.map(({ path }) =>
-          <Route path={path} key={path} component={props =>
+        {/* View navigation menu */}
+        <Route path='/:context(all|public)' component={props =>
+          <Navigation {...props}
+            collapsed={collapsedState}
+            styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })}
+            mapView={isMapViewPath(location.pathname)}
+          />}
+        />
+        {group && memberOfCurrentGroup &&
+          <Route path='/:context(groups)/:groupSlug' component={props =>
             <Navigation {...props}
               collapsed={collapsedState}
               styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })}
               mapView={isMapViewPath(location.pathname)}
             />}
           />
-        )}
+        }
+
         <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
@@ -209,7 +218,7 @@ export default class PrimaryLayout extends Component {
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
             {/* Member Routes */}
-            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
             <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* All and Public Routes */}
             <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
@@ -220,6 +229,8 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Group Routes */}
+            {group && !memberOfCurrentGroup &&
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
@@ -237,13 +248,15 @@ export default class PrimaryLayout extends Component {
             <Route path='/confirm-group-delete' component={GroupDeleteConfirmation} />
           </Switch>
         </div>
-        <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
-          <Switch>
-            <Route path={`/:context(groups)/:groupSlug/:view(stream|events|map|groups|projects)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
-            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
-            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
-          </Switch>
-        </div>
+        {group && memberOfCurrentGroup &&
+          <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
+            <Switch>
+              <Route path={`/:context(groups)/:groupSlug/:view(stream|events|map|groups|projects)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+              <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+            </Switch>
+          </div>
+        }
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
             {detailRoutes.map(({ path, component }) =>

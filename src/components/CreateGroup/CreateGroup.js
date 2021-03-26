@@ -33,6 +33,8 @@ export default class CreateGroup extends Component {
       slugCustomized: false,
       visibility: 1,
 
+      edited: false,
+
       errors: {
         name: false,
         slug: false
@@ -73,7 +75,8 @@ export default class CreateGroup extends Component {
 
     const updates = {
       [field]: newValue,
-      errors: { ...this.state.errors }
+      errors: { ...this.state.errors },
+      edited: true
     }
 
     if (field === 'name') {
@@ -115,7 +118,7 @@ export default class CreateGroup extends Component {
 
   render () {
     const { match, parentGroupOptions } = this.props
-    const { accessibility, characterCount, errors, name, parentGroups, slug, visibility } = this.state
+    const { accessibility, characterCount, edited, errors, name, parentGroups, slug, visibility } = this.state
 
     if (!match) return null
 
@@ -231,7 +234,7 @@ export default class CreateGroup extends Component {
         </div>
       </div>
 
-      { this.props.parentGroups.length > 0 && <div styleName='parentGroups'>
+      <div styleName='parentGroups'>
         <div styleName='parentSelector'>
           <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
           {/* TODO: somehow show groups that are restricted and will be a join request differently */}
@@ -243,17 +246,18 @@ export default class CreateGroup extends Component {
             ref={this.groupsSelector}
           />
         </div>
-      </div>}
+      </div>
+
       <div styleName='createGroupBottom'>
         <Button
           color='green-white-green-border'
           key='create-button'
           narrow
-          disabled={!this.isValid()}
+          disabled={!edited || !this.isValid()}
           onClick={this.onSubmit}
           styleName='submit-button'
         >
-          <Icon name='Plus' green styleName='create-group-icon' />Create Group
+          <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />Create Group
         </Button>
       </div>
     </div>

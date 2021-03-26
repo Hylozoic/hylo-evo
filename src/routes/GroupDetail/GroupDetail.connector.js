@@ -17,7 +17,7 @@ import {
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('detailGroupSlug', state, props)
   const routeParams = props.match.params
-  const group = presentGroup(getGroupForDetails(state, props))
+  const group = presentGroup(props.group || getGroupForDetails(state, props))
   const currentUser = getMe(state)
   const { GroupDetail } = state
   const isMember = group && currentUser ? getMyMemberships(state, props).find(m => m.group.id === group.id) : false
@@ -46,7 +46,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchGroup: () => dispatch(fetchGroupBySlug(slug)),
     fetchJoinRequests: (groupId) => () => dispatch(fetchJoinRequests(groupId)),
-    onClose: () => dispatch(push(closeLocation)),
+    onClose: slug ? () => dispatch(push(closeLocation)) : false,
     joinGroup: (groupId, userId) => () => dispatch(joinGroup(groupId, userId)),
     createJoinRequest: (groupId) => (questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }
