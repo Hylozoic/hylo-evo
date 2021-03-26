@@ -9,6 +9,9 @@ import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import './PostListRow.scss'
 
+// :SHONK: no idea why React propagates events from child elements but NOT IN OTHER COMPONENTS
+const stopEvent = (e) => e.stopPropagation()
+
 const PostListRow = (props) => {
   const {
     routeParams,
@@ -39,8 +42,16 @@ const PostListRow = (props) => {
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
       <div styleName='votes'>
-        <a onClick={voteOnPost} styleName={cx('vote-button', { voted: myVote })}
-          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={`post-tt-${post.id}`}>
+        <a
+          onClick={(e) => {
+            voteOnPost(e)
+            stopEvent(e)
+          }}
+          styleName={cx('vote-button', { voted: myVote })}
+          data-tip-disable={myVote}
+          data-tip='Upvote this post so more people see it.'
+          data-for={`post-tt-${post.id}`}
+        >
           <Icon name='ArrowUp' styleName='vote-icon' />
           {votesTotal}
         </a>
@@ -61,7 +72,7 @@ const PostListRow = (props) => {
         {!isEmpty(topics) && (
           <div styleName='topics'>
             {topics.slice(0, 3).map(t =>
-              <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={(e) => e.stopPropagation()}>#{t.name}</Link>)}
+              <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={stopEvent}>#{t.name}</Link>)}
           </div>
         )}
         <div styleName='timestamp'>
