@@ -8,7 +8,6 @@ import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
-import ReactTooltip from 'react-tooltip'
 
 export default class PostFooter extends React.PureComponent {
   static propTypes= {
@@ -101,10 +100,6 @@ export default class PostFooter extends React.PureComponent {
         <Icon name='ArrowUp' styleName='arrowIcon' />
         {votesTotal}
       </a> : '' }
-      <ReactTooltip
-        effect={'solid'}
-        delayShow={550}
-        id='postfooter-tt' />
     </div>
   }
 }

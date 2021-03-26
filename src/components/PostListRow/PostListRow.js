@@ -6,6 +6,7 @@ import { personUrl, topicUrl } from 'util/navigation'
 import { humanDate } from 'hylo-utils/text'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
+import Tooltip from 'components/Tooltip'
 import './PostListRow.scss'
 
 const PostListRow = (props) => {
@@ -39,7 +40,7 @@ const PostListRow = (props) => {
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
       <div styleName='votes'>
         <a onClick={voteOnPost} styleName={cx('vote-button', { voted: myVote })}
-          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
+          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={`post-tt-${post.id}`}>
           <Icon name='ArrowUp' styleName='vote-icon' />
           {votesTotal}
         </a>
@@ -67,6 +68,9 @@ const PostListRow = (props) => {
           {humanDate(createdAt)}
         </div>
       </div>
+      <Tooltip
+        delay={550}
+        id={`post-tt-${post.id}`} />
     </div>
   )
 }
