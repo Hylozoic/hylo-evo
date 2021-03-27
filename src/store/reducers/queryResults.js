@@ -270,7 +270,8 @@ export const queryParamWhitelist = [
   'topic',
   'type',
   'page',
-  'isPublic'
+  'context',
+  'onlyPublic'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {
