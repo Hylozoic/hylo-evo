@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -195,7 +199,7 @@ $drawer-z-index: 51;
 }
 
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1050px) {
   .sidebar {
     top: -100vh;
     opacity: 0;
@@ -256,7 +260,6 @@ $drawer-z-index: 51;
     max-width: 100%;
     flex: 0 0 100%;
     left: 0%;
-    height: calc(100vh - 104px);
     padding: 0 0 150px 0;
   }
 
@@ -289,6 +292,12 @@ $drawer-z-index: 51;
     width: 100%;
     margin-top: 0;
     top: 0;
+    height: 100%;
+    position: absolute;
+  }
+
+  .detailOpen, .detailOpen .center, .detailOpen .main {
+    overflow: hidden;
   }
 
   .center {

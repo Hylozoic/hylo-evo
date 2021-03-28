@@ -3,7 +3,7 @@ import { compact } from 'lodash/fp'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
-import { topicsUrl } from 'util/navigation'
+import { topicsUrl, allGroupsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 
@@ -88,7 +88,7 @@ export default function Navigation (props) {
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
         <li styleName={cx('item', 'topicItem')}>
-          <Link to={topicsUrl({ routeParams })}>
+          <Link to={topicsUrl(routeParams, allGroupsUrl())}>
             <Icon name='Topics' />
           </Link>
         </li>
