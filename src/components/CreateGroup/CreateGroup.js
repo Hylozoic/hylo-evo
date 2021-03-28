@@ -237,6 +237,10 @@ export default class CreateGroup extends Component {
       <div styleName='parentGroups'>
         <div styleName='parentSelector'>
           <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
+          <div styleName='parentGroupInfo'>
+            ?
+            <div styleName='parentGroupTooltip'>You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has accessibility settings which allow groups to join</div>
+          </div>
           {/* TODO: somehow show groups that are restricted and will be a join request differently */}
           <GroupsSelector
             options={parentGroupOptions}
