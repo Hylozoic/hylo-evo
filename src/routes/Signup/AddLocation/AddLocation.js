@@ -82,7 +82,7 @@ export default class AddLocation extends Component {
           <p>Add your location to see more relevant content, and find people and projects around you.</p>
         </div>
         <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Confirm your details'} />
+          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
         </div>
       </div>
     </div>
