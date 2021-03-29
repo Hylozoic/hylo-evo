@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -56,7 +57,7 @@ export default class GroupDetail extends Component {
         let errorMessage, successMessage
         if (res.error) errorMessage = `Error joining ${group.name}.`
         const membership = get(res, 'payload.data')
-        if (membership) successMessage = `You have joined ${group.name}.`
+        if (membership) successMessage = <span>You have joined <Link to={groupUrl(group.slug)}>{group.name}</Link></span>
         return this.setState({ errorMessage, successMessage, membership })
       })
   }
@@ -77,6 +78,7 @@ export default class GroupDetail extends Component {
     const {
       group,
       currentUser,
+      isMember,
       location,
       pending,
       onClose
@@ -87,9 +89,7 @@ export default class GroupDetail extends Component {
 
     const topics = group && group.groupTopics
 
-    const isMember = (currentUser && currentUser.memberships) ? currentUser.memberships.toModelArray().find(m => m.group.id === group.id) : false
-
-    return <div styleName='g.group'>
+    return <div className={cx({ [g.group]: true, [g.fullPage]: !onClose })}>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
@@ -119,7 +119,7 @@ export default class GroupDetail extends Component {
         { !currentUser
           ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to post in <span styleName='g.requestGroup'>{group.name}</span></Link></div>
           : isMember
-            ? <div styleName='g.existingMember'>You are already a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+            ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
             : this.renderGroupDetails()
         }
       </div>
@@ -147,7 +147,7 @@ export default class GroupDetail extends Component {
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
             {group.settings.publicMemberDirectory
               ? <div>{group.members.map(member => {
-                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} url={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
+                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
               : <div styleName='g.detail'>
                 <Icon name='Unlock' />
@@ -197,6 +197,6 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
 }
 
 export function Message ({ errorMessage, successMessage, request }) {
-  const message = request ? 'You have already requested to join this group.' : (errorMessage || successMessage)
+  const message = request ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
   return (<div styleName='g.message'>{message}</div>)
 }

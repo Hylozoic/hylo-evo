@@ -1,3 +1,4 @@
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { removeGroupFromUrl } from 'util/navigation'
@@ -5,6 +6,7 @@ import fetchGroupBySlug from 'store/actions/fetchGroupBySlug'
 import presentGroup from 'store/presenters/presentGroup'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import getGroupForDetails from 'store/selectors/getGroupForDetails'
 import { FETCH_GROUP, FETCH_JOIN_REQUESTS } from 'store/constants'
 import {
@@ -14,26 +16,28 @@ import {
 } from './GroupDetail.store'
 
 export function mapStateToProps (state, props) {
-  const slug = getRouteParam('detailGroupSlug', state, props)
   const routeParams = props.match.params
-  const group = presentGroup(getGroupForDetails(state, props))
+  const group = presentGroup(props.group || getGroupForDetails(state, props))
+  const slug = get('slug', group)
   const currentUser = getMe(state)
   const { GroupDetail } = state
+  const isMember = group && currentUser ? getMyMemberships(state, props).find(m => m.group.id === group.id) : false
 
   return {
-    slug,
-    routeParams,
-    group,
     currentUser,
+    group,
+    isMember,
+    joinRequests: GroupDetail,
     pending: state.pending[FETCH_GROUP] || state.pending[FETCH_JOIN_REQUESTS],
-    joinRequests: GroupDetail
+    routeParams,
+    slug
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
 
-  const slug = getRouteParam('detailGroupSlug', {}, props)
+  const slug = getRouteParam('detailGroupSlug', {}, props) || getRouteParam('groupSlug', {}, props)
 
   const closeLocation = {
     ...props.location,
@@ -43,7 +47,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchGroup: () => dispatch(fetchGroupBySlug(slug)),
     fetchJoinRequests: (groupId) => () => dispatch(fetchJoinRequests(groupId)),
-    onClose: () => dispatch(push(closeLocation)),
+    onClose: slug ? () => dispatch(push(closeLocation)) : false,
     joinGroup: (groupId, userId) => () => dispatch(joinGroup(groupId, userId)),
     createJoinRequest: (groupId) => (questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }

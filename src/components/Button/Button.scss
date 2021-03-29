@@ -24,8 +24,10 @@
 }
 
 .disabled {
-  cursor: not-allowed;
-  background-color: #cccccc;
+  cursor: not-allowed !important;
+  background-color: white !important;
+  color: $color-alto !important;
+  border-color: $color-alto !important;
 }
 
 .green {

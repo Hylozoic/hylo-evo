@@ -68,6 +68,8 @@ export default class Feed extends Component {
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
+    const isPublicStream = context === 'public'
+
     return <div>
       {topicName
         ? <TopicFeedHeader
@@ -92,8 +94,8 @@ export default class Feed extends Component {
           newPost={newPost}
           urlLocation={location}
           currentUserHasMemberships={currentUserHasMemberships} />}
-      {currentUserHasMemberships && <FeedList {...this.getFeedProps()} />}
-      {!membershipsPending && !currentUserHasMemberships && <CreateGroupPrompt
+      {(currentUserHasMemberships || isPublicStream) && <FeedList {...this.getFeedProps()} />}
+      {!membershipsPending && !currentUserHasMemberships && !isPublicStream && <CreateGroupPrompt
         goToCreateGroup={goToCreateGroup}
       />}
       {membershipsPending && <Loading />}

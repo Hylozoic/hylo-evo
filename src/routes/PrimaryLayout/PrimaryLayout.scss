@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -34,6 +38,7 @@
 }
 
 .main {
+  padding-top: 56px;
   position: relative;
   flex-grow: 1;
   display: flex;
@@ -99,6 +104,18 @@ $drawer-z-index: 51;
   }
 }
 
+.singleColumn .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-right: 0;
+  height: calc(100vh - 58px);
+  padding-left: 0;
+}
+
 .center.collapsedState {
   width: 43%;
   flex: 0 0 43%;
@@ -148,9 +165,9 @@ $drawer-z-index: 51;
   background-color: white;
   position: absolute;
   z-index: 30;
-  top: 0;
+  top: 58px;
   right: 0px;
-  height: 100%;
+  height: calc(100vh - 58px);
   width: $detail-column-width;
   box-shadow: 0px 4px 56px 0px $shadow-color;
   transition-delay: 0.1s;
@@ -182,10 +199,12 @@ $drawer-z-index: 51;
 }
 
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1050px) {
   .sidebar {
     top: -100vh;
     opacity: 0;
+    transform: scale(0);
+    height: 0;
   }
 
   .center {
@@ -232,6 +251,7 @@ $drawer-z-index: 51;
   .detail {
     width: calc(100% - 80px);
     margin-top: 0;
+    top: 56px;
   }
 
 }
@@ -241,7 +261,6 @@ $drawer-z-index: 51;
     max-width: 100%;
     flex: 0 0 100%;
     left: 0%;
-    height: calc(100vh - 104px);
     padding: 0 0 150px 0;
   }
 
@@ -273,6 +292,13 @@ $drawer-z-index: 51;
   .detail {
     width: 100%;
     margin-top: 0;
+    top: 0;
+    height: 100%;
+    position: absolute;
+  }
+
+  .detailOpen, .detailOpen .center, .detailOpen .main {
+    overflow: hidden;
   }
 
   .center {

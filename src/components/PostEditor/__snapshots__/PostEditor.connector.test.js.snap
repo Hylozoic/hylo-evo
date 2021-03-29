@@ -90,7 +90,7 @@ Object {
     "id": "1",
   },
   "defaultTopics": Array [],
-  "editing": true,
+  "editing": false,
   "editingPostId": undefined,
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],

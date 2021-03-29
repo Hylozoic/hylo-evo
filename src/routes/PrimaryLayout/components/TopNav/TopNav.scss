@@ -1,6 +1,8 @@
 .topNavWrapper {
   width: 100%;
   z-index: 21;
+  position: fixed;
+  top: 0;
 
   &:hover {
     z-index: 111;

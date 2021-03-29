@@ -39,16 +39,17 @@ export function joinGroup (groupId) {
     graphql: {
       query: `mutation ($groupId: ID) {
         joinGroup(groupId: $groupId) {
-          membership {
+          id
+          role
+          hasModeratorRole
+          group {
             id
-            role
-            group {
-              id
-              name
-              slug
-            }
+            name
+            slug
           }
-          error
+          person {
+            id
+          }
         }
       }`,
       variables: {
@@ -56,6 +57,7 @@ export function joinGroup (groupId) {
       }
     },
     meta: {
+      extractModel: 'Membership',
       groupId,
       optimistic: true
     }

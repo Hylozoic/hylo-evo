@@ -83,13 +83,7 @@ export function fetchGroupExists (slug) {
   }
 }
 
-export function createGroup (name, slug, parentIds) {
-  const data = {
-    name,
-    slug,
-    parentIds
-  }
-
+export function createGroup (data) {
   return {
     type: CREATE_GROUP,
     graphql: {
@@ -106,6 +100,9 @@ export function createGroup (name, slug, parentIds) {
                 id
               }
             }
+          }
+          person {
+            id
           }
         }
       }

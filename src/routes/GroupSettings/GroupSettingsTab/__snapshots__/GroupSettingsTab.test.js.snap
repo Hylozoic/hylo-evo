@@ -71,97 +71,24 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         </strong>
         ?
       </p>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-            value={2}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Public"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Public
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Anyone can find and see 
-              Foomunity
-            </span>
-          </div>
-        </label>
-      </div>
-      <div
-        data-stylename="privacySetting on"
-      >
-        <label>
-          <input
-            checked={true}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-            value={1}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Shield"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Protected
-            </h4>
-            <span
-              data-stylename="privacy-option"
-            >
-              Only members of parent groups can see 
-              Foomunity
-            </span>
-          </div>
-        </label>
-      </div>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-            value={0}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Hidden"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Hidden
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Only members of 
-              Foomunity
-               can see this group
-            </span>
-          </div>
-        </label>
-      </div>
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={0}
+        key="0"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={1}
+        key="1"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={2}
+        key="2"
+        updateSetting={[Function]}
+      />
     </div>
     <div
       data-stylename="groupPrivacySection"
@@ -178,146 +105,57 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         </strong>
         ?
       </p>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={2}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Enter-Door"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Open
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Anyone who can see 
-              Foomunity
-               can automatically join it
-            </span>
-          </div>
-        </label>
-      </div>
-      <div
-        data-stylename="privacySetting on"
-      >
-        <label>
-          <input
-            checked={true}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={1}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Hand"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Restricted
-            </h4>
-            <span
-              data-stylename="privacy-option"
-            >
-              Anyone can apply to join but must be approved by a moderator
-            </span>
-          </div>
-        </label>
-        <div
-          data-stylename="groupQuestions "
-        >
-          <SwitchStyled
-            backgroundColor="#8B96A4"
-            checked={false}
-            disabled={false}
-            onChange={[Function]}
-          />
-          <div
-            data-stylename="onOff"
-          >
-            <div
-              data-stylename="off"
-            >
-              OFF
-            </div>
-            <div
-              data-stylename="on"
-            >
-              ON
-            </div>
-          </div>
-          <div
-            data-stylename="questionList"
-          >
-            <span
-              data-stylename="questionDescription"
-            >
-              Require groups to answer questions when joining this group
-            </span>
-            <div
-              data-stylename="question"
-              key="0"
-            >
-              <span
-                data-stylename="createInput"
-              >
-                +
-              </span>
-              <input
-                name="joinQuestions[]"
-                onChange={[Function]}
-                placeholder="Add a new question"
-                value=""
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={0}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Lock"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Closed
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Membership in 
-              Foomunity
-               is invite only
-            </span>
-          </div>
-        </label>
-      </div>
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={0}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="0"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={1}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="1"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={2}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="2"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
     </div>
   </div>
   <div

@@ -128,6 +128,13 @@
   }
 }
 
+.allTopics {
+  font-size: 12px;
+  border: 1px solid rgba(37, 195, 159, .5);
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+
 :global {
   .active-topic-nav-link {
     color: $color-caribbean-green !important;

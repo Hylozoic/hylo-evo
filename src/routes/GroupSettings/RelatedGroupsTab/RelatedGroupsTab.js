@@ -42,6 +42,16 @@ export default class RelatedGroupsTab extends Component {
     this.setState({ showRequestoJoinPicker: !this.state.showRequestoJoinPicker })
   }
 
+  handleRequestToAddGroupToParent = (parentId, childId) => (e) => {
+    this.props.requestToAddGroupToParent(parentId, childId)
+    this.toggleRequestToJoinPicker()
+  }
+
+  handleInviteGroupToJoinParent = (parentId, childId) => (e) => {
+    this.props.inviteGroupToJoinParent(parentId, childId)
+    this.toggleInviteAsChildPicker()
+  }
+
   render () {
     const {
       acceptGroupRelationshipInvite,
@@ -53,12 +63,10 @@ export default class RelatedGroupsTab extends Component {
       groupInvitesToJoinThem,
       groupRequestsToJoinUs,
       groupRequestsToJoinThem,
-      inviteGroupToJoinParent,
       parentGroups,
       possibleChildren,
       possibleParents,
-      rejectGroupRelationshipInvite,
-      requestToAddGroupToParent
+      rejectGroupRelationshipInvite
     } = this.props
 
     const relationshipDropdownItems = (fromGroup, toGroup, type) => [
@@ -81,8 +89,8 @@ export default class RelatedGroupsTab extends Component {
          /> */}
 
       <h1>Parent Groups</h1>
-      {parentGroups.length > 0 && <div>
-        <h3>These are the {parentGroups.length} groups that {group.name} is a member of</h3>
+      {parentGroups.length > 0 ? <div>
+        <h3>{parentGroups.length === 1 ? 'This is the one group' : `These are the ${parentGroups.length} groups`} that {group.name} is a member of</h3>
         <div styleName='group-list' >
           {parentGroups.map(p => <GroupCard
             group={p}
@@ -90,7 +98,9 @@ export default class RelatedGroupsTab extends Component {
             actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(p, group, GROUP_RELATIONSHIP_TYPE.ChildToParent)} />}
           />)}
         </div>
-      </div> }
+      </div>
+        : <h3>{group.name} is not a member of any groups yet</h3>
+      }
 
       {groupInvitesToJoinThem.length > 0 && <div>
         <h3>Open Invitations to Join Other Groups</h3>
@@ -134,7 +144,7 @@ export default class RelatedGroupsTab extends Component {
         {this.state.showRequestoJoinPicker && <div styleName='group-picker'>
           <div styleName='group-picker-list'>
             {possibleParents.map(membership => <div key={membership.id}>
-              <span styleName='invite-button' onClick={requestToAddGroupToParent(membership.group.id, group.id)}>
+              <span styleName='invite-button' onClick={this.handleRequestToAddGroupToParent(membership.group.id, group.id)}>
                 <b>{membership.hasModeratorRole ? 'Join' : 'Request'}</b>
                 {membership.group.name}
               </span>
@@ -143,9 +153,10 @@ export default class RelatedGroupsTab extends Component {
         </div>}
       </div>
 
+      <br />
       <h1>Child Groups</h1>
-      {childGroups.length > 0 && <div>
-        <h3>These {childGroups.length} groups are members of {group.name}</h3>
+      {childGroups.length > 0 ? <div>
+        <h3>{childGroups.length === 1 ? 'This group is a member' : `These ${childGroups.length} groups are members`} of {group.name}</h3>
         <div styleName='group-list'>
           {childGroups.map(c =>
             <GroupCard
@@ -154,7 +165,9 @@ export default class RelatedGroupsTab extends Component {
               actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={relationshipDropdownItems(group, c, GROUP_RELATIONSHIP_TYPE.ParentToChild)} />}
             />)}
         </div>
-      </div> }
+      </div>
+        : <h3>No groups are members of {group.name} yet</h3>
+      }
 
       {groupRequestsToJoinUs.length > 0 && <div>
         <h3>Requests to join {group.name}</h3>
@@ -198,7 +211,7 @@ export default class RelatedGroupsTab extends Component {
         {this.state.showInviteAsChildPicker && <div styleName='group-picker'>
           <div styleName='group-picker-list'>
             {possibleChildren.map(membership => <div key={membership.id}>
-              <span styleName='invite-button' onClick={inviteGroupToJoinParent(group.id, membership.group.id)}>
+              <span styleName='invite-button' onClick={this.handleInviteGroupToJoinParent(group.id, membership.group.id)}>
                 <b>{membership.hasModeratorRole ? 'Add' : 'Invite'}</b>
                 {membership.group.name}
               </span>

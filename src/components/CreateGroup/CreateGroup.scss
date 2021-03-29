@@ -150,8 +150,7 @@
   .dropdownItem, .dropdownItemSelected {
 
     .selectedString {
-      line-height: 24px;
-      padding-right: 15px;
+      line-height: 16px;
     }
 
     b {
@@ -171,11 +170,14 @@
     display: flex;
     align-items: center;
 
+    .selectedString {
+      padding-right: 20px;
+    }
+
     .dropdownDescription {
-      font-size: 12px;
+      font-size: 10px;
       color: rgba(192, 197, 205, 1.00);
-      line-height: 12px;
-      margin-top: 6px;
+      line-height: 16px;
     }
 
     .selectedIcon {
@@ -239,12 +241,48 @@
     border-radius: 3px;
     border: 1px solid rgba(225, 229, 233, 1.00);
     background-color: white;
+    position: relative;
 
     .title {
       font-size: 12px;
       color: rgba(192, 197, 205, 1.00);
       display: block;
       margin-bottom: 15px;
+    }
+
+    .parentGroupInfo {
+      background-color: rgba(128, 140, 155, 1.00);
+      color: white;
+      font-weight: bold;
+      width: 18px;
+      height: 18px;
+      border-radius: 18px;
+      text-align: center;
+      font-size: 12px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      .parentGroupTooltip {
+        display: none;
+        position: absolute;
+        width: 240px;
+        top: 0;
+        right: 0;
+        background-color: $color-black-80;
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 5px;
+        top: 20px;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .parentGroupTooltip {
+          display: block;
+        }
+      }
     }
   }
 }

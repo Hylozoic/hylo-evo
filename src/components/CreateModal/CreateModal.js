@@ -28,7 +28,7 @@ export default class CreateModal extends Component {
             <Route path={match.path + `/group`} children={({ match, location }) =>
               <CreateGroup match={match} location={location} onClose={closeModal} />} />
             <Route>
-              <CreateModalChooser match={match} location={location} />}
+              <CreateModalChooser match={match} location={location} />
             </Route>
           </Switch>
         </div>

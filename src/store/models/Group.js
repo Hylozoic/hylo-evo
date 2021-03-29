@@ -6,18 +6,18 @@ export const GROUP_ACCESSIBILITY = {
   Open: 2
 }
 
-export function groupAccessibilityDescription (a) {
+export function accessibilityDescription (a) {
   switch (a) {
     case GROUP_ACCESSIBILITY.Closed:
-      return 'Require new users to answer questions in order to join'
+      return 'This group is invitation only'
     case GROUP_ACCESSIBILITY.Restricted:
-      return 'People who apply must be approved by moderators'
+      return 'People can apply to join this group and must be approved'
     case GROUP_ACCESSIBILITY.Open:
-      return 'Anyone can join this group'
+      return 'Anyone who can see this group can join it'
   }
 }
 
-export function groupAccessibilityIcon (a) {
+export function accessibilityIcon (a) {
   switch (a) {
     case GROUP_ACCESSIBILITY.Closed:
       return 'Lock'
@@ -34,18 +34,18 @@ export const GROUP_VISIBILITY = {
   Public: 2
 }
 
-export function groupVisibilityDescription (v) {
+export function visibilityDescription (v) {
   switch (v) {
     case GROUP_VISIBILITY.Hidden:
-      return 'Only members of this group can see this group'
+      return 'Only members of this group or direct child groups can see it'
     case GROUP_VISIBILITY.Protected:
-      return 'Only members of parent groups can see this group'
+      return 'Members of parent groups can see this group'
     case GROUP_VISIBILITY.Public:
       return 'Anyone can find and see this group'
   }
 }
 
-export function groupVisibilityIcon (v) {
+export function visibilityIcon (v) {
   switch (v) {
     case GROUP_VISIBILITY.Hidden:
       return 'Hidden'
@@ -54,6 +54,14 @@ export function groupVisibilityIcon (v) {
     case GROUP_VISIBILITY.Public:
       return 'Public'
   }
+}
+
+export const accessibilityString = (accessibility) => {
+  return Object.keys(GROUP_ACCESSIBILITY).find(key => GROUP_ACCESSIBILITY[key] === accessibility)
+}
+
+export const visibilityString = (visibility) => {
+  return Object.keys(GROUP_VISIBILITY).find(key => GROUP_VISIBILITY[key] === visibility)
 }
 
 export class GroupModerator extends Model { }
@@ -136,11 +144,3 @@ export const ALL_GROUPS_AVATAR_PATH = '/assets/white-merkaba.png'
 
 export const PUBLIC_CONTEXT_ID = 'public-context'
 export const PUBLIC_CONTEXT_AVATAR_PATH = '/public.svg'
-
-export const accessibilityString = (accessibility) => {
-  return Object.keys(GROUP_ACCESSIBILITY).find(key => GROUP_ACCESSIBILITY[key] === accessibility)
-}
-
-export const visibilityString = (visibility) => {
-  return Object.keys(GROUP_VISIBILITY).find(key => GROUP_VISIBILITY[key] === visibility)
-}

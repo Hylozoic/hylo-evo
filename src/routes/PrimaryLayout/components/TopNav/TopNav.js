@@ -96,11 +96,11 @@ function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
 }
 
 function Title ({ group, isPublic, onClick }) {
-  var [ label, name ] = ['GLOBAL', 'All Groups']
+  var [ label, name ] = ['GLOBAL', 'All My Groups']
   if (group) {
     [ label, name ] = ['GROUP', group.name]
   } else if (isPublic) {
-    [ label, name ] = ['GLOBAL', 'Public View']
+    [ label, name ] = ['GLOBAL', 'Public Groups & Posts']
   }
 
   return <a styleName='title' onClick={onClick}>

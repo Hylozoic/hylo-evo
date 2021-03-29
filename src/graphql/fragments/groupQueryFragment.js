@@ -74,11 +74,13 @@ export default
   childGroups {
     items {
       id
+      accessibility
       avatarUrl
       bannerUrl
       description
       name
       slug
+      visibility
       settings {
         allowGroupInvites
         askJoinQuestions
@@ -89,11 +91,13 @@ export default
   parentGroups {
     items {
       id
+      accessibility
       avatarUrl
       bannerUrl
       description
       name
       slug
+      visibility
       settings {
         allowGroupInvites
         askJoinQuestions

@@ -18,6 +18,14 @@
   left: 25px;
 }
 
+.fullPage .groupTitleContainer {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 25px;
+  max-width: 640px;
+}
+
 .groupTitle {
   color: $color-white;
   font-size: 24px;
@@ -42,6 +50,14 @@
 
 .groupDetailBody {
   padding: 25px 30px;
+}
+
+.fullPage .groupDetailBody {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 640px;
 }
 
 .signupButton {
@@ -202,4 +218,29 @@
   background: #2A4059;
   color: #FFFFFF;
   padding: 14px 0px;
+}
+
+@media screen and (max-width: 600px) {
+  .groupDetails {
+    display: block;
+  }
+
+  .detailContainer {
+    margin-bottom: 15px;
+  }
+
+  .groupDetailBody {
+    padding: 25px 15px;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .groupDescription {
+    font-size: 14px;
+  }
+
+  .detail {
+    font-size: 12px;
+  }
 }

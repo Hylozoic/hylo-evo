@@ -35,9 +35,8 @@ exports[`RelatedGroupstab renders correctly 1`] = `
   </h1>
   <div>
     <h3>
-      These are the 
-      3
-       groups that 
+      These are the 3 groups
+       that 
       Best Group
        is a member of
     </h3>
@@ -150,14 +149,14 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       </span>
     </Button>
   </div>
+  <br />
   <h1>
     Child Groups
   </h1>
   <div>
     <h3>
-      These 
-      3
-       groups are members of 
+      These 3 groups are members
+       of 
       Best Group
     </h3>
     <div

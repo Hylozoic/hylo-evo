@@ -63,13 +63,14 @@ export default class MemberProfile extends React.Component {
       contentLoading,
       person,
       currentUser,
+      isSingleColumn,
       routeParams,
       showDetails,
       push
     } = this.props
     const affiliations = person.affiliations && person.affiliations.items
     const events = person.eventsAttending && person.eventsAttending.items
-    const memberships = person.memberships
+    const memberships = person.memberships.sort((a, b) => a.group.name.localeCompare(b.group.name))
     const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
@@ -102,7 +103,7 @@ export default class MemberProfile extends React.Component {
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
 
-    return <div styleName='member-profile'>
+    return <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
           <Icon name='Edit' /> Edit Profile
@@ -240,7 +241,7 @@ export function ActionDropdown ({ items }) {
     <Dropdown
       items={activeItems}
       toggleChildren={
-        <Icon styleName='action-icon-button action-menu' name='More' />
+        <Icon styleName='action-icon-button action-menu' name='More' alignRight />
       }
     />
 }
@@ -276,7 +277,7 @@ export function Event ({ memberCap, event, routeParams, showDetails }) {
 }
 
 export function Error ({ children }) {
-  return <div styleName='member-profile'>
+  return <div styleName='memberProfile'>
     <span styleName='error'>{children}</span>
   </div>
 }

@@ -20,7 +20,7 @@ class Geocoder extends Component {
       loading: false,
       searchTime: new Date(),
       showList: false,
-      inputValue: '',
+      inputValue: this.props.defaultInputValue,
       typedInput: ''
     }
     this.handleBlur = this.handleBlur.bind(this)
@@ -29,17 +29,16 @@ class Geocoder extends Component {
     this.onResult = this.onResult.bind(this)
   }
 
-  componentWillMount () {
-    this.setState({ inputValue: this.props.defaultInputValue })
-  }
   componentDidMount () {
     if (this.props.focusOnMount) ReactDOM.findDOMNode(this.refs.input).focus()
   }
-  componentWillReceiveProps (props) {
-    if (props.defaultInputValue !== this.props.inputValue) {
-      this.setState({ inputValue: props.defaultInputValue })
+
+  componentDidUpdate (prevProps) {
+    if (this.props.defaultInputValue !== prevProps.defaultInputValue) {
+      this.setState({ inputValue: this.props.defaultInputValue })
     }
   }
+
   search (
     endpoint,
     source,
