@@ -23,23 +23,21 @@ export function formatError (error, action) {
     </div>
   }
 
-  function testJSON(text){
-    if (typeof text !== "string"){
-        return false;
-    }
-    try{
-        JSON.parse(text);
-        return true;
-    }
-    catch (e){
-        return false;
+  function testJSON (text) {
+    if (typeof text !== 'string') {
+      return false
+    } try {
+      JSON.parse(text)
+      return true
+    } catch (e) {
+      return false
     }
   }
 
-  function errorMessages(type) {
+  function errorMessages (type) {
     var err
 
-    if(testJSON(type)) {
+    if (testJSON(type)) {
       err = JSON.parse(type)
       err = err.error
     } else {
@@ -47,8 +45,8 @@ export function formatError (error, action) {
     }
 
     const errors = {
-      'no user' : `${action} was canceled or no user data was found.`,
-      'no email' : 'Please enter a valid email address',
+      'no user': `${action} was canceled or no user data was found.`,
+      'no email': 'Please enter a valid email address',
       'no email provided': 'Please enter a valid email address',
       'invalid-email': 'Please enter a valid email address',
       'duplicate-email': 'Account already exists!',
