@@ -150,7 +150,7 @@
   .dropdownItem, .dropdownItemSelected {
 
     .selectedString {
-      line-height: 24px;
+      line-height: 16px;
     }
 
     b {
@@ -175,10 +175,9 @@
     }
 
     .dropdownDescription {
-      font-size: 12px;
+      font-size: 10px;
       color: rgba(192, 197, 205, 1.00);
-      line-height: 12px;
-      margin-top: 6px;
+      line-height: 16px;
     }
 
     .selectedIcon {
