@@ -22,10 +22,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
     trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data)),
-    goToPreviousStep: () => dispatch(push('/signup/add-skills')),
     goBack: () => dispatch(goBack()),
     push: (path) => dispatch(push(path)),
-    fetchMySkills: () => dispatch(fetchMySkills()),
     resetReturnToURL: () => dispatch(resetReturnToURL())
   }
 }
