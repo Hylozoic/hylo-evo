@@ -1,14 +1,16 @@
+import cx from 'classnames'
+import { get, some } from 'lodash/fp'
+import qs from 'querystring'
 import React, { Component } from 'react'
+import Intercom from 'react-intercom'
+import Joyride from 'react-joyride'
 import {
   matchPath,
   Redirect,
   Route,
   Switch
 } from 'react-router-dom'
-import cx from 'classnames'
-import { get, some } from 'lodash/fp'
-import qs from 'querystring'
-import Intercom from 'react-intercom'
+
 import config, { isTest } from 'config'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
@@ -46,7 +48,7 @@ import {
   isMapViewPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-import './PrimaryLayout.scss'
+import styles from './PrimaryLayout.scss'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
@@ -129,6 +131,23 @@ const redirectRoutes = [
 ]
 
 export default class PrimaryLayout extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      steps: [
+        {
+          target: '.' + styles.center,
+          content: 'Center column!',
+          placement: 'left'
+        },
+        {
+          target: '.' + styles.top,
+          content: 'Top Navigation is my favorite kind'
+        }
+      ]
+    }
+  }
+
   componentDidMount () {
     this.props.fetchForCurrentUser()
     if (this.props.slug) {
@@ -273,6 +292,14 @@ export default class PrimaryLayout extends Component {
       <SocketListener location={location} />
       <SocketSubscriber type='group' id={get('slug', group)} />
       <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
+      <Joyride
+        continuous
+        run
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={this.state.steps}
+      />
     </div>
   }
 }
