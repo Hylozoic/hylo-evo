@@ -80,10 +80,9 @@ export default function Navigation (props) {
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
 
-  return <div styleName={cx({ mapView }, collapserState)}
-    className={className}>
+  return <div styleName={cx({ mapView }, collapserState)} className={className}>
     <div styleName='navigation'>
-      <ul styleName='links'>
+      <ul styleName='links' id='groupMenu'>
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}

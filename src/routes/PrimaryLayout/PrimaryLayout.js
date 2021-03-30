@@ -136,13 +136,16 @@ export default class PrimaryLayout extends Component {
     this.state = {
       steps: [
         {
-          target: '.' + styles.center,
-          content: 'Center column!',
-          placement: 'left'
+          target: '#toggleDrawer',
+          content: 'Toggle drawer open'
         },
         {
-          target: '.' + styles.top,
-          content: 'Top Navigation is my favorite kind'
+          target: '#personalSettings',
+          content: 'Profile, notifications & messages'
+        },
+        {
+          target: '#groupMenu',
+          content: 'Navigation column!'
         }
       ]
     }
@@ -293,10 +296,8 @@ export default class PrimaryLayout extends Component {
       <SocketSubscriber type='group' id={get('slug', group)} />
       <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
       <Joyride
-        continuous
         run
         scrollToFirstStep
-        showProgress
         showSkipButton
         steps={this.state.steps}
       />

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-content: stretch;
+  background-color: rgba(255,255,255, 1);
   align-items: stretch;
   height: 100vh;
   overflow: hidden;
@@ -57,7 +58,7 @@ $drawer-z-index: 51;
   height: $drawer-height;
   position: fixed;
   left: 0px;
-  z-index: 600;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   transition-delay: 0s;

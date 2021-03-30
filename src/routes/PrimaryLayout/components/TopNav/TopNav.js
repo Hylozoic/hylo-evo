@@ -53,9 +53,9 @@ export default class TopNav extends Component {
         <div styleName='logo-hover'>
           <Logo {...{ group, isPublic, toggleDrawer }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
-          <Title group={group} isPublic={isPublic} onClick={toggleDrawer} />
+          <Title group={group} isPublic={isPublic} onClick={toggleDrawer}/>
         </div>
-        <div styleName='navIcons'>
+        <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
             <BadgedIcon name='Messages' styleName='icon'
@@ -92,7 +92,7 @@ function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
     imageStyle = bgImageStyle(publicLogo)
   }
 
-  return <span styleName='image' style={imageStyle} onClick={toggleDrawer} />
+  return <span styleName='image' style={imageStyle} onClick={toggleDrawer}  id='toggleDrawer' />
 }
 
 function Title ({ group, isPublic, onClick }) {
