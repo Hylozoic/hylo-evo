@@ -3,6 +3,7 @@ import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import presentGroup from 'store/presenters/presentGroup'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import { getParentGroups } from 'store/selectors/getGroupRelationships'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
 import getMe from 'store/selectors/getMe'
@@ -15,11 +16,14 @@ export function mapStateToProps (state, props) {
   const slug = getRouteParam('groupSlug', state, props, false)
   const group = getGroupForCurrentRoute(state, props)
   const canModerate = getCanModerate(state, { group })
+  const currentUser = getMe(state)
+  const parentGroups = group ? getParentGroups(state, { groupSlug: group.slug }) : []
 
   return {
     canModerate,
+    currentUser,
     group: group ? presentGroup(group) : null,
-    currentUser: getMe(state),
+    parentGroups,
     slug
   }
 }

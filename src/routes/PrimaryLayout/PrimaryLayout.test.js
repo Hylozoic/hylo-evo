@@ -29,7 +29,7 @@ it('shows normal children for a group route if the group is loaded', () => {
     location={{ pathname: '/', search: '' }}
     group={{ id: '1' }}
     currentUser={{}} />, { disableLifecycleMethods: true })
-  expect(wrapper.name()).toEqual('div')
+  expect(wrapper.name()).toEqual('Div100vh')
 })
 
 describe('RedirectToGroup', () => {

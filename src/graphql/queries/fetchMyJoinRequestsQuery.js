@@ -1,27 +1,29 @@
-export default
-`query {
-  me {
-    joinRequests {
-      total
-      hasMore
-      items {
-        id
-        status
-        createdAt
-        questionAnswers {
+import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
+
+export default (pendingOnly = false) =>
+  `query {
+    me {
+      joinRequests${pendingOnly ? `(status: ${JOIN_REQUEST_STATUS.Pending})` : ''} {
+        total
+        hasMore
+        items {
           id
-          question {
+          status
+          createdAt
+          questionAnswers {
             id
-            text
+            question {
+              id
+              text
+            }
+            answer
           }
-          answer
-        }
-        group {
-          id
-          name
-          avatarUrl
+          group {
+            id
+            name
+            avatarUrl
+          }
         }
       }
     }
-  }
-}`
+  }`

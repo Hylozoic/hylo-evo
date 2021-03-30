@@ -157,6 +157,27 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         updateSettingDirectly={[Function]}
       />
     </div>
+    <div
+      data-stylename="groupPrivacySection"
+    >
+      <h3>
+        Prerequisite Groups
+      </h3>
+      <p
+        data-stylename="privacyDetail"
+      >
+        Only members of these groups can join 
+        <strong>
+          Foomunity
+        </strong>
+      </p>
+      <GroupsSelector
+        onChange={[Function]}
+        options={Array []}
+        placeholder="Type group name..."
+        selected={Array []}
+      />
+    </div>
   </div>
   <div
     data-stylename="saveChanges"

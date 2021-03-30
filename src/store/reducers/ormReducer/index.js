@@ -222,6 +222,8 @@ export default function ormReducer (state = {}, action) {
       group = Group.withId(meta.id)
       group.update(meta.changes)
       me = Me.first()
+      // Clear out prerequisiteGroups so they can be reset when the UPDATE completes
+      group.update({ prerequisiteGroups: [] })
 
       // Triggers an update to redux-orm for the membership
       membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
@@ -229,7 +231,7 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_GROUP_SETTINGS:
       // Set new join questions in the ORM
-      if (payload.data.updateGroupSettings && payload.data.updateGroupSettings.joinQuestions) {
+      if (payload.data.updateGroupSettings && (payload.data.updateGroupSettings.joinQuestions || payload.data.updateGroupSettings.prerequisiteGroups)) {
         group = Group.withId(meta.id)
         clearCacheFor(Group, meta.id)
       }
@@ -338,7 +340,7 @@ export default function ormReducer (state = {}, action) {
     case CREATE_JOIN_REQUEST:
       if (payload.data.createJoinRequest.request) {
         me = Me.first()
-        const jr = JoinRequest.create({ group: meta.groupId, user: me.id })
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id, status: payload.data.createJoinRequest.request.status })
         me.updateAppending({ joinRequests: [jr] })
       }
       break

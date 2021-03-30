@@ -48,9 +48,17 @@ export function fetchGroupSettings (slug) {
           }
           parentGroups (first: 100) {
             items {
+              avatarUrl
               id
               name
+            }
+          }
+          prerequisiteGroups {
+            items {
               avatarUrl
+              id
+              name
+              slug
             }
           }
           pendingInvitations {
@@ -82,6 +90,11 @@ export function fetchGroupSettings (slug) {
 }
 
 export function updateGroupSettings (id, changes) {
+  if (changes.prerequisiteGroups) {
+    changes.prerequisiteGroupIds = changes.prerequisiteGroups.map(g => g.id)
+    delete changes.prerequisiteGroups
+  }
+
   return {
     type: UPDATE_GROUP_SETTINGS,
     graphql: {
@@ -93,6 +106,14 @@ export function updateGroupSettings (id, changes) {
               id
               questionId
               text
+            }
+          }
+          prerequisiteGroups {
+            items {
+              id
+              avatarUrl
+              name
+              slug
             }
           }
         }

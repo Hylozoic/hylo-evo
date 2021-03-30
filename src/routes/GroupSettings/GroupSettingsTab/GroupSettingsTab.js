@@ -5,6 +5,7 @@ import cx from 'classnames'
 import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
 import Button from 'components/Button'
+import GroupsSelector from 'components/GroupsSelector'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
 import SwitchStyled from 'components/SwitchStyled'
@@ -47,7 +48,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, prerequisiteGroups, settings, visibility
     } = group
 
     return {
@@ -59,6 +60,7 @@ export default class GroupSettingsTab extends Component {
         location: location || '',
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
+        prerequisiteGroups: prerequisiteGroups || [],
         settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
         visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
       },
@@ -121,12 +123,12 @@ export default class GroupSettingsTab extends Component {
   }
 
   render () {
-    const { group, currentUser } = this.props
+    const { currentUser, group, parentGroups } = this.props
     if (!group) return <Loading />
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, prerequisiteGroups, settings, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
@@ -186,6 +188,16 @@ export default class GroupSettingsTab extends Component {
             />
           )}
         </div>
+
+        <div styleName='groupPrivacySection'>
+          <h3>Prerequisite Groups</h3>
+          <p styleName='privacyDetail'>Only members of these groups can join <strong>{group.name}</strong></p>
+          <GroupsSelector
+            options={parentGroups}
+            selected={prerequisiteGroups}
+            onChange={this.updateSettingDirectly('prerequisiteGroups')}
+          />
+        </div>
       </div>
 
       <div styleName='saveChanges'>
@@ -229,7 +241,7 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
         <div styleName='on'>ON</div>
       </div>
       <div styleName='questionList'>
-        <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
+        <span styleName='questionDescription'>Require people to answer questions when requesting to join this group</span>
 
         {joinQuestions.map((q, i) => <div key={i} styleName='question'>
           {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}

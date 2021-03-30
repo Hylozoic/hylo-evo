@@ -12,7 +12,7 @@ export function fetchJoinRequests () {
   return {
     type: FETCH_MY_JOIN_REQUESTS,
     graphql: {
-      query: fetchJoinRequestsQuery
+      query: fetchJoinRequestsQuery()
     },
     meta: {
       extractModel: 'Me'

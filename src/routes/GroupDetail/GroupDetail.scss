@@ -60,6 +60,10 @@
   max-width: 640px;
 }
 
+.prerequisiteGroups {
+
+}
+
 .signupButton {
   text-align: center;
 }
@@ -107,6 +111,37 @@
 
 .detailText {
   margin-left: 10px;
+}
+
+.group-privacy {
+  display: inline-block;
+  position: relative;
+
+  .privacy-icon {
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+  }
+
+  .privacy-tooltip {
+    display: none;
+    position: absolute;
+    width: 240px;
+    top: 0;
+    left: 0;
+    background-color: $color-black-80;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    top: 20px;
+    color: white;
+  }
+
+  &:hover {
+    .privacy-tooltip {
+      display: block;
+    }
+  }
 }
 
 .avatarContainer {

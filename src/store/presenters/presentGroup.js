@@ -10,6 +10,13 @@ export default function presentGroup (group) {
         name: groupTopic.topic.name
       }
     }) : [],
-    joinQuestions: group.joinQuestions.toRefArray()
+    joinQuestions: group.joinQuestions.toRefArray(),
+    prerequisiteGroups: group.prerequisiteGroups ? group.prerequisiteGroups.toModelArray().map(prereq => {
+      return {
+        ...prereq.ref,
+        joinQuestions: prereq.joinQuestions ? prereq.joinQuestions.toModelArray() : [],
+        prerequisiteGroups: prereq.prerequisiteGroups ? prereq.prerequisiteGroups.toModelArray() : []
+      }
+    }) : []
   }
 }

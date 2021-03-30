@@ -1,4 +1,4 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites }) => `
   id
   accessibility
   avatarUrl
@@ -87,6 +87,35 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       id
       questionId
       text
+    }
+  }` : ''}
+  ${withPrerequisites ? `prerequisiteGroups(onlyNotMember: true) {
+    items {
+      avatarUrl
+      id
+      name
+      settings {
+        askJoinQuestions
+      }
+      slug
+      joinQuestions {
+        items {
+          id
+          questionId
+          text
+        }
+      }
+      prerequisiteGroups(onlyNotMember: true) {
+        items {
+          avatarUrl
+          id
+          name
+          slug
+          settings {
+            askJoinQuestions
+          }
+        }
+      }
     }
   }` : ''}
 `
