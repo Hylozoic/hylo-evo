@@ -20,7 +20,6 @@
   padding-top: 5px;
   padding-left: 5px;
 }
-
 .change-banner-button {
   /* empty */
 }
@@ -31,6 +30,46 @@
   padding: 25px;
   margin-bottom: 25px;
   position: relative;
+
+  h3 {
+    color: rgba(35, 64, 91, 1.000);
+    font-size: 24px;
+    font-weight: bold;
+    padding-right: 80px;
+    margin-bottom: 0;
+    transition: all .25s ease;
+  }
+
+  p {
+    color: $color-black-30;
+    font-size: 12px;
+    padding-bottom: 20px;
+    transition: all .25s ease;
+  }
+
+  p.prerequisiteWarning {
+    margin-top: -15px;
+
+    .prerequisiteIcon {
+      font-size: 16px;
+      position: relative;
+      top: 3px;
+      color: rgba(41, 64, 90, 1.00);
+      margin: 0 3px;
+    }
+
+    strong {
+      color: rgba(41, 64, 90, 1.00);
+    }
+
+    .warning {
+      color: rgba(237, 86, 83, 1.00);
+    }
+  }
+}
+
+.groupPrivacySection.on p {
+  color: $color-black-60;
 }
 
 .avatar {
@@ -206,29 +245,6 @@ label {
   opacity: 0;
 }
 
-.groupPrivacySection h3 {
-  color: rgba(35, 64, 91, 1.000);
-  font-size: 24px;
-  font-weight: bold;
-  padding-right: 80px;
-  margin-bottom: 0;
-  transition: all .25s ease;
-}
-
-.groupPrivacySection p {
-  color: $color-black-30;
-  transition: all .25s ease;
-}
-
-.groupPrivacySection.on p {
-  color: $color-black-60;
-}
-
-.groupPrivacySection p {
-  font-size: 12px;
-  padding-bottom: 20px;
-}
-
 .groupQuestions {
   position: relative;
   margin-left: 13px;
@@ -290,6 +306,7 @@ label {
       font-size: 14px;
       padding: 5px 25px 5px 8px;
       color: rgba(35, 64, 91, 1.000);
+      border-radius: 3px;
 
       &::placecholder {
         font-style: italic;

@@ -89,8 +89,26 @@ export default class GroupDetail extends Component {
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
           <img src={group.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
-          <div styleName='g.groupTitle'>{group.name}</div>
+          <div>
+            <div styleName='g.groupTitle'>{group.name}</div>
+            <div styleName='g.groupContextInfo'>
+              <span styleName='g.group-privacy'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
+                <div styleName='g.privacy-tooltip'>
+                  <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+                </div>
+              </span>
+              <span styleName='g.group-privacy'>
+                <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
+                <div styleName='g.privacy-tooltip'>
+                  <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
+                </div>
+              </span>
+              {group.location}
+            </div>
+          </div>
         </div>
+        <div styleName='g.headerBackground' />
       </div>
       <div styleName='g.groupDetailBody'>
         <div styleName='g.groupDescription'>{group.description}</div>
@@ -126,22 +144,6 @@ export default class GroupDetail extends Component {
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
     return (
       <div>
-        <div styleName='g.groupDetails'>
-          <div styleName='g.group-privacy'>
-            <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
-            <span>{visibilityString(group.visibility)}</span>
-            <div styleName='g.privacy-tooltip'>
-              <div>{visibilityDescription(group.visibility)}</div>
-            </div>
-          </div>
-          <div styleName='g.group-privacy'>
-            <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
-            <span>{accessibilityString(group.accessibility)}</span>
-            <div styleName='g.privacy-tooltip'>
-              <div>{accessibilityDescription(group.accessibility)}</div>
-            </div>
-          </div>
-        </div>
         <div styleName='g.groupDetails'>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>Recent Posts</div>
@@ -194,9 +196,33 @@ export function JoinSection ({ group, groupsWithPendingRequests, joinGroup, requ
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
         ? topLevel
           ? <div styleName='g.prerequisiteGroups'>
-            <p>You must first join these groups before you can join {group.name}</p>
-            {group.prerequisiteGroups.map(prereq => <div key={prereq.id}>
-              {prereq.name}
+            {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{group.name} is only accessible to members of the following groups:</h4>}
+            {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
+              <div styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
+                <div styleName='g.groupTitleContainer'>
+                  <img src={prereq.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
+                  <div>
+                    <div styleName='g.groupTitle'>{prereq.name}</div>
+                    <div styleName='g.groupContextInfo'>
+                      <span styleName='g.group-privacy'>
+                        <Icon name={visibilityIcon(prereq.visibility)} styleName='g.privacy-icon' />
+                        <div styleName='g.privacy-tooltip'>
+                          <div>{visibilityString(prereq.visibility)} - {visibilityDescription(prereq.visibility)}</div>
+                        </div>
+                      </span>
+                      <span styleName='g.group-privacy'>
+                        <Icon name={accessibilityIcon(prereq.accessibility)} styleName='g.privacy-icon' />
+                        <div styleName='g.privacy-tooltip'>
+                          <div>{accessibilityString(prereq.accessibility)} - {accessibilityDescription(prereq.accessibility)}</div>
+                        </div>
+                      </span>
+                      {prereq.location}
+                    </div>
+                  </div>
+                </div>
+                <div styleName='g.headerBackground' />
+              </div>
+              { prereq.description ? <div styleName='g.prereqDescription'>{prereq.description}</div> : ' ' }
               <JoinSection group={prereq} groupsWithPendingRequests={groupsWithPendingRequests} joinGroup={joinGroup} requestToJoinGroup={requestToJoinGroup} topLevel={false} routeParams={routeParams} />
             </div>)}
           </div>
@@ -208,17 +234,21 @@ export function JoinSection ({ group, groupsWithPendingRequests, joinGroup, requ
               <h3>{q.text}</h3>
               <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
             </div>)}
-            <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
+            <div styleName='g.center'>
+              <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
+            </div>
           </div>
           : group.accessibility === GROUP_ACCESSIBILITY.Restricted
             ? hasPendingRequest
-              ? <div>Request to join pending</div>
+              ? <div styleName='g.requestPending'>Request to join pending</div>
               : <div styleName='g.requestOption'> {/* Restricted group, no request pending */}
                 {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                   <h3>{q.text}</h3>
                   <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
                 </div>)}
-                <div styleName='g.requestButton' onClick={requestToJoinGroup(group.id, questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+                <div styleName='g.center'>
+                  <div styleName='g.requestButton' onClick={requestToJoinGroup(group.id, questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+                </div>
               </div>
             : <div styleName='g.requestOption'> {/* Closed group */}
               This is group is invitation only

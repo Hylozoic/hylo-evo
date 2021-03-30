@@ -15,6 +15,10 @@
   text-transform: uppercase;
 }
 
+.keyListPrivacyIcon {
+  font-size: 14px;
+}
+
 .keyListPublic {
   align-items: center;
   display: flex;
@@ -34,15 +38,13 @@
   max-height: 132px;
   position: relative;
   overflow: scroll;
-
-
 }
 
 .keyListMemberCount {
   color: $color-rhino-50;
   font-size: 12px;
-  margin: 0 0 3px;
-  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .keyListMemberIcon {

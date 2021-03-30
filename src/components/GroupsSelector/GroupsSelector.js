@@ -72,6 +72,7 @@ export default class GroupsSelector extends Component {
 
     return (
       <TagInput
+        groupSettings={this.props.groupSettings}
         placeholder={placeholder}
         tags={selected}
         suggestions={suggestions}

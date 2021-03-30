@@ -10,12 +10,63 @@
   width: 100%;
 }
 
+.groupDetailHeader.prereqHeader {
+  height: 83px;
+  border-radius: 5px;
+  margin-bottom: 25px;
+
+  .headerBackground {
+    height: 83px;
+    border-radius: 5px;
+  }
+
+  .groupTitleContainer {
+    bottom: 15px;
+    left: 15px;
+  }
+}
+
+.fullPage .groupDetailHeader.prereqHeader {
+
+  .groupTitleContainer {
+    left: 15px;
+    padding: 0;
+    transform: translateX(0);
+  }
+}
+
+.prereqDescription {
+  font-size: 12px;
+  margin-bottom: 25px;
+}
+
+.headerBackground {
+  background: linear-gradient(180deg, rgba(42, 64, 89, 0) 0%, #2A4059 100%);
+  width: 100%;
+  height: 150px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.requestPending {
+  border: 1px dashed rgba(227, 230, 235, 1.00);
+  border-radius: 25px;
+  padding: 5px 10px;
+}
+
 .groupTitleContainer {
   display: flex;
   align-items: center;
   position: absolute;
   bottom: 25px;
   left: 25px;
+  z-index: 10;
+
+  img {
+    border-radius: 5px;
+  }
 }
 
 .fullPage .groupTitleContainer {
@@ -31,6 +82,14 @@
   font-size: 24px;
   font-weight: bold;
   margin-left: 15px;
+}
+
+.groupContextInfo {
+  color: white;
+  font-size: 14px;
+  margin-top: -5px;
+  padding-left: 15px;
+  opacity: .7;
 }
 
 .close {
@@ -52,6 +111,14 @@
   padding: 25px 30px;
 }
 
+.prerequisiteGroup {
+  background-color: white;
+  box-shadow: 0px 4px 25px rgba(128, 140, 155, 0.17);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
 .fullPage .groupDetailBody {
   position: absolute;
   left: 50%;
@@ -60,8 +127,26 @@
   max-width: 640px;
 }
 
-.prerequisiteGroups {
+.fullPage .prerequisiteGroups {
+  width: 100%;
+  max-width: 640px;
+}
 
+.prerequisiteGroups {
+  width: 100%;
+  margin-bottom: 100px;
+  border: 1px dashed rgba(225, 229, 234, 1.00);
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(249, 251, 252, 1.00);
+
+  h4 {
+    text-align: center;
+    color: rgba(41, 64, 90, 1.00);
+    font-size: 16px;
+    line-height: 18px;
+    padding: 8px 0;
+  }
 }
 
 .signupButton {
@@ -118,16 +203,18 @@
   position: relative;
 
   .privacy-icon {
-    font-size: 18px;
+    font-size: 16px;
     position: relative;
     top: 3px;
+    color: white;
+    margin-right: 5px;
+    z-index: 0;
   }
 
   .privacy-tooltip {
     display: none;
     position: absolute;
     width: 240px;
-    top: 0;
     left: 0;
     background-color: $color-black-80;
     font-size: 12px;
@@ -178,7 +265,6 @@
   border-width: 0px;
   justify-content: center;
   height: auto;
-  padding-bbottom: 100px;
 }
 
 .requestBarBorderless .requestButton {
@@ -220,6 +306,10 @@
   }
 }
 
+.center {
+  text-align: center;
+}
+
 .requestButton {
   background-color: $color-picton-blue;
   border-radius: 15px;
@@ -228,6 +318,8 @@
   font-size: 14px;
   margin: 0 15px;
   padding: 5px 15px;
+  text-align: center;
+  display: inline-block;
 
   h3 {
     font-size: 16px;
@@ -268,9 +360,6 @@
     padding: 25px 15px;
   }
 
-}
-
-@media screen and (max-width: 600px) {
   .groupDescription {
     font-size: 14px;
   }
@@ -278,4 +367,44 @@
   .detail {
     font-size: 12px;
   }
+}
+
+@media screen and (max-width: 425px) {
+  .groupDetailBody {
+    padding: 25px 10px;
+  }
+
+  .groupTitle {
+    font-size: 16px;
+    margin-left: 8px;
+  }
+
+  .groupContextInfo {
+    font-size: 12px;
+    padding-left: 8px;
+  }
+
+  .prerequisiteGroup {
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .groupDetailHeader.prereqHeader, .fullPage .groupDetailHeader.prereqHeader {
+    height: 65px;
+    margin-bottom: 15px;
+
+    .headerBackground {
+      height: 65px;
+    }
+
+    .groupTitleContainer {
+      bottom: 8px;
+      left: 8px;
+    }
+  }
+
+  .joinQuestion textarea {
+    font-size: 14px;
+  }
+
 }

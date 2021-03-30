@@ -191,11 +191,13 @@ export default class GroupSettingsTab extends Component {
 
         <div styleName='groupPrivacySection'>
           <h3>Prerequisite Groups</h3>
-          <p styleName='privacyDetail'>Only members of these groups can join <strong>{group.name}</strong></p>
+          <p styleName='privacyDetail'>When you select a prerequisite group, people must join the selected groups before joining <strong>{group.name}</strong>. Only parent groups can be added as prerequisite groups.</p>
+          <p styleName='prerequisiteWarning'><strong styleName='warning'>Warning:</strong> If you select a prerequisite group that has a privacy setting of <strong><Icon name='Hidden' styleName='prerequisiteIcon' /> Hidden</strong> or <strong><Icon name='Shield' styleName='prerequisiteIcon' /> Protected</strong>, only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.</p>
           <GroupsSelector
             options={parentGroups}
             selected={prerequisiteGroups}
             onChange={this.updateSettingDirectly('prerequisiteGroups')}
+            groupSettings
           />
         </div>
       </div>
