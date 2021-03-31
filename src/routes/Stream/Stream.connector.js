@@ -25,9 +25,10 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const defaultSortBy = get('settings.streamSortBy', currentUser) || 'created'
   const defaultViewMode = get('settings.streamViewMode', currentUser) || 'list'
+  const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
-  const postTypeFilter = getQuerystringParam('t', state, props)
+  const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
   const viewMode = getQuerystringParam('v', state, props) || defaultViewMode
 
@@ -66,7 +67,10 @@ export function mapDispatchToProps (dispatch, props) {
   const updateSettings = (params) => dispatch(updateUserSettings(params))
   return {
     updateUserSettings: updateSettings,
-    changeTab: tab => dispatch(changeQuerystringParam(props, 't', tab, 'all')),
+    changeTab: tab => {
+      updateSettings({ settings: { streamPostType: tab || '' } })
+      return dispatch(changeQuerystringParam(props, 't', tab, 'all'))
+    },
     changeSort: sort => {
       updateSettings({ settings: { streamSortBy: sort } })
       return dispatch(changeQuerystringParam(props, 's', sort, 'all'))

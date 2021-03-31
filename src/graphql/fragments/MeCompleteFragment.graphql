@@ -49,6 +49,7 @@ fragment MeCompleteFragment on Me {
     commentNotifications
     streamViewMode
     streamSortBy
+    streamPostType
   }
   affiliations {
     items {
