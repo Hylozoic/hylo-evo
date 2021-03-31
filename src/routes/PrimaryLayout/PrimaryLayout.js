@@ -12,6 +12,7 @@ import {
 } from 'react-router-dom'
 
 import config, { isTest } from 'config'
+import Div100vh from 'react-div-100vh'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
@@ -197,7 +198,7 @@ export default class PrimaryLayout extends Component {
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
     const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
 
-    return <div styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn })}>
+    return <Div100vh styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       {/* Context navigation drawer */}
       <Switch>
         {routesWithDrawer.map(({ path }) => (
@@ -228,7 +229,7 @@ export default class PrimaryLayout extends Component {
           />
         }
 
-        <div styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
+        <Div100vh styleName={cx('center', { 'map-view': isMapViewPath(location.pathname) }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             {signupRoutes.map(({ path, child }) =>
@@ -266,7 +267,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/search' component={Search} />
             <Route path='/confirm-group-delete' component={GroupDeleteConfirmation} />
           </Switch>
-        </div>
+        </Div100vh>
         {group && memberOfCurrentGroup &&
           <div styleName={cx('sidebar', { hidden: (hasDetail || isMapViewPath(location.pathname)) })}>
             <Switch>
@@ -301,7 +302,7 @@ export default class PrimaryLayout extends Component {
         showSkipButton
         steps={this.state.steps}
       />
-    </div>
+    </Div100vh>
   }
 }
 

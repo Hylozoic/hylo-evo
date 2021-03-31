@@ -39,7 +39,9 @@
 
 .sorter-label {
   line-height: 28px;
+  white-space: nowrap;
   composes: caption-lt-lg from 'css/typography.scss';
+
   > span {
     vertical-align: middle;
     margin-left: $space-1x;
