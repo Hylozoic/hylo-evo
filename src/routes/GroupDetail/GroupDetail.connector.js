@@ -51,7 +51,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchGroup: () => dispatch(fetchGroupDetails(slug)),
     fetchJoinRequests: () => dispatch(fetchJoinRequests()),
-    onClose: slug ? () => dispatch(push(closeLocation)) : false,
+    onClose: getRouteParam('detailGroupSlug', {}, props) ? () => dispatch(push(closeLocation)) : false,
     joinGroup: (groupId) => dispatch(joinGroup(groupId)),
     createJoinRequest: (groupId, questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }
