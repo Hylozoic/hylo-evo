@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
+import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
@@ -156,7 +157,7 @@ export default class GroupSettingsTab extends Component {
         type='location'
       />
       <div styleName='privacy-settings'>
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Visibility</h3>
           <p styleName='privacyDetail'>Who is able to see <strong>{group.name}</strong>?</p>
           {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
@@ -167,9 +168,9 @@ export default class GroupSettingsTab extends Component {
               updateSetting={this.updateSetting}
             />
           )}
-        </div>
+        </SettingsSection>
 
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Access</h3>
           <p styleName='privacyDetail'>How can people become members of <strong>{group.name}</strong>?</p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
@@ -185,7 +186,7 @@ export default class GroupSettingsTab extends Component {
               updateSettingDirectly={this.updateSettingDirectly}
             />
           )}
-        </div>
+        </SettingsSection>
       </div>
 
       <div styleName='saveChanges'>
