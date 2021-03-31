@@ -49,7 +49,7 @@ import {
   isMapViewPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
-import styles from './PrimaryLayout.scss'
+import './PrimaryLayout.scss'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
@@ -135,21 +135,45 @@ export default class PrimaryLayout extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      run: false,
       steps: [
         {
-          target: '#toggleDrawer',
-          content: 'Toggle drawer open'
+          target: '#currentContext',
+          title: 'You are here!',
+          content: 'This is where we show you which group or view you are looking at. Hylo allows you to easily switch between groups as well as see updates from all your groups at once.'
         },
         {
-          target: '#personalSettings',
-          content: 'Profile, notifications & messages'
+          target: '#toggleDrawer',
+          title: 'Switching groups & viewing all',
+          content: 'By clicking on the community icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
         },
         {
           target: '#groupMenu',
-          content: 'Navigation column!'
+          title: 'Create & navigate',
+          content: 'Here you can switch between types of content and create new content for people in your group or everyone on Hylo!'
+        },
+        {
+          target: '#personalSettings',
+          title: 'Messages, notifications & profile',
+          content: 'Search for posts & people. Send messages to group members or people you see on Hylo. Stay up to date with current events and edit your profile.'
         }
-      ]
+      ],
+      closeTheTour: false
     }
+  }
+
+  handleClickStart = (e) => {
+    e.preventDefault()
+    this.setState({
+      run: true,
+      closeTheTour: true
+    })
+  }
+
+  closeTour = () => {
+    this.setState({
+      closeTheTour: true
+    })
   }
 
   componentDidMount () {
@@ -188,6 +212,47 @@ export default class PrimaryLayout extends Component {
       if (!group && !groupPending) return <NotFound />
     }
 
+    // Custom joyride tooltip
+    const Tooltip = ({
+      continuous,
+      index,
+      step,
+      backProps,
+      closeProps,
+      primaryProps,
+      tooltipProps
+    }) => (
+      <div {...tooltipProps} styleName='tooltipWrapper'>
+        <div styleName='tooltipContent'>
+          <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+          <div>
+            {step.title && <div styleName='stepTitle'>{step.title}</div>}
+            <div>{step.content}</div>
+          </div>
+        </div>
+        <div styleName='tooltipControls'>
+          {index > 0 && (
+            <button styleName='backButton' {...backProps}>
+              Back
+            </button>
+          )}
+          {continuous && (
+            <button styleName='nextButton' {...primaryProps}>
+              Next
+            </button>
+          )}
+          {!continuous && (
+            <button {...closeProps}>
+              Close
+            </button>
+          )}
+        </div>
+      </div>
+    )
+
+    // Don't show more than once
+    const showTourPrompt = true
+
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
@@ -200,6 +265,21 @@ export default class PrimaryLayout extends Component {
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       {/* Context navigation drawer */}
+      { showTourPrompt ? <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
+        <div styleName='tourPrompt'>
+          <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+          <div styleName='tourExplanation'>
+            <p><strong>Welcome to Hylo {currentUser.name.split(' ')[0]}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
+            <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+            <div>
+              <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
+              <button styleName='startTour' onClick={this.handleClickStart}>Show me Hylo</button>
+            </div>
+            <div styleName='speechIndicator' />
+          </div>
+        </div>
+        <div styleName='tourBg' onClick={this.closeTour} />
+      </div> : ' '}
       <Switch>
         {routesWithDrawer.map(({ path }) => (
           <Route path={path} key={path} render={props => (
@@ -297,9 +377,11 @@ export default class PrimaryLayout extends Component {
       <SocketSubscriber type='group' id={get('slug', group)} />
       <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
       <Joyride
-        run
-        scrollToFirstStep
-        showSkipButton
+        run={this.state.run}
+        continuous
+        showProgress
+        showClose
+        tooltipComponent={Tooltip}
         steps={this.state.steps}
       />
     </Div100vh>
