@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash'
 import SignupModalFooter from '../SignupModalFooter'
-import LeftSidebar from '../LeftSidebar'
 
 import '../Signup.scss'
 
@@ -64,10 +63,6 @@ export default class AddSkills extends Component {
     const { editing, skillText } = this.state
 
     return <div styleName='flex-wrapper'>
-      <LeftSidebar
-        header='Share your unique super powers and what excites or interests you!'
-        body="What skills are you known for? What topics do you love to explore and discuss? What do you want to learn more about? The more you add, the more relevant the content. It's like magic."
-      />
       <div styleName='panel'>
         <span styleName='white-text step-count'>STEP 3/4</span>
         <br />
