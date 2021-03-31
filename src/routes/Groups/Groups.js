@@ -20,8 +20,8 @@ import './Groups.scss'
 
 const networkData = {
   nodes: [
-    { id: 'Terran', group: 1, name: 'Terran', slug: '/terran' },
-    { id: 'Hylo', group: 1, name: 'Hylo' },
+    { id: 'Terran', group: 1, name: 'Terran', slug: '/terran', avatarUrl: DEFAULT_AVATAR },
+    { id: 'Hylo', group: 1, name: 'Hylo', avatarUrl: DEFAULT_AVATAR },
     { id: 'PHA', group: 1, name: 'PHA' },
     { id: 'PHA Next Gen', group: 1, name: 'PHA Next Gen' },
     { id: 'Common Vision', group: 2, name: 'Common Vision' },
@@ -54,6 +54,8 @@ export default class Groups extends Component {
       parentGroups,
       routeParams
     } = this.props
+
+    console.log('\nthis group\n', group)
 
     return <div styleName='container'>
 <<<<<<< HEAD

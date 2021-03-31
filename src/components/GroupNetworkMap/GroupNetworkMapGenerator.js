@@ -9,8 +9,7 @@ import styles from './GroupNetworkMap.scss'
 export function runForceGraph (
   container,
   linksData,
-  nodesData,
-  nodeHoverTooltip
+  nodesData
 ) {
   const links = linksData.map((d) => Object.assign({}, d))
   const nodes = nodesData.map((d) => Object.assign({}, d))
@@ -18,17 +17,16 @@ export function runForceGraph (
   const containerRect = container.getBoundingClientRect()
   const height = containerRect.height
   const width = containerRect.width
-  console.log('\ncontainer size\n', height, width)
 
   const color = () => { return '#2A4059' }
 
-  const icon = (d) => {
-    // <Link to={groupUrl(d.slug)}>
-    //   <RoundImage url={d.avatarUrl || DEFAULT_AVATAR} small /> {d.name}
-    // </Link>
-    console.log('d inside ICON', d)
-    return d.name
-  }
+  // const icon = (d) => {
+  //   // <Link to={groupUrl(d.slug)}>
+  //   //   <RoundImage url={d.avatarUrl || DEFAULT_AVATAR} small /> {d.name}
+  //   // </Link>
+  //   console.log('d inside ICON', d)
+  //   return d.name
+  // }
 
   const getClass = (d) => {
     return d.gender === 'male' ? styles.male : styles.female
@@ -60,33 +58,33 @@ export function runForceGraph (
   }
 
   // Add the tooltip element to the graph
-  const tooltip = document.querySelector('#graph-tooltip')
-  if (!tooltip) {
-    const tooltipDiv = document.createElement('div')
-    tooltipDiv.classList.add(styles.tooltip)
-    tooltipDiv.style.opacity = '0'
-    tooltipDiv.id = 'graph-tooltip'
-    document.body.appendChild(tooltipDiv)
-  }
-  const div = d3.select('#graph-tooltip')
+  // const tooltip = document.querySelector('#graph-tooltip')
+  // if (!tooltip) {
+  //   const tooltipDiv = document.createElement('div')
+  //   tooltipDiv.classList.add(styles.tooltip)
+  //   tooltipDiv.style.opacity = '0'
+  //   tooltipDiv.id = 'graph-tooltip'
+  //   document.body.appendChild(tooltipDiv)
+  // }
+  // const div = d3.select('#graph-tooltip')
 
-  const addTooltip = (hoverTooltip, d, x, y) => {
-    div
-      .transition()
-      .duration(200)
-      .style('opacity', 0.9)
-    div
-      .html(hoverTooltip(d))
-      .style('left', `${x}px`)
-      .style('top', `${y - 28}px`)
-  }
-
-  const removeTooltip = () => {
-    div
-      .transition()
-      .duration(200)
-      .style('opacity', 0)
-  }
+  // const addTooltip = (hoverTooltip, d, x, y) => {
+  //   div
+  //     .transition()
+  //     .duration(200)
+  //     .style('opacity', 0.9)
+  //   div
+  //     .html(hoverTooltip(d))
+  //     .style('left', `${x}px`)
+  //     .style('top', `${y - 28}px`)
+  // }
+  //
+  // const removeTooltip = () => {
+  //   div
+  //     .transition()
+  //     .duration(200)
+  //     .style('opacity', 0)
+  // }
 
   const simulation = d3
     .forceSimulation(nodes)
@@ -112,23 +110,23 @@ export function runForceGraph (
     .join('line')
     .attr('stroke-width', d => Math.sqrt(d.value))
 
-  var node = svg
+  const node = svg
     .append('g')
-    .attr('stroke', '#fff')
-    .attr('stroke-width', 2)
+    // .attr('stroke', '#fff')
+    // .attr('stroke-width', 2)
     .selectAll('circle')
     .data(nodes)
     .join('circle')
-    .attr('r', 15)
+    .attr('r', 25)
     .attr('fill', color)
     .call(drag(simulation))
 
-  node.append('image')
-    .attr('xlink:href', DEFAULT_AVATAR)
-    .attr('x', -8)
-    .attr('y', -8)
-    .attr('width', 20)
-    .attr('height', 20)
+  const images = svg.append('image')
+    .attr('xlink:href', function (d) { return d.avatarUrl ? d.avatarUrl : 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png' })
+    .attr('x', function (d) { return -25 })
+    .attr('y', function (d) { return -25 })
+    .attr('height', 50)
+    .attr('width', 50)
 
   const label = svg.append('g')
     .attr('class', 'labels')
@@ -143,10 +141,10 @@ export function runForceGraph (
     .call(drag(simulation))
 
   label.on('mouseover', (event, d) => {
-    addTooltip(nodeHoverTooltip, d, event.pageX, event.pageY)
+    // addTooltip(nodeHoverTooltip, d, event.pageX, event.pageY)
   })
     .on('mouseout', () => {
-      removeTooltip()
+      // removeTooltip()
     })
 
   simulation.on('tick', () => {
