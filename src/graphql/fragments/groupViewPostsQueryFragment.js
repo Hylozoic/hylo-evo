@@ -1,13 +1,13 @@
 import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
-const postsQueryFragment = `
+// TODO: change to showing aggregate tree of posts by doing
+// posts: viewPosts(
+const groupViewPostsQueryFragment = `
 posts(
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
-  groupSlugs: $groupSlugs,
   offset: $offset,
-  context: $context,
   order: "desc",
   sortBy: $sortBy,
   search: $search,
@@ -20,4 +20,4 @@ posts(
   }
 }`
 
-export default postsQueryFragment
+export default groupViewPostsQueryFragment
