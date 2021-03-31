@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { push, goBack } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
+import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 
@@ -17,22 +18,24 @@ export function mapDispatchToProps (dispatch, props) {
     goToPreviousStep: () => dispatch(push('/signup/upload-photo')),
     goBack: () => dispatch(goBack()),
     push: (path) => dispatch(push(path)),
-    resetReturnToURL: () => dispatch(resetReturnToURL())
-
+    resetReturnToURL: () => dispatch(resetReturnToURL()),
+    trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data))
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  console.log(stateProps.returnToURL)
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToNextStep: (defaultPath = '/signup/review') => {
-      dispatchProps.resetReturnToURL()
-      dispatchProps.push(stateProps.returnToURL || defaultPath)
+    goToNextStep: (defaultPath = '/signup/welcome') => {
+      if (stateProps.returnToURL) {
+        dispatchProps.resetReturnToURL()
+        dispatchProps.push(stateProps.returnToURL)
+      } else {
+        dispatchProps.push(defaultPath)
+      }
     }
-
   }
 }
 

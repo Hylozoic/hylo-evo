@@ -12,8 +12,11 @@ export default class Signup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      name: '',
       nameActive: false,
+      email: '',
       emailActive: false,
+      password: '',
       passwordActive: false
     }
   }
@@ -58,17 +61,18 @@ export default class Signup extends React.Component {
   }
 
   render () {
-    const { className, downloadAppUrl } = this.props
+    const { className, downloadAppUrl, error } = this.props
+    const { email, emailActive, name, nameActive, password, passwordActive } = this.state
 
     return <div className={className}>
       <div styleName='formWrapper'>
         {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
         <h1 styleName='title'>Welcome to Hylo</h1>
         <p styleName='blurb'>Stay connected, organized, and engaged with your group.</p>
-        {this.props.error && formatError(this.props.error, 'Signup')}
+        {error && formatError(error, 'Signup')}
         <div styleName='field'>
-          <label htmlFor='name' styleName={cx('field-label', this.state.nameActive === true ? 'active' : '')}>Full name</label>
-          <TextInput aria-label='name' label='name' type='text' name='name' id='name' styleName='authInput'
+          <label htmlFor='name' styleName={cx('field-label', nameActive || name.length > 0 ? 'active' : '')}>Full name</label>
+          <TextInput aria-label='name' label='name' type='text' name='name' id='name' styleName='authInput' autoFocus
             onFocus={this.activateField}
             onChange={this.handleChange}
             onBlur={this.disableFocus}
@@ -76,7 +80,7 @@ export default class Signup extends React.Component {
             inputRef={input => { this.name = input }} />
         </div>
         <div styleName='field'>
-          <label htmlFor='email' styleName={cx('field-label', this.state.emailActive === true ? 'active' : '')}>Your email address</label>
+          <label htmlFor='email' styleName={cx('field-label', emailActive || email.length > 0 ? 'active' : '')}>Your email address</label>
           <TextInput aria-label='email' label='email' type='text' name='email' id='email' styleName='authInput'
             onFocus={this.activateField}
             onChange={this.handleChange}
@@ -85,7 +89,7 @@ export default class Signup extends React.Component {
             inputRef={input => { this.email = input }} />
         </div>
         <div styleName='field'>
-          <label htmlFor='password' styleName={cx('field-label', this.state.passwordActive === true ? 'active' : '')}>Password</label>
+          <label htmlFor='password' styleName={cx('field-label', passwordActive || password.length > 0 ? 'active' : '')}>Password</label>
           <TextInput aria-label='password' label='password' type='password' name='password' id='password' styleName='authInput'
             onFocus={this.activateField}
             onChange={this.handleChange}

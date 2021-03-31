@@ -13,7 +13,9 @@ export default class Login extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      email: '',
       emailActive: false,
+      password: '',
       passwordActive: false
     }
   }
@@ -73,7 +75,7 @@ export default class Login extends React.Component {
         <h1 styleName='title'>Sign in to Hylo</h1>
         {this.props.error && formatError(this.props.error, 'Login')}
         <div styleName='field'>
-          <label htmlFor='email' styleName={cx('field-label', this.state.emailActive === true ? 'active' : '')}>Your email address</label>
+          <label htmlFor='email' styleName={cx('field-label', this.state.emailActive || this.state.email.length > 0 ? 'active' : '')}>Your email address</label>
           <TextInput aria-label='email' label='email' type='text' name='email' id='email' styleName='authInput'
             onFocus={this.activateField}
             onChange={this.handleChange}
@@ -83,7 +85,7 @@ export default class Login extends React.Component {
         </div>
 
         <div styleName='field'>
-          <label htmlFor='password' styleName={cx('field-label', this.state.passwordActive === true ? 'active' : '')}>Password</label>
+          <label htmlFor='password' styleName={cx('field-label', this.state.passwordActive || this.state.password.length > 0 ? 'active' : '')}>Password</label>
           <TextInput aria-label='password' label='password' type='password' name='password' id='password' styleName='authInput'
             onFocus={this.activateField}
             onChange={this.handleChange}

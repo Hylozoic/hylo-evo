@@ -2,7 +2,7 @@
 
 exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
-  data-stylename="member-profile"
+  className=""
 >
   <div
     data-stylename="header"

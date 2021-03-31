@@ -38,8 +38,12 @@ export default class AddLocation extends Component {
   submit = () => {
     const { locationId, location } = this.state
     const changes = Object.assign({ location, locationId }, { settings: { signupInProgress: false } })
+
     this.props.updateUserSettings(changes)
-    this.props.goToNextStep()
+      .then(() => {
+        this.props.trackAnalyticsEvent('Signup Complete')
+        this.props.goToNextStep()
+      })
   }
 
   previous = () => {

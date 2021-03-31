@@ -4,7 +4,7 @@ import { bgImageStyle } from 'util/index'
 import { get } from 'lodash/fp'
 import '../Signup.scss'
 
-export default class Review extends Component {
+export default class Welcome extends Component {
   getValue = (field) => {
     return get(field, this.props.currentUser)
   }
