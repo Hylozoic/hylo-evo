@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Everywhere we show a list of groups we now sort them alphabetically. This includes in the group selector when creating a post, and in the affiliations lists on user profiles and in the user settings.
 - The save button on the user and group settings pages now sticks to the bottom of the viewport so it is always visible and more clear when something needs to be saved.
 - You can now create a Project or Event from the regular post creation modal instead of having to go to the Projects or Events section to do so.
+- Much nicer signup wizard with welcome dialog that directs you to different things you can do
 - Many small fixes and improvements to the UI on mobile web.
 
 ### Fixes

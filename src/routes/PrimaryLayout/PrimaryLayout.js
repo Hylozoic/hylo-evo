@@ -17,7 +17,6 @@ import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
-import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
 import GroupSettings from 'routes/GroupSettings'
 import GroupSidebar from 'routes/GroupSidebar'
 import Groups from 'routes/Groups'
@@ -33,7 +32,7 @@ import Navigation from './components/Navigation'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
 import PostEditorModal from 'components/PostEditorModal'
-import Review from 'routes/Signup/Review'
+import Welcome from 'routes/Signup/Welcome'
 import Search from 'routes/Search'
 import SignupModal from 'routes/Signup/SignupModal'
 import SocketListener from 'components/SocketListener'
@@ -88,6 +87,7 @@ const detailRoutes = [
 
 const createRoutes = [
   { path: `/:context(all|public)/:view(events|groups|map|projects)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/:views(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
@@ -100,7 +100,7 @@ const createRoutes = [
 const signupRoutes = [
   { path: '/signup/upload-photo', child: UploadPhoto },
   { path: '/signup/add-location', child: AddLocation },
-  { path: '/signup/review', child: Review }
+  { path: '/signup/welcome', child: Welcome }
 ]
 
 const redirectRoutes = [
@@ -345,7 +345,6 @@ export default class PrimaryLayout extends Component {
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            <Route path='/confirm-group-delete' component={GroupDeleteConfirmation} />
           </Switch>
         </Div100vh>
         {group && memberOfCurrentGroup &&
