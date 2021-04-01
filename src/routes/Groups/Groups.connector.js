@@ -1,5 +1,6 @@
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
+import { mapNodesAndLinks } from 'util/networkMap'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
@@ -18,12 +19,14 @@ export function mapStateToProps (state, props) {
     g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
     return g
   })
+  const networkData = mapNodesAndLinks(parentGroups, childGroups, group)
 
   return {
     childGroups,
     group,
     memberships,
     parentGroups,
+    networkData,
     routeParams: get('match.params', props)
   }
 }

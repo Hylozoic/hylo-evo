@@ -12,30 +12,10 @@
   height: 100%;
 }
 
-.male {
-  fill: rgb(22, 130, 218);
-}
-
-.female {
-  fill: rgb(0, 0, 0);
-}
-
 .node text {
-  font: 16px sans-serif;
+  font-size: 16px;
 }
 
 .node circle {
-  border: 2px solid blue;
-}
-
-div.tooltip {
-  position: absolute;
-  text-align: center;
-  width: 110px;
-  padding: 10px;
-  font: 12px sans-serif;
-  background: lightsteelblue;
-  border: 0;
-  border-radius: 8px;
-  pointer-events: none;
+  cursor: pointer;
 }
