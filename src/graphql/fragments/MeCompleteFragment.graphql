@@ -43,10 +43,11 @@ fragment MeCompleteFragment on Me {
     name
   }
   settings {
-    signupInProgress
+    alreadySeenTour
     digestFrequency
     dmNotifications
     commentNotifications
+    signupInProgress
   }
   affiliations {
     items {

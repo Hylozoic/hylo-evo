@@ -138,6 +138,7 @@ export default class PrimaryLayout extends Component {
       run: false,
       steps: [
         {
+          disableBeacon: true,
           target: '#currentContext',
           title: 'You are here!',
           content: 'This is where we show you which group or view you are looking at. Hylo allows you to easily switch between groups as well as see updates from all your groups at once.'
@@ -145,7 +146,7 @@ export default class PrimaryLayout extends Component {
         {
           target: '#toggleDrawer',
           title: 'Switching groups & viewing all',
-          content: 'By clicking on the community icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
+          content: 'By clicking on the group icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
         },
         {
           target: '#groupMenu',
@@ -162,8 +163,9 @@ export default class PrimaryLayout extends Component {
     }
   }
 
-  handleClickStart = (e) => {
+  handleClickStartTour = (e) => {
     e.preventDefault()
+    this.props.updateUserSettings({ settings: { alreadySeenTour: true } })
     this.setState({
       run: true,
       closeTheTour: true
@@ -171,6 +173,7 @@ export default class PrimaryLayout extends Component {
   }
 
   closeTour = () => {
+    this.props.updateUserSettings({ settings: { alreadySeenTour: true } })
     this.setState({
       closeTheTour: true
     })
@@ -251,7 +254,7 @@ export default class PrimaryLayout extends Component {
     )
 
     // Don't show more than once
-    const showTourPrompt = true
+    const showTourPrompt = !get('settings.alreadySeenTour', currentUser)
 
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
@@ -264,7 +267,6 @@ export default class PrimaryLayout extends Component {
     const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
-      {/* Context navigation drawer */}
       { showTourPrompt ? <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
         <div styleName='tourPrompt'>
           <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
@@ -273,13 +275,15 @@ export default class PrimaryLayout extends Component {
             <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
             <div>
               <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
-              <button styleName='startTour' onClick={this.handleClickStart}>Show me Hylo</button>
+              <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
             </div>
             <div styleName='speechIndicator' />
           </div>
         </div>
         <div styleName='tourBg' onClick={this.closeTour} />
       </div> : ' '}
+
+      {/* Context navigation drawer */}
       <Switch>
         {routesWithDrawer.map(({ path }) => (
           <Route path={path} key={path} render={props => (
