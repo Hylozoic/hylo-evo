@@ -15,7 +15,6 @@ import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
-import GroupDeleteConfirmation from 'routes/GroupSettings/GroupDeleteConfirmation'
 import GroupSettings from 'routes/GroupSettings'
 import GroupSidebar from 'routes/GroupSidebar'
 import Groups from 'routes/Groups'
@@ -244,7 +243,6 @@ export default class PrimaryLayout extends Component {
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
-            <Route path='/confirm-group-delete' component={GroupDeleteConfirmation} />
           </Switch>
         </Div100vh>
         {group && memberOfCurrentGroup &&
