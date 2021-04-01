@@ -92,6 +92,9 @@ const postFieldsFragment = withComments => `
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
