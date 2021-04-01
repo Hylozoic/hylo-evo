@@ -1,14 +1,16 @@
+import cx from 'classnames'
+import { get, some } from 'lodash/fp'
+import qs from 'querystring'
 import React, { Component } from 'react'
+import Intercom from 'react-intercom'
+import Joyride from 'react-joyride'
 import {
   matchPath,
   Redirect,
   Route,
   Switch
 } from 'react-router-dom'
-import cx from 'classnames'
-import { get, some } from 'lodash/fp'
-import qs from 'querystring'
-import Intercom from 'react-intercom'
+
 import config, { isTest } from 'config'
 import Div100vh from 'react-div-100vh'
 import AddLocation from 'routes/Signup/AddLocation'
@@ -130,6 +132,53 @@ const redirectRoutes = [
 ]
 
 export default class PrimaryLayout extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      run: false,
+      steps: [
+        {
+          disableBeacon: true,
+          target: '#currentContext',
+          title: 'You are here!',
+          content: 'This is where we show you which group or view you are looking at. Hylo allows you to easily switch between groups as well as see updates from all your groups at once.'
+        },
+        {
+          target: '#toggleDrawer',
+          title: 'Switching groups & viewing all',
+          content: 'By clicking on the group icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
+        },
+        {
+          target: '#groupMenu',
+          title: 'Create & navigate',
+          content: 'Here you can switch between types of content and create new content for people in your group or everyone on Hylo!'
+        },
+        {
+          target: '#personalSettings',
+          title: 'Messages, notifications & profile',
+          content: 'Search for posts & people. Send messages to group members or people you see on Hylo. Stay up to date with current events and edit your profile.'
+        }
+      ],
+      closeTheTour: false
+    }
+  }
+
+  handleClickStartTour = (e) => {
+    e.preventDefault()
+    this.props.updateUserSettings({ settings: { alreadySeenTour: true } })
+    this.setState({
+      run: true,
+      closeTheTour: true
+    })
+  }
+
+  closeTour = () => {
+    this.props.updateUserSettings({ settings: { alreadySeenTour: true } })
+    this.setState({
+      closeTheTour: true
+    })
+  }
+
   componentDidMount () {
     this.props.fetchForCurrentUser()
     if (this.props.slug) {
@@ -169,6 +218,7 @@ export default class PrimaryLayout extends Component {
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
+    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser)
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
@@ -177,6 +227,24 @@ export default class PrimaryLayout extends Component {
     const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
+      { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
+        <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
+          <div styleName='tourPrompt'>
+            <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+            <div styleName='tourExplanation'>
+              <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
+              <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+              <div>
+                <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
+                <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+              </div>
+              <div styleName='speechIndicator' />
+            </div>
+          </div>
+          <div styleName='tourBg' onClick={this.closeTour} />
+        </div>} />
+        : ' '}
+
       {/* Context navigation drawer */}
       <Switch>
         {routesWithDrawer.map(({ path }) => (
@@ -273,6 +341,14 @@ export default class PrimaryLayout extends Component {
       <SocketListener location={location} />
       <SocketSubscriber type='group' id={get('slug', group)} />
       <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
+      <Joyride
+        run={this.state.run}
+        continuous
+        showProgress
+        showClose
+        tooltipComponent={TourTooltip}
+        steps={this.state.steps}
+      />
     </Div100vh>
   }
 }
@@ -295,4 +371,41 @@ export function RedirectToGroup ({ path, currentUser }) {
   }
 
   return <Redirect exact from={path} to={redirectToPath} />
+}
+
+function TourTooltip ({
+  continuous,
+  index,
+  step,
+  backProps,
+  closeProps,
+  primaryProps,
+  tooltipProps
+}) {
+  return <div {...tooltipProps} styleName='tooltipWrapper'>
+    <div styleName='tooltipContent'>
+      <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+      <div>
+        {step.title && <div styleName='stepTitle'>{step.title}</div>}
+        <div>{step.content}</div>
+      </div>
+    </div>
+    <div styleName='tooltipControls'>
+      {index > 0 && (
+        <button styleName='backButton' {...backProps}>
+          Back
+        </button>
+      )}
+      {continuous && (
+        <button styleName='nextButton' {...primaryProps}>
+          Next
+        </button>
+      )}
+      {!continuous && (
+        <button {...closeProps}>
+          Close
+        </button>
+      )}
+    </div>
+  </div>
 }
