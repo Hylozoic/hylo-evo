@@ -86,6 +86,7 @@ const detailRoutes = [
 
 const createRoutes = [
   { path: `/:context(all|public)/:view(events|groups|map|projects)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/:views(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
