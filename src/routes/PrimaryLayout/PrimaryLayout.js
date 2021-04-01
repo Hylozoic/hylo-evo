@@ -215,44 +215,6 @@ export default class PrimaryLayout extends Component {
       if (!group && !groupPending) return <NotFound />
     }
 
-    // Custom joyride tooltip
-    const Tooltip = ({
-      continuous,
-      index,
-      step,
-      backProps,
-      closeProps,
-      primaryProps,
-      tooltipProps
-    }) => (
-      <div {...tooltipProps} styleName='tooltipWrapper'>
-        <div styleName='tooltipContent'>
-          <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-          <div>
-            {step.title && <div styleName='stepTitle'>{step.title}</div>}
-            <div>{step.content}</div>
-          </div>
-        </div>
-        <div styleName='tooltipControls'>
-          {index > 0 && (
-            <button styleName='backButton' {...backProps}>
-              Back
-            </button>
-          )}
-          {continuous && (
-            <button styleName='nextButton' {...primaryProps}>
-              Next
-            </button>
-          )}
-          {!continuous && (
-            <button {...closeProps}>
-              Close
-            </button>
-          )}
-        </div>
-      </div>
-    )
-
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
@@ -384,7 +346,7 @@ export default class PrimaryLayout extends Component {
         continuous
         showProgress
         showClose
-        tooltipComponent={Tooltip}
+        tooltipComponent={TourTooltip}
         steps={this.state.steps}
       />
     </Div100vh>
@@ -409,4 +371,41 @@ export function RedirectToGroup ({ path, currentUser }) {
   }
 
   return <Redirect exact from={path} to={redirectToPath} />
+}
+
+function TourTooltip ({
+  continuous,
+  index,
+  step,
+  backProps,
+  closeProps,
+  primaryProps,
+  tooltipProps
+}) {
+  return <div {...tooltipProps} styleName='tooltipWrapper'>
+    <div styleName='tooltipContent'>
+      <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+      <div>
+        {step.title && <div styleName='stepTitle'>{step.title}</div>}
+        <div>{step.content}</div>
+      </div>
+    </div>
+    <div styleName='tooltipControls'>
+      {index > 0 && (
+        <button styleName='backButton' {...backProps}>
+          Back
+        </button>
+      )}
+      {continuous && (
+        <button styleName='nextButton' {...primaryProps}>
+          Next
+        </button>
+      )}
+      {!continuous && (
+        <button {...closeProps}>
+          Close
+        </button>
+      )}
+    </div>
+  </div>
 }
