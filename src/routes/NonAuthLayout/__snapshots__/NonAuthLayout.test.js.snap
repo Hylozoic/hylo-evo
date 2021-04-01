@@ -145,14 +145,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
         src="assets/hylo.svg"
       />
     </a>
-    <Route
-      component={[Function]}
-      path="/login"
-    />
-    <Route
-      component={[Function]}
-      path="/reset-password"
-    />
   </div>
   <Route
     component={[Function]}
@@ -252,16 +244,20 @@ exports[`NonAuthLayout renders correctly 1`] = `
     </Switch>
   </div>
   <div
-    data-stylename="signupToggle"
+    data-stylename="below-container"
   >
-    <p
-      data-stylename="below-container"
-    >
-      <Route
-        component={[Function]}
-        path="/signup"
-      />
-    </p>
+    <Route
+      component={[Function]}
+      path="/signup"
+    />
+    <Route
+      component={[Function]}
+      path="/login"
+    />
+    <Route
+      component={[Function]}
+      path="/reset-password"
+    />
   </div>
 </div>
 `;

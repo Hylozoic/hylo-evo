@@ -4,10 +4,6 @@ exports[`AddSkills renders correctly 1`] = `
 <div
   data-stylename="flex-wrapper"
 >
-  <Connect(LeftSidebar)
-    body="What skills are you known for? What topics do you love to explore and discuss? What do you want to learn more about? The more you add, the more relevant the content. It's like magic."
-    header="Share your unique super powers and what excites or interests you!"
-  />
   <div
     data-stylename="panel"
   >

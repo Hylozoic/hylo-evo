@@ -2,81 +2,95 @@
 
 exports[`Signup renders correctly 1`] = `
 <div>
-  <h1
-    data-stylename="title"
-  >
-    Welcome to Hylo
-  </h1>
-  <p
-    data-stylename="blurb"
-  >
-    Stay connected, organized, and engaged with your group.
-  </p>
   <div
-    data-stylename="field"
+    data-stylename="formWrapper"
   >
-    <label
-      data-stylename="field-label"
-      htmlFor="name"
+    <h1
+      data-stylename="title"
     >
-      Full name
-    </label>
-    <TextInput
-      aria-label="name"
-      autoFocus={true}
-      inputRef={[Function]}
-      label="name"
-      name="name"
-      onChange={[Function]}
-      type="text"
+      Welcome to Hylo
+    </h1>
+    <p
+      data-stylename="blurb"
+    >
+      Stay connected, organized, and engaged with your group.
+    </p>
+    <div
+      data-stylename="field"
+    >
+      <label
+        data-stylename="field-label"
+        htmlFor="name"
+      >
+        Full name
+      </label>
+      <TextInput
+        aria-label="name"
+        autoFocus={true}
+        data-stylename="authInput"
+        id="name"
+        inputRef={[Function]}
+        label="name"
+        name="name"
+        onAnimationStart={[Function]}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        type="text"
+      />
+    </div>
+    <div
+      data-stylename="field"
+    >
+      <label
+        data-stylename="field-label"
+        htmlFor="email"
+      >
+        Your email address
+      </label>
+      <TextInput
+        aria-label="email"
+        data-stylename="authInput"
+        id="email"
+        inputRef={[Function]}
+        label="email"
+        name="email"
+        onAnimationStart={[Function]}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        type="text"
+      />
+    </div>
+    <div
+      data-stylename="field"
+    >
+      <label
+        data-stylename="field-label"
+        htmlFor="password"
+      >
+        Password
+      </label>
+      <TextInput
+        aria-label="password"
+        data-stylename="authInput"
+        id="password"
+        label="password"
+        name="password"
+        onAnimationStart={[Function]}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onEnter={[Function]}
+        onFocus={[Function]}
+        type="password"
+      />
+    </div>
+    <Button
+      data-stylename="submit"
+      label="Sign Up"
+      onClick={[Function]}
     />
   </div>
-  <div
-    data-stylename="field"
-  >
-    <label
-      data-stylename="field-label"
-      htmlFor="email"
-    >
-      Your email address
-    </label>
-    <TextInput
-      aria-label="email"
-      inputRef={[Function]}
-      label="email"
-      name="email"
-      onChange={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    data-stylename="field"
-  >
-    <label
-      data-stylename="field-label"
-      htmlFor="password"
-    >
-      Password
-    </label>
-    <TextInput
-      aria-label="password"
-      label="password"
-      name="password"
-      onChange={[Function]}
-      onEnter={[Function]}
-      type="password"
-    />
-  </div>
-  <Button
-    data-stylename="submit"
-    label="Sign Up"
-    onClick={[Function]}
-  />
-  <p
-    data-stylename="connect-label"
-  >
-    Or:
-  </p>
   <div
     data-stylename="auth-buttons"
   >
@@ -94,84 +108,98 @@ exports[`Signup renders correctly 1`] = `
 
 exports[`Signup renders correctly with mobile redirect 1`] = `
 <div>
-  <DownloadAppPortal
-    url="some.url"
-  />
-  <h1
-    data-stylename="title"
-  >
-    Welcome to Hylo
-  </h1>
-  <p
-    data-stylename="blurb"
-  >
-    Stay connected, organized, and engaged with your group.
-  </p>
   <div
-    data-stylename="field"
+    data-stylename="formWrapper"
   >
-    <label
-      data-stylename="field-label"
-      htmlFor="name"
+    <DownloadAppPortal
+      url="some.url"
+    />
+    <h1
+      data-stylename="title"
     >
-      Full name
-    </label>
-    <TextInput
-      aria-label="name"
-      autoFocus={true}
-      inputRef={[Function]}
-      label="name"
-      name="name"
-      onChange={[Function]}
-      type="text"
+      Welcome to Hylo
+    </h1>
+    <p
+      data-stylename="blurb"
+    >
+      Stay connected, organized, and engaged with your group.
+    </p>
+    <div
+      data-stylename="field"
+    >
+      <label
+        data-stylename="field-label"
+        htmlFor="name"
+      >
+        Full name
+      </label>
+      <TextInput
+        aria-label="name"
+        autoFocus={true}
+        data-stylename="authInput"
+        id="name"
+        inputRef={[Function]}
+        label="name"
+        name="name"
+        onAnimationStart={[Function]}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        type="text"
+      />
+    </div>
+    <div
+      data-stylename="field"
+    >
+      <label
+        data-stylename="field-label"
+        htmlFor="email"
+      >
+        Your email address
+      </label>
+      <TextInput
+        aria-label="email"
+        data-stylename="authInput"
+        id="email"
+        inputRef={[Function]}
+        label="email"
+        name="email"
+        onAnimationStart={[Function]}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        type="text"
+      />
+    </div>
+    <div
+      data-stylename="field"
+    >
+      <label
+        data-stylename="field-label"
+        htmlFor="password"
+      >
+        Password
+      </label>
+      <TextInput
+        aria-label="password"
+        data-stylename="authInput"
+        id="password"
+        label="password"
+        name="password"
+        onAnimationStart={[Function]}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onEnter={[Function]}
+        onFocus={[Function]}
+        type="password"
+      />
+    </div>
+    <Button
+      data-stylename="submit"
+      label="Sign Up"
+      onClick={[Function]}
     />
   </div>
-  <div
-    data-stylename="field"
-  >
-    <label
-      data-stylename="field-label"
-      htmlFor="email"
-    >
-      Your email address
-    </label>
-    <TextInput
-      aria-label="email"
-      inputRef={[Function]}
-      label="email"
-      name="email"
-      onChange={[Function]}
-      type="text"
-    />
-  </div>
-  <div
-    data-stylename="field"
-  >
-    <label
-      data-stylename="field-label"
-      htmlFor="password"
-    >
-      Password
-    </label>
-    <TextInput
-      aria-label="password"
-      label="password"
-      name="password"
-      onChange={[Function]}
-      onEnter={[Function]}
-      type="password"
-    />
-  </div>
-  <Button
-    data-stylename="submit"
-    label="Sign Up"
-    onClick={[Function]}
-  />
-  <p
-    data-stylename="connect-label"
-  >
-    Or:
-  </p>
   <div
     data-stylename="auth-buttons"
   >

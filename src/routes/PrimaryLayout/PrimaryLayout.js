@@ -31,7 +31,7 @@ import Navigation from './components/Navigation'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
 import PostEditorModal from 'components/PostEditorModal'
-import Review from 'routes/Signup/Review'
+import Welcome from 'routes/Signup/Welcome'
 import Search from 'routes/Search'
 import SignupModal from 'routes/Signup/SignupModal'
 import SocketListener from 'components/SocketListener'
@@ -99,7 +99,7 @@ const createRoutes = [
 const signupRoutes = [
   { path: '/signup/upload-photo', child: UploadPhoto },
   { path: '/signup/add-location', child: AddLocation },
-  { path: '/signup/review', child: Review }
+  { path: '/signup/welcome', child: Welcome }
 ]
 
 const redirectRoutes = [
