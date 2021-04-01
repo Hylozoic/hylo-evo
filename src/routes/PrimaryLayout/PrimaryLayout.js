@@ -253,12 +253,10 @@ export default class PrimaryLayout extends Component {
       </div>
     )
 
-    // Don't show more than once
-    const showTourPrompt = !get('settings.alreadySeenTour', currentUser)
-
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
+    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser)
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
@@ -267,21 +265,23 @@ export default class PrimaryLayout extends Component {
     const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
-      { showTourPrompt ? <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
-        <div styleName='tourPrompt'>
-          <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-          <div styleName='tourExplanation'>
-            <p><strong>Welcome to Hylo {currentUser.name.split(' ')[0]}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
-            <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
-            <div>
-              <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
-              <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+      { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
+        <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
+          <div styleName='tourPrompt'>
+            <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+            <div styleName='tourExplanation'>
+              <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
+              <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+              <div>
+                <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
+                <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+              </div>
+              <div styleName='speechIndicator' />
             </div>
-            <div styleName='speechIndicator' />
           </div>
-        </div>
-        <div styleName='tourBg' onClick={this.closeTour} />
-      </div> : ' '}
+          <div styleName='tourBg' onClick={this.closeTour} />
+        </div>} />
+        : ' '}
 
       {/* Context navigation drawer */}
       <Switch>
