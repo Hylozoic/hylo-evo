@@ -234,7 +234,7 @@ export default class CreateGroup extends Component {
         </div>
       </div> */}
 
-      <div styleName='parentGroups'>
+      {parentGroupOptions && parentGroupOptions.length > 0 && <div styleName='parentGroups'>
         <div styleName='parentSelector'>
           <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
           <div styleName='parentGroupInfo'>
@@ -250,7 +250,7 @@ export default class CreateGroup extends Component {
             ref={this.groupsSelector}
           />
         </div>
-      </div>
+      </div>}
 
       <div styleName='createGroupBottom'>
         <Button
