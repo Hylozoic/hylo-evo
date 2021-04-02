@@ -563,6 +563,17 @@ $drawer-z-index: 51;
   .center.map-view {
     overflow-y: auto;
   }
+
+
+  .tourWrapper .tourPrompt .tourGuide {
+    min-width: 40px;
+    height: 40px;
+
+    img {
+      width: 24px;
+      height: 18px;
+    }
+  }
 }
 
 @media screen and (max-width: 375px) {
