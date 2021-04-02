@@ -34,6 +34,7 @@ export default
           id
           name
         }
+        email
         group {
           id
           accessibility

@@ -94,7 +94,7 @@ export default class ManageInvitesTab extends Component {
 }
 
 function GroupInvite ({ acceptInvite, declineInvite, invite }) {
-  const { creator, group, id, token } = invite
+  const { creator, createdAt, group, id, token } = invite
 
   const decline = () => {
     if (window.confirm(`Are you sure you want to decline the invitation to join ${group.name}?`)) {
@@ -107,11 +107,12 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
       <div styleName='requestDetail'>
         <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
         <span>invited you to join</span>
+        <span styleName='createdDate'>on {moment(createdAt).format('YYYY-MM-DD')}</span>
         <div styleName='requestGroup'>
           <GroupButton group={group} />
         </div>
         <span onClick={decline} styleName='cancelButton'>Decline</span>
-        <span onClick={() => acceptInvite(token)} styleName='joinButton'>Join</span>
+        <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>Join</span>
       </div>
     </div>
   )

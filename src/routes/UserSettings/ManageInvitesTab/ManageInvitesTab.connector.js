@@ -1,6 +1,8 @@
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { useInvitation } from 'routes/JoinGroup/JoinGroup.store'
 import { FETCH_MY_REQUESTS_AND_INVITES } from 'store/constants'
+import { groupUrl } from 'util/navigation'
 import {
   cancelJoinRequest,
   declineInvite,
@@ -28,7 +30,7 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    acceptInvite: (invitationToken) => dispatch(useInvitation({ invitationToken })),
+    acceptInvite: (invitationToken, groupSlug) => dispatch(useInvitation({ invitationToken })).then(() => dispatch(push(groupUrl(groupSlug)))),
     cancelJoinRequest: (params) => dispatch(cancelJoinRequest(params)),
     declineInvite: (inviteId) => dispatch(declineInvite(inviteId)),
     fetchMyInvitesAndRequests: () => dispatch(fetchMyInvitesAndRequests())

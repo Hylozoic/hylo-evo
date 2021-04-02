@@ -4,7 +4,6 @@ import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_MODERATOR_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
-  CANCEL_JOIN_REQUEST,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_JOIN_REQUEST,
@@ -13,7 +12,6 @@ import {
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
   FETCH_MESSAGES_PENDING,
-  FETCH_MY_REQUESTS_AND_INVITES,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
@@ -83,6 +81,7 @@ export default function ormReducer (state = {}, action) {
     GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
+    Invitation,
     JoinRequest,
     Me,
     Membership,
@@ -329,11 +328,6 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case CANCEL_JOIN_REQUEST:
-      const jr = JoinRequest.withId(meta.id)
-      jr.delete()
-      break
-
     case JOIN_PROJECT_PENDING:
       me = Me.first()
       ProjectMember.create({ post: meta.id, member: me.id })
@@ -353,7 +347,9 @@ export default function ormReducer (state = {}, action) {
       break
 
     case USE_INVITATION:
-      Me.first().updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
+      me = Me.first()
+      me.updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
+      Invitation.filter({ email: me.email, group: payload.data.useInvitation.membership.group.id }).delete()
       break
 
     case DELETE_GROUP_TOPIC_PENDING:
@@ -418,11 +414,6 @@ export default function ormReducer (state = {}, action) {
       }
       break
     }
-
-    case FETCH_MY_REQUESTS_AND_INVITES:
-      me = Me.first()
-      clearCacheFor(Me, me.id)
-      break
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

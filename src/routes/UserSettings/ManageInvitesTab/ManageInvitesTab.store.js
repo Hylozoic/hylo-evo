@@ -6,9 +6,10 @@ import {
   DECLINE_GROUP_INVITE,
   FETCH_MY_REQUESTS_AND_INVITES
 } from 'store/constants'
+import fetchMyInvitesAndRequestsQuery from 'graphql/queries/fetchMyInvitesAndRequestsQuery'
 import presentGroupInvite from 'store/presenters/presentGroupInvite'
 import presentJoinRequest from 'store/presenters/presentJoinRequest'
-import fetchMyInvitesAndRequestsQuery from 'graphql/queries/fetchMyInvitesAndRequestsQuery'
+import clearCacheFor from 'store/reducers/ormReducer/clearCacheFor'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
 
 export function cancelJoinRequest (id) {
@@ -54,6 +55,27 @@ export function fetchMyInvitesAndRequests () {
     meta: {
       extractModel: 'Me'
     }
+  }
+}
+
+// Redux-ORM Session Reducer
+export function ormSessionReducer ({ Invitation, JoinRequest, Me }, { type, meta }) {
+  let request, invitation, me
+  switch (type) {
+    case CANCEL_JOIN_REQUEST:
+      request = JoinRequest.withId(meta.id)
+      request.delete()
+      break
+
+    case DECLINE_GROUP_INVITE:
+      invitation = Invitation.withId(meta.id)
+      invitation.delete()
+      break
+
+    case FETCH_MY_REQUESTS_AND_INVITES:
+      me = Me.first()
+      clearCacheFor(Me, me.id)
+      break
   }
 }
 

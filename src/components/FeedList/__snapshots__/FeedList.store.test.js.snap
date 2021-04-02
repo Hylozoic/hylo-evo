@@ -27,7 +27,7 @@ Object {
     bannerUrl
     postCount
     
-posts(
+posts: viewPosts(
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
