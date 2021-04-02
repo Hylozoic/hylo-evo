@@ -8,13 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - __Holonic Architecture!__ You can now add infinitely nested groups within groups within groups. And groups can have multiple "parent groups" too. This is the beginning of truly enabling us to map and connect complex organizations and ecosystems and how groups of all kinds work together.
 - Added a new Groups page in the group nav menu that shows all the "parent" groups and "child" groups of the current group.
-- Looking at a group's stream will show you all the posts to that group + all the posts to any descendant groups that you are also a member of (this feature temporarily disabled)
+- Looking at a group's stream will show you all the posts to that group + all the posts to any descendant groups that you are also a member of
+- When looking at the map for a group you will see the group itself on the map plus all descendant groups.
 - __Group relationship invites/requests:__ Groups can request to join other groups or invite a group to join them, and these invites/requests can be canceled, accepted or rejected by moderators of the other group. This all happens from the new group settings page "Related Groups".
 - __Group Join Questions:__ groups can now have questions that must be answered when a person is requesting to join the group. These are set up in the group settings page, and the form with the questions to answer shows up anywhere we show a Request to Join button to a user (when they are looking at a group they are not a member of that they are allowed to join because the accessibility setting is Restricted.)
 - New user settings page for Invites & Requests where you can see any current invites and requests to join a group and cancel, accept or reject them.
-- When looking at the map for a group you will see the group itself on the map plus all descendant groups.
 - __Inline Comments:__ Comments can be nested undearneath other comments.
 - __Create Button:__ New button in the group navigation menu to create a post or a group within the current group.
+- __Tour__: A tour for new users to introduce the basics of Hylo when you first join
 
 ### Changed
 - Upgraded Projects to have location and times, appear on map, and show completion.
@@ -25,10 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Everywhere we show a list of groups we now sort them alphabetically. This includes in the group selector when creating a post, and in the affiliations lists on user profiles and in the user settings.
 - The save button on the user and group settings pages now sticks to the bottom of the viewport so it is always visible and more clear when something needs to be saved.
 - You can now create a Project or Event from the regular post creation modal instead of having to go to the Projects or Events section to do so.
+- Much nicer signup wizard with welcome dialog that directs you to different things you can do
 - Many small fixes and improvements to the UI on mobile web.
 
 ### Fixes
 - Show posts in the public stream for users that dont have any groups yet.
+- The notification when you are invited to an event now correctly links to that event
 
 ## [2.2.5] - 2021-02-01
 ### Added

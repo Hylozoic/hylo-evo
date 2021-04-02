@@ -2,11 +2,12 @@ import groupFieldsFragment from 'graphql/fragments/groupFieldsFragment'
 
 const groupsQueryFragment = `
 groups(
-  isPublic: $isPublic,
-  sortBy: $sortBy,
   boundingBox: $boundingBox,
+  context: $context,
+  parentSlugs: $parentSlugs,
   search: $search,
-  parentSlugs: $parentSlugs
+  sortBy: $sortBy,
+  visibility: $visibility
 ) {
   items {
     ${groupFieldsFragment(false)}

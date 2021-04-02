@@ -57,14 +57,13 @@ export function mapStateToProps (state, props) {
     context,
     slug,
     groupSlugs, // used to filter posts by multiple groups
-    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
-    isPublic: context === 'public'
+    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null
   }
 
   const fetchGroupParams = {
+    context,
     parentSlugs: groupSlugs, // used to filter posts by multiple groups
-    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null,
-    isPublic: context === 'public'
+    boundingBox: state.MapExplorer.fetchParams ? state.MapExplorer.fetchParams.boundingBox : null
   }
 
   // TODO: maybe filtering should happen on the presentedPosts? since we do some of that presentation in the filtering code, like calling topics.toModelArray in the filters for every post each time

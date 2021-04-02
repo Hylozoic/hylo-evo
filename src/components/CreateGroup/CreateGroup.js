@@ -223,7 +223,7 @@ export default class CreateGroup extends Component {
         </div>
       </div>
 
-      <div styleName='inviteMembers'>
+      {/* TODO: turn this on when finished <div styleName='inviteMembers'>
         <div styleName='memberSelector'>
           <span styleName='title'>INVITE MEMBERS</span>
           <TextInput
@@ -232,14 +232,14 @@ export default class CreateGroup extends Component {
             placeholder='Enter names & email addresses'
           />
         </div>
-      </div>
+      </div> */}
 
-      <div styleName='parentGroups'>
+      {parentGroupOptions && parentGroupOptions.length > 0 && <div styleName='parentGroups'>
         <div styleName='parentSelector'>
           <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
           <div styleName='parentGroupInfo'>
             ?
-            <div styleName='parentGroupTooltip'>You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has accessibility settings which allow groups to join</div>
+            <div styleName='parentGroupTooltip'>You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it</div>
           </div>
           {/* TODO: somehow show groups that are restricted and will be a join request differently */}
           <GroupsSelector
@@ -250,7 +250,7 @@ export default class CreateGroup extends Component {
             ref={this.groupsSelector}
           />
         </div>
-      </div>
+      </div>}
 
       <div styleName='createGroupBottom'>
         <Button

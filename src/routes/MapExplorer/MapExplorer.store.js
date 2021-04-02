@@ -3,8 +3,8 @@ import { createSelector } from 'reselect'
 import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_GROUPS_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 import groupsQueryFragment from 'graphql/fragments/groupsQueryFragment'
+import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
-import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
@@ -50,18 +50,20 @@ const groupPostsQuery = `query (
     avatarUrl
     bannerUrl
     postCount
-    ${postsQueryFragment}
+    ${groupViewPostsQueryFragment}
   }
 }`
 
-const allGroupsPostsQuery = `query (
-  $sortBy: String,
-  $search: String,
+const postsQuery = `query (
+  $boundingBox: [PointInput],
   $filter: String,
-  $topic: ID,
   $first: Int,
+  $groupSlugs: [String]
   $offset: Int,
-  $boundingBox: [PointInput]
+  $context: String,
+  $search: String,
+  $sortBy: String,
+  $topic: ID
 ) {
   ${postsQueryFragment}
 }`
@@ -107,25 +109,13 @@ const groupMembersQuery = `query (
   }
 }`
 
-const publicPostsQuery = `query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $groupSlugs: [String]
-  $boundingBox: [PointInput]
-) {
-  ${publicPostsQueryFragment}
-}`
-
 const groupsQuery = `query (
-  $isPublic: Boolean,
-  $sortBy: String,
-  $search: String,
   $boundingBox: [PointInput],
-  $parentSlugs: [String]
+  $context: String,
+  $parentSlugs: [String],
+  $search: String,
+  $sortBy: String,
+  $visibility: Int
 ) {
   ${groupsQueryFragment}
 }`
@@ -138,12 +128,8 @@ export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boun
     query = groupPostsQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
-  } else if (context === 'all') {
-    query = allGroupsPostsQuery
-    extractModel = 'Post'
-    getItems = get('payload.data.posts')
-  } else if (context === 'public') {
-    query = publicPostsQuery
+  } else if (context === 'all' || context === 'public') {
+    query = postsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -155,14 +141,14 @@ export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boun
     graphql: {
       query,
       variables: {
+        boundingBox: formatBoundingBox(boundingBox),
+        filter,
+        groupSlugs,
+        context,
         slug,
         sortBy,
         search,
-        filter,
-        topic,
-        groupSlugs,
-        boundingBox: formatBoundingBox(boundingBox),
-        isPublic: context === 'public'
+        topic
       }
     },
     meta: {
@@ -203,8 +189,7 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search, grou
         sortBy,
         search,
         groupSlugs,
-        boundingBox: formatBoundingBox(boundingBox),
-        isPublic: context === 'public'
+        boundingBox: formatBoundingBox(boundingBox)
       }
     },
     meta: {
@@ -222,11 +207,11 @@ export function fetchGroups ({ boundingBox, context, groupSlugs, search, slug, s
     graphql: {
       query: groupsQuery,
       variables: {
-        sortBy,
-        search,
         boundingBox: formatBoundingBox(boundingBox),
+        context,
         parentSlugs: groupSlugs,
-        isPublic: context === 'public'
+        sortBy,
+        search
       }
     },
     meta: {

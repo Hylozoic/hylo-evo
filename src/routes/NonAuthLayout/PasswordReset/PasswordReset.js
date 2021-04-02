@@ -37,19 +37,21 @@ export default class PasswordReset extends Component {
     const canSubmit = validator.isEmail(email)
 
     return <div className={className}>
-      <h1 styleName='title'>Reset Your Password</h1>
-      <div styleName='subtitle'>
-        Enter your email address and we'll send you an email that lets you reset your password.
+      <div styleName='formWrapper'>
+        <h1 styleName='title'>Reset Your Password</h1>
+        <div styleName='subtitle'>
+          Enter your email address and we'll send you an email that lets you reset your password.
+        </div>
+        {success && <div styleName='success'>If your email address matched an account in our system, we sent you an email. Please check your inbox.</div>}
+        {error && <div styleName='error'>There was a problem with your request. Please check your email and try again.</div>}
+        <div styleName='field'>
+          <label>Your email address</label>
+          <TextInput type='text' name='email' onChange={onChange} value={email}
+            inputRef={input => { this.email = input }} noClearButton />
+        </div>
+        <Button styleName='submit' label='Reset' color={canSubmit ? 'green' : 'gray'}
+          onClick={canSubmit ? () => this.submit() : null} />
       </div>
-      {success && <div styleName='success'>If your email address matched an account in our system, we sent you an email. Please check your inbox.</div>}
-      {error && <div styleName='error'>There was a problem with your request. Please check your email and try again.</div>}
-      <div styleName='field'>
-        <label styleName='field-label'>Your email address</label>
-        <TextInput type='text' name='email' onChange={onChange} value={email}
-          inputRef={input => { this.email = input }} noClearButton />
-      </div>
-      <Button styleName='submit' label='Reset' color={canSubmit ? 'green' : 'gray'}
-        onClick={canSubmit ? () => this.submit() : null} />
     </div>
   }
 }
