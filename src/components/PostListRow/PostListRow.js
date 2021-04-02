@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
+import Moment from 'moment'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { humanDate } from 'hylo-utils/text'
@@ -35,9 +36,12 @@ const PostListRow = (props) => {
     return null
   }
 
+  console.log(post)
+
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const numOtherCommentors = commentersTotal - 1
   const unread = false
+  const startTimeMoment = Moment(post.startTime)
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
@@ -57,27 +61,33 @@ const PostListRow = (props) => {
         </a>
       </div>
       <div styleName='content-summary'>
-        <div styleName='participants'>
-          <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
-          {creator.name} {
-            numOtherCommentors > 0
-              ? (<span> and <strong>{numOtherCommentors}</strong></span>)
-              : null
-          }
+        <div styleName='type-author'>
+          <div styleName={cx('post-type', post.type)}>{post.type}</div>
+          <div styleName='participants'>
+            {post.type === 'event' ? <div styleName='date'>
+              <span>{startTimeMoment.format('MMM')}</span>
+              <span>{startTimeMoment.format('D')}</span>
+            </div> : <div>
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+              {creator.name} {
+                numOtherCommentors > 1
+                  ? (<span> and <strong>{numOtherCommentors} others</strong></span>)
+                  : null
+              }
+            </div> }
+          </div>
+          <div styleName='timestamp'>
+            {humanDate(createdAt)}
+          </div>
         </div>
-        <h3 styleName='title'>{title}</h3>
-        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
-      </div>
-      <div styleName='meta'>
         {!isEmpty(topics) && (
           <div styleName='topics'>
             {topics.slice(0, 3).map(t =>
               <Link styleName='topic' to={topicUrl(t.name, { groupSlug: routeParams.slug })} key={t.name} onClick={stopEvent}>#{t.name}</Link>)}
           </div>
         )}
-        <div styleName='timestamp'>
-          {humanDate(createdAt)}
-        </div>
+        <h3 styleName='title'>{title}</h3>
+        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
       </div>
       <Tooltip
         delay={550}
