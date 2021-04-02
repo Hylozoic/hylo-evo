@@ -1,6 +1,7 @@
 export default
 `query {
   me {
+    id
     joinRequests {
       total
       hasMore
@@ -21,6 +22,27 @@ export default
           name
           avatarUrl
         }
+      }
+    }
+    groupInvitesPending {
+      total
+      hasMore
+      items {
+        id
+        createdAt
+        creator {
+          id
+          name
+        }
+        group {
+          id
+          accessibility
+          avatarUrl
+          name
+          slug
+          visibility
+        }
+        token
       }
     }
   }

@@ -86,6 +86,10 @@
         position: relative;
         top: 5px;
       }
+
+      .creator {
+        color: blue;
+      }
     }
   }
 
@@ -95,7 +99,7 @@
   }
 }
 
-.cancelButton, .declinedCanceled {
+.cancelButton, .declinedCanceled, .joinButton {
   margin-left: auto;
   composes: text-button from 'css/typography.scss';
   color: rgba(125, 140, 157, 1.000);
@@ -111,7 +115,19 @@
   }
 }
 
+.joinButton {
+  &:hover {
+    background-color: $color-caribbean-green;
+    cursor: pointer;
+  }
+}
+
 .declinedCanceled {
   background-color: transparent;
   border: 1px dashed rgba(191, 197, 206, .5);
+  &:hover {
+    color: rgba(125, 140, 157, 1.000);
+    background-color: transparent;
+    cursor: default;
+  }
 }

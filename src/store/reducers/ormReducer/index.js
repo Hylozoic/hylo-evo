@@ -13,7 +13,7 @@ import {
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
   FETCH_MESSAGES_PENDING,
-  FETCH_MY_JOIN_REQUESTS,
+  FETCH_MY_REQUESTS_AND_INVITES,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
@@ -419,7 +419,7 @@ export default function ormReducer (state = {}, action) {
       break
     }
 
-    case FETCH_MY_JOIN_REQUESTS:
+    case FETCH_MY_REQUESTS_AND_INVITES:
       me = Me.first()
       clearCacheFor(Me, me.id)
       break
