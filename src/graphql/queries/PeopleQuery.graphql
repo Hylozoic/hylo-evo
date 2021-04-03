@@ -1,9 +1,9 @@
 query PeopleQuery (
   $first: Int,
   $autocomplete: String,
-  $communityIds: [String]
+  $groupIds: [ID]
 ) {
-  communities(communityIds: $communityIds) {
+  groups(groupIds: $groupIds) {
     items {
       id
       members(first: $first, search: $autocomplete, sortBy: "name", order: "desc") {

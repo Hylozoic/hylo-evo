@@ -17,7 +17,11 @@ import {
   ACTION_ANNOUNCEMENT,
   ACTION_DONATION_TO,
   ACTION_DONATION_FROM,
-  ACTION_EVENT_INVITATION
+  ACTION_EVENT_INVITATION,
+  ACTION_GROUP_CHILD_GROUP_INVITE,
+  ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED,
+  ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST,
+  ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED
 } from 'store/models/Notification'
 import striptags from 'striptags'
 import { decode } from 'ent'
@@ -193,13 +197,29 @@ export function NotificationHeader ({ notification }) {
         <span styleName='bold'>{actor.name} </span>
         invited you to an event
       </div>
+    case ACTION_GROUP_CHILD_GROUP_INVITE:
+      return <div styleName='header'>
+        Your group has been invited
+      </div>
+    case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
+      return <div styleName='header'>
+        New Group Joined
+      </div>
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
+      return <div styleName='header'>
+        Group Requesting to Join
+      </div>
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
+      return <div styleName='header'>
+        New Group Joined
+      </div>
   }
 
   return null
 }
 
 export function NotificationBody ({ notification }) {
-  const { activity: { action, actor, post, comment, community, contributionAmount } } = notification
+  const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
 
   const truncateForBody = text =>
     text && textLength(text) > 76 ? truncate(text, 76) : text
@@ -221,13 +241,13 @@ export function NotificationBody ({ notification }) {
       return <div styleName='body'>
         <span styleName='bold'>{actor.name} </span>
         asked to join
-        <span styleName='bold'> {community.name}</span>
+        <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_APPROVED_JOIN_REQUEST:
       return <div styleName='body'>
         <span styleName='bold'>{actor.name} </span>
         approved your request to join
-        <span styleName='bold'> {community.name}</span>
+        <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_ANNOUNCEMENT:
       text = truncateForBody(post.title)
@@ -248,6 +268,22 @@ export function NotificationBody ({ notification }) {
       text = truncateForBody(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> invited you to: "{text}"
+      </div>
+    case ACTION_GROUP_CHILD_GROUP_INVITE:
+      return <div styleName='body'>
+        <span styleName='bold'>{group.name}</span> has invited <span styleName='bold'>{otherGroup.name}</span> to join it
+      </div>
+    case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
+      return <div styleName='body'>
+        <span styleName='bold'>{otherGroup.name}</span> has joined <span styleName='bold'>{group.name}</span>!
+      </div>
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
+      return <div styleName='body'>
+        <span styleName='bold'>{group.name}</span> has requested to join <span styleName='bold'>{otherGroup.name}</span>
+      </div>
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
+      return <div styleName='body'>
+        <span styleName='bold'>{group.name}</span> has joined <span styleName='bold'>{otherGroup.name}</span>!
       </div>
   }
 

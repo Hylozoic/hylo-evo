@@ -8,9 +8,9 @@ export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
 }
 
-export function canModerate (memberships, community) {
+export function canModerate (memberships, group) {
   const matchedMembership = find(
-    m => m.community === get('id', community),
+    m => m.group === get('id', group),
     toRefArray(memberships)
   )
 
@@ -82,6 +82,8 @@ Me.fields = {
   name: attr(),
   posts: many('Post'),
   intercomHash: attr(),
+  groupInvitesPending: many('Invitation'),
+  joinRequests: many('JoinRequest'),
   location: attr(),
   locationId: fk({
     to: 'Location',

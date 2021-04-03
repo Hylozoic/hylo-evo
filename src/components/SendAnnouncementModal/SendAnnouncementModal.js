@@ -5,28 +5,28 @@ import Button from '../Button'
 export default function SendAnnouncementModal ({
   closeModal,
   save,
-  communityCount,
-  myModeratedCommunities,
-  communities
+  groupCount,
+  myModeratedGroups,
+  groups
 }) {
-  const communityIds = communities.map(c => c.id)
-  const communityModIds = myModeratedCommunities.map(c => c.id)
-  const canModerateAllCommunities = communityIds.every(val => communityModIds.indexOf(val) >= 0)
+  const groupIds = groups.map(c => c.id)
+  const groupModIds = myModeratedGroups.map(c => c.id)
+  const canModerateAllGroups = groupIds.every(val => groupModIds.indexOf(val) >= 0)
 
   return <div styleName='modal'>
     <div styleName='modal-container'>
       <h1 styleName='modal-header'>MAKE AN ANNOUNCEMENT</h1>
-      {communityCount === 1 && canModerateAllCommunities &&
-        <p styleName='modal-paragraph'>This means that all members of this community will receive an instant email and push notification about this Post. (This feature is available to moderators only.)</p>
+      {groupCount === 1 && canModerateAllGroups &&
+        <p styleName='modal-paragraph'>This means that all members of this group will receive an instant email and push notification about this Post. (This feature is available to moderators only.)</p>
       }
-      {communityCount > 1 && canModerateAllCommunities &&
-        <p styleName='modal-paragraph'>This means that all members of the {communityCount} communities selected will receive instant email and push notifications about this Post. (This feature is available to moderators only.)</p>
+      {groupCount > 1 && canModerateAllGroups &&
+        <p styleName='modal-paragraph'>This means that all members of the {groupCount} groups selected will receive instant email and push notifications about this Post. (This feature is available to moderators only.)</p>
       }
 
-      {!canModerateAllCommunities &&
+      {!canModerateAllGroups &&
         <span>
-          <p styleName='modal-paragraph'>This means that all members of the {communityCount} communities selected will receive an instant email and push notification about this Post.</p>
-          <p styleName='modal-paragraph'>This will only be sent as an Announcement to the communities where you are a Moderator. For other communities it will be shared as a regular Post.</p>
+          <p styleName='modal-paragraph'>This means that all members of the {groupCount} groups selected will receive an instant email and push notification about this Post.</p>
+          <p styleName='modal-paragraph'>This will only be sent as an Announcement to the groups where you are a Moderator. For other groups it will be shared as a regular Post.</p>
         </span>
       }
       <a>

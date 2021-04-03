@@ -1,9 +1,11 @@
 .topNavWrapper {
   width: 100%;
   z-index: 21;
+  position: fixed;
+  top: 0;
 
   &:hover {
-    z-index: 111;
+    z-index: 80;
   }
 }
 
@@ -64,7 +66,7 @@
   composes: tag from 'css/typography.scss';
 }
 
-.communityName {
+.groupName {
   composes: hdr-subheadline from 'css/typography.scss';
   font-size: 16px !important;
   position: relative;
@@ -133,7 +135,7 @@
 }
 
 @media screen and (max-width: 375px) {
-  .communityName, .label {
+  .groupName, .label {
     display: none;
   }
 }

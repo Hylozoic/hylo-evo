@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JoinGroup.store checkInvitation action creator generates an action with all expected parameters 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($invitationToken: String, $accessCode: String) {
+        checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+          valid
+        }
+      }",
+    "variables": Object {
+      "accessCode": "accesstoken1",
+      "invitationToken": "invitationtoken1",
+    },
+  },
+  "type": "JoinGroup/CHECK_INVITATION",
+}
+`;
+
+exports[`JoinGroup.store useInvitation action creator generates an action with all expected parameters 1`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($invitationToken: String, $accessCode: String) {
+        useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+          membership {
+            id
+            role
+            group {
+              id
+              accessibility
+              name
+              settings {
+                allowGroupInvites
+                askJoinQuestions
+                publicMemberDirectory
+              }
+              slug
+              visibility
+            }
+            person {
+              id
+            }
+          }
+          error
+        }
+      }",
+    "variables": Object {
+      "accessCode": undefined,
+      "invitationToken": undefined,
+    },
+  },
+  "meta": Object {
+    "analytics": "Group Invitation Accepted",
+    "extractModel": Object {
+      "getRoot": [Function],
+      "modelName": "Membership",
+    },
+  },
+  "type": "JoinGroup/USE_INVITATION",
+}
+`;

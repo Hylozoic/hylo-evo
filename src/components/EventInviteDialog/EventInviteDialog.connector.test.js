@@ -13,7 +13,7 @@ describe('mapStateToProps', () => {
   it('returns the expected keys', () => {
     const session = orm.session(orm.getEmptyState())
     const state = { orm: session.state }
-    const props = { forCommunities: [] }
+    const props = { forGroups: [] }
     const stateProps = mapStateToProps(state, props)
     expect(stateProps).toMatchSnapshot()
   })

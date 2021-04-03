@@ -14,22 +14,22 @@ describe('AllTopics', () => {
       }
     ]
     const wrapper = shallow(<AllTopics
-      community={{ id: '1', slug: 'goteam' }}
-      routeParams={{ slug: 'goteam' }}
+      group={{ id: '1', slug: 'goteam' }}
+      routeParams={{ groupSlug: 'goteam' }}
       topics={topic}
       topicsTotal='10'
       fetchTopics={jest.fn()}
-      toggleCommunityTopicSubscribe={() => {}} />)
+      toggleGroupTopicSubscribe={() => {}} />)
 
     expect(wrapper).toMatchSnapshot()
   })
 
   it('caches totalTopics', () => {
     const wrapper = shallow(<AllTopics
-      routeParams={{ slug: 'goteam' }}
-      community={{ id: '1', slug: 'goteam' }}
+      routeParams={{ groupSlug: 'goteam' }}
+      group={{ id: '1', slug: 'goteam' }}
       fetchTopics={() => {}}
-      toggleCommunityTopicSubscribe={() => {}}
+      toggleGroupTopicSubscribe={() => {}}
       topics={[]}
       selectedSort='followers'
     />)
@@ -56,10 +56,10 @@ describe('SearchBar', () => {
 })
 
 describe('TopicListItem', () => {
-  it('when multiple communities matches the latest snapshot', () => {
+  it('when multiple groups matches the latest snapshot', () => {
     const topic = {
       name: 'petitions',
-      communityTopics: [
+      groupTopics: [
         {
           id: '1',
           postsTotal: 24,
@@ -76,7 +76,7 @@ describe('TopicListItem', () => {
     }
     const wrapper = shallow(<TopicListItem
       topic={topic}
-      routeParams={{ slug: 'goteam' }} />)
+      routeParams={{ groupSlug: 'goteam' }} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

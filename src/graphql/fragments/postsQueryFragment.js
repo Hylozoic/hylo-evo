@@ -2,16 +2,19 @@ import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
 const postsQueryFragment = `
 posts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
+  groupSlugs: $groupSlugs,
   offset: $offset,
+  context: $context,
+  order: "desc",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: "desc"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     ${postFieldsFragment(false)}
   }

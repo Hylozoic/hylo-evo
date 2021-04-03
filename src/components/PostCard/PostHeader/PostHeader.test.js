@@ -13,7 +13,7 @@ it('matches snapshot', () => {
     url: '/foo/bar'
   }
 
-  const communities = [
+  const groups = [
     {
       name: 'FooC', slug: 'fooc'
     },
@@ -22,9 +22,9 @@ it('matches snapshot', () => {
     }
   ]
 
-  const wrapper = shallow(<PostHeader communities={communities} creator={creator} />)
+  const wrapper = shallow(<PostHeader groups={groups} creator={creator} />)
   expect(wrapper).toMatchSnapshot()
-  wrapper.setProps({ context, type: 'request', communities })
+  wrapper.setProps({ context, type: 'request', groups })
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ deletePost: () => {}, editPost: () => {} })
   expect(wrapper).toMatchSnapshot()
@@ -41,7 +41,7 @@ it('matches announcement snapshot', () => {
     url: '/foo/bar'
   }
 
-  const communities = [
+  const groups = [
     {
       name: 'FooC', slug: 'fooc'
     },
@@ -50,9 +50,9 @@ it('matches announcement snapshot', () => {
     }
   ]
 
-  const wrapper = shallow(<PostHeader communities={communities} creator={creator} announcement />)
+  const wrapper = shallow(<PostHeader groups={groups} creator={creator} announcement />)
   expect(wrapper).toMatchSnapshot()
-  wrapper.setProps({ context, type: 'request', communities })
+  wrapper.setProps({ context, type: 'request', groups })
   expect(wrapper).toMatchSnapshot()
   wrapper.setProps({ deletePost: () => {}, editPost: () => {} })
   expect(wrapper).toMatchSnapshot()

@@ -1,6 +1,6 @@
 import
 NotificationSettingsTab,
-{ MessageSettingsRow, AllCommunitiesSettingsRow, MembershipSettingsRow, SettingsRow, SettingsIcon }
+{ MessageSettingsRow, AllGroupsSettingsRow, MembershipSettingsRow, SettingsRow, SettingsIcon }
   from './NotificationSettingsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
@@ -66,7 +66,7 @@ describe('NotificationSettingsTab', () => {
     })
   })
 
-  describe('updateAllCommunities', () => {
+  describe('updateAllGroups', () => {
     it('calls updateAllMemberships', () => {
       const props = {
         messageSettings: {
@@ -74,18 +74,18 @@ describe('NotificationSettingsTab', () => {
         },
         updateAllMemberships: jest.fn(),
         memberships: [{
-          community: {
+          group: {
             id: 1
           }
         }, {
-          community: {
+          group: {
             id: 2
           }
         }]
       }
       const wrapper = shallow(<NotificationSettingsTab {...props} />)
       const instance = wrapper.instance()
-      instance.updateAllCommunities({ sendPushNotifications: true })
+      instance.updateAllGroups({ sendPushNotifications: true })
       expect(props.updateAllMemberships).toHaveBeenCalledWith([1, 2], { sendPushNotifications: true })
     })
   })
@@ -103,14 +103,14 @@ describe('MessageSettingsRow', () => {
   })
 })
 
-describe('AllCommunitiesSettingsRow', () => {
+describe('AllGroupsSettingsRow', () => {
   const props = {
     settings: { sendEmail: true },
-    updateAllCommunities: () => {}
+    updateAllGroups: () => {}
   }
 
   it('renders correctly', () => {
-    const wrapper = shallow(<AllCommunitiesSettingsRow {...props} />)
+    const wrapper = shallow(<AllGroupsSettingsRow {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -119,7 +119,7 @@ describe('MembershipSettingsRow', () => {
   const props = {
     membership: {
       settings: { sendEmail: true },
-      community: {
+      group: {
         name: 'Foomunity',
         avatarUrl: 'foo.png'
       }

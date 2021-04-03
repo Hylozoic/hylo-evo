@@ -1,8 +1,8 @@
-import { fetchCommunityTopic, fetchTopic } from './Feed.store'
+import { fetchGroupTopic, fetchTopic } from './Feed.store'
 
-describe('fetchCommunityTopic', () => {
+describe('fetchGroupTopic', () => {
   it('should match latest snapshot', () => {
-    expect(fetchCommunityTopic('petitions', 'goteam')).toMatchSnapshot()
+    expect(fetchGroupTopic('petitions', 'goteam')).toMatchSnapshot()
   })
 })
 

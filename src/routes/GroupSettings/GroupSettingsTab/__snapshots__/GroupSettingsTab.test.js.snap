@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupSettingsTab renders correctly 1`] = `
+<div
+  data-stylename="groupSettings"
+>
+  <input
+    data-stylename="name"
+    onChange={[Function]}
+    type="text"
+    value="Foomunity"
+  />
+  <div
+    data-stylename="banner"
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
+  >
+    <Connect(UploadAttachmentButton)
+      data-stylename="change-banner-button"
+      id={1}
+      onSuccess={[Function]}
+      type="groupBanner"
+    />
+  </div>
+  <div
+    data-stylename="avatar"
+    style={
+      Object {
+        "backgroundImage": "url(avatar.png)",
+      }
+    }
+  >
+    <Connect(UploadAttachmentButton)
+      data-stylename="change-avatar-button"
+      id={1}
+      onSuccess={[Function]}
+      type="groupAvatar"
+    />
+  </div>
+  <SettingsControl
+    label="Description"
+    onChange={[Function]}
+    type="textarea"
+    value="Great group"
+  />
+  <SettingsControl
+    label="Location"
+    location=""
+    locationObject="Fuji"
+    onChange={[Function]}
+    type="location"
+  />
+  <div
+    data-stylename="privacy-settings"
+  >
+    <div
+      data-stylename="groupPrivacySection"
+    >
+      <h3>
+        Visibility
+      </h3>
+      <p
+        data-stylename="privacyDetail"
+      >
+        Who is able to see 
+        <strong>
+          Foomunity
+        </strong>
+        ?
+      </p>
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={0}
+        key="0"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={1}
+        key="1"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={2}
+        key="2"
+        updateSetting={[Function]}
+      />
+    </div>
+    <div
+      data-stylename="groupPrivacySection"
+    >
+      <h3>
+        Access
+      </h3>
+      <p
+        data-stylename="privacyDetail"
+      >
+        How can people become members of 
+        <strong>
+          Foomunity
+        </strong>
+        ?
+      </p>
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={0}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="0"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={1}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="1"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        askJoinQuestions={false}
+        clearField={[Function]}
+        currentSetting={1}
+        forSetting={2}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="2"
+        updateJoinQuestion={[Function]}
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="saveChanges"
+  >
+    <span
+      data-stylename=""
+    >
+      Current settings up to date
+    </span>
+    <Button
+      color="gray"
+      data-stylename="save-button"
+      label="Save Changes"
+      onClick={null}
+    />
+  </div>
+</div>
+`;

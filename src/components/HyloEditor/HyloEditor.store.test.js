@@ -73,7 +73,7 @@ describe('getMentionResults selector', () => {
 })
 
 describe('findTopics', () => {
-  it('queries communityTopics at the top level', () => {
+  it('queries groupTopics at the top level', () => {
     expect(findTopics('foo')).toMatchSnapshot()
   })
 })

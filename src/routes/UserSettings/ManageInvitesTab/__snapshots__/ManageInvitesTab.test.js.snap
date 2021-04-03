@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
+<div
+  data-stylename="container"
+>
+  <h1
+    data-stylename="title"
+  >
+    Group Invitations & Join Requests
+  </h1>
+  <div
+    data-stylename="description"
+  >
+    This list contains all open requests and invitations to join groups. To view all groups you are a part of go to your 
+    <Link
+      to="/settings/groups"
+    >
+      Affiliations
+    </Link>
+    .
+  </div>
+  <h2
+    data-stylename="subhead"
+  >
+    Invitations to Join New Groups
+  </h2>
+  <div
+    data-stylename="requestList"
+  >
+    <GroupInvite
+      invite={
+        Object {
+          "creator": Object {
+            "id": 1,
+            "name": "Testy Tester",
+          },
+          "group": Object {
+            "avatarUrl": null,
+            "id": 1,
+            "name": "group1",
+          },
+          "id": "1",
+        }
+      }
+      key="1"
+    />
+  </div>
+  <h2
+    data-stylename="subhead"
+  >
+    Your Open Requests to Join Groups
+  </h2>
+  <div
+    data-stylename="requestList"
+  >
+    <JoinRequest
+      cancelJoinRequest={[Function]}
+      joinRequest={
+        Object {
+          "group": Object {
+            "avatarUrl": null,
+            "id": 1,
+            "name": "group1",
+          },
+          "id": "1",
+        }
+      }
+      key="1"
+    />
+    <JoinRequest
+      cancelJoinRequest={[Function]}
+      joinRequest={
+        Object {
+          "group": Object {
+            "avatarUrl": null,
+            "id": 2,
+            "name": "group2",
+          },
+          "id": "2",
+        }
+      }
+      key="2"
+    />
+  </div>
+  <h2
+    data-stylename="subhead"
+  >
+    Declined Invitations & Requests
+  </h2>
+  <div
+    data-stylename="requestList"
+  />
+</div>
+`;

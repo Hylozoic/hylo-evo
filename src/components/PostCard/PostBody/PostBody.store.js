@@ -50,10 +50,10 @@ export function unfulfillPost (postId) {
   }
 }
 
-export const getCommunity = ormCreateSelector(
+export const getGroup = ormCreateSelector(
   orm,
   (_, { routeParams }) => routeParams,
-  (session, { slug }) => session.Community.safeGet({ slug })
+  (session, { slug }) => session.Group.safeGet({ slug })
 )
 
 export function ormSessionReducer ({ Post }, { type, meta }) {

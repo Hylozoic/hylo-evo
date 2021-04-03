@@ -41,6 +41,10 @@
 
 /* Body */
 
+input, textarea {
+  font-family: 'Circular Book';
+}
+
 .bdy-drk-lg {
   @include font-regular;
   color: $color-rhino-80;
@@ -89,7 +93,7 @@
   line-height: 19px;
 }
 
-/* Communities Drawer */
+/* Groups Drawer */
 
 .drawer-inv-bd {
   @include font-bold;

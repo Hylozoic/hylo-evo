@@ -16,7 +16,6 @@ $current-name-margin-bottom: 13px;
 
 $ul-vertical-spacing: 10px;
 $ul-horizontal-spacing: 14px;
-$ul-network-community-indent: 25px;
 $li-padding: 4px;
 $li-spacing: 14px;
 $li-height: 40px;
@@ -24,31 +23,31 @@ $li-avatar-size: 38px;
 
 $badge-width: 20px;
 
-$community-list-avatar-size: 28px;
-$community-list-font-size: 13px;
+$group-list-avatar-size: 28px;
+$group-list-font-size: 13px;
 
-$new-community-width: 310px;
-$new-community-vertical-margin: 15px;
-$new-community-font-size: 14px;
-$new-community-spacing: 16px;
+$new-group-width: 310px;
+$new-group-vertical-margin: 15px;
+$new-group-font-size: 14px;
+$new-group-spacing: 16px;
 
-.communityDrawer {
+.groupDrawer {
   background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
   overflow-y: scroll;
 }
 
-.communityDrawer {
+.groupDrawer {
   scrollbar-width: thin;
   scrollbar-color: white rgba(200,200,200,.5);
 }
 
-.communityDrawer::-webkit-scrollbar {
+.groupDrawer::-webkit-scrollbar {
   background-color: white;
   width: 5px;
   border-radius: 5px;
 }
 
-.communityDrawer::-webkit-scrollbar-thumb {
+.groupDrawer::-webkit-scrollbar-thumb {
   background-color: rgba(35, 64, 91, .3);
   outline: none;
 }
@@ -68,19 +67,15 @@ $new-community-spacing: 16px;
   font-size: $close-dimension;
 }
 
-.currentNetwork {
-  border-left: 5px solid rgba(13, 195, 159, 1.000);
-}
-
-.communityDrawer > .currentCommunity {
+.groupDrawer > .currentGroup {
   box-shadow: 0px 4px 56px 0px rgba(0,0,0,.5);
 }
 
-a.currentCommunity:hover {
+a.currentGroup:hover {
   text-decoration: none;
 }
 
-.currentCommunity {
+.currentGroup {
   background-color: $color-caribbean-green;
   padding: $current-padding-top 0 $current-padding-bottom;
   text-align: center;
@@ -144,7 +139,7 @@ a.currentCommunity:hover {
   margin-right: $li-spacing;
 }
 
-.communitiesList {
+.groupsList {
   margin: 10px 0;
   padding: 0px;
   overflow-y: auto;
@@ -153,22 +148,15 @@ a.currentCommunity:hover {
   }
 }
 
-.networkCommunitiesList {
-  padding: 0;
-  li {
-    list-style: none;
-  }
-}
-
-.communityRowAvatar {
-  @include image($community-list-avatar-size);
+.contextRowAvatar {
+  @include image($group-list-avatar-size);
   display: inline-block;
   vertical-align: middle;
   border-radius: 4px;
   margin-right: $li-spacing;
 }
 
-.communityRow {
+.contextRow {
   padding: 6px $ul-horizontal-spacing 6px 28px;
   transition: all .3s ease;
   background: rgba(35, 57, 87, 0);
@@ -178,11 +166,11 @@ a.currentCommunity:hover {
   }
 }
 
-.nonMember {
-  color: $color-iceberg;
+.currentContext {
+  background-color: rgba(58, 160, 223, 1.00);
 }
 
-.communityRowLink {
+.contextRowLink {
   display: flex;
   align-items: center;
   &:hover {
@@ -201,30 +189,7 @@ a.currentCommunity:hover {
   text-align: center;
 }
 
-.networkRow {
-  padding: 6px 0;
-  transition: all .3s ease;
-  &:hover {
-    background: linear-gradient(0deg, #2A4059 0%, rgba(42, 64, 89, .3) 100%);
-  }
-}
-
-.networkRowLink {
-  &:hover, &:visited, &:focus {
-    text-decoration: none;
-  }
-  padding-right: 0 !important;
-  li {
-    list-style: none;
-  }
-}
-
-.networkExpanded {
-  background: linear-gradient(0deg, rgba(42, 64, 89, .6) 0%, rgba(42, 64, 89, 0) 100%);
-  padding: 10px 0;
-}
-
-.community-name, .network-name {
+.group-name {
   composes: drawer-inv-li from 'css/typography.scss';
   flex: 2;
   vertical-align: middle;
@@ -235,26 +200,7 @@ a.currentCommunity:hover {
   display: inline-block;
 }
 
-.is-member {
-  @include font-bold;
-  opacity: 1 !important;
-  color: $color-white;
-}
-
-.network-name-wrapper {
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  padding: 5px 0px 5px 20px;
-}
-
-.network-name {
-  font-weight: 600;
-  opacity: 1;
-  color: $color-white;
-}
-
-.communitiesButton {
+.groupsButton {
   width: 38px;
   height: 26px;
   border-left: 1px solid rgba(#FFF, 0.3);
@@ -278,20 +224,20 @@ a.currentCommunity:hover {
   }
 }
 
-.community-name {
-  font-size: $community-list-font-size;
+.group-name {
+  font-size: $group-list-font-size;
   opacity: 0.9;
 }
 
-.newCommunity {
+.newGroup {
   text-align: center;
 }
 
-.newCommunityBtn {
+.newGroupBtn {
   text-align: center;
   width: 80%;
-  margin: $new-community-vertical-margin auto;
-  font-size: $new-community-font-size;
+  margin: $new-group-vertical-margin auto;
+  font-size: $new-group-font-size;
   padding: 0;
   box-shadow: 0 5px 15px 0 rgba(0,0,0,0.05);
   height: 40px;
@@ -300,7 +246,7 @@ a.currentCommunity:hover {
 }
 
 @media screen and (max-width: 600px) {
-  .newCommunityBtn {
+  .newGroupBtn {
       margin-bottom: 250px;
   }
 }

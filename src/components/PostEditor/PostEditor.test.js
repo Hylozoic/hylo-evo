@@ -57,7 +57,7 @@ describe('PostEditor', () => {
           type,
           startTime: new Date(1551908483315),
           endTime: new Date(1551908483315),
-          communities: []
+          groups: []
         },
         titlePlaceholderForPostType
       }
@@ -75,9 +75,9 @@ describe('PostEditor', () => {
         post: {
           type: 'offer',
           title: 'valid title',
-          communities: [
-            { id: '1', name: 'test community 1' },
-            { id: '2', name: 'test community 2' }
+          groups: [
+            { id: '1', name: 'test group 1' },
+            { id: '2', name: 'test group 2' }
           ],
           topicNames: ['design'],
           startTime: new Date(1551908483315),
@@ -93,14 +93,14 @@ describe('PostEditor', () => {
       const topicSelectorMock = {
         getSelected: () => [{ id: 1, name: 'design' }]
       }
-      const communitiesSelectorMock = {
+      const groupsSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
       testInstance.editor.current = editorMock
       testInstance.topicSelector.current = topicSelectorMock
-      testInstance.communitiesSelector.current = communitiesSelectorMock
+      testInstance.groupsSelector.current = groupsSelectorMock
       testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
       expect(props.createPost.mock.calls).toMatchSnapshot()
@@ -113,7 +113,7 @@ describe('PostEditor', () => {
         ...baseProps,
         isEvent: true,
         post: {
-          communities: []
+          groups: []
         }
       }
       const wrapper = shallow(<PostEditor {...props} />)
@@ -130,9 +130,9 @@ describe('PostEditor', () => {
         type: 'request',
         title: 'valid title',
         linkPreview: { id: '1', title: 'a link' },
-        communities: [
-          { id: '1', name: 'test community 1' },
-          { id: '2', name: 'test community 2' }
+        groups: [
+          { id: '1', name: 'test group 1' },
+          { id: '2', name: 'test group 2' }
         ],
         topicNames: ['design'],
         startTime: new Date(1551908483315),
@@ -161,14 +161,14 @@ describe('PostEditor', () => {
       const topicSelectorMock = {
         getSelected: () => [{ id: 1, name: 'design' }]
       }
-      const communitiesSelectorMock = {
+      const groupsSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
       testInstance.editor.current = editorMock
       testInstance.topicSelector.current = topicSelectorMock
-      testInstance.communitiesSelector.current = communitiesSelectorMock
+      testInstance.groupsSelector.current = groupsSelectorMock
       testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
@@ -202,8 +202,8 @@ describe('PostEditor', () => {
         post: {
           type: 'request',
           title: 'valid title',
-          communities: [
-            { id: '1', name: 'test community 1' }
+          groups: [
+            { id: '1', name: 'test group 1' }
           ]
         }
       }
@@ -217,7 +217,7 @@ describe('PostEditor', () => {
         ...baseProps,
         post: {
           title: 'valid title',
-          communities: [],
+          groups: [],
           type: 'Request'
         }
       }
@@ -225,16 +225,6 @@ describe('PostEditor', () => {
       testInstance.editor = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeFalsy()
     })
-  })
-
-  test('onClose is attached to the close button', () => {
-    const props = {
-      ...baseProps,
-      onClose: jest.fn()
-    }
-    const wrapper = shallow(<PostEditor {...props} />)
-    expect(wrapper.find('[data-stylename="initial-closeButton"]').props().onClick)
-      .toEqual(props.onClose)
   })
 
   test('saving a valid post will update a post', () => {
@@ -246,9 +236,9 @@ describe('PostEditor', () => {
         type: 'offer',
         title: 'valid title',
         linkPreview: { id: '1', title: 'a link' },
-        communities: [
-          { id: '1', name: 'test community 1' },
-          { id: '2', name: 'test community 2' }
+        groups: [
+          { id: '1', name: 'test group 1' },
+          { id: '2', name: 'test group 2' }
         ],
         topicNames: ['design'],
         startTime: new Date(1551908483315),
@@ -264,14 +254,14 @@ describe('PostEditor', () => {
     const topicSelectorMock = {
       getSelected: () => [{ id: 1, name: 'design' }]
     }
-    const communitiesSelectorMock = {
+    const groupsSelectorMock = {
       reset: jest.fn()
     }
     const wrapper = shallow(<PostEditor {...props} />)
     const testInstance = wrapper.instance()
     testInstance.editor.current = editorMock
     testInstance.topicSelector.current = topicSelectorMock
-    testInstance.communitiesSelector.current = communitiesSelectorMock
+    testInstance.groupsSelector.current = groupsSelectorMock
     testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()
@@ -282,7 +272,7 @@ describe('PostEditor', () => {
     beforeEach(() => {
       linkPreviewProps = {
         ...baseProps,
-        post: { communities: [] },
+        post: { groups: [] },
         pollingFetchLinkPreview: jest.fn(),
         clearLinkPreview: jest.fn()
       }
@@ -304,7 +294,7 @@ describe('PostEditor', () => {
       const props = merge(linkPreviewProps, {
         post: {
           linkPreview: {},
-          communities: []
+          groups: []
         }
       })
       const wrapper = shallow(<PostEditor {...props} />)

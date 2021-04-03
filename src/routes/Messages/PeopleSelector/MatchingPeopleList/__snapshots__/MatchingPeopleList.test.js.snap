@@ -12,7 +12,7 @@ exports[`matches the last snapshot 1`] = `
     person={
       Object {
         "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/saarabpreet/128.jpg",
-        "community": "Associate",
+        "group": "Associate",
         "id": "72297",
         "name": "Cristal Heller",
       }
@@ -26,7 +26,7 @@ exports[`matches the last snapshot 1`] = `
     person={
       Object {
         "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/orkuncaylar/128.jpg",
-        "community": "Associate",
+        "group": "Associate",
         "id": "72552",
         "name": "Helga Cronin",
       }
@@ -40,7 +40,7 @@ exports[`matches the last snapshot 1`] = `
     person={
       Object {
         "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/larrygerard/128.jpg",
-        "community": "Associate",
+        "group": "Associate",
         "id": "72257",
         "name": "Isadore Herzog",
       }
@@ -54,7 +54,7 @@ exports[`matches the last snapshot 1`] = `
     person={
       Object {
         "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/antonyzotov/128.jpg",
-        "community": "Associate",
+        "group": "Associate",
         "id": "72041",
         "name": "Oma Hettinger",
       }

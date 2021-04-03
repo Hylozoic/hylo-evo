@@ -1,6 +1,5 @@
 export default `query (
-  $communitySlug: String,
-  $networkSlug: String,
+  $groupSlug: String,
   $autocomplete: String,
   $isDefault: Boolean,
   $visibility: [Int],
@@ -9,8 +8,7 @@ export default `query (
   $sortBy: String
 ) {
   topics (
-    communitySlug: $communitySlug,
-    networkSlug: $networkSlug,
+    groupSlug: $groupSlug,
     autocomplete: $autocomplete,
     isDefault: $isDefault,
     visibility: $visibility,
@@ -24,24 +22,18 @@ export default `query (
       id
       name
       postsTotal(
-        communitySlug: $communitySlug,
-        networkSlug: $networkSlug
+        groupSlug: $groupSlug
       )
       followersTotal(
-        communitySlug: $communitySlug,
-        networkSlug: $networkSlug
+        groupSlug: $groupSlug
       )
-      communityTopics(isDefault: $isDefault, visibility: $visibility) {
+      groupTopics(isDefault: $isDefault, visibility: $visibility) {
         items {
           id
-          community {
+          group {
             id
             name
             avatarUrl
-            network {
-              id
-              slug
-            }
           }
           postsTotal
           followersTotal

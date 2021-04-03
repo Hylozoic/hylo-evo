@@ -6,22 +6,38 @@
   align-items: center;
   min-height: 54px;
   font-size: 14px;
+  padding-right: 10px;
 
   .role {
     font-weight: bold;
     font-family: 'Circular Bold';
     padding: 0 5px 0 10px;
+    color: rgba(41, 64, 90, 1.00);
   }
 
-  .community {
+  .group {
     margin-left: 5px;
     display: flex;
     align-items: center;
     padding: 6px 10px 4px 6px;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     a {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      width: 100%;
       color: #808C9B;
       text-decoration: none;
+
+      div {
+        position: relative;
+        top: 1px;
+      }
     }
   }
 }
@@ -44,5 +60,16 @@
   &:hover {
     color: $color-white;
     background-color: $color-amaranth;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .membership {
+    font-size: 12px;
+
+    .group {
+      font-size: 12px;
+      padding: 0 10px 0 6px;
+    }
   }
 }

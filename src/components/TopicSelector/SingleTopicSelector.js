@@ -29,7 +29,7 @@ const inputStyles = {
 
 class SingleTopicSelector extends Component {
   static defaultProps = {
-    currentCommunity: null,
+    currentGroup: null,
     defaultTopics: [],
     placeholder: 'Find/add a topic'
   }
@@ -47,9 +47,9 @@ class SingleTopicSelector extends Component {
     this.setState({ value })
     if (!isEmpty(value)) {
       await this.props.findTopics(value)
-      const { currentCommunity, defaultTopics, topicResults } = this.props
+      const { currentGroup, defaultTopics, topicResults } = this.props
       const sortedTopics = sortBy([t => t.name === value ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
-      return defaultTopics ? [ { label: currentCommunity.name + ' topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
+      return defaultTopics ? [ { label: currentGroup.name + ' topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
     } else {
       this.setState({ value: null })
       return []
@@ -70,10 +70,10 @@ class SingleTopicSelector extends Component {
   }
 
   render () {
-    const { currentCommunity, defaultTopics, placeholder } = this.props
+    const { currentGroup, defaultTopics, placeholder } = this.props
     const { value } = this.state
 
-    const defaultsToShow = defaultTopics ? [ { label: currentCommunity.name + ' topics', options: defaultTopics } ] : []
+    const defaultsToShow = defaultTopics ? [ { label: currentGroup.name + ' topics', options: defaultTopics } ] : []
 
     return (
       <AsyncCreatableSelect

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { DEFAULT_AVATAR } from 'store/models/Community'
+import { DEFAULT_AVATAR } from 'store/models/Group'
 import RoundImage from 'components/RoundImage'
 import './RemovableListItem.scss'
 

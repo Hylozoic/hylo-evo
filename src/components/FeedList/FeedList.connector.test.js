@@ -11,7 +11,7 @@ describe('mapStateToProps', () => {
     const session = orm.session(orm.getEmptyState())
 
     times(i => {
-      session.Post.create({ id: i.toString(), communities: ['1'] })
+      session.Post.create({ id: i.toString(), groups: ['1'] })
     }, 5)
 
     state = {
@@ -27,11 +27,11 @@ describe('mapStateToProps', () => {
   })
 
   it('returns empty posts if no results exist', () => {
-    expect(mapStateToProps(state, { postTypeFilter: 'bar' })).toHaveProperty('posts', [])
+    expect(mapStateToProps(state, { routeParams: {}, postTypeFilter: 'bar' })).toHaveProperty('posts', [])
   })
 
   it('returns posts in the correct order', () => {
-    expect(mapStateToProps(state, { postTypeFilter: 'foo' })).toEqual(
+    expect(mapStateToProps(state, { routeParams: {}, postTypeFilter: 'foo' })).toEqual(
       expect.objectContaining({
         hasMore: true,
         pending: undefined,
@@ -49,7 +49,7 @@ describe('mapStateToProps', () => {
       ...state,
       pending: { [FETCH_POSTS]: true }
     }
-    const result = mapStateToProps(state, { id: 'foo' })
+    const result = mapStateToProps(state, { routeParams: {}, groupId: '1' })
     expect(result).toMatchObject({ pending: true })
   })
 })

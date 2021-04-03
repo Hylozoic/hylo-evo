@@ -4,11 +4,11 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Moment from 'moment'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
-import { firstName as getFirstName, twitterUrl, AXOLOTL_ID } from 'store/models/Person'
+import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
-  messageThreadUrl,
+  messagePersonUrl,
   messagesUrl,
   gotoExternalUrl
 } from 'util/navigation'
@@ -63,30 +63,30 @@ export default class MemberProfile extends React.Component {
       contentLoading,
       person,
       currentUser,
+      isSingleColumn,
       routeParams,
       showDetails,
       push
     } = this.props
     const affiliations = person.affiliations && person.affiliations.items
     const events = person.eventsAttending && person.eventsAttending.items
-    const memberships = person.memberships
+    const memberships = person.memberships.sort((a, b) => a.group.name.localeCompare(b.group.name))
     const projects = person.projects && person.projects.items
     const { currentTab } = this.state
     const personId = routeParams.personId
-    const firstName = getFirstName(person)
     const locationWithoutUsa = person.location && person.location.replace(', United States', '')
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const contentDropDownItems = [
-      { label: 'Overview', title: `${firstName}'s recent activity`, component: RecentActivity },
-      { label: 'Posts', title: `${firstName}'s posts`, component: MemberPosts },
-      { label: 'Comments', title: `${firstName}'s comments`, component: MemberComments },
-      { label: 'Upvotes', title: `${firstName}'s upvotes`, component: MemberVotes }
+      { label: 'Overview', title: `${person.name}'s recent activity`, component: RecentActivity },
+      { label: 'Posts', title: `${person.name}'s posts`, component: MemberPosts },
+      { label: 'Comments', title: `${person.name}'s comments`, component: MemberComments },
+      { label: 'Upvotes', title: `${person.name}'s upvotes`, component: MemberVotes }
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const actionButtonsItems = [
-      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messageThreadUrl(person)), hideTooltip: true },
+      { iconName: 'Letter', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideTooltip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
       { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },
@@ -103,7 +103,7 @@ export default class MemberProfile extends React.Component {
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
 
-    return <div styleName='member-profile'>
+    return <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
           <Icon name='Edit' /> Edit Profile
@@ -115,7 +115,7 @@ export default class MemberProfile extends React.Component {
             <Icon name='Location' styleName='header-member-location-icon' />
             {locationWithoutUsa}
           </div>}
-          {/* TODO: Do we still want to show the "Community manager" role? */}
+          {/* TODO: Do we still want to show the "Group manager" role? */}
           {/* {role && <div styleName='location'>
             <Icon styleName='star' name='StarCircle' />
             {role}
@@ -241,7 +241,7 @@ export function ActionDropdown ({ items }) {
     <Dropdown
       items={activeItems}
       toggleChildren={
-        <Icon styleName='action-icon-button action-menu' name='More' />
+        <Icon styleName='action-icon-button action-menu' name='More' alignRight />
       }
     />
 }
@@ -277,7 +277,7 @@ export function Event ({ memberCap, event, routeParams, showDetails }) {
 }
 
 export function Error ({ children }) {
-  return <div styleName='member-profile'>
+  return <div styleName='memberProfile'>
     <span styleName='error'>{children}</span>
   </div>
 }

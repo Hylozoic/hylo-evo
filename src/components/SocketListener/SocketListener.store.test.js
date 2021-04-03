@@ -40,16 +40,16 @@ describe('SocketListener.store.ormSessionReducer', () => {
     beforeEach(() => {
       session.Me.create({ id: '2' })
       session.Person.create({ id: '14' })
-      session.Community.create({ id: '1', name: 'place' })
-      session.Membership.create({ id: '1', community: '1' })
-      session.Membership.create({ id: '2', community: '1', person: '14' })
-      session.CommunityTopic.create({ id: '1', topic: '2', community: '1' })
-      session.CommunityTopic.create({ id: '2', topic: '7', community: '1' })
+      session.Group.create({ id: '1', name: 'place' })
+      session.Membership.create({ id: '1', group: '1' })
+      session.Membership.create({ id: '2', group: '1', person: '14' })
+      session.GroupTopic.create({ id: '1', topic: '2', group: '1' })
+      session.GroupTopic.create({ id: '2', topic: '7', group: '1' })
       action = {
         type: RECEIVE_POST,
         payload: {
           topics: ['2', '7'],
-          communityId: '1',
+          groupId: '1',
           creatorId: '4'
         }
       }
@@ -59,8 +59,8 @@ describe('SocketListener.store.ormSessionReducer', () => {
       ormSessionReducer(session, action)
       expect(session.Membership.withId('1').newPostCount).toBe(1)
       expect(session.Membership.withId('2').newPostCount).toBeFalsy()
-      expect(session.CommunityTopic.withId('1').newPostCount).toBe(1)
-      expect(session.CommunityTopic.withId('2').newPostCount).toBe(1)
+      expect(session.GroupTopic.withId('1').newPostCount).toBe(1)
+      expect(session.GroupTopic.withId('2').newPostCount).toBe(1)
     })
 
     it('ignores posts created by the current user', () => {

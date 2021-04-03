@@ -3,16 +3,14 @@
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
   "canModerate": undefined,
-  "community": null,
   "fetchIsPending": false,
   "fetchTopicsParams": Object {
     "autocomplete": undefined,
-    "communitySlug": "testslug",
-    "networkSlug": undefined,
+    "groupSlug": undefined,
     "sortBy": undefined,
   },
+  "group": null,
   "hasMore": undefined,
-  "network": null,
   "routeParams": Object {
     "slug": "testslug",
   },

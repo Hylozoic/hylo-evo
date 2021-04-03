@@ -3,7 +3,7 @@ import { compact } from 'lodash/fp'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
-import { topicsUrl } from 'util/navigation'
+import { topicsUrl, allGroupsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 
@@ -11,20 +11,23 @@ import './Navigation.scss'
 
 export default function Navigation (props) {
   const {
-    className,
-    collapsed,
-    routeParams,
-    rootPath,
-    membersPath,
-    projectsPath,
-    communityId,
-    eventsPath,
-    mapPath,
-    mapView,
     badge,
+    className,
     clearBadge,
     clearFeedList,
-    hideTopics
+    createPath,
+    collapsed,
+    eventsPath,
+    groupId,
+    groupsPath,
+    hasRelatedGroups,
+    hideTopics,
+    mapPath,
+    mapView,
+    membersPath,
+    projectsPath,
+    routeParams,
+    rootPath
   } = props
 
   const homeOnClick = () => {
@@ -35,6 +38,11 @@ export default function Navigation (props) {
   }
 
   const links = compact([
+    createPath && {
+      label: 'Create',
+      icon: 'Create',
+      to: createPath
+    },
     rootPath && {
       label: 'Home',
       icon: 'Home',
@@ -58,6 +66,11 @@ export default function Navigation (props) {
       icon: 'Members',
       to: membersPath
     },
+    hasRelatedGroups && groupsPath && {
+      label: 'Groups',
+      icon: 'Groups',
+      to: groupsPath
+    },
     mapPath && {
       label: 'Map',
       icon: 'Globe',
@@ -67,15 +80,14 @@ export default function Navigation (props) {
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
 
-  return <div styleName={cx({ mapView }, collapserState)}
-    className={className}>
+  return <div styleName={cx({ mapView }, collapserState)} className={className}>
     <div styleName='navigation'>
-      <ul styleName='links'>
+      <ul styleName='links' id='groupMenu'>
         {links.map(link =>
           <NavLink key={link.label} {...link} collapsed={collapsed}
             onClick={link.onClick} />)}
         <li styleName={cx('item', 'topicItem')}>
-          <Link to={topicsUrl({ routeParams })}>
+          <Link to={topicsUrl(routeParams, allGroupsUrl())}>
             <Icon name='Topics' />
           </Link>
         </li>
@@ -84,7 +96,7 @@ export default function Navigation (props) {
         collapsed={collapsed}
         backUrl={rootPath}
         routeParams={routeParams}
-        communityId={communityId} />}
+        groupId={groupId} />}
     </div>
   </div>
 }

@@ -12,7 +12,7 @@ exports[`displays image an image attachments 1`] = `
       data-stylename="comment-header"
     >
       <RoundImage
-        large={true}
+        data-stylename="profileImage"
         url="foo.jpg"
       />
       <Highlight
@@ -100,7 +100,7 @@ exports[`matches last snapshot 1`] = `
       data-stylename="comment-header"
     >
       <RoundImage
-        large={true}
+        data-stylename="profileImage"
         url="foo.jpg"
       />
       <Highlight
@@ -174,7 +174,7 @@ exports[`matches last snapshot with different config 1`] = `
       data-stylename="comment-header"
     >
       <RoundImage
-        large={true}
+        data-stylename="profileImage"
         url="foo.jpg"
       />
       <Highlight

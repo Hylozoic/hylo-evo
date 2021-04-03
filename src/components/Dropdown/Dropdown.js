@@ -53,7 +53,7 @@ export default class Dropdown extends React.Component {
 
     let menuItems = children || items.map(item =>
       <li styleName={cx(item.onClick ? 'linkItem' : 'headerItem', { redItem: item.red })}
-        onClick={item.onClick} key={item.label}>
+        onClick={item.onClick} key={item.key || item.label}>
         {item.icon && <Icon styleName='icon' name={item.icon} />}
         {item.label}
       </li>)

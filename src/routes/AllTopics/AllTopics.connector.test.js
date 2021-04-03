@@ -33,7 +33,7 @@ describe('mergeProps', () => {
       search: 're',
       hasMore: true,
       fetchTopicsParams: {
-        communitySlug: 'testcommunityslug'
+        groupSlug: 'testgroupslug'
       }
     }
     const fetchTopics = jest.fn()

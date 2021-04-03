@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
-import PostCommunities from './PostCommunities'
+import PostGroups from './PostGroups'
 import CardImageAttachments from 'components/CardImageAttachments'
 import PostBody from './PostBody'
 import EventBody from './EventBody'
@@ -12,7 +12,7 @@ import samplePost from './samplePost'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 
-export { PostHeader, PostFooter, PostBody, PostCommunities, EventBody }
+export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
 
 export default class PostCard extends React.Component {
   static propTypes = {
@@ -72,9 +72,9 @@ export default class PostCard extends React.Component {
         editPost={editPost}
         constrained={constrained} />
       <CardImageAttachments attachments={post.attachments} />
-      {isEvent && <EventBody event={post} slug={routeParams.slug} respondToEvent={respondToEvent} constrained={constrained} />}
-      {!isEvent && <PostBody {...post} slug={routeParams.slug} constrained={constrained} />}
-      <PostCommunities isPublic={post.isPublic} communities={post.communities} slug={routeParams.slug} constrained={constrained} />
+      {isEvent && <EventBody event={post} slug={routeParams.groupSlug} respondToEvent={respondToEvent} constrained={constrained} />}
+      {!isEvent && <PostBody {...post} slug={routeParams.groupSlug} constrained={constrained} />}
+      <PostGroups isPublic={post.isPublic} groups={post.groups} slug={routeParams.groupSlug} constrained={constrained} />
       <PostFooter {...post} voteOnPost={voteOnPost} constrained={constrained} currentUser={currentUser} />
     </div>
   }

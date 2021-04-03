@@ -8,7 +8,7 @@ export default function fetchForCurrentUser (slug) {
     graphql: {
       query: MeQuery,
       variables: {
-        includeCommunity: !!slug,
+        includeGroup: !!slug,
         ...queryVariables(slug)
       }
     },
@@ -20,8 +20,8 @@ export default function fetchForCurrentUser (slug) {
           append: true
         },
         {
-          getRoot: get(slug ? 'community' : 'communityTopics'),
-          modelName: slug ? 'Community' : 'CommunityTopic',
+          getRoot: get(slug ? 'group' : 'groupTopics'),
+          modelName: slug ? 'Group' : 'GroupTopic',
           append: true
         }
       ]

@@ -37,15 +37,6 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
-    communities={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
     context="Stop Wombat Walrus"
     creator={
       Object {
@@ -56,6 +47,15 @@ exports[`renders as expected 1`] = `
       }
     }
     details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
+    groups={
+      Array [
+        Object {
+          "id": "1",
+          "name": "Great Cause",
+          "slug": "great",
+        },
+      ]
+    }
     id="FAKE_29222"
     routeParams={
       Object {
@@ -115,15 +115,6 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
-    communities={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
     context="Stop Wombat Walrus"
     creator={
       Object {
@@ -134,8 +125,16 @@ exports[`renders as expected 1`] = `
       }
     }
     details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
+    groups={
+      Array [
+        Object {
+          "id": "1",
+          "name": "Great Cause",
+          "slug": "great",
+        },
+      ]
+    }
     id="FAKE_29222"
-    slug="foom"
     tags={
       Array [
         "activism",
@@ -147,8 +146,8 @@ exports[`renders as expected 1`] = `
     updatedAt="2014-01-17T00:00:00.000Z"
     votesTotal={11519}
   />
-  <Connect(PostCommunities)
-    communities={
+  <Connect(PostGroups)
+    groups={
       Array [
         Object {
           "id": "1",
@@ -157,7 +156,6 @@ exports[`renders as expected 1`] = `
         },
       ]
     }
-    slug="foom"
   />
   <PostFooter
     attachments={
@@ -191,15 +189,6 @@ exports[`renders as expected 1`] = `
       ]
     }
     commentersTotal={76572}
-    communities={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
     context="Stop Wombat Walrus"
     creator={
       Object {
@@ -210,6 +199,15 @@ exports[`renders as expected 1`] = `
       }
     }
     details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
+    groups={
+      Array [
+        Object {
+          "id": "1",
+          "name": "Great Cause",
+          "slug": "great",
+        },
+      ]
+    }
     id="FAKE_29222"
     tags={
       Array [

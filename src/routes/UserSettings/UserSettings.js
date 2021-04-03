@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { isEmpty } from 'lodash/fp'
 import EditProfileTab from './EditProfileTab/EditProfileTab'
-import CommunitySettingsTab from './CommunitySettingsTab'
+import UserGroupsTab from './UserGroupsTab/'
 import BlockedUsersTab from './BlockedUsersTab/BlockedUsersTab'
+import ManageInvitesTab from './ManageInvitesTab/'
 import NotificationSettingsTab from './NotificationSettingsTab/NotificationSettingsTab'
 import AccountSettingsTab from './AccountSettingsTab/AccountSettingsTab'
 import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
@@ -25,7 +26,7 @@ export default class UserSettings extends Component {
       updateMembershipSettings,
       updateAllMemberships,
       messageSettings,
-      allCommunitiesSettings,
+      allGroupsSettings,
       fetchPending,
       queryParams,
       registerStripeAccount
@@ -45,8 +46,13 @@ export default class UserSettings extends Component {
       },
       {
         name: 'Affiliations',
-        path: '/settings/communities',
-        component: <CommunitySettingsTab personId={currentUser.id} />
+        path: '/settings/groups',
+        component: <UserGroupsTab personId={currentUser.id} />
+      },
+      {
+        name: 'Invites & Requests',
+        path: '/settings/invitations',
+        component: <ManageInvitesTab currentUser={currentUser} />
       },
       {
         name: 'Notifications',
@@ -58,7 +64,7 @@ export default class UserSettings extends Component {
           updateMembershipSettings={updateMembershipSettings}
           updateAllMemberships={updateAllMemberships}
           messageSettings={messageSettings}
-          allCommunitiesSettings={allCommunitiesSettings} />
+          allGroupsSettings={allGroupsSettings} />
       },
       {
         name: 'Account',

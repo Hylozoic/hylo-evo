@@ -43,10 +43,11 @@ fragment MeCompleteFragment on Me {
     name
   }
   settings {
-    signupInProgress
+    alreadySeenTour
     digestFrequency
     dmNotifications
     commentNotifications
+    signupInProgress
   }
   affiliations {
     items {
@@ -58,6 +59,16 @@ fragment MeCompleteFragment on Me {
       createdAt
       updatedAt
       isActive
+    }
+  }
+  joinRequests(status: 0) {
+    items {
+      id
+      status
+      createdAt
+      group {
+        id
+      }
     }
   }
   memberships {
@@ -72,13 +83,20 @@ fragment MeCompleteFragment on Me {
     person {
       id
     }
-    community {
+    group {
       id
+      accessibility
+      avatarUrl
+      memberCount
       name
       slug
-      memberCount
-      avatarUrl
-      communityTopics(subscribed: true) {
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
+      visibility
+      groupTopics(subscribed: true) {
         total
         hasMore
         items {
@@ -91,24 +109,6 @@ fragment MeCompleteFragment on Me {
           postsTotal
           followersTotal
           isSubscribed
-        }
-      }
-      network {
-        id
-        slug
-        name
-        avatarUrl
-        communities(first: 300) {
-          items {
-            id
-            name
-            slug
-            memberCount
-            avatarUrl
-            network {
-              id
-            }
-          }
         }
       }
     }

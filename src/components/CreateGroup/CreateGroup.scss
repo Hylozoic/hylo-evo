@@ -1,0 +1,388 @@
+.wrapper {
+  width: 100%;
+  max-width: 590px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.error {
+  color: red;
+}
+
+.center {
+  clear: both;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  display: flex;
+
+  button {
+    border: none;
+    background: none;
+    padding-left: 15px;
+
+    .backIcon::before {
+      font-size: 16px;
+    }
+  }
+
+  .headerHeadline {
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    margin-right: 30px;
+    display: block;
+    color: rgba(128, 140, 156, 1.00);
+  }
+}
+
+.nameAndSlug {
+  background: rgba(246, 248, 249, 1.00);
+  padding: 30px;
+  position: relative;
+
+  .groupNameInput {
+
+    input {
+      font-size: 36px;
+      font-weight: bold;
+      width: 100%;
+      color: rgba(41, 64, 90, 1.00);
+      border-bottom: 1px dashed rgba(192, 197, 205, 1.00);
+
+      &::placeholder {
+        color: rgba(192, 197, 205, 1.00);
+      }
+    }
+  }
+
+  .characterCounter {
+    position: absolute;
+    right: 30px;
+    color: rgba(192, 197, 205, 1.00);
+    font-size: 12px;
+  }
+
+  .slug {
+    font-size: 10px;
+    color: rgba(192, 197, 205, 1.00);
+    display: flex;
+    align-items: center;
+
+    .slugButton {
+      font-family: 'Circular Book';
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+      padding: 0;
+      line-height: 11px;
+
+      span::before {
+        font-size: 14px;
+        margin-right: 5px;
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+
+  .nameError {
+    color: rgba(237, 86, 83, 1.00);
+    position: absolute;
+    top: 18px;
+    font-size: 12px;
+  }
+
+  .slugError {
+    color: rgba(237, 86, 83, 1.00);
+    font-size: 12px;
+  }
+
+  .slugInput {
+    font-size: 11px;
+    border: none;
+    color: rgba(192, 197, 205, 1.00);
+    padding: 0;
+    font-family: 'Circular Book';
+    width: 150px;
+    background-color: transparent;
+    position: relative;
+    top: 6px;
+  }
+}
+
+.slug-wrapper {
+  display: inline;
+  border: none;
+  height: inherit;
+}
+
+.privacy {
+  padding: 10px;
+  background: white;
+}
+
+.dropdownContainer {
+  border: 1px solid rgba(225, 229, 233, 1.00);
+  border-radius: 100px;
+  padding: 15px;
+  position: relative;
+  margin: 15px;
+
+  .openDropdown {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -12px;
+  }
+}
+
+.privacyDropdown {
+  width: 100%;
+  text-align: left;
+
+  .dropdownItem, .dropdownItemSelected {
+
+    .selectedString {
+      line-height: 16px;
+    }
+
+    b {
+      color: rgba(41, 64, 90, 1.00);
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    span {
+      padding-left: 8px;
+      font-size: 14px;
+      color: rgba(128, 140, 156, 1.00);
+    }
+  }
+
+  .dropdownItemSelected {
+    display: flex;
+    align-items: center;
+
+    .selectedString {
+      padding-right: 20px;
+    }
+
+    .dropdownDescription {
+      font-size: 10px;
+      color: rgba(192, 197, 205, 1.00);
+      line-height: 16px;
+    }
+
+    .selectedIcon {
+      font-size: 36px;
+      position: relative;
+      margin-right: 15px;
+    }
+  }
+
+  .dropdownItem {
+    align-items: center;
+    display: flex;
+
+    b {
+      padding-right: 5px;
+    }
+
+    span {
+      padding-left: 0;
+      padding-right: 5px;
+    }
+  }
+}
+
+.invitePeople {
+  paddding: 10px;
+  background: lightgray;
+}
+
+.inviteMembers {
+  padding: 30px;
+  background-color: rgba(246, 248, 249, 1.00);
+
+  .memberSelector {
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba(225, 229, 233, 1.00);
+    background-color: white;
+
+    div {
+      border: 0;
+      padding: 0;
+
+      input {
+        padding: 0;
+      }
+    }
+
+    .title {
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+    }
+  }
+}
+
+.parentGroups {
+  padding: 30px 30px 0 30px;
+
+  .parentSelector {
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba(225, 229, 233, 1.00);
+    background-color: white;
+    position: relative;
+
+    .title {
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .parentGroupInfo {
+      background-color: rgba(128, 140, 155, 1.00);
+      color: white;
+      font-weight: bold;
+      width: 18px;
+      height: 18px;
+      border-radius: 18px;
+      text-align: center;
+      font-size: 12px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      .parentGroupTooltip {
+        display: none;
+        position: absolute;
+        width: 240px;
+        top: 0;
+        right: 0;
+        background-color: $color-black-80;
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 5px;
+        top: 20px;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .parentGroupTooltip {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.createGroupBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+
+  .submit-button {
+    text-align: center;
+    display: flex;
+    align-items: center;
+
+    .create-group-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+
+  .nameAndSlug {
+    padding: 15px;
+
+    .groupNameInput {
+
+      input {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .dropdownContainer {
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+
+    .openDropdown {
+      right: 0;
+    }
+  }
+
+  .privacyDropdown {
+
+    .dropdownItem, .dropdownItemSelected {
+
+      .selectedString {
+        line-height: 12px;
+      }
+
+      b {
+        font-size: 14px;
+      }
+
+      span {
+        font-size: 12px;
+        padding-right: 0;
+      }
+    }
+
+    .dropdownItem {
+
+      span {
+        padding-right: 5px;
+        max-width: 120px;
+        white-space: normal;
+      }
+    }
+
+    .dropdownItemSelected {
+
+      .dropdownDescription {
+        font-size: 10px;
+      }
+
+      .selectedIcon {
+        font-size: 36px;
+        position: relative;
+        margin-right: 10px;
+      }
+    }
+
+    & > div {
+      left:  0;
+    }
+  }
+
+  .nameAndSlug .nameError {
+    top: 4px;
+  }
+
+  .inviteMembers {
+    padding: 15px;
+  }
+
+  .parentGroups {
+    padding: 15px 15px 0 15px;
+  }
+
+}

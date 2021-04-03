@@ -8,7 +8,7 @@ import Select from 'components/Select'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 
-const allCommunitiesLogo = '/hylo-merkaba.png'
+const allGroupsLogo = '/hylo-merkaba.png'
 
 const { object, func } = PropTypes
 
@@ -44,26 +44,26 @@ export default class NotificationSettingsTab extends Component {
     })
   }
 
-  updateAllCommunities = changes => {
+  updateAllGroups = changes => {
     const { memberships, updateAllMemberships } = this.props
-    updateAllMemberships(memberships.map(m => m.community.id), changes)
+    updateAllMemberships(memberships.map(m => m.group.id), changes)
   }
 
-  updateAllCommunitiesAlert = changes => {
+  updateAllGroupsAlert = changes => {
     const key = ('sendEmail' in changes) ? 'sendEmail' : 'sendPushNotifications'
 
     const type = key === 'sendEmail' ? 'Email' : 'Push Notifications'
     const onOrOff = changes[key] ? 'ON' : 'OFF'
-    const numCommunities = this.props.memberships.length
+    const numGroups = this.props.memberships.length
 
-    if (window.confirm(`You wish to turn ${onOrOff} ${type} for all communities? This will affect ${numCommunities} ${numCommunities === 1 ? 'community' : 'communities'}`)) {
-      this.updateAllCommunities(changes)
+    if (window.confirm(`You wish to turn ${onOrOff} ${type} for all groups? This will affect ${numGroups} ${numGroups === 1 ? 'group' : 'groups'}`)) {
+      this.updateAllGroups(changes)
     }
   }
 
   render () {
     const {
-      currentUser, updateUserSettings, memberships, updateMembershipSettings, allCommunitiesSettings,
+      currentUser, updateUserSettings, memberships, updateMembershipSettings, allGroupsSettings,
       messageSettings
     } = this.props
 
@@ -90,7 +90,7 @@ export default class NotificationSettingsTab extends Component {
     return <div>
       <div styleName='title'>Notifications</div>
       <div styleName='prompt'>How often would you like to receive email digests
-        for new posts in your communities and saved searches?</div>
+        for new posts in your groups and saved searches?</div>
       <Select
         onChange={updateSetting('digestFrequency')}
         selected={settings['digestFrequency']}
@@ -111,13 +111,13 @@ export default class NotificationSettingsTab extends Component {
         <MessageSettingsRow
           settings={messageSettings}
           updateMessageSettings={this.updateMessageSettings} />
-        <AllCommunitiesSettingsRow
-          settings={allCommunitiesSettings}
-          updateAllCommunities={this.updateAllCommunitiesAlert} />
+        <AllGroupsSettingsRow
+          settings={allGroupsSettings}
+          updateAllGroups={this.updateAllGroupsAlert} />
         {memberships.map(membership => <MembershipSettingsRow
           key={membership.id}
           membership={membership}
-          updateMembershipSettings={changes => updateMembershipSettings(membership.community.id, changes)} />)}
+          updateMembershipSettings={changes => updateMembershipSettings(membership.group.id, changes)} />)}
       </div>
 
       <div styleName='help'>
@@ -139,18 +139,18 @@ export function MessageSettingsRow ({ settings, updateMessageSettings }) {
     update={updateMessageSettings} />
 }
 
-export function AllCommunitiesSettingsRow ({ settings, updateAllCommunities }) {
+export function AllGroupsSettingsRow ({ settings, updateAllGroups }) {
   return <SettingsRow
-    imageUrl={allCommunitiesLogo}
-    name='All Communities'
+    imageUrl={allGroupsLogo}
+    name='All Groups'
     settings={settings}
-    update={updateAllCommunities} />
+    update={updateAllGroups} />
 }
 
 export function MembershipSettingsRow ({ membership, updateMembershipSettings }) {
   return <SettingsRow
-    imageUrl={membership.community.avatarUrl}
-    name={membership.community.name}
+    imageUrl={membership.group.avatarUrl}
+    name={membership.group.name}
     settings={membership.settings}
     update={updateMembershipSettings} />
 }
@@ -175,7 +175,7 @@ export class SettingsRow extends React.Component {
     return <div styleName={cx('settingsRow', { expanded })}>
       <div styleName='nameRow'>
         {iconName && <Icon name={iconName} styleName='avatarIcon' />}
-        {!iconName && <div styleName='communityAvatar' style={imageStyle} />}
+        {!iconName && <div styleName='groupAvatar' style={imageStyle} />}
         <span styleName='name'>{name}</span>
         <Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='arrowIcon' onClick={this.toggleExpand} />
       </div>

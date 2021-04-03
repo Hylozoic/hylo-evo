@@ -305,7 +305,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -326,7 +326,7 @@ exports[`Notification renders correctly with a join request notification 1`] = `
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -511,7 +511,7 @@ exports[`Notification renders correctly with an approved join request notificati
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -532,7 +532,7 @@ exports[`Notification renders correctly with an approved join request notificati
               "id": 2,
               "name": "Marie Curie",
             },
-            "community": Object {
+            "group": Object {
               "name": "Foomunity",
             },
             "meta": Object {},
@@ -925,7 +925,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
                 "id": 2,
                 "name": "Marie Curie",
               },
-              "community": Object {
+              "group": Object {
                 "name": "Foomunity",
               },
               "meta": Object {},
@@ -947,7 +947,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
                 "id": 2,
                 "name": "Marie Curie",
               },
-              "community": Object {
+              "group": Object {
                 "name": "Foomunity",
               },
               "meta": Object {},

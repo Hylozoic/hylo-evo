@@ -1,0 +1,173 @@
+.container {
+  padding-bottom: 40px;
+}
+
+// GroupControl
+.group-control {
+  min-height: 52px;
+  border-bottom: 1px solid $color-ghost;
+}
+
+.title {
+  min-height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  composes: hdr-display from 'css/typography.scss';
+  background-color: $color-catskill-white;
+  border: none;
+  width: 100%;
+}
+
+.description {
+  color: $color-regent;
+  margin-bottom: 30px;
+}
+
+.subhead {
+  text-transform: uppercase;
+  color: $color-rhino-30;
+  font-size: $space-3x;
+  padding-top: $space-3x;
+  margin-top: $space-3x;
+  margin-bottom: $space-3x;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  > span {
+    cursor: pointer;
+  }
+}
+
+.error {
+  background-color: $color-pale-pink;
+  color: $color-amaranth;
+}
+
+.success {
+  background-color: $color-iceberg;
+  color: $color-mountain-meadow;
+}
+
+// ADD AFFILIATION FORM
+
+.add-affiliation {
+  color: $color-caribbean-green;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  margin: 20px 0px;
+
+  .plus {
+    width: 27px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 1px solid $color-caribbean-green;
+    text-align: center;
+    margin-right: 5px;
+  }
+}
+
+.affiliation-form {
+  border: 1px solid $color-athens-gray-dark;
+  padding: 10px 15px;
+  box-shadow: 2px 2px 4px $color-athens-gray-dark;
+  margin: 20px 0px;
+  font-size: 14px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin-bottom: 0;
+      font-size: 14px;
+    }
+
+    .close {
+      cursor: pointer;
+      font-size: 22px;
+      color: $color-ghost;
+    }
+  }
+
+  .body {
+    display: block;
+    text-align: center;
+    padding: 0px 50px;
+
+    > div {
+      margin: 10px 0;
+
+      > input {
+        color: $color-cod-gray-dark;
+        border: none;
+        border-bottom: 1px dashed $color-athens-gray-dark;
+        width: 100%;
+      }
+
+      input::placeholder {
+        color: $color-ghost;
+      }
+
+      > .chars {
+        text-align: right;
+        color: $color-ghost;
+        font-size: 10px;
+      }
+    }
+
+    .dropdown {
+      display: block;
+      border: 1px solid $color-athens-gray-dark;
+      text-align: center;
+      width: 50px;
+      margin-bottom: 20px;
+
+      > span {
+        text-align: left;
+
+        > span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      > div {
+        left: 0;
+      }
+    }
+  }
+
+  .save {
+    margin-top: 10px;
+    > span {
+      background-color: $color-caribbean-green;
+      color: #FFFFFF;
+      border-radius: 20px;
+      border: 1px solid $color-caribbean-green;
+      cursor: pointer;
+      padding: 5px 10px;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+  }
+
+  .disabled > span {
+    color: $color-alto;
+    border-color: $color-alto;
+    background-color: $color-white;
+  }
+
+}

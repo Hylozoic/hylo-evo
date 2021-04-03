@@ -2,7 +2,7 @@
 
 exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
-  data-stylename="member-profile"
+  className=""
 >
   <div
     data-stylename="header"
@@ -135,7 +135,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         key="3"
         membership={
           Object {
-            "community": Object {
+            "group": Object {
               "id": "1836",
               "name": "Wombats",
               "slug": "wombats",
@@ -154,11 +154,6 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <Event
         event={
           Object {
-            "communities": Array [
-              Object {
-                "slug": "psychedelics",
-              },
-            ],
             "eventInvitations": Object {
               "items": Array [
                 Object {
@@ -169,6 +164,11 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
                 },
               ],
             },
+            "groups": Array [
+              Object {
+                "slug": "psychedelics",
+              },
+            ],
             "id": "1212",
             "location": "https://us02web.zoom.us/j/2896940440?pwd=YnB2QWZVVzRhbXNmWWVzZUw2MHcxUT09",
             "startTime": "2020-12-01T08:00:00.000Z",
@@ -186,11 +186,6 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <Event
         event={
           Object {
-            "communities": Array [
-              Object {
-                "slug": "bb",
-              },
-            ],
             "eventInvitations": Object {
               "items": Array [
                 Object {
@@ -207,6 +202,11 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
                 },
               ],
             },
+            "groups": Array [
+              Object {
+                "slug": "bb",
+              },
+            ],
             "id": "1213",
             "location": "Scotts Valley, California, United States",
             "startTime": "2020-12-09T08:00:00.000Z",
@@ -307,7 +307,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <h2
         data-stylename="content-header"
       >
-        Rich's recent activity
+        Rich Churcher's recent activity
       </h2>
       <Dropdown
         data-stylename="content-dropdown"
@@ -323,7 +323,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Overview",
               "onClick": [Function],
-              "title": "Rich's recent activity",
+              "title": "Rich Churcher's recent activity",
             },
             Object {
               "component": Object {
@@ -335,7 +335,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Posts",
               "onClick": [Function],
-              "title": "Rich's posts",
+              "title": "Rich Churcher's posts",
             },
             Object {
               "component": Object {
@@ -347,7 +347,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Comments",
               "onClick": [Function],
-              "title": "Rich's comments",
+              "title": "Rich Churcher's comments",
             },
             Object {
               "component": Object {
@@ -359,7 +359,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Upvotes",
               "onClick": [Function],
-              "title": "Rich's upvotes",
+              "title": "Rich Churcher's upvotes",
             },
           ]
         }

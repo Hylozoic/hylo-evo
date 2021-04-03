@@ -1,14 +1,14 @@
-import { FETCH_TOPIC, FETCH_COMMUNITY_TOPIC } from 'store/constants'
+import { FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
 
 export const MODULE_NAME = 'Feed'
 export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
 
-export function fetchCommunityTopic (topicName, communitySlug) {
+export function fetchGroupTopic (topicName, groupSlug) {
   return {
-    type: FETCH_COMMUNITY_TOPIC,
+    type: FETCH_GROUP_TOPIC,
     graphql: {
-      query: `query ($communitySlug: String, $topicName: String) {
-        communityTopic(communitySlug: $communitySlug, topicName: $topicName) {
+      query: `query ($groupSlug: String, $topicName: String) {
+        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
           id
           postsTotal
           followersTotal
@@ -16,18 +16,18 @@ export function fetchCommunityTopic (topicName, communitySlug) {
             id
             name
           }
-          community {
+          group {
             id
           }
         }
       }`,
       variables: {
-        communitySlug,
+        groupSlug,
         topicName
       }
     },
     meta: {
-      extractModel: 'CommunityTopic'
+      extractModel: 'GroupTopic'
     }
   }
 }
@@ -51,31 +51,6 @@ export function fetchTopic (name, id) {
     },
     meta: {
       extractModel: 'Topic'
-    }
-  }
-}
-
-export function fetchNetwork (slug) {
-  return {
-    type: FETCH_NETWORK,
-    graphql: {
-      query: `query ($slug: String) {
-        network (slug: $slug) {
-          id
-          slug
-          name
-          isModerator
-          description
-          avatarUrl
-          bannerUrl
-        }
-      }`,
-      variables: {
-        slug
-      }
-    },
-    meta: {
-      extractModel: 'Network'
     }
   }
 }

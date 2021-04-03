@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly for All Communities 1`] = `
+exports[`renders correctly for All Groups 1`] = `
 <div
   data-stylename="s.topicNavigation"
 >
   <div
     data-stylename="s.header"
   >
-    <Icon
-      data-stylename="s.icon"
-      name="Topics"
-    />
     <Link
       to="/seeAllTopics"
     >
+      <Icon
+        data-stylename="s.icon"
+        name="Topics"
+      />
       <span
         data-stylename="s.title"
       >
@@ -52,28 +52,29 @@ exports[`renders correctly for All Communities 1`] = `
     data-stylename="s.addTopic"
   >
     <Link
+      data-stylename="s.allTopics"
       to="/seeAllTopics"
     >
-      see all
+      All topics
     </Link>
   </div>
 </div>
 `;
 
-exports[`renders correctly for a community 1`] = `
+exports[`renders correctly for a group 1`] = `
 <div
   data-stylename="s.topicNavigation"
 >
   <div
     data-stylename="s.header"
   >
-    <Icon
-      data-stylename="s.icon"
-      name="Topics"
-    />
     <Link
       to="/seeAllTopics"
     >
+      <Icon
+        data-stylename="s.icon"
+        name="Topics"
+      />
       <span
         data-stylename="s.title"
       >
@@ -112,9 +113,10 @@ exports[`renders correctly for a community 1`] = `
     data-stylename="s.addTopic"
   >
     <Link
+      data-stylename="s.allTopics"
       to="/seeAllTopics"
     >
-      see all
+      All topics
     </Link>
   </div>
 </div>

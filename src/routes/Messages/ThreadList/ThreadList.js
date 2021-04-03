@@ -40,7 +40,7 @@ export default class ThreadList extends Component {
         <div styleName='closeMessages'>
           <CloseMessages onCloseURL={onCloseURL} />
         </div>
-        <Link to='/t/new' onClick={toggleMessages}><Button label='New Message' styleName='new-message' /></Link>
+        <Link to='/messages/new' onClick={toggleMessages}><Button label='New Message' styleName='new-message' /></Link>
         <div styleName='header-text'>Messages</div>
       </div>
       <div styleName='search'>
@@ -106,7 +106,7 @@ export function ThreadListItem ({
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
   return <li styleName='list-item'>
-    <Link to={`/t/${id}`} onClick={toggleMessages}>
+    <Link to={`/messages/${id}`} onClick={toggleMessages}>
       {active && <div styleName='active-thread' />}
       <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>

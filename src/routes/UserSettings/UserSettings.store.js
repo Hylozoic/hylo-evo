@@ -82,11 +82,7 @@ export function fetchSavedSearches (userId) {
             boundingBox
             createdAt
             context
-            community {
-              name
-              slug
-            }
-            network {
+            group {
               name
               slug
             }
@@ -121,15 +117,15 @@ export function deleteSearch (id) {
   }
 }
 
-export function saveSearch ({ boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }) {
+export function saveSearch ({ boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }) {
   return {
     type: SAVE_SEARCH,
     graphql: {
       query: CreateSavedSearchMutation,
-      variables: { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
+      variables: { boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }
     },
     meta: {
-      boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId, optimistic: true
+      boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId, optimistic: true
     }
   }
 }
@@ -155,12 +151,12 @@ export function unlinkAccount (provider) {
   }
 }
 
-export function updateMembershipSettings (communityId, settings) {
+export function updateMembershipSettings (groupId, settings) {
   return {
     type: UPDATE_MEMBERSHIP_SETTINGS,
     graphql: {
-      query: `mutation ($communityId: ID, $data: MembershipInput) {
-        updateMembership(communityId: $communityId, data: $data) {
+      query: `mutation ($groupId: ID, $data: MembershipInput) {
+        updateMembership(groupId: $groupId, data: $data) {
           id
         }
       }`,
@@ -168,20 +164,20 @@ export function updateMembershipSettings (communityId, settings) {
         data: {
           settings
         },
-        communityId: communityId
+        groupId: groupId
       }
     },
     meta: {
-      communityId,
+      groupId,
       settings,
       optimistic: true
     }
   }
 }
 
-export function updateAllMemberships (communityIds, settings) {
-  const subqueries = communityIds.map(communityId => `
-    alias${communityId}: updateMembership(communityId: ${communityId}, data: {settings: ${JSON.stringify(settings).replace(/"/g, '')}}) {
+export function updateAllMemberships (groupIds, settings) {
+  const subqueries = groupIds.map(groupId => `
+    alias${groupId}: updateMembership(groupId: ${groupId}, data: {settings: ${JSON.stringify(settings).replace(/"/g, '')}}) {
       id
     }
   `).join()

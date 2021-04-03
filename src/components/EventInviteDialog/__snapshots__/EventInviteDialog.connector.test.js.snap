@@ -6,15 +6,15 @@ Object {
     "query": Object {},
     "variables": Object {
       "autocomplete": "searchstring",
-      "communityIds": Array [
+      "first": 20,
+      "groupIds": Array [
         1,
         2,
       ],
-      "first": 20,
     },
   },
   "meta": Object {
-    "extractModel": "Community",
+    "extractModel": "Group",
     "extractQueryResults": Object {
       "getItems": [Function],
     },

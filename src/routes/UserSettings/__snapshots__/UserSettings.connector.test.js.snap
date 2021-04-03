@@ -2,7 +2,7 @@
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
-  "allCommunitiesSettings": Object {
+  "allGroupsSettings": Object {
     "sendEmail": true,
     "sendPushNotifications": true,
   },

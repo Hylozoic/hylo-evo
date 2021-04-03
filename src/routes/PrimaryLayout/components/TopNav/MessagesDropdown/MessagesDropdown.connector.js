@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { threadUrl } from 'util/navigation'
+import { messageThreadUrl } from 'util/navigation'
 import fetchThreads from 'store/actions/fetchThreads'
 import { getThreads } from 'routes/Messages/Messages.store'
 import getMe from 'store/selectors/getMe'
@@ -17,7 +17,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     fetchThreads: () => dispatch(fetchThreads(10, 0)),
-    goToThread: id => dispatch(push(threadUrl(id)))
+    goToThread: id => dispatch(push(messageThreadUrl(id)))
   }
 }
 

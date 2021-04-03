@@ -3,7 +3,8 @@ import Icon from 'components/Icon'
 import Button from 'components/Button'
 import { PostPrompt } from 'components/FeedBanner/FeedBanner'
 import { inflectedTotal, bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER } from 'store/models/Community'
+import { DEFAULT_BANNER } from 'store/models/Group'
+
 import './TopicFeedHeader.scss'
 
 export default function TopicFeedHeader ({
@@ -14,6 +15,7 @@ export default function TopicFeedHeader ({
   newPost,
   postsTotal,
   toggleSubscribe,
+  topic,
   topicName,
   type
 }) {

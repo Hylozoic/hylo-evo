@@ -2,7 +2,7 @@ import TopNav from './TopNav'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-it('renders as expected with no community', () => {
+it('renders as expected with no group', () => {
   const wrapper = shallow(<TopNav />)
   expect(wrapper).toMatchSnapshot()
 

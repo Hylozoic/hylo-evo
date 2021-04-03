@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupCell matches last snapshot with 1 group 1`] = `
+<Fragment>
+  <Link
+    data-stylename="groupCell"
+    to="/all"
+  >
+    <div
+      data-stylename="groupCellAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png)",
+        }
+      }
+    />
+    <span
+      data-stylename="groupCellName"
+    />
+  </Link>
+</Fragment>
+`;
+
+exports[`GroupRow matches last snapshot with 1 group 1`] = `
+<div
+  data-stylename="groupRow"
+>
+  <GroupCell
+    group={
+      Object {
+        "id": 1,
+        "name": "One",
+        "slug": "one",
+      }
+    }
+    key="1"
+  />
+  <GroupCell
+    group={
+      Object {
+        "id": 2,
+        "name": "Two",
+        "slug": "two",
+      }
+    }
+    key="2"
+  />
+</div>
+`;
+
+exports[`GroupsList matches last snapshot with 1 group 1`] = `
+<GroupRow
+  groups={
+    Array [
+      Object {
+        "id": 1,
+        "name": "One",
+        "slug": "one",
+      },
+    ]
+  }
+  key="1"
+/>
+`;
+
+exports[`GroupsList matches last snapshot with 2 groups 1`] = `
+<GroupRow
+  groups={
+    Array [
+      Object {
+        "id": 1,
+        "name": "One",
+        "slug": "one",
+      },
+      Object {
+        "id": 2,
+        "name": "Two",
+        "slug": "two",
+      },
+    ]
+  }
+  key="1"
+/>
+`;
+
+exports[`GroupsList matches last snapshot with 5 group 1`] = `
+Array [
+  <GroupRow
+    groups={
+      Array [
+        Object {
+          "id": 1,
+          "name": "One",
+          "slug": "one",
+        },
+        Object {
+          "id": 2,
+          "name": "Two",
+          "slug": "two",
+        },
+      ]
+    }
+    key="1"
+  />,
+  <GroupRow
+    groups={
+      Array [
+        Object {
+          "id": 3,
+          "name": "Three",
+          "slug": "three",
+        },
+        Object {
+          "id": 4,
+          "name": "Four",
+          "slug": "four",
+        },
+      ]
+    }
+    key="3"
+  />,
+  <GroupRow
+    groups={
+      Array [
+        Object {
+          "id": 5,
+          "name": "Five",
+          "slug": "five",
+        },
+      ]
+    }
+    key="5"
+  />,
+]
+`;

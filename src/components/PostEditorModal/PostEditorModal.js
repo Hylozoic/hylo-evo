@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
+import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
 import './PostEditorModal.scss'
 
@@ -17,7 +18,8 @@ export default class PostEditorModal extends Component {
       transitionLeaveTimeout={300}>
       <div styleName='post-editor-modal' key='post-editor-modal'>
         <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
-          <PostEditor onClose={hidePostEditor} {...this.props} />
+          <span styleName='close-button' onClick={hidePostEditor}><Icon name='Ex' /></span>
+          <PostEditor {...this.props} onClose={hidePostEditor} />
         </div>
       </div>
     </CSSTransitionGroup>

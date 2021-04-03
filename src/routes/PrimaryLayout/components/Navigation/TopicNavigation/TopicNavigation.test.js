@@ -9,7 +9,7 @@ const topics = [
   { name: 't4', url: '/t4', newPostCount: 2 }
 ]
 
-const community = {
+const group = {
   slug: 'foo'
 }
 
@@ -19,16 +19,16 @@ const requiredProps = {
   backUrl: '/return-here',
   seeAllUrl: '/seeAllTopics',
   routeParams: {
-    slug: community.slug
+    slug: group.slug
   }
 }
 
-it('renders correctly for a community', () => {
+it('renders correctly for a group', () => {
   const wrapper = shallow(<TopicNavigation {...requiredProps} />)
   expect(wrapper).toMatchSnapshot()
 })
 
-it('renders correctly for All Communities', () => {
+it('renders correctly for All Groups', () => {
   const wrapper = shallow(<TopicNavigation {...requiredProps} />)
   expect(wrapper).toMatchSnapshot()
 })

@@ -3,18 +3,18 @@ import './Model.extension'
 import Activity from './Activity'
 import Attachment from './Attachment'
 import Comment from './Comment'
-import Community, { CommunityModerator } from './Community'
-import CommunityTopic from './CommunityTopic'
 import EventInvitation from './EventInvitation'
+import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion } from './Group'
+import GroupRelationshipInvite from './GroupRelationshipInvite'
+import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
-import JoinRequest from './JoinRequest'
+import JoinRequest, { JoinRequestQuestionAnswer, Question } from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
 import Me, { MySkillsToLearn } from './Me'
 import Membership from './Membership'
 import Message from './Message'
 import MessageThread from './MessageThread'
-import Network, { NetworkModerator } from './Network'
 import Notification from './Notification'
 import Person, { PersonSkillsToLearn } from './Person'
 import PersonConnection from './PersonConnection'
@@ -31,21 +31,23 @@ orm.register(
   Activity,
   Attachment,
   Comment,
-  Community,
-  CommunityModerator,
-  CommunityTopic,
   EventInvitation,
+  Group,
+  GroupJoinQuestion,
+  GroupModerator,
+  GroupRelationship,
+  GroupRelationshipInvite,
+  GroupTopic,
   Invitation,
   LinkPreview,
   Location,
   JoinRequest,
+  JoinRequestQuestionAnswer,
   Me,
   Membership,
   Message,
   MessageThread,
   MySkillsToLearn,
-  Network,
-  NetworkModerator,
   Notification,
   Person,
   PersonConnection,
@@ -55,6 +57,7 @@ orm.register(
   PostFollower,
   PostMembership,
   ProjectMember,
+  Question,
   SearchResult,
   Skill,
   Topic,

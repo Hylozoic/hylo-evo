@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AllCommunitiesSettingsRow renders correctly 1`] = `
+exports[`AllGroupsSettingsRow renders correctly 1`] = `
 <SettingsRow
   imageUrl="/hylo-merkaba.png"
-  name="All Communities"
+  name="All Groups"
   settings={
     Object {
       "sendEmail": true,
@@ -49,7 +49,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   <div
     data-stylename="prompt"
   >
-    How often would you like to receive email digests for new posts in your communities and saved searches?
+    How often would you like to receive email digests for new posts in your groups and saved searches?
   </div>
   <Select
     onChange={[Function]}
@@ -104,8 +104,8 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     <MessageSettingsRow
       updateMessageSettings={[Function]}
     />
-    <AllCommunitiesSettingsRow
-      updateAllCommunities={[Function]}
+    <AllGroupsSettingsRow
+      updateAllGroups={[Function]}
     />
     <MembershipSettingsRow
       key="1"
@@ -168,7 +168,7 @@ exports[`SettingsRow renders correctly 1`] = `
     data-stylename="nameRow"
   >
     <div
-      data-stylename="communityAvatar"
+      data-stylename="groupAvatar"
       style={Object {}}
     />
     <span

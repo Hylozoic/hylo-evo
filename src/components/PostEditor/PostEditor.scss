@@ -14,7 +14,6 @@ $wrapperBorderRadius: 8px;
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-width: $post-editor-width;
   list-style: none;
   border: solid 1px rgb(0,0,0);
   border-radius: $wrapperBorderRadius;
@@ -30,7 +29,8 @@ $wrapperBorderRadius: 8px;
 // Header area
 
 .header {
-  padding: $space-4x $space-4x 0 $space-4x;
+  padding: 10px;
+  position: relative;
 }
 
 .initial {
@@ -40,12 +40,36 @@ $wrapperBorderRadius: 8px;
   align-items: center;
   line-height: normal;
   margin-bottom: $space-4x;
-  &-prompt {
-    color: $color-loblolly;
-    composes: bdy-lt-sm from 'css/typography.scss';
+}
+
+.initial-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  margin: 0 0 0 8px;
+}
+
+.icon {
+  &-discussion {
+    color: $color-discussions;
   }
-  &-closeButton {
-    cursor: pointer;
+  &-request {
+    color: $color-requests;
+  }
+  &-offer {
+    color: $color-offers;
+  }
+  &-resource {
+    color: $color-resources;
+  }
+  &-project {
+    color: $color-projects;
+  }
+  &-event {
+    color: $color-events;
   }
 }
 
@@ -62,51 +86,65 @@ $wrapperBorderRadius: 8px;
   color: $color-rhino-darker;
   font-size: 11px;
   letter-spacing: 1.2px;
+  width: 130px;
   line-height: 40px;
   display: inline-block;
-  width: 100%;
-  margin: 0 $space-2x;
-  padding: 0 $space-5x;
-  text-align: center;
-  border-radius: $space-1x;
-  background-color: $color-athens-gray-dark;
-  &:last-child {
-    margin-right: 0;
-  }
-  &:first-child {
-    margin-left: 0;
-  }
+  margin: 0;
+  border-bottom: 1px solid rgba(240, 241, 243, 1.00);
+  border-radius: 5px;
+  padding: 0 10px;
+
   &-discussion {
     &.selectable:hover, &:active, &.active {
       color: $color-discussions;
-      background-color: $color-discussions-20;
+      border: 1px solid $color-discussions-20;
     }
   }
   &-request {
     &.selectable:hover, &:active, &.active {
       color: $color-requests;
-      background-color: $color-requests-20;
+      border: 1px solid $color-requests-20;
     }
   }
   &-offer {
     &.selectable:hover, &:active, &.active  {
       color: $color-offers;
-      background-color: $color-offers-20;
+      border: 1px solid $color-offers-20;
     }
   }
   &-resource {
     &.selectable:hover, &:active, &.active  {
       color: $color-resources;
-      background-color: $color-resources-20;
+      border: 1px solid $color-resources-20;
     }
   }
   &-project {
-    color: $color-projects;
-    background-color: $color-projects-20;
+    &.selectable:hover, &:active, &.active  {
+      color: $color-projects;
+      border: 1px solid $color-projects-20;
+    }
   }
   &-event {
-    color: $color-events;
-    background-color: $color-events-20;
+    &.selectable:hover, &:active, &.active  {
+      color: $color-events;
+      border: 1px solid $color-events-20;
+    }
+  }
+}
+
+.postTypeMenu {
+  background-color: $color-white;
+  -webkit-box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 12px;
+  border-radius: 5px;
+  z-index: 999;
+
+  .postType {
+    border-radius: 0;
+    display: block;
+    margin: 0;
   }
 }
 
@@ -182,7 +220,7 @@ $wrapperBorderRadius: 8px;
   &-topics {
     width: 100%;
   }
-  &-communities {
+  &-groups {
     width: 100%;
   }
 }
@@ -272,20 +310,25 @@ $wrapperBorderRadius: 8px;
 
 
 @media screen and (max-width: 600px) {
-  .wrapper {
-    min-width: 320px;
-    border-radius: 0;
-  }
 
   .postType {
     font-size: 10px;
-    padding: 0 5px;
     line-height: 32px;
     height: 32px;
   }
 }
 
 @media screen and (max-width: 425px) {
+  .footerSection-topics, .footerSection-groups {
+    font-size: 14px;
+  }
+
+  .section-label, .footerSection-label, .section-label.footerSection-label {
+    margin-right: 15px;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
   .postType {
     margin: 0 2px;
   }
@@ -301,7 +344,4 @@ $wrapperBorderRadius: 8px;
     font-size: 10px;
   }
 
-  .section-label, .footerSection-label, .section-label.footerSection-label {
-    margin-right: 15px;
-  }
 }

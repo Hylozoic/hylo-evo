@@ -51,14 +51,14 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       <Link
         data-stylename="open"
         onClick={[Function]}
-        to="/t/2?inbox=1"
+        to="/messages/2?inbox=1"
       >
         Open Messages
       </Link>
       <Link
         data-stylename="new"
         onClick={[Function]}
-        to="/t/new"
+        to="/messages/new"
       >
         New
       </Link>
@@ -87,14 +87,14 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
       <Link
         data-stylename="open"
         onClick={[Function]}
-        to="/t/new"
+        to="/messages/new"
       >
         Open Messages
       </Link>
       <Link
         data-stylename="new"
         onClick={[Function]}
-        to="/t/new"
+        to="/messages/new"
       >
         New
       </Link>

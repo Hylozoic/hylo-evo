@@ -35,12 +35,17 @@ export function fetchNotifications () {
               post {
                 id
                 title
-                communities {
+                groups {
                   id
                   slug
                 }
               }
-              community {
+              group {
+                id
+                name
+                slug
+              }
+              otherGroup {
                 id
                 name
                 slug

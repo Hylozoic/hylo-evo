@@ -16,12 +16,11 @@ import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
-import { createIconLayerFromCommunities } from 'components/Map/layers/iconLayer'
+import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
-import { getCommunitySlugInPath as getCommunitySlug, getNetworkSlugInPath as getNetworkSlug } from 'util/navigation'
 
 export default class MapExplorer extends React.Component {
   static defaultProps = {
@@ -29,7 +28,7 @@ export default class MapExplorer extends React.Component {
     filters: {},
     members: [],
     posts: [],
-    publicCommunities: [],
+    groups: [],
     routeParams: {},
     hideDrawer: false,
     topics: [],
@@ -40,7 +39,7 @@ export default class MapExplorer extends React.Component {
     super(props)
     this.state = {
       clusterLayer: null,
-      communityIconLayer: null,
+      groupIconLayer: null,
       currentBoundingBox: null,
       features: [],
       hideDrawer: props.hideDrawer,
@@ -79,26 +78,27 @@ export default class MapExplorer extends React.Component {
     if (!prevProps) return
 
     const {
+      context,
+      fetchGroups,
       fetchMembers,
       fetchPosts,
       fetchParams,
-      fetchPublicCommunities,
       members,
       posts,
-      publicCommunities
+      groups
     } = this.props
 
-    if (!isEqual(prevProps.fetchParams, fetchParams)) {
+    if (!isEqual(prevProps.fetchParams, fetchParams) || prevProps.context !== context) {
       fetchMembers()
       fetchPosts()
-      fetchPublicCommunities()
+      fetchGroups()
     }
 
     if (this.state.currentBoundingBox &&
         (!isEqual(prevProps.fetchParams, fetchParams) ||
          !isEqual(prevProps.posts, posts) ||
          !isEqual(prevProps.members, members) ||
-         !isEqual(prevProps.publicCommunities, publicCommunities))) {
+         !isEqual(prevProps.groups, groups))) {
       this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
     }
 
@@ -108,20 +108,27 @@ export default class MapExplorer extends React.Component {
   }
 
   updateSavedSearch (search) {
-    const { boundingBox, featureTypes, networkSlug, searchText, slug, subject, topics } = generateViewParams(search)
-    const params = { featureTypes, networkSlug, search: searchText, slug, subject, topics }
+    const { boundingBox, featureTypes, searchText, groupSlug, context, topics } = generateViewParams(search)
+    const params = { featureTypes, search: searchText, groupSlug, context, topics }
     this.updateBoundingBoxQuery(boundingBox)
     this.props.fetchMembers(params)
     this.props.fetchPosts(params)
-    this.props.fetchPublicCommunities(params)
+    this.props.fetchGroups(params)
     this.props.storeFetchParams({ boundingBox })
     this.props.storeClientFilterParams({ featureTypes, searchText, topics })
     this.updateViewportWithBbox({ bbox: formatBoundingBox(boundingBox) })
   }
 
   updatedMapFeatures (boundingBox) {
+    const {
+      group,
+      groups,
+      members,
+      posts
+    } = this.props
+
     const bbox = bboxPolygon(boundingBox)
-    const viewMembers = this.props.members.filter(member => {
+    const viewMembers = members.filter(member => {
       const locationObject = member.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
@@ -129,7 +136,7 @@ export default class MapExplorer extends React.Component {
       }
       return false
     })
-    const viewPosts = this.props.posts.filter(post => {
+    const viewPosts = posts.filter(post => {
       const locationObject = post.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
@@ -137,14 +144,14 @@ export default class MapExplorer extends React.Component {
       }
       return false
     })
-    const viewCommunities = this.props.publicCommunities.filter(community => {
-      const locationObject = community.locationObject
+    const viewGroups = groups.filter(group => {
+      const locationObject = group.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    })
+    }).concat(group && group.locationObject ? group : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
@@ -155,8 +162,8 @@ export default class MapExplorer extends React.Component {
         onClick: this.onMapClick,
         boundingBox: this.state.currentBoundingBox
       }),
-      communityIconLayer: createIconLayerFromCommunities({
-        communities: viewCommunities,
+      groupIconLayer: createIconLayerFromGroups({
+        groups: viewGroups,
         onHover: this.onMapHover,
         onClick: this.onMapClick,
         boundingBox: this.state.currentBoundingBox
@@ -200,7 +207,7 @@ export default class MapExplorer extends React.Component {
       finalBbox = newBoundingBox
     }
 
-    // Check if we need to look for more posts and communities
+    // Check if we need to look for more posts and groups
     if (!isEqual(finalBbox, this.state.totalLoadedBoundingBox)) {
       this.props.storeFetchParams({ boundingBox: finalBbox })
     }
@@ -236,8 +243,8 @@ export default class MapExplorer extends React.Component {
       this.setState({ selectedObject: info.object })
       if (info.object.type === 'member') {
         this.props.gotoMember(info.object.id)
-      } else if (info.object.type === 'community') {
-        this.props.showCommunityDetails(info.object.id)
+      } else if (info.object.type === 'group') {
+        this.props.showGroupDetails(info.object.slug)
       } else {
         this.props.showDetails(info.object.id)
       }
@@ -289,15 +296,10 @@ export default class MapExplorer extends React.Component {
 
   saveSearch = (name) => {
     const { currentBoundingBox } = this.state
-    const { context, currentUser, filters, location, posts } = this.props
+    const { context, currentUser, filters, posts, routeParams } = this.props
     const { featureTypes, search: searchText, topics } = filters
-    const { pathname } = location
 
-    let communitySlug
-    let networkSlug
-
-    if (context === 'community') communitySlug = getCommunitySlug(pathname)
-    if (context === 'network') networkSlug = getNetworkSlug(pathname)
+    let groupSlug = routeParams.groupSlug
 
     const userId = currentUser.id
 
@@ -315,7 +317,7 @@ export default class MapExplorer extends React.Component {
       { lat: currentBoundingBox[3], lng: currentBoundingBox[2] }
     ]
 
-    const attributes = { boundingBox, communitySlug, context, lastPostId, name, networkSlug, postTypes, searchText, topicIds, userId }
+    const attributes = { boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }
 
     this.props.saveSearch(attributes)
   }
@@ -338,7 +340,7 @@ export default class MapExplorer extends React.Component {
 
     const {
       clusterLayer,
-      communityIconLayer,
+      groupIconLayer,
       features,
       hideDrawer,
       showFeatureFilters,
@@ -349,7 +351,7 @@ export default class MapExplorer extends React.Component {
     return <div styleName={cx('container', { 'noUser': !currentUser })}>
       <div styleName='mapContainer'>
         <Map
-          layers={[communityIconLayer, clusterLayer]}
+          layers={[groupIconLayer, clusterLayer]}
           afterViewportUpdate={this.afterViewportUpdate}
           onViewportUpdate={this.mapViewPortUpdate}
           children={this._renderTooltip()}
@@ -377,13 +379,13 @@ export default class MapExplorer extends React.Component {
         <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
       <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
-        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/5</strong>
+        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/6</strong>
       </button>
       { currentUser ? <Icon name='Heart' styleName={`savedSearchesButton${showSavedSearches ? '-open' : ''}`} onClick={this.toggleSavedSearches} /> : '' }
       { currentUser && showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
       <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
         <h3>What do you want to see on the map?</h3>
-        {['member', 'request', 'offer', 'resource', 'event'].map(featureType => {
+        {['member', 'request', 'offer', 'resource', 'event', 'project'].map(featureType => {
           let color = FEATURE_TYPES[featureType].primaryColor
 
           return <div

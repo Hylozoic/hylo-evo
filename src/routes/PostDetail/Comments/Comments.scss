@@ -1,14 +1,6 @@
 .comments {
   padding-top: 25px;
-  padding-bottom: 150px;
-}
-
-// ShowMore
-
-.showMore {
-  padding: 0 25px;
-  margin-bottom: 20px;
-  composes: text-button from 'css/typography.scss';
+  padding-bottom: 50px;
 }
 
 .form-wrapper {
@@ -16,9 +8,22 @@
   bottom: 0;
   background-color: #FFF;
   padding: 0 $space-6x;
+  z-index: 1;
 }
 
 .people-typing {
   position: fixed;
   bottom: -3px;
+}
+
+
+
+@media screen and (max-width: 320px) {
+  .form-wrapper {
+    padding: 0 10px;
+  }
+
+  .comments {
+    padding-bottom: 50px;
+  }
 }

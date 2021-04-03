@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostGroups matches last snapshot 1`] = `
+<div
+  data-stylename="groups"
+>
+  <div
+    data-stylename="row"
+  >
+    <span
+      data-stylename="label"
+    >
+      Posted In: 
+    </span>
+    <LinkedGroupNameList
+      expandFunc={[Function]}
+      groups={
+        Array [
+          Object {
+            "id": 1,
+            "name": "One",
+            "slug": "one",
+          },
+          Object {
+            "id": 2,
+            "name": "Two",
+            "slug": "two",
+          },
+          Object {
+            "id": 3,
+            "name": "Three",
+            "slug": "three",
+          },
+        ]
+      }
+      maxShown={2}
+    />
+    <a
+      data-stylename="expandLink"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="expandIcon"
+        name="ArrowDown"
+      />
+    </a>
+  </div>
+</div>
+`;
+
+exports[`PostGroups matches last snapshot when expanded 1`] = `
+<div
+  data-stylename="groups expanded"
+  onClick={[Function]}
+>
+  <div
+    data-stylename="row"
+  >
+    <span
+      data-stylename="label"
+    >
+      Posted In: 
+    </span>
+    <a
+      data-stylename="expandLink"
+      onClick={[Function]}
+    >
+      <Icon
+        data-stylename="expandIcon"
+        name="ArrowUp"
+      />
+    </a>
+  </div>
+  <GroupsList
+    groups={
+      Array [
+        Object {
+          "id": 1,
+          "name": "One",
+          "slug": "one",
+        },
+        Object {
+          "id": 2,
+          "name": "Two",
+          "slug": "two",
+        },
+        Object {
+          "id": 3,
+          "name": "Three",
+          "slug": "three",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`PostGroups returns null when in the only group 1`] = `""`;

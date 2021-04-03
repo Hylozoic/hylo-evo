@@ -30,8 +30,12 @@
   }
 }
 
-.keyList {
-  //
+.keyList{
+  max-height: 132px;
+  position: relative;
+  overflow: scroll;
+
+
 }
 
 .keyListMemberCount {

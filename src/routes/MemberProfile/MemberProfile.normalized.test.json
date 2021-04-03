@@ -54,7 +54,7 @@
       "id": "3",
       "hasModeratorRole": true,
       "person": "46816",
-      "community": "1836"
+      "group": "1836"
     }
   ],
   "comments": [
@@ -73,7 +73,7 @@
       "createdAt": "Fri Mar 24 2017 10:39:41 GMT+1300 (NZDT)"
     }
   ],
-  "communities": [
+  "groups": [
     {
       "id": "1836",
       "name": "Wombats",
@@ -91,7 +91,7 @@
       "commentsTotal": 0,
       "commenters": [],
       "commentersTotal": 0,
-      "communities": [ "1836" ],
+      "groups": [ "1836" ],
       "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)"
     },
     {
@@ -104,7 +104,7 @@
       "commentsTotal": 0,
       "commenters": [ "46816" ],
       "commentersTotal": 1,
-      "communities": [ "1836" ],
+      "groups": [ "1836" ],
       "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)"
     }
   ],

@@ -73,11 +73,11 @@ export default class PostHeader extends PureComponent {
 
     if (!creator) return null
 
-    const creatorUrl = personUrl(creator.id, routeParams.slug, routeParams.networkSlug)
+    const creatorUrl = personUrl(creator.id, routeParams.groupSlug)
     const { flaggingVisible } = this.state
     // Used to generate a link to this post from the backend.
     const flagPostData = {
-      slug: routeParams.slug,
+      slug: routeParams.groupSlug,
       id: id,
       type: 'post'
     }
@@ -86,10 +86,11 @@ export default class PostHeader extends PureComponent {
       { icon: 'Edit', label: 'Edit', onClick: editPost },
       { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
       { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
-      { icon: 'Trash', label: 'Remove From Community', onClick: removePost, red: true }
+      { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
-    const canHaveTimes = type === 'offer' || type === 'request' || type === 'resource'
+    const typesWithTimes = ['offer', 'request', 'resource', 'project']
+    const canHaveTimes = typesWithTimes.includes(type)
     let timeWindow = ''
     const startDate = startTime && formatStartDate(startTime)
     const endDate = endTime && formatEndDate(endTime)
@@ -123,7 +124,7 @@ export default class PostHeader extends PureComponent {
                 delayShow={550}
                 id='announcement-tt' />
             </span>}
-            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} />}
+            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
           </div>
         </div>
         <div styleName='upperRight'>
@@ -131,7 +132,7 @@ export default class PostHeader extends PureComponent {
           {fulfilledAt && <PostLabel type={'completed'} styleName='label' />}
           {type && <PostLabel type={type} styleName='label' />}
           {dropdownItems.length > 0 &&
-            <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+            <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
           {close &&
             <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
         </div>
@@ -140,7 +141,7 @@ export default class PostHeader extends PureComponent {
           onClose={() => this.setState({ flaggingVisible: false })} />
         }
       </div>
-      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.slug} newLine />}
+      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.groupSlug} newLine />}
       {canHaveTimes && <div styleName='timeWindow'>
         {timeWindow}
       </div>}
@@ -152,6 +153,6 @@ export function TopicsLine ({ topics, slug, newLine }) {
   return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
     {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>
-      <Link styleName='topic' to={topicUrl(t.name, { communitySlug: slug })} key={t.name}>#{t.name}</Link>)}
+      <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
   </div>
 }

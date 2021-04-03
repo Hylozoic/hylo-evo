@@ -69,13 +69,13 @@ Array [
       }",
         "variables": Object {
           "postId": 10,
-          "slug": "mycommunity",
+          "slug": "mygroup",
         },
       },
       "meta": Object {
         "optimistic": true,
         "postId": 10,
-        "slug": "mycommunity",
+        "slug": "mygroup",
       },
       "type": "PostHeader/REMOVE_POST",
     },
@@ -84,7 +84,7 @@ Array [
     Object {
       "payload": Object {
         "args": Array [
-          "/c/mycommunity/p/10/edit",
+          "/groups/mygroup/post/10/edit",
         ],
         "method": "push",
       },
@@ -94,18 +94,18 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $communityId: ID) {
-        pinPost(postId: $postId, communityId: $communityId) {
+        "query": "mutation ($postId: ID, $groupId: ID) {
+        pinPost(postId: $postId, groupId: $groupId) {
           success
         }
       }",
         "variables": Object {
-          "communityId": 3,
+          "groupId": 3,
           "postId": 2,
         },
       },
       "meta": Object {
-        "communityId": 3,
+        "groupId": 3,
         "optimistic": true,
         "postId": 2,
       },

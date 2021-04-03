@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapStateToProps returns the right keys 1`] = `
+Object {
+  "canModerate": true,
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+    },
+    "id": "1",
+  },
+  "group": Object {
+    "groupTopics": Array [],
+    "id": "99",
+    "joinQuestions": Array [],
+    "members": Array [],
+    "slug": "foo",
+  },
+  "slug": "foo",
+}
+`;
+
+exports[`mergeProps merges the props 1`] = `
+Object {
+  "graphql": Object {
+    "query": "query ($slug: String) {
+        group (slug: $slug) {
+          id
+          accessibility
+          avatarUrl
+          bannerUrl
+          description
+          location
+          invitePath
+          name
+          settings {
+            allowGroupInvites
+            askJoinQuestions
+            publicMemberDirectory
+          }
+          slug
+          visibility
+          childGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          moderators (first: 100) {
+            hasMore
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          parentGroups (first: 100) {
+            items {
+              id
+              name
+              avatarUrl
+            }
+          }
+          pendingInvitations {
+            hasMore
+            items {
+              id
+              email
+              createdAt
+              lastSentAt
+            }
+          }
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
+        }
+      }",
+    "variables": Object {
+      "slug": "foo",
+    },
+  },
+  "meta": Object {
+    "extractModel": "Group",
+  },
+  "type": "GroupSettings/FETCH_GROUP_SETTINGS",
+}
+`;
+
+exports[`mergeProps merges the props 2`] = `
+Object {
+  "graphql": Object {
+    "query": "mutation ($id: ID, $changes: GroupInput) {
+        updateGroupSettings(id: $id, changes: $changes) {
+          id
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
+        }
+      }",
+    "variables": Object {
+      "changes": undefined,
+      "id": "99",
+    },
+  },
+  "meta": Object {
+    "changes": undefined,
+    "extractModel": "Group",
+    "id": "99",
+    "optimistic": true,
+  },
+  "type": "GroupSettings/UPDATE_GROUP_SETTINGS",
+}
+`;
+
+exports[`mergeProps merges the props 3`] = `
+Object {
+  "canModerate": true,
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+    },
+    "id": "1",
+  },
+  "deleteGroup": [Function],
+  "fetchGroupSettings": [Function],
+  "fetchGroupSettingsMaker": [Function],
+  "group": Object {
+    "groupTopics": Array [],
+    "id": "99",
+    "joinQuestions": Array [],
+    "members": Array [],
+    "slug": "foo",
+  },
+  "slug": "foo",
+  "updateGroupSettings": [Function],
+  "updateGroupSettingsMaker": [Function],
+}
+`;

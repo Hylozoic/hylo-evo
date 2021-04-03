@@ -33,9 +33,9 @@ describe('connector', () => {
 
   beforeEach(() => {
     session = orm.mutableSession(orm.getEmptyState())
-    const { communities, person, posts } = normalized
+    const { groups, person, posts } = normalized
     session.Person.create(person)
-    session.Community.create(communities[0])
+    session.Group.create(groups[0])
     posts.forEach(post => session.Post.create(post))
     state = { orm: session.state }
     props = { routeParams: { personId: '46816', slug: 'wombats' } }
@@ -48,7 +48,7 @@ describe('connector', () => {
 
       expect(actual.id).toEqual(expected.id)
       expect(actual.creator.id).toEqual(expected.creator.id)
-      expect(actual.communities[0].id).toEqual(expected.communities[0].id)
+      expect(actual.groups[0].id).toEqual(expected.groups[0].id)
     })
   })
 

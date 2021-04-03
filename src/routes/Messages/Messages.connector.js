@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { get, isEmpty } from 'lodash/fp'
 import { getSocket, sendIsTyping } from 'client/websockets'
 import { push } from 'connected-react-router'
-import { threadUrl } from 'util/navigation'
+import { messageThreadUrl } from 'util/navigation'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import isPendingFor from 'store/selectors/isPendingFor'
 import fetchThreads from 'store/actions/fetchThreads'
@@ -81,7 +81,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchPeople,
     updateThreadReadTime,
     fetchThread,
-    goToThread: messageThreadId => push(threadUrl(messageThreadId))
+    goToThread: messageThreadId => push(messageThreadUrl(messageThreadId))
   }, dispatch)
 }
 

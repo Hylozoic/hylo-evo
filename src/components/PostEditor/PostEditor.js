@@ -6,7 +6,7 @@ import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
-import { POST_PROP_TYPES } from 'store/models/Post'
+import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
@@ -15,7 +15,7 @@ import RoundImage from 'components/RoundImage'
 import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import Switch from 'components/Switch'
-import CommunitiesSelector from 'components/CommunitiesSelector'
+import GroupsSelector from 'components/GroupsSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
@@ -31,15 +31,14 @@ export const MAX_TITLE_LENGTH = 50
 export default class PostEditor extends React.Component {
   static propTypes = {
     clearLinkPreview: PropTypes.func,
-    communityOptions: PropTypes.array,
+    groupOptions: PropTypes.array,
     createPost: PropTypes.func,
     currentUser: PropTypes.object,
-    currentCommunity: PropTypes.object,
+    currentGroup: PropTypes.object,
     defaultTopics: PropTypes.array,
     detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
     fetchDefaultTopics: PropTypes.func,
-    initialPromptForPostType: PropTypes.object,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
@@ -52,11 +51,6 @@ export default class PostEditor extends React.Component {
   }
 
   static defaultProps = {
-    initialPromptForPostType: {
-      project: <span styleName='postType postType-project'>CREATE PROJECT</span>,
-      event: <span styleName='postType postType-event'>CREATE EVENT</span>,
-      default: 'What are you looking to post?'
-    },
     titlePlaceholderForPostType: {
       offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
@@ -77,17 +71,18 @@ export default class PostEditor extends React.Component {
       type: 'discussion',
       title: '',
       details: '',
-      communities: [],
+      groups: [],
       location: ''
     },
+    postTypes: Object.keys(POST_TYPES),
     editing: false,
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentCommunity, post, topic, initialPrompt, announcementSelected, postTypeContext }) => {
-    const defaultPostWithCommunitiesAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
-      type: postTypeContext || PostEditor.defaultProps.post.type,
-      communities: currentCommunity ? [currentCommunity] : PostEditor.defaultProps.post.communities,
+  buildStateFromProps = ({ editing, currentGroup, post, topic, announcementSelected, postType }) => {
+    const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
+      type: postType || PostEditor.defaultProps.post.type,
+      groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
       topics: topic ? [topic] : [],
       detailsTopics: [],
       acceptContributions: false
@@ -97,16 +92,16 @@ export default class PostEditor extends React.Component {
       locationId: post.locationObject ? post.locationObject.id : null,
       startTime: Moment(post.startTime),
       endTime: Moment(post.endTime)
-    }) : defaultPostWithCommunitiesAndTopic
+    }) : defaultPostWithGroupsAndTopic
 
     return {
       post: currentPost,
-      initialPrompt: initialPrompt || this.initialPromptForPostType(currentPost.type),
       titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
       detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
+      showPostTypeMenu: false,
       titleLengthError: false,
       dateError: false
     }
@@ -118,7 +113,7 @@ export default class PostEditor extends React.Component {
     this.state = this.buildStateFromProps(props)
     this.titleInput = React.createRef()
     this.editor = React.createRef()
-    this.communitiesSelector = React.createRef()
+    this.groupsSelector = React.createRef()
     this.topicSelector = React.createRef()
   }
 
@@ -148,7 +143,7 @@ export default class PostEditor extends React.Component {
 
   reset = (props) => {
     this.editor.current.reset()
-    this.communitiesSelector.current.reset()
+    this.groupsSelector.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
@@ -156,11 +151,19 @@ export default class PostEditor extends React.Component {
 
   handlePostTypeSelection = event => {
     const type = event.target.textContent.toLowerCase()
+    const { changeQueryString, location } = this.props
+    changeQueryString({
+      pathname: location.pathname,
+      search: `?newPostType=${type}`
+    })
+
+    const showPostTypeMenu = this.state.showPostTypeMenu
     this.setState({
       post: { ...this.state.post, type },
       titlePlaceholder: this.titlePlaceholderForPostType(type),
       detailPlaceholder: this.detailPlaceholderForPostType(type),
-      valid: this.isValid({ type })
+      valid: this.isValid({ type }),
+      showPostTypeMenu: !showPostTypeMenu
     })
   }
 
@@ -172,11 +175,6 @@ export default class PostEditor extends React.Component {
   detailPlaceholderForPostType (type) {
     const { detailPlaceholderForPostType } = this.props
     return detailPlaceholderForPostType[type] || detailPlaceholderForPostType['default']
-  }
-
-  initialPromptForPostType (type) {
-    const { initialPromptForPostType } = this.props
-    return initialPromptForPostType[type] || initialPromptForPostType['default']
   }
 
   postTypeButtonProps = (forPostType) => {
@@ -191,12 +189,14 @@ export default class PostEditor extends React.Component {
         [styles[`selectable`]]: !loading && !active
       }
     )
+    const label = active ? <span styleName='initial-prompt'><span>{forPostType}</span> <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' /></span> : forPostType
     return {
-      label: forPostType,
-      onClick: this.handlePostTypeSelection,
+      label,
+      onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection,
       disabled: loading,
       color: '',
-      className
+      className,
+      key: forPostType
     }
   }
 
@@ -285,10 +285,10 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  setSelectedCommunities = communities => {
+  setSelectedGroups = groups => {
     this.setState({
-      post: { ...this.state.post, communities },
-      valid: this.isValid({ communities })
+      post: { ...this.state.post, groups },
+      valid: this.isValid({ groups })
     })
   }
 
@@ -312,14 +312,14 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, communities, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, groups, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
     const { isEvent } = this.props
 
     return !!(this.editor.current &&
-      communities &&
+      groups &&
       type.length > 0 &&
       title.length > 0 &&
-      communities.length > 0 &&
+      groups.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && (startTime < endTime)))
     )
@@ -327,12 +327,12 @@ export default class PostEditor extends React.Component {
 
   save = () => {
     const {
-      editing, createPost, createProject, updatePost, onClose,
-      goToPost, setAnnouncement, announcementSelected, isProject,
+      editing, createPost, updatePost, onClose,
+      goToPost, setAnnouncement, announcementSelected,
       imageAttachments, fileAttachments
     } = this.props
     const {
-      id, type, title, communities, linkPreview, members,
+      id, type, title, groups, linkPreview, members,
       acceptContributions, eventInvitations, startTime,
       endTime, location, locationId, isPublic
     } = this.state.post
@@ -344,9 +344,9 @@ export default class PostEditor extends React.Component {
     const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
 
     const postToSave = {
-      id, type, title, details, communities, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
+      id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
     }
-    const saveFunc = editing ? updatePost : isProject ? createProject : createPost
+    const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)
     saveFunc(postToSave).then(editing ? onClose : goToPost)
   }
@@ -366,41 +366,48 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  togglePostTypeMenu = () => {
+    const { showPostTypeMenu } = this.state
+    this.setState({
+      ...this.state,
+      showPostTypeMenu: !showPostTypeMenu
+    })
+  }
+
   render () {
     const {
-      initialPrompt, titlePlaceholder, detailPlaceholder, titleLengthError,
-      dateError, valid, post, detailsTopics = [], showAnnouncementModal
+      titlePlaceholder, detailPlaceholder, titleLengthError,
+      dateError, valid, post, detailsTopics = [], showAnnouncementModal, showPostTypeMenu
     } = this.state
     const {
-      id, type, title, details, communities, linkPreview, topics, members,
+      id, type, title, details, groups, linkPreview, topics, members,
       acceptContributions, eventInvitations, startTime, endTime, location,
       locationObject
     } = post
     const {
-      onClose, currentCommunity, currentUser, communityOptions, defaultTopics, loading, setAnnouncement,
-      announcementSelected, canModerate, myModeratedCommunities, isProject,
-      isEvent, showFiles, showImages, addAttachment
+      currentGroup, currentUser, groupOptions, defaultTopics, loading, setAnnouncement,
+      announcementSelected, canModerate, myModeratedGroups, isProject,
+      isEvent, showFiles, showImages, addAttachment, postTypes
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-    const hasLocation = ['event', 'offer', 'request', 'resource'].includes(type)
-    const showPostTypes = !isProject && !isEvent
+    const hasLocation = ['event', 'offer', 'request', 'resource', 'project'].includes(type)
     const canHaveTimes = type !== 'discussion'
-    // Center location autocomplete either on post's current location, or current community's location, or current user's location
-    const curLocation = locationObject || get('0.locationObject', communities) || get('locationObject', currentUser)
+    // Center location autocomplete either on post's current location, or current group's location, or current user's location
+    const curLocation = locationObject || get('0.locationObject', groups) || get('locationObject', currentUser)
 
     return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
       <div styleName='header'>
         <div styleName='initial'>
-          <div styleName='initial-prompt'>{initialPrompt}</div>
-          <a styleName='initial-closeButton' onClick={onClose}><Icon name='Ex' /></a>
+          <div>
+            <Button {...this.postTypeButtonProps(type)} />
+            {showPostTypeMenu && <div styleName='postTypeMenu'>
+              {postTypes.filter(postType => postType !== type).map(postType =>
+                <Button {...this.postTypeButtonProps(postType)} />
+              )}
+            </div>}
+          </div>
         </div>
-        {showPostTypes && <div styleName='postTypes'>
-          <Button {...this.postTypeButtonProps('discussion')} />
-          <Button {...this.postTypeButtonProps('request')} />
-          <Button {...this.postTypeButtonProps('offer')} />
-          <Button {...this.postTypeButtonProps('resource')} />
-        </div>}
       </div>
       <div styleName='body'>
         <div styleName='body-column'>
@@ -439,11 +446,11 @@ export default class PostEditor extends React.Component {
       <div styleName='footer'>
         {isProject && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Project Members</div>
-          <div styleName='footerSection-communities'>
+          <div styleName='footerSection-groups'>
             <MemberSelector
               initialMembers={members || []}
               onChange={this.updateProjectMembers}
-              forCommunities={communities}
+              forGroups={groups}
               readOnly={loading}
             />
           </div>
@@ -452,7 +459,7 @@ export default class PostEditor extends React.Component {
           <div styleName='footerSection-label'>Topics</div>
           <div styleName='footerSection-topics'>
             <TopicSelector
-              currentCommunity={currentCommunity}
+              currentGroup={currentGroup}
               selectedTopics={topics}
               defaultTopics={defaultTopics}
               detailsTopics={detailsTopics}
@@ -461,13 +468,13 @@ export default class PostEditor extends React.Component {
         </div>
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Post in</div>
-          <div styleName='footerSection-communities'>
-            <CommunitiesSelector
-              options={communityOptions}
-              selected={communities}
-              onChange={this.setSelectedCommunities}
+          <div styleName='footerSection-groups'>
+            <GroupsSelector
+              options={groupOptions}
+              selected={groups}
+              onChange={this.setSelectedGroups}
               readOnly={loading}
-              ref={this.communitiesSelector}
+              ref={this.groupsSelector}
             />
           </div>
         </div>
@@ -493,22 +500,22 @@ export default class PostEditor extends React.Component {
         </div>}
         {isEvent && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Invite People</div>
-          <div styleName='footerSection-communities'>
+          <div styleName='footerSection-groups'>
             <MemberSelector
               initialMembers={eventInvitations || []}
               onChange={this.updateEventInvitations}
-              forCommunities={communities}
+              forGroups={groups}
               readOnly={loading}
             />
           </div>
         </div>}
         {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
           <div styleName='footerSection-label'>Accept Contributions</div>
-          {hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions')}>
+          {hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions')}>
             <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
             {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
           </div>}
-          {!hasStripeAccount && <div styleName={cx('footerSection-communities', 'accept-contributions-help')}>
+          {!hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions-help')}>
             To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
           </div>}
         </div>}
@@ -526,9 +533,9 @@ export default class PostEditor extends React.Component {
           canModerate={canModerate}
           toggleAnnouncementModal={this.toggleAnnouncementModal}
           showAnnouncementModal={showAnnouncementModal}
-          communityCount={get('communities', post).length}
-          myModeratedCommunities={myModeratedCommunities}
-          communities={post.communities}
+          groupCount={get('groups', post).length}
+          myModeratedGroups={myModeratedGroups}
+          groups={post.groups}
         />
       </div>
     </div>
@@ -549,9 +556,9 @@ export function ActionsBar ({
   canModerate,
   toggleAnnouncementModal,
   showAnnouncementModal,
-  communityCount,
-  myModeratedCommunities,
-  communities
+  groupCount,
+  myModeratedGroups,
+  groups
 }) {
   return <div styleName='actionsBar'>
     <div styleName='actions'>
@@ -594,9 +601,9 @@ export function ActionsBar ({
       {showAnnouncementModal && <SendAnnouncementModal
         closeModal={toggleAnnouncementModal}
         save={save}
-        communityCount={communityCount}
-        myModeratedCommunities={myModeratedCommunities}
-        communities={communities}
+        groupCount={groupCount}
+        myModeratedGroups={myModeratedGroups}
+        groups={groups}
       />}
 
     </div>

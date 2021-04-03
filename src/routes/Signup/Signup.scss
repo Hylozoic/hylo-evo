@@ -1,38 +1,114 @@
 .flex-wrapper {
-  display: flex;
-  flex-direction: row;
   background: $color-white;
-  min-width: 680px;
-  min-height: 500px;
-  border-radius: $space-1x;
+  width: 320px;
+  margin: 0 auto;
+  border-radius: 10px;
 }
 
-.sidebar {
-  min-height: 1px; // Prevent collapsing
-  height: 100%;
-  flex: 0.3;
-  margin-left: 24px;
-  margin-top: 16px;
-  margin-right: 30px;
+.flex-wrapper.final-wrapper {
+  background-color: rgba(248, 248, 248, 1.00);
 }
 
 .panel {
-  min-height: 1px; // Prevent collapsing
-  height: 500px;
-  flex: 0.7;
-  padding-left: 16px;
-  padding-top: 16px;
-  border-top-right-radius: $space-1x;
-  border-bottom-right-radius: $space-1x;
-  background-color: $color-caribbean-green;
-  padding-right: 24px;
+  padding: 30px;
+  position: relative;
+}
+
+.final-panel {
+  padding: 30px 15px 15px 15px;
+
+  .instructions {
+    padding: 10px;
+
+    h3 {
+      font-size: 24px;
+      color: rgba(0, 196, 159, 1.00);
+      font-weight: bold;
+    }
+  }
 }
 
 .step-count {
-  float: right;
-  letter-spacing: 1px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
   font-size: 10px;
-  color: $color-white;
+  color: rgba(128, 140, 156, 1.00);
+}
+
+.final-step {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.2);
+  border-radius: 10px;
+  background-color: $color-white;
+  transition: all .25s ease;
+  position: relative;
+  top: 0;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+
+  h4 {
+    font-size: 16px;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: bold;
+    color: rgba(41, 64, 90, 1.00);
+    margin-bottom: 0px;
+    text-decoration: none;
+  }
+
+  p {
+    font-size: 12px;
+    color: rgba(128, 140, 156, 1.00);
+    text-decoration: none;
+    line-height: 16px;
+    margin-bottom: 0;
+  }
+
+  .step-image {
+    min-width: 80px;
+    min-height: 80px;
+    margin-right: 15px;
+    border-radius: 10px;
+    transition: all .25s ease;
+    box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.2);
+    background-size: cover;
+
+    .profile-cover {
+      background: linear-gradient(11.34deg, rgba(235, 87, 87, 0.7) 20.05%, rgba(238, 194, 40, 0.7) 87.14%);
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      opacity: .7;
+    }
+  }
+}
+
+.final-step:hover {
+  top: -3px;
+  box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.4);
+
+  .step-image.map {
+    box-shadow: 0px 5px 15px rgba(79, 118, 193, .7);
+  }
+
+  .step-image.stream {
+    box-shadow: 0px 5px 15px rgba(22, 178, 190, .7);
+  }
+
+  .step-image.group {
+    box-shadow: 0px 5px 15px rgba(129, 174, 101, .7);
+  }
+
+  .step-image.profile {
+    box-shadow: 0px 5px 15px rgba(238, 136, 56, .7);
+  }
+}
+
+.final-panel a:hover {
+  text-decoration: none;
 }
 
 .sidebar-header {
@@ -56,43 +132,47 @@
 }
 
 .signup-modal-footer {
-  position: absolute;
-  bottom: 0;
-  padding-bottom: 20px;
-  right: 0;
+  padding-top: 20px;
 }
 
 .footer-buttons {
-  float: right;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .continue-button {
-  color: $color-caribbean-green;
-  background-color: $color-white;
+  color: $color-white;
+  background-color: $color-caribbean-green;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   padding: 6px 30px 6px 30px;
   border-radius: 25px;
   max-width: 10px;
   cursor: pointer;
+  transition: all .25s ease;
+  position: relative;
+  box-shadow: 0px 5px 15px rgba(42, 64, 89, 0);
+  top: 0;
 }
 
 .continue-button:hover {
-  color: $color-caribbean-green;
-  background-color: $color-white;
+  background-color: rgba(0, 113, 219, 1.00);
+  box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.2);
+  top: -2px;
 }
 
 .previous-button {
-  color: $color-white;
-  background-color: $color-caribbean-green;
-  border: 1px solid $color-white;
+  color: rgba(128, 140, 156, 1.00);
+  border: 1px solid rgba(128, 140, 156, 1.00);
   text-align: center;
   font-size: 12px;
   margin-right: 20px;
-  padding: 4px 16px 4px 16px;
-  border-radius: 25px;
+  padding: 2px 10px 2px 10px;
+  border-radius: 5px;
   cursor: pointer;
+  position: absolute;
+  top: 8px;
+  left: 15px;
 }
 
 .previous-button:hover {
@@ -101,14 +181,10 @@
 }
 
 .press-enter {
-  position: absolute;
-  bottom: 0;
-  right: 27px;
   font-size: 10px;
-  color: $color-white;
-  font-style: italic;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  color: rgba(128, 140, 156, 1.00);
+  margin-top: -12px;
+  text-align: center;
 }
 
 .sidebar-text {
@@ -122,34 +198,56 @@
   padding-right: 25px;
 }
 
-.white-text {
-  color: $color-white
-}
-
 .signup-modal {
   height: 100%;
   width: 100%;
+  overflow: scroll;
   position: fixed;
   z-index: 100;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instructions {
+  text-align: center;
+  padding-top: 30px;
+
+  h3 {
+    color: rgba(41, 64, 90, 1.00);
+  }
+
+  p {
+    color: rgba(128, 140, 156, 1.00);
+    font-size: 14px;
+  }
+
 }
 
 .signup-background {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(41, 64, 90, .5);
 }
 
 .signup-wrapper {
+  transition: all .25s ease;
   position: relative;
   z-index: 1;
-  width: 660px;
-  margin: -($post-editor-height/2) auto 0;
-  top: 50%;
+  min-height: 480px;
+  min-width: 320px;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
 }
 
 .pill-container {
@@ -179,7 +277,6 @@
   width: 20%;
 }
 
-
 .center-text {
   text-align: center;
 }
@@ -191,25 +288,27 @@
   width: 60%;
   margin-right: 10px;
   margin-left: 10px;
-  font-size: 24px;
+  font-size: 18px;
   color: $color-white;
   font-weight: lighter;
   padding-bottom: 10px;
 }
 
-.signup-padding {
-  padding-top: 70px;
-}
-
 .large-input-text {
-  font-size: 24px;
+  font-size: 16px;
+  text-align: left;
+  padding-left: 37px;
 }
 
 .signup-input {
-  background-color: transparent;
+  margin-top: 40px;
+  border-radius: 5px;
+  background-color: rgba(251, 252, 253, 1.00);
   border: none;
   width: 100%;
-  color: $color-white;
+  color: rgba(128, 140, 156, 1.00);
+  border: 1px solid rgba(225, 229, 233, 1.00);
+  height: 50px;
   font-weight: lighter;
 }
 
@@ -218,10 +317,6 @@
 }
 .review-input-padding {
   padding-bottom: 5px;
-}
-
-.signup-input::placeholder {
-  color: $color-white;
 }
 
 .signup-input:focus {
@@ -242,6 +337,9 @@
   color: $color-white;
 }
 
+span.globe-icon {
+  font-size: 100px;
+}
 
 .skills {
   margin-top: 16px;
@@ -249,6 +347,17 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 0px 50px 0px 50px;
+}
+
+.location-input {
+  position: relative;
+
+  .location-icon {
+    position: absolute;
+    top: 53px;
+    left: 8px;
+    z-index: 100;
+  }
 }
 
 .skill {
@@ -363,6 +472,15 @@
   color: $color-dove-gray-75;
 }
 
+
+.uploadWrapper {
+  border: 3px dashed rgba(0, 196, 159, .5);
+  width: 160px;
+  height: 160px;
+  border-radius: 160px;
+  padding: 7px;
+}
+
 .avatar {
   display: flex;
   align-items: flex-end;
@@ -381,76 +499,5 @@
     font-size: 30px;
     color: $color-white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  }
-}
-
-@media screen and (max-width: 680px) {
-  .flex-wrapper {
-    min-width: 100%;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  .signup-wrapper {
-    width: 100%;
-    margin: 0;
-    top: 0;
-  }
-
-  .signup-modal-footer {
-    right: 10px;
-  }
-
-  .press-enter {
-    right: 37px;
-  }
-}
-
-@media screen and (max-width: 425px) {
-
-  .panel {
-    min-height: 100vh !important;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .signup-padding {
-    padding-top: 25px;
-  }
-
-  .signup-modal-footer {
-    height: 200px;
-    position: static;
-    overflow-y: scroll;
-    margin: 20px auto;
-    width: 100%;
-  }
-
-  .press-enter {
-    opacity: 0;
-  }
-
-  .skills {
-    height: 145px;
-    overflow-y: scroll;
-    padding: 0px 10px 0px 10px;
-  }
-
-  .your-skills {
-    margin-top: 10px;
-    padding-top: 5px;
-    padding-bottom: 10px;
-  }
-
-  .your-skills-label {
-    display: block;
-    padding-top: 0;
-    width: 100%;
-  }
-
-  .your-skills-list {
-    margin-top: 10px;
-    padding: 0px 10px 0px 10px;
-    width: 100%;
   }
 }

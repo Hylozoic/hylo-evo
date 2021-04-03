@@ -16,8 +16,8 @@ export default function (queryVariables = {}) {
           getRoot: get('topics.items')
         },
         {
-          modelName: 'CommunityTopic',
-          getRoot: get('topic.items.communityTopics.items')
+          modelName: 'GroupTopic',
+          getRoot: get('topic.items.groupTopics.items')
         }
       ],
       extractQueryResults: {
@@ -41,8 +41,8 @@ export function fetchDefaultTopics (queryVariables = {}) {
           getRoot: get('topics.items')
         },
         {
-          modelName: 'CommunityTopic',
-          getRoot: get('topic.items.communityTopics.items')
+          modelName: 'GroupTopic',
+          getRoot: get('topic.items.groupTopics.items')
         }
       ],
       extractQueryResults: {

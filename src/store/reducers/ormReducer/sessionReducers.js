@@ -16,7 +16,7 @@ export {
 
 export {
   ormSessionReducer as inviteSettingsTabReducer
-} from 'routes/CommunitySettings/InviteSettingsTab/InviteSettingsTab.store'
+} from 'routes/GroupSettings/InviteSettingsTab/InviteSettingsTab.store'
 
 export {
   ormSessionReducer as socketListenerReducer
@@ -31,5 +31,5 @@ export {
 } from 'routes/Members/Members.store'
 
 export {
-  ormSessionReducer as NetworkSettingsReducer
-} from 'routes/NetworkSettings/NetworkSettings.store'
+  ormSessionReducer as manageInvitesReducer
+} from 'routes/UserSettings/ManageInvitesTab/ManageInvitesTab.store'

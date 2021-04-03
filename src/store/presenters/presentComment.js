@@ -1,4 +1,4 @@
-export default function presentComment (comment, communitySlug = undefined) {
+export default function presentComment (comment, groupSlug = undefined) {
   if (!comment || !comment.post) return
   return {
     ...comment.ref,
@@ -6,6 +6,6 @@ export default function presentComment (comment, communitySlug = undefined) {
     post: comment.post.ref,
     attachments: comment.attachments
       .orderBy('position').toModelArray(),
-    slug: communitySlug
+    slug: groupSlug
   }
 }

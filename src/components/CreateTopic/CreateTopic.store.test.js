@@ -2,24 +2,24 @@ import { get, has } from 'lodash/fp'
 
 import reducer, {
   CREATE_TOPIC,
-  FETCH_COMMUNITY_TOPIC,
+  FETCH_GROUP_TOPIC,
   createTopic,
-  fetchCommunityTopic
+  fetchGroupTopic
 } from './CreateTopic.store'
 
 it('matches the last snapshot for createTopic', () => {
   expect(createTopic('wombats', '1')).toMatchSnapshot()
 })
 
-it('matches the last snapshot for fetchCommunityTopic', () => {
-  expect(fetchCommunityTopic('wombats', 'wombat-community')).toMatchSnapshot()
+it('matches the last snapshot for fetchGroupTopic', () => {
+  expect(fetchGroupTopic('wombats', 'wombat-group')).toMatchSnapshot()
 })
 
 describe('reducer', () => {
   it('removes the topic name from the component store (CREATE_TOPIC)', () => {
     const state = {
       wombats: {
-        'wombat-community': false
+        'wombat-group': false
       }
     }
     const action = {
@@ -36,33 +36,33 @@ describe('reducer', () => {
     expect(hasTopic).toBeFalsy()
   })
 
-  it('sets flag to false if topic does not exist (FETCH_COMMUNITY_TOPIC)', () => {
+  it('sets flag to false if topic does not exist (FETCH_GROUP_TOPIC)', () => {
     const action = {
-      type: FETCH_COMMUNITY_TOPIC,
+      type: FETCH_GROUP_TOPIC,
       meta: {
-        communitySlug: 'wombat-community',
+        groupSlug: 'wombat-group',
         topicName: 'wombats'
       },
       payload: {
         data: {
-          communityTopic: null
+          groupTopic: null
         }
       }
     }
-    const communityFlag = get('wombats.wombat-community', reducer({}, action))
-    expect(communityFlag).toBe(false)
+    const groupFlag = get('wombats.wombat-group', reducer({}, action))
+    expect(groupFlag).toBe(false)
   })
 
-  it('sets flag to true if topic exists (FETCH_COMMUNITY_TOPIC)', () => {
+  it('sets flag to true if topic exists (FETCH_GROUP_TOPIC)', () => {
     const action = {
-      type: FETCH_COMMUNITY_TOPIC,
+      type: FETCH_GROUP_TOPIC,
       meta: {
-        communitySlug: 'wombat-community',
+        groupSlug: 'wombat-group',
         topicName: 'wombats'
       },
       payload: {
         data: {
-          communityTopic: {
+          groupTopic: {
             id: '1',
             topic: {
               id: '1',
@@ -72,7 +72,7 @@ describe('reducer', () => {
         }
       }
     }
-    const communityFlag = get('wombats.wombat-community', reducer({}, action))
-    expect(communityFlag).toBe(true)
+    const groupFlag = get('wombats.wombat-group', reducer({}, action))
+    expect(groupFlag).toBe(true)
   })
 })

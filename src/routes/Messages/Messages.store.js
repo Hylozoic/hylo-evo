@@ -299,8 +299,8 @@ export const getMessagesHasMore = createSelector(
 export function presentPersonListItem (person) {
   return {
     ...pick([ 'id', 'name', 'avatarUrl' ], person.ref),
-    community: person.memberships.first()
-      ? person.memberships.first().community.name : null
+    group: person.memberships.first()
+      ? person.memberships.first().group.name : null
   }
 }
 

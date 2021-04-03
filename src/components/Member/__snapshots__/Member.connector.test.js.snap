@@ -1,22 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mapDispatchToProps goToPerson is correct for "community" subject 1`] = `
+exports[`mapDispatchToProps goToPerson is correct for "groups" context 1`] = `
 Object {
   "payload": Object {
     "args": Array [
-      "/c/anything/m/1",
-    ],
-    "method": "push",
-  },
-  "type": "@@router/CALL_HISTORY_METHOD",
-}
-`;
-
-exports[`mapDispatchToProps goToPerson is correct for "network" subject 1`] = `
-Object {
-  "payload": Object {
-    "args": Array [
-      "/n/anything/m/1",
+      "/groups/anything/members/1",
     ],
     "method": "push",
   },

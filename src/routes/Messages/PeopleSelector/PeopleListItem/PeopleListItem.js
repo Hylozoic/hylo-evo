@@ -8,7 +8,7 @@ export default function PeopleListItem ({ active, onClick, onMouseOver, person }
   return <li styleName={cx('person-list-item', { active })} onClick={onClick} onMouseOver={onMouseOver}>
     <RoundImage url={person.avatarUrl} styleName='avatar' medium />
     <span styleName='name'>{person.name}</span>
-    <span styleName='community'>{person.community}</span>
+    <span styleName='group'>{person.group}</span>
   </li>
 }
 
@@ -20,6 +20,6 @@ PeopleListItem.propTypes = {
     id: PropTypes.any,
     name: PropTypes.string,
     avatarUrl: PropTypes.string,
-    community: PropTypes.string
+    group: PropTypes.string
   })
 }

@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserGroupsTab renders a list of Memberships 1`] = `
+<div
+  data-stylename="container"
+>
+  <h1
+    data-stylename="title"
+  >
+    Your affiliations with organizations
+  </h1>
+  <div
+    data-stylename="description"
+  >
+    This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.
+  </div>
+  <h2
+    data-stylename="subhead"
+  >
+    Hylo Groups
+  </h2>
+  <Membership
+    archive={[Function]}
+    index={0}
+    key="1"
+    membership={
+      Object {
+        "hasModeratorRole": true,
+        "id": "1",
+      }
+    }
+  />
+  <Membership
+    archive={[Function]}
+    index={1}
+    key="2"
+    membership={
+      Object {
+        "hasModeratorRole": true,
+        "id": "2",
+      }
+    }
+  />
+  <Membership
+    archive={[Function]}
+    index={2}
+    key="3"
+    membership={
+      Object {
+        "hasModeratorRole": true,
+        "id": "3",
+      }
+    }
+  />
+  <h2
+    data-stylename="subhead"
+  >
+    Other Affiliations
+  </h2>
+  <Affiliation
+    affiliation={
+      Object {
+        "id": "1",
+        "isActive": true,
+        "orgName": "La Fromagerie",
+        "preposition": "at",
+        "role": "Cheesemonger",
+        "url": "https://www.lafromagerie.com",
+      }
+    }
+    archive={[Function]}
+    index={0}
+    key="1"
+  />
+  <Affiliation
+    affiliation={
+      Object {
+        "id": "2",
+        "isActive": true,
+        "orgName": "Rights of Nature Santa Cruz",
+        "preposition": "of",
+        "role": "Organizer",
+        "url": "https://rightsofnaturesc.org",
+      }
+    }
+    archive={[Function]}
+    index={1}
+    key="2"
+  />
+  <div
+    data-stylename="add-affiliation"
+    onClick={[Function]}
+  >
+    <div
+      data-stylename="plus"
+    >
+      +
+    </div>
+    <div>
+      Add new affiliation
+    </div>
+  </div>
+</div>
+`;

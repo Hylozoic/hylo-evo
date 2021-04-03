@@ -29,10 +29,10 @@ export default class EventInviteDialog extends React.PureComponent {
   }
 
   onSearchChange = ({ target: { value } }) => {
-    const { fetchPeople, forCommunities } = this.props
-    const forCommunityIds = forCommunities.map(c => c.id)
+    const { fetchPeople, forGroups } = this.props
+    const forGroupIds = forGroups.map(c => c.id)
     this.setState({ searchTerm: value })
-    fetchPeople(value, forCommunityIds)
+    fetchPeople(value, forGroupIds)
   }
 
   getFilteredInviteSuggestions = () => {

@@ -3,7 +3,7 @@ import { boolean, arrayOf, func, number, shape, string, object } from 'prop-type
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 // import CreateTopic from 'components/CreateTopic'
-import { CommunityCell } from 'components/CommunitiesList/CommunitiesList'
+import { GroupCell } from 'components/GroupsList/GroupsList'
 import Dropdown from 'components/Dropdown'
 import FullPageModal from 'routes/FullPageModal'
 import Icon from 'components/Icon'
@@ -34,15 +34,14 @@ export default class AllTopics extends Component {
       followersTotal: number,
       isSubscribed: boolean
     })),
-    community: object,
-    network: object,
+    group: object,
     routeParams: object.isRequired,
     totalTopics: number,
     selectedSort: string,
     setSort: func,
     search: string,
     setSearch: func,
-    toggleCommunityTopicSubscribe: func.isRequired
+    toggleGroupTopicSubscribe: func.isRequired
   }
 
   componentDidMount () {
@@ -65,15 +64,14 @@ export default class AllTopics extends Component {
     }
     if (prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search ||
-      prevProps.routeParams.networkSlug !== this.props.routeParams.networkSlug ||
-      prevProps.routeParams.communitySlug !== this.props.routeParams.communitySlug) {
+      prevProps.routeParams.groupSlug !== this.props.routeParams.groupSlug) {
       this.props.fetchTopics()
     }
   }
 
-  deleteCommunityTopic (communityTopicId) {
-    if (window.confirm('Are you sure you want to delete this communityTopic?')) {
-      this.props.deleteCommunityTopic(communityTopicId)
+  deleteGroupTopic (groupTopicId) {
+    if (window.confirm('Are you sure you want to delete this groupTopic?')) {
+      this.props.deleteGroupTopic(groupTopicId)
     }
   }
 
@@ -85,8 +83,7 @@ export default class AllTopics extends Component {
   render () {
     const {
       routeParams,
-      community,
-      network,
+      group,
       topics,
       search,
       setSearch,
@@ -95,32 +92,32 @@ export default class AllTopics extends Component {
       fetchMoreTopics,
       fetchIsPending,
       canModerate,
-      toggleCommunityTopicSubscribe
+      toggleGroupTopicSubscribe
     } = this.props
     const { totalTopicsCached } = this.state
 
     return <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
       <div styleName='all-topics'>
-        <div styleName='title'>{community ? community.name : network ? network.name : 'All'} Topics</div>
+        <div styleName='title'>{group ? group.name : 'All'} Topics</div>
         <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
         <div styleName='controls'>
           <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
-          {/* {community && <CreateTopic
+          {/* {group && <CreateTopic
             buttonText='Add a Topic'
-            communityId={community.id}
-            communitySlug={community.slug}
-            communityTopics={communityTopics} />} */}
+            groupId={group.id}
+            groupSlug={group.slug}
+            groupTopics={groupTopics} />} */}
         </div>
         <div styleName='topic-list' id={TOPIC_LIST_ID}>
           {topics.map(topic =>
             <TopicListItem
               key={topic.id}
-              singleCommunity={community}
+              singleGroup={group}
               topic={topic}
               routeParams={routeParams}
               canModerate={canModerate}
-              deleteItem={this.deleteCommunityTopic}
-              toggleSubscribe={toggleCommunityTopicSubscribe} />)}
+              deleteItem={this.deleteGroupTopic}
+              toggleSubscribe={toggleGroupTopicSubscribe} />)}
           <ScrollListener onBottom={() => fetchMoreTopics()}
             elementId={TOPIC_LIST_ID} />
         </div>
@@ -154,29 +151,29 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   </div>
 }
 
-export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubscribe, deleteItem, canModerate }) {
-  const { name, communityTopics, postsTotal, followersTotal } = topic
-  let communityTopicContent
+export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe, deleteItem, canModerate }) {
+  const { name, groupTopics, postsTotal, followersTotal } = topic
+  let groupTopicContent
 
-  if (singleCommunity) {
-    // Grab correct CommunityTopic object
-    const communityTopic = topic.communityTopics.find(ct => ct.community.id === singleCommunity.id)
+  if (singleGroup) {
+    // Grab correct GroupTopic object
+    const groupTopic = topic.groupTopics.find(ct => ct.group.id === singleGroup.id)
 
     // Don't show hidden topics unless user is subscribed to it
-    if (!communityTopic || (!communityTopic.isSubscribed && communityTopic.visibility === 0)) return ''
+    if (!groupTopic || (!groupTopic.isSubscribed && groupTopic.visibility === 0)) return ''
 
-    communityTopicContent = <div styleName='topic-stats'>
+    groupTopicContent = <div styleName='topic-stats'>
       {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
-      {toggleSubscribe && <span onClick={() => toggleSubscribe(communityTopic)} styleName='topic-subscribe'>
-        {communityTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+      {toggleSubscribe && <span onClick={() => toggleSubscribe(groupTopic)} styleName='topic-subscribe'>
+        {groupTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
       </span>}
     </div>
   } else {
     // Don't show hidden topics unless user is subscribed to it
-    const visibleCommunityTopics = communityTopics.filter(ct => ct.isSubscribed || ct.visibility !== 0)
-    if (visibleCommunityTopics.length === 0) return ''
+    const visibleGroupTopics = groupTopics.filter(ct => ct.isSubscribed || ct.visibility !== 0)
+    if (visibleGroupTopics.length === 0) return ''
 
-    communityTopicContent = visibleCommunityTopics.map((ct, key) => <CommunityCell community={ct.community} key={key}>
+    groupTopicContent = visibleGroupTopics.map((ct, key) => <GroupCell group={ct.group} key={key}>
       <div styleName='topic-stats'>
         {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
         {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
@@ -184,15 +181,15 @@ export function TopicListItem ({ topic, singleCommunity, routeParams, toggleSubs
         </span>}
       </div>
       <br />
-    </CommunityCell>)
+    </GroupCell>)
   }
 
   return <div styleName='topic'>
-    <div styleName='communitiesList'>
+    <div styleName='groupsList'>
       <Link styleName='topic-details' to={topicUrl(name, { ...routeParams, view: null })}>
         <div styleName='topic-name'>#{name}</div>
       </Link>
-      {communityTopicContent}
+      {groupTopicContent}
     </div>
   </div>
 }

@@ -14,7 +14,7 @@ exports[`renders 1`] = `
   >
     In the meantime, click a topic from an individual
     <br />
-    community to see posts from that community.
+    group to see posts from that group.
   </p>
   <Link
     to="/all"
@@ -22,7 +22,7 @@ exports[`renders 1`] = `
     <Button
       data-stylename="back-button"
     >
-      Return to All Communities
+      Return to All Groups
     </Button>
   </Link>
   <img

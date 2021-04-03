@@ -49,18 +49,18 @@ export const getMemberMatches = createSelector(
   orm,
   getMembers,
   getMe,
-  (_, props) => props.forCommunities,
+  (_, props) => props.forGroups,
   getAutocomplete,
   (
-    { Community },
+    { Group },
     members,
     currentUser,
-    forCommunities,
+    forGroups,
     autocomplete
   ) => {
-    const forCommunityIds = forCommunities && forCommunities.map(c => c.id)
-    const communities = Community
-      .filter(c => forCommunityIds ? forCommunityIds.includes(c.id) : true)
+    const forGroupIds = forGroups && forGroups.map(c => c.id)
+    const groups = Group
+      .filter(c => forGroupIds ? forGroupIds.includes(c.id) : true)
       .toModelArray()
     const memberIds = members.map(m => m.id)
     const autocompleteFilter = p =>
@@ -75,7 +75,7 @@ export const getMemberMatches = createSelector(
       orderBy('name', 'asc')
     ]
 
-    return flow(processors)(communities)
+    return flow(processors)(groups)
   }
 )
 

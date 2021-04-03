@@ -29,7 +29,7 @@
 
 // MEMBER PROFILE
 
-.member-profile {
+.memberProfile {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,6 +65,7 @@
 
 .header {
   width: 100%;
+  position: relative;
 }
 
 .header-banner {
@@ -360,10 +361,27 @@
   border: 1px solid $color-projects-50;
 }
 
+.tagline {
+  margin: 0 15px 15px 15px;
+}
+
+.bio {
+  margin: 0 15px 15px 15px;
+}
+
+.action-icons {
+  margin: 0 15px;
+  position: relative;
+  top: -20px;
+}
+
+.member-details {
+  margin: 0 0 15px 0;
+}
 // CONTENT
 
 .content {
-  @include column-padding();
+  padding: 0 10px;
   width: 100%;
   justify-content: center;
   .activity-item {
@@ -383,13 +401,15 @@
 
 .content-header {
   composes: hdr-headline from 'css/typography.scss';
-  font-size: $space-6x;
+  font-size: 16px;
   // margin: 0 0 $space-6x 0;
 }
 
 .content-dropdown {
   composes: label from 'components/SkillLabel/component.scss';
   color: $color-rhino-60;
+  min-width: 120px;
+  height: 32px;
   text-transform: unset;
   &, &-icon {
     font-size: 14px;
@@ -400,6 +420,27 @@
   }
 }
 
+.isSingleColumn .action-icons, .isSingleColumn .bio, .isSingleColumn .tagline, .isSingleColumn .member-details {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 25px;
+  max-width: 640px;
+  position: relative;
+  top: -45px;
+}
+
+.isSingleColumn .content {
+  max-width: 640px;
+}
+
 // ERROR
 
 .error { color: $color-amaranth; }
+
+@media screen and (max-width: 600px) {
+
+  .isSingleColumn .action-icons, .isSingleColumn .bio, .isSingleColumn .tagline, .isSingleColumn .member-details, .isSingleColumn .content {
+    margin: 0;
+  }
+}

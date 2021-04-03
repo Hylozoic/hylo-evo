@@ -6,7 +6,7 @@
     "memberships": [
       {
         "id": "6217",
-        "community": {
+        "group": {
           "id": "2619",
           "name": "Associate"
         }
@@ -20,7 +20,7 @@
     "memberships": [
       {
         "id": "6560",
-        "community": {
+        "group": {
           "id": "2619",
           "name": "Associate"
         }
@@ -34,7 +34,7 @@
     "memberships": [
       {
         "id": "7010",
-        "community": {
+        "group": {
           "id": "2619",
           "name": "Associate"
         }
@@ -48,7 +48,7 @@
     "memberships": [
       {
         "id": "6374",
-        "community": {
+        "group": {
           "id": "2619",
           "name": "Associate"
         }

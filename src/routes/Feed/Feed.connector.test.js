@@ -8,22 +8,22 @@ describe('mapStateToProps', () => {
   }
   const matchProps = {
     params: {
-      slug: 'foo'
+      groupSlug: 'foo'
     }
   }
 
   beforeEach(() => {
     session = orm.session(orm.getEmptyState())
-    session.Community.create({ id: '1', slug: 'foo', postCount: 10 })
+    session.Group.create({ id: '1', slug: 'foo', postCount: 10 })
     session.Topic.create({
       id: '2',
       name: 'petitions',
       postsTotal: '100',
       followersTotal: '200'
     })
-    session.CommunityTopic.create({
+    session.GroupTopic.create({
       id: '3',
-      community: '1',
+      group: '1',
       topic: '2',
       postsTotal: '10',
       followersTotal: '20'
@@ -47,28 +47,28 @@ describe('mapStateToProps', () => {
     })
   })
 
-  it('sets community from the router props', () => {
+  it('sets group from the router props', () => {
     const props = {
       location: locationProps,
       match: matchProps
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      community: expect.objectContaining({ id: '1', slug: 'foo' })
+      group: expect.objectContaining({ id: '1', slug: 'foo' })
     })
   })
 
-  it('sets communityTopic from the router props', () => {
+  it('sets groupTopic from the router props', () => {
     const props = {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           topicName: 'petitions'
         }
       }
     }
     expect(mapStateToProps(state, props)).toMatchObject({
-      communityTopic: expect.objectContaining({ id: '3', postsTotal: '10' })
+      groupTopic: expect.objectContaining({ id: '3', postsTotal: '10' })
     })
   })
 
@@ -77,7 +77,7 @@ describe('mapStateToProps', () => {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           topicName: 'petitions'
         }
       }
@@ -92,7 +92,7 @@ describe('mapStateToProps', () => {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           postId: '24'
         }
       }
@@ -102,12 +102,12 @@ describe('mapStateToProps', () => {
     })
   })
 
-  it('sets postsTotal and followersTotal from the communityTopic when there is one', () => {
+  it('sets postsTotal and followersTotal from the groupTopic when there is one', () => {
     const props = {
       location: locationProps,
       match: {
         params: {
-          slug: 'foo',
+          groupSlug: 'foo',
           topicName: 'petitions'
         }
       }
@@ -118,7 +118,7 @@ describe('mapStateToProps', () => {
     })
   })
 
-  it('sets postsTotal and followersTotal from the topic when there is no communityTopic', () => {
+  it('sets postsTotal and followersTotal from the topic when there is no groupTopic', () => {
     const props = {
       location: locationProps,
       match: {
@@ -140,10 +140,10 @@ describe('mapDispatchToProps', () => {
     const props = {
       location: {
         search: '?s=votes&t=offer',
-        pathname: '/c/foo'
+        pathname: '/groups/foo'
       },
       match: {
-        params: { slug: 'foo' }
+        params: { groupSlug: 'foo' }
       }
     }
 
@@ -153,16 +153,16 @@ describe('mapDispatchToProps', () => {
   })
 
   describe('fetchTopic', () => {
-    it('will call fetchCommunityTopic if communitySlug and topicName are in the url', () => {
+    it('will call fetchGroupTopic if groupSlug and topicName are in the url', () => {
       const dispatch = jest.fn(x => Promise.resolve(x))
       const props = {
         location: {
           search: '?s=votes&t=offer',
-          pathname: '/c/foo/petitions'
+          pathname: '/groups/foo/petitions'
         },
         match: {
           params: {
-            slug: 'foo',
+            groupSlug: 'foo',
             topicName: 'petitions'
           }
         }

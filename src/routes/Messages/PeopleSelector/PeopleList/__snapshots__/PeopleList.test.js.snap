@@ -19,7 +19,7 @@ exports[`does something 1`] = `
         person={
           Object {
             "avatarUrl": "https://flargle.com",
-            "community": "Wombats",
+            "group": "Wombats",
             "id": "1",
             "name": "Wombat",
           }
@@ -31,7 +31,7 @@ exports[`does something 1`] = `
         person={
           Object {
             "avatarUrl": "https://argle.com",
-            "community": "Aardvarks",
+            "group": "Aardvarks",
             "id": "2",
             "name": "Aardvark",
           }
@@ -43,7 +43,7 @@ exports[`does something 1`] = `
         person={
           Object {
             "avatarUrl": "https://wargle.com",
-            "community": "Ocelots",
+            "group": "Ocelots",
             "id": "3",
             "name": "Ocelot",
           }

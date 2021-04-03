@@ -13,7 +13,9 @@ Invitation.fields = {
   id: attr(),
   email: attr(),
   createdAt: attr(),
+  creator: fk('Person', 'createdInvites'),
+  group: fk('Group', 'pendingInvitations'),
   lastSentAt: attr(),
   resent: attr(),
-  community: fk('Community', 'pendingInvitations')
+  token: attr()
 }

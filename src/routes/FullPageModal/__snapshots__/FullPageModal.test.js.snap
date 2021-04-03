@@ -110,11 +110,11 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
         <NavLink
           data-stylename="nav-link"
           exact={true}
-          key="/settings/communities"
+          key="/settings/groups"
           replace={true}
-          to="/settings/communities"
+          to="/settings/groups"
         >
-          Communities
+          Groups
         </NavLink>
         <Icon
           data-stylename="arrowDown"
@@ -133,8 +133,8 @@ exports[`FullPageModal renders correctly with multiple tabs 1`] = `
       />
       <Route
         exact={true}
-        key="/settings/communities"
-        path="/settings/communities"
+        key="/settings/groups"
+        path="/settings/groups"
         render={[Function]}
       />
     </div>

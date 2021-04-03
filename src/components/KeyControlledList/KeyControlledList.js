@@ -125,7 +125,7 @@ export default class KeyControlledList extends React.Component {
       })
 
     return <div styleName='keyListContainer'>
-      {tagType && tagType === 'communities' && <div styleName='keyListLabel'>Communities</div>}
+      {tagType && tagType === 'groups' && <div styleName='keyListLabel'>Groups</div>}
       <ul {...omit(propsToOmit, props)} className={theme.items} styleName='keyList'>
         {this.childrenWithRefs}
       </ul>
@@ -178,7 +178,7 @@ export class KeyControlledItemList extends React.Component {
       : item => <li className={theme.item} key={item.id || 'blank'}>
         <a onClick={event => this.change(item, event)}>
           <div>{item.name}</div>
-          {tagType && tagType === 'communities' && <div styleName='keyListMemberCount'><Icon name='Members' styleName='keyListMemberIcon' /> {item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
+          {tagType && tagType === 'groups' && <div styleName='keyListMemberCount'><Icon name='Members' styleName='keyListMemberIcon' /> {item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
         </a>
       </li>
 

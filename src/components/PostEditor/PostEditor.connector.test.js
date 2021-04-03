@@ -5,8 +5,8 @@ import { CREATE_POST } from 'store/constants'
 let state, requiredProps
 beforeAll(() => {
   const session = orm.session(orm.getEmptyState())
-  const community = session.Community.create({ id: '99', slug: 'foo' })
-  const community2 = session.Community.create({ id: '100', slug: 'bar' })
+  const group = session.Group.create({ id: '99', slug: 'foo', name: 'foo' })
+  const group2 = session.Group.create({ id: '100', slug: 'bar', name: 'bar' })
 
   session.LinkPreview.create({
     id: 1
@@ -17,12 +17,12 @@ beforeAll(() => {
     memberships: [
       session.Membership.create({
         id: '345',
-        community: community.id,
+        group: group.id,
         hasModeratorRole: true
       }),
       session.Membership.create({
         id: '678',
-        community: community2.id,
+        group: group2.id,
         hasModeratorRole: false
       })
     ]
@@ -58,8 +58,8 @@ describe('mapStateToProps', () => {
     expect(mapStateToProps(state, props)).toMatchSnapshot()
   })
 
-  it('sets myModeratedCommunities appropriately', () => {
-    expect(mapStateToProps(state, requiredProps).myModeratedCommunities.length).toEqual(1)
+  it('sets myModeratedGroups appropriately', () => {
+    expect(mapStateToProps(state, requiredProps).myModeratedGroups.length).toEqual(1)
   })
 
   it('returns the right keys for a new post while pending', () => {
@@ -93,7 +93,7 @@ describe('mergeProps', () => {
   it('goToPost redirects to topic with topicName', () => {
     const stateProps = {
       topicName: 'thetopicname',
-      communitySlug: 'theslug'
+      groupSlug: 'theslug'
     }
     const dispatchProps = {
       goToUrl: jest.fn()
@@ -113,9 +113,9 @@ describe('mergeProps', () => {
     expect(dispatchProps.goToUrl.mock.calls).toMatchSnapshot()
   })
 
-  it('goToPost redirects to community feed with no topicName', () => {
+  it('goToPost redirects to group feed with no topicName', () => {
     const stateProps = {
-      communitySlug: 'theslug'
+      groupSlug: 'theslug'
     }
     const dispatchProps = {
       goToUrl: jest.fn()

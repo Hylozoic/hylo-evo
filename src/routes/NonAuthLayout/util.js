@@ -23,17 +23,41 @@ export function formatError (error, action) {
     </div>
   }
 
-  var text
-  switch (error) {
-    case 'no user':
-      text = `${action} was canceled or no user data was found.`
-      break
-    case 'no email':
-      text = 'The user data did not include an email address.'
-      break
-    default:
-      text = error
+  function testJSON (text) {
+    if (typeof text !== 'string') {
+      return false
+    } try {
+      JSON.parse(text)
+      return true
+    } catch (e) {
+      return false
+    }
   }
 
-  return <div styleName='error'>{text}</div>
+  function errorMessages (type) {
+    var err
+
+    if (testJSON(type)) {
+      err = JSON.parse(type)
+      err = err.error
+    } else {
+      err = type
+    }
+
+    const errors = {
+      'no user': `${action} was canceled or no user data was found.`,
+      'no email': 'Please enter a valid email address',
+      'no email provided': 'Please enter a valid email address',
+      'invalid-email': 'Please enter a valid email address',
+      'duplicate-email': 'Account already exists!',
+      'no password provided': 'Please enter your password',
+      'email not found': 'Email address not found',
+      'data and salt arguments required': 'Please enter a password',
+      default: type
+    }
+
+    return errors[err] || errors.default
+  }
+
+  return <div styleName='error'>{errorMessages(error)}</div>
 }

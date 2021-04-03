@@ -13,8 +13,8 @@ export default class TopicNavigation extends Component {
   static propTypes = {
     topics: array,
     routeParams: object,
-    communitySlug: string,
-    communityId: string,
+    groupSlug: string,
+    groupId: string,
     seeAllUrl: string,
     backUrl: string,
     clearBadge: func,
@@ -23,13 +23,13 @@ export default class TopicNavigation extends Component {
     expand: func
   }
 
-  onClickTopic = communityTopic => {
+  onClickTopic = groupTopic => {
     const { clearBadge, clearFeedList } = this.props
-    const { id, topic } = communityTopic
+    const { id, topic } = groupTopic
 
     if (id) {
       this.currentTopic(topic.name) && clearFeedList()
-      communityTopic.newPostCount > 0 && clearBadge(id)
+      groupTopic.newPostCount > 0 && clearBadge(id)
     }
   }
 
@@ -40,14 +40,14 @@ export default class TopicNavigation extends Component {
 
     return <div styleName={cx('s.topicNavigation', { 's.collapsed': collapsed })}>
       <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
-        <Icon name='Topics' styleName='s.icon' />
         <Link to={seeAllUrl}>
+          <Icon name='Topics' styleName='s.icon' />
           <span styleName='s.title'>Topics</span>
         </Link>
         {/* TODO: remove for now, probably for good?
-          {communityId && <CreateTopic
-          communityId={communityId}
-          communitySlug={slug}
+          {groupId && <CreateTopic
+          groupId={groupId}
+          groupSlug={slug}
           topics={topics}
         />} */}
       </div>
@@ -57,7 +57,7 @@ export default class TopicNavigation extends Component {
         topics={topics}
       />
       <div styleName='s.addTopic'>
-        <Link to={seeAllUrl}>see all</Link>
+        <Link to={seeAllUrl} styleName='s.allTopics'>All topics</Link>
       </div>
     </div>
   }

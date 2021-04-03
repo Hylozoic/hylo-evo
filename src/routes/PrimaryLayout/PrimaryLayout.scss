@@ -1,7 +1,12 @@
+body {
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-content: stretch;
+  background-color: rgba(255,255,255, 1);
   align-items: stretch;
   height: 100vh;
   overflow: hidden;
@@ -34,6 +39,7 @@
 }
 
 .main {
+  padding-top: 56px;
   position: relative;
   flex-grow: 1;
   display: flex;
@@ -56,7 +62,7 @@ $drawer-z-index: 51;
   height: $drawer-height;
   position: fixed;
   left: 0px;
-  z-index: 600;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   transition-delay: 0s;
@@ -68,6 +74,261 @@ $drawer-z-index: 51;
     box-shadow: 0px 4px 56px 0px rgba(35, 64, 91, 0);
   }
 }
+
+/* tooltip stuff */
+
+.tooltipWrapper {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  border-radius: 3px;
+  width: 100%;
+  max-width: 300px;
+
+  .tooltipContent {
+    font-size: 12px;
+    color: rgba(130, 142, 158, 1.00);
+    display: flex;
+
+    .stepTitle {
+      font-size: 14px;
+      color: rgba(45, 65, 90, 1.00);
+      font-weight: bold;
+    }
+  }
+
+  .backButton, .nextButton {
+    padding: 5px 8px;
+    margin: 0 5px;
+    border-radius: 5px;
+    color: rgba(0, 196, 159, 1.00);
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Circular Book';
+  }
+
+  .nextButton {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(0, 196, 159, 1.00);
+  }
+
+  .tooltipControls {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  .tourGuide {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    background-color: rgba(255, 255, 255, 1);
+    border: 5px solid rgba(58, 160, 223, 1.00);
+    position: relative;
+    margin-right: 10px;
+
+
+    img {
+      width: 40px;
+      height: 31px;
+    }
+  }
+}
+
+@keyframes joyride-beacon-inner {
+  20% {
+    opacity: 0.9;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes joyride-beacon-outer {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    opacity: 0.7;
+    transform: scale(0.75);
+  }
+
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+.tourWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  transition: all .35s ease;
+  align-items: center;
+  justify-content: center;
+
+  .beaconExample {
+    background-color: transparent;
+    border: 0px;
+    border-radius: 0px;
+    color: rgb(85, 85, 85);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 8px;
+    appearance: none;
+    display: inline-block;
+    height: 20px;
+    position: relative;
+    width: 20px;
+    z-index: 100;
+    top: 4px;
+    margin-top: -10px;
+
+    .beaconA {
+      animation: joyride-beacon-inner 1.2s ease-in-out 0s infinite;
+      background-color: rgb(255, 0, 68);
+      border-radius: 50%;
+      display: block;
+      height: 50%;
+      left: 50%;
+      opacity: 0.7;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+    }
+
+    .beaconB {
+      animation: joyride-beacon-outer 1.2s ease-in-out 0s infinite;
+      background-color: rgba(255, 0, 68, 0.2);
+      border: 2px solid rgb(255, 0, 68);
+      border-radius: 50%;
+      box-sizing: border-box;
+      display: block;
+      height: 100%;
+      left: 0px;
+      opacity: 0.9;
+      position: absolute;
+      top: 0px;
+      transform-origin: center center;
+      width: 100%;
+    }
+  }
+
+  .tourPrompt {
+    margin: auto;
+    display: flex;
+    max-width: 400px;
+    width: 100%;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+
+    .tourGuide {
+      min-width: 80px;
+      height: 80px;
+      border-radius: 100px;
+      background-color: rgba(255, 255, 255, 1);
+      border: 5px solid rgba(58, 160, 223, 1.00);
+      position: relative;
+      margin-right: 10px;
+      box-shadow: 0px 4px 25px rgba(41, 64, 90, .25);
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 50px;
+        width: 64px;
+      }
+    }
+
+    .tourExplanation {
+      background-color: rgba(255, 255, 255, 1);
+      font-size: 14px;
+      border-radius: 5px;
+      padding: 10px;
+      position: relative;
+      box-shadow: 0px 4px 25px rgba(41, 64, 90, .25);
+
+      .speechIndicator {
+        width: 10px;
+        height: 10px;
+        background-color: rgba(255, 255, 255, 1);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        left: -5px;
+      }
+
+      div {
+        display: flex;
+        justify-content: center;
+      }
+
+      p {
+        color: rgba(128, 140, 156, 1.00);
+
+        strong {
+          color: rgba(41, 64, 90, 1.00);
+        }
+      }
+
+      .startTour, .skipTour {
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-family: 'Circular Book';
+        margin: 0 5px;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .startTour {
+        background-color: rgba(0, 196, 159, 1.00);
+        color: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(0, 196, 159, 1.00);
+      }
+
+      .skipTour {
+        color: rgba(128, 140, 156, 1.00);
+        border: 1px solid rgba(128, 140, 156, .5);
+        background-color: transparent;
+      }
+    }
+  }
+
+  .tourBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(41, 64, 90, .5);
+    opacity: 1;
+    transition: all .25s ease;
+  }
+}
+
+.tourWrapper.tourClosed {
+  top: -100%;
+
+  .tourBg {
+    opacity: 0;
+  }
+}
+
+
+/* end tooltip stuff */
 
 .left {
   transition: all .45s ease;
@@ -97,6 +358,18 @@ $drawer-z-index: 51;
     height: calc(100vh - 40px);
     padding-bottom: 0px;
   }
+}
+
+.singleColumn .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-right: 0;
+  height: calc(100vh - 58px);
+  padding-left: 0;
 }
 
 .center.collapsedState {
@@ -148,14 +421,14 @@ $drawer-z-index: 51;
   background-color: white;
   position: absolute;
   z-index: 30;
-  top: 0;
+  top: 57px;
   right: 0px;
-  height: 100%;
+  height: calc(100vh - 58px);
   width: $detail-column-width;
   box-shadow: 0px 4px 56px 0px $shadow-color;
   transition-delay: 0.1s;
   transition-duration: 0.2s;
-  padding-bottom: 150px;
+  padding-bottom: 50px;
   overflow-y: auto;
   margin-top: -8px;
 
@@ -182,10 +455,12 @@ $drawer-z-index: 51;
 }
 
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1050px) {
   .sidebar {
     top: -100vh;
     opacity: 0;
+    transform: scale(0);
+    height: 0;
   }
 
   .center {
@@ -232,6 +507,7 @@ $drawer-z-index: 51;
   .detail {
     width: calc(100% - 80px);
     margin-top: 0;
+    top: 56px;
   }
 
 }
@@ -241,7 +517,6 @@ $drawer-z-index: 51;
     max-width: 100%;
     flex: 0 0 100%;
     left: 0%;
-    height: calc(100vh - 104px);
     padding: 0 0 150px 0;
   }
 
@@ -273,6 +548,13 @@ $drawer-z-index: 51;
   .detail {
     width: 100%;
     margin-top: 0;
+    top: 0;
+    height: 100%;
+    position: absolute;
+  }
+
+  .detailOpen, .detailOpen .center, .detailOpen .main {
+    overflow: hidden;
   }
 
   .center {
@@ -280,6 +562,17 @@ $drawer-z-index: 51;
   }
   .center.map-view {
     overflow-y: auto;
+  }
+
+
+  .tourWrapper .tourPrompt .tourGuide {
+    min-width: 40px;
+    height: 40px;
+
+    img {
+      width: 24px;
+      height: 18px;
+    }
   }
 }
 

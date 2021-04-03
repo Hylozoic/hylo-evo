@@ -80,3 +80,14 @@ $search-width: 460px;
     padding: 0 10px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .member-row {
+    display: block;
+    margin-bottom: 0;
+
+    > *:first-child {
+      margin-right: 0;
+    }
+  }
+}

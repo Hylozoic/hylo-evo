@@ -3,7 +3,7 @@
 exports[`AllTopics matches the latest snapshot 1`] = `
 <withRouter(Connect(FullPageModal))
   fullWidth={true}
-  goToOnClose="/c/goteam"
+  goToOnClose="/groups/goteam"
 >
   <div
     data-stylename="all-topics"
@@ -32,10 +32,10 @@ exports[`AllTopics matches the latest snapshot 1`] = `
         key="1"
         routeParams={
           Object {
-            "slug": "goteam",
+            "groupSlug": "goteam",
           }
         }
-        singleCommunity={
+        singleGroup={
           Object {
             "id": "1",
             "slug": "goteam",
@@ -105,16 +105,16 @@ exports[`SearchBar matches the latest snapshot 1`] = `
 </div>
 `;
 
-exports[`TopicListItem when multiple communities matches the latest snapshot 1`] = `
+exports[`TopicListItem when multiple groups matches the latest snapshot 1`] = `
 <div
   data-stylename="topic"
 >
   <div
-    data-stylename="communitiesList"
+    data-stylename="groupsList"
   >
     <Link
       data-stylename="topic-details"
-      to="/c/goteam/petitions"
+      to="/groups/goteam/topics/petitions"
     >
       <div
         data-stylename="topic-name"
@@ -123,7 +123,7 @@ exports[`TopicListItem when multiple communities matches the latest snapshot 1`]
         petitions
       </div>
     </Link>
-    <CommunityCell
+    <GroupCell
       key="0"
     >
       <div
@@ -135,8 +135,8 @@ exports[`TopicListItem when multiple communities matches the latest snapshot 1`]
          •
       </div>
       <br />
-    </CommunityCell>
-    <CommunityCell
+    </GroupCell>
+    <GroupCell
       key="1"
     >
       <div
@@ -148,7 +148,7 @@ exports[`TopicListItem when multiple communities matches the latest snapshot 1`]
          •
       </div>
       <br />
-    </CommunityCell>
+    </GroupCell>
   </div>
 </div>
 `;

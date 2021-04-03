@@ -4,7 +4,6 @@ exports[`presentPost matches the snapshot 1`] = `
 Object {
   "attachments": Array [],
   "commenters": Array [],
-  "communities": Array [],
   "creator": null,
   "eventInvitations": Array [
     Object {
@@ -14,6 +13,7 @@ Object {
     },
   ],
   "fileAttachments": Array [],
+  "groups": Array [],
   "id": 324,
   "isPublic": undefined,
   "linkPreview": null,

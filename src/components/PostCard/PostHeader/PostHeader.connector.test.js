@@ -4,11 +4,11 @@ import orm from 'store/models'
 describe('mapStateToProps', () => {
   it('maps', () => {
     const session = orm.session(orm.getEmptyState())
-    session.Community.create({ id: 33, slug: 'mycommunity' })
+    session.Group.create({ id: 33, slug: 'mygroup' })
     session.Me.create({ id: 20,
       memberships: [session.Membership.create({
         id: '345',
-        community: 33,
+        group: 33,
         hasModeratorRole: true
       })] })
 
@@ -16,10 +16,10 @@ describe('mapStateToProps', () => {
       orm: session.state
     }
 
-    const ownProps = { creator: { id: 20 }, routeParams: { slug: 'mycommunity' } }
-    const { community, currentUser } = mapStateToProps(state, ownProps)
+    const ownProps = { creator: { id: 20 }, routeParams: { groupSlug: 'mygroup' } }
+    const { group, currentUser } = mapStateToProps(state, ownProps)
 
-    expect(community.id).toBe(33)
+    expect(group.id).toBe(33)
     expect(currentUser.id).toBe(20)
   })
 })
@@ -30,7 +30,7 @@ describe('mapDispatchToProps', () => {
     const dispatch = jest.fn(val => val)
     const props = {
       routeParams: {
-        slug: 'mycommunity'
+        groupSlug: 'mygroup'
       }
     }
     const dispatchProps = mapDispatchToProps(dispatch, props)
@@ -94,17 +94,17 @@ describe('mergeProps', () => {
   describe('as moderator', () => {
     it('can delete and edit own posts, and pin a post', () => {
       const session = orm.session(orm.getEmptyState())
-      const community = session.Community.create({ id: 33, slug: 'mycommunity' })
+      const group = session.Group.create({ id: 33, slug: 'mygroup' })
       session.Me.create({ id: 20,
         memberships: [session.Membership.create({
           id: '345',
-          community: community.id,
+          group: group.id,
           hasModeratorRole: true
         })] })
       const state = {
         orm: session.state
       }
-      const ownProps = { id: 20, routeParams: { slug: 'mycommunity' }, creator: { id: 20 } }
+      const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 20 } }
       const stateProps = mapStateToProps(state, ownProps)
       const { deletePost, removePost, editPost, canEdit, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
 
@@ -125,11 +125,11 @@ describe('mergeProps', () => {
 
     it('cannot delete posts but can moderate', () => {
       const session = orm.session(orm.getEmptyState())
-      const community = session.Community.create({ id: 33, slug: 'mycommunity' })
+      const group = session.Group.create({ id: 33, slug: 'mygroup' })
       session.Me.create({ id: 20,
         memberships: [session.Membership.create({
           id: '345',
-          community: community.id,
+          group: group.id,
           hasModeratorRole: true
         })] })
 
@@ -137,7 +137,7 @@ describe('mergeProps', () => {
         orm: session.state
       }
 
-      const ownProps = { id: 20, routeParams: { slug: 'mycommunity' }, creator: { id: 33 } }
+      const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 33 } }
       const stateProps = mapStateToProps(state, ownProps)
 
       const { deletePost, removePost, editPost } = mergeProps(stateProps, dispatchProps, ownProps)
@@ -154,11 +154,11 @@ describe('mergeProps', () => {
   describe('as non-moderator', () => {
     it("can delete own posts, can't pin posts", () => {
       const session = orm.session(orm.getEmptyState())
-      const community = session.Community.create({ id: 33, slug: 'mycommunity' })
+      const group = session.Group.create({ id: 33, slug: 'mygroup' })
       session.Me.create({ id: 20,
         memberships: [session.Membership.create({
           id: '345',
-          community: community.id,
+          group: group.id,
           hasModeratorRole: false
         })] })
 
@@ -166,7 +166,7 @@ describe('mergeProps', () => {
         orm: session.state
       }
 
-      const ownProps = { id: 20, routeParams: { slug: 'mycommunity' }, creator: { id: 20 } }
+      const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 20 } }
       const stateProps = mapStateToProps(state, ownProps)
 
       const { deletePost, removePost, editPost, pinPost } = mergeProps(stateProps, dispatchProps, ownProps)
@@ -183,11 +183,11 @@ describe('mergeProps', () => {
 
   it('cannot delete or remove posts if not creator or moderator', () => {
     const session = orm.session(orm.getEmptyState())
-    const community = session.Community.create({ id: 33, slug: 'mycommunity' })
+    const group = session.Group.create({ id: 33, slug: 'mygroup' })
     session.Me.create({ id: 20,
       memberships: [session.Membership.create({
         id: '345',
-        community: community.id,
+        group: group.id,
         hasModeratorRole: false
       })] })
 
@@ -195,7 +195,7 @@ describe('mergeProps', () => {
       orm: session.state
     }
 
-    const ownProps = { id: 20, routeParams: { slug: 'mycommunity' }, creator: { id: 33 } }
+    const ownProps = { id: 20, routeParams: { groupSlug: 'mygroup' }, creator: { id: 33 } }
     const stateProps = mapStateToProps(state, ownProps)
 
     const { deletePost, removePost, editPost } = mergeProps(stateProps, dispatchProps, ownProps)

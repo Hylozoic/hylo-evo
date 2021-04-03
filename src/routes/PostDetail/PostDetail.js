@@ -12,7 +12,7 @@ import {
   PostBody,
   PostFooter,
   PostHeader,
-  PostCommunities,
+  PostGroups,
   EventBody
 } from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
@@ -167,14 +167,14 @@ export default class PostDetail extends Component {
         {isEvent && <EventBody
           styleName='body'
           expanded
-          slug={routeParams.slug}
+          slug={routeParams.groupSlug}
           event={post}
           respondToEvent={respondToEvent} />}
         {!isEvent && <PostBody
           styleName='body'
           expanded
           routeParams={routeParams}
-          slug={routeParams.slug}
+          slug={routeParams.groupSlug}
           {...post} />}
         {isProject && <div styleName='join-project-button-container'>
           <JoinProjectButton
@@ -187,22 +187,23 @@ export default class PostDetail extends Component {
             postId={post.id}
             totalContributions={totalContributions}
             processStripeToken={processStripeToken} />}
-        <PostCommunities
+        <PostGroups
           isPublic={post.isPublic}
-          communities={post.communities}
-          slug={routeParams.slug}
+          groups={post.groups}
+          slug={routeParams.groupSlug}
           showBottomBorder />
         <div styleName='activity-header' ref={this.activityHeader}>ACTIVITY</div>
         {postFooter}
         {showPeopleDialog && <PostPeopleDialog
           title={postPeopleDialogTitle}
           members={people}
-          onClose={togglePeopleDialog} />}
+          onClose={togglePeopleDialog}
+          slug={routeParams.groupSlug} />}
         {atActivity && <div styleName='activity-sticky' style={activityStyle}>
           <div styleName='activity-header'>ACTIVITY</div>
           {postFooter}
         </div>}
-        <Comments postId={post.id} slug={routeParams.slug} scrollToBottom={scrollToBottom} />
+        <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />
         <SocketSubscriber type='post' id={post.id} />
       </div>
     }</ReactResizeDetector>
@@ -213,7 +214,7 @@ export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
 
   return <div styleName='tags'>
-    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, { communitySlug: slug })} key={tag}>
+    {tags.map(tag => <Link styleName='tag' to={topicUrl(tag, { groupSlug: slug })} key={tag}>
       #{tag}
     </Link>)}
   </div>

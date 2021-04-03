@@ -122,12 +122,12 @@
   padding-left: 36px;
 }
 
-.communityAvatar {
-  @include image(24px);  
+.groupAvatar {
+  @include image(24px);
   margin-right: 13px;
 }
 
-// SettingsIcon 
+// SettingsIcon
 .icon {
   font-size: 44px;
   margin-right: 21px;

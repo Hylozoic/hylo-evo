@@ -10,7 +10,7 @@ export default function updatePost (post, query = updatePostMutation) {
     type,
     title,
     details,
-    communities,
+    groups,
     linkPreview,
     imageUrls,
     fileUrls,
@@ -25,7 +25,7 @@ export default function updatePost (post, query = updatePostMutation) {
     isPublic
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
-  const communityIds = communities.map(c => c.id)
+  const groupIds = groups.map(c => c.id)
 
   return {
     type: UPDATE_POST,
@@ -37,7 +37,7 @@ export default function updatePost (post, query = updatePostMutation) {
         title,
         details,
         linkPreviewId,
-        communityIds,
+        groupIds,
         imageUrls,
         fileUrls,
         topicNames,

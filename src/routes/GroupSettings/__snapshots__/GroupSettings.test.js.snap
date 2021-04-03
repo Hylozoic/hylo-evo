@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a redirect if you can not moderate 1`] = `
+<Redirect
+  to="/groups/foo"
+/>
+`;
+
+exports[`renders correctly with a group 1`] = `
+<withRouter(Connect(FullPageModal))
+  content={
+    Array [
+      Object {
+        "component": <GroupSettingsTab
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Settings",
+        "path": "/groups/foo/settings",
+      },
+      Object {
+        "component": <Memo(Connect(ModeratorsSettingsTab))
+          groupId={1}
+          slug="foo"
+        />,
+        "name": "Moderators",
+        "path": "/groups/foo/settings/moderators",
+      },
+      Object {
+        "component": <Memo(Connect(TopicsSettingsTab))
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Topics",
+        "path": "/groups/foo/settings/topics",
+      },
+      Object {
+        "component": <Memo(Connect(InviteSettingsTab))
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Invite",
+        "path": "/groups/foo/settings/invite",
+      },
+      Object {
+        "component": <Memo(Connect(MembershipRequestsTab))
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Join Requests",
+        "path": "/groups/foo/settings/requests",
+      },
+      Object {
+        "component": <Memo(Connect(RelatedGroupsTab))
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Related Groups",
+        "path": "/groups/foo/settings/relationships",
+      },
+      Object {
+        "component": <ImportExportSettingsTab
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "",
+        "path": "/groups/foo/settings/import",
+      },
+      Object {
+        "component": <DeleteSettingsTab
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Delete",
+        "path": "/groups/foo/settings/delete",
+      },
+    ]
+  }
+  goToOnClose="/groups/foo"
+/>
+`;
+
+exports[`renders correctly with no group 1`] = `<Loading />`;

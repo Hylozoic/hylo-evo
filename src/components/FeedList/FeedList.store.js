@@ -1,34 +1,26 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
+import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
-import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ context, slug, sortBy, offset, search, filter, topic }) {
   var query, extractModel, getItems
 
-  if (subject === 'community') {
-    query = communityQuery
-    extractModel = 'Community'
-    getItems = get('payload.data.community.posts')
-  } else if (subject === 'network') {
-    query = networkQuery
-    extractModel = 'Network'
-    getItems = get('payload.data.network.posts')
-  } else if (subject === 'all-communities') {
-    query = allCommunitiesQuery
-    extractModel = 'Post'
-    getItems = get('payload.data.posts')
-  } else if (subject === 'public-communities') {
-    query = publicPostsQuery
+  if (context === 'groups') {
+    query = groupQuery
+    extractModel = 'Group'
+    getItems = get('payload.data.group.posts')
+  } else if (context === 'all' || context === 'public') {
+    query = postsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
-    throw new Error(`FETCH_POSTS with subject=${subject} is not implemented`)
+    throw new Error(`FETCH_POSTS with context=${context} is not implemented`)
   }
 
   return {
@@ -36,13 +28,13 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
     graphql: {
       query,
       variables: {
-        slug,
-        networkSlug,
-        sortBy,
-        offset,
-        search,
         filter,
         first: 20,
+        offset,
+        context,
+        search,
+        slug,
+        sortBy,
         topic
       }
     },
@@ -55,17 +47,17 @@ export function fetchPosts ({ subject, slug, networkSlug, sortBy, offset, search
   }
 }
 
-const communityQuery = `query (
-  $slug: String,
-  $sortBy: String,
+const groupQuery = `query (
+  $boundingBox: [PointInput],
+  $filter: String,
+  $first: Int,
   $offset: Int,
   $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
+  $slug: String,
+  $sortBy: String,
+  $topic: ID
 ) {
-  community(slug: $slug, updateLastViewed: true) {
+  group(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
@@ -78,49 +70,22 @@ const communityQuery = `query (
     avatarUrl
     bannerUrl
     postCount
-    ${postsQueryFragment}
+    ${groupViewPostsQueryFragment}
   }
 }`
 
-const networkQuery = `query (
-  $networkSlug: String,
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
+const postsQuery = `query (
+  $boundingBox: [PointInput],
   $filter: String,
-  $topic: ID,
   $first: Int,
-  $boundingBox: [PointInput]
-) {
-  network(slug: $networkSlug) {
-    id
-    ${postsQueryFragment}
-  }
-}`
-
-const allCommunitiesQuery = `query (
-  $sortBy: String,
+  $groupSlugs: [String],
   $offset: Int,
+  $context: String,
   $search: String,
-  $filter: String,
+  $sortBy: String,
   $topic: ID,
-  $first: Int
-  $boundingBox: [PointInput]
 ) {
   ${postsQueryFragment}
-}`
-
-const publicPostsQuery = `query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput],
-  $networkSlugs: [String]
-) {
-  ${publicPostsQueryFragment}
 }`
 
 export function storeFetchPostsParam (props) {

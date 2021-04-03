@@ -1,10 +1,10 @@
 #import "../fragments/MeCompleteFragment.graphql"
-#import "../fragments/CommunityFragment.graphql"
+#import "../fragments/GroupFragment.graphql"
 
 query MeQuery (
   $slug: String,
   $updateLastViewed: Boolean,
-  $includeCommunity: Boolean = false
+  $includeGroup: Boolean = false
   $skipTopics: Boolean = false,
   $first: Int,
   $offset: Int,
@@ -16,7 +16,7 @@ query MeQuery (
   me {
     ...MeCompleteFragment
   }
-  community(slug: $slug, updateLastViewed: $updateLastViewed) @include(if: $includeCommunity) {
-    ...CommunityFragment
+  group(slug: $slug, updateLastViewed: $updateLastViewed) @include(if: $includeGroup) {
+    ...GroupFragment
   }
 }

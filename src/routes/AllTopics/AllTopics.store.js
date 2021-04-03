@@ -9,8 +9,8 @@ import { FETCH_TOPICS } from 'store/constants'
 export const MODULE_NAME = 'AllTopics'
 export const SET_SORT = `${MODULE_NAME}/SET_SORT`
 export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
-export const DELETE_COMMUNITY_TOPIC = `${MODULE_NAME}/DELETE_COMMUNITY_TOPIC`
-export const DELETE_COMMUNITY_TOPIC_PENDING = `${DELETE_COMMUNITY_TOPIC}_PENDING`
+export const DELETE_GROUP_TOPIC = `${MODULE_NAME}/DELETE_GROUP_TOPIC`
+export const DELETE_GROUP_TOPIC_PENDING = `${DELETE_GROUP_TOPIC}_PENDING`
 
 // Actions
 
@@ -28,21 +28,21 @@ export function setSearch (search) {
   }
 }
 
-export function deleteCommunityTopic (communityTopicId) {
+export function deleteGroupTopic (groupTopicId) {
   return {
-    type: DELETE_COMMUNITY_TOPIC,
+    type: DELETE_GROUP_TOPIC,
     graphql: {
       query: `mutation ($id: ID) {
-        deleteCommunityTopic(id: $id) {
+        deleteGroupTopic(id: $id) {
           success
         }
       }`,
       variables: {
-        id: communityTopicId
+        id: groupTopicId
       }
     },
     meta: {
-      id: communityTopicId,
+      id: groupTopicId,
       optimistic: true
     }
   }

@@ -26,7 +26,7 @@ describe('using extractQueryResults', () => {
       type: FETCH_MEMBERS,
       payload: {
         data: {
-          community: {
+          group: {
             members: {
               total: 22,
               items: [{ id: 7 }, { id: 8 }, { id: 9 }],
@@ -38,7 +38,7 @@ describe('using extractQueryResults', () => {
       meta: {
         graphql: { variables },
         extractQueryResults: {
-          getItems: get('payload.data.community.members')
+          getItems: get('payload.data.group.members')
         }
       }
     }
@@ -65,7 +65,7 @@ describe('using extractQueryResults', () => {
       type: FETCH_MEMBERS,
       payload: {
         data: {
-          community: {
+          group: {
             members: {
               total: 22,
               items: [{ id: 7 }, { id: 8 }, { id: 9 }],
@@ -79,7 +79,7 @@ describe('using extractQueryResults', () => {
           variables: { slug: 'foo', sortBy: 'name' }
         },
         extractQueryResults: {
-          getItems: get('payload.data.community.members')
+          getItems: get('payload.data.group.members')
         }
       }
     }
@@ -101,7 +101,7 @@ describe('using extractQueryResults', () => {
       type: FETCH_MEMBERS,
       payload: {
         data: {
-          community: {
+          group: {
             members: {
               total: 22,
               items: [{ id: 7 }, { id: 8 }, { id: 9 }],
@@ -234,8 +234,8 @@ describe('matchNewPostIntoQueryResults', () => {
         ids: ['18', '11']
       }
     }
-    const communities = [{ slug: 'foo' }, { slug: 'bar' }]
-    const post = { id: '17', type: 'request', communities }
+    const groups = [{ slug: 'foo' }, { slug: 'bar' }]
+    const post = { id: '17', type: 'request', groups }
 
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
       '{"type":"FETCH_POSTS","params":{"slug":"bar"}}': {
@@ -256,8 +256,8 @@ describe('matchNewPostIntoQueryResults', () => {
         ids: ['18', '11']
       }
     }
-    const communities = [{ slug: 'foo' }, { slug: 'bar' }]
-    const post = { id: '17', type: 'request', communities, topics: [{ name: 'a', id: '123' }] }
+    const groups = [{ slug: 'foo' }, { slug: 'bar' }]
+    const post = { id: '17', type: 'request', groups, topics: [{ name: 'a', id: '123' }] }
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
       '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
         hasMore: true,

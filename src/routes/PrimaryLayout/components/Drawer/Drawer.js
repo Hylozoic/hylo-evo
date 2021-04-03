@@ -2,89 +2,60 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
-import { contextSwitchingUrl } from 'util/navigation'
+import { contextSwitchingUrl, groupUrl } from 'util/navigation'
 import Badge from 'components/Badge'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
-import badgeHoverStyles from 'components/Badge/component.scss'
-import { DEFAULT_AVATAR } from 'store/models/Community'
+import { DEFAULT_AVATAR } from 'store/models/Group'
 import cx from 'classnames'
-import { isEmpty, sum } from 'lodash/fp'
 
 const { string, number, arrayOf, shape } = PropTypes
 
 export default class Drawer extends React.PureComponent {
   static propTypes = {
-    community: shape({
-      id: string,
-      name: string,
-      location: string,
-      slug: string,
-      avatarUrl: string
-    }),
-    memberships: arrayOf(shape({
+    groups: arrayOf(shape({
       id: string,
       newPostCount: number,
-      community: shape({
-        name: string,
-        slug: string,
-        avatarUrl: string
-      })
-    })),
-    networks: arrayOf(shape({
-      id: string,
       name: string,
-      avatarUrl: string,
-      memberships: arrayOf(shape({
-        id: string,
-        newPostCount: number,
-        community: shape({
-          name: string,
-          slug: string,
-          avatarUrl: string
-        })
-      }))
+      slug: string,
+      avatarUrl: string
     }))
   }
 
   render () {
-    const { currentLocation, community, network, communities, networks, defaultNetworks, className, toggleDrawer, canModerate } = this.props
+    const { currentLocation, group, groups, defaultContexts, className, toggleDrawer, canModerate } = this.props
     const routeParams = this.props.match.params
 
-    return <div className={className} styleName='s.communityDrawer'>
-      <div styleName={cx({ 's.currentCommunity': community !== null || network !== null })}>
+    return <div className={className} styleName='s.groupDrawer'>
+      <div styleName={cx({ 's.currentGroup': group !== null })}>
         <div styleName='s.hyloLogoBar'>
           <img src='/hylo.svg' width='50px' />
           <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
         </div>
-        <Logo community={community} network={network} />
-        {canModerate && <Link styleName='s.settingsLink' to={`/c/${community.slug}/settings`}>
+        <Logo group={group} />
+        {canModerate && <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
           <Icon name='Settings' styleName='s.settingsIcon' /> Settings
         </Link>}
       </div>
       <div>
-        <ul styleName='s.communitiesList'>
-          {defaultNetworks && defaultNetworks.map(network =>
-            <NetworkRow network={network} routeParams={routeParams} currentLocation={currentLocation} key={network.id} />
+        <ul styleName='s.groupsList'>
+          {defaultContexts && defaultContexts.map(context =>
+            <ContextRow currentLocation={currentLocation} group={context} routeParams={routeParams} key={context.id} />
           )}
         </ul>
-        <ul styleName='s.communitiesList'>
-          {networks.length ? <div><li styleName='s.sectionTitle'>My Networks</li>
-            {networks.map(network =>
-              <NetworkRow network={network} routeParams={routeParams} currentLocation={currentLocation} key={network.id} />
-            )}</div> : ''}
-          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Communities</li>
-          {communities.map(community =>
-            <CommunityRow community={community} routeParams={routeParams} key={community.id} />
+        <ul styleName='s.groupsList'>
+          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Groups</li>
+          {groups.map(group =>
+            <ContextRow currentLocation={currentLocation} group={group} routeParams={routeParams} key={group.id} />
           )}
         </ul>
-        <div styleName='s.newCommunity'>
+        <div styleName='s.newGroup'>
           <Button
             color='white'
-            styleName='s.newCommunityBtn'
-            label='Start a Community'
-            onClick={this.props.goToCreateCommunity}
+            styleName='s.newGroupBtn'
+            label='Start a Group'
+            onClick={this.props.goToCreateGroup}
           />
         </div>
       </div>
@@ -92,85 +63,24 @@ export default class Drawer extends React.PureComponent {
   }
 }
 
-export function CommunityRow ({ community, routeParams, isMember = true }) {
-  const { avatarUrl, name, newPostCount, slug } = community
+export function ContextRow ({ currentLocation, group, routeParams }) {
+  const { avatarUrl, context, name, newPostCount, slug } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
-  return <li styleName='s.communityRow'>
-    <Link to={contextSwitchingUrl({ slug }, routeParams)} styleName='s.communityRowLink' title={name}>
-      <div styleName='s.communityRowAvatar' style={imageStyle} />
-      <span styleName={cx('s.community-name', { 's.is-member': isMember })}>{name}</span>
+  const path = contextSwitchingUrl({ groupSlug: slug, context }, routeParams)
+  return <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation === path })}>
+    <Link to={contextSwitchingUrl({ context: context || 'groups', groupSlug: slug }, routeParams)} styleName='s.contextRowLink' title={name}>
+      <div styleName='s.contextRowAvatar' style={imageStyle} />
+      <span styleName='s.group-name'>{name}</span>
       {showBadge && <Badge expanded number={newPostCount} />}
     </Link>
   </li>
 }
 
-export class NetworkRow extends React.Component {
-  constructor (props) {
-    super(props)
-    const expanded = !!sum(props.network.communities.map(c => c.newPostCount))
-
-    this.state = {
-      expanded,
-      seeAllExpanded: false
-    }
-  }
-
-  toggleExpanded = e => {
-    e.preventDefault()
-    this.setState({
-      expanded: !this.state.expanded
-    })
-  }
-
-  toggleSeeAll = e => {
-    e.preventDefault()
-    this.setState({
-      seeAllExpanded: !this.state.seeAllExpanded
-    })
-  }
-
-  render () {
-    const { network, routeParams, currentLocation } = this.props
-    const { communities, name, slug, context, avatarUrl, nonMemberCommunities } = network
-    const path = contextSwitchingUrl({ networkSlug: slug, context }, routeParams)
-    const { expanded, seeAllExpanded } = this.state
-    const newPostCount = sum(network.communities.map(c => c.newPostCount))
-    const imageStyle = bgImageStyle(avatarUrl)
-    const showCommunities = !isEmpty(communities)
-
-    return <li styleName={cx('s.networkRow', { 's.networkExpanded': expanded }, { 's.currentNetwork': currentLocation === path })}>
-      <Link to={path} styleName='s.networkRowLink' title={name} className={badgeHoverStyles.parent}>
-        <div styleName='s.network-name-wrapper'>
-          <div styleName='s.avatar' style={imageStyle} />
-          <span styleName='s.network-name'>{name}</span>
-          {showCommunities && <span styleName='s.communitiesButton' onClick={this.toggleExpanded}>
-            {expanded
-              ? <Icon name='ArrowDown' styleName='s.arrowDown' />
-              : newPostCount
-                ? <Badge number={newPostCount} expanded />
-                : <Icon name='ArrowForward' styleName='s.arrowForward' />}
-          </span>}
-        </div>
-      </Link>
-      {showCommunities && expanded && <ul styleName='s.networkCommunitiesList'>
-        {communities.map(community =>
-          <CommunityRow community={community} routeParams={routeParams} key={community.id} />)}
-        {(seeAllExpanded && !isEmpty(nonMemberCommunities)) && nonMemberCommunities.map(community =>
-          <CommunityRow community={community} routeParams={routeParams} key={community.id} isMember={false} />)}
-        {!isEmpty(nonMemberCommunities) && <li styleName='s.seeAllBtn' onClick={this.toggleSeeAll}>
-          {seeAllExpanded ? 'See less' : 'See all'}
-        </li>}
-      </ul>}
-    </li>
-  }
-}
-
-function Logo ({ community, network }) {
-  if (!community && !network) return null
-  const { slug, name, location, avatarUrl } = (community || network)
-  const link = `/${community ? 'c' : 'n'}/${slug}`
-  return <Link styleName='s.currentCommunity' to={link}>
+function Logo ({ group }) {
+  if (!group) return null
+  const { slug, name, location, avatarUrl } = group
+  return <Link styleName='s.currentGroup' to={groupUrl(slug)}>
     <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
     <div className='drawer-inv-bd'>{name}</div>
     <div className='drawer-inv-sm'>{location}</div>

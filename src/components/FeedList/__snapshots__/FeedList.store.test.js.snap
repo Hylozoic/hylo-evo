@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`works for a community 1`] = `
+exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $slug: String,
-  $sortBy: String,
+  $boundingBox: [PointInput],
+  $filter: String,
+  $first: Int,
   $offset: Int,
   $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
+  $slug: String,
+  $sortBy: String,
+  $topic: ID
 ) {
-  community(slug: $slug, updateLastViewed: true) {
+  group(slug: $slug, updateLastViewed: true) {
     id
     slug
     name
@@ -27,17 +27,18 @@ Object {
     bannerUrl
     postCount
     
-posts(
+posts: viewPosts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
   offset: $offset,
+  order: \\"desc\\",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: \\"desc\\"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     
   id
@@ -92,12 +93,13 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
-  communities {
+  groups {
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -108,7 +110,7 @@ posts(
   postMemberships {
     id
     pinned
-    community {
+    group {
       id
     }
   }
@@ -128,12 +130,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -149,23 +145,18 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
+
   }
 }
   }
 }",
     "variables": Object {
+      "context": "groups",
       "filter": "offer",
       "first": 20,
-      "networkSlug": undefined,
       "offset": 20,
       "search": "gardening",
       "slug": undefined,
@@ -174,7 +165,7 @@ posts(
     },
   },
   "meta": Object {
-    "extractModel": "Community",
+    "extractModel": "Group",
     "extractQueryResults": Object {
       "getItems": [Function],
     },
@@ -183,30 +174,35 @@ posts(
 }
 `;
 
-exports[`works for all communities 1`] = `
+exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
+  $boundingBox: [PointInput],
   $filter: String,
+  $first: Int,
+  $groupSlugs: [String],
+  $offset: Int,
+  $context: String,
+  $search: String,
+  $sortBy: String,
   $topic: ID,
-  $first: Int
-  $boundingBox: [PointInput]
 ) {
   
 posts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
+  groupSlugs: $groupSlugs,
   offset: $offset,
+  context: $context,
+  order: \\"desc\\",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: \\"desc\\"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     
   id
@@ -261,12 +257,13 @@ posts(
   }
   votesTotal
   myVote
-  acceptContributions
-  totalContributions
-  communities {
+  groups {
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -277,7 +274,7 @@ posts(
   postMemberships {
     id
     pinned
-    community {
+    group {
       id
     }
   }
@@ -297,12 +294,6 @@ posts(
       bio
       tagline
       location
-      skills (first: 100) {
-        items {
-          id
-          name
-        }
-      }
     }
   }
   eventInvitations {
@@ -318,22 +309,17 @@ posts(
         bio
         tagline
         location
-        skills (first: 100) {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }
+
   }
 }
 }",
     "variables": Object {
+      "context": "all",
       "filter": "request",
       "first": 20,
-      "networkSlug": undefined,
       "offset": 20,
       "search": "graphic design",
       "slug": undefined,
