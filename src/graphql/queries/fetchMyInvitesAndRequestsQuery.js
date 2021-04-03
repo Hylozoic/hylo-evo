@@ -19,8 +19,11 @@ export default
         }
         group {
           id
-          name
+          accessibility
           avatarUrl
+          name
+          slug
+          visibility
         }
       }
     }
