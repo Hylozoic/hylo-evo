@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.0.0] - 2021-04-02
 ### Added
 - __Holonic Architecture!__ You can now add infinitely nested groups within groups within groups. And groups can have multiple "parent groups" too. This is the beginning of truly enabling us to map and connect complex organizations and ecosystems and how groups of all kinds work together.
 - Added a new Groups page in the group nav menu that shows all the "parent" groups and "child" groups of the current group.
