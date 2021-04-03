@@ -104,15 +104,21 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
 
   return (
     <div styleName='joinRequest'>
-      <div styleName='requestDetail'>
-        <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
-        <span>invited you to join</span>
-        <span styleName='createdDate'>on {moment(createdAt).format('YYYY-MM-DD')}</span>
-        <div styleName='requestGroup'>
-          <GroupButton group={group} />
+      <div styleName='invitationDetail'>
+        <div styleName='invitationSource'>
+          <div>
+            <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
+            <span>invited you to join</span>
+          </div>
+          <div styleName='requestGroup'>
+            <GroupButton group={group} />
+          </div>
         </div>
-        <span onClick={decline} styleName='cancelButton'>Decline</span>
-        <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>Join</span>
+        <div styleName='invitationResponse'>
+          <span styleName='createdDate'>Sent {moment(createdAt).format('MM-DD-YYYY')}</span>
+          <span onClick={decline} styleName='cancelButton'>Decline</span>
+          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>Join</span>
+        </div>
       </div>
     </div>
   )
