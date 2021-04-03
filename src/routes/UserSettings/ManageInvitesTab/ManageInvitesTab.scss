@@ -47,7 +47,6 @@
 }
 
 .requestGroup {
-  max-width: 50%;
 
   div a {
     position: relative;
@@ -72,19 +71,26 @@
 
   .joinRequest {
     margin-bottom: 2px;
-    display:flex;
+    display: block;
     justify-content: space-between;
     align-items: center;
+    justify-content: center;
     padding: 5px;
+
+    .requestGroup {
+      margin: 0 auto;
+    }
 
     .requestDetail {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
 
       .createdDate {
         font-size: 12px;
         color: rgba(191, 197, 206, 1.000);
         position: relative;
-        top: 5px;
+        top: 2px;
       }
     }
   }
@@ -95,7 +101,49 @@
   }
 }
 
-.cancelButton, .declinedCanceled {
+.invitationDetail {
+  width: 100%;
+  font-size: 14px;
+  position: relative;
+
+  .createdDate {
+    font-size: 12px;
+    color: rgba(191, 197, 206, 1.000);
+  }
+
+  .decline {
+    font-size: 18px;
+  }
+
+  .invitationSource {
+    display: flex;
+    align-items: center;
+    color: rgba(136, 148, 161, 1.00);
+
+    .creator {
+      margin-right: 5px;
+      color: rgba(0, 196, 159, 1.00);
+    }
+
+    .requestGroup {
+      margin-left: 5px;
+    }
+  }
+
+  .invitationResponse {
+    padding: 8px 0 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-left: auto;
+
+    .cancelButton {
+      margin-left: auto;
+    }
+  }
+}
+
+.cancelButton, .declinedCanceled, .joinButton {
   margin-left: auto;
   composes: text-button from 'css/typography.scss';
   color: rgba(125, 140, 157, 1.000);
@@ -111,7 +159,55 @@
   }
 }
 
+.joinButton {
+  background-color: $color-caribbean-green;
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid $color-caribbean-green;
+}
+
+.joinButton {
+  &:hover {
+    background-color: $color-caribbean-green;
+    cursor: pointer;
+  }
+}
+
 .declinedCanceled {
   background-color: transparent;
   border: 1px dashed rgba(191, 197, 206, .5);
+  &:hover {
+    color: rgba(125, 140, 157, 1.000);
+    background-color: transparent;
+    cursor: default;
+  }
+}
+@media screen and (max-width: 600px) {
+
+  .invitationDetail .invitationSource {
+    display: block;
+    text-align: center;
+
+    .requestGroup {
+      margin: 0 auto;
+      max-width: 100%;
+    }
+  }
+
+  .requestList .joinRequest .requestGroup {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .title {
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+
+  .description {
+    font-size: 12px;
+    text-align: center;
+  }
 }

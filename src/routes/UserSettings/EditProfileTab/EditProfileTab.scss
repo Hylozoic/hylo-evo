@@ -113,6 +113,11 @@
   margin-left: auto;
 }
 
+@media screen and (max-width: 425px) {
+  .save-button {
+    font-size: 12px;
+  }
+}
 
 @media screen and (max-width: 320px) {
   .saveChanges {

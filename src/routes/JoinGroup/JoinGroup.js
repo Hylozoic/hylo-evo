@@ -15,13 +15,13 @@ export default class JoinGroup extends Component {
       checkInvitation()
     } else {
       fetchForCurrentUser()
-      if (currentUser) useInvitation(currentUser.id)
+      if (currentUser) useInvitation()
     }
   }
 
   componentWillReceiveProps (nextProps) {
     if (!this.props.currentUser && nextProps.currentUser) {
-      this.props.useInvitation(nextProps.currentUser.id)
+      this.props.useInvitation()
     }
   }
 

@@ -23,13 +23,13 @@ export function checkInvitation (inviteCodes) {
   }
 }
 
-export function useInvitation (userId, inviteCodes = {}) {
+export function useInvitation (inviteCodes = {}) {
   const { invitationToken, accessCode } = inviteCodes
   return {
     type: USE_INVITATION,
     graphql: {
-      query: `mutation ($userId: ID, $invitationToken: String, $accessCode: String) {
-        useInvitation (userId: $userId, invitationToken: $invitationToken, accessCode: $accessCode) {
+      query: `mutation ($invitationToken: String, $accessCode: String) {
+        useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
           membership {
             id
             role
@@ -53,7 +53,6 @@ export function useInvitation (userId, inviteCodes = {}) {
         }
       }`,
       variables: {
-        userId,
         invitationToken,
         accessCode
       }
