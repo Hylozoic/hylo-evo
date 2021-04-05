@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
+import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
-import publicPostsQueryFragment from 'graphql/fragments/publicPostsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
@@ -15,12 +15,8 @@ export function fetchPosts ({ context, slug, sortBy, offset, search, filter, top
     query = groupQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
-  } else if (context === 'all') {
-    query = allGroupsQuery
-    extractModel = 'Post'
-    getItems = get('payload.data.posts')
-  } else if (context === 'public') {
-    query = publicPostsQuery
+  } else if (context === 'all' || context === 'public') {
+    query = postsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -32,12 +28,13 @@ export function fetchPosts ({ context, slug, sortBy, offset, search, filter, top
     graphql: {
       query,
       variables: {
-        slug,
-        sortBy,
-        offset,
-        search,
         filter,
         first: 20,
+        offset,
+        context,
+        search,
+        slug,
+        sortBy,
         topic
       }
     },
@@ -51,14 +48,14 @@ export function fetchPosts ({ context, slug, sortBy, offset, search, filter, top
 }
 
 const groupQuery = `query (
-  $slug: String,
-  $sortBy: String,
+  $boundingBox: [PointInput],
+  $filter: String,
+  $first: Int,
   $offset: Int,
   $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
+  $slug: String,
+  $sortBy: String,
+  $topic: ID
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -73,33 +70,22 @@ const groupQuery = `query (
     avatarUrl
     bannerUrl
     postCount
-    ${postsQueryFragment}
+    ${groupViewPostsQueryFragment}
   }
 }`
 
-const allGroupsQuery = `query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
+const postsQuery = `query (
+  $boundingBox: [PointInput],
   $filter: String,
+  $first: Int,
+  $groupSlugs: [String],
+  $offset: Int,
+  $context: String,
+  $search: String,
+  $sortBy: String,
   $topic: ID,
-  $first: Int
-  $boundingBox: [PointInput]
 ) {
   ${postsQueryFragment}
-}`
-
-const publicPostsQuery = `query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput],
-  $groupSlugs: [String]
-) {
-  ${publicPostsQueryFragment}
 }`
 
 export function storeFetchPostsParam (props) {

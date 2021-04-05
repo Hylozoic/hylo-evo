@@ -50,7 +50,7 @@ describe('mapStateToProps', () => {
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         currentUser: undefined,
         context: 'groups',
-        fetchParams: { boundingBox: undefined, slug: 'foo', context: 'groups', groupSlugs: undefined, isPublic: false },
+        fetchParams: { boundingBox: undefined, slug: 'foo', context: 'groups', groupSlugs: undefined },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',

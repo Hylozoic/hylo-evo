@@ -55,7 +55,7 @@ export default class TopNav extends Component {
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} onClick={toggleDrawer} />
         </div>
-        <div styleName='navIcons'>
+        <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
             <BadgedIcon name='Messages' styleName='icon'
@@ -92,18 +92,18 @@ function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
     imageStyle = bgImageStyle(publicLogo)
   }
 
-  return <span styleName='image' style={imageStyle} onClick={toggleDrawer} />
+  return <span styleName='image' style={imageStyle} onClick={toggleDrawer} id='toggleDrawer' />
 }
 
 function Title ({ group, isPublic, onClick }) {
-  var [ label, name ] = ['GLOBAL', 'All Groups']
+  var [ label, name ] = ['GLOBAL', 'All My Groups']
   if (group) {
     [ label, name ] = ['GROUP', group.name]
   } else if (isPublic) {
-    [ label, name ] = ['GLOBAL', 'Public View']
+    [ label, name ] = ['GLOBAL', 'Public Groups & Posts']
   }
 
-  return <a styleName='title' onClick={onClick}>
+  return <a styleName='title' onClick={onClick} id='currentContext'>
     <div styleName='label'>
       {label}
     </div>

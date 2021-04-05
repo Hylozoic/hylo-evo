@@ -21,17 +21,18 @@ Object {
     bannerUrl
     postCount
     
-posts(
+posts: viewPosts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
   offset: $offset,
+  order: \\"desc\\",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: \\"desc\\"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     
   id
@@ -90,6 +91,9 @@ posts(
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -145,9 +149,9 @@ posts(
 }",
     "variables": Object {
       "boundingBox": undefined,
+      "context": "groups",
       "filter": "offer",
       "groupSlugs": undefined,
-      "isPublic": false,
       "search": "gardening",
       "slug": undefined,
       "sortBy": undefined,
@@ -168,26 +172,31 @@ exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $sortBy: String,
-  $search: String,
+  $boundingBox: [PointInput],
   $filter: String,
-  $topic: ID,
   $first: Int,
+  $groupSlugs: [String]
   $offset: Int,
-  $boundingBox: [PointInput]
+  $context: String,
+  $search: String,
+  $sortBy: String,
+  $topic: ID
 ) {
   
 posts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
+  groupSlugs: $groupSlugs,
   offset: $offset,
+  context: $context,
+  order: \\"desc\\",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: \\"desc\\"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     
   id
@@ -246,6 +255,9 @@ posts(
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -300,9 +312,9 @@ posts(
 }",
     "variables": Object {
       "boundingBox": undefined,
+      "context": "all",
       "filter": "request",
       "groupSlugs": undefined,
-      "isPublic": false,
       "search": "graphic design",
       "slug": undefined,
       "sortBy": undefined,

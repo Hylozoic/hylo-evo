@@ -43,10 +43,11 @@ fragment MeCompleteFragment on Me {
     name
   }
   settings {
-    signupInProgress
+    alreadySeenTour
     digestFrequency
     dmNotifications
     commentNotifications
+    signupInProgress
   }
   affiliations {
     items {
@@ -84,15 +85,17 @@ fragment MeCompleteFragment on Me {
     }
     group {
       id
+      accessibility
+      avatarUrl
+      memberCount
       name
       slug
-      memberCount
-      avatarUrl
       settings {
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
       }
+      visibility
       groupTopics(subscribed: true) {
         total
         hasMore

@@ -15,6 +15,7 @@ exports[`renders as expected with no group 1`] = `
     </div>
     <div
       data-stylename="navIcons"
+      id="personalSettings"
     >
       <Link
         to="/search"

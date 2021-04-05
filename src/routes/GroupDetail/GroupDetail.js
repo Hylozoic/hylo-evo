@@ -1,3 +1,5 @@
+import cx from 'classnames'
+import { get, keyBy } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -12,8 +14,6 @@ import { groupUrl } from 'util/navigation'
 
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
-import get from 'lodash/get'
-import keyBy from 'lodash/keyBy'
 
 export const initialState = {
   errorMessage: undefined,
@@ -89,7 +89,7 @@ export default class GroupDetail extends Component {
 
     const topics = group && group.groupTopics
 
-    return <div styleName='g.group'>
+    return <div className={cx({ [g.group]: true, [g.fullPage]: !onClose })}>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
@@ -145,7 +145,7 @@ export default class GroupDetail extends Component {
           </div>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {group.settings.publicMemberDirectory
+            {get('settings.publicMemberDirectory', group)
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
@@ -185,7 +185,7 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
         : <div styleName='g.requestOption'>
-          {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+          {get('settings.askJoinQuestions', group) && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
             <h3>{q.text}</h3>
             <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
           </div>)}

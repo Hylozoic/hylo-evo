@@ -93,7 +93,7 @@ describe('JoinGroup.connector', () => {
       )
       actual.useInvitation(userId)
       expect(dispatchProps.useInvitation).toBeCalledWith(
-        userId, { invitationToken, accessCode }
+        { invitationToken, accessCode }
       )
     })
   })

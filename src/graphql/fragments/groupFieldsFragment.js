@@ -32,14 +32,10 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       id
       accessibility
       avatarUrl
+      bannerUrl
       name
       slug
       visibility
-      childGroups(first: 300) {
-        items {
-          id
-        }
-      }
     }
   }
   childGroups {
@@ -47,6 +43,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       id
       accessibility
       avatarUrl
+      bannerUrl
       name
       slug
       visibility

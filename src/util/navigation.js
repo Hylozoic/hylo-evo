@@ -96,10 +96,6 @@ export function groupDetailUrl (slug, opts = {}, querystringParams = {}) {
   return addQuerystringToPath(result, querystringParams)
 }
 
-export function groupDeleteConfirmationUrl () {
-  return '/confirm-group-delete'
-}
-
 // Post URLS
 export function postUrl (id, opts = {}, querystringParams = {}) {
   const action = get('action', opts)
