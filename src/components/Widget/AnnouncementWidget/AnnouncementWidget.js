@@ -14,7 +14,7 @@ export default class AnnouncementWidget extends Component {
   }
 
   render () {
-    const { announcements } = this.props
+    const { announcements = [] } = this.props
     return (
       <div>
         {announcements.map(a => <div>{a.title}</div>)}

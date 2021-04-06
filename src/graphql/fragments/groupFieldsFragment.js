@@ -1,7 +1,8 @@
 const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   id
   accessibility
-  announcements {
+  announcements: posts(isAnnouncement: true, sortBy: 'created', first: 3) {
+    hasMore
     items {
       id
       title
@@ -105,7 +106,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       }
     }
   }
-  events {
+  events: posts(filter: "event", first: 1) {
+    hasMore
     items {
       id
       title
@@ -119,7 +121,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       }
     }
   }
-  projects {
+  projects: posts(filter: "project", first: 8) {
     items {
       id
       title
@@ -134,7 +136,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       }
     }
   }
-  offersAndRequests {
+  offersAndRequests: posts(filter: "offersAndRequests", first: 8) {
     items {
       id
       title

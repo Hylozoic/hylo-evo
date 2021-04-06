@@ -99,35 +99,35 @@ const ChildWidget = ({
   settings
   }) => {
   if (!isVisible) return <HiddenWidget isVisible={isVisible} name={name}/>
-  const announcements = group && group.announcements && group.announcements.items
-  const events = group && group.events && group.events.items
-  const members = group && group.activeMembers && group.activeMembers.items
-  const offersAndRequests = group && group.offersAndRequests && group.offersAndRequests.items
-  const projects = group && group.projects && group.projects.items
-  const topics = group && group.groupTopics
   switch(name) {
     case 'Welcome message': {
       return <WelcomeWidget settings={settings}/>
     }
     case 'Announcement': {
-      return <AnnouncementWidget announcements={announcements} />
+      const announcements = group && group.announcements && group.announcements.items
+      return announcements? <AnnouncementWidget announcements={announcements} /> : <></>
     }
     case 'Recently active members': {
+      const members = group && group.activeMembers && group.activeMembers.items
       return <MembersWidget members={members} />
     }
     case 'Open requests & offers': {
+      const offersAndRequests = group && group.offersAndRequests && group.offersAndRequests.items
       return <OffersAndRequestsWidget offersAndRequests={offersAndRequests} />
     }
     case 'Recent posts': {
       return <RecentPostsWidget posts={posts} showDetails={showDetails} />
     }
     case 'Community topics': {
+      const topics = group && group.groupTopics
       return <GroupTopicsWidget topics={topics} />
     }
     case 'Upcoming events': {
+      const events = group && group.events && group.events.items
       return <EventsWidget events={events} routeParams={routeParams} showDetails={showDetails} />
     }
     case 'Recent project activity': {
+      const projects = group && group.projects && group.projects.items
       return <ProjectsWidget projects={projects} routeParams={routeParams} showDetails={showDetails} />
     }
     case 'Subgroups and affiliations': {
