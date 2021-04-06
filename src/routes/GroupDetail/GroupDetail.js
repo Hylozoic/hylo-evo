@@ -198,7 +198,7 @@ export function JoinSection ({ group, groupsWithPendingRequests, joinGroup, requ
           ? <div styleName='g.prerequisiteGroups'>
             {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{group.name} is only accessible to members of the following groups:</h4>}
             {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
-              <div styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
+              <Link to={groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
                 <div styleName='g.groupTitleContainer'>
                   <img src={prereq.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
                   <div>
@@ -221,7 +221,7 @@ export function JoinSection ({ group, groupsWithPendingRequests, joinGroup, requ
                   </div>
                 </div>
                 <div styleName='g.headerBackground' />
-              </div>
+              </Link>
               { prereq.description ? <div styleName='g.prereqDescription'>{prereq.description}</div> : ' ' }
               <JoinSection group={prereq} groupsWithPendingRequests={groupsWithPendingRequests} joinGroup={joinGroup} requestToJoinGroup={requestToJoinGroup} topLevel={false} routeParams={routeParams} />
             </div>)}
