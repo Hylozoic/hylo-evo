@@ -30,6 +30,7 @@ export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
   static propTypes = {
+    context: PropTypes.string,
     clearLinkPreview: PropTypes.func,
     groupOptions: PropTypes.array,
     createPost: PropTypes.func,
@@ -79,13 +80,14 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ editing, currentGroup, post, topic, announcementSelected, postType }) => {
+  buildStateFromProps = ({ context, editing, currentGroup, post, topic, announcementSelected, postType }) => {
     const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postType || PostEditor.defaultProps.post.type,
       groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
       topics: topic ? [topic] : [],
       detailsTopics: [],
-      acceptContributions: false
+      acceptContributions: false,
+      isPublic: context === 'public'
     })
     const currentPost = post ? ({
       ...post,
