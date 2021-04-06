@@ -75,7 +75,6 @@ export default class GroupDetail extends Component {
 
   render () {
     const {
-      canClose,
       group,
       currentUser,
       isMember,

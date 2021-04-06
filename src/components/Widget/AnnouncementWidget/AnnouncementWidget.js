@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-const { array } = PropTypes
 
 import './AnnouncementWidget.scss'
+
+const { array } = PropTypes
 
 export default class AnnouncementWidget extends Component {
   static propTypes = {
     announcements: array
-  }
-
-  constructor () {
-    super()
   }
 
   render () {

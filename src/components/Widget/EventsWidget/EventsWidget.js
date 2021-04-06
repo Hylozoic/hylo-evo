@@ -1,24 +1,21 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-const { array } = PropTypes
 
 import './EventsWidget.scss'
+
+const { array } = PropTypes
 
 export default class EventsWidget extends Component {
   static propTypes = {
     events: array
   }
 
-  constructor () {
-    super()
-  }
-
   render () {
-    const { events, routeParams, showDetails } = this.props
-    // Can use the Event component on MemberProfile
+    const { events } = this.props
+    // TODO: Can use the Event component on MemberProfile
     return (
       <div>
-        {events.map(e => <div>{e.title}</div>)}
+        {events && events.map(e => <div key={e.id}>{e.title}</div>)}
       </div>
     )
   }

@@ -41,7 +41,7 @@ export default class LandingPage extends Component {
     const widgets = (group.widgets || []).filter(w => w.name !== 'Community map')
     const locationText = group && group.locationObject && (group.locationObject.fullText || `${group.locationObject.city}, ${group.locationObject.country}`)
 
-    if (!canView) return (<GroupDetail canClose={false} location={location} match={match} groupId={group.id} />)
+    if (!canView) return (<GroupDetail location={location} match={match} groupId={group.id} />)
 
     return (
       <div>
@@ -61,7 +61,16 @@ export default class LandingPage extends Component {
           </div>
         </div>
 
-        {widgets && widgets.map(props => (<Widget {...props} group={group} posts={posts} routeParams={routeParams} showDetails={showDetails}/>)) }
+        {widgets && widgets.map(widget =>
+          <Widget
+            {...widget}
+            key={widget.id}
+            group={group}
+            posts={posts}
+            routeParams={routeParams}
+            showDetails={showDetails}
+          />
+        )}
       </div>
     )
   }

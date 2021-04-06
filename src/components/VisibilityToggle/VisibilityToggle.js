@@ -5,7 +5,7 @@ import Icon from 'components/Icon'
 
 function VisibilityToggle ({ id, onChange, checked, disabled, backgroundColor, name }) {
   const handleToggle = () => {
-    onChange({id, isVisible: checked, name})
+    onChange({ id, isVisible: checked, name })
   }
   return (
     <div styleName={cx('container', { containerDisabled: disabled })} onClick={disabled ? null : handleToggle}>

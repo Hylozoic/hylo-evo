@@ -141,7 +141,7 @@ Group.fields = {
   settings: attr(),
   slug: attr(),
   visibility: attr(),
-  widgets: many('Widget'),
+  widgets: many('Widget')
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'

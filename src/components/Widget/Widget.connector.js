@@ -3,7 +3,7 @@ import { toggleWidgetVisibility, updateWidgetSettings } from './Widget.store'
 
 export function mapStateToProps (state, props) {
   return {
-    isVisible: props.isVisible
+    ...props
   }
 }
 

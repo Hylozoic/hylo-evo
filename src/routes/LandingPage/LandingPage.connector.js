@@ -12,10 +12,10 @@ export function mapStateToProps (state, props) {
   let group, fetchPostsParam, posts
   const groupSlug = getRouteParam('groupSlug', state, props)
   const routeParams = props.match.params
-  
+
   if (groupSlug) {
     group = presentGroup(getGroupForCurrentRoute(state, props))
-    fetchPostsParam = { slug: groupSlug, context: 'groups'}
+    fetchPostsParam = { slug: groupSlug, context: 'groups' }
     posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   }
 
@@ -42,7 +42,7 @@ export function mapDispatchToProps (dispatch, props) {
       await fetchGroup(groupSlug)
       dispatch(push(url))
     },
-    showDetails: (postId) => dispatch(push(postUrl(postId, { groupSlug }))),
+    showDetails: (postId) => dispatch(push(postUrl(postId, { groupSlug })))
   }
 }
 
@@ -53,7 +53,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam),
+    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam)
   }
 }
 

@@ -5,9 +5,7 @@ export default function presentGroup (group) {
     visibility: group.visibility,
     accessibility: group.accessibility,
     settings: group.settings,
-    widgets: group.widgets.toModelArray().map(widget => {
-      return {...widget.ref}
-    }),
+    widgets: group.widgets ? group.widgets.toRefArray() : [],
     groupTopics: group.groupTopics ? group.groupTopics.toModelArray().map(groupTopic => {
       return {
         ...groupTopic.ref,
