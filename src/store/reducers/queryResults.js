@@ -266,6 +266,7 @@ export function buildKey (type, params) {
 
 export const queryParamWhitelist = [
   'id',
+  'context',
   'slug',
   'groupSlug',
   'groupSlugs',
@@ -276,8 +277,7 @@ export const queryParamWhitelist = [
   'filter',
   'topic',
   'type',
-  'page',
-  'context'
+  'page'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {
