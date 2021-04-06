@@ -28,7 +28,7 @@ export default class RecentPostsWidget extends Component {
     return (
       <div>
         <Slider {...settings}>
-          {posts.map(p => <RecentPostCard post={p} showDetails={showDetails} />)}
+          {posts.map(p => <RecentPostCard key={p.id} post={p} showDetails={showDetails} />)}
         </Slider>
       </div>
     )
