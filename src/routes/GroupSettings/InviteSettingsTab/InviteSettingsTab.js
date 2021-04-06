@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
-import Switch from 'components/Switch'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
@@ -39,8 +38,7 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
       copied: false,
       reset: false,
       emails: '',
-      message: defaultMessage,
-      allMembersCanInvite: undefined
+      message: defaultMessage
     }
   }
 
@@ -85,26 +83,6 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
       })
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { group } = this.props
-    const nextPropsGroup = nextProps.group
-    if (group && nextPropsGroup && group !== nextPropsGroup) {
-      this.setState({ allMembersCanInvite: nextPropsGroup.allowGroupInvites })
-    }
-  }
-
-  toggleAllMembersCanInvite = () => {
-    const groupId = this.props.group.id
-    const allMembersCanInvite = !this.state.allMembersCanInvite
-    this.props.allowGroupInvites(groupId, allMembersCanInvite)
-      .then(({ error }) => {
-        if (error) {
-          this.setState({ allMembersCanInvite: !allMembersCanInvite })
-        }
-      })
-    this.setState({ allMembersCanInvite })
-  }
-
   render () {
     const {
       group,
@@ -115,11 +93,10 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
       pendingInvites = [],
       expireInvitation,
       resendInvitation,
-      reinviteAll,
-      canModerate
+      reinviteAll
     } = this.props
     const { name } = group
-    const { copied, reset, emails, errorMessage, successMessage, allMembersCanInvite } = this.state
+    const { copied, reset, emails, errorMessage, successMessage } = this.state
 
     const onReset = () => {
       if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
@@ -158,10 +135,6 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
         </div>
       </div>
       {pending && <Loading />}
-      {!pending && canModerate && <div styleName='styles.switch-header'>
-        <span styleName='styles.switch-label'>Let anyone in this group send invites</span>
-        <Switch styleName='styles.switch' value={allMembersCanInvite} onClick={this.toggleAllMembersCanInvite} />
-      </div>}
       {!pending && <div styleName='styles.invite-link-settings'>
         <div styleName='styles.invite-link-text'>
           <div styleName='styles.help'>Anyone with this link can join the group</div>

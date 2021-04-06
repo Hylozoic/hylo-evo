@@ -7,9 +7,7 @@ export default function FacebookButton ({
   signUp,
   className = ''
 }) {
-  const label = signUp
-    ? 'Sign up with Google'
-    : 'Log in with Google'
+  const label = 'Continue with Google'
 
   return <a
     aria-label={label}
@@ -17,7 +15,7 @@ export default function FacebookButton ({
     styleName={cx('google-button', className)}
     onClick={onClick}
   >
-    <img src='assets/btn_google_light_normal_ios.svg' />
+    <div styleName='google-icon'><img src='assets/btn_google_light_normal_ios.svg' /></div>
     {label}
   </a>
 }

@@ -4,7 +4,6 @@ import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_MODERATOR_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
-  CANCEL_JOIN_REQUEST,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_JOIN_REQUEST,
@@ -13,7 +12,6 @@ import {
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
   FETCH_MESSAGES_PENDING,
-  FETCH_MY_JOIN_REQUESTS,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
@@ -46,9 +44,6 @@ import {
 import {
   REMOVE_SKILL_PENDING as REMOVE_SKILL_TO_LEARN_PENDING, ADD_SKILL as ADD_SKILL_TO_LEARN
 } from 'components/SkillsToLearnSection/SkillsToLearnSection.store'
-import {
-  SIGNUP_ADD_SKILL, SIGNUP_REMOVE_SKILL_PENDING
-} from 'routes/Signup/AddSkills/AddSkills.store'
 
 import {
   UPDATE_GROUP_SETTINGS,
@@ -86,6 +81,7 @@ export default function ormReducer (state = {}, action) {
     GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
+    Invitation,
     JoinRequest,
     Me,
     Membership,
@@ -285,11 +281,6 @@ export default function ormReducer (state = {}, action) {
       person.skillsToLearn.remove(meta.skillId)
       break
 
-    case SIGNUP_REMOVE_SKILL_PENDING:
-      me = Me.withId(Me.first().id)
-      me.skills.remove(meta.skillId)
-      break
-
     case ADD_SKILL:
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
@@ -300,12 +291,6 @@ export default function ormReducer (state = {}, action) {
       const skillToLearn = payload.data.addSkillToLearn
       person = Person.withId(Me.first().id)
       person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
-      break
-
-    case SIGNUP_ADD_SKILL:
-      const mySkill = payload.data.addSkill
-      me = Me.withId(Me.first().id)
-      me.updateAppending({ skills: [Skill.create(mySkill)] })
       break
 
     case DELETE_COMMENT_PENDING:
@@ -345,11 +330,6 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case CANCEL_JOIN_REQUEST:
-      const jr = JoinRequest.withId(meta.id)
-      jr.delete()
-      break
-
     case JOIN_PROJECT_PENDING:
       me = Me.first()
       ProjectMember.create({ post: meta.id, member: me.id })
@@ -369,7 +349,9 @@ export default function ormReducer (state = {}, action) {
       break
 
     case USE_INVITATION:
-      Me.first().updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
+      me = Me.first()
+      me.updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
+      Invitation.filter({ email: me.email, group: payload.data.useInvitation.membership.group.id }).delete()
       break
 
     case DELETE_GROUP_TOPIC_PENDING:
@@ -434,11 +416,6 @@ export default function ormReducer (state = {}, action) {
       }
       break
     }
-
-    case FETCH_MY_JOIN_REQUESTS:
-      me = Me.first()
-      clearCacheFor(Me, me.id)
-      break
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

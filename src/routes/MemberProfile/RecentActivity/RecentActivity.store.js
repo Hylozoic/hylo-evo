@@ -12,7 +12,7 @@ const recentActivityQuery =
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
-  $groupSlugs: [],
+  $groupSlugs: [String],
   $id: ID,
   $offset: Int,
   $context: String,
@@ -47,7 +47,7 @@ const recentActivityQuery =
   }
 }`
 
-export function fetchRecentActivity (id, first = 3, query = recentActivityQuery) {
+export function fetchRecentActivity (id, first = 10, query = recentActivityQuery) {
   return {
     type: FETCH_RECENT_ACTIVITY,
     graphql: {

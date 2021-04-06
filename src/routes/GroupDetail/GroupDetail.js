@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import keyBy from 'lodash/keyBy'
+import { get, keyBy } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -154,7 +154,7 @@ export default class GroupDetail extends Component {
           </div>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {group.settings.publicMemberDirectory
+            {get('settings.publicMemberDirectory', group)
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>

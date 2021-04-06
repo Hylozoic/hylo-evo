@@ -1,5 +1,5 @@
 import { CREATE_JOIN_REQUEST, FETCH_MY_JOIN_REQUESTS } from 'store/constants'
-import fetchMyJoinRequestsQuery from 'graphql/queries/fetchMyJoinRequestsQuery'
+import fetchMyPendingJoinRequestsQuery from 'graphql/queries/fetchMyPendingJoinRequestsQuery'
 
 export const MODULE_NAME = 'GroupDetail'
 
@@ -10,7 +10,7 @@ export function fetchJoinRequests (groupId) {
   return {
     type: FETCH_MY_JOIN_REQUESTS,
     graphql: {
-      query: fetchMyJoinRequestsQuery(true)
+      query: fetchMyPendingJoinRequestsQuery
     },
     meta: {
       extractModel: 'Me'

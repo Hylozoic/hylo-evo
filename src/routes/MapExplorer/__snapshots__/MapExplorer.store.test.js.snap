@@ -21,7 +21,7 @@ Object {
     bannerUrl
     postCount
     
-posts(
+posts: viewPosts(
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
@@ -91,6 +91,9 @@ posts(
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -252,6 +255,9 @@ posts(
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type

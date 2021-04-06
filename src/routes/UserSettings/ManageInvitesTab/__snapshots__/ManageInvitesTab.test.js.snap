@@ -25,7 +25,27 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
   >
     Invitations to Join New Groups
   </h2>
-  TODO
+  <div
+    data-stylename="requestList"
+  >
+    <GroupInvite
+      invite={
+        Object {
+          "creator": Object {
+            "id": 1,
+            "name": "Testy Tester",
+          },
+          "group": Object {
+            "avatarUrl": null,
+            "id": 1,
+            "name": "group1",
+          },
+          "id": "1",
+        }
+      }
+      key="1"
+    />
+  </div>
   <h2
     data-stylename="subhead"
   >
