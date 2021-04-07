@@ -28,6 +28,7 @@ export function fetchGroupSettings (slug) {
             allowGroupInvites
             askJoinQuestions
             publicMemberDirectory
+            showSuggestedSkills
           }
           slug
           visibility
@@ -36,6 +37,13 @@ export function fetchGroupSettings (slug) {
               id
               name
               avatarUrl
+            }
+          }
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
             }
           }
           moderators (first: 100) {
@@ -62,11 +70,10 @@ export function fetchGroupSettings (slug) {
               lastSentAt
             }
           }
-          joinQuestions {
+          suggestedSkills {
             items {
               id
-              questionId
-              text
+              name
             }
           }
         }

@@ -94,6 +94,7 @@ fragment MeCompleteFragment on Me {
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
       visibility
       groupTopics(subscribed: true) {

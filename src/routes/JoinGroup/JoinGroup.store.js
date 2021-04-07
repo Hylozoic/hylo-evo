@@ -41,6 +41,7 @@ export function useInvitation (inviteCodes = {}) {
                 allowGroupInvites
                 askJoinQuestions
                 publicMemberDirectory
+                showSuggestedSkills
               }
               slug
               visibility

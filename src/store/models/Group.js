@@ -133,6 +133,7 @@ Group.fields = {
   joinQuestions: many('GroupJoinQuestion'),
   settings: attr(),
   slug: attr(),
+  suggestedSkills: many('Skill'),
   visibility: attr()
 }
 

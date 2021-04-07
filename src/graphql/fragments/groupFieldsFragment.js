@@ -9,6 +9,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
     allowGroupInvites
     askJoinQuestions
     publicMemberDirectory
+    showSuggestedSkills
   }
   slug
   visibility

@@ -8,6 +8,7 @@ import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
+import SkillsSection from 'components/SkillsSection'
 import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
@@ -37,7 +38,7 @@ export default class GroupSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (!isEqual(prevProps.group, this.props.group)) {
+    if (!isEqual(prevProps.group.id, this.props.group.id)) {
       this.setState(this.defaultEditState())
     }
   }
@@ -60,7 +61,7 @@ export default class GroupSettingsTab extends Component {
         location: location || '',
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
-        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
+        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false, showSuggestedSkills: false },
         visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
       },
       changed: false
@@ -75,7 +76,7 @@ export default class GroupSettingsTab extends Component {
   updateJoinQuestion = (index) => event => {
     const value = event.target.value
     const newJoinQuestions = this.state.edits.joinQuestions
-    let changed = false
+    let changed = this.state.edits.changed
     if (trim(value) === '') {
       newJoinQuestions.splice(index, 1)
       changed = true
@@ -131,6 +132,7 @@ export default class GroupSettingsTab extends Component {
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
+    const showSuggestedSkills = settings.showSuggestedSkills
 
     return <div styleName='groupSettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -187,6 +189,22 @@ export default class GroupSettingsTab extends Component {
             />
           )}
         </SettingsSection>
+      </div>
+
+      <div styleName='groupPrivacySection'>
+        <h3>Relevant skills &amp; interests</h3>
+        <p styleName='privacyDetail'>What skills and interests are relevant to this group?</p>
+        <SwitchStyled
+          checked={showSuggestedSkills}
+          onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+          backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+        <div>Ask new members to fill out their skills and interests?</div>
+
+        <SkillsSection
+          group={group}
+          label='Add a relevant skill or interest'
+          placeholder='What skills and interests are most relevant to your group?' />
+
       </div>
 
       <div styleName='saveChanges'>

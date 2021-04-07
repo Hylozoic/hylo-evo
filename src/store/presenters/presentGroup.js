@@ -3,13 +3,14 @@ export default function presentGroup (group) {
 
   return {
     ...group.ref,
-    members: group.members ? group.members.toModelArray() : [],
     groupTopics: group.groupTopics ? group.groupTopics.toModelArray().map(groupTopic => {
       return {
         ...groupTopic.ref,
         name: groupTopic.topic.name
       }
     }) : [],
-    joinQuestions: group.joinQuestions.toRefArray()
+    joinQuestions: group.joinQuestions ? group.joinQuestions.toRefArray() : [],
+    members: group.members ? group.members.toModelArray() : [],
+    suggestedSkills: group.suggestedSkills ? group.suggestedSkills.toRefArray() : []
   }
 }
