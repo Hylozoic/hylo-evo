@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { get, keyBy } from 'lodash'
+import { get } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
