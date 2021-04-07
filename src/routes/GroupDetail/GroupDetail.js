@@ -36,7 +36,7 @@ export default class GroupDetail extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.group && this.props.group.id !== prevProps.group.id) {
+    if (get(prevProps, 'group.id') !== get(this.props, 'group.id')) {
       this.onGroupChange()
     }
   }
