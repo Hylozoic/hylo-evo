@@ -36,7 +36,7 @@ export default class GroupDetail extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug && this.props.slug !== prevProps.slug) {
+    if (this.props.group && this.props.group.id !== prevProps.group.id) {
       this.onGroupChange()
     }
   }
@@ -129,9 +129,8 @@ export default class GroupDetail extends Component {
   renderGroupDetails () {
     const { group, currentUser, joinRequests } = this.props
     const { errorMessage, successMessage } = this.state
-    const usersWithPendingRequests = keyBy(joinRequests, 'user.id')
-    const request = currentUser ? usersWithPendingRequests[currentUser.id] : false
-    const displayMessage = errorMessage || successMessage || request
+    const hasPendingRequest = joinRequests.find(jr => jr.group.id === group.id && jr.user.id === currentUser.id)
+    const displayMessage = errorMessage || successMessage || hasPendingRequest
     return (
       <div>
         <div styleName='g.groupDetails'>
@@ -156,7 +155,7 @@ export default class GroupDetail extends Component {
           </div>
         </div>
         { displayMessage
-          ? <Message errorMessage={errorMessage} successMessage={successMessage} request={request} />
+          ? <Message errorMessage={errorMessage} successMessage={successMessage} hasPendingRequest={hasPendingRequest} />
           : <Request group={group} joinGroup={this.joinGroup} requestToJoinGroup={this.requestToJoinGroup} />
         }
       </div>
@@ -195,7 +194,7 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
   )
 }
 
-export function Message ({ errorMessage, successMessage, request }) {
-  const message = request ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
+export function Message ({ errorMessage, successMessage, hasPendingRequest }) {
+  const message = hasPendingRequest ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
   return (<div styleName='g.message'>{message}</div>)
 }

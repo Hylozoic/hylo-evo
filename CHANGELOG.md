@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Issues on the Groups page where we would incorrectly show a person having requested membership in a group or not show that they had requested membership
+- Make sure new posts appear in the stream immediately
+- Join questions now correctly appearing when trying to join a group that has them specified
 
 ## [3.0.0] - 2021-04-02
 ### Added
