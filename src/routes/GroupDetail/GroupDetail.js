@@ -144,7 +144,7 @@ export default class GroupDetail extends Component {
           </div>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {get('settings.publicMemberDirectory', group)
+            {get(group, 'settings.publicMemberDirectory')
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
@@ -184,7 +184,7 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
         : <div styleName='g.requestOption'>
-          {get('settings.askJoinQuestions', group) && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+          {get(group, 'settings.askJoinQuestions') && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
             <h3>{q.text}</h3>
             <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
           </div>)}
