@@ -229,7 +229,7 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
         <div styleName='on'>ON</div>
       </div>
       <div styleName='questionList'>
-        <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
+        <span styleName='questionDescription'>Require people to answer questions when asking to join this group</span>
 
         {joinQuestions.map((q, i) => <div key={i} styleName='question'>
           {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
