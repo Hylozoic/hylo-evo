@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issues saving and viewing Saved Searches on the map
 - Fixed viewing join requests settings page
 - You can edit comments once again
+- Closed groups don't show request to join button
 
 ## [3.0.1] - 2021-04-07
 ### Fixed

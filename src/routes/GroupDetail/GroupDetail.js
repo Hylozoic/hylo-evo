@@ -182,13 +182,16 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestHint'>Anyone can join this group!</div>
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
-        : <div styleName='g.requestOption'>
+        : group.accessibility === GROUP_ACCESSIBILITY.Restricted ? <div styleName='g.requestOption'>
           {get(group, 'settings.askJoinQuestions') && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
             <h3>{q.text}</h3>
             <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
           </div>)}
           <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
+          : <div styleName='g.requestOption'> {/* Closed group */}
+            This is group is invitation only
+          </div>
       }
     </div>
   )
