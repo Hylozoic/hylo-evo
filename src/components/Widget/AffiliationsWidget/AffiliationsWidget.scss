@@ -87,6 +87,7 @@
     justify-content: left;
     align-items: center;
     padding-left: 15px;
+    width: 160px;
 
     a {
       border: 1px solid rgba(192, 197, 205, 1.00);
@@ -111,4 +112,10 @@
 
 .affiliations :global(.slick-list) {
   padding: 0 20% 0 0;
+}
+
+@media screen and (max-width: 600px) {
+  .affiliations {
+    padding: 0 0 0 0;
+  }
 }

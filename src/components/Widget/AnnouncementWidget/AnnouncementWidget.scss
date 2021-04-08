@@ -65,3 +65,9 @@
 .announcements :global(.slick-list) {
   padding: 0 20% 0 0;
 }
+
+@media screen and (max-width: 600px) {
+  .announcements {
+    padding: 0 0 0 0;
+  }
+}
