@@ -158,10 +158,12 @@ const ChildWidget = ({
     }
     case 'Recent project activity': {
       const projects = [{ // group && group.projects && group.projects.items
+        id: '1234',
         title: 'Project: Extend Hylo Projects',
         lastActivity: '3 HRS AGO',
         createdBy: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg'
       }, {
+        id: '1334',
         title: 'Project: Extend Hylo Projects',
         lastActivity: 'yesterday',
         createdBy: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg'
