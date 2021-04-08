@@ -75,12 +75,12 @@ export class Comment extends Component {
             {editing && 'Editing now'}
             {!editing && humanDate(createdAt)}
           </span>
-          {hasFeature('INLINE_COMMENTS') && <div styleName='upperRight'>
-            <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+          <div styleName='upperRight'>
+            {hasFeature('INLINE_COMMENTS') && <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
-            </div>
+            </div>}
             {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
-          </div>}
+          </div>
         </div>
         <CardImageAttachments attachments={attachments} linked styleName='images' />
         <CardFileAttachments attachments={attachments} styleName='files' />
