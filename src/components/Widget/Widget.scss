@@ -1,16 +1,32 @@
 .widget {
-  margin: 1em auto;
+  margin: 1em auto 0 auto;
   display: block;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+
+  h3 {
+    padding-left: 15px;
+    min-width: 200px;
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: .4;
+    margin-bottom: 0;
+  }
 }
 
 .more {
   text-align: right;
   padding: 2px;
+  height: 30px;
+}
+
+.widget-visibility {
+  min-width: 30px;
 }
 
 .selected {
@@ -24,7 +40,7 @@
   @include is-top-triangle(#0DC39F, #0DC39F, 14px);
   margin-left: 20px;
   top: -5px;
-  left: 145px;
+  right: 0;
   width: 14px !important;
   height: 14px !important;
   z-index: 10;
@@ -39,6 +55,8 @@
   padding: 10px;
   margin-top: 15px;
   color: white;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 25px 10px 25px 25px;
 }
 
 .visible {
@@ -47,7 +65,6 @@
 
 .content {
   position: relative;
-  top: -50px;
   text-align: center;
   z-index: 1;
 }
@@ -122,3 +139,14 @@
   margin-right: 5px;
 }
 
+:global(.slick-dots) {
+  bottom: -5px;
+}
+
+
+
+@media screen and (max-width: 425px) {
+  .header h3 {
+    font-size: 14px;
+  }
+}

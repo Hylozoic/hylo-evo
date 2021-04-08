@@ -1,0 +1,67 @@
+.announcements {
+  width: 100%;
+  padding: 0 15px 0 8px;
+
+  .announcement {
+    height: 230px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+
+    .content {
+      background-color: rgba(41, 64, 90, .8);
+      padding: 15px;
+      position: absolute;
+      bottom: 0;
+      text-align: left;
+      z-index: 10;
+      border-radius: 0 0 5px 5px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+
+      .meta {
+        margin-top: -8px;
+
+        .author {
+          color: rgba(255, 255, 255, 1);
+          font-size: 12px;
+        }
+        .created {
+          font-size: 10px;
+          color: rgba(255, 255, 255, .6);
+          padding-left: 10px;
+        }
+      }
+
+      .title {
+        color: rgba(255, 255, 255, 1);
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      z-index: 0;
+      border-radius: 5px;
+    }
+  }
+
+  .announcement.narrow {
+    margin-right: 15px;
+  }
+}
+
+.announcements :global(.slick-slide > div) {
+  padding: 0 8px 15px 8px;
+}
+
+.announcements :global(.slick-list) {
+  padding: 0 20% 0 0;
+}

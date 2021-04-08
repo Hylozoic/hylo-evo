@@ -4,7 +4,6 @@ import AffiliationsWidget from 'components/Widget/AffiliationsWidget'
 import AnnouncementWidget from 'components/Widget/AnnouncementWidget'
 import EventsWidget from 'components/Widget/EventsWidget'
 import GroupTopicsWidget from 'components/Widget/GroupTopicsWidget'
-import MapWidget from 'components/Widget/MapWidget'
 import MembersWidget from 'components/Widget/MembersWidget'
 import OffersAndRequestsWidget from 'components/Widget/OffersAndRequestsWidget'
 import ProjectsWidget from 'components/Widget/ProjectsWidget'
@@ -23,7 +22,7 @@ export default function Widget (props) {
   return (
     <div styleName='widget'>
       <div styleName='header'>
-        <div>{(settings && settings.title) || name}</div>
+        <h3>{(settings && settings.title) || name}</h3>
         <div styleName='more'>
 
           <Icon name='More' styleName={`more ${viewingMore ? 'selected' : ''}`} onClick={() => { viewMore(!viewingMore); editSettings(false) }} />
@@ -32,7 +31,7 @@ export default function Widget (props) {
           {!editingSettings && <div styleName={`edit-section ${viewingMore ? 'visible' : ''}`}>
             <span styleName='triangle'>&nbsp;</span>
             {settings && <div styleName='edit-settings'><Icon name='Edit' onClick={() => editSettings(!editingSettings)} /> Edit welcome message</div>}
-            <VisibilityToggle id={id} checked={isVisible} onChange={toggleVisibility} backgroundColor={isVisible ? '#0DC39F' : '#8B96A4'} /> Visibility: {isVisible ? 'Visible' : 'Hidden'}
+            <VisibilityToggle id={id} checked={isVisible} onChange={toggleVisibility} styleName='widget-visibility' backgroundColor={isVisible ? '#0DC39F' : '#8B96A4'} /> Visibility: {isVisible ? 'Visible' : 'Hidden'}
           </div>}
         </div>
       </div>
@@ -47,7 +46,6 @@ export default function Widget (props) {
 const EditForm = ({ id, editSettings, viewMore, newSettings, updateSettings, save }) => {
   return (
     <div styleName='edit-form'>
-
       <div>
         <input
           type='text'
@@ -104,7 +102,17 @@ const ChildWidget = ({
       return <WelcomeWidget settings={settings} />
     }
     case 'Announcement': {
-      const announcements = group && group.announcements && group.announcements.items
+      const announcements = [{ // group && group.announcements && group.announcements.items
+        title: 'Nutrient Density working group forming! Sign up here!',
+        author: 'Amanda Rodriguez',
+        created: '3 HRS AGO',
+        image: '/default-announcement.png'
+      }, {
+        title: 'Bioregional healthcare is coming to the Bay Area!',
+        author: 'Clare Politano',
+        created: '1 WEEK AGO',
+        image: '/default-announcement.png'
+      }]
       return announcements && <AnnouncementWidget announcements={announcements} />
     }
     case 'Recently active members': {
@@ -112,7 +120,19 @@ const ChildWidget = ({
       return <MembersWidget members={members} />
     }
     case 'Open requests & offers': {
-      const offersAndRequests = group && group.offersAndRequests && group.offersAndRequests.items
+      const offersAndRequests = [{ // group && group.offersAndRequests && group.offersAndRequests.items
+        title: 'Seeking an accountant familiar with non-profits working with MediCal',
+        author: 'Brooke Daily',
+        avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30591/userAvatar/30591/10216723681744864.jpg',
+        numComments: '1',
+        kind: 'offer'
+      }, {
+        title: 'I can map your land using lidar and drones! Available to help within 50 mi. of Bay Area',
+        author: 'Raphi Dondo',
+        avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg',
+        numComments: '24',
+        kind: 'request'
+      }]
       return <OffersAndRequestsWidget offersAndRequests={offersAndRequests} />
     }
     case 'Recent posts': {
@@ -123,18 +143,64 @@ const ChildWidget = ({
       return <GroupTopicsWidget topics={topics} />
     }
     case 'Upcoming events': {
-      const events = group && group.events && group.events.items
+      const events = [{ // group && group.events && group.events.items
+        time: 'Thursday, April 26, 3:00p - 4:00p',
+        title: 'Mindfulness 101',
+        location: 'https://zoom.us/j/380357601',
+        image: '/default-event.png'
+      }, {
+        time: 'Scoopday, May 15, 5:00p',
+        title: 'Holonic relationships - how we get from here to there and back again',
+        location: '100 Main St., Covid, CA, 94117',
+        image: '/default-event.png'
+      }]
       return <EventsWidget events={events} routeParams={routeParams} showDetails={showDetails} />
     }
     case 'Recent project activity': {
-      const projects = group && group.projects && group.projects.items
+      const projects = [{ // group && group.projects && group.projects.items
+        title: 'Project: Extend Hylo Projects',
+        lastActivity: '3 HRS AGO',
+        createdBy: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg'
+      }, {
+        title: 'Project: Extend Hylo Projects',
+        lastActivity: 'yesterday',
+        createdBy: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg'
+      }]
       return <ProjectsWidget projects={projects} routeParams={routeParams} showDetails={showDetails} />
     }
     case 'Subgroups and affiliations': {
-      return <AffiliationsWidget />
-    }
-    case 'Community map': {
-      return <MapWidget />
+      const affiliations = [{
+        id: '1234',
+        groupName: 'Annual Meeting 2020',
+        groupAvatar: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkAvatar/55/Screen%20Shot%202020-07-01%20at%2011.16.56%20AM.png',
+        groupBackground: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkBanner/55/Screen%20Shot%202020-07-01%20at%2011.14.47%20AM.png',
+        // truncate groupDescription after 100 characters and append elipses
+        groupDescription: 'Annual Meeting Description - The program theme is “Technology and Neuroscience.” This meeting will review ...',
+        memberCount: '72 Members',
+        isMember: true,
+        groupUrl: 'http://localhost:3000/group/groupname'
+      }, {
+        id: '5678',
+        groupName: 'PH Student Club',
+        groupAvatar: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkAvatar/55/Screen%20Shot%202020-07-01%20at%2011.16.56%20AM.png',
+        groupBackground: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkBanner/55/Screen%20Shot%202020-07-01%20at%2011.14.47%20AM.png',
+        // truncate groupDescription after 100 characters and append elipses
+        groupDescription: 'Annual Meeting Description - The program theme is “Technology and Neuroscience.” This meeting will review ...',
+        memberCount: '72 Members',
+        isMember: false,
+        groupUrl: 'http://localhost:3000/group/groupname'
+      }, {
+        id: '9101',
+        groupName: 'PH Student Club',
+        groupAvatar: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkAvatar/55/Screen%20Shot%202020-07-01%20at%2011.16.56%20AM.png',
+        groupBackground: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkBanner/55/Screen%20Shot%202020-07-01%20at%2011.14.47%20AM.png',
+        // truncate groupDescription after 100 characters and append elipses
+        groupDescription: 'Annual Meeting Description - The program theme is “Technology and Neuroscience.” This meeting will review ...',
+        memberCount: '72 Members',
+        isMember: false,
+        groupUrl: 'http://localhost:3000/group/groupname'
+      }]
+      return <AffiliationsWidget affiliations={affiliations} />
     }
     default: {
       return <div>Nothing to see here</div>

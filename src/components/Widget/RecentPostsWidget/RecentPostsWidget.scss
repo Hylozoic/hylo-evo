@@ -1,24 +1,109 @@
 .post {
-  width: 140px;
   min-height: 180px;
   color: $color-white;
   text-align: center;
   border-radius: 5px;
   padding: 25px;
-  margin-right: 15px;
-  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
   cursor: pointer;
+  position: relative;
+
+  .bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    opacity: .4;
+    z-index: 0;
+  }
+
+  .content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 100%;
+    left: 0;
+    overflow: hidden;
+
+    .type {
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-bottom: 10px;
+    }
+    .title {
+      font-size: 14px;
+      line-height: 18px;
+      padding: 5px;
+    }
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: -15px;
+    width: 100%;
+    left: 0;
+
+    > div {
+      position: relative;
+      left: 5px;
+    }
+
+    > span {
+      position: relative;
+      right: 5px;
+      top: 12px;
+      color: #FFFFFF;
+      font-size: 18px;
+      height: 16px;
+      border-radius: 30px;
+    }
+
+    .commenters {
+      color: black;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 3px 5px 2px 7px;
+      font-size: 11px;
+      font-family: 'Circular Book', sans-serif;
+      color: rgba(41, 64, 90, 1.00);
+    }
+
+    .comments {
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
+    }
+  }
 }
 
-.type {
-  text-transform: uppercase;
-  font-size: 10px;
-  margin-bottom: 10px;
-}
+.view-all {
+  min-width: 150px;
+  padding-left: 30px;
+  position: relative;
+  height: 180px;
 
-.title {
-  font-size: 14px;
-  line-height: 18px;
+  a {
+    border: 1px solid rgba(192, 197, 205, 1.00);
+    height: 30px;
+    background-color: transparent;
+    font-size: 14px;
+    color: rgba(128, 140, 156, 1.00);
+    line-height: 30px;
+    padding: 0 15px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 30px;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
 .discussion {
@@ -45,31 +130,12 @@
   background-color: $color-resources;
 }
 
-.images {
-  display: flex;
-  justify-content: space-between;
-  
-  > div {
-    position: relative;
-    top: -1em;
-    left: 1em;
-  }
 
-  > span {
-    position: relative;
-    right: 1.5em;
-    top: -0.3em;
-    color: #FFFFFF;
-    font-size: 18px;
-  }
-  
-  .commenters {
-    color: black;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 3px 5px 2px 7px;
-    font-size: 12px;
-    font-family: 'Circular Book', sans-serif;
-  }
+.recent-posts :global(.slick-slide > div) {
+  padding: 0 0px 20px 15px;
 }
+
+.recent-posts :global(.slick-list) {
+  padding: 0 50px 0 0;
+}
+

@@ -1,0 +1,54 @@
+.events {
+  padding: 0 15px 0 8px;
+
+  .event {
+    height: 230px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+
+     .content {
+      background-color: rgba(234, 100, 96, .8);
+      padding: 15px;
+      position: absolute;
+      bottom: 0;
+      text-align: left;
+      z-index: 10;
+      width: 100%;
+      border-radius: 0 0 5px 5px;
+
+      .time, .location {
+          color: rgba(255, 255, 255, .7);
+          font-size: 12px;
+      }
+
+      .title {
+        color: rgba(255, 255, 255, 1);
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      z-index: 0;
+      border-radius: 5px;
+    }
+  }
+  .event.narrow {
+    margin-right: 15px;
+  }
+}
+
+.events :global(.slick-slide > div) {
+  padding: 0 8px 15px 8px;
+}
+
+.events :global(.slick-list) {
+  padding: 0 20% 0 0;
+}

@@ -13,7 +13,10 @@ export default class WelcomeWidget extends Component {
   render () {
     const { settings = {} } = this.props
     return (
-      <div>{settings ? settings.text : ''}</div>
+      <div styleName='welcome-widget'>
+        <h2>Example title</h2>
+        <p>Example text {settings ? settings.text : ''}</p>
+      </div>
     )
   }
 }
