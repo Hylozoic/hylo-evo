@@ -30,8 +30,10 @@ export default class MembersWidget extends Component {
           {members && members.map(m => <div key={m.id} styleName='active-user'>
             <div styleName='user-name'>{m.name.split(' ')[0]}</div>
             <div styleName='user-controls'>
+              <div styleName='buttons'>
               <Link to='#'><Icon name='Messages' styleName='user-message-icon' /></Link>
               <Link to='#'><Icon name='Person' styleName='user-profile-icon' /></Link>
+              </div>
             </div>
             <div styleName='user-background' />
             <div styleName='user-image' style={{ backgroundImage: `url(${m.avatarUrl})` }} />
