@@ -9,6 +9,7 @@ import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getGroupForDetails from 'store/selectors/getGroupForDetails'
 import { FETCH_GROUP, FETCH_JOIN_REQUESTS } from 'store/constants'
+import { addSkill, removeSkill } from 'components/SkillsSection/SkillsSection.store'
 import {
   createJoinRequest,
   fetchJoinRequests,
@@ -45,6 +46,8 @@ export function mapDispatchToProps (dispatch, props) {
   }
 
   return {
+    addSkill: (name) => dispatch(addSkill(name)),
+    removeSkill: (skillId) => dispatch(removeSkill(skillId)),
     fetchGroup: () => dispatch(fetchGroupBySlug(slug)),
     fetchJoinRequests: (groupId) => () => dispatch(fetchJoinRequests(groupId)),
     onClose: getRouteParam('detailGroupSlug', {}, props) ? () => dispatch(push(closeLocation)) : false,

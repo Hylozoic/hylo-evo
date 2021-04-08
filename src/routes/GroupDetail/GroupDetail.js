@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { get } from 'lodash'
+import { get, map } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -8,6 +8,7 @@ import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import Pillbox from 'components/Pillbox'
 import { DEFAULT_AVATAR, DEFAULT_BANNER, GROUP_ACCESSIBILITY } from 'store/models/Group'
 import { inIframe } from 'util/index'
 import { groupUrl } from 'util/navigation'
@@ -75,12 +76,12 @@ export default class GroupDetail extends Component {
 
   render () {
     const {
-      group,
       currentUser,
+      group,
       isMember,
       location,
-      pending,
-      onClose
+      onClose,
+      pending
     } = this.props
 
     if (!group && !pending) return <NotFound />
@@ -127,7 +128,7 @@ export default class GroupDetail extends Component {
   }
 
   renderGroupDetails () {
-    const { group, currentUser, joinRequests } = this.props
+    const { addSkill, currentUser, group, joinRequests, removeSkill } = this.props
     const { errorMessage, successMessage } = this.state
     const hasPendingRequest = joinRequests.find(jr => jr.group.id === group.id && jr.user.id === currentUser.id)
     const displayMessage = errorMessage || successMessage || hasPendingRequest
@@ -156,14 +157,21 @@ export default class GroupDetail extends Component {
         </div>
         { displayMessage
           ? <Message errorMessage={errorMessage} successMessage={successMessage} hasPendingRequest={hasPendingRequest} />
-          : <Request group={group} joinGroup={this.joinGroup} requestToJoinGroup={this.requestToJoinGroup} />
+          : <Request
+            addSkill={addSkill}
+            currentUser={currentUser}
+            group={group}
+            joinGroup={this.joinGroup}
+            requestToJoinGroup={this.requestToJoinGroup}
+            removeSkill={removeSkill}
+          />
         }
       </div>
     )
   }
 }
 
-export function Request ({ group, joinGroup, requestToJoinGroup }) {
+export function Request ({ addSkill, currentUser, group, joinGroup, requestToJoinGroup, removeSkill }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
   const setAnswer = (index) => (event) => {
@@ -177,6 +185,8 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
 
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
+      {group.suggestedSkills && group.suggestedSkills.length > 0 &&
+        <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
       { group.accessibility === GROUP_ACCESSIBILITY.Open
         ? <div styleName='g.requestOption'>
           <div styleName='g.requestHint'>Anyone can join this group!</div>
@@ -200,4 +210,34 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
 export function Message ({ errorMessage, successMessage, hasPendingRequest }) {
   const message = hasPendingRequest ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
   return (<div styleName='g.message'>{message}</div>)
+}
+
+export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) {
+  const [selectedSkills, setSelectedSkills] = useState(currentUser.skills ? currentUser.skills.toRefArray().map(s => s.id) : [])
+
+  const pills = map(group.suggestedSkills, skill => ({
+    ...skill,
+    label: skill.name,
+    className: selectedSkills.find(s => s === skill.id) ? g.selectedSkill : ''
+  }))
+
+  const handleClick = (skillId) => {
+    const hasSkill = selectedSkills.includes(skillId)
+    if (hasSkill) {
+      removeSkill(skillId)
+      setSelectedSkills(selectedSkills.filter(s => s !== skillId))
+    } else {
+      addSkill(group.suggestedSkills.find(s => s.id === skillId).name)
+      setSelectedSkills(selectedSkills.concat(skillId))
+    }
+  }
+
+  return <div>
+    <h1>Which of the following skills &amp; interests are relevant to you?</h1>
+    <Pillbox
+      pills={pills}
+      handleClick={handleClick}
+      editable={false}
+    />
+  </div>
 }

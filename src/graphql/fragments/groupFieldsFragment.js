@@ -86,6 +86,12 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       questionId
       text
     }
+  }
+  suggestedSkills {
+    items {
+      id
+      name
+    }
   }` : ''}
 `
 
