@@ -186,7 +186,8 @@ export function Request ({ addSkill, currentUser, group, joinGroup, requestToJoi
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
       {group.suggestedSkills && group.suggestedSkills.length > 0 &&
-        <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
+        <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />
+      }
       { group.accessibility === GROUP_ACCESSIBILITY.Open
         ? <div styleName='g.requestOption'>
           <div styleName='g.requestHint'>Anyone can join this group!</div>
@@ -232,12 +233,14 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
     }
   }
 
-  return <div>
-    <h1>Which of the following skills &amp; interests are relevant to you?</h1>
-    <Pillbox
-      pills={pills}
-      handleClick={handleClick}
-      editable={false}
-    />
+  return <div styleName='g.joinQuestion'>
+    <h3>Which of the following skills &amp; interests are relevant to you?</h3>
+    <div styleName='g.skillPills'>
+      <Pillbox
+        pills={pills}
+        handleClick={handleClick}
+        editable={false}
+      />
+    </div>
   </div>
 }

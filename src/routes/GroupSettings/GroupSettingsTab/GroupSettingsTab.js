@@ -194,17 +194,21 @@ export default class GroupSettingsTab extends Component {
       <div styleName='groupPrivacySection'>
         <h3>Relevant skills &amp; interests</h3>
         <p styleName='privacyDetail'>What skills and interests are relevant to this group?</p>
-        <SwitchStyled
-          checked={showSuggestedSkills}
-          onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
-          backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-        <div>Ask new members to fill out their skills and interests?</div>
-
+        <div styleName={'skillsSetting' + ' ' + cx({ on: showSuggestedSkills })}>
+          <SwitchStyled
+            checked={showSuggestedSkills}
+            onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+            backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+          <p styleName='toggleDescription'>Ask new members to fill out their skills and interests?</p>
+          <div styleName='onOff'>
+            <div styleName='off'>OFF</div>
+            <div styleName='on'>ON</div>
+          </div>
+        </div>
         <SkillsSection
           group={group}
           label='Add a relevant skill or interest'
           placeholder='What skills and interests are most relevant to your group?' />
-
       </div>
 
       <div styleName='saveChanges'>
@@ -249,7 +253,6 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
       </div>
       <div styleName='questionList'>
         <span styleName='questionDescription'>Require people to answer questions when asking to join this group</span>
-
         {joinQuestions.map((q, i) => <div key={i} styleName='question'>
           {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
           <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
