@@ -69,5 +69,10 @@
 @media screen and (max-width: 600px) {
   .announcements {
     padding: 0 0 0 0;
+
+    .announcement .content .title {
+      font-size: 16px;
+      line-height: 16px;
+    }
   }
 }
