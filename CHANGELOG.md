@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.2] - 2021-04-08
+### Fixed
+- Fixed issues saving and viewing Saved Searches on the map
+- Fixed viewing join requests settings page
+- You can edit comments once again
+
 ## [3.0.1] - 2021-04-07
 ### Fixed
 - Issues on the Groups page where we would incorrectly show a person having requested membership in a group or not show that they had requested membership
