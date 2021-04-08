@@ -15,6 +15,7 @@ Object {
     "joinQuestions": Array [],
     "members": Array [],
     "slug": "foo",
+    "suggestedSkills": Array [],
   },
   "slug": "foo",
 }
@@ -37,6 +38,7 @@ Object {
             allowGroupInvites
             askJoinQuestions
             publicMemberDirectory
+            showSuggestedSkills
           }
           slug
           visibility
@@ -45,6 +47,13 @@ Object {
               id
               name
               avatarUrl
+            }
+          }
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
             }
           }
           moderators (first: 100) {
@@ -71,11 +80,10 @@ Object {
               lastSentAt
             }
           }
-          joinQuestions {
+          suggestedSkills {
             items {
               id
-              questionId
-              text
+              name
             }
           }
         }
@@ -139,6 +147,7 @@ Object {
     "joinQuestions": Array [],
     "members": Array [],
     "slug": "foo",
+    "suggestedSkills": Array [],
   },
   "slug": "foo",
   "updateGroupSettings": [Function],

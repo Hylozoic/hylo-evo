@@ -50,6 +50,9 @@ export function joinGroup (groupId) {
           person {
             id
           }
+          settings {
+            showJoinForm
+          }
         }
       }`,
       variables: {

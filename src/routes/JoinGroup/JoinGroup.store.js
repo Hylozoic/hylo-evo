@@ -49,6 +49,9 @@ export function useInvitation (inviteCodes = {}) {
             person {
               id
             }
+            settings {
+              showJoinForm
+            }
           }
           error
         }

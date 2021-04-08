@@ -1,0 +1,85 @@
+:global .welcome-modal-enter, :global .welcome-modal-appear {
+  .welcome-modal-background {
+    opacity: 0;
+  }
+
+  .welcome-modal-wrapper {
+    opacity: 0;
+    position: relative;
+    right: -100%;
+  }
+}
+
+:global .welcome-modal-enter.welcome-modal-enter-active, :global .welcome-modal-appear.welcome-modal-appear-active {
+  .welcome-modal-background {
+    opacity: 1;
+    transition: opacity 200ms ease-out;
+  }
+
+  .welcome-modal {
+    opacity: 1;
+    right: 0;
+    transition: right 250ms ease-out, opacity 400ms ease-out;
+  }
+}
+
+:global .welcome-modal-leave {
+  .welcome-modal-background {
+    opacity: 0;
+  }
+
+  .welcome-modal {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+:global .welcome-modal-leave.welcome-modal-leave-active {
+  .welcome-modal-background {
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+  }
+
+  .welcome-modal {
+    opacity: 0;
+    transform: translate(0, -100px);
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+  }
+}
+
+.welcome-modal-wrapper {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: rgba(41, 64, 90, .4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-modal {
+  width: 100%;
+  max-width: 590px;
+  margin-top: auto;
+  margin-bottom: auto;
+  position: relative;
+  padding: 10px;
+  background: white;
+}
+
+.close-button {
+  cursor: pointer;
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  z-index: 1000;
+  &:hover {
+    cursor: pointer;
+  }
+}

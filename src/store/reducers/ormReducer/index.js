@@ -55,6 +55,7 @@ import {
 import {
   USE_INVITATION
 } from 'routes/JoinGroup/JoinGroup.store'
+import { FETCH_GROUP_WELCOME_DATA } from 'routes/GroupWelcomeModal/GroupWelcomeModal.store'
 
 import {
   DELETE_GROUP_TOPIC_PENDING
@@ -154,6 +155,10 @@ export default function ormReducer (state = {}, action) {
         // of messages works as expected
         Message.filter({ messageThread: meta.id }).delete()
       }
+      break
+
+    case FETCH_GROUP_WELCOME_DATA:
+      clearCacheFor(Group, meta.id)
       break
 
     case UPDATE_THREAD_READ_TIME:
