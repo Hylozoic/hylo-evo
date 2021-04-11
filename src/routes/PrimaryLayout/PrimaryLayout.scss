@@ -421,7 +421,7 @@ $drawer-z-index: 51;
   background-color: white;
   position: absolute;
   z-index: 30;
-  top: 58px;
+  top: 57px;
   right: 0px;
   height: calc(100vh - 58px);
   width: $detail-column-width;
@@ -562,6 +562,17 @@ $drawer-z-index: 51;
   }
   .center.map-view {
     overflow-y: auto;
+  }
+
+
+  .tourWrapper .tourPrompt .tourGuide {
+    min-width: 40px;
+    height: 40px;
+
+    img {
+      width: 24px;
+      height: 18px;
+    }
   }
 }
 
