@@ -58,7 +58,7 @@ export default class Feed extends Component {
 
   render () {
     const {
-      routeParams, location, group, currentUser, postsTotal, followersTotal,
+      routeParams, querystringParams, group, currentUser, postsTotal, followersTotal,
       groupTopic, newPost, currentUserHasMemberships,
       goToCreateGroup, membershipsPending, postTypeFilter, topicLoading, toggleGroupTopicSubscribe
     } = this.props
@@ -92,7 +92,8 @@ export default class Feed extends Component {
           type={postTypeFilter}
           context={context}
           newPost={newPost}
-          urlLocation={location}
+          routeParams={routeParams}
+          querystringParams={querystringParams}
           currentUserHasMemberships={currentUserHasMemberships} />}
       {(currentUserHasMemberships || isPublicStream) && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && !isPublicStream && <CreateGroupPrompt
