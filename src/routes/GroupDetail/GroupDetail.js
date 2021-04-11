@@ -47,7 +47,7 @@ export default class GroupDetail extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug && this.props.slug !== prevProps.slug) {
+    if (get(prevProps, 'group.id') !== get(this.props, 'group.id')) {
       this.onGroupChange()
     }
   }
@@ -154,7 +154,7 @@ export default class GroupDetail extends Component {
           </div>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {get('settings.publicMemberDirectory', group)
+            {get(group, 'settings.publicMemberDirectory')
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>

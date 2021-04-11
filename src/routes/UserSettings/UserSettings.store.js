@@ -83,6 +83,7 @@ export function fetchSavedSearches (userId) {
             createdAt
             context
             group {
+              id
               name
               slug
             }

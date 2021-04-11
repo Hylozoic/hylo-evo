@@ -1,6 +1,5 @@
 .container {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-  margin-left: 8px;
   transition: all .25s ease;
   position: absolute;
 }
@@ -9,7 +8,7 @@
   min-width: 0 !important;
   @include is-top-triangle(#0DC39F, #0DC39F, 14px);
   margin-left: 20px;
-  top: 70px;
+  top: 60px;
   left: 6px;
   width: 14px !important;
   height: 14px !important;
@@ -19,7 +18,7 @@
 .innerContainer {
   position: fixed;
   margin-left: 12px;
-  top: 130px;
+  top: 120px;
   width: 300px;
   overflow-y: auto;
   z-index: 20;
@@ -45,7 +44,7 @@
   > span {
     font-size: 12px;
     line-height: 15px;
-    
+
     text {
       opacity: 0.5;
     }
@@ -74,7 +73,7 @@
 
 .search {
   padding: 9px;
-  border-bottom: 1px dashed #C0C5CD; 
+  border-bottom: 1px dashed #C0C5CD;
 }
 
 .search:last-of-type {
