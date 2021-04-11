@@ -220,13 +220,13 @@ export default class PrimaryLayout extends Component {
     const closeDrawer = () => isDrawerOpen && toggleDrawer()
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
-    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser)
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
     const collapsedState = hasDetail || (isMapViewPath(location.pathname) && queryParams['hideDrawer'] !== 'true')
     const isSingleColumn = (group && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
+    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser) && !isSingleColumn
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapViewPath(location.pathname), 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
