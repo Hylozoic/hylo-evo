@@ -65,12 +65,14 @@
 
 .welcome-modal {
   width: 100%;
-  max-width: 590px;
+  max-width: 440px;
   margin-top: auto;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
   margin-bottom: auto;
   position: relative;
-  padding: 10px;
   background: white;
+  border-radius: 5px;
+  margin: 10px;
 }
 
 .close-button {
@@ -78,8 +80,56 @@
   position: absolute;
   top: 24px;
   right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
+  width: 30px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  height: 30px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 30px;
   &:hover {
     cursor: pointer;
+  }
+}
+
+.banner {
+  position: relative;
+  border-radius: 5px 5px 0 0;
+  background-size: cover;
+
+  .fade {
+    position: absolute;
+    border-radius: 5px 5px 0 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-color: rgba(49, 73, 101, 1.00);
+    opacity: .4;
+  }
+
+  .banner-content {
+    padding: 15px;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+
+    h3 {
+      padding-left: 15px;
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.welcome-content {
+  padding: 15px;
+
+  .call-to-action {
+    text-align: center;
   }
 }

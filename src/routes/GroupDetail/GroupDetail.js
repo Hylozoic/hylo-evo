@@ -234,7 +234,7 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
   }
 
   return <div styleName='g.joinQuestion'>
-    <h3>Which of the following skills &amp; interests are relevant to you?</h3>
+    <h4>Which of the following skills &amp; interests are relevant to you?</h4>
     <div styleName='g.skillPills'>
       <Pillbox
         pills={pills}
