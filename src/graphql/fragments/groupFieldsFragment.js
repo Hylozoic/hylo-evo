@@ -1,7 +1,7 @@
 const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   id
   accessibility
-  announcements: posts(isAnnouncement: true, sortBy: 'created', first: 3) {
+  announcements: posts(isAnnouncement: true, sortBy: "created", first: 3) {
     hasMore
     items {
       id
