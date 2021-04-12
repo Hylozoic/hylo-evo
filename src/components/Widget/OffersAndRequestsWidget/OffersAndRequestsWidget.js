@@ -17,7 +17,7 @@ export default class OffersAndRequestsWidget extends Component {
     const { offersAndRequests } = this.props
     return (
       <div styleName='offers-and-requests'>
-        {offersAndRequests && offersAndRequests.map(a => <Link to='#'>
+        {offersAndRequests && offersAndRequests.map(a => <Link to='#' key={a.id}>
           <div styleName='item'>
             <div styleName='meta'>
               <span styleName='type'>{a.kind}</span> from {a.author}

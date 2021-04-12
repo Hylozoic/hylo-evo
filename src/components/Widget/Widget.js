@@ -12,8 +12,21 @@ import WelcomeWidget from 'components/Widget/WelcomeWidget'
 import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 
+const WIDGET_TITLE = {
+  text_block: 'Welcome message',
+  announcements: 'Announcement',
+  active_members: 'Recently active members',
+  requests_offers: 'Open requests & offers',
+  posts: 'Recent posts',
+  community_topics: 'Community topics',
+  events: 'Upcoming events',
+  project_activity: 'Recent project activity',
+  group_affiliations: 'Subgroups and affiliations',
+  map: 'Community map'
+}
+
 export default function Widget (props) {
-  const { toggleVisibility, id, isVisible, name, settings, updateWidgetSettings } = props
+  const { id, isVisible, name, settings, updateWidget } = props
 
   const [viewingMore, viewMore] = useState(false)
   const [editingSettings, editSettings] = useState(false)
@@ -22,16 +35,28 @@ export default function Widget (props) {
   return (
     <div styleName='widget'>
       <div styleName='header'>
-        <h3>{(settings && settings.title) || name}</h3>
+        <h3>{(settings && settings.title) || WIDGET_TITLE[name]}</h3>
         <div styleName='more'>
 
           <Icon name='More' styleName={`more ${viewingMore ? 'selected' : ''}`} onClick={() => { viewMore(!viewingMore); editSettings(false) }} />
-          {editingSettings && <EditForm id={id} editSettings={editSettings} viewMore={viewMore} newSettings={newSettings} updateSettings={updateSettings} save={updateWidgetSettings} />}
+          {editingSettings &&
+            <EditForm
+              id={id}
+              editSettings={editSettings}
+              viewMore={viewMore}
+              newSettings={newSettings}
+              updateSettings={updateSettings}
+              save={updateWidget} />}
 
           {!editingSettings && <div styleName={`edit-section ${viewingMore ? 'visible' : ''}`}>
             <span styleName='triangle'>&nbsp;</span>
-            {settings && <div styleName='edit-settings'><Icon name='Edit' onClick={() => editSettings(!editingSettings)} /> Edit welcome message</div>}
-            <VisibilityToggle id={id} checked={isVisible} onChange={toggleVisibility} styleName='widget-visibility' backgroundColor={isVisible ? '#0DC39F' : '#8B96A4'} /> Visibility: {isVisible ? 'Visible' : 'Hidden'}
+            {name === 'text_block' && <div styleName='edit-settings'><Icon name='Edit' onClick={() => editSettings(!editingSettings)} /> Edit welcome message</div>}
+            <VisibilityToggle
+              id={id}
+              checked={isVisible}
+              onChange={() => updateWidget(id, { isVisible: !isVisible })}
+              styleName='widget-visibility'
+              backgroundColor={isVisible ? '#0DC39F' : '#8B96A4'} /> Visibility: {isVisible ? 'Visible' : 'Hidden'}
           </div>}
         </div>
       </div>
@@ -71,7 +96,7 @@ const EditForm = ({ id, editSettings, viewMore, newSettings, updateSettings, sav
           editSettings(false)
           viewMore(true)
         }}>Cancel</span>
-        <span styleName='save' onClick={() => save({ id, data: newSettings })}>Save</span>
+        <span styleName='save' onClick={() => save(id, { settings: newSettings })}>Save</span>
       </div>
 
     </div>
@@ -82,7 +107,7 @@ const HiddenWidget = ({ isVisible, name }) => {
   return (
     <div>
       <div>Visibility: {isVisible ? 'Visible' : 'Hidden'}</div>
-      <div>The {name} section is not visible to members of this community</div>
+      <div>The {name} section is not visible to members of this group</div>
     </div>
   )
 }
@@ -98,10 +123,10 @@ const ChildWidget = ({
 }) => {
   if (!isVisible) return <HiddenWidget isVisible={isVisible} name={name} />
   switch (name) {
-    case 'Welcome message': {
+    case 'text_block': {
       return <WelcomeWidget settings={settings} />
     }
-    case 'Announcement': {
+    case 'announcements': {
       const announcements = [{ // group && group.announcements && group.announcements.items
         title: 'Nutrient Density working group forming! Sign up here!',
         author: 'Amanda Rodriguez',
@@ -115,11 +140,11 @@ const ChildWidget = ({
       }]
       return announcements && <AnnouncementWidget announcements={announcements} />
     }
-    case 'Recently active members': {
+    case 'active_members': {
       const members = group && group.activeMembers && group.activeMembers.items
       return <MembersWidget members={members} />
     }
-    case 'Open requests & offers': {
+    case 'requests_offers': {
       const offersAndRequests = [{ // group && group.offersAndRequests && group.offersAndRequests.items
         title: 'Seeking an accountant familiar with non-profits working with MediCal',
         author: 'Brooke Daily',
@@ -135,14 +160,14 @@ const ChildWidget = ({
       }]
       return <OffersAndRequestsWidget offersAndRequests={offersAndRequests} />
     }
-    case 'Recent posts': {
+    case 'posts': {
       return <RecentPostsWidget posts={posts} showDetails={showDetails} />
     }
-    case 'Community topics': {
+    case 'community_topics': {
       const topics = group && group.groupTopics
       return <GroupTopicsWidget topics={topics} />
     }
-    case 'Upcoming events': {
+    case 'events': {
       const events = [{ // group && group.events && group.events.items
         time: 'Thursday, April 26, 3:00p - 4:00p',
         title: 'Mindfulness 101',
@@ -156,7 +181,7 @@ const ChildWidget = ({
       }]
       return <EventsWidget events={events} routeParams={routeParams} showDetails={showDetails} />
     }
-    case 'Recent project activity': {
+    case 'project_activity': {
       const projects = [{ // group && group.projects && group.projects.items
         id: '1234',
         title: 'Project: Extend Hylo Projects',
@@ -170,7 +195,7 @@ const ChildWidget = ({
       }]
       return <ProjectsWidget projects={projects} routeParams={routeParams} showDetails={showDetails} />
     }
-    case 'Subgroups and affiliations': {
+    case 'group_affiliations': {
       const affiliations = [{
         id: '1234',
         groupName: 'Annual Meeting 2020',

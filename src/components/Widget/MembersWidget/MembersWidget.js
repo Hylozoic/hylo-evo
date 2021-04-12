@@ -31,8 +31,8 @@ export default class MembersWidget extends Component {
             <div styleName='user-name'>{m.name.split(' ')[0]}</div>
             <div styleName='user-controls'>
               <div styleName='buttons'>
-              <Link to='#'><Icon name='Messages' styleName='user-message-icon' /></Link>
-              <Link to='#'><Icon name='Person' styleName='user-profile-icon' /></Link>
+                <Link to='#'><Icon name='Messages' styleName='user-message-icon' /></Link>
+                <Link to='#'><Icon name='Person' styleName='user-profile-icon' /></Link>
               </div>
             </div>
             <div styleName='user-background' />
