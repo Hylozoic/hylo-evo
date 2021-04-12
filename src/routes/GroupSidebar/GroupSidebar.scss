@@ -62,6 +62,19 @@ $about-height: 116px;
   display: block;
   margin-bottom: 20px;
   composes: text-button from 'css/typography.scss';
+  height: 30px;
+  line-height: 28px;
+  border: 1px solid rgba(37, 195, 159, 1.00);
+  border-radius: 30px;
+  display: inline-block;
+  padding: 0 15px;
+
+  .settings-icon {
+    font-size: 18px;
+    color: rgba(37, 195, 159, 1.00);
+    position: relative;
+    top: 3px;
+  }
 }
 
 // MemberSection
