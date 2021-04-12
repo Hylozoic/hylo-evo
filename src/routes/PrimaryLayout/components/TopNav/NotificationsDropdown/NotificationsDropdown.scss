@@ -35,6 +35,8 @@
   display: flex;
   align-items: flex-start;
   cursor: pointer;
+  border-bottom: 1px solid $color-black-squeeze;
+
   &:first-child {
     margin-top: 5px;
   }
@@ -43,10 +45,6 @@
       border: none;
     }
   }
-}
-
-.unread {
-  background-color: $color-saltpan;
 }
 
 .image-wraper {
@@ -65,7 +63,6 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 20px 15px 15px 0;
-  border-bottom: 1px solid $color-black-squeeze;
 }
 
 // NotificationHeader
@@ -73,7 +70,7 @@
 .header {
   composes: caption-lt-lg from 'css/typography.scss';
   margin-bottom: 5px;
-  color: $color-rhino;
+  color: $color-rhino-60;;
 }
 
 .bold {
@@ -86,3 +83,17 @@
   composes: caption-lt-lg from 'css/typography.scss';
   color: $color-rhino-60;
 }
+
+.unread {
+  background-color: rgba(42, 201, 167, .1);
+
+  .body {
+    color: $color-rhino;
+  }
+
+  .header {
+    color: $color-rhino;
+    @include font-bold;
+  }
+}
+
