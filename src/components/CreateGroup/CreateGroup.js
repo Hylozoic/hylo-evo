@@ -52,7 +52,7 @@ export default class CreateGroup extends Component {
   }
 
   focusSlug = () => {
-    this.slugRef.current.focus()
+    this.slugRef.current.select()
   }
 
   isValid = () => {
@@ -137,11 +137,11 @@ export default class CreateGroup extends Component {
           theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
           placeholder="Your group's name"
           noClearButton
-          maxLength='30'
+          maxLength='40'
           onEnter={this.onSubmit}
           styleName='groupNameInput'
         />
-        <span styleName='characterCounter'>{characterCount} / 30</span>
+        <span styleName='characterCounter'>{characterCount} / 40</span>
         {errors.name && <span styleName='nameError'>{errors.name}</span>}
         <span styleName='slug'>
           <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
@@ -158,6 +158,8 @@ export default class CreateGroup extends Component {
             onEnter={this.onSubmit}
             maxLength='30'
             inputRef={this.slugRef}
+            onClick={this.focusSlug}
+            spellCheck='false'
           />
         </span>
         {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
