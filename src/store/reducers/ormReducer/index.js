@@ -11,6 +11,7 @@ import {
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
+  FETCH_GROUP_DETAILS_PENDING,
   FETCH_MESSAGES_PENDING,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
@@ -155,6 +156,13 @@ export default function ormReducer (state = {}, action) {
         Message.filter({ messageThread: meta.id }).delete()
       }
       break
+
+    case FETCH_GROUP_DETAILS_PENDING: {
+      // Clear out prerequisite groups so they correclty update with latest data
+      group = Group.safeGet({ slug: meta.slug })
+      group.update({ prerequisiteGroups: [] })
+      break
+    }
 
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()

@@ -82,8 +82,9 @@ export default class GroupDetail extends Component {
     if (pending) return <Loading />
 
     const topics = group && group.groupTopics
+    const fullPage = !onClose
 
-    return <div className={cx({ [g.group]: true, [g.fullPage]: !onClose })}>
+    return <div className={cx({ [g.group]: true, [g.fullPage]: fullPage })}>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
@@ -140,7 +141,7 @@ export default class GroupDetail extends Component {
   }
 
   renderGroupDetails () {
-    const { group, joinRequests, routeParams } = this.props
+    const { group, joinRequests, onClose, routeParams } = this.props
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
     return (
       <div>
@@ -166,6 +167,7 @@ export default class GroupDetail extends Component {
           </div>
         </div>
         <JoinSection
+          fullPage={!onClose}
           group={group}
           groupsWithPendingRequests={groupsWithPendingRequests}
           joinGroup={this.joinGroup}
@@ -177,7 +179,7 @@ export default class GroupDetail extends Component {
   }
 }
 
-export function JoinSection ({ group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, routeParams, topLevel = true }) {
+export function JoinSection ({ fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, routeParams }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
   const setAnswer = (index) => (event) => {
@@ -194,39 +196,36 @@ export function JoinSection ({ group, groupsWithPendingRequests, joinGroup, requ
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
-        ? topLevel
-          ? <div styleName='g.prerequisiteGroups'>
-            {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{group.name} is only accessible to members of the following groups:</h4>}
-            {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
-              <Link to={groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
-                <div styleName='g.groupTitleContainer'>
-                  <img src={prereq.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
-                  <div>
-                    <div styleName='g.groupTitle'>{prereq.name}</div>
-                    <div styleName='g.groupContextInfo'>
-                      <span styleName='g.group-privacy'>
-                        <Icon name={visibilityIcon(prereq.visibility)} styleName='g.privacy-icon' />
-                        <div styleName='g.privacy-tooltip'>
-                          <div>{visibilityString(prereq.visibility)} - {visibilityDescription(prereq.visibility)}</div>
-                        </div>
-                      </span>
-                      <span styleName='g.group-privacy'>
-                        <Icon name={accessibilityIcon(prereq.accessibility)} styleName='g.privacy-icon' />
-                        <div styleName='g.privacy-tooltip'>
-                          <div>{accessibilityString(prereq.accessibility)} - {accessibilityDescription(prereq.accessibility)}</div>
-                        </div>
-                      </span>
-                      {prereq.location}
-                    </div>
+        ? <div styleName='g.prerequisiteGroups'>
+          {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{group.name} is only accessible to members of the following groups:</h4>}
+          {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
+            <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
+              <div styleName='g.groupTitleContainer'>
+                <img src={prereq.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
+                <div>
+                  <div styleName='g.groupTitle'>{prereq.name}</div>
+                  <div styleName='g.groupContextInfo'>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={visibilityIcon(prereq.visibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{visibilityString(prereq.visibility)} - {visibilityDescription(prereq.visibility)}</div>
+                      </div>
+                    </span>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={accessibilityIcon(prereq.accessibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{accessibilityString(prereq.accessibility)} - {accessibilityDescription(prereq.accessibility)}</div>
+                      </div>
+                    </span>
+                    {prereq.location}
                   </div>
                 </div>
-                <div styleName='g.headerBackground' />
-              </Link>
-              { prereq.description ? <div styleName='g.prereqDescription'>{prereq.description}</div> : ' ' }
-              <JoinSection group={prereq} groupsWithPendingRequests={groupsWithPendingRequests} joinGroup={joinGroup} requestToJoinGroup={requestToJoinGroup} topLevel={false} routeParams={routeParams} />
-            </div>)}
-          </div>
-          : <span>You must join additional groups before joining this one. Please <Link to={groupDetailUrl(group.slug, routeParams)}>visit it</Link> to do so.</span>
+              </div>
+              <div styleName='g.headerBackground' />
+            </Link>
+          </div>)}
+        </div>
+        : group.numPrerequisitesLeft ? "This group has prerequisite groups you cannot see, you cannot join this group at this time"
         : group.accessibility === GROUP_ACCESSIBILITY.Open
           ? <div styleName='g.requestOption'>
             <div styleName='g.requestHint'>Anyone can join this group!</div>

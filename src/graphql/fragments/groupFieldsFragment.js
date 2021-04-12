@@ -91,30 +91,11 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       avatarUrl
       id
       name
-      settings {
-        askJoinQuestions
-      }
       slug
-      joinQuestions {
-        items {
-          id
-          questionId
-          text
-        }
-      }
-      prerequisiteGroups(onlyNotMember: true) {
-        items {
-          avatarUrl
-          id
-          name
-          slug
-          settings {
-            askJoinQuestions
-          }
-        }
-      }
     }
-  }` : ''}
+  }
+  numPrerequisitesLeft
+  ` : ''}
 `
 
 export default groupFieldsFragment

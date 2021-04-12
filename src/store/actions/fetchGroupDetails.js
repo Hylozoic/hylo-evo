@@ -12,6 +12,9 @@ export default function fetchGroupDetails (slug) {
       }`,
       variables: { slug }
     },
-    meta: { extractModel: 'Group' }
+    meta: {
+      extractModel: 'Group',
+      slug
+    }
   }
 }
