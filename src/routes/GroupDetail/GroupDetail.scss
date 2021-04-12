@@ -14,7 +14,7 @@
 .groupDetailHeader.prereqHeader {
   height: 83px;
   border-radius: 5px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   .headerBackground {
     height: 83px;
@@ -348,6 +348,24 @@
   padding: 14px 0px;
 }
 
+.cta {
+  text-align: center;
+}
+
+.prereqVisitLink {
+  border: 1px solid rgba(228, 228, 228, 1.00);
+  height: 24px;
+  line-height: 24px;
+  color: rgba(140, 151, 166, 1.00);
+  border-radius: 24px;
+  text-decoration: none;
+  padding: 0 10px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .groupDetails {
     display: block;
@@ -392,7 +410,6 @@
 
   .groupDetailHeader.prereqHeader, .fullPage .groupDetailHeader.prereqHeader {
     height: 65px;
-    margin-bottom: 15px;
 
     .headerBackground {
       height: 65px;

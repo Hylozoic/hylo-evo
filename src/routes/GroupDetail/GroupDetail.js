@@ -223,35 +223,38 @@ export function JoinSection ({ fullPage, group, groupsWithPendingRequests, joinG
               </div>
               <div styleName='g.headerBackground' />
             </Link>
+            <div styleName='g.cta'>
+              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member
+            </div>
           </div>)}
         </div>
-        : group.numPrerequisitesLeft ? "This group has prerequisite groups you cannot see, you cannot join this group at this time"
-        : group.accessibility === GROUP_ACCESSIBILITY.Open
-          ? <div styleName='g.requestOption'>
-            <div styleName='g.requestHint'>Anyone can join this group!</div>
-            {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
-              <h3>{q.text}</h3>
-              <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
-            </div>)}
-            <div styleName='g.center'>
-              <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
-            </div>
-          </div>
-          : group.accessibility === GROUP_ACCESSIBILITY.Restricted
-            ? hasPendingRequest
-              ? <div styleName='g.requestPending'>Request to join pending</div>
-              : <div styleName='g.requestOption'> {/* Restricted group, no request pending */}
-                {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
-                  <h3>{q.text}</h3>
-                  <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
-                </div>)}
-                <div styleName='g.center'>
-                  <div styleName='g.requestButton' onClick={requestToJoinGroup(group.id, questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
-                </div>
+        : group.numPrerequisitesLeft ? 'This group has prerequisite groups you cannot see, you cannot join this group at this time'
+          : group.accessibility === GROUP_ACCESSIBILITY.Open
+            ? <div styleName='g.requestOption'>
+              <div styleName='g.requestHint'>Anyone can join this group!</div>
+              {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+                <h3>{q.text}</h3>
+                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+              </div>)}
+              <div styleName='g.center'>
+                <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
               </div>
-            : <div styleName='g.requestOption'> {/* Closed group */}
-              This is group is invitation only
             </div>
+            : group.accessibility === GROUP_ACCESSIBILITY.Restricted
+              ? hasPendingRequest
+                ? <div styleName='g.requestPending'>Request to join pending</div>
+                : <div styleName='g.requestOption'> {/* Restricted group, no request pending */}
+                  {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+                    <h3>{q.text}</h3>
+                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+                  </div>)}
+                  <div styleName='g.center'>
+                    <div styleName='g.requestButton' onClick={requestToJoinGroup(group.id, questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+                  </div>
+                </div>
+              : <div styleName='g.requestOption'> {/* Closed group */}
+                This is group is invitation only
+              </div>
       }
     </div>
   )
