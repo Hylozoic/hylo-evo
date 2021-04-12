@@ -35,7 +35,7 @@ export default class Drawer extends React.PureComponent {
         </div>
         <Logo group={group} />
         {canModerate && <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
-          <Icon name='Settings' styleName='s.settingsIcon' /> Settings
+          <Icon name='Settings' styleName='s.settingsIcon' /> Group Settings
         </Link>}
       </div>
       <div>
