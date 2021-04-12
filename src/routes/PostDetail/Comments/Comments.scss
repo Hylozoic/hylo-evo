@@ -1,6 +1,6 @@
 .comments {
   padding-top: 25px;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 .form-wrapper {
@@ -21,9 +21,5 @@
 @media screen and (max-width: 320px) {
   .form-wrapper {
     padding: 0 10px;
-  }
-
-  .comments {
-    padding-bottom: 50px;
   }
 }
