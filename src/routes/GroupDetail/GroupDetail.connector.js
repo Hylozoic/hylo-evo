@@ -1,3 +1,4 @@
+import { get } from 'lodash'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { removeGroupFromUrl } from 'util/navigation'
@@ -15,9 +16,9 @@ import {
 } from './GroupDetail.store'
 
 export function mapStateToProps (state, props) {
-  const slug = getRouteParam('detailGroupSlug', state, props)
   const routeParams = props.match.params
   const group = presentGroup(props.group || getGroupForDetails(state, props))
+  const slug = get('slug', group)
   const currentUser = getMe(state)
   const { GroupDetail } = state
   const isMember = group && currentUser ? getMyMemberships(state, props).find(m => m.group.id === group.id) : false
@@ -36,7 +37,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const { location } = props
 
-  const slug = getRouteParam('detailGroupSlug', {}, props)
+  const slug = getRouteParam('detailGroupSlug', {}, props) || getRouteParam('groupSlug', {}, props)
 
   const closeLocation = {
     ...props.location,
@@ -46,7 +47,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchGroup: () => dispatch(fetchGroupBySlug(slug)),
     fetchJoinRequests: (groupId) => () => dispatch(fetchJoinRequests(groupId)),
-    onClose: slug ? () => dispatch(push(closeLocation)) : false,
+    onClose: getRouteParam('detailGroupSlug', {}, props) ? () => dispatch(push(closeLocation)) : false,
     joinGroup: (groupId, userId) => () => dispatch(joinGroup(groupId, userId)),
     createJoinRequest: (groupId) => (questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }

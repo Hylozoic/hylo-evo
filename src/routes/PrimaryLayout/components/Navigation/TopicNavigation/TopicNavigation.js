@@ -57,7 +57,7 @@ export default class TopicNavigation extends Component {
         topics={topics}
       />
       <div styleName='s.addTopic'>
-        <Link to={seeAllUrl}>see all</Link>
+        <Link to={seeAllUrl} styleName='s.allTopics'>All topics</Link>
       </div>
     </div>
   }

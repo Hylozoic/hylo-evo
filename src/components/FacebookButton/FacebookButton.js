@@ -8,9 +8,7 @@ export default function FacebookButton ({
   signUp,
   className = ''
 }) {
-  const label = signUp
-    ? 'Sign up with Facebook'
-    : 'Log in With Facebook'
+  const label = 'Continue with Facebook'
 
   return <a
     aria-label={label}

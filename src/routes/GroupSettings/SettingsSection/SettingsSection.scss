@@ -1,0 +1,27 @@
+.section {
+  background: rgba(244, 247, 250, 0.56);
+  border: 1px dashed #E1E5E9;
+  padding: 25px;
+  margin-bottom: 25px;
+  position: relative;
+
+  h3 {
+    color: rgba(35, 64, 91, 1.000);
+    font-size: 24px;
+    font-weight: bold;
+    padding-right: 80px;
+    margin-bottom: 0;
+    transition: all .25s ease;
+  }
+
+  .section p {
+    color: $color-black-30;
+    transition: all .25s ease;
+    font-size: 12px;
+    padding-bottom: 20px;
+  }
+
+  .section.on p {
+    color: $color-black-60;
+  }
+}

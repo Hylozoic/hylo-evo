@@ -25,14 +25,6 @@
   /* empty */
 }
 
-.groupPrivacySection {
-  background: rgba(244, 247, 250, 0.56);
-  border: 1px dashed $color-grey-keyline-light;
-  padding: 25px;
-  margin-bottom: 25px;
-  position: relative;
-}
-
 .avatar {
   display: flex;
   align-items: flex-end;
@@ -204,29 +196,6 @@ label {
 
 .on .settingDisabled {
   opacity: 0;
-}
-
-.groupPrivacySection h3 {
-  color: rgba(35, 64, 91, 1.000);
-  font-size: 24px;
-  font-weight: bold;
-  padding-right: 80px;
-  margin-bottom: 0;
-  transition: all .25s ease;
-}
-
-.groupPrivacySection p {
-  color: $color-black-30;
-  transition: all .25s ease;
-}
-
-.groupPrivacySection.on p {
-  color: $color-black-60;
-}
-
-.groupPrivacySection p {
-  font-size: 12px;
-  padding-bottom: 20px;
 }
 
 .groupQuestions {

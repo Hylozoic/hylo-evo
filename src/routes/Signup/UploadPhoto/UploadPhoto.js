@@ -4,7 +4,6 @@ import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import LeftSidebar from '../LeftSidebar'
 import SignupModalFooter from '../SignupModalFooter'
 import '../Signup.scss'
 
@@ -45,38 +44,27 @@ export default class UploadPhoto extends Component {
     const currentAvatarUrl = this.getValue('avatarUrl')
 
     return <div styleName='flex-wrapper'>
-      <LeftSidebar
-        header="Let's complete your profile!"
-        body={`Welcome to Hylo, ${currentUser.name}. It only takes a couple seconds to complete your profile. Let's get started!`}
-      />
       <div styleName='panel'>
-        <span styleName='white-text step-count'>STEP 1/4</span>
+        <span styleName='step-count'>STEP 1/3</span>
         <br />
         <div styleName='center'>
-          <UploadAttachmentButton
-            type='userAvatar'
-            id={currentUser.id}
-            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
-            <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
-              <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
-            </div>
-          </UploadAttachmentButton>
+          <div styleName='uploadWrapper'>
+            <UploadAttachmentButton
+              type='userAvatar'
+              id={currentUser.id}
+              onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
+              <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
+                <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
+              </div>
+            </UploadAttachmentButton>
+          </div>
         </div>
-        <div styleName='center'>
-          <input
-            styleName='signup-input signup-padding large-input-text gray-bottom-border'
-            value={'Upload a profile photo'}
-            onKeyPress={event => {
-              if (event.key === 'Enter') {
-                this.submit()
-              }
-            }}
-            autoFocus
-            readOnly
-          />
+        <div styleName='instructions'>
+          <h3>Upload a profile image</h3>
+          <p>Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.</p>
         </div>
         <div>
-          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={'Onwards!'} />
+          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={'Next: Where are you from?'} />
         </div>
       </div>
     </div>

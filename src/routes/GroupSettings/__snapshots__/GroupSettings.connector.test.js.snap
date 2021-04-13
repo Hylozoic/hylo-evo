@@ -133,7 +133,6 @@ Object {
   "deleteGroup": [Function],
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
-  "goToGroupDeleteConfirmation": [Function],
   "group": Object {
     "groupTopics": Array [],
     "id": "99",

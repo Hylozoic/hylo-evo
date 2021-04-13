@@ -34,7 +34,7 @@ export default class Groups extends Component {
     } = this.props
 
     return <div styleName='container'>
-      <div styleName='network-map'><span>Group network map in progress</span></div>
+      {/* <div styleName='network-map'><span>Group network map in progress</span></div> */}
 
       {/* <SearchBar
         search={search}

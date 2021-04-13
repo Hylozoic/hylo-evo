@@ -5,17 +5,19 @@ import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import './FeedBanner.scss'
 import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
+import { createPostUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
 export default function FeedBanner ({
   context,
-  group,
+  currentUserHasMemberships,
   currentUser,
+  group,
   newPost,
-  type,
-  urlLocation,
-  currentUserHasMemberships
+  querystringParams,
+  routeParams,
+  type
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
 
@@ -56,11 +58,13 @@ export default function FeedBanner ({
       </div>
     </div>
     {currentUserHasMemberships && <PostPrompt
-      type={type}
-      location={urlLocation}
-      firstName={currentUser.firstName()}
       avatarUrl={currentUser.avatarUrl}
-      newPost={newPost} />}
+      firstName={currentUser.firstName()}
+      newPost={newPost}
+      querystringParams={querystringParams}
+      routeParams={routeParams}
+      type={type}
+    />}
   </div>
 }
 
@@ -78,10 +82,11 @@ export function postPromptString (type = '', { firstName }) {
 
 export class PostPrompt extends React.Component {
   static defaultProps = {
-    type: '',
-    location: '',
     firstName: '',
-    promptStringFunc: postPromptString
+    promptStringFunc: postPromptString,
+    querystringParams: {},
+    routeParams: {},
+    type: ''
   }
 
   constructor (props) {
@@ -94,11 +99,11 @@ export class PostPrompt extends React.Component {
   onMouseLeaveHandler = () => this.setState({ hover: false })
 
   render () {
-    const { type, location, avatarUrl, firstName, promptStringFunc, className } = this.props
+    const { avatarUrl, className, firstName, type, promptStringFunc, querystringParams, routeParams } = this.props
     const { hover } = this.state
 
     return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-      <Link to={location.pathname + '/create/post?newPostType=' + type}>
+      <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
         <div styleName='postPrompt' className={className}>
           <RoundImage url={avatarUrl} small styleName='prompt-image' />
           {promptStringFunc(type, { firstName })}

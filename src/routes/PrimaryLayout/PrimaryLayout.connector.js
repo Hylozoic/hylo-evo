@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { toggleDrawer } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
+import updateUserSettings from 'store/actions/updateUserSettings'
 import { FETCH_FOR_GROUP } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -40,7 +41,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
     fetchForGroup: () => dispatch(fetchForGroup(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer())
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    updateUserSettings: (changes) => dispatch(updateUserSettings(changes))
   }
 }
 

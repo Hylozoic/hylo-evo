@@ -4,14 +4,14 @@ exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $slug: String,
-  $sortBy: String,
+  $boundingBox: [PointInput],
+  $filter: String,
+  $first: Int,
   $offset: Int,
   $search: String,
-  $filter: String,
-  $topic: ID,
-  $first: Int,
-  $boundingBox: [PointInput]
+  $slug: String,
+  $sortBy: String,
+  $topic: ID
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -27,17 +27,18 @@ Object {
     bannerUrl
     postCount
     
-posts(
+posts: viewPosts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
   offset: $offset,
+  order: \\"desc\\",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: \\"desc\\"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     
   id
@@ -96,6 +97,9 @@ posts(
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -150,6 +154,7 @@ posts(
   }
 }",
     "variables": Object {
+      "context": "groups",
       "filter": "offer",
       "first": 20,
       "offset": 20,
@@ -173,26 +178,31 @@ exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $sortBy: String,
-  $offset: Int,
-  $search: String,
+  $boundingBox: [PointInput],
   $filter: String,
+  $first: Int,
+  $groupSlugs: [String],
+  $offset: Int,
+  $context: String,
+  $search: String,
+  $sortBy: String,
   $topic: ID,
-  $first: Int
-  $boundingBox: [PointInput]
 ) {
   
 posts(
+  boundingBox: $boundingBox,
+  filter: $filter,
   first: $first,
+  groupSlugs: $groupSlugs,
   offset: $offset,
+  context: $context,
+  order: \\"desc\\",
   sortBy: $sortBy,
   search: $search,
-  filter: $filter,
-  topic: $topic,
-  boundingBox: $boundingBox,
-  order: \\"desc\\"
+  topic: $topic
 ) {
   hasMore
+  total
   items {
     
   id
@@ -251,6 +261,9 @@ posts(
     id
     name
     slug
+    settings {
+      publicMemberDirectory
+    }
   }
   attachments {
     type
@@ -304,6 +317,7 @@ posts(
 }
 }",
     "variables": Object {
+      "context": "all",
       "filter": "request",
       "first": 20,
       "offset": 20,

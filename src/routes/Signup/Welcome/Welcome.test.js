@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Review from './Review'
+import Welcome from './Welcome'
 
-describe('Review', () => {
+describe('Welcome', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<Review fetchMySkills={jest.fn()} skills={[]} />)
+    const wrapper = shallow(<Welcome currentUser={{ name: "Tibet" }} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

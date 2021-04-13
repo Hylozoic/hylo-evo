@@ -29,3 +29,7 @@ export {
 export {
   ormSessionReducer as membersReducer
 } from 'routes/Members/Members.store'
+
+export {
+  ormSessionReducer as manageInvitesReducer
+} from 'routes/UserSettings/ManageInvitesTab/ManageInvitesTab.store'

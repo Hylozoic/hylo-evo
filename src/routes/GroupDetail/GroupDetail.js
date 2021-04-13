@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import { get } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -13,8 +14,6 @@ import { groupUrl } from 'util/navigation'
 
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
-import get from 'lodash/get'
-import keyBy from 'lodash/keyBy'
 
 export const initialState = {
   errorMessage: undefined,
@@ -37,7 +36,7 @@ export default class GroupDetail extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.slug && this.props.slug !== prevProps.slug) {
+    if (get(prevProps, 'group.id') !== get(this.props, 'group.id')) {
       this.onGroupChange()
     }
   }
@@ -130,9 +129,8 @@ export default class GroupDetail extends Component {
   renderGroupDetails () {
     const { group, currentUser, joinRequests } = this.props
     const { errorMessage, successMessage } = this.state
-    const usersWithPendingRequests = keyBy(joinRequests, 'user.id')
-    const request = currentUser ? usersWithPendingRequests[currentUser.id] : false
-    const displayMessage = errorMessage || successMessage || request
+    const hasPendingRequest = joinRequests.find(jr => jr.group.id === group.id && jr.user.id === currentUser.id)
+    const displayMessage = errorMessage || successMessage || hasPendingRequest
     return (
       <div>
         <div styleName='g.groupDetails'>
@@ -145,7 +143,7 @@ export default class GroupDetail extends Component {
           </div>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {group.settings.publicMemberDirectory
+            {get(group, 'settings.publicMemberDirectory')
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
@@ -157,7 +155,7 @@ export default class GroupDetail extends Component {
           </div>
         </div>
         { displayMessage
-          ? <Message errorMessage={errorMessage} successMessage={successMessage} request={request} />
+          ? <Message errorMessage={errorMessage} successMessage={successMessage} hasPendingRequest={hasPendingRequest} />
           : <Request group={group} joinGroup={this.joinGroup} requestToJoinGroup={this.requestToJoinGroup} />
         }
       </div>
@@ -184,19 +182,22 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
           <div styleName='g.requestHint'>Anyone can join this group!</div>
           <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
-        : <div styleName='g.requestOption'>
-          {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+        : group.accessibility === GROUP_ACCESSIBILITY.Restricted ? <div styleName='g.requestOption'>
+          {get(group, 'settings.askJoinQuestions') && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
             <h3>{q.text}</h3>
             <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
           </div>)}
           <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
+          : <div styleName='g.requestOption'> {/* Closed group */}
+            This is group is invitation only
+          </div>
       }
     </div>
   )
 }
 
-export function Message ({ errorMessage, successMessage, request }) {
-  const message = request ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
+export function Message ({ errorMessage, successMessage, hasPendingRequest }) {
+  const message = hasPendingRequest ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
   return (<div styleName='g.message'>{message}</div>)
 }

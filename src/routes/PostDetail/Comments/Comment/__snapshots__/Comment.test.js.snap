@@ -24,16 +24,6 @@ exports[`Comment displays image attachments 1`] = `
     <div
       data-stylename="upperRight"
     >
-      <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
-      >
-        <Icon
-          name="Replies"
-        />
-      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
@@ -119,16 +109,6 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     <div
       data-stylename="upperRight"
     >
-      <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
-      >
-        <Icon
-          name="Replies"
-        />
-      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
@@ -200,16 +180,6 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     <div
       data-stylename="upperRight"
     >
-      <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
-      >
-        <Icon
-          name="Replies"
-        />
-      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
@@ -281,16 +251,6 @@ exports[`Comment renders correctly 1`] = `
     <div
       data-stylename="upperRight"
     >
-      <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
-      >
-        <Icon
-          name="Replies"
-        />
-      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
@@ -362,16 +322,6 @@ exports[`Comment renders correctly when editing 1`] = `
     <div
       data-stylename="upperRight"
     >
-      <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
-      >
-        <Icon
-          name="Replies"
-        />
-      </div>
       <Dropdown
         data-stylename="dropdown"
         items={
