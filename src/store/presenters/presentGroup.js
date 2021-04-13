@@ -2,6 +2,12 @@ export default function presentGroup (group) {
   if (!group) return null
   return {
     ...group.ref,
+    activeProjects: group.activeProjects ? group.activeProjects.toModelArray().map(p => {
+      return {
+        ...p.ref,
+        creator: p.creator.ref
+      }
+    }) : [],
     announcements: group.announcements ? group.announcements.toModelArray().map(a => {
       return {
         ...a.ref,
@@ -21,6 +27,12 @@ export default function presentGroup (group) {
       return {
         ...p.ref,
         creator: p.creator.ref
+      }
+    }) : [],
+    upcomingEvents: group.upcomingEvents ? group.upcomingEvents.toModelArray().map(p => {
+      return {
+        ...p.ref,
+        primaryImage: p.attachments.length > 0 ? p.attachments[0].url : false
       }
     }) : [],
     widgets: group.widgets ? group.widgets.toRefArray() : []

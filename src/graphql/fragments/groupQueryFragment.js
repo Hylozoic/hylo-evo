@@ -17,6 +17,24 @@ export default
   }
   slug
   visibility
+  activeProjects: posts(filter: "project", sortBy: "updated", order: "desc", first: 5) {
+    items {
+      id
+      title
+      createdAt
+      updatedAt
+      creator {
+        id
+        name
+      }
+      members {
+        items {
+          id
+          avatarUrl
+        }
+      }
+    }
+  }
   announcements: posts(isAnnouncement: true, sortBy: "created", order: "desc", first: 3) {
     hasMore
     items {
@@ -47,21 +65,6 @@ export default
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
-      }
-    }
-  }
-  events: posts(filter: "event", first: 1) {
-    hasMore
-    items {
-      id
-      title
-      startTime
-      endTime
-      location
-      members {
-        items {
-          avatarUrl
-        }
       }
     }
   }
@@ -165,18 +168,16 @@ export default
       }
     }
   }
-  projects: posts(filter: "project", first: 8) {
+  upcomingEvents: posts(isFuture: true, filter: "event", first: 5) {
+    hasMore
     items {
       id
       title
-      createdAt
-      creator {
-        id
-        name
-      }
+      startTime
+      endTime
+      location
       members {
         items {
-          id
           avatarUrl
         }
       }

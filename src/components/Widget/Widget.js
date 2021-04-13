@@ -131,47 +131,27 @@ const ChildWidget = ({
       return announcements.length > 0 && <AnnouncementWidget announcements={announcements} group={group} showDetails={showDetails} />
     }
     case 'active_members': {
-      const members = group && group.members && group.members.sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8)
-      return <MembersWidget group={group} members={members} />
+      const members = (group && group.members && group.members.sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8)) || []
+      return members.length > 0 && <MembersWidget group={group} members={members} />
     }
     case 'requests_offers': {
-      const offersAndRequests = group && group.openOffersAndRequests
-      return <OffersAndRequestsWidget group={group} offersAndRequests={offersAndRequests} />
+      const offersAndRequests = (group && group.openOffersAndRequests) || []
+      return offersAndRequests.length > 0 && <OffersAndRequestsWidget group={group} offersAndRequests={offersAndRequests} />
     }
     case 'posts': {
       return <RecentPostsWidget posts={posts} showDetails={showDetails} />
     }
     case 'community_topics': {
-      const topics = group && group.groupTopics
-      return <GroupTopicsWidget topics={topics} />
+      const topics = (group && group.groupTopics) || []
+      return topics.length > 0 && <GroupTopicsWidget topics={topics} />
     }
     case 'events': {
-      const events = [{ // group && group.events && group.events.items
-        time: 'Thursday, April 26, 3:00p - 4:00p',
-        title: 'Mindfulness 101',
-        location: 'https://zoom.us/j/380357601',
-        image: '/default-event.png'
-      }, {
-        time: 'Scoopday, May 15, 5:00p',
-        title: 'Holonic relationships - how we get from here to there and back again',
-        location: '100 Main St., Covid, CA, 94117',
-        image: '/default-event.png'
-      }]
-      return <EventsWidget events={events} routeParams={routeParams} showDetails={showDetails} />
+      const events = (group && group.upcomingEvents) || []
+      return events.length > 0 && <EventsWidget events={events} group={group} />
     }
     case 'project_activity': {
-      const projects = [{ // group && group.projects && group.projects.items
-        id: '1234',
-        title: 'Project: Extend Hylo Projects',
-        lastActivity: '3 HRS AGO',
-        createdBy: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg'
-      }, {
-        id: '1334',
-        title: 'Project: Extend Hylo Projects',
-        lastActivity: 'yesterday',
-        createdBy: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg'
-      }]
-      return <ProjectsWidget projects={projects} routeParams={routeParams} showDetails={showDetails} />
+      const projects = (group && group.activeProjects) || []
+      return projects.length > 0 && <ProjectsWidget group={group} projects={projects} />
     }
     case 'group_affiliations': {
       const affiliations = [{

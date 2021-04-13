@@ -113,10 +113,15 @@ Group.modelName = 'Group'
 
 Group.fields = {
   accessibility: attr(),
+  activeProjects: many({
+    to: 'Post',
+    as: 'activeProjects',
+    relatedName: 'activeProjectGroups'
+  }),
   announcements: many({
     to: 'Post',
     as: 'announcements',
-    relatedName: 'announcementsMade'
+    relatedName: 'announcementGroups'
   }),
   childGroups: many({
     to: 'Group',
@@ -150,6 +155,11 @@ Group.fields = {
   joinQuestions: many('GroupJoinQuestion'),
   settings: attr(),
   slug: attr(),
+  upcomingEvents: many({
+    to: 'Post',
+    as: 'upcomingEvents',
+    relatedName: 'eventGroups'
+  }),
   visibility: attr(),
   widgets: many('Widget')
 }
