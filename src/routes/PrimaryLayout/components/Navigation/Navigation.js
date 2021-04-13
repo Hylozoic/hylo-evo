@@ -22,12 +22,14 @@ export default function Navigation (props) {
     groupsPath,
     hasRelatedGroups,
     hideTopics,
+    isGroupMenuOpen,
     mapPath,
     mapView,
     membersPath,
     projectsPath,
     routeParams,
-    rootPath
+    rootPath,
+    toggleGroupMenu
   } = props
 
   const homeOnClick = () => {
@@ -36,6 +38,7 @@ export default function Navigation (props) {
       clearBadge()
     }
   }
+
 
   const links = compact([
     createPath && {
@@ -80,12 +83,16 @@ export default function Navigation (props) {
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
 
-  return <div styleName={cx({ mapView }, collapserState)} className={className}>
+  return <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
     <div styleName='navigation'>
       <ul styleName='links' id='groupMenu'>
         {links.map(link =>
-          <NavLink key={link.label} {...link} collapsed={collapsed}
-            onClick={link.onClick} />)}
+          <NavLink
+            key={link.label} {...link}
+            collapsed={collapsed}
+            onClick={link.onClick}
+          />
+        )}
         <li styleName={cx('item', 'topicItem')}>
           <Link to={topicsUrl(routeParams, allGroupsUrl())}>
             <Icon name='Topics' />
@@ -98,5 +105,6 @@ export default function Navigation (props) {
         routeParams={routeParams}
         groupId={groupId} />}
     </div>
+    <div styleName='closeBg' onClick={toggleGroupMenu} />
   </div>
 }

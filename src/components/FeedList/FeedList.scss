@@ -39,6 +39,10 @@
   .FeedListItem {
     margin: 0 10px 10px 10px;
   }
+
+  .tabbar-sticky {
+    z-index: 22;
+  }
 }
 
 @media screen and (max-width: 425px) {

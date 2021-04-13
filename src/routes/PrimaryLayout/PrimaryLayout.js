@@ -199,6 +199,7 @@ export default class PrimaryLayout extends Component {
       group,
       groupPending,
       isDrawerOpen,
+      isGroupMenuOpen,
       isGroupRoute,
       location,
       memberOfCurrentGroup,
@@ -270,7 +271,7 @@ export default class PrimaryLayout extends Component {
           <Route path='/:context(groups)/:groupSlug' component={props =>
             <Navigation {...props}
               collapsed={collapsedState}
-              styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) })}
+              styleName={cx('left', { 'map-view': isMapViewPath(location.pathname) }, { 'hidden': !isGroupMenuOpen })}
               mapView={isMapViewPath(location.pathname)}
             />}
           />

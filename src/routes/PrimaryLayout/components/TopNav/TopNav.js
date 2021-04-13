@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { bgImageStyle } from 'util/index'
-import { personUrl } from 'util/navigation'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import Icon from 'components/Icon'
@@ -9,6 +8,7 @@ import BadgedIcon from 'components/BadgedIcon'
 import Badge from 'components/Badge'
 import { IntercomAPI } from 'react-intercom'
 import RoundImage from 'components/RoundImage'
+import { personUrl, baseUrl } from 'util/navigation'
 import './TopNav.scss'
 import Dropdown from 'components/Dropdown'
 import { get } from 'lodash/fp'
@@ -41,19 +41,29 @@ function downloadApp () {
   }
 }
 
+
 export default class TopNav extends Component {
   render () {
-    const { className, group, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
+    const { className, group, currentUser, logout, toggleDrawer, toggleGroupMenu, showLogoBadge, onClick, isPublic, isGroupMenuOpen } = this.props
+
     const profileUrl = personUrl(get('id', currentUser))
 
     const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
-      <div styleName='topNav' ref='topNav'>
-        <div styleName='logo-hover'>
-          <Logo {...{ group, isPublic, toggleDrawer }} />
+      <div styleName={cx('topNav', { groupMenuOpen: isGroupMenuOpen })} ref='topNav'>
+        <div styleName='drawerToggle'>
+          <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
+        </div>
+        <Link to='/' styleName='logo-hover'>
+          <Logo {...{ group, isPublic }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
-          <Title group={group} isPublic={isPublic} onClick={toggleDrawer} />
+          <Title group={group} isPublic={isPublic} />
+        </Link>
+        <div onClick={toggleGroupMenu} styleName={cx('mobile-logo', { groupMenuOpen: isGroupMenuOpen })}>
+          <Logo {...{ group, isPublic }} />
+          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
+          <Title group={group} isPublic={isPublic} />
         </div>
         <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
@@ -84,7 +94,7 @@ export default class TopNav extends Component {
   }
 }
 
-function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
+function Logo ({ group, isPublic, showLogoBadge }) {
   let imageStyle = bgImageStyle(hyloLogo)
   if (group) {
     imageStyle = bgImageStyle(get('avatarUrl', group))
@@ -92,7 +102,12 @@ function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
     imageStyle = bgImageStyle(publicLogo)
   }
 
-  return <span styleName='image' style={imageStyle} onClick={toggleDrawer} id='toggleDrawer' />
+  return <span styleName='image' style={imageStyle}>
+    <span>
+      <Icon name='Home' styleName='homeLink' />
+      <Icon name='Ex' styleName='closeGroupMenu' />
+    </span>
+  </span>
 }
 
 function Title ({ group, isPublic, onClick }) {
@@ -103,10 +118,8 @@ function Title ({ group, isPublic, onClick }) {
     [ label, name ] = ['GLOBAL', 'Public Groups & Posts']
   }
 
-  return <a styleName='title' onClick={onClick} id='currentContext'>
-    <div styleName='label'>
-      {label}
-    </div>
+  return <div styleName='title' id='currentContext'>
+    <div styleName='label'>{label}</div>
     <div styleName='groupName'>{name}</div>
-  </a>
+  </div>
 }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleDrawer } from './PrimaryLayout.store'
+import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import updateUserSettings from 'store/actions/updateUserSettings'
@@ -24,6 +24,7 @@ export function mapStateToProps (state, props) {
     currentUser: getMe(state),
     downloadAppUrl: mobileRedirect(),
     isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
+    isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
     isGroupRoute: isGroupRoute(state, props),
     group,
     groupPending: state.pending[FETCH_FOR_GROUP],
@@ -42,6 +43,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
     fetchForGroup: () => dispatch(fetchForGroup(slug)),
     toggleDrawer: () => dispatch(toggleDrawer()),
+    toggleGroupMenu: () => dispatch(toggleGroupMenu()),
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes))
   }
 }

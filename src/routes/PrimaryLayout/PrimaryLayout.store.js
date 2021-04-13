@@ -10,8 +10,11 @@ export const MODULE_NAME = 'PrimaryLayout'
 
 const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
 
+const TOGGLE_GROUP_MENU = `${MODULE_NAME}/TOGGLE_GROUP_MENU`
+
 export const initialState = {
-  isDrawerOpen: false
+  isDrawerOpen: false,
+  isGroupMenuOpen: false
 }
 
 export default function reducer (state = initialState, action) {
@@ -21,8 +24,12 @@ export default function reducer (state = initialState, action) {
     return { ...state, isDrawerOpen: !state.isDrawerOpen }
   }
 
+  if (action.type === TOGGLE_GROUP_MENU) {
+    return { ...state, isGroupMenuOpen: !state.isGroupMenuOpen }
+  }
+
   if (action.type === LOCATION_CHANGE) {
-    return { ...state, isDrawerOpen: false }
+    return { ...state, isDrawerOpen: false, isGroupMenuOpen: false }
   }
 
   // Links current user to rollbar config
@@ -45,6 +52,12 @@ export default function reducer (state = initialState, action) {
 export function toggleDrawer () {
   return {
     type: TOGGLE_DRAWER
+  }
+}
+
+export function toggleGroupMenu () {
+  return {
+    type: TOGGLE_GROUP_MENU
   }
 }
 
