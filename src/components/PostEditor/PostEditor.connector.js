@@ -103,7 +103,8 @@ export function mapStateToProps (state, props) {
     uploadFileAttachmentPending,
     uploadImageAttachmentPending,
     location,
-    querystringParams
+    querystringParams,
+    routeParams
   }
 }
 
@@ -126,13 +127,13 @@ export const mapDispatchToProps = (dispatch) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    context, fetchLinkPreviewPending, topicName, groupSlug, postType, querystringParams
+    fetchLinkPreviewPending, topicName, groupSlug, postType, routeParams, querystringParams
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, { context, groupSlug, postType, topicName }, querystringParams)
+    const url = postUrl(id, { ...routeParams, postType }, querystringParams)
 
     return goToUrl(url)
   }
