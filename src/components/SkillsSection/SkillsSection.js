@@ -9,7 +9,7 @@ export default class SkillsSection extends Component {
   static defaultProps = {
     editable: true,
     label: 'Add a Skill or Interest',
-    placeholder: 'skills and interests do you have?'
+    placeholder: 'What skills and interests do you have?'
   }
 
   componentDidMount () {
@@ -43,6 +43,7 @@ export default class SkillsSection extends Component {
 
     const {
       editable,
+      group,
       isMe,
       label,
       placeholder,
@@ -57,9 +58,9 @@ export default class SkillsSection extends Component {
         handleClick={this.handleClick}
         handleAddition={this.handleAddition}
         handleDelete={this.handleDelete}
-        editable={editable && isMe}
+        editable={editable && (isMe || group)}
         addLabel={label}
-        placeholder={`What ${!isEmpty(skills) ? 'other ' : ''}${placeholder}`}
+        placeholder={placeholder}
         suggestions={skillSuggestions}
       />
     </div>

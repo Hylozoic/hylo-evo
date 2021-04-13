@@ -104,6 +104,9 @@ export function createGroup (data) {
           person {
             id
           }
+          settings {
+            showJoinForm
+          }
         }
       }
       `,

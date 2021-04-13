@@ -82,6 +82,7 @@ fragment MeCompleteFragment on Me {
     settings {
       sendEmail
       sendPushNotifications
+      showJoinForm
     }
     person {
       id
@@ -97,6 +98,7 @@ fragment MeCompleteFragment on Me {
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
       visibility
       groupTopics(subscribed: true) {
@@ -114,6 +116,12 @@ fragment MeCompleteFragment on Me {
           isSubscribed
         }
       }
+    }
+  }
+  skills {
+    items {
+      id
+      name
     }
   }
 }

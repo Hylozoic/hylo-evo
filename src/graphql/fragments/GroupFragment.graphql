@@ -12,6 +12,7 @@ fragment GroupFragment on Group {
     allowGroupInvites
     askJoinQuestions
     publicMemberDirectory
+    showSuggestedSkills
   }
   slug
   visibility

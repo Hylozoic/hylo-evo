@@ -249,6 +249,7 @@
   color: $color-regent;
   align-items: center;
   display: flex;
+  flex-direction: column;
   padding-bottom: 10px;
   z-index: 5;
 }
@@ -292,6 +293,10 @@
   width: 100%;
   margin-bottom: 25px;
 
+  h4 {
+    color: rgba(140, 151, 166, 1.00);
+  }
+
   textarea {
     width: 100%;
     background-color: transparent;
@@ -310,6 +315,19 @@
 
 .center {
   text-align: center;
+}
+
+.skillPills div div span div {
+  background-color: rgba(255, 255, 255, 1.00);
+  transition: all .25s ease;
+}
+
+.skillPills div div span div.selectedSkill {
+  background-color: rgba(19, 113, 219, 1.00);
+
+  span {
+    color: rgba(255, 255, 255, 1.00);
+  }
 }
 
 .requestButton {

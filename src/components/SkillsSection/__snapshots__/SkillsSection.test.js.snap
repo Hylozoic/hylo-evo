@@ -24,7 +24,7 @@ exports[`shows basic pills 1`] = `
         },
       ]
     }
-    placeholder="What other skills and interests do you have?"
+    placeholder="What skills and interests do you have?"
   />
 </div>
 `;
@@ -54,7 +54,7 @@ exports[`shows editable fields when isMe = true 1`] = `
         },
       ]
     }
-    placeholder="What other skills and interests do you have?"
+    placeholder="What skills and interests do you have?"
   />
 </div>
 `;

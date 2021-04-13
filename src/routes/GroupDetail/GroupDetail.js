@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { get, keyBy } from 'lodash'
+import { get, keyBy, map } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -8,6 +8,7 @@ import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import Pillbox from 'components/Pillbox'
 import {
   accessibilityDescription,
   accessibilityIcon,
@@ -141,8 +142,9 @@ export default class GroupDetail extends Component {
   }
 
   renderGroupDetails () {
-    const { group, joinRequests, onClose, routeParams } = this.props
+    const { addSkill, currentUser, group, joinRequests, onClose, removeSkill, routeParams } = this.props
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
+
     return (
       <div>
         <div styleName='g.groupDetails'>
@@ -167,11 +169,14 @@ export default class GroupDetail extends Component {
           </div>
         </div>
         <JoinSection
+          addSkill={addSkill}
+          currentUser={currentUser}
           fullPage={!onClose}
           group={group}
           groupsWithPendingRequests={groupsWithPendingRequests}
           joinGroup={this.joinGroup}
           requestToJoinGroup={this.requestToJoinGroup}
+          removeSkill={removeSkill}
           routeParams={routeParams}
         />
       </div>
@@ -179,7 +184,7 @@ export default class GroupDetail extends Component {
   }
 }
 
-export function JoinSection ({ fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, routeParams }) {
+export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
   const setAnswer = (index) => (event) => {
@@ -195,6 +200,9 @@ export function JoinSection ({ fullPage, group, groupsWithPendingRequests, joinG
 
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
+      {group.suggestedSkills && group.suggestedSkills.length > 0 &&
+        <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />
+      }
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
         ? <div styleName='g.prerequisiteGroups'>
           {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{group.name} is only accessible to members of the following groups:</h4>}
@@ -258,4 +266,36 @@ export function JoinSection ({ fullPage, group, groupsWithPendingRequests, joinG
       }
     </div>
   )
+}
+
+export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) {
+  const [selectedSkills, setSelectedSkills] = useState(currentUser.skills ? currentUser.skills.toRefArray().map(s => s.id) : [])
+
+  const pills = map(group.suggestedSkills, skill => ({
+    ...skill,
+    label: skill.name,
+    className: selectedSkills.find(s => s === skill.id) ? g.selectedSkill : ''
+  }))
+
+  const handleClick = (skillId) => {
+    const hasSkill = selectedSkills.includes(skillId)
+    if (hasSkill) {
+      removeSkill(skillId)
+      setSelectedSkills(selectedSkills.filter(s => s !== skillId))
+    } else {
+      addSkill(group.suggestedSkills.find(s => s.id === skillId).name)
+      setSelectedSkills(selectedSkills.concat(skillId))
+    }
+  }
+
+  return <div styleName='g.joinQuestion'>
+    <h4>Which of the following skills &amp; interests are relevant to you?</h4>
+    <div styleName='g.skillPills'>
+      <Pillbox
+        pills={pills}
+        handleClick={handleClick}
+        editable={false}
+      />
+    </div>
+  </div>
 }

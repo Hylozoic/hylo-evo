@@ -14,6 +14,7 @@ export default
     allowGroupInvites
     askJoinQuestions
     publicMemberDirectory
+    showSuggestedSkills
   }
   slug
   visibility
@@ -65,6 +66,7 @@ export default
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
     }
   }
@@ -165,6 +167,7 @@ export default
         allowGroupInvites
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
     }
   }

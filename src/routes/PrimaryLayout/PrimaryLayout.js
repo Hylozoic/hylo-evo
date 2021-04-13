@@ -19,6 +19,7 @@ import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupSettings from 'routes/GroupSettings'
 import GroupSidebar from 'routes/GroupSidebar'
+import GroupWelcomeModal from 'routes/GroupWelcomeModal'
 import Groups from 'routes/Groups'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
@@ -210,13 +211,13 @@ export default class PrimaryLayout extends Component {
 
   render () {
     const {
+      currentGroupMembership,
       currentUser,
       group,
       groupPending,
       isDrawerOpen,
       isGroupRoute,
       location,
-      memberOfCurrentGroup,
       showLogoBadge
     } = this.props
 
@@ -232,14 +233,14 @@ export default class PrimaryLayout extends Component {
 
     const queryParams = qs.parse(location.search.substring(1))
     const signupInProgress = get('settings.signupInProgress', currentUser)
-    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser)
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
     const isMapView = isMapViewPath(location.pathname)
     const collapsedState = hasDetail || (isMapView && queryParams['hideDrawer'] !== 'true')
-    const isSingleColumn = (group && !memberOfCurrentGroup) || matchPath(location.pathname, { path: '/members/:personId' })
+    const isSingleColumn = (group && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
+    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser) && !isSingleColumn
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
@@ -280,7 +281,7 @@ export default class PrimaryLayout extends Component {
             mapView={isMapView}
           />}
         />
-        {group && memberOfCurrentGroup &&
+        {group && currentGroupMembership &&
           <Route path='/:context(groups)/:groupSlug' component={props =>
             <Navigation {...props}
               group={group}
@@ -313,8 +314,10 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Group Routes */}
-            {group && !memberOfCurrentGroup &&
+            {group && !currentGroupMembership &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
+            {currentGroupMembership && currentGroupMembership.settings.showJoinForm &&
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
@@ -332,7 +335,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/search' component={Search} />
           </Switch>
         </Div100vh>
-        {group && memberOfCurrentGroup &&
+        {group && currentGroupMembership &&
           <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
             <Switch>
               <Route path={`/:context(groups)/:groupSlug/:view(events|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />

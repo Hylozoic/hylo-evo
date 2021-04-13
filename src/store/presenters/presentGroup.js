@@ -21,7 +21,7 @@ export default function presentGroup (group) {
         name: groupTopic.topic.name
       }
     }) : [],
-    joinQuestions: group.joinQuestions.toRefArray(),
+    joinQuestions: group.joinQuestions ? group.joinQuestions.toRefArray() : [],
     members: group.members ? group.members.toModelArray() : [],
     openOffersAndRequests: group.openOffersAndRequests ? group.openOffersAndRequests.toModelArray().map(p => {
       return {
@@ -36,6 +36,7 @@ export default function presentGroup (group) {
         prerequisiteGroups: prereq.prerequisiteGroups ? prereq.prerequisiteGroups.toModelArray() : []
       }
     }) : [],
+    suggestedSkills: group.suggestedSkills ? group.suggestedSkills.toRefArray() : [],
     upcomingEvents: group.upcomingEvents ? group.upcomingEvents.toModelArray().map(p => {
       return {
         ...p.ref,

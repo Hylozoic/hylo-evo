@@ -9,6 +9,7 @@ import Button from 'components/Button'
 import GroupsSelector from 'components/GroupsSelector'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
+import SkillsSection from 'components/SkillsSection'
 import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
@@ -38,7 +39,7 @@ export default class GroupSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (!isEqual(prevProps.group, this.props.group)) {
+    if (!isEqual(prevProps.group.id, this.props.group.id)) {
       this.setState(this.defaultEditState())
     }
   }
@@ -62,7 +63,7 @@ export default class GroupSettingsTab extends Component {
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
         prerequisiteGroups: prerequisiteGroups || [],
-        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
+        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false, showSuggestedSkills: false },
         visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
       },
       changed: false
@@ -77,7 +78,7 @@ export default class GroupSettingsTab extends Component {
   updateJoinQuestion = (index) => event => {
     const value = event.target.value
     const newJoinQuestions = this.state.edits.joinQuestions
-    let changed = false
+    let changed = this.state.edits.changed
     if (trim(value) === '') {
       newJoinQuestions.splice(index, 1)
       changed = true
@@ -133,6 +134,7 @@ export default class GroupSettingsTab extends Component {
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
+    const showSuggestedSkills = settings.showSuggestedSkills
 
     return <div styleName='groupSettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -203,6 +205,26 @@ export default class GroupSettingsTab extends Component {
         </SettingsSection>
       </div>
 
+      <SettingsSection>
+        <h3>Relevant skills &amp; interests</h3>
+        <p styleName='privacyDetail'>What skills and interests are relevant to this group?</p>
+        <div styleName={'skillsSetting' + ' ' + cx({ on: showSuggestedSkills })}>
+          <SwitchStyled
+            checked={showSuggestedSkills}
+            onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+            backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+          <p styleName='toggleDescription'>Ask new members to fill out their skills and interests?</p>
+          <div styleName='onOff'>
+            <div styleName='off'>OFF</div>
+            <div styleName='on'>ON</div>
+          </div>
+        </div>
+        <SkillsSection
+          group={group}
+          label='Add a relevant skill or interest'
+          placeholder='What skills and interests are most relevant to your group?' />
+      </SettingsSection>
+
       <div styleName='saveChanges'>
         <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
         <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
@@ -245,7 +267,6 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
       </div>
       <div styleName='questionList'>
         <span styleName='questionDescription'>Require people to answer questions when asking to join this group</span>
-
         {joinQuestions.map((q, i) => <div key={i} styleName='question'>
           {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
           <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />

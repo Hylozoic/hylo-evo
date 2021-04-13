@@ -80,6 +80,22 @@ label {
   padding: 2px 6px;
 }
 
+.skillsSetting {
+  padding: 0;
+  position: relative;
+  padding-bottom: 25px;
+  margin-left: -15px;
+}
+
+.toggleDescription {
+  display: inline;
+  font-size: 14px;
+  color: rgba(34, 64, 91, .5);
+  padding-left: 15px;
+}
+.on p.toggleDescription {
+  color: rgba(34, 64, 91, 1);
+}
 
 .privacySetting {
   padding: 10px 0;

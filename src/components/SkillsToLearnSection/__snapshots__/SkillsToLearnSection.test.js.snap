@@ -5,7 +5,7 @@ exports[`shows basic pills 1`] = `
   editable={true}
   fetchMemberSkills={[MockFunction]}
   label="Add a skill you want to learn"
-  placeholder="skills do you want to learn?"
+  placeholder="What skills do you want to learn?"
   skills={
     Array [
       Object {
@@ -27,7 +27,7 @@ exports[`shows editable fields when isMe = true 1`] = `
   fetchMemberSkills={[MockFunction]}
   isMe={true}
   label="Add a skill you want to learn"
-  placeholder="skills do you want to learn?"
+  placeholder="What skills do you want to learn?"
   skills={
     Array [
       Object {

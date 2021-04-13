@@ -19,6 +19,7 @@ Object {
     "openOffersAndRequests": Array [],
     "prerequisiteGroups": Array [],
     "slug": "foo",
+    "suggestedSkills": Array [],
     "upcomingEvents": Array [],
     "widgets": Array [],
   },
@@ -44,6 +45,7 @@ Object {
             allowGroupInvites
             askJoinQuestions
             publicMemberDirectory
+            showSuggestedSkills
           }
           slug
           visibility
@@ -52,6 +54,13 @@ Object {
               id
               name
               avatarUrl
+            }
+          }
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
             }
           }
           moderators (first: 100) {
@@ -86,11 +95,10 @@ Object {
               lastSentAt
             }
           }
-          joinQuestions {
+          suggestedSkills {
             items {
               id
-              questionId
-              text
+              name
             }
           }
         }
@@ -166,6 +174,7 @@ Object {
     "openOffersAndRequests": Array [],
     "prerequisiteGroups": Array [],
     "slug": "foo",
+    "suggestedSkills": Array [],
     "upcomingEvents": Array [],
     "widgets": Array [],
   },

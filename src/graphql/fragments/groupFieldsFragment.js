@@ -11,6 +11,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
     allowGroupInvites
     askJoinQuestions
     publicMemberDirectory
+    showSuggestedSkills
   }
   slug
   visibility
@@ -84,6 +85,12 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       id
       questionId
       text
+    }
+  }
+  suggestedSkills {
+    items {
+      id
+      name
     }
   }` : ''}
   ${withPrerequisites ? `prerequisiteGroups(onlyNotMember: true) {

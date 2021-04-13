@@ -18,7 +18,7 @@ export function mapStateToProps (state, props) {
   const hasMemberships = memberships.length > 0
   const slug = getSlugFromLocation(null, props)
   const group = getGroupForCurrentRoute(state, props)
-  const memberOfCurrentGroup = group && hasMemberships && memberships.find(m => m.group.id === group.id)
+  const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
 
   return {
     currentUser: getMe(state),
@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
     group,
     groupPending: state.pending[FETCH_FOR_GROUP],
     hasMemberships,
-    memberOfCurrentGroup,
+    currentGroupMembership,
     returnToURL: getReturnToURL(state),
     showLogoBadge,
     slug

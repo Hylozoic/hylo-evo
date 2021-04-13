@@ -41,7 +41,7 @@ import {
 // FIXME these should not be using different constants and getting handled in
 // different places -- they're doing the same thing!
 import {
-  REMOVE_SKILL_PENDING, ADD_SKILL
+  REMOVE_SKILL_PENDING, ADD_SKILL, ADD_SKILL_TO_GROUP, REMOVE_SKILL_FROM_GROUP_PENDING
 } from 'components/SkillsSection/SkillsSection.store'
 import {
   REMOVE_SKILL_PENDING as REMOVE_SKILL_TO_LEARN_PENDING, ADD_SKILL as ADD_SKILL_TO_LEARN
@@ -57,6 +57,7 @@ import {
 import {
   USE_INVITATION
 } from 'routes/JoinGroup/JoinGroup.store'
+import { FETCH_GROUP_WELCOME_DATA } from 'routes/GroupWelcomeModal/GroupWelcomeModal.store'
 
 import {
   DELETE_GROUP_TOPIC_PENDING
@@ -166,6 +167,10 @@ export default function ormReducer (state = {}, action) {
       }
       break
     }
+
+    case FETCH_GROUP_WELCOME_DATA:
+      clearCacheFor(Group, meta.id)
+      break
 
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()
@@ -292,17 +297,32 @@ export default function ormReducer (state = {}, action) {
       person.skillsToLearn.remove(meta.skillId)
       break
 
-    case ADD_SKILL:
+    case REMOVE_SKILL_FROM_GROUP_PENDING:
+      group = Group.withId(meta.groupId)
+      group.suggestedSkills.remove(meta.skillId)
+      clearCacheFor(Group, meta.groupId)
+      break
+
+    case ADD_SKILL: {
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({ skills: [Skill.create(skill)] })
       break
+    }
 
     case ADD_SKILL_TO_LEARN:
       const skillToLearn = payload.data.addSkillToLearn
       person = Person.withId(Me.first().id)
       person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
       break
+
+    case ADD_SKILL_TO_GROUP: {
+      const skill = payload.data.addSuggestedSkillToGroup
+      group = Group.withId(meta.groupId)
+      group.updateAppending({ suggestedSkills: [Skill.create(skill)] })
+      clearCacheFor(Group, meta.groupId)
+      break
+    }
 
     case DELETE_COMMENT_PENDING:
       comment = Comment.withId(meta.id)

@@ -161,6 +161,7 @@ Group.fields = {
   }),
   settings: attr(),
   slug: attr(),
+  suggestedSkills: many('Skill'),
   upcomingEvents: many({
     to: 'Post',
     as: 'upcomingEvents',
