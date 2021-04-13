@@ -136,15 +136,16 @@ export default
       name
     }
   }
-  offersAndRequests: posts(filter: "offersAndRequests", first: 8) {
+  openOffersAndRequests: posts(filter: "offersAndRequests", isFulfilled: false, first: 8) {
     items {
       id
       title
       creator {
+        id
         name
         avatarUrl
       }
-      commentersTotal
+      commentsTotal
     }
   }
   parentGroups {
@@ -170,10 +171,12 @@ export default
       title
       createdAt
       creator {
+        id
         name
       }
       members {
         items {
+          id
           avatarUrl
         }
       }

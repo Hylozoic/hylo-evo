@@ -64,13 +64,6 @@ export const visibilityString = (visibility) => {
   return Object.keys(GROUP_VISIBILITY).find(key => GROUP_VISIBILITY[key] === visibility)
 }
 
-export class GroupAnnouncement extends Model { }
-GroupAnnouncement.modelName = 'GroupAnnouncement'
-GroupAnnouncement.fields = {
-  group: fk('Group', 'groupAnnouncements'),
-  announcement: fk('Post', 'groupAnnouncements')
-}
-
 export class GroupModerator extends Model { }
 GroupModerator.modelName = 'GroupModerator'
 GroupModerator.fields = {
@@ -122,9 +115,8 @@ Group.fields = {
   accessibility: attr(),
   announcements: many({
     to: 'Post',
-    relatedName: 'announcementsMade',
-    through: 'GroupAnnouncement',
-    throughFields: [ 'group', 'announcement' ]
+    as: 'announcements',
+    relatedName: 'announcementsMade'
   }),
   childGroups: many({
     to: 'Group',
@@ -148,6 +140,11 @@ Group.fields = {
     throughFields: [ 'group', 'moderator' ]
   }),
   name: attr(),
+  openOffersAndRequests: many({
+    to: 'Post',
+    as: 'openOffersAndRequests',
+    relatedName: 'groupsWithOffersAndRequests'
+  }),
   posts: many('Post'),
   postCount: attr(),
   joinQuestions: many('GroupJoinQuestion'),

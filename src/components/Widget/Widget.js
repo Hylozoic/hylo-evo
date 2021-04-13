@@ -135,20 +135,8 @@ const ChildWidget = ({
       return <MembersWidget group={group} members={members} />
     }
     case 'requests_offers': {
-      const offersAndRequests = [{ // group && group.offersAndRequests && group.offersAndRequests.items
-        title: 'Seeking an accountant familiar with non-profits working with MediCal',
-        author: 'Brooke Daily',
-        avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30591/userAvatar/30591/10216723681744864.jpg',
-        numComments: '1',
-        kind: 'offer'
-      }, {
-        title: 'I can map your land using lidar and drones! Available to help within 50 mi. of Bay Area',
-        author: 'Raphi Dondo',
-        avatarUrl: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/29528/userAvatar/29528/2020-02-15_RSphoto_1135_2k_Hand.jpg',
-        numComments: '24',
-        kind: 'request'
-      }]
-      return <OffersAndRequestsWidget offersAndRequests={offersAndRequests} />
+      const offersAndRequests = group && group.openOffersAndRequests
+      return <OffersAndRequestsWidget group={group} offersAndRequests={offersAndRequests} />
     }
     case 'posts': {
       return <RecentPostsWidget posts={posts} showDetails={showDetails} />
