@@ -35,9 +35,14 @@
     padding-bottom: 20px;
     display: flex;
     align-items: center;
-    
+
     > div {
       padding-left: 10px;
+    }
+
+    .landing-page-avatar {
+      min-width: 4rem;
+      min-height: 4rem;
     }
   }
 
@@ -57,5 +62,17 @@
 
   > img {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .banner {
+    .name {
+      font-size: 18px;
+    }
+
+    .location {
+      font-size: 11px;
+    }
   }
 }

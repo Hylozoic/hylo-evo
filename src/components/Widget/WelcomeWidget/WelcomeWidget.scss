@@ -18,3 +18,15 @@
     margin-bottom: 0;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .welcome-widget {
+    h2 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}

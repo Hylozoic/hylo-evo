@@ -8,10 +8,12 @@ function VisibilityToggle ({ id, onChange, checked, disabled, backgroundColor, n
     onChange({ id, isVisible: checked, name })
   }
   return (
-    <div styleName={cx('container', { containerDisabled: disabled })} onClick={disabled ? null : handleToggle}>
+    <div styleName={cx('container', { containerDisabled: disabled }, { visible: checked })} onClick={disabled ? null : handleToggle}>
       <input type='hidden' name={name} defaultChecked={checked} />
-      <span styleName={'track'} style={{ backgroundColor, opacity: checked ? 1 : 0.4 }} />
-      <span styleName={cx('button', { buttonChecked: checked })}><Icon name='Eye' /></span>
+      <span styleName='track' />
+      <span styleName={cx('button', { buttonChecked: checked })} />
+      <Icon name='Eye' styleName='visibleIcon' />
+      <Icon name='Hidden' styleName='hiddenIcon' />
     </div>
   )
 }
@@ -19,7 +21,6 @@ function VisibilityToggle ({ id, onChange, checked, disabled, backgroundColor, n
 VisibilityToggle.defaultProps = {
   checked: false,
   disabled: false,
-  backgroundColor: '#ff44ff',
   onChange: (checked, name) => { console.log(checked, name) }
 }
 
