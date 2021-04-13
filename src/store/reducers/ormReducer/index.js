@@ -160,7 +160,9 @@ export default function ormReducer (state = {}, action) {
     case FETCH_GROUP_DETAILS_PENDING: {
       // Clear out prerequisite groups so they correclty update with latest data
       group = Group.safeGet({ slug: meta.slug })
-      group.update({ prerequisiteGroups: [] })
+      if (group) {
+        group.update({ prerequisiteGroups: [] })
+      }
       break
     }
 

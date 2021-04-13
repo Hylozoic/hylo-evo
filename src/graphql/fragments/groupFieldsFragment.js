@@ -91,6 +91,11 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       avatarUrl
       id
       name
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
       slug
     }
   }
