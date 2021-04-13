@@ -27,7 +27,7 @@ function GroupWelcomeModal (props) {
         <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='banner'>
           <div styleName='banner-content'>
             <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} size='50px' square />
-            <h3>Welcome to my {group.name}!</h3>
+            <h3>Welcome to {group.name}!</h3>
           </div>
           <div styleName='fade' />
         </div>
