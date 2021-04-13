@@ -56,9 +56,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   <div
     data-stylename="privacy-settings"
   >
-    <div
-      data-stylename="groupPrivacySection"
-    >
+    <SettingsSection>
       <h3>
         Visibility
       </h3>
@@ -89,10 +87,8 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         key="2"
         updateSetting={[Function]}
       />
-    </div>
-    <div
-      data-stylename="groupPrivacySection"
-    >
+    </SettingsSection>
+    <SettingsSection>
       <h3>
         Access
       </h3>
@@ -156,7 +152,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         updateSetting={[Function]}
         updateSettingDirectly={[Function]}
       />
-    </div>
+    </SettingsSection>
   </div>
   <div
     data-stylename="saveChanges"
