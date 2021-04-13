@@ -41,7 +41,6 @@ function downloadApp () {
   }
 }
 
-
 export default class TopNav extends Component {
   render () {
     const { className, group, currentUser, logout, toggleDrawer, toggleGroupMenu, showLogoBadge, onClick, isPublic, isGroupMenuOpen } = this.props

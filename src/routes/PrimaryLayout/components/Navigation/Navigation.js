@@ -39,7 +39,6 @@ export default function Navigation (props) {
     }
   }
 
-
   const links = compact([
     createPath && {
       label: 'Create',
