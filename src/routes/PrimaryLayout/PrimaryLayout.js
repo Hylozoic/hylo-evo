@@ -149,6 +149,11 @@ export default class PrimaryLayout extends Component {
           content: 'This is where we show you which group or view you are looking at. Hylo allows you to easily switch between groups as well as see updates from all your groups at once.'
         },
         {
+          target: '#mobileMenu',
+          title: 'Group menu',
+          content: 'Press on the group name or icon to navigate within the current group. Discover events, discussions, resources & more!'
+        },
+        {
           target: '#toggleDrawer',
           title: 'Switching groups & viewing all',
           content: 'By clicking on the group icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
@@ -216,6 +221,7 @@ export default class PrimaryLayout extends Component {
       group,
       groupPending,
       isDrawerOpen,
+      isGroupMenuOpen,
       isGroupRoute,
       location,
       showLogoBadge
@@ -286,7 +292,7 @@ export default class PrimaryLayout extends Component {
             <Navigation {...props}
               group={group}
               collapsed={collapsedState}
-              styleName={cx('left', { 'map-view': isMapView })}
+              styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
               mapView={isMapView}
             />}
           />

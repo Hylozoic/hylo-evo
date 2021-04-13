@@ -26,10 +26,12 @@ export default function Navigation (props) {
     groupsPath,
     hasRelatedGroups,
     hideTopics,
+    isGroupMenuOpen,
     mapPath,
     mapView,
     routeParams,
-    rootPath
+    rootPath,
+    toggleGroupMenu
   } = props
 
   const homeOnClick = () => {
@@ -88,7 +90,7 @@ export default function Navigation (props) {
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
   const canView = !group || group.memberCount !== 0
 
-  return <div styleName={cx({ mapView }, collapserState)} className={className}>
+  return <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
     <div styleName='navigation'>
       {canView &&
         <ul styleName='links' id='groupMenu'>
@@ -108,5 +110,6 @@ export default function Navigation (props) {
         routeParams={routeParams}
         groupId={groupId} />}
     </div>
+    <div styleName='closeBg' onClick={toggleGroupMenu} />
   </div>
 }
