@@ -17,7 +17,7 @@ export default
   }
   slug
   visibility
-  activeProjects: posts(filter: "project", sortBy: "updated", order: "desc", first: 5) {
+  activeProjects: posts(filter: "project", sortBy: "updated", order: "desc", first: 4) {
     items {
       id
       title
@@ -139,7 +139,7 @@ export default
       name
     }
   }
-  openOffersAndRequests: posts(filter: "offersAndRequests", isFulfilled: false, first: 8) {
+  openOffersAndRequests: posts(filter: "offersAndRequests", isFulfilled: false, first: 4) {
     items {
       id
       title
@@ -168,7 +168,7 @@ export default
       }
     }
   }
-  upcomingEvents: posts(isFuture: true, filter: "event", first: 5) {
+  upcomingEvents: posts(isFuture: true, filter: "event", first: 4) {
     hasMore
     items {
       id
