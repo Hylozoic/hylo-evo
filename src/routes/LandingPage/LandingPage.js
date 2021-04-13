@@ -41,7 +41,7 @@ export default class LandingPage extends Component {
           </div>
 
           <div styleName='title'>
-            <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} />
+            <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} styleName='landing-page-avatar' />
             <div>
               <div styleName='name'>{group.name}</div>
               {group.location ? <div styleName='location'><Icon name='Location' />{group.location}</div> : ''}

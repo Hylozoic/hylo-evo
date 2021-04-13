@@ -33,34 +33,35 @@ export default function Widget (props) {
   const [newSettings, updateSettings] = useState(settings)
 
   return (
-    <div styleName='widget'>
+    <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
       <div styleName='header'>
-        <h3>{(settings && settings.title) || WIDGET_TITLE[name]}</h3>
+        <h3>{(settings.title && '') || WIDGET_TITLE[name]}</h3>
         <div styleName='more'>
-
-          <Icon name='More' styleName={`more ${isMenuOpen ? 'selected' : ''}`} onClick={() => { setIsMenuOpen(!isMenuOpen); setIsEditingSettings(false) }} />
-          {isEditingSettings &&
-            <EditForm
-              id={id}
-              setIsEditingSettings={setIsEditingSettings}
-              setIsMenuOpen={setIsMenuOpen}
-              newSettings={newSettings}
-              updateSettings={updateSettings}
-              save={updateWidget} />}
-
-          {!isEditingSettings && <div styleName={`edit-section ${isMenuOpen ? 'visible' : ''}`}>
-            <span styleName='triangle'>&nbsp;</span>
-            {name === 'text_block' && <div styleName='edit-settings'><Icon name='Edit' onClick={() => setIsEditingSettings(!isEditingSettings)} /> Edit welcome message</div>}
-            <VisibilityToggle
-              id={id}
-              checked={isVisible}
-              onChange={() => updateWidget(id, { isVisible: !isVisible })}
-              styleName='widget-visibility'
-              backgroundColor={isVisible ? 'gray' : 'black'} /> {isVisible ? 'Visible' : 'Hidden'}
-          </div>}
+          <Icon name='More' styleName={`more-icon ${isMenuOpen ? 'selected' : ''}`} onClick={() => { setIsMenuOpen(!isMenuOpen); setIsEditingSettings(false) }} />
+          <div styleName={`edit-menu ${isMenuOpen ? 'visible' : ''}`}>
+            {!isEditingSettings && <div styleName='edit-section'>
+              <span styleName='triangle'>&nbsp;</span>
+              {name === 'text_block' && <div styleName='edit-settings'><span onClick={() => setIsEditingSettings(!isEditingSettings)}><Icon name='Edit' /> Edit welcome message</span></div>}
+              <div styleName='visibility-settings'>
+                <VisibilityToggle
+                  id={id}
+                  checked={isVisible}
+                  onChange={() => updateWidget(id, { isVisible: !isVisible })}
+                  styleName='widget-visibility'
+                  backgroundColor={isVisible ? 'gray' : 'black'} /> <span styleName='visibility-label'>Visibility:</span> {isVisible ? 'Visible' : 'Hidden'}
+              </div>
+            </div>}
+          </div>
         </div>
       </div>
-
+      {isEditingSettings &&
+        <EditForm
+          id={id}
+          setIsEditingSettings={setIsEditingSettings}
+          setIsMenuOpen={setIsMenuOpen}
+          newSettings={newSettings}
+          updateSettings={updateSettings}
+          save={updateWidget} />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
         <ChildWidget {...props} />
       </div>
@@ -82,7 +83,7 @@ const EditForm = ({ id, setIsEditingSettings, setIsMenuOpen, newSettings, update
       </div>
 
       <div>
-        <input
+        <textarea
           type='text'
           onChange={e => updateSettings({ ...newSettings, text: e.target.value.substring(0, 500) })}
           placeholder='Enter your message here'
@@ -105,9 +106,9 @@ const EditForm = ({ id, setIsEditingSettings, setIsMenuOpen, newSettings, update
 
 const HiddenWidget = ({ isVisible, name }) => {
   return (
-    <div>
-      <div>Hidden</div>
-      <div>The {WIDGET_TITLE[name]} section is not visible to members of this group</div>
+    <div styleName='hidden-description'>
+      <h4><Icon name='Hidden' styleName='hidden-icon' /> Hidden</h4>
+      <p>The {WIDGET_TITLE[name]} section is not visible to members of this group. Click the three dots (<Icon name='More' styleName='more-icon' />) above this box to change the visibility settings. Only moderators can see this message.</p>
     </div>
   )
 }
