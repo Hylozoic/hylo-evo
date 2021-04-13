@@ -20,8 +20,8 @@ export default class ProjectsWidget extends Component {
     // TODO: Can use the Projects component on MemberProfile?
     return (
       <div styleName='projects'>
-        {projects && projects.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })}>
-          <div styleName='project' key={p.id}>
+        {projects && projects.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
+          <div styleName='project'>
             <div styleName='meta'>
               <div styleName='title'>{p.title}</div>
               <div styleName='last-activity'>{moment(p.updatedAt).fromNow()}</div>
