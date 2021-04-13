@@ -17,6 +17,9 @@ export default function Navigation (props) {
     clearFeedList,
     createPath,
     collapsed,
+    streamPath,
+    membersPath,
+    projectsPath,
     eventsPath,
     group,
     groupId,
@@ -25,8 +28,6 @@ export default function Navigation (props) {
     hideTopics,
     mapPath,
     mapView,
-    membersPath,
-    projectsPath,
     routeParams,
     rootPath,
     streamPath
@@ -56,8 +57,7 @@ export default function Navigation (props) {
     streamPath && {
       label: 'Stream',
       icon: 'Stream',
-      to: streamPath,
-      exact: true
+      to: streamPath
     },
     projectsPath && {
       label: 'Projects',

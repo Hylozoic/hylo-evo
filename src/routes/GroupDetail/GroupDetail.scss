@@ -148,7 +148,7 @@
 }
 
 .requestBarBorderless .requestButton {
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: $box-shadow-default;
 }
 
 .requestOption {
@@ -212,11 +212,11 @@
 
 .message {
   border-radius: 5px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: $box-shadow-default;
   font-size: 16px;
   line-height: 20px;
   text-align: center;
-  background: #2A4059;
+  background: $color-member;
   color: #FFFFFF;
   padding: 14px 0px;
 }

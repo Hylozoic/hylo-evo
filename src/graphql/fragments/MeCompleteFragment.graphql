@@ -48,6 +48,9 @@ fragment MeCompleteFragment on Me {
     dmNotifications
     commentNotifications
     signupInProgress
+    streamViewMode
+    streamSortBy
+    streamPostType
   }
   affiliations {
     items {

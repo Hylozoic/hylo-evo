@@ -22,6 +22,7 @@ import GroupSidebar from 'routes/GroupSidebar'
 import Groups from 'routes/Groups'
 import Drawer from './components/Drawer'
 import Feed from 'routes/Feed'
+import Stream from 'routes/Stream'
 import MapExplorer from 'routes/MapExplorer'
 import LandingPage from 'routes/LandingPage'
 import Loading from 'components/Loading'
@@ -63,7 +64,7 @@ const routesWithDrawer = [
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}` },
-  { path: `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|topics|stream)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
   // {/* Member Routes */}
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
@@ -304,7 +305,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
             <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* All and Public Routes */}
-            <Route path={`/:context(all|public)/:view(events|projects|stream)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
@@ -315,7 +317,8 @@ export default class PrimaryLayout extends Component {
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
-            <Route path={`/:context(groups)/:groupSlug/:view(events|projects|stream)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
             <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
