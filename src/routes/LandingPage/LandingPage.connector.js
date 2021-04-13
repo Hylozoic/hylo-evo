@@ -9,7 +9,7 @@ import presentPost from 'store/presenters/presentPost'
 import { fetchPosts, getPosts } from 'components/FeedList/FeedList.store'
 
 export function mapStateToProps (state, props) {
-  let group, fetchPostsParam, posts
+  let group, fetchPostsParam, posts, widgets
   const groupSlug = getRouteParam('groupSlug', state, props)
   const routeParams = props.match.params
 
@@ -17,13 +17,15 @@ export function mapStateToProps (state, props) {
     group = presentGroup(getGroupForCurrentRoute(state, props))
     fetchPostsParam = { slug: groupSlug, context: 'groups' }
     posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
+    widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map')
   }
 
   return {
     fetchPostsParam,
     group,
     posts,
-    routeParams
+    routeParams,
+    widgets
   }
 }
 

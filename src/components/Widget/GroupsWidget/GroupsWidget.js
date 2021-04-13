@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import './AffiliationsWidget.scss'
+import './GroupsWidget.scss'
 
 const { array } = PropTypes
 
@@ -26,18 +26,18 @@ const settings = {
   ]
 }
 
-export default class AffiliationsWidget extends Component {
+export default class GroupsWidget extends Component {
   static propTypes = {
-    affiliations: array
+    groups: array
   }
 
   render () {
-    const { affiliations = [] } = this.props
+    const { groups = [] } = this.props
 
     return (
-      <div styleName='affiliations'>
+      <div styleName='groups'>
         <Slider {...settings}>
-          {affiliations && affiliations.map(a => <div styleName='affiliation' key={a.id}>
+          {groups && groups.map(a => <div styleName='group' key={a.id}>
             <div>
               <div styleName='content'>
                 <div styleName='group-avatar'><img src={a.groupAvatar} /></div>

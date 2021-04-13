@@ -1,7 +1,7 @@
-.affiliations {
+.groups {
   padding: 0 15px;
 
-  .affiliation {
+  .group {
     height: 320px;
     position: relative;
     padding: 15px;
@@ -106,16 +106,16 @@
   }
 }
 
-.affiliations :global(.slick-slide > div) {
+.groups :global(.slick-slide > div) {
   padding: 0 8px 15px 8px;
 }
 
-.affiliations :global(.slick-list) {
+.groups :global(.slick-list) {
   padding: 0 20% 0 0;
 }
 
 @media screen and (max-width: 600px) {
-  .affiliations {
+  .groups {
     padding: 0 0 0 0;
   }
 }

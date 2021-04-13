@@ -94,13 +94,6 @@ GroupRelationship.fields = {
   childGroup: fk({ to: 'Group', as: 'childGroup', relatedName: 'parentRelationships' })
 }
 
-export class GroupWidget extends Model {}
-GroupWidget.modelName = 'GroupWidget'
-GroupWidget.fields = {
-  group: fk({ to: 'Group', as: 'parent', relatedName: 'childConnections' }),
-  widget: fk({ to: 'Group', as: 'child', relatedName: 'parentConnections' })
-}
-
 class Group extends Model {
   toString () {
     return `Group: ${this.name}`
