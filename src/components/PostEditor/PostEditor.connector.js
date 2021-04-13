@@ -72,6 +72,7 @@ export function mapStateToProps (state, props) {
   const isProject = postType === 'project' || get('type', post) === 'project'
   const isEvent = postType === 'event' || get('type', post) === 'event'
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const routeParams = get('match.params', props)
 
   return {
     context,
@@ -127,7 +128,7 @@ export const mapDispatchToProps = (dispatch) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    fetchLinkPreviewPending, topicName, groupSlug, postType, routeParams, querystringParams
+    fetchLinkPreviewPending, groupSlug, postType, routeParams, querystringParams
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
