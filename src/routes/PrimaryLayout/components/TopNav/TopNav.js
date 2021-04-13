@@ -51,15 +51,15 @@ export default class TopNav extends Component {
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
       <div styleName={cx('topNav', { groupMenuOpen: isGroupMenuOpen })} ref='topNav'>
-        <div styleName='drawerToggle'>
+        <div styleName='drawerToggle' id='toggleDrawer'>
           <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
         </div>
-        <Link to='/' styleName='logo-hover'>
+        <Link to='/' styleName='logo-hover' id='currentContext'>
           <Logo {...{ group, isPublic }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} />
         </Link>
-        <div onClick={toggleGroupMenu} styleName={cx('mobile-logo', { groupMenuOpen: isGroupMenuOpen })}>
+        <div onClick={toggleGroupMenu} styleName={cx('mobile-logo', { groupMenuOpen: isGroupMenuOpen })} id='mobileMenu'>
           <Logo {...{ group, isPublic }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} />
@@ -117,7 +117,7 @@ function Title ({ group, isPublic, onClick }) {
     [ label, name ] = ['GLOBAL', 'Public Groups & Posts']
   }
 
-  return <div styleName='title' id='currentContext'>
+  return <div styleName='title'>
     <div styleName='label'>{label}</div>
     <div styleName='groupName'>{name}</div>
   </div>

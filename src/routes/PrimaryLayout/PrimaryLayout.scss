@@ -454,6 +454,10 @@ $drawer-z-index: 51;
   outline: none;
 }
 
+:global(.react-joyride__beacon, .react-joyride__beacon:focus, .react-joyride__beacon:active) {
+  outline: none;
+  border: none;
+}
 
 @media screen and (max-width: 1050px) {
   .sidebar {
@@ -604,6 +608,7 @@ $drawer-z-index: 51;
     animation-name: fadeOutUp;
     animation-duration: .25s;
     left: -100%;
+    display: none;
   }
 }
 
