@@ -189,7 +189,7 @@ export default class PrimaryLayout extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (get('group.id', this.props) !== get('group.id', prevProps)) {
+    if (this.props.slug && this.props.slug !== prevProps.slug) {
       this.props.fetchForGroup()
     }
   }
