@@ -21,6 +21,32 @@ exports[`Comment displays image attachments 1`] = `
     >
       just now
     </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
   <CardImageAttachments
     attachments={
@@ -80,6 +106,32 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     >
       just now
     </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
   <CardImageAttachments
     attachments={Array []}
@@ -125,6 +177,32 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     >
       just now
     </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
   <CardImageAttachments
     attachments={Array []}
@@ -170,6 +248,32 @@ exports[`Comment renders correctly 1`] = `
     >
       just now
     </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
   <CardImageAttachments
     attachments={Array []}
@@ -215,6 +319,32 @@ exports[`Comment renders correctly when editing 1`] = `
     >
       Editing now
     </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Trash",
+              "label": "Delete",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Trash",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
   <CardImageAttachments
     attachments={Array []}

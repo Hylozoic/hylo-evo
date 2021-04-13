@@ -115,6 +115,7 @@ const redirectRoutes = [
   { from: '/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
   { from: '/all/m/:personId', to: '/all/members/:personId' },
   { from: '/all/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
+  { from: '/(c|n)/:groupSlug/join/:accessCode', to: '/groups/:groupSlug/join/:accessCode' },
   { from: '/(c|n)/:groupSlug/', to: '/groups/:groupSlug/' },
   { from: '/(c|n)/:groupSlug/event', to: '/groups/:groupSlug/events' },
   { from: '/(c|n)/:groupSlug/event/:postId', to: '/groups/:groupSlug/events/post/:postId' },

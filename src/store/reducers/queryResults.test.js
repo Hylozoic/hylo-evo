@@ -12,7 +12,7 @@ import {
   REMOVE_POST_PENDING
 } from 'components/PostCard/PostHeader/PostHeader.store'
 
-const variables = { slug: 'foo', sortBy: 'name' }
+const variables = { context: 'groups', slug: 'foo', sortBy: 'name' }
 
 const key = JSON.stringify({
   type: FETCH_MEMBERS,
@@ -76,7 +76,7 @@ describe('using extractQueryResults', () => {
       },
       meta: {
         graphql: {
-          variables: { slug: 'foo', sortBy: 'name' }
+          variables
         },
         extractQueryResults: {
           getItems: get('payload.data.group.members')
@@ -180,9 +180,9 @@ describe('using extractQueryResults', () => {
 })
 
 describe('queryResults reducer', () => {
-  const key1 = '{"type":"FETCH_POSTS","params":{"slug":"foo"}}'
-  const key2 = '{"type":"FETCH_POSTS","params":{"slug":"foo","filter":"request"}}'
-  const key3 = '{"type":"FETCH_POSTS","params":{"slug":"bar"}}'
+  const key1 = '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"foo"}}'
+  const key2 = '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"foo","filter":"request"}}'
+  const key3 = '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar"}}'
 
   const state = {
     [key1]: {
@@ -217,19 +217,19 @@ describe('queryResults reducer', () => {
 
 describe('buildKey', () => {
   it('omits blank parameters', () => {
-    expect(buildKey('actionType', { slug: 'foo', search: null }))
-      .toEqual('{"type":"actionType","params":{"slug":"foo"}}')
+    expect(buildKey('actionType', { context: 'groups', slug: 'foo', search: null }))
+      .toEqual('{"type":"actionType","params":{"context":"groups","slug":"foo"}}')
   })
 })
 
 describe('matchNewPostIntoQueryResults', () => {
   it('prepends the post id to matching query result sets', () => {
     const state = {
-      '{"type":"FETCH_POSTS","params":{"slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar"}}': {
         hasMore: true,
         ids: ['18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"slug":"bar","filter":"request"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","filter":"request"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -238,11 +238,11 @@ describe('matchNewPostIntoQueryResults', () => {
     const post = { id: '17', type: 'request', groups }
 
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
-      '{"type":"FETCH_POSTS","params":{"slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"slug":"bar","filter":"request"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","filter":"request"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
       }
@@ -251,7 +251,7 @@ describe('matchNewPostIntoQueryResults', () => {
 
   it('prepends the post id to matching query result sets with a topic', () => {
     const state = {
-      '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","topic":"123"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -259,7 +259,7 @@ describe('matchNewPostIntoQueryResults', () => {
     const groups = [{ slug: 'foo' }, { slug: 'bar' }]
     const post = { id: '17', type: 'request', groups, topics: [{ name: 'a', id: '123' }] }
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
-      '{"type":"FETCH_POSTS","params":{"slug":"bar","topic":"123"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","topic":"123"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
       }

@@ -17,6 +17,10 @@ export default
         }
         answer
       }
+      group {
+        id
+        slug
+      }
       user {
         id
         avatarUrl
