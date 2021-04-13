@@ -29,7 +29,6 @@ export default class EventsWidget extends Component {
 
   render () {
     const { events, group } = this.props
-    // TODO: Can use the Event component on MemberProfile?
     return (
       <div styleName='events'>
         <Slider {...settings}>
@@ -41,7 +40,7 @@ export default class EventsWidget extends Component {
                 <div styleName='location'>{e.location}</div>
               </div>
             </Link>
-            <div styleName='background' style={{ backgroundImage: `url(${e.primaryImage})` }} />
+            <div styleName='background' style={{ backgroundImage: `url(${e.primaryImage || '/default-event.png'})` }} />
           </div>)}
         </Slider>
       </div>
