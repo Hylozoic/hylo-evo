@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
+import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
 import GroupsSelector from 'components/GroupsSelector'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -158,7 +159,7 @@ export default class GroupSettingsTab extends Component {
         type='location'
       />
       <div styleName='privacy-settings'>
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Visibility</h3>
           <p styleName='privacyDetail'>Who is able to see <strong>{group.name}</strong>?</p>
           {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
@@ -169,9 +170,9 @@ export default class GroupSettingsTab extends Component {
               updateSetting={this.updateSetting}
             />
           )}
-        </div>
+        </SettingsSection>
 
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Access</h3>
           <p styleName='privacyDetail'>How can people become members of <strong>{group.name}</strong>?</p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
@@ -187,9 +188,9 @@ export default class GroupSettingsTab extends Component {
               updateSettingDirectly={this.updateSettingDirectly}
             />
           )}
-        </div>
+        </SettingsSection>
 
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Prerequisite Groups</h3>
           <p styleName='privacyDetail'>When you select a prerequisite group, people must join the selected groups before joining <strong>{group.name}</strong>. Only parent groups can be added as prerequisite groups.</p>
           <p styleName='prerequisiteWarning'><strong styleName='warning'>Warning:</strong> If you select a prerequisite group that has a visibility setting of <strong><Icon name='Hidden' styleName='prerequisiteIcon' /> Hidden</strong> or <strong><Icon name='Shield' styleName='prerequisiteIcon' /> Protected</strong>, only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.</p>
@@ -199,7 +200,7 @@ export default class GroupSettingsTab extends Component {
             onChange={this.updateSettingDirectly('prerequisiteGroups')}
             groupSettings
           />
-        </div>
+        </SettingsSection>
       </div>
 
       <div styleName='saveChanges'>

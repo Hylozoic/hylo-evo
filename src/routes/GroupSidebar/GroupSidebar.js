@@ -5,11 +5,12 @@ import Avatar from 'components/Avatar'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
-import './GroupSidebar.scss'
+import Icon from 'components/Icon'
 import cx from 'classnames'
 import { personUrl, groupUrl } from 'util/navigation'
 import { markdown } from 'hylo-utils/text'
 import { isEmpty } from 'lodash/fp'
+import './GroupSidebar.scss'
 
 const { object, string, array } = PropTypes
 
@@ -82,7 +83,7 @@ export class AboutSection extends Component {
 export function SettingsLink ({ canModerate, group }) {
   if (!canModerate) return null
   return <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
-    Settings
+    <Icon name='Settings' styleName='settings-icon' /> Group Settings
   </Link>
 }
 
