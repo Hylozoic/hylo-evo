@@ -8,25 +8,7 @@ export default
   bannerUrl
   description
   location
-    locationObject {
-    id
-    addressNumber
-    addressStreet
-    bbox {
-      lat
-      lng
-    }
-    center {
-      lat
-      lng
-    }
-    city
-    country
-    fullText
-    locality
-    neighborhood
-    region
-  }
+  memberCount
   name
   settings {
     allowGroupInvites
@@ -35,6 +17,57 @@ export default
   }
   slug
   visibility
+  activeProjects: posts(filter: "project", sortBy: "updated", order: "desc", first: 4) {
+    items {
+      id
+      title
+      createdAt
+      updatedAt
+      creator {
+        id
+        name
+      }
+      members {
+        items {
+          id
+          avatarUrl
+        }
+      }
+    }
+  }
+  announcements: posts(isAnnouncement: true, sortBy: "created", order: "desc", first: 3) {
+    hasMore
+    items {
+      id
+      title
+      createdAt
+      creator {
+        id
+        name
+      }
+      attachments(type: "image") {
+        position
+        url
+      }
+    }
+  }
+  childGroups {
+    items {
+      id
+      accessibility
+      avatarUrl
+      bannerUrl
+      description
+      name
+      slug
+      visibility
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
+    }
+  }
   groupRelationshipInvitesFrom {
     items {
       id
@@ -71,21 +104,51 @@ export default
       }
     }
   }
-  childGroups {
+  locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
+  members(first: 8, sortBy: "last_active_at", order: "desc") {
     items {
       id
-      accessibility
       avatarUrl
-      bannerUrl
-      description
+      lastActiveAt
       name
-      slug
-      visibility
-      settings {
-        allowGroupInvites
-        askJoinQuestions
-        publicMemberDirectory
+    }
+  }
+  moderators {
+    items {
+      id
+      avatarUrl
+      lastActiveAt
+      name
+    }
+  }
+  openOffersAndRequests: posts(filter: "offersAndRequests", isFulfilled: false, first: 4) {
+    items {
+      id
+      title
+      creator {
+        id
+        name
+        avatarUrl
       }
+      commentsTotal
     }
   }
   parentGroups {
@@ -105,19 +168,31 @@ export default
       }
     }
   }
-  memberCount
-  members(first: 8, sortBy: "name", order: "desc") {
+  upcomingEvents: posts(isFuture: true, filter: "event", first: 4) {
+    hasMore
     items {
       id
-      name
-      avatarUrl
+      title
+      startTime
+      endTime
+      location
+      members {
+        items {
+          avatarUrl
+        }
+      }
     }
   }
-  moderators {
+  widgets {
     items {
       id
       name
-      avatarUrl
+      isVisible
+      order
+      settings {
+        text
+        title
+      }
     }
   }
   ${groupTopicsQueryFragment}

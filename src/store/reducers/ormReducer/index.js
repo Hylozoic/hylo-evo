@@ -28,6 +28,7 @@ import {
   UPDATE_POST_PENDING,
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
+  UPDATE_WIDGET,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
 import {
@@ -413,6 +414,10 @@ export default function ormReducer (state = {}, action) {
         }
       }
       break
+    }
+
+    case UPDATE_WIDGET: {
+      clearCacheFor(Group, payload.data.updateWidget.group.id)
     }
   }
 

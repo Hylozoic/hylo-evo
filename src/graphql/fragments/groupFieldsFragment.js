@@ -4,6 +4,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   avatarUrl
   bannerUrl
   description
+  location
+  memberCount
   name
   settings {
     allowGroupInvites
@@ -12,17 +14,6 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
   }
   slug
   visibility
-  parentGroups {
-    items {
-      id
-      accessibility
-      avatarUrl
-      bannerUrl
-      name
-      slug
-      visibility
-    }
-  }
   childGroups {
     items {
       id
@@ -34,22 +25,6 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       visibility
     }
   }
-  memberCount
-  members(first: 8, sortBy: "name", order: "desc") {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  moderators {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  location
   locationObject {
     id
     addressNumber
@@ -68,6 +43,31 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
     locality
     neighborhood
     region
+  }
+  members(first: 8, sortBy: "name", order: "desc") {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  moderators {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  parentGroups {
+    items {
+      id
+      accessibility
+      avatarUrl
+      bannerUrl
+      name
+      slug
+      visibility
+    }
   }
   ${withTopics ? `groupTopics(first: 8) {
     items {

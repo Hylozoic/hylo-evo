@@ -18,6 +18,7 @@ export default function Navigation (props) {
     createPath,
     collapsed,
     eventsPath,
+    group,
     groupId,
     groupsPath,
     hasRelatedGroups,
@@ -27,7 +28,8 @@ export default function Navigation (props) {
     membersPath,
     projectsPath,
     routeParams,
-    rootPath
+    rootPath,
+    streamPath
   } = props
 
   const homeOnClick = () => {
@@ -51,6 +53,12 @@ export default function Navigation (props) {
       onClick: homeOnClick,
       exact: true
     },
+    streamPath && {
+      label: 'Stream',
+      icon: 'Stream',
+      to: streamPath,
+      exact: true
+    },
     projectsPath && {
       label: 'Projects',
       icon: 'Projects',
@@ -62,8 +70,8 @@ export default function Navigation (props) {
       to: eventsPath
     },
     membersPath && {
-      label: 'Members',
-      icon: 'Members',
+      label: 'People',
+      icon: 'People',
       to: membersPath
     },
     hasRelatedGroups && groupsPath && {
@@ -79,20 +87,23 @@ export default function Navigation (props) {
   ])
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
+  const canView = !group || group.memberCount !== 0
 
   return <div styleName={cx({ mapView }, collapserState)} className={className}>
     <div styleName='navigation'>
-      <ul styleName='links' id='groupMenu'>
-        {links.map(link =>
-          <NavLink key={link.label} {...link} collapsed={collapsed}
-            onClick={link.onClick} />)}
-        <li styleName={cx('item', 'topicItem')}>
-          <Link to={topicsUrl(routeParams, allGroupsUrl())}>
-            <Icon name='Topics' />
-          </Link>
-        </li>
-      </ul>
-      {!hideTopics && <TopicNavigation
+      {canView &&
+        <ul styleName='links' id='groupMenu'>
+          {links.map(link =>
+            <NavLink key={link.label} {...link} collapsed={collapsed}
+              onClick={link.onClick} />)}
+          <li styleName={cx('item', 'topicItem')}>
+            <Link to={topicsUrl(routeParams, allGroupsUrl())}>
+              <Icon name='Topics' />
+            </Link>
+          </li>
+        </ul>
+      }
+      {!hideTopics && canView && <TopicNavigation
         collapsed={collapsed}
         backUrl={rootPath}
         routeParams={routeParams}

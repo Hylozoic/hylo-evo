@@ -1,0 +1,49 @@
+.group-topics {
+  text-align: left;
+  padding: 0 15px;
+
+  .topic-wrapper {
+    display: inline-block;
+
+    .topic {
+      border: 1px solid rgba(217, 221, 225, 1.00);
+      border-radius: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      margin: 0 5px 5px 0;
+      transition: all .25s ease;
+
+      .num-posts {
+        height: 100%;
+        display: inline-block;
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+        background-color: rgba(243, 244, 245, 1.00);
+        color: rgba(128, 140, 156, 1.00);
+        max-width: 25px;
+        font-size: 12px;
+        text-align: center;
+        min-width: 25px;
+        display: flex;
+        align-items: center;
+        transition: all .25s ease;
+        justify-content: center;
+      }
+
+      .topic-name {
+        font-size: 12px;
+        padding: 0 8px;
+        color: rgba(128, 140, 156, 1.00);
+      }
+    }
+    &:hover .topic {
+      border: 1px solid rgba(58, 160, 223, .3);
+
+      .num-posts {
+        background-color: rgba(58, 160, 223, 1.00);
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+}

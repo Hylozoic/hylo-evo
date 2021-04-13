@@ -106,6 +106,16 @@ Group.modelName = 'Group'
 
 Group.fields = {
   accessibility: attr(),
+  activeProjects: many({
+    to: 'Post',
+    as: 'activeProjects',
+    relatedName: 'activeProjectGroups'
+  }),
+  announcements: many({
+    to: 'Post',
+    as: 'announcements',
+    relatedName: 'announcementGroups'
+  }),
   childGroups: many({
     to: 'Group',
     relatedName: 'parentGroups',
@@ -128,12 +138,23 @@ Group.fields = {
     throughFields: [ 'group', 'moderator' ]
   }),
   name: attr(),
+  openOffersAndRequests: many({
+    to: 'Post',
+    as: 'openOffersAndRequests',
+    relatedName: 'groupsWithOffersAndRequests'
+  }),
   posts: many('Post'),
   postCount: attr(),
   joinQuestions: many('GroupJoinQuestion'),
   settings: attr(),
   slug: attr(),
-  visibility: attr()
+  upcomingEvents: many({
+    to: 'Post',
+    as: 'upcomingEvents',
+    relatedName: 'eventGroups'
+  }),
+  visibility: attr(),
+  widgets: many('Widget')
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'

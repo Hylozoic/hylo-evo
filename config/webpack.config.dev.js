@@ -130,6 +130,13 @@ module.exports = {
               'css-loader'
             ]
           },
+          {
+            test: /slick-carousel.*\.css$/,
+            use: [
+              'style-loader',
+              'css-loader'
+            ]
+          },
           // CSS Modules for all SASS files not in resources or global
           {
             test: /\.(css|scss|sass)$/,
@@ -140,6 +147,10 @@ module.exports = {
               'sass-loader',
               sharedConfig.sassResourcesLoader
             ]
+          },
+          {
+            test: /\.(ttf|eot|woff|woff2|svg)$/,
+            loader: 'file-loader'
           }
         ]
       }

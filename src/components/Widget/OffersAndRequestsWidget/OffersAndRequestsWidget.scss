@@ -1,0 +1,71 @@
+.offers-and-requests {
+  width: 100%;
+  padding: 0 15px;
+
+  .item {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
+    border-radius: 5px;
+    text-align: left;
+    position: relative;
+    padding: 10px 10px 10px 40px;
+    margin-bottom: 15px;
+
+    .meta {
+      font-size: 14px;
+      color: rgba(128, 140, 156, 1.00);
+
+      .type {
+        text-transform: capitalize;
+      }
+
+      .num-comments {
+        color: rgba(255, 255, 255, 1);
+        font-size: 10px;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        border-radius: 24px;
+        display: inline-block;
+        text-align: center;
+        position: relative;
+        top: -2px;
+        margin-left: 5px;
+
+        .tail {
+          width: 5px;
+          height: 5px;
+          position: absolute;
+          bottom: 1px;
+          left: 1px;
+        }
+      }
+
+      .num-comments.offer, .offer .tail {
+        background-color: rgba(0, 196, 159, 1.00);
+      }
+
+      .num-comments.request, .request .tail {
+        background-color: rgba(98, 75, 162, 1.00);
+      }
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(41, 64, 90, 1.00);
+      line-height: 18px;
+    }
+
+    .author-image {
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
