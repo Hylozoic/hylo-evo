@@ -11,6 +11,7 @@ import {
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
+  FETCH_GROUP_DETAILS_PENDING,
   FETCH_MESSAGES_PENDING,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
@@ -157,6 +158,15 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
+    case FETCH_GROUP_DETAILS_PENDING: {
+      // Clear out prerequisite groups so they correclty update with latest data
+      group = Group.safeGet({ slug: meta.slug })
+      if (group) {
+        group.update({ prerequisiteGroups: [] })
+      }
+      break
+    }
+
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()
       break
@@ -219,6 +229,8 @@ export default function ormReducer (state = {}, action) {
       group = Group.withId(meta.id)
       group.update(meta.changes)
       me = Me.first()
+      // Clear out prerequisiteGroups so they can be reset when the UPDATE completes
+      group.update({ prerequisiteGroups: [] })
 
       // Triggers an update to redux-orm for the membership
       membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
@@ -226,7 +238,7 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_GROUP_SETTINGS:
       // Set new join questions in the ORM
-      if (payload.data.updateGroupSettings && payload.data.updateGroupSettings.joinQuestions) {
+      if (payload.data.updateGroupSettings && (payload.data.updateGroupSettings.joinQuestions || payload.data.updateGroupSettings.prerequisiteGroups)) {
         group = Group.withId(meta.id)
         clearCacheFor(Group, meta.id)
       }
@@ -324,7 +336,7 @@ export default function ormReducer (state = {}, action) {
     case CREATE_JOIN_REQUEST:
       if (payload.data.createJoinRequest.request) {
         me = Me.first()
-        const jr = JoinRequest.create({ group: meta.groupId, user: me.id })
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id, status: payload.data.createJoinRequest.request.status })
         me.updateAppending({ joinRequests: [jr] })
       }
       break

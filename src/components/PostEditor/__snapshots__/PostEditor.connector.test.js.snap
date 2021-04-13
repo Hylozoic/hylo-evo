@@ -71,6 +71,9 @@ Object {
   "postPending": false,
   "postType": undefined,
   "querystringParams": Object {},
+  "routeParams": Object {
+    "slug": "foo",
+  },
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -136,6 +139,9 @@ Object {
   "postPending": true,
   "postType": undefined,
   "querystringParams": Object {},
+  "routeParams": Object {
+    "slug": "foo",
+  },
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -148,7 +154,7 @@ Object {
 exports[`mergeProps goToPost redirects to group feed with no topicName 1`] = `
 Array [
   Array [
-    "/groups/theslug/post/123",
+    "/all/post/123",
   ],
 ]
 `;
@@ -156,7 +162,7 @@ Array [
 exports[`mergeProps goToPost redirects to topic with topicName 1`] = `
 Array [
   Array [
-    "/groups/theslug/topics/thetopicname/post/123",
+    "/all/post/123",
   ],
 ]
 `;

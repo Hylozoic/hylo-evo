@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { get } from 'lodash'
+import { get, keyBy } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -8,9 +8,19 @@ import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import { DEFAULT_AVATAR, DEFAULT_BANNER, GROUP_ACCESSIBILITY } from 'store/models/Group'
+import {
+  accessibilityDescription,
+  accessibilityIcon,
+  accessibilityString,
+  DEFAULT_BANNER,
+  DEFAULT_AVATAR,
+  GROUP_ACCESSIBILITY,
+  visibilityDescription,
+  visibilityIcon,
+  visibilityString
+} from 'store/models/Group'
 import { inIframe } from 'util/index'
-import { groupUrl } from 'util/navigation'
+import { groupDetailUrl, groupUrl } from 'util/navigation'
 
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
@@ -33,6 +43,7 @@ export default class GroupDetail extends Component {
 
   componentDidMount () {
     this.onGroupChange()
+    this.props.fetchJoinRequests()
   }
 
   componentDidUpdate (prevProps) {
@@ -43,59 +54,62 @@ export default class GroupDetail extends Component {
 
   onGroupChange = () => {
     this.props.fetchGroup()
-    this.props.fetchJoinRequests()
 
     this.setState(initialState)
   }
 
-  joinGroup = () => {
-    const { group = {}, joinGroup } = this.props
-
-    joinGroup()
-      .then(res => {
-        let errorMessage, successMessage
-        if (res.error) errorMessage = `Error joining ${group.name}.`
-        const membership = get(res, 'payload.data')
-        if (membership) successMessage = <span>You have joined <Link to={groupUrl(group.slug)}>{group.name}</Link></span>
-        return this.setState({ errorMessage, successMessage, membership })
-      })
+  joinGroup = (groupId) => () => {
+    const { joinGroup } = this.props
+    joinGroup(groupId)
   }
 
-  requestToJoinGroup = (questionAnswers) => {
+  requestToJoinGroup = (groupId, questionAnswers) => () => {
     const { createJoinRequest } = this.props
-    createJoinRequest(questionAnswers)
-      .then(res => {
-        let errorMessage, successMessage
-        if (res.error) errorMessage = `Error sending your join request.`
-        const request = get(res, 'payload.data')
-        if (request) successMessage = `Your join request is pending.`
-        return this.setState({ errorMessage, successMessage, request })
-      })
+    createJoinRequest(groupId, questionAnswers)
   }
 
   render () {
     const {
-      group,
       currentUser,
+      group,
       isMember,
       location,
-      pending,
-      onClose
+      onClose,
+      pending
     } = this.props
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />
 
     const topics = group && group.groupTopics
+    const fullPage = !onClose
 
-    return <div className={cx({ [g.group]: true, [g.fullPage]: !onClose })}>
+    return <div className={cx({ [g.group]: true, [g.fullPage]: fullPage })}>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
           <img src={group.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
-          <div styleName='g.groupTitle'>{group.name}</div>
+          <div>
+            <div styleName='g.groupTitle'>{group.name}</div>
+            <div styleName='g.groupContextInfo'>
+              <span styleName='g.group-privacy'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
+                <div styleName='g.privacy-tooltip'>
+                  <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+                </div>
+              </span>
+              <span styleName='g.group-privacy'>
+                <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
+                <div styleName='g.privacy-tooltip'>
+                  <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
+                </div>
+              </span>
+              {group.location}
+            </div>
+          </div>
         </div>
+        <div styleName='g.headerBackground' />
       </div>
       <div styleName='g.groupDetailBody'>
         <div styleName='g.groupDescription'>{group.description}</div>
@@ -116,7 +130,7 @@ export default class GroupDetail extends Component {
           : ''
         }
         { !currentUser
-          ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to post in <span styleName='g.requestGroup'>{group.name}</span></Link></div>
+          ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
           : isMember
             ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
             : this.renderGroupDetails()
@@ -127,10 +141,8 @@ export default class GroupDetail extends Component {
   }
 
   renderGroupDetails () {
-    const { group, currentUser, joinRequests } = this.props
-    const { errorMessage, successMessage } = this.state
-    const hasPendingRequest = joinRequests.find(jr => jr.group.id === group.id && jr.user.id === currentUser.id)
-    const displayMessage = errorMessage || successMessage || hasPendingRequest
+    const { group, joinRequests, onClose, routeParams } = this.props
+    const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
     return (
       <div>
         <div styleName='g.groupDetails'>
@@ -154,16 +166,20 @@ export default class GroupDetail extends Component {
             }
           </div>
         </div>
-        { displayMessage
-          ? <Message errorMessage={errorMessage} successMessage={successMessage} hasPendingRequest={hasPendingRequest} />
-          : <Request group={group} joinGroup={this.joinGroup} requestToJoinGroup={this.requestToJoinGroup} />
-        }
+        <JoinSection
+          fullPage={!onClose}
+          group={group}
+          groupsWithPendingRequests={groupsWithPendingRequests}
+          joinGroup={this.joinGroup}
+          requestToJoinGroup={this.requestToJoinGroup}
+          routeParams={routeParams}
+        />
       </div>
     )
   }
 }
 
-export function Request ({ group, joinGroup, requestToJoinGroup }) {
+export function JoinSection ({ fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, routeParams }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
   const setAnswer = (index) => (event) => {
@@ -175,29 +191,71 @@ export function Request ({ group, joinGroup, requestToJoinGroup }) {
     })
   }
 
+  const hasPendingRequest = groupsWithPendingRequests[group.id]
+
   return (
     <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
-      { group.accessibility === GROUP_ACCESSIBILITY.Open
-        ? <div styleName='g.requestOption'>
-          <div styleName='g.requestHint'>Anyone can join this group!</div>
-          <div styleName='g.requestButton' onClick={joinGroup}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
-        </div>
-        : group.accessibility === GROUP_ACCESSIBILITY.Restricted ? <div styleName='g.requestOption'>
-          {get(group, 'settings.askJoinQuestions') && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
-            <h3>{q.text}</h3>
-            <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+      { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
+        ? <div styleName='g.prerequisiteGroups'>
+          {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{group.name} is only accessible to members of the following groups:</h4>}
+          {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
+            <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
+              <div styleName='g.groupTitleContainer'>
+                <img src={prereq.avatarUrl || DEFAULT_AVATAR} height='50px' width='50px' />
+                <div>
+                  <div styleName='g.groupTitle'>{prereq.name}</div>
+                  <div styleName='g.groupContextInfo'>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={visibilityIcon(prereq.visibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{visibilityString(prereq.visibility)} - {visibilityDescription(prereq.visibility)}</div>
+                      </div>
+                    </span>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={accessibilityIcon(prereq.accessibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{accessibilityString(prereq.accessibility)} - {accessibilityDescription(prereq.accessibility)}</div>
+                      </div>
+                    </span>
+                    {prereq.location}
+                  </div>
+                </div>
+              </div>
+              <div styleName='g.headerBackground' />
+            </Link>
+            <div styleName='g.cta'>
+              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member
+            </div>
           </div>)}
-          <div styleName='g.requestButton' onClick={() => requestToJoinGroup(questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
         </div>
-          : <div styleName='g.requestOption'> {/* Closed group */}
-            This is group is invitation only
-          </div>
+        : group.numPrerequisitesLeft ? 'This group has prerequisite groups you cannot see, you cannot join this group at this time'
+          : group.accessibility === GROUP_ACCESSIBILITY.Open
+            ? <div styleName='g.requestOption'>
+              <div styleName='g.requestHint'>Anyone can join this group!</div>
+              {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+                <h3>{q.text}</h3>
+                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+              </div>)}
+              <div styleName='g.center'>
+                <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
+              </div>
+            </div>
+            : group.accessibility === GROUP_ACCESSIBILITY.Restricted
+              ? hasPendingRequest
+                ? <div styleName='g.requestPending'>Request to join pending</div>
+                : <div styleName='g.requestOption'> {/* Restricted group, no request pending */}
+                  {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
+                    <h3>{q.text}</h3>
+                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+                  </div>)}
+                  <div styleName='g.center'>
+                    <div styleName='g.requestButton' onClick={requestToJoinGroup(group.id, questionAnswers)}>Request Membership in <span styleName='g.requestGroup'>{group.name}</span></div>
+                  </div>
+                </div>
+              : <div styleName='g.requestOption'> {/* Closed group */}
+                This is group is invitation only
+              </div>
       }
     </div>
   )
-}
-
-export function Message ({ errorMessage, successMessage, hasPendingRequest }) {
-  const message = hasPendingRequest ? 'Your request to join this group is pending moderator approval.' : (errorMessage || successMessage)
-  return (<div styleName='g.message'>{message}</div>)
 }

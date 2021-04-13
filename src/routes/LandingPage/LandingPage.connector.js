@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { groupUrl, postUrl } from 'util/navigation'
-import fetchGroup from 'store/actions/fetchGroupBySlug'
+import fetchGroup from 'store/actions/fetchGroupDetails'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import presentGroup from 'store/presenters/presentGroup'

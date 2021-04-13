@@ -6,6 +6,7 @@ import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
 import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
+import GroupsSelector from 'components/GroupsSelector'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
 import SwitchStyled from 'components/SwitchStyled'
@@ -48,7 +49,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, prerequisiteGroups, settings, visibility
     } = group
 
     return {
@@ -60,6 +61,7 @@ export default class GroupSettingsTab extends Component {
         location: location || '',
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
+        prerequisiteGroups: prerequisiteGroups || [],
         settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
         visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
       },
@@ -122,12 +124,12 @@ export default class GroupSettingsTab extends Component {
   }
 
   render () {
-    const { group, currentUser } = this.props
+    const { currentUser, group, parentGroups } = this.props
     if (!group) return <Loading />
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, prerequisiteGroups, settings, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
@@ -186,6 +188,18 @@ export default class GroupSettingsTab extends Component {
               updateSettingDirectly={this.updateSettingDirectly}
             />
           )}
+        </SettingsSection>
+
+        <SettingsSection>
+          <h3>Prerequisite Groups</h3>
+          <p styleName='privacyDetail'>When you select a prerequisite group, people must join the selected groups before joining <strong>{group.name}</strong>. Only parent groups can be added as prerequisite groups.</p>
+          <p styleName='prerequisiteWarning'><strong styleName='warning'>Warning:</strong> If you select a prerequisite group that has a visibility setting of <strong><Icon name='Hidden' styleName='prerequisiteIcon' /> Hidden</strong> or <strong><Icon name='Shield' styleName='prerequisiteIcon' /> Protected</strong>, only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.</p>
+          <GroupsSelector
+            options={parentGroups}
+            selected={prerequisiteGroups}
+            onChange={this.updateSettingDirectly('prerequisiteGroups')}
+            groupSettings
+          />
         </SettingsSection>
       </div>
 

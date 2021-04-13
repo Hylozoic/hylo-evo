@@ -1,4 +1,4 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites }) => `
   id
   accessibility
   avatarUrl
@@ -86,6 +86,21 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       text
     }
   }` : ''}
+  ${withPrerequisites ? `prerequisiteGroups(onlyNotMember: true) {
+    items {
+      avatarUrl
+      id
+      name
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
+      slug
+    }
+  }
+  numPrerequisitesLeft
+  ` : ''}
 `
 
 export default groupFieldsFragment

@@ -25,12 +25,6 @@ export default
         id
         avatarUrl
         name
-        skills {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }

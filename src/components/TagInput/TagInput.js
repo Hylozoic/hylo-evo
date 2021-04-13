@@ -4,8 +4,10 @@ import { debounce, includes, isEmpty } from 'lodash'
 import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
+import Icon from 'components/Icon'
 import { KeyControlledItemList } from 'components/KeyControlledList'
 import RoundImage from 'components/RoundImage'
+import { accessibilityIcon, visibilityIcon, accessibilityString, accessibilityDescription, visibilityString, visibilityDescription } from 'store/models/Group'
 import styles from './TagInput.scss'
 
 const { object, array, bool, string, func } = PropTypes
@@ -122,7 +124,23 @@ export default class TagInput extends Component {
     const selectedItems = uniqBy('id', tags).map(t =>
       <li key={t.id} className={theme.selectedTag}>
         {t.avatarUrl && <RoundImage url={t.avatarUrl} small className={theme.selectedTagImage} />}
-        <span className={theme.selectedTagName}>{optionalHashtag}{t.label || t.name}</span>
+        <span className={theme.selectedTagName}>
+          {optionalHashtag}{t.label || t.name}
+          {tagType && tagType === 'groups' && this.props.groupSettings && <span>
+            <span styleName='privacyIcon'>
+              <Icon name={accessibilityIcon(t.accessibility)} styleName='tagInputPrivacyIcon' />
+              <div styleName='privacy-tooltip'>
+                <div><strong>{accessibilityString(t.accessibility)}</strong> - {accessibilityDescription(t.accessibility)}</div>
+              </div>
+            </span>
+            <span styleName='privacyIcon'>
+              <Icon name={visibilityIcon(t.visibility)} styleName='tagInputPrivacyIcon' />
+              <div styleName='privacy-tooltip'>
+                <div><strong>{visibilityString(t.visibility)}</strong> - {visibilityDescription(t.visibility)}</div>
+              </div>
+            </span>
+          </span>}
+        </span>
         <a onClick={!readOnly ? this.remove(t) : undefined} className={theme.selectedTagRemove}>&times;</a>
       </li>
     )

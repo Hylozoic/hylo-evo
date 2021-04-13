@@ -20,7 +20,6 @@
   padding-top: 5px;
   padding-left: 5px;
 }
-
 .change-banner-button {
   /* empty */
 }
@@ -115,6 +114,25 @@ label {
   }
 }
 
+.prerequisiteWarning {
+  margin-top: -15px;
+
+  .prerequisiteIcon {
+    font-size: 16px;
+    position: relative;
+    top: 3px;
+    color: rgba(41, 64, 90, 1.00);
+    margin: 0 3px;
+  }
+
+  strong {
+    color: rgba(41, 64, 90, 1.00);
+  }
+
+  .warning {
+    color: rgba(237, 86, 83, 1.00);
+  }
+}
 
 .onOff {
   position: absolute;
@@ -259,6 +277,7 @@ label {
       font-size: 14px;
       padding: 5px 25px 5px 8px;
       color: rgba(35, 64, 91, 1.000);
+      border-radius: 3px;
 
       &::placecholder {
         font-style: italic;

@@ -29,6 +29,13 @@ export default function presentGroup (group) {
         creator: p.creator.ref
       }
     }) : [],
+    prerequisiteGroups: group.prerequisiteGroups ? group.prerequisiteGroups.toModelArray().map(prereq => {
+      return {
+        ...prereq.ref,
+        joinQuestions: prereq.joinQuestions ? prereq.joinQuestions.toModelArray() : [],
+        prerequisiteGroups: prereq.prerequisiteGroups ? prereq.prerequisiteGroups.toModelArray() : []
+      }
+    }) : [],
     upcomingEvents: group.upcomingEvents ? group.upcomingEvents.toModelArray().map(p => {
       return {
         ...p.ref,

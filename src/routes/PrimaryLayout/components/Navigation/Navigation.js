@@ -29,8 +29,7 @@ export default function Navigation (props) {
     mapPath,
     mapView,
     routeParams,
-    rootPath,
-    streamPath
+    rootPath
   } = props
 
   const homeOnClick = () => {

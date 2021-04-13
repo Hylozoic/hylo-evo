@@ -14,14 +14,10 @@
     transition: all .25s ease;
   }
 
-  .section p {
+  p {
     color: $color-black-30;
-    transition: all .25s ease;
     font-size: 12px;
     padding-bottom: 20px;
-  }
-
-  .section.on p {
-    color: $color-black-60;
+    transition: all .25s ease;
   }
 }

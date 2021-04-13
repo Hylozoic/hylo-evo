@@ -94,6 +94,13 @@ GroupRelationship.fields = {
   childGroup: fk({ to: 'Group', as: 'childGroup', relatedName: 'parentRelationships' })
 }
 
+export class GroupPrerequisite extends Model {}
+GroupPrerequisite.modelName = 'GroupPrerequisite'
+GroupPrerequisite.fields = {
+  prerequisiteGroup: fk({ to: 'Group', as: 'prerequisiteGroup', relatedName: 'antireqs' }),
+  forGroup: fk({ to: 'Group', as: 'forGroup', relatedName: 'prereqs' })
+}
+
 class Group extends Model {
   toString () {
     return `Group: ${this.name}`
@@ -124,6 +131,7 @@ Group.fields = {
   }),
   feedOrder: attr(),
   id: attr(),
+  joinQuestions: many('GroupJoinQuestion'),
   location: attr(),
   locationId: fk({
     to: 'Location',
@@ -145,7 +153,12 @@ Group.fields = {
   }),
   posts: many('Post'),
   postCount: attr(),
-  joinQuestions: many('GroupJoinQuestion'),
+  prerequisiteGroups: many({
+    to: 'Group',
+    relatedName: 'antirequisiteGroups',
+    through: 'GroupPrerequisite',
+    throughFields: [ 'prerequisiteGroup', 'forGroup' ]
+  }),
   settings: attr(),
   slug: attr(),
   upcomingEvents: many({

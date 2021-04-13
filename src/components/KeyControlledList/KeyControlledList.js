@@ -5,6 +5,7 @@ import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
 import Icon from 'components/Icon'
 import './KeyControlledList.scss'
+import { accessibilityIcon, visibilityIcon } from 'store/models/Group'
 
 const { array, func, object, bool, number, string } = PropTypes
 
@@ -177,8 +178,10 @@ export class KeyControlledItemList extends React.Component {
       ? item => this.props.renderListItem({ item, handleChoice: this.change })
       : item => <li className={theme.item} key={item.id || 'blank'}>
         <a onClick={event => this.change(item, event)}>
-          <div>{item.name}</div>
-          {tagType && tagType === 'groups' && <div styleName='keyListMemberCount'><Icon name='Members' styleName='keyListMemberIcon' /> {item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div>}
+          <div>
+            <span>{item.name}</span>
+          </div>
+          {tagType && tagType === 'groups' && <div styleName='keyListMemberCount'><div><Icon name='Members' styleName='keyListPrivacyIcon' /> {item.memberCount} {item.memberCount !== 1 ? 'Members' : 'Member'}</div><div><Icon name={accessibilityIcon(item.accessibility)} styleName='keyListPrivacyIcon' /> <Icon name={visibilityIcon(item.visibility)} styleName='keyListPrivacyIcon' /></div></div>}
         </a>
       </li>
 
