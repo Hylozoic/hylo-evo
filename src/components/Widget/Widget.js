@@ -13,16 +13,16 @@ import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 
 const WIDGET_TITLE = {
-  text_block: 'Welcome message',
-  announcements: 'Announcement',
-  active_members: 'Recently active members',
-  requests_offers: 'Open requests & offers',
-  posts: 'Recent posts',
-  community_topics: 'Community topics',
-  events: 'Upcoming events',
-  project_activity: 'Recent project activity',
-  group_affiliations: 'Subgroups and affiliations',
-  map: 'Community map'
+  text_block: '',
+  announcements: 'Announcements',
+  active_members: 'Recently Active Members',
+  requests_offers: 'Open Requests & Offers',
+  posts: 'Recent Posts',
+  community_topics: 'Community Topics',
+  events: 'Upcoming Events',
+  project_activity: 'Recently Active Projects',
+  group_affiliations: 'Subgroups',
+  map: 'Community Map'
 }
 
 export default function Widget (props) {
@@ -106,8 +106,8 @@ const EditForm = ({ id, editSettings, viewMore, newSettings, updateSettings, sav
 const HiddenWidget = ({ isVisible, name }) => {
   return (
     <div>
-      <div>Visibility: {isVisible ? 'Visible' : 'Hidden'}</div>
-      <div>The {name} section is not visible to members of this group</div>
+      <div>Hidden</div>
+      <div>The {WIDGET_TITLE[name]} section is not visible to members of this group</div>
     </div>
   )
 }
@@ -121,28 +121,18 @@ const ChildWidget = ({
   showDetails,
   settings
 }) => {
-  if (!isVisible) return <HiddenWidget isVisible={isVisible} name={name} />
+  if (!isVisible) return <HiddenWidget name={name} />
   switch (name) {
     case 'text_block': {
-      return <WelcomeWidget settings={settings} />
+      return <WelcomeWidget group={group} settings={settings} />
     }
     case 'announcements': {
-      const announcements = [{ // group && group.announcements && group.announcements.items
-        title: 'Nutrient Density working group forming! Sign up here!',
-        author: 'Amanda Rodriguez',
-        created: '3 HRS AGO',
-        image: '/default-announcement.png'
-      }, {
-        title: 'Bioregional healthcare is coming to the Bay Area!',
-        author: 'Clare Politano',
-        created: '1 WEEK AGO',
-        image: '/default-announcement.png'
-      }]
-      return announcements && <AnnouncementWidget announcements={announcements} />
+      const announcements = (group && group.announcements) || []
+      return announcements.length > 0 && <AnnouncementWidget announcements={announcements} group={group} showDetails={showDetails} />
     }
     case 'active_members': {
-      const members = group && group.activeMembers && group.activeMembers.items
-      return <MembersWidget members={members} />
+      const members = group && group.members && group.members.sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8)
+      return <MembersWidget group={group} members={members} />
     }
     case 'requests_offers': {
       const offersAndRequests = [{ // group && group.offersAndRequests && group.offersAndRequests.items

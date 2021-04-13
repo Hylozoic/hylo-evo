@@ -3,11 +3,13 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import Icon from 'components/Icon'
+import { groupUrl, messagePersonUrl, personUrl } from 'util/navigation'
+
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './MembersWidget.scss'
 
-const { array } = PropTypes
+const { array, object } = PropTypes
 
 const settings = {
   dots: true,
@@ -19,11 +21,12 @@ const settings = {
 
 export default class MembersWidget extends Component {
   static propTypes = {
+    group: object,
     members: array
   }
 
   render () {
-    const { members } = this.props
+    const { group, members } = this.props
     return (
       <div styleName='active-users'>
         <Slider {...settings}>
@@ -31,8 +34,8 @@ export default class MembersWidget extends Component {
             <div styleName='user-name'>{m.name.split(' ')[0]}</div>
             <div styleName='user-controls'>
               <div styleName='buttons'>
-                <Link to='#'><Icon name='Messages' styleName='user-message-icon' /></Link>
-                <Link to='#'><Icon name='Person' styleName='user-profile-icon' /></Link>
+                <Link to={messagePersonUrl(m)}><Icon name='Messages' styleName='user-message-icon' /></Link>
+                <Link to={personUrl(m.id, group.slug)}><Icon name='Person' styleName='user-profile-icon' /></Link>
               </div>
             </div>
             <div styleName='user-background' />
@@ -40,7 +43,7 @@ export default class MembersWidget extends Component {
           </div>)}
           <div styleName='members-link'>
             <div>
-              <Link to='#'>All</Link>
+              <Link to={groupUrl(group.slug, 'members')}>All</Link>
             </div>
           </div>
         </Slider>

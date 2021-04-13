@@ -11,11 +11,11 @@ export default class WelcomeWidget extends Component {
   }
 
   render () {
-    const { settings = {} } = this.props
+    const { group, settings = {} } = this.props
     return (
       <div styleName='welcome-widget'>
-        <h2>Example title</h2>
-        <p>Example text {settings ? settings.text : ''}</p>
+        <h2>{settings.title || `Welcome to ${group.name}!`}</h2>
+        <p>{settings.text || `We're thrilled to have you here`}</p>
       </div>
     )
   }

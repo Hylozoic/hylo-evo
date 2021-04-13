@@ -4,44 +4,11 @@ export default
 `group(slug: $slug, updateLastViewed: $updateLastViewed) {
   id
   accessibility
-  announcements {
-    items {
-      id
-      title
-      createdAt
-      creator {
-        id
-        name
-      }
-      attachments {
-        position
-        url
-      }
-    }
-  }
   avatarUrl
   bannerUrl
   description
   location
-  locationObject {
-    id
-    addressNumber
-    addressStreet
-    bbox {
-      lat
-      lng
-    }
-    center {
-      lat
-      lng
-    }
-    city
-    country
-    fullText
-    locality
-    neighborhood
-    region
-  }
+  memberCount
   name
   settings {
     allowGroupInvites
@@ -50,6 +17,54 @@ export default
   }
   slug
   visibility
+  announcements: posts(isAnnouncement: true, sortBy: "created", order: "desc", first: 3) {
+    hasMore
+    items {
+      id
+      title
+      createdAt
+      creator {
+        id
+        name
+      }
+      attachments(type: "image") {
+        position
+        url
+      }
+    }
+  }
+  childGroups {
+    items {
+      id
+      accessibility
+      avatarUrl
+      bannerUrl
+      description
+      name
+      slug
+      visibility
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
+    }
+  }
+  events: posts(filter: "event", first: 1) {
+    hasMore
+    items {
+      id
+      title
+      startTime
+      endTime
+      location
+      members {
+        items {
+          avatarUrl
+        }
+      }
+    }
+  }
   groupRelationshipInvitesFrom {
     items {
       id
@@ -86,21 +101,50 @@ export default
       }
     }
   }
-  childGroups {
+  locationObject {
+    id
+    addressNumber
+    addressStreet
+    bbox {
+      lat
+      lng
+    }
+    center {
+      lat
+      lng
+    }
+    city
+    country
+    fullText
+    locality
+    neighborhood
+    region
+  }
+  members(first: 8, sortBy: "last_active_at", order: "desc") {
     items {
       id
-      accessibility
       avatarUrl
-      bannerUrl
-      description
+      lastActiveAt
       name
-      slug
-      visibility
-      settings {
-        allowGroupInvites
-        askJoinQuestions
-        publicMemberDirectory
+    }
+  }
+  moderators {
+    items {
+      id
+      avatarUrl
+      lastActiveAt
+      name
+    }
+  }
+  offersAndRequests: posts(filter: "offersAndRequests", first: 8) {
+    items {
+      id
+      title
+      creator {
+        name
+        avatarUrl
       }
+      commentersTotal
     }
   }
   parentGroups {
@@ -120,58 +164,7 @@ export default
       }
     }
   }
-  memberCount
-  activeMembers(first: 8, sortBy: "last_active_at", order: "desc") {
-    items {
-      id
-      name
-      lastActiveAt
-      avatarUrl
-      contactEmail
-    }
-  }
-  members(first: 8, sortBy: "name", order: "desc") {
-    items {
-      id
-      name
-      avatarUrl
-      contactEmail
-    }
-  }
-  moderators {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  widgets {
-    items {
-      id
-      name
-      isVisible
-      order
-      settings {
-        text
-        title
-      }
-    }
-  }
-  events {
-    items {
-      id
-      title
-      startTime
-      endTime
-      location
-      members {
-        items {
-          avatarUrl
-        }
-      }
-    }
-  }
-  projects {
+  projects: posts(filter: "project", first: 8) {
     items {
       id
       title
@@ -186,15 +179,16 @@ export default
       }
     }
   }
-  offersAndRequests {
+  widgets {
     items {
       id
-      title
-      creator {
-        name
-        avatarUrl
+      name
+      isVisible
+      order
+      settings {
+        text
+        title
       }
-      commentersTotal
     }
   }
   ${groupTopicsQueryFragment}
