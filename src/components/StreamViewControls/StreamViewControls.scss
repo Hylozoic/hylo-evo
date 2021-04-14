@@ -78,3 +78,18 @@
     color: $color-white;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .stream-view-ctrls {
+    height: auto;
+    padding: 10px 5px;
+  }
+
+  .dropdown {
+    margin-right: 5px;
+  }
+
+  .dropdown-label span {
+    margin-right: 0;
+  }
+}
