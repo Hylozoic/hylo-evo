@@ -52,7 +52,8 @@
   }
 
   .name {
-    font-size: 28px;
+    font-size: 24px;
+    @include font-medium;
   }
 
   .location {
