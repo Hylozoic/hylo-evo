@@ -47,6 +47,7 @@ export default class LandingPage extends Component {
               {group.location ? <div styleName='location'><Icon name='Location' />{group.location}</div> : ''}
             </div>
           </div>
+          <div styleName='bg-fade' />
         </div>
 
         {widgets && widgets.map(widget =>
