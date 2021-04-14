@@ -38,24 +38,24 @@ export class SocialControl extends Component {
     label: string,
     provider: string,
     value: string | null,
-    updateSocialSetting: func,
+    updateSettingDirectly: func,
     handleUnlinkAccount: func
   }
 
   handleLinkClick () {
-    const { provider, updateSocialSetting } = this.props
+    const { provider, updateSettingDirectly } = this.props
 
     switch (provider) {
       case 'twitter': {
         const twitterHandle = window.prompt('Please enter your twitter name.')
         if (twitterHandle) {
-          updateSocialSetting({ key: mapSocialProviderToKey[provider], value: twitterHandle })
+          updateSettingDirectly(mapSocialProviderToKey[provider])(twitterHandle)
         }
         break
       }
       case 'linkedin': {
         const linkedinUrl = linkedinPrompt()
-        updateSocialSetting({ key: mapSocialProviderToKey[provider], value: linkedinUrl })
+        updateSettingDirectly(mapSocialProviderToKey[provider])(linkedinUrl)
         break
       }
       // case 'facebook': {
@@ -69,10 +69,10 @@ export class SocialControl extends Component {
   }
 
   handleUnlinkClick () {
-    const { handleUnlinkAccount, updateSocialSetting, provider } = this.props
+    const { handleUnlinkAccount, updateSettingDirectly, provider } = this.props
 
     handleUnlinkAccount()
-    updateSocialSetting({ key: mapSocialProviderToKey[provider], value: null })
+    updateSettingDirectly(mapSocialProviderToKey[provider])(null)
   }
 
   render () {
@@ -164,14 +164,8 @@ export default class EditProfileTab extends Component {
     })
   }
 
-  updateSettingDirectly = (key, changed) => value =>
+  updateSettingDirectly = (key, changed) => value => {
     this.updateSetting(key, changed)({ target: { value } })
-
-  updateSocialSetting = ({ key, value }) => {
-    this.setState({
-      changed: true,
-      edits: { ...this.state.edits, [key]: value }
-    })
   }
 
   save = () => {
@@ -237,21 +231,21 @@ export default class EditProfileTab extends Component {
         provider='facebook'
         value={facebookUrl}
         onLink={() => loginWithService('facebook')}
-        updateSocialSetting={this.updateSocialSetting}
+        updateSettingDirectly={this.updateSettingDirectly}
         handleUnlinkAccount={() => unlinkAccount('facebook')}
       />
       <SocialControl
         label='Twitter'
         provider='twitter'
         value={twitterName}
-        updateSocialSetting={this.updateSocialSetting}
+        updateSettingDirectly={this.updateSettingDirectly}
         handleUnlinkAccount={() => unlinkAccount('twitter')}
       />
       <SocialControl
         label='LinkedIn'
         provider='linkedin'
         value={linkedinUrl}
-        updateSocialSetting={this.updateSocialSetting}
+        updateSettingDirectly={this.updateSettingDirectly}
         handleUnlinkAccount={() => unlinkAccount('linkedin')}
       />
       <div styleName='saveChanges'>
