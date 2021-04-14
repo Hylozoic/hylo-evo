@@ -162,6 +162,10 @@
     align-items: center;
     color: #FFFFFF;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .edit-form, .hidden div.edit-form {
