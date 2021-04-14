@@ -15,8 +15,6 @@ import './EditProfileTab.scss'
 
 const { object, func, string } = PropTypes
 
-export const socialLinkClicked = provider => {}
-
 const mapSocialProviderToKey = {
   'twitter': 'twitterName',
   'linkedin': 'linkedinUrl',
@@ -24,18 +22,16 @@ const mapSocialProviderToKey = {
 }
 
 /** LinkedIn Url */
-export const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
+const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
 
 export const linkedinPrompt = () => {
   let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
 
-  if (linkedinUrl) {
-    while (!validateLinkedinUrl(linkedinUrl)) {
-      linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
-    }
-
-    return linkedinUrl
+  while (!validateLinkedinUrl(linkedinUrl)) {
+    linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
   }
+
+  return linkedinUrl
 }
 export class SocialControl extends Component {
   static propTypes = {
@@ -76,7 +72,7 @@ export class SocialControl extends Component {
     const { handleUnlinkAccount, updateSocialSetting, provider } = this.props
 
     handleUnlinkAccount()
-    updateSocialSetting({ key: mapSocialProviderToKey[provider], value: '' })
+    updateSocialSetting({ key: mapSocialProviderToKey[provider], value: null })
   }
 
   render () {
