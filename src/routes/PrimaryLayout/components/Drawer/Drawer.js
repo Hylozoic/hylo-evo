@@ -24,19 +24,30 @@ export default class Drawer extends React.PureComponent {
   }
 
   render () {
-    const { currentLocation, group, groups, defaultContexts, className, toggleDrawer, canModerate } = this.props
+    const { currentLocation, group, groups, defaultContexts, className, toggleDrawer, canModerate, context } = this.props
     const routeParams = this.props.match.params
 
+    let bannerUrl
+
+    if (!group) {
+      bannerUrl = ''
+    } else {
+      ({ bannerUrl } = group)
+    }
+
     return <div className={className} styleName='s.groupDrawer'>
-      <div styleName={cx({ 's.currentGroup': group !== null })}>
-        <div styleName='s.hyloLogoBar'>
-          <img src='/hylo.svg' width='50px' />
-          <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
+      <div styleName={cx('drawerHeader', { 's.currentGroup': group !== null })} style={bgImageStyle(bannerUrl)}>
+        <div styleName='drawerBanner'>
+          <div styleName='s.hyloLogoBar'>
+            <img src='/hylo.svg' width='50px' />
+            <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
+          </div>
+          <Logo group={group} />
+          {canModerate && <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
+            <Icon name='Settings' styleName='s.settingsIcon' /> Group Settings
+          </Link>}
         </div>
-        <Logo group={group} />
-        {canModerate && <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
-          <Icon name='Settings' styleName='s.settingsIcon' /> Group Settings
-        </Link>}
+        <div styleName='backgroundFade' />
       </div>
       <div>
         <ul styleName='s.groupsList'>
