@@ -32,17 +32,16 @@ export default class Groups extends Component {
       group,
       parentGroups,
       networkData,
+      groupRelationshipCount,
       routeParams
     } = this.props
 
     return <div styleName='container'>
-<<<<<<< HEAD
-      {/* <div styleName='network-map'><span>Group network map in progress</span></div> */}
-=======
-      <div styleName='network-map'>
-        <GroupNetworkMap networkData={networkData} />
-      </div>
->>>>>>> groups network map viz basic
+      {groupRelationshipCount > 1 &&
+        <div styleName='network-map'>
+          <GroupNetworkMap networkData={networkData} />
+        </div>
+      }
 
       {/* <SearchBar
         search={search}

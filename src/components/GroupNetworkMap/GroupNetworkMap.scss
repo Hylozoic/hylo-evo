@@ -12,10 +12,11 @@
   height: 100%;
 }
 
-.node text {
-  font-size: 16px;
+text {
+  cursor: pointer;
 }
 
-.node circle {
+image {
   cursor: pointer;
+  // clip-path: url(#group-avatar-clip);
 }

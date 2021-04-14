@@ -1,4 +1,4 @@
-// import { groupUrl } from 'util/navigation'
+import { groupUrl } from 'util/navigation'
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import * as d3 from 'd3'
 
@@ -13,8 +13,6 @@ export function runForceGraph (
   const containerRect = container.getBoundingClientRect()
   const height = containerRect.height
   const width = containerRect.width
-
-  const color = () => { return '#2A4059' }
 
   const drag = (simulation) => {
     const dragstarted = (event, d) => {
@@ -41,13 +39,38 @@ export function runForceGraph (
       .on('end', dragended)
   }
 
+  const wrap = (text, width) => {
+    text.each(function () {
+      let text = d3.select(this)
+      let words = text.text().split(/\s+/).reverse()
+      let word
+      let line = []
+      let lineNumber = 0
+      let lineHeight = 1.1 // ems
+      let y = text.attr('y')
+      let dy = parseFloat(text.attr('dy')) || 0
+      let tspan = text.text(null).append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em')
+      // eslint-disable-next-line no-cond-assign
+      while (word = words.pop()) {
+        line.push(word)
+        tspan.text(line.join(' '))
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop()
+          tspan.text(line.join(' '))
+          line = [word]
+          tspan = text.append('tspan').attr('x', 0).attr('y', y).attr('dy', `${++lineNumber * lineHeight + dy}em`).text(word)
+        }
+      }
+    })
+  }
+
   const simulation = d3
     .forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(function (d) { return d.value }))
-    .force('charge', d3.forceManyBody().strength(-500))
+    .force('link', d3.forceLink(links).id(d => d.id))
+    .force('charge', d3.forceManyBody().strength(-1000))
     .force('collide', d3.forceCollide().radius(60).iterations(2))
-    .force('x', d3.forceX())
-    .force('y', d3.forceY())
+    .force('x', d3.forceX(width / 4).strength(0.4))
+    .force('y', d3.forceY(height / 4).strength(0.6))
 
   let svg = d3
     .select(container)
@@ -58,7 +81,9 @@ export function runForceGraph (
       // svg.attr('transform', event.transform)
     }))
 
-  svg.append('defs').append('marker')
+  let defs = svg.append('defs')
+
+  defs.append('marker')
     .attr('id', 'arrowhead')
     .attr('viewBox', '-0 -5 10 10')
     .attr('refX', 13)
@@ -69,60 +94,63 @@ export function runForceGraph (
     .attr('xoverflow', 'visible')
     .append('svg:path')
     .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-    .attr('fill', '#999')
+    .attr('fill', '#BBB')
     .style('stroke', 'none')
+
+  defs.append('clipPath')
+    .attr('id', 'group-avatar-clip')
+    .append('circle')
+    .attr('r', 20)
+    .attr('cx', 20)
+    .attr('cy', 20)
 
   const link = svg
     .append('g')
-    .attr('stroke', '#999')
-    .attr('stroke-opacity', 0.6)
+    .attr('stroke', '#BBB')
+    .attr('stroke-opacity', 0.5)
     .selectAll('polyline')
     .data(links)
     .join('polyline')
     .attr('stroke-width', 3)
     .attr('marker-mid', 'url(#arrowhead)')
 
-  const node = svg
-    .append('g')
-    .selectAll('circle')
-    .data(nodes)
-    .join('circle')
-    .attr('r', 24)
-    .attr('fill', color)
-    .call(drag(simulation))
-
   const images = svg.append('g')
-    .attr('class', 'img')
     .selectAll('circle')
     .data(nodes)
     .enter()
+    .append('a')
+    .attr('xlink:href', d => groupUrl(d.slug))
     .append('image')
+    .attr('x', 0)
+    .attr('y', 0)
     .attr('xlink:href', d => d.avatarUrl ? d.avatarUrl : DEFAULT_AVATAR)
-    .attr('x', d => -25)
-    .attr('y', d => -25)
-    .attr('height', 50)
-    .attr('width', 50)
+    .attr('clip-path', 'url(#group-avatar-clip)')
+    .attr('transform', d => `translate(${d.x - 20}, ${d.y - 20})`)
+    .attr('height', 40)
+    .attr('width', 40)
     .call(drag(simulation))
-
-  images.on('click', function (d) {
-    // TODO if a member, go to group page
-  })
 
   const label = svg.append('g')
     .attr('class', 'labels')
     .selectAll('text')
     .data(nodes)
     .enter()
+    .append('a')
+    .attr('xlink:href', d => groupUrl(d.slug))
     .append('text')
     .attr('text-anchor', 'middle')
-    .attr('y', d => 50)
-    // .attr('class', d => `fa ${getClass(d)}`)
+    .attr('y', d => 40)
     .text(d => { return d.name })
-    .style('font-size', d => d.index === 0 ? '20px' : '16px')
+    .style('font-size', d => d.index === 0 ? '16px' : '12px')
     .style('font-weight', 'bold')
+    .call(wrap, 150)
     .call(drag(simulation))
 
   simulation.on('tick', () => {
+    // center the root node
+    nodes[0].x = 0
+    nodes[0].y = 0
+
     // update link positions
     link.attr('points', function (d) {
       return d.source.x + ',' + d.source.y + ' ' +
@@ -130,20 +158,13 @@ export function runForceGraph (
         d.target.x + ',' + d.target.y
     })
 
-    // update node positions
-    node
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-
     // update image positions
     images
-      .attr('x', d => { return d.x - 25 })
-      .attr('y', d => { return d.y - 25 })
+      .attr('transform', d => `translate(${d.x - 20}, ${d.y - 20})`)
 
     // update label positions
     label
-      .attr('x', d => { return d.x })
-      .attr('y', d => { return d.y + 50 })
+      .attr('transform', d => `translate(${d.x}, ${d.y})`)
   })
 
   return {

@@ -20,6 +20,7 @@ export function mapStateToProps (state, props) {
     return g
   })
   const networkData = mapNodesAndLinks(parentGroups, childGroups, group)
+  const groupRelationshipCount = childGroups.length + parentGroups.length
 
   return {
     childGroups,
@@ -27,6 +28,7 @@ export function mapStateToProps (state, props) {
     memberships,
     parentGroups,
     networkData,
+    groupRelationshipCount,
     routeParams: get('match.params', props)
   }
 }
