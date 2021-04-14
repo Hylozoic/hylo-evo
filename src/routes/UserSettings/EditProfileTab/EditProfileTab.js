@@ -12,6 +12,7 @@ import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 
 import './EditProfileTab.scss'
+import { connectRouter } from 'connected-react-router'
 
 const { object, func, string } = PropTypes
 
@@ -27,11 +28,28 @@ const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedi
 export const linkedinPrompt = () => {
   let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
 
-  while (!validateLinkedinUrl(linkedinUrl)) {
-    linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
+  if (linkedinUrl){
+    while (!validateLinkedinUrl(linkedinUrl)) {
+      linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
+    }
   }
 
   return linkedinUrl
+}
+
+/** Facebook Url */
+const validateFacebookUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?facebook\.com/)
+
+export const facebookPrompt = () => {
+  let facebookUrl = window.prompt('Please enter the full url for your Facebook page.')
+
+  if (facebookUrl){
+    while (!validateFacebookUrl(facebookUrl)) {
+      facebookUrl = window.prompt('Invalid url. Please enter the full url for your Facebook page.')
+    }
+  }
+
+  return facebookUrl
 }
 export class SocialControl extends Component {
   static propTypes = {
@@ -39,7 +57,8 @@ export class SocialControl extends Component {
     provider: string,
     value: string | null,
     updateSettingDirectly: func,
-    handleUnlinkAccount: func
+    handleUnlinkAccount: func,
+    onLink: func
   }
 
   handleLinkClick () {
@@ -55,16 +74,18 @@ export class SocialControl extends Component {
       }
       case 'linkedin': {
         const linkedinUrl = linkedinPrompt()
-        updateSettingDirectly(mapSocialProviderToKey[provider])(linkedinUrl)
+        if (linkedinUrl){
+          updateSettingDirectly(mapSocialProviderToKey[provider])(linkedinUrl)
+        }
         break
       }
-      // case 'facebook': {
-      //   return onLink()
-      //   .then(({ error }) => {
-      //     if (error) return onChange(false)
-      //     return onChange(true)
-      //   })
-      // }
+      case 'facebook': {
+        const facebookUrl = facebookPrompt()
+        if (facebookUrl){
+          updateSettingDirectly(mapSocialProviderToKey[provider])(facebookUrl)
+        }
+        break
+      }
     }
   }
 
@@ -76,7 +97,7 @@ export class SocialControl extends Component {
   }
 
   render () {
-    const { label, value = '' } = this.props
+    const { label, value = '', provider, onLink } = this.props
     const linked = !!value
 
     const linkButton =
@@ -86,11 +107,21 @@ export class SocialControl extends Component {
         {linked ? 'Unlink' : 'Link'}
       </span>
 
+    // const connectFacebookButton =
+    //   <span
+    //     styleName='link-button'
+    //     onClick={onLink}
+    //   >
+    //     {linked ? 'Disconnect' : 'Connect'}
+    //   </span>
+
     return (
       <div styleName='control'>
         <div styleName={cx('social-control-label')}>
           {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
-          {label}{linkButton}
+          {label}
+          {/* {provider === 'facebook' && connectFacebookButton} */}
+          {linkButton}
         </div>
       </div>
     )
