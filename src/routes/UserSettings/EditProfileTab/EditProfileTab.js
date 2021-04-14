@@ -38,8 +38,8 @@ export class SocialControl extends Component {
     label: string,
     provider: string,
     value: string | null,
-    updateSocialSettings: func,
-    handleUnlink: func
+    updateSocialSetting: func,
+    handleUnlinkAccount: func
   }
 
   handleLinkClick () {
