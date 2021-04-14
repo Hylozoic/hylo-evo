@@ -16,7 +16,7 @@ export function runForceGraph (
 
   const drag = (simulation) => {
     const dragstarted = (event, d) => {
-      if (!event.active) simulation.alphaTarget(0.3).restart()
+      if (!event.active) simulation.alphaTarget(0.1).restart()
       d.fx = d.x
       d.fy = d.y
     }
@@ -145,6 +145,9 @@ export function runForceGraph (
     .style('font-weight', 'bold')
     .call(wrap, 150)
     .call(drag(simulation))
+
+  // Run the simulation without rendering to reduce animation time
+  simulation.tick(250)
 
   simulation.on('tick', () => {
     // center the root node
