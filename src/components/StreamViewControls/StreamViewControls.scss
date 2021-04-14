@@ -1,6 +1,10 @@
 .stream-view-ctrls {
   height: 70px;
   padding: 17px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .dropdown {
@@ -9,7 +13,8 @@
   font-size: 12px;
   border-radius: 30px;
   margin-right: 1em;
-  border: 1px solid $color-grey-keyline-light;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: $box-shadow-default;
 }
 
 .dropdown-label {

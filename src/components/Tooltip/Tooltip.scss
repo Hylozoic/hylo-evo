@@ -9,3 +9,10 @@
   // border: 1px solid $color-picton-blue !important;
   box-shadow: $box-shadow-default;
 }
+
+
+@media screen and (max-width: 425px) {
+  .tooltip {
+    display: none;
+  }
+}
