@@ -10,9 +10,7 @@ import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
-
 import './EditProfileTab.scss'
-import { connectRouter } from 'connected-react-router'
 
 const { object, func, string } = PropTypes
 
