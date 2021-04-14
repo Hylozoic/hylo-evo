@@ -195,9 +195,9 @@ export default class EditProfileTab extends Component {
     })
   }
 
-  updateSettingDirectly = (key, changed) => value => {
+  updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
-  }
+
 
   save = () => {
     this.setState({ changed: false })
