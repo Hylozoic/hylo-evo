@@ -109,7 +109,7 @@ export class SocialControl extends Component {
     const connectFacebookButton =
       <span
         styleName='link-button'
-        onClick={onLink}
+        onClick={linked ? () => this.handleUnlinkClick() : () => onLink()}
         className='ml-auto'
       >
         {linked ? 'Disconnect' : 'Connect'}
