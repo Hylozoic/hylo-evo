@@ -96,6 +96,7 @@ fragment MeCompleteFragment on Me {
       slug
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills

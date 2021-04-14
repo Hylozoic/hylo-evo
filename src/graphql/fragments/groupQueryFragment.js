@@ -12,6 +12,7 @@ export default
   name
   settings {
     allowGroupInvites
+    askGroupToGroupJoinQuestions
     askJoinQuestions
     publicMemberDirectory
     showSuggestedSkills
@@ -64,6 +65,7 @@ export default
       visibility
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills
@@ -165,6 +167,7 @@ export default
       visibility
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills

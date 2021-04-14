@@ -15,6 +15,7 @@ export default function presentGroup (group) {
         primaryImage: a.attachments.length > 0 ? a.attachments[0].url : false
       }
     }) : [],
+    groupToGroupJoinQuestions: group.groupToGroupJoinQuestions ? group.groupToGroupJoinQuestions.toRefArray() : [],
     groupTopics: group.groupTopics ? group.groupTopics.toModelArray().map(groupTopic => {
       return {
         ...groupTopic.ref,

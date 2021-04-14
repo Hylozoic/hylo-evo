@@ -235,16 +235,13 @@ label {
 .groupQuestions {
   position: relative;
   margin-left: 13px;
-  display: flex;
   padding-top: 10px;
   transition: all .25s ease;
 
   .questionList {
-    margin-left: 15px;
-
-    .questionDescription {
-      padding-right: 40px;
-    }
+    margin-top: 5px;
+    margin-left: 58px;
+    width: 450px;
 
     span {
       transition: all .25s ease;
