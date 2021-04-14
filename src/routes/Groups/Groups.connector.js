@@ -1,5 +1,6 @@
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
+import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 import { mapNodesAndLinks } from 'util/networkMap'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelationships'
@@ -10,7 +11,7 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const queryProps = { groupSlug: group.slug }
   const memberships = getMyMemberships(state, props)
-  const joinRequests = getMyJoinRequests(state, props)
+  const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
   const childGroups = getChildGroups(state, queryProps).map(g => {
     g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
     return g
