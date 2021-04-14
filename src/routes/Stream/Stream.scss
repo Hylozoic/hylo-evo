@@ -1,6 +1,6 @@
 .stream-items {
   margin: 0 auto;
-  overflow: auto; // prevent margin collapse
+  overflow: visible;
 }
 
 .stream-items > div:first-child {
