@@ -153,12 +153,12 @@ export function inviteGroupToJoinParent (parentId, childId) {
   }
 }
 
-export function requestToAddGroupToParent (parentId, childId) {
+export function requestToAddGroupToParent (parentId, childId, questionAnswers) {
   return {
     type: REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
-      query: `mutation ($parentId: ID, $childId: ID) {
-        requestToAddGroupToParent(parentId: $parentId, childId: $childId) {
+      query: `mutation ($parentId: ID, $childId: ID, $questionAnswers: [QuestionAnswerInput]) {
+        requestToAddGroupToParent(parentId: $parentId, childId: $childId, questionAnswers: $questionAnswers) {
           success
           groupRelationship {
             id
@@ -185,7 +185,7 @@ export function requestToAddGroupToParent (parentId, childId) {
           }
         }
       }`,
-      variables: { parentId, childId }
+      variables: { parentId, childId, questionAnswers }
     },
     meta: {
       parentId,

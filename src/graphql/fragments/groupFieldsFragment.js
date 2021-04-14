@@ -83,13 +83,6 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
     }
   }` : ''}
   ${withJoinQuestions ? `
-  groupToGroupJoinQuestions {
-    items {
-      id
-      questionId
-      text
-    }
-  }
   joinQuestions {
     items {
       id
@@ -114,6 +107,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
         askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
       slug
     }

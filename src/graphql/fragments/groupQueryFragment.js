@@ -106,6 +106,14 @@ export default
         id
         name
       }
+      questionAnswers {
+        id
+        question {
+          id
+          text
+        }
+        answer
+      }
     }
   }
   locationObject {
