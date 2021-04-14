@@ -1,28 +1,20 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites }) => `
   id
   accessibility
   avatarUrl
   bannerUrl
   description
+  location
+  memberCount
   name
   settings {
     allowGroupInvites
     askJoinQuestions
     publicMemberDirectory
+    showSuggestedSkills
   }
   slug
   visibility
-  parentGroups {
-    items {
-      id
-      accessibility
-      avatarUrl
-      bannerUrl
-      name
-      slug
-      visibility
-    }
-  }
   childGroups {
     items {
       id
@@ -34,22 +26,6 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       visibility
     }
   }
-  memberCount
-  members(first: 8, sortBy: "name", order: "desc") {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  moderators {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  location
   locationObject {
     id
     addressNumber
@@ -69,6 +45,31 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
     neighborhood
     region
   }
+  members(first: 8, sortBy: "name", order: "desc") {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  moderators {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  parentGroups {
+    items {
+      id
+      accessibility
+      avatarUrl
+      bannerUrl
+      name
+      slug
+      visibility
+    }
+  }
   ${withTopics ? `groupTopics(first: 8) {
     items {
       id
@@ -85,7 +86,28 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       questionId
       text
     }
+  }
+  suggestedSkills {
+    items {
+      id
+      name
+    }
   }` : ''}
+  ${withPrerequisites ? `prerequisiteGroups(onlyNotMember: true) {
+    items {
+      avatarUrl
+      id
+      name
+      settings {
+        allowGroupInvites
+        askJoinQuestions
+        publicMemberDirectory
+      }
+      slug
+    }
+  }
+  numPrerequisitesLeft
+  ` : ''}
 `
 
 export default groupFieldsFragment

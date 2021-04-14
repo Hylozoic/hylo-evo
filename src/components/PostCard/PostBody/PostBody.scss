@@ -151,17 +151,35 @@
 }
 
 @media screen and (max-width: 425px) {
-  .eventRightColumn, .calendarDate {
-    display: none;
+  .eventBody {
+    padding: 0 15px 0 15px;
+    position: relative;
+    flex-direction: column;
+  }
+
+  .calendarDate {
+    margin-top: -40px;
+
+    > div {
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  .eventRightColumn {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+  }
+
+  .inviteButton {
+    margin-top: 0;
+    margin-left: 15px;
   }
 
   .eventData {
     padding: 0 0 0 0;
     margin: 0 0 5px 0;
-  }
-
-  .eventBody {
-    padding: 0 15px 0 15px;
   }
 
   .cardPadding {

@@ -104,7 +104,7 @@ export default function (state = {}, action) {
   return state
 }
 
-export function matchNewPostIntoQueryResults (state, { id, type, groups, topics = [] }) {
+export function matchNewPostIntoQueryResults (state, { id, isPublic, type, groups, topics = [] }) {
   /* about this:
       we add the post id into queryResult sets that are based on time of
       creation because we know that the post just created is the latest
@@ -114,24 +114,31 @@ export function matchNewPostIntoQueryResults (state, { id, type, groups, topics 
   const queriesToMatch = []
 
   // All Groups feed w/ topics
-  queriesToMatch.push({})
+  queriesToMatch.push({ context: 'all' })
   for (let topic of topics) {
     queriesToMatch.push(
-      { topic: topic.id }
+      { context: 'all', topic: topic.id }
     )
+  }
+
+  // Public posts stream
+  if (isPublic) {
+    queriesToMatch.push({ context: 'public' })
   }
 
   // Group feeds w/ topics
   return reduce((memo, group) => {
     queriesToMatch.push(
-      { slug: group.slug },
-      { slug: group.slug, filter: type },
-      { slug: group.slug, sortBy: 'updated' },
-      { slug: group.slug, sortBy: 'updated', filter: type }
+      { context: 'groups', slug: group.slug },
+      { context: 'groups', slug: group.slug, filter: type },
+      { context: 'groups', slug: group.slug, sortBy: 'updated' },
+      { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type },
+      { context: 'groups', slug: group.slug, sortBy: 'created' },
+      { context: 'groups', slug: group.slug, sortBy: 'created', filter: type }
     )
     for (let topic of topics) {
       queriesToMatch.push(
-        { slug: group.slug, topic: topic.id }
+        { context: 'groups', slug: group.slug, topic: topic.id }
       )
     }
     return reduce((innerMemo, params) => {
@@ -259,6 +266,7 @@ export function buildKey (type, params) {
 
 export const queryParamWhitelist = [
   'id',
+  'context',
   'slug',
   'groupSlug',
   'groupSlugs',
@@ -269,8 +277,7 @@ export const queryParamWhitelist = [
   'filter',
   'topic',
   'type',
-  'page',
-  'context'
+  'page'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {

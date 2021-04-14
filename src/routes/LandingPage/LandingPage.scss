@@ -1,0 +1,94 @@
+.banner {
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  position: relative;
+
+  .right {
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 20px;
+    position: relative;
+    z-index: 1;
+
+    .about {
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 20px;
+      padding: 5px 10px;
+      cursor: pointer;
+
+      > span {
+        color: white;
+        font-size: 14px;
+        padding-right: 5px;
+      }
+    }
+
+    .about:hover {
+      background-color: rgba(0,0,0,0.5);
+    }
+  }
+
+  .title {
+    position: relative;
+    z-index: 1;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    > div {
+      padding-left: 10px;
+    }
+
+    .landing-page-avatar {
+      min-width: 4rem;
+      min-height: 4rem;
+    }
+  }
+
+  .name {
+    font-size: 24px;
+    @include font-medium;
+  }
+
+  .location {
+    font-size: 14px;
+
+    > span {
+      color: white;
+      font-size: 14px;
+      padding-right: 5px;
+    }
+  }
+
+  > img {
+    width: 100%;
+  }
+
+  .bg-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #2A4059 0%, rgba(42, 64, 89, 0.3) 0.01%, rgba(42, 64, 89, 0.7) 100%);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .banner {
+    .name {
+      font-size: 18px;
+    }
+
+    .location {
+      font-size: 11px;
+    }
+  }
+}

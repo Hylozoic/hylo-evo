@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.0.2] - 2021-04-08
+### Fixed
+- Fixed issues saving and viewing Saved Searches on the map
+- Fixed viewing join requests settings page
+- You can edit comments once again
+- Closed groups don't show request to join button
+
+## [3.0.1] - 2021-04-07
+### Fixed
+- Issues on the Groups page where we would incorrectly show a person having requested membership in a group or not show that they had requested membership
+- Make sure new posts appear in the stream immediately
+- Join questions now correctly appearing when trying to join a group that has them specified
+
+## [3.0.0] - 2021-04-02
 ### Added
 - __Holonic Architecture!__ You can now add infinitely nested groups within groups within groups. And groups can have multiple "parent groups" too. This is the beginning of truly enabling us to map and connect complex organizations and ecosystems and how groups of all kinds work together.
 - Added a new Groups page in the group nav menu that shows all the "parent" groups and "child" groups of the current group.

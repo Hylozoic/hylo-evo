@@ -56,9 +56,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   <div
     data-stylename="privacy-settings"
   >
-    <div
-      data-stylename="groupPrivacySection"
-    >
+    <SettingsSection>
       <h3>
         Visibility
       </h3>
@@ -89,10 +87,8 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         key="2"
         updateSetting={[Function]}
       />
-    </div>
-    <div
-      data-stylename="groupPrivacySection"
-    >
+    </SettingsSection>
+    <SettingsSection>
       <h3>
         Access
       </h3>
@@ -156,8 +152,109 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         updateSetting={[Function]}
         updateSettingDirectly={[Function]}
       />
-    </div>
+    </SettingsSection>
+    <SettingsSection>
+      <h3>
+        Prerequisite Groups
+      </h3>
+      <p
+        data-stylename="privacyDetail"
+      >
+        When you select a prerequisite group, people must join the selected groups before joining 
+        <strong>
+          Foomunity
+        </strong>
+        . Only parent groups can be added as prerequisite groups.
+      </p>
+      <p
+        data-stylename="prerequisiteWarning"
+      >
+        <strong
+          data-stylename="warning"
+        >
+          Warning:
+        </strong>
+         If you select a prerequisite group that has a visibility setting of 
+        <strong>
+          <Icon
+            data-stylename="prerequisiteIcon"
+            name="Hidden"
+          />
+           Hidden
+        </strong>
+         or 
+        <strong>
+          <Icon
+            data-stylename="prerequisiteIcon"
+            name="Shield"
+          />
+           Protected
+        </strong>
+        , only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
+      </p>
+      <GroupsSelector
+        groupSettings={true}
+        onChange={[Function]}
+        options={Array []}
+        placeholder="Type group name..."
+        selected={Array []}
+      />
+    </SettingsSection>
   </div>
+  <SettingsSection>
+    <h3>
+      Relevant skills & interests
+    </h3>
+    <p
+      data-stylename="privacyDetail"
+    >
+      What skills and interests are relevant to this group?
+    </p>
+    <div
+      data-stylename="skillsSetting "
+    >
+      <SwitchStyled
+        backgroundColor="#8B96A4"
+        checked={false}
+        disabled={false}
+        onChange={[Function]}
+      />
+      <p
+        data-stylename="toggleDescription"
+      >
+        Ask new members to fill out their skills and interests?
+      </p>
+      <div
+        data-stylename="onOff"
+      >
+        <div
+          data-stylename="off"
+        >
+          OFF
+        </div>
+        <div
+          data-stylename="on"
+        >
+          ON
+        </div>
+      </div>
+    </div>
+    <Connect(SkillsSection)
+      group={
+        Object {
+          "avatarUrl": "avatar.png",
+          "bannerUrl": "avatar.png",
+          "description": "Great group",
+          "id": 1,
+          "locationObject": "Fuji",
+          "name": "Foomunity",
+          "slug": "foo",
+        }
+      }
+      label="Add a relevant skill or interest"
+      placeholder="What skills and interests are most relevant to your group?"
+    />
+  </SettingsSection>
   <div
     data-stylename="saveChanges"
   >

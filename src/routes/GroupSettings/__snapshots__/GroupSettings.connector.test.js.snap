@@ -10,12 +10,20 @@ Object {
     "id": "1",
   },
   "group": Object {
+    "activeProjects": Array [],
+    "announcements": Array [],
     "groupTopics": Array [],
     "id": "99",
     "joinQuestions": Array [],
     "members": Array [],
+    "openOffersAndRequests": Array [],
+    "prerequisiteGroups": Array [],
     "slug": "foo",
+    "suggestedSkills": Array [],
+    "upcomingEvents": Array [],
+    "widgets": Array [],
   },
+  "parentGroups": Array [],
   "slug": "foo",
 }
 `;
@@ -37,6 +45,7 @@ Object {
             allowGroupInvites
             askJoinQuestions
             publicMemberDirectory
+            showSuggestedSkills
           }
           slug
           visibility
@@ -45,6 +54,13 @@ Object {
               id
               name
               avatarUrl
+            }
+          }
+          joinQuestions {
+            items {
+              id
+              questionId
+              text
             }
           }
           moderators (first: 100) {
@@ -57,9 +73,17 @@ Object {
           }
           parentGroups (first: 100) {
             items {
+              avatarUrl
               id
               name
+            }
+          }
+          prerequisiteGroups {
+            items {
               avatarUrl
+              id
+              name
+              slug
             }
           }
           pendingInvitations {
@@ -71,11 +95,10 @@ Object {
               lastSentAt
             }
           }
-          joinQuestions {
+          suggestedSkills {
             items {
               id
-              questionId
-              text
+              name
             }
           }
         }
@@ -104,15 +127,23 @@ Object {
               text
             }
           }
+          prerequisiteGroups {
+            items {
+              id
+              avatarUrl
+              name
+              slug
+            }
+          }
         }
       }",
     "variables": Object {
-      "changes": undefined,
+      "changes": 1,
       "id": "99",
     },
   },
   "meta": Object {
-    "changes": undefined,
+    "changes": 1,
     "extractModel": "Group",
     "id": "99",
     "optimistic": true,
@@ -134,12 +165,20 @@ Object {
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "group": Object {
+    "activeProjects": Array [],
+    "announcements": Array [],
     "groupTopics": Array [],
     "id": "99",
     "joinQuestions": Array [],
     "members": Array [],
+    "openOffersAndRequests": Array [],
+    "prerequisiteGroups": Array [],
     "slug": "foo",
+    "suggestedSkills": Array [],
+    "upcomingEvents": Array [],
+    "widgets": Array [],
   },
+  "parentGroups": Array [],
   "slug": "foo",
   "updateGroupSettings": [Function],
   "updateGroupSettingsMaker": [Function],

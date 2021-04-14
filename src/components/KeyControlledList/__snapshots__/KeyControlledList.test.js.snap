@@ -68,7 +68,9 @@ exports[`KeyControlledItemList renders correctly (with items) 1`] = `
       onClick={[Function]}
     >
       <div>
-        one
+        <span>
+          one
+        </span>
       </div>
     </a>
   </li>
@@ -80,7 +82,9 @@ exports[`KeyControlledItemList renders correctly (with items) 1`] = `
       onClick={[Function]}
     >
       <div>
-        two
+        <span>
+          two
+        </span>
       </div>
     </a>
   </li>

@@ -6,6 +6,7 @@ import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { baseUrl, isPublicPath } from 'util/navigation'
+import { toggleGroupMenu } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
@@ -15,6 +16,7 @@ export function mapStateToProps (state, props) {
 
   const group = getGroupForCurrentRoute(state, props)
   const rootPath = baseUrl(routeParams)
+  const streamPath = `${rootPath}/stream`
   const projectsPath = `${rootPath}/projects`
   const eventsPath = `${rootPath}/events`
   const groupsPath = `${rootPath}/groups`
@@ -42,7 +44,9 @@ export function mapStateToProps (state, props) {
     groupId: get('id', group),
     hasRelatedGroups,
     hideTopics: isPublicPath(props.location.pathname),
+    isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
     rootPath,
+    streamPath,
     membersPath,
     projectsPath,
     eventsPath,
@@ -59,7 +63,8 @@ const dropPostResults = makeDropQueryResults(FETCH_POSTS)
 export function mapDispatchToProps (dispatch, props) {
   return {
     resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
-    dropPostResultsMaker: feedListFetchPostsParam => () => dispatch(dropPostResults(feedListFetchPostsParam))
+    dropPostResultsMaker: feedListFetchPostsParam => () => dispatch(dropPostResults(feedListFetchPostsParam)),
+    toggleGroupMenu: () => dispatch(toggleGroupMenu())
   }
 }
 

@@ -9,8 +9,12 @@ export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
 export const FETCH_SKILL_SUGGESTIONS = `${MODULE_NAME}/FETCH_SKILL_SUGGESTIONS`
 export const ADD_SKILL = `${MODULE_NAME}/ADD_SKILL`
 export const ADD_SKILL_PENDING = `${ADD_SKILL}_PENDING`
+export const ADD_SKILL_TO_GROUP = `${MODULE_NAME}/ADD_SKILL_TO_GROUP`
+export const ADD_SKILL_TO_GROUP_PENDING = `${ADD_SKILL_TO_GROUP}_PENDING`
 export const REMOVE_SKILL = `${MODULE_NAME}/REMOVE_SKILL`
 export const REMOVE_SKILL_PENDING = `${REMOVE_SKILL}_PENDING`
+export const REMOVE_SKILL_FROM_GROUP = `${MODULE_NAME}/REMOVE_SKILL_FROM_GROUP`
+export const REMOVE_SKILL_FROM_GROUP_PENDING = `${REMOVE_SKILL_FROM_GROUP}_PENDING`
 
 // Action Creators
 
@@ -35,6 +39,29 @@ export function addSkill (skillName) {
   }
 }
 
+export function addSkillToGroup (groupId, skillName) {
+  return {
+    type: ADD_SKILL_TO_GROUP,
+    graphql: {
+      query: `mutation ($groupId: ID, $name: String) {
+        addSuggestedSkillToGroup(groupId: $groupId, name: $name) {
+          id,
+          name
+        }
+      }`,
+      variables: {
+        groupId,
+        name: skillName
+      }
+    },
+    meta: {
+      optimistic: true,
+      groupId,
+      skillName
+    }
+  }
+}
+
 export function removeSkill (skillId) {
   return {
     type: REMOVE_SKILL,
@@ -50,6 +77,28 @@ export function removeSkill (skillId) {
     },
     meta: {
       optimistic: true,
+      skillId
+    }
+  }
+}
+
+export function removeSkillFromGroup (groupId, skillId) {
+  return {
+    type: REMOVE_SKILL_FROM_GROUP,
+    graphql: {
+      query: `mutation ($groupId: ID, $id: ID) {
+        removeSuggestedSkillFromGroup(groupId: $groupId, id: $id) {
+          success
+        }
+      }`,
+      variables: {
+        groupId,
+        id: skillId
+      }
+    },
+    meta: {
+      optimistic: true,
+      groupId,
       skillId
     }
   }
@@ -141,10 +190,16 @@ export const getSkillSuggestions = ormCreateSelector(
   orm,
   getSkillSuggestionsFromCache,
   (_, props) => props.personId,
-  (session, results, personId) => {
+  (_, props) => props.group,
+  (session, results, personId, group) => {
     if (isEmpty(results) || isEmpty(results.ids)) return []
-    const person = session.Person.withId(personId)
-    const alreadySelectedIds = map('id', person.skills.toRefArray())
+    let alreadySelectedIds
+    if (personId) {
+      const person = session.Person.withId(personId)
+      alreadySelectedIds = map('id', person.skills.toRefArray())
+    } else if (group) {
+      alreadySelectedIds = map('id', group.suggestedSkills)
+    }
     const ids = difference(results.ids, alreadySelectedIds)
     return session.Skill.all()
       .filter(x => includes(x.id, ids))

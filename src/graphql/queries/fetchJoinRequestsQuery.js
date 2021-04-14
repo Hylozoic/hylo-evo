@@ -17,16 +17,14 @@ export default
         }
         answer
       }
+      group {
+        id
+        slug
+      }
       user {
         id
         avatarUrl
         name
-        skills {
-          items {
-            id
-            name
-          }
-        }
       }
     }
   }

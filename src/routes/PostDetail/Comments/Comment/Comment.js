@@ -2,19 +2,20 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
-import ReactTooltip from 'react-tooltip'
-import { isEmpty } from 'lodash/fp'
+import { filter, isEmpty, isFunction } from 'lodash/fp'
 import { humanDate, present, sanitize } from 'hylo-utils/text'
 import { personUrl } from 'util/navigation'
 import ShowMore from '../ShowMore'
+import Tooltip from 'components/Tooltip'
 import Avatar from 'components/Avatar'
-// import Dropdown from 'components/Dropdown'
-// import Icon from 'components/Icon'
+import Dropdown from 'components/Dropdown'
+import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
+import { hasFeature } from 'store/models/Me'
 import CommentForm from '../CommentForm'
 import './Comment.scss'
 
@@ -52,18 +53,18 @@ export class Comment extends Component {
   }
 
   render () {
-    const { comment, slug } = this.props
-    const { creator, createdAt, text, attachments } = comment
+    const { comment, slug, isCreator, onReplyComment, deleteComment, removeComment } = this.props
+    const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
     const profileUrl = personUrl(creator.id, slug)
     const presentedText = present(sanitize(text), { slug })
 
-    // const dropdownItems = filter(item => isFunction(item.onClick), [
-    //   {},
-    //   { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
-    //   { icon: 'Trash', label: 'Delete', onClick: deleteComment ? () => deleteComment(comment.id) : null },
-    //   { icon: 'Trash', label: 'Remove', onClick: removeComment ? () => removeComment(comment.id) : null }
-    // ])
+    const dropdownItems = filter(item => isFunction(item.onClick), [
+      {},
+      { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
+      { icon: 'Trash', label: 'Delete', onClick: deleteComment ? () => deleteComment(comment.id) : null },
+      { icon: 'Trash', label: 'Remove', onClick: removeComment ? () => removeComment(comment.id) : null }
+    ])
 
     return (
       <div>
@@ -74,12 +75,12 @@ export class Comment extends Component {
             {editing && 'Editing now'}
             {!editing && humanDate(createdAt)}
           </span>
-          {/* XXX: turn off replies for now until mobile has them <div styleName='upperRight'>
-            <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+          <div styleName='upperRight'>
+            {hasFeature('INLINE_COMMENTS') && <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
-            </div>
+            </div>}
             {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
-          </div> */}
+          </div>
         </div>
         <CardImageAttachments attachments={attachments} linked styleName='images' />
         <CardFileAttachments attachments={attachments} styleName='files' />
@@ -184,18 +185,7 @@ export default class CommentWithReplies extends Component {
           editorContent={this.state.prefillEditor}
           focusOnRender />
       </div>}
-      <ReactTooltip
-        id={`reply-tip-${comment.id}`}
-        effect='solid'
-        style='light'
-        border
-        // :TODO: de-duplicate these colour values
-        textColor='#2A4059'
-        borderColor='#40A1DD'
-        backgroundColor='white'
-        offset={{ 'top': -2 }}
-        delayShow={500}
-        styleName='actionsTooltip' />
+      <Tooltip id={`reply-tip-${comment.id}`} />
     </div>
   }
 }

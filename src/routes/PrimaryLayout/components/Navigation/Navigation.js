@@ -17,17 +17,21 @@ export default function Navigation (props) {
     clearFeedList,
     createPath,
     collapsed,
+    streamPath,
+    membersPath,
+    projectsPath,
     eventsPath,
+    group,
     groupId,
     groupsPath,
     hasRelatedGroups,
     hideTopics,
+    isGroupMenuOpen,
     mapPath,
     mapView,
-    membersPath,
-    projectsPath,
     routeParams,
-    rootPath
+    rootPath,
+    toggleGroupMenu
   } = props
 
   const homeOnClick = () => {
@@ -51,6 +55,11 @@ export default function Navigation (props) {
       onClick: homeOnClick,
       exact: true
     },
+    streamPath && {
+      label: 'Stream',
+      icon: 'Stream',
+      to: streamPath
+    },
     projectsPath && {
       label: 'Projects',
       icon: 'Projects',
@@ -62,8 +71,8 @@ export default function Navigation (props) {
       to: eventsPath
     },
     membersPath && {
-      label: 'Members',
-      icon: 'Members',
+      label: 'People',
+      icon: 'People',
       to: membersPath
     },
     hasRelatedGroups && groupsPath && {
@@ -79,24 +88,28 @@ export default function Navigation (props) {
   ])
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
+  const canView = !group || group.memberCount !== 0
 
-  return <div styleName={cx({ mapView }, collapserState)} className={className}>
+  return <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
     <div styleName='navigation'>
-      <ul styleName='links' id='groupMenu'>
-        {links.map(link =>
-          <NavLink key={link.label} {...link} collapsed={collapsed}
-            onClick={link.onClick} />)}
-        <li styleName={cx('item', 'topicItem')}>
-          <Link to={topicsUrl(routeParams, allGroupsUrl())}>
-            <Icon name='Topics' />
-          </Link>
-        </li>
-      </ul>
-      {!hideTopics && <TopicNavigation
+      {canView &&
+        <ul styleName='links' id='groupMenu'>
+          {links.map(link =>
+            <NavLink key={link.label} {...link} collapsed={collapsed}
+              onClick={link.onClick} />)}
+          <li styleName={cx('item', 'topicItem')}>
+            <Link to={topicsUrl(routeParams, allGroupsUrl())}>
+              <Icon name='Topics' />
+            </Link>
+          </li>
+        </ul>
+      }
+      {!hideTopics && canView && <TopicNavigation
         collapsed={collapsed}
         backUrl={rootPath}
         routeParams={routeParams}
         groupId={groupId} />}
     </div>
+    <div styleName='closeBg' onClick={toggleGroupMenu} />
   </div>
 }

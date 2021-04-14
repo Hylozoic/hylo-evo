@@ -26,12 +26,12 @@
     text-overflow: ellipsis;
 
     a {
+      color: $color-regent;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display: block;
       width: 100%;
-      color: #808C9B;
       text-decoration: none;
 
       div {

@@ -5,10 +5,12 @@ import getMe from 'store/selectors/getMe'
 import getPerson from 'store/selectors/getPerson'
 import {
   addSkill,
+  addSkillToGroup,
   removeSkill,
+  removeSkillFromGroup,
   fetchMemberSkills,
-  getMemberSkills,
   fetchSkillSuggestions,
+  getMemberSkills,
   getSkillSuggestions,
   getSearch,
   setSearch
@@ -20,21 +22,25 @@ export function mapStateToProps (state, props) {
   const person = getPerson(state, props)
   const currentUser = getMe(state, props)
   const search = getSearch(state)
+  const group = props.group
 
   return {
-    loading: isPendingFor(fetchMemberSkills, state),
+    currentUser,
+    loading: !group && isPendingFor(fetchMemberSkills, state),
     search,
     skillSuggestions: getSkillSuggestions(state, { search, ...props }),
-    skills: getMemberSkills(state, props),
-    currentUser,
-    isMe: currentUser && person && currentUser.id === person.id
+    skills: group ? group.suggestedSkills : getMemberSkills(state, props),
+    isMe: !group && currentUser && person && currentUser.id === person.id,
+    group
   }
 }
 
-export function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch, props) {
+  const group = props.group
+
   return {
-    addSkill: name => dispatch(addSkill(name)),
-    removeSkill: skillId => dispatch(removeSkill(skillId)),
+    addSkill: group ? name => dispatch(addSkillToGroup(group.id, name)) : name => dispatch(addSkill(name)),
+    removeSkill: group ? skillId => dispatch(removeSkillFromGroup(group.id, skillId)) : skillId => dispatch(removeSkill(skillId)),
     fetchSkillSuggestions: search => dispatch(fetchSkillSuggestions(search)),
     fetchMemberSkills: (id, limit) => dispatch(fetchMemberSkills(id, limit)),
     setSearch: search => dispatch(setSearch(search)),
@@ -50,7 +56,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchMemberSkills: () => dispatchProps.fetchMemberSkills(ownProps.personId),
+    fetchMemberSkills: stateProps.group ? () => {} : () => dispatchProps.fetchMemberSkills(ownProps.personId),
     fetchSkillSuggestions: () => dispatchProps.fetchSkillSuggestions(stateProps.search)
   }
 }

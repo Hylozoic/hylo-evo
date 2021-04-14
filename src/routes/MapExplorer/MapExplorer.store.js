@@ -93,10 +93,10 @@ const membersFragment = `
 `
 
 const groupMembersQuery = `query (
+  $boundingBox: [PointInput],
   $slug: String,
   $sortBy: String,
-  $search: String,
-  $boundingBox: [PointInput]
+  $search: String
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -188,7 +188,6 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search, grou
         slug,
         sortBy,
         search,
-        groupSlugs,
         boundingBox: formatBoundingBox(boundingBox)
       }
     },

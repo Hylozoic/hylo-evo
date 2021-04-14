@@ -37,14 +37,9 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     />
     3
   </a>
-  <ReactTooltip
-    clickable={false}
-    delayShow={550}
-    effect="solid"
+  <Tooltip
+    delay={550}
     id="postfooter-tt"
-    insecure={true}
-    resizeHide={true}
-    wrapper="div"
   />
 </div>
 `;
@@ -86,14 +81,9 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     />
     3
   </a>
-  <ReactTooltip
-    clickable={false}
-    delayShow={550}
-    effect="solid"
+  <Tooltip
+    delay={550}
     id="postfooter-tt"
-    insecure={true}
-    resizeHide={true}
-    wrapper="div"
   />
 </div>
 `;
@@ -116,14 +106,9 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
   >
     No one is attending yet
   </span>
-  <ReactTooltip
-    clickable={false}
-    delayShow={550}
-    effect="solid"
+  <Tooltip
+    delay={550}
     id="postfooter-tt"
-    insecure={true}
-    resizeHide={true}
-    wrapper="div"
   />
 </div>
 `;
@@ -162,14 +147,9 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     />
     0
   </a>
-  <ReactTooltip
-    clickable={false}
-    delayShow={550}
-    effect="solid"
+  <Tooltip
+    delay={550}
     id="postfooter-tt"
-    insecure={true}
-    resizeHide={true}
-    wrapper="div"
   />
 </div>
 `;

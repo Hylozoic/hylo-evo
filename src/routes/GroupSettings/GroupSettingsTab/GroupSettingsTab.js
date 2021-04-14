@@ -4,9 +4,12 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
+import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
+import GroupsSelector from 'components/GroupsSelector'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
+import SkillsSection from 'components/SkillsSection'
 import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
@@ -36,7 +39,7 @@ export default class GroupSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (!isEqual(prevProps.group, this.props.group)) {
+    if (!isEqual(prevProps.group.id, this.props.group.id)) {
       this.setState(this.defaultEditState())
     }
   }
@@ -47,7 +50,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, prerequisiteGroups, settings, visibility
     } = group
 
     return {
@@ -59,7 +62,8 @@ export default class GroupSettingsTab extends Component {
         location: location || '',
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
-        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false },
+        prerequisiteGroups: prerequisiteGroups || [],
+        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false, showSuggestedSkills: false },
         visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
       },
       changed: false
@@ -74,7 +78,7 @@ export default class GroupSettingsTab extends Component {
   updateJoinQuestion = (index) => event => {
     const value = event.target.value
     const newJoinQuestions = this.state.edits.joinQuestions
-    let changed = false
+    let changed = this.state.edits.changed
     if (trim(value) === '') {
       newJoinQuestions.splice(index, 1)
       changed = true
@@ -121,15 +125,16 @@ export default class GroupSettingsTab extends Component {
   }
 
   render () {
-    const { group, currentUser } = this.props
+    const { currentUser, group, parentGroups } = this.props
     if (!group) return <Loading />
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, prerequisiteGroups, settings, visibility
     } = edits
 
     const locationObject = group.locationObject || currentUser.locationObject
+    const showSuggestedSkills = settings.showSuggestedSkills
 
     return <div styleName='groupSettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -156,7 +161,7 @@ export default class GroupSettingsTab extends Component {
         type='location'
       />
       <div styleName='privacy-settings'>
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Visibility</h3>
           <p styleName='privacyDetail'>Who is able to see <strong>{group.name}</strong>?</p>
           {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
@@ -167,9 +172,9 @@ export default class GroupSettingsTab extends Component {
               updateSetting={this.updateSetting}
             />
           )}
-        </div>
+        </SettingsSection>
 
-        <div styleName='groupPrivacySection'>
+        <SettingsSection>
           <h3>Access</h3>
           <p styleName='privacyDetail'>How can people become members of <strong>{group.name}</strong>?</p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
@@ -185,8 +190,40 @@ export default class GroupSettingsTab extends Component {
               updateSettingDirectly={this.updateSettingDirectly}
             />
           )}
-        </div>
+        </SettingsSection>
+
+        <SettingsSection>
+          <h3>Prerequisite Groups</h3>
+          <p styleName='privacyDetail'>When you select a prerequisite group, people must join the selected groups before joining <strong>{group.name}</strong>. Only parent groups can be added as prerequisite groups.</p>
+          <p styleName='prerequisiteWarning'><strong styleName='warning'>Warning:</strong> If you select a prerequisite group that has a visibility setting of <strong><Icon name='Hidden' styleName='prerequisiteIcon' /> Hidden</strong> or <strong><Icon name='Shield' styleName='prerequisiteIcon' /> Protected</strong>, only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.</p>
+          <GroupsSelector
+            options={parentGroups}
+            selected={prerequisiteGroups}
+            onChange={this.updateSettingDirectly('prerequisiteGroups')}
+            groupSettings
+          />
+        </SettingsSection>
       </div>
+
+      <SettingsSection>
+        <h3>Relevant skills &amp; interests</h3>
+        <p styleName='privacyDetail'>What skills and interests are relevant to this group?</p>
+        <div styleName={'skillsSetting' + ' ' + cx({ on: showSuggestedSkills })}>
+          <SwitchStyled
+            checked={showSuggestedSkills}
+            onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+            backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+          <p styleName='toggleDescription'>Ask new members to fill out their skills and interests?</p>
+          <div styleName='onOff'>
+            <div styleName='off'>OFF</div>
+            <div styleName='on'>ON</div>
+          </div>
+        </div>
+        <SkillsSection
+          group={group}
+          label='Add a relevant skill or interest'
+          placeholder='What skills and interests are most relevant to your group?' />
+      </SettingsSection>
 
       <div styleName='saveChanges'>
         <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
@@ -229,8 +266,7 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
         <div styleName='on'>ON</div>
       </div>
       <div styleName='questionList'>
-        <span styleName='questionDescription'>Require groups to answer questions when joining this group</span>
-
+        <span styleName='questionDescription'>Require people to answer questions when asking to join this group</span>
         {joinQuestions.map((q, i) => <div key={i} styleName='question'>
           {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
           <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />

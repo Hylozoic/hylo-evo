@@ -107,12 +107,13 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
   return addQuerystringToPath(result, querystringParams)
 }
 
-export function editPostUrl (id, opts = {}, querystringParams = {}) {
-  return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
+export function createPostUrl (opts = {}, querystringParams = {}) {
+  let url = baseUrl(opts) + '/create/post'
+  return addQuerystringToPath(url, querystringParams)
 }
 
-export function newPostUrl (opts = {}, querystringParams = {}) {
-  return postUrl('new', opts, querystringParams)
+export function editPostUrl (id, opts = {}, querystringParams = {}) {
+  return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
 
 export function commentUrl (postId, commentId, opts = {}, querystringParams = {}) {
@@ -205,4 +206,8 @@ export function isPublicPath (path) {
 
 export function isMapViewPath (path) {
   return (path.includes('/map'))
+}
+
+export function isAboutPath (path) {
+  return (path.includes('/about'))
 }

@@ -1,7 +1,7 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "private": true,
   "scripts": {
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
@@ -169,6 +169,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-select": "^3.1.0",
+    "react-slick": "^0.28.0",
     "react-stripe-checkout": "^2.6.3",
     "react-textarea-autosize": "^7.1.0",
     "react-tooltip": "^4.2.10",
@@ -190,6 +191,7 @@
     "sass-loader": "^10.1.1",
     "sass-resources-loader": "^2.1.1",
     "scroll-into-view-if-needed": "^2.2.26",
+    "slick-carousel": "^1.8.1",
     "socket.io-client": "2.3.1",
     "standard-loader": "^6.0.1",
     "streamifier": "^0.1.1",
