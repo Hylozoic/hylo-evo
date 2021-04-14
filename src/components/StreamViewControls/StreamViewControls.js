@@ -55,7 +55,7 @@ const StreamViewControls = (props) => {
       </div>
       { makeDropdown(sortBy, sortOptions, changeSort) }
       { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
-      <Tooltip id='stream-viewmode-tip' position='bottom'/>
+      <Tooltip id='stream-viewmode-tip' position='bottom' />
     </div>
   )
 }

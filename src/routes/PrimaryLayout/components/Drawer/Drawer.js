@@ -24,7 +24,7 @@ export default class Drawer extends React.PureComponent {
   }
 
   render () {
-    const { currentLocation, group, groups, defaultContexts, className, toggleDrawer, canModerate, context } = this.props
+    const { currentLocation, group, groups, defaultContexts, className, toggleDrawer, canModerate } = this.props
     const routeParams = this.props.match.params
 
     let bannerUrl
