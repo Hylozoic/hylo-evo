@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { get, some } from 'lodash/fp'
+import { get, isEqual, some } from 'lodash/fp'
 import qs from 'querystring'
 import React, { Component } from 'react'
 import Intercom from 'react-intercom'
@@ -184,7 +184,7 @@ export default class PrimaryLayout extends Component {
     if (this.props.slug && this.props.slug !== prevProps.slug) {
       this.props.fetchForGroup()
     }
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    if (!isEqual(this.props.routeParams, prevProps.routeParams)) {
       this.scrollToTop()
     }
   }
