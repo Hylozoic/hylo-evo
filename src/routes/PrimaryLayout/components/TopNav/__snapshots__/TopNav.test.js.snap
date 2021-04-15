@@ -23,7 +23,7 @@ exports[`renders as expected with no group 1`] = `
     <Link
       data-stylename="logo-hover"
       id="currentContext"
-      to="/"
+      to="/all"
     >
       <Logo />
       <Title />
