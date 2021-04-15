@@ -12,15 +12,15 @@ const { array, object } = PropTypes
 export default class OffersAndRequestsWidget extends Component {
   static propTypes = {
     group: object,
-    offersAndRequests: array
+    items: array
   }
 
   render () {
-    const { group, offersAndRequests } = this.props
+    const { group, items } = this.props
 
     return (
       <div styleName='offers-and-requests'>
-        {offersAndRequests && offersAndRequests.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
+        {items.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
           <div styleName='item'>
             <div styleName='meta'>
               <span styleName='type'>{p.type}</span> from {p.creator.name}

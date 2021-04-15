@@ -22,8 +22,8 @@ export function mapStateToProps (state, props) {
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
 
   let routeParams = { context: 'all' }
-  const match = matchPath(props.location.pathname, { path: '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?'}) ||
-              matchPath(props.location.pathname, { path: '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?'})
+  const match = matchPath(props.location.pathname, { path: '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?' }) ||
+                matchPath(props.location.pathname, { path: '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?' })
   if (match) {
     routeParams = match.params
   }

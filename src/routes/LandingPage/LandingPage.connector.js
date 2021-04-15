@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { groupUrl, postUrl } from 'util/navigation'
 import fetchGroup from 'store/actions/fetchGroupDetails'
+import getCanModerate from 'store/selectors/getCanModerate'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getRouteParam from 'store/selectors/getRouteParam'
 import presentGroup from 'store/presenters/presentGroup'
@@ -9,7 +10,7 @@ import presentPost from 'store/presenters/presentPost'
 import { fetchPosts, getPosts } from 'components/FeedList/FeedList.store'
 
 export function mapStateToProps (state, props) {
-  let group, fetchPostsParam, posts, widgets
+  let group, fetchPostsParam, isModerator, posts, widgets
   const groupSlug = getRouteParam('groupSlug', state, props)
   const routeParams = props.match.params
 
@@ -18,11 +19,13 @@ export function mapStateToProps (state, props) {
     fetchPostsParam = { slug: groupSlug, context: 'groups' }
     posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
     widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map')
+    isModerator = getCanModerate(state, { group })
   }
 
   return {
     fetchPostsParam,
     group,
+    isModerator,
     posts,
     routeParams,
     widgets

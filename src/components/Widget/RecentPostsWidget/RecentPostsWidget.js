@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Slider from 'react-slick'
-import Icon from 'components/Icon'
 import { Link } from 'react-router-dom'
+import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import { groupUrl, postUrl } from 'util/navigation'
 import './RecentPostsWidget.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -12,7 +13,7 @@ const { array } = PropTypes
 
 export default class RecentPostsWidget extends Component {
   static propTypes = {
-    posts: array
+    items: array
   }
 
   render () {
@@ -40,13 +41,13 @@ export default class RecentPostsWidget extends Component {
       ]
     }
 
-    const { posts, showDetails } = this.props
+    const { group, items } = this.props
     return (
       <div styleName='recent-posts'>
         <Slider {...settings}>
-          {posts.map(p => <RecentPostCard key={p.id} post={p} showDetails={showDetails} />)}
+          {items.map(p => <RecentPostCard key={p.id} post={p} group={group} />)}
           <div styleName='view-all'>
-            <Link to='#'>View all</Link>
+            <Link to={groupUrl(group.slug, 'stream')}>View all</Link>
           </div>
         </Slider>
       </div>
@@ -54,11 +55,11 @@ export default class RecentPostsWidget extends Component {
   }
 }
 
-const RecentPostCard = ({ post, showDetails }) => {
+const RecentPostCard = ({ group, post }) => {
   const { commentersTotal, creator, id, title, type } = post
   return (
     <div>
-      <div styleName={`post ${type}`} onClick={() => showDetails(id)}>
+      <Link to={postUrl(id, { groupSlug: group.slug })} styleName={`post ${type}`}>
         <div styleName='content'>
           <div styleName='type'>{type}</div>
           <div styleName='title'>{title}</div>
@@ -68,7 +69,7 @@ const RecentPostCard = ({ post, showDetails }) => {
           <RoundImage url={creator.avatarUrl} medium withBorder={false} />
           <Icon name='SpeechBubble' styleName='comments'><span styleName='commenters'>{commentersTotal}</span></Icon>
         </div>
-      </div>
+      </Link>
     </div>
   )
 }

@@ -22,15 +22,15 @@ const settings = {
 export default class MembersWidget extends Component {
   static propTypes = {
     group: object,
-    members: array
+    items: array
   }
 
   render () {
-    const { group, members } = this.props
+    const { items, group } = this.props
     return (
       <div styleName='active-users'>
         <Slider {...settings}>
-          {members && members.map(m => <div key={m.id} styleName='active-user'>
+          {items.map(m => <div key={m.id} styleName='active-user'>
             <div styleName='user-name'>{m.name.split(' ')[0]}</div>
             <div styleName='user-controls'>
               <div styleName='buttons'>

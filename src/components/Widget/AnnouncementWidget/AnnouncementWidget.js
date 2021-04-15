@@ -22,16 +22,16 @@ const settings = {
 
 export default class AnnouncementWidget extends Component {
   static propTypes = {
-    announcements: array
+    items: array
   }
 
   render () {
-    const { announcements = [], group } = this.props
+    const { items = [], group } = this.props
 
     return (
       <div styleName='announcements'>
         <Slider {...settings}>
-          {announcements.map(a => <div styleName={cx('announcement', { narrow: announcements.length > 1 })} key={a.id}>
+          {items.map(a => <div styleName={cx('announcement', { narrow: items.length > 1 })} key={a.id}>
             <Link to={postUrl(a.id, { groupSlug: group.slug })}>
               <div styleName='content'>
                 <div>
