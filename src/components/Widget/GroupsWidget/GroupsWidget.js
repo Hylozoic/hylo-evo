@@ -45,7 +45,7 @@ export default class GroupsWidget extends Component {
               <div styleName='content'>
                 <div styleName='group-avatar'><img src={g.avatarUrl} /></div>
                 <div styleName='group-name'>{g.name}</div>
-                <div styleName='member-count'>{g.memberCount}</div>
+                <div styleName='member-count'>{g.memberCount} member{g.memberCount !== 1 ? 's' : ''}</div>
                 <div styleName='group-description'>{g.description}</div>
                 {g.memberStatus === 'member'
                   ? <div styleName='is-member'><Link to={groupUrl(g.slug)}>Member</Link></div>
