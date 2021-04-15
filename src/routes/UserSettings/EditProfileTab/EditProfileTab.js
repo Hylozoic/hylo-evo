@@ -14,19 +14,13 @@ import './EditProfileTab.scss'
 
 const { object, func, string } = PropTypes
 
-const mapSocialProviderToKey = {
-  'twitter': 'twitterName',
-  'linkedin': 'linkedinUrl',
-  'facebook': 'facebookUrl'
-}
-
 /** LinkedIn Url */
 const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
 
 export const linkedinPrompt = () => {
   let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
 
-  if (linkedinUrl){
+  if (linkedinUrl) {
     while (!validateLinkedinUrl(linkedinUrl)) {
       linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
     }
@@ -41,7 +35,7 @@ const validateFacebookUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?faceboo
 export const facebookPrompt = () => {
   let facebookUrl = window.prompt('Please enter the full url for your Facebook page.')
 
-  if (facebookUrl){
+  if (facebookUrl) {
     while (!validateFacebookUrl(facebookUrl)) {
       facebookUrl = window.prompt('Invalid url. Please enter the full url for your Facebook page.')
     }
@@ -66,21 +60,21 @@ export class SocialControl extends Component {
       case 'twitter': {
         const twitterHandle = window.prompt('Please enter your twitter name.')
         if (twitterHandle) {
-          updateSettingDirectly(mapSocialProviderToKey[provider])(twitterHandle)
+          updateSettingDirectly()(twitterHandle)
         }
         break
       }
       case 'linkedin': {
         const linkedinUrl = linkedinPrompt()
-        if (linkedinUrl){
-          updateSettingDirectly(mapSocialProviderToKey[provider])(linkedinUrl)
+        if (linkedinUrl) {
+          updateSettingDirectly()(linkedinUrl)
         }
         break
       }
       case 'facebook': {
         const facebookUrl = facebookPrompt()
-        if (facebookUrl){
-          updateSettingDirectly(mapSocialProviderToKey[provider])(facebookUrl)
+        if (facebookUrl) {
+          updateSettingDirectly()(facebookUrl)
         }
         break
       }
@@ -88,10 +82,10 @@ export class SocialControl extends Component {
   }
 
   handleUnlinkClick () {
-    const { handleUnlinkAccount, updateSettingDirectly, provider } = this.props
+    const { handleUnlinkAccount, updateSettingDirectly } = this.props
 
     handleUnlinkAccount()
-    updateSettingDirectly(mapSocialProviderToKey[provider])(null)
+    updateSettingDirectly()(null)
   }
 
   render () {
@@ -198,7 +192,6 @@ export default class EditProfileTab extends Component {
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
 
-
   save = () => {
     this.setState({ changed: false })
     this.props.setConfirm(false)
@@ -262,21 +255,21 @@ export default class EditProfileTab extends Component {
         provider='facebook'
         value={facebookUrl}
         onLink={() => loginWithService('facebook')}
-        updateSettingDirectly={this.updateSettingDirectly}
+        updateSettingDirectly={() => this.updateSettingDirectly('facebookUrl')}
         handleUnlinkAccount={() => unlinkAccount('facebook')}
       />
       <SocialControl
         label='Twitter'
         provider='twitter'
         value={twitterName}
-        updateSettingDirectly={this.updateSettingDirectly}
+        updateSettingDirectly={() => this.updateSettingDirectly('twitterName')}
         handleUnlinkAccount={() => unlinkAccount('twitter')}
       />
       <SocialControl
         label='LinkedIn'
         provider='linkedin'
         value={linkedinUrl}
-        updateSettingDirectly={this.updateSettingDirectly}
+        updateSettingDirectly={() => this.updateSettingDirectly('linkedinUrl')}
         handleUnlinkAccount={() => unlinkAccount('linkedin')}
       />
       <div styleName='saveChanges'>
