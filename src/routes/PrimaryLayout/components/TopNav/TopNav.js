@@ -1,20 +1,21 @@
-import React, { Component } from 'react'
-import { bgImageStyle } from 'util/index'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import Icon from 'components/Icon'
 import isMobile from 'ismobilejs'
-import BadgedIcon from 'components/BadgedIcon'
-import Badge from 'components/Badge'
+import { get, pick } from 'lodash/fp'
+import React, { Component } from 'react'
 import { IntercomAPI } from 'react-intercom'
-import RoundImage from 'components/RoundImage'
-import { personUrl } from 'util/navigation'
-import './TopNav.scss'
+import { Link } from 'react-router-dom'
+import Badge from 'components/Badge'
+import BadgedIcon from 'components/BadgedIcon'
 import Dropdown from 'components/Dropdown'
-import { get } from 'lodash/fp'
+import Icon from 'components/Icon'
+import RoundImage from 'components/RoundImage'
+import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
+import { baseUrl, personUrl } from 'util/navigation'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
+
+import './TopNav.scss'
 
 function isMobileDevice () {
   return (
@@ -43,7 +44,7 @@ function downloadApp () {
 
 export default class TopNav extends Component {
   render () {
-    const { className, group, currentUser, logout, toggleDrawer, toggleGroupMenu, showLogoBadge, onClick, isPublic, isGroupMenuOpen } = this.props
+    const { className, group, currentUser, logout, toggleDrawer, toggleGroupMenu, showLogoBadge, onClick, isPublic, isGroupMenuOpen, routeParams } = this.props
 
     const profileUrl = personUrl(get('id', currentUser))
 
@@ -54,7 +55,7 @@ export default class TopNav extends Component {
         <div styleName='drawerToggle' id='toggleDrawer'>
           <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
         </div>
-        <Link to='/' styleName='logo-hover' id='currentContext'>
+        <Link to={baseUrl(pick(['context', 'groupSlug'], routeParams))} styleName='logo-hover' id='currentContext'>
           <Logo {...{ group, isPublic }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} />

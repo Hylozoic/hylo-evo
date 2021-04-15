@@ -224,6 +224,7 @@ export default class PrimaryLayout extends Component {
       isGroupMenuOpen,
       isGroupRoute,
       location,
+      routeParams,
       showLogoBadge
     } = this.props
 
@@ -276,7 +277,7 @@ export default class PrimaryLayout extends Component {
         ))}
       </Switch>
 
-      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, showLogoBadge }} />
+      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge }} />
 
       <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
         {/* View navigation menu */}

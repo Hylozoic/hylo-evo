@@ -4,11 +4,7 @@ import { logout } from 'routes/NonAuthLayout/Login/Login.store'
 import { toggleDrawer, toggleGroupMenu } from 'routes/PrimaryLayout/PrimaryLayout.store'
 
 export function mapStateToProps (state, props) {
-  const { currentLocation } = state.locationHistory
-  let isPublic = false
-  if (currentLocation.includes('/public')) {
-    isPublic = true
-  }
+  const isPublic = props.routeParams.context === 'public'
 
   return {
     isPublic,
