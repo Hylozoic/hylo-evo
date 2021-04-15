@@ -1,4 +1,4 @@
-import EditProfileTab, { SocialControl, linkedinPrompt } from './EditProfileTab'
+import EditProfileTab, { SocialControl, linkedinPrompt, facebookPrompt } from './EditProfileTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
@@ -31,6 +31,40 @@ describe('linkedinPrompt', () => {
       }
     })
     expect(linkedinPrompt()).toEqual('https://www.linkedin.com/in/username/')
+    expect(count).toEqual(2)
+    expect(window.prompt.mock.calls).toMatchSnapshot()
+  })
+})
+
+describe('facebookPrompt', () => {
+  var oldPrompt
+
+  beforeAll(() => {
+    oldPrompt = window.prompt
+  })
+
+  afterAll(() => {
+    window.prompt = oldPrompt
+  })
+
+  it('returns a correct facebook Url', () => {
+    const url = 'https://www.facebook.com/username/'
+    window.prompt = jest.fn(() => url)
+    expect(facebookPrompt()).toEqual(url)
+  })
+
+  it('rejects an incorrect facebook Url, calling itself again', () => {
+    var count = 0
+    window.prompt = jest.fn(() => {
+      if (count === 0) {
+        count += 1
+        return 'a bad url'
+      } else {
+        count += 1
+        return 'https://www.facebook.com/username/'
+      }
+    })
+    expect(facebookPrompt()).toEqual('https://www.facebook.com/username/')
     expect(count).toEqual(2)
     expect(window.prompt.mock.calls).toMatchSnapshot()
   })
@@ -77,7 +111,8 @@ describe('SocialControl', () => {
     describe('when provider is twitter', () => {
       it('and handle is entered, it updates the twitterName', () => {
         window.prompt = jest.fn(() => 'twitterhandle')
-        const updateSocialSetting = jest.fn()
+        const updateSettingDirectlyCallback = jest.fn()
+        const updateSettingDirectly = jest.fn(() => updateSettingDirectlyCallback)
         const handleUnlinkAccount = jest.fn()
 
         const wrapper = shallow(
@@ -85,19 +120,20 @@ describe('SocialControl', () => {
             label='Twitter'
             provider='twitter'
             value='twitterhandle'
-            updateSocialSetting={updateSocialSetting}
+            updateSettingDirectly={updateSettingDirectly}
             handleUnlinkAccount={handleUnlinkAccount}
           />
         )
 
         wrapper.instance().handleLinkClick()
         expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
-        expect(updateSocialSetting).toHaveBeenCalledWith({ key: 'twitterName', value: 'twitterhandle' })
+        expect(updateSettingDirectly).toHaveBeenCalledWith('twitterName')
+        expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('twitterhandle')
       })
 
       it('and handle is NOT entered, it does NOT update the twitterName', () => {
         window.prompt = jest.fn(() => false)
-        const updateSocialSetting = jest.fn()
+        const updateSettingDirectly = jest.fn(() => jest.fn())
         const handleUnlinkAccount = jest.fn()
 
         const wrapper = shallow(
@@ -105,21 +141,22 @@ describe('SocialControl', () => {
             label='Twitter'
             provider='twitter'
             value='twitterhandle'
-            updateSocialSetting={updateSocialSetting}
+            updateSettingDirectly={updateSettingDirectly}
             handleUnlinkAccount={handleUnlinkAccount}
           />
         )
 
         wrapper.instance().handleLinkClick()
         expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
-        expect(updateSocialSetting).not.toHaveBeenCalled()
+        expect(updateSettingDirectly).not.toHaveBeenCalled()
       })
     })
 
     describe('when provider is linkedin', () => {
       it('and valid linkedinUrl is provided, it updates the linkedinUrl', () => {
         window.prompt = jest.fn(() => 'linkedin.com/test')
-        const updateSocialSetting = jest.fn()
+        const updateSettingDirectlyCallback = jest.fn()
+        const updateSettingDirectly = jest.fn(() => updateSettingDirectlyCallback)
         const handleUnlinkAccount = jest.fn()
 
         const wrapper = shallow(
@@ -127,53 +164,61 @@ describe('SocialControl', () => {
             label='LinkedIn'
             provider='linkedin'
             value='linkedin.com/test'
-            updateSocialSetting={updateSocialSetting}
+            updateSettingDirectly={updateSettingDirectly}
             handleUnlinkAccount={handleUnlinkAccount}
           />
         )
 
         wrapper.instance().handleLinkClick()
         expect(window.prompt).toBeCalledWith('Please enter the full url for your LinkedIn page.');
-        expect(updateSocialSetting).toHaveBeenCalledWith({ key: 'linkedinUrl', value: 'linkedin.com/test' })
+        expect(updateSettingDirectly).toHaveBeenCalledWith('linkedinUrl')
+        expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('linkedin.com/test')
       })
     })
 
-    // describe('when provider is facebook', () => {
-    //   it('calls the right things when provider is facebook', async () => {
-    //     const provider = 'facebook'
-    //     const onLink = () => Promise.resolve({ error: false })
-    //     const updateUserSettings = jest.fn()
-    //     const onChange = jest.fn()
-    //     const wrapper = shallow(<SocialControl
-    //       label='A Social Control'
-    //       provider={provider}
-    //       onLink={onLink}
-    //       updateUserSettings={updateUserSettings}
-    //       onChange={onChange} />)
+    describe('when provider is facebook', () => {
+      it('and valid facebookUrl is provided, it updates the facebookUrl', () => {
+        window.prompt = jest.fn(() => 'facebook.com/test')
+        const updateSettingDirectlyCallback = jest.fn()
+        const updateSettingDirectly = jest.fn(() => updateSettingDirectlyCallback)
+        const handleUnlinkAccount = jest.fn()
 
-    //     await wrapper.instance().linkClicked()
-    //     expect(updateUserSettings).not.toHaveBeenCalledWith()
-    //     expect(onChange).toHaveBeenCalledWith(true)
-    //   })
-    // })
+        const wrapper = shallow(
+          <SocialControl
+            label='Facebook'
+            provider='facebook'
+            value='facebook.com/test'
+            updateSettingDirectly={updateSettingDirectly}
+            handleUnlinkAccount={handleUnlinkAccount}
+          />
+        )
+
+        wrapper.instance().handleLinkClick()
+        expect(window.prompt).toBeCalledWith('Please enter the full url for your Facebook page.');
+        expect(updateSettingDirectly).toHaveBeenCalledWith('facebookUrl')
+        expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('facebook.com/test')
+      })
+    })
   })
 
   describe('handleUnlinkClick', () => {
     const handleUnlinkAccount = jest.fn()
-    const updateSocialSetting = jest.fn()
+    const updateSettingDirectlyCallback = jest.fn()
+    const updateSettingDirectly = jest.fn(() => updateSettingDirectlyCallback)
 
     const wrapper = shallow(
       <SocialControl
         label='LinkedIn'
         provider='linkedin'
         value='linkedin.com/test'
-        updateSocialSetting={updateSocialSetting}
+        updateSettingDirectly={updateSettingDirectly}
         handleUnlinkAccount={handleUnlinkAccount}
       />
     )
 
     wrapper.instance().handleUnlinkClick()
     expect(handleUnlinkAccount).toHaveBeenCalled()
-    expect(updateSocialSetting).toHaveBeenCalledWith({ key: 'linkedinUrl', value: '' })
+    expect(updateSettingDirectly).toHaveBeenCalledWith('linkedinUrl')
+    expect(updateSettingDirectlyCallback).toHaveBeenCalledWith(null)
   })
 })

@@ -12,7 +12,7 @@ import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 import './EditProfileTab.scss'
 
-const { object, func, string } = PropTypes
+const { object, func, string, number } = PropTypes
 
 const mapSocialProviderToKey = {
   'twitter': 'twitterName',
