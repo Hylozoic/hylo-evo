@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- __New group home page__: Groups now have a landing page that shows customizable widgets displaying recent announcements, recent posts, open requests and offers, upcoming events, recently active projects, recenty active members, sub-groups, and a customizable welcome message. Moderators can hide widgets for their group if desired.
+_ __Customizable post stream__: The post stream is now a separate view and has a compact list view on top of the current card view. Also the sort and post type filter settings will be remembered across groups and refreshes.
+- __Prerequisite group__: If a moderator adds these to a group that means the prerequisite groups have to be joined by a user before they can join the original group.
+- __Suggested skills__: A moderator can now add suggested skills & interests in a group's settings. These will be displayed on the group join form - when a user is requesting to join a group they will be shown the suggested skills and can select which ones are relevant to them. If a user is invited to a group then this join form with suggested skills will popup when they first land on the group.
+- Group moderators can now export the member directory for a Group to a CSV from a new Export Data group settings tab.
+
+### Changed
+- Added a new menu button in the top nav to open the navigation drawer. Now clicking on the current context/group icon or name in the top nav will go back to the Home page for the current context.
+- Better style for Group Settings link in the group sidebar.
+- When changing contexts or views we scroll back to the top of the page.
+- Added group banner image to navigation drawer.
+- Increased contrast between read and unread notifications.
+
+### Fixed
+- Issue that sometimes caused group join button to not be visible on group details on small screens.
+- RSVPing to events on mobile web.
 
 ## [3.0.2] - 2021-04-08
 ### Fixed
