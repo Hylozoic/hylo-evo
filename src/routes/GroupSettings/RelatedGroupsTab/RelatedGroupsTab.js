@@ -249,8 +249,9 @@ export default class RelatedGroupsTab extends Component {
       {showRequestToJoinModalForGroup && <RequestToJoinModal
         group={group}
         parentGroup={showRequestToJoinModalForGroup}
-        requestToAddGroupToParent={(parentId, childId, questionAnswers) => { requestToAddGroupToParent(parentId, childId, questionAnswers); this.hideRequestToJoinModal() }} />
-      }
+        requestToAddGroupToParent={requestToAddGroupToParent}
+        hideRequestToJoinModal={this.hideRequestToJoinModal}
+      />}
     </div>
   }
 }
@@ -303,7 +304,7 @@ export function GroupCard ({ actionMenu, thisGroup, group, questionAnswers, type
   </div>
 }
 
-export function RequestToJoinModal ({ group, parentGroup, requestToAddGroupToParent }) {
+export function RequestToJoinModal ({ group, hideRequestToJoinModal, parentGroup, requestToAddGroupToParent }) {
   const [questionAnswers, setQuestionAnswers] = useState(parentGroup.groupToGroupJoinQuestions.toModelArray().map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
   const setAnswer = (index) => (event) => {
@@ -319,6 +320,7 @@ export function RequestToJoinModal ({ group, parentGroup, requestToAddGroupToPar
     <div styleName='request-modal-bg'>
       <div styleName='request-modal'>
         <div styleName='request-top'>
+          <span styleName='modal-close-button' onClick={hideRequestToJoinModal}><Icon name='Ex' /></span>
           <span styleName='request-message'>You are requesting that <strong>{group.name}</strong> become a member of <strong>{parentGroup.name}</strong></span>
           <div styleName='join-example'>
             <div styleName='requesting-group' style={bgImageStyle(group.bannerUrl)}>
@@ -342,7 +344,7 @@ export function RequestToJoinModal ({ group, parentGroup, requestToAddGroupToPar
           </div>)}
         </div>}
         <div styleName='request-bottom'>
-          <Button onClick={() => requestToAddGroupToParent(parentGroup.id, group.id, questionAnswers)}>Request to Join</Button>
+          <Button onClick={() => { requestToAddGroupToParent(parentGroup.id, group.id, questionAnswers); hideRequestToJoinModal() }}>Request to Join</Button>
         </div>
       </div>
     </div>

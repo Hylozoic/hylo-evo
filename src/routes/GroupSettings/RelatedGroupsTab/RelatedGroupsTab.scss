@@ -137,11 +137,25 @@
   z-index: 10;
   background: white;
   border: 1px solid gray;
+  position: relative;
 
   .request-top {
     background-color: rgba(242, 242, 242, 1.00);
-    padding: 15px;
+    padding: 25px 15px 15px 15px;
     border-radius: 15px 15px 0 0;
+
+    .modal-close-button {
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      z-index: 1000;
+      background: white;
+      border-radius: 17px;
+      width: 24px;
+      height: 24px;
+      box-shadow: 0px 1px 3px 0px grey;
+    }
 
     strong {
       @include font-bold;

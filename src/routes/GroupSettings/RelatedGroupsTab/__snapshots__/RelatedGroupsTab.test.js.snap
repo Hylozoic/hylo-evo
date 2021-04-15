@@ -2,26 +2,30 @@
 
 exports[`GroupsCard renders correctly 1`] = `
 <div
-  data-stylename="group-card"
+  data-stylename="group-card-wrapper"
 >
   <div
-    data-stylename="group-details"
+    data-stylename="group-card"
   >
-    <RoundImage
-      data-stylename="group-image"
-      size="30px"
-      square={true}
-      url="foom.png"
-    />
-    <Link
-      to="/all"
+    <div
+      data-stylename="group-details"
     >
-      <span
-        data-stylename="group-name"
+      <RoundImage
+        data-stylename="group-image"
+        size="30px"
+        square={true}
+        url="foom.png"
+      />
+      <Link
+        to="/all"
       >
-        Foom
-      </span>
-    </Link>
+        <span
+          data-stylename="group-name"
+        >
+          Foom
+        </span>
+      </Link>
+    </div>
   </div>
 </div>
 `;
