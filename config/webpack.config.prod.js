@@ -179,7 +179,8 @@ module.exports = {
               'sass-loader',
               sharedConfig.sassResourcesLoader
             ]
-          }
+          },
+          sharedConfig.fileLoader
         ]
       }
     ]

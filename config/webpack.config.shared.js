@@ -31,5 +31,9 @@ module.exports = {
       // load order is on purpose.
       resources: [paths.appSrc + '/css/global/_sass_resources.scss']
     }
+  },
+  fileLoader: {
+    test: /\.(ttf|eot|woff|woff2|svg)$/,
+    loader: 'file-loader'
   }
 }
