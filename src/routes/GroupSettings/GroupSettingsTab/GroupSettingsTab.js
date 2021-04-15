@@ -182,14 +182,16 @@ export default class GroupSettingsTab extends Component {
         <h3>Relevant skills &amp; interests</h3>
         <p styleName='privacyDetail'>What skills and interests are relevant to this group?</p>
         <div styleName={'skillsSetting' + ' ' + cx({ on: showSuggestedSkills })}>
-          <SwitchStyled
-            checked={showSuggestedSkills}
-            onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
-            backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-          <p styleName='toggleDescription'>Ask new members to fill out their skills and interests?</p>
-          <div styleName='onOff'>
-            <div styleName='off'>OFF</div>
-            <div styleName='on'>ON</div>
+          <div styleName='switchContainer'>
+            <SwitchStyled
+              checked={showSuggestedSkills}
+              onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+              backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+            <span styleName='toggleDescription'>Ask new members to fill out their skills and interests?</span>
+            <div styleName='onOff'>
+              <div styleName='off'>OFF</div>
+              <div styleName='on'>ON</div>
+            </div>
           </div>
         </div>
         <SkillsSection
@@ -201,15 +203,18 @@ export default class GroupSettingsTab extends Component {
       <SettingsSection>
         <h3>Group Access Questions</h3>
         <p styleName='privacyDetail'>What questions are asked when a group requests to join this group?</p>
+
         <div styleName={'groupQuestions' + ' ' + cx({ on: askGroupToGroupJoinQuestions })}>
-          <SwitchStyled
-            checked={askGroupToGroupJoinQuestions}
-            onChange={() => this.updateSettingDirectly('settings.askGroupToGroupJoinQuestions')(!askGroupToGroupJoinQuestions)}
-            backgroundColor={askGroupToGroupJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-          <p styleName='toggleDescription'>Require groups to answer questions when requesting to join this group</p>
-          <div styleName='onOff'>
-            <div styleName='off'>OFF</div>
-            <div styleName='on'>ON</div>
+          <div styleName='switchContainer'>
+            <SwitchStyled
+              checked={askGroupToGroupJoinQuestions}
+              onChange={() => this.updateSettingDirectly('settings.askGroupToGroupJoinQuestions')(!askGroupToGroupJoinQuestions)}
+              backgroundColor={askGroupToGroupJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+            <span styleName='toggleDescription'>Require groups to answer questions when requesting to join this group</span>
+            <div styleName='onOff'>
+              <div styleName='off'>OFF</div>
+              <div styleName='on'>ON</div>
+            </div>
           </div>
           <QuestionsForm questions={groupToGroupJoinQuestions} save={this.updateSettingDirectly('groupToGroupJoinQuestions')} />
         </div>
@@ -248,14 +253,16 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
     </label>
     {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted &&
       <div styleName={'groupQuestions' + ' ' + cx({ on: askJoinQuestions })}>
-        <SwitchStyled
-          checked={askJoinQuestions}
-          onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
-          backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-        <p styleName='toggleDescription'>Require people to answer questions when requesting to join this group</p>
-        <div styleName='onOff'>
-          <div styleName='off'>OFF</div>
-          <div styleName='on'>ON</div>
+        <div styleName='switchContainer'>
+          <SwitchStyled
+            checked={askJoinQuestions}
+            onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
+            backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+          <span styleName='toggleDescription'>Require people to answer questions when requesting to join this group</span>
+          <div styleName='onOff'>
+            <div styleName='off'>OFF</div>
+            <div styleName='on'>ON</div>
+          </div>
         </div>
         <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} />
       </div>

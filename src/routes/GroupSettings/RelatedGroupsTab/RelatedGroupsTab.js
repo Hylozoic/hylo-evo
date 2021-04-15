@@ -2,7 +2,7 @@ import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component, useState } from 'react'
-
+import { bgImageStyle } from 'util/index'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -272,12 +272,19 @@ export function GroupCard ({ actionMenu, thisGroup, group, questionAnswers, type
   // Answers to questions no longer being asked by the group
   const otherAnswers = questionAnswers ? questionAnswers.filter(qa => !thisGroup.groupToGroupJoinQuestions.find(jq => jq.questionId === qa.question.id)) : []
 
-  return <div styleName='group-card'>
-    <div styleName='group-details'>
-      <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='30px' square />
-      <Link to={groupUrl(group.slug)}><span styleName='group-name'>{group.name}</span></Link>
+  return <div styleName='group-card-wrapper'>
+    <div styleName='group-card'>
+      <div styleName='group-details'>
+        <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='30px' square />
+        <Link to={groupUrl(group.slug)}><span styleName='group-name'>{group.name}</span></Link>
+      </div>
+      {actionMenu}
     </div>
     {type === GROUP_RELATIONSHIP_TYPE.ChildToParent &&
+    thisGroup.settings.askGroupToGroupJoinQuestions &&
+    thisGroup.groupToGroupJoinQuestions &&
+    thisGroup.groupToGroupJoinQuestions && <div styleName='answer-wrapper'>
+      {type === GROUP_RELATIONSHIP_TYPE.ChildToParent &&
       thisGroup.settings.askGroupToGroupJoinQuestions &&
       thisGroup.groupToGroupJoinQuestions &&
       thisGroup.groupToGroupJoinQuestions.map(q =>
@@ -285,15 +292,14 @@ export function GroupCard ({ actionMenu, thisGroup, group, questionAnswers, type
           <h3>{q.text}</h3>
           <p>{get('answer', questionAnswers && questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}</p>
         </div>
-      )
-    }
-    {otherAnswers.map(qa =>
-      <div styleName='answer' key={qa.id}>
-        <h3>{qa.question.text}</h3>
-        <p>{qa.answer}</p>
-      </div>
-    )}
-    {actionMenu}
+      )}
+      {otherAnswers.map(qa =>
+        <div styleName='answer' key={qa.id}>
+          <h3>{qa.question.text}</h3>
+          <p>{qa.answer}</p>
+        </div>
+      )}
+    </div>}
   </div>
 }
 
@@ -310,14 +316,35 @@ export function RequestToJoinModal ({ group, parentGroup, requestToAddGroupToPar
   }
 
   return <React.Fragment>
-    <div styleName='request-modal-bg' />
-    <div styleName='request-modal'>
-      {group.name} requesting to join {parentGroup.name}
-      {questionAnswers.map((q, index) => <div styleName='join-question' key={index}>
-        <h3>{q.text}</h3>
-        <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
-      </div>)}
-      <Button onClick={() => requestToAddGroupToParent(parentGroup.id, group.id, questionAnswers)}>Request to Join</Button>
+    <div styleName='request-modal-bg'>
+      <div styleName='request-modal'>
+        <div styleName='request-top'>
+          <span styleName='request-message'>You are requesting that <strong>{group.name}</strong> become a member of <strong>{parentGroup.name}</strong></span>
+          <div styleName='join-example'>
+            <div styleName='requesting-group' style={bgImageStyle(group.bannerUrl)}>
+              <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='30px' square />
+              <h4>{group.name}</h4>
+            </div>
+            <div styleName='requesting-icon'>
+              <Icon name='Handshake' />
+            </div>
+            <div styleName='requested-parent-group' style={bgImageStyle(parentGroup.bannerUrl)}>
+              <RoundImage url={parentGroup.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='30px' square />
+              <h4>{parentGroup.name}</h4>
+            </div>
+          </div>
+        </div>
+        {questionAnswers && <div styleName='join-questions'>
+          <div styleName='request-message-title'>{parentGroup.name} requires groups to answer the following questions before joining</div>
+          {questionAnswers.map((q, index) => <div styleName='join-question' key={index}>
+            <h3>{q.text}</h3>
+            <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
+          </div>)}
+        </div>}
+        <div styleName='request-bottom'>
+          <Button onClick={() => requestToAddGroupToParent(parentGroup.id, group.id, questionAnswers)}>Request to Join</Button>
+        </div>
+      </div>
     </div>
   </React.Fragment>
 }
