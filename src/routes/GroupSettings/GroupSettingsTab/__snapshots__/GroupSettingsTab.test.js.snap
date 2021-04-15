@@ -204,29 +204,33 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     <div
       data-stylename="skillsSetting "
     >
-      <SwitchStyled
-        backgroundColor="#8B96A4"
-        checked={false}
-        disabled={false}
-        onChange={[Function]}
-      />
-      <p
-        data-stylename="toggleDescription"
-      >
-        Ask new members to fill out their skills and interests?
-      </p>
       <div
-        data-stylename="onOff"
+        data-stylename="switchContainer"
       >
-        <div
-          data-stylename="off"
+        <SwitchStyled
+          backgroundColor="#8B96A4"
+          checked={false}
+          disabled={false}
+          onChange={[Function]}
+        />
+        <span
+          data-stylename="toggleDescription"
         >
-          OFF
-        </div>
+          Ask new members to fill out their skills and interests?
+        </span>
         <div
-          data-stylename="on"
+          data-stylename="onOff"
         >
-          ON
+          <div
+            data-stylename="off"
+          >
+            OFF
+          </div>
+          <div
+            data-stylename="on"
+          >
+            ON
+          </div>
         </div>
       </div>
     </div>
@@ -258,29 +262,33 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     <div
       data-stylename="groupQuestions "
     >
-      <SwitchStyled
-        backgroundColor="#8B96A4"
-        checked={false}
-        disabled={false}
-        onChange={[Function]}
-      />
-      <p
-        data-stylename="toggleDescription"
-      >
-        Require groups to answer questions when requesting to join this group
-      </p>
       <div
-        data-stylename="onOff"
+        data-stylename="switchContainer"
       >
-        <div
-          data-stylename="off"
+        <SwitchStyled
+          backgroundColor="#8B96A4"
+          checked={false}
+          disabled={false}
+          onChange={[Function]}
+        />
+        <span
+          data-stylename="toggleDescription"
         >
-          OFF
-        </div>
+          Require groups to answer questions when requesting to join this group
+        </span>
         <div
-          data-stylename="on"
+          data-stylename="onOff"
         >
-          ON
+          <div
+            data-stylename="off"
+          >
+            OFF
+          </div>
+          <div
+            data-stylename="on"
+          >
+            ON
+          </div>
         </div>
       </div>
       <QuestionsForm
