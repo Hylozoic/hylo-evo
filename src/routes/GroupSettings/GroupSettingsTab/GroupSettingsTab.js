@@ -50,7 +50,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, location, name, joinQuestions, prerequisiteGroups, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, location, name, joinQuestions, prerequisiteGroups, settings, visibility
     } = group
 
     return {
@@ -59,42 +59,15 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
+        groupToGroupJoinQuestions: groupToGroupJoinQuestions ? groupToGroupJoinQuestions.concat({ text: '' }) : [{ text: '' }],
         location: location || '',
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
         prerequisiteGroups: prerequisiteGroups || [],
-        settings: typeof settings !== 'undefined' ? settings : { allowGroupInvites: false, askJoinQuestions: false, publicMemberDirectory: false, showSuggestedSkills: false },
+        settings: typeof settings !== 'undefined' ? settings : { },
         visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
       },
       changed: false
-    }
-  }
-
-  clearField = (index) => event => {
-    event.target.value = ''
-    this.updateJoinQuestion(index)(event)
-  }
-
-  updateJoinQuestion = (index) => event => {
-    const value = event.target.value
-    const newJoinQuestions = this.state.edits.joinQuestions
-    let changed = this.state.edits.changed
-    if (trim(value) === '') {
-      newJoinQuestions.splice(index, 1)
-      changed = true
-    } else if (newJoinQuestions[index].text !== value) {
-      newJoinQuestions[index] = { text: value }
-      changed = true
-    }
-    if (newJoinQuestions[newJoinQuestions.length - 1].text !== '') {
-      newJoinQuestions.push({ text: '' })
-      changed = true
-    }
-    if (changed) {
-      this.setState({
-        changed,
-        edits: { ...this.state.edits, joinQuestions: newJoinQuestions }
-      })
     }
   }
 
@@ -130,11 +103,11 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, joinQuestions, location, name, prerequisiteGroups, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, joinQuestions, location, name, prerequisiteGroups, settings, visibility
     } = edits
+    const { askGroupToGroupJoinQuestions, showSuggestedSkills } = settings
 
     const locationObject = group.locationObject || currentUser.locationObject
-    const showSuggestedSkills = settings.showSuggestedSkills
 
     return <div styleName='groupSettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -209,20 +182,42 @@ export default class GroupSettingsTab extends Component {
         <h3>Relevant skills &amp; interests</h3>
         <p styleName='privacyDetail'>What skills and interests are relevant to this group?</p>
         <div styleName={'skillsSetting' + ' ' + cx({ on: showSuggestedSkills })}>
-          <SwitchStyled
-            checked={showSuggestedSkills}
-            onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
-            backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-          <p styleName='toggleDescription'>Ask new members to fill out their skills and interests?</p>
-          <div styleName='onOff'>
-            <div styleName='off'>OFF</div>
-            <div styleName='on'>ON</div>
+          <div styleName='switchContainer'>
+            <SwitchStyled
+              checked={showSuggestedSkills}
+              onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+              backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+            <span styleName='toggleDescription'>Ask new members to fill out their skills and interests?</span>
+            <div styleName='onOff'>
+              <div styleName='off'>OFF</div>
+              <div styleName='on'>ON</div>
+            </div>
           </div>
         </div>
         <SkillsSection
           group={group}
           label='Add a relevant skill or interest'
           placeholder='What skills and interests are most relevant to your group?' />
+      </SettingsSection>
+
+      <SettingsSection>
+        <h3>Group Access Questions</h3>
+        <p styleName='privacyDetail'>What questions are asked when a group requests to join this group?</p>
+
+        <div styleName={'groupQuestions' + ' ' + cx({ on: askGroupToGroupJoinQuestions })}>
+          <div styleName='switchContainer'>
+            <SwitchStyled
+              checked={askGroupToGroupJoinQuestions}
+              onChange={() => this.updateSettingDirectly('settings.askGroupToGroupJoinQuestions')(!askGroupToGroupJoinQuestions)}
+              backgroundColor={askGroupToGroupJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+            <span styleName='toggleDescription'>Require groups to answer questions when requesting to join this group</span>
+            <div styleName='onOff'>
+              <div styleName='off'>OFF</div>
+              <div styleName='on'>ON</div>
+            </div>
+          </div>
+          <QuestionsForm questions={groupToGroupJoinQuestions} save={this.updateSettingDirectly('groupToGroupJoinQuestions')} />
+        </div>
       </SettingsSection>
 
       <div styleName='saveChanges'>
@@ -256,22 +251,49 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
         <span styleName={cx('privacy-option', { disabled: currentSetting !== forSetting })}>{accessibilityDescription(forSetting)}</span>
       </div>
     </label>
-    {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted && <div styleName={'groupQuestions' + ' ' + cx({ on: askJoinQuestions })}>
-      <SwitchStyled
-        checked={askJoinQuestions}
-        onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
-        backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-      <div styleName='onOff'>
-        <div styleName='off'>OFF</div>
-        <div styleName='on'>ON</div>
+    {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted &&
+      <div styleName={'groupQuestions' + ' ' + cx({ on: askJoinQuestions })}>
+        <div styleName='switchContainer'>
+          <SwitchStyled
+            checked={askJoinQuestions}
+            onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
+            backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+          <span styleName='toggleDescription'>Require people to answer questions when requesting to join this group</span>
+          <div styleName='onOff'>
+            <div styleName='off'>OFF</div>
+            <div styleName='on'>ON</div>
+          </div>
+        </div>
+        <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} />
       </div>
-      <div styleName='questionList'>
-        <span styleName='questionDescription'>Require people to answer questions when asking to join this group</span>
-        {joinQuestions.map((q, i) => <div key={i} styleName='question'>
-          {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
-          <input name='joinQuestions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
-        </div>)}
-      </div>
-    </div>}
+    }
+  </div>
+}
+
+function QuestionsForm ({ questions, save }) {
+  const updateJoinQuestion = (index) => event => {
+    const value = event.target.value
+    const newQuestions = questions
+    if (trim(value) === '') {
+      newQuestions.splice(index, 1)
+    } else if (newQuestions[index].text !== value) {
+      newQuestions[index] = { text: value }
+    }
+    if (newQuestions[newQuestions.length - 1].text !== '') {
+      newQuestions.push({ text: '' })
+    }
+    save(newQuestions)
+  }
+
+  const clearField = (index) => event => {
+    event.target.value = ''
+    updateJoinQuestion(index)(event)
+  }
+
+  return <div styleName='questionList'>
+    {questions.map((q, i) => <div key={i} styleName='question'>
+      {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
+      <input name='questions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
+    </div>)}
   </div>
 }

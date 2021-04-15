@@ -102,8 +102,6 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         ?
       </p>
       <AccessibilitySettingRow
-        askJoinQuestions={false}
-        clearField={[Function]}
         currentSetting={1}
         forSetting={0}
         joinQuestions={
@@ -114,13 +112,10 @@ exports[`GroupSettingsTab renders correctly 1`] = `
           ]
         }
         key="0"
-        updateJoinQuestion={[Function]}
         updateSetting={[Function]}
         updateSettingDirectly={[Function]}
       />
       <AccessibilitySettingRow
-        askJoinQuestions={false}
-        clearField={[Function]}
         currentSetting={1}
         forSetting={1}
         joinQuestions={
@@ -131,13 +126,10 @@ exports[`GroupSettingsTab renders correctly 1`] = `
           ]
         }
         key="1"
-        updateJoinQuestion={[Function]}
         updateSetting={[Function]}
         updateSettingDirectly={[Function]}
       />
       <AccessibilitySettingRow
-        askJoinQuestions={false}
-        clearField={[Function]}
         currentSetting={1}
         forSetting={2}
         joinQuestions={
@@ -148,7 +140,6 @@ exports[`GroupSettingsTab renders correctly 1`] = `
           ]
         }
         key="2"
-        updateJoinQuestion={[Function]}
         updateSetting={[Function]}
         updateSettingDirectly={[Function]}
       />
@@ -254,6 +245,55 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       label="Add a relevant skill or interest"
       placeholder="What skills and interests are most relevant to your group?"
     />
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
+      Group Access Questions
+    </h3>
+    <p
+      data-stylename="privacyDetail"
+    >
+      What questions are asked when a group requests to join this group?
+    </p>
+    <div
+      data-stylename="groupQuestions "
+    >
+      <SwitchStyled
+        backgroundColor="#8B96A4"
+        checked={false}
+        disabled={false}
+        onChange={[Function]}
+      />
+      <p
+        data-stylename="toggleDescription"
+      >
+        Require groups to answer questions when requesting to join this group
+      </p>
+      <div
+        data-stylename="onOff"
+      >
+        <div
+          data-stylename="off"
+        >
+          OFF
+        </div>
+        <div
+          data-stylename="on"
+        >
+          ON
+        </div>
+      </div>
+      <QuestionsForm
+        questions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        save={[Function]}
+      />
+    </div>
   </SettingsSection>
   <div
     data-stylename="saveChanges"

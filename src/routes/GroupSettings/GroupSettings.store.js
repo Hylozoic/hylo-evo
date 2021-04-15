@@ -26,6 +26,7 @@ export function fetchGroupSettings (slug) {
           name
           settings {
             allowGroupInvites
+            askGroupToGroupJoinQuestions
             askJoinQuestions
             publicMemberDirectory
             showSuggestedSkills
@@ -37,6 +38,13 @@ export function fetchGroupSettings (slug) {
               id
               name
               avatarUrl
+            }
+          }
+          groupToGroupJoinQuestions {
+            items {
+              id
+              questionId
+              text
             }
           }
           joinQuestions {
@@ -108,6 +116,13 @@ export function updateGroupSettings (id, changes) {
       query: `mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          groupToGroupJoinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
           joinQuestions {
             items {
               id

@@ -21,3 +21,9 @@
     transition: all .25s ease;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .section {
+    padding: 10px;
+  }
+}

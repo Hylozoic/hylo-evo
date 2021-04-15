@@ -12,6 +12,7 @@ Object {
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],
+    "groupToGroupJoinQuestions": Array [],
     "groupTopics": Array [],
     "id": "99",
     "joinQuestions": Array [],
@@ -43,6 +44,7 @@ Object {
           name
           settings {
             allowGroupInvites
+            askGroupToGroupJoinQuestions
             askJoinQuestions
             publicMemberDirectory
             showSuggestedSkills
@@ -54,6 +56,13 @@ Object {
               id
               name
               avatarUrl
+            }
+          }
+          groupToGroupJoinQuestions {
+            items {
+              id
+              questionId
+              text
             }
           }
           joinQuestions {
@@ -120,6 +129,13 @@ Object {
     "query": "mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          groupToGroupJoinQuestions {
+            items {
+              id
+              questionId
+              text
+            }
+          }
           joinQuestions {
             items {
               id
@@ -167,6 +183,7 @@ Object {
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],
+    "groupToGroupJoinQuestions": Array [],
     "groupTopics": Array [],
     "id": "99",
     "joinQuestions": Array [],

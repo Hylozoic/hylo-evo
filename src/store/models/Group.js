@@ -80,6 +80,15 @@ GroupJoinQuestion.fields = {
   group: fk('Group')
 }
 
+export class GroupToGroupJoinQuestion extends Model { }
+GroupToGroupJoinQuestion.modelName = 'GroupToGroupJoinQuestion'
+GroupToGroupJoinQuestion.fields = {
+  id: attr(),
+  questionId: attr(),
+  text: attr(),
+  group: fk('Group')
+}
+
 export class GroupTopic extends Model {}
 GroupTopic.modelName = 'GroupTopic'
 GroupTopic.fields = {
@@ -130,6 +139,7 @@ Group.fields = {
     throughFields: [ 'childGroup', 'parentGroup' ]
   }),
   feedOrder: attr(),
+  groupToGroupJoinQuestions: many('GroupToGroupJoinQuestion'),
   id: attr(),
   joinQuestions: many('GroupJoinQuestion'),
   location: attr(),

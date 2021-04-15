@@ -97,9 +97,6 @@ posts: viewPosts(
     id
     name
     slug
-    settings {
-      publicMemberDirectory
-    }
   }
   attachments {
     type
@@ -261,9 +258,6 @@ posts(
     id
     name
     slug
-    settings {
-      publicMemberDirectory
-    }
   }
   attachments {
     type
