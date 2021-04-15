@@ -49,7 +49,6 @@ export default class LandingPage extends Component {
           </div>
           <div styleName='bg-fade' />
         </div>
-
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}
