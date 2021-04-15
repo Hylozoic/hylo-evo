@@ -39,7 +39,7 @@ export default class GroupSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (!isEqual(prevProps.group.id, this.props.group.id)) {
+    if (!isEqual(prevProps.group, this.props.group)) {
       this.setState(this.defaultEditState())
     }
   }
