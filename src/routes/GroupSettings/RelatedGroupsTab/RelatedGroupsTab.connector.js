@@ -48,7 +48,7 @@ export function mapDispatchToProps (dispatch, props) {
     fetchGroupToGroupJoinQuestions: () => dispatch(fetchGroupToGroupJoinQuestions()),
     inviteGroupToJoinParent: (parentId, childId) => dispatch(inviteGroupToJoinParent(parentId, childId)),
     rejectGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(rejectGroupRelationshipInvite(groupRelationshipInviteId)),
-    requestToAddGroupToParent: (parentId, childId, questionAnswers) => dispatch(requestToAddGroupToParent(parentId, childId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
+    requestToAddGroupToParent: (parentId, childId, questionAnswers = []) => dispatch(requestToAddGroupToParent(parentId, childId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }
 }
 
