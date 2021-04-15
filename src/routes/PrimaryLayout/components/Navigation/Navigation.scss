@@ -34,7 +34,7 @@
 }
 
 .navigation {
-  padding-top: $space-6x;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -60,62 +60,52 @@
 }
 
 @media screen and (max-width: 600px) {
+  @-webkit-keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
 
-  .links {
-    border-bottom: none;
-    padding: 0 0 0 0;
+    to {
+      opacity: 1;
+    }
   }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
 
-}
-
-@media screen and (max-width: 600px) {
-  .navigation {
-    padding: 5px;
-    background-color: rgba(255,255,255,1);
-  }
-
-  .collapser {
-    margin: 0;
-    height: auto;
-  }
-
-  .links {
-    display: flex;
-    justify-content: center;
-  }
-
-  .icon {
-    margin: 0;
-  }
-
-  .topicItem {
-    display: block;
-    padding: 0 15px;
-
-    a {
-      display: inline-block;
-      position: relative;
-      text-decoration: none;
-      top: 6px;
-
-      &:hover, &:focus {
-        text-decoration: none;
-      }
+    to {
+      opacity: 1;
     }
   }
 
-  .mapView.collapser {
-    margin: 0;
+  .navigation {
+    position: relative;
+    z-index: 100;
+  }
+  .closeBg {
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    transition: all .25s ease;
   }
 
-}
+  .mapView.collapser {
+    margin: 0 0 0 0;
+  }
 
-@media screen and (max-width: 320px) {
-  .topicItem {
-    padding: 0 10px;
+  .showGroupMenu {
 
-    a {
-      top: 9px;
+    .closeBg {
+      background-color: rgba(49, 73, 101, 0);
+      height: 100%;
+      top: 0;
+      width: calc(100% - 280px);
+      opacity: .5;
     }
   }
 }

@@ -20,13 +20,47 @@
   display: flex;
   justify-content: flex-start;
   background-color: white;
+  align-items: center;
   z-index: 50;
-  margin-bottom: $space-6x;
-  // mixing metaphors here because the top padding is not a multiple of the spacer
-  padding-top: 13px;
   padding-left: $space-5x;
   padding-right: $space-5x;
   box-shadow: 0px 4px 56px 0px $shadow-color;
+}
+
+.drawerToggle {
+  margin-left: 0px;
+  margin-right: 0px;
+  transition: all .25s ease;
+
+  .drawerToggleButton {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    margin-right: 10px;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    transition: all .25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .menuIcon {
+      font-size: 16px;
+      color: rgba(49, 73, 101, 1.00);
+      transition: all .25s ease;
+    }
+
+    &:hover {
+      background-color: rgba(42, 201, 167, 1.00);
+      cursor: pointer;
+
+      .menuIcon {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
 }
 
 .image {
@@ -35,24 +69,63 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+
+  > span {
+    transition: all .25s ease;
+    opacity: 0;
+    background-color: rgba(42, 201, 167, 1.00);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .homeLink {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .closeGroupMenu {
+    display: none;
+  }
 }
 
-.logo-hover {
+a.logo-hover {
   position: relative;
-  &:hover .image {
-    background: $color-caribbean-green !important;
-    &::after {
-      content: "<";
-      color: $color-white;
-      font-size: 20px;
-      padding-left: 9px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  .title {
+    max-width: calc(100vw - 270px);
+
+    .groupName {
+      width: auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .groupName {
+    width: 100px;
+  }
+
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+
+    .image > span {
+      opacity: 1;
     }
   }
 }
 
 .logoBadge {
   position: absolute;
-  top: -10px;
+  top: -8px;
   left: 19px;
 }
 
@@ -90,6 +163,10 @@
       text-decoration: none;
     }
   }
+}
+
+.mobile-logo {
+  display: none;
 }
 
 .icon {
@@ -134,8 +211,81 @@
   color: $color-black;
 }
 
-@media screen and (max-width: 375px) {
-  .groupName, .label {
+@media screen and (max-width: 600px) {
+  .user-menu > div {
+    bottom: 30px;
+  }
+
+  a.logo-hover {
     display: none;
+  }
+
+  .mobile-logo {
+    display: block;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    position: relative;
+    padding: 0;
+    text-align: left;
+
+    &:active, &:focus {
+      outline: none;
+      border: none;
+    }
+
+    .title {
+      max-width: calc(100vw - 120px);
+    }
+
+    .groupName {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 0;
+    }
+  }
+
+  .mobile-logo.groupMenuOpen {
+
+    .title {
+      max-width: calc(100vw - 62px);
+      transition: all .25s ease;
+    }
+    .image > span {
+      opacity: 1;
+
+      .homeLink {
+        display: none;
+      }
+
+      .closeGroupMenu {
+        display: block;
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+
+  }
+
+
+  .topNav.groupMenuOpen .drawerToggle {
+    margin-left: -65px;
+    margin-right: 17px;
+  }
+
+  .navIcons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    box-shadow: 0px 4px 56px 0px rgba(42, 64, 89, .3);
   }
 }

@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { get, some } from 'lodash/fp'
+import { get, isEqual, some } from 'lodash/fp'
 import qs from 'querystring'
 import React, { Component } from 'react'
 import Intercom from 'react-intercom'
@@ -86,18 +86,21 @@ const detailRoutes = [
   { path: `/:context(groups)/:groupSlug/:view(map|groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
 ]
 
 const createRoutes = [
   { path: `/:context(all|public)/:view(events|groups|map|projects|stream)/${OPTIONAL_POST_MATCH}` },
-  { path: `/:context(all|public)/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(members)/:personId?/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/:views(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
-  { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(members)/:personId?/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(events|groups|map|projects|stream|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(groups|map)/${GROUP_DETAIL_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/${OPTIONAL_GROUP_MATCH}` },
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` }
 ]
 
@@ -149,6 +152,11 @@ export default class PrimaryLayout extends Component {
           content: 'This is where we show you which group or view you are looking at. Hylo allows you to easily switch between groups as well as see updates from all your groups at once.'
         },
         {
+          target: '#mobileMenu',
+          title: 'Group menu',
+          content: 'Press on the group name or icon to navigate within the current group. Discover events, discussions, resources & more!'
+        },
+        {
           target: '#toggleDrawer',
           title: 'Switching groups & viewing all',
           content: 'By clicking on the group icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
@@ -179,7 +187,7 @@ export default class PrimaryLayout extends Component {
     if (this.props.slug && this.props.slug !== prevProps.slug) {
       this.props.fetchForGroup()
     }
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    if (!isEqual(this.props.routeParams, prevProps.routeParams)) {
       this.scrollToTop()
     }
   }
@@ -216,8 +224,10 @@ export default class PrimaryLayout extends Component {
       group,
       groupPending,
       isDrawerOpen,
+      isGroupMenuOpen,
       isGroupRoute,
       location,
+      routeParams,
       showLogoBadge
     } = this.props
 
@@ -270,7 +280,7 @@ export default class PrimaryLayout extends Component {
         ))}
       </Switch>
 
-      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, showLogoBadge }} />
+      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge }} />
 
       <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
@@ -286,7 +296,7 @@ export default class PrimaryLayout extends Component {
             <Navigation {...props}
               group={group}
               collapsed={collapsedState}
-              styleName={cx('left', { 'map-view': isMapView })}
+              styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
               mapView={isMapView}
             />}
           />
@@ -323,13 +333,14 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
             <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
+            <Route path={`/:context(groups)/:groupSlug/:view(members)/create`} component={Members} />
             <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
             <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} exact component={LandingPage} />
-            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_GROUP_MATCH}`} component={LandingPage} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />

@@ -12,15 +12,15 @@ const { array, object } = PropTypes
 export default class ProjectsWidget extends Component {
   static propTypes = {
     group: object,
-    projects: array
+    items: array
   }
 
   render () {
-    const { group, projects } = this.props
-    // TODO: Can use the Projects component on MemberProfile?
+    const { group, items } = this.props
+
     return (
       <div styleName='projects'>
-        {projects && projects.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
+        {items && items.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
           <div styleName='project'>
             <div styleName='meta'>
               <div styleName='title'>{p.title}</div>

@@ -1,12 +1,12 @@
 .container {
   position: relative;
   display: inline-block;
-  width: 30px;
-  height: 16px;
+  width: 60px;
+  height: 20px;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  margin-left: 14px;
+  margin-right: 10px;
 }
 
 .containerDisabled {
@@ -20,23 +20,51 @@
   left: 0px;
   right: 0px;
   bottom: 0px;
-  border-radius: 8px;
+  border-radius: 10px;
+  background-color: rgba(22, 133, 111, 1.00);
 }
 
 .button {
   position: absolute;
   top: 2px;
   bottom: 2px;
-  right: 15px;
-  left: 4px;
+  right: 50%;
+  left: 2px;
   background-color: #fff;
   border-radius: 12px;
-  transition: all 100ms ease
+  transition: all 100ms ease;
+  z-index: 0;
 }
 
 .buttonChecked {
-  right: 4px;
-  left: 15px;
+  right: 2px;
+  left: 50%;
+}
+
+.visibleIcon {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  z-index: 10;
+  font-size: 13px;
+  color: rgba(150, 208, 195, 1.00);
+}
+
+.visible .visibleIcon {
+  color: rgba(41, 64, 90, 1.00);
+}
+
+.hiddenIcon {
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  z-index: 10;
+  font-size: 16px;
+  color: rgba(41, 64, 90, 1.00);
+}
+
+.visible .hiddenIcon {
+  color: rgba(150, 208, 195, 1.00);
 }
 
 

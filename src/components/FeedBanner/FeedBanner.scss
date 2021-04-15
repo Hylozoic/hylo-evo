@@ -64,7 +64,7 @@
   // Extract typography?
   @include font-medium;
   color: $color-white;
-  font-size: 32px;
+  font-size: 24px;
   letter-spacing: -0.47px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.50);
 }
@@ -154,7 +154,7 @@
   }
 
   .header-name {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .postPrompt {
@@ -173,6 +173,10 @@
 }
 
 @media screen and (max-width: 325px) {
+  .header-name {
+    font-size: 16px;
+  }
+
   .postPrompt {
     font-size: 12px;
   }

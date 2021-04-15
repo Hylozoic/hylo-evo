@@ -23,16 +23,16 @@ const settings = {
 
 export default class EventsWidget extends Component {
   static propTypes = {
-    events: array,
-    group: object
+    group: object,
+    items: array
   }
 
   render () {
-    const { events, group } = this.props
+    const { items, group } = this.props
     return (
       <div styleName='events'>
         <Slider {...settings}>
-          {events && events.map(e => <div styleName={cx('event', { narrow: events.length > 1 })} key={e.id}>
+          {items.map(e => <div styleName={cx('event', { narrow: items.length > 1 })} key={e.id}>
             <Link to={postUrl(e.id, { groupSlug: group.slug })}>
               <div styleName='content'>
                 <div styleName='time'>{moment(e.startTime).format('MMM D YYYY')}</div>

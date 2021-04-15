@@ -1,21 +1,24 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { topicUrl } from 'util/navigation'
 
 import './GroupTopicsWidget.scss'
 
-const { array } = PropTypes
+const { array, object } = PropTypes
 
 export default class GroupTopicsWidget extends Component {
   static propTypes = {
-    topics: array
+    items: array,
+    group: object
   }
 
   render () {
-    const { topics } = this.props
+    const { group, items } = this.props
+
     return (
       <div styleName='group-topics'>
-        {topics && topics.slice(0, 10).map(t => <Link key={t.id} to='#'>
+        {items && items.map(t => <Link key={t.id} to={topicUrl(t.name, { groupSlug: group.slug, context: 'groups' })}>
           <div styleName='topic-wrapper'>
             <div styleName='topic-wrapper'>
               <div styleName='topic'>

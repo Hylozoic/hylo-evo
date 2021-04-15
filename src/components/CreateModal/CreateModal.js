@@ -32,6 +32,7 @@ export default class CreateModal extends Component {
             </Route>
           </Switch>
         </div>
+        <div styleName='create-modal-bg' onClick={closeModal} />
       </div>
     </CSSTransitionGroup>
   }

@@ -25,7 +25,7 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     Joe, Scary and 2 others commented
   </span>
   <a
-    data-for="postfooter-tt"
+    data-for="postfooter-tt-undefined"
     data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={false}
@@ -39,7 +39,7 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
   </a>
   <Tooltip
     delay={550}
-    id="postfooter-tt"
+    id="postfooter-tt-undefined"
   />
 </div>
 `;
@@ -69,7 +69,7 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     Joe, Scary and 2 others commented
   </span>
   <a
-    data-for="postfooter-tt"
+    data-for="postfooter-tt-undefined"
     data-stylename="vote-button voted"
     data-tip="Upvote this post so more people see it."
     data-tip-disable={true}
@@ -83,7 +83,7 @@ exports[`PostFooter matches the latest snapshot 1`] = `
   </a>
   <Tooltip
     delay={550}
-    id="postfooter-tt"
+    id="postfooter-tt-undefined"
   />
 </div>
 `;
@@ -108,7 +108,7 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
   </span>
   <Tooltip
     delay={550}
-    id="postfooter-tt"
+    id="postfooter-tt-undefined"
   />
 </div>
 `;
@@ -136,7 +136,7 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     Sarah is a member
   </span>
   <a
-    data-for="postfooter-tt"
+    data-for="postfooter-tt-undefined"
     data-stylename="vote-button"
     data-tip="Upvote this post so more people see it."
     onClick={[Function]}
@@ -149,7 +149,7 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
   </a>
   <Tooltip
     delay={550}
-    id="postfooter-tt"
+    id="postfooter-tt-undefined"
   />
 </div>
 `;

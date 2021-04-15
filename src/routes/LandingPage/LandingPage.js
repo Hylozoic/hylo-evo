@@ -30,7 +30,7 @@ export default class LandingPage extends Component {
   }
 
   render () {
-    const { group, posts, routeParams, showAbout, showDetails, widgets } = this.props
+    const { childGroups, group, isModerator, posts, routeParams, showAbout, showDetails, widgets } = this.props
     if (!group) return <Loading />
 
     return (
@@ -41,19 +41,22 @@ export default class LandingPage extends Component {
           </div>
 
           <div styleName='title'>
-            <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} />
+            <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} styleName='landing-page-avatar' />
             <div>
               <div styleName='name'>{group.name}</div>
               {group.location ? <div styleName='location'><Icon name='Location' />{group.location}</div> : ''}
             </div>
           </div>
+          <div styleName='bg-fade' />
         </div>
 
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}
+            childGroups={childGroups}
             key={widget.id}
             group={group}
+            isModerator={isModerator}
             posts={posts}
             routeParams={routeParams}
             showDetails={showDetails}

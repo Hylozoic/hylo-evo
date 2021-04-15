@@ -35,7 +35,11 @@ export default class TopicNavigation extends Component {
 
   render () {
     const {
-      topics, goBack, seeAllUrl, collapsed, expand
+      topics,
+      goBack,
+      seeAllUrl,
+      collapsed,
+      expand
     } = this.props
 
     return <div styleName={cx('s.topicNavigation', { 's.collapsed': collapsed })}>
@@ -70,9 +74,6 @@ export function TopicsList ({ topics, onClick, onClose }) {
         <NavLink className={badgeHoverStyles.parent}
           styleName='s.topicLink'
           to={topic.url}
-          // TODO: Removing onClick event for now
-          //       but not sure why it's breaking things
-          // onClick={() => onClick(topic)}
           activeClassName='active-topic-nav-link'
         >
           { topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' /> }

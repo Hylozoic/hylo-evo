@@ -23,8 +23,8 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
 
   const currentUser = getMe(state, props)
-  const defaultSortBy = get('settings.streamSortBy', currentUser) || 'created'
-  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'list'
+  const defaultSortBy = get('settings.streamSortBy', currentUser) || 'updated'
+  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)

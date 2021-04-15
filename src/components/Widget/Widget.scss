@@ -1,6 +1,17 @@
 .widget {
   margin: 1em auto 0 auto;
   display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.widget.editing-settings {
+  position: relative;
+  z-index: 100;
+
+  .content {
+    display: none;
+  }
 }
 
 .header {
@@ -20,19 +31,51 @@
 }
 
 .more {
+  position: relative;
+  z-index: 1000;
+}
+
+.more-icon {
   text-align: right;
   padding: 2px;
   height: 30px;
+  position: relative;
+  width: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .widget-visibility {
   min-width: 30px;
 }
 
+.visibility-label {
+  color: rgba(215, 242, 237, .7);
+  margin-right: 5px;
+}
+
 .selected {
   background-color: $color-caribbean-green;
   color: white;
   border-radius: 16px;
+  z-index: 100000;
+}
+
+.edit-menu {
+  transform: scale(0);
+  transition: all .25s ease;
+  width: 230px;
+  position: absolute;
+  top: -20px;
+  right: -90px;
+}
+
+.edit-menu.visible {
+  transform: scale(1);
+  top: 25px;
+  right: 0;
 }
 
 .triangle {
@@ -40,14 +83,14 @@
   @include is-top-triangle(#0DC39F, #0DC39F, 14px);
   margin-left: 20px;
   top: -5px;
-  right: 0;
+  right: 7px;
+  left: initial;
   width: 14px !important;
   height: 14px !important;
   z-index: 10;
 }
 
 .edit-section {
-  visibility: hidden;
   z-index: 2;
   height: auto;
   background: $color-caribbean-green;
@@ -57,10 +100,18 @@
   color: white;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
   border-radius: 25px 10px 25px 25px;
+  position: relative;
 }
 
-.visible {
-  visibility: visible;
+.visibility-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-section.visible {
+  top: 0;
+  right: 0;
 }
 
 .content {
@@ -69,25 +120,55 @@
   z-index: 1;
 }
 
+.hidden-description {
+  .more-icon {
+    margin-top: -5px;
+    font-size: 16px;
+  }
+
+  .hidden-icon {
+    font-size: 16px;
+    color: rgba(49, 73, 101, 1.00);
+  }
+
+  h4 {
+    color: rgba(49, 73, 101, 1.00);
+    font-size: 18px;
+  }
+  p {
+    color: rgba(140, 151, 166, 1.00);
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+}
+
 .hidden > div {
   background-color: #E1E5E9;
   color: #808C9B;
-  font-style: italic;
   font-size: 14px;
   display: block;
   padding: 20px 40px;
   border-radius: 3px;
+  margin: 0 15px 15px 15px;
 }
 
 .edit-settings {
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px dashed rgba(105, 220, 197, 1.00);
+  padding-bottom: 5px;
+  margin-bottom: 8px;
 
   span {
+    display: flex;
+    align-items: center;
     color: #FFFFFF;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }
 
-.edit-form {
+.edit-form, .hidden div.edit-form {
   background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
@@ -95,10 +176,12 @@
   padding: 20px;
   z-index: 2;
   height: auto;
-  position: relative;
-  width: 400px;
+  position: absolute;
+  width: 100%;
+  top: -15px;
+  font-style: normal;
 
-  input {
+  input, textarea {
     font-family: 'Circular Book';
     color: $color-regent;
     border: none;

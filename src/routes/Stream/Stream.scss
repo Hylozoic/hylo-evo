@@ -1,6 +1,6 @@
 .stream-items {
   margin: 0 auto;
-  overflow: auto; // prevent margin collapse
+  overflow: visible;
 }
 
 .stream-items > div:first-child {
@@ -13,4 +13,10 @@
 }
 .expanded {
   margin: 0 $space-2x $space-6x;
+}
+
+@media screen and (max-width: 425px) {
+  .card-item {
+    margin: 0 5px 10px 5px;
+  }
 }
