@@ -127,7 +127,7 @@ describe('SocialControl', () => {
 
         wrapper.instance().handleLinkClick()
         expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
-        expect(updateSettingDirectly).toHaveBeenCalledWith('twitterName')
+        expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('twitterhandle')
       })
 
@@ -171,7 +171,7 @@ describe('SocialControl', () => {
 
         wrapper.instance().handleLinkClick()
         expect(window.prompt).toBeCalledWith('Please enter the full url for your LinkedIn page.');
-        expect(updateSettingDirectly).toHaveBeenCalledWith('linkedinUrl')
+        expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('linkedin.com/test')
       })
     })
@@ -195,7 +195,7 @@ describe('SocialControl', () => {
 
         wrapper.instance().handleLinkClick()
         expect(window.prompt).toBeCalledWith('Please enter the full url for your Facebook page.');
-        expect(updateSettingDirectly).toHaveBeenCalledWith('facebookUrl')
+        expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('facebook.com/test')
       })
     })
@@ -218,7 +218,7 @@ describe('SocialControl', () => {
 
     wrapper.instance().handleUnlinkClick()
     expect(handleUnlinkAccount).toHaveBeenCalled()
-    expect(updateSettingDirectly).toHaveBeenCalledWith('linkedinUrl')
+    expect(updateSettingDirectly).toHaveBeenCalled
     expect(updateSettingDirectlyCallback).toHaveBeenCalledWith(null)
   })
 })
