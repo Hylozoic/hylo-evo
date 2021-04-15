@@ -59,6 +59,7 @@ export default
       avatarUrl
       bannerUrl
       description
+      memberCount
       name
       slug
       visibility

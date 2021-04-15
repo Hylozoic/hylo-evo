@@ -53,7 +53,7 @@ const WIDGETS = {
 }
 
 export default function Widget (props) {
-  const { group, id, isModerator, isVisible, name, posts, settings, updateWidget } = props
+  const { childGroups, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
 
   if (!WIDGETS[name]) return null
 
@@ -64,7 +64,7 @@ export default function Widget (props) {
     text: settings.text || ''
   })
 
-  const widgetItems = getWidgetItems(name, group, posts)
+  const widgetItems = getWidgetItems({ childGroups, name, group, posts })
 
   return (
     <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
@@ -97,7 +97,7 @@ export default function Widget (props) {
           updateSettings={updateSettings}
           save={updateWidget} />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
-        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, settings }) : null)
+        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings }) : null)
           : isModerator ? <HiddenWidget name={name} /> : null
         }
       </div>
@@ -114,7 +114,7 @@ const HiddenWidget = ({ isVisible, name }) => {
   )
 }
 
-const getWidgetItems = (name, group, posts) => {
+const getWidgetItems = ({ childGroups, name, group, posts }) => {
   switch (name) {
     case 'text_block': {
       return true
@@ -141,37 +141,7 @@ const getWidgetItems = (name, group, posts) => {
       return group.activeProjects.length > 0 ? group.activeProjects : false
     }
     case 'group_affiliations': {
-      return [{
-        id: '1234',
-        groupName: 'Annual Meeting 2020',
-        groupAvatar: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkAvatar/55/Screen%20Shot%202020-07-01%20at%2011.16.56%20AM.png',
-        groupBackground: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkBanner/55/Screen%20Shot%202020-07-01%20at%2011.14.47%20AM.png',
-        // truncate groupDescription after 100 characters and append elipses
-        groupDescription: 'Annual Meeting Description - The program theme is “Technology and Neuroscience.” This meeting will review ...',
-        memberCount: '72 Members',
-        isMember: true,
-        groupUrl: 'http://localhost:3000/group/groupname'
-      }, {
-        id: '5678',
-        groupName: 'PH Student Club',
-        groupAvatar: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkAvatar/55/Screen%20Shot%202020-07-01%20at%2011.16.56%20AM.png',
-        groupBackground: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkBanner/55/Screen%20Shot%202020-07-01%20at%2011.14.47%20AM.png',
-        // truncate groupDescription after 100 characters and append elipses
-        groupDescription: 'Annual Meeting Description - The program theme is “Technology and Neuroscience.” This meeting will review ...',
-        memberCount: '72 Members',
-        isMember: false,
-        groupUrl: 'http://localhost:3000/group/groupname'
-      }, {
-        id: '9101',
-        groupName: 'PH Student Club',
-        groupAvatar: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkAvatar/55/Screen%20Shot%202020-07-01%20at%2011.16.56%20AM.png',
-        groupBackground: 'https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/30730/networkBanner/55/Screen%20Shot%202020-07-01%20at%2011.14.47%20AM.png',
-        // truncate groupDescription after 100 characters and append elipses
-        groupDescription: 'Annual Meeting Description - The program theme is “Technology and Neuroscience.” This meeting will review ...',
-        memberCount: '72 Members',
-        isMember: false,
-        groupUrl: 'http://localhost:3000/group/groupname'
-      }]
+      return childGroups.length > 0 ? childGroups : false
     }
     default: {
       return false

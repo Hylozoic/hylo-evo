@@ -30,7 +30,7 @@ export default class LandingPage extends Component {
   }
 
   render () {
-    const { group, isModerator, posts, routeParams, showAbout, showDetails, widgets } = this.props
+    const { childGroups, group, isModerator, posts, routeParams, showAbout, showDetails, widgets } = this.props
     if (!group) return <Loading />
 
     return (
@@ -53,6 +53,7 @@ export default class LandingPage extends Component {
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}
+            childGroups={childGroups}
             key={widget.id}
             group={group}
             isModerator={isModerator}

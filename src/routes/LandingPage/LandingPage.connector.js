@@ -2,27 +2,34 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { groupUrl, postUrl } from 'util/navigation'
 import fetchGroup from 'store/actions/fetchGroupDetails'
+import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 import getCanModerate from 'store/selectors/getCanModerate'
+import { getChildGroups } from 'store/selectors/getGroupRelationships'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import getRouteParam from 'store/selectors/getRouteParam'
 import presentGroup from 'store/presenters/presentGroup'
 import presentPost from 'store/presenters/presentPost'
 import { fetchPosts, getPosts } from 'components/FeedList/FeedList.store'
 
 export function mapStateToProps (state, props) {
-  let group, fetchPostsParam, isModerator, posts, widgets
   const groupSlug = getRouteParam('groupSlug', state, props)
+  const fetchPostsParam = { slug: groupSlug, context: 'groups' }
+  const group = presentGroup(getGroupForCurrentRoute(state, props))
+  const isModerator = getCanModerate(state, { group })
+  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
-
-  if (groupSlug) {
-    group = presentGroup(getGroupForCurrentRoute(state, props))
-    fetchPostsParam = { slug: groupSlug, context: 'groups' }
-    posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
-    widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map')
-    isModerator = getCanModerate(state, { group })
-  }
+  const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map')
+  const memberships = getMyMemberships(state, props)
+  const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
+  const childGroups = getChildGroups(state, { groupSlug }).map(g => {
+    g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
+    return g
+  })
 
   return {
+    childGroups,
     fetchPostsParam,
     group,
     isModerator,

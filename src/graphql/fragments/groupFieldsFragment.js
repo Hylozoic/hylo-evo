@@ -21,6 +21,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       accessibility
       avatarUrl
       bannerUrl
+      memberCount
       name
       slug
       visibility
