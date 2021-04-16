@@ -91,7 +91,7 @@
     border: 1px solid rgba(192, 197, 205, 1.00);
     height: 30px;
     background-color: transparent;
-    font-size: 14px;
+    font-size: 12px;
     color: rgba(128, 140, 156, 1.00);
     line-height: 30px;
     padding: 0 15px;
@@ -129,6 +129,35 @@
 
 .resource {
   background-color: $color-resources;
+}
+
+.post.create-new {
+  background-color: transparent;
+  border: 1px dashed rgba(198, 202, 209, .50);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0);
+  transition: all .25s ease;
+
+
+  .type {
+    color: rgba(198, 202, 209, 1.00);
+  }
+
+  .recent-posts-cta {
+    border: 1px solid rgba(130, 142, 158, 1.00);
+    color: rgba(130, 142, 158, 1.00);
+    font-size: 12px;
+    line-height: 12px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  &:hover {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, .2);
+  }
 }
 
 

@@ -123,7 +123,7 @@ const getWidgetItems = ({ childGroups, name, group, posts }) => {
       return group.announcements.length > 0 ? group.announcements : false
     }
     case 'active_members': {
-      return group.members && group.members.length > 0 ? group.members.sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8) : false
+      return group.members && group.members.length > 2 ? group.members.sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8) : false
     }
     case 'requests_offers': {
       return group.openOffersAndRequests.length > 0 ? group.openOffersAndRequests : false
@@ -135,7 +135,7 @@ const getWidgetItems = ({ childGroups, name, group, posts }) => {
       return group.groupTopics.length > 0 ? group.groupTopics.slice(0, 10) : false
     }
     case 'events': {
-      return group.upcomingEvents.length > 0 ? group.upcomingEvents : false
+      return group.upcomingEvents
     }
     case 'project_activity': {
       return group.activeProjects.length > 0 ? group.activeProjects : false

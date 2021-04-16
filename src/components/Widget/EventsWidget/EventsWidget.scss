@@ -43,6 +43,32 @@
   .event.narrow {
     margin-right: 15px;
   }
+  .event.create-new {
+    background-color: transparent;
+    border: 1px dashed rgba(198, 202, 209, .50);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0);
+    transition: all .25s ease;
+
+    .events-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .button {
+        font-size: 12px;
+        margin-right: 5px;
+        text-decoration: none;
+        color: rgba(192, 197, 205, 1.00);
+        border: 1px solid rgba(192, 197, 205, 1.00);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        padding: 0 15px;
+        border-radius: 30px;
+      }
+    }
+  }
 }
 
 .events :global(.slick-slide > div) {

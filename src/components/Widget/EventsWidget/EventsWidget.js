@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
-import { postUrl } from 'util/navigation'
+import { postUrl, createPostUrl } from 'util/navigation'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -42,6 +42,14 @@ export default class EventsWidget extends Component {
             </Link>
             <div styleName='background' style={{ backgroundImage: `url(${e.primaryImage || '/default-event.png'})` }} />
           </div>)}
+          <div styleName='event create-new'>
+            <Link to={createPostUrl}>
+              <div styleName='events-cta'>
+                <h4>Bring your group together</h4>
+                <div styleName='button'>+ Create a new event</div>
+              </div>
+            </Link>
+          </div>
         </Slider>
       </div>
     )

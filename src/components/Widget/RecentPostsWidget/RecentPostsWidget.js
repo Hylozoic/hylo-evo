@@ -4,7 +4,7 @@ import Slider from 'react-slick'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
-import { groupUrl, postUrl } from 'util/navigation'
+import { groupUrl, postUrl, createPostUrl } from 'util/navigation'
 import './RecentPostsWidget.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -41,11 +41,19 @@ export default class RecentPostsWidget extends Component {
       ]
     }
 
-    const { group, items } = this.props
+    const { group, items, routeParams } = this.props
     return (
       <div styleName='recent-posts'>
         <Slider {...settings}>
           {items.map(p => <RecentPostCard key={p.id} post={p} group={group} />)}
+          <div>
+            <Link to={createPostUrl(routeParams)} styleName='post create-new'>
+              <div styleName='content'>
+                <div styleName='type'>NO MORE RECENT ACTIVITY</div>
+                <div styleName='recent-posts-cta'>+ New post</div>
+              </div>
+            </Link>
+          </div>
           <div styleName='view-all'>
             <Link to={groupUrl(group.slug, 'stream')}>View all</Link>
           </div>

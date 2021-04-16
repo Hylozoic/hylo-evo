@@ -69,3 +69,37 @@
     text-decoration: none;
   }
 }
+
+.ask-offer-cta {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  align-items: center;
+
+  a {
+    font-size: 12px;
+    margin-right: 5px;
+    text-decoration: none;
+    color: rgba(192, 197, 205, 1.00);
+    border: 1px solid rgba(192, 197, 205, 1.00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 0 15px;
+    border-radius: 30px;
+
+    span {
+      display: inline-block;
+      padding-left: 5px;
+    }
+
+    .offer {
+      color: rgba(37, 196, 159, 1.00);
+    }
+
+    .request {
+      color: rgba(98, 75, 163, 1.00);
+    }
+  }
+}
