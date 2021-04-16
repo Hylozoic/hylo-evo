@@ -1,12 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`facebookPrompt rejects an incorrect facebook Url, calling itself again 1`] = `
+Array [
+  Array [
+    "Please enter the full url for your Facebook page.",
+  ],
+  Array [
+    "Invalid url. Please enter the full url for your Facebook page.",
+  ],
+]
+`;
+
 exports[`linkedinPrompt rejects an incorrect linkedIn Url, calling itself again 1`] = `
 Array [
   Array [
     "Please enter the full url for your LinkedIn page.",
   ],
   Array [
-    "Invalid url. Please enter full url for your LinkedIn page.",
+    "Invalid url. Please enter the full url for your LinkedIn page.",
   ],
 ]
 `;
