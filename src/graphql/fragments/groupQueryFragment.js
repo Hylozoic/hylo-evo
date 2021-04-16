@@ -183,7 +183,7 @@ export default
       }
     }
   }
-  upcomingEvents: posts(isFuture: true, filter: "event", first: 4) {
+  upcomingEvents: posts(isFuture: true, filter: "event", sortBy: "start_time", order: "asc", first: 4) {
     hasMore
     items {
       id
