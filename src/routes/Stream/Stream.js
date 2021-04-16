@@ -1,14 +1,15 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
-import ScrollListener from 'components/ScrollListener'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import FeedBanner from 'components/FeedBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
-import ViewControls from 'components/StreamViewControls'
 import PostListRow from 'components/PostListRow'
 import PostCard from 'components/PostCard'
+import ScrollListener from 'components/ScrollListener'
+import ViewControls from 'components/StreamViewControls'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Stream.scss'
 
 const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== get(sel, prevProps)
@@ -58,22 +59,38 @@ export default class Stream extends Component {
 
   render () {
     const {
-      routeParams,
-      selectedPostId,
-      postTypeFilter,
-      sortBy,
-      viewMode,
-      changeTab,
       changeSort,
+      changeTab,
       changeView,
+      context,
+      currentUser,
+      currentUserHasMemberships,
+      group,
+      newPost,
+      routeParams,
       posts,
-      pending
+      postTypeFilter,
+      pending,
+      querystringParams,
+      selectedPostId,
+      sortBy,
+      viewMode
     } = this.props
 
     const ViewComponent = viewMode === 'cards' ? viewComponent['card'] : viewComponent['list']
 
     return (
       <React.Fragment>
+        <FeedBanner
+          group={group}
+          currentUser={currentUser}
+          type={postTypeFilter}
+          context={context}
+          newPost={newPost}
+          routeParams={routeParams}
+          querystringParams={querystringParams}
+          currentUserHasMemberships={currentUserHasMemberships}
+        />
         <ViewControls
           routeParams={routeParams}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
