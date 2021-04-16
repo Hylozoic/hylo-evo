@@ -22,8 +22,7 @@ export function mapStateToProps (state, props) {
   const routeParams = props.match.params
   const group = presentGroup(props.group || getGroupForDetails(state, props))
   const slug = get(group, 'slug')
-  const mainGroupSlug = getRouteParam('groupSlug', state, props)
-  const isAboutCurrentGroup = slug === mainGroupSlug
+  const isAboutCurrentGroup = getRouteParam('groupSlug', state, props) === getRouteParam('detailGroupSlug', state, props)
   const currentUser = getMe(state)
   const myMemberships = getMyMemberships(state, props)
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
