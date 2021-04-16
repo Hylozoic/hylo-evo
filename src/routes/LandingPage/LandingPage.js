@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import Icon from 'components/Icon'
 import { isEmpty } from 'lodash/fp'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 import Widget from 'components/Widget'
+import { groupDetailUrl, groupUrl } from 'util/navigation'
 
 import './LandingPage.scss'
 
@@ -30,14 +32,14 @@ export default class LandingPage extends Component {
   }
 
   render () {
-    const { childGroups, group, isModerator, posts, routeParams, showAbout, showDetails, widgets } = this.props
+    const { childGroups, group, isAboutOpen, isModerator, posts, routeParams, showAbout, showDetails, widgets } = this.props
     if (!group) return <Loading />
 
     return (
       <div>
         <div styleName='banner' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
           <div styleName='right'>
-            <span styleName='about' onClick={showAbout}><Icon name='Info' />About us</span>
+            <Link styleName='about' to={isAboutOpen ? groupUrl(group.slug) : groupDetailUrl(group.slug, { context: 'groups', groupSlug: group.slug })}><Icon name='Info' />About us</Link>
           </div>
 
           <div styleName='title'>

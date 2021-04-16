@@ -73,6 +73,7 @@ export default class GroupDetail extends Component {
     const {
       currentUser,
       group,
+      isAboutCurrentGroup,
       isMember,
       location,
       onClose,
@@ -114,7 +115,7 @@ export default class GroupDetail extends Component {
       </div>
       <div styleName='g.groupDetailBody'>
         <div styleName='g.groupDescription'>{group.description}</div>
-        { topics && topics.length
+        { !isAboutCurrentGroup && topics && topics.length
           ? <div styleName='g.groupTopics'>
             <div styleName='g.groupSubtitle'>Topics</div>
             {topics.slice(0, 10).map(topic => {
@@ -130,11 +131,13 @@ export default class GroupDetail extends Component {
           </div>
           : ''
         }
-        { !currentUser
-          ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
-          : isMember
-            ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
-            : this.renderGroupDetails()
+        { isAboutCurrentGroup
+          ? ''
+          : !currentUser
+            ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
+            : isMember
+              ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+              : this.renderGroupDetails()
         }
       </div>
       <SocketSubscriber type='group' id={group.id} />

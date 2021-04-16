@@ -17,6 +17,7 @@ export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
   const fetchPostsParam = { slug: groupSlug, context: 'groups' }
   const group = presentGroup(getGroupForCurrentRoute(state, props))
+  const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
   const isModerator = getCanModerate(state, { group })
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
@@ -32,6 +33,7 @@ export function mapStateToProps (state, props) {
     childGroups,
     fetchPostsParam,
     group,
+    isAboutOpen,
     isModerator,
     posts,
     routeParams,
