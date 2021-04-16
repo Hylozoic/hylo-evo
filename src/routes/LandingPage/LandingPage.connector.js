@@ -13,7 +13,7 @@ import { fetchPosts, getPosts } from 'components/FeedList/FeedList.store'
 
 export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
-  const fetchPostsParam = { slug: groupSlug, context: 'groups' }
+  const fetchPostsParam = { slug: groupSlug, context: 'groups', sortBy: 'created' }
   const group = presentGroup(getGroupForCurrentRoute(state, props))
   const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
   const isModerator = getCanModerate(state, { group })
