@@ -41,7 +41,6 @@ export function mapStateToProps (state, props) {
   const groupOptions = props.groupOptions ||
     (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
   const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c)))
-  let post = props.post || presentPost(getPost(state, props))
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
@@ -51,11 +50,17 @@ export function mapStateToProps (state, props) {
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
   const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
-  const editing = !!post || loading
+  let post = null
+  let editing = false
+  if (getRouteParam('action', null, props) === 'edit') {
+    post = props.post || presentPost(getPost(state, props))
+    editing = !!post || loading
+  }
   const imageAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const fileAttachments = getAttachments(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const showImages = !isEmpty(imageAttachments) || uploadImageAttachmentPending
   const showFiles = !isEmpty(fileAttachments) || uploadFileAttachmentPending
+  const context = getRouteParam('context', null, props)
   const groupSlug = getRouteParam('groupSlug', null, props)
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
@@ -66,8 +71,11 @@ export function mapStateToProps (state, props) {
   const postType = getQuerystringParam('newPostType', null, props)
   const isProject = postType === 'project' || get('type', post) === 'project'
   const isEvent = postType === 'event' || get('type', post) === 'event'
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const routeParams = get('match.params', props)
 
   return {
+    context,
     currentUser,
     currentGroup,
     groupOptions,
@@ -95,7 +103,9 @@ export function mapStateToProps (state, props) {
     myModeratedGroups,
     uploadFileAttachmentPending,
     uploadImageAttachmentPending,
-    location
+    location,
+    querystringParams,
+    routeParams
   }
 }
 
@@ -118,13 +128,13 @@ export const mapDispatchToProps = (dispatch) => {
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
-    fetchLinkPreviewPending, topicName, groupSlug, postType
+    fetchLinkPreviewPending, groupSlug, postType, routeParams, querystringParams
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, { groupSlug, postType, topicName })
+    const url = postUrl(id, { ...routeParams, postType }, querystringParams)
 
     return goToUrl(url)
   }

@@ -8,7 +8,7 @@ import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
-import ReactTooltip from 'react-tooltip'
+import Tooltip from 'components/Tooltip'
 
 export default class PostFooter extends React.PureComponent {
   static propTypes= {
@@ -34,6 +34,7 @@ export default class PostFooter extends React.PureComponent {
       votesTotal,
       myVote,
       members,
+      postId,
       type
     } = this.props
     const onClick = isFunction(this.props.onClick) ? this.props.onClick : undefined
@@ -89,6 +90,9 @@ export default class PostFooter extends React.PureComponent {
     } else {
 
     }
+
+    const tooltipId = 'postfooter-tt-' + postId
+
     const { caption, avatarUrls } = peopleRowResult
 
     return <div styleName={cx('footer', { constrained })}>
@@ -97,14 +101,13 @@ export default class PostFooter extends React.PureComponent {
         {caption}
       </span>
       { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
-        data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for='postfooter-tt'>
+        data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
         <Icon name='ArrowUp' styleName='arrowIcon' />
         {votesTotal}
       </a> : '' }
-      <ReactTooltip
-        effect={'solid'}
-        delayShow={550}
-        id='postfooter-tt' />
+      <Tooltip
+        delay={550}
+        id={tooltipId} />
     </div>
   }
 }

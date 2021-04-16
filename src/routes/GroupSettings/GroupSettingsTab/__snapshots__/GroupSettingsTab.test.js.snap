@@ -56,9 +56,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   <div
     data-stylename="privacy-settings"
   >
-    <div
-      data-stylename="groupPrivacySection"
-    >
+    <SettingsSection>
       <h3>
         Visibility
       </h3>
@@ -71,101 +69,26 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         </strong>
         ?
       </p>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-            value={2}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Public"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Public
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Anyone can find and see 
-              Foomunity
-            </span>
-          </div>
-        </label>
-      </div>
-      <div
-        data-stylename="privacySetting on"
-      >
-        <label>
-          <input
-            checked={true}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-            value={1}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Shield"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Protected
-            </h4>
-            <span
-              data-stylename="privacy-option"
-            >
-              Only members of parent groups can see 
-              Foomunity
-            </span>
-          </div>
-        </label>
-      </div>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="visibility"
-            onChange={[Function]}
-            type="radio"
-            value={0}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Hidden"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Hidden
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Only members of 
-              Foomunity
-               can see this group
-            </span>
-          </div>
-        </label>
-      </div>
-    </div>
-    <div
-      data-stylename="groupPrivacySection"
-    >
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={0}
+        key="0"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={1}
+        key="1"
+        updateSetting={[Function]}
+      />
+      <VisibilitySettingRow
+        currentSetting={1}
+        forSetting={2}
+        key="2"
+        updateSetting={[Function]}
+      />
+    </SettingsSection>
+    <SettingsSection>
       <h3>
         Access
       </h3>
@@ -178,148 +101,208 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         </strong>
         ?
       </p>
-      <div
-        data-stylename="privacySetting "
+      <AccessibilitySettingRow
+        currentSetting={1}
+        forSetting={0}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="0"
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        currentSetting={1}
+        forSetting={1}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="1"
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+      <AccessibilitySettingRow
+        currentSetting={1}
+        forSetting={2}
+        joinQuestions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        key="2"
+        updateSetting={[Function]}
+        updateSettingDirectly={[Function]}
+      />
+    </SettingsSection>
+    <SettingsSection>
+      <h3>
+        Prerequisite Groups
+      </h3>
+      <p
+        data-stylename="privacyDetail"
       >
-        <label>
-          <input
-            checked={false}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={2}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Enter-Door"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Open
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Anyone who can see 
-              Foomunity
-               can automatically join it
-            </span>
-          </div>
-        </label>
-      </div>
-      <div
-        data-stylename="privacySetting on"
+        When you select a prerequisite group, people must join the selected groups before joining 
+        <strong>
+          Foomunity
+        </strong>
+        . Only parent groups can be added as prerequisite groups.
+      </p>
+      <p
+        data-stylename="prerequisiteWarning"
       >
-        <label>
-          <input
-            checked={true}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={1}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Hand"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Restricted
-            </h4>
-            <span
-              data-stylename="privacy-option"
-            >
-              Anyone can apply to join but must be approved by a moderator
-            </span>
-          </div>
-        </label>
-        <div
-          data-stylename="groupQuestions "
+        <strong
+          data-stylename="warning"
         >
-          <SwitchStyled
-            backgroundColor="#8B96A4"
-            checked={false}
-            disabled={false}
-            onChange={[Function]}
+          Warning:
+        </strong>
+         If you select a prerequisite group that has a visibility setting of 
+        <strong>
+          <Icon
+            data-stylename="prerequisiteIcon"
+            name="Hidden"
           />
+           Hidden
+        </strong>
+         or 
+        <strong>
+          <Icon
+            data-stylename="prerequisiteIcon"
+            name="Shield"
+          />
+           Protected
+        </strong>
+        , only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
+      </p>
+      <GroupsSelector
+        groupSettings={true}
+        onChange={[Function]}
+        options={Array []}
+        placeholder="Type group name..."
+        selected={Array []}
+      />
+    </SettingsSection>
+  </div>
+  <SettingsSection>
+    <h3>
+      Relevant skills & interests
+    </h3>
+    <p
+      data-stylename="privacyDetail"
+    >
+      What skills and interests are relevant to this group?
+    </p>
+    <div
+      data-stylename="skillsSetting "
+    >
+      <div
+        data-stylename="switchContainer"
+      >
+        <SwitchStyled
+          backgroundColor="#8B96A4"
+          checked={false}
+          disabled={false}
+          onChange={[Function]}
+        />
+        <span
+          data-stylename="toggleDescription"
+        >
+          Ask new members to fill out their skills and interests?
+        </span>
+        <div
+          data-stylename="onOff"
+        >
           <div
-            data-stylename="onOff"
+            data-stylename="off"
           >
-            <div
-              data-stylename="off"
-            >
-              OFF
-            </div>
-            <div
-              data-stylename="on"
-            >
-              ON
-            </div>
+            OFF
           </div>
           <div
-            data-stylename="questionList"
+            data-stylename="on"
           >
-            <span
-              data-stylename="questionDescription"
-            >
-              Require groups to answer questions when joining this group
-            </span>
-            <div
-              data-stylename="question"
-              key="0"
-            >
-              <span
-                data-stylename="createInput"
-              >
-                +
-              </span>
-              <input
-                name="joinQuestions[]"
-                onChange={[Function]}
-                placeholder="Add a new question"
-                value=""
-              />
-            </div>
+            ON
           </div>
         </div>
       </div>
-      <div
-        data-stylename="privacySetting "
-      >
-        <label>
-          <input
-            checked={false}
-            name="accessibility"
-            onChange={[Function]}
-            type="radio"
-            value={0}
-          />
-          <Icon
-            data-stylename="settingIcon"
-            name="Lock"
-          />
-          <div
-            data-stylename="settingDescription"
-          >
-            <h4>
-              Closed
-            </h4>
-            <span
-              data-stylename="privacy-option disabled"
-            >
-              Membership in 
-              Foomunity
-               is invite only
-            </span>
-          </div>
-        </label>
-      </div>
     </div>
-  </div>
+    <Connect(SkillsSection)
+      group={
+        Object {
+          "avatarUrl": "avatar.png",
+          "bannerUrl": "avatar.png",
+          "description": "Great group",
+          "id": 1,
+          "locationObject": "Fuji",
+          "name": "Foomunity",
+          "slug": "foo",
+        }
+      }
+      label="Add a relevant skill or interest"
+      placeholder="What skills and interests are most relevant to your group?"
+    />
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
+      Group Access Questions
+    </h3>
+    <p
+      data-stylename="privacyDetail"
+    >
+      What questions are asked when a group requests to join this group?
+    </p>
+    <div
+      data-stylename="groupQuestions "
+    >
+      <div
+        data-stylename="switchContainer"
+      >
+        <SwitchStyled
+          backgroundColor="#8B96A4"
+          checked={false}
+          disabled={false}
+          onChange={[Function]}
+        />
+        <span
+          data-stylename="toggleDescription"
+        >
+          Require groups to answer questions when requesting to join this group
+        </span>
+        <div
+          data-stylename="onOff"
+        >
+          <div
+            data-stylename="off"
+          >
+            OFF
+          </div>
+          <div
+            data-stylename="on"
+          >
+            ON
+          </div>
+        </div>
+      </div>
+      <QuestionsForm
+        questions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        save={[Function]}
+      />
+    </div>
+  </SettingsSection>
   <div
     data-stylename="saveChanges"
   >

@@ -8,7 +8,7 @@
   overflow-y: auto;
   z-index: 20;
   overflow-x: hidden;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: $box-shadow-default;
 
   &.noUser {
     height: 100%;
@@ -116,7 +116,6 @@
   padding: 0 8px 0 0;
   margin-right: 8px;
   margin-bottom: 8px;
-  cursor: pointer;
   display: inline-block;
   position: relative;
   height: 30px;
@@ -131,7 +130,7 @@
   display: inline-block;
   height: 100%;
   margin: 0 6px 0 0 !important;
-  color: #0DC39F;
+  color: $color-caribbean-green;
   width: 30px;
   display: inline-block;
   border-radius: 3px 0 0 3px;

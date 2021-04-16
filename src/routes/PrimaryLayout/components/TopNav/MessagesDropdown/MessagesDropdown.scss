@@ -19,6 +19,8 @@
   display: flex;
   align-items: flex-start;
   cursor: pointer;
+  border-bottom: 1px solid $color-black-squeeze;
+
   &:first-child {
     margin-top: 5px;
   }
@@ -27,10 +29,6 @@
       border: none;
     }
   }
-}
-
-.unread {
-  background-color: $color-saltpan;
 }
 
 .image-wrapper {
@@ -45,12 +43,12 @@
   flex-grow: 1;
   align-items: flex-start;
   padding: 20px 15px 15px 0;
-  border-bottom: 1px solid $color-black-squeeze;
 }
 
 .name {
   composes: username-cards from 'css/typography.scss';
   margin-bottom: $space-1x;
+  color: $color-rhino-60;
 }
 
 .body {
@@ -61,4 +59,16 @@
   composes: caption-lt-lg from 'css/typography.scss';
   color: $color-slate-gray-80;
   font-size: 12px;
+}
+
+.unread {
+  background-color: rgba(42, 201, 167, .1);
+
+  .name {
+    color: $color-rhino;
+  }
+
+  .body {
+    color: $color-rhino;
+  }
 }

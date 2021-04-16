@@ -2,7 +2,7 @@
 
 exports[`mapStateToProps returns the right keys, adding All Groups link 1`] = `
 Object {
-  "canModerate": true,
+  "canModerate": undefined,
   "currentLocation": "mock",
   "defaultContexts": Array [
     Object {

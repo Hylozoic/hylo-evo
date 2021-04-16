@@ -19,7 +19,7 @@ export default class PostEditorModal extends Component {
       <div styleName='post-editor-modal' key='post-editor-modal'>
         <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
           <span styleName='close-button' onClick={hidePostEditor}><Icon name='Ex' /></span>
-          <PostEditor {...this.props} />
+          <PostEditor {...this.props} onClose={hidePostEditor} />
         </div>
       </div>
     </CSSTransitionGroup>

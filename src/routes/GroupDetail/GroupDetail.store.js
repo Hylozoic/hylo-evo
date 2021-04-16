@@ -1,34 +1,19 @@
-import { CREATE_JOIN_REQUEST, FETCH_JOIN_REQUESTS } from 'store/constants'
-import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
+import { CREATE_JOIN_REQUEST, FETCH_MY_JOIN_REQUESTS } from 'store/constants'
+import fetchMyPendingJoinRequestsQuery from 'graphql/queries/fetchMyPendingJoinRequestsQuery'
 
 export const MODULE_NAME = 'GroupDetail'
 
 export const JOIN_GROUP = `${MODULE_NAME}/JOIN_GROUP`
 export const JOIN_GROUP_PENDING = `${MODULE_NAME}/JOIN_GROUP_PENDING`
 
-const defaultState = []
-
-export default function reducer (state = defaultState, action) {
-  const { error, payload, type } = action
-  if (error) return state
-  switch (type) {
-    case FETCH_JOIN_REQUESTS:
-      const requests = payload.data.joinRequests.items || []
-      return requests.filter(r => r.status === 0)
-    default:
-      return state
-  }
-}
-
 export function fetchJoinRequests (groupId) {
   return {
-    type: FETCH_JOIN_REQUESTS,
+    type: FETCH_MY_JOIN_REQUESTS,
     graphql: {
-      query: fetchJoinRequestsQuery,
-      variables: { groupId }
+      query: fetchMyPendingJoinRequestsQuery
     },
     meta: {
-      groupId
+      extractModel: 'Me'
     }
   }
 }
@@ -39,16 +24,20 @@ export function joinGroup (groupId) {
     graphql: {
       query: `mutation ($groupId: ID) {
         joinGroup(groupId: $groupId) {
-          membership {
+          id
+          role
+          hasModeratorRole
+          group {
             id
-            role
-            group {
-              id
-              name
-              slug
-            }
+            name
+            slug
           }
-          error
+          person {
+            id
+          }
+          settings {
+            showJoinForm
+          }
         }
       }`,
       variables: {
@@ -56,6 +45,7 @@ export function joinGroup (groupId) {
       }
     },
     meta: {
+      extractModel: 'Membership',
       groupId,
       optimistic: true
     }

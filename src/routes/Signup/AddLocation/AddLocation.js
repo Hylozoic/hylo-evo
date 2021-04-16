@@ -1,10 +1,8 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
-import LeftSidebar from '../LeftSidebar'
-import { hyloNameWhiteBackground } from 'util/assets'
-import { bgImageStyle } from 'util/index'
 import LocationInput from 'components/LocationInput'
 import SignupModalFooter from '../SignupModalFooter'
+import Icon from 'components/Icon'
 import styles from '../Signup.scss'
 
 export default class AddLocation extends Component {
@@ -39,8 +37,13 @@ export default class AddLocation extends Component {
 
   submit = () => {
     const { locationId, location } = this.state
-    this.props.updateUserSettings({ location, locationId })
-    this.props.goToNextStep()
+    const changes = Object.assign({ location, locationId }, { settings: { signupInProgress: false } })
+
+    this.props.updateUserSettings(changes)
+      .then(() => {
+        this.props.trackAnalyticsEvent('Signup Complete')
+        this.props.goToNextStep()
+      })
   }
 
   previous = () => {
@@ -56,17 +59,14 @@ export default class AddLocation extends Component {
     })
 
     return <div styleName='flex-wrapper'>
-      <LeftSidebar
-        header='Add your location'
-        body='Add your location to see more relevant content, and find people and projects around you.'
-      />
       <div styleName='panel'>
-        <span styleName='white-text step-count'>STEP 2/4</span>
+        <span styleName='step-count'>STEP 2/3</span>
         <br />
         <div styleName='center'>
-          <div styleName='logo center' style={bgImageStyle(hyloNameWhiteBackground)} />
+          <Icon name='Globe' styleName='globe-icon' />
         </div>
-        <div styleName='center'>
+        <div styleName='center location-input'>
+          <Icon name='Location' styleName='location-icon' />
           <LocationInput
             saveLocationToDB
             inputClass={inputClass}
@@ -79,10 +79,14 @@ export default class AddLocation extends Component {
                 this.submit()
               }
             }}
+            autofocus
           />
         </div>
+        <div styleName='instructions'>
+          <p>Add your location to see more relevant content, and find people and projects around you.</p>
+        </div>
         <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'One Last Step'} />
+          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
         </div>
       </div>
     </div>

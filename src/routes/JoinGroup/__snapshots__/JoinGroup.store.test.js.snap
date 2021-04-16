@@ -20,24 +20,38 @@ Object {
 exports[`JoinGroup.store useInvitation action creator generates an action with all expected parameters 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($userId: ID, $invitationToken: String, $accessCode: String) {
-        useInvitation (userId: $userId, invitationToken: $invitationToken, accessCode: $accessCode) {
+    "query": "mutation ($invitationToken: String, $accessCode: String) {
+        useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
           membership {
             id
             role
             group {
               id
+              accessibility
               name
+              settings {
+                allowGroupInvites
+                askJoinQuestions
+                askGroupToGroupJoinQuestions
+                publicMemberDirectory
+                showSuggestedSkills
+              }
               slug
+              visibility
+            }
+            person {
+              id
+            }
+            settings {
+              showJoinForm
             }
           }
           error
         }
       }",
     "variables": Object {
-      "accessCode": "accesstoken1",
-      "invitationToken": "invitationtoken1",
-      "userId": "1",
+      "accessCode": undefined,
+      "invitationToken": undefined,
     },
   },
   "meta": Object {

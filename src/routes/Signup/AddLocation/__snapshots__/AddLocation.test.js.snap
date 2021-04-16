@@ -4,35 +4,32 @@ exports[`AddLocation renders correctly 1`] = `
 <div
   data-stylename="flex-wrapper"
 >
-  <Connect(LeftSidebar)
-    body="Add your location to see more relevant content, and find people and projects around you."
-    header="Add your location"
-  />
   <div
     data-stylename="panel"
   >
     <span
-      data-stylename="white-text step-count"
+      data-stylename="step-count"
     >
-      STEP 2/4
+      STEP 2/3
     </span>
     <br />
     <div
       data-stylename="center"
     >
-      <div
-        data-stylename="logo center"
-        style={
-          Object {
-            "backgroundImage": "url(/logo-white.svg)",
-          }
-        }
+      <Icon
+        data-stylename="globe-icon"
+        name="Globe"
       />
     </div>
     <div
-      data-stylename="center"
+      data-stylename="center location-input"
     >
+      <Icon
+        data-stylename="location-icon"
+        name="Location"
+      />
       <Connect(LocationInput)
+        autofocus={true}
         inputClass="undefined"
         location=""
         locationObject={null}
@@ -42,9 +39,16 @@ exports[`AddLocation renders correctly 1`] = `
         saveLocationToDB={true}
       />
     </div>
+    <div
+      data-stylename="instructions"
+    >
+      <p>
+        Add your location to see more relevant content, and find people and projects around you.
+      </p>
+    </div>
     <div>
       <SignupModalFooter
-        continueText="One Last Step"
+        continueText="Next: Welcome to Hylo!"
         previous={[Function]}
         submit={[Function]}
       />

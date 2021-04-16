@@ -1,0 +1,79 @@
+.projects {
+  padding: 0 15px;
+
+  .project {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-align: left;
+    position: relative;
+    margin-bottom: 10px;
+
+    .meta {
+      padding-right: 60px;
+
+      .title {
+        font-size: 16px;
+        color: rgba(49, 73, 101, 1.00);
+      }
+
+      .last-activity {
+        color: rgba(49, 73, 101, .5);
+        font-size: 12px;
+      }
+    }
+
+    .created-by {
+      width: 50px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+    }
+  }
+
+  a.new-project {
+    text-decoration: none;
+
+    .project {
+      box-shadow: 0px 4px 15px rgba(41, 64, 90, 0);
+      border: 1px dashed rgba(198, 202, 209, .50);
+
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 0;
+
+        > div {
+          padding-right: 10px;
+        }
+
+        .create-project-cta {
+          border: 1px solid rgba(130, 142, 158, 1.00);
+          color: rgba(130, 142, 158, 1.00);
+          font-size: 12px;
+          border-radius: 50px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all .25s ease;
+          padding: 0 15px;
+          min-width: 110px;
+        }
+      }
+    }
+
+    &:hover .project {
+      box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
+
+      .meta .create-project-cta {
+        border: 1px solid rgba(238, 135, 14, 1.00);
+        background-color: rgba(238, 135, 14, 1.00);
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+}

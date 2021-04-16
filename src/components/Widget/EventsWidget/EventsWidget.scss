@@ -1,0 +1,133 @@
+.events {
+  padding: 0 15px 0 8px;
+
+  .event {
+    height: 230px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
+
+    a {
+      /* Make it easier to drag carousel items without dragging the link */
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+      user-drag: none;
+      -webkit-user-drag: none;
+    }
+
+    .content {
+      background-color: rgba(234, 100, 96, .8);
+      padding: 15px;
+      position: absolute;
+      bottom: 0;
+      text-align: left;
+      z-index: 10;
+      width: 100%;
+      border-radius: 0 0 5px 5px;
+
+      .time, .location {
+          color: rgba(255, 255, 255, .7);
+          font-size: 12px;
+      }
+
+      .title {
+        color: rgba(255, 255, 255, 1);
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      z-index: 0;
+      border-radius: 5px;
+    }
+  }
+  .event.narrow {
+    margin-right: 15px;
+  }
+  .event.create-new {
+    background-color: transparent;
+    border: 1px dashed rgba(198, 202, 209, .50);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0);
+    transition: all .25s ease;
+    position: relative
+
+    a {
+      text-decoration: none;
+    }
+
+    .event-icon {
+      color: rgba(192, 197, 205, 1.00);
+    }
+
+    h4 {
+      color: rgba(41, 64, 90, 1.00);
+      font-size: 18px;
+      margin-bottom: 0;
+    }
+
+    p {
+      color: rgba(128, 140, 156, 1.00);
+      font-size: 12px;
+    }
+
+    .events-cta a {
+      text-decoration: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,  -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      .button {
+        border: 1px solid rgba(130, 142, 158, 1.00);
+        color: rgba(130, 142, 158, 1.00);
+        font-size: 12px;
+        line-height: 12px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        margin: 0 15px;
+        justify-content: center;
+        padding: 10px;
+        min-width: 140px;
+        transition: all .25s ease;
+      }
+
+      &:hover .button {
+        color: rgba(255, 255, 255, 1);
+        background-color: rgba(238, 85, 83, 1.00);
+        border: 1px solid rgba(238, 85, 83, 1.00);
+      }
+    }
+
+    &:hover {
+      box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
+    }
+  }
+}
+
+.events :global(.slick-slide > div) {
+  padding: 0 8px 15px 8px;
+}
+
+.events :global(.slick-list) {
+  padding: 0 20% 0 0;
+}
+
+@media screen and (max-width: 600px) {
+  .events {
+    padding: 0 0 0 0;
+  }
+}

@@ -1,7 +1,7 @@
 .container {
   position: relative;
   display: inline-block;
-  width: 30px;
+  min-width: 30px;
   height: 16px;
   vertical-align: middle;
   cursor: pointer;

@@ -1,20 +1,21 @@
-import React, { Component } from 'react'
-import { bgImageStyle } from 'util/index'
-import { personUrl } from 'util/navigation'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import Icon from 'components/Icon'
 import isMobile from 'ismobilejs'
-import BadgedIcon from 'components/BadgedIcon'
-import Badge from 'components/Badge'
+import { get, pick } from 'lodash/fp'
+import React, { Component } from 'react'
 import { IntercomAPI } from 'react-intercom'
-import RoundImage from 'components/RoundImage'
-import './TopNav.scss'
+import { Link } from 'react-router-dom'
+import Badge from 'components/Badge'
+import BadgedIcon from 'components/BadgedIcon'
 import Dropdown from 'components/Dropdown'
-import { get } from 'lodash/fp'
+import Icon from 'components/Icon'
+import RoundImage from 'components/RoundImage'
+import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
+import { baseUrl, personUrl } from 'util/navigation'
 import MessagesDropdown from './MessagesDropdown'
 import NotificationsDropdown from './NotificationsDropdown'
+
+import './TopNav.scss'
 
 function isMobileDevice () {
   return (
@@ -43,19 +44,28 @@ function downloadApp () {
 
 export default class TopNav extends Component {
   render () {
-    const { className, group, currentUser, logout, toggleDrawer, showLogoBadge, onClick, isPublic } = this.props
+    const { className, group, currentUser, logout, toggleDrawer, toggleGroupMenu, showLogoBadge, onClick, isPublic, isGroupMenuOpen, routeParams } = this.props
+
     const profileUrl = personUrl(get('id', currentUser))
 
     const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
 
     return <div styleName='topNavWrapper' className={className} onClick={onClick}>
-      <div styleName='topNav' ref='topNav'>
-        <div styleName='logo-hover'>
-          <Logo {...{ group, isPublic, toggleDrawer }} />
-          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
-          <Title group={group} isPublic={isPublic} onClick={toggleDrawer} />
+      <div styleName={cx('topNav', { groupMenuOpen: isGroupMenuOpen })} ref='topNav'>
+        <div styleName='drawerToggle' id='toggleDrawer'>
+          <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
         </div>
-        <div styleName='navIcons'>
+        <Link to={baseUrl(pick(['context', 'groupSlug'], routeParams))} styleName='logo-hover' id='currentContext'>
+          <Logo {...{ group, isPublic }} />
+          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
+          <Title group={group} isPublic={isPublic} />
+        </Link>
+        <div onClick={toggleGroupMenu} styleName={cx('mobile-logo', { groupMenuOpen: isGroupMenuOpen })} id='mobileMenu'>
+          <Logo {...{ group, isPublic }} />
+          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
+          <Title group={group} isPublic={isPublic} />
+        </div>
+        <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>
             <BadgedIcon name='Messages' styleName='icon'
@@ -84,7 +94,7 @@ export default class TopNav extends Component {
   }
 }
 
-function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
+function Logo ({ group, isPublic, showLogoBadge }) {
   let imageStyle = bgImageStyle(hyloLogo)
   if (group) {
     imageStyle = bgImageStyle(get('avatarUrl', group))
@@ -92,21 +102,24 @@ function Logo ({ group, isPublic, toggleDrawer, showLogoBadge }) {
     imageStyle = bgImageStyle(publicLogo)
   }
 
-  return <span styleName='image' style={imageStyle} onClick={toggleDrawer} />
+  return <span styleName='image' style={imageStyle}>
+    <span>
+      <Icon name='Home' styleName='homeLink' />
+      <Icon name='Ex' styleName='closeGroupMenu' />
+    </span>
+  </span>
 }
 
 function Title ({ group, isPublic, onClick }) {
-  var [ label, name ] = ['GLOBAL', 'All Groups']
+  var [ label, name ] = ['GLOBAL', 'All My Groups']
   if (group) {
     [ label, name ] = ['GROUP', group.name]
   } else if (isPublic) {
-    [ label, name ] = ['GLOBAL', 'Public View']
+    [ label, name ] = ['GLOBAL', 'Public Groups & Posts']
   }
 
-  return <a styleName='title' onClick={onClick}>
-    <div styleName='label'>
-      {label}
-    </div>
+  return <div styleName='title'>
+    <div styleName='label'>{label}</div>
     <div styleName='groupName'>{name}</div>
-  </a>
+  </div>
 }

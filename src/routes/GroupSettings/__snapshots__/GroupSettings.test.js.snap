@@ -97,6 +97,19 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/import",
       },
       Object {
+        "component": <Memo(Connect(ExportDataTab))
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Export Data",
+        "path": "/groups/foo/settings/export",
+      },
+      Object {
         "component": <DeleteSettingsTab
           group={
             Object {

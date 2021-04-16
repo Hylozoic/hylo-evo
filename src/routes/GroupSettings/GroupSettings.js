@@ -9,6 +9,7 @@ import InviteSettingsTab from './InviteSettingsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
 import RelatedGroupsTab from './RelatedGroupsTab'
 import TopicsSettingsTab from './TopicsSettingsTab'
+import ExportDataTab from './ExportDataTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { get } from 'lodash/fp'
@@ -36,11 +37,13 @@ export default class GroupSettings extends Component {
 
   render () {
     const {
-      group,
-      currentUser,
-      updateGroupSettings,
       canModerate,
+      currentUser,
       deleteGroup,
+      group,
+      parentGroups,
+      prerequisiteGroups,
+      updateGroupSettings,
       upload
     } = this.props
 
@@ -56,8 +59,10 @@ export default class GroupSettings extends Component {
           name: 'Settings',
           path: groupUrl(slug, 'settings'),
           component: <GroupSettingsTab
-            group={group}
             currentUser={currentUser}
+            group={group}
+            parentGroups={parentGroups}
+            prerequisiteGroups={prerequisiteGroups}
             updateGroupSettings={updateGroupSettings}
           />
         },
@@ -98,6 +103,13 @@ export default class GroupSettings extends Component {
           component: <ImportExportSettingsTab
             group={group}
             upload={upload}
+          />
+        },
+        {
+          name: 'Export Data',
+          path: groupUrl(slug, 'settings/export'),
+          component: <ExportDataTab
+            group={group}
           />
         },
         {

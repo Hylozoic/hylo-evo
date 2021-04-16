@@ -1,8 +1,11 @@
-$third-party-icon-size: 14px;
+.nonAuthContainer {
+  overflow-y: auto;
+}
 
 .background {
   width: 100vw;
   height: 100vh;
+  min-height: 750px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,7 +21,9 @@ $third-party-icon-size: 14px;
   z-index: -1000;
   height: 100vh;
   width: 100vw;
+  min-height: 750px;
   line-height: 100vh;
+  background: linear-gradient(137.79deg, rgba(255, 255, 255, 0) 0%, rgba(135, 225, 208, 0.173177) 35.31%, rgba(13, 195, 159, 0.35) 99.7%);
 }
 
 .topRow {
@@ -30,32 +35,60 @@ $third-party-icon-size: 14px;
   padding: 20px;
 }
 
+.signupRow {
+  width: 320px;
+}
+
 .form {
   background-color: white;
-  box-shadow: 0px 0px 6px 0px $color-black-10;
-  padding: 50px 40px 40px;
+  box-shadow: 0px 5px 15px 0px $color-black-10;
   border-radius: 8px;
-  width: 420px;
+  width: 320px;
 }
 
 .below-container {
-  margin-top: $space-2x;
+  box-shadow: 0px 5px 15px 0px $color-black-10;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 30px;
+  width: 320px;
+  text-align: center;
+
   a {
-    color: rgba(191, 197, 206, 1.000);
+    color: rgba(128, 140, 156, 1.00);
     cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: none;
+      color: rgba(128, 140, 156, 1.00);
+    }
 
     span {
-      border: 1px solid rgba(13, 195, 159, 1.000);
-      padding: 5px 20px;
-      border-radius: 30px;
       display: inline-block;
       margin-left: 5px;
     }
   }
 }
 
+.resetPasswordBottom {
+  color: rgba(128, 140, 156, 1.00);
+
+  .signupButton {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
 .signupButton {
+  margin-left: 15px;
+  border-radius: 5px;
+  padding: 0 10px;
+  height: 36px;
+  line-height: 36px;
   background-color: $color-white;
+  font-size: 14px;
 }
 
 .logo {
@@ -98,38 +131,31 @@ $third-party-icon-size: 14px;
 }
 
 @media screen and (max-width: 600px) {
-  .signupRow {
-    width: 80%;
-    margin: 0 auto;
+  .topRow {
+    padding: 10px;
+    position: relative;
   }
 
-  .form {
+  .background {
+    padding: 0 0 80px 0;
     width: auto;
-    padding: 20px;
-    margin-top: 140px;
+    height: auto;
+    display: block;
+    flex-direction: unset;
+    justify-content: unset;
+    align-items: unset;
+
+    .signupRow {
+      margin: 0 auto;
+    }
+
+    .below-container {
+      margin: 20px auto;
+    }
   }
 
-  .signupToggle {
-    position: absolute;
-    right: 30px;
-    top: 24px;
-  }
-}
-
-@media screen and (max-width: 425px) {
-  .signupRow {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .signupRow {
+  .particlesBackgroundWrapper {
     width: 100%;
-  }
-  .form {
-    margin-top: 50px;
-  }
-  .below-container a {
-    color: rgba(191, 197, 206, 0);
+    height: 100%;
   }
 }

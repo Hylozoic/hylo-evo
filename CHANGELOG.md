@@ -5,8 +5,69 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.1.0] - 2021-04-16
+### Added
+- __New group home page__: Groups now have a landing page that shows customizable widgets displaying recent announcements, recent posts, open requests and offers, upcoming events, recently active projects, recenty active members, sub-groups, and a customizable welcome message. Moderators can hide widgets for their group if desired.
+_ __Customizable post stream__: The post stream is now a separate view and has a compact list view on top of the current card view. Also the sort and post type filter settings will be remembered across groups and refreshes.
+- __Prerequisite group__: If a moderator adds these to a group that means the prerequisite groups have to be joined by a user before they can join the original group.
+- __Suggested skills__: A moderator can now add suggested skills & interests in a group's settings. These will be displayed on the group join form - when a user is requesting to join a group they will be shown the suggested skills and can select which ones are relevant to them. If a user is invited to a group then this join form with suggested skills will popup when they first land on the group.
+- __Group to Group Join Questions__: Moderators can add join questions in the group settings that get asked when another group is requesting to join it as a child group. The answers appear in the Related Groups page for incoming group join requests.
+- Add Group Network Map Visualization to Groups View
+- Group moderators can now export the member directory for a Group to a CSV from a new Export Data group settings tab.
+
 ### Changed
-- Upgraded Projects to have location and times, appear on map, and show completion
+- Added a new menu button in the top nav to open the navigation drawer. Now clicking on the current context/group icon or name in the top nav will go back to the Home page for the current context.
+- Better style for Group Settings link in the group sidebar.
+- When changing contexts or views we scroll back to the top of the page.
+- Added group banner image to navigation drawer.
+- Increased contrast between read and unread notifications.
+
+### Fixed
+- Issue that sometimes caused group join button to not be visible on group details on small screens.
+- RSVPing to events on mobile web.
+
+## [3.0.2] - 2021-04-08
+### Fixed
+- Fixed issues saving and viewing Saved Searches on the map
+- Fixed viewing join requests settings page
+- You can edit comments once again
+- Closed groups don't show request to join button
+
+## [3.0.1] - 2021-04-07
+### Fixed
+- Issues on the Groups page where we would incorrectly show a person having requested membership in a group or not show that they had requested membership
+- Make sure new posts appear in the stream immediately
+- Join questions now correctly appearing when trying to join a group that has them specified
+
+## [3.0.0] - 2021-04-02
+### Added
+- __Holonic Architecture!__ You can now add infinitely nested groups within groups within groups. And groups can have multiple "parent groups" too. This is the beginning of truly enabling us to map and connect complex organizations and ecosystems and how groups of all kinds work together.
+- Added a new Groups page in the group nav menu that shows all the "parent" groups and "child" groups of the current group.
+- Looking at a group's stream will show you all the posts to that group + all the posts to any descendant groups that you are also a member of
+- When looking at the map for a group you will see the group itself on the map plus all descendant groups.
+- __Group relationship invites/requests:__ Groups can request to join other groups or invite a group to join them, and these invites/requests can be canceled, accepted or rejected by moderators of the other group. This all happens from the new group settings page "Related Groups".
+- __Group Join Questions:__ groups can now have questions that must be answered when a person is requesting to join the group. These are set up in the group settings page, and the form with the questions to answer shows up anywhere we show a Request to Join button to a user (when they are looking at a group they are not a member of that they are allowed to join because the accessibility setting is Restricted.)
+- __Manage Invites & Requests__: New user settings page for Invites & Requests where you can see any current invites and requests to join a group and cancel, accept or reject them.
+- __Inline Comments:__ Comments can be nested undearneath other comments.
+- __Create Button:__ New button in the group navigation menu to create a post or a group within the current group.
+- __Tour__: A tour for new users to introduce the basics of Hylo when you first join
+
+### Changed
+- Upgraded Projects to have location and times, appear on map, and show completion.
+- Networks with communities in them have been converted into Groups with sub-groups inside them.
+- The navigation drawer now shows a flat alphabetical lst of all Groups you are a part of.
+- New group creation modal replaces the old community creation wizard. It now allows you to set the visibility and accessibility of the group as well as select one or more parent groups for the new group.
+- Almost all of Hylo's routes have changed, in part to reflect the switch from communities and networks to groups, but also to make them more clear.
+- Everywhere we show a list of groups we now sort them alphabetically. This includes in the group selector when creating a post, and in the affiliations lists on user profiles and in the user settings.
+- The save button on the user and group settings pages now sticks to the bottom of the viewport so it is always visible and more clear when something needs to be saved.
+- You can now create a Project or Event from the regular post creation modal instead of having to go to the Projects or Events section to do so.
+- Much nicer signup wizard with welcome dialog that directs you to different things you can do
+- Many small fixes and improvements to the UI on mobile web.
+
+### Fixes
+- Show posts in the public stream for users that dont have any groups yet.
+- The notification when you are invited to an event now correctly links to that event
 
 ## [2.2.5] - 2021-02-01
 ### Added

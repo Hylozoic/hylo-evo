@@ -15,6 +15,7 @@ describe('RelatedGroupstab', () => {
       group={group}
       parentGroups={parentGroups}
       childGroups={childGroups}
+      fetchGroupToGroupJoinQuestions={() => {}}
       groupInvitesToJoinUs={[]}
       groupRequestsToJoinUs={[]}
       groupInvitesToJoinThem={[]}

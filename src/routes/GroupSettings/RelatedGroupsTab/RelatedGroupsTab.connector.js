@@ -15,7 +15,8 @@ import {
   getGroupRequestsToJoinThem,
   getGroupRequestsToJoinUs
 } from 'store/selectors/getGroupRelationships'
-import { getPossibleRelatedGroups, getSearch } from './RelatedGroupsTab.store'
+import presentGroupRelationshipInvite from 'store/presenters/presentGroupRelationshipInvite'
+import { fetchGroupToGroupJoinQuestions, getPossibleRelatedGroups, getSearch } from './RelatedGroupsTab.store'
 
 export function mapStateToProps (state, props) {
   const search = getSearch(state, props)
@@ -30,7 +31,7 @@ export function mapStateToProps (state, props) {
     group: props.group,
     parentGroups,
     groupInvitesToJoinUs: getGroupInvitesToJoinUs(state, queryProps),
-    groupRequestsToJoinUs: getGroupRequestsToJoinUs(state, queryProps),
+    groupRequestsToJoinUs: getGroupRequestsToJoinUs(state, queryProps).map(i => presentGroupRelationshipInvite(i)),
     groupInvitesToJoinThem: getGroupInvitesToJoinThem(state, queryProps),
     groupRequestsToJoinThem: getGroupRequestsToJoinThem(state, queryProps),
     possibleChildren: possibleRelatedGroups,
@@ -43,10 +44,11 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     acceptGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(acceptGroupRelationshipInvite(groupRelationshipInviteId)),
     cancelGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(cancelGroupRelationshipInvite(groupRelationshipInviteId)),
-    rejectGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(rejectGroupRelationshipInvite(groupRelationshipInviteId)),
     deleteGroupRelationship: (parentId, childId) => dispatch(deleteGroupRelationship(parentId, childId)),
-    inviteGroupToJoinParent: (parentId, childId) => () => dispatch(inviteGroupToJoinParent(parentId, childId)),
-    requestToAddGroupToParent: (parentId, childId) => () => dispatch(requestToAddGroupToParent(parentId, childId))
+    fetchGroupToGroupJoinQuestions: () => dispatch(fetchGroupToGroupJoinQuestions()),
+    inviteGroupToJoinParent: (parentId, childId) => dispatch(inviteGroupToJoinParent(parentId, childId)),
+    rejectGroupRelationshipInvite: (groupRelationshipInviteId) => () => dispatch(rejectGroupRelationshipInvite(groupRelationshipInviteId)),
+    requestToAddGroupToParent: (parentId, childId, questionAnswers = []) => dispatch(requestToAddGroupToParent(parentId, childId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }
 }
 

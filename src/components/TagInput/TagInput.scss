@@ -1,3 +1,35 @@
 .error {
   color: $color-amaranth !important;
 }
+
+.tagInputPrivacyIcon {
+  font-size: 14px;
+  color: rgba(37, 195, 159, 1.00);
+}
+
+.privacyIcon {
+  position: relative;
+  padding: 0 3px;
+
+  .privacy-tooltip {
+    display: none;
+    color: white;
+    position: absolute;
+    width: 240px;
+    top: 0;
+    right: 0;
+    background-color: $color-black-80;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    top: 20px;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    .privacy-tooltip {
+      display: block;
+    }
+  }
+}

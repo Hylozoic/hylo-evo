@@ -1,6 +1,7 @@
 .post {
-  padding-top: $space-6x;
+  padding-top: 25px;
   background-color: white;
+  overflow-x: hidden;
 }
 
 .header {
@@ -9,9 +10,9 @@
 
 .header-sticky {
   position: fixed;
-  top: 48px;
+  top: 49px;
   background-image: linear-gradient(0deg, rgba(255,255,255,0.00) 0%, $color-white 25%);
-  padding: $space-6x 0;
+  padding: 25px 5px 25px 0;
   z-index: 1;
 }
 
@@ -68,6 +69,10 @@
 
 @media screen and (max-width: 425px) {
   .header-sticky {
-    transform: translateY(8px);
+    top: 0;
+  }
+
+  .activity-sticky {
+    top: 9px;
   }
 }

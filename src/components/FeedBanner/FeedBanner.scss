@@ -1,14 +1,13 @@
 .banner {
-  padding-top: $space-6x;
   padding-bottom: $space-8x;
   position: relative;
-  z-index: 2;
+  z-index: 20;
 }
 
 .imageShape {
   width: 100%;
   height: 160px;
-  border-radius: 4px;
+  border-radius: 0 0 10px 10px;
 }
 
 .image {
@@ -22,18 +21,17 @@
   // Note: replace these with pseudo elements
   composes: imageShape;
   position: relative;
-  background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
 }
 
 .fade2 {
   composes: imageShape;
-  background-color: $color-rhino-30;
+  background: linear-gradient(180deg, #2A4059 0%, rgba(42, 64, 89, 0.3) 0.01%, rgba(42, 64, 89, 0.7) 100%);
 }
 
 .header {
   position: relative;
   top: -110px;
-  padding-left: 24px;
+  padding-left: 20px;
   display: flex;
 }
 
@@ -44,9 +42,14 @@
 }
 
 .logo {
-  @include image(64px);
-  border-radius: 4px;
-  margin-right: $space-5x;
+  min-width: 4rem;
+  min-height: 4rem;
+  height: 4rem;
+  width: 4rem;
+  background-size: cover;
+  border-radius: 100%;
+  margin-right: 10px;
+  border: 3px solid rgba(255, 255, 255, 1);
 }
 
 .all-logo {
@@ -64,7 +67,7 @@
   // Extract typography?
   @include font-medium;
   color: $color-white;
-  font-size: 32px;
+  font-size: 24px;
   letter-spacing: -0.47px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.50);
 }
@@ -72,8 +75,12 @@
 .header-subtitle {
   @include font-regular;
   color: $color-white;
-  font-size: 13px;
-  opacity: 0.8;
+  font-size: 12px;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
 }
 
 .header-icon {
@@ -154,7 +161,7 @@
   }
 
   .header-name {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .postPrompt {
@@ -173,6 +180,10 @@
 }
 
 @media screen and (max-width: 325px) {
+  .header-name {
+    font-size: 16px;
+  }
+
   .postPrompt {
     font-size: 12px;
   }

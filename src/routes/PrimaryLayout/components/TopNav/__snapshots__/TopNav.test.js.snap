@@ -8,13 +8,36 @@ exports[`renders as expected with no group 1`] = `
     data-stylename="topNav"
   >
     <div
+      data-stylename="drawerToggle"
+      id="toggleDrawer"
+    >
+      <button
+        data-stylename="drawerToggleButton"
+      >
+        <Icon
+          data-stylename="menuIcon"
+          name="Hamburger"
+        />
+      </button>
+    </div>
+    <Link
       data-stylename="logo-hover"
+      id="currentContext"
+      to="/all"
+    >
+      <Logo />
+      <Title />
+    </Link>
+    <div
+      data-stylename="mobile-logo"
+      id="mobileMenu"
     >
       <Logo />
       <Title />
     </div>
     <div
       data-stylename="navIcons"
+      id="personalSettings"
     >
       <Link
         to="/search"

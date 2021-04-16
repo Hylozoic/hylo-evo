@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`mapDispatchToProps 1`] = `
-Object {
-  "push": [Function],
-  "resetReturnToURL": [Function],
-  "updateUserSettings": [Function],
-}
-`;

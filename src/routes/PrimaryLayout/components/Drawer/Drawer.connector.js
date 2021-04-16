@@ -1,12 +1,13 @@
 import { push } from 'connected-react-router'
 import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
+import { createSelector } from 'redux-orm'
 
 import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import orm from 'store/models'
 import { ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Group'
+import getCanModerate from 'store/selectors/getCanModerate'
 import getMyMemberships from 'store/selectors/getMyMemberships'
-import getMe from 'store/selectors/getMe'
 import { createGroupUrl } from 'util/navigation'
 
 const defaultContexts = [
@@ -27,14 +28,15 @@ const defaultContexts = [
 ]
 
 const getGroups = createSelector(
+  orm,
   getMyMemberships,
-  (memberships) => memberships.map(m => ({ ...m.group.ref, newPostCount: m.newPostCount })).sort((a, b) => a.name.localeCompare(b.name))
+  (state, memberships) => memberships.map(m => ({ ...m.group.ref, newPostCount: m.newPostCount })).sort((a, b) => a.name.localeCompare(b.name))
 )
 
 export function mapStateToProps (state, props) {
   const { currentLocation } = state.locationHistory
-  const groups = getGroups(state)
-  const canModerate = props.group && getMe(state, props).canModerate(props.group)
+  const groups = getGroups(state, props)
+  const canModerate = props.group && getCanModerate(state, props)
 
   return {
     currentLocation,

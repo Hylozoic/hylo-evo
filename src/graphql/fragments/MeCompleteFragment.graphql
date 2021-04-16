@@ -43,10 +43,14 @@ fragment MeCompleteFragment on Me {
     name
   }
   settings {
-    signupInProgress
+    alreadySeenTour
     digestFrequency
     dmNotifications
     commentNotifications
+    signupInProgress
+    streamViewMode
+    streamSortBy
+    streamPostType
   }
   affiliations {
     items {
@@ -78,21 +82,26 @@ fragment MeCompleteFragment on Me {
     settings {
       sendEmail
       sendPushNotifications
+      showJoinForm
     }
     person {
       id
     }
     group {
       id
+      accessibility
+      avatarUrl
+      memberCount
       name
       slug
-      memberCount
-      avatarUrl
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
+      visibility
       groupTopics(subscribed: true) {
         total
         hasMore
@@ -108,6 +117,12 @@ fragment MeCompleteFragment on Me {
           isSubscribed
         }
       }
+    }
+  }
+  skills {
+    items {
+      id
+      name
     }
   }
 }

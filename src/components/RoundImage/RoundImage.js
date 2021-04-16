@@ -6,6 +6,7 @@ import './RoundImage.scss'
 
 export default function RoundImage ({
   url,
+  tiny,
   small,
   medium,
   large,
@@ -15,12 +16,14 @@ export default function RoundImage ({
   className,
   square,
   size,
-  onClick
+  onClick,
+  withBorder = true
 }) {
   let styleName = cx(
     'image', {
       square,
       overlaps,
+      tiny,
       small,
       medium,
       large,
@@ -32,6 +35,9 @@ export default function RoundImage ({
   if (size) {
     style = { ...style, width: size, height: size }
   }
+  if (!withBorder) {
+    style = { ...style, borderWidth: 0 }
+  }
   return <div
     style={style}
     styleName={styleName}
@@ -41,6 +47,7 @@ export default function RoundImage ({
 }
 RoundImage.propTypes = {
   url: string,
+  tiny: bool,
   small: bool,
   medium: bool,
   large: bool,

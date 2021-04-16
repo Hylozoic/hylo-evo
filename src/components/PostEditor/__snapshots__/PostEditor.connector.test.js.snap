@@ -19,6 +19,7 @@ exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
   "announcementSelected": undefined,
   "canModerate": undefined,
+  "context": undefined,
   "currentGroup": null,
   "currentUser": SessionBoundModel {
     "_fields": Object {
@@ -69,6 +70,10 @@ Object {
   "post": null,
   "postPending": false,
   "postType": undefined,
+  "querystringParams": Object {},
+  "routeParams": Object {
+    "slug": "foo",
+  },
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -82,6 +87,7 @@ exports[`mapStateToProps returns the right keys for a new post while pending 1`]
 Object {
   "announcementSelected": undefined,
   "canModerate": undefined,
+  "context": undefined,
   "currentGroup": null,
   "currentUser": SessionBoundModel {
     "_fields": Object {
@@ -90,7 +96,7 @@ Object {
     "id": "1",
   },
   "defaultTopics": Array [],
-  "editing": true,
+  "editing": false,
   "editingPostId": undefined,
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],
@@ -132,6 +138,10 @@ Object {
   "post": null,
   "postPending": true,
   "postType": undefined,
+  "querystringParams": Object {},
+  "routeParams": Object {
+    "slug": "foo",
+  },
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -144,7 +154,7 @@ Object {
 exports[`mergeProps goToPost redirects to group feed with no topicName 1`] = `
 Array [
   Array [
-    "/groups/theslug/post/123",
+    "/all/post/123",
   ],
 ]
 `;
@@ -152,7 +162,7 @@ Array [
 exports[`mergeProps goToPost redirects to topic with topicName 1`] = `
 Array [
   Array [
-    "/groups/theslug/topics/thetopicname/post/123",
+    "/all/post/123",
   ],
 ]
 `;

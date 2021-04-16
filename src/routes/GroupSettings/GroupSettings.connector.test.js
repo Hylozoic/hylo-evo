@@ -44,7 +44,7 @@ describe('mergeProps', () => {
     const dispatchProps = mapDispatchToProps(dispatch, stateProps)
     const mergedProps = mergeProps(stateProps, dispatchProps, ownProps)
     expect(mergedProps.fetchGroupSettings()).toMatchSnapshot()
-    expect(mergedProps.updateGroupSettings()).toMatchSnapshot()
+    expect(mergedProps.updateGroupSettings(1, {})).toMatchSnapshot()
     expect(mergedProps).toMatchSnapshot()
   })
 })

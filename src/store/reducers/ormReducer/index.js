@@ -4,7 +4,6 @@ import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
   ADD_MODERATOR_PENDING,
   CANCEL_GROUP_RELATIONSHIP_INVITE,
-  CANCEL_JOIN_REQUEST,
   CREATE_COMMENT,
   CREATE_COMMENT_PENDING,
   CREATE_JOIN_REQUEST,
@@ -12,8 +11,8 @@ import {
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
+  FETCH_GROUP_DETAILS_PENDING,
   FETCH_MESSAGES_PENDING,
-  FETCH_MY_JOIN_REQUESTS,
   INVITE_CHILD_TO_JOIN_PARENT_GROUP,
   JOIN_PROJECT_PENDING,
   LEAVE_GROUP,
@@ -30,6 +29,7 @@ import {
   UPDATE_POST_PENDING,
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
+  UPDATE_WIDGET,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
 import {
@@ -41,14 +41,11 @@ import {
 // FIXME these should not be using different constants and getting handled in
 // different places -- they're doing the same thing!
 import {
-  REMOVE_SKILL_PENDING, ADD_SKILL
+  REMOVE_SKILL_PENDING, ADD_SKILL, ADD_SKILL_TO_GROUP, REMOVE_SKILL_FROM_GROUP_PENDING
 } from 'components/SkillsSection/SkillsSection.store'
 import {
   REMOVE_SKILL_PENDING as REMOVE_SKILL_TO_LEARN_PENDING, ADD_SKILL as ADD_SKILL_TO_LEARN
 } from 'components/SkillsToLearnSection/SkillsToLearnSection.store'
-import {
-  SIGNUP_ADD_SKILL, SIGNUP_REMOVE_SKILL_PENDING
-} from 'routes/Signup/AddSkills/AddSkills.store'
 
 import {
   UPDATE_GROUP_SETTINGS,
@@ -60,6 +57,7 @@ import {
 import {
   USE_INVITATION
 } from 'routes/JoinGroup/JoinGroup.store'
+import { FETCH_GROUP_WELCOME_DATA } from 'routes/GroupWelcomeModal/GroupWelcomeModal.store'
 
 import {
   DELETE_GROUP_TOPIC_PENDING
@@ -67,10 +65,11 @@ import {
 import {
   INVITE_PEOPLE_TO_EVENT_PENDING
 } from 'components/EventInviteDialog/EventInviteDialog.store'
+import { FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS } from 'routes/GroupSettings/RelatedGroupsTab/RelatedGroupsTab.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
-import { find, values } from 'lodash/fp'
+import { find, get, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
 
@@ -86,6 +85,7 @@ export default function ormReducer (state = {}, action) {
     GroupRelationshipInvite,
     GroupTopic,
     EventInvitation,
+    Invitation,
     JoinRequest,
     Me,
     Membership,
@@ -160,6 +160,27 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
+    case FETCH_GROUP_DETAILS_PENDING: {
+      // Clear out prerequisite groups so they correclty update with latest data
+      group = Group.safeGet({ slug: meta.slug })
+      if (group) {
+        group.update({ prerequisiteGroups: [] })
+      }
+      break
+    }
+
+    case FETCH_GROUP_WELCOME_DATA:
+      clearCacheFor(Group, meta.id)
+      break
+
+    case FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS: {
+      const memberships = get('data.me.memberships', payload)
+      if (memberships) {
+        memberships.forEach(m => clearCacheFor(Membership, m.id))
+      }
+      break
+    }
+
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()
       break
@@ -167,6 +188,8 @@ export default function ormReducer (state = {}, action) {
     case LEAVE_GROUP:
       me = Me.first()
       membership = find(m => m.group.id === meta.id, me.memberships.toModelArray())
+      if (membership) membership.delete()
+      membership = Membership.safeGet({ group: meta.id, person: me.id })
       if (membership) membership.delete()
       break
 
@@ -220,6 +243,8 @@ export default function ormReducer (state = {}, action) {
       group = Group.withId(meta.id)
       group.update(meta.changes)
       me = Me.first()
+      // Clear out prerequisiteGroups so they can be reset when the UPDATE completes
+      group.update({ prerequisiteGroups: [] })
 
       // Triggers an update to redux-orm for the membership
       membership = Membership.safeGet({ group: meta.id, person: me.id }).update({ forceUpdate: new Date() })
@@ -227,7 +252,7 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_GROUP_SETTINGS:
       // Set new join questions in the ORM
-      if (payload.data.updateGroupSettings && payload.data.updateGroupSettings.joinQuestions) {
+      if (payload.data.updateGroupSettings && (payload.data.updateGroupSettings.joinQuestions || payload.data.updateGroupSettings.prerequisiteGroups)) {
         group = Group.withId(meta.id)
         clearCacheFor(Group, meta.id)
       }
@@ -281,16 +306,18 @@ export default function ormReducer (state = {}, action) {
       person.skillsToLearn.remove(meta.skillId)
       break
 
-    case SIGNUP_REMOVE_SKILL_PENDING:
-      me = Me.withId(Me.first().id)
-      me.skills.remove(meta.skillId)
+    case REMOVE_SKILL_FROM_GROUP_PENDING:
+      group = Group.withId(meta.groupId)
+      group.suggestedSkills.remove(meta.skillId)
+      clearCacheFor(Group, meta.groupId)
       break
 
-    case ADD_SKILL:
+    case ADD_SKILL: {
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({ skills: [Skill.create(skill)] })
       break
+    }
 
     case ADD_SKILL_TO_LEARN:
       const skillToLearn = payload.data.addSkillToLearn
@@ -298,11 +325,13 @@ export default function ormReducer (state = {}, action) {
       person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
       break
 
-    case SIGNUP_ADD_SKILL:
-      const mySkill = payload.data.addSkill
-      me = Me.withId(Me.first().id)
-      me.updateAppending({ skills: [Skill.create(mySkill)] })
+    case ADD_SKILL_TO_GROUP: {
+      const skill = payload.data.addSuggestedSkillToGroup
+      group = Group.withId(meta.groupId)
+      group.updateAppending({ suggestedSkills: [Skill.create(skill)] })
+      clearCacheFor(Group, meta.groupId)
       break
+    }
 
     case DELETE_COMMENT_PENDING:
       comment = Comment.withId(meta.id)
@@ -336,14 +365,9 @@ export default function ormReducer (state = {}, action) {
     case CREATE_JOIN_REQUEST:
       if (payload.data.createJoinRequest.request) {
         me = Me.first()
-        const jr = JoinRequest.create({ group: meta.groupId, user: me.id })
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id, status: payload.data.createJoinRequest.request.status })
         me.updateAppending({ joinRequests: [jr] })
       }
-      break
-
-    case CANCEL_JOIN_REQUEST:
-      const jr = JoinRequest.withId(meta.id)
-      jr.delete()
       break
 
     case JOIN_PROJECT_PENDING:
@@ -365,7 +389,9 @@ export default function ormReducer (state = {}, action) {
       break
 
     case USE_INVITATION:
-      Me.first().updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
+      me = Me.first()
+      me.updateAppending({ memberships: [payload.data.useInvitation.membership.id] })
+      Invitation.filter({ email: me.email, group: payload.data.useInvitation.membership.group.id }).delete()
       break
 
     case DELETE_GROUP_TOPIC_PENDING:
@@ -431,10 +457,9 @@ export default function ormReducer (state = {}, action) {
       break
     }
 
-    case FETCH_MY_JOIN_REQUESTS:
-      me = Me.first()
-      clearCacheFor(Me, me.id)
-      break
+    case UPDATE_WIDGET: {
+      clearCacheFor(Group, payload.data.updateWidget.group.id)
+    }
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))

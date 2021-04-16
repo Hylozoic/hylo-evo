@@ -6,17 +6,9 @@
   height: 320px;
   width: 100%;
   margin-bottom: 15px;
+  border-radius: 0 0 10px 10px;
+  border-bottom: 1px solid rgba(244, 245, 245, 1.00);
   position: relative;
-
-  span {
-    display: block;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    opacity: .3;
-    font-size: 12px;
-    text-align: center;
-  }
 }
 
 .section {
@@ -89,9 +81,16 @@
   border-radius: 5px;
   color: white;
   padding: 15px;
-  filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.15));
+  filter: drop-shadow(0px 5px 15px rgba(41, 64, 90, .2));
   margin-bottom: 15px;
   min-width: 0;
+  transition: all .1s ease;
+  top: 0px;
+
+  &:hover {
+    top: -2px;
+    filter: drop-shadow(0px 5px 15px rgba(41, 64, 90, .5));
+  }
 
   .group-description {
     display: block;
@@ -109,12 +108,13 @@
       font-size: 14px;
     }
   }
+
 }
 
 .group-image {
   margin-right: 15px;
   min-width: 50px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
   margin-left: -25px;
 }
 
@@ -126,48 +126,13 @@
   min-width: 0;
 }
 
-.membership-status {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 5;
-  font-size: 14px;
-
-  .member-complete {
-    color: rgba(255,255,255,1);
-    margin-left: 1px;
-  }
-
-  .join-group {
-    font-size: 18px;
-    color: rgba(255,255,255,1);
-    margin-left: 1px;
-  }
-
-  .status-tag {
-    border: 1px solid rgba(255,255,255,.3);
-    background-color: rgba(35, 64, 91, .2);
-    height: 26px;
-    line-height: 20px;
-    border-radius: 20px;
-    padding: 0 8px 0 2px;
-    display: flex;
-    align-items: center;
-    color: rgba(255,255,255,1);
-
-    b {
-      margin-left: 5px;
-      color: rgba(255,255,255,1);
-    }
-  }
-}
-
 .group-name {
   color: white;
   @include font-bold;
   font-size: 20px;
   line-height: 20px;
   text-decoration: none;
+  padding-right: 140px;
 }
 
 .group-stats {
@@ -175,19 +140,99 @@
   color: white;
   @include font-regular;
   font-size: 12px;
-  opacity: .5;
+  opacity: .7;
+  transition: opacity .25s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .member-count {
+    margin-right: 6px;
+  }
+
+  .membership-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 5;
+    font-size: 14px;
+    display: flex;
+
+    .group-privacy {
+      margin-right: 8px;
+
+      .privacy-icon {
+        color: $color-white;
+        font-size: 18px;
+        position: relative;
+        top: 3px;
+      }
+
+      .privacy-tooltip {
+        display: none;
+        position: absolute;
+        width: 240px;
+        top: 0;
+        right: 0;
+        background-color: $color-black-80;
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 5px;
+        top: 20px;
+      }
+
+      &:hover {
+        .privacy-tooltip {
+          display: block;
+        }
+      }
+    }
+
+    .member-complete {
+      color: rgba(255,255,255,1);
+      margin-left: 1px;
+    }
+
+    .join-group {
+      font-size: 18px;
+      color: rgba(255,255,255,1);
+      margin-left: 1px;
+    }
+
+    .status-tag {
+      border: 1px solid rgba(255,255,255,.3);
+      background-color: rgba(35, 64, 91, .2);
+      height: 26px;
+      line-height: 20px;
+      border-radius: 20px;
+      padding: 0 8px 0 2px;
+      display: flex;
+      align-items: center;
+      color: rgba(255,255,255,1);
+      font-size: 12px;
+
+      b {
+        margin-left: 5px;
+        color: rgba(255,255,255,1);
+      }
+    }
+  }
 }
 
 .group-link {
   text-decoration: none;
-  z-index: 1;
-  display: flex;
-  min-width: 0;
-  align-items: center;
 
   &:hover {
     text-decoration: none;
   }
+}
+
+.card-wrapper {
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  align-items: center;
 }
 
 .button {
@@ -211,5 +256,89 @@
     background: linear-gradient(0deg, #2A4059 -6.16%, rgba(42, 64, 89, 0.23) 109.19%);
     opacity: 0.89;
     border-radius: 5px;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .group-name {
+    padding-right: 0;
+    font-size: 18px;
+  }
+
+  .group-stats {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+
+    .membership-status {
+      position: relative;
+      display: flex;
+      font-size: 10px;
+      top: 0;
+      right: initial;
+      left: 0;
+
+      .group-privacy {
+
+        .privacy-icon {
+          top: 2px;
+          font-size: 14px;
+        }
+      }
+
+      .status-tag {
+        height: 18px;
+        line-height: 18px;
+      }
+
+      .join-group {
+        font-size: 12px;
+      }
+
+      .member-complete {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .group-card .group-description {
+    padding-top: 5px;
+
+    span {
+      font-size: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .group-name {
+    line-height: 18px;
+    font-size: 16px;
+  }
+
+  .content-margins {
+    margin-right: 10px;
+  }
+
+  .group-card .group-description {
+
+    span {
+      font-size: 11px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .group-name {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .group-card .group-description {
+
+    span {
+      font-size: 10px;
+    }
   }
 }

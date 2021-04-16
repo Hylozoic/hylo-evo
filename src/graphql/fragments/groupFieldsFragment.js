@@ -1,54 +1,33 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites }) => `
   id
   accessibility
   avatarUrl
   bannerUrl
   description
+  location
+  memberCount
   name
   settings {
     allowGroupInvites
+    askGroupToGroupJoinQuestions
     askJoinQuestions
     publicMemberDirectory
+    showSuggestedSkills
   }
   slug
   visibility
-  parentGroups {
-    items {
-      id
-      slug
-      name
-      avatarUrl
-      childGroups(first: 300) {
-        items {
-          id
-        }
-      }
-    }
-  }
   childGroups {
     items {
       id
+      accessibility
+      avatarUrl
+      bannerUrl
+      memberCount
+      name
       slug
-      name
-      avatarUrl
+      visibility
     }
   }
-  memberCount
-  members(first: 8, sortBy: "name", order: "desc") {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  moderators {
-    items {
-      id
-      name
-      avatarUrl
-    }
-  }
-  location
   locationObject {
     id
     addressNumber
@@ -68,7 +47,33 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
     neighborhood
     region
   }
-  ${withTopics ? `groupTopics(first: 8) {
+  members(first: 8, sortBy: "name", order: "desc") {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  moderators {
+    items {
+      id
+      name
+      avatarUrl
+    }
+  }
+  parentGroups {
+    items {
+      id
+      accessibility
+      avatarUrl
+      bannerUrl
+      name
+      slug
+      visibility
+    }
+  }
+  ${withTopics ? `
+  groupTopics(first: 8) {
     items {
       id
       topic {
@@ -78,13 +83,38 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions }) => `
       postsTotal
     }
   }` : ''}
-  ${withJoinQuestions ? `joinQuestions {
+  ${withJoinQuestions ? `
+  joinQuestions {
     items {
       id
       questionId
       text
     }
+  }
+  suggestedSkills {
+    items {
+      id
+      name
+    }
   }` : ''}
+  ${withPrerequisites ? `
+  prerequisiteGroups(onlyNotMember: true) {
+    items {
+      avatarUrl
+      id
+      name
+      settings {
+        allowGroupInvites
+        askGroupToGroupJoinQuestions
+        askJoinQuestions
+        publicMemberDirectory
+        showSuggestedSkills
+      }
+      slug
+    }
+  }
+  numPrerequisitesLeft
+  ` : ''}
 `
 
 export default groupFieldsFragment
