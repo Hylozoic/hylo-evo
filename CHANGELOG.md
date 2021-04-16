@@ -26,6 +26,7 @@ _ __Customizable post stream__: The post stream is now a separate view and has a
 ### Fixed
 - Issue that sometimes caused group join button to not be visible on group details on small screens.
 - RSVPing to events on mobile web.
+- Ability to add Facebook, Twitter and LinkedIn URLs to profile
 
 ## [3.0.2] - 2021-04-08
 ### Fixed
