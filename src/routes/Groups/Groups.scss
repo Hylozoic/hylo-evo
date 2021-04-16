@@ -6,17 +6,9 @@
   height: 320px;
   width: 100%;
   margin-bottom: 15px;
+  border-radius: 0 0 10px 10px;
+  border-bottom: 1px solid rgba(244, 245, 245, 1.00);
   position: relative;
-
-  span {
-    display: block;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    opacity: .3;
-    font-size: 12px;
-    text-align: center;
-  }
 }
 
 .section {

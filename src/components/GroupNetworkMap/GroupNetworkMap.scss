@@ -1,0 +1,26 @@
+.container {
+  height: 100%;
+  background: rgb(225,229,233);
+  background: url('/network-map-bg.png'); /* fallback */
+  background: url('/network-map-bg.png'), linear-gradient(rgba(255,255,255, 1), rgba(249, 250, 250, 1.00)); /* W3C */
+  border-radius: 0 0 10px 10px;
+}
+
+.container svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+text {
+  cursor: pointer;
+  color: rgba(49, 73, 101, 1.00);
+}
+
+image {
+  cursor: pointer;
+}
+:global(.shadow) {
+  -webkit-text-stroke: 1px white;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 1.00);
+}

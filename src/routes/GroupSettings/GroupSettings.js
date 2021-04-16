@@ -37,11 +37,13 @@ export default class GroupSettings extends Component {
 
   render () {
     const {
-      group,
-      currentUser,
-      updateGroupSettings,
       canModerate,
+      currentUser,
       deleteGroup,
+      group,
+      parentGroups,
+      prerequisiteGroups,
+      updateGroupSettings,
       upload
     } = this.props
 
@@ -57,8 +59,10 @@ export default class GroupSettings extends Component {
           name: 'Settings',
           path: groupUrl(slug, 'settings'),
           component: <GroupSettingsTab
-            group={group}
             currentUser={currentUser}
+            group={group}
+            parentGroups={parentGroups}
+            prerequisiteGroups={prerequisiteGroups}
             updateGroupSettings={updateGroupSettings}
           />
         },

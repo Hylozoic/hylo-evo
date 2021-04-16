@@ -40,13 +40,18 @@ export function useInvitation (inviteCodes = {}) {
               settings {
                 allowGroupInvites
                 askJoinQuestions
+                askGroupToGroupJoinQuestions
                 publicMemberDirectory
+                showSuggestedSkills
               }
               slug
               visibility
             }
             person {
               id
+            }
+            settings {
+              showJoinForm
             }
           }
           error

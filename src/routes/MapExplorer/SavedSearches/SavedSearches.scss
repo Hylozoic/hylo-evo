@@ -1,12 +1,12 @@
 .container {
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: $box-shadow-default;
   transition: all .25s ease;
   position: absolute;
 }
 
 .triangle {
   min-width: 0 !important;
-  @include is-top-triangle(#0DC39F, #0DC39F, 14px);
+  @include is-top-triangle($color-caribbean-green, $color-caribbean-green, 14px);
   margin-left: 20px;
   top: 60px;
   left: 6px;
@@ -23,11 +23,11 @@
   overflow-y: auto;
   z-index: 20;
   overflow-x: hidden;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: $box-shadow-default;
 }
 
 .title {
-  background: #0DC39F;
+  background: $color-caribbean-green;
   color: white;
   padding: 9px;
   font-size: 16px;
@@ -62,7 +62,7 @@
 
   h2 {
     background-color: #F2F2F2;
-    color: #808C9B;
+    color: $color-regent;
     font-weight: bold;
     font-size: 16px;
     line-height: 20px;
@@ -73,7 +73,7 @@
 
 .search {
   padding: 9px;
-  border-bottom: 1px dashed #C0C5CD;
+  border-bottom: 1px dashed $color-grey-keyline;
 }
 
 .search:last-of-type {
@@ -102,11 +102,11 @@
   white-space: nowrap;
   font-size: 10px;
   line-height: 13px;
-  color: #C0C5CD;
+  color: $color-grey-keyline;
 }
 
 .params {
-  background: #2A4059;
+  background: $color-member;
   padding: 11px 15px;
 }
 
@@ -115,7 +115,7 @@
   padding: 10px 10px 0px;
   font-size: 11px;
   line-height: 14px;
-  color: #C0C5CD;
+  color: $color-grey-keyline;
 
   .filters {
     line-height: 16px;
@@ -133,7 +133,7 @@
     padding: 2px 10px;
     font-size: 14px;
     height: 30px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: $box-shadow-default;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;

@@ -39,30 +39,33 @@
 }
 
 .icon {
-  margin-right: 24px;
+    margin-right: 20px;
+    min-width: 30px;
+    text-align: center;
 }
 
 .label {
   padding-right: 5px;
 }
 
-
-@media screen and (max-width: 600px) {
-  .label {
-    display: none;
-  }
-
-  .link {
-    text-align: center;
+@media screen and (max-width: 930px) {
+  .icon {
+    min-width: 100%;
+    margin-right: 20px;
   }
 
   .item {
-    margin: 0 5px;
+    padding: 0 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .icon {
+    min-width: 30px;
   }
 
-  .icon {
-    margin: 0;
-    margin-top: 7px;
+  .item {
+    padding: 0 15px;
   }
 }
 
@@ -70,19 +73,11 @@
   .icon {
     font-size: 24px;
   }
-
-  .item {
-    padding: 0 8px;
-  }
 }
 
 @media screen and (max-width: 375px) {
   .icon {
     font-size: 22px;
-  }
-
-  .item {
-    padding: 0 6px;
   }
 }
 
@@ -94,9 +89,5 @@
 
   .link {
     height: 32px;
-  }
-
-  .item {
-    padding: 0 4px;
   }
 }

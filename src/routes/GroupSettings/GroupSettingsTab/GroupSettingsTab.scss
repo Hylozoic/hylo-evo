@@ -20,7 +20,6 @@
   padding-top: 5px;
   padding-left: 5px;
 }
-
 .change-banner-button {
   /* empty */
 }
@@ -81,6 +80,22 @@ label {
   padding: 2px 6px;
 }
 
+.skillsSetting {
+  padding: 0;
+  position: relative;
+  padding-bottom: 25px;
+  margin-left: -15px;
+}
+
+.toggleDescription {
+  display: inline;
+  font-size: 14px;
+  color: rgba(34, 64, 91, .5);
+  padding-left: 15px;
+}
+.on > .switchContainer .toggleDescription {
+  color: rgba(34, 64, 91, 1);
+}
 
 .privacySetting {
   padding: 10px 0;
@@ -115,10 +130,30 @@ label {
   }
 }
 
+.prerequisiteWarning {
+  margin-top: -15px;
+
+  .prerequisiteIcon {
+    font-size: 16px;
+    position: relative;
+    top: 3px;
+    color: rgba(41, 64, 90, 1.00);
+    margin: 0 3px;
+  }
+
+  strong {
+    color: rgba(41, 64, 90, 1.00);
+  }
+
+  .warning {
+    color: rgba(237, 86, 83, 1.00);
+  }
+}
 
 .onOff {
   position: absolute;
-  top: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0;
 
   div {
@@ -131,19 +166,19 @@ label {
     line-height: 20px;
   }
 
-  div.on {
+  .on {
     display: none;
     border: 1px solid rgba(0, 163, 227, 1.000);
     color: rgba(0, 163, 227, 1.000);
   }
 }
 
-.on > .onOff {
+.on > div .onOff {
   .off {
     display: none;
   }
 
-  div.on {
+  .on {
     display: block;
   }
 }
@@ -190,6 +225,14 @@ label {
   }
 }
 
+.switchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-right: 40px;
+  margin-bottom: 20px;
+}
+
 .save-button {
   margin: 0 auto;
 }
@@ -198,42 +241,15 @@ label {
   opacity: 0;
 }
 
-.groupPrivacySection h3 {
-  color: rgba(35, 64, 91, 1.000);
-  font-size: 24px;
-  font-weight: bold;
-  padding-right: 80px;
-  margin-bottom: 0;
-  transition: all .25s ease;
-}
-
-.groupPrivacySection p {
-  color: $color-black-30;
-  transition: all .25s ease;
-}
-
-.groupPrivacySection.on p {
-  color: $color-black-60;
-}
-
-.groupPrivacySection p {
-  font-size: 12px;
-  padding-bottom: 20px;
-}
-
 .groupQuestions {
   position: relative;
   margin-left: 13px;
-  display: flex;
   padding-top: 10px;
   transition: all .25s ease;
 
   .questionList {
-    margin-left: 15px;
-
-    .questionDescription {
-      padding-right: 40px;
-    }
+    margin-top: 5px;
+    margin-left: 58px;
 
     span {
       transition: all .25s ease;
@@ -282,6 +298,7 @@ label {
       font-size: 14px;
       padding: 5px 25px 5px 8px;
       color: rgba(35, 64, 91, 1.000);
+      border-radius: 3px;
 
       &::placecholder {
         font-style: italic;
@@ -309,7 +326,6 @@ label {
 .groupSettings {
   padding-bottom: 150px;
 }
-
 
 
 @media screen and (max-width: 600px) {

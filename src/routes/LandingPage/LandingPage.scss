@@ -1,0 +1,116 @@
+.banner {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  border-radius: 0 0 10px 10px;
+  position: relative;
+  box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
+
+  .right {
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 20px;
+    position: relative;
+    z-index: 1;
+
+    .about {
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 20px;
+      padding: 5px 10px;
+      cursor: pointer;
+      color: white;
+      text-decoration: none;
+
+      > span {
+        color: white;
+        font-size: 14px;
+        padding-right: 5px;
+      }
+    }
+
+    .about:hover {
+      background-color: rgba(0,0,0,0.5);
+    }
+  }
+
+  .title {
+    position: relative;
+    z-index: 1;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    > div {
+      padding-left: 10px;
+    }
+
+    .landing-page-avatar {
+      min-width: 4rem;
+      min-height: 4rem;
+    }
+  }
+
+  .name {
+    font-size: 24px;
+    @include font-medium;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.50);
+    letter-spacing: -0.47px;
+  }
+
+  .location {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+    position: relative;
+    top: -3px;
+    opacity: .7;
+
+    > span {
+      color: white;
+      font-size: 14px;
+      padding-right: 5px;
+    }
+  }
+
+  > img {
+    width: 100%;
+  }
+
+  .bg-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #2A4059 0%, rgba(42, 64, 89, 0.3) 0.01%, rgba(42, 64, 89, 0.7) 100%);
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .banner, .bg-fade {
+    border-radius: 0 0 0 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .banner {
+    .name {
+      font-size: 18px;
+    }
+
+    .location {
+      font-size: 11px;
+    }
+  }
+}

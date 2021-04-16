@@ -1,0 +1,157 @@
+.active-users {
+
+  .right-fade {
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .members-link {
+    width: 80px !important;
+    height: 90px;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      height: 90px;
+      width: 90px;
+
+      a {
+        border: 1px solid rgba(192, 197, 205, 1.00);
+        height: 30px;
+        background-color: transparent;
+        font-size: 14px;
+        color: rgba(128, 140, 156, 1.00);
+        line-height: 30px;
+        padding: 0 15px;
+        border-radius: 30px;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+.active-user {
+  min-width: 90px;
+  min-height: 90px;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+
+  .user-name {
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    bottom: 1px;
+    left: 5px;
+    font-size: 14px;
+    z-index: 10;
+  }
+
+  .user-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(21.15deg, rgba(13, 195, 159, 0.51) 18.21%, rgba(13, 195, 159, 0) 36.84%);
+    z-index: 1;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .user-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    border-radius: 5px;
+  }
+
+  .user-controls {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: rgba(0, 196, 159, .8);
+    border-radius: 5px;
+    opacity: 0;
+    transition: all .25s ease;
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    a {
+      width: 34px;
+      height: 34px;
+      margin: 0 3px;
+      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 1);
+      transition: all .25s ease;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0);
+
+      /* Make it easier to drag carousel items without dragging the link */
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+      user-drag: none;
+      -webkit-user-drag: none;
+
+      &:hover {
+        text-decoration: none;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        position: relative;
+        top: -1px;
+
+        .user-message-icon, .user-profile-icon {
+          color: rgba(0, 196, 159, 1);
+        }
+      }
+
+      .user-message-icon, .user-profile-icon {
+        color: rgba(255, 255, 255, 1);
+        transition: all .25s ease;
+        font-size: 18px;
+      }
+
+      .user-message-icon {
+        font-size: 24px;
+      }
+
+    }
+  }
+
+  &:hover .user-controls {
+    opacity: 1;
+
+    .buttons {
+      display: flex;
+    }
+  }
+}
+
+.active-users :global(.slick-slide > div) {
+  padding: 0 0 15px 15px;
+}

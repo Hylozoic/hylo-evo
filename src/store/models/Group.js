@@ -80,6 +80,15 @@ GroupJoinQuestion.fields = {
   group: fk('Group')
 }
 
+export class GroupToGroupJoinQuestion extends Model { }
+GroupToGroupJoinQuestion.modelName = 'GroupToGroupJoinQuestion'
+GroupToGroupJoinQuestion.fields = {
+  id: attr(),
+  questionId: attr(),
+  text: attr(),
+  group: fk('Group')
+}
+
 export class GroupTopic extends Model {}
 GroupTopic.modelName = 'GroupTopic'
 GroupTopic.fields = {
@@ -94,6 +103,13 @@ GroupRelationship.fields = {
   childGroup: fk({ to: 'Group', as: 'childGroup', relatedName: 'parentRelationships' })
 }
 
+export class GroupPrerequisite extends Model {}
+GroupPrerequisite.modelName = 'GroupPrerequisite'
+GroupPrerequisite.fields = {
+  prerequisiteGroup: fk({ to: 'Group', as: 'prerequisiteGroup', relatedName: 'antireqs' }),
+  forGroup: fk({ to: 'Group', as: 'forGroup', relatedName: 'prereqs' })
+}
+
 class Group extends Model {
   toString () {
     return `Group: ${this.name}`
@@ -106,6 +122,16 @@ Group.modelName = 'Group'
 
 Group.fields = {
   accessibility: attr(),
+  activeProjects: many({
+    to: 'Post',
+    as: 'activeProjects',
+    relatedName: 'activeProjectGroups'
+  }),
+  announcements: many({
+    to: 'Post',
+    as: 'announcements',
+    relatedName: 'announcementGroups'
+  }),
   childGroups: many({
     to: 'Group',
     relatedName: 'parentGroups',
@@ -113,7 +139,9 @@ Group.fields = {
     throughFields: [ 'childGroup', 'parentGroup' ]
   }),
   feedOrder: attr(),
+  groupToGroupJoinQuestions: many('GroupToGroupJoinQuestion'),
   id: attr(),
+  joinQuestions: many('GroupJoinQuestion'),
   location: attr(),
   locationId: fk({
     to: 'Location',
@@ -128,12 +156,29 @@ Group.fields = {
     throughFields: [ 'group', 'moderator' ]
   }),
   name: attr(),
+  openOffersAndRequests: many({
+    to: 'Post',
+    as: 'openOffersAndRequests',
+    relatedName: 'groupsWithOffersAndRequests'
+  }),
   posts: many('Post'),
   postCount: attr(),
-  joinQuestions: many('GroupJoinQuestion'),
+  prerequisiteGroups: many({
+    to: 'Group',
+    relatedName: 'antirequisiteGroups',
+    through: 'GroupPrerequisite',
+    throughFields: [ 'prerequisiteGroup', 'forGroup' ]
+  }),
   settings: attr(),
   slug: attr(),
-  visibility: attr()
+  suggestedSkills: many('Skill'),
+  upcomingEvents: many({
+    to: 'Post',
+    as: 'upcomingEvents',
+    relatedName: 'eventGroups'
+  }),
+  visibility: attr(),
+  widgets: many('Widget')
 }
 
 export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg'

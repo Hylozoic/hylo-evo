@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import GroupNetworkMap from 'components/GroupNetworkMap'
 import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
@@ -30,11 +31,17 @@ export default class Groups extends Component {
       childGroups,
       group,
       parentGroups,
+      networkData,
+      groupRelationshipCount,
       routeParams
     } = this.props
 
     return <div styleName='container'>
-      {/* <div styleName='network-map'><span>Group network map in progress</span></div> */}
+      {groupRelationshipCount > 1 &&
+        <div styleName='network-map'>
+          <GroupNetworkMap networkData={networkData} />
+        </div>
+      }
 
       {/* <SearchBar
         search={search}
