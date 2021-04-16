@@ -36,8 +36,6 @@ const PostListRow = (props) => {
     return null
   }
 
-  console.log(post)
-
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const numOtherCommentors = commentersTotal - 1
   const unread = false
