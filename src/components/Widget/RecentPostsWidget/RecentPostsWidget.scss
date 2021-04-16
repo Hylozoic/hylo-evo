@@ -9,6 +9,14 @@
   position: relative;
   display: block;
 
+  /* Make it easier to drag carousel items without dragging the link */
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+  user-drag: none;
+  -webkit-user-drag: none;
+
   .bg {
     position: absolute;
     width: 100%;

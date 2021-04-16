@@ -8,6 +8,16 @@
     border-radius: 5px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
 
+    a {
+      /* Make it easier to drag carousel items without dragging the link */
+      -webkit-user-select: none; /* Safari 3.1+ */
+      -moz-user-select: none; /* Firefox 2+ */
+      -ms-user-select: none; /* IE 10+ */
+      user-select: none; /* Standard syntax */
+      user-drag: none;
+      -webkit-user-drag: none;
+    }
+
     .content {
       background-color: rgba(41, 64, 90, .8);
       padding: 15px;
