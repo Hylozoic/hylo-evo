@@ -42,7 +42,11 @@
 }
 
 .logo {
-  @include image(64px);
+  min-width: 4rem;
+  min-height: 4rem;
+  height: 4rem;
+  width: 4rem;
+  background-size: cover;
   border-radius: 100%;
   margin-right: 10px;
   border: 3px solid rgba(255, 255, 255, 1);

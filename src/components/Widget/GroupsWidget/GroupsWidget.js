@@ -46,12 +46,15 @@ export default class GroupsWidget extends Component {
                 <div styleName='group-avatar'><img src={g.avatarUrl} /></div>
                 <div styleName='group-name'>{g.name}</div>
                 <div styleName='member-count'>{g.memberCount} member{g.memberCount !== 1 ? 's' : ''}</div>
-                <div styleName='group-description'>{g.description}</div>
+                <div styleName='group-description'>
+                  {g.description}
+                  {g.description && g.description.length > 140 && <div styleName='descriptionFade' />}
+                </div>
                 {g.memberStatus === 'member'
-                  ? <div styleName='is-member'><Link to={groupUrl(g.slug)}>Member</Link></div>
+                  ? <div styleName='is-member'><Link to={groupUrl(g.slug)}><span>Member</span><span styleName='visit'>Visit</span></Link></div>
                   : g.memberStatus === 'requested'
-                    ? <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}>Request Pending</Link></div>
-                    : <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}>View</Link></div>
+                    ? <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}><span>Pending</span><span styleName='visit'>View</span></Link></div>
+                    : <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}><span>View</span><span styleName='visit'>View</span></Link></div>
                 }
               </div>
             </div>
