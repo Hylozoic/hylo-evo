@@ -118,7 +118,7 @@ export default class RelatedGroupsTab extends Component {
           {parentGroups.map(p => <GroupCard
             group={p}
             key={p.id}
-            actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={this.relationshipDropdownItems(p, group, GROUP_RELATIONSHIP_TYPE.ChildToParent)} />}
+            actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={this.relationshipDropdownItems(p, group, GROUP_RELATIONSHIP_TYPE.ChildToParent)} styleName='relatedGroupDropdown' />}
           />)}
         </div>
       </div>
@@ -185,7 +185,7 @@ export default class RelatedGroupsTab extends Component {
             <GroupCard
               group={c}
               key={c.id}
-              actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={this.relationshipDropdownItems(group, c, GROUP_RELATIONSHIP_TYPE.ParentToChild)} />}
+              actionMenu={<Dropdown toggleChildren={<Icon name='More' />} items={this.relationshipDropdownItems(group, c, GROUP_RELATIONSHIP_TYPE.ParentToChild)} styleName='relatedGroupDropdown' />}
             />)}
         </div>
       </div>

@@ -10,8 +10,8 @@
     color: rgba(125, 140, 157, 1.000);
     font-weight: 100;
   }
-
 }
+
 .icon {
   margin: 15px 15px 0 auto;
   align-self: flex-start;
@@ -22,6 +22,11 @@
   position: relative;
   margin-top: 20px;
   margin-bottom: 50px;
+}
+
+.relatedGroupDropdown > div {
+  right: 0;
+  left: initial;
 }
 
 .connect-button {
