@@ -71,7 +71,7 @@ export default function Navigation (props) {
       to: eventsPath
     },
     membersPath && {
-      label: 'People',
+      label: 'Members',
       icon: 'People',
       to: membersPath
     },
