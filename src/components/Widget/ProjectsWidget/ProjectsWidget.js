@@ -2,7 +2,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { postUrl } from 'util/navigation'
+import { postUrl, createPostUrl } from 'util/navigation'
 import RoundImage from '../../RoundImage'
 
 import './ProjectsWidget.scss'
@@ -16,7 +16,7 @@ export default class ProjectsWidget extends Component {
   }
 
   render () {
-    const { group, items } = this.props
+    const { group, items, routeParams } = this.props
 
     return (
       <div styleName='projects'>
@@ -31,6 +31,17 @@ export default class ProjectsWidget extends Component {
             </div>
           </div>
         </Link>)}
+        {items.length < 3 ? <Link to={createPostUrl(routeParams, { newPostType: 'project' })} styleName='new-project'>
+          <div styleName='project'>
+            <div styleName='meta'>
+              <div>
+                <div styleName='title'>What are you doing together?</div>
+                <div styleName='last-activity'>Projects help you and your group accomplish shared goals.</div>
+              </div>
+              <div styleName='create-project-cta'>+ New project</div>
+            </div>
+          </div>
+        </Link> : '' }
       </div>
     )
   }

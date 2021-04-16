@@ -2,6 +2,7 @@ import cx from 'classnames'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import Icon from 'components/Icon'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { postUrl, createPostUrl } from 'util/navigation'
@@ -28,7 +29,7 @@ export default class EventsWidget extends Component {
   }
 
   render () {
-    const { items, group } = this.props
+    const { items, group, routeParams } = this.props
     return (
       <div styleName='events'>
         <Slider {...settings}>
@@ -43,12 +44,14 @@ export default class EventsWidget extends Component {
             <div styleName='background' style={{ backgroundImage: `url(${e.primaryImage || '/default-event.png'})` }} />
           </div>)}
           <div styleName='event create-new'>
-            <Link to={createPostUrl}>
-              <div styleName='events-cta'>
+            <div styleName='events-cta'>
+              <Link to={createPostUrl(routeParams, { newPostType: 'event' })}>
+                <Icon name='Calendar' styleName='event-icon' />
                 <h4>Bring your group together</h4>
-                <div styleName='button'>+ Create a new event</div>
-              </div>
-            </Link>
+                <p>What you will do at your next event?</p>
+                <div styleName='button'>+ Create an event</div>
+              </Link>
+            </div>
           </div>
         </Slider>
       </div>

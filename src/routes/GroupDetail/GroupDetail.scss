@@ -1,5 +1,5 @@
 .group {
-  //
+  position: relative;
 }
 
 .groupDetailHeader {
@@ -36,6 +36,108 @@
   }
 }
 
+.groupAvatar {
+  width: 50px;
+  height: 50px;
+}
+
+.isAboutCurrentGroup {
+
+  .groupAvatar {
+    height: 40px;
+    width: 40px;
+  }
+
+  .close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .groupTitle {
+    font-size: 18px;
+  }
+
+  .no-description {
+    border: 1px dashed rgba(198, 202, 209, .50);
+    padding: 15px;
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      h4 {
+        color: rgba(41, 64, 90, 1.00);
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+
+      p {
+        color: rgba(128, 140, 156, 1.00);
+        font-size: 12px;
+      }
+
+      a {
+        border: 1px solid rgba(130, 142, 158, 1.00);
+        color: rgba(130, 142, 158, 1.00);
+        font-size: 12px;
+        line-height: 12px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        margin: 0 15px;
+        justify-content: center;
+        padding: 10px;
+        min-width: 140px;
+        transition: all .25s ease;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .groupDetailHeader {
+    height: 90px;
+    display: flex;
+    align-items: center;
+
+    .headerBackground {
+      height: 90px;
+    }
+
+    .groupTitleContainer {
+      position: relative;
+      bottom: initial;
+      left: 15px;
+    }
+  }
+}
+
+.aboutCurrentGroup {
+  padding: 15px 0;
+
+  .privacySetting {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .settingIcon {
+      font-size: 24px;
+      color: rgba(140, 151, 166, 1.00);
+    }
+
+    p {
+      font-size: 14px;
+      color: rgba(140, 151, 166, 1.00);
+      margin-bottom: 0;
+      margin-left: 10px;
+    }
+  }
+}
+
 .prereqDescription {
   font-size: 12px;
   margin-bottom: 25px;
@@ -64,6 +166,14 @@
   bottom: 25px;
   left: 25px;
   z-index: 10;
+
+  .group-location {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+  }
 
   img {
     border-radius: 5px;
@@ -161,7 +271,7 @@
 
 .groupDescription {
   color: $color-regent;
-  font-size: 16px;
+  font-size: 14px;
   white-space: pre-wrap;
   margin-bottom: 18px;
 }

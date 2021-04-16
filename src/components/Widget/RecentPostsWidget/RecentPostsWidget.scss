@@ -32,12 +32,11 @@
     .type {
       text-transform: uppercase;
       font-size: 10px;
-      margin-bottom: 10px;
     }
     .title {
       font-size: 14px;
       line-height: 18px;
-      padding: 5px;
+      padding: 0 5px 5px 5px;
     }
   }
 
@@ -78,6 +77,10 @@
     .comments {
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
     }
+  }
+
+  &:hover {
+    color: rgba(255, 255, 255, 1);
   }
 }
 
@@ -140,6 +143,7 @@
 
   .type {
     color: rgba(198, 202, 209, 1.00);
+    padding: 0 10px;
   }
 
   .recent-posts-cta {
@@ -150,13 +154,20 @@
     border-radius: 50px;
     display: flex;
     align-items: center;
-    margin: 0 15px;
+    margin: 10px 15px 0 15px;
     justify-content: center;
     padding: 10px;
+    transition: all .25s ease;
   }
 
   &:hover {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, .2);
+
+    .recent-posts-cta {
+      background-color: rgba(38, 196, 159, 1.00);
+      border: 1px solid rgba(38, 196, 159, 1.00);
+      color: rgba(255, 255, 255, 1);
+    }
   }
 }
 

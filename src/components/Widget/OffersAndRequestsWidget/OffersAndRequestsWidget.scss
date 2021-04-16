@@ -4,7 +4,7 @@
 
   .item {
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
     border-radius: 5px;
     text-align: left;
     position: relative;
@@ -68,6 +68,16 @@
   a:hover {
     text-decoration: none;
   }
+
+  .item.create-offer-request {
+    border: 1px dashed rgba(198, 202, 209, .50);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0);
+    transition: all .25s ease;
+
+    &:hover {
+      box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
+    }
+  }
 }
 
 .ask-offer-cta {
@@ -82,16 +92,19 @@
     text-decoration: none;
     color: rgba(192, 197, 205, 1.00);
     border: 1px solid rgba(192, 197, 205, 1.00);
+    background-color: rgba(255, 255, 255, 1);
     display: flex;
     align-items: center;
     justify-content: center;
     height: 30px;
     padding: 0 15px;
     border-radius: 30px;
+    transition: all .25s ease;
 
     span {
       display: inline-block;
       padding-left: 5px;
+      transition: all .25s ease;
     }
 
     .offer {
@@ -100,6 +113,25 @@
 
     .request {
       color: rgba(98, 75, 163, 1.00);
+    }
+  }
+
+  a.offer-link:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(37, 196, 159, 1.00);
+    border: 1px solid rgba(37, 196, 159, 1.00);
+
+    .offer {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+  a.request-link:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(98, 75, 163, 1.00);
+    border: 1px solid rgba(98, 75, 163, 1.00);
+
+    .request {
+      color: rgba(255, 255, 255, 1);
     }
   }
 }

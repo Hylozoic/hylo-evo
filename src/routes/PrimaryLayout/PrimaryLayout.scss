@@ -423,7 +423,7 @@ $drawer-z-index: 51;
   z-index: 30;
   top: 57px;
   right: 0px;
-  height: calc(100vh - 58px);
+  height: calc(100vh - 50px);
   width: $detail-column-width;
   box-shadow: 0px 4px 56px 0px $shadow-color;
   transition-delay: 0.1s;
@@ -431,6 +431,7 @@ $drawer-z-index: 51;
   padding-bottom: 50px;
   overflow-y: auto;
   margin-top: -8px;
+  overflow-x: hidden;
 
   &.hidden {
     opacity: 0;

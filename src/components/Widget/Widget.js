@@ -138,7 +138,7 @@ const getWidgetItems = ({ childGroups, name, group, posts }) => {
       return group.upcomingEvents
     }
     case 'project_activity': {
-      return group.activeProjects.length > 0 ? group.activeProjects : false
+      return group.activeProjects
     }
     case 'group_affiliations': {
       return childGroups.length > 0 ? childGroups : false

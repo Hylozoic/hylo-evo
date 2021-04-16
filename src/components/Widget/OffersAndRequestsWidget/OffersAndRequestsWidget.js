@@ -30,14 +30,14 @@ export default class OffersAndRequestsWidget extends Component {
             <RoundImage url={p.creator.avatarUrl} styleName='author-image' />
           </div>
         </Link>)}
-        {items.length < 3 ? <div styleName='item'>
+        {items.length < 3 ? <div styleName='item create-offer-request'>
           <div styleName='meta'>
             <span styleName='type'>Create a request or offer!</span>
           </div>
           <div styleName='title'> What do you need? What are you offering?</div>
           <div styleName='ask-offer-cta'>
-            <Link to={createPostUrl(routeParams, { newPostType: 'offer'} )}>+ Create an <span styleName='offer'>Offer</span></Link>
-            <Link to={createPostUrl(routeParams, { newPostType: 'request'} )}>+ Create a <span styleName='request'>Request</span></Link>
+            <Link to={createPostUrl(routeParams, { newPostType: 'offer' })} styleName='offer-link'>+ New <span styleName='offer'>Offer</span></Link>
+            <Link to={createPostUrl(routeParams, { newPostType: 'request' })} styleName='request-link'>+ New <span styleName='request'>Request</span></Link>
           </div>
           <RoundImage url='/gift.png' styleName='author-image' />
         </div> : ' '}
