@@ -144,6 +144,7 @@ export function runForceGraph (
     .style('font-size', d => d.index === 0 ? '16px' : '11px')
     .style('font-weight', d => d.index === 0 ? 'bold' : 'regular')
     .style('fill', d => d.index === 0 ? '#2A4059' : '#808C9B')
+    .attr('class', 'shadow')
     .call(wrap, 150)
     .call(drag(simulation))
 
