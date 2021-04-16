@@ -65,10 +65,11 @@ import {
 import {
   INVITE_PEOPLE_TO_EVENT_PENDING
 } from 'components/EventInviteDialog/EventInviteDialog.store'
+import { FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS } from 'routes/GroupSettings/RelatedGroupsTab/RelatedGroupsTab.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
-import { find, values } from 'lodash/fp'
+import { find, get, values } from 'lodash/fp'
 import extractModelsFromAction from '../ModelExtractor/extractModelsFromAction'
 import { isPromise } from 'util/index'
 
@@ -171,6 +172,14 @@ export default function ormReducer (state = {}, action) {
     case FETCH_GROUP_WELCOME_DATA:
       clearCacheFor(Group, meta.id)
       break
+
+    case FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS: {
+      const memberships = get('data.me.memberships', payload)
+      if (memberships) {
+        memberships.forEach(m => clearCacheFor(Membership, m.id))
+      }
+      break
+    }
 
     case UPDATE_THREAD_READ_TIME:
       MessageThread.withId(meta.id).markAsRead()

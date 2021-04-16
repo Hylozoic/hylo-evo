@@ -1,7 +1,9 @@
+import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { FETCH_POSTS } from 'store/constants'
 import getMe from 'store/selectors/getMe'
+import getMyMemberships from 'store/selectors/getMyMemberships'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
@@ -13,6 +15,7 @@ import {
 } from 'components/FeedList/FeedList.store'
 import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import presentPost from 'store/presenters/presentPost'
+import { createPostUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
   let group
@@ -23,8 +26,9 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
 
   const currentUser = getMe(state, props)
-  const defaultSortBy = get('settings.streamSortBy', currentUser) || 'created'
-  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'list'
+  const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
+  const defaultSortBy = get('settings.streamSortBy', currentUser) || 'updated'
+  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
@@ -48,23 +52,28 @@ export function mapStateToProps (state, props) {
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
-    routeParams,
-    querystringParams,
+    context,
+    currentUser,
+    currentUserHasMemberships,
     fetchPostsParam,
     group,
-    context,
-    selectedPostId: getRouteParam('postId', state, props),
-    postTypeFilter,
-    sortBy,
-    viewMode,
-    posts,
     hasMore,
-    pending: state.pending[FETCH_POSTS]
+    pending: state.pending[FETCH_POSTS],
+    postTypeFilter,
+    posts,
+    querystringParams,
+    routeParams,
+    selectedPostId: getRouteParam('postId', state, props),
+    sortBy,
+    viewMode
   }
 }
 
 export function mapDispatchToProps (dispatch, props) {
   const updateSettings = (params) => dispatch(updateUserSettings(params))
+  const routeParams = get('match.params', props)
+  const querystringParams = getQuerystringParam(['s', 't'], null, props)
+
   return {
     updateUserSettings: updateSettings,
     changeTab: tab => {
@@ -81,7 +90,8 @@ export function mapDispatchToProps (dispatch, props) {
     },
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
-    }
+    },
+    newPost: () => dispatch(push(createPostUrl(routeParams, querystringParams)))
   }
 }
 

@@ -15,6 +15,6 @@ describe('PrimaryLayout.connector', () => {
       orm: session.state,
       AuthRoute: { returnToURL }
     }
-    expect(mapStateToProps(state, {})).toHaveProperty('returnToURL', returnToURL)
+    expect(mapStateToProps(state, { location: { pathname: '' }})).toHaveProperty('returnToURL', returnToURL)
   })
 })

@@ -9,6 +9,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
   name
   settings {
     allowGroupInvites
+    askGroupToGroupJoinQuestions
     askJoinQuestions
     publicMemberDirectory
     showSuggestedSkills
@@ -21,6 +22,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       accessibility
       avatarUrl
       bannerUrl
+      memberCount
       name
       slug
       visibility
@@ -70,7 +72,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       visibility
     }
   }
-  ${withTopics ? `groupTopics(first: 8) {
+  ${withTopics ? `
+  groupTopics(first: 8) {
     items {
       id
       topic {
@@ -80,7 +83,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       postsTotal
     }
   }` : ''}
-  ${withJoinQuestions ? `joinQuestions {
+  ${withJoinQuestions ? `
+  joinQuestions {
     items {
       id
       questionId
@@ -93,15 +97,18 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
       name
     }
   }` : ''}
-  ${withPrerequisites ? `prerequisiteGroups(onlyNotMember: true) {
+  ${withPrerequisites ? `
+  prerequisiteGroups(onlyNotMember: true) {
     items {
       avatarUrl
       id
       name
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
+        showSuggestedSkills
       }
       slug
     }

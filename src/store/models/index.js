@@ -4,8 +4,8 @@ import Activity from './Activity'
 import Attachment from './Attachment'
 import Comment from './Comment'
 import EventInvitation from './EventInvitation'
-import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion, GroupPrerequisite } from './Group'
-import GroupRelationshipInvite from './GroupRelationshipInvite'
+import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion, GroupPrerequisite, GroupToGroupJoinQuestion } from './Group'
+import GroupRelationshipInvite, { GroupToGroupJoinRequestQuestionAnswer } from './GroupRelationshipInvite'
 import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
 import JoinRequest, { JoinRequestQuestionAnswer, Question } from './JoinRequest'
@@ -39,6 +39,8 @@ orm.register(
   GroupPrerequisite,
   GroupRelationship,
   GroupRelationshipInvite,
+  GroupToGroupJoinQuestion,
+  GroupToGroupJoinRequestQuestionAnswer,
   GroupTopic,
   Invitation,
   LinkPreview,

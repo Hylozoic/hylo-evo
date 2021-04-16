@@ -40,6 +40,7 @@ export function useInvitation (inviteCodes = {}) {
               settings {
                 allowGroupInvites
                 askJoinQuestions
+                askGroupToGroupJoinQuestions
                 publicMemberDirectory
                 showSuggestedSkills
               }

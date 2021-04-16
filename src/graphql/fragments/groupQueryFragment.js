@@ -12,6 +12,7 @@ export default
   name
   settings {
     allowGroupInvites
+    askGroupToGroupJoinQuestions
     askJoinQuestions
     publicMemberDirectory
     showSuggestedSkills
@@ -59,11 +60,13 @@ export default
       avatarUrl
       bannerUrl
       description
+      memberCount
       name
       slug
       visibility
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills
@@ -103,6 +106,14 @@ export default
       createdBy {
         id
         name
+      }
+      questionAnswers {
+        id
+        question {
+          id
+          text
+        }
+        answer
       }
     }
   }
@@ -165,6 +176,7 @@ export default
       visibility
       settings {
         allowGroupInvites
+        askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills

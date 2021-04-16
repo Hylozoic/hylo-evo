@@ -1,17 +1,17 @@
+import { push } from 'connected-react-router'
 import { get } from 'lodash'
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import { removeGroupFromUrl } from 'util/navigation'
 import fetchGroupDetails from 'store/actions/fetchGroupDetails'
-import presentGroup from 'store/presenters/presentGroup'
-import getRouteParam from 'store/selectors/getRouteParam'
-import getMe from 'store/selectors/getMe'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
+import presentGroup from 'store/presenters/presentGroup'
+import getMe from 'store/selectors/getMe'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getGroupForDetails from 'store/selectors/getGroupForDetails'
+import getRouteParam from 'store/selectors/getRouteParam'
 import { FETCH_GROUP_DETAILS } from 'store/constants'
 import { addSkill, removeSkill } from 'components/SkillsSection/SkillsSection.store'
+import { removeGroupFromUrl } from 'util/navigation'
 import {
   createJoinRequest,
   fetchJoinRequests,
@@ -21,7 +21,9 @@ import {
 export function mapStateToProps (state, props) {
   const routeParams = props.match.params
   const group = presentGroup(props.group || getGroupForDetails(state, props))
-  const slug = get('slug', group)
+  const slug = get(group, 'slug')
+  const mainGroupSlug = getRouteParam('groupSlug', state, props)
+  const isAboutCurrentGroup = slug === mainGroupSlug
   const currentUser = getMe(state)
   const myMemberships = getMyMemberships(state, props)
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
@@ -30,6 +32,7 @@ export function mapStateToProps (state, props) {
   return {
     currentUser,
     group,
+    isAboutCurrentGroup,
     isMember,
     joinRequests,
     myMemberships,

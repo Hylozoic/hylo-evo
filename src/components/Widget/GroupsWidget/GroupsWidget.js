@@ -2,13 +2,15 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
+import { createGroupUrl, groupUrl, groupDetailUrl } from 'util/navigation'
+
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './GroupsWidget.scss'
 
-const { array } = PropTypes
+const { array, object } = PropTypes
 
-const settings = {
+const sliderSettings = {
   dots: true,
   infinite: false,
   speed: 500,
@@ -28,33 +30,36 @@ const settings = {
 
 export default class GroupsWidget extends Component {
   static propTypes = {
-    groups: array
+    group: object,
+    items: array
   }
 
   render () {
-    const { groups = [] } = this.props
+    const { items = [], routeParams } = this.props
 
     return (
       <div styleName='groups'>
-        <Slider {...settings}>
-          {groups && groups.map(a => <div styleName='group' key={a.id}>
+        <Slider {...sliderSettings}>
+          {items && items.map(g => <div styleName='group' key={g.id}>
             <div>
               <div styleName='content'>
-                <div styleName='group-avatar'><img src={a.groupAvatar} /></div>
-                <div styleName='group-name'>{a.groupName}</div>
-                <div styleName='member-count'>{a.memberCount}</div>
-                <div styleName='group-description'>{a.groupDescription}</div>
-                {a.isMember
-                  ? <div styleName='is-member'><Link to='#'>Member</Link></div>
-                  : <div styleName='isnt-member'><Link to='#'>View</Link></div>
+                <div styleName='group-avatar'><img src={g.avatarUrl} /></div>
+                <div styleName='group-name'>{g.name}</div>
+                <div styleName='member-count'>{g.memberCount} member{g.memberCount !== 1 ? 's' : ''}</div>
+                <div styleName='group-description'>{g.description}</div>
+                {g.memberStatus === 'member'
+                  ? <div styleName='is-member'><Link to={groupUrl(g.slug)}>Member</Link></div>
+                  : g.memberStatus === 'requested'
+                    ? <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}>Request Pending</Link></div>
+                    : <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}>View</Link></div>
                 }
               </div>
             </div>
-            <div styleName='background' style={{ backgroundImage: `url(${a.groupBackground})` }} ><div styleName='fade' /></div>
+            <div styleName='background' style={{ backgroundImage: `url(${g.bannerUrl})` }} ><div styleName='fade' /></div>
           </div>)}
           <div styleName='createGroup'>
             <div>
-              <Link to='#'>+ Create Group</Link>
+              <Link to={createGroupUrl(routeParams)}>+ Create Group</Link>
             </div>
           </div>
         </Slider>

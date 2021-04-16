@@ -6,8 +6,8 @@ import Tooltip from 'components/Tooltip'
 import './StreamViewControls.scss'
 
 const sortOptions = [
-  { id: 'created', label: 'Most recent' },
   { id: 'updated', label: 'Latest activity' },
+  { id: 'created', label: 'Post Date' },
   { id: 'votes', label: 'Popular' }
 ]
 
@@ -15,9 +15,10 @@ const postTypeOptions = [
   { id: undefined, label: 'All' },
   { id: 'discussion', label: 'Discussions' },
   { id: 'event', label: 'Events' },
-  { id: 'project', label: 'Projects' },
   { id: 'offer', label: 'Offers' },
-  { id: 'request', label: 'Requests' }
+  { id: 'project', label: 'Projects' },
+  { id: 'request', label: 'Requests' },
+  { id: 'resource', label: 'Resources' }
 ]
 
 const makeDropdown = (selected, options, onChange) => (
@@ -55,7 +56,7 @@ const StreamViewControls = (props) => {
       </div>
       { makeDropdown(sortBy, sortOptions, changeSort) }
       { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
-      <Tooltip id='stream-viewmode-tip' position='bottom'/>
+      <Tooltip id='stream-viewmode-tip' position='bottom' />
     </div>
   )
 }

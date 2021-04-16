@@ -1,5 +1,7 @@
+import { get, some } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
+import { matchPath } from 'react-router'
+import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import updateUserSettings from 'store/actions/updateUserSettings'
@@ -8,9 +10,8 @@ import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
-import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
-import { get, some } from 'lodash/fp'
 import mobileRedirect from 'util/mobileRedirect'
+import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
 
 export function mapStateToProps (state, props) {
   const memberships = getMyMemberships(state, props)
@@ -19,6 +20,13 @@ export function mapStateToProps (state, props) {
   const slug = getSlugFromLocation(null, props)
   const group = getGroupForCurrentRoute(state, props)
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
+
+  let routeParams = { context: 'all' }
+  const match = matchPath(props.location.pathname, { path: '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?' }) ||
+                matchPath(props.location.pathname, { path: '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?' })
+  if (match) {
+    routeParams = match.params
+  }
 
   return {
     currentUser: getMe(state),
@@ -31,6 +39,7 @@ export function mapStateToProps (state, props) {
     hasMemberships,
     currentGroupMembership,
     returnToURL: getReturnToURL(state),
+    routeParams,
     showLogoBadge,
     slug
   }

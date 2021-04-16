@@ -1,4 +1,4 @@
-import { attr, fk, Model } from 'redux-orm'
+import { attr, fk, many, Model } from 'redux-orm'
 
 export const GROUP_RELATIONSHIP_TYPE = {
   ParentToChild: 0,
@@ -19,5 +19,13 @@ GroupRelationshipInvite.fields = {
   type: attr(),
   createdBy: fk('Person', 'groupInvitesCreated'),
   fromGroup: fk('Group', 'groupInvitesTo'),
+  questionAnswers: many('GroupToGroupJoinRequestQuestionAnswer'),
   toGroup: fk('Group', 'groupInvitesFrom')
+}
+
+export class GroupToGroupJoinRequestQuestionAnswer extends Model { }
+GroupToGroupJoinRequestQuestionAnswer.modelName = 'GroupToGroupJoinRequestQuestionAnswer'
+GroupToGroupJoinRequestQuestionAnswer.fields = {
+  answer: attr(),
+  question: fk('Question', 'groupToGroupJoinRequestAnswers')
 }

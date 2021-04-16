@@ -57,30 +57,38 @@ exports[`Drawer renders with a current group 1`] = `
   data-stylename="s.groupDrawer"
 >
   <div
-    data-stylename="s.currentGroup"
+    data-stylename="drawerHeader s.currentGroup"
+    style={Object {}}
   >
     <div
-      data-stylename="s.hyloLogoBar"
+      data-stylename="drawerBanner"
     >
-      <img
-        src="/hylo.svg"
-        width="50px"
-      />
-      <Icon
-        data-stylename="s.closeDrawer"
-        name="Ex"
+      <div
+        data-stylename="s.hyloLogoBar"
+      >
+        <img
+          src="/hylo.svg"
+          width="50px"
+        />
+        <Icon
+          data-stylename="s.closeDrawer"
+          name="Ex"
+        />
+      </div>
+      <Logo
+        group={
+          Object {
+            "avatarUrl": "/foo.png",
+            "id": "11",
+            "name": "Foomunity",
+            "newPostCount": 0,
+            "slug": "foo",
+          }
+        }
       />
     </div>
-    <Logo
-      group={
-        Object {
-          "avatarUrl": "/foo.png",
-          "id": "11",
-          "name": "Foomunity",
-          "newPostCount": 0,
-          "slug": "foo",
-        }
-      }
+    <div
+      data-stylename="backgroundFade"
     />
   </div>
   <div>
@@ -138,21 +146,29 @@ exports[`Drawer renders without a current group 1`] = `
   data-stylename="s.groupDrawer"
 >
   <div
-    data-stylename="s.currentGroup"
+    data-stylename="drawerHeader s.currentGroup"
+    style={Object {}}
   >
     <div
-      data-stylename="s.hyloLogoBar"
+      data-stylename="drawerBanner"
     >
-      <img
-        src="/hylo.svg"
-        width="50px"
-      />
-      <Icon
-        data-stylename="s.closeDrawer"
-        name="Ex"
-      />
+      <div
+        data-stylename="s.hyloLogoBar"
+      >
+        <img
+          src="/hylo.svg"
+          width="50px"
+        />
+        <Icon
+          data-stylename="s.closeDrawer"
+          name="Ex"
+        />
+      </div>
+      <Logo />
     </div>
-    <Logo />
+    <div
+      data-stylename="backgroundFade"
+    />
   </div>
   <div>
     <ul

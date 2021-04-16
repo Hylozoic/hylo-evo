@@ -8,6 +8,35 @@ export const MODULE_NAME = 'RelatedGroups'
 
 // Constants
 export const SET_SEARCH = `${MODULE_NAME}/SET_SEARCH`
+export const FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS = `${MODULE_NAME}/FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS`
+
+export function fetchGroupToGroupJoinQuestions () {
+  return {
+    type: FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS,
+    graphql: {
+      query: `query {
+        me {
+          memberships {
+            id
+            group {
+              id
+              groupToGroupJoinQuestions {
+                items {
+                  id
+                  questionId
+                  text
+                }
+              }
+            }
+          }
+        }
+      }`
+    },
+    meta: {
+      extractModel: 'Me'
+    }
+  }
+}
 
 // Reducer
 const defaultState = {
