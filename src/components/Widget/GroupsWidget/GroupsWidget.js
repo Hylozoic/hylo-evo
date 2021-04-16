@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { createGroupUrl, groupUrl, groupDetailUrl } from 'util/navigation'
 
 import 'slick-carousel/slick/slick.css'
@@ -43,7 +44,7 @@ export default class GroupsWidget extends Component {
           {items && items.map(g => <div styleName='group' key={g.id}>
             <div>
               <div styleName='content'>
-                <div styleName='group-avatar'><img src={g.avatarUrl} /></div>
+                <div styleName='group-avatar'><img src={g.avatarUrl || DEFAULT_AVATAR} /></div>
                 <div styleName='group-name'>{g.name}</div>
                 <div styleName='member-count'>{g.memberCount} member{g.memberCount !== 1 ? 's' : ''}</div>
                 <div styleName='group-description'>
@@ -58,7 +59,7 @@ export default class GroupsWidget extends Component {
                 }
               </div>
             </div>
-            <div styleName='background' style={{ backgroundImage: `url(${g.bannerUrl})` }} ><div styleName='fade' /></div>
+            <div styleName='background' style={{ backgroundImage: `url(${g.bannerUrl || DEFAULT_BANNER})` }} ><div styleName='fade' /></div>
           </div>)}
           <div styleName='createGroup'>
             <div>
