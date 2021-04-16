@@ -13,13 +13,11 @@ import './LandingPage.scss'
 
 export default class LandingPage extends Component {
   static propTypes = {
-    group: PropTypes.object,
-    showAbout: PropTypes.func
+    group: PropTypes.object
   }
 
   static defaultProps = {
-    group: {},
-    showAbout: () => {}
+    group: {}
   }
 
   componentDidMount () {
@@ -32,7 +30,7 @@ export default class LandingPage extends Component {
   }
 
   render () {
-    const { childGroups, group, isAboutOpen, isModerator, posts, routeParams, showAbout, showDetails, widgets } = this.props
+    const { childGroups, group, isAboutOpen, isModerator, posts, routeParams, widgets } = this.props
     if (!group) return <Loading />
 
     return (
@@ -61,7 +59,6 @@ export default class LandingPage extends Component {
             isModerator={isModerator}
             posts={posts}
             routeParams={routeParams}
-            showDetails={showDetails}
           />
         )}
       </div>

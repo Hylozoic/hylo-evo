@@ -1,6 +1,4 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import { groupUrl, postUrl } from 'util/navigation'
 import fetchGroup from 'store/actions/fetchGroupDetails'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 import getCanModerate from 'store/selectors/getCanModerate'
@@ -43,20 +41,10 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const groupSlug = getRouteParam('groupSlug', {}, props)
-  const url = `${groupUrl(groupSlug)}/about`
 
   return {
     fetchGroup: () => dispatch(fetchGroup(groupSlug)),
-    fetchPosts: param => offset => {
-      // The topic was not found in this case
-      if (param.topicName && !param.topic) return
-      return dispatch(fetchPosts({ offset, ...param }))
-    },
-    showAbout: async () => {
-      await fetchGroup(groupSlug)
-      dispatch(push(url))
-    },
-    showDetails: (postId) => dispatch(push(postUrl(postId, { groupSlug })))
+    fetchPosts: (params) => () => dispatch(fetchPosts({ ...params }))
   }
 }
 
