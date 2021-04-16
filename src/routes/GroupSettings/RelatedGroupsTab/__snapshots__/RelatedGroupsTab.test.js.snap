@@ -50,6 +50,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <GroupCard
         actionMenu={
           <Dropdown
+            data-stylename="relatedGroupDropdown"
             items={
               Array [
                 Object {
@@ -77,6 +78,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <GroupCard
         actionMenu={
           <Dropdown
+            data-stylename="relatedGroupDropdown"
             items={
               Array [
                 Object {
@@ -104,6 +106,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <GroupCard
         actionMenu={
           <Dropdown
+            data-stylename="relatedGroupDropdown"
             items={
               Array [
                 Object {
@@ -169,6 +172,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <GroupCard
         actionMenu={
           <Dropdown
+            data-stylename="relatedGroupDropdown"
             items={
               Array [
                 Object {
@@ -196,6 +200,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <GroupCard
         actionMenu={
           <Dropdown
+            data-stylename="relatedGroupDropdown"
             items={
               Array [
                 Object {
@@ -223,6 +228,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       <GroupCard
         actionMenu={
           <Dropdown
+            data-stylename="relatedGroupDropdown"
             items={
               Array [
                 Object {
