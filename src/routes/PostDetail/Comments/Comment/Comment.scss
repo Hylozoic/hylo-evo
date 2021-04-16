@@ -51,7 +51,10 @@ $comment-row-padding: 25px;
 }
 
 .dropdown {
-/* !empty */
+  > div {
+    left: initial;
+    right: 0;
+  }
 }
 
 .text {

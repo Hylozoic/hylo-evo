@@ -66,6 +66,7 @@ export default class GroupsWidget extends Component {
             </div>
           </div>
         </Slider>
+        <div styleName='groupBumper' />
       </div>
     )
   }

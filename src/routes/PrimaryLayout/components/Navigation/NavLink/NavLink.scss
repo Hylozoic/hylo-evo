@@ -40,13 +40,25 @@
 
 .icon {
     margin-right: 10px;
-    width: 40px;
+    min-width: 40px;
     text-align: center;
 }
 
 .label {
   padding-right: 5px;
 }
+
+@media screen and (max-width: 930px) {
+  .icon {
+    min-width: 100%;
+    margin-right: 20px;
+  }
+
+  .item {
+    padding: 0 0;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .item {
     padding: 0 15px;

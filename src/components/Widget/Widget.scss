@@ -226,7 +226,15 @@
   bottom: -5px;
 }
 
+:global(.slick-prev) {
+  left: 15px;
+  z-index: 100;
+}
 
+:global(.slick-next) {
+  right: 10px;
+  z-index: 100;
+}
 
 @media screen and (max-width: 425px) {
   .header h3 {
