@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
+import getMe from 'store/selectors/getMe'
 import { updateWidget } from './Widget.store'
 
 export function mapStateToProps (state, props) {
   return {
-    ...props
+    ...props,
+    currentUser: getMe(state, props)
   }
 }
 

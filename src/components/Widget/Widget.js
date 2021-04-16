@@ -53,7 +53,7 @@ const WIDGETS = {
 }
 
 export default function Widget (props) {
-  const { childGroups, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
+  const { childGroups, currentUser, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
 
   if (!WIDGETS[name]) return null
 
@@ -64,7 +64,7 @@ export default function Widget (props) {
     text: settings.text || ''
   })
 
-  const widgetItems = getWidgetItems({ childGroups, name, group, posts })
+  const widgetItems = getWidgetItems({ childGroups, currentUser, name, group, posts })
 
   return (
     <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
@@ -114,7 +114,7 @@ const HiddenWidget = ({ isVisible, name }) => {
   )
 }
 
-const getWidgetItems = ({ childGroups, name, group, posts }) => {
+const getWidgetItems = ({ currentUser, childGroups, name, group, posts }) => {
   switch (name) {
     case 'text_block': {
       return true
@@ -123,7 +123,7 @@ const getWidgetItems = ({ childGroups, name, group, posts }) => {
       return group.announcements.length > 0 ? group.announcements : false
     }
     case 'active_members': {
-      return group.members && group.members.length > 2 ? group.members.sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8) : false
+      return group.members && group.members.length > 2 ? group.members.filter(m => m.id !== currentUser.id).sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8) : false
     }
     case 'requests_offers': {
       return group.openOffersAndRequests.length > 0 ? group.openOffersAndRequests : false
