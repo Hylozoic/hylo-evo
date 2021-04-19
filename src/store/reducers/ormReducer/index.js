@@ -27,6 +27,7 @@ import {
   UPDATE_COMMENT_PENDING,
   UPDATE_GROUP_TOPIC_PENDING,
   UPDATE_POST_PENDING,
+  UPDATE_POST,
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
@@ -112,6 +113,33 @@ export default function ormReducer (state = {}, action) {
         Group.withId(newGroupRelationship.parentGroup.id).updateAppending({ childGroups: [childGroup] })
         clearCacheFor(Group, childGroup.id)
       }
+
+    case ADD_MODERATOR_PENDING:
+      person = Person.withId(meta.personId)
+      Group.withId(meta.groupId).updateAppending({ moderators: [person] })
+      break
+
+    case ADD_SKILL: {
+      const skill = payload.data.addSkill
+      person = Person.withId(Me.first().id)
+      person.updateAppending({ skills: [Skill.create(skill)] })
+      break
+    }
+
+    case ADD_SKILL_TO_LEARN:
+      const skillToLearn = payload.data.addSkillToLearn
+      person = Person.withId(Me.first().id)
+      person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
+      break
+
+    case ADD_SKILL_TO_GROUP: {
+      const skill = payload.data.addSuggestedSkillToGroup
+      group = Group.withId(meta.groupId)
+      group.updateAppending({ suggestedSkills: [Skill.create(skill)] })
+      clearCacheFor(Group, meta.groupId)
+      break
+    }
+
     case CANCEL_GROUP_RELATIONSHIP_INVITE:
     case REJECT_GROUP_RELATIONSHIP_INVITE:
       const invite = GroupRelationshipInvite.withId(meta.id)
@@ -137,6 +165,19 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
+    case CREATE_GROUP:
+      me = Me.withId(Me.first().id)
+      me.updateAppending({ memberships: [payload.data.createGroup.id] })
+      break
+
+    case CREATE_JOIN_REQUEST:
+      if (payload.data.createJoinRequest.request) {
+        me = Me.first()
+        const jr = JoinRequest.create({ group: meta.groupId, user: me.id, status: payload.data.createJoinRequest.request.status })
+        me.updateAppending({ joinRequests: [jr] })
+      }
+      break
+
     case CREATE_MESSAGE_PENDING:
       Message.create({
         id: meta.tempId,
@@ -152,12 +193,26 @@ export default function ormReducer (state = {}, action) {
       MessageThread.withId(message.messageThread.id).newMessageReceived()
       break
 
-    case FETCH_MESSAGES_PENDING:
-      if (meta.reset) {
-        // this is so that after websocket reconnect events, pagination
-        // of messages works as expected
-        Message.filter({ messageThread: meta.id }).delete()
+    case DELETE_COMMENT_PENDING:
+      comment = Comment.withId(meta.id)
+      comment.delete()
+      break
+
+    case DELETE_GROUP_RELATIONSHIP: {
+      if (payload.data.deleteGroupRelationship.success) {
+        const gr = GroupRelationship.safeGet({ parentGroup: meta.parentId, childGroup: meta.childId })
+        if (gr) {
+          gr.delete()
+          clearCacheFor(Group, meta.parentId)
+          clearCacheFor(Group, meta.childId)
+        }
       }
+      break
+    }
+
+    case DELETE_GROUP_TOPIC_PENDING:
+      groupTopic = GroupTopic.withId(meta.id)
+      groupTopic.delete()
       break
 
     case FETCH_GROUP_DETAILS_PENDING: {
@@ -181,8 +236,43 @@ export default function ormReducer (state = {}, action) {
       break
     }
 
-    case UPDATE_THREAD_READ_TIME:
-      MessageThread.withId(meta.id).markAsRead()
+    case FETCH_MESSAGES_PENDING:
+      if (meta.reset) {
+        // this is so that after websocket reconnect events, pagination
+        // of messages works as expected
+        Message.filter({ messageThread: meta.id }).delete()
+      }
+      break
+
+    case INVITE_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.inviteGroupToJoinParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.inviteGroupToJoinParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
+
+    case INVITE_PEOPLE_TO_EVENT_PENDING:
+      meta.inviteeIds.map(inviteeId => {
+        EventInvitation.create({
+          event: meta.eventId,
+          person: inviteeId
+        })
+      })
+      clearCacheFor(Post, meta.eventId)
+      break
+
+    case JOIN_PROJECT_PENDING:
+      me = Me.first()
+      ProjectMember.create({ post: meta.id, member: me.id })
+      clearCacheFor(Post, meta.id)
       break
 
     case LEAVE_GROUP:
@@ -193,27 +283,32 @@ export default function ormReducer (state = {}, action) {
       if (membership) membership.delete()
       break
 
-    case TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING:
-      groupTopic = GroupTopic.get({ topic: meta.topicId, group: meta.groupId })
-      groupTopic.update({
-        followersTotal: groupTopic.followersTotal + (meta.isSubscribing ? 1 : -1),
-        isSubscribed: !!meta.isSubscribing
+    case LEAVE_PROJECT_PENDING:
+      me = Me.first()
+      const projectMember = find(
+        m => String(m.member.id) === String(me.id) && String(m.post.id) === String(meta.id),
+        ProjectMember.all().toModelArray()
+      )
+      if (projectMember) {
+        projectMember.delete()
+        clearCacheFor(Post, meta.id)
+      }
+      break
+
+    case PROCESS_STRIPE_TOKEN_PENDING:
+      post = Post.withId(meta.postId)
+      const totalContributions = Number(post.totalContributions) + Number(meta.amount)
+      post.update({
+        totalContributions
       })
       break
 
-    case UPDATE_GROUP_TOPIC_PENDING:
-      groupTopic = GroupTopic.withId(meta.id)
-      groupTopic.update(meta.data)
-      clearCacheFor(GroupTopic, meta.id)
-      break
-
-    case VOTE_ON_POST_PENDING:
-      post = session.Post.withId(meta.postId)
-      if (post.myVote) {
-        !meta.isUpvote && post.update({ myVote: false, votesTotal: (post.votesTotal || 1) - 1 })
-      } else {
-        meta.isUpvote && post.update({ myVote: true, votesTotal: (post.votesTotal || 0) + 1 })
-      }
+    case REMOVE_MODERATOR_PENDING:
+      group = Group.withId(meta.groupId)
+      const moderators = group.moderators.filter(m =>
+        m.id !== meta.personId)
+        .toModelArray()
+      group.update({ moderators })
       break
 
     case RESET_NEW_POST_COUNT_PENDING:
@@ -226,17 +321,65 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
-    case ADD_MODERATOR_PENDING:
-      person = Person.withId(meta.personId)
-      Group.withId(meta.groupId).updateAppending({ moderators: [person] })
+    case REMOVE_SKILL_PENDING:
+      person = Person.withId(Me.first().id)
+      person.skills.remove(meta.skillId)
       break
 
-    case REMOVE_MODERATOR_PENDING:
+    case REMOVE_SKILL_TO_LEARN_PENDING:
+      person = Person.withId(Me.first().id)
+      person.skillsToLearn.remove(meta.skillId)
+      break
+
+    case REMOVE_SKILL_FROM_GROUP_PENDING:
       group = Group.withId(meta.groupId)
-      const moderators = group.moderators.filter(m =>
-        m.id !== meta.personId)
-        .toModelArray()
-      group.update({ moderators })
+      group.suggestedSkills.remove(meta.skillId)
+      clearCacheFor(Group, meta.groupId)
+      break
+
+    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP: {
+      const newGroupRelationship = payload.data.requestToAddGroupToParent.groupRelationship
+      if (newGroupRelationship) {
+        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
+        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+      } else {
+        const newGroupRelationshipInvite = payload.data.requestToAddGroupToParent.groupRelationshipInvite
+        if (newGroupRelationshipInvite) {
+          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
+          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
+        }
+      }
+      break
+    }
+
+    case RESPOND_TO_EVENT_PENDING:
+      const event = Post.withId(meta.id)
+      event.update({ myEventResponse: meta.response })
+      break
+
+    case TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING:
+      groupTopic = GroupTopic.get({ topic: meta.topicId, group: meta.groupId })
+      groupTopic.update({
+        followersTotal: groupTopic.followersTotal + (meta.isSubscribing ? 1 : -1),
+        isSubscribed: !!meta.isSubscribing
+      })
+      break
+
+    case UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING:
+      const memberships = session.Membership.all()
+      memberships.toModelArray().map(membership => {
+        membership.update({
+          settings: {
+            ...membership.settings,
+            ...meta.settings
+          }
+        })
+      })
+      break
+
+    case UPDATE_COMMENT_PENDING:
+      comment = Comment.withId(meta.id)
+      comment.update(meta.data)
       break
 
     case UPDATE_GROUP_SETTINGS_PENDING:
@@ -258,6 +401,12 @@ export default function ormReducer (state = {}, action) {
       }
       break
 
+    case UPDATE_GROUP_TOPIC_PENDING:
+      groupTopic = GroupTopic.withId(meta.id)
+      groupTopic.update(meta.data)
+      clearCacheFor(GroupTopic, meta.id)
+      break
+
     case UPDATE_MEMBERSHIP_SETTINGS_PENDING:
       me = Me.first()
       membership = Membership.safeGet({ group: meta.groupId, person: me.id })
@@ -271,16 +420,23 @@ export default function ormReducer (state = {}, action) {
       })
       break
 
-    case UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING:
-      const memberships = session.Membership.all()
-      memberships.toModelArray().map(membership => {
-        membership.update({
-          settings: {
-            ...membership.settings,
-            ...meta.settings
-          }
-        })
-      })
+    case UPDATE_POST_PENDING:
+      // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
+      post = Post.withId(meta.id)
+      post.attachments.toModelArray().map(a => a.delete())
+      post.update({ topics: [] })
+      break
+
+    case UPDATE_POST: {
+      // This is needed right now to make sure posts update in real time on the landing page
+      if (payload.data.updatePost.groups) {
+        payload.data.updatePost.groups.forEach(g => clearCacheFor(Group, g.id))
+      }
+      break
+    }
+
+    case UPDATE_THREAD_READ_TIME:
+      MessageThread.withId(meta.id).markAsRead()
       break
 
     case UPDATE_USER_SETTINGS_PENDING:
@@ -296,97 +452,9 @@ export default function ormReducer (state = {}, action) {
       me.update(changes)
       break
 
-    case REMOVE_SKILL_PENDING:
-      person = Person.withId(Me.first().id)
-      person.skills.remove(meta.skillId)
-      break
-
-    case REMOVE_SKILL_TO_LEARN_PENDING:
-      person = Person.withId(Me.first().id)
-      person.skillsToLearn.remove(meta.skillId)
-      break
-
-    case REMOVE_SKILL_FROM_GROUP_PENDING:
-      group = Group.withId(meta.groupId)
-      group.suggestedSkills.remove(meta.skillId)
-      clearCacheFor(Group, meta.groupId)
-      break
-
-    case ADD_SKILL: {
-      const skill = payload.data.addSkill
-      person = Person.withId(Me.first().id)
-      person.updateAppending({ skills: [Skill.create(skill)] })
-      break
+    case UPDATE_WIDGET: {
+      clearCacheFor(Group, payload.data.updateWidget.group.id)
     }
-
-    case ADD_SKILL_TO_LEARN:
-      const skillToLearn = payload.data.addSkillToLearn
-      person = Person.withId(Me.first().id)
-      person.updateAppending({ skillsToLearn: [Skill.create(skillToLearn)] })
-      break
-
-    case ADD_SKILL_TO_GROUP: {
-      const skill = payload.data.addSuggestedSkillToGroup
-      group = Group.withId(meta.groupId)
-      group.updateAppending({ suggestedSkills: [Skill.create(skill)] })
-      clearCacheFor(Group, meta.groupId)
-      break
-    }
-
-    case DELETE_COMMENT_PENDING:
-      comment = Comment.withId(meta.id)
-      comment.delete()
-      break
-
-    case DELETE_GROUP_RELATIONSHIP: {
-      if (payload.data.deleteGroupRelationship.success) {
-        const gr = GroupRelationship.safeGet({ parentGroup: meta.parentId, childGroup: meta.childId })
-        if (gr) {
-          gr.delete()
-          clearCacheFor(Group, meta.parentId)
-          clearCacheFor(Group, meta.childId)
-        }
-      }
-      break
-    }
-
-    case UPDATE_POST_PENDING:
-      // deleting all attachments and removing topics here because we restore them from the result of the UPDATE_POST action
-      post = Post.withId(meta.id)
-      post.attachments.toModelArray().map(a => a.delete())
-      post.update({ topics: [] })
-      break
-
-    case CREATE_GROUP:
-      me = Me.withId(Me.first().id)
-      me.updateAppending({ memberships: [payload.data.createGroup.id] })
-      break
-
-    case CREATE_JOIN_REQUEST:
-      if (payload.data.createJoinRequest.request) {
-        me = Me.first()
-        const jr = JoinRequest.create({ group: meta.groupId, user: me.id, status: payload.data.createJoinRequest.request.status })
-        me.updateAppending({ joinRequests: [jr] })
-      }
-      break
-
-    case JOIN_PROJECT_PENDING:
-      me = Me.first()
-      ProjectMember.create({ post: meta.id, member: me.id })
-      clearCacheFor(Post, meta.id)
-      break
-
-    case LEAVE_PROJECT_PENDING:
-      me = Me.first()
-      const projectMember = find(
-        m => String(m.member.id) === String(me.id) && String(m.post.id) === String(meta.id),
-        ProjectMember.all().toModelArray()
-      )
-      if (projectMember) {
-        projectMember.delete()
-        clearCacheFor(Post, meta.id)
-      }
-      break
 
     case USE_INVITATION:
       me = Me.first()
@@ -394,72 +462,14 @@ export default function ormReducer (state = {}, action) {
       Invitation.filter({ email: me.email, group: payload.data.useInvitation.membership.group.id }).delete()
       break
 
-    case DELETE_GROUP_TOPIC_PENDING:
-      groupTopic = GroupTopic.withId(meta.id)
-      groupTopic.delete()
-      break
-
-    case UPDATE_COMMENT_PENDING:
-      comment = Comment.withId(meta.id)
-      comment.update(meta.data)
-      break
-
-    case PROCESS_STRIPE_TOKEN_PENDING:
-      post = Post.withId(meta.postId)
-      const totalContributions = Number(post.totalContributions) + Number(meta.amount)
-      post.update({
-        totalContributions
-      })
-      break
-
-    case RESPOND_TO_EVENT_PENDING:
-      const event = Post.withId(meta.id)
-      event.update({ myEventResponse: meta.response })
-      break
-
-    case INVITE_PEOPLE_TO_EVENT_PENDING:
-      meta.inviteeIds.map(inviteeId => {
-        EventInvitation.create({
-          event: meta.eventId,
-          person: inviteeId
-        })
-      })
-      clearCacheFor(Post, meta.eventId)
-      break
-
-    case REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP: {
-      const newGroupRelationship = payload.data.requestToAddGroupToParent.groupRelationship
-      if (newGroupRelationship) {
-        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
-        clearCacheFor(Group, newGroupRelationship.childGroup.id)
+    case VOTE_ON_POST_PENDING:
+      post = session.Post.withId(meta.postId)
+      if (post.myVote) {
+        !meta.isUpvote && post.update({ myVote: false, votesTotal: (post.votesTotal || 1) - 1 })
       } else {
-        const newGroupRelationshipInvite = payload.data.requestToAddGroupToParent.groupRelationshipInvite
-        if (newGroupRelationshipInvite) {
-          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
-          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
-        }
+        meta.isUpvote && post.update({ myVote: true, votesTotal: (post.votesTotal || 0) + 1 })
       }
       break
-    }
-
-    case INVITE_CHILD_TO_JOIN_PARENT_GROUP: {
-      const newGroupRelationship = payload.data.inviteGroupToJoinParent.groupRelationship
-      if (newGroupRelationship) {
-        clearCacheFor(Group, newGroupRelationship.parentGroup.id)
-        clearCacheFor(Group, newGroupRelationship.childGroup.id)
-      } else {
-        const newGroupRelationshipInvite = payload.data.inviteGroupToJoinParent.groupRelationshipInvite
-        if (newGroupRelationshipInvite) {
-          clearCacheFor(Group, newGroupRelationshipInvite.toGroup.id)
-          clearCacheFor(Group, newGroupRelationshipInvite.fromGroup.id)
-        }
-      }
-      break
-    }
-
-    case UPDATE_WIDGET: {
-      clearCacheFor(Group, payload.data.updateWidget.group.id)
-    }
   }
 
   values(sessionReducers).forEach(fn => fn(session, action))
