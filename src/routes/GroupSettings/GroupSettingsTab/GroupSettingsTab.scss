@@ -173,7 +173,7 @@ label {
   }
 }
 
-.on > div .onOff {
+.on > div > .onOff {
   .off {
     display: none;
   }
@@ -201,6 +201,7 @@ label {
     }
   }
 }
+
 .saveChanges {
   position: fixed;
   bottom: 10px;

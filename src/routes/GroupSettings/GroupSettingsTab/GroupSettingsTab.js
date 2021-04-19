@@ -216,7 +216,7 @@ export default class GroupSettingsTab extends Component {
               <div styleName='on'>ON</div>
             </div>
           </div>
-          <QuestionsForm questions={groupToGroupJoinQuestions} save={this.updateSettingDirectly('groupToGroupJoinQuestions')} />
+          <QuestionsForm questions={groupToGroupJoinQuestions} save={this.updateSettingDirectly('groupToGroupJoinQuestions')} disabled={!askGroupToGroupJoinQuestions} />
         </div>
       </SettingsSection>
 
@@ -264,13 +264,13 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
             <div styleName='on'>ON</div>
           </div>
         </div>
-        <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} />
+        <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
       </div>
     }
   </div>
 }
 
-function QuestionsForm ({ questions, save }) {
+function QuestionsForm ({ disabled, questions, save }) {
   const updateJoinQuestion = (index) => event => {
     const value = event.target.value
     const newQuestions = questions
@@ -293,7 +293,7 @@ function QuestionsForm ({ questions, save }) {
   return <div styleName='questionList'>
     {questions.map((q, i) => <div key={i} styleName='question'>
       {q.text ? <div styleName='deleteInput'><Icon name='CircleEx' styleName='close' onClick={clearField(i)} /></div> : <span styleName='createInput'>+</span>}
-      <input name='questions[]' value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
+      <input name='questions[]' disabled={disabled} value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
     </div>)}
   </div>
 }
