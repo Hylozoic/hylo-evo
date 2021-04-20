@@ -104,19 +104,33 @@ export const getGroup = ormCreateSelector(
   (session, { groupSlug }) => session.Group.safeGet({ slug: groupSlug })
 )
 
-export function ormSessionReducer ({ Post }, { type, meta }) {
-  var post
+export function ormSessionReducer ({ Group, Post }, { type, meta }) {
+  let post
   switch (type) {
     case DELETE_POST_PENDING:
       Post.withId(meta.id).delete()
       break
 
-    case REMOVE_POST_PENDING:
+    case REMOVE_POST_PENDING: {
       post = Post.withId(meta.postId)
       const groups = post.groups.filter(c =>
         c.slug !== meta.slug).toModelArray()
       post.update({ groups })
+
+      // XXX: this is ugly, would be better to load these posts through redux-orm "queries" so they update automatically
+      const group = Group.safeGet({ slug: meta.slug })
+      if (post.announcement) {
+        group.update({ announcements: group.announcements.filter(p => p.id !== post.id).toModelArray() })
+      }
+      if (post.type === 'request' || post.type === 'offer') {
+        group.update({ openOffersAndRequests: group.openOffersAndRequests.filter(p => p.id !== post.id).toModelArray() })
+      } else if (post.type === 'event') {
+        group.update({ upcomingEvents: group.upcomingEvents.filter(p => p.id !== post.id).toModelArray() })
+      } else if (post.type === 'project') {
+        group.update({ activeProjects: group.activeProjects.filter(p => p.id !== post.id).toModelArray() })
+      }
       break
+    }
 
     case PIN_POST_PENDING:
       post = Post.withId(meta.postId)
