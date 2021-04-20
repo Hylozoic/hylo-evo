@@ -29,6 +29,7 @@ export function mapStateToProps (state, props) {
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
   const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
   const canModerate = getCanModerate(state, { group })
+  const moderators = group && isAboutCurrentGroup ? group.moderators : []
 
   return {
     canModerate,
@@ -37,6 +38,7 @@ export function mapStateToProps (state, props) {
     isAboutCurrentGroup,
     isMember,
     joinRequests,
+    moderators,
     myMemberships,
     pending: state.pending[FETCH_GROUP_DETAILS],
     routeParams,

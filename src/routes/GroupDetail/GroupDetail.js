@@ -21,7 +21,7 @@ import {
   visibilityString
 } from 'store/models/Group'
 import { inIframe } from 'util/index'
-import { groupDetailUrl, groupUrl } from 'util/navigation'
+import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
@@ -77,6 +77,7 @@ export default class GroupDetail extends Component {
       isAboutCurrentGroup,
       isMember,
       location,
+      moderators,
       onClose,
       pending
     } = this.props
@@ -145,6 +146,11 @@ export default class GroupDetail extends Component {
         }
         { isAboutCurrentGroup
           ? <div styleName='g.aboutCurrentGroup'>
+            <h3>Moderators</h3>
+            {moderators.map(p => <div>
+              <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
+              <Link to={personUrl(p.id, group.slug)}>{p.name}</Link>
+            </div>)}
             <h3>Privacy settings</h3>
             <div styleName='g.privacySetting'>
               <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />

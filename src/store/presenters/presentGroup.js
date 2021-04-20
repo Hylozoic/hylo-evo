@@ -24,6 +24,7 @@ export default function presentGroup (group) {
     }) : [],
     joinQuestions: group.joinQuestions ? group.joinQuestions.toRefArray() : [],
     members: group.members ? group.members.toModelArray() : [],
+    moderators: group.moderators ? group.moderators.toModelArray() : [],
     openOffersAndRequests: group.openOffersAndRequests ? group.openOffersAndRequests.toModelArray().map(p => {
       return {
         ...p.ref,
