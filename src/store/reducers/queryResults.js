@@ -178,13 +178,15 @@ export function matchNewThreadIntoQueryResults (state, { id, type }) {
 export function matchSubCommentsIntoQueryResults (state, { data }) {
   const toplevelComments = get(`post.comments.items`, data)
 
-  toplevelComments.forEach(comment => {
-    state = appendIds(state,
-      FETCH_CHILD_COMMENTS,
-      { id: comment.id },
-      get(`childComments`, comment) || {}
-    )
-  })
+  if (toplevelComments) {
+    toplevelComments.forEach(comment => {
+      state = appendIds(state,
+        FETCH_CHILD_COMMENTS,
+        { id: comment.id },
+        get(`childComments`, comment) || {}
+      )
+    })
+  }
 
   return state
 }
