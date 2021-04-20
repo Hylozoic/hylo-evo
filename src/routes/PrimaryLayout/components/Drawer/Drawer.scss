@@ -70,7 +70,7 @@ $new-group-spacing: 16px;
 .hyloLogoBar {
   display: flex;
   justify-content: space-between;
-  padding: 15px 15px 0;
+  padding: 15px 5px 0 5px;
   height: 55px;
   width: 100%;
 }
@@ -95,7 +95,7 @@ a.currentGroup:hover {
 }
 
 .currentGroup {
-  padding: $current-padding-top 0 $current-padding-bottom;
+  padding: $current-padding-top 10px $current-padding-bottom 10px;
   text-align: center;
 
   .avatar {
