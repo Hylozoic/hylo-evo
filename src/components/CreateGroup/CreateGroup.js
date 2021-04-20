@@ -53,6 +53,7 @@ export default class CreateGroup extends Component {
 
   focusSlug = () => {
     this.slugRef.current.focus()
+    this.slugRef.current.select()
   }
 
   isValid = () => {
@@ -90,9 +91,11 @@ export default class CreateGroup extends Component {
     }
 
     if (field === 'name' && !this.state.slugCustomized) {
-      const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g, '').replace(/\s+/g, '-')
-      updates.errors.slug = this.validateSlug(slugString)
-      updates.slug = slugString
+      if (newValue.length < 40) {
+        const slugString = newValue.toLowerCase().replace(/(^\s+|[^a-zA-Z0-9 ]+|\s+$)/g, '').replace(/\s+/g, '-')
+        updates.errors.slug = this.validateSlug(slugString)
+        updates.slug = slugString
+      }
     }
 
     this.setState(updates)
@@ -137,11 +140,11 @@ export default class CreateGroup extends Component {
           theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
           placeholder="Your group's name"
           noClearButton
-          maxLength='30'
+          maxLength='60'
           onEnter={this.onSubmit}
           styleName='groupNameInput'
         />
-        <span styleName='characterCounter'>{characterCount} / 30</span>
+        <span styleName='characterCounter'>{characterCount} / 60</span>
         {errors.name && <span styleName='nameError'>{errors.name}</span>}
         <span styleName='slug'>
           <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
@@ -153,10 +156,11 @@ export default class CreateGroup extends Component {
             name='slug'
             onChange={this.updateField('slug')}
             value={slug}
+            onClick={this.focusSlug}
             theme={{ input: styles['slugInput'], wrapper: styles['slug-wrapper'] }}
             noClearButton
             onEnter={this.onSubmit}
-            maxLength='30'
+            maxLength='40'
             inputRef={this.slugRef}
           />
         </span>

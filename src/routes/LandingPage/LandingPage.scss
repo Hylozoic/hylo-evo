@@ -43,11 +43,13 @@
     z-index: 1;
     padding-left: 20px;
     padding-bottom: 20px;
+    padding-right: 10px;
     display: flex;
     align-items: center;
 
     > div {
       padding-left: 10px;
+      max-width: calc(100% - 4rem);
     }
 
     .landing-page-avatar {
@@ -59,8 +61,10 @@
   .name {
     font-size: 24px;
     @include font-medium;
+    line-height: 24px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.50);
     letter-spacing: -0.47px;
+    margin-bottom: 5px;
   }
 
   .location {
@@ -104,9 +108,15 @@
 }
 
 @media screen and (max-width: 425px) {
+  .title {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+  }
   .banner {
     .name {
       font-size: 18px;
+      line-height: 18px;
     }
 
     .location {
