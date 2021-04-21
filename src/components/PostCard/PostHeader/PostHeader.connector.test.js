@@ -114,7 +114,7 @@ describe('mergeProps', () => {
       expect(editPost).toBeTruthy()
 
       deletePost()
-      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)
+      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33)
 
       editPost()
       expect(dispatchProps.editPost).toHaveBeenCalledWith(20)
@@ -177,7 +177,7 @@ describe('mergeProps', () => {
       expect(pinPost).toBeFalsy()
 
       deletePost()
-      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20)
+      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33)
     })
   })
 

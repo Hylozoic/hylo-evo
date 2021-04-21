@@ -142,36 +142,9 @@ const redirectRoutes = [
 export default class PrimaryLayout extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
       run: false,
-      steps: [
-        {
-          disableBeacon: true,
-          target: '#currentContext',
-          title: 'You are here!',
-          content: 'This is where we show you which group or view you are looking at. Hylo allows you to easily switch between groups as well as see updates from all your groups at once.'
-        },
-        {
-          target: '#mobileMenu',
-          title: 'Group menu',
-          content: 'Press on the group name or icon to navigate within the current group. Discover events, discussions, resources & more!'
-        },
-        {
-          target: '#toggleDrawer',
-          title: 'Switching groups & viewing all',
-          content: 'By clicking on the group icon, you\'ll be able to switch between groups, or see all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
-        },
-        {
-          target: '#groupMenu',
-          title: 'Create & navigate',
-          content: 'Here you can switch between types of content and create new content for people in your group or everyone on Hylo!'
-        },
-        {
-          target: '#personalSettings',
-          title: 'Messages, notifications & profile',
-          content: 'Search for posts & people. Send messages to group members or people you see on Hylo. Stay up to date with current events and edit your profile.'
-        }
-      ],
       closeTheTour: false
     }
   }
@@ -217,6 +190,38 @@ export default class PrimaryLayout extends Component {
     }
   }
 
+  tourSteps = () => {
+    const desktopWidth = this.props.width > 600
+    let steps = [
+      {
+        disableBeacon: true,
+        target: '#currentContext',
+        title: desktopWidth ? 'You are here!' : 'Group menu',
+        content: desktopWidth
+          ? 'This is where we show you which group or other view you are looking at. Click here to return to the home page.'
+          : 'Press on the group name or icon to navigate within the current group or view. Discover events, discussions, resources & more!'
+      },
+      {
+        target: '#toggleDrawer',
+        title: 'Switching groups & viewing all',
+        content: 'This menu allows you to switch between groups, or see updates from all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
+      }
+    ]
+    if (desktopWidth) {
+      steps.push({
+        target: '#groupMenu',
+        title: 'Create & navigate',
+        content: 'Here you can switch between types of content and create new content for people in your group or everyone on Hylo!',
+        placement: 'right'
+      })
+    }
+    return steps.concat({
+      target: '#personalSettings',
+      title: 'Messages, notifications & profile',
+      content: 'Search for posts & people. Send messages to group members or people you see on Hylo. Stay up to date with current events and edit your profile.'
+    })
+  }
+
   render () {
     const {
       currentGroupMembership,
@@ -228,7 +233,8 @@ export default class PrimaryLayout extends Component {
       isGroupRoute,
       location,
       routeParams,
-      showLogoBadge
+      showLogoBadge,
+      width
     } = this.props
 
     if (!currentUser) {
@@ -250,7 +256,10 @@ export default class PrimaryLayout extends Component {
     const isMapView = isMapViewPath(location.pathname)
     const collapsedState = hasDetail || (isMapView && queryParams['hideDrawer'] !== 'true')
     const isSingleColumn = (group && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
-    const showTourPrompt = !signupInProgress && !get('settings.alreadySeenTour', currentUser) && !isSingleColumn
+    const showTourPrompt = !signupInProgress &&
+      !get('settings.alreadySeenTour', currentUser) &&
+      !isSingleColumn && // Don't show tour on non-member group details page
+      !get('settings.showJoinForm', currentGroupMembership) // Show group welcome modal before tour
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
@@ -280,7 +289,7 @@ export default class PrimaryLayout extends Component {
         ))}
       </Switch>
 
-      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge }} />
+      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
 
       <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
@@ -326,7 +335,7 @@ export default class PrimaryLayout extends Component {
             {/* Group Routes */}
             {group && !currentGroupMembership &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
-            {currentGroupMembership && currentGroupMembership.settings.showJoinForm &&
+            {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
@@ -384,7 +393,7 @@ export default class PrimaryLayout extends Component {
         showProgress
         showClose
         tooltipComponent={TourTooltip}
-        steps={this.state.steps}
+        steps={this.tourSteps()}
       />
     </Div100vh>
   }

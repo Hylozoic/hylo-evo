@@ -292,6 +292,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         </div>
       </div>
       <QuestionsForm
+        disabled={true}
         questions={
           Array [
             Object {
