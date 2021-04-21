@@ -44,8 +44,19 @@ function downloadApp () {
 
 export default class TopNav extends Component {
   render () {
-    const { className, group, currentUser, logout, toggleDrawer, toggleGroupMenu, showLogoBadge, onClick, isPublic, isGroupMenuOpen, routeParams } = this.props
-
+    const {
+      className,
+      currentUser,
+      group,
+      isGroupMenuOpen,
+      isPublic,
+      logout,
+      onClick,
+      routeParams,
+      showLogoBadge,
+      toggleDrawer,
+      toggleGroupMenu
+    } = this.props
     const profileUrl = personUrl(get('id', currentUser))
 
     const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
@@ -55,16 +66,16 @@ export default class TopNav extends Component {
         <div styleName='drawerToggle' id='toggleDrawer'>
           <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
         </div>
-        <Link to={baseUrl(pick(['context', 'groupSlug'], routeParams))} styleName='logo-hover' id='currentContext'>
+        <Link
+          to={baseUrl(pick(['context', 'groupSlug'], routeParams))}
+          onClick={toggleGroupMenu}
+          styleName={cx('current-context', { groupMenuOpen: isGroupMenuOpen })}
+          id='currentContext'
+        >
           <Logo {...{ group, isPublic }} />
           {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} />
         </Link>
-        <div onClick={toggleGroupMenu} styleName={cx('mobile-logo', { groupMenuOpen: isGroupMenuOpen })} id='mobileMenu'>
-          <Logo {...{ group, isPublic }} />
-          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
-          <Title group={group} isPublic={isPublic} />
-        </div>
         <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <MessagesDropdown renderToggleChildren={showBadge =>

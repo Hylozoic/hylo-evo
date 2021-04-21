@@ -12,4 +12,12 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps, { logout, toggleDrawer, toggleGroupMenu })
+export function mapDispatchToProps (dispatch, props) {
+  return {
+    logout: () => dispatch(logout()),
+    toggleDrawer: () => dispatch(toggleDrawer()),
+    toggleGroupMenu: props.width > 600 ? () => {} : (e) => { dispatch(toggleGroupMenu()); e.preventDefault() }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)

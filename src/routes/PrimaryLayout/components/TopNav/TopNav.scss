@@ -93,7 +93,7 @@
   }
 }
 
-a.logo-hover {
+a.current-context {
   position: relative;
   display: flex;
   align-items: center;
@@ -165,10 +165,6 @@ a.logo-hover {
   }
 }
 
-.mobile-logo {
-  display: none;
-}
-
 .icon {
   position: relative;
   top: 3px;
@@ -216,18 +212,10 @@ a.logo-hover {
     bottom: 30px;
   }
 
-  a.logo-hover {
-    display: none;
-  }
-
-  .mobile-logo {
-    display: block;
+  .current-context {
     outline: none;
     border: none;
-    display: flex;
-    align-items: center;
     background-color: transparent;
-    position: relative;
     padding: 0;
     text-align: left;
 
@@ -248,7 +236,7 @@ a.logo-hover {
     }
   }
 
-  .mobile-logo.groupMenuOpen {
+  .current-context.groupMenuOpen {
 
     .title {
       max-width: calc(100vw - 62px);
