@@ -110,9 +110,10 @@
     color: rgba(192, 197, 205, 1.00);
     padding: 0;
     font-family: 'Circular Book';
-    width: 150px;
+    max-width: 250px;
     background-color: transparent;
     position: relative;
+    width: 100%;
     top: 6px;
   }
 }
@@ -120,6 +121,7 @@
 .slug-wrapper {
   display: inline;
   border: none;
+  flex-grow: 2;
   height: inherit;
 }
 
