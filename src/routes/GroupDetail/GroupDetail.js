@@ -148,7 +148,7 @@ export default class GroupDetail extends Component {
           ? <div styleName='g.aboutCurrentGroup'>
             <h3>Moderators</h3>
             <div styleName='g.moderators'>
-              {moderators.map(p => <Link to={personUrl(p.id, group.slug)} key='p.id' styleName='g.moderator'>
+              {moderators.map(p => <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
                 <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
                 <span>{p.name}</span>
               </Link>)}
