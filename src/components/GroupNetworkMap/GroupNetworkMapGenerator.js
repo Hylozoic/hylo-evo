@@ -68,7 +68,8 @@ export function runForceGraph (
     .forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d => d.id))
     .force('charge', d3.forceManyBody().strength(-1000))
-    .force('collide', d3.forceCollide().radius(60).iterations(2))
+    .force('collide', d3.forceCollide().radius(60))
+    .force('center', d3.forceCenter(0, 0))
     .force('x', d3.forceX(width / 4).strength(0.4))
     .force('y', d3.forceY(height / 4).strength(0.6))
 
