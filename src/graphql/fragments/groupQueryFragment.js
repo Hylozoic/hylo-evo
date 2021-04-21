@@ -33,6 +33,7 @@ export default
         items {
           id
           avatarUrl
+          name
         }
       }
     }
@@ -193,7 +194,9 @@ export default
       location
       members {
         items {
+          id
           avatarUrl
+          name
         }
       }
     }

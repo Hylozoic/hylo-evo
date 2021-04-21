@@ -22,9 +22,9 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const { groupSlug } = props.routeParams
   const closeUrl = removePostFromUrl(window.location.pathname)
-  const deletePostWithConfirm = postId => {
+  const deletePostWithConfirm = (postId, groupId) => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      dispatch(deletePost(postId))
+      dispatch(deletePost(postId, groupId))
       dispatch(push(closeUrl))
     }
   }
@@ -33,9 +33,9 @@ export function mapDispatchToProps (dispatch, props) {
     editPost: postId => props.editPost
       ? props.editPost(postId)
       : dispatch(push(editPostUrl(postId, props.routeParams))),
-    deletePost: postId => props.deletePost
+    deletePost: (postId, groupId) => props.deletePost
       ? props.deletePost(postId)
-      : deletePostWithConfirm(postId),
+      : deletePostWithConfirm(postId, groupId),
     fulfillPost: postId => props.fulfillPost
       ? props.fulfillPost(postId)
       : dispatch(fulfillPost(postId)),
@@ -60,7 +60,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: isCreator ? () => deletePost(id) : undefined,
+    deletePost: isCreator ? () => deletePost(id, group ? group.id : null) : undefined,
     editPost: canEdit ? () => editPost(id) : undefined,
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     canFlag: !isCreator,
