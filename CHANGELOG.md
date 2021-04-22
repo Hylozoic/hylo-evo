@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2021-04-21
+## Added
+- GDPR cookie notice when signing up for Hylo.
+
+## Changed
+- Allow for group names up to 60 characters.
+- Show moderators on group about panel.
+- Improved default group welcome message on landing page.
+
+### Fixed
+- Immediately navigate away from a post after deleting it.
+- Immediately update the landing page when editing a post, deleting a post, or removing a post from the group.
+- Correctly enable/disable ask join question form in group settings.
+- Sometimes crashing bug when creating a new message.
+- Style tweaks on group landing page.
+- Show correct welcome tour steps on mobile and desktop.
+- Show group welcome modal before showing tour.
+- Dont show welcome modal twice if closed quickly.
+
 ## [3.1.0] - 2021-04-16
 ### Added
 - __New group home page__: Groups now have a landing page that shows customizable widgets displaying recent announcements, recent posts, open requests and offers, upcoming events, recently active projects, recenty active members, sub-groups, and a customizable welcome message. Moderators can hide widgets for their group if desired.
