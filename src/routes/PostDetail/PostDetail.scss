@@ -13,7 +13,7 @@
   top: 49px;
   background-image: linear-gradient(0deg, rgba(255,255,255,0.00) 0%, $color-white 25%);
   padding: 25px 5px 25px 0;
-  z-index: 1;
+  z-index: 10;
 }
 
 .noUser .header-sticky {
@@ -21,7 +21,7 @@
 }
 
 .activity-sticky {
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   top: $topnav-height;
   background: $color-white;
