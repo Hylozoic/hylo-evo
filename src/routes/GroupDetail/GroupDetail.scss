@@ -488,6 +488,11 @@
     text-decoration: none;
     color: $color-white;
   }
+
+  &.disabledButton {
+    cursor: default;
+    background-color: gray;
+  }
 }
 
 .requestGroup {
