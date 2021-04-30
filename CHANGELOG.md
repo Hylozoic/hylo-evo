@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.2] - 2021-04-30
+## Changed
+- You can now start typing a topic with a # and it will correctly create the topic or autocomplete existing topics
+- Make join questions required before you can join a group
+
+### Fixed
+- Bug that prevented clicking on a comment to edit it at that locaion
+- Broken links to posts in emails
+- Bug when landing on a group page as a brand new user
+- Placeholder text scrolling on top of post header
+
 ## [3.1.1] - 2021-04-21
 ## Added
 - GDPR cookie notice when signing up for Hylo.
