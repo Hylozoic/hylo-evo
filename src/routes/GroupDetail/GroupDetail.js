@@ -293,7 +293,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
                   </div>)}
                   <div styleName='g.center'>
-                    <div styleName={cx('g.requestButton', {'g.disabledButton': !allQuestionsAnswered})} onClick={allQuestionsAnswered ? requestToJoinGroup(group.id, questionAnswers) : () => {}}>
+                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? requestToJoinGroup(group.id, questionAnswers) : () => {}}>
                       Request Membership in <span styleName='g.requestGroup'>{group.name}</span>
                     </div>
                   </div>
