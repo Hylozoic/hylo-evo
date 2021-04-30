@@ -129,6 +129,7 @@ const redirectRoutes = [
   { from: '/(c|n)/:groupSlug/:view(members|map|settings|topics)', to: '/groups/:groupSlug/:view' },
   { from: '/(c|n)/:groupSlug/map/p/:postId', to: '/groups/:groupSlug/map/post/:postId' },
   { from: '/(c|n)/:groupSlug/p/:postId', to: '/groups/:groupSlug/post/:postId' },
+  { from: '/groups/:groupSlug/p/:postId', to: '/groups/:groupSlug/post/:postId' },
   { from: '/(c|n)/:groupSlug/m/:personId', to: '/groups/:groupSlug/members/:personId' },
   { from: '/(c|n)/:groupSlug/m/:personId/p/:postId', to: '/groups/:groupSlug/members/:personId/post/:postId' },
   { from: '/(c|n)/:groupSlug/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
@@ -234,6 +235,7 @@ export default class PrimaryLayout extends Component {
       location,
       routeParams,
       showLogoBadge,
+      slug,
       width
     } = this.props
 
@@ -255,7 +257,7 @@ export default class PrimaryLayout extends Component {
     )
     const isMapView = isMapViewPath(location.pathname)
     const collapsedState = hasDetail || (isMapView && queryParams['hideDrawer'] !== 'true')
-    const isSingleColumn = (group && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
+    const isSingleColumn = (slug && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
     const showTourPrompt = !signupInProgress &&
       !get('settings.alreadySeenTour', currentUser) &&
       !isSingleColumn && // Don't show tour on non-member group details page
@@ -333,7 +335,7 @@ export default class PrimaryLayout extends Component {
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             {/* Group Routes */}
-            {group && !currentGroupMembership &&
+            {slug && !currentGroupMembership &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
             {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}

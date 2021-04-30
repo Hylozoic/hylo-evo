@@ -15,7 +15,6 @@ import HyloEditor from 'components/HyloEditor'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
-import { hasFeature } from 'store/models/Me'
 import CommentForm from '../CommentForm'
 import './Comment.scss'
 
@@ -76,9 +75,9 @@ export class Comment extends Component {
             {!editing && humanDate(createdAt)}
           </span>
           <div styleName='upperRight'>
-            {hasFeature('INLINE_COMMENTS') && <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+            <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
-            </div>}
+            </div>
             {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
           </div>
         </div>
