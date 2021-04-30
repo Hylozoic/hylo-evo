@@ -78,6 +78,9 @@ export default class TopicSelector extends Component {
   }
 
   handleInputChange = async (input) => {
+    if (input.charAt(0) === '#') {
+      input = input.slice(1)
+    }
     this.setState({ input })
     if (!isEmpty(input)) {
       if (this.state.selected.length >= MAX_TOPICS) {
@@ -123,18 +126,29 @@ export default class TopicSelector extends Component {
         styles={inputStyles}
         loadOptions={this.handleInputChange}
         onChange={this.handleTopicsChange}
-        getNewOptionData={(inputValue, optionLabel) => (selected.length >= MAX_TOPICS ? null : { name: inputValue, label: inputValue, value: inputValue, __isNew__: true })}
-        noOptionsMessage={() => {
+        getNewOptionData={(inputValue, optionLabel) => {
+          const sanitizedValue = inputValue.charAt(0) === '#' ? inputValue.slice(1) : inputValue
+          return selected.length >= MAX_TOPICS ? null : {
+            name: sanitizedValue,
+            label: sanitizedValue,
+            value: sanitizedValue,
+            __isNew__: true }
+        }}
+        noOptionsMessage={(inputValue) => {
           return selected.length >= MAX_TOPICS ? 'You can only select up to 3 topics' : 'Start typing to add a topic'
         }}
         formatOptionLabel={(item, { context, inputValue, selectValue }) => {
+          if (item.label === '') {
+            return <span>Start typing to add a topic</span>
+          }
           if (context === 'value') {
             return <div styleName='topicLabel'>#{item.label}</div>
           }
           if (item.__isNew__) {
-            return <div>Create topic &quot;{item.value}&quot;</div>
+            return <div>Create topic &quot;#{item.value}&quot;</div>
           }
           const { name, postsTotal, followersTotal } = item
+
           const formatCount = count => isNaN(count)
             ? 0
             : count < 1000
