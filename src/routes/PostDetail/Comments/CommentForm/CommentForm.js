@@ -69,7 +69,6 @@ export default class CommentForm extends Component {
     return <div
       styleName='commentForm'
       className={className}
-      onClick={() => this.editor.current.focus()}
     >
       { currentUser ? <AttachmentManager type='comment' id='new' /> : '' }
       <div styleName={cx('prompt', { 'disabled': !currentUser })}>
