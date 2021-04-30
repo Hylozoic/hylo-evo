@@ -112,7 +112,6 @@ export default class TopicSelector extends Component {
     const { currentGroup, defaultTopics, placeholder } = this.props
     const { selected } = this.state
 
-    let sanitizedValue = ''
     // If at max # topics don't show more default topics to select
     const defaultsToShow = selected.length >= MAX_TOPICS ? [] : defaultTopics ? [ { label: currentGroup ? currentGroup.name : 'Default' + ' Topics', options: defaultTopics } ] : []
 
@@ -127,20 +126,19 @@ export default class TopicSelector extends Component {
         styles={inputStyles}
         loadOptions={this.handleInputChange}
         onChange={this.handleTopicsChange}
-        getNewOptionData={(inputValue, optionLabel) => (
-          sanitizedValue = inputValue.charAt(0) === '#' ? inputValue.slice(1) : inputValue,
-          selected.length >= MAX_TOPICS ? null : {
+        getNewOptionData={(inputValue, optionLabel) => {
+          const sanitizedValue = inputValue.charAt(0) === '#' ? inputValue.slice(1) : inputValue
+          return selected.length >= MAX_TOPICS ? null : {
             name: sanitizedValue,
             label: sanitizedValue,
             value: sanitizedValue,
             __isNew__: true }
-        )}
+        }}
         noOptionsMessage={(inputValue) => {
-          return selected.length >= MAX_TOPICS  ? 'You can only select up to 3 topics' : 'Start typing to add a topic'
+          return selected.length >= MAX_TOPICS ? 'You can only select up to 3 topics' : 'Start typing to add a topic'
         }}
         formatOptionLabel={(item, { context, inputValue, selectValue }) => {
-          console.log(item)
-          if (item.label === "") {
+          if (item.label === '') {
             return <span>Start typing to add a topic</span>
           }
           if (context === 'value') {
