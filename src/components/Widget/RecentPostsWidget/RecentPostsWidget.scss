@@ -41,6 +41,7 @@
     .type {
       text-transform: uppercase;
       font-size: 10px;
+      opacity: .7;
     }
     .title {
       font-size: 14px;
@@ -127,26 +128,33 @@
 
 .discussion {
   background-color: $color-discussions;
+  background: linear-gradient(180deg, #40A1DD 0%, #215778 100%);
 }
 
 .event {
   background-color: $color-events;
+  background: linear-gradient(180deg, #EB5757 0%, #A51C1C 100%);
+
 }
 
 .offer {
   background-color: $color-offers;
+  background: linear-gradient(180deg, #0DC39F 0%, #106252 100%);
 }
 
 .project {
   background-color: $color-projects;
+  background: linear-gradient(180deg, #EC8627 0%, #A05107 100%);
 }
 
 .request {
   background-color: $color-requests;
+  background: linear-gradient(180deg, #624EA0 0%, #201936 100%);
 }
 
 .resource {
   background-color: $color-resources;
+  background: linear-gradient(180deg, #FDD549 0%, #B69629 100%);
 }
 
 .post.create-new {

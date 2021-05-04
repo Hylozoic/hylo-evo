@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import Slider from 'react-slick'
 import { Link } from 'react-router-dom'
+import { filter, isEmpty } from 'lodash/fp'
+import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { groupUrl, postUrl, createPostUrl } from 'util/navigation'
@@ -72,6 +74,13 @@ export default ({ group, items, routeParams }) => {
 
 const RecentPostCard = ({ group, onClickCapture, post }) => {
   const { commentersTotal, creator, id, title, type } = post
+  const imageAttachments = filter({ type: 'image' }, post.attachments)
+  let postBackgroundImage
+  if (!isEmpty(imageAttachments)) {
+    postBackgroundImage = imageAttachments[0].url
+  } else {
+    postBackgroundImage = 'none'
+  }
   return (
     <div>
       <Link to={postUrl(id, { groupSlug: group.slug })} styleName={`post ${type}`} onClickCapture={onClickCapture}>
@@ -79,7 +88,7 @@ const RecentPostCard = ({ group, onClickCapture, post }) => {
           <div styleName='type'>{type}</div>
           <div styleName='title'>{title}</div>
         </div>
-        <div styleName='bg' style={{ backgroundImage: `url('https://d3ngex8q79bk55.cloudfront.net/evo-uploads/user/31786/post/new/2020-12-01_Subcomments_v01.jpg')` }} />
+        <div styleName='bg' style={bgImageStyle(postBackgroundImage)} />
         <div styleName='meta'>
           <RoundImage url={creator.avatarUrl} medium withBorder={false} />
           <Icon name='SpeechBubble' styleName='comments'><span styleName='commenters'>{commentersTotal}</span></Icon>
