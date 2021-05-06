@@ -212,7 +212,7 @@ a.current-context {
     bottom: 30px;
   }
 
-  .current-context {
+  a.current-context {
     outline: none;
     border: none;
     background-color: transparent;
@@ -236,7 +236,7 @@ a.current-context {
     }
   }
 
-  .current-context.groupMenuOpen {
+  a.current-context.groupMenuOpen {
 
     .title {
       max-width: calc(100vw - 62px);
