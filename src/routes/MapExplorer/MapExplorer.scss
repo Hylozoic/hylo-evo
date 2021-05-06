@@ -274,6 +274,7 @@ button.toggleFeatureFiltersButton {
 
 @media screen and (max-width: 375px) {
   .toggleDrawerButton.drawerOpen {
-    z-index: 100;
+    z-index: 80;
+    top: 19px;
   }
 }
