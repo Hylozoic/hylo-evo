@@ -25,10 +25,9 @@
   }
 }
 
-
-
 .active {
   background-color: $color-iceberg;
+
   .link {
     text-decoration: none;
     color: $color-rhino;
@@ -66,6 +65,10 @@
 
   .item {
     padding: 0 15px;
+  }
+
+  .link.collapsed, .active .link.collapsed {
+    color: $color-rhino-60;
   }
 }
 

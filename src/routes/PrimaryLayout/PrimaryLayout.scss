@@ -592,22 +592,16 @@ $drawer-z-index: 51;
     box-shadow: 0px 4px 56px 0px $shadow-color;
     left: 0px;
     background-color: rgba(255, 255, 255, 1);
-    z-index: 79;
+    z-index: 101;
     width: 100%;
     max-width: 280px;
     flex: 0 0 100%;
     height: calc(100% - 56px);
     top: 56px;
-    -webkit-animation-name: fadeInDown;
-    animation-name: fadeInDown;
-    animation-duration: .25s;
     margin: 0;
   }
 
   .left.hidden {
-    -webkit-animation-name: fadeOutUp;
-    animation-name: fadeOutUp;
-    animation-duration: .25s;
     left: -100%;
     display: none;
   }
