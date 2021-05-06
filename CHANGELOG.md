@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.3] - 2021-05-06
+## Changed
+- Longer group names on mobile
+
+### Fixed
+- Fixed editing posts on mobile web
+- Fix bugs related to navigation menu on mobile
+
 ## [3.1.2] - 2021-04-30
 ## Changed
 - You can now start typing a topic with a # and it will correctly create the topic or autocomplete existing topics
