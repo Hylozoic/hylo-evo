@@ -35,9 +35,8 @@ $dropdown-width: 375px;
 
 .triangle {
   min-width: 0 !important;
-  @include is-top-triangle(#fff, $dropdown-border-color, 14px);
-  left: auto;
-}
+  @include is-top-triangle(#fff, transparent, 14px);
+  left: auto;}
 
 .header {
   display: flex;
