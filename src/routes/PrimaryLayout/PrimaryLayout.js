@@ -294,24 +294,24 @@ export default class PrimaryLayout extends Component {
       <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
 
       <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
-          {/* View navigation menu */}
-          <Route path='/:context(all|public)' component={props =>
+        {/* View navigation menu */}
+        <Route path='/:context(all|public)' component={props =>
+          <Navigation {...props}
+            collapsed={collapsedState}
+            styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
+            mapView={isMapView}
+          />}
+        />
+        {group && currentGroupMembership &&
+          <Route path='/:context(groups)/:groupSlug' component={props =>
             <Navigation {...props}
+              group={group}
               collapsed={collapsedState}
-              styleName={cx('left', { 'map-view': isMapView}, { 'hidden': !isGroupMenuOpen })}
+              styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
               mapView={isMapView}
             />}
           />
-          {group && currentGroupMembership &&
-            <Route path='/:context(groups)/:groupSlug' component={props =>
-              <Navigation {...props}
-                group={group}
-                collapsed={collapsedState}
-                styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
-                mapView={isMapView}
-              />}
-            />
-          }
+        }
 
         <Div100vh styleName={cx('center', { 'map-view': isMapView }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <Switch>
