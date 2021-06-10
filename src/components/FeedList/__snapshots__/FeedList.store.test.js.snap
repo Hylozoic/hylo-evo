@@ -166,6 +166,7 @@ posts: viewPosts(
     "extractQueryResults": Object {
       "getItems": [Function],
     },
+    "slug": undefined,
   },
   "type": "FETCH_POSTS",
 }
@@ -326,6 +327,7 @@ posts(
     "extractQueryResults": Object {
       "getItems": [Function],
     },
+    "slug": undefined,
   },
   "type": "FETCH_POSTS",
 }

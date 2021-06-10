@@ -39,7 +39,7 @@ export default ({ items = [], group }) => {
     <div styleName='announcements'>
       <Slider {...settings} onSwipe={handleSwiped}>
         {items.map(a => <div styleName={cx('announcement', { narrow: items.length > 1 })} key={a.id}>
-          <Link to={postUrl(a.id, { groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
+          <Link to={postUrl(a.id, { view: 'explore', groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
             <div styleName='content'>
               <div>
                 <div styleName='meta'>

@@ -41,7 +41,7 @@ export default ({ items, group, routeParams }) => {
     <div styleName='events'>
       <Slider {...settings} onSwipe={handleSwiped}>
         {items.map(e => <div styleName={cx('event', { narrow: items.length > 1 })} key={e.id}>
-          <Link to={postUrl(e.id, { groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
+          <Link to={postUrl(e.id, { view: 'explore', groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
             <div styleName='content'>
               <div styleName='time'>{moment(e.startTime).format('MMM D YYYY')}</div>
               <div styleName='title'>{e.title}</div>

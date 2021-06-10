@@ -43,11 +43,12 @@ export const facebookPrompt = () => {
 
   return facebookUrl
 }
+
 export class SocialControl extends Component {
   static propTypes = {
     label: string,
     provider: string,
-    value: string | null,
+    value: string,
     updateSettingDirectly: func,
     handleUnlinkAccount: func,
     onLink: func

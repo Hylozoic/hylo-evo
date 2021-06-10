@@ -56,7 +56,7 @@ import './PrimaryLayout.scss'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
-  { path: `/:context(all|public)/:view(events|map|projects|stream)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}` },
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
   { path: '/:context(all)/:view(topics)/:topicName' },
@@ -65,7 +65,7 @@ const routesWithDrawer = [
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}` },
-  { path: `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
   // {/* Member Routes */}
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
@@ -77,13 +77,13 @@ const routesWithDrawer = [
 ]
 
 const detailRoutes = [
-  { path: `/:context(all|public)/:view(events|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(all|public)/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(groups)/:groupSlug/:view(events|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
+  { path: `/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(groups)/:groupSlug/:view(map|groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(groups)/:groupSlug/:view(explore|map|groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
@@ -91,12 +91,12 @@ const detailRoutes = [
 ]
 
 const createRoutes = [
-  { path: `/:context(all|public)/:view(events|groups|map|projects|stream)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(all|public)/:view(events|explore|groups|map|projects|stream)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/:view(members)/:personId?/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/:views(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId?/${OPTIONAL_POST_MATCH}` },
-  { path: `/:context(groups)/:groupSlug/:view(events|groups|map|projects|stream|topics)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(groups)/:groupSlug/:view(events|explore|groups|map|projects|stream|topics)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(groups|map)/${GROUP_DETAIL_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
@@ -323,25 +323,32 @@ export default class PrimaryLayout extends Component {
               <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
-            {/* Member Routes */}
+            {/* **** Member Routes **** */}
             <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
             <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
-            {/* All and Public Routes */}
+            {/* **** All and Public Routes **** */}
             <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
             <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Feed} />
-            {/* Group Routes */}
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            {/* **** Group Routes **** */}
+            {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
+            {/* First time viewing a group redirect to explore page */}
+            {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
+              <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
+            {/* When joining a group by invitation show join form */}
             {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
               <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
             <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
             <Route path={`/:context(groups)/:groupSlug/:view(members)/create`} component={Members} />
@@ -350,9 +357,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={LandingPage} />
-            <Route path={`/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
-            <Route path={`/:context(groups)/:groupSlug`} component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug`} component={Stream} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -361,7 +367,7 @@ export default class PrimaryLayout extends Component {
         {group && currentGroupMembership &&
           <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
             <Switch>
-              <Route path={`/:context(groups)/:groupSlug/:view(events|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
+              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
               <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
               <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
             </Switch>

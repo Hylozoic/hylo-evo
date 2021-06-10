@@ -17,7 +17,7 @@ export default function Navigation (props) {
     clearFeedList,
     createPath,
     collapsed,
-    streamPath,
+    explorePath,
     membersPath,
     projectsPath,
     eventsPath,
@@ -48,17 +48,18 @@ export default function Navigation (props) {
       to: createPath
     },
     rootPath && {
-      label: 'Home',
-      icon: 'Home',
+      label: 'Stream',
+      icon: 'Stream',
       to: rootPath,
       badge: badge,
       onClick: homeOnClick,
-      exact: true
+      exact: true,
+      home: true
     },
-    streamPath && {
-      label: 'Stream',
-      icon: 'Stream',
-      to: streamPath
+    explorePath && {
+      label: 'Explore',
+      icon: 'Binoculars',
+      to: explorePath
     },
     projectsPath && {
       label: 'Projects',
