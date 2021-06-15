@@ -53,8 +53,7 @@ export default function Navigation (props) {
       to: rootPath,
       badge: badge,
       onClick: homeOnClick,
-      exact: true,
-      home: true
+      exact: true
     },
     explorePath && {
       label: 'Explore',
