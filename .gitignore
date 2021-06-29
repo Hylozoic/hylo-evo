@@ -12,6 +12,9 @@ build-hc
 es5
 storybook-static
 
+# local config
+config/ssl
+
 # misc
 .DS_Store
 .env

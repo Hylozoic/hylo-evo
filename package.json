@@ -240,5 +240,5 @@
       "test"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "localhost:3001"
 }
