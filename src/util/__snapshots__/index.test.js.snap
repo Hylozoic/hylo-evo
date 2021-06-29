@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`formatDatePair displays differences of dates 1`] = `"Mon, Feb 4 at 6:41PM"`;
+exports[`formatDatePair displays differences of dates 1`] = `"Tue, Feb 5 at 2:41AM GMT"`;
 
-exports[`formatDatePair displays differences of dates 2`] = `"Mon, Feb 4 at 6:41PM - 9:41PM"`;
+exports[`formatDatePair displays differences of dates 2`] = `"Tue, Feb 5 at 2:41AM GMT - 5:41AM GMT"`;
 
-exports[`formatDatePair displays differences of dates 3`] = `"Mon, Feb 4 at 6:41PM - Tue 5 at 9:41PM"`;
+exports[`formatDatePair displays differences of dates 3`] = `"Tue, Feb 5 at 2:41AM GMT - Wed 6 at 5:41AM GMT"`;
 
-exports[`formatDatePair displays differences of dates 4`] = `"Mon, Feb 4 at 6:41PM - Tue, Mar 5 at 9:41PM"`;
+exports[`formatDatePair displays differences of dates 4`] = `"Tue, Feb 5 at 2:41AM GMT - Wed, Mar 6 at 5:41AM GMT"`;

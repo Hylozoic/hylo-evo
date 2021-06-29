@@ -10,6 +10,14 @@ const mockGeolocation = {
 
 global.navigator.geolocation = mockGeolocation
 
+window.Intl = {
+  DateTimeFormat: jest.fn().mockImplementation(() => ({
+    resolvedOptions: jest.fn().mockImplementation(() => ({
+      timeZone: "Etc/GMT"
+    }))
+  }))
+}
+
 window.matchMedia = jest.fn().mockImplementation(query => {
   return {
     matches: false,
