@@ -16,7 +16,7 @@ export function mapStateToProps (state, props) {
 
   const group = getGroupForCurrentRoute(state, props)
   const rootPath = baseUrl(routeParams)
-  const streamPath = `${rootPath}/stream`
+  const explorePath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/explore` : false
   const projectsPath = `${rootPath}/projects`
   const eventsPath = `${rootPath}/events`
   const groupsPath = `${rootPath}/groups`
@@ -46,7 +46,7 @@ export function mapStateToProps (state, props) {
     hideTopics: isPublicPath(props.location.pathname),
     isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
     rootPath,
-    streamPath,
+    explorePath,
     membersPath,
     projectsPath,
     eventsPath,

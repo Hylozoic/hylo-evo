@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import Icon from 'components/Icon'
-import { isEmpty } from 'lodash/fp'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
 import Widget from 'components/Widget'
@@ -21,12 +20,7 @@ export default class LandingPage extends Component {
   }
 
   componentDidMount () {
-    this.fetchOrShowCached()
-  }
-
-  fetchOrShowCached = () => {
-    const { posts, fetchPosts } = this.props
-    if (isEmpty(posts)) fetchPosts()
+    this.props.fetchPosts()
   }
 
   render () {

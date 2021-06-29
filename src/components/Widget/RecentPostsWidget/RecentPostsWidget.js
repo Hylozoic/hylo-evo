@@ -83,7 +83,7 @@ const RecentPostCard = ({ group, onClickCapture, post }) => {
   }
   return (
     <div>
-      <Link to={postUrl(id, { groupSlug: group.slug })} styleName={`post ${type}`} onClickCapture={onClickCapture}>
+      <Link to={postUrl(id, { view: 'explore', groupSlug: group.slug })} styleName={`post ${type}`} onClickCapture={onClickCapture}>
         <div styleName='content'>
           <div styleName='type'>{type}</div>
           <div styleName='title'>{title}</div>
