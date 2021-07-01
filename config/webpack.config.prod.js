@@ -301,7 +301,9 @@ module.exports = {
     // having to parse `index.html`.
     new WebpackManifestPlugin({
       fileName: 'asset-manifest.json'
-    })
+    }),
+    // To strip all locales except “en”
+    new MomentLocalesPlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

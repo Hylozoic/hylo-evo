@@ -1,5 +1,5 @@
 import inflection from 'inflection'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 export function bgImageStyle (url) {
   if (!url) return {}
@@ -20,20 +20,20 @@ export function isPromise (value) {
 export const inflectedTotal = (word, count) => `${count.toLocaleString()} ${inflection.inflect(word, count)}`
 
 export const formatDatePair = (startTime, endTime) => {
-  const start = moment(startTime)
-  const end = moment(endTime)
+  const start = moment.tz(startTime, moment.tz.guess())
+  const end = moment.tz(endTime, moment.tz.guess())
 
-  const from = start.format('ddd, MMM D [at] h:mmA')
+  const from = start.format('ddd, MMM D [at] h:mmA z')
 
   var to = ''
 
   if (endTime) {
     if (end.month() !== start.month()) {
-      to = end.format(' - ddd, MMM D [at] h:mmA')
+      to = end.format(' - ddd, MMM D [at] h:mmA z')
     } else if (end.date() !== start.date()) {
-      to = end.format(' - ddd D [at] h:mmA')
+      to = end.format(' - ddd D [at] h:mmA z')
     } else {
-      to = end.format(' - h:mmA')
+      to = end.format(' - h:mmA z')
     }
   }
 
