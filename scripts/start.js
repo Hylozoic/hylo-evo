@@ -8,6 +8,8 @@ require('dotenv').config({ silent: true })
 
 var chalk = require('chalk')
 var webpack = require('webpack')
+var fs = require('fs')
+var path = require('path')
 var WebpackDevServer = require('webpack-dev-server')
 var historyApiFallback = require('connect-history-api-fallback')
 var httpProxyMiddleware = require('http-proxy-middleware')
@@ -137,10 +139,10 @@ function onProxyError (proxy) {
   }
 }
 
-function addMiddleware (devServer) {
+function addMiddleware (devServer, protocol) {
   // `proxy` lets you to specify a fallback server during development.
   // Every unrecognized request will be forwarded to it.
-  var proxy = process.env.API_HOST || require(paths.appPackageJson).proxy
+  var proxy = process.env.API_HOST || (protocol + '://' + require(paths.appPackageJson).proxy)
   devServer.use(historyApiFallback({
     // Paths with dots should still use the history fallback.
     // See https://github.com/facebookincubator/create-react-app/issues/387.
@@ -200,6 +202,13 @@ function addMiddleware (devServer) {
     // If this is not done, httpProxyMiddleware will not try to upgrade until
     // an initial plain HTTP request is made.
     devServer.listeningApp.on('upgrade', hpm.upgrade)
+
+    // This prevents an issue when developing locally using SSL where the server would crash if the API server wasn't running
+    devServer.listeningApp.on('secureConnection', (sock) => {
+      sock.on('error', (err) => {
+        console.error("Caught error on secure connect: ", err);
+      });
+    })
   }
 
   // Finally, by now we have certainly resolved the URL.
@@ -251,12 +260,16 @@ function runDevServer (host, port, protocol) {
       ignored: /node_modules/
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
+    https: protocol === 'https' ? process.env.LOCAL_CERT ? {
+      ca: fs.readFileSync(path.resolve(__dirname, `../config/ssl/${process.env.LOCAL_CERT}.pem`)),
+      key: fs.readFileSync(path.resolve(__dirname, `../config/ssl/${process.env.LOCAL_CERT}.key`)),
+      cert: fs.readFileSync(path.resolve(__dirname, `../config/ssl/${process.env.LOCAL_CERT}.crt`))
+    } : true : false,
     host: host
   })
 
   // Our custom middleware proxies requests to /index.html or a remote API.
-  addMiddleware(devServer)
+  addMiddleware(devServer, protocol)
 
   // Launch WebpackDevServer.
   devServer.listen(port, (err, result) => {

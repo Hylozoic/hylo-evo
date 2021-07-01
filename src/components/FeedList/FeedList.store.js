@@ -39,6 +39,7 @@ export function fetchPosts ({ context, slug, sortBy, offset, search, filter, top
       }
     },
     meta: {
+      slug,
       extractModel,
       extractQueryResults: {
         getItems

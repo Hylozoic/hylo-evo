@@ -24,6 +24,17 @@
 3. If you are building a new UI component, please add :)
 4. Run the storybook with `yarn storybook`
 
+## Develop with SSL locally
+
+1. Create a local certificate and make sure your computer trusts it. Here are some up to date instructions for macOS: https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/
+2. Create a directory `config/ssl` and copy the .crt, key and .pem (CA certificate) files you generated above to it. Make sure they all have the same filename e.g. localhost.crt, localhost.key and localhost.pem
+3. Update your `.env` with:
+
+```
+HTTPS=true
+LOCAL_CERT=localhost (this should be the root filename used for your certificate files above)
+```
+
 ## Further documentation
 
 So long as this repo remains private, remaining docs are available in [Confluence](https://hylozoic.atlassian.net/wiki/spaces/DEV/pages/87195649/Web+Client).
