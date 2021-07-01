@@ -8,6 +8,7 @@ posts: viewPosts(
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
+  isFuture: $isFuture,
   offset: $offset,
   order: "desc",
   sortBy: $sortBy,

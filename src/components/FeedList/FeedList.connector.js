@@ -20,7 +20,8 @@ export function mapStateToProps (state, props) {
     ], props.routeParams),
     ...pick([
       'sortBy',
-      'topic'
+      'topic',
+      'isFuture'
     ], props)
   }
 

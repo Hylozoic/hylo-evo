@@ -47,6 +47,7 @@ export default class Feed extends Component {
       topic: get('id', this.props.topic),
       groupId: get('group.id', this.props),
       ...pick([
+        'isFuture',
         'postTypeFilter',
         'sortBy',
         'changeSort',

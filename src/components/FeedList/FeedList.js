@@ -98,6 +98,7 @@ export default class FeedList extends React.Component {
     const isProject = routeParams.view === 'projects'
     const isEvent = routeParams.view === 'events'
     const showSortAndFilters = !isProject && !isEvent
+    const emptyMessage = isEvent ? "No upcoming events" : "Nothing to see here"
 
     return <div styleName='FeedList-container' ref={targetRef}>
       <ScrollListener
@@ -120,7 +121,7 @@ export default class FeedList extends React.Component {
         </div>}
       </React.Fragment>}
       <div styleName={cx('FeedListItems', { collapsedState })}>
-        {!pending && posts.length === 0 ? <NoPosts /> : ''}
+        {!pending && posts.length === 0 ? <NoPosts message={emptyMessage} /> : ''}
 
         {posts.map(post => {
           const expanded = post.id === routeParams.postId
