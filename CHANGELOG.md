@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.1.4] - 2021-07-08
+### Added
+- Show timezone for an event's start and end time
+- Support local development with SSL
+
+### Changed
+- Switch back to the stream being the home page for groups. Show Explore page on the first time viewing a group.
+
 ### Fixed
 - Editing a post deleting its images
 
