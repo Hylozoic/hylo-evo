@@ -98,7 +98,7 @@ export default class FeedList extends React.Component {
     const isProject = routeParams.view === 'projects'
     const isEvent = routeParams.view === 'events'
     const showSortAndFilters = !isProject && !isEvent
-    const emptyMessage = isEvent ? "No upcoming events" : "Nothing to see here"
+    const emptyMessage = isEvent ? 'No upcoming events' : 'Nothing to see here'
 
     return <div styleName='FeedList-container' ref={targetRef}>
       <ScrollListener

@@ -3,7 +3,7 @@ import './NoPosts.scss'
 
 import { jollyAxolotl } from 'util/assets'
 
-export default ({message = 'Nothing to see here'}) => (
+export default ({ message = 'Nothing to see here' }) => (
   <div styleName='no-posts'>
     <img src={jollyAxolotl} />
     <br />
