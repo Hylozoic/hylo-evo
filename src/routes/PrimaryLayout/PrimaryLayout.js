@@ -312,6 +312,9 @@ export default class PrimaryLayout extends Component {
             />}
           />
         }
+        {/* When joining a group by invitation show join form */}
+        {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
+          <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
 
         <Div100vh styleName={cx('center', { 'map-view': isMapView }, { collapsedState })} id={CENTER_COLUMN_ID}>
           <Switch>
@@ -341,9 +344,6 @@ export default class PrimaryLayout extends Component {
             {/* First time viewing a group redirect to explore page */}
             {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
               <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
-            {/* When joining a group by invitation show join form */}
-            {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
-              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
