@@ -23,12 +23,22 @@ export const formatDatePair = (startTime, endTime) => {
   const start = moment.tz(startTime, moment.tz.guess())
   const end = moment.tz(endTime, moment.tz.guess())
 
-  const from = start.format('ddd, MMM D [at] h:mmA z')
+  const now = moment()
+  const isThisYear = start.year() === now.year() && end.year() === now.year()
 
-  var to = ''
+  let to = ''
+  let from = ''
+
+  if (isThisYear) {
+    from = start.format('ddd, MMM D [at] h:mmA z')
+  } else {
+    from = start.format('ddd, MMM D, YYYY [at] h:mmA z')
+  }
 
   if (endTime) {
-    if (end.month() !== start.month()) {
+    if (end.year() !== start.year()) {
+      to = end.format(' - ddd, MMM D, YYY [at] h:mmA z')
+    } else if (end.month() !== start.month()) {
       to = end.format(' - ddd, MMM D [at] h:mmA z')
     } else if (end.date() !== start.date()) {
       to = end.format(' - ddd D [at] h:mmA z')

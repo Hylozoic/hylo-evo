@@ -8,7 +8,7 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ context, slug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ context, isFuture, slug, sortBy, offset, search, filter, topic }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -30,6 +30,7 @@ export function fetchPosts ({ context, slug, sortBy, offset, search, filter, top
       variables: {
         filter,
         first: 20,
+        isFuture,
         offset,
         context,
         search,
@@ -52,6 +53,7 @@ const groupQuery = `query (
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
+  $isFuture: Boolean,
   $offset: Int,
   $search: String,
   $slug: String,
@@ -80,6 +82,7 @@ const postsQuery = `query (
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
+  $isFuture: Boolean,
   $offset: Int,
   $context: String,
   $search: String,

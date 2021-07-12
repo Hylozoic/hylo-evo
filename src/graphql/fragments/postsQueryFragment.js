@@ -6,6 +6,7 @@ posts(
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
+  isFuture: $isFuture,
   offset: $offset,
   context: $context,
   order: "desc",
