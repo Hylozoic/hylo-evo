@@ -83,7 +83,7 @@ export function mapDispatchToProps (dispatch, props) {
         return dispatch(fetchTopic(topicName))
       }
     },
-    toggleCommunityTopicSubscribe: groupTopic =>
+    toggleGroupTopicSubscribe: groupTopic =>
       dispatch(toggleGroupTopicSubscribe(groupTopic)),
     goToCreateGroup: () => dispatch(push(createGroupUrl(routeParams))),
     newPost: () => dispatch(push(createPostUrl(routeParams, querystringParams)))
