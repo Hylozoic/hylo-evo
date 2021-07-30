@@ -10,7 +10,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import presentPost from 'store/presenters/presentPost'
-import { createGroupUrl, createPostUrl } from 'util/navigation'
+import { createPostUrl } from 'util/navigation'
 
 import {
   fetchPosts,
