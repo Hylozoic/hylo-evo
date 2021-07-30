@@ -43,6 +43,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/Signup/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
+import { inIframe } from 'util/index'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
@@ -291,9 +292,9 @@ export default class PrimaryLayout extends Component {
         ))}
       </Switch>
 
-      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
+      {!inIframe() && <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />}
 
-      <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
+      <div styleName={cx('main', { 'map-view': isMapView, 'inIframe': inIframe() })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
         <Route path='/:context(all|public)' component={props =>
           <Navigation {...props}
