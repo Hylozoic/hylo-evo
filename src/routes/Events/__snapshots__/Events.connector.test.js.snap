@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapDispatchToProps correctly sets up updateTimeframe and fetchEvents 1`] = `
+Object {
+  "payload": "future",
+  "type": "Events/UPDATE_TIMEFRAME",
+}
+`;
+
+exports[`mapDispatchToProps correctly sets up updateTimeframe and fetchEvents 2`] = `[Function]`;

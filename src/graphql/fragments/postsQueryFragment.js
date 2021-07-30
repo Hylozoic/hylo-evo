@@ -2,14 +2,15 @@ import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
 const postsQueryFragment = `
 posts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
-  isFuture: $isFuture,
   offset: $offset,
   context: $context,
-  order: "desc",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
   topic: $topic

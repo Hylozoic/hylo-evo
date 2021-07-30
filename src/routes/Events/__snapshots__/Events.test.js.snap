@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events renders a post list 1`] = `
+<div>
+  <FeedBanner
+    currentUser={
+      Object {
+        "id": 1,
+      }
+    }
+    currentUserHasMemberships={true}
+    querystringParams={Object {}}
+    routeParams={Object {}}
+    type="event"
+  />
+  <div
+    data-stylename="viewStyles.stream-view-ctrls"
+  >
+    <Dropdown
+      items={
+        Array [
+          Object {
+            "label": "Upcoming Events",
+            "onClick": [Function],
+          },
+          Object {
+            "label": "Past Events",
+            "onClick": [Function],
+          },
+        ]
+      }
+      toggleChildren={
+        <span
+          data-stylename="viewStyles.dropdown-label"
+        >
+          <Icon
+            name="ArrowDown"
+          />
+          Upcoming Events
+        </span>
+      }
+    />
+  </div>
+  <div
+    data-stylename="s.events-stream"
+  >
+    <Connect(PostCard)
+      data-stylename="s.event-card"
+      expanded={false}
+      key="1"
+      post={
+        Object {
+          "id": 1,
+        }
+      }
+      routeParams={Object {}}
+    />
+    <Connect(PostCard)
+      data-stylename="s.event-card"
+      expanded={false}
+      key="2"
+      post={
+        Object {
+          "id": 2,
+        }
+      }
+      routeParams={Object {}}
+    />
+    <Connect(PostCard)
+      data-stylename="s.event-card"
+      expanded={false}
+      key="3"
+      post={
+        Object {
+          "id": 3,
+        }
+      }
+      routeParams={Object {}}
+    />
+  </div>
+  <ScrollListener
+    elementId="center-column"
+    onBottom={[Function]}
+  />
+</div>
+`;

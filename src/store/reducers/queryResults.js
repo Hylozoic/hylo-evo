@@ -136,7 +136,8 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       { context: 'groups', slug: group.slug, sortBy: 'created' },
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type },
       // For events feed
-      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, isFuture: true }
+      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
+      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'desc' }
     )
     for (let topic of topics) {
       queriesToMatch.push(
@@ -274,9 +275,9 @@ export const queryParamWhitelist = [
   'slug',
   'groupSlug',
   'groupSlugs',
-  'isFuture',
   'parentSlugs',
   'sortBy',
+  'order',
   'search',
   'autocomplete',
   'filter',

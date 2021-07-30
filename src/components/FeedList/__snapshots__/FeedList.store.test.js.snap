@@ -4,11 +4,13 @@ exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
-  $isFuture: Boolean,
   $offset: Int,
+  $order: String,
   $search: String,
   $slug: String,
   $sortBy: String,
@@ -29,12 +31,13 @@ Object {
     postCount
     
 posts: viewPosts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
-  isFuture: $isFuture,
   offset: $offset,
-  order: \\"desc\\",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
   topic: $topic
@@ -153,11 +156,13 @@ posts: viewPosts(
   }
 }",
     "variables": Object {
+      "afterTime": undefined,
+      "beforeTime": undefined,
       "context": "groups",
       "filter": "offer",
       "first": 20,
-      "isFuture": undefined,
       "offset": 20,
+      "order": undefined,
       "search": "gardening",
       "slug": undefined,
       "sortBy": undefined,
@@ -179,27 +184,30 @@ exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
+  $context: String,
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
-  $isFuture: Boolean,
   $offset: Int,
-  $context: String,
+  $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID,
 ) {
   
 posts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
-  isFuture: $isFuture,
   offset: $offset,
   context: $context,
-  order: \\"desc\\",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
   topic: $topic
@@ -317,11 +325,13 @@ posts(
 }
 }",
     "variables": Object {
+      "afterTime": undefined,
+      "beforeTime": undefined,
       "context": "all",
       "filter": "request",
       "first": 20,
-      "isFuture": undefined,
       "offset": 20,
+      "order": undefined,
       "search": "graphic design",
       "slug": undefined,
       "sortBy": undefined,

@@ -55,7 +55,6 @@ export function mapStateToProps (state, props) {
     groupTopic,
     groupSlug,
     group,
-    isFuture: view === 'events',
     topicLoading,
     topicName,
     topic,

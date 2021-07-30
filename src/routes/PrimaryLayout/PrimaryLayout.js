@@ -22,6 +22,7 @@ import GroupSidebar from 'routes/GroupSidebar'
 import GroupWelcomeModal from 'routes/GroupWelcomeModal'
 import Groups from 'routes/Groups'
 import Drawer from './components/Drawer'
+import Events from 'routes/Events'
 import Feed from 'routes/Feed'
 import Stream from 'routes/Stream'
 import MapExplorer from 'routes/MapExplorer'
@@ -331,7 +332,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
             {/* **** All and Public Routes **** */}
             <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-            <Route path={`/:context(all|public)/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
@@ -349,7 +351,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
             <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
             <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
-            <Route path={`/:context(groups)/:groupSlug/:view(events|projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
             <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
             <Route path={`/:context(groups)/:groupSlug/:view(members)/create`} component={Members} />
             <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />

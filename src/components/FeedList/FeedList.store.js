@@ -8,7 +8,7 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ context, isFuture, slug, sortBy, offset, search, filter, topic }) {
+export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -28,11 +28,13 @@ export function fetchPosts ({ context, isFuture, slug, sortBy, offset, search, f
     graphql: {
       query,
       variables: {
+        afterTime,
+        beforeTime,
+        context,
         filter,
         first: 20,
-        isFuture,
         offset,
-        context,
+        order,
         search,
         slug,
         sortBy,
@@ -50,11 +52,13 @@ export function fetchPosts ({ context, isFuture, slug, sortBy, offset, search, f
 }
 
 const groupQuery = `query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
-  $isFuture: Boolean,
   $offset: Int,
+  $order: String,
   $search: String,
   $slug: String,
   $sortBy: String,
@@ -78,13 +82,15 @@ const groupQuery = `query (
 }`
 
 const postsQuery = `query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
+  $context: String,
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
-  $isFuture: Boolean,
   $offset: Int,
-  $context: String,
+  $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID,

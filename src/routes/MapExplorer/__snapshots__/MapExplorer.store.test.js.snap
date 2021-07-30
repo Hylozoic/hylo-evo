@@ -4,14 +4,17 @@ exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
-  $slug: String,
-  $sortBy: String,
+  $afterTime: Date,
+  $beforeTime: Date,
+  $boundingBox: [PointInput]
   $filter: String,
-  $search: String,
-  $topic: ID,
   $first: Int,
   $offset: Int,
-  $boundingBox: [PointInput]
+  $order: String,
+  $search: String,
+  $slug: String,
+  $sortBy: String,
+  $topic: ID
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -22,12 +25,13 @@ Object {
     postCount
     
 posts: viewPosts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
-  isFuture: $isFuture,
   offset: $offset,
-  order: \\"desc\\",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
   topic: $topic
@@ -170,26 +174,30 @@ exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
+  $context: String,
   $filter: String,
   $first: Int,
   $groupSlugs: [String]
   $offset: Int,
-  $context: String,
+  $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID
 ) {
   
 posts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
-  isFuture: $isFuture,
   offset: $offset,
   context: $context,
-  order: \\"desc\\",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
   topic: $topic

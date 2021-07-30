@@ -34,14 +34,17 @@ export function formatBoundingBox (bbox) {
 }
 
 const groupPostsQuery = `query (
-  $slug: String,
-  $sortBy: String,
+  $afterTime: Date,
+  $beforeTime: Date,
+  $boundingBox: [PointInput]
   $filter: String,
-  $search: String,
-  $topic: ID,
   $first: Int,
   $offset: Int,
-  $boundingBox: [PointInput]
+  $order: String,
+  $search: String,
+  $slug: String,
+  $sortBy: String,
+  $topic: ID
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -55,12 +58,15 @@ const groupPostsQuery = `query (
 }`
 
 const postsQuery = `query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
+  $context: String,
   $filter: String,
   $first: Int,
   $groupSlugs: [String]
   $offset: Int,
-  $context: String,
+  $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID
