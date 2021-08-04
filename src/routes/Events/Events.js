@@ -2,7 +2,6 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import FeedBanner from 'components/FeedBanner'
 import Icon from 'components/Icon'
@@ -10,7 +9,6 @@ import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
-import { bgImageStyle } from 'util/index'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import s from './Events.scss'
 import viewStyles from '../../components/StreamViewControls/StreamViewControls.scss'
@@ -58,15 +56,13 @@ export default class Events extends Component {
       collapsedState,
       routeParams, querystringParams, group, currentUser,
       newPost, currentUserHasMemberships,
-      goToCreateEvent, membershipsPending, pending, posts,
+      membershipsPending, pending, posts,
       timeframe, updateTimeframe
     } = this.props
     const { context } = routeParams
 
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
-
-    const isPublic = context === 'public'
 
     return <div>
       <FeedBanner
@@ -94,7 +90,7 @@ export default class Events extends Component {
 
       {pending && <Loading />}
 
-      {(currentUserHasMemberships || isPublic) && <div styleName={cx('s.events-stream', { [s.collapsedState]: collapsedState })}>
+      <div styleName={cx('s.events-stream', { [s.collapsedState]: collapsedState })}>
         {!pending && posts.length === 0 ? <NoPosts message={`No ${timeframe === 'future' ? 'upcoming' : 'past'} events`} /> : ''}
 
         {posts.map(post => {
@@ -106,24 +102,9 @@ export default class Events extends Component {
             expanded={expanded}
             key={post.id} />
         })}
-      </div>}
+      </div>
       <ScrollListener onBottom={this.fetchMoreEvents} elementId={CENTER_COLUMN_ID} />
 
-      {!membershipsPending && !currentUserHasMemberships && !isPublic && <CreateEventPrompt
-        goToCreateEvent={goToCreateEvent}
-      />}
     </div>
   }
-}
-
-export function CreateEventPrompt ({ goToCreateEvent }) {
-  return <div styleName='s.create-group-prompt'>
-    <p>There's no events to show, let's create one!</p>
-    <Button
-      styleName='s.button'
-      label='Create an Event'
-      onClick={goToCreateEvent}
-    />
-    <div style={bgImageStyle('/assets/hey-axolotl.png')} styleName='s.sidebar-image' />
-  </div>
 }

@@ -19,6 +19,7 @@ describe('Events', () => {
   it('displays the regular FeedBanner', () => {
     const props = {
       currentUser: { id: 1 },
+      posts: [],
       timeframe: 'future',
       fetchEvents: jest.fn()
     }

@@ -7,3 +7,5 @@ exports[`formatDatePair displays differences of dates 2`] = `"Mon, Feb 4, 2019 a
 exports[`formatDatePair displays differences of dates 3`] = `"Mon, Feb 4, 2019 at 6:41PM GMT - Tue, Feb 5 at 9:41PM GMT"`;
 
 exports[`formatDatePair displays differences of dates 4`] = `"Mon, Feb 4, 2019 at 6:41PM GMT - Tue, Mar 5 at 9:41PM GMT"`;
+
+exports[`formatDatePair displays differences of dates 5`] = `"Mon, Feb 4, 2019 at 6:41PM GMT - Sat, Feb 5, 502050 at 9:41PM GMT"`;

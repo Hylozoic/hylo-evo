@@ -8,3 +8,15 @@ Object {
 `;
 
 exports[`mapDispatchToProps correctly sets up updateTimeframe and fetchEvents 2`] = `[Function]`;
+
+exports[`mapDispatchToProps correctly sets up updateTimeframe and fetchEvents 3`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/groups/foo/create/post?newPostType=event",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;

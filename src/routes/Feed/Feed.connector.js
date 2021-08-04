@@ -42,7 +42,7 @@ export function mapStateToProps (state, props) {
   }
 
   const postTypeFilter = view === 'projects' ? 'project' : (view === 'events' ? 'event' : getQuerystringParam('t', state, props))
-  const sortBy = view === 'events' ? 'start_time' : getQuerystringParam('s', state, props)
+  const sortBy = getQuerystringParam('s', state, props)
 
   return {
     routeParams,

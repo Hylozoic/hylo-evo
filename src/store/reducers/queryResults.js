@@ -113,7 +113,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   */
   const queriesToMatch = []
 
-  // All Groups feed w/ topics
+  // All Groups stream w/ topics
   queriesToMatch.push({ context: 'all' })
   for (let topic of topics) {
     queriesToMatch.push(
@@ -126,7 +126,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     queriesToMatch.push({ context: 'public' })
   }
 
-  // Group feeds w/ topics
+  // Group streams
   return reduce((memo, group) => {
     queriesToMatch.push(
       { context: 'groups', slug: group.slug },
@@ -135,7 +135,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type },
       { context: 'groups', slug: group.slug, sortBy: 'created' },
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type },
-      // For events feed
+      // For events stream
       { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
       { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'desc' }
     )

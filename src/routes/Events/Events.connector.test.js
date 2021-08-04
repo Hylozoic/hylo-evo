@@ -63,5 +63,6 @@ describe('mapDispatchToProps', () => {
     const dispatchProps = mapDispatchToProps(dispatch, props)
     expect(dispatchProps.updateTimeframe('future')).toMatchSnapshot()
     expect(dispatchProps.fetchEvents(fetchPostsParam)).toMatchSnapshot()
+    expect(dispatchProps.newPost(fetchPostsParam)).toMatchSnapshot()
   })
 })

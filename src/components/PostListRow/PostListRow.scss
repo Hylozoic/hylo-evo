@@ -7,6 +7,10 @@
   margin-left: 0 0;
   padding: 12px 20px;
   background-color: rgba(233, 248, 245, 0);
+
+  &:first-child {
+    border-top: 1px solid $color-cape-cod-10;
+  }
 }
 
 .type-author {
