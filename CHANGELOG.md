@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Events view now show Upcoming events in start time order and has an option to show Past events in descending start time order.
 
+### Fixed
+- (Un)subscribing to a topic from a topic feed banner
+
 ## [3.1.4] - 2021-07-08
 ### Added
 - Show timezone for an event's start and end time
