@@ -7,10 +7,12 @@ describe('formatDatePair', () => {
     const d2 = moment.tz(d1, "Etc/GMT").hour(21)
     const d3 = moment.tz(d2, "Etc/GMT").day(2)
     const d4 = moment.tz(d3, "Etc/GMT").month(2)
+    const d5 = moment.tz(d3, "Etc/GMT").year(2050)
 
     expect(formatDatePair(d1)).toMatchSnapshot()
     expect(formatDatePair(d1, d2)).toMatchSnapshot()
     expect(formatDatePair(d1, d3)).toMatchSnapshot()
     expect(formatDatePair(d1, d4)).toMatchSnapshot()
+    expect(formatDatePair(d1, d5)).toMatchSnapshot()
   })
 })

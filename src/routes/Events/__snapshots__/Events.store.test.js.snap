@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`updateTimeframe should match latest snapshot 1`] = `
+Object {
+  "payload": "past",
+  "type": "Events/UPDATE_TIMEFRAME",
+}
+`;
