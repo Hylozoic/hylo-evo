@@ -4,6 +4,7 @@
   "version": "3.1.5",
   "private": true,
   "scripts": {
+    "dev": "yarn start",
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
     "build": "node --max-old-space-size=4000 scripts/build.js && scripts/build-es5.sh",
     "test": "node scripts/test.js",
