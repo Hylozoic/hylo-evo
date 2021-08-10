@@ -31,7 +31,7 @@ export default class LandingPage extends Component {
       <div>
         <div styleName='banner' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
           <div styleName='right'>
-            <Link styleName='about' to={isAboutOpen ? groupUrl(group.slug) : groupDetailUrl(group.slug, { context: 'groups', groupSlug: group.slug })}><Icon name='Info' />About us</Link>
+            <Link styleName='about' to={isAboutOpen ? groupUrl(group.slug, 'explore') : groupDetailUrl(group.slug, { context: 'groups', view: 'explore', groupSlug: group.slug })}><Icon name='Info' />About us</Link>
           </div>
 
           <div styleName='title'>
