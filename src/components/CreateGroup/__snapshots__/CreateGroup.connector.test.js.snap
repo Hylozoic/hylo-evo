@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateGroup.connector mapDispatchToProps maps the action generators 1`] = `
+Object {
+  "closeModal": [Function],
+  "createGroup": [Function],
+  "fetchGroupExists": [Function],
+  "goToGroup": [Function],
+}
+`;
