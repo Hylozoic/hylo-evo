@@ -206,8 +206,8 @@ function addMiddleware (devServer, protocol) {
     // This prevents an issue when developing locally using SSL where the server would crash if the API server wasn't running
     devServer.listeningApp.on('secureConnection', (sock) => {
       sock.on('error', (err) => {
-        console.error("Caught error on secure connect: ", err);
-      });
+        console.error('Caught error on secure connect: ', err)
+      })
     })
   }
 

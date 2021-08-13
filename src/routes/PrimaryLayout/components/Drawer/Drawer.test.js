@@ -31,7 +31,7 @@ describe('Drawer', () => {
   })
 
   it('renders without a current group', () => {
-    const wrapper = shallow(<Drawer groups={groups} defaultContexts={[]} match={match}/>)
+    const wrapper = shallow(<Drawer groups={groups} defaultContexts={[]} match={match} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -47,4 +47,3 @@ describe('ContextRow', () => {
     expect(wrapper).toMatchSnapshot()
   })
 })
-

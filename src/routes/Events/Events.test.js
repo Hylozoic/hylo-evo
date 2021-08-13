@@ -10,7 +10,7 @@ describe('Events', () => {
       posts={posts}
       fetchEvents={jest.fn()}
       timeframe='future'
-      currentUserHasMemberships={true}
+      currentUserHasMemberships
     />)
     expect(wrapper.find('Connect(PostCard)').length).toEqual(3)
     expect(wrapper).toMatchSnapshot()

@@ -1,3 +1,4 @@
+/* eslint no-unused-vars:'off' */
 import orm from 'store/models'
 import { mapStateToProps, mapDispatchToProps } from './Events.connector'
 

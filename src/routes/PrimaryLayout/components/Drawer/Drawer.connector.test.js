@@ -1,5 +1,4 @@
-import { partitionGroups, mapStateToProps } from './Drawer.connector'
-import getMyMemberships from 'store/selectors/getMyMemberships'
+import { mapStateToProps } from './Drawer.connector'
 import orm from 'store/models'
 
 describe('mapStateToProps', () => {

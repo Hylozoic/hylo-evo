@@ -27,7 +27,7 @@ module.exports = function (api) {
     presets: [
       [
         '@babel/preset-env',
-        {targets: {node: 'current'}}
+        { targets: { node: 'current' } }
       ],
       '@babel/preset-react'
     ],

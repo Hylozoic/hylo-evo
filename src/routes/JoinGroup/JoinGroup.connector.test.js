@@ -31,7 +31,7 @@ describe('JoinGroup.connector', () => {
       const session = orm.session(orm.getEmptyState())
 
       session.Me.create({
-        id: '1',
+        id: '1'
       })
 
       state = {

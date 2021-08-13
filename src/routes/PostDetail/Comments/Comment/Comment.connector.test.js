@@ -60,7 +60,7 @@ describe('mapStateToProps', () => {
       })
       const meUser = session.Person.create({ id: '1' })
       const otherUser = session.Person.create({ id: '2' })
-      myComment = session.Comment.create({ creator: meUser, parentComment: null})
+      myComment = session.Comment.create({ creator: meUser, parentComment: null })
       otherComment = session.Comment.create({ creator: otherUser, parentComment: null })
 
       state = {
