@@ -4,7 +4,7 @@ import Welcome from './Welcome'
 
 describe('Welcome', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<Welcome currentUser={{ name: "Tibet" }} />)
+    const wrapper = shallow(<Welcome currentUser={{ name: 'Tibet' }} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

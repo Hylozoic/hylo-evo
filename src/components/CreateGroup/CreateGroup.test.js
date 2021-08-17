@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 describe('CreateGroup', () => {
-
   it('matches snapshot', () => {
     const wrapper = shallow(<CreateGroup />)
     expect(wrapper).toMatchSnapshot()
@@ -13,5 +12,4 @@ describe('CreateGroup', () => {
     const wrapper = shallow(<CreateGroup initialName='Epic Name' initialSlug='bananaslug' />)
     expect(wrapper).toMatchSnapshot()
   })
-
 })

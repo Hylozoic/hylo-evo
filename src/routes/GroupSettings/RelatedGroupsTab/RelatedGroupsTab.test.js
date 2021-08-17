@@ -1,4 +1,4 @@
-import RelatedGroupsTab, { Banner, SearchBar, GroupsList, GroupCard } from './RelatedGroupsTab'
+import RelatedGroupsTab, { GroupCard } from './RelatedGroupsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 

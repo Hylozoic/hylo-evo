@@ -675,5 +675,3 @@ describe('on UPDATE_COMMENT_PENDING', () => {
     expect(comment.text).toEqual(theNewText)
   })
 })
-
-

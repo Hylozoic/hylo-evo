@@ -52,7 +52,7 @@ const messages = [
   }
 ]
 
-let wrapper, instance, socket
+let wrapper, socket
 
 beforeEach(() => {
   socket = {
@@ -60,7 +60,6 @@ beforeEach(() => {
     off: jest.fn()
   }
 })
-
 
 it('fetches more messages when scrolled to top', () => {
   const fetchMessages = jest.fn()

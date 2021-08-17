@@ -1,3 +1,4 @@
+/* eslint no-unused-expressions: 'off' */
 import EditProfileTab, { SocialControl, linkedinPrompt, facebookPrompt } from './EditProfileTab'
 import { shallow } from 'enzyme'
 import React from 'react'
@@ -126,7 +127,7 @@ describe('SocialControl', () => {
         )
 
         wrapper.instance().handleLinkClick()
-        expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
+        expect(window.prompt).toBeCalledWith('Please enter your twitter name.')
         expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('twitterhandle')
       })
@@ -147,7 +148,7 @@ describe('SocialControl', () => {
         )
 
         wrapper.instance().handleLinkClick()
-        expect(window.prompt).toBeCalledWith('Please enter your twitter name.');
+        expect(window.prompt).toBeCalledWith('Please enter your twitter name.')
         expect(updateSettingDirectly).not.toHaveBeenCalled()
       })
     })
@@ -170,7 +171,7 @@ describe('SocialControl', () => {
         )
 
         wrapper.instance().handleLinkClick()
-        expect(window.prompt).toBeCalledWith('Please enter the full url for your LinkedIn page.');
+        expect(window.prompt).toBeCalledWith('Please enter the full url for your LinkedIn page.')
         expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('linkedin.com/test')
       })
@@ -194,7 +195,7 @@ describe('SocialControl', () => {
         )
 
         wrapper.instance().handleLinkClick()
-        expect(window.prompt).toBeCalledWith('Please enter the full url for your Facebook page.');
+        expect(window.prompt).toBeCalledWith('Please enter the full url for your Facebook page.')
         expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('facebook.com/test')
       })

@@ -9,7 +9,7 @@ import {
 const defaultProps = {
   match: {
     params: {
-      context:'group',
+      context: 'group',
       groupSlug: 'moderatorgroup'
     }
   },
@@ -26,7 +26,7 @@ describe('CreateGroup.connector', () => {
       const session = orm.session(orm.getEmptyState())
 
       session.Me.create({
-        id: '1',
+        id: '1'
       })
 
       state = {
@@ -49,9 +49,11 @@ describe('CreateGroup.connector', () => {
     })
 
     it('gets the default name and slug from the querystring', () => {
-      const props = { ...defaultProps, location: {
-        search: '?name=weird&slug=banana'
-      }}
+      const props = { ...defaultProps,
+        location: {
+          search: '?name=weird&slug=banana'
+        }
+      }
       const actual = mapStateToProps(state, props)
       expect(actual.initialGroupName).toEqual('weird')
       expect(actual.initialGroupSlug).toEqual('banana')
