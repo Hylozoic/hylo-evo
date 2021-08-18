@@ -1,64 +1,44 @@
-import React, { Component } from 'react'
-import { object, func } from 'prop-types'
-// import SettingsSection from '../SettingsSection'
-// import Switch from 'components/SwitchStyled'
+import React, { useState } from 'react'
+import { object } from 'prop-types'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
+import fetch from 'isomorphic-fetch'
+import { getHost } from 'store/middleware/apiMiddleware'
 
-export default class ExportDataTab extends Component {
-  static propTypes = {
-    group: object,
-    requestMemberCSV: func
+export default function ExportDataTabFn (props) {
+  const [clicked, setClicked] = useState(false)
+  const [status, setStatus] = useState(null)
+  const group = props.group
+
+  const success = () => setStatus('You should receive an email with the member export in a few minutes')
+  const failure = () => {
+    setClicked(false)
+    setStatus('Oh no, something went wrong! Check your internet connection and try again')
+  }
+  const handleClick = (e) => {
+    e.preventDefault()
+    setClicked(true)
+    triggerMemberExport(group.id, success, failure)
   }
 
-  // :TODO: further export options
-  // state = {
-  //   exportFromGroups: [],
-  //   exportMembers: false,
-  //   exportPosts: false,
-  //   exportTopicSubscribers: false
-  // }
+  if (!group) return <Loading />
+  return (
+    <div>
+      <h3>Export Data</h3>
+      <p>This function exports all member data for this group as a CSV file for import into other software.</p>
+      {status && <p>{status}</p>}
+      <Button disabled={clicked} label='Export Members' color='green' onClick={handleClick} />
+    </div>)
+}
 
-  render () {
-    const { group } = this.props
-    // const { exportMembers, exportPosts, exportTopicSubscribers } = this.state
+function triggerMemberExport (groupId, success, failure) {
+  fetch(`${getHost()}/noo/export/group?groupId=${groupId}&datasets[]=members`)
+    .then((res) => {
+      let { status } = res
+      status === 200 ? success() : failure()
+    })
+}
 
-    if (!group) return <Loading />
-
-    return (
-      <div>
-        {/* <SettingsSection>
-          <h3>Data Set</h3>
-          <p>Which group(s) would you like to export data from?</p>
-        </SettingsSection>
-        <SettingsSection>
-          <h3>Data Types</h3>
-          <p>What types of things do you want to export?</p>
-          <p>
-            <Switch checked={exportMembers} onChange={this._toggleState('exportMembers')} backgroundColor='#40A1DD' />
-            Members & associated member information
-          </p>
-          <p>
-            <Switch checked={exportPosts} onChange={this._toggleState('exportPosts')} backgroundColor='#40A1DD' />
-            Posts & comments
-          </p>
-          <p>
-            <Switch checked={exportTopicSubscribers} onChange={this._toggleState('exportTopicSubscribers')} backgroundColor='#40A1DD' />
-            Topic list & subscriber list
-          </p>
-        </SettingsSection> */}
-        <h3>Export Data</h3>
-        <p>This function exports all member data for this group as a CSV file for import into other software.</p>
-        <Button label='Export Members' color='green' onClick={this.exportMembers.bind(this)} />
-      </div>
-    )
-  }
-
-  exportMembers () {
-    this.props.requestMemberCSV()
-  }
-
-  _toggleState (field) {
-    return (selected) => this.setState({ [field]: !selected })
-  }
+ExportDataTabFn.propTypes = {
+  group: object
 }
