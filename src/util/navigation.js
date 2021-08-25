@@ -13,7 +13,7 @@ export const REQUIRED_EDIT_POST_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})
 
 export const GROUP_DETAIL_MATCH = `:detail(group)/:detailGroupSlug`
 export const OPTIONAL_GROUP_MATCH = `:detail(group)?/(:detailGroupSlug)?`
-export const hyloUrlRegex = /http[s]?:\/\/hylo\.com(.*)/g // https://regex101.com/r/yQxli1/1/
+export const HYLO_URL_REGEX = /http[s]?:\/\/hylo\.com(.*)/g // https://regex101.com/r/yQxli1/1/
 
 // Fundamental URL paths
 
