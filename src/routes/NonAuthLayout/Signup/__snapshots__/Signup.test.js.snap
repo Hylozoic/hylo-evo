@@ -91,16 +91,17 @@ exports[`Signup renders correctly 1`] = `
       onClick={[Function]}
     />
   </div>
+  <div>
+     Or 
+  </div>
   <div
     data-stylename="auth-buttons"
   >
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
   </div>
 </div>
@@ -200,16 +201,17 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
       onClick={[Function]}
     />
   </div>
+  <div>
+     Or 
+  </div>
   <div
     data-stylename="auth-buttons"
   >
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
   </div>
 </div>

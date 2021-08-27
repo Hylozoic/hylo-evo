@@ -31,6 +31,11 @@ export default class Signup extends React.Component {
     })
   }
 
+  signupAndRedirect = (service) => {
+    this.props.loginWithService(service)
+      .then(({ error }) => error || this.props.redirectOnSignIn('/'))
+  }
+
   disableField = (e) => {
     this.setState({
       [`${e.target.name}Active`]: false
@@ -99,9 +104,10 @@ export default class Signup extends React.Component {
         </div>
         <Button styleName='submit' label='Sign Up' onClick={this.submit} />
       </div>
+      <div> Or </div>
       <div styleName='auth-buttons'>
-        <FacebookButton signUp onClick={this.submit} />
-        <GoogleButton signUp onClick={this.submit} />
+        <FacebookButton onClick={() => this.signupAndRedirect('facebook')} />
+        <GoogleButton onClick={() => this.signupAndRedirect('google')} />
       </div>
     </div>
   }
