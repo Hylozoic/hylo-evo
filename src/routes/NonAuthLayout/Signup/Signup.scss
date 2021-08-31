@@ -20,6 +20,11 @@
   margin-bottom: 30px;
 }
 
+.or {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  text-align: center;
+}
+
 .field {
   display: block;
   margin-bottom: 20px;
@@ -57,7 +62,7 @@
 
   }
 
-  .field-label.active {
+  .field-label.active, .field-label:-webkit-autofill {
     font-size: 11px;
     top: 4px;
     left: 16px;

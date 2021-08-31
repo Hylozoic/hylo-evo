@@ -87,6 +87,7 @@ export default class Signup extends React.Component {
         <div styleName='field'>
           <label htmlFor='email' styleName={cx('field-label', emailActive || email.length > 0 ? 'active' : '')}>Your email address</label>
           <TextInput aria-label='email' label='email' type='text' name='email' id='email' styleName='authInput'
+            autoComplete='off'
             onFocus={this.activateField}
             onChange={this.handleChange}
             onBlur={this.disableFocus}
@@ -96,6 +97,7 @@ export default class Signup extends React.Component {
         <div styleName='field'>
           <label htmlFor='password' styleName={cx('field-label', passwordActive || password.length > 0 ? 'active' : '')}>Password</label>
           <TextInput aria-label='password' label='password' type='password' name='password' id='password' styleName='authInput'
+            autoComplete='off'
             onFocus={this.activateField}
             onChange={this.handleChange}
             onBlur={this.disableFocus}
@@ -104,7 +106,7 @@ export default class Signup extends React.Component {
         </div>
         <Button styleName='submit' label='Sign Up' onClick={this.submit} />
       </div>
-      <div> Or </div>
+      <p styleName='or'> Or use a social login: </p>
       <div styleName='auth-buttons'>
         <FacebookButton onClick={() => this.signupAndRedirect('facebook')} />
         <GoogleButton onClick={() => this.signupAndRedirect('google')} />
