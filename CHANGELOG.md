@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.6] - 2021-08-31
+### Added
+- Ability to pass in a group name and slug as URL parameters to group creation modal
+
+### Fixed
+- Signup with social logins works again
+- You can now export data from large groups. The exported CSV file will be sent in an email.
+- Hylo links in posts now load that link in the same tab not in a new tab
+- Bug loading posts on member profile page
+- About button on Explore page stays on Explore page instead of going to Stream
+
 ## [3.1.5] - 2021-08-04
 ### Changed
 - Events view now show Upcoming events in start time order and has an option to show Past events in descending start time order.
