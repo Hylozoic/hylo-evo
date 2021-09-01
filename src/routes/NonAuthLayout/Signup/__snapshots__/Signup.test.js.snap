@@ -50,6 +50,7 @@ exports[`Signup renders correctly 1`] = `
       </label>
       <TextInput
         aria-label="email"
+        autoComplete="off"
         data-stylename="authInput"
         id="email"
         inputRef={[Function]}
@@ -73,6 +74,7 @@ exports[`Signup renders correctly 1`] = `
       </label>
       <TextInput
         aria-label="password"
+        autoComplete="off"
         data-stylename="authInput"
         id="password"
         label="password"
@@ -91,9 +93,11 @@ exports[`Signup renders correctly 1`] = `
       onClick={[Function]}
     />
   </div>
-  <div>
-     Or 
-  </div>
+  <p
+    data-stylename="or"
+  >
+     Or use a social login: 
+  </p>
   <div
     data-stylename="auth-buttons"
   >
@@ -160,6 +164,7 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
       </label>
       <TextInput
         aria-label="email"
+        autoComplete="off"
         data-stylename="authInput"
         id="email"
         inputRef={[Function]}
@@ -183,6 +188,7 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
       </label>
       <TextInput
         aria-label="password"
+        autoComplete="off"
         data-stylename="authInput"
         id="password"
         label="password"
@@ -201,9 +207,11 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
       onClick={[Function]}
     />
   </div>
-  <div>
-     Or 
-  </div>
+  <p
+    data-stylename="or"
+  >
+     Or use a social login: 
+  </p>
   <div
     data-stylename="auth-buttons"
   >
