@@ -9,9 +9,9 @@ Hylo relies on donations - of money, and of time and energy from people who shar
 Do you dream of a world that works for all? If so, Hylo could benefit from your care. Here’s how to get involved.
 
 ## Our Culture & Design Principles
-As the builders of a collaboration platform, we strive for helpful and respectful interactions. Our culture is kind and encouraging, and it’s important to us that the community creating Hylo is a safe and welcoming space for all. We are incorporating the [Prosocial](https://www.prosocial.world/) framework into our processes to evolve our team coherence even more.
+As the builders of a collaboration platform, we strive for helpful and respectful interactions. Our culture is kind and encouraging, and it’s important to us that the community creating Hylo is a safe and welcoming space for all.
 
-These are the values we embed at every level of our stack:
+These are the values we embed at every level of our stack. Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to learn more about how to move in this space.
 
 ### Seven-generation thinking
 We are building tools for long-term planetary thriving; so that our children have clean air to breath and healthy food to eat.
@@ -61,10 +61,10 @@ Hylo is stewarded by a team of engineers, designers, artists, and product manage
 
 ### Steps to get involved:
 - Join the [Building Hylo](https://www.hylo.com/groups/building-hylo/join/RcDe6vcG7u) group, our open source community for people co-creating Hylo!
-- Reach out to Hylo's tech lead Tibet Sprague to say hi: tibet [at] terran [dot] io
+- Reach out to Hylo's tech lead Tibet Sprague to say hi: tibet [at] hylo [dot] com
 - Set up your development environment: Follow the READMEs in [hylo-evo](https://github.com/Hylozoic/hylo-evo) and [hylo-node](https://github.com/Hylozoic/hylo-node)
 - Watch the developer onboarding recording (link coming soon!)
-- Check out the [Project board](https://github.com/orgs/Hylozoic/projects/1) and look for tickets with Good First Ticket label
+- Check out the [Project board](https://github.com/orgs/Hylozoic/projects/1) and look for tickets with [Good First Ticket](https://github.com/Hylozoic/hylo-evo/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+first+ticket%22) label
 - If you get stuck, please reach out for support by sending Tibet a DM on Hylo
 
 ### How to make a pull request
