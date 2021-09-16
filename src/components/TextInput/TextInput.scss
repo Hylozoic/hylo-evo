@@ -87,3 +87,10 @@ $text-input-height: 40px;
     padding-left: 5px;
   }
 }
+
+
+@media screen and (max-width: 650px) {
+  .clear {
+    top: -4px;
+  }
+}

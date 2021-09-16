@@ -29,3 +29,30 @@
   composes: bdy-drk-sm from 'css/typography.scss';
   @include word-wrap;
 }
+
+@media screen and (max-width: 650px) {
+  .content {
+    padding-left: 10px;
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+  .avatar {
+    width: 32px;
+    height: 32px;
+
+    a div {
+      height: 32px;
+    }
+  }
+
+  .name {
+    font-size:  10px;
+  }
+
+  .text {
+    font-size:  12px;
+    line-height:  15px;
+  }
+}

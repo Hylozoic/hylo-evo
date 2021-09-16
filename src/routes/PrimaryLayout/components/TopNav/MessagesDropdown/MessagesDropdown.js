@@ -6,6 +6,7 @@ import cx from 'classnames'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import { newMessageUrl, messageThreadUrl } from 'util/navigation'
+import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
@@ -93,9 +94,9 @@ export default class MessagesDropdown extends Component {
       header={
         <div styleName='header-content'>
           <Link to={firstThreadUrl} styleName='open' onClick={this.close}>
-            Open Messages
+            <Icon styleName='open-icon' name='ArrowForward' /> Open Messages
           </Link>
-          <Link to={newMessageUrl()} styleName='new' onClick={this.close}>New</Link>
+          <Link to={newMessageUrl()} styleName='new' onClick={this.close}><Icon name='SmallEdit' styleName='new-icon' /> New</Link>
         </div>}
       body={body}
     />

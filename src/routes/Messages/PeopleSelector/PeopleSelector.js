@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { debounce, throttle } from 'lodash/fp'
-import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
-import CloseMessages from '../CloseMessages'
 import MatchingPeopleList from './MatchingPeopleList'
 import PeopleList from './PeopleList'
 import MatchingPeopleListItem from './MatchingPeopleListItem'
@@ -118,9 +116,6 @@ export default class PeopleSelector extends React.Component {
 
     return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
-        <div styleName='backButton' onClick={toggleMessages}>
-          <Icon name='ArrowDown' styleName='arrow-down' />
-        </div>
         <div styleName='autocomplete-control'>
           {selectedPeople && selectedPeople.map(person =>
             <MatchingPeopleListItem
@@ -129,27 +124,29 @@ export default class PeopleSelector extends React.Component {
               onClick={() => this.removePerson(person)}
               key={person.id} />
           )}
-          <input styleName='autocomplete'
-            autoFocus
-            ref={this.autocompleteInput}
-            type='text'
-            spellCheck={false}
-            onChange={evt => this.onChange(evt)}
-            onKeyDown={evt => this.onKeyDown(evt)}
-            placeholder={selectedPeople.length ? '' : 'Type in the names of people to message'} />
+          <div styleName='select-people'>
+            <input styleName='autocomplete'
+              autoFocus
+              ref={this.autocompleteInput}
+              type='text'
+              spellCheck={false}
+              onChange={evt => this.onChange(evt)}
+              onKeyDown={evt => this.onKeyDown(evt)}
+              placeholder={'+ Add someone'} />
+
+            {currentMatch
+              ? <MatchingPeopleList
+                matchingPeople={this.excludeSelectedPeopleAndCurrentUser(matchingPeople)}
+                currentMatch={currentMatch}
+                onClick={this.selectPerson}
+                onMouseOver={this.setCurrentMatch} />
+              : <PeopleList
+                people={this.excludeSelectedPeopleAndCurrentUser(people)}
+                recentPeople={this.excludeSelectedPeopleAndCurrentUser(recentPeople)}
+                onClick={this.selectPerson} />}
+          </div>
         </div>
-        <CloseMessages onCloseURL={onCloseURL} />
       </div>
-      {currentMatch
-        ? <MatchingPeopleList
-          matchingPeople={this.excludeSelectedPeopleAndCurrentUser(matchingPeople)}
-          currentMatch={currentMatch}
-          onClick={this.selectPerson}
-          onMouseOver={this.setCurrentMatch} />
-        : <PeopleList
-          people={this.excludeSelectedPeopleAndCurrentUser(people)}
-          recentPeople={this.excludeSelectedPeopleAndCurrentUser(recentPeople)}
-          onClick={this.selectPerson} />}
     </React.Fragment>
   }
 }

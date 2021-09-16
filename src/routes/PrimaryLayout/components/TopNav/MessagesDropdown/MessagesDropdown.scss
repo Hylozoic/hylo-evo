@@ -3,12 +3,28 @@
 }
 
 .open {
-  composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
+  font-size:  14px;
+  color:  rgba(255, 255, 255, 1);
+  background-color: rgba(0, 115, 216, 1.00);
+  border-radius:  25px;
+  box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.2);
+  padding: 3px 15px;
+
+  .open-icon {
+    color: rgba(255, 255, 255, 1);
+    position: relative;
+    font-size: 14px;
+    top: 1px;
+  }
 }
 
 .new {
   composes: header-link from '../TopNavDropdown/TopNavDropdown.scss';
   margin-left: auto;
+
+  .new-icon {
+    font-size:  14px;
+  }
 }
 
 .threads {
@@ -70,5 +86,17 @@
 
   .body {
     color: $color-rhino;
+  }
+}
+
+
+@media screen and (max-width: 650px) {
+  .name {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .date {
+    font-size: 10px;
   }
 }

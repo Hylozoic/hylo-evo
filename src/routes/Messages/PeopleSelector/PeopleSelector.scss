@@ -3,7 +3,6 @@
   flex-wrap: wrap;
   flex: 1;
   align-items: flex-end;
-  border-bottom: 1px $color-rhino-30 solid;
   padding-bottom: $space-2x;
   margin-right: $space-5x;
   min-height: $space-13x;
@@ -16,8 +15,18 @@
 .autocomplete {
   composes: body-drk-lg from 'css/typography.scss';
   flex: 1;
-  border: none;
+  border: 1px dashed rgba(199, 204, 211, 1.00);
+  border-radius:  30px;
+  height:  2.5rem;
+  transition:  all .25s ease;
+  padding:  0 15px;
+  width:  150px;
+  color:  rgba(49, 73, 101, 1.00);
+  box-shadow: 0px 4px 10px rgba(42, 64, 89, 0);
   outline: none;
+  margin-right: 0.5rem;
+  position: relative;
+  top: 8px;
 
   // Yep, believe it or not this is necessary... can't group the selectors!
   &::-webkit-input-placeholder {
@@ -45,6 +54,10 @@
     letter-spacing: 0.4;
   }
 }
+input.autocomplete:focus, input.autocomplete:active {
+    border: 1px dashed rgba(255, 255, 255, 1.00);
+    box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.2);
+  }
 
 .close-button {
   margin-bottom: $space-4x;
@@ -60,19 +73,50 @@
 
 .thread-header {
   composes: header from '../Messages.scss';
-  padding-top: $space-4x;
-  padding-bottom: $space-3x;
   height: unset;
+  padding-top: 0;
+  padding-right: .5rem;
+  padding-bottom: 0;
+  padding-left: .5rem;
+
+  .select-people {
+    position: relative;
+    max-width: 150px;
+    padding-bottom: .5rem;
+  }
 }
 
 @media screen and (max-width: 650px) {
   .backButton {
     display: block;
+    position: relative;
+    top: 10px;
 
     span {
       transform: rotate(90deg);
       display: block;
       top: -2px;
     }
+  }
+
+  .thread-header {
+    padding: 5px;
+    padding-bottom: 0;
+    overflow: visible;
+
+    .select-people {
+      width: 100px;
+      max-width: 100px;
+      padding: 0;
+    }
+  }
+
+  .autocomplete {
+    padding: 0 5px;
+    font-size: 12px;
+    height: 28px;
+    margin: 0;
+    display: inline-block;
+    width: 100px;
   }
 }

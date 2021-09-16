@@ -2,12 +2,16 @@
   list-style: none;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   max-width: 500px;
   margin: $space-1x 0;
   padding: $space-2x;
   border-radius: $space-1x;
   cursor: pointer;
+
+  div span {
+    display: block;
+  }
 }
 
 .active {
@@ -17,6 +21,7 @@
 .avatar {
   margin-right: $space-4x;
   border: none;
+  min-width: 36px;
 }
 
 .name {

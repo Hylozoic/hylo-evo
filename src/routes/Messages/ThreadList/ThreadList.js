@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import { get, isEmpty, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import { humanDate } from 'hylo-utils/text'
-import RoundImage from 'components/RoundImage'
 import Badge from 'components/Badge'
-import CloseMessages from '../CloseMessages'
-import Button from 'components/Button'
+import Icon from 'components/Icon'
+import RoundImage from 'components/RoundImage'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
@@ -26,7 +26,6 @@ export default class ThreadList extends Component {
       currentUser,
       threadsPending,
       threads,
-      onCloseURL,
       threadSearch,
       onScrollBottom,
       messagesOpen,
@@ -37,22 +36,26 @@ export default class ThreadList extends Component {
 
     return <div styleName='thread-list' className={className}>
       <div styleName='header'>
-        <div styleName='closeMessages'>
-          <CloseMessages onCloseURL={onCloseURL} />
+        <div styleName='search'>
+          <div styleName='search-icon'>
+            <Icon name='Search' />
+          </div>
+          <TextInput
+            placeholder='Search for people...'
+            value={threadSearch}
+            onChange={this.onSearchChange} />
         </div>
-        <Link to='/messages/new' onClick={toggleMessages}><Button label='New Message' styleName='new-message' /></Link>
-        <div styleName='header-text'>Messages</div>
-      </div>
-      <div styleName='search'>
-        <TextInput
-          placeholder='Search for people...'
-          value={threadSearch}
-          onChange={this.onSearchChange} />
+        <Link styleName='new-message' to='/messages/new' onClick={toggleMessages}>
+          <span>New</span>
+          <Icon name='Messages' styleName='messages-icon' />
+        </Link>
       </div>
       <ul styleName='list' id={'thread-list-list'}>
         {!isEmpty(threads) && threads.map(t => {
           const messages = itemsToArray(toRefArray(t.messages))
+          const isUnread = t.unreadCount > 0
           const latestMessage = orderBy(m => Date.parse(m.createdAt), 'desc', messages)[0]
+          console.log(isUnread)
 
           return <ThreadListItem
             id={t.id}
@@ -63,7 +66,8 @@ export default class ThreadList extends Component {
             unreadCount={t.unreadCount}
             key={`thread-li-${t.id}`}
             messagesOpen={messagesOpen}
-            toggleMessages={toggleMessages} />
+            toggleMessages={toggleMessages}
+            isUnread={isUnread} />
         })}
         {threadsPending &&
           <Loading type='bottom' />}
@@ -91,7 +95,7 @@ ThreadList.propTypes = {
 }
 
 export function ThreadListItem ({
-  currentUser, active, id, thread, latestMessage, unreadCount, toggleMessages
+  currentUser, active, id, thread, latestMessage, unreadCount, toggleMessages, isUnread
 }) {
   const maxTextLength = 54
   let text = ''
@@ -105,7 +109,7 @@ export function ThreadListItem ({
 
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
-  return <li styleName='list-item'>
+  return <li styleName={cx(isUnread ? 'unread-list-item' : 'list-item')}>
     <Link to={`/messages/${id}`} onClick={toggleMessages}>
       {active && <div styleName='active-thread' />}
       <ThreadAvatars avatarUrls={avatarUrls} />

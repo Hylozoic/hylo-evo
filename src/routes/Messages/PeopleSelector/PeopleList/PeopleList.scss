@@ -1,6 +1,8 @@
 .people-list-container {
   composes: messages-section from '../../MessageSection/MessageSection.scss';
   flex: 1;
+  padding: 0;
+  border: 0;
   height: 0;
 }
 

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, filter, get, map } from 'lodash/fp'
 import Icon from 'components/Icon'
-import CloseMessages from '../CloseMessages'
 import { others } from 'store/models/MessageThread'
 import '../Messages.scss'
 
@@ -60,8 +59,8 @@ export default class Header extends React.Component {
     const showArrow = !!andOthers
 
     return <div styleName='header' id='thread-header'>
-      <div styleName='backButton' onClick={toggleMessages}>
-        <Icon name='ArrowDown' styleName='arrow-down' />
+      <div styleName='close-thread' onClick={toggleMessages}>
+        <Icon name='ArrowForward' />
       </div>
       <div styleName='header-text'>
         {!pending && <React.Fragment>
@@ -71,7 +70,6 @@ export default class Header extends React.Component {
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
-      <CloseMessages onCloseURL={onCloseURL} styleName='closeMessages' />
     </div>
   }
 }

@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
+import CloseMessages from './CloseMessages'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -169,6 +171,18 @@ export default class Messages extends React.Component {
 
     return <div styleName={cx('modal', { messagesOpen })}>
       <div styleName='content'>
+        <div styleName='messages-header'>
+          <div styleName='close-messages'>
+            <CloseMessages onCloseURL={onCloseURL} />
+          </div>
+          <div styleName='messages-title'>
+            <Icon name='Messages' />
+            {!forNewThread ?
+              <h3>Conversations</h3>
+            :
+              <h3>New Conversation</h3>}
+          </div>
+        </div>
         <ThreadList
           styleName='left-column'
           setThreadSearch={setThreadSearch}
@@ -184,20 +198,31 @@ export default class Messages extends React.Component {
         <div styleName='right-column'>
           <div styleName='thread'>
             {forNewThread &&
-              <PeopleSelector
-                currentUser={currentUser}
-                fetchPeople={fetchPeople}
-                fetchDefaultList={fetchRecentContacts}
-                setPeopleSearch={setContactsSearch}
-                people={contacts}
-                recentPeople={recentContacts}
-                matchingPeople={matchingContacts}
-                onCloseURL={onCloseURL}
-                selectedPeople={participants}
-                selectPerson={this.addParticipant}
-                removePerson={this.removeParticipant}
-                messagesOpen={messagesOpen}
-                toggleMessages={this.toggleMessages} />}
+              <div>
+                <div styleName='new-thread-header'>
+                  <div styleName='back-button' onClick={this.toggleMessages}>
+                    <Icon name='ArrowForward' styleName='close-messages-icon' />
+                  </div>
+                  <div styleName='messages-title'>
+                    <Icon name='Messages' />
+                    <h3>New Conversation</h3>
+                  </div>
+                </div>
+                <PeopleSelector
+                  currentUser={currentUser}
+                  fetchPeople={fetchPeople}
+                  fetchDefaultList={fetchRecentContacts}
+                  setPeopleSearch={setContactsSearch}
+                  people={contacts}
+                  recentPeople={recentContacts}
+                  matchingPeople={matchingContacts}
+                  onCloseURL={onCloseURL}
+                  selectedPeople={participants}
+                  selectPerson={this.addParticipant}
+                  removePerson={this.removeParticipant}
+                  messagesOpen={messagesOpen}
+                  toggleMessages={this.toggleMessages} />
+            </div>}
             {!forNewThread && messageThreadId &&
               <Header
                 messageThread={messageThread}

@@ -8,6 +8,7 @@ $min-height: 56px;
   padding: $space-2x $space-4x $space-2x $space-2x;
   display: flex;
   background: $color-white;
+  box-shadow: 0px 4px 21px rgba(42, 64, 89, 0.2);
 }
 
 .message-textarea {
@@ -30,4 +31,37 @@ $min-height: 56px;
   position: relative;
   top: 1px;
   margin-right: $space-5x;
+}
+
+@media screen and (max-width: 650px) {
+  .message-form {
+    height: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .message-textarea {
+    font-size: 14px;
+    margin-top: 0;
+  }
+
+  .user-image {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .message-form {
+    height: auto;
+    padding: 0 5px;
+    min-height: 40px;
+  }
+  .message-textarea {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 5px 0;
+  }
 }
