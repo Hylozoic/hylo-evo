@@ -1,15 +1,16 @@
 .people-list-container {
   composes: messages-section from '../../MessageSection/MessageSection.scss';
   flex: 1;
+  position: absolute;
+  top: 44px;
+  width: 280px;
+  height:  300px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 12px 15px rgba(42, 64, 89, 0.15);
+  border-radius: 5px;
   padding: 0;
-  border: 0;
-  height: 0;
-}
-
-.people-list-header {
-  composes: hdr-subheadline from 'css/typography.scss';
-  margin-top: $space-8x;
-  color: $color-rhino-80;
+  display: flex;
+  flex-direction: column;
 }
 
 .people-list {
@@ -17,5 +18,15 @@
 
   li:hover {
     background-color: $color-rhino-10;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .people-list-container {
+    position: fixed;
+    left: 0;
+    top: 112px;
+    width: 100%;
+    transform: translateY(5px);
   }
 }

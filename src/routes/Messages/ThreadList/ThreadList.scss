@@ -9,7 +9,7 @@ $counteract-badge-styling: 13px;
 $active-thread-border-width: 4px;
 
 .thread-list {
-  height: calc(100vh - 56px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -19,8 +19,8 @@ $active-thread-border-width: 4px;
 }
 
 .header {
-  height: $messages-header-height;
-  padding: $space-5x $space-6x;
+  height: 56px;
+  padding: 8px 12px;
   display:  flex;
   justify-content: space-between;
   border-bottom: $light-border;
@@ -66,14 +66,37 @@ $active-thread-border-width: 4px;
     padding-left: 38px;
 
     &:focus, &:active {
-      border: 1px dashed #4fabe4;
+      border: 1px dashed #ffffff;
       box-shadow: 0px 4px 10px rgba(42, 64, 89, .2);
     }
   }
 }
 
+@-webkit-keyframes rainbow {
+    0%{background-position:0% 100%}
+    50%{background-position:100% 0%}
+    100%{background-position:0% 100%}
+}
+@-moz-keyframes rainbow {
+    0%{background-position:0% 100%}
+    50%{background-position:100% 0%}
+    100%{background-position:0% 100%}
+}
+@-o-keyframes rainbow {
+    0%{background-position:0% 100%}
+    50%{background-position:100% 0%}
+    100%{background-position:0% 100%}
+}
+@keyframes rainbow {
+    0%{background-position:0% 100%}
+    50%{background-position:100% 0%}
+    100%{background-position:0% 100%}
+}
+
 a.new-message {
-  background-color: rgba(37, 195, 159, 1.00);
+  background: linear-gradient(124deg, #624EA0, #40A1DD, #0DC39F, #FDD549, #EC8627, #EB5757, #BB60A8);
+  background-size: 1000% 1000%;
+  animation: rainbow 5s ease infinite;
   color: rgba(255, 255, 255, 1);
   display: inline-block;
   border-radius: 30px;
@@ -81,18 +104,23 @@ a.new-message {
   display: flex;
   text-decoration: none;
   align-items: center;
+  animation-play-state: paused;
 
   &:hover, &:active, &:visited, &:link {
   text-decoration: none;
   color: rgba(255, 255, 255, 1);
   }
 
-
+  &:hover, &:active {
+    animation-play-state: running;
+    box-shadow: 0px 4px 15px rgba(42, 64, 89, 0.15);
+  }
 
   .messages-icon {
     color:  rgba(255, 255, 255, 1);
     margin-left: 5px;
   }
+
 }
 
 .list {
@@ -191,11 +219,12 @@ a.new-message {
   text-align: center;
   width: $space-9x;
   height: $space-9x;
+  font-size: 12px;
+  line-height: 1.8rem;
   border: 3px solid $color-white;
   border-radius: $space-9x / 2;
-  background: $color-caribbean-green;
+  background: rgba(35, 64, 91, 1.000);
   color: $color-white;
-  padding-top: 1px;
 }
 
 .li-center-content {
@@ -284,13 +313,14 @@ a.new-message {
   }
 
   .thread-list {
-    height: 100vh;
+    height: 100%;
   }
 
   .thread-avatars {
     height: 56px;
     align-items: center;
     display: flex;
+    min-width: 56px;
   }
   .avatar-more:nth-child(1) {
     top: -5px;

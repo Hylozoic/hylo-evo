@@ -177,10 +177,10 @@ export default class Messages extends React.Component {
           </div>
           <div styleName='messages-title'>
             <Icon name='Messages' />
-            {!forNewThread ?
-              <h3>Conversations</h3>
-            :
-              <h3>New Conversation</h3>}
+            { !forNewThread
+              ? <h3>Conversations</h3>
+              : <h3>New Conversation</h3>
+            }
           </div>
         </div>
         <ThreadList
@@ -222,7 +222,7 @@ export default class Messages extends React.Component {
                   removePerson={this.removeParticipant}
                   messagesOpen={messagesOpen}
                   toggleMessages={this.toggleMessages} />
-            </div>}
+              </div>}
             {!forNewThread && messageThreadId &&
               <Header
                 messageThread={messageThread}

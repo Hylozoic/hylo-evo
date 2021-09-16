@@ -10,6 +10,11 @@
   box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.2);
   padding: 3px 15px;
 
+  &:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+  }
+
   .open-icon {
     color: rgba(255, 255, 255, 1);
     position: relative;

@@ -52,7 +52,7 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { onCloseURL, pending, toggleMessages } = this.props
+    const { pending, toggleMessages } = this.props
     const otherParticipants = this.getOthers(this.props)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
     const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
@@ -75,8 +75,7 @@ export default class Header extends React.Component {
 }
 
 Header.propTypes = {
-  messageThread: PropTypes.any,
-  onCloseURL: PropTypes.any
+  messageThread: PropTypes.any
 }
 
 export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
