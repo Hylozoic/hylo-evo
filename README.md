@@ -35,6 +35,10 @@ HTTPS=true
 LOCAL_CERT=localhost (this should be the root filename used for your certificate files above)
 ```
 
+## Contributions and Code of Conduct
+
+Please review our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to step into co-creative stewardship with us.
+
 ## Further documentation
 
-So long as this repo remains private, remaining docs are available in [Confluence](https://hylozoic.atlassian.net/wiki/spaces/DEV/pages/87195649/Web+Client).
+More detailed docs are available in [Confluence](https://hylozoic.atlassian.net/wiki/spaces/DEV/pages/87195649/Web+Client) about specific topics such as updating the icon font - please ask a Hylo steward for access.
