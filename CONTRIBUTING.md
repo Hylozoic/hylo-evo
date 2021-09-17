@@ -47,9 +47,9 @@ There are so many ways to contribute to Hylo, and we’d be delighted for you to
 
 To get involved in beta testing, creating onboarding materials, or offering feedback on product ideas or designs, join [Building Hylo](https://www.hylo.com/groups/building-hylo/join/RcDe6vcG7u).
 
-We accept bug reports through Intercom within the Hylo web application.
+We accept bug reports through Intercom within the Hylo web application, or by creating a ticket on our [GitHub repo](https://github.com/Hylozoic/hylo-evo).
 
-We accept [feature requests here](https://airtable.com/shrAWV0UkgDoM55TW). Follow along on our transparent [development roadmap here](https://airtable.com/shrcTCuwNDVTS1DpE).
+We accept [feature requests here](https://airtable.com/shrAWV0UkgDoM55TW).
 
 Have more ideas about how you’d like to contribute to Hylo? Please get in touch at hello@hylo.com and let us know how you’d like to help.
 
