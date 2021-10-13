@@ -28,7 +28,7 @@ exports[`UserSettings renders correctly 1`] = `
         "component": <Memo(Connect(UserGroupsTab))
           personId={1}
         />,
-        "name": "Affiliations",
+        "name": "Groups & Affiliations",
         "path": "/settings/groups",
       },
       Object {

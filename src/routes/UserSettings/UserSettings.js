@@ -45,7 +45,7 @@ export default class UserSettings extends Component {
           fetchPending={fetchPending} />
       },
       {
-        name: 'Affiliations',
+        name: 'Groups & Affiliations',
         path: '/settings/groups',
         component: <UserGroupsTab personId={currentUser.id} />
       },
