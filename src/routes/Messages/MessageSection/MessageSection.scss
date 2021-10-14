@@ -1,11 +1,13 @@
 .messages-section {
   flex: 1;
-  padding: 20px $space-6x 150px;
+  padding: 20px $space-6x 0px;
   overflow-y: auto;
+  display: flex;
 }
 
 .messages-section-inner {
     padding-bottom: 100px;
+    margin-top: auto;
 }
 
 .new-messages {
@@ -28,10 +30,17 @@
   .messages-section {
     padding:  15px 15px 15px 15px;
   }
+
+  .messages-section-inner {
+    padding-bottom: 80px;
+  }
 }
 
 @media screen and (max-width: 425px) {
   .messages-section {
     padding: 12px 12px 12px 12px;
+  }
+  .messages-section-inner {
+    padding-bottom: 70px;
   }
 }

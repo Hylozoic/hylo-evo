@@ -6,8 +6,9 @@
   max-width: 500px;
   margin: $space-1x 0;
   padding: $space-2x;
-  border-radius: $space-1x;
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all .25s ease;
 
   div span {
     display: block;
@@ -35,4 +36,26 @@
 
 .group {
   composes: faint-lt-sm from 'css/typography.scss';
+}
+
+@media screen and (max-width: 650px) {
+  .name {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .person-list-item {
+    max-width: 100%;
+  }
+
+  .group {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .avatar {
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+  }
 }

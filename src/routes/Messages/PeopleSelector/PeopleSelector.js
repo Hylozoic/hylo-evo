@@ -106,9 +106,7 @@ export default class PeopleSelector extends React.Component {
       people,
       recentPeople,
       matchingPeople,
-      onCloseURL,
-      selectedPeople,
-      toggleMessages
+      selectedPeople
     } = this.props
     const {
       currentMatch
@@ -117,6 +115,7 @@ export default class PeopleSelector extends React.Component {
     return <React.Fragment>
       <div styleName='thread-header' tabIndex='0'>
         <div styleName='autocomplete-control'>
+          <span styleName='to'>With:</span>
           {selectedPeople && selectedPeople.map(person =>
             <MatchingPeopleListItem
               avatarUrl={person.avatarUrl}

@@ -15,18 +15,15 @@
 .autocomplete {
   composes: body-drk-lg from 'css/typography.scss';
   flex: 1;
-  border: 1px dashed rgba(199, 204, 211, 1.00);
   border-radius:  30px;
   height:  2.5rem;
   transition:  all .25s ease;
-  padding:  0 15px;
   width:  150px;
   color:  rgba(49, 73, 101, 1.00);
-  box-shadow: 0px 4px 10px rgba(42, 64, 89, 0);
   outline: none;
   margin-right: 0.5rem;
-  position: relative;
-  top: 8px;
+  border: none;
+  margin-top: 8px;
 
   // Yep, believe it or not this is necessary... can't group the selectors!
   &::-webkit-input-placeholder {
@@ -54,10 +51,6 @@
     letter-spacing: 0.4;
   }
 }
-input.autocomplete:focus, input.autocomplete:active {
-    border: 1px dashed rgba(255, 255, 255, 1.00);
-    box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.2);
-  }
 
 .close-button {
   margin-bottom: $space-4x;
@@ -82,7 +75,14 @@ input.autocomplete:focus, input.autocomplete:active {
   .select-people {
     position: relative;
     max-width: 150px;
-    padding-bottom: .5rem;
+  }
+
+  .to {
+    font-size: 16px;
+    color: rgba(125, 140, 157, 1.000);
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding: 0 10px;
   }
 }
 
@@ -100,9 +100,15 @@ input.autocomplete:focus, input.autocomplete:active {
   }
 
   .thread-header {
-    padding: 5px;
+    padding: 9px 0;
     padding-bottom: 0;
     overflow: visible;
+
+    .to {
+      height: 28px;
+      line-height: 28px;
+      font-size: 12px;
+    }
 
     .select-people {
       width: 100px;
@@ -118,5 +124,12 @@ input.autocomplete:focus, input.autocomplete:active {
     margin: 0;
     display: inline-block;
     width: 100px;
+    top: 0;
+  }
+
+  .autocomplete-control {
+    align-items: center;
+    max-height: 64px;
+    overflow: scroll;
   }
 }

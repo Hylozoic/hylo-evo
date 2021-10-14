@@ -42,6 +42,7 @@ $messages-inner-padding: $space-6x;
 .content {
   composes: modal-content from 'css/layout.scss';
   display: flex;
+  height: 100%;
 }
 
 .left-column {
@@ -87,6 +88,8 @@ $messages-inner-padding: $space-6x;
   flex: 1;
   word-wrap: break-word;
   font-size: 16px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .more-icon {

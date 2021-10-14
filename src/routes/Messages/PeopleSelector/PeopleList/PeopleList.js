@@ -7,7 +7,6 @@ export default function PeopleList ({ onClick, people, recentPeople }) {
   return <div styleName='people-list-container'>
     {recentPeople && recentPeople.length > 0 &&
       <div>
-        <h2 styleName='people-list-header'>Recent</h2>
         <ul styleName='people-list'>
           {recentPeople.map(person =>
             <PeopleListItem
@@ -18,7 +17,6 @@ export default function PeopleList ({ onClick, people, recentPeople }) {
       </div>}
     {people && people.length > 0 &&
       <div>
-        <h2 styleName='people-list-header'>All Contacts</h2>
         <ul styleName='people-list'>
           {people.map(person =>
             <PeopleListItem

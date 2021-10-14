@@ -6,6 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import './MessageForm.scss'
 
@@ -57,9 +58,14 @@ export default class MessageForm extends React.Component {
         value={messageText}
         styleName='message-textarea'
         inputRef={formRef}
+        minRows={1}
+        maxRows={8}
         onChange={this.handleOnChange}
         onKeyDown={this.handleKeyDown}
         placeholder={placeholder} />
+      <button styleName='send-button'>
+        <Icon name='Reply' styleName='reply-icon' />
+      </button>
     </form>
   }
 }
