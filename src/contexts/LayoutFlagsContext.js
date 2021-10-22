@@ -20,7 +20,7 @@ function LayoutFlagsProvider ({ children }) {
   const [layoutFlags, setLayoutFlags] = React.useState()
   const params = new URLSearchParams(window.location.search)
   const layoutFlagsFromURL = remove(flag => !VALID_FLAGS.includes(flag), (params.get('layoutFlags') || '').split(','))
-  
+
   React.useEffect(() => {
     setLayoutFlags(
       reduce((flags, flag) => {
