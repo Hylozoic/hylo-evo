@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
+import { get } from 'lodash/fp'
 import './GroupSettings.scss'
 import GroupSettingsTab from './GroupSettingsTab'
 import MembershipRequestsTab from './MembershipRequestsTab'
-// import ModeratorsSettingsTab from './ModeratorsSettingsTab'
+import ModeratorsSettingsTab from './ModeratorsSettingsTab'
 import ImportExportSettingsTab from './ImportExportSettingsTab'
-// import InviteSettingsTab from './InviteSettingsTab'
+import InviteSettingsTab from './InviteSettingsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
 import RelatedGroupsTab from './RelatedGroupsTab'
 import TopicsSettingsTab from './TopicsSettingsTab'
@@ -25,7 +26,7 @@ export default function GroupSettings ({
   fetchGroupSettings,
   upload
 }) {
-  const { slug } = group
+  const slug = get('slug', group)
 
   useEffect(() => {
     group && fetchGroupSettings()
@@ -47,21 +48,21 @@ export default function GroupSettings ({
           updateGroupSettings={updateGroupSettings}
         />
       },
-      // {
-      //   name: 'Moderators',
-      //   path: groupUrl(slug, 'settings/moderators'),
-      //   component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
-      // },
+      {
+        name: 'Moderators',
+        path: groupUrl(slug, 'settings/moderators'),
+        component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
+      },
       {
         name: 'Topics',
         path: groupUrl(slug, 'settings/topics'),
         component: <TopicsSettingsTab group={group} />
       },
-      // {
-      //   name: 'Invite',
-      //   path: groupUrl(slug, 'settings/invite'),
-      //   component: <InviteSettingsTab group={group} />
-      // },
+      {
+        name: 'Invite',
+        path: groupUrl(slug, 'settings/invite'),
+        component: <InviteSettingsTab group={group} />
+      },
       {
         name: 'Join Requests',
         path: groupUrl(slug, 'settings/requests'),

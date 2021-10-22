@@ -30,7 +30,6 @@ function LayoutFlagsProvider ({ children }) {
     )
   }, [])
 
-  console.log('!!!!!! layoutFlags', layoutFlags)
   return <LayoutFlagsContext.Provider value={layoutFlags}>{children}</LayoutFlagsContext.Provider>
 }
 
