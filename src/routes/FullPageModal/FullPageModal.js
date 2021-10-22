@@ -1,18 +1,19 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styles from './FullPageModal.scss'
 import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 import cx from 'classnames'
+import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 
-export default class FullPageModal extends Component {
-  state = {
-    entryLocation: this.props.previousLocation
-  }
+export default function FullPageModal ({
+  confirmMessage, setConfirmBeforeClose, navigate, goToOnClose,
+  content, children, narrow, fullWidth, leftSideBarHidden,
+  previousLocation
+}) {
+  const { mobileSettingsLayout } = useLayoutFlags()
+  const [entryLocation] = useState(previousLocation)
 
-  onClose = () => {
-    const { entryLocation } = this.state
-    const { confirmMessage, setConfirmBeforeClose, navigate, goToOnClose } = this.props
+  const onClose = () => {
     const closeLocation = goToOnClose || entryLocation
 
     if (confirmMessage && window.confirm(confirmMessage)) {
@@ -23,13 +24,11 @@ export default class FullPageModal extends Component {
     }
   }
 
-  render () {
-    const { content, children, narrow, fullWidth, leftSideBarHidden } = this.props
+  const multipleTabs = Array.isArray(content)
 
-    const multipleTabs = Array.isArray(content)
-
-    return <div styleName={cx('modal', { fullWidth })}>
-      <div styleName='content'>
+  return <div styleName={cx('modal', { fullWidth })}>
+    <div styleName='content'>
+      {!mobileSettingsLayout && (
         <div styleName={cx('left-sidebar', { leftSideBarHidden })}>
           <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>
             {multipleTabs && content.filter(tab => !!tab.name).map(tab =>
@@ -44,32 +43,24 @@ export default class FullPageModal extends Component {
             <Icon name='ArrowDown' styleName='arrowDown' />
           </div>
         </div>
-        {multipleTabs && <div styleName='center narrow'>
-          {content.map(tab =>
-            <Route path={tab.path}
-              exact
-              render={tab.render ? tab.render : () => tab.component}
-              key={tab.path} />)}
-        </div>}
-        {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
+      )}
+      {multipleTabs && <div styleName='center narrow'>
+        {content.map(tab =>
+          <Route path={tab.path}
+            exact
+            render={tab.render ? tab.render : () => tab.component}
+            key={tab.path} />)}
+      </div>}
+      {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
+      {!mobileSettingsLayout && (
         <div styleName='right-sidebar'>
           <div styleName='right-sidebar-inner'>
-            <CloseButton onClose={this.onClose} />
+            <CloseButton onClose={onClose} />
           </div>
         </div>
-      </div>
+      )}
     </div>
-  }
-}
-
-FullPageModal.propTypes = {
-  children: PropTypes.any,
-  content: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ]),
-  narrow: PropTypes.bool,
-  onClose: PropTypes.func
+  </div>
 }
 
 export function CloseButton ({ onClose }) {

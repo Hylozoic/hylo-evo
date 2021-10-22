@@ -8,6 +8,7 @@ import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import styles from './MembershipRequestsTab.scss' // eslint-disable-line no-unused-vars
 import { jollyAxolotl } from 'util/assets'
+import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 
 const { array, func, object } = PropTypes
 
@@ -59,6 +60,8 @@ export default class MembershipRequestsTab extends Component {
 }
 
 export function NoRequests ({ group, viewMembers }) {
+  const { mobileSettingsLayout } = useLayoutFlags()
+
   return (
     <React.Fragment>
       <div styleName='no-requests'>
@@ -68,11 +71,13 @@ export function NoRequests ({ group, viewMembers }) {
           <h2>No new join requests</h2>
           We'll notify you by email when someone wants to join <strong>{group.name}</strong>
         </div>
-        <Button
-          label='View Current Members'
-          onClick={viewMembers}
-          styleName='view-members'
-        />
+        {!mobileSettingsLayout && (
+          <Button
+            label='View Current Members'
+            onClick={viewMembers}
+            styleName='view-members'
+          />
+        )}
       </div>
     </React.Fragment>
   )

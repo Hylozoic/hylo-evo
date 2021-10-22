@@ -10,9 +10,10 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
+import Div100vh from 'react-div-100vh'
 
 import config, { isTest } from 'config'
-import Div100vh from 'react-div-100vh'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
@@ -142,6 +143,8 @@ const redirectRoutes = [
 ]
 
 export default class PrimaryLayout extends Component {
+  static contextType = LayoutFlagsContext
+
   constructor (props) {
     super(props)
 
@@ -239,6 +242,7 @@ export default class PrimaryLayout extends Component {
       slug,
       width
     } = this.props
+    const { mobileSettingsLayout } = this.context
 
     if (!currentUser) {
       return <div styleName='container'>
@@ -265,34 +269,38 @@ export default class PrimaryLayout extends Component {
       !get('settings.showJoinForm', currentGroupMembership) // Show group welcome modal before tour
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
-      { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
-        <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
-          <div styleName='tourPrompt'>
-            <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-            <div styleName='tourExplanation'>
-              <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
-              <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
-              <div>
-                <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
-                <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+      {/* Site tour */}
+      {showTourPrompt && !mobileSettingsLayout && (
+        <Route path='/:context(all|public|groups)' component={props =>
+          <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
+            <div styleName='tourPrompt'>
+              <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+              <div styleName='tourExplanation'>
+                <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
+                <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+                <div>
+                  <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
+                  <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+                </div>
+                <div styleName='speechIndicator' />
               </div>
-              <div styleName='speechIndicator' />
             </div>
-          </div>
-          <div styleName='tourBg' onClick={this.closeTour} />
-        </div>} />
-        : ' '}
+            <div styleName='tourBg' onClick={this.closeTour} />
+          </div>} />
+      )}
 
       {/* Context navigation drawer */}
-      <Switch>
-        {routesWithDrawer.map(({ path }) => (
-          <Route path={path} key={path} render={props => (
-            <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
-          )} />
-        ))}
-      </Switch>
+      {!mobileSettingsLayout && <>
+        <Switch>
+          {routesWithDrawer.map(({ path }) => (
+            <Route path={path} key={path} render={props => (
+              <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
+            )} />
+          ))}
+        </Switch>
 
-      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
+        <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
+      </>}
 
       <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
