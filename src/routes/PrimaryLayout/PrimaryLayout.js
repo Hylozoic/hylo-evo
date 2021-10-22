@@ -338,7 +338,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(group)} />
             {/* **** Group Routes **** */}
             {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
@@ -360,8 +360,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
-            <Route path={`/:context(groups)/:groupSlug`} component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(group)} />
+            <Route path={`/:context(groups)/:groupSlug`} component={returnDefaultRouteForGroup(group)} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -407,6 +407,16 @@ export default class PrimaryLayout extends Component {
         steps={this.tourSteps()}
       />
     </Div100vh>
+  }
+}
+
+export function returnDefaultRouteForGroup (group) {
+  let type = group.type
+  switch (type) {
+    case 'farm':
+      return LandingPage
+    default:
+      return Stream
   }
 }
 

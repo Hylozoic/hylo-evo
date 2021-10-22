@@ -9,6 +9,7 @@ export default () => {
     avatarUrl
     bannerUrl
     description
+    type
     location
     memberCount
     name
@@ -61,6 +62,7 @@ export default () => {
         id
         accessibility
         avatarUrl
+        type
         bannerUrl
         description
         memberCount
@@ -174,6 +176,7 @@ export default () => {
         avatarUrl
         bannerUrl
         description
+        type
         name
         slug
         visibility
