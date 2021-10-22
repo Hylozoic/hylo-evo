@@ -31,6 +31,7 @@ export default function Navigation (props) {
     mapView,
     routeParams,
     rootPath,
+    streamPath,
     toggleGroupMenu
   } = props
 
@@ -48,14 +49,19 @@ export default function Navigation (props) {
       to: createPath
     },
     rootPath && {
-      label: 'Stream',
-      icon: 'Stream',
+      label: group.type ? 'Home' : 'Stream',
+      icon: group.type ? 'Home' : 'Stream',
       to: rootPath,
       badge: badge,
       onClick: homeOnClick,
       exact: true
     },
-    explorePath && {
+    streamPath && group.type === 'farm' && {
+      label: 'Stream',
+      icon: 'Stream',
+      to: streamPath
+    },
+    explorePath && group.type !== 'farm' && {
       label: 'Explore',
       icon: 'Binoculars',
       to: explorePath
