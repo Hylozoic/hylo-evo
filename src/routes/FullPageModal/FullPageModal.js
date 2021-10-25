@@ -58,7 +58,7 @@ export default function FullPageModal ({
               <Icon name='ArrowDown' styleName='arrowDown' />
             </div>
           </div>
-          {multipleTabs && <div styleName={cx('center', { narrow })}>
+          {multipleTabs && <div styleName='center narrow'>
             {content.map(tab =>
               <Route path={tab.path}
                 exact
