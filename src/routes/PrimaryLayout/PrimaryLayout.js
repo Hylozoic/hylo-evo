@@ -266,11 +266,12 @@ export default class PrimaryLayout extends Component {
     const showTourPrompt = !signupInProgress &&
       !get('settings.alreadySeenTour', currentUser) &&
       !isSingleColumn && // Don't show tour on non-member group details page
-      !get('settings.showJoinForm', currentGroupMembership) // Show group welcome modal before tour
+      !get('settings.showJoinForm', currentGroupMembership) && // Show group welcome modal before tour
+      !mobileSettingsLayout
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       {/* Site tour */}
-      {showTourPrompt && !mobileSettingsLayout && (
+      {showTourPrompt && (
         <Route path='/:context(all|public|groups)' component={props =>
           <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
             <div styleName='tourPrompt'>

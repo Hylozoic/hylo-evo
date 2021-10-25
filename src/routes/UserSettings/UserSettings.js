@@ -12,6 +12,9 @@ import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import './UserSettings.scss'
 
+// NOTE: This area is also rendered and shared with the mobile app.
+// When making changes here or in any of the settings tabs please
+// confirm accurate rendering and functiong in the related mobile area.
 export default class UserSettings extends Component {
   render () {
     const {
@@ -105,7 +108,6 @@ export default class UserSettings extends Component {
       })
     }
 
-    return <FullPageModal
-      content={content} />
+    return <FullPageModal content={content} />
   }
 }

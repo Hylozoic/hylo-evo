@@ -26,41 +26,55 @@ export default function FullPageModal ({
 
   const multipleTabs = Array.isArray(content)
 
-  return <div styleName={cx('modal', { fullWidth })}>
-    <div styleName='content'>
-      {!mobileSettingsLayout && (
-        <div styleName={cx('left-sidebar', { leftSideBarHidden })}>
-          <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>
-            {multipleTabs && content.filter(tab => !!tab.name).map(tab =>
-              <NavLink to={tab.path}
-                exact
-                replace
-                activeClassName={styles.active}
-                styleName='nav-link'
-                key={tab.path}>
-                {tab.name}
-              </NavLink>)}
-            <Icon name='ArrowDown' styleName='arrowDown' />
-          </div>
-        </div>
-      )}
-      {multipleTabs && <div styleName='center narrow'>
-        {content.map(tab =>
+  if (mobileSettingsLayout) {
+    return (
+      <div styleName='modalMobileSettings'>
+        {multipleTabs && content.map(tab => (
           <Route path={tab.path}
             exact
             render={tab.render ? tab.render : () => tab.component}
-            key={tab.path} />)}
-      </div>}
-      {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
-      {!mobileSettingsLayout && (
-        <div styleName='right-sidebar'>
-          <div styleName='right-sidebar-inner'>
-            <CloseButton onClose={onClose} />
+            key={tab.path} />
+        ))}
+        {!multipleTabs && <>
+          {content || children}
+        </>}
+      </div>
+    )
+  } else {
+    return (
+      <div styleName={cx('modal', { fullWidth })}>
+        <div styleName='content'>
+          <div styleName={cx('left-sidebar', { leftSideBarHidden })}>
+            <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>
+              {multipleTabs && content.filter(tab => !!tab.name).map(tab =>
+                <NavLink to={tab.path}
+                  exact
+                  replace
+                  activeClassName={styles.active}
+                  styleName='nav-link'
+                  key={tab.path}>
+                  {tab.name}
+                </NavLink>)}
+              <Icon name='ArrowDown' styleName='arrowDown' />
+            </div>
+          </div>
+          {multipleTabs && <div styleName={cx('center', { narrow })}>
+            {content.map(tab =>
+              <Route path={tab.path}
+                exact
+                render={tab.render ? tab.render : () => tab.component}
+                key={tab.path} />)}
+          </div>}
+          {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
+          <div styleName='right-sidebar'>
+            <div styleName='right-sidebar-inner'>
+              <CloseButton onClose={onClose} />
+            </div>
           </div>
         </div>
-      )}
-    </div>
-  </div>
+      </div>
+    )
+  }
 }
 
 export function CloseButton ({ onClose }) {
