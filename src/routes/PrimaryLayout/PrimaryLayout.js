@@ -410,8 +410,9 @@ export default class PrimaryLayout extends Component {
   }
 }
 
-export function returnDefaultRouteForGroup ({ type }) {
-  switch (type) {
+export function returnDefaultRouteForGroup (group) {
+  if (!group) return Stream
+  switch (group.type) {
     case 'farm':
       return LandingPage
     default:
