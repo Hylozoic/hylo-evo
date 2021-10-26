@@ -53,7 +53,7 @@ export default class TopNav extends Component {
       logout,
       onClick,
       routeParams,
-      showLogoBadge,
+      showMenuBadge,
       toggleDrawer,
       toggleGroupMenu
     } = this.props
@@ -65,6 +65,7 @@ export default class TopNav extends Component {
       <div styleName={cx('topNav', { groupMenuOpen: isGroupMenuOpen })} ref='topNav'>
         <div styleName='drawerToggle' id='toggleDrawer'>
           <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
+          {showMenuBadge && <Badge number='1' styleName='logoBadge' border />}
         </div>
         <Link
           to={baseUrl(pick(['context', 'groupSlug'], routeParams))}
@@ -73,7 +74,6 @@ export default class TopNav extends Component {
           id='currentContext'
         >
           <Logo {...{ group, isPublic }} />
-          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} />
         </Link>
         <div styleName='navIcons' id='personalSettings'>
@@ -105,7 +105,7 @@ export default class TopNav extends Component {
   }
 }
 
-function Logo ({ group, isPublic, showLogoBadge }) {
+function Logo ({ group, isPublic }) {
   let imageStyle = bgImageStyle(hyloLogo)
   if (group) {
     imageStyle = bgImageStyle(get('avatarUrl', group))

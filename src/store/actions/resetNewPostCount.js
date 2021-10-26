@@ -20,7 +20,7 @@ export default function resetNewPostCount (id, type) {
   }
 }
 
-const GroupTopicQuery = `mutation($id: ID, $data: GroupTopicInput) {
+const GroupTopicQuery = `mutation($id: ID, $data: GroupTopicFollowInput) {
     updateGroupTopicFollow(id: $id, data: $data) {
       success
     }
