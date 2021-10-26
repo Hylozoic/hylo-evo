@@ -28,7 +28,7 @@ export default function FullPageModal ({
 
   if (mobileSettingsLayout) {
     return (
-      <div styleName='modalMobileSettings'>
+      <div styleName='modal--modal-settings-layout'>
         {multipleTabs && content.map(tab => (
           <Route path={tab.path}
             exact

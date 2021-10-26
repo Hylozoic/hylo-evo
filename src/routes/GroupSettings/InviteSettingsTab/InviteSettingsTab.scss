@@ -1,21 +1,13 @@
 $rowHeight: 60px;
 
+.container {
+  // empty
+}
+
 .header {
   border-radius: 4px;
   background-color: $color-athens-gray;
-  padding: $space-7x $space-6x;
-  margin-bottom: $space-8x;
-  margin-top: $space-6x;
-}
-
-.switch-header {
-  border-radius: 4px;
-  background-color: $color-athens-gray;
-  padding: $space-7x $space-6x;
-  margin-bottom: $space-8x;
-  margin-top: $space-6x;
-  display: flex;
-  max-height: 80px;
+  margin-bottom: $space-2x;
 }
 
 .title {
@@ -23,60 +15,65 @@ $rowHeight: 60px;
 }
 
 .subtitle {
-  composes: caption-lt-lg from 'css/typography.scss';
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-rhino-80;
+  margin-bottom: 10px;
+  padding: 0
+}
+
+.help {
+  color: $color-rhino-60;
+  margin-bottom: 10px;
+}
+
+.invite-link-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 26px;
 }
 
 .invite-link-settings {
   display: flex;
-  align-items: flex-end;
-}
-
-.invite-link-text {
-  display: flex;
   flex-direction: column;
 }
 
-.help {
-  composes: caption-lt-lg from 'css/typography.scss';
-  margin-bottom: 10px;
-}
-
 .invite-link {
-  composes: text-button from 'css/typography.scss';
+  // composes: text-button from 'css/typography.scss';
   font-size: 13px;
-}
-
-.buttons {
-  margin-left: 10px;
+  flex-wrap: wrap;
+  color: $color-caribbean-green;
+  cursor: pointer;
+  margin-bottom: 10px
 }
 
 .button {
-  white-space: nowrap;
-  padding: 0 15px;
-  width: 95px;
-  text-align: center;
-  transition: 0.5s;
+  height: max-content;
+  width: max-content;
+  line-height: initial;
+  font-size: 12px;
+  color: $color-caribbean-green;
+  padding: 5px 10px 5px 10px;
+  margin: 0;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
 }
 
-.reset-button {
+.invite-link-button {
   composes: button;
-  margin-right: 10px;
 }
 
-.copy-button {
-  composes: button;
-  margin-top: 10px;
+.copy-icon {
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 10px
 }
 
 .email-section {
   display: flex;
   flex-direction: column;
-  margin-top: 38px;
-}
-
-.send-invite-button {
-  text-align: right;
-  margin-top: 20px;
+  margin-bottom: 26px;
 }
 
 .email-addresses-input {
@@ -84,22 +81,25 @@ $rowHeight: 60px;
   font-size: 14px;
   height: 50px;
   border-radius: 2px;
+  margin-bottom: 16px;
   &::placeholder {
-
   }
 }
 
 .invite-msg-input {
   border: 1px solid $color-ghost;
-  margin-top: 16px;
-  padding: 14px;
+  padding: 10px;
   border-radius: 2px;
   @include font-regular;
   font-size: 14px;
-
+  margin-bottom: 16px;
   &:focus {
     outline: 0;
   }
+}
+
+.send-invite-button {
+  text-align: right;
 }
 
 .resend-all-button {
@@ -107,16 +107,8 @@ $rowHeight: 60px;
 }
 
 .pending-invites-section {
-  margin-top: 40px;
-
   .pending-invites-header {
     display: flex;
-    flex-direction: row;
-
-    h1 {
-      font-size: 24px;
-      color: $color-rhino-darker;
-    }
   }
 
   .pending-invites-list {
@@ -204,23 +196,9 @@ $rowHeight: 60px;
   color: $color-mountain-meadow;
 }
 
-.switch {
-  float: right;
-  margin-left: 180px;
-  margin-top: -6px;
-}
-
-.switch-label {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
 @media screen and (max-width: 525px) {
   .invite-link-settings {
-    display: block;
-    text-align: center;
-  }
-
-  .switch {
-    margin-left: 20px;
+    // display: block;
+    // text-align: center;
   }
 }

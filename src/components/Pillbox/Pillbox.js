@@ -135,7 +135,7 @@ export default class Pillbox extends Component {
           ref={this.list} />
         }
       </div>}
-      {!isMobile && (
+      {!isMobile.any && (
         <ReactTooltip place='top'
           type='dark'
           id='pill-label'

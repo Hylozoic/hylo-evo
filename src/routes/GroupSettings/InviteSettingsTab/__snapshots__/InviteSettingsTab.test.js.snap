@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div>
+<div
+  data-stylename="styles.container"
+>
   <div
     data-stylename="styles.header"
   >
@@ -10,71 +12,102 @@ exports[`renders correctly 1`] = `
     >
       Invite People
     </div>
+  </div>
+  <div
+    data-stylename="styles.invite-link-section"
+  >
     <div
       data-stylename="styles.subtitle"
     >
-      to 
-      Hylo
-       on Hylo
+      Share a Join Link
     </div>
-  </div>
-  <div
-    data-stylename="styles.invite-link-settings"
-  >
     <div
-      data-stylename="styles.invite-link-text"
+      data-stylename="styles.help"
     >
-      <div
-        data-stylename="styles.help"
+      Anyone can join 
+      <span
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
       >
-        Anyone with this link can join the group
-      </div>
+        Hylo
+      </span>
+       with this link
+      . Click or press on it to copy it
+      :
+    </div>
+    <div
+      data-stylename="styles.invite-link-settings"
+    >
       <div
         data-stylename="styles.invite-link"
       >
-        http://www.hylo.com/c/hylo/join/lalala
+        <CopyToClipboard
+          onCopy={[Function]}
+          text="http://www.hylo.com/c/hylo/join/lalala"
+        >
+          <span
+            data-for="invite-link-tooltip"
+            data-tip="Click to Copy"
+          >
+            http://www.hylo.com/c/hylo/join/lalala
+            <Icon
+              data-stylename="styles.copy-icon"
+              name="Copy"
+            />
+          </span>
+        </CopyToClipboard>
+        <ReactTooltip
+          clickable={false}
+          delayShow={500}
+          effect="solid"
+          id="invite-link-tooltip"
+          insecure={true}
+          place="top"
+          resizeHide={true}
+          type="dark"
+          wrapper="div"
+        />
       </div>
-    </div>
-    <div
-      data-stylename="styles.buttons"
-    >
       <Button
         color="green-white-green-border"
-        data-stylename="styles.reset-button"
-        narrow={true}
+        data-stylename="styles.invite-link-button"
         onClick={[Function]}
-        small={true}
       >
         Reset Link
       </Button>
-      <CopyToClipboard
-        onCopy={[Function]}
-        text="http://www.hylo.com/c/hylo/join/lalala"
-      >
-        <Button
-          color="green-white-green-border"
-          data-stylename="styles.copy-button"
-          narrow={true}
-          small={true}
-        >
-          Copy Link
-        </Button>
-      </CopyToClipboard>
     </div>
   </div>
   <div
     data-stylename="styles.email-section"
   >
+    <div
+      data-stylename="styles.subtitle"
+    >
+      Send Invites via email
+    </div>
+    <div
+      data-stylename="styles.help"
+    >
+      Email addresses of those you'd like to invite:
+    </div>
     <TextareaAutosize
       data-stylename="styles.invite-msg-input"
       inputRef={[Function]}
-      minRows={5}
+      minRows={1}
       onChange={[Function]}
       onHeightChange={[Function]}
-      placeholder="Type email addresses"
+      placeholder="Type email addresses (multiples should be separated by either a space or comma)"
       useCacheForDOMMeasurements={false}
       value=""
     />
+    <div
+      data-stylename="styles.help"
+    >
+      Customize the invite email message (optional):
+    </div>
     <TextareaAutosize
       data-stylename="styles.invite-msg-input"
       inputRef={[Function]}
@@ -100,43 +133,6 @@ Hylo is using Hylo for our online group: this is our dedicated space for communi
       >
         Send Invite
       </Button>
-    </div>
-  </div>
-  <div
-    data-stylename="styles.pending-invites-section"
-  >
-    <div
-      data-stylename="styles.pending-invites-header"
-    >
-      <h1
-        style={
-          Object {
-            "flex": 1,
-          }
-        }
-      >
-        No 
-        Pending Invites
-      </h1>
-    </div>
-    <div
-      data-stylename="styles.pending-invites-list"
-    >
-      <CSSTransitionGroup
-        transitionAppear={false}
-        transitionEnter={true}
-        transitionEnterTimeout={400}
-        transitionLeave={true}
-        transitionLeaveTimeout={500}
-        transitionName={
-          Object {
-            "enter": undefined,
-            "enterActive": undefined,
-            "leave": undefined,
-            "leaveActive": undefined,
-          }
-        }
-      />
     </div>
   </div>
 </div>

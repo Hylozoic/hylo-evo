@@ -1,28 +1,26 @@
+.container {
+  // empty
+}
+
 .header {
-  border-radius: 4px;
   background-color: $color-athens-gray;
-  padding: $space-7x $space-6x;
-  margin-bottom: $space-8x;
-  margin-top: $space-6x;
 }
 
 .title {
   composes: hdr-display from 'css/typography.scss';
+  margin-bottom: 10px;
+  padding: 0
 }
 
 .subtitle {
   composes: caption-lt-lg from 'css/typography.scss';
+  margin-bottom: 10px;
+  padding: 0
 }
 
 .help {
-  composes: caption-lt-lg from 'css/typography.scss';
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
-
-.button-wrapper {
-  display: flex;
-  justify-content: center;
+  color: $color-rhino-60;
+  margin-bottom: 16px;
 }
 
 .delete-button {
@@ -32,7 +30,6 @@
   background-color: white;
   border-color: $color-amaranth;
   color: $color-amaranth;
-  margin-right: 10px;
   &:hover, &.hover {
     background-color: $color-pale-pink;
   }

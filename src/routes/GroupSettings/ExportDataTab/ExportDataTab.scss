@@ -1,0 +1,19 @@
+.container {
+  // empty
+}
+
+.title {
+  composes: hdr-display from 'css/typography.scss';
+  margin-bottom: 10px;
+  padding: 0
+}
+
+.subtitle {
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-rhino-80;
+}
+
+.help {
+  color: $color-rhino-60;
+  margin-bottom: 16px;
+}

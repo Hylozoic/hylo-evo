@@ -33,7 +33,7 @@ export default function GroupSettings ({
 
   useEffect(() => {
     group && fetchGroupSettings()
-  }, slug)
+  }, [slug])
 
   if (!group) return <Loading />
   if (!canModerate) return <Redirect to={groupUrl(slug)} />

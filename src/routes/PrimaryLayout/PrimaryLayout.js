@@ -303,7 +303,7 @@ export default class PrimaryLayout extends Component {
         <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
       </>}
 
-      <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
+      <div styleName={cx('main', { 'map-view': isMapView, 'main--mobile-settings-layout': mobileSettingsLayout })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
         <Route path='/:context(all|public)' component={props =>
           <Navigation {...props}
@@ -326,7 +326,7 @@ export default class PrimaryLayout extends Component {
         {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
           <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
 
-        <Div100vh styleName={cx('center', { 'map-view': isMapView }, { collapsedState })} id={CENTER_COLUMN_ID}>
+        <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, 'center--mobile-settings-layout': mobileSettingsLayout })} id={CENTER_COLUMN_ID}>
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             {signupRoutes.map(({ path, child }) =>

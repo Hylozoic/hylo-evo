@@ -45,7 +45,7 @@ export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
     <div styleName='row'>
       <span styleName='name' onClick={() => viewSavedSearch(search)}>{search.name}</span>
       <span data-tip={formatParams(search)} data-for='params'><Icon name='Info' styleName='params-icon' /></span>
-      {!isMobile && (
+      {!isMobile.any && (
         <ReactTooltip place='right'
           type='dark'
           id='params'
