@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactTooltip from 'react-tooltip'
+import isMobile from 'ismobilejs'
 import { CSSTransitionGroup } from 'react-transition-group'
 import { debounce, includes, isEmpty, delay } from 'lodash'
 import cx from 'classnames'
@@ -134,12 +135,14 @@ export default class Pillbox extends Component {
           ref={this.list} />
         }
       </div>}
-      <ReactTooltip place='top'
-        type='dark'
-        id='pill-label'
-        effect='solid'
-        disable={!editable}
-        delayShow={500} />
+      {!isMobile && (
+        <ReactTooltip place='top'
+          type='dark'
+          id='pill-label'
+          effect='solid'
+          disable={!editable}
+          delayShow={500} />
+      )}
     </div>
   }
 }
