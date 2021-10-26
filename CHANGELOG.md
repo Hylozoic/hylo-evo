@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.7] - 2021-10-26
+### Added
+- Contributor guide and code of conduct to the repo
+
+### Changed
+- Clicking on link to a Hylo post from a post loads in same tab not new one
+- Update user Affiliations settings tab to say Groups & Affiliations
+
+### Fixed
+- Resetting of unread counts when viewing a group and a topic
+- Scrolling list of people who have responded to an event
+
 ## [3.1.6] - 2021-08-31
 ### Added
 - Ability to pass in a group name and slug as URL parameters to group creation modal
