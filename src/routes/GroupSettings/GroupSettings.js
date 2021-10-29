@@ -22,7 +22,8 @@ export default class GroupSettings extends Component {
   static propTypes = {
     currentUser: object,
     group: object,
-    fetchGroupSettings: func
+    fetchGroupSettings: func,
+    fetchLocation: func
   }
 
   componentDidMount () {
@@ -44,7 +45,8 @@ export default class GroupSettings extends Component {
       parentGroups,
       prerequisiteGroups,
       updateGroupSettings,
-      upload
+      upload,
+      fetchLocation
     } = this.props
 
     if (!group) return <Loading />
@@ -59,6 +61,7 @@ export default class GroupSettings extends Component {
           name: 'Settings',
           path: groupUrl(slug, 'settings'),
           component: <GroupSettingsTab
+            fetchLocation={fetchLocation}
             currentUser={currentUser}
             group={group}
             parentGroups={parentGroups}
