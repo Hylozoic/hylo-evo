@@ -124,6 +124,7 @@ Hylo is using Hylo for our online group: this is our dedicated space for communi
     <div
       data-stylename="styles.send-invite-button"
     >
+      <div />
       <Button
         color="green"
         disabled={true}

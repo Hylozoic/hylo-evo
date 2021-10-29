@@ -176,8 +176,6 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
           Send Invites via email
         </div>
         <div styleName='styles.help'>Email addresses of those you'd like to invite:</div>
-        {successMessage && <span styleName='success'>{successMessage}</span>}
-        {errorMessage && <span styleName='error'>{errorMessage}</span>}
         <TextareaAutosize minRows={1} styleName='styles.invite-msg-input'
           placeholder='Type email addresses (multiples should be separated by either a space or comma)'
           value={this.state.emails}
@@ -189,6 +187,10 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
           disabled={pendingCreate}
           onChange={(event) => this.setState({ message: event.target.value })} />
         <div styleName='styles.send-invite-button'>
+          <div>
+            {successMessage && <span styleName='success'>{successMessage}</span>}
+            {errorMessage && <span styleName='error'>{errorMessage}</span>}
+          </div>
           <Button color='green' disabled={disableSendBtn} onClick={this.sendInvites} narrow small>
             Send Invite
           </Button>
@@ -199,12 +201,14 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
         <div styleName='styles.pending-invites-section'>
           <div styleName='styles.pending-invites-header'>
             <div styleName='styles.subtitle'>Pending Invites</div>
-            {hasPendingInvites && <Button styleName='styles.resend-all-button'
-              color='green-white-green-border'
-              narrow small
-              onClick={resendAllOnClick}>
-              Resend All
-            </Button>}
+            {hasPendingInvites && (
+              <Button styleName='styles.resend-all-button'
+                color='green-white-green-border'
+                narrow small
+                onClick={resendAllOnClick}>
+                Resend All
+              </Button>
+            )}
           </div>
           <div styleName='styles.pending-invites-list'>
             <CSSTransitionGroup

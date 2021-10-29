@@ -99,21 +99,24 @@ $rowHeight: 60px;
 }
 
 .send-invite-button {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
 }
 
 .resend-all-button {
-  margin-top: 3px;
+  composes: button;
+  margin-bottom: 10px;
 }
 
 .pending-invites-section {
   .pending-invites-header {
     display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
   }
 
   .pending-invites-list {
     display: flex;
-    margin-top: 10px;
     align-content: space-between;
     flex-direction: column;
 
@@ -193,7 +196,7 @@ $rowHeight: 60px;
 }
 
 .success {
-  color: $color-mountain-meadow;
+  color: $color-caribbean-green;
 }
 
 @media screen and (max-width: 525px) {
