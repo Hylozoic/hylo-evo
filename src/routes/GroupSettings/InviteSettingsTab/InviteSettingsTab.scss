@@ -98,9 +98,14 @@ $rowHeight: 60px;
   }
 }
 
+.send-invite-feedback {
+  margin-right: 10px
+}
+
 .send-invite-button {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .resend-all-button {

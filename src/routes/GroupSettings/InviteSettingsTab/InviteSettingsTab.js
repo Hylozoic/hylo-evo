@@ -187,7 +187,7 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
           disabled={pendingCreate}
           onChange={(event) => this.setState({ message: event.target.value })} />
         <div styleName='styles.send-invite-button'>
-          <div>
+          <div styleName='styles.send-invite-feedback'>
             {successMessage && <span styleName='success'>{successMessage}</span>}
             {errorMessage && <span styleName='error'>{errorMessage}</span>}
           </div>
