@@ -68,14 +68,12 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
 
         const numBad = badEmails.length
         let errorMessage, successMessage
-        if (numBad === 1) {
-          errorMessage = 'The address below is invalid.'
-        } else if (numBad > 1) {
-          errorMessage = `The ${numBad} addresses below are invalid.`
+        if (numBad > 0) {
+          errorMessage = `${numBad} invalid email address/es found (see above). `
         }
         const numGood = invitations.length - badEmails.length
         if (numGood > 0) {
-          successMessage = `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
+          successMessage = `Sent ${numGood} ${numGood === 1 ? 'email.' : 'emails.'}`
           trackAnalyticsEvent('Group Invitations Sent', { numGood })
         }
         this.setState({
@@ -177,7 +175,7 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
         </div>
         <div styleName='styles.help'>Email addresses of those you'd like to invite:</div>
         <TextareaAutosize minRows={1} styleName='styles.invite-msg-input'
-          placeholder='Type email addresses (multiples should be separated by either a space or comma)'
+          placeholder='Type email addresses (multiples should be separated by either a comma or new line)'
           value={this.state.emails}
           disabled={pendingCreate}
           onChange={(event) => this.setState({ emails: event.target.value })} />
@@ -188,8 +186,8 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
           onChange={(event) => this.setState({ message: event.target.value })} />
         <div styleName='styles.send-invite-button'>
           <div styleName='styles.send-invite-feedback'>
-            {successMessage && <span styleName='success'>{successMessage}</span>}
             {errorMessage && <span styleName='error'>{errorMessage}</span>}
+            {successMessage && <span styleName='success'>{successMessage}</span>}
           </div>
           <Button color='green' disabled={disableSendBtn} onClick={this.sendInvites} narrow small>
             Send Invite
@@ -220,16 +218,18 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
               }}
               transitionEnterTimeout={400}
               transitionLeaveTimeout={500}>
-              {pendingInvites.map(invite => <div styleName='styles.row' key={invite.id}>
-                <div style={{ flex: 1 }}>
-                  <span>{invite.email}</span>
-                  <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
+              {pendingInvites.map(invite => (
+                <div styleName='styles.row' key={invite.id}>
+                  <div style={{ flex: 1 }}>
+                    <span>{invite.email}</span>
+                    <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
+                  </div>
+                  <div styleName='styles.invite-actions'>
+                    <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
+                    <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
+                  </div>
                 </div>
-                <div styleName='styles.invite-actions'>
-                  <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
-                  <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
-                </div>
-              </div>)}
+              ))}
             </CSSTransitionGroup>
           </div>
         </div>
