@@ -99,7 +99,7 @@ exports[`renders correctly 1`] = `
       minRows={1}
       onChange={[Function]}
       onHeightChange={[Function]}
-      placeholder="Type email addresses (multiples should be separated by either a space or comma)"
+      placeholder="Type email addresses (multiples should be separated by either a comma or new line)"
       useCacheForDOMMeasurements={false}
       value=""
     />
@@ -124,7 +124,9 @@ Hylo is using Hylo for our online group: this is our dedicated space for communi
     <div
       data-stylename="styles.send-invite-button"
     >
-      <div />
+      <div
+        data-stylename="styles.send-invite-feedback"
+      />
       <Button
         color="green"
         disabled={true}
