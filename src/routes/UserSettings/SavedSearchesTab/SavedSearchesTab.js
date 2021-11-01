@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect } from 'react'
 import { push } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactTooltip from 'react-tooltip'
+import isMobile from 'ismobilejs'
 import getMe from 'store/selectors/getMe'
 import { fetchSavedSearches, deleteSearch as deleteSearchAction } from '../UserSettings.store'
 import { FETCH_SAVED_SEARCHES } from 'store/constants'
 import { formatParams, generateViewParams } from 'util/savedSearch'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import ReactTooltip from 'react-tooltip'
 import './SavedSearchesTab.scss'
 
 export default function SavedSearchesTab () {
@@ -44,13 +45,15 @@ export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
     <div styleName='row'>
       <span styleName='name' onClick={() => viewSavedSearch(search)}>{search.name}</span>
       <span data-tip={formatParams(search)} data-for='params'><Icon name='Info' styleName='params-icon' /></span>
-      <ReactTooltip place='right'
-        type='dark'
-        id='params'
-        effect='solid'
-        multiline
-        delayShow={200}
-        className='params' />
+      {!isMobile.any && (
+        <ReactTooltip place='right'
+          type='dark'
+          id='params'
+          effect='solid'
+          multiline
+          delayShow={200}
+          className='params' />
+      )}
       <span onClick={() => deleteSearch(search.id)} styleName='delete-button'>Delete</span>
     </div>
   </div>
