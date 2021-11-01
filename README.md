@@ -35,7 +35,9 @@
 HTTPS=true
 LOCAL_CERT=localhost (this should be the root filename used for your certificate files above)
 ```
+## Contributions and Code of Conduct
 
+Please review our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to step into co-creative stewardship with us.
 ## Data fetching and storage
 
 The application's series of Redux middlewares take care of *MOST* of the data fetching for the application. Data fetching side-effects are triggered by dispatching specific redux actions, as with most redux setups. Instead of custom or specific request handlers, however, Evo uses a series of middleware handlers to handle all fetching to the platform backend. These actions conform to the flux-standard-action pattern, with some additions to handle the application's edge cases.
@@ -54,11 +56,3 @@ So to recap, if you want to interact with the backend and ensure some data is av
 - has a graphql query attached to it (or in rare cases, just a appropriate `api` property attached)
 - has an appropriate `meta.modelExtractor`
 - optionally includes a `meta.optimistic === true` property if you want to optimisitically update the local store
-
-## Contributions and Code of Conduct
-
-Please review our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) to step into co-creative stewardship with us.
-
-## Further documentation
-
-More detailed docs are available in [Confluence](https://hylozoic.atlassian.net/wiki/spaces/DEV/pages/87195649/Web+Client) about specific topics such as updating the icon font - please ask a Hylo steward for access.
