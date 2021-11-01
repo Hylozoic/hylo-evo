@@ -25,8 +25,6 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
-
 export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
@@ -50,7 +48,8 @@ export default class PostEditor extends React.Component {
     removeLinkPreview: PropTypes.func,
     titlePlaceholderForPostType: PropTypes.object,
     updatePost: PropTypes.func,
-    fetchLocation: PropTypes.func
+    fetchLocation: PropTypes.func,
+    ensureLocationIdIfCoordinate: PropTypes.func
   }
 
   static defaultProps = {
@@ -333,7 +332,7 @@ export default class PostEditor extends React.Component {
     const {
       editing, createPost, updatePost, onClose,
       goToPost, setAnnouncement, announcementSelected,
-      imageAttachments, fileAttachments, fetchLocation
+      imageAttachments, fileAttachments, fetchLocation, ensureLocationIdIfCoordinate
     } = this.props
     const {
       id, type, title, groups, linkPreview, members,

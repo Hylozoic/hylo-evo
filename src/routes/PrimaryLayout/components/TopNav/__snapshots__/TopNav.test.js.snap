@@ -82,7 +82,7 @@ exports[`renders as expected with no group 1`] = `
         <li>
           <a
             data-stylename="hover-highlight"
-            href="http://hylo.com/terms"
+            href="http://hylo.com/terms/"
             target="_blank"
           >
             Terms & Privacy
