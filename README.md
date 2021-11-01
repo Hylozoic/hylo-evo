@@ -4,6 +4,7 @@
 
 1. `git clone git@github.com:Hylozoic/hylo-evo.git`
 2. `cd hylo-evo`
+3. Setup your .env file by copying `.env.example` to `.env`. You will need to ask a Hylo dev team member for API keys or tokens for Filepicker, Intercom, MapBox and Mixpanel as needed.
 
 ## Running local:
 

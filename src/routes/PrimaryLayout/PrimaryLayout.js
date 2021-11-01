@@ -238,7 +238,7 @@ export default class PrimaryLayout extends Component {
       isGroupRoute,
       location,
       routeParams,
-      showLogoBadge,
+      showMenuBadge,
       slug,
       width
     } = this.props
@@ -299,8 +299,7 @@ export default class PrimaryLayout extends Component {
             )} />
           ))}
         </Switch>
-
-        <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
+        <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
       </>}
 
       <div styleName={cx('main', { 'map-view': isMapView, 'main--mobile-settings-layout': mobileSettingsLayout })} onClick={this.closeDrawer}>
