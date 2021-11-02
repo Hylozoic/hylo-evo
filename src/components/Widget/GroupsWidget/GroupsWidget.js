@@ -64,6 +64,7 @@ export default class GroupsWidget extends Component {
           <div styleName='createGroup'>
             <div>
               <Link to={createGroupUrl(routeParams)}>+ Create Group</Link>
+              {/* might have to make this conditional, to suit a wider range of uses */}
             </div>
           </div>
         </Slider>
