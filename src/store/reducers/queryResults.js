@@ -19,7 +19,8 @@ import {
   DROP_QUERY_RESULTS,
   FIND_OR_CREATE_THREAD,
   FETCH_THREADS,
-  FETCH_CHILD_COMMENTS
+  FETCH_CHILD_COMMENTS,
+  FETCH_COMMENTS
 } from 'store/constants'
 // import {
 //   FETCH_NETWORK_SETTINGS,
@@ -45,7 +46,7 @@ export default function (state = {}, action) {
 
   // Special case for post query- needs to extract subcomments as well.
   // Toplevel comments are handled by standard extractQueryResults (below).
-  if (type === FETCH_POST) {
+  if (type === FETCH_POST || type === FETCH_COMMENTS) {
     state = matchSubCommentsIntoQueryResults(state, payload)
   }
 

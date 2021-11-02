@@ -111,9 +111,9 @@ export default class RelatedGroupsTab extends Component {
         setSearch={setSearch}
          /> */}
 
-      <h1>Parent Groups</h1>
+      <div styleName='title'>Parent Groups</div>
       {parentGroups.length > 0 ? <div>
-        <h3>{parentGroups.length === 1 ? 'This is the one group' : `These are the ${parentGroups.length} groups`} that {group.name} is a member of</h3>
+        <div styleName='subtitle'>{parentGroups.length === 1 ? 'This is the one group' : `These are the ${parentGroups.length} groups`} that {group.name} is a member of</div>
         <div styleName='group-list' >
           {parentGroups.map(p => <GroupCard
             group={p}
@@ -122,11 +122,11 @@ export default class RelatedGroupsTab extends Component {
           />)}
         </div>
       </div>
-        : <h3>{group.name} is not a member of any groups yet</h3>
+        : <div styleName='subtitle'>{group.name} is not a member of any groups yet</div>
       }
 
       {groupInvitesToJoinThem.length > 0 && <div>
-        <h3>Open Invitations to Join Other Groups</h3>
+        <div styleName='subtitle'>Open Invitations to Join Other Groups</div>
         <div styleName='group-list'>
           {groupInvitesToJoinThem.map(invite => {
             return <GroupCard
@@ -142,7 +142,7 @@ export default class RelatedGroupsTab extends Component {
       </div> }
 
       {groupRequestsToJoinThem.length > 0 && <div>
-        <h3>Pending requests to join other groups</h3>
+        <div styleName='subtitle'>Pending requests to join other groups</div>
         <div styleName='group-list'>
           {groupRequestsToJoinThem.map(invite => {
             return <GroupCard
@@ -176,10 +176,9 @@ export default class RelatedGroupsTab extends Component {
         </div>}
       </div>
 
-      <br />
-      <h1>Child Groups</h1>
+      <div styleName='title'>Child Groups</div>
       {childGroups.length > 0 ? <div>
-        <h3>{childGroups.length === 1 ? 'This group is a member' : `These ${childGroups.length} groups are members`} of {group.name}</h3>
+        <div styleName='subtitle'>{childGroups.length === 1 ? 'This group is a member' : `These ${childGroups.length} groups are members`} of {group.name}</div>
         <div styleName='group-list'>
           {childGroups.map(c =>
             <GroupCard
@@ -189,11 +188,11 @@ export default class RelatedGroupsTab extends Component {
             />)}
         </div>
       </div>
-        : <h3>No groups are members of {group.name} yet</h3>
+        : <div styleName='subtitle'>No groups are members of {group.name} yet</div>
       }
 
       {groupRequestsToJoinUs.length > 0 && <div>
-        <h3>Requests to join {group.name}</h3>
+        <div styleName='subtitle'>Requests to join {group.name}</div>
         <div styleName='group-list'>
           {groupRequestsToJoinUs.map(invite => {
             return <GroupCard
@@ -212,7 +211,7 @@ export default class RelatedGroupsTab extends Component {
       </div> }
 
       {groupInvitesToJoinUs.length > 0 && <div>
-        <h3>Pending invites to join {group.name}</h3>
+        <div styleName='subtitle'>Pending invites to join {group.name}</div>
         <div styleName='group-list'>
           {groupInvitesToJoinUs.map(invite => {
             return <GroupCard
@@ -290,13 +289,13 @@ export function GroupCard ({ actionMenu, thisGroup, group, questionAnswers, type
       thisGroup.groupToGroupJoinQuestions &&
       thisGroup.groupToGroupJoinQuestions.map(q =>
         <div styleName='answer' key={q.id}>
-          <h3>{q.text}</h3>
+          <div styleName='subtitle'>{q.text}</div>
           <p>{get('answer', questionAnswers && questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}</p>
         </div>
       )}
       {otherAnswers.map(qa =>
         <div styleName='answer' key={qa.id}>
-          <h3>{qa.question.text}</h3>
+          <div styleName='subtitle'>{qa.question.text}</div>
           <p>{qa.answer}</p>
         </div>
       )}
@@ -339,7 +338,7 @@ export function RequestToJoinModal ({ group, hideRequestToJoinModal, parentGroup
         {questionAnswers && <div styleName='join-questions'>
           <div styleName='request-message-title'>{parentGroup.name} requires groups to answer the following questions before joining</div>
           {questionAnswers.map((q, index) => <div styleName='join-question' key={index}>
-            <h3>{q.text}</h3>
+            <div styleName='subtitle'>{q.text}</div>
             <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
           </div>)}
         </div>}

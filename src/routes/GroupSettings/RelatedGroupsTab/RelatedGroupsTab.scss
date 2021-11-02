@@ -1,15 +1,17 @@
 .container {
   padding-bottom: 200px;
+}
 
-  h1 {
-    margin-bottom: 0;
-  }
+.title {
+  composes: hdr-display from 'css/typography.scss';
+}
 
-  h3 {
-    font-size: 16px;
-    color: rgba(125, 140, 157, 1.000);
-    font-weight: 100;
-  }
+.subtitle {
+  // composes: hdr-headline from 'css/typography.scss';
+  font-size: 16px;
+  color: $color-rhino-80;
+  margin-bottom: 10px;
+  padding: 0
 }
 
 .icon {

@@ -4,7 +4,27 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.1.9] - 2021-11-2
+### Fixed
+- Only most recent 2 child comments appearing in a comment thread
+
+## [3.1.8] - 2021-11-1
+### Added
+- Add Layout Flags context to capture the `layoutFlags` query param and make it available in React context as `<layoutFlag>Layout`
+- Switch on/off site header and footer for `mobileSettingsLayout` 
+- Update and normalize Group Settings area UI, optimizing for small/mobile screens
+
+## [3.1.7] - 2021-10-26
+### Added
+- Contributor guide and code of conduct to the repo
+
+### Changed
+- Clicking on link to a Hylo post from a post loads in same tab not new one
+- Update user Affiliations settings tab to say Groups & Affiliations
+
+### Fixed
+- Resetting of unread counts when viewing a group and a topic
+- Scrolling list of people who have responded to an event
 
 ## [3.1.6] - 2021-08-31
 ### Added

@@ -15,6 +15,7 @@ export const getTopicsFromSubscribedGroupTopics = (state, props) => {
     return {
       ...groupTopic.ref,
       ...groupTopic.topic.ref,
+      groupTopicId: groupTopic.id, // Needed for the reset new post count code
       url: topicUrl(groupTopic.topic.name, routeParams),
       current: matchPath(
         location.pathname,

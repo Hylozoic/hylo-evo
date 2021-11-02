@@ -52,3 +52,9 @@
   padding: 5px;
   margin-bottom: 25px;
 }
+
+@media screen and (max-width: 600px) {
+  .saveChanges {
+    bottom: 60px;
+  }
+}

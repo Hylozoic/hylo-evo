@@ -139,12 +139,16 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
         <GroupButton group={group} />
       </div>
       <div styleName='requestDetail'>
-        <span styleName='createdDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
-        {joinRequest.status === JOIN_REQUEST_STATUS.Pending ? <span onClick={cancel} styleName='cancelButton'>Cancel</span>
-          : joinRequest.status === JOIN_REQUEST_STATUS.Rejected ? <span styleName='declinedCanceled'>Declined</span>
-            : joinRequest.status === JOIN_REQUEST_STATUS.Canceled ? <span styleName='declinedCanceled'>Canceled</span>
-              : ''
-        }
+        <span styleName='createdDate joinRequestDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
+        {joinRequest.status === JOIN_REQUEST_STATUS.Pending && (
+          <span onClick={cancel} styleName='cancelButton'>Cancel</span>
+        )}
+        {joinRequest.status === JOIN_REQUEST_STATUS.Rejected && (
+          <span styleName='declinedCanceled'>Declined</span>
+        )}
+        {joinRequest.status === JOIN_REQUEST_STATUS.Canceled && (
+          <span styleName='declinedCanceled'>Canceled</span>
+        )}
       </div>
     </div>
   )

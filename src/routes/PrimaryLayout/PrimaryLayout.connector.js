@@ -15,7 +15,7 @@ import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
 
 export function mapStateToProps (state, props) {
   const memberships = getMyMemberships(state, props)
-  const showLogoBadge = some(m => m.newPostCount > 0, memberships)
+  const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const hasMemberships = memberships.length > 0
   const slug = getSlugFromLocation(null, props)
   const group = getGroupForCurrentRoute(state, props)
@@ -40,7 +40,7 @@ export function mapStateToProps (state, props) {
     currentGroupMembership,
     returnToURL: getReturnToURL(state),
     routeParams,
-    showLogoBadge,
+    showMenuBadge,
     slug
   }
 }
