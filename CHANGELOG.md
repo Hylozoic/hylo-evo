@@ -4,6 +4,10 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.9] - 2021-11-2
+### Fixed
+- Only most recent 2 child comments appearing in a comment thread
+
 ## [3.1.8] - 2021-11-1
 ### Added
 - Add Layout Flags context to capture the `layoutFlags` query param and make it available in React context as `<layoutFlag>Layout`
