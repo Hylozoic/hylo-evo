@@ -20,7 +20,7 @@ import './Comment.scss'
 
 const { object, func } = PropTypes
 
-const INITIAL_SUBCOMMENTS_DISPLAYED = 2
+export const INITIAL_SUBCOMMENTS_DISPLAYED = 4
 
 export class Comment extends Component {
   static propTypes = {
@@ -158,11 +158,8 @@ export default class CommentWithReplies extends Component {
             total={childCommentsTotal + newCommentsAdded}
             hasMore={hasMoreChildComments}
             fetchComments={() => {
-              if (this.state.showLatestOnly) {
-                this.setState({ showLatestOnly: false })
-              } else {
-                fetchChildComments()
-              }
+              this.setState({ showLatestOnly: false })
+              fetchChildComments()
             }} />
         </div>
         {childComments.map(c =>

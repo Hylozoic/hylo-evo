@@ -1,3 +1,5 @@
+import { INITIAL_SUBCOMMENTS_DISPLAYED } from 'routes/PostDetail/Comments/Comment/Comment'
+
 // :TODO: clean this up and use proper query fragments?
 const CommentFieldsFragment = `
   id
@@ -46,7 +48,7 @@ const postFieldsFragment = withComments => `
   ${withComments ? `comments(first: 10, order: "desc") {
     items {
       ${CommentFieldsFragment}
-      childComments(first: 10, order: "desc") {
+      childComments(first: ${INITIAL_SUBCOMMENTS_DISPLAYED}, order: "desc") {
         items {
           ${CommentFieldsFragment}
           post {
