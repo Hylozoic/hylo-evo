@@ -54,6 +54,10 @@ body {
   }
 }
 
+.main--mobile-settings-layout {
+  padding-top: 0
+}
+
 $drawer-width: 367px;
 $drawer-height: 100vh;
 $drawer-z-index: 51;
@@ -358,6 +362,10 @@ $drawer-z-index: 51;
     height: calc(100vh - 40px);
     padding-bottom: 0px;
   }
+}
+
+.center--mobile-settings-layout {
+  padding-bottom: 0
 }
 
 .singleColumn .center {

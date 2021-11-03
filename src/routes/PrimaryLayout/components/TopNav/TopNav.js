@@ -53,7 +53,7 @@ export default class TopNav extends Component {
       logout,
       onClick,
       routeParams,
-      showLogoBadge,
+      showMenuBadge,
       toggleDrawer,
       toggleGroupMenu
     } = this.props
@@ -65,6 +65,7 @@ export default class TopNav extends Component {
       <div styleName={cx('topNav', { groupMenuOpen: isGroupMenuOpen })} ref='topNav'>
         <div styleName='drawerToggle' id='toggleDrawer'>
           <button styleName='drawerToggleButton' onClick={toggleDrawer}><Icon name='Hamburger' styleName='menuIcon' /></button>
+          {showMenuBadge && <Badge number='1' styleName='logoBadge' border />}
         </div>
         <Link
           to={baseUrl(pick(['context', 'groupSlug'], routeParams))}
@@ -73,7 +74,6 @@ export default class TopNav extends Component {
           id='currentContext'
         >
           <Logo {...{ group, isPublic }} />
-          {showLogoBadge && <Badge number='1' styleName='logoBadge' border />}
           <Title group={group} isPublic={isPublic} />
         </Link>
         <div styleName='navIcons' id='personalSettings'>
@@ -95,7 +95,7 @@ export default class TopNav extends Component {
             </li>
             <li><Link styleName={'hover-highlight'} to='/settings'>Settings</Link></li>
             <li><span styleName={'hover-highlight'} onClick={showIntercom}>Feedback &amp; Support</span></li>
-            <li><a href='http://hylo.com/terms' target='_blank' styleName={'hover-highlight'}>Terms & Privacy</a></li>
+            <li><a href='http://hylo.com/terms/' target='_blank' styleName={'hover-highlight'}>Terms & Privacy</a></li>
             <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>Download App</span></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
@@ -105,7 +105,7 @@ export default class TopNav extends Component {
   }
 }
 
-function Logo ({ group, isPublic, showLogoBadge }) {
+function Logo ({ group, isPublic }) {
   let imageStyle = bgImageStyle(hyloLogo)
   if (group) {
     imageStyle = bgImageStyle(get('avatarUrl', group))

@@ -146,7 +146,8 @@ export const getPendingInvites = ormCreateSelector(
   orm,
   (state, props) => props.groupId,
   ({ Invitation }, id) =>
-    Invitation.filter(i => i.group === id)
+    Invitation
+      .filter(i => (i.group === id) && !!i.id)
       .orderBy(i => -new Date(i.createdAt))
       .toModelArray()
 )

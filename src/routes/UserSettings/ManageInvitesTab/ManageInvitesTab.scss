@@ -71,14 +71,15 @@
 
   .joinRequest {
     margin-bottom: 2px;
-    display: block;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    justify-content: center;
     padding: 5px;
 
     .requestGroup {
-      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+      
     }
 
     .requestDetail {
@@ -182,24 +183,12 @@
   }
 }
 @media screen and (max-width: 600px) {
-
-  .invitationDetail .invitationSource {
-    display: block;
-    text-align: center;
-
-    .requestGroup {
-      margin: 0 auto;
-      max-width: 100%;
-    }
-  }
-
-  .requestList .joinRequest .requestGroup {
-    width: 100%;
-    text-align: center;
-  }
 }
 
 @media screen and (max-width: 425px) {
+  .joinRequestDate {
+    display: none
+  }
   .title {
     line-height: 20px;
     margin-bottom: 0;
@@ -208,6 +197,5 @@
 
   .description {
     font-size: 12px;
-    text-align: center;
   }
 }

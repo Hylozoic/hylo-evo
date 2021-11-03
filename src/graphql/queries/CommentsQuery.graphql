@@ -9,7 +9,7 @@ query CommentsQuery (
     comments(first: 10, cursor: $cursor, order: "desc") {
       items {
         ...CommentFields
-        childComments {
+        childComments(first: 4, order: "desc") {
           items {
             ...CommentFields
             post {

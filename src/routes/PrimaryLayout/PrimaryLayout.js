@@ -10,9 +10,10 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
+import Div100vh from 'react-div-100vh'
 
 import config, { isTest } from 'config'
-import Div100vh from 'react-div-100vh'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
@@ -142,6 +143,8 @@ const redirectRoutes = [
 ]
 
 export default class PrimaryLayout extends Component {
+  static contextType = LayoutFlagsContext
+
   constructor (props) {
     super(props)
 
@@ -235,10 +238,11 @@ export default class PrimaryLayout extends Component {
       isGroupRoute,
       location,
       routeParams,
-      showLogoBadge,
+      showMenuBadge,
       slug,
       width
     } = this.props
+    const { mobileSettingsLayout } = this.context
 
     if (!currentUser) {
       return <div styleName='container'>
@@ -262,39 +266,43 @@ export default class PrimaryLayout extends Component {
     const showTourPrompt = !signupInProgress &&
       !get('settings.alreadySeenTour', currentUser) &&
       !isSingleColumn && // Don't show tour on non-member group details page
-      !get('settings.showJoinForm', currentGroupMembership) // Show group welcome modal before tour
+      !get('settings.showJoinForm', currentGroupMembership) && // Show group welcome modal before tour
+      !mobileSettingsLayout
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
-      { showTourPrompt ? <Route path='/:context(all|public|groups)' component={props =>
-        <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
-          <div styleName='tourPrompt'>
-            <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-            <div styleName='tourExplanation'>
-              <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
-              <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
-              <div>
-                <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
-                <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+      {/* Site tour */}
+      {showTourPrompt && (
+        <Route path='/:context(all|public|groups)' component={props =>
+          <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
+            <div styleName='tourPrompt'>
+              <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+              <div styleName='tourExplanation'>
+                <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
+                <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+                <div>
+                  <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
+                  <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+                </div>
+                <div styleName='speechIndicator' />
               </div>
-              <div styleName='speechIndicator' />
             </div>
-          </div>
-          <div styleName='tourBg' onClick={this.closeTour} />
-        </div>} />
-        : ' '}
+            <div styleName='tourBg' onClick={this.closeTour} />
+          </div>} />
+      )}
 
       {/* Context navigation drawer */}
-      <Switch>
-        {routesWithDrawer.map(({ path }) => (
-          <Route path={path} key={path} render={props => (
-            <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
-          )} />
-        ))}
-      </Switch>
+      {!mobileSettingsLayout && <>
+        <Switch>
+          {routesWithDrawer.map(({ path }) => (
+            <Route path={path} key={path} render={props => (
+              <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
+            )} />
+          ))}
+        </Switch>
+        <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
+      </>}
 
-      <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showLogoBadge, width }} />
-
-      <div styleName={cx('main', { 'map-view': isMapView })} onClick={this.closeDrawer}>
+      <div styleName={cx('main', { 'map-view': isMapView, 'main--mobile-settings-layout': mobileSettingsLayout })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
         <Route path='/:context(all|public)' component={props =>
           <Navigation {...props}
@@ -317,7 +325,7 @@ export default class PrimaryLayout extends Component {
         {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
           <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
 
-        <Div100vh styleName={cx('center', { 'map-view': isMapView }, { collapsedState })} id={CENTER_COLUMN_ID}>
+        <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, 'center--mobile-settings-layout': mobileSettingsLayout })} id={CENTER_COLUMN_ID}>
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             {signupRoutes.map(({ path, child }) =>
