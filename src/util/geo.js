@@ -25,10 +25,8 @@ export function parseCoordinate (coordinate) {
 
 export function convertCoordinateToLocation (coordinate) {
   let city = ''
-
   let addressNumber = ''
   let addressStreet = ''
-  console.log(coordinate, 'cooridnate inside')
   return {
     accuracy: null,
     addressNumber,

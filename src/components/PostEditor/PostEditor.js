@@ -347,7 +347,6 @@ export default class PostEditor extends React.Component {
     const imageUrls = imageAttachments && imageAttachments.map(attachment => attachment.url)
     const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
     coordLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
-
     const postToSave = {
       id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId: coordLocationId || locationId, isPublic
     }

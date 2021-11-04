@@ -3,18 +3,11 @@ import React from 'react'
 import { merge } from 'lodash'
 import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
-// import * as LocationInputStore from 'components/LocationInput/LocationInput.store'
-
-// jest.mock('components/LocationInput/LocationInput.store')
 
 describe('PostEditor', () => {
   let baseProps = {
     fetchDefaultTopics: jest.fn()
   }
-
-  // beforeAll(() => {
-  //   LocationInputStore.ensureLocationIdIfCoordinate = jest.fn().mockResolvedValue('876')
-  // })
 
   beforeEach(() => {
     baseProps = {
@@ -36,7 +29,7 @@ describe('PostEditor', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  describe.skip('for a new post', () => {
+  describe('for a new post', () => {
     test('initial prompt and placeholders', () => {
       const props = {
         ...baseProps,
@@ -93,7 +86,9 @@ describe('PostEditor', () => {
         createPost: jest.fn(() => new Promise(() => {})),
         fetchLocation: jest.fn().mockReturnValue('8778'),
         setAnnouncement: jest.fn(),
-        ensureLocationIdIfCoordinate: jest.fn().mockResolvedValue('555')
+        ensureLocationIdIfCoordinate: async () => {
+          return '666'
+        }
       }
       const editorMock = {
         getContentHTML: () => props.post.details,
@@ -110,7 +105,7 @@ describe('PostEditor', () => {
       testInstance.editor.current = editorMock
       testInstance.topicSelector.current = topicSelectorMock
       testInstance.groupsSelector.current = groupsSelectorMock
-      testInstance.save()
+      await testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
       expect(props.createPost.mock.calls).toMatchSnapshot()
     })
@@ -130,7 +125,7 @@ describe('PostEditor', () => {
     })
   })
 
-  describe.skip('editing a post', () => {
+  describe('editing a post', () => {
     const props = {
       ...baseProps,
       editing: true,
@@ -163,7 +158,7 @@ describe('PostEditor', () => {
       expect(wrapper).toMatchSnapshot()
     })
 
-    test('saving a post will update a post', () => {
+    test('saving a post will update a post', async () => {
       const editorMock = {
         getContentHTML: () => props.post.details,
         reset: jest.fn()
@@ -179,7 +174,7 @@ describe('PostEditor', () => {
       testInstance.editor.current = editorMock
       testInstance.topicSelector.current = topicSelectorMock
       testInstance.groupsSelector.current = groupsSelectorMock
-      testInstance.save()
+      await testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
     })
@@ -237,7 +232,7 @@ describe('PostEditor', () => {
     })
   })
 
-  test.skip('saving a valid post will update a post', () => {
+  test('saving a valid post will update a post', async () => {
     const props = {
       ...baseProps,
       editing: true,
@@ -273,7 +268,7 @@ describe('PostEditor', () => {
     testInstance.editor.current = editorMock
     testInstance.topicSelector.current = topicSelectorMock
     testInstance.groupsSelector.current = groupsSelectorMock
-    testInstance.save()
+    await testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()
   })
