@@ -9,24 +9,25 @@ import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
 import { personUrl, topicUrl } from 'util/navigation'
+import { formatDatePair } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
 
-const formatStartDate = (startTime) => {
+const formatStartDate = (startTime, from) => {
   const current = moment()
   let start = ''
   if (moment(startTime).isAfter(current)) {
-    start = moment(startTime).format('MMM D YYYY')
+    start = from
   }
   return start
 }
 
-const formatEndDate = (endTime) => {
+const formatEndDate = (endTime, to) => {
   const current = moment()
   let end = ''
-  const endFormatted = moment(endTime).format('MMM D YYYY')
+  const endFormatted = to
   if (moment(endTime).isAfter(current)) {
     end = `ends ${endFormatted}`
   } else if (current.isAfter(moment(endTime))) {
@@ -91,9 +92,12 @@ export default class PostHeader extends PureComponent {
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
     const canHaveTimes = typesWithTimes.includes(type)
+
+    const { from, to } = formatDatePair(startTime, endTime, true)
+    const startDate = (startTime && from) && formatStartDate(startTime, from)
+    const endDate = (endTime && to) && formatEndDate(endTime, to)
     let timeWindow = ''
-    const startDate = startTime && formatStartDate(startTime)
-    const endDate = endTime && formatEndDate(endTime)
+
     if (startDate && endDate) {
       timeWindow = `${type} starts ${startDate} and ${endDate}`
     } else if (endDate) {
