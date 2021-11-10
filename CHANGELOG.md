@@ -4,7 +4,15 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.1.9] - 2021-11-2
+### Fixed
+- Only most recent 2 child comments appearing in a comment thread
+
+## [3.1.8] - 2021-11-1
+### Added
+- Add Layout Flags context to capture the `layoutFlags` query param and make it available in React context as `<layoutFlag>Layout`
+- Switch on/off site header and footer for `mobileSettingsLayout` 
+- Update and normalize Group Settings area UI, optimizing for small/mobile screens
 
 ## [3.1.7] - 2021-10-26
 ### Added

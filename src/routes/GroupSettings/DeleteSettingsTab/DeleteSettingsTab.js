@@ -15,19 +15,15 @@ export default class DeleteSettingsTab extends Component {
     const { group } = this.props
     const { name } = group
 
-    return <div>
-      <div styleName='header'>
-        <div styleName='title'>Delete {name}</div>
-      </div>
+    return <div styleName='container'>
+      <div styleName='title'>Delete {name}</div>
       <div styleName='help'>
         If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.
       </div>
-      <div styleName='button-wrapper'>
-        <Button
-          label='Delete Group'
-          onClick={this.deleteGroup}
-          styleName='delete-button' />
-      </div>
+      <Button
+        label='Delete Group'
+        onClick={this.deleteGroup}
+        styleName='delete-button' />
     </div>
   }
 }
