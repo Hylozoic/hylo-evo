@@ -4,6 +4,7 @@ import LocationInput from 'components/LocationInput'
 import SignupModalFooter from '../SignupModalFooter'
 import Icon from 'components/Icon'
 import styles from '../Signup.scss'
+import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 
 export default class AddLocation extends Component {
   constructor () {
@@ -35,9 +36,12 @@ export default class AddLocation extends Component {
     })
   }
 
-  submit = () => {
+  submit = async () => {
     const { locationId, location } = this.state
-    const changes = Object.assign({ location, locationId }, { settings: { signupInProgress: false } })
+    const { fetchLocation } = this.props
+
+    const coordLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
+    const changes = Object.assign({ location, locationId: coordLocationId }, { settings: { signupInProgress: false } })
 
     this.props.updateUserSettings(changes)
       .then(() => {

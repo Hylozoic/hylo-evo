@@ -32,7 +32,8 @@ export default class UserSettings extends Component {
       allGroupsSettings,
       fetchPending,
       queryParams,
-      registerStripeAccount
+      registerStripeAccount,
+      fetchLocation
     } = this.props
 
     const content = [
@@ -45,6 +46,7 @@ export default class UserSettings extends Component {
           loginWithService={loginWithService}
           unlinkAccount={unlinkAccount}
           setConfirm={setConfirm}
+          fetchLocation={fetchLocation}
           fetchPending={fetchPending} />
       },
       {

@@ -69,6 +69,7 @@
     "connect-history-api-fallback": "1.5.0",
     "connected-react-router": "^6.8.0",
     "cookie-parser": "^1.4.3",
+    "coordinate-parser": "^1.0.7",
     "cross-spawn": "5.1.0",
     "css-loader": "1.0.0",
     "css-modules-require-hook": "4.2.1",
@@ -218,8 +219,8 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
-    "standard": "12.0.1",
-    "husky": "^7.0.0"
+    "husky": "^7.0.0",
+    "standard": "12.0.1"
   },
   "engines": {
     "node": "15.5.0",
