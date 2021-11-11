@@ -9,6 +9,6 @@ it('matches the last snapshot', () => {
     }
   }
   const { query, variables } = graphql
-  const actual = fetchPeople(variables.autocomplete, [], query, variables.first)
+  const actual = fetchPeople({ autocomplete: variables.autocomplete, groupIds: [], first: variables.first, query })
   expect(actual).toMatchSnapshot()
 })

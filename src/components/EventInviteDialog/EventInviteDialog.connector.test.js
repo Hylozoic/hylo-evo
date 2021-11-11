@@ -29,7 +29,7 @@ describe('mapDispatchToProps', () => {
   it('returns the expected action for fetchPeople', () => {
     const dispatch = r => r
     const result = mapDispatchToProps(dispatch)
-    const fetchPeopleResult = result.fetchPeople('searchstring', [1, 2], {})
+    const fetchPeopleResult = result.fetchPeople({ autocomplete: 'searchstring', groupIds: [1, 2], first: 20, query: {} })
     expect(fetchPeopleResult).toMatchSnapshot()
   })
 })

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
 import ModalDialog from 'components/ModalDialog'
@@ -19,16 +19,18 @@ export default function EventInviteDialog ({
 }) {
   const [invitedIds, setInvitedIds] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [peopleFetched, setPeopleFetched] = useState(0)
 
-  const toggleInvite = id => (invitedIds.includes(id)) 
+  const toggleInvite = id => (invitedIds.includes(id))
     ? setInvitedIds(invitedIds.filter(invitedId => invitedId !== id))
-    : setInvitedIds(invitedIds.concat([id])) 
+    : setInvitedIds(invitedIds.concat([id]))
 
   const onSearchChange = ({ target: { value } }) => setSearchTerm(value)
 
   useEffect(() => {
-      const forGroupIds = forGroups.map(c => c.id)
-      fetchPeople(searchTerm, forGroupIds)
+    const forGroupIds = forGroups.map(c => c.id)
+    fetchPeople(searchTerm, forGroupIds, 20, 20)
+    setPeopleFetched(peopleFetched + 20)
   }, [searchTerm])
 
   const getFilteredInviteSuggestions = () => {

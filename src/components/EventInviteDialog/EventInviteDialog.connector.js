@@ -17,7 +17,7 @@ export function mapDispatchToProps (dispatch, props) {
     ...bindActionCreators({
       invitePeopleToEvent
     }, dispatch),
-    fetchPeople: debounce(300, (...args) => dispatch(fetchPeople(...args)))
+    fetchPeople: debounce(300, (args) => dispatch(fetchPeople(args)))
   }
 }
 
