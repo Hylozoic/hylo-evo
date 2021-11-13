@@ -157,6 +157,7 @@
     "react-app-polyfill": "^0.2.2",
     "react-autocomplete": "^1.7.2",
     "react-cookie-consent": "^6.2.3",
+    "react-cool-inview": "^2.0.8",
     "react-copy-to-clipboard": "^5.0.1",
     "react-datetime": "^3.0.0",
     "react-dev-utils": "^8.0.0",

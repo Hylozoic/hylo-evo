@@ -7,7 +7,7 @@ export default function fetchPeople ({ autocomplete, groupIds, first = 20, query
     type: FETCH_PEOPLE,
     graphql: {
       query,
-      variables: { autocomplete, first, groupIds }
+      variables: { autocomplete, first, groupIds, offset }
     },
     meta: {
       extractModel: 'Group',

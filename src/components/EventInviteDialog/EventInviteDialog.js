@@ -7,6 +7,9 @@ import Button from 'components/Button'
 import styles from './EventInviteDialog.scss'
 import { humanResponse } from 'store/models/EventInvitation'
 import TextInput from 'components/TextInput'
+import useInView from 'react-cool-inview'
+import Loading from 'components/Loading'
+const pageSize = 30
 
 export default function EventInviteDialog ({
   fetchPeople,
@@ -19,7 +22,8 @@ export default function EventInviteDialog ({
 }) {
   const [invitedIds, setInvitedIds] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [peopleFetched, setPeopleFetched] = useState(0)
+  const [pageFetched, setPageFetched] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const toggleInvite = id => (invitedIds.includes(id))
     ? setInvitedIds(invitedIds.filter(invitedId => invitedId !== id))
@@ -27,11 +31,31 @@ export default function EventInviteDialog ({
 
   const onSearchChange = ({ target: { value } }) => setSearchTerm(value)
 
-  useEffect(() => {
-    const forGroupIds = forGroups.map(c => c.id)
-    fetchPeople(searchTerm, forGroupIds, 20, 20)
-    setPeopleFetched(peopleFetched + 20)
+  useEffect(async () => {
+    const fetch = async () => {
+      const forGroupIds = forGroups.map(c => c.id)
+      setIsLoading(true)
+      await fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: 0 })
+      setPageFetched(pageSize)
+      setIsLoading(false)
+    }
+    fetch()
   }, [searchTerm])
+
+  const { observe } = useInView({
+    onEnter: ({ unobserve, observe }) => {
+      const fetch = async () => {
+        unobserve()
+        const forGroupIds = forGroups.map(c => c.id)
+        setIsLoading(true)
+        await fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: pageFetched })
+        setPageFetched(pageFetched + pageSize)
+        observe()
+        setIsLoading(false)
+      }
+      fetch()
+    }
+  })
 
   const getFilteredInviteSuggestions = () => {
     return people.filter(person => {
@@ -52,7 +76,7 @@ export default function EventInviteDialog ({
     : invitedIds.length === 1
       ? 'Invite 1 person'
       : `Invite ${invitedIds.length} people`
-
+  
   return <ModalDialog key='event-invite-dialog'
     closeModal={onClose}
     modalTitle={`Invite`}
@@ -62,13 +86,20 @@ export default function EventInviteDialog ({
     <div styleName='container'>
       <Search onChange={onSearchChange} />
       <div styleName='inviteSuggestions'>
-        {filteredInviteSuggestions.map(invitee => <InviteeRow
+        {filteredInviteSuggestions.map((invitee, idx) => <InviteeRow
           key={invitee.id}
           person={invitee}
+          ref={idx === filteredInviteSuggestions.length - 10 ? observe : null}
           selected={invitedIds.includes(invitee.id)}
           onClick={() => toggleInvite(invitee.id)}
         />)}
+        <div styleName={cx('row')}>
+          <div styleName='col' style={{ height: '40px' }}>
+            {<div>Loading more</div>}
+          </div>
+        </div>
       </div>
+
       <div styleName='alreadyInvitedLabel'>Already Invited</div>
       <div styleName='alreadyInvited'>
         {eventInvitations.map(eventInvitation =>
@@ -88,10 +119,10 @@ export default function EventInviteDialog ({
   </ModalDialog>
 }
 
-export function InviteeRow ({ person, selected, showResponse, onClick }) {
+export const InviteeRow = React.forwardRef((props, ref) => {
+  const { person, selected, showResponse, onClick } = props
   const { name, avatarUrl, response } = person
-
-  return <div styleName={cx('row')} onClick={onClick}>
+  return <div ref={ref} styleName={cx('row')} onClick={onClick}>
     <div styleName='col'>
       <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
     </div>
@@ -105,7 +136,7 @@ export function InviteeRow ({ person, selected, showResponse, onClick }) {
       {humanResponse(response)}
     </div>}
   </div>
-}
+})
 
 export function Search ({ onChange }) {
   return <div styleName='search'>
