@@ -1,3 +1,4 @@
+import { FETCH_PEOPLE } from 'store/constants'
 import orm from 'store/models'
 import { mapStateToProps, mapDispatchToProps } from './EventInviteDialog.connector'
 
@@ -12,7 +13,7 @@ jest.mock('lodash/fp', () => ({
 describe('mapStateToProps', () => {
   it('returns the expected keys', () => {
     const session = orm.session(orm.getEmptyState())
-    const state = { orm: session.state }
+    const state = { orm: session.state, pending: { [FETCH_PEOPLE]: false } }
     const props = { forGroups: [] }
     const stateProps = mapStateToProps(state, props)
     expect(stateProps).toMatchSnapshot()

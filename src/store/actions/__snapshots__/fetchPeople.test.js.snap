@@ -8,6 +8,7 @@ Object {
       "autocomplete": "Tchaikovs",
       "first": 100,
       "groupIds": Array [],
+      "offset": 0,
     },
   },
   "meta": Object {

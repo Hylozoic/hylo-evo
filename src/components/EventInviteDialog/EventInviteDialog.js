@@ -18,12 +18,12 @@ export default function EventInviteDialog ({
   people,
   eventId,
   onClose,
-  invitePeopleToEvent
+  invitePeopleToEvent,
+  pending
 }) {
   const [invitedIds, setInvitedIds] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [pageFetched, setPageFetched] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
 
   const toggleInvite = id => (invitedIds.includes(id))
     ? setInvitedIds(invitedIds.filter(invitedId => invitedId !== id))
@@ -31,27 +31,21 @@ export default function EventInviteDialog ({
 
   const onSearchChange = ({ target: { value } }) => setSearchTerm(value)
 
-  useEffect(async () => {
-    const fetch = async () => {
+  useEffect(() => {
+    const fetch = () => {
       const forGroupIds = forGroups.map(c => c.id)
-      setIsLoading(true)
-      await fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: 0 })
+      fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: 0 })
       setPageFetched(pageSize)
-      setIsLoading(false)
     }
     fetch()
   }, [searchTerm])
 
   const { observe } = useInView({
-    onEnter: ({ unobserve, observe }) => {
-      const fetch = async () => {
-        unobserve()
+    onEnter: () => {
+      const fetch = () => {
         const forGroupIds = forGroups.map(c => c.id)
-        setIsLoading(true)
-        await fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: pageFetched })
+        fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: pageFetched })
         setPageFetched(pageFetched + pageSize)
-        observe()
-        setIsLoading(false)
       }
       fetch()
     }
@@ -76,7 +70,7 @@ export default function EventInviteDialog ({
     : invitedIds.length === 1
       ? 'Invite 1 person'
       : `Invite ${invitedIds.length} people`
-  
+
   return <ModalDialog key='event-invite-dialog'
     closeModal={onClose}
     modalTitle={`Invite`}
@@ -95,7 +89,7 @@ export default function EventInviteDialog ({
         />)}
         <div styleName={cx('row')}>
           <div styleName='col' style={{ height: '40px' }}>
-            {<div>Loading more</div>}
+            {pending && <div><Loading /></div> }
           </div>
         </div>
       </div>
