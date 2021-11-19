@@ -163,7 +163,9 @@ exports[`matches announcement snapshot 2`] = `
   </div>
   <div
     data-stylename="timeWindow"
-  />
+  >
+    request ended 
+  </div>
 </div>
 `;
 
@@ -262,7 +264,9 @@ exports[`matches announcement snapshot 3`] = `
   </div>
   <div
     data-stylename="timeWindow"
-  />
+  >
+    request ended 
+  </div>
 </div>
 `;
 
@@ -352,7 +356,9 @@ exports[`matches snapshot 2`] = `
   </div>
   <div
     data-stylename="timeWindow"
-  />
+  >
+    request ended 
+  </div>
 </div>
 `;
 
@@ -424,6 +430,161 @@ exports[`matches snapshot 3`] = `
   </div>
   <div
     data-stylename="timeWindow"
-  />
+  >
+    request ended 
+  </div>
+</div>
+`;
+
+exports[`renders human readable dates 1`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <Avatar
+      avatarUrl="foo.png"
+      data-stylename="avatar"
+      url="/all/members/123"
+    />
+    <div
+      data-stylename="headerText"
+    >
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+      >
+        <Link
+          data-stylename="userName"
+          to="/all/members/123"
+        >
+          JJ
+        </Link>
+      </Highlight>
+      <div
+        data-stylename="timestampRow"
+      >
+        <span
+          data-stylename="timestamp"
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="upperRight"
+    >
+      <PostLabel
+        data-stylename="label"
+        type="request"
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="timeWindow"
+  >
+    request ends Thu, Nov 29, 2029 at 12:00AM GMT
+  </div>
+</div>
+`;
+
+exports[`renders human readable dates 2`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <Avatar
+      avatarUrl="foo.png"
+      data-stylename="avatar"
+      url="/all/members/123"
+    />
+    <div
+      data-stylename="headerText"
+    >
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+      >
+        <Link
+          data-stylename="userName"
+          to="/all/members/123"
+        >
+          JJ
+        </Link>
+      </Highlight>
+      <div
+        data-stylename="timestampRow"
+      >
+        <span
+          data-stylename="timestamp"
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="upperRight"
+    >
+      <PostLabel
+        data-stylename="label"
+        type="request"
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="timeWindow"
+  >
+    request starts Tue, Nov 29, 2022 at 12:00AM GMT and ends Thu, Nov 29, 2029 at 12:00AM GMT
+  </div>
+</div>
+`;
+
+exports[`renders human readable dates 3`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <Avatar
+      avatarUrl="foo.png"
+      data-stylename="avatar"
+      url="/all/members/123"
+    />
+    <div
+      data-stylename="headerText"
+    >
+      <Highlight
+        component="span"
+        highlightClassName="highlight"
+      >
+        <Link
+          data-stylename="userName"
+          to="/all/members/123"
+        >
+          JJ
+        </Link>
+      </Highlight>
+      <div
+        data-stylename="timestampRow"
+      >
+        <span
+          data-stylename="timestamp"
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="upperRight"
+    >
+      <PostLabel
+        data-stylename="label"
+        type="request"
+      />
+    </div>
+  </div>
+  <div
+    data-stylename="timeWindow"
+  >
+    request ended Sun, Nov 29, 2020 at 12:00AM GMT
+  </div>
 </div>
 `;

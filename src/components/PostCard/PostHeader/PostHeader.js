@@ -9,32 +9,11 @@ import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
 import { personUrl, topicUrl } from 'util/navigation'
-import { formatDatePair } from 'util/index'
+import { formatDatePair, isDateInTheFuture } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
-
-const formatStartDate = (startTime, from) => {
-  const current = moment()
-  let start = ''
-  if (moment(startTime).isAfter(current)) {
-    start = from
-  }
-  return start
-}
-
-const formatEndDate = (endTime, to) => {
-  const current = moment()
-  let end = ''
-  const endFormatted = to
-  if (moment(endTime).isAfter(current)) {
-    end = `ends ${endFormatted}`
-  } else if (current.isAfter(moment(endTime))) {
-    end = `ended ${endFormatted}`
-  }
-  return end
-}
 
 export default class PostHeader extends PureComponent {
   static defaultProps = {
@@ -94,8 +73,8 @@ export default class PostHeader extends PureComponent {
     const canHaveTimes = typesWithTimes.includes(type)
 
     const { from, to } = formatDatePair(startTime, endTime, true)
-    const startDate = (startTime && from) && formatStartDate(startTime, from)
-    const endDate = (endTime && to) && formatEndDate(endTime, to)
+    const startDate = isDateInTheFuture(startTime) ? from : ''
+    const endDate = endTime !== moment() && isDateInTheFuture(endTime) ? `ends ${to}` : `ended ${to}`
     let timeWindow = ''
 
     if (startDate && endDate) {

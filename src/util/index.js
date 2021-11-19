@@ -38,12 +38,8 @@ export const formatDatePair = (startTime, endTime, returnAsObj) => {
   if (endTime) {
     if (end.year() !== start.year()) {
       to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
-    } else if (end.month() !== start.month()) {
-      to = end.format('ddd, MMM D [at] h:mmA z')
-    } else if (end.date() !== start.date()) {
-      to = end.format('ddd, MMM D [at] h:mmA z')
     } else {
-      to = end.format('h:mmA z')
+      to = end.format('ddd, MMM D [at] h:mmA z')
     }
     to = returnAsObj ? to : ' - ' + to
   }
@@ -62,4 +58,8 @@ export function hexToRgb (hex) {
 
 export function inIframe () {
   return window.location !== window.parent.location
+}
+
+export function isDateInTheFuture (date) {
+  return moment(date).isAfter(moment())
 }
