@@ -30,7 +30,7 @@ export default class MemberSelector extends Component {
     this.props.setAutocomplete(input)
     if (!isEmpty(input)) {
       // this fetched should be debounced or throttled, maybe here, or in the connector
-      this.props.fetchPeople(input, forGroups ? forGroups.map(c => c.id) : null)
+      this.props.fetchPeople({ autocomplete: input, groupIds: forGroups ? forGroups.map(c => c.id) : null })
     }
   }
 

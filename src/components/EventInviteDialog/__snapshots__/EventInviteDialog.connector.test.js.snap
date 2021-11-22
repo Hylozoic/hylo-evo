@@ -11,6 +11,7 @@ Object {
         1,
         2,
       ],
+      "offset": 0,
     },
   },
   "meta": Object {
@@ -32,6 +33,7 @@ Object {
 
 exports[`mapStateToProps returns the expected keys 1`] = `
 Object {
+  "pending": false,
   "people": Array [],
 }
 `;
