@@ -33,7 +33,10 @@ export default class UserSettings extends Component {
       fetchPending,
       queryParams,
       registerStripeAccount,
-      fetchLocation
+      fetchLocation,
+      deleteMe,
+      deactivateMe,
+      logout
     } = this.props
 
     const content = [
@@ -76,8 +79,11 @@ export default class UserSettings extends Component {
         path: '/settings/account',
         component: <AccountSettingsTab
           currentUser={currentUser}
-          updateUserSettings={updateUserSettings}
-          setConfirm={setConfirm} />
+          deactivateMe={deactivateMe}
+          deleteMe={deleteMe}
+          logout={logout}
+          setConfirm={setConfirm}
+          updateUserSettings={updateUserSettings} />
       },
       {
         name: 'Saved Searches',
