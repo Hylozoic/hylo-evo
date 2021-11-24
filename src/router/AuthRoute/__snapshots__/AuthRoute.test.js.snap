@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AuthRoute should redirect into signup process if logged in and on the first signup step 1`] = `
+exports[`AuthRoute should redirect into welcome flow if logged in and on the first signup step 1`] = `
 <Route
   render={[Function]}
 />

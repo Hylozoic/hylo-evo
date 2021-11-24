@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Welcome renders correctly 1`] = `
+exports[`WelcomeExplore renders correctly 1`] = `
 <div
   data-stylename="flex-wrapper final-wrapper"
 >

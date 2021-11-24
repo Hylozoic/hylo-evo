@@ -197,8 +197,8 @@ export const origin = () =>
 
 // Utility path functions
 
-export function isSignupPath (path) {
-  return (path.startsWith('/signup'))
+export function isWelcomePath (path) {
+  return (path.startsWith('/welcome'))
 }
 
 export function isPublicPath (path) {

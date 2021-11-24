@@ -1,9 +1,9 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
 import LocationInput from 'components/LocationInput'
-import SignupModalFooter from '../SignupModalFooter'
+import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
 import Icon from 'components/Icon'
-import styles from '../Signup.scss'
+import styles from '../WelcomeWizard.scss'
 
 export default class AddLocation extends Component {
   constructor () {
@@ -52,8 +52,8 @@ export default class AddLocation extends Component {
 
   render () {
     const inputClass = cx({
-      [styles['signup-input']]: true,
-      [styles['signup-padding']]: true,
+      [styles['input']]: true,
+      [styles['padding']]: true,
       [styles['large-input-text']]: true,
       [styles['gray-bottom-border']]: true
     })
@@ -86,7 +86,7 @@ export default class AddLocation extends Component {
           <p>Add your location to see more relevant content, and find people and projects around you.</p>
         </div>
         <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
+          <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
         </div>
       </div>
     </div>
