@@ -145,7 +145,7 @@ exports[`NonAuthLayout renders correctly 1`] = `
         <img
           alt="Hylo logo"
           data-stylename="logo"
-          src="assets/hylo.svg"
+          src="/assets/hylo.svg"
         />
       </a>
     </div>
