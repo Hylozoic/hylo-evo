@@ -153,10 +153,23 @@ exports[`NonAuthLayout renders correctly 1`] = `
       component={[Function]}
       path="/login"
     />
-    <Route
-      component={[Function]}
-      path="/signup"
-    />
+    <Switch>
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/signup"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/signup/verify-email"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/signup/finish"
+      />
+    </Switch>
     <Route
       component={[Function]}
       path="/reset-password"

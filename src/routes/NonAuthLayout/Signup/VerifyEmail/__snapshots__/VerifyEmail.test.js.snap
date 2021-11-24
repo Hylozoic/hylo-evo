@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VerifyEmail renders correctly 1`] = `
+<div>
+  <Link
+    data-stylename="back-button"
+    to="/signup"
+  >
+    ← back
+  </Link>
+  <div
+    data-stylename="formWrapper"
+  >
+    <h1
+      data-stylename="title"
+    >
+      Check your email
+    </h1>
+    <p
+      data-stylename="sub-header"
+    >
+      We've sent a 6 digit code to 
+      test@wheee.com
+      . The code will expire shortly, so please enter it here soon.
+    </p>
+    <div
+      data-stylename="field"
+    >
+      <t
+        autoFocus={true}
+        disabled={false}
+        fields={6}
+        filterChars={
+          Array [
+            "-",
+            ".",
+          ]
+        }
+        filterKeyCodes={
+          Array [
+            189,
+            190,
+          ]
+        }
+        forceUppercase={false}
+        isValid={true}
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <Button
+      data-stylename="submit"
+      label="Verify Email"
+      onClick={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`VerifyEmail renders correctly with an error 1`] = `
+<div>
+  <Link
+    data-stylename="back-button"
+    to="/signup"
+  >
+    ← back
+  </Link>
+  <div
+    data-stylename="formWrapper"
+  >
+    <h1
+      data-stylename="title"
+    >
+      Check your email
+    </h1>
+    <p
+      data-stylename="sub-header"
+    >
+      We've sent a 6 digit code to 
+      test@wheee.com
+      . The code will expire shortly, so please enter it here soon.
+    </p>
+    <div
+      data-stylename="error"
+    >
+      some error
+    </div>
+    <div
+      data-stylename="field"
+    >
+      <t
+        autoFocus={true}
+        disabled={false}
+        fields={6}
+        filterChars={
+          Array [
+            "-",
+            ".",
+          ]
+        }
+        filterKeyCodes={
+          Array [
+            189,
+            190,
+          ]
+        }
+        forceUppercase={false}
+        isValid={true}
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <Button
+      data-stylename="submit"
+      label="Verify Email"
+      onClick={[Function]}
+    />
+  </div>
+</div>
+`;

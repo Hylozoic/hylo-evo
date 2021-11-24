@@ -6,7 +6,10 @@ exports[`TextInput renders correctly 1`] = `
 >
   <input
     data-stylename="input"
+    onAnimationStart={[Function]}
+    onBlur={[Function]}
     onChange={[Function]}
+    onFocus={[Function]}
     onKeyDown={[Function]}
     value="value"
   />
@@ -14,7 +17,7 @@ exports[`TextInput renders correctly 1`] = `
     data-stylename="clear"
     onClick={[Function]}
   >
-    Clear
+    x
   </div>
 </div>
 `;

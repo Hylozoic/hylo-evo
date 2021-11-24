@@ -155,6 +155,8 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-autocomplete": "^1.7.2",
+    "react-code-input": "^3.10.1",
+    "react-cookie": "^4.1.1",
     "react-cookie-consent": "^6.2.3",
     "react-copy-to-clipboard": "^5.0.1",
     "react-datetime": "^3.0.0",
@@ -218,8 +220,8 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
-    "standard": "12.0.1",
-    "husky": "^7.0.0"
+    "husky": "^7.0.0",
+    "standard": "12.0.1"
   },
   "engines": {
     "node": "15.5.0",

@@ -1,10 +1,14 @@
+import { trim, pick, keys, omit, find, isEmpty } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { trim, pick, keys, omit, find, isEmpty } from 'lodash/fp'
-import SettingsControl from 'components/SettingsControl'
-import './AccountSettingsTab.scss'
+
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import SettingsControl from 'components/SettingsControl'
+import { validateEmail } from 'util/index'
+
+import './AccountSettingsTab.scss'
+
 const { object, func } = PropTypes
 
 export default class AccountSettingsTab extends Component {
@@ -88,7 +92,7 @@ export default class AccountSettingsTab extends Component {
 
     if (!validateEmail(email)) errors.push('Email address is not in a valid format')
     if (password.length > 0 && password.length < 9) errors.push('Passwords must be at least 9 characters long')
-    if (!passwordConfirmed && confirm.length > 8) errors.push('Passwords don\'t match')
+    if (!passwordConfirmed) errors.push('Passwords don\'t match')
 
     return errors
   }
@@ -129,10 +133,4 @@ export default class AccountSettingsTab extends Component {
       </div>
     </div>
   }
-}
-
-/* eslint-disable */
-export const validateEmail = email => {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(email.toLowerCase())
 }
