@@ -1,17 +1,14 @@
 import { DEACTIVATE_ME } from '../constants'
 
-export default function deactivateMe (userId) {
+export default function deactivateMe () {
   return {
     type: DEACTIVATE_ME,
     graphql: {
-      query: `mutation ($userId: ID) {
-        deactivateMe (id: $userId) {
+      query: `mutation {
+        deactivateMe {
           success
         }
-      }`,
-      variables: {
-        userId
-      }
+      }`
     }
   }
 }

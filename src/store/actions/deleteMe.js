@@ -1,17 +1,14 @@
 import { DELETE_ME } from '../constants'
 
-export default function deleteMe (userId) {
+export default function deleteMe () {
   return {
     type: DELETE_ME,
     graphql: {
-      query: `mutation ($userId: ID) {
-        deleteMe (id: $userId) {
+      query: `mutation {
+        deleteMe {
           success
         }
-      }`,
-      variables: {
-        userId
-      }
+      }`
     }
   }
 }
