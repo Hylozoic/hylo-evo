@@ -4,6 +4,7 @@ import getMe from 'store/selectors/getMe'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -19,7 +20,8 @@ export function mapDispatchToProps (dispatch, props) {
     goBack: () => dispatch(goBack()),
     push: (path) => dispatch(push(path)),
     resetReturnToURL: () => dispatch(resetReturnToURL()),
-    trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data))
+    trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data)),
+    fetchLocation: (location) => dispatch(fetchLocation(location))
   }
 }
 

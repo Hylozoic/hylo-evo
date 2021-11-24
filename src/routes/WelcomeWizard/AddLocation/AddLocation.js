@@ -1,8 +1,10 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
 import LocationInput from 'components/LocationInput'
+import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
 import Icon from 'components/Icon'
+
 import styles from '../WelcomeWizard.scss'
 
 export default class AddLocation extends Component {
@@ -35,9 +37,12 @@ export default class AddLocation extends Component {
     })
   }
 
-  submit = () => {
+  submit = async () => {
     const { locationId, location } = this.state
-    const changes = Object.assign({ location, locationId }, { settings: { signupInProgress: false } })
+    const { fetchLocation } = this.props
+
+    const coordLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
+    const changes = Object.assign({ location, locationId: coordLocationId }, { settings: { signupInProgress: false } })
 
     this.props.updateUserSettings(changes)
       .then(() => {

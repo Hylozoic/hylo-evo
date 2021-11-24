@@ -23,7 +23,7 @@ exports[`EventInviteDialog renders correctly 1`] = `
     <div
       data-stylename="inviteSuggestions"
     >
-      <InviteeRow
+      <ForwardRef
         key="4"
         onClick={[Function]}
         person={
@@ -34,7 +34,7 @@ exports[`EventInviteDialog renders correctly 1`] = `
         }
         selected={false}
       />
-      <InviteeRow
+      <ForwardRef
         key="5"
         onClick={[Function]}
         person={
@@ -45,6 +45,18 @@ exports[`EventInviteDialog renders correctly 1`] = `
         }
         selected={false}
       />
+      <div
+        data-stylename="row"
+      >
+        <div
+          data-stylename="col"
+          style={
+            Object {
+              "height": "40px",
+            }
+          }
+        />
+      </div>
     </div>
     <div
       data-stylename="alreadyInvitedLabel"
@@ -54,7 +66,7 @@ exports[`EventInviteDialog renders correctly 1`] = `
     <div
       data-stylename="alreadyInvited"
     >
-      <InviteeRow
+      <ForwardRef
         key="1"
         person={
           Object {
@@ -63,7 +75,7 @@ exports[`EventInviteDialog renders correctly 1`] = `
         }
         showResponse={true}
       />
-      <InviteeRow
+      <ForwardRef
         key="2"
         person={
           Object {
@@ -72,7 +84,7 @@ exports[`EventInviteDialog renders correctly 1`] = `
         }
         showResponse={true}
       />
-      <InviteeRow
+      <ForwardRef
         key="3"
         person={
           Object {
