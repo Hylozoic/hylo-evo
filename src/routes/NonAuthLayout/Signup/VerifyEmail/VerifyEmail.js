@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ReactCodeInput from 'react-code-input'
 import { Link } from 'react-router-dom'
 
-import Button from 'components/Button'
 import { formatError } from '../../util'
 
 import '../Signup.scss'
@@ -28,10 +27,9 @@ export default function VerifyEmail (props) {
       <h1 styleName='title'>Check your email</h1>
       <p styleName='sub-header'>We've sent a 6 digit code to {email}. The code will expire shortly, so please enter it here soon.</p>
       {error && formatError(error, 'Signup')}
-      <div styleName='field'>
+      <div styleName='codeWrapper'>
         <ReactCodeInput type='text' fields={6} onChange={onChange} />
       </div>
-      <Button styleName='submit' label='Verify Email' onClick={submit} />
     </div>
   </div>
 }

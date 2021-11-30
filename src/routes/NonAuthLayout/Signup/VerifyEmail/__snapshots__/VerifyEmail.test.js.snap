@@ -24,7 +24,7 @@ exports[`VerifyEmail renders correctly 1`] = `
       . The code will expire shortly, so please enter it here soon.
     </p>
     <div
-      data-stylename="field"
+      data-stylename="codeWrapper"
     >
       <t
         autoFocus={true}
@@ -49,11 +49,6 @@ exports[`VerifyEmail renders correctly 1`] = `
         value=""
       />
     </div>
-    <Button
-      data-stylename="submit"
-      label="Verify Email"
-      onClick={[Function]}
-    />
   </div>
 </div>
 `;
@@ -87,7 +82,7 @@ exports[`VerifyEmail renders correctly with an error 1`] = `
       some error
     </div>
     <div
-      data-stylename="field"
+      data-stylename="codeWrapper"
     >
       <t
         autoFocus={true}
@@ -112,11 +107,6 @@ exports[`VerifyEmail renders correctly with an error 1`] = `
         value=""
       />
     </div>
-    <Button
-      data-stylename="submit"
-      label="Verify Email"
-      onClick={[Function]}
-    />
   </div>
 </div>
 `;
