@@ -15,6 +15,7 @@ import getMyMemberships from 'store/selectors/getMyMemberships'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export const getAllGroupsSettings = createSelector(
   getMyMemberships,
@@ -65,7 +66,8 @@ export function mapDispatchToProps (dispatch) {
     setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
     updateMembershipSettings: (groupId, settings) => dispatch(updateMembershipSettings(groupId, settings)),
     updateAllMemberships: (groupIds, settings) => dispatch(updateAllMemberships(groupIds, settings)),
-    registerStripeAccount: (params) => dispatch(registerStripeAccount(params))
+    registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
+    fetchLocation: (location) => dispatch(fetchLocation(location))
   }
 }
 

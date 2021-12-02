@@ -25,12 +25,14 @@ import {
   visibilityIcon,
   visibilityString
 } from 'store/models/Group'
-const { object } = PropTypes
+import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
+const { object, func } = PropTypes
 
 export default class GroupSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
-    group: object
+    group: object,
+    fetchLocation: func
   }
 
   constructor (props) {
@@ -92,9 +94,15 @@ export default class GroupSettingsTab extends Component {
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
 
-  save = () => {
+  save = async () => {
     this.setState({ changed: false })
-    this.props.updateGroupSettings(this.state.edits)
+    const { group, fetchLocation } = this.props
+    let coordinateLocationId
+    if (group && this.state.edits.location !== group.location) {
+      coordinateLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId: this.state.edits.locationId })
+    }
+
+    this.props.updateGroupSettings({ ...this.state.edits, locationId: this.state.edits.locationId || coordinateLocationId })
   }
 
   render () {

@@ -181,6 +181,7 @@ Object {
   "deleteGroup": [Function],
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
+  "fetchLocation": [Function],
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],

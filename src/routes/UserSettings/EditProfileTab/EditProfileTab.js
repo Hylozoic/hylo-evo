@@ -11,6 +11,7 @@ import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 import './EditProfileTab.scss'
+import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 
 const { object, func, string } = PropTypes
 
@@ -51,7 +52,8 @@ export class SocialControl extends Component {
     value: string,
     updateSettingDirectly: func,
     handleUnlinkAccount: func,
-    onLink: func
+    onLink: func,
+    fetchLocation: func
   }
 
   handleLinkClick () {
@@ -173,7 +175,8 @@ export default class EditProfileTab extends Component {
     })
   }
 
-  updateSetting = (key, setChanged = true) => event => {
+  updateSetting = (key, setChanged = true) => async event => {
+    const { fetchLocation, currentUser } = this.props
     const { edits, changed } = this.state
     setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
 
@@ -183,10 +186,14 @@ export default class EditProfileTab extends Component {
     } else {
       edits[key] = event.target.value
     }
+    let coordinateLocationId
+    if (edits.location !== currentUser.location) {
+      coordinateLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId: this.state.edits.locationId })
+    }
 
     this.setState({
       changed: setChanged ? true : changed,
-      edits: { ...edits }
+      edits: { ...edits, locationId: coordinateLocationId }
     })
   }
 

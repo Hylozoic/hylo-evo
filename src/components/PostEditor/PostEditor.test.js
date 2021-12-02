@@ -69,7 +69,7 @@ describe('PostEditor', () => {
       })
     )
 
-    test('saving a post will create a new post', () => {
+    test('saving a post will create a new post', async () => {
       const props = {
         ...baseProps,
         post: {
@@ -84,7 +84,11 @@ describe('PostEditor', () => {
           endTime: new Date(1551908483315)
         },
         createPost: jest.fn(() => new Promise(() => {})),
-        setAnnouncement: jest.fn()
+        fetchLocation: jest.fn().mockReturnValue('8778'),
+        setAnnouncement: jest.fn(),
+        ensureLocationIdIfCoordinate: async () => {
+          return '666'
+        }
       }
       const editorMock = {
         getContentHTML: () => props.post.details,
@@ -101,7 +105,7 @@ describe('PostEditor', () => {
       testInstance.editor.current = editorMock
       testInstance.topicSelector.current = topicSelectorMock
       testInstance.groupsSelector.current = groupsSelectorMock
-      testInstance.save()
+      await testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
       expect(props.createPost.mock.calls).toMatchSnapshot()
     })
@@ -140,6 +144,7 @@ describe('PostEditor', () => {
       },
       updatePost: jest.fn(() => new Promise(() => {})),
       showImagePreviews: true,
+      ensureLocationIdIfCoordinate: jest.fn().mockResolvedValue('555'),
       setAnnouncement: jest.fn()
     }
 
@@ -153,7 +158,7 @@ describe('PostEditor', () => {
       expect(wrapper).toMatchSnapshot()
     })
 
-    test('saving a post will update a post', () => {
+    test('saving a post will update a post', async () => {
       const editorMock = {
         getContentHTML: () => props.post.details,
         reset: jest.fn()
@@ -169,7 +174,7 @@ describe('PostEditor', () => {
       testInstance.editor.current = editorMock
       testInstance.topicSelector.current = topicSelectorMock
       testInstance.groupsSelector.current = groupsSelectorMock
-      testInstance.save()
+      await testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
     })
@@ -227,7 +232,7 @@ describe('PostEditor', () => {
     })
   })
 
-  test('saving a valid post will update a post', () => {
+  test('saving a valid post will update a post', async () => {
     const props = {
       ...baseProps,
       editing: true,
@@ -245,7 +250,8 @@ describe('PostEditor', () => {
         endTime: new Date(1551908483315)
       },
       updatePost: jest.fn(() => new Promise(() => {})),
-      setAnnouncement: jest.fn()
+      setAnnouncement: jest.fn(),
+      ensureLocationIdIfCoordinate: jest.fn().mockResolvedValue('555')
     }
     const editorMock = {
       getContentHTML: () => props.post.details,
@@ -262,7 +268,7 @@ describe('PostEditor', () => {
     testInstance.editor.current = editorMock
     testInstance.topicSelector.current = topicSelectorMock
     testInstance.groupsSelector.current = groupsSelectorMock
-    testInstance.save()
+    await testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()
   })

@@ -1,12 +1,13 @@
 query PeopleQuery (
   $first: Int,
   $autocomplete: String,
-  $groupIds: [ID]
+  $groupIds: [ID],
+  $offset: Int
 ) {
   groups(groupIds: $groupIds) {
     items {
       id
-      members(first: $first, search: $autocomplete, sortBy: "name", order: "desc") {
+      members(first: $first, offset: $offset, search: $autocomplete, sortBy: "name", order: "asc") {
         items {
           id
           name

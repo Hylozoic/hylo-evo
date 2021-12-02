@@ -10,6 +10,7 @@ import {
   fetchGroupSettings, updateGroupSettings, deleteGroup
 } from './GroupSettings.store'
 import { allGroupsUrl } from 'util/navigation'
+import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('groupSlug', state, props, false)
@@ -31,7 +32,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     deleteGroup: id => dispatch(deleteGroup(id)),
     fetchGroupSettingsMaker: slug => () => dispatch(fetchGroupSettings(slug)),
-    updateGroupSettingsMaker: id => changes => dispatch(updateGroupSettings(id, changes))
+    updateGroupSettingsMaker: id => changes => dispatch(updateGroupSettings(id, changes)),
+    fetchLocation: (location) => dispatch(fetchLocation(location))
   }
 }
 

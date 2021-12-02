@@ -17,8 +17,10 @@ export default function PostTitle ({
   if (locationObject) {
     if (locationObject.addressNumber !== null && locationObject.addressNumber !== '') {
       generalLocation = `${locationObject.addressNumber} ${locationObject.addressStreet}, ${locationObject.city}, ${locationObject.region}`
-    } else {
+    } else if (locationObject.city !== null && locationObject.city !== '') {
       generalLocation = `${locationObject.city}, ${locationObject.region}`
+    } else {
+      generalLocation = locationObject.fullText
     }
   }
 

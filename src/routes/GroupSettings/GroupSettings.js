@@ -27,7 +27,8 @@ export default function GroupSettings ({
   prerequisiteGroups,
   updateGroupSettings,
   fetchGroupSettings,
-  upload
+  upload,
+  fetchLocation
 }) {
   const slug = get('slug', group)
 
@@ -44,6 +45,7 @@ export default function GroupSettings ({
         name: 'Settings',
         path: groupUrl(slug, 'settings'),
         component: <GroupSettingsTab
+          fetchLocation={fetchLocation}
           currentUser={currentUser}
           group={group}
           parentGroups={parentGroups}
