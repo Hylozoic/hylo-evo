@@ -30,16 +30,18 @@ export const formatDatePair = (startTime, endTime, returnAsObj) => {
   let from = ''
 
   if (isThisYear) {
-    from = start.format('ddd, MMM D [at] h:mmA z')
+    from = endTime ? start.format('ddd, MMM D [at] h:mmA') : start.format('ddd, MMM D [at] h:mmA z')
   } else {
-    from = start.format('ddd, MMM D, YYYY [at] h:mmA z')
+    from = endTime ? start.format('ddd, MMM D, YYYY [at] h:mmA') : start.format('ddd, MMM D, YYYY [at] h:mmA z')
   }
 
   if (endTime) {
     if (end.year() !== start.year()) {
       to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
-    } else {
+    } else if (end.month() !== start.month() || end.day() !== start.day()) {
       to = end.format('ddd, MMM D [at] h:mmA z')
+    } else {
+      to = end.format('h:mmA z')
     }
     to = returnAsObj ? to : ' - ' + to
   }

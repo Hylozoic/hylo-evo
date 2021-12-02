@@ -533,7 +533,7 @@ exports[`renders human readable dates 2`] = `
   <div
     data-stylename="timeWindow"
   >
-    request starts Tue, Nov 29, 2022 at 12:00AM GMT and ends Thu, Nov 29, 2029 at 12:00AM GMT
+    request starts Tue, Nov 29, 2022 at 12:00AM and ends Thu, Nov 29, 2029 at 12:00AM GMT
   </div>
 </div>
 `;
