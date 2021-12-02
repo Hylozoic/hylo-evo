@@ -212,6 +212,7 @@ export default () => {
         name
         isVisible
         order
+        context
         settings {
           text
           title
