@@ -152,7 +152,7 @@ export default class EditProfileTab extends Component {
 
     const {
       name, avatarUrl, bannerUrl, tagline, bio,
-      contactEmail, contactPhone, locationId, location,
+      contactEmail, contactPhone, locationObject, location,
       url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
 
@@ -166,7 +166,7 @@ export default class EditProfileTab extends Component {
         contactPhone: contactPhone || '',
         contactEmail: contactEmail || '',
         location: location || '',
-        locationId: locationId || null,
+        locationId: locationObject.id || null,
         url: url || '',
         facebookUrl,
         twitterName,
@@ -182,18 +182,14 @@ export default class EditProfileTab extends Component {
 
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
-      edits['locationId'] = event.target.value.id
+      edits['locationId'] = await ensureLocationIdIfCoordinate({ fetchLocation, location: edits.location, locationId: event.target.value.id })
     } else {
       edits[key] = event.target.value
-    }
-    let coordinateLocationId
-    if (edits.location !== currentUser.location) {
-      coordinateLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId: this.state.edits.locationId })
     }
 
     this.setState({
       changed: setChanged ? true : changed,
-      edits: { ...edits, locationId: coordinateLocationId }
+      edits
     })
   }
 
