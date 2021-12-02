@@ -1,5 +1,4 @@
-import { get } from 'lodash/fp'
-import { isEqual, set, trim } from 'lodash'
+import { set, trim } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import cx from 'classnames'

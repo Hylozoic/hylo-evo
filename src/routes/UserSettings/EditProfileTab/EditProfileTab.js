@@ -176,7 +176,7 @@ export default class EditProfileTab extends Component {
   }
 
   updateSetting = (key, setChanged = true) => async event => {
-    const { fetchLocation, currentUser } = this.props
+    const { fetchLocation } = this.props
     const { edits, changed } = this.state
     setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
 
