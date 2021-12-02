@@ -22,6 +22,7 @@ export default function GroupSettings ({
   canModerate,
   currentUser,
   deleteGroup,
+  fetchPending,
   group,
   parentGroups,
   prerequisiteGroups,
@@ -46,6 +47,7 @@ export default function GroupSettings ({
         path: groupUrl(slug, 'settings'),
         component: <GroupSettingsTab
           fetchLocation={fetchLocation}
+          fetchPending={fetchPending}
           currentUser={currentUser}
           group={group}
           parentGroups={parentGroups}

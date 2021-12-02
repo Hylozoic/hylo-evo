@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import { isEqual, set, trim } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -32,7 +33,8 @@ export default class GroupSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     group: object,
-    fetchLocation: func
+    fetchLocation: func,
+    fetchPending: object
   }
 
   constructor (props) {
@@ -41,7 +43,7 @@ export default class GroupSettingsTab extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (!isEqual(prevProps.group, this.props.group)) {
+    if (prevProps.fetchPending && !this.props.fetchPending) {
       this.setState(this.defaultEditState())
     }
   }
@@ -52,7 +54,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, location, name, joinQuestions, prerequisiteGroups, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, location, locationObject, name, joinQuestions, prerequisiteGroups, settings, visibility
     } = group
 
     return {
@@ -63,6 +65,7 @@ export default class GroupSettingsTab extends Component {
         description: description || '',
         groupToGroupJoinQuestions: groupToGroupJoinQuestions ? groupToGroupJoinQuestions.concat({ text: '' }) : [{ text: '' }],
         location: location || '',
+        locationId: locationObject ? locationObject.id : '',
         name: name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
         prerequisiteGroups: prerequisiteGroups || [],
@@ -97,12 +100,12 @@ export default class GroupSettingsTab extends Component {
   save = async () => {
     this.setState({ changed: false })
     const { group, fetchLocation } = this.props
-    let coordinateLocationId
+    let locationId = this.state.edits.locationId
     if (group && this.state.edits.location !== group.location) {
-      coordinateLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId: this.state.edits.locationId })
+      locationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId })
     }
 
-    this.props.updateGroupSettings({ ...this.state.edits, locationId: this.state.edits.locationId || coordinateLocationId })
+    this.props.updateGroupSettings({ ...this.state.edits, locationId })
   }
 
   render () {
