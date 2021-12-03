@@ -49,7 +49,6 @@ jobs:
     - run: echo $CIRCLE_ARTIFACTS
     - run: echo $CIRCLE_TEST_REPORTS
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    # This is based on your 1.0 configuration file or project settings
     - run:
         working_directory: ~/Hylozoic/hylo-evo
         command: nvm install 15.5.0 && nvm alias default 15.5.0
@@ -63,38 +62,25 @@ jobs:
     # Restore the dependency cache
     - restore_cache:
         keys:
+        # Invalidate if yarn.lock changes
+        - v1-dep-{{ .Branch }}-{{ checksum "yarn.lock" }}-
         # This branch if available
         - v1-dep-{{ .Branch }}-
         # Default branch if not
         - v1-dep-dev-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
-    # This is based on your 1.0 configuration file or project settings
     - run: npm install -g codecov
-    # This is based on your 1.0 configuration file or project settings
     - run: /usr/share/yarn/bin/yarn
     # Save dependency cache
     - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        key: v1-dep-{{ .Branch }}-{{ checksum "yarn.lock" }}-
         paths:
-        # This is a broad list of cache paths to include many possible development environments
-        # You can probably delete some of these entries
-        - vendor/bundle
-        - ~/virtualenvs
-        - ~/.m2
-        - ~/.ivy2
-        - ~/.bundle
-        - ~/.go_workspace
-        - ~/.gradle
-        - ~/.cache/bower
-        # These cache paths were specified in the 1.0 config
         - ~/.cache/yarn
         - ./node_modules
     # Test
     #   This would typically be a build job when using workflows, possibly combined with build
-    # This is based on your 1.0 configuration file or project settings
     - run: yarn test -- --coverage --runInBand
-    # This is based on your 1.0 configuration file or project settings
     - run: codecov --token=c2dc871a-a23b-4a38-b105-f46e97f383c7
     # Teardown
     #   If you break your build into multiple jobs with workflows, you will probably want to do the parts of this that are relevant in each

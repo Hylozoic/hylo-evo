@@ -73,7 +73,7 @@ describe('facebookPrompt', () => {
 
 describe('EditProfileTab', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<EditProfileTab currentUser={{}} />)
+    const wrapper = shallow(<EditProfileTab currentUser={{ locationObject: { id: 1 }}} />)
     expect(wrapper.find('Connect(UploadAttachmentButton)').length).toEqual(2)
     expect(wrapper.find('SettingsControl').length).toEqual(8)
     expect(wrapper.find('SocialControl').length).toEqual(3)
