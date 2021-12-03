@@ -7,6 +7,6 @@ describe('VerifyEmail.connector', () => {
 
   it('returns the right keys', () => {
     expect(mapStateToProps({}, { location: { search: '?email=test@hylo.com' } }).email).toEqual('test@hylo.com')
-    expect(mapStateToProps({ login: { error: 'errrr' }}, { location: { search: '?email=test@hylo.com' } }).error).toEqual('errrr')
+    expect(mapStateToProps({ login: { error: 'errrr' } }, { location: { search: '?email=test@hylo.com' } }).error).toEqual('errrr')
   })
 })
