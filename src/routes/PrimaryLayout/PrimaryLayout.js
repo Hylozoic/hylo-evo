@@ -14,6 +14,7 @@ import Div100vh from 'react-div-100vh'
 
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+import About from 'routes/GroupProfile'
 import AddLocation from 'routes/Signup/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
@@ -350,7 +351,7 @@ export default class PrimaryLayout extends Component {
             {/* **** Group Routes **** */}
             {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
-              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <About {...props} group={group} />} />}
             {/* First time viewing a group redirect to explore page */}
             {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
               <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
