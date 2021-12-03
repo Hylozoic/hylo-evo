@@ -109,7 +109,7 @@ export default class PostClusterLayer extends CompositeLayer {
           getAlignmentBaseline: 'top',
           getPixelOffset: [0, 15],
           getText: d => d.properties.cluster ? ' ' : d.properties.message.length > 20 ? d.properties.message.slice(0, 19) + '...' : d.properties.message,
-          getSize: d => d.properties.cluster ? 0 : 14,
+          getSize: d => d.properties.cluster ? 0 : 20,
           // wordBreak: 'break-word',
           // maxWidth: 600,
           sizeUnits: 'pixels'
@@ -144,7 +144,7 @@ export default class PostClusterLayer extends CompositeLayer {
 
           return d.properties.type + '.png'
         },
-        getSize: d => d.properties.cluster ? 34 : 15,
+        getSize: d => d.properties.cluster ? 50 : 22,
         sizeUnits: 'pixels',
         pickable: true
       })
@@ -162,9 +162,9 @@ export default class PostClusterLayer extends CompositeLayer {
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
         getText: d => d.properties.cluster ? `${d.properties.point_count}` : ' ',
-        getSize: d => d.properties.cluster ? 14 : 0,
+        getSize: d => d.properties.cluster ? 20 : 0,
         sizeUnits: 'pixels',
-        sizeMinPixels: 14
+        sizeMinPixels: 20
       })
     ))
 
