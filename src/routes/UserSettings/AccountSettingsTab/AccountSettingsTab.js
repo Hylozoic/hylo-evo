@@ -160,7 +160,8 @@ export default class AccountSettingsTab extends Component {
               If you deactivate your account:
             </h4>
             <ul>
-              <li>You won't be able to use Hylo</li>
+              <li>You won't be able to use Hylo unless you log back in</li>
+              <li>You won't receive platform notifications</li>
               <li>Your profile won't show up in any member searches or group memberships</li>
               <li>Your comments and posts will REMAIN as they are</li>
             </ul>
@@ -186,7 +187,7 @@ export default class AccountSettingsTab extends Component {
             <ul>
               <li>Your account and its details will be deleted</li>
               <li>The content of your posts and comments will be removed</li>
-              <li>You won't be able to use Hylo</li>
+              <li>You won't be able to use Hylo unless you create a brand new account</li>
             </ul>
           </div>
         </ModalDialog>

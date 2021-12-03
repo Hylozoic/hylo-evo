@@ -79,7 +79,6 @@ export default Me
 Me.modelName = 'Me'
 Me.fields = {
   isAdmin: attr(),
-  active: attr(),
   name: attr(),
   posts: many('Post'),
   intercomHash: attr(),
