@@ -265,8 +265,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
   </div>
   <a
     ButtonComponent={[Function]}
-    acceptOnScroll={false}
-    acceptOnScrollPercentage={25}
     ariaAcceptLabel="Accept cookies"
     ariaDeclineLabel="Decline cookies"
     buttonClasses=""
@@ -310,7 +308,6 @@ exports[`NonAuthLayout renders correctly 1`] = `
         "background": "rgba(41, 64, 90, .8)",
       }
     }
-    visible="byCookieValue"
   >
     Hylo uses cookies to enhance the user experience. 
     <button
