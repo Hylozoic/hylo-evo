@@ -19,11 +19,13 @@ export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onCli
 
   return new IconLayer({
     loadOptions: {
-      mode: 'no-cors',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'yes',
-        'Origin': 'bloop'
+      fetch: {
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'yes'
+          // 'Origin': 'bloop'
+        }
       }
     },
     id: 'group-icon-layer',

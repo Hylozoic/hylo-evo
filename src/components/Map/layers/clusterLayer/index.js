@@ -38,7 +38,7 @@ export function createIconLayerFromPostsAndMembers ({ boundingBox, members, post
   return new PostClusterLayer({ boundingBox, data, onHover, onClick, getPosition: d => d.coordinates })
 }
 
-export default class PostClusterLayer extends CompositeLayer {
+class PostClusterLayer extends CompositeLayer {
   shouldUpdateState ({ changeFlags }) {
     return changeFlags.somethingChanged
   }
@@ -171,3 +171,6 @@ export default class PostClusterLayer extends CompositeLayer {
     return layers
   }
 }
+PostClusterLayer.layerName = 'postClusterLayer'
+
+export default PostClusterLayer
