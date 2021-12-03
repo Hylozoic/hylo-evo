@@ -135,7 +135,8 @@ module.exports = {
               // `babel-loader` specific config (not Babel itself)
               customize: require.resolve('babel-preset-react-app/webpack-overrides'),
               cacheDirectory: true,
-              cacheCompression: true
+              cacheCompression: true,
+              ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ]
             }
           },
           // Process any JS outside of the app with Babel.
