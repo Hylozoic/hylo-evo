@@ -21,7 +21,7 @@ export default function Navigation (props) {
     membersPath,
     projectsPath,
     eventsPath,
-    group,
+    group = {},
     groupId,
     groupsPath,
     hasRelatedGroups,
@@ -49,8 +49,8 @@ export default function Navigation (props) {
       to: createPath
     },
     rootPath && {
-      label: group.type ? 'Home' : 'Stream',
-      icon: group.type ? 'Home' : 'Stream',
+      label: group.type === 'farm' ? 'Home' : 'Stream',
+      icon: group.type === 'farm' ? 'Home' : 'Stream',
       to: rootPath,
       badge: badge,
       onClick: homeOnClick,
