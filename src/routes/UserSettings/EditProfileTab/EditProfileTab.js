@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
@@ -166,7 +167,7 @@ export default class EditProfileTab extends Component {
         contactPhone: contactPhone || '',
         contactEmail: contactEmail || '',
         location: location || '',
-        locationId: locationObject.id || null,
+        locationId: get('id', locationObject) || null,
         url: url || '',
         facebookUrl,
         twitterName,

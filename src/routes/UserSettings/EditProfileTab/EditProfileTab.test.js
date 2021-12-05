@@ -80,6 +80,12 @@ describe('EditProfileTab', () => {
     expect(wrapper.find('Button').prop('color')).toEqual('gray')
     wrapper.setState({ changed: true })
     expect(wrapper.find('Button').prop('color')).toEqual('green')
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('renders correctly without location object', () => {
+    const wrapper = shallow(<EditProfileTab currentUser={{ }} />)
+    expect(wrapper).toMatchSnapshot()
   })
 })
 
