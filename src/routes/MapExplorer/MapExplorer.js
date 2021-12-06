@@ -22,6 +22,8 @@ import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
 
+import 'mapbox-gl/dist/mapbox-gl.css'
+
 export default class MapExplorer extends React.Component {
   static defaultProps = {
     centerLocation: { lat: 35.442845, lng: 7.916598 },

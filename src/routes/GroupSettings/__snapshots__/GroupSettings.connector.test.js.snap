@@ -9,6 +9,7 @@ Object {
     },
     "id": "1",
   },
+  "fetchPending": undefined,
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],
@@ -41,6 +42,25 @@ Object {
           bannerUrl
           description
           location
+          locationObject {
+            id
+            addressNumber
+            addressStreet
+            bbox {
+              lat
+              lng
+            }
+            center {
+              lat
+              lng
+            }
+            city
+            country
+            fullText
+            locality
+            neighborhood
+            region
+          }
           invitePath
           name
           settings {
@@ -182,6 +202,7 @@ Object {
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "fetchLocation": [Function],
+  "fetchPending": undefined,
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],
