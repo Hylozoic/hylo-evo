@@ -4,9 +4,12 @@
 }
 
 .button-row {
-  display: flex;
-  width: 100%;
-  margin-top: $space-9x;
+  padding: 4px;
+  width: inherit;
+}
+
+.modal-container {
+  text-align: left;
 }
 
 .saveChanges {
