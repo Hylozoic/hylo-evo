@@ -12,6 +12,7 @@ import WelcomeWidget from 'components/Widget/WelcomeWidget'
 import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 import useGetWidgetItems from 'hooks/useGetWidgetItems'
+import FarmComparisonWidget from './FarmComparisonWidget'
 
 const WIDGETS = {
   text_block: {
@@ -65,7 +66,7 @@ const WIDGETS = {
   },
   farm_comparison: {
     title: 'Farm Comparison',
-    component: GroupsWidget
+    component: FarmComparisonWidget
   }
 }
 

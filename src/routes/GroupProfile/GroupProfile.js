@@ -1,68 +1,89 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { DEFAULT_AVATAR } from 'store/models/Group'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import RoundImage from 'components/RoundImage'
 import Widget from 'components/Widget'
+import { useSelector } from 'react-redux'
 import { groupDetailUrl } from 'util/navigation'
+import {
+  accessibilityDescription,
+  accessibilityIcon,
+  accessibilityString,
+  DEFAULT_BANNER,
+  DEFAULT_AVATAR,
+  GROUP_ACCESSIBILITY,
+  visibilityDescription,
+  visibilityIcon,
+  visibilityString
+} from 'store/models/Group'
 
 import './GroupProfile.scss'
+import presentGroup from 'store/presenters/presentGroup'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getCanModerate from 'store/selectors/getCanModerate'
+import { fetchPosts, getPosts } from 'components/FeedList/FeedList.store'
+import getRouteParam from 'store/selectors/getRouteParam'
+import presentPost from 'store/presenters/presentPost'
+import { getChildGroups } from 'store/selectors/getGroupRelationships'
+import getMyMemberships from 'store/selectors/getMyMemberships'
+import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
+import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 
-export default function About ({ group = {}, childGroups, isModerator, posts, routeParams, widgets }) {
+export default function GroupProfile (props) {
+  // TODO: move these selectors into a big group hook
+  const groupSlug = useSelector(state => getRouteParam('groupSlug', state, props))
+  const fetchPostsParam = { slug: groupSlug, context: 'groups', sortBy: 'created' }
+  const group = useSelector((state) => presentGroup(getGroupForCurrentRoute(state, props)))
+  const isModerator = useSelector((state) => getCanModerate(state, { group }))
+  const posts = useSelector((state) => getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id)))
+  const routeParams = props.match.params
+  const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'group_detail')
+  const memberships = useSelector(state => getMyMemberships(state, props))
+  const joinRequests = useSelector(state => getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending))
+  const childGroups = useSelector(state => getChildGroups(state, { groupSlug }).map(g => {
+    g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
+    return g
+  }))
   // this.props.fetchPosts()  ==>   do I need an useEnsurePosts?
 
-  return <div>
-    <div styleName='banner' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
-      <div styleName='right'>
-        <Link styleName='about' to={groupDetailUrl(group.slug, { context: 'groups', view: 'explore', groupSlug: group.slug })}><Icon name='Info' />About us</Link>
-      </div>
-      <div styleName='title'>
-        <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} styleName='landing-page-avatar' />
+  return <div styleName={'fullPage group'}>
+    <div styleName='groupProfileHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
+      <div styleName='groupTitleContainer'>
+        <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='groupAvatar' />
         <div>
-          <div styleName='name'>{group.name}</div>
-          {group.location ? <div styleName='location'><Icon name='Location' />{group.location}</div> : ''}
+          <div styleName='groupTitle'>{group.name}</div>
+          <div styleName='groupContextInfo'>
+            <div>
+              <span styleName='group-privacy'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='privacy-icon' />
+                <div styleName='privacy-tooltip'>
+                  <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+                </div>
+              </span>
+              <span styleName='group-privacy'>
+                <Icon name={accessibilityIcon(group.accessibility)} styleName='privacy-icon' />
+                <div styleName='privacy-tooltip'>
+                  <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
+                </div>
+              </span>
+            </div>
+            <span styleName='group-location'>{group.location}</span>
+          </div>
         </div>
       </div>
-      <div styleName='bg-fade' />
+      <div styleName='headerBackground' />
+    </div>
+    <div styleName='groupProfileBody'>
+      {widgets && widgets.map(widget =>
+        <Widget
+          {...widget}
+          childGroups={childGroups}
+          key={widget.id}
+          group={group}
+          isModerator={isModerator}
+          posts={posts}
+          routeParams={routeParams}
+        />
+      )}
     </div>
   </div>
 }
-
-// export default class LandingPage extends Component {
-
-//   render () {
-//     const { childGroups, group, isModerator, posts, routeParams, widgets } = this.props
-//     if (!group) return <Loading />
-
-//     return (
-//       <div>
-//         <div styleName='banner' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
-//           <div styleName='right'>
-//             <Link styleName='about' to={isAboutOpen ? groupUrl(group.slug, 'explore') : groupDetailUrl(group.slug, { context: 'groups', view: 'explore', groupSlug: group.slug })}><Icon name='Info' />About us</Link>
-//           </div>
-
-//           <div styleName='title'>
-//             <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} large hasBorder={false} styleName='landing-page-avatar' />
-//             <div>
-//               <div styleName='name'>{group.name}</div>
-//               {group.location ? <div styleName='location'><Icon name='Location' />{group.location}</div> : ''}
-//             </div>
-//           </div>
-//           <div styleName='bg-fade' />
-//         </div>
-//         {widgets && widgets.map(widget => // so each widget already gets childGroups, posts and the group entity
-//           <Widget
-//             {...widget}
-//             childGroups={childGroups}
-//             key={widget.id}
-//             group={group}
-//             isModerator={isModerator}
-//             posts={posts}
-//             routeParams={routeParams}
-//           />
-//         )}
-//       </div>
-//     )
-//   }
-// }
