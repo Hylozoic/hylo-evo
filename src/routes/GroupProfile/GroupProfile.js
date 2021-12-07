@@ -36,7 +36,7 @@ export default function GroupProfile (props) {
   const isModerator = useSelector((state) => getCanModerate(state, { group }))
   const posts = useSelector((state) => getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id)))
   const routeParams = props.match.params
-  const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'group_detail')
+  const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'group_profile')
   const memberships = useSelector(state => getMyMemberships(state, props))
   const joinRequests = useSelector(state => getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending))
   const childGroups = useSelector(state => getChildGroups(state, { groupSlug }).map(g => {
@@ -44,6 +44,9 @@ export default function GroupProfile (props) {
     return g
   }))
   // this.props.fetchPosts()  ==>   do I need an useEnsurePosts?
+
+  // TODO: flip accessibility stuff into a widget
+  // TODO: For 'normal' groups, either data migration for default group profile widgets, or default it in the code
 
   return <div styleName={'fullPage group'}>
     <div styleName='groupProfileHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>

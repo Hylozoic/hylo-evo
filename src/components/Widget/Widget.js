@@ -13,6 +13,11 @@ import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 import useGetWidgetItems from 'hooks/useGetWidgetItems'
 import FarmComparisonWidget from './FarmComparisonWidget'
+import FarmMapWidget from './FarmMapWidget'
+import ModeratorsWidget from './ModeratorsWidget'
+import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
+import PrivacyWidget from './PrivacyWidget'
+import RichTextWidget from './RichTextWidget'
 
 const WIDGETS = {
   text_block: {
@@ -67,6 +72,26 @@ const WIDGETS = {
   farm_comparison: {
     title: 'Farm Comparison',
     component: FarmComparisonWidget
+  },
+  farm_map: {
+    title: 'Farm Map',
+    component: FarmMapWidget
+  },
+  moderators: {
+    title: 'Moderators', // TODO: ensure there is a way to customize/overwrite this
+    component: ModeratorsWidget
+  },
+  opportunities_to_collaborate: {
+    title: 'Opportunities to Collaborate',
+    component: OpportunitiesToCollaborateWidget
+  },
+  privacy_settings: {
+    title: 'Privacy',
+    component: PrivacyWidget
+  },
+  mission: {
+    title: 'Our Mission',
+    component: RichTextWidget
   }
 }
 

@@ -6,6 +6,9 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     case 'text_block': {
       return true
     }
+    case 'mission': {
+      return true
+    }
     case 'announcements': {
       return group.announcements.length > 0 ? group.announcements : false
     }
