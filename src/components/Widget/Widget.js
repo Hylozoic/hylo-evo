@@ -18,6 +18,8 @@ import ModeratorsWidget from './ModeratorsWidget'
 import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
 import PrivacyWidget from './PrivacyWidget'
 import RichTextWidget from './RichTextWidget'
+import JoinWidget from './JoinWidget'
+import TopicsWidget from './TopicsWidget'
 
 const WIDGETS = {
   text_block: {
@@ -92,6 +94,14 @@ const WIDGETS = {
   mission: {
     title: 'Our Mission',
     component: RichTextWidget
+  },
+  join: {
+    title: null,
+    component: JoinWidget
+  },
+  topics: {
+    title: 'Topics',
+    component: TopicsWidget
   }
 }
 

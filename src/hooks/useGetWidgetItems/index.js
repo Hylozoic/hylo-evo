@@ -54,6 +54,10 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     case 'moderators': {
       return [] // TODO: build out selector for this
     }
+    case 'topics': {
+      return [] // TODO: build out selector for this
+    }
+    case 'join': 
     case 'privacy_settings': {
       return true
     }

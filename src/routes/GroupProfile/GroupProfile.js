@@ -45,7 +45,7 @@ export default function GroupProfile (props) {
   }))
   // this.props.fetchPosts()  ==>   do I need an useEnsurePosts?
 
-  // TODO: flip accessibility stuff into a widget
+  // TODO: flip accessibility/privacy stuff into a widget
   // TODO: For 'normal' groups, either data migration for default group profile widgets, or default it in the code
 
   return <div styleName={'fullPage group'}>
