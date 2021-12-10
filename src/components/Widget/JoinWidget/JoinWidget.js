@@ -1,19 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { JoinSection } from 'routes/GroupDetail/GroupDetail'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
-import { get, keyBy, map, trim } from 'lodash'
+import { get, keyBy } from 'lodash'
 import { inIframe } from 'util/index'
+import { addSkill, removeSkill } from 'components/SkillsSection/SkillsSection.store'
+import { useDispatch } from 'react-redux'
 
 import './Join.scss'
+import { useRouter, useState } from 'hooks/useRouter'
+import { useCurrentUser } from 'hooks/useCurrentUser'
+import { createJoinRequest, joinGroup } from 'routes/GroupDetail/GroupDetail.store'
+import { useGetJoinRequests } from 'hooks/useGetJoinRequests'
 
-export default function JoinWidget ({ currentUser, addSkill, group, joinRequests, onClose, removeSkill, routeParams, location }) {
-  // current params
-  // items: widgetItems, group, routeParams, settings 
-  const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
+export default function JoinWidget ({ group, fullPage = true, routeParams }) {
+  const dispatch = useDispatch()
+  const { location } = useRouter()
+  const currentUser = useCurrentUser()
+  const joinRequests = useGetJoinRequests()
+  const handleAddSkill = (skillId) => dispatch(addSkill(skillId))
+  const handleRemoveSkill = (skillId) => dispatch(removeSkill(skillId))
+  const handleJoinGroup = (groupId) => dispatch(joinGroup(groupId))
+  const handleRequestToJoinGroup = (groupId, questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers))
+  const [groupsWithPendingRequests, setGroupsWithPendingRequests] = useState(keyBy(joinRequests, 'group.id'))
+  useEffect(() => {
+    setGroupsWithPendingRequests(keyBy(joinRequests, 'group.id'))
+  }, [joinRequests])
 
-  return  <div styleName='join-container'>
+  return <div styleName='join-container'>
     {!currentUser
       ? <div styleName='signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='requestButton'>Signup or Login to connect with <span styleName='requestGroup'>{group.name}</span></Link></div>
       : <div>
@@ -39,14 +54,14 @@ export default function JoinWidget ({ currentUser, addSkill, group, joinRequests
           </div>
         </div>
         <JoinSection
-          addSkill={addSkill}
+          addSkill={handleAddSkill}
           currentUser={currentUser}
-          fullPage={!onClose}
+          fullPage={fullPage}
           group={group}
           groupsWithPendingRequests={groupsWithPendingRequests}
-          joinGroup={this.joinGroup}
-          requestToJoinGroup={this.requestToJoinGroup}
-          removeSkill={removeSkill}
+          joinGroup={handleJoinGroup}
+          requestToJoinGroup={handleRequestToJoinGroup}
+          removeSkill={handleRemoveSkill}
           routeParams={routeParams}
         />
       </div>}
