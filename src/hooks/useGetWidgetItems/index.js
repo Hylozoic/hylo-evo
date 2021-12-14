@@ -1,7 +1,6 @@
 // import { useState, useEffect } from 'react'
 
 export default function useGetWidgetItems ({ currentUser, childGroups, name, group, posts }) {
-  // so by moving this function into its own hook
   switch (name) {
     case 'text_block': {
       return true
@@ -57,7 +56,7 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     case 'topics': {
       return [] // TODO: build out selector for this
     }
-    case 'join': 
+    case 'join':
     case 'privacy_settings': {
       return true
     }

@@ -1,32 +1,28 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { JoinSection } from 'routes/GroupDetail/GroupDetail'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
-import { get, keyBy } from 'lodash'
+import { get } from 'lodash'
 import { inIframe } from 'util/index'
 import { addSkill, removeSkill } from 'components/SkillsSection/SkillsSection.store'
 import { useDispatch } from 'react-redux'
 
 import './Join.scss'
-import { useRouter, useState } from 'hooks/useRouter'
+import { useRouter } from 'hooks/useRouter'
 import { useCurrentUser } from 'hooks/useCurrentUser'
 import { createJoinRequest, joinGroup } from 'routes/GroupDetail/GroupDetail.store'
-import { useGetJoinRequests } from 'hooks/useGetJoinRequests'
+import { useKeyJoinRequestsByGroupId } from 'hooks/useGetJoinRequests'
 
 export default function JoinWidget ({ group, fullPage = true, routeParams }) {
   const dispatch = useDispatch()
   const { location } = useRouter()
   const currentUser = useCurrentUser()
-  const joinRequests = useGetJoinRequests()
+  const groupsWithPendingRequests = useKeyJoinRequestsByGroupId()
   const handleAddSkill = (skillId) => dispatch(addSkill(skillId))
   const handleRemoveSkill = (skillId) => dispatch(removeSkill(skillId))
   const handleJoinGroup = (groupId) => dispatch(joinGroup(groupId))
   const handleRequestToJoinGroup = (groupId, questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers))
-  const [groupsWithPendingRequests, setGroupsWithPendingRequests] = useState(keyBy(joinRequests, 'group.id'))
-  useEffect(() => {
-    setGroupsWithPendingRequests(keyBy(joinRequests, 'group.id'))
-  }, [joinRequests])
 
   return <div styleName='join-container'>
     {!currentUser

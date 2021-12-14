@@ -100,7 +100,7 @@ const WIDGETS = {
     component: JoinWidget
   },
   topics: {
-    title: 'Topics',
+    title: null,
     component: TopicsWidget
   }
 }
@@ -108,6 +108,7 @@ const WIDGETS = {
 export default function Widget (props) {
   const { childGroups, currentUser, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
 
+  // might focus on pushing more and more of the data these widgets require into selector hooks and relying less and less on props being passed down
   if (!WIDGETS[name]) return null
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
