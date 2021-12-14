@@ -58,6 +58,39 @@ it('matches announcement snapshot', () => {
   expect(wrapper).toMatchSnapshot()
 })
 
+it('renders human readable dates', () => {
+  const creator = {
+    name: 'JJ',
+    avatarUrl: 'foo.png',
+    id: 123
+  }
+  const groups = [
+    {
+      name: 'FooC', slug: 'fooc'
+    },
+    {
+      name: 'BarC', slug: 'barc'
+    }
+  ]
+  const context = {
+    label: 'some context',
+    url: '/foo/bar'
+  }
+  let startTime = '11/29/2020'
+  let endTime = '11/29/2029'
+
+  const wrapper = shallow(<PostHeader type='request' groups={groups} creator={creator} context={context} startTime={startTime} endTime={endTime} />)
+  expect(wrapper).toMatchSnapshot()
+  startTime = '11/29/2022'
+  endTime = '11/29/2029'
+  wrapper.setProps({ startTime, endTime })
+  expect(wrapper).toMatchSnapshot()
+  startTime = '11/29/2010'
+  endTime = '11/29/2020'
+  wrapper.setProps({ startTime, endTime })
+  expect(wrapper).toMatchSnapshot()
+})
+
 describe('TopicsLine', () => {
   it('matches last snapshot', () => {
     const props = {

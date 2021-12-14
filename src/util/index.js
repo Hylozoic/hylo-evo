@@ -19,7 +19,7 @@ export function isPromise (value) {
 
 export const inflectedTotal = (word, count) => `${count.toLocaleString()} ${inflection.inflect(word, count)}`
 
-export const formatDatePair = (startTime, endTime) => {
+export const formatDatePair = (startTime, endTime, returnAsObj) => {
   const start = moment.tz(startTime, moment.tz.guess())
   const end = moment.tz(endTime, moment.tz.guess())
 
@@ -30,24 +30,23 @@ export const formatDatePair = (startTime, endTime) => {
   let from = ''
 
   if (isThisYear) {
-    from = start.format('ddd, MMM D [at] h:mmA z')
+    from = endTime ? start.format('ddd, MMM D [at] h:mmA') : start.format('ddd, MMM D [at] h:mmA z')
   } else {
-    from = start.format('ddd, MMM D, YYYY [at] h:mmA z')
+    from = endTime ? start.format('ddd, MMM D, YYYY [at] h:mmA') : start.format('ddd, MMM D, YYYY [at] h:mmA z')
   }
 
   if (endTime) {
     if (end.year() !== start.year()) {
-      to = end.format(' - ddd, MMM D, YYY [at] h:mmA z')
-    } else if (end.month() !== start.month()) {
-      to = end.format(' - ddd, MMM D [at] h:mmA z')
-    } else if (end.date() !== start.date()) {
-      to = end.format(' - ddd, MMM D [at] h:mmA z')
+      to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
+    } else if (end.month() !== start.month() || end.day() !== start.day()) {
+      to = end.format('ddd, MMM D [at] h:mmA z')
     } else {
-      to = end.format(' - h:mmA z')
+      to = end.format('h:mmA z')
     }
+    to = returnAsObj ? to : ' - ' + to
   }
 
-  return from + to
+  return returnAsObj ? { from, to } : from + to
 }
 
 export function hexToRgb (hex) {
@@ -61,4 +60,8 @@ export function hexToRgb (hex) {
 
 export function inIframe () {
   return window.location !== window.parent.location
+}
+
+export function isDateInTheFuture (date) {
+  return moment(date).isAfter(moment())
 }

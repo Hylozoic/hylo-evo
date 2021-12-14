@@ -30,6 +30,24 @@ exports[`AccountSettingsTab renders correctly 1`] = `
     Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.
   </div>
   <div
+    data-stylename="button-row"
+  >
+    <Button
+      color="purple"
+      label="Deactivate Account"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    data-stylename="button-row"
+  >
+    <Button
+      color="purple"
+      label="Delete Account"
+      onClick={[Function]}
+    />
+  </div>
+  <div
     data-stylename="saveChanges"
   >
     <span

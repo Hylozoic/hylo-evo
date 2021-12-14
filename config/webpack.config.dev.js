@@ -115,6 +115,7 @@ module.exports = {
                   { helpers: true }
                 ]
               ],
+              ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ],
               cacheDirectory: true,
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
@@ -133,6 +134,13 @@ module.exports = {
           },
           {
             test: /slick-carousel.*\.css$/,
+            use: [
+              'style-loader',
+              'css-loader'
+            ]
+          },
+          {
+            test: /mapbox-gl.*\.css$/,
             use: [
               'style-loader',
               'css-loader'

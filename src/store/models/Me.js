@@ -85,7 +85,7 @@ Me.fields = {
   groupInvitesPending: many('Invitation'),
   joinRequests: many('JoinRequest'),
   location: attr(),
-  locationId: fk({
+  locationObject: fk({
     to: 'Location',
     as: 'locationObject'
   }),
