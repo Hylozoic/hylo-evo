@@ -9396,16 +9396,16 @@ husky@^7.0.0:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.1.tgz#579f4180b5da4520263e8713cc832942b48e1f1c"
   integrity sha512-gceRaITVZ+cJH9sNHqx5tFwbzlLCVxtVZcusME8JYQ8Edy5mpGDOqD8QBCdMhpyo9a+JXddnujQ4rpY2Ff9SJA==
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils#2ff4926":
-  version "1.2.4"
-  resolved "https://github.com/Hylozoic/hylo-utils#2ff4926916472cd15c0459a5a7162b9984a4700e"
+"hylo-utils@https://github.com/Hylozoic/hylo-utils#3534de":
+  version "1.2.5"
+  resolved "https://github.com/Hylozoic/hylo-utils#3534de31c25e0e31afc4176576f3f3aa31d105bc"
   dependencies:
     buffer "^5.0.6"
     cheerio "^1.0.0-rc.3"
     events "^1.1.1"
-    insane "^2.6.1"
+    insane "^2.6.2"
     linkifyjs Hylozoic/linkifyjs#allow-underscores
-    marked "^0.3.5"
+    marked "^4"
     pretty-date "^0.2.0"
     stream "^0.0.2"
     trunc-html "^1.1.2"
@@ -9735,9 +9735,9 @@ insane@2.6.1:
     assignment "2.0.0"
     he "0.5.0"
 
-insane@^2.6.1:
+insane@^2.6.2:
   version "2.6.2"
-  resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.2.tgz"
+  resolved "https://registry.yarnpkg.com/insane/-/insane-2.6.2.tgz#c2ab68bb3e006ab451560d1b446917329c0a8120"
   integrity sha1-wqtouz4AarRRVg0bRGkXMpwKgSA=
   dependencies:
     assignment "2.0.0"
@@ -11612,10 +11612,15 @@ markdown-to-jsx@^6.11.4:
     prop-types "^15.6.2"
     unquote "^1.1.0"
 
-marked@^0.3.12, marked@^0.3.5:
+marked@^0.3.12:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz"
   integrity sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
+
+marked@^4:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.7.tgz#596a0826e7a8c6b4119eacd00b0220ddaee7fc71"
+  integrity sha512-mQrRvV2vRk7DHZsWsYJfAjmBo+lSYPhTJPThaaGpkEfmC+4oefeug2txZniQTieDS0CFpokfVhd7JuS5GtnHhA==
 
 marksy@^8.0.0:
   version "8.0.0"
