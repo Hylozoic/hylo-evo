@@ -5,21 +5,27 @@ exports[`matches last snapshot 1`] = `
   value={
     Object {
       "store": Object {
-        "@@observable": [Function],
         "dispatch": [Function],
         "getState": [Function],
         "replaceReducer": [Function],
         "subscribe": [Function],
+        Symbol(observable): [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
         "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "dispatch": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+          Symbol(observable): [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
