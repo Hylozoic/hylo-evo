@@ -339,16 +339,15 @@ export default class PostEditor extends React.Component {
       acceptContributions, eventInvitations, startTime,
       endTime, location, locationId, isPublic
     } = this.state.post
-    let coordLocationId = null
     const details = this.editor.current.getContentHTML()
     const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
     const memberIds = members && members.map(m => m.id)
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const imageUrls = imageAttachments && imageAttachments.map(attachment => attachment.url)
     const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
-    coordLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
+    const actualLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
     const postToSave = {
-      id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId: coordLocationId || locationId, isPublic
+      id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId: actualLocationId, isPublic
     }
     const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)

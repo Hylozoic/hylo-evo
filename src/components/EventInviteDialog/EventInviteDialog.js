@@ -33,7 +33,7 @@ export default function EventInviteDialog ({
 
   useEffect(() => {
     const fetch = () => {
-      const forGroupIds = forGroups.map(c => c.id)
+      const forGroupIds = forGroups.map(c => c.id).filter(c => c !== 'public')
       fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: 0 })
       setPageFetched(pageSize)
     }
@@ -43,7 +43,7 @@ export default function EventInviteDialog ({
   const { observe } = useInView({
     onEnter: () => {
       const fetch = () => {
-        const forGroupIds = forGroups.map(c => c.id)
+        const forGroupIds = forGroups.map(c => c.id).filter(c => c !== 'public')
         fetchPeople({ autocomplete: searchTerm, groupIds: forGroupIds, first: pageSize, offset: pageFetched })
         setPageFetched(pageFetched + pageSize)
       }

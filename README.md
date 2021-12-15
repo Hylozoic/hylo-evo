@@ -34,6 +34,9 @@
 ```
 HTTPS=true
 LOCAL_CERT=localhost (this should be the root filename used for your certificate files above)
+
+API_HOST=https://localhost:3001
+SOCKET_HOST=https://localhost:3001
 ```
 ## Contributions and Code of Conduct
 

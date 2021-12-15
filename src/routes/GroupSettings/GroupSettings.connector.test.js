@@ -18,7 +18,8 @@ beforeAll(() => {
   })
 
   state = {
-    orm: session.state
+    orm: session.state,
+    pending: { }
   }
 })
 
