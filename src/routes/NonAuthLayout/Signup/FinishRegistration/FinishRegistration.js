@@ -1,4 +1,3 @@
-import { trim } from 'lodash/fp'
 import React, { useState } from 'react'
 
 import TextInput from 'components/TextInput'
@@ -33,7 +32,7 @@ export default function FinishRegistration (props) {
 
   const handleChange = (e) => {
     const name = e.target.name
-    const value = trim(e.target.value)
+    const value = e.target.value
     let newError = ''
 
     if (name === 'password') {
@@ -99,7 +98,7 @@ export default function FinishRegistration (props) {
       />
 
       <Button styleName='submit' label='Jump in to Hylo!' color={canSubmit ? 'green' : 'gray'}
-        onClick={canSubmit ? () => this.submit() : null} />
+        onClick={canSubmit ? () => submit() : null} />
     </div>
   </div>
 }
