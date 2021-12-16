@@ -9396,9 +9396,9 @@ husky@^7.0.0:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.1.tgz#579f4180b5da4520263e8713cc832942b48e1f1c"
   integrity sha512-gceRaITVZ+cJH9sNHqx5tFwbzlLCVxtVZcusME8JYQ8Edy5mpGDOqD8QBCdMhpyo9a+JXddnujQ4rpY2Ff9SJA==
 
-"hylo-utils@https://github.com/Hylozoic/hylo-utils#3534de":
+"hylo-utils@https://github.com/Hylozoic/hylo-utils#2c31ec":
   version "1.2.5"
-  resolved "https://github.com/Hylozoic/hylo-utils#3534de31c25e0e31afc4176576f3f3aa31d105bc"
+  resolved "https://github.com/Hylozoic/hylo-utils#2c31ecfa97135ef04941abda57db1a6b113cf5c5"
   dependencies:
     buffer "^5.0.6"
     cheerio "^1.0.0-rc.3"
