@@ -139,7 +139,7 @@
     "history": "^4.9.0",
     "html-webpack-plugin": "^4.5.1",
     "http-proxy-middleware": "0.17.4",
-    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#2ff4926",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#2c31ec",
     "identity-obj-proxy": "3.0.0",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
