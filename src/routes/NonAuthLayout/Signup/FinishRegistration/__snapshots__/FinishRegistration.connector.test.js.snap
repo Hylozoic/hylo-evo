@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`signup should match latest snapshot 1`] = `
+exports[`FinishRegistration.connector should call signup 1`] = `
 Object {
   "payload": Object {
     "api": Object {
       "method": "post",
       "params": Object {
-        "email": "name",
+        "email": "test@hylo.com",
         "email_validated": true,
         "login": true,
-        "name": "test@hylo.com",
-        "password": "testPassword",
+        "name": "name",
+        "password": "password",
       },
       "path": "/noo/user",
     },

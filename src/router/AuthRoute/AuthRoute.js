@@ -4,21 +4,23 @@ import RedirectRoute from 'router/RedirectRoute'
 
 export default function AuthRoute ({
   component,
-  nonAuthComponent,
-  requireAuth,
-  isLoggedIn,
   currentUser,
+  isLoggedIn,
+  location,
+  nonAuthComponent,
+  nonAuthOnly,
+  requireAuth,
   returnToOnAuth,
   setReturnToURL,
-  location,
   ...rest
 }) {
   if (!isLoggedIn && nonAuthComponent) {
     return <Route {...rest} render={props => React.createElement(nonAuthComponent, props)} />
   }
 
-  if (isLoggedIn && location.pathname === '/signup') {
-    return <RedirectRoute to={'/signup/upload-photo'} />
+  // If already logged in and going to signup or login route then redirect to the home page
+  if (isLoggedIn && nonAuthOnly) {
+    return <RedirectRoute to={'/'} />
   }
 
   // On mobile we want to only store the intended URL and forward to the
@@ -26,15 +28,13 @@ export default function AuthRoute ({
   // Specifically we don't want any components to do any work but this,
   // namely JoinGroup which utilizes returnToOnAuth) and may attempt
   // to auth the user with a token and send them into sign-up.
-  if (
-    (!isLoggedIn && (requireAuth || returnToOnAuth))
-  ) {
+  if (!isLoggedIn && (requireAuth || returnToOnAuth)) {
     setReturnToURL(location.pathname + location.search)
   }
-  if (
-    (!isLoggedIn && requireAuth)
-  ) {
+
+  if (!isLoggedIn && requireAuth) {
     return <RedirectRoute to={'/login'} />
   }
+
   return <Route {...rest} render={props => React.createElement(component, props)} />
 }

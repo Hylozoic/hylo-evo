@@ -16,7 +16,7 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     updateUserSettings: (changes) => dispatch(updateUserSettings(changes)),
-    goToPreviousStep: () => dispatch(push('/signup/upload-photo')),
+    goToPreviousStep: () => dispatch(push('/welcome/upload-photo')),
     goBack: () => dispatch(goBack()),
     push: (path) => dispatch(push(path)),
     resetReturnToURL: () => dispatch(resetReturnToURL()),
@@ -30,7 +30,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    goToNextStep: (defaultPath = '/signup/welcome') => {
+    goToNextStep: (defaultPath = '/welcome/explore') => {
       if (stateProps.returnToURL) {
         dispatchProps.resetReturnToURL()
         dispatchProps.push(stateProps.returnToURL)

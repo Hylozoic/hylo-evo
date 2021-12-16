@@ -27,12 +27,12 @@ describe('AuthRoute', () => {
     return expect(wrapper).toMatchSnapshot()
   })
 
-  it('should redirect into signup process if logged in and on the first signup step', () => {
+  it('should redirect into welcome flow if logged in and on the first signup step', () => {
     const testProps = {
       ...defaultProps,
       isLoggedIn: true,
       location: {
-        pathname: '/signup'
+        pathname: '/welcome'
       }
     }
     const wrapper = shallow(<AuthRoute {...testProps} />)

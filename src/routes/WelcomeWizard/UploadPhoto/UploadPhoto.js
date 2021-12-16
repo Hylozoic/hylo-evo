@@ -4,8 +4,8 @@ import { bgImageStyle } from 'util/index'
 import Loading from 'components/Loading'
 import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
-import SignupModalFooter from '../SignupModalFooter'
-import '../Signup.scss'
+import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
+import '../WelcomeWizard.scss'
 
 export default class UploadPhoto extends Component {
   constructor () {
@@ -64,7 +64,7 @@ export default class UploadPhoto extends Component {
           <p>Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.</p>
         </div>
         <div>
-          <SignupModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={'Next: Where are you from?'} />
+          <WelcomeWizardModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={'Next: Where are you from?'} />
         </div>
       </div>
     </div>

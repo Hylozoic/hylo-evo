@@ -184,6 +184,8 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-autocomplete": "^1.7.2",
+    "react-code-input": "^3.10.1",
+    "react-cookie": "^4.1.1",
     "react-cookie-consent": "^6.2.3",
     "react-cool-inview": "^2.0.8",
     "react-copy-to-clipboard": "^5.0.1",

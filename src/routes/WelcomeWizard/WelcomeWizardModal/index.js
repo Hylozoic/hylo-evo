@@ -1,19 +1,19 @@
 import React from 'react'
 import { CSSTransitionGroup } from 'react-transition-group'
-import '../Signup.scss'
+import '../WelcomeWizard.scss'
 
-export default function SignupModal (props) {
+export default function WelcomeWizardModal (props) {
   return <CSSTransitionGroup
-    transitionName='signup'
+    transitionName='welcome-wizard'
     transitionAppear
     transitionAppearTimeout={400}
     transitionEnterTimeout={400}
     transitionLeaveTimeout={300}>
     <div
-      styleName='signup-modal'
-      key='signup-modal'>
-      <div styleName='signup-background' className='signup-background' />
-      <div styleName='signup-wrapper' className='signup-wrapper'>
+      styleName='modal'
+      key='modal'>
+      <div styleName='background' className='background' />
+      <div styleName='wrapper' className='wrapper'>
         {<props.child />}
       </div>
     </div>
