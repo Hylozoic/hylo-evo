@@ -76,7 +76,10 @@ export default class PostHeader extends PureComponent {
     let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
 
     const { from, to } = formatDatePair(startTime, actualEndTime, true)
-    const startString = isDateInTheFuture(startTime) ? `Starts: ${from}` : false
+    const startString = fulfilledAt ? false
+      : isDateInTheFuture(startTime) ? `Starts: ${from}`
+        : isDateInTheFuture(endTime) ? `Started: ${from}`
+          : false
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {

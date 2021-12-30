@@ -474,7 +474,7 @@ exports[`renders human readable dates 1`] = `
   <div
     data-stylename="timeWindow"
   >
-    Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+    Started: Sun, Nov 29, 2020 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
   </div>
 </div>
 `;

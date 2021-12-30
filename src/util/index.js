@@ -38,7 +38,9 @@ export const formatDatePair = (startTime, endTime, returnAsObj) => {
   if (endTime) {
     if (end.year() !== start.year()) {
       to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
-    } else if (end.month() !== start.month() || end.day() !== start.day()) {
+    } else if (end.month() !== start.month() ||
+               end.day() !== start.day() ||
+               end <= now) {
       to = end.format('ddd, MMM D [at] h:mmA z')
     } else {
       to = end.format('h:mmA z')
