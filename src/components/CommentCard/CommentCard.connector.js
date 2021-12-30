@@ -3,9 +3,7 @@ import { push } from 'connected-react-router'
 import { postUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
-  return {
-    routeParams: props.routeParams || {}
-  }
+  return { }
 }
 
 export function mapDispatchToProps (dispatch, props) {
