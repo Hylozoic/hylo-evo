@@ -9,6 +9,7 @@ import { FlyToInterpolator } from 'react-map-gl'
 import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
 import { generateViewParams } from 'util/savedSearch'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
@@ -37,6 +38,8 @@ export default class MapExplorer extends React.Component {
     zoom: 0
   }
 
+  static contextType = LayoutFlagsContext
+
   constructor (props) {
     super(props)
     this.state = {
@@ -64,7 +67,11 @@ export default class MapExplorer extends React.Component {
   }
 
   componentDidMount () {
+    const mobileSettingsLayout = this.context
+    this.setState({ mobileSettingsLayout })
+
     this.refs = {}
+
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
@@ -347,10 +354,11 @@ export default class MapExplorer extends React.Component {
       hideDrawer,
       showFeatureFilters,
       showSavedSearches,
-      viewport
+      viewport,
+      mobileSettingsLayout
     } = this.state
 
-    return <div styleName={cx('container', { 'noUser': !currentUser })}>
+    return <div styleName={cx('container', { 'noUser': !currentUser, mapContainerMobileApp: mobileSettingsLayout })}>
       <div styleName='mapContainer'>
         <Map
           layers={[groupIconLayer, clusterLayer]}
