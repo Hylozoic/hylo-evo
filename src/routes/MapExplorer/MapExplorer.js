@@ -358,7 +358,7 @@ export default class MapExplorer extends React.Component {
       mobileSettingsLayout
     } = this.state
 
-    return <div styleName={cx('container', { 'noUser': !currentUser, mapContainerMobileApp: mobileSettingsLayout })}>
+    return <div styleName={cx('container', { 'noUser': !currentUser, containerMobileApp: mobileSettingsLayout })}>
       <div styleName='mapContainer'>
         <Map
           layers={[groupIconLayer, clusterLayer]}
