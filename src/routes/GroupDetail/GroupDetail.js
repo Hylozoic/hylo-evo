@@ -219,7 +219,6 @@ export default class GroupDetail extends Component {
 
 export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
-
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
 
   const setAnswer = (index) => (event) => {
@@ -281,7 +280,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                 <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
               </div>)}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
@@ -293,7 +292,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
                   </div>)}
                   <div styleName='g.center'>
-                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? requestToJoinGroup(group.id, questionAnswers) : () => {}}>
+                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
                       Request Membership in <span styleName='g.requestGroup'>{group.name}</span>
                     </div>
                   </div>

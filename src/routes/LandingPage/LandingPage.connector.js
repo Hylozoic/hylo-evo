@@ -19,7 +19,7 @@ export function mapStateToProps (state, props) {
   const isModerator = getCanModerate(state, { group })
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
-  const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map')
+  const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'landing')
   const memberships = getMyMemberships(state, props)
   const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
   const childGroups = getChildGroups(state, { groupSlug }).map(g => {

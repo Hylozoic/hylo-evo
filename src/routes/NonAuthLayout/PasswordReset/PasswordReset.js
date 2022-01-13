@@ -44,11 +44,20 @@ export default class PasswordReset extends Component {
         </div>
         {success && <div styleName='success'>If your email address matched an account in our system, we sent you an email. Please check your inbox.</div>}
         {error && <div styleName='error'>There was a problem with your request. Please check your email and try again.</div>}
-        <div styleName='field'>
-          <label>Your email address</label>
-          <TextInput type='text' name='email' onChange={onChange} value={email}
-            inputRef={input => { this.email = input }} noClearButton />
-        </div>
+
+        <label>Your email address</label>
+        <TextInput
+          autoFocus
+          inputRef={input => { this.email = input }}
+          name='email'
+          noClearButton
+          onChange={onChange}
+          onEnter={() => { this.submit() }}
+          styleName='field'
+          type='text'
+          value={email}
+        />
+
         <Button styleName='submit' label='Reset' color={canSubmit ? 'green' : 'gray'}
           onClick={canSubmit ? () => this.submit() : null} />
       </div>

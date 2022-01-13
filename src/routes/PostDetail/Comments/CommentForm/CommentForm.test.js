@@ -21,6 +21,6 @@ describe('CommentForm', () => {
     const wrapper = shallow(<CommentForm {...minDefaultProps} />)
     expect(wrapper.find('Connect(HyloEditor)').length).toEqual(1)
     expect(wrapper.find('Connect(HyloEditor)').prop('placeholder'))
-      .toEqual("Hi Jen, what's on your mind?")
+      .toEqual('Add a comment...')
   })
 })

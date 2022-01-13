@@ -6,14 +6,15 @@ Object {
     "api": Object {
       "method": "post",
       "params": Object {
-        "email": "test@hylo.com",
+        "email": "name",
+        "email_validated": true,
         "login": true,
-        "name": "name",
+        "name": "test@hylo.com",
         "password": "testPassword",
       },
       "path": "/noo/user",
     },
   },
-  "type": "SIGNUP",
+  "type": "Signup/REGISTER",
 }
 `;

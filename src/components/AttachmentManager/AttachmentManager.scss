@@ -1,8 +1,7 @@
 // mixins
 .attachment-manager {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   padding: 15px 20px 0px;
   border-top: solid 1px $color-ghost-30;
 }
@@ -109,7 +108,6 @@
 
 .file-name {
   composes: caption-drk-lg from 'css/typography.scss';
-  width: 155px;
   margin-right: 10px;
   overflow: hidden;
   text-overflow: ellipsis;

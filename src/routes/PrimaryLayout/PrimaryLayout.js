@@ -14,7 +14,8 @@ import Div100vh from 'react-div-100vh'
 
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import AddLocation from 'routes/Signup/AddLocation'
+import About from 'routes/GroupProfile'
+import AddLocation from 'routes/WelcomeWizard/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
@@ -37,20 +38,20 @@ import Navigation from './components/Navigation'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
 import PostEditorModal from 'components/PostEditorModal'
-import Welcome from 'routes/Signup/Welcome'
+import WelcomeExplore from 'routes/WelcomeWizard/WelcomeExplore'
 import Search from 'routes/Search'
-import SignupModal from 'routes/Signup/SignupModal'
+import WelcomeWizardModal from 'routes/WelcomeWizard/WelcomeWizardModal'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
-import UploadPhoto from 'routes/Signup/UploadPhoto'
+import UploadPhoto from 'routes/WelcomeWizard/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
   REQUIRED_EDIT_POST_MATCH,
   isAboutPath,
-  isSignupPath,
+  isWelcomePath,
   isMapViewPath
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -106,10 +107,10 @@ const createRoutes = [
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` }
 ]
 
-const signupRoutes = [
-  { path: '/signup/upload-photo', child: UploadPhoto },
-  { path: '/signup/add-location', child: AddLocation },
-  { path: '/signup/welcome', child: Welcome }
+const welcomeRoutes = [
+  { path: '/welcome/upload-photo', child: UploadPhoto },
+  { path: '/welcome/add-location', child: AddLocation },
+  { path: '/welcome/explore', child: WelcomeExplore }
 ]
 
 const redirectRoutes = [
@@ -328,11 +329,11 @@ export default class PrimaryLayout extends Component {
         <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, 'center--mobile-settings-layout': mobileSettingsLayout })} id={CENTER_COLUMN_ID}>
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
-            {signupRoutes.map(({ path, child }) =>
+            {welcomeRoutes.map(({ path, child }) =>
               <Route path={path} key={path} render={props =>
-                <SignupModal {...props} child={child} />} />)}
+                <WelcomeWizardModal {...props} child={child} />} />)}
             {signupInProgress &&
-              <RedirectToSignupFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
+              <RedirectToWelcomeFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
             {!signupInProgress &&
               <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
             {/* **** Member Routes **** */}
@@ -350,7 +351,7 @@ export default class PrimaryLayout extends Component {
             {/* **** Group Routes **** */}
             {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
-              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <About {...props} group={group} />} />}
             {/* First time viewing a group redirect to explore page */}
             {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
               <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
@@ -428,10 +429,10 @@ export function returnDefaultRouteForGroup (group) {
   }
 }
 
-export function RedirectToSignupFlow ({ pathname }) {
-  if (isSignupPath(pathname)) return null
+export function RedirectToWelcomeFlow ({ pathname }) {
+  if (isWelcomePath(pathname)) return null
 
-  return <Redirect to='/signup/upload-photo' />
+  return <Redirect to='/welcome/upload-photo' />
 }
 
 export function RedirectToGroup ({ path, currentUser }) {

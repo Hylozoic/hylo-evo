@@ -76,17 +76,17 @@ it('renders human readable dates', () => {
     label: 'some context',
     url: '/foo/bar'
   }
-  let startTime = '11/29/2020'
-  let endTime = '11/29/2029'
+  let startTime = '2020-11-29'
+  let endTime = '2029-11-29'
 
   const wrapper = shallow(<PostHeader type='request' groups={groups} creator={creator} context={context} startTime={startTime} endTime={endTime} />)
   expect(wrapper).toMatchSnapshot()
-  startTime = '11/29/2022'
-  endTime = '11/29/2029'
+  startTime = '2022-11-29'
+  endTime = '2029-11-29'
   wrapper.setProps({ startTime, endTime })
   expect(wrapper).toMatchSnapshot()
-  startTime = '11/29/2010'
-  endTime = '11/29/2020'
+  startTime = '2010-11-29'
+  endTime = '2020-11-29'
   wrapper.setProps({ startTime, endTime })
   expect(wrapper).toMatchSnapshot()
 })

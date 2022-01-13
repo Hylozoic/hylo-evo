@@ -239,6 +239,7 @@ export function ActionDropdown ({ items }) {
 
   return activeItems.length > 0 &&
     <Dropdown
+      alignRight
       items={activeItems}
       toggleChildren={
         <Icon styleName='action-icon-button action-menu' name='More' alignRight />

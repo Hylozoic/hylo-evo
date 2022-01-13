@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddLocation renders correctly 1`] = `
+<div
+  data-stylename="flex-wrapper"
+>
+  <div
+    data-stylename="panel"
+  >
+    <span
+      data-stylename="step-count"
+    >
+      STEP 2/3
+    </span>
+    <br />
+    <div
+      data-stylename="center"
+    >
+      <Icon
+        data-stylename="globe-icon"
+        name="Globe"
+      />
+    </div>
+    <div
+      data-stylename="center location-input"
+    >
+      <Icon
+        data-stylename="location-icon"
+        name="Location"
+      />
+      <Connect(LocationInput)
+        autofocus={true}
+        inputClass="undefined"
+        location=""
+        locationObject={null}
+        onChange={[Function]}
+        onKeyPress={[Function]}
+        placeholder="Where do you call home?"
+        saveLocationToDB={true}
+      />
+    </div>
+    <div
+      data-stylename="instructions"
+    >
+      <p>
+        Add your location to see more relevant content, and find people and projects around you.
+      </p>
+    </div>
+    <div>
+      <WelcomeWizardModalFooter
+        continueText="Next: Welcome to Hylo!"
+        previous={[Function]}
+        submit={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;

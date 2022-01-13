@@ -1,10 +1,11 @@
 // import { useState, useEffect } from 'react'
 
 export default function useGetWidgetItems ({ currentUser, childGroups, name, group, posts }) {
-  // so by moving this function into its own hook
-
   switch (name) {
     case 'text_block': {
+      return true
+    }
+    case 'mission': {
       return true
     }
     case 'announcements': {
@@ -42,6 +43,22 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     }
     case 'farm_comparison': {
       return true // TODO: build out data get/fetch hook for relevant groups
+    }
+    case 'opportunities_to_collaborate': {
+      return [] // TODO: build out selector for this
+    }
+    case 'farm_map': {
+      return [] // TODO: figure out what even needs to be displayed for this
+    }
+    case 'moderators': {
+      return [] // TODO: build out selector for this
+    }
+    case 'topics': {
+      return [] // TODO: build out selector for this
+    }
+    case 'join':
+    case 'privacy_settings': {
+      return true
     }
     default: {
       return false

@@ -4,6 +4,30 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.1] - 2021-12-29
+
+### Changed
+- Cleanup display of post start and end times to be easier to read - don't uppercase text, better syntax.
+- If a post was "completed" before it ended show the end date as the date it was completed
+- Improve copy for comment box placeholder
+
+### Fixed
+- Fix issue where posts without a start/end time would always show as ENDED
+- Make sure you can see the dropdown to block a member
+
+## [3.2.0] - 2021-12-17
+
+### Added
+- New signup/registration flow that includes email verification, password confirmation and in general better security practices.
+- You can now deactivate or delete your account from the Settings -> Account page.
+- You can now use Markdown when editing the welcome message on the explore page for your group. This means links will work as well.
+
+### Changed
+- Attachments on posts now display in a list instead of a row so you can see any number of attachments. Previously you could see only the first 6 or so.
+
+### Fixed
+- Editing welcome message on explore page updates the widget instantly.
+
 ## [3.1.11] - 2021-12-3
 ### Fixed
 - Display of map icons on latest safari

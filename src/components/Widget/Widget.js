@@ -12,6 +12,14 @@ import WelcomeWidget from 'components/Widget/WelcomeWidget'
 import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 import useGetWidgetItems from 'hooks/useGetWidgetItems'
+import FarmComparisonWidget from './FarmComparisonWidget'
+import FarmMapWidget from './FarmMapWidget'
+import ModeratorsWidget from './ModeratorsWidget'
+import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
+import PrivacyWidget from './PrivacyWidget'
+import RichTextWidget from './RichTextWidget'
+import JoinWidget from './JoinWidget'
+import TopicsWidget from './TopicsWidget'
 
 const WIDGETS = {
   text_block: {
@@ -65,13 +73,42 @@ const WIDGETS = {
   },
   farm_comparison: {
     title: 'Farm Comparison',
-    component: GroupsWidget
+    component: FarmComparisonWidget
+  },
+  farm_map: {
+    title: 'Farm Map',
+    component: FarmMapWidget
+  },
+  moderators: {
+    title: 'Moderators', // TODO: ensure there is a way to customize/overwrite this
+    component: ModeratorsWidget
+  },
+  opportunities_to_collaborate: {
+    title: 'Opportunities to Collaborate',
+    component: OpportunitiesToCollaborateWidget
+  },
+  privacy_settings: {
+    title: 'Privacy',
+    component: PrivacyWidget
+  },
+  mission: {
+    title: 'Our Mission',
+    component: RichTextWidget
+  },
+  join: {
+    title: null,
+    component: JoinWidget
+  },
+  topics: {
+    title: null,
+    component: TopicsWidget
   }
 }
 
 export default function Widget (props) {
   const { childGroups, currentUser, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
 
+  // might focus on pushing more and more of the data these widgets require into selector hooks and relying less and less on props being passed down
   if (!WIDGETS[name]) return null
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -161,7 +198,7 @@ const EditForm = ({ id, setIsEditingSettings, setIsMenuOpen, newSettings, update
           setIsEditingSettings(false)
           setIsMenuOpen(true)
         }}>Cancel</span>
-        <span styleName='save' onClick={() => { save(id, { settings: newSettings }); setIsEditingSettings(false) }}>Save</span>
+        <span styleName='save' onClick={() => { save(id, { settings: newSettings }); setIsEditingSettings(false); setIsMenuOpen(false) }}>Save</span>
       </div>
 
     </div>
