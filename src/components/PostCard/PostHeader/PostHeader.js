@@ -72,17 +72,30 @@ export default class PostHeader extends PureComponent {
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
     const canHaveTimes = typesWithTimes.includes(type)
 
-    const { from, to } = formatDatePair(startTime, endTime, true)
-    const startDate = isDateInTheFuture(startTime) ? from : ''
-    const endDate = endTime !== moment() && isDateInTheFuture(endTime) ? `ends ${to}` : `ended ${to}`
+    // If it was completed/fulfilled before it ended, then use that as the end datetime
+    let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
+
+    const { from, to } = formatDatePair(startTime, actualEndTime, true)
+    const startString = fulfilledAt ? false
+      : isDateInTheFuture(startTime) ? `Starts: ${from}`
+        : isDateInTheFuture(endTime) ? `Started: ${from}`
+          : false
+
+    let endString = false
+    if (fulfilledAt && fulfilledAt <= endTime) {
+      endString = `Completed: ${to}`
+    } else {
+      endString = endTime !== moment() && isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+    }
+
     let timeWindow = ''
 
-    if (startDate && endDate) {
-      timeWindow = `${type} starts ${startDate} and ${endDate}`
-    } else if (endDate) {
-      timeWindow = `${type} ${endDate}`
-    } else if (startDate) {
-      timeWindow = `${type} starts ${startDate}`
+    if (startString && endString) {
+      timeWindow = `${startString} / ${endString}`
+    } else if (endString) {
+      timeWindow = endString
+    } else if (startString) {
+      timeWindow = startString
     }
 
     return <div styleName={cx('header', { constrained })} className={className}>

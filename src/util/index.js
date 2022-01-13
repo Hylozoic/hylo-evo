@@ -38,7 +38,9 @@ export const formatDatePair = (startTime, endTime, returnAsObj) => {
   if (endTime) {
     if (end.year() !== start.year()) {
       to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
-    } else if (end.month() !== start.month() || end.day() !== start.day()) {
+    } else if (end.month() !== start.month() ||
+               end.day() !== start.day() ||
+               end <= now) {
       to = end.format('ddd, MMM D [at] h:mmA z')
     } else {
       to = end.format('h:mmA z')
@@ -60,6 +62,12 @@ export function hexToRgb (hex) {
 
 export function inIframe () {
   return window.location !== window.parent.location
+}
+
+/* eslint-disable */
+export const validateEmail = email => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(email.toLowerCase())
 }
 
 export function isDateInTheFuture (date) {

@@ -1,7 +1,7 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "3.1.11",
+  "version": "3.2.1",
   "private": true,
   "engines": {
     "node": "15.5.0",
@@ -139,7 +139,7 @@
     "history": "^4.9.0",
     "html-webpack-plugin": "^4.5.1",
     "http-proxy-middleware": "0.17.4",
-    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#2ff4926",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#2c31ec",
     "identity-obj-proxy": "3.0.0",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
@@ -184,6 +184,8 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-autocomplete": "^1.7.2",
+    "react-code-input": "^3.10.1",
+    "react-cookie": "^4.1.1",
     "react-cookie-consent": "^6.2.3",
     "react-cool-inview": "^2.0.8",
     "react-copy-to-clipboard": "^5.0.1",

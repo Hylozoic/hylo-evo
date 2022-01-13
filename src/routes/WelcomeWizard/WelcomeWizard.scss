@@ -131,7 +131,7 @@
   align-items: center;
 }
 
-.signup-modal-footer {
+.modal-footer {
   padding-top: 20px;
 }
 
@@ -198,7 +198,7 @@
   padding-right: 25px;
 }
 
-.signup-modal {
+.modal {
   height: 100%;
   width: 100%;
   overflow: scroll;
@@ -228,7 +228,7 @@
 
 }
 
-.signup-background {
+.background {
   position: fixed;
   top: 0;
   right: 0;
@@ -239,7 +239,7 @@
   background: rgba(41, 64, 90, .5);
 }
 
-.signup-wrapper {
+.wrapper {
   transition: all .25s ease;
   position: relative;
   z-index: 1;
@@ -281,7 +281,7 @@
   text-align: center;
 }
 
-.signup-input-review {
+.input-review {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid $color-athens-gray-dark-50;
@@ -300,7 +300,7 @@
   padding-left: 37px;
 }
 
-.signup-input {
+.input {
   margin-top: 40px;
   border-radius: 5px;
   background-color: rgba(251, 252, 253, 1.00);
@@ -319,8 +319,8 @@
   padding-bottom: 5px;
 }
 
-.signup-input:focus {
-    outline: none;
+.input:focus {
+  outline: none;
 }
 
 .close-button {

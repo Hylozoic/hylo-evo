@@ -51,7 +51,7 @@ export default class ModalDialog extends Component {
 
   static defaultProps = {
     closeOnSubmit: true,
-    style: { width: '500px' },
+    style: { },
     modalTitle: 'Notice',
     showModalTitle: true,
     showCancelButton: true,

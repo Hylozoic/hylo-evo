@@ -8,7 +8,7 @@ import { checkLogin, login, loginWithService } from './Login.store'
 
 export function mapStateToProps (state, props) {
   return {
-    error: getLoginError(state),
+    error: getLoginError(state) || getQuerystringParam('error', state, props),
     returnToURL: getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state),
     downloadAppUrl: mobileRedirect()
   }

@@ -61,7 +61,7 @@ export function ormSessionReducer ({ Post }, { type, meta }) {
   switch (type) {
     case FULFILL_POST_PENDING:
       post = Post.withId(meta.postId)
-      post.update({ fulfilledAt: true })
+      post.update({ fulfilledAt: (new Date()).toISOString() })
       break
 
     case UNFULFILL_POST_PENDING:

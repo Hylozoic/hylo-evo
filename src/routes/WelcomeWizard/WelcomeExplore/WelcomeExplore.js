@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { get } from 'lodash/fp'
-import '../Signup.scss'
+import '../WelcomeWizard.scss'
 
-export default class Welcome extends Component {
+export default class WelcomeExplore extends Component {
   getValue = (field) => {
     return get(field, this.props.currentUser)
   }
