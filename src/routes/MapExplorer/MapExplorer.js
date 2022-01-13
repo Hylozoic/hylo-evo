@@ -8,7 +8,6 @@ import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
 import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
-import { history } from 'router'
 import { generateViewParams } from 'util/savedSearch'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import Icon from 'components/Icon'
@@ -23,10 +22,11 @@ import SwitchStyled from 'components/SwitchStyled'
 import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
 import { locationObjectToViewport } from 'util/geo'
+import { useHistory } from 'react-router-dom'
 
 import 'mapbox-gl/dist/mapbox-gl.css'
 
-export default class MapExplorer extends React.Component {
+export class UnwrappedMapExplorer extends React.Component {
   static defaultProps = {
     centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
@@ -74,7 +74,7 @@ export default class MapExplorer extends React.Component {
     // e.g. push.
     const { mobileSettingsLayout } = this.context
     if (mobileSettingsLayout) {
-      history.block(tx => {
+      this.props.history.block(tx => {
         const messageData = {
           url: tx.pathname
         }
@@ -428,4 +428,12 @@ export default class MapExplorer extends React.Component {
       </div>
     </div>
   }
+}
+
+export default function MapExplorer (props) {
+  const history = useHistory()
+
+  return (
+    <UnwrappedMapExplorer {...props} history={history} />
+  )
 }
