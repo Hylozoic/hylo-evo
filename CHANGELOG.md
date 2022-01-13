@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Added needed mobile app layout modifications to MapExplorer
+- Added route interception to MapExplorer when in mobile app context
 - Added HTTPS to MapBox API URL
 
 ## [3.2.1] - 2021-12-29
