@@ -8,6 +8,7 @@ import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
 import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
+import { history } from 'router'
 import { generateViewParams } from 'util/savedSearch'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import Icon from 'components/Icon'
@@ -67,10 +68,20 @@ export default class MapExplorer extends React.Component {
   }
 
   componentDidMount () {
-    const mobileSettingsLayout = this.context
-    this.setState({ mobileSettingsLayout })
-
     this.refs = {}
+
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. push.
+    const { mobileSettingsLayout } = this.context
+    if (mobileSettingsLayout) {
+      history.block(tx => {
+        const messageData = {
+          url: tx.pathname
+        }
+        window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+        return false
+      })
+    }
 
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
@@ -354,9 +365,10 @@ export default class MapExplorer extends React.Component {
       hideDrawer,
       showFeatureFilters,
       showSavedSearches,
-      viewport,
-      mobileSettingsLayout
+      viewport
     } = this.state
+
+    const { mobileSettingsLayout } = this.context
 
     return <div styleName={cx('container', { 'noUser': !currentUser, containerMobileApp: mobileSettingsLayout })}>
       <div styleName='mapContainer'>
