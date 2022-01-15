@@ -40,6 +40,7 @@ function rootRoutes () {
         <AuthRoute nonAuthOnly path='/signup/finish' exact component={NonAuthLayout} />
         <AuthRoute nonAuthOnly path='/signup' exact component={NonAuthLayout} />
         <AuthRoute nonAuthOnly path='/reset-password' exact component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/oauth' component={NonAuthLayout} />
         <AuthRoute path='/:context(public)' nonAuthComponent={NonAuthLayout} component={PrimaryLayout} />
         <AuthRoute requireAuth path='/' component={PrimaryLayout} />
       </Switch>

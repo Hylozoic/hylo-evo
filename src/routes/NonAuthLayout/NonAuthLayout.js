@@ -8,12 +8,15 @@ import Particles from 'react-particles-js'
 import particlesjsConfig from './particlesjsConfig'
 import Button from 'components/Button'
 import Login from './Login'
+import OAuthConsent from './OAuth/Consent'
+import OAuthLogin from './OAuth/Login'
 import Signup from './Signup'
 import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import GroupDetail from 'routes/GroupDetail'
 import MapExplorer from 'routes/MapExplorer'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import PostDetail from 'routes/PostDetail'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import VerifyEmail from './Signup/VerifyEmail'
 import FinishRegistration from './Signup/FinishRegistration'
 import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
@@ -63,13 +66,13 @@ export default class NonAuthLayout extends React.Component {
           </a>
         </div>
 
-        <Route path='/login' component={() =>
-          <div styleName='signupRow'>
-            <Login {...this.props} styleName='form' />
-          </div>
-        } />
-
         <Switch>
+          <Route path='/login' component={() =>
+            <div styleName='signupRow'>
+              <Login {...this.props} styleName='form' />
+            </div>
+          } />
+
           <Route exact path='/signup' component={() =>
             <div styleName='signupRow'>
               <Signup {...this.props} styleName='form' />
@@ -87,15 +90,25 @@ export default class NonAuthLayout extends React.Component {
               <FinishRegistration {...this.props} styleName='form' />
             </div>
           } />
-        </Switch>
 
-        <Route path='/reset-password' component={() =>
-          <div styleName='signupRow'>
-            <PasswordReset {...this.props} styleName='form' />
-          </div>
-        } />
+          <Route path='/reset-password' component={() =>
+            <div styleName='signupRow'>
+              <PasswordReset {...this.props} styleName='form' />
+            </div>
+          } />
 
-        <Switch>
+          <Route path='/oauth/login/:uid' render={(props) =>
+            <div styleName='signupRow'>
+              <OAuthLogin {...props} styleName='form' />
+            </div>
+          } />
+
+          <Route path='/oauth/consent/:uid' render={(props) =>
+            <div styleName='signupRow'>
+              <OAuthConsent {...props} styleName='form' />
+            </div>
+          } />
+
           <Redirect from={`/public/${OPTIONAL_POST_MATCH}`} exact to='/public/map' key='streamToMap' />
           <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
           <Route path={`/:context(public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
@@ -119,6 +132,12 @@ export default class NonAuthLayout extends React.Component {
             <Link tabIndex={-1} to='/signup'>
               Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
             </Link>
+          } />
+          <Route path='/oauth/login' render={(props) =>
+            <p>Use your Hylo account to access {getQuerystringParam('name', {}, props) || 'this application'}.</p>
+          } />
+          <Route path='/oauth/consent' render={(props) =>
+            <p>Make sure you trust {getQuerystringParam('name', {}, props) || 'this application'} with your information.</p>
           } />
           <Route path='/reset-password' component={() =>
             <div styleName='resetPasswordBottom'>

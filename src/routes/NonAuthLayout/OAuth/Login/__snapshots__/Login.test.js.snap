@@ -50,16 +50,6 @@ exports[`renders correctly 1`] = `
       onClick={[Function]}
     />
   </div>
-  <div
-    data-stylename="auth-buttons"
-  >
-    <FacebookButton
-      onClick={[Function]}
-    />
-    <GoogleButton
-      onClick={[Function]}
-    />
-  </div>
 </div>
 `;
 
@@ -113,16 +103,6 @@ exports[`renders correctly with mobile redirect 1`] = `
     <Button
       data-stylename="submit"
       label="Sign in"
-      onClick={[Function]}
-    />
-  </div>
-  <div
-    data-stylename="auth-buttons"
-  >
-    <FacebookButton
-      onClick={[Function]}
-    />
-    <GoogleButton
       onClick={[Function]}
     />
   </div>

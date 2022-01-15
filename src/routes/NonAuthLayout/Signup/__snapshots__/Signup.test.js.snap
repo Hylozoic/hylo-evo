@@ -52,7 +52,7 @@ exports[`Signup renders correctly 1`] = `
     <FacebookButton
       onClick={[Function]}
     />
-    <FacebookButton
+    <GoogleButton
       onClick={[Function]}
     />
   </div>
@@ -114,7 +114,7 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     <FacebookButton
       onClick={[Function]}
     />
-    <FacebookButton
+    <GoogleButton
       onClick={[Function]}
     />
   </div>

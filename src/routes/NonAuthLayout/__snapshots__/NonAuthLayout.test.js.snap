@@ -149,11 +149,11 @@ exports[`NonAuthLayout renders correctly 1`] = `
         />
       </a>
     </div>
-    <Route
-      component={[Function]}
-      path="/login"
-    />
     <Switch>
+      <Route
+        component={[Function]}
+        path="/login"
+      />
       <Route
         component={[Function]}
         exact={true}
@@ -169,12 +169,18 @@ exports[`NonAuthLayout renders correctly 1`] = `
         exact={true}
         path="/signup/finish"
       />
-    </Switch>
-    <Route
-      component={[Function]}
-      path="/reset-password"
-    />
-    <Switch>
+      <Route
+        component={[Function]}
+        path="/reset-password"
+      />
+      <Route
+        path="/oauth/login/:uid"
+        render={[Function]}
+      />
+      <Route
+        path="/oauth/consent/:uid"
+        render={[Function]}
+      />
       <Redirect
         exact={true}
         from="/public/:detail(post)?/:postId(\\\\d+)?/:action(new|edit)?"
@@ -269,6 +275,14 @@ exports[`NonAuthLayout renders correctly 1`] = `
       <Route
         component={[Function]}
         path="/login"
+      />
+      <Route
+        path="/oauth/login"
+        render={[Function]}
+      />
+      <Route
+        path="/oauth/consent"
+        render={[Function]}
       />
       <Route
         component={[Function]}

@@ -54,6 +54,8 @@ export function formatError (error, action) {
       'email not found': 'Email address not found',
       'invalid code': 'Invalid code, please try again',
       'invalid-link': 'Link expired, please try again',
+      // From oidc-provider
+      'invalid_request': 'Request expired, please start over',
       default: err
     }
 

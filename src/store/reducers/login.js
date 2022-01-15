@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { CHECK_LOGIN, LOGIN } from 'store/constants'
-import { SEND_EMAIL_VERIFICATION, SIGNUP, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store.js'
+import { SEND_EMAIL_VERIFICATION, SIGNUP, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store'
+import { OAUTH_CANCEL, OAUTH_CONFIRM } from 'routes/NonAuthLayout/OAuth/Consent/Consent.store'
 
 export default combineReducers({
   verifiedEmail: (state = null, { type, error, payload }) => {
@@ -22,7 +23,7 @@ export default combineReducers({
   },
 
   error: (state = null, { type, error, payload }) => {
-    if (error && (type === LOGIN || type === SIGNUP || type === VERIFY_EMAIL || type === SEND_EMAIL_VERIFICATION)) return payload.message
+    if (error && ([LOGIN, SIGNUP, VERIFY_EMAIL, SEND_EMAIL_VERIFICATION, OAUTH_CONFIRM, OAUTH_CANCEL].includes(type))) return payload.message
     if (!error) return ''
     return state
   }
