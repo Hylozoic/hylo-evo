@@ -9,8 +9,8 @@
     width: 100%;
   }
 
-  &.containerMobileApp {
-    height: 100vh
+  &.withoutNav {
+    height: 100vh;
   }
 }
 
@@ -168,7 +168,7 @@ button.toggleFeatureFiltersButton {
   box-shadow: $box-shadow-default;
   padding: 0 10px;
 
-  &.featureFiltersOpen {
+  &.open {
     color: rgba(255,255,255,1);
     background-color: $color-caribbean-green;
   }
@@ -205,13 +205,9 @@ button.toggleFeatureFiltersButton {
   position: absolute;
   top: 0px;
   display: none;
-
-  &.savedSearchesOpen {
-    display: block;
-  }
 }
 
-.savedSearchesButton, .savedSearchesButton-open {
+.savedSearchesButton {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -222,14 +218,13 @@ button.toggleFeatureFiltersButton {
   border-radius: 50px;
   transition: all .25s ease;
   cursor: pointer;
-}
-
-.savedSearchesButton-open, .savedSearchesButton:hover {
-  background-color: $color-caribbean-green;
-  color: white;
-  font-size: 20px;
-  border-radius: 50px;
-  cursor: pointer;
+  &.open, &:hover {
+    background-color: $color-caribbean-green;
+    color: white;
+    font-size: 20px;
+    border-radius: 50px;
+    cursor: pointer;  
+  }
 }
 
 .featureTypeFilters {
@@ -241,7 +236,7 @@ button.toggleFeatureFiltersButton {
   padding-bottom: 10px;
   box-shadow: $box-shadow-default;
 
-  &.featureFiltersOpen {
+  &.open {
     display: block;
   }
 
@@ -269,10 +264,16 @@ button.toggleFeatureFiltersButton {
 
   .featureTypeFilters {
     bottom: 106px;
+    &.withoutNav {
+      bottom: 106px - 50px; // height of top nav
+    }
   }
 
   button.toggleFeatureFiltersButton {
     bottom: 66px;
+    &.withoutNav {
+      bottom: 66px - 50px; // height of top nav
+    }
   }
 }
 
