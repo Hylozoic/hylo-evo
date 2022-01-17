@@ -1,28 +1,32 @@
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { debounce, get, groupBy, isEqual } from 'lodash'
+import cx from 'classnames'
 import bbox from '@turf/bbox'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, get, groupBy, isEqual } from 'lodash'
-import cx from 'classnames'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
+import { locationObjectToViewport } from 'util/geo'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
+import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
-import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
-import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import SwitchStyled from 'components/SwitchStyled'
-import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
-import { locationObjectToViewport } from 'util/geo'
 
-export default class MapExplorer extends React.Component {
+import styles from './MapExplorer.scss'
+import 'mapbox-gl/dist/mapbox-gl.css'
+
+export class UnwrappedMapExplorer extends React.Component {
   static defaultProps = {
     centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
@@ -34,6 +38,8 @@ export default class MapExplorer extends React.Component {
     topics: [],
     zoom: 0
   }
+
+  static contextType = LayoutFlagsContext
 
   constructor (props) {
     super(props)
@@ -63,6 +69,20 @@ export default class MapExplorer extends React.Component {
 
   componentDidMount () {
     this.refs = {}
+
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. push.
+    const { mobileSettingsLayout } = this.context
+    if (mobileSettingsLayout) {
+      this.props.history.block(tx => {
+        const messageData = {
+          url: tx.pathname
+        }
+        window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+        return false
+      })
+    }
+
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
@@ -348,7 +368,9 @@ export default class MapExplorer extends React.Component {
       viewport
     } = this.state
 
-    return <div styleName={cx('container', { 'noUser': !currentUser })}>
+    const { mobileSettingsLayout } = this.context
+
+    return <div styleName={cx('container', { 'noUser': !currentUser, containerMobileApp: mobileSettingsLayout })}>
       <div styleName='mapContainer'>
         <Map
           layers={[groupIconLayer, clusterLayer]}
@@ -406,4 +428,12 @@ export default class MapExplorer extends React.Component {
       </div>
     </div>
   }
+}
+
+export default function MapExplorer (props) {
+  const history = useHistory()
+
+  return (
+    <UnwrappedMapExplorer {...props} history={history} />
+  )
 }

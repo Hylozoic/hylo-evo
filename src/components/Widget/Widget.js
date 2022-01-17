@@ -178,7 +178,7 @@ const EditForm = ({ id, setIsEditingSettings, setIsMenuOpen, newSettings, update
           setIsEditingSettings(false)
           setIsMenuOpen(true)
         }}>Cancel</span>
-        <span styleName='save' onClick={() => { save(id, { settings: newSettings }); setIsEditingSettings(false) }}>Save</span>
+        <span styleName='save' onClick={() => { save(id, { settings: newSettings }); setIsEditingSettings(false); setIsMenuOpen(false) }}>Save</span>
       </div>
 
     </div>

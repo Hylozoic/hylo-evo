@@ -12,6 +12,9 @@ import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import './UserSettings.scss'
 
+// NOTE: This area is also rendered and shared with the mobile app.
+// When making changes here or in any of the settings tabs please
+// confirm accurate rendering and function in the related mobile area.
 export default class UserSettings extends Component {
   render () {
     const {
@@ -29,7 +32,11 @@ export default class UserSettings extends Component {
       allGroupsSettings,
       fetchPending,
       queryParams,
-      registerStripeAccount
+      registerStripeAccount,
+      fetchLocation,
+      deleteMe,
+      deactivateMe,
+      logout
     } = this.props
 
     const content = [
@@ -42,6 +49,7 @@ export default class UserSettings extends Component {
           loginWithService={loginWithService}
           unlinkAccount={unlinkAccount}
           setConfirm={setConfirm}
+          fetchLocation={fetchLocation}
           fetchPending={fetchPending} />
       },
       {
@@ -71,8 +79,11 @@ export default class UserSettings extends Component {
         path: '/settings/account',
         component: <AccountSettingsTab
           currentUser={currentUser}
-          updateUserSettings={updateUserSettings}
-          setConfirm={setConfirm} />
+          deactivateMe={deactivateMe}
+          deleteMe={deleteMe}
+          logout={logout}
+          setConfirm={setConfirm}
+          updateUserSettings={updateUserSettings} />
       },
       {
         name: 'Saved Searches',
@@ -105,7 +116,6 @@ export default class UserSettings extends Component {
       })
     }
 
-    return <FullPageModal
-      content={content} />
+    return <FullPageModal content={content} />
   }
 }

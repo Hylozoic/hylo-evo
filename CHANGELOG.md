@@ -4,7 +4,73 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.2.2] - 2022-01-13
+
+### Changed
+- Added needed mobile app layout modifications to MapExplorer
+- Added route interception to MapExplorer when in mobile app context
+- Added HTTPS to MapBox API URL
+
+## [3.2.1] - 2021-12-29
+
+### Changed
+- Cleanup display of post start and end times to be easier to read - don't uppercase text, better syntax.
+- If a post was "completed" before it ended show the end date as the date it was completed
+- Improve copy for comment box placeholder
+
+### Fixed
+- Fix issue where posts without a start/end time would always show as ENDED
+- Make sure you can see the dropdown to block a member
+
+## [3.2.0] - 2021-12-17
+
+### Added
+- New signup/registration flow that includes email verification, password confirmation and in general better security practices.
+- You can now deactivate or delete your account from the Settings -> Account page.
+- You can now use Markdown when editing the welcome message on the explore page for your group. This means links will work as well.
+
+### Changed
+- Attachments on posts now display in a list instead of a row so you can see any number of attachments. Previously you could see only the first 6 or so.
+
+### Fixed
+- Editing welcome message on explore page updates the widget instantly.
+
+## [3.1.11] - 2021-12-3
+### Fixed
+- Display of map icons on latest safari
+- Inviting people to public events
+
+## [3.1.10] - 2021-12-2
+### Added
+- Display timezone for datetimes in requests, offers and resources
+- You can now specify locations for people, groups and posts as coordinates
+- Scrolling will now show more suggested event invites
+
+### Fixed
+- Saving your individual or group settings could erase your location from the map
+- Hylo URLs in posts that dont have www at the front will correctly load in the same tab instead of opening a new one
+
+## [3.1.9] - 2021-11-2
+### Fixed
+- Only most recent 2 child comments appearing in a comment thread
+
+## [3.1.8] - 2021-11-1
+### Added
+- Add Layout Flags context to capture the `layoutFlags` query param and make it available in React context as `<layoutFlag>Layout`
+- Switch on/off site header and footer for `mobileSettingsLayout` 
+- Update and normalize Group Settings area UI, optimizing for small/mobile screens
+
+## [3.1.7] - 2021-10-26
+### Added
+- Contributor guide and code of conduct to the repo
+
+### Changed
+- Clicking on link to a Hylo post from a post loads in same tab not new one
+- Update user Affiliations settings tab to say Groups & Affiliations
+
+### Fixed
+- Resetting of unread counts when viewing a group and a topic
+- Scrolling list of people who have responded to an event
 
 ## [3.1.6] - 2021-08-31
 ### Added

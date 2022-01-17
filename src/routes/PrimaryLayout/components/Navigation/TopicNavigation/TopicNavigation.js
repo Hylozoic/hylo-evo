@@ -25,11 +25,12 @@ export default class TopicNavigation extends Component {
 
   onClickTopic = groupTopic => {
     const { clearBadge, clearFeedList } = this.props
-    const { id, topic } = groupTopic
+    const { current, groupTopicId, newPostCount } = groupTopic
 
-    if (id) {
-      this.currentTopic(topic.name) && clearFeedList()
-      groupTopic.newPostCount > 0 && clearBadge(id)
+    if (groupTopicId) {
+      // XXX: not sure exactly what this doing and if we need, we have not been doing this for a while and things seemed to work
+      current && clearFeedList()
+      newPostCount > 0 && clearBadge(groupTopicId)
     }
   }
 
@@ -74,6 +75,7 @@ export function TopicsList ({ topics, onClick, onClose }) {
         <NavLink className={badgeHoverStyles.parent}
           styleName='s.topicLink'
           to={topic.url}
+          onClick={() => onClick(topic)}
           activeClassName='active-topic-nav-link'
         >
           { topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' /> }

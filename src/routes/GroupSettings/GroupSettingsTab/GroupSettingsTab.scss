@@ -330,6 +330,11 @@ label {
   padding-bottom: 150px;
 }
 
+@media screen and (max-width: 425px) {
+  .save-button {
+    font-size: 12px;
+  }
+}
 
 @media screen and (max-width: 600px) {
   .saveChanges {

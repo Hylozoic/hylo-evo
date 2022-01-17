@@ -28,7 +28,7 @@ export function mapDispatchToProps (dispatch, props) {
       removeMember,
       setMembers
     }, dispatch),
-    fetchPeople: debounce(300, (...args) => dispatch(fetchPeople(...args)))
+    fetchPeople: debounce(300, (args) => dispatch(fetchPeople(args)))
   }
 }
 

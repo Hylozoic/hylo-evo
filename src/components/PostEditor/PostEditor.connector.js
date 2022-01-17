@@ -11,6 +11,7 @@ import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import { fetchLocation, ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import {
   CREATE_POST,
   CREATE_PROJECT,
@@ -105,7 +106,8 @@ export function mapStateToProps (state, props) {
     uploadImageAttachmentPending,
     location,
     querystringParams,
-    routeParams
+    routeParams,
+    ensureLocationIdIfCoordinate
   }
 }
 
@@ -121,7 +123,8 @@ export const mapDispatchToProps = (dispatch) => {
       clearLinkPreview,
       updatePost,
       createPost,
-      addAttachment
+      addAttachment,
+      fetchLocation
     }, dispatch)
   }
 }

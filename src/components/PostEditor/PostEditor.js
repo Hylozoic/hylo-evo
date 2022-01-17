@@ -25,7 +25,6 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
-
 export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
@@ -48,7 +47,9 @@ export default class PostEditor extends React.Component {
     post: PropTypes.shape(POST_PROP_TYPES),
     removeLinkPreview: PropTypes.func,
     titlePlaceholderForPostType: PropTypes.object,
-    updatePost: PropTypes.func
+    updatePost: PropTypes.func,
+    fetchLocation: PropTypes.func,
+    ensureLocationIdIfCoordinate: PropTypes.func
   }
 
   static defaultProps = {
@@ -327,11 +328,11 @@ export default class PostEditor extends React.Component {
     )
   }
 
-  save = () => {
+  save = async () => {
     const {
       editing, createPost, updatePost, onClose,
       goToPost, setAnnouncement, announcementSelected,
-      imageAttachments, fileAttachments
+      imageAttachments, fileAttachments, fetchLocation, ensureLocationIdIfCoordinate
     } = this.props
     const {
       id, type, title, groups, linkPreview, members,
@@ -344,9 +345,9 @@ export default class PostEditor extends React.Component {
     const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
     const imageUrls = imageAttachments && imageAttachments.map(attachment => attachment.url)
     const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
-
+    const actualLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
     const postToSave = {
-      id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId, isPublic
+      id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId: actualLocationId, isPublic
     }
     const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)

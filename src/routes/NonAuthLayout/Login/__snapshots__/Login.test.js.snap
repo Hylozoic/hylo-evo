@@ -10,62 +10,40 @@ exports[`renders correctly 1`] = `
     >
       Sign in to Hylo
     </h1>
-    <div
+    <TextInput
+      aria-label="email"
+      autoFocus={true}
       data-stylename="field"
-    >
-      <label
-        data-stylename="field-label"
-        htmlFor="email"
-      >
-        Your email address
-      </label>
-      <TextInput
-        aria-label="email"
-        data-stylename="authInput"
-        id="email"
-        inputRef={[Function]}
-        label="email"
-        name="email"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        type="text"
-      />
-    </div>
-    <div
+      id="email"
+      internalLabel="Email"
+      label="email"
+      name="email"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <TextInput
+      aria-label="password"
       data-stylename="field"
+      id="password"
+      internalLabel="Password"
+      label="password"
+      name="password"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="password"
+      value=""
+    />
+    <Link
+      data-stylename="forgot-password"
+      to="/reset-password"
     >
-      <label
-        data-stylename="field-label"
-        htmlFor="password"
-      >
-        Password
-      </label>
-      <TextInput
-        aria-label="password"
-        data-stylename="authInput"
-        id="password"
-        label="password"
-        name="password"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onEnter={[Function]}
-        onFocus={[Function]}
-        type="password"
-      />
-      <Link
+      <span
         data-stylename="forgot-password"
-        to="/reset-password"
       >
-        <span
-          data-stylename="forgot-password"
-        >
-          Forgot password?
-        </span>
-      </Link>
-    </div>
+        Forgot password?
+      </span>
+    </Link>
     <Button
       data-stylename="submit"
       label="Sign in"
@@ -98,62 +76,40 @@ exports[`renders correctly with mobile redirect 1`] = `
     >
       Sign in to Hylo
     </h1>
-    <div
+    <TextInput
+      aria-label="email"
+      autoFocus={true}
       data-stylename="field"
-    >
-      <label
-        data-stylename="field-label"
-        htmlFor="email"
-      >
-        Your email address
-      </label>
-      <TextInput
-        aria-label="email"
-        data-stylename="authInput"
-        id="email"
-        inputRef={[Function]}
-        label="email"
-        name="email"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        type="text"
-      />
-    </div>
-    <div
+      id="email"
+      internalLabel="Email"
+      label="email"
+      name="email"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <TextInput
+      aria-label="password"
       data-stylename="field"
+      id="password"
+      internalLabel="Password"
+      label="password"
+      name="password"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="password"
+      value=""
+    />
+    <Link
+      data-stylename="forgot-password"
+      to="/reset-password"
     >
-      <label
-        data-stylename="field-label"
-        htmlFor="password"
-      >
-        Password
-      </label>
-      <TextInput
-        aria-label="password"
-        data-stylename="authInput"
-        id="password"
-        label="password"
-        name="password"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onEnter={[Function]}
-        onFocus={[Function]}
-        type="password"
-      />
-      <Link
+      <span
         data-stylename="forgot-password"
-        to="/reset-password"
       >
-        <span
-          data-stylename="forgot-password"
-        >
-          Forgot password?
-        </span>
-      </Link>
-    </div>
+        Forgot password?
+      </span>
+    </Link>
     <Button
       data-stylename="submit"
       label="Sign in"

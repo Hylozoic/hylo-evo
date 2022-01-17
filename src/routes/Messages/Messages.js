@@ -45,7 +45,7 @@ export default class Messages extends React.Component {
 
   async componentDidMount () {
     await this.props.fetchThreads()
-    await this.props.fetchPeople()
+    await this.props.fetchPeople({})
     this.setState(() => ({ loading: false }))
     this.onThreadIdChange()
 

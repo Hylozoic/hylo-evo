@@ -1,9 +1,11 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
 import LocationInput from 'components/LocationInput'
-import SignupModalFooter from '../SignupModalFooter'
+import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
+import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
 import Icon from 'components/Icon'
-import styles from '../Signup.scss'
+
+import styles from '../WelcomeWizard.scss'
 
 export default class AddLocation extends Component {
   constructor () {
@@ -35,9 +37,12 @@ export default class AddLocation extends Component {
     })
   }
 
-  submit = () => {
+  submit = async () => {
     const { locationId, location } = this.state
-    const changes = Object.assign({ location, locationId }, { settings: { signupInProgress: false } })
+    const { fetchLocation } = this.props
+
+    const coordLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
+    const changes = Object.assign({ location, locationId: coordLocationId }, { settings: { signupInProgress: false } })
 
     this.props.updateUserSettings(changes)
       .then(() => {
@@ -52,8 +57,8 @@ export default class AddLocation extends Component {
 
   render () {
     const inputClass = cx({
-      [styles['signup-input']]: true,
-      [styles['signup-padding']]: true,
+      [styles['input']]: true,
+      [styles['padding']]: true,
       [styles['large-input-text']]: true,
       [styles['gray-bottom-border']]: true
     })
@@ -86,7 +91,7 @@ export default class AddLocation extends Component {
           <p>Add your location to see more relevant content, and find people and projects around you.</p>
         </div>
         <div>
-          <SignupModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
+          <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
         </div>
       </div>
     </div>

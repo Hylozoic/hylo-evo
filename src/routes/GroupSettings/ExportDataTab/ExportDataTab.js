@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { object } from 'prop-types'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 import fetch from 'isomorphic-fetch'
 import { getHost } from 'store/middleware/apiMiddleware'
+import './ExportDataTab.scss'
 
-export default function ExportDataTabFn (props) {
+export default function ExportDataTab (props) {
   const [clicked, setClicked] = useState(false)
   const [status, setStatus] = useState(null)
   const group = props.group
@@ -22,10 +22,11 @@ export default function ExportDataTabFn (props) {
   }
 
   if (!group) return <Loading />
+
   return (
     <div>
-      <h3>Export Data</h3>
-      <p>This function exports all member data for this group as a CSV file for import into other software.</p>
+      <div styleName='title'>Export Data</div>
+      <p styleName='help'>This function exports all member data for this group as a CSV file for import into other software.</p>
       {status && <p>{status}</p>}
       <Button disabled={clicked} label='Export Members' color='green' onClick={handleClick} />
     </div>)
@@ -37,8 +38,4 @@ function triggerMemberExport (groupId, success, failure) {
       let { status } = res
       status === 200 ? success() : failure()
     })
-}
-
-ExportDataTabFn.propTypes = {
-  group: object
 }

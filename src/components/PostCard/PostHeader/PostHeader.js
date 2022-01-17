@@ -9,31 +9,11 @@ import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
 import { personUrl, topicUrl } from 'util/navigation'
+import { formatDatePair, isDateInTheFuture } from 'util/index'
 import { humanDate } from 'hylo-utils/text'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
-
-const formatStartDate = (startTime) => {
-  const current = moment()
-  let start = ''
-  if (moment(startTime).isAfter(current)) {
-    start = moment(startTime).format('MMM D YYYY')
-  }
-  return start
-}
-
-const formatEndDate = (endTime) => {
-  const current = moment()
-  let end = ''
-  const endFormatted = moment(endTime).format('MMM D YYYY')
-  if (moment(endTime).isAfter(current)) {
-    end = `ends ${endFormatted}`
-  } else if (current.isAfter(moment(endTime))) {
-    end = `ended ${endFormatted}`
-  }
-  return end
-}
 
 export default class PostHeader extends PureComponent {
   static defaultProps = {
@@ -91,15 +71,31 @@ export default class PostHeader extends PureComponent {
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
     const canHaveTimes = typesWithTimes.includes(type)
+
+    // If it was completed/fulfilled before it ended, then use that as the end datetime
+    let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
+
+    const { from, to } = formatDatePair(startTime, actualEndTime, true)
+    const startString = fulfilledAt ? false
+      : isDateInTheFuture(startTime) ? `Starts: ${from}`
+        : isDateInTheFuture(endTime) ? `Started: ${from}`
+          : false
+
+    let endString = false
+    if (fulfilledAt && fulfilledAt <= endTime) {
+      endString = `Completed: ${to}`
+    } else {
+      endString = endTime !== moment() && isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+    }
+
     let timeWindow = ''
-    const startDate = startTime && formatStartDate(startTime)
-    const endDate = endTime && formatEndDate(endTime)
-    if (startDate && endDate) {
-      timeWindow = `${type} starts ${startDate} and ${endDate}`
-    } else if (endDate) {
-      timeWindow = `${type} ${endDate}`
-    } else if (startDate) {
-      timeWindow = `${type} starts ${startDate}`
+
+    if (startString && endString) {
+      timeWindow = `${startString} / ${endString}`
+    } else if (endString) {
+      timeWindow = endString
+    } else if (startString) {
+      timeWindow = startString
     }
 
     return <div styleName={cx('header', { constrained })} className={className}>

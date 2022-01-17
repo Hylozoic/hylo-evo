@@ -4,18 +4,19 @@ import getLoginError from 'store/selectors/getLoginError'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import mobileRedirect from 'util/mobileRedirect'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import { signup } from './Signup.store'
+import { sendEmailVerification, signup } from './Signup.store'
 import { loginWithService } from '../Login/Login.store'
 
 export function mapStateToProps (state, props) {
   return {
-    error: getLoginError(state),
-    returnToURL: getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state),
-    downloadAppUrl: mobileRedirect()
+    downloadAppUrl: mobileRedirect(),
+    error: getLoginError(state) || getQuerystringParam('error', state, props),
+    returnToURL: getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state)
   }
 }
 
 export const mapDispatchToProps = {
+  sendEmailVerification,
   signup,
   resetReturnToURL,
   loginWithService,
@@ -30,6 +31,12 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     redirectOnSignIn: (defaultPath) => {
       dispatchProps.resetReturnToURL()
       dispatchProps.push(stateProps.returnToURL || defaultPath)
+    },
+    sendEmailVerification: (email) => {
+      dispatchProps.sendEmailVerification(email).then(
+        () => { dispatchProps.push('/signup/verify-email?email=' + encodeURIComponent(email)) },
+        (e) => { /* Error handled by login reducer but we need this here as a catch */ }
+      )
     }
   }
 }

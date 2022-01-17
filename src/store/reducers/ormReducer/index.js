@@ -466,6 +466,7 @@ export default function ormReducer (state = {}, action) {
 
     case UPDATE_WIDGET: {
       clearCacheFor(Group, payload.data.updateWidget.group.id)
+      break
     }
 
     case USE_INVITATION:

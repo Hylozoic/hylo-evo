@@ -47,7 +47,7 @@ exports[`AddLocation renders correctly 1`] = `
       </p>
     </div>
     <div>
-      <SignupModalFooter
+      <WelcomeWizardModalFooter
         continueText="Next: Welcome to Hylo!"
         previous={[Function]}
         submit={[Function]}

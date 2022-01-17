@@ -1,8 +1,35 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "3.1.6",
+  "version": "3.2.2",
   "private": true,
+  "engines": {
+    "node": "15.5.0",
+    "yarn": "^1.2.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all",
+    "not chrome < 51",
+    "not safari < 10"
+  ],
+  "standard": {
+    "parser": "babel-eslint",
+    "global": [
+      "afterAll",
+      "afterEach",
+      "beforeAll",
+      "beforeEach",
+      "describe",
+      "expect",
+      "it",
+      "jest",
+      "test"
+    ]
+  },
+  "proxy": "localhost:3001",
   "scripts": {
     "dev": "yarn start",
     "start": "rm -rf ./node_modules/.cache/babel-loader && node --preserve-symlinks scripts/start.js",
@@ -23,12 +50,12 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "@deck.gl/core": "^8.2",
-    "@deck.gl/geo-layers": "^8.2",
-    "@deck.gl/layers": "^8.2",
-    "@deck.gl/mesh-layers": "^8.2",
-    "@deck.gl/react": "^8.2",
-    "@math.gl/web-mercator": "^3.2.2",
+    "@deck.gl/core": "^8.6",
+    "@deck.gl/geo-layers": "^8.6",
+    "@deck.gl/layers": "^8.6",
+    "@deck.gl/mesh-layers": "^8.6",
+    "@deck.gl/react": "^8.6",
+    "@math.gl/web-mercator": "^3.5",
     "@storybook/addon-actions": "^v5.0.10",
     "@storybook/addon-info": "^5.0.10",
     "@storybook/addon-links": "^v5.0.10",
@@ -60,6 +87,7 @@
     "babel-preset-react-app": "^10.0.0",
     "bfj": "6.1.1",
     "bootstrap": "4.0.0-alpha.6",
+    "browserslist": "^4.18.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "chalk": "2.3.0",
     "cheerio": "^1.0.0-rc.5",
@@ -69,6 +97,7 @@
     "connect-history-api-fallback": "1.5.0",
     "connected-react-router": "^6.8.0",
     "cookie-parser": "^1.4.3",
+    "coordinate-parser": "^1.0.7",
     "cross-spawn": "5.1.0",
     "css-loader": "1.0.0",
     "css-modules-require-hook": "4.2.1",
@@ -110,7 +139,7 @@
     "history": "^4.9.0",
     "html-webpack-plugin": "^4.5.1",
     "http-proxy-middleware": "0.17.4",
-    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#2ff4926",
+    "hylo-utils": "https://github.com/Hylozoic/hylo-utils#2c31ec",
     "identity-obj-proxy": "3.0.0",
     "immutable": "^3.8.1",
     "inflection": "^1.12.0",
@@ -155,7 +184,10 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-autocomplete": "^1.7.2",
+    "react-code-input": "^3.10.1",
+    "react-cookie": "^4.1.1",
     "react-cookie-consent": "^6.2.3",
+    "react-cool-inview": "^2.0.8",
     "react-copy-to-clipboard": "^5.0.1",
     "react-datetime": "^3.0.0",
     "react-dev-utils": "^8.0.0",
@@ -166,7 +198,7 @@
     "react-flip-move": "^3.0.4",
     "react-intercom": "^1.0.15",
     "react-joyride": "^2.3.0",
-    "react-map-gl": "^5.2.3",
+    "react-map-gl": "^6",
     "react-particles-js": "^2.1.0",
     "react-redux": "^7.0.0",
     "react-resize-detector": "^6.6.5",
@@ -218,32 +250,7 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
-    "standard": "12.0.1",
-    "husky": "^7.0.0"
-  },
-  "engines": {
-    "node": "15.5.0",
-    "yarn": "^1.2.0"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "standard": {
-    "parser": "babel-eslint",
-    "global": [
-      "afterAll",
-      "afterEach",
-      "beforeAll",
-      "beforeEach",
-      "describe",
-      "expect",
-      "it",
-      "jest",
-      "test"
-    ]
-  },
-  "proxy": "localhost:3001"
+    "husky": "^7.0.0",
+    "standard": "12.0.1"
+  }
 }
