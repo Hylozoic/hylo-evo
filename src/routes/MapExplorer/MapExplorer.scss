@@ -221,9 +221,17 @@ button.toggleFeatureFiltersButton {
   &.open, &:hover {
     background-color: $color-caribbean-green;
     color: white;
-    font-size: 20px;
-    border-radius: 50px;
     cursor: pointer;  
+  }
+  // Necessary to keep simulated hover event on touch devices
+  // from sticking (Saved Search button was remaining
+  // highlighted after closed)
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: inherit;
+      color: inherit;
+      cursor: inherit;
+    }
   }
 }
 
@@ -254,7 +262,6 @@ button.toggleFeatureFiltersButton {
     margin-left: 10px;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   .toggleDrawerButton.drawerOpen {

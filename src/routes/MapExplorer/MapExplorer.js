@@ -9,6 +9,7 @@ import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FlyToInterpolator } from 'react-map-gl'
+import isMobile from 'ismobilejs'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
 import { locationObjectToViewport } from 'util/geo'
@@ -70,14 +71,22 @@ export class UnwrappedMapExplorer extends React.Component {
   componentDidMount () {
     this.refs = {}
 
+    // Drawer hidden by default on mobile devices
+    if (isMobile) {
+      this.setState({ hideDrawer: true })
+    }
+
     // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. push.
+    // e.g. react router / history push
     const { mobileSettingsLayout } = this.context
     if (mobileSettingsLayout) {
       this.props.history.block(tx => {
-        const messageData = {
-          url: tx.pathname
-        }
+        const path = tx.pathname
+        // when in embedded view of map allow web navigation within map
+        // the keeps saved search retrieval from reseting group context in the app
+        if (path.match(/\/map$/)) return true
+        // url will be deprecated for path
+        const messageData = { path, url: path }
         window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
         return false
       })
