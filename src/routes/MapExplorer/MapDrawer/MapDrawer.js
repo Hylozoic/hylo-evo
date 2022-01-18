@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -27,6 +28,8 @@ function MapDrawer (props) {
 
   const searchText = filters.search
 
+  const { mobileSettingsLayout } = useLayoutFlags()
+  const withoutNav = mobileSettingsLayout
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
 
@@ -63,7 +66,7 @@ function MapDrawer (props) {
   const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
 
   return (
-    <div styleName={cx('styles.container', { 'styles.noUser': !currentUser })}>
+    <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
       <input
         styleName='searchBox'
         type='text'
