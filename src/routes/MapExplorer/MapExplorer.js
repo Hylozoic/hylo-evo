@@ -1,30 +1,33 @@
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { debounce, get, groupBy, isEqual } from 'lodash'
+import cx from 'classnames'
 import bbox from '@turf/bbox'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, get, groupBy, isEqual } from 'lodash'
-import cx from 'classnames'
+import isMobile from 'ismobilejs'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
+import { locationObjectToViewport } from 'util/geo'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
+import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
-import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
-import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import SwitchStyled from 'components/SwitchStyled'
-import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
-import { locationObjectToViewport } from 'util/geo'
 
+import styles from './MapExplorer.scss'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
-export default class MapExplorer extends React.Component {
+export class UnwrappedMapExplorer extends React.Component {
   static defaultProps = {
     centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
@@ -36,6 +39,8 @@ export default class MapExplorer extends React.Component {
     topics: [],
     zoom: 0
   }
+
+  static contextType = LayoutFlagsContext
 
   constructor (props) {
     super(props)
@@ -65,6 +70,28 @@ export default class MapExplorer extends React.Component {
 
   componentDidMount () {
     this.refs = {}
+
+    // Drawer hidden by default on mobile devices
+    if (isMobile) {
+      this.setState({ hideDrawer: true })
+    }
+
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. react router / history push
+    const { mobileSettingsLayout } = this.context
+    if (mobileSettingsLayout) {
+      this.props.history.block(tx => {
+        const path = tx.pathname
+        // when in embedded view of map allow web navigation within map
+        // the keeps saved search retrieval from reseting group context in the app
+        if (path.match(/\/map$/)) return true
+        // url will be deprecated for path
+        const messageData = { path, url: path }
+        window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+        return false
+      })
+    }
+
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
@@ -350,7 +377,10 @@ export default class MapExplorer extends React.Component {
       viewport
     } = this.state
 
-    return <div styleName={cx('container', { 'noUser': !currentUser })}>
+    const { mobileSettingsLayout } = this.context
+    const withoutNav = mobileSettingsLayout
+
+    return <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
       <div styleName='mapContainer'>
         <Map
           layers={[groupIconLayer, clusterLayer]}
@@ -365,7 +395,7 @@ export default class MapExplorer extends React.Component {
         <Icon name='Hamburger' className={styles.openDrawer} />
         <Icon name='Ex' className={styles.closeDrawer} />
       </button>
-      { !hideDrawer ? (
+      {!hideDrawer && (
         <MapDrawer
           currentUser={currentUser}
           features={features}
@@ -375,37 +405,62 @@ export default class MapExplorer extends React.Component {
           pending={pending}
           routeParams={routeParams}
           topics={topics}
-        />)
-        : '' }
+        />
+      )}
       <div styleName={cx('searchAutocomplete')}>
         <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
-      <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
+      <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/6</strong>
       </button>
-      { currentUser ? <Icon name='Heart' styleName={`savedSearchesButton${showSavedSearches ? '-open' : ''}`} onClick={this.toggleSavedSearches} /> : '' }
-      { currentUser && showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
-      <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
+      {currentUser && <>
+        <Icon
+          name='Heart'
+          onClick={this.toggleSavedSearches}
+          styleName={cx('savedSearchesButton', { open: showSavedSearches })}
+        />
+        {showSavedSearches && (
+          <SavedSearches
+            deleteSearch={deleteSearch}
+            filters={filters}
+            saveSearch={this.saveSearch}
+            searches={searches}
+            toggle={this.toggleSavedSearches}
+            viewSavedSearch={this.handleViewSavedSearch}
+          />
+        )}
+      </>}
+      <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event', 'project'].map(featureType => {
           let color = FEATURE_TYPES[featureType].primaryColor
 
-          return <div
-            key={featureType}
-            ref={this.refs[featureType]}
-            styleName='featureTypeSwitch'
-          >
-            <SwitchStyled
-              backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
-              name={featureType}
-              checked={filters.featureTypes[featureType]}
-              onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
-            />
-            <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
-          </div>
+          return (
+            <div
+              key={featureType}
+              ref={this.refs[featureType]}
+              styleName='featureTypeSwitch'
+            >
+              <SwitchStyled
+                backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
+                name={featureType}
+                checked={filters.featureTypes[featureType]}
+                onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
+              />
+              <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
+            </div>
+          )
         })}
         <div styleName={cx('pointer')} />
       </div>
     </div>
   }
+}
+
+export default function MapExplorer (props) {
+  const history = useHistory()
+
+  return (
+    <UnwrappedMapExplorer {...props} history={history} />
+  )
 }

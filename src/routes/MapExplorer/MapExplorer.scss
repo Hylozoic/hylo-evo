@@ -8,6 +8,10 @@
     height: 100%;
     width: 100%;
   }
+
+  &.withoutNav {
+    height: 100vh;
+  }
 }
 
 .mapContainer {
@@ -164,7 +168,7 @@ button.toggleFeatureFiltersButton {
   box-shadow: $box-shadow-default;
   padding: 0 10px;
 
-  &.featureFiltersOpen {
+  &.open {
     color: rgba(255,255,255,1);
     background-color: $color-caribbean-green;
   }
@@ -201,13 +205,9 @@ button.toggleFeatureFiltersButton {
   position: absolute;
   top: 0px;
   display: none;
-
-  &.savedSearchesOpen {
-    display: block;
-  }
 }
 
-.savedSearchesButton, .savedSearchesButton-open {
+.savedSearchesButton {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -218,14 +218,21 @@ button.toggleFeatureFiltersButton {
   border-radius: 50px;
   transition: all .25s ease;
   cursor: pointer;
-}
-
-.savedSearchesButton-open, .savedSearchesButton:hover {
-  background-color: $color-caribbean-green;
-  color: white;
-  font-size: 20px;
-  border-radius: 50px;
-  cursor: pointer;
+  &.open, &:hover {
+    background-color: $color-caribbean-green;
+    color: white;
+    cursor: pointer;  
+  }
+  // Necessary to keep simulated hover event on touch devices
+  // from sticking (Saved Search button was remaining
+  // highlighted after closed)
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: inherit;
+      color: inherit;
+      cursor: inherit;
+    }
+  }
 }
 
 .featureTypeFilters {
@@ -237,7 +244,7 @@ button.toggleFeatureFiltersButton {
   padding-bottom: 10px;
   box-shadow: $box-shadow-default;
 
-  &.featureFiltersOpen {
+  &.open {
     display: block;
   }
 
@@ -256,7 +263,6 @@ button.toggleFeatureFiltersButton {
   }
 }
 
-
 @media screen and (max-width: 600px) {
   .toggleDrawerButton.drawerOpen {
     left: 10px;
@@ -265,10 +271,16 @@ button.toggleFeatureFiltersButton {
 
   .featureTypeFilters {
     bottom: 106px;
+    &.withoutNav {
+      bottom: 106px - 50px; // height of top nav
+    }
   }
 
   button.toggleFeatureFiltersButton {
     bottom: 66px;
+    &.withoutNav {
+      bottom: 66px - 50px; // height of top nav
+    }
   }
 }
 

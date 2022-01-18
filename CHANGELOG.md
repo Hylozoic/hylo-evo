@@ -4,6 +4,26 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.4] - 2022-01-17
+
+## Changed
+- Hide MapExplorer drawer by default on mobile browsers and in Hylo App embed
+- Allow MapExplorer Saved Searches navigation to happen when in Hylo App embed
+- Fix hover state for MapExplorer on touch-based devices
+
+## [3.2.3] - 2022-01-14
+
+## Fixed 
+- Map styling fixes related to nav-less layout used in the embedded Hylo App WebView
+- Changes login text entry field to "email" from "text" to keep auto-capitalization off in some browsers
+
+## [3.2.2] - 2022-01-13
+
+### Changed
+- Added needed mobile app layout modifications to MapExplorer
+- Added route interception to MapExplorer when in mobile app context
+- Added HTTPS to MapBox API URL
+
 ## [3.2.1] - 2021-12-29
 
 ### Changed
