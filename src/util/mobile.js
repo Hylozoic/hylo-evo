@@ -4,8 +4,7 @@ export const APP_STORE_APP_URL = 'https://appsto.re/us/0gcV7.i'
 export const GOOGLE_PLAY_APP_URL = 'https://play.google.com/store/apps/details?id=com.hylo.hyloandroid'
 
 export function mobileRedirect () {
-  const inviteApp = isMobileDevice()
-  if (inviteApp) {
+  if (isMobileDevice()) {
     if (isMobile.apple.device) {
       return APP_STORE_APP_URL
     } else if (isMobile.android.device) {
