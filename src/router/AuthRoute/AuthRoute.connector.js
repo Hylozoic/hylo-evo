@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import mobileRedirect from 'util/mobileRedirect'
+import { mobileRedirect } from 'util/mobile'
 import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
 import getMe from 'store/selectors/getMe'
 import {
