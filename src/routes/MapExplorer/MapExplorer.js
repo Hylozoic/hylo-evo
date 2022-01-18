@@ -9,7 +9,7 @@ import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FlyToInterpolator } from 'react-map-gl'
-import isMobile from 'ismobilejs'
+import { isMobileDevice } from 'util/mobile'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
 import { locationObjectToViewport } from 'util/geo'
@@ -72,7 +72,7 @@ export class UnwrappedMapExplorer extends React.Component {
     this.refs = {}
 
     // Drawer hidden by default on mobile devices
-    if (isMobile) {
+    if (isMobileDevice()) {
       this.setState({ hideDrawer: true })
     }
 

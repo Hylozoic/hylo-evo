@@ -1,9 +1,9 @@
 import cx from 'classnames'
-import isMobile from 'ismobilejs'
 import { get, pick } from 'lodash/fp'
 import React, { Component } from 'react'
 import { IntercomAPI } from 'react-intercom'
 import { Link } from 'react-router-dom'
+import { isMobileDevice, downloadApp } from 'util/mobile'
 import Badge from 'components/Badge'
 import BadgedIcon from 'components/BadgedIcon'
 import Dropdown from 'components/Dropdown'
@@ -17,29 +17,8 @@ import NotificationsDropdown from './NotificationsDropdown'
 
 import './TopNav.scss'
 
-function isMobileDevice () {
-  return (
-    isMobile.apple.phone ||
-    isMobile.apple.ipod ||
-    isMobile.android.phone ||
-    isMobile.seven_inch
-  )
-}
-
 function showIntercom () {
   IntercomAPI('show')
-}
-
-function downloadApp () {
-  if (isMobileDevice()) {
-    if (isMobile.apple.device) {
-      window.open('https://appsto.re/us/0gcV7.i', '_blank')
-    } else if (isMobile.android.device) {
-      window.open('https://play.google.com/store/apps/details?id=com.hylo.hyloandroid', '_blank')
-    } else {
-      return false
-    }
-  }
 }
 
 export default class TopNav extends Component {
