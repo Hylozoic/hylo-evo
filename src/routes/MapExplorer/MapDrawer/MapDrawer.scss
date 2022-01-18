@@ -187,13 +187,16 @@
   .container {
     /* Drawer now covers the map instead of sitting next to it */
     position: fixed;
-    right: 0px;
     top: 55px;
+    right: 0px;
     height: calc(100vh - 55px);
-
     width: calc(100% - 64px);
     min-width: auto;
     padding-bottom: 100px;
+    &.withoutNav {
+      top: 0;
+      height: calc(100vh);
+    }
   }
 }
 
