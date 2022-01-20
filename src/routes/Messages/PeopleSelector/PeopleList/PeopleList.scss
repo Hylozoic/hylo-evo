@@ -1,5 +1,7 @@
 .people-list-container {
   composes: messages-section from '../../MessageSection/MessageSection.scss';
+  display: flex;
+  flex-direction: column;
   flex: 1;
   position: absolute;
   top: 44px;
@@ -9,16 +11,10 @@
   box-shadow: 0px 12px 15px rgba(42, 64, 89, 0.15);
   border-radius: 5px;
   padding: 0;
-  display: flex;
-  flex-direction: column;
 }
 
 .people-list {
   padding: 0;
-
-  li:hover {
-    background-color: $color-rhino-10;
-  }
 }
 
 @media screen and (max-width: 650px) {
@@ -28,5 +24,27 @@
     top: 112px;
     width: 100%;
     transform: translateY(5px);
+  }
+
+  /* XXX: Hack to make sure people selector doesn't look weird on mobile when right-column slides in and out
+   *      Needed because we set it to position: fixed above and so it otherwise would hang in place.
+   *      Global styles helpful here!
+   */
+  :global .right-column-enter, :global .right-column-appear {
+    .people-list-container {
+      opacity: 0;
+    }
+  }
+
+  :global .right-column-enter-done {
+    .people-list-container {
+      opacity: 1;
+    }
+  }
+
+  :global .right-column-exit {
+    .people-list-container {
+      opacity: 0;
+    }
   }
 }

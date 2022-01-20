@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { isEmpty, filter, get, map } from 'lodash/fp'
 import Icon from 'components/Icon'
@@ -52,16 +53,16 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { pending, toggleMessages } = this.props
+    const { pending } = this.props
     const otherParticipants = this.getOthers(this.props)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
     const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
     const showArrow = !!andOthers
 
     return <div styleName='header' id='thread-header'>
-      <div styleName='close-thread' onClick={toggleMessages}>
+      <Link to='/messages' styleName='close-thread'>
         <Icon name='ArrowForward' />
-      </div>
+      </Link>
       <div styleName='header-text'>
         {!pending && <React.Fragment>
           {displayNames}

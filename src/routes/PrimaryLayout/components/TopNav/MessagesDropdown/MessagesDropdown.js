@@ -1,3 +1,4 @@
+import isMobile from 'ismobilejs'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
@@ -68,7 +69,7 @@ export default class MessagesDropdown extends Component {
     if (pending) {
       body = <LoadingItems />
     } else if (isEmpty(threads)) {
-      body = <NoItems message="You don't have any conversations yet" />
+      body = <NoItems message="You don't have any messages yet" />
     } else {
       body = <div styleName='threads'>
         {threads.map(thread =>
@@ -83,7 +84,7 @@ export default class MessagesDropdown extends Component {
     }
 
     const firstThreadUrl = !isEmpty(threads)
-      ? messageThreadUrl(threads[0].id) + '?inbox=1'
+      ? isMobile.any ? '/messages' : messageThreadUrl(threads[0].id)
       : newMessageUrl()
 
     return <TopNavDropdown

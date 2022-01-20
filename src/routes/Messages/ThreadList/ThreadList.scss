@@ -144,6 +144,10 @@ a.new-message {
   margin: 0;
   border-bottom: $light-border;
 
+  &:hover, &.active {
+    background-color: $color-rhino-10;
+  }
+
   a {
     display: flex;
     padding: $thread-padding;

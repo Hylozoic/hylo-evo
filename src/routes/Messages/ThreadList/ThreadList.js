@@ -28,8 +28,6 @@ export default class ThreadList extends Component {
       threads,
       threadSearch,
       onScrollBottom,
-      messagesOpen,
-      toggleMessages,
       match: { params: { messageThreadId } },
       className
     } = this.props
@@ -43,9 +41,11 @@ export default class ThreadList extends Component {
           <TextInput
             placeholder='Search for people...'
             value={threadSearch}
-            onChange={this.onSearchChange} />
+            onChange={this.onSearchChange}
+            onFocus={this.props.onFocus}
+          />
         </div>
-        <Link styleName='new-message' to='/messages/new' onClick={toggleMessages}>
+        <Link styleName='new-message' to='/messages/new'>
           <span>New</span>
           <Icon name='Messages' styleName='messages-icon' />
         </Link>
@@ -55,7 +55,6 @@ export default class ThreadList extends Component {
           const messages = itemsToArray(toRefArray(t.messages))
           const isUnread = t.unreadCount > 0
           const latestMessage = orderBy(m => Date.parse(m.createdAt), 'desc', messages)[0]
-          console.log(isUnread)
 
           return <ThreadListItem
             id={t.id}
@@ -65,16 +64,14 @@ export default class ThreadList extends Component {
             currentUser={currentUser}
             unreadCount={t.unreadCount}
             key={`thread-li-${t.id}`}
-            messagesOpen={messagesOpen}
-            toggleMessages={toggleMessages}
             isUnread={isUnread} />
         })}
         {threadsPending &&
           <Loading type='bottom' />}
         {!threadsPending && isEmpty(threads) && !threadSearch &&
-          <div styleName='no-conversations'>You have no active conversations</div>}
+          <div styleName='no-conversations'>You have no active messages</div>}
         {!threadsPending && isEmpty(threads) && threadSearch &&
-          <div styleName='no-conversations'>No conversations found</div>}
+          <div styleName='no-conversations'>No messages found</div>}
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}
@@ -95,7 +92,7 @@ ThreadList.propTypes = {
 }
 
 export function ThreadListItem ({
-  currentUser, active, id, thread, latestMessage, unreadCount, toggleMessages, isUnread
+  currentUser, active, id, thread, latestMessage, unreadCount, isUnread
 }) {
   const maxTextLength = 54
   let text = ''
@@ -109,8 +106,8 @@ export function ThreadListItem ({
 
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
-  return <li styleName={cx(isUnread ? 'unread-list-item' : 'list-item')}>
-    <Link to={`/messages/${id}`} onClick={toggleMessages}>
+  return <li styleName={cx({ 'list-item': true, 'unread-list-item': isUnread, 'active': active })}>
+    <Link to={`/messages/${id}`}>
       {active && <div styleName='active-thread' />}
       <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>
@@ -132,6 +129,7 @@ ThreadListItem.propTypes = {
   latestMessage: PropTypes.shape({
     text: PropTypes.string.isRequired
   }),
+  onFocus: PropTypes.func,
   thread: PropTypes.object,
   unreadCount: PropTypes.number
 }

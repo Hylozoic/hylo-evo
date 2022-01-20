@@ -35,7 +35,7 @@ $min-height: 56px;
 
 button.send-button {
   border-radius: 5px;
-  background-color: rgba(0, 116, 223, 1.000);
+  background-color: rgba(116, 116, 116, 1.000);
   border: none;
   outline: none;
   min-width: 30px;
@@ -59,6 +59,16 @@ button.send-button {
     width: 30px;
     height: 30px;
     color: rgba(255, 255, 255, 1);
+  }
+}
+
+.has-focus {
+  .send-button {
+    background-color: rgba(0, 116, 223, 1.000);
+  }
+
+  .message-textarea {
+    caret-color: blue;
   }
 }
 

@@ -235,11 +235,28 @@ $messages-inner-padding: $space-6x;
     height: 100%;
     position: fixed;
     top: 0;
-    left: 100%;
     z-index: 10;
-    transition: all .3s ease;
     background-color: rgba(255,255,255,1);
   }
+
+  :global .right-column-enter, :global .right-column-appear {
+    right: -100%;
+  }
+
+  :global .right-column-enter.right-column-enter-active, :global .right-column-appear.right-column-appear-active {
+    right: 0;
+    transition: right 300ms ease-out;
+  }
+
+  :global .right-column-exit {
+    right: 0;
+  }
+
+  :global .right-column-exit.right-column-exit-active {
+    right: -100%;
+    transition: right 200ms ease-out;
+  }
+
 
   .messages-title {
     font-size: 14px;
@@ -257,14 +274,6 @@ $messages-inner-padding: $space-6x;
       top: -3px;
       margin-right: 5px;
     }
-  }
-
-  .messagesOpen .right-column {
-    left: 0%;
-  }
-
-  .right-column .header a {
-    display: none;
   }
 
   .close-messages {
