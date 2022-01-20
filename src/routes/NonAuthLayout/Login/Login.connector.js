@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import getLoginError from 'store/selectors/getLoginError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import mobileRedirect from 'util/mobileRedirect'
+import { mobileRedirect } from 'util/mobile'
 import { checkLogin, login, loginWithService } from './Login.store'
 
 export function mapStateToProps (state, props) {

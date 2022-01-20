@@ -1,4 +1,4 @@
-import mobileRedirect from './mobileRedirect'
+import { mobileRedirect } from './mobile'
 
 jest.mock('ismobilejs', () => ({
   apple: {
