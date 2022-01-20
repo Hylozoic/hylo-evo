@@ -23,7 +23,7 @@
   }
 }
 
-:global .welcome-modal-leave {
+:global .welcome-modal-exit {
   .welcome-modal-background {
     opacity: 0;
   }
@@ -34,7 +34,7 @@
   }
 }
 
-:global .welcome-modal-leave.welcome-modal-leave-active {
+:global .welcome-modal-exit.welcome-modal-exit-active {
   .welcome-modal-background {
     opacity: 0;
     transition: opacity 300ms ease-out;
