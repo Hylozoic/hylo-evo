@@ -1,8 +1,15 @@
-import postFieldsFragment from '../fragments/postFieldsFragment'
+import gql from 'graphql-tag'
+import PostFieldsFragment from '../fragments/PostFieldsFragment'
 
-export default
-`query ($id: ID) {
-  post(id: $id) {
-    ${postFieldsFragment(true)}
+export default gql`
+  query (
+    $id: ID
+    $withComments: Boolean = true
+  ) {
+    post(id: $id) {
+      ...PostFieldsFragment
+    }
   }
-}`
+
+  ${PostFieldsFragment}
+`

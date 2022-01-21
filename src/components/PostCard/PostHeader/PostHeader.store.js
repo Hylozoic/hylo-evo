@@ -1,5 +1,6 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'PostHeader'
 
@@ -18,11 +19,13 @@ export function deletePost (id, groupId) {
   return {
     type: DELETE_POST,
     graphql: {
-      query: `mutation ($id: ID) {
-        deletePost(id: $id) {
-          success
+      query: gql`
+        mutation ($id: ID) {
+          deletePost(id: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         id
       }
@@ -39,11 +42,13 @@ export function removePost (postId, slug) {
   return {
     type: REMOVE_POST,
     graphql: {
-      query: `mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
+      query: gql`
+        mutation ($postId: ID, $slug: String) {
+          removePost(postId: $postId, slug: $slug) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         postId,
         slug
@@ -61,11 +66,13 @@ export function pinPost (postId, groupId) {
   return {
     type: PIN_POST,
     graphql: {
-      query: `mutation ($postId: ID, $groupId: ID) {
-        pinPost(postId: $postId, groupId: $groupId) {
-          success
+      query: gql`
+        mutation ($postId: ID, $groupId: ID) {
+          pinPost(postId: $postId, groupId: $groupId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         postId,
         groupId
@@ -83,11 +90,13 @@ export function fulfillPost (postId) {
   return {
     type: FULFILL_POST,
     graphql: {
-      query: `mutation ($postId: ID) {
-        fulfillPost (postId: $postId) {
-          success
+      query: gql`
+        mutation ($postId: ID) {
+          fulfillPost (postId: $postId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         postId
       }

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import gql from 'graphql-tag'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 
@@ -54,12 +55,14 @@ export function removeMember (personId, groupId) {
   return {
     type: REMOVE_MEMBER,
     graphql: {
-      query: `mutation($personId: ID, $groupId: ID) {
-        removeMember(personId: $personId, groupId: $groupId) {
-          id
-          memberCount
+      query: gql`
+        mutation($personId: ID, $groupId: ID) {
+          removeMember(personId: $personId, groupId: $groupId) {
+            id
+            memberCount
+          }
         }
-      }`,
+      `,
       variables: { personId, groupId }
     },
     meta: {

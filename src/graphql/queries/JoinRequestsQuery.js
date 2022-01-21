@@ -1,9 +1,9 @@
+import gql from 'graphql-tag'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 
-export default
-`query {
-  me {
-    joinRequests(status: ${JOIN_REQUEST_STATUS.Pending}) {
+export default gql`
+  query ($groupId: ID) {
+    joinRequests (groupId: $groupId, status: ${JOIN_REQUEST_STATUS.Pending}) {
       total
       hasMore
       items {
@@ -20,10 +20,20 @@ export default
         }
         group {
           id
-          name
+          slug
+        }
+        user {
+          id
           avatarUrl
+          name
+          skills {
+            items {
+              id
+              name
+            }
+          }
         }
       }
     }
   }
-}`
+`

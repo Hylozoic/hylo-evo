@@ -1,5 +1,6 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import gql from 'graphql-tag'
 import {
   FETCH_NOTIFICATIONS,
   MARK_ACTIVITY_READ,
@@ -10,56 +11,58 @@ export function fetchNotifications () {
   return {
     type: FETCH_NOTIFICATIONS,
     graphql: {
-      query: `query (
-        $first: Int = 20,
-        $order: String = "desc",
-        $resetCount: Boolean = true
-      ) {
-        notifications (first: $first, order: $order, resetCount: $resetCount) {
-          total
-          hasMore
-          items {
-            id
-            createdAt
-            activity {
+      query: gql`
+        query (
+          $first: Int = 20,
+          $order: String = "desc",
+          $resetCount: Boolean = true
+        ) {
+          notifications (first: $first, order: $order, resetCount: $resetCount) {
+            total
+            hasMore
+            items {
               id
-              actor {
+              createdAt
+              activity {
                 id
-                name
-                avatarUrl
-              }
-              comment {
-                id
-                text
-              }
-              post {
-                id
-                title
-                groups {
+                actor {
                   id
+                  name
+                  avatarUrl
+                }
+                comment {
+                  id
+                  text
+                }
+                post {
+                  id
+                  title
+                  groups {
+                    id
+                    slug
+                  }
+                }
+                group {
+                  id
+                  name
                   slug
                 }
+                otherGroup {
+                  id
+                  name
+                  slug
+                }
+                meta {
+                  reasons
+                }
+                action
+                unread
+                contributionAmount
               }
-              group {
-                id
-                name
-                slug
-              }
-              otherGroup {
-                id
-                name
-                slug
-              }
-              meta {
-                reasons
-              }
-              action
-              unread
-              contributionAmount
             }
           }
         }
-      }`
+      `
     },
     meta: {
       extractModel: 'Notification',
@@ -72,11 +75,13 @@ export function markActivityRead (id) {
   return {
     type: MARK_ACTIVITY_READ,
     graphql: {
-      query: `mutation ($id: ID) {
-        markActivityRead(id: $id) {
-          id
+      query: gql`
+        mutation ($id: ID) {
+          markActivityRead(id: $id) {
+            id
+          }
         }
-      }`,
+      `,
       variables: { id }
     },
     meta: {
@@ -90,11 +95,13 @@ export function markAllActivitiesRead () {
   return {
     type: MARK_ALL_ACTIVITIES_READ,
     graphql: {
-      query: `mutation {
-        markAllActivitiesRead {
-          success
+      query: gql`
+        mutation {
+          markAllActivitiesRead {
+            success
+          }
         }
-      }`
+      `
     },
     meta: {
       optimistic: true

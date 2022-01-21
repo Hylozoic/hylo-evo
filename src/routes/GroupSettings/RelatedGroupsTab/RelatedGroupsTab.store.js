@@ -1,6 +1,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
+import gql from 'graphql-tag'
 import { getCurrentlyRelatedGroupIds } from 'store/selectors/getGroupRelationships'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 
@@ -14,23 +15,25 @@ export function fetchGroupToGroupJoinQuestions () {
   return {
     type: FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS,
     graphql: {
-      query: `query {
-        me {
-          memberships {
-            id
-            group {
+      query: gql`
+        query {
+          me {
+            memberships {
               id
-              groupToGroupJoinQuestions {
-                items {
-                  id
-                  questionId
-                  text
+              group {
+                id
+                groupToGroupJoinQuestions {
+                  items {
+                    id
+                    questionId
+                    text
+                  }
                 }
               }
             }
           }
         }
-      }`
+      `
     },
     meta: {
       extractModel: 'Me'

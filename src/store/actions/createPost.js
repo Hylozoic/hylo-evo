@@ -1,11 +1,11 @@
 import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import createPostMutation from 'graphql/mutations/createPostMutation'
+import CreatePostMutation from 'graphql/mutations/CreatePostMutation'
 import { CREATE_POST } from 'store/constants'
 
 export default function createPost (postParams) {
-  const query = createPostMutation
+  const query = CreatePostMutation
 
   const {
     type,

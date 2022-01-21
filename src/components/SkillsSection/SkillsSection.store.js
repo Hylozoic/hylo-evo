@@ -1,6 +1,7 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
 import { get, includes, isEmpty, difference, map } from 'lodash/fp'
+import gql from 'graphql-tag'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'SkillsSection'
@@ -22,12 +23,14 @@ export function addSkill (skillName) {
   return {
     type: ADD_SKILL,
     graphql: {
-      query: `mutation ($name: String) {
-        addSkill(name: $name) {
-          id,
-          name
+      query: gql`
+        mutation ($name: String) {
+          addSkill(name: $name) {
+            id,
+            name
+          }
         }
-      }`,
+      `,
       variables: {
         name: skillName
       }
@@ -43,12 +46,14 @@ export function addSkillToGroup (groupId, skillName) {
   return {
     type: ADD_SKILL_TO_GROUP,
     graphql: {
-      query: `mutation ($groupId: ID, $name: String) {
-        addSuggestedSkillToGroup(groupId: $groupId, name: $name) {
-          id,
-          name
+      query: gql`
+        mutation ($groupId: ID, $name: String) {
+          addSuggestedSkillToGroup(groupId: $groupId, name: $name) {
+            id,
+            name
+          }
         }
-      }`,
+      `,
       variables: {
         groupId,
         name: skillName
@@ -66,11 +71,13 @@ export function removeSkill (skillId) {
   return {
     type: REMOVE_SKILL,
     graphql: {
-      query: `mutation ($id: ID) {
-        removeSkill(id: $id) {
-          success
+      query: gql`
+        mutation ($id: ID) {
+          removeSkill(id: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         id: skillId
       }
@@ -86,11 +93,13 @@ export function removeSkillFromGroup (groupId, skillId) {
   return {
     type: REMOVE_SKILL_FROM_GROUP,
     graphql: {
-      query: `mutation ($groupId: ID, $id: ID) {
-        removeSuggestedSkillFromGroup(groupId: $groupId, id: $id) {
-          success
+      query: gql`
+        mutation ($groupId: ID, $id: ID) {
+          removeSuggestedSkillFromGroup(groupId: $groupId, id: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         groupId,
         id: skillId
@@ -115,17 +124,19 @@ export function fetchMemberSkills (id, limit = 20) {
   return {
     type: FETCH_MEMBER_SKILLS,
     graphql: {
-      query: `query ($id: ID, $limit: Int) {
-        person (id: $id) {
-          id
-          skills (first: $limit) {
-            items {
-              id
-              name
+      query: gql`
+        query ($id: ID, $limit: Int) {
+          person (id: $id) {
+            id
+            skills (first: $limit) {
+              items {
+                id
+                name
+              }
             }
           }
         }
-      }`,
+      `,
       variables: { id, limit }
     },
     meta: {
@@ -138,14 +149,16 @@ export function fetchSkillSuggestions (search) {
   return {
     type: FETCH_SKILL_SUGGESTIONS,
     graphql: {
-      query: `query ($search: String) {
-        skills (first: 10, autocomplete: $search) {
-          items {
-            id
-            name
+      query: gql`
+        query ($search: String) {
+          skills (first: 10, autocomplete: $search) {
+            items {
+              id
+              name
+            }
           }
         }
-      }`,
+      `,
       variables: {
         search
       }

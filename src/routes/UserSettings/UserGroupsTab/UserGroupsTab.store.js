@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import {
   CREATE_AFFILIATION,
   DELETE_AFFILIATION,
@@ -20,18 +21,20 @@ export function createAffiliation ({ role, preposition, orgName, url }) {
   return {
     type: CREATE_AFFILIATION,
     graphql: {
-      query: `mutation ($role: String, $preposition: String, $orgName: String, $url: String) {
-        createAffiliation(data: { role: $role, preposition: $preposition, orgName: $orgName, url: $url }) {
-          id
-          role
-          preposition
-          orgName
-          url
-          createdAt
-          updatedAt
-          isActive
+      query: gql`
+        mutation ($role: String, $preposition: String, $orgName: String, $url: String) {
+          createAffiliation(data: { role: $role, preposition: $preposition, orgName: $orgName, url: $url }) {
+            id
+            role
+            preposition
+            orgName
+            url
+            createdAt
+            updatedAt
+            isActive
+          }
         }
-      }`,
+      `,
       variables: { role, preposition, orgName, url }
     },
     meta: {
@@ -44,9 +47,11 @@ export function deleteAffiliation (id) {
   return {
     type: DELETE_AFFILIATION,
     graphql: {
-      query: `mutation ($id: ID) {
-        deleteAffiliation(id: $id)
-      }`,
+      query: gql`
+        mutation ($id: ID) {
+          deleteAffiliation(id: $id)
+        }
+      `,
       variables: { id }
     },
     meta: {
@@ -60,9 +65,11 @@ export function leaveGroup (id) {
   return {
     type: LEAVE_GROUP,
     graphql: {
-      query: `mutation ($id: ID) {
-        leaveGroup(id: $id)
-      }`,
+      query: gql`
+        mutation ($id: ID) {
+          leaveGroup(id: $id)
+        }
+      `,
       variables: { id }
     },
     meta: {

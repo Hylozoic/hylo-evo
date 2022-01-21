@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import { get } from 'lodash/fp'
 import {
   ACCEPT_GROUP_RELATIONSHIP_INVITE,
@@ -12,20 +13,22 @@ export function acceptGroupRelationshipInvite (groupRelationshipInviteId) {
   return {
     type: ACCEPT_GROUP_RELATIONSHIP_INVITE,
     graphql: {
-      query: `mutation acceptGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
-        acceptGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
-          success
-          groupRelationship {
-            id
-            childGroup {
+      query: gql`
+        mutation acceptGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
+          acceptGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
+            success
+            groupRelationship {
               id
-            }
-            parentGroup {
-              id
+              childGroup {
+                id
+              }
+              parentGroup {
+                id
+              }
             }
           }
         }
-      }`,
+      `,
       variables: {
         groupRelationshipInviteId
       }
@@ -45,11 +48,13 @@ export function cancelGroupRelationshipInvite (groupRelationshipInviteId) {
   return {
     type: CANCEL_GROUP_RELATIONSHIP_INVITE,
     graphql: {
-      query: `mutation cancelGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
-        cancelGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
-          success
+      query: gql`
+        mutation cancelGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
+          cancelGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         groupRelationshipInviteId
       }
@@ -64,11 +69,13 @@ export function rejectGroupRelationshipInvite (groupRelationshipInviteId) {
   return {
     type: REJECT_GROUP_RELATIONSHIP_INVITE,
     graphql: {
-      query: `mutation rejectGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
-        rejectGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
-          success
+      query: gql`
+        mutation rejectGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
+          rejectGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         groupRelationshipInviteId
       }
@@ -83,11 +90,13 @@ export function deleteGroupRelationship (parentId, childId) {
   return {
     type: DELETE_GROUP_RELATIONSHIP,
     graphql: {
-      query: `mutation deleteGroupRelationship ($parentId: ID, $childId: ID) {
-        deleteGroupRelationship(parentId: $parentId, childId: $childId) {
-          success
+      query: gql`
+        mutation deleteGroupRelationship ($parentId: ID, $childId: ID) {
+          deleteGroupRelationship(parentId: $parentId, childId: $childId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         parentId,
         childId
@@ -104,34 +113,36 @@ export function inviteGroupToJoinParent (parentId, childId) {
   return {
     type: INVITE_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
-      query: `mutation ($parentId: ID, $childId: ID) {
-        inviteGroupToJoinParent(parentId: $parentId, childId: $childId) {
-          success
-          groupRelationship {
-            id
-            childGroup {
+      query: gql`
+        mutation ($parentId: ID, $childId: ID) {
+          inviteGroupToJoinParent(parentId: $parentId, childId: $childId) {
+            success
+            groupRelationship {
               id
+              childGroup {
+                id
+              }
+              parentGroup {
+                id
+              }
             }
-            parentGroup {
+            groupRelationshipInvite {
               id
-            }
-          }
-          groupRelationshipInvite {
-            id
-            fromGroup {
-              id
-            }
-            toGroup {
-              id
-            }
-            type
-            status
-            createdBy {
-              id
+              fromGroup {
+                id
+              }
+              toGroup {
+                id
+              }
+              type
+              status
+              createdBy {
+                id
+              }
             }
           }
         }
-      }`,
+      `,
       variables: { parentId, childId }
     },
     meta: {
@@ -157,34 +168,36 @@ export function requestToAddGroupToParent (parentId, childId, questionAnswers) {
   return {
     type: REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
-      query: `mutation ($parentId: ID, $childId: ID, $questionAnswers: [QuestionAnswerInput]) {
-        requestToAddGroupToParent(parentId: $parentId, childId: $childId, questionAnswers: $questionAnswers) {
-          success
-          groupRelationship {
-            id
-            childGroup {
+      query: gql`
+        mutation ($parentId: ID, $childId: ID, $questionAnswers: [QuestionAnswerInput]) {
+          requestToAddGroupToParent(parentId: $parentId, childId: $childId, questionAnswers: $questionAnswers) {
+            success
+            groupRelationship {
               id
+              childGroup {
+                id
+              }
+              parentGroup {
+                id
+              }
             }
-            parentGroup {
+            groupRelationshipInvite {
               id
-            }
-          }
-          groupRelationshipInvite {
-            id
-            fromGroup {
-              id
-            }
-            toGroup {
-              id
-            }
-            type
-            status
-            createdBy {
-              id
+              fromGroup {
+                id
+              }
+              toGroup {
+                id
+              }
+              type
+              status
+              createdBy {
+                id
+              }
             }
           }
         }
-      }`,
+      `,
       variables: { parentId, childId, questionAnswers }
     },
     meta: {

@@ -1,17 +1,21 @@
-import groupFieldsFragment from 'graphql/fragments/groupFieldsFragment'
+import gql from 'graphql-tag'
+import GroupFieldsFragment from 'graphql/fragments/GroupFieldsFragment'
 
-const groupsQueryFragment = `
-groups(
-  boundingBox: $boundingBox,
-  context: $context,
-  parentSlugs: $parentSlugs,
-  search: $search,
-  sortBy: $sortBy,
-  visibility: $visibility
-) {
-  items {
-    ${groupFieldsFragment(false)}
+export default gql`
+  fragment GroupsQueryFragment on Query {
+    groups(
+      boundingBox: $boundingBox,
+      context: $context,
+      parentSlugs: $parentSlugs,
+      search: $search,
+      sortBy: $sortBy,
+      visibility: $visibility
+    ) {
+      items {
+        ...GroupFieldsFragment
+      }
+    }
   }
-}`
 
-export default groupsQueryFragment
+  ${GroupFieldsFragment}
+`

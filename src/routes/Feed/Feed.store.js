@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import { FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
 
 export const MODULE_NAME = 'Feed'
@@ -7,20 +8,22 @@ export function fetchGroupTopic (topicName, groupSlug) {
   return {
     type: FETCH_GROUP_TOPIC,
     graphql: {
-      query: `query ($groupSlug: String, $topicName: String) {
-        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
-          id
-          postsTotal
-          followersTotal
-          topic {
+      query: gql`
+        query ($groupSlug: String, $topicName: String) {
+          groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
             id
-            name
-          }
-          group {
-            id
+            postsTotal
+            followersTotal
+            topic {
+              id
+              name
+            }
+            group {
+              id
+            }
           }
         }
-      }`,
+      `,
       variables: {
         groupSlug,
         topicName
@@ -36,14 +39,16 @@ export function fetchTopic (name, id) {
   return {
     type: FETCH_TOPIC,
     graphql: {
-      query: `query ($name: String, $id: ID) {
-        topic(name: $name, id: $id) {
-          id
-          name
-          postsTotal
-          followersTotal
+      query: gql`
+        query ($name: String, $id: ID) {
+          topic(name: $name, id: $id) {
+            id
+            name
+            postsTotal
+            followersTotal
+          }
         }
-      }`,
+      `,
       variables: {
         name,
         id

@@ -1,5 +1,6 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'InviteSettingsTab'
 export const CREATE_INVITATIONS = `${MODULE_NAME}/CREATE_INVITATIONS`
@@ -33,17 +34,19 @@ export function createInvitations (groupId, emails, message) {
   return {
     type: CREATE_INVITATIONS,
     graphql: {
-      query: `mutation ($groupId: ID, $data: InviteInput) {
-        createInvitation(groupId: $groupId, data: $data) {
-          invitations {
-            id,
-            email,
-            createdAt,
-            lastSentAt,
-            error
+      query: gql`
+        mutation ($groupId: ID, $data: InviteInput) {
+          createInvitation(groupId: $groupId, data: $data) {
+            invitations {
+              id,
+              email,
+              createdAt,
+              lastSentAt,
+              error
+            }
           }
         }
-      }`,
+      `,
       variables: {
         groupId,
         data: {
@@ -64,11 +67,13 @@ export function reinviteAll (groupId) {
   return {
     type: REINVITE_ALL,
     graphql: {
-      query: `mutation ($groupId: ID) {
-        reinviteAll(groupId: $groupId) {
-          success
+      query: gql`
+        mutation ($groupId: ID) {
+          reinviteAll(groupId: $groupId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         groupId
       }
@@ -84,11 +89,13 @@ export function expireInvitation (invitationToken) {
   return {
     type: EXPIRE_INVITATION,
     graphql: {
-      query: `mutation ($invitationToken: ID) {
-        expireInvitation(invitationId: $invitationToken) {
-          success
+      query: gql`
+        mutation ($invitationToken: ID) {
+          expireInvitation(invitationId: $invitationToken) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         invitationToken
       }
@@ -104,11 +111,13 @@ export function resendInvitation (invitationToken) {
   return {
     type: RESEND_INVITATION,
     graphql: {
-      query: `mutation ($invitationToken: ID) {
-        resendInvitation(invitationId: $invitationToken) {
-          success
+      query: gql`
+        mutation ($invitationToken: ID) {
+          resendInvitation(invitationId: $invitationToken) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         invitationToken
       }
@@ -124,11 +133,13 @@ export function allowGroupInvites (groupId, data) {
   return {
     type: ALLOW_GROUP_INVITES,
     graphql: {
-      query: `mutation ($groupId: ID, $data: Boolean) {
-        allowGroupInvites(groupId: $groupId, data: $data) {
-          id
+      query: gql`
+        mutation ($groupId: ID, $data: Boolean) {
+          allowGroupInvites(groupId: $groupId, data: $data) {
+            id
+          }
         }
-      }`,
+      `,
       variables: {
         groupId,
         data

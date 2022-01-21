@@ -1,4 +1,5 @@
 import { get, omit } from 'lodash/fp'
+import gql from 'graphql-tag'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export const MODULE_NAME = 'CreateTopic'
@@ -9,11 +10,13 @@ export function fetchGroupTopic (topicName, groupSlug) {
   return {
     type: FETCH_GROUP_TOPIC,
     graphql: {
-      query: `query ($topicName: String, $groupSlug: String) {
-        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
-          id
+      query: gql`
+        query ($topicName: String, $groupSlug: String) {
+          groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
+            id
+          }
         }
-      }`,
+      `,
       variables: {
         groupSlug,
         topicName
@@ -30,29 +33,31 @@ export function createTopic (topicName, groupId, isDefault = false, isSubscribin
   return {
     type: CREATE_TOPIC,
     graphql: {
-      query: `mutation ($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
-        createTopic(topicName: $topicName, groupId: $groupId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
-          id
-          name
-          groupTopics {
-            items {
-              id
-              group {
+      query: gql`
+        mutation ($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+          createTopic(topicName: $topicName, groupId: $groupId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
+            id
+            name
+            groupTopics {
+              items {
                 id
-                slug
+                group {
+                  id
+                  slug
+                }
+                isDefault
+                isSubscribed
+                newPostCount
+                postsTotal
+                followersTotal
+                visibility
               }
-              isDefault
-              isSubscribed
-              newPostCount
-              postsTotal
-              followersTotal
-              visibility
             }
+            followersTotal
+            postsTotal
           }
-          followersTotal
-          postsTotal
         }
-      }`,
+      `,
       variables: {
         groupId,
         topicName,

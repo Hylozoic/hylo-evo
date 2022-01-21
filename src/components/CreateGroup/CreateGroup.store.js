@@ -1,6 +1,7 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { AnalyticsEvents } from 'hylo-utils/constants'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = `CreateGroup`
 export const ADD_GROUP_NAME = `${MODULE_NAME}/ADD_GROUP_NAME`
@@ -69,7 +70,7 @@ export function fetchGroupExists (slug) {
   return {
     type: FETCH_GROUP_EXISTS,
     graphql: {
-      query: `
+      query: gql`
         query ($slug: String) {
           groupExists (slug: $slug) {
             exists
@@ -87,28 +88,29 @@ export function createGroup (data) {
   return {
     type: CREATE_GROUP,
     graphql: {
-      query: `mutation ($data: GroupInput) {
-        createGroup(data: $data) {
-          id
-          hasModeratorRole
-          group {
+      query: gql`
+        mutation ($data: GroupInput) {
+          createGroup(data: $data) {
             id
-            name
-            slug
-            parentGroups {
-              items {
-                id
+            hasModeratorRole
+            group {
+              id
+              name
+              slug
+              parentGroups {
+                items {
+                  id
+                }
               }
             }
-          }
-          person {
-            id
-          }
-          settings {
-            showJoinForm
+            person {
+              id
+            }
+            settings {
+              showJoinForm
+            }
           }
         }
-      }
       `,
       variables: {
         data

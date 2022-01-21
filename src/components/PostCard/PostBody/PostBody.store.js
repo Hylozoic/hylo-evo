@@ -1,5 +1,6 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'PostBody'
 
@@ -14,11 +15,13 @@ export function fulfillPost (postId) {
   return {
     type: FULFILL_POST,
     graphql: {
-      query: `mutation ($postId: ID) {
-        fulfillPost (postId: $postId) {
-          success
+      query: gql`
+        mutation ($postId: ID) {
+          fulfillPost (postId: $postId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         postId
       }
@@ -34,11 +37,13 @@ export function unfulfillPost (postId) {
   return {
     type: UNFULFILL_POST,
     graphql: {
-      query: `mutation ($postId: ID) {
-        unfulfillPost (postId: $postId) {
-          success
+      query: gql`
+        mutation ($postId: ID) {
+          unfulfillPost (postId: $postId) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         postId
       }

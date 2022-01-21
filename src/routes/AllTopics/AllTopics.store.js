@@ -5,6 +5,7 @@ import presentTopic from 'store/presenters/presentTopic'
 import orm from 'store/models'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { FETCH_TOPICS } from 'store/constants'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'AllTopics'
 export const SET_SORT = `${MODULE_NAME}/SET_SORT`
@@ -32,11 +33,13 @@ export function deleteGroupTopic (groupTopicId) {
   return {
     type: DELETE_GROUP_TOPIC,
     graphql: {
-      query: `mutation ($id: ID) {
-        deleteGroupTopic(id: $id) {
-          success
+      query: gql`
+        mutation ($id: ID) {
+          deleteGroupTopic(id: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         id: groupTopicId
       }

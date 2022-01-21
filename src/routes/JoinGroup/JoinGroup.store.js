@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import gql from 'graphql-tag'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 
 export const MODULE_NAME = 'JoinGroup'
@@ -10,11 +11,13 @@ export function checkInvitation (inviteCodes) {
   return {
     type: CHECK_INVITATION,
     graphql: {
-      query: `query ($invitationToken: String, $accessCode: String) {
-        checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
-          valid
+      query: gql`
+        query ($invitationToken: String, $accessCode: String) {
+          checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+            valid
+          }
         }
-      }`,
+      `,
       variables: {
         invitationToken,
         accessCode
@@ -28,35 +31,37 @@ export function useInvitation (inviteCodes = {}) {
   return {
     type: USE_INVITATION,
     graphql: {
-      query: `mutation ($invitationToken: String, $accessCode: String) {
-        useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
-          membership {
-            id
-            role
-            group {
+      query: gql`
+        mutation ($invitationToken: String, $accessCode: String) {
+          useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+            membership {
               id
-              accessibility
-              name
-              settings {
-                allowGroupInvites
-                askJoinQuestions
-                askGroupToGroupJoinQuestions
-                publicMemberDirectory
-                showSuggestedSkills
+              role
+              group {
+                id
+                accessibility
+                name
+                settings {
+                  allowGroupInvites
+                  askJoinQuestions
+                  askGroupToGroupJoinQuestions
+                  publicMemberDirectory
+                  showSuggestedSkills
+                }
+                slug
+                visibility
               }
-              slug
-              visibility
+              person {
+                id
+              }
+              settings {
+                showJoinForm
+              }
             }
-            person {
-              id
-            }
-            settings {
-              showJoinForm
-            }
+            error
           }
-          error
         }
-      }`,
+      `,
       variables: {
         invitationToken,
         accessCode

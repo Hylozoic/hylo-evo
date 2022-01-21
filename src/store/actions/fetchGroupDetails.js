@@ -1,15 +1,25 @@
+import gql from 'graphql-tag'
 import { FETCH_GROUP_DETAILS } from 'store/constants'
-import groupFieldsFragment from 'graphql/fragments/groupFieldsFragment'
+import GroupFieldsFragment from 'graphql/fragments/GroupFieldsFragment'
 
 export default function fetchGroupDetails (slug) {
   return {
     type: FETCH_GROUP_DETAILS,
     graphql: {
-      query: `query ($slug: String) {
-        group(slug: $slug) {
-          ${groupFieldsFragment({ withTopics: true, withJoinQuestions: true, withPrerequisites: true })}
+      query: gql`
+        query (
+          $slug: String
+          $withTopics: Boolean = true
+          $withJoinQuestions: Boolean = true
+          $withPrerequisites: Boolean = true
+        ) {
+          group(slug: $slug) {
+            ..GroupFieldsFragment
+          }
         }
-      }`,
+
+        ${GroupFieldsFragment}
+      `,
       variables: { slug }
     },
     meta: {

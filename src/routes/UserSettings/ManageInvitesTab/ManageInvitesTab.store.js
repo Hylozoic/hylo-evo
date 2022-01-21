@@ -6,21 +6,24 @@ import {
   DECLINE_GROUP_INVITE,
   FETCH_MY_REQUESTS_AND_INVITES
 } from 'store/constants'
-import fetchMyInvitesAndRequestsQuery from 'graphql/queries/fetchMyInvitesAndRequestsQuery'
+import MyInvitesAndRequestsQuery from 'graphql/queries/MyInvitesAndRequestsQuery'
 import presentGroupInvite from 'store/presenters/presentGroupInvite'
 import presentJoinRequest from 'store/presenters/presentJoinRequest'
 import clearCacheFor from 'store/reducers/ormReducer/clearCacheFor'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
+import gql from 'graphql-tag'
 
 export function cancelJoinRequest (id) {
   return {
     type: CANCEL_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($id: ID) {
-        cancelJoinRequest(joinRequestId: $id) {
-          success
+      query: gql`
+        mutation ($id: ID) {
+          cancelJoinRequest(joinRequestId: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: { id }
     },
     meta: {
@@ -33,11 +36,13 @@ export function declineInvite (id) {
   return {
     type: DECLINE_GROUP_INVITE,
     graphql: {
-      query: `mutation ($id: ID) {
-        expireInvitation(invitationId: $id) {
-          success
+      query: gql`
+        mutation ($id: ID) {
+          expireInvitation(invitationId: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: { id }
     },
     meta: {
@@ -50,7 +55,7 @@ export function fetchMyInvitesAndRequests () {
   return {
     type: FETCH_MY_REQUESTS_AND_INVITES,
     graphql: {
-      query: fetchMyInvitesAndRequestsQuery
+      query: MyInvitesAndRequestsQuery
     },
     meta: {
       extractModel: 'Me'
