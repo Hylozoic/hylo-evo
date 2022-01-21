@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 
 export default gql`
-  query ($groupId: ID) {
+  query JoinRequestQuery($groupId: ID) {
     joinRequests (groupId: $groupId, status: ${JOIN_REQUEST_STATUS.Pending}) {
       total
       hasMore

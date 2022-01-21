@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  mutation CreateMessageMutation (
+  mutation CreateMessageMutation(
     $messageThreadId: String,
     $text: String,
     $createdAt: Date

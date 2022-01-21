@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  query MessageThreadQuery ($id: ID) {
+  query MessageThreadQuery($id: ID) {
     messageThread (id: $id) {
       id
       unreadCount

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  mutation FindOrCreateThreadMutation ($participantIds: [String]) {
+  mutation FindOrCreateThreadMutation($participantIds: [String]) {
     findOrCreateThread(data: {
       participantIds: $participantIds
     }) {

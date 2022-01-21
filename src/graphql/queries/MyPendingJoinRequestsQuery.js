@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 
 export default gql`
-  query {
+  query MyPendingJoinRequestsQuery {
     me {
       joinRequests(status: ${JOIN_REQUEST_STATUS.Pending}) {
         total

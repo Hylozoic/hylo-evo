@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  query PersonDetails ($id: ID) {
+  query PersonDetailsQuery ($id: ID) {
     person (id: $id) {
       id
       name

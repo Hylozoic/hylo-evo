@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  query MessageThreadsQuery ($first: Int = 10, $offset: Int, $firstMessages: Int = 1) {
+  query MessageThreadsQuery($first: Int = 10, $offset: Int, $firstMessages: Int = 1) {
     me {
       id
       messageThreads(sortBy: "updatedAt", order: "desc", first: $first, offset: $offset) {

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  mutation CreateCommentMutation (
+  mutation CreateCommentMutation(
     $postId: String,
     $parentCommentId: String,
     $text: String,
