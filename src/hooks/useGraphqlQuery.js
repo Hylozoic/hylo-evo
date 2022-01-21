@@ -3,31 +3,23 @@ import { useDispatch } from 'react-redux'
 import { isString } from 'lodash/fp'
 import { FETCH_GRAPHQL } from 'store/constants'
 
-export default function useGraphqlQuery (queryOrOptions, dependencies = []) {
+export default function useGraphqlQuery (queryOrFetchParams, dependencies = []) {
   const dispatch = useDispatch()
-  const fetcherParams = { type: FETCH_GRAPHQL }
-  
-  if (isString(queryOrOptions)) {
-    fetcherParams = {
-      query: queryOrOptions
-    }
+  // Values here will trump anything provided in queryOrFetchParams
+  let fetchParams = { type: FETCH_GRAPHQL }
+
+  if (isString(queryOrFetchParams)) {
+    fetchParams.graphql = { query: queryOrFetchParams }
   } else {
-    fetcherParams = {
-      ...queryOrOptions
+    fetchParams = {
+      ...queryOrFetchParams,
+      ...fetchParams
     }
   }
 
-  // TOOD: Throw if `query` key not present
+  // TOOD: Throw here if `query` key not present
 
   useEffect(() => {
-    dispatch(graphqlFetcher(fetcherParams))
+    dispatch(fetchParams)
   }, dependencies)
-}
-
-export function graphqlFetcher ({ type = FETCH_GRAPHQL, query, variables }) {
-  return {
-    type,
-    graphql: { query, variables },
-    meta
-  }
 }
