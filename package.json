@@ -148,6 +148,7 @@
     "jest": "^26.6.3",
     "jest-pnp-resolver": "^1.2.2",
     "jest-resolve": "^26.6.2",
+    "jest-serializer-graphql": "^1.0.0",
     "jest-transform-graphql": "^2.1.0",
     "jest-watch-typeahead": "^0.6.1",
     "json-loader": "0.5.7",
@@ -250,8 +251,8 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
+    "@playlyfe/gql": "^2.6.2",
     "husky": "^7.0.0",
-    "standard": "12.0.1",
-    "@playlyfe/gql": "^2.6.2"
+    "standard": "12.0.1"
   }
 }
