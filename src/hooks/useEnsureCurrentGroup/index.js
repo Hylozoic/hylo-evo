@@ -13,7 +13,7 @@ const selectAndPresentGroup = createSelector(
   (group) => presentGroup(group)
 )
 
-export function useEnsureCurrentGroup () {
+export default function useEnsureCurrentGroup () {
   const router = useRouter()
   const groupSlug = router.query.groupSlug
   const group = useSelector(state => selectAndPresentGroup(state, router))
