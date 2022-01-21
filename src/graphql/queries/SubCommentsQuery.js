@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import CommentFieldsFragment from 'graphql/fragments/CommentFieldsFragment'
 
 export default gql`
-  query SubCommentsQuery (
+  query SubCommentsQuery(
     $id: ID,
     $cursor: ID
   ) {

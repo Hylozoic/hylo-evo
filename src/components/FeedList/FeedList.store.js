@@ -13,11 +13,11 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupQuery
+    query = GroupQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
-    query = postsQuery
+    query = PostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -52,7 +52,7 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
   }
 }
 
-const groupQuery = gql`
+const GroupQuery = gql`
   query GroupQuery(
     $afterTime: Date,
     $beforeTime: Date,
@@ -87,7 +87,7 @@ const groupQuery = gql`
   ${GroupViewPostsQueryFragment}
 `
 
-const postsQuery = gql`
+const PostsQuery = gql`
   query PostsQuery(
     $afterTime: Date,
     $beforeTime: Date,
