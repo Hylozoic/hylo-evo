@@ -35,7 +35,7 @@ exports[`mergeProps merges the props 1`] = `
 Object {
   "graphql": Object {
     "query": "query ($slug: String) {
-        group (slug: $slug) {
+        group(slug: $slug) {
           id
           accessibility
           avatarUrl
@@ -72,7 +72,7 @@ Object {
           }
           slug
           visibility
-          childGroups (first: 100) {
+          childGroups(first: 100) {
             items {
               id
               name
@@ -93,7 +93,7 @@ Object {
               text
             }
           }
-          moderators (first: 100) {
+          moderators(first: 100) {
             hasMore
             items {
               id
@@ -101,7 +101,7 @@ Object {
               avatarUrl
             }
           }
-          parentGroups (first: 100) {
+          parentGroups(first: 100) {
             items {
               avatarUrl
               id

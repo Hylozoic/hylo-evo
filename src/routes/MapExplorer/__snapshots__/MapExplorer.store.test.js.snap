@@ -3,152 +3,181 @@
 exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
-    "query": "query (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput]
-  $filter: String,
-  $first: Int,
-  $offset: Int,
-  $order: String,
-  $search: String,
-  $slug: String,
-  $sortBy: String,
-  $topic: ID
-) {
-  group(slug: $slug, updateLastViewed: true) {
-    id
-    slug
-    name
-    avatarUrl
-    bannerUrl
-    postCount
-    
-posts: viewPosts(
-  afterTime: $afterTime,
-  beforeTime: $beforeTime,
-  boundingBox: $boundingBox,
-  filter: $filter,
-  first: $first,
-  offset: $offset,
-  order: $order,
-  sortBy: $sortBy,
-  search: $search,
-  topic: $topic
-) {
-  hasMore
-  total
-  items {
-    
-  id
-  announcement
-  title
-  details
-  type
-  creator {
-    id
-    name
-    avatarUrl
-  }
-  createdAt
-  updatedAt
-  isPublic
-  fulfilledAt
-  startTime
-  endTime
-  myEventResponse
-  commenters(first: 3) {
-    id
-    name
-    avatarUrl
-  }
-  commentersTotal
-  
-  linkPreview {
-    id
-    title
-    url
-    imageUrl
-  }
-  location
-  locationObject {
-    id
-    addressNumber
-    addressStreet
-    bbox {
-      lat
-      lng
-    }
-    center {
-      lat
-      lng
-    }
-    city
-    country
-    fullText
-    locality
-    neighborhood
-    region
-  }
-  votesTotal
-  myVote
-  groups {
-    id
-    name
-    slug
-  }
-  attachments {
-    type
-    url
-    position
-    id
-  }
-  postMemberships {
-    id
-    pinned
-    group {
-      id
-    }
-  }
-  topics {
-    id
-    name
-    postsTotal
-    followersTotal
-  }
-  members {
-    total
-    hasMore
-    items {
-      id
-      name
-      avatarUrl
-      bio
-      tagline
-      location
-    }
-  }
-  eventInvitations {
-    total
-    hasMore
-    items {
-      id
-      response
-      person {
-        id
-        name
-        avatarUrl
-        bio
-        tagline
-        location
+    "query": "query ($afterTime: Date, $beforeTime: Date, $boundingBox: [PointInput], $filter: String, $first: Int, $offset: Int, $order: String, $search: String, $slug: String, $sortBy: String, $topic: ID, $withComments: Boolean = false) {
+        group(slug: $slug, updateLastViewed: true) {
+          id
+          slug
+          name
+          avatarUrl
+          bannerUrl
+          postCount
+          ...GroupViewPostsQueryFragment
+        }
       }
-    }
-  }
 
-  }
-}
-  }
-}",
+      fragment GroupViewPostsQueryFragment on Group {
+        posts: viewPosts(
+          afterTime: $afterTime
+          beforeTime: $beforeTime
+          boundingBox: $boundingBox
+          filter: $filter
+          first: $first
+          offset: $offset
+          order: $order
+          sortBy: $sortBy
+          search: $search
+          topic: $topic
+        ) {
+          hasMore
+          total
+          items {
+            ...PostFieldsFragment
+          }
+        }
+      }
+
+      fragment PostFieldsFragment on Post {
+        id
+        announcement
+        title
+        details
+        type
+        creator {
+          id
+          name
+          avatarUrl
+        }
+        createdAt
+        updatedAt
+        isPublic
+        fulfilledAt
+        startTime
+        endTime
+        myEventResponse
+        commenters(first: 3) {
+          id
+          name
+          avatarUrl
+        }
+        commentersTotal
+        comments(first: 10, order: \\"desc\\") @include(if: $withComments) {
+          items {
+            ...CommentFieldsFragment
+            childComments(first: 4, order: \\"desc\\") {
+              items {
+                ...CommentFieldsFragment
+                post {
+                  id
+                }
+              }
+              total
+              hasMore
+            }
+          }
+          total
+          hasMore
+        }
+        linkPreview {
+          id
+          title
+          url
+          imageUrl
+        }
+        location
+        locationObject {
+          id
+          addressNumber
+          addressStreet
+          bbox {
+            lat
+            lng
+          }
+          center {
+            lat
+            lng
+          }
+          city
+          country
+          fullText
+          locality
+          neighborhood
+          region
+        }
+        votesTotal
+        myVote
+        groups {
+          id
+          name
+          slug
+        }
+        attachments {
+          type
+          url
+          position
+          id
+        }
+        postMemberships {
+          id
+          pinned
+          group {
+            id
+          }
+        }
+        topics {
+          id
+          name
+          postsTotal
+          followersTotal
+        }
+        members {
+          total
+          hasMore
+          items {
+            id
+            name
+            avatarUrl
+            bio
+            tagline
+            location
+          }
+        }
+        eventInvitations {
+          total
+          hasMore
+          items {
+            id
+            response
+            person {
+              id
+              name
+              avatarUrl
+              bio
+              tagline
+              location
+            }
+          }
+        }
+      }
+
+      fragment CommentFieldsFragment on Comment {
+        id
+        text
+        creator {
+          id
+          name
+          avatarUrl
+        }
+        attachments {
+          id
+          position
+          type
+          url
+        }
+        parentComment {
+          id
+        }
+        createdAt
+      }",
     "variables": Object {
       "boundingBox": undefined,
       "context": "groups",
@@ -173,147 +202,175 @@ posts: viewPosts(
 exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
-    "query": "query (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput],
-  $context: String,
-  $filter: String,
-  $first: Int,
-  $groupSlugs: [String]
-  $offset: Int,
-  $order: String,
-  $search: String,
-  $sortBy: String,
-  $topic: ID
-) {
-  
-posts(
-  afterTime: $afterTime,
-  beforeTime: $beforeTime,
-  boundingBox: $boundingBox,
-  filter: $filter,
-  first: $first,
-  groupSlugs: $groupSlugs,
-  offset: $offset,
-  context: $context,
-  order: $order,
-  sortBy: $sortBy,
-  search: $search,
-  topic: $topic
-) {
-  hasMore
-  total
-  items {
-    
-  id
-  announcement
-  title
-  details
-  type
-  creator {
-    id
-    name
-    avatarUrl
-  }
-  createdAt
-  updatedAt
-  isPublic
-  fulfilledAt
-  startTime
-  endTime
-  myEventResponse
-  commenters(first: 3) {
-    id
-    name
-    avatarUrl
-  }
-  commentersTotal
-  
-  linkPreview {
-    id
-    title
-    url
-    imageUrl
-  }
-  location
-  locationObject {
-    id
-    addressNumber
-    addressStreet
-    bbox {
-      lat
-      lng
-    }
-    center {
-      lat
-      lng
-    }
-    city
-    country
-    fullText
-    locality
-    neighborhood
-    region
-  }
-  votesTotal
-  myVote
-  groups {
-    id
-    name
-    slug
-  }
-  attachments {
-    type
-    url
-    position
-    id
-  }
-  postMemberships {
-    id
-    pinned
-    group {
-      id
-    }
-  }
-  topics {
-    id
-    name
-    postsTotal
-    followersTotal
-  }
-  members {
-    total
-    hasMore
-    items {
-      id
-      name
-      avatarUrl
-      bio
-      tagline
-      location
-    }
-  }
-  eventInvitations {
-    total
-    hasMore
-    items {
-      id
-      response
-      person {
-        id
-        name
-        avatarUrl
-        bio
-        tagline
-        location
+    "query": "query ($afterTime: Date, $beforeTime: Date, $boundingBox: [PointInput], $context: String, $filter: String, $first: Int, $groupSlugs: [String], $offset: Int, $order: String, $search: String, $sortBy: String, $topic: ID) {
+        ...PostsQueryFragment
       }
-    }
-  }
 
-  }
-}
-}",
+      fragment PostsQueryFragment on Query {
+        posts(
+          afterTime: $afterTime
+          beforeTime: $beforeTime
+          boundingBox: $boundingBox
+          filter: $filter
+          first: $first
+          groupSlugs: $groupSlugs
+          offset: $offset
+          context: $context
+          order: $order
+          sortBy: $sortBy
+          search: $search
+          topic: $topic
+        ) {
+          hasMore
+          total
+          items {
+            ...PostFieldsFragment
+          }
+        }
+      }
+
+      fragment PostFieldsFragment on Post {
+        id
+        announcement
+        title
+        details
+        type
+        creator {
+          id
+          name
+          avatarUrl
+        }
+        createdAt
+        updatedAt
+        isPublic
+        fulfilledAt
+        startTime
+        endTime
+        myEventResponse
+        commenters(first: 3) {
+          id
+          name
+          avatarUrl
+        }
+        commentersTotal
+        comments(first: 10, order: \\"desc\\") @include(if: $withComments) {
+          items {
+            ...CommentFieldsFragment
+            childComments(first: 4, order: \\"desc\\") {
+              items {
+                ...CommentFieldsFragment
+                post {
+                  id
+                }
+              }
+              total
+              hasMore
+            }
+          }
+          total
+          hasMore
+        }
+        linkPreview {
+          id
+          title
+          url
+          imageUrl
+        }
+        location
+        locationObject {
+          id
+          addressNumber
+          addressStreet
+          bbox {
+            lat
+            lng
+          }
+          center {
+            lat
+            lng
+          }
+          city
+          country
+          fullText
+          locality
+          neighborhood
+          region
+        }
+        votesTotal
+        myVote
+        groups {
+          id
+          name
+          slug
+        }
+        attachments {
+          type
+          url
+          position
+          id
+        }
+        postMemberships {
+          id
+          pinned
+          group {
+            id
+          }
+        }
+        topics {
+          id
+          name
+          postsTotal
+          followersTotal
+        }
+        members {
+          total
+          hasMore
+          items {
+            id
+            name
+            avatarUrl
+            bio
+            tagline
+            location
+          }
+        }
+        eventInvitations {
+          total
+          hasMore
+          items {
+            id
+            response
+            person {
+              id
+              name
+              avatarUrl
+              bio
+              tagline
+              location
+            }
+          }
+        }
+      }
+
+      fragment CommentFieldsFragment on Comment {
+        id
+        text
+        creator {
+          id
+          name
+          avatarUrl
+        }
+        attachments {
+          id
+          position
+          type
+          url
+        }
+        parentComment {
+          id
+        }
+        createdAt
+      }",
     "variables": Object {
       "boundingBox": undefined,
       "context": "all",

@@ -6,7 +6,7 @@ Object {
     "query": "mutation ($personId: ID, $groupId: ID) {
         addModerator(personId: $personId, groupId: $groupId) {
           id
-          moderators (first: 100) {
+          moderators(first: 100) {
             items {
               id
               name
@@ -33,9 +33,13 @@ exports[`mapDispatchToProps correctly sets up dispatches 2`] = `
 Object {
   "graphql": Object {
     "query": "mutation ($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
-        removeModerator(personId: $personId, groupId: $groupId, isRemoveFromGroup: $isRemoveFromGroup) {
+        removeModerator(
+          personId: $personId
+          groupId: $groupId
+          isRemoveFromGroup: $isRemoveFromGroup
+        ) {
           id
-          moderators (first: 100) {
+          moderators(first: 100) {
             items {
               id
               name
@@ -64,9 +68,9 @@ exports[`mapDispatchToProps correctly sets up dispatches 3`] = `
 Object {
   "graphql": Object {
     "query": "query ($id: ID, $autocomplete: String) {
-        group (id: $id) {
+        group(id: $id) {
           id
-          members (first: 10, autocomplete: $autocomplete) {
+          members(first: 10, autocomplete: $autocomplete) {
             hasMore
             items {
               id
