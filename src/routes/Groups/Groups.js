@@ -81,7 +81,7 @@ export function GroupsList ({ groups, routeParams }) {
 }
 
 export function GroupCard ({ group, routeParams }) {
-  return <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
+  return <Link to={group.memberStatus === 'member' ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
     <div styleName='group-card'>
       <div styleName='card-wrapper'>
         <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
