@@ -43,6 +43,7 @@ export default class ThreadList extends Component {
             value={threadSearch}
             onChange={this.onSearchChange}
             onFocus={this.props.onFocus}
+            noClearButton
           />
         </div>
         <Link styleName='new-message' to='/messages/new'>
