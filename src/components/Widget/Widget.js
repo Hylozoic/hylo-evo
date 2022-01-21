@@ -20,6 +20,11 @@ import PrivacyWidget from './PrivacyWidget'
 import RichTextWidget from './RichTextWidget'
 import JoinWidget from './JoinWidget'
 import TopicsWidget from './TopicsWidget'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEnsureCurrentGroup } from 'hooks/useEnsureCurrentGroup'
+import getMe from 'store/selectors/getMe'
+import { updateWidget } from './Widget.store'
+import { useRouter } from 'hooks/useRouter'
 
 const WIDGETS = {
   text_block: {
@@ -106,9 +111,14 @@ const WIDGETS = {
 }
 
 export default function Widget (props) {
-  const { childGroups, currentUser, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
+  const dispatch = useDispatch()
+  const { childGroups, id, isModerator, isVisible, name, posts, settings } = props
+  const router = useRouter()
+  const routeParams = router && router.query
+  const { group } = useEnsureCurrentGroup()
+  const currentUser = useSelector(getMe)
+  const handleUpdateWidget = (id, changes) => dispatch(updateWidget(id, changes))
 
-  // might focus on pushing more and more of the data these widgets require into selector hooks and relying less and less on props being passed down
   if (!WIDGETS[name]) return null
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -135,7 +145,7 @@ export default function Widget (props) {
                 <VisibilityToggle
                   id={id}
                   checked={isVisible}
-                  onChange={() => updateWidget(id, { isVisible: !isVisible })}
+                  onChange={() => handleUpdateWidget(id, { isVisible: !isVisible })}
                   styleName='widget-visibility'
                   backgroundColor={isVisible ? 'gray' : 'black'} /> <span styleName='visibility-label'>Visibility:</span> {isVisible ? 'Visible' : 'Hidden'}
               </div>
