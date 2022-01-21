@@ -7,7 +7,7 @@ export default function blockUser (blockedUserId) {
     type: BLOCK_USER,
     graphql: {
       query: gql`
-        mutation ($blockedUserId: ID) {
+        mutation BlockUserMutation($blockedUserId: ID) {
           blockUser (blockedUserId: $blockedUserId) {
             success
           }

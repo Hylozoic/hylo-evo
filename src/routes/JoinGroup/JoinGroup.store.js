@@ -12,7 +12,7 @@ export function checkInvitation (inviteCodes) {
     type: CHECK_INVITATION,
     graphql: {
       query: gql`
-        query ($invitationToken: String, $accessCode: String) {
+        query CheckInvitation($invitationToken: String, $accessCode: String) {
           checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
             valid
           }
@@ -32,7 +32,7 @@ export function useInvitation (inviteCodes = {}) {
     type: USE_INVITATION,
     graphql: {
       query: gql`
-        mutation ($invitationToken: String, $accessCode: String) {
+        mutation UseInvitation($invitationToken: String, $accessCode: String) {
           useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
             membership {
               id

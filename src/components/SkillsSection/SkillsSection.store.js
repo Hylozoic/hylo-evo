@@ -24,7 +24,7 @@ export function addSkill (skillName) {
     type: ADD_SKILL,
     graphql: {
       query: gql`
-        mutation ($name: String) {
+        mutation AddSkill($name: String) {
           addSkill(name: $name) {
             id,
             name
@@ -47,7 +47,7 @@ export function addSkillToGroup (groupId, skillName) {
     type: ADD_SKILL_TO_GROUP,
     graphql: {
       query: gql`
-        mutation ($groupId: ID, $name: String) {
+        mutation AddSkillToGroup($groupId: ID, $name: String) {
           addSuggestedSkillToGroup(groupId: $groupId, name: $name) {
             id,
             name
@@ -72,7 +72,7 @@ export function removeSkill (skillId) {
     type: REMOVE_SKILL,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation RemoveSkill($id: ID) {
           removeSkill(id: $id) {
             success
           }
@@ -94,7 +94,7 @@ export function removeSkillFromGroup (groupId, skillId) {
     type: REMOVE_SKILL_FROM_GROUP,
     graphql: {
       query: gql`
-        mutation ($groupId: ID, $id: ID) {
+        mutation RemoveSkillFromGroup($groupId: ID, $id: ID) {
           removeSuggestedSkillFromGroup(groupId: $groupId, id: $id) {
             success
           }
@@ -125,7 +125,7 @@ export function fetchMemberSkills (id, limit = 20) {
     type: FETCH_MEMBER_SKILLS,
     graphql: {
       query: gql`
-        query ($id: ID, $limit: Int) {
+        query PersonSkills($id: ID, $limit: Int) {
           person (id: $id) {
             id
             skills (first: $limit) {
@@ -150,8 +150,8 @@ export function fetchSkillSuggestions (search) {
     type: FETCH_SKILL_SUGGESTIONS,
     graphql: {
       query: gql`
-        query ($search: String) {
-          skills (first: 10, autocomplete: $search) {
+        query SkillsSuggestions($search: String) {
+          skills(first: 10, autocomplete: $search) {
             items {
               id
               name

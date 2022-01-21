@@ -3,7 +3,7 @@
 exports[`addModerator 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($personId: ID, $groupId: ID) {
+    "query": "mutation AddModerator($personId: ID, $groupId: ID) {
         addModerator(personId: $personId, groupId: $groupId) {
           id
           moderators(first: 100) {
@@ -38,7 +38,7 @@ Object {
 exports[`fetchModeratorSuggestions 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($id: ID, $autocomplete: String) {
+    "query": "query ModeratorSuggestions($id: ID, $autocomplete: String) {
         group(id: $id) {
           id
           members(first: 10, autocomplete: $autocomplete) {
@@ -66,7 +66,7 @@ Object {
 exports[`removeModerator 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
+    "query": "mutation RemoveModerator($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
         removeModerator(
           personId: $personId
           groupId: $groupId

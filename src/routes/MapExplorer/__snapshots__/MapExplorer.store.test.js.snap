@@ -3,7 +3,7 @@
 exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($afterTime: Date, $beforeTime: Date, $boundingBox: [PointInput], $filter: String, $first: Int, $offset: Int, $order: String, $search: String, $slug: String, $sortBy: String, $topic: ID, $withComments: Boolean = false) {
+    "query": "query GroupPosts($afterTime: Date, $beforeTime: Date, $boundingBox: [PointInput], $filter: String, $first: Int, $offset: Int, $order: String, $search: String, $slug: String, $sortBy: String, $topic: ID, $withComments: Boolean = false) {
         group(slug: $slug, updateLastViewed: true) {
           id
           slug
@@ -202,7 +202,7 @@ Object {
 exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($afterTime: Date, $beforeTime: Date, $boundingBox: [PointInput], $context: String, $filter: String, $first: Int, $groupSlugs: [String], $offset: Int, $order: String, $search: String, $sortBy: String, $topic: ID) {
+    "query": "query PostsQuery($afterTime: Date, $beforeTime: Date, $boundingBox: [PointInput], $context: String, $filter: String, $first: Int, $groupSlugs: [String], $offset: Int, $order: String, $search: String, $sortBy: String, $topic: ID) {
         ...PostsQueryFragment
       }
 

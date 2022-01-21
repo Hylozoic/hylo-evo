@@ -16,7 +16,7 @@ export function fetchGroupToGroupJoinQuestions () {
     type: FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS,
     graphql: {
       query: gql`
-        query {
+        query GroupToGroupJoinQuestions{
           me {
             memberships {
               id

@@ -11,7 +11,7 @@ export function submitFlagContent (category, reason, linkData) {
     type: FLAG_CONTENT,
     graphql: {
       query: gql`
-        mutation ($category: String, $reason: String, $linkData: LinkDataInput) {
+        mutation FlagContentMutation($category: String, $reason: String, $linkData: LinkDataInput) {
           flagInappropriateContent(data: {category: $category, reason: $reason, linkData: $linkData}) {
             success
           }

@@ -3,7 +3,7 @@
 exports[`matches the last snapshot for createTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+    "query": "mutation CreateTopic($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
         createTopic(
           topicName: $topicName
           groupId: $groupId
@@ -63,7 +63,7 @@ Object {
 exports[`matches the last snapshot for fetchGroupTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($topicName: String, $groupSlug: String) {
+    "query": "query GroupTopic($topicName: String, $groupSlug: String) {
         groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
           id
         }

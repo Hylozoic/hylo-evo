@@ -16,7 +16,7 @@ export function fulfillPost (postId) {
     type: FULFILL_POST,
     graphql: {
       query: gql`
-        mutation ($postId: ID) {
+        mutation FulfillPost($postId: ID) {
           fulfillPost (postId: $postId) {
             success
           }
@@ -38,7 +38,7 @@ export function unfulfillPost (postId) {
     type: UNFULFILL_POST,
     graphql: {
       query: gql`
-        mutation ($postId: ID) {
+        mutation UnfullfillPost($postId: ID) {
           unfulfillPost (postId: $postId) {
             success
           }

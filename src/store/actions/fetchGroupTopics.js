@@ -4,8 +4,8 @@ import GroupTopicsQueryFragment from 'graphql/fragments/GroupTopicsQueryFragment
 
 export const FETCH_GROUP_TOPICS = 'FETCH_GROUP_TOPICS'
 
-const groupQuery = gql`
-  query (
+const GroupQuery = gql`
+  query GroupQuery(
     $id: ID,
     $first: Int,
     $offset: Int,
@@ -23,8 +23,8 @@ const groupQuery = gql`
   ${GroupTopicsQueryFragment}
 `
 
-const rootQuery = gql`
-  query (
+const RootQuery = gql`
+  query RootQuery(
     $first: Int,
     $offset: Int,
     $sortBy: String,
@@ -43,11 +43,11 @@ export default function fetchGroupTopics (groupId, {
 }) {
   let query, extractModel, getItems
   if (groupId) {
-    query = groupQuery
+    query = GroupQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.groupTopics')
   } else {
-    query = rootQuery
+    query = RootQuery
     extractModel = 'GroupTopic'
     getItems = get('payload.data.groupTopics')
   }

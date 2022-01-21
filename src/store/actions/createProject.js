@@ -26,7 +26,7 @@ export default function createProject (postParams) {
     type: CREATE_PROJECT,
     graphql: {
       query: gql`
-        mutation (
+        mutation CreateProjectMutation(
           $title: String,
           $details: String,
           $linkPreviewId: String,

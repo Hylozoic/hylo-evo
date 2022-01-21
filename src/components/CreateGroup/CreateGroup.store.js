@@ -71,7 +71,7 @@ export function fetchGroupExists (slug) {
     type: FETCH_GROUP_EXISTS,
     graphql: {
       query: gql`
-        query ($slug: String) {
+        query GroupExists($slug: String) {
           groupExists (slug: $slug) {
             exists
           }
@@ -89,7 +89,7 @@ export function createGroup (data) {
     type: CREATE_GROUP,
     graphql: {
       query: gql`
-        mutation ($data: GroupInput) {
+        mutation CreateGroup($data: GroupInput) {
           createGroup(data: $data) {
             id
             hasModeratorRole

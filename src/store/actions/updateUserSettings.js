@@ -6,7 +6,7 @@ export default function updateUserSettings (changes) {
     type: UPDATE_USER_SETTINGS,
     graphql: {
       query: gql`
-        mutation ($changes: MeInput) {
+        mutation UpdateUserSettingsMutation($changes: MeInput) {
           updateMe(changes: $changes) {
             id
           }

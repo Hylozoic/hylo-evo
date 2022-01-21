@@ -6,7 +6,7 @@ export default function deleteComment (id) {
     type: DELETE_COMMENT,
     graphql: {
       query: gql`
-        mutation DeleteComment ($id: ID) {
+        mutation DeleteCommentMutation ($id: ID) {
           deleteComment(id: $id) {
             success
           }

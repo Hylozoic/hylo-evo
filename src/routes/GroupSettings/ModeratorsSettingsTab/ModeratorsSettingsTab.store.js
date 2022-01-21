@@ -31,7 +31,7 @@ export function fetchModeratorSuggestions (id, autocomplete) {
     type: FETCH_MODERATOR_SUGGESTIONS,
     graphql: {
       query: gql`
-        query ($id: ID, $autocomplete: String) {
+        query ModeratorSuggestions($id: ID, $autocomplete: String) {
           group (id: $id) {
             id
             members (first: 10, autocomplete: $autocomplete) {
@@ -66,7 +66,7 @@ export function addModerator (personId, groupId) {
     type: ADD_MODERATOR,
     graphql: {
       query: gql`
-        mutation ($personId: ID, $groupId: ID) {
+        mutation AddModerator($personId: ID, $groupId: ID) {
           addModerator(personId: $personId, groupId: $groupId) {
             id
             moderators (first: 100) {
@@ -94,7 +94,7 @@ export function removeModerator (personId, groupId, isRemoveFromGroup) {
     type: REMOVE_MODERATOR,
     graphql: {
       query: gql`
-        mutation ($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
+        mutation RemoveModerator($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
           removeModerator(personId: $personId, groupId: $groupId, isRemoveFromGroup: $isRemoveFromGroup) {
             id
             moderators (first: 100) {

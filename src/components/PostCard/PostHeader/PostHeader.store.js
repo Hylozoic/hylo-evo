@@ -20,7 +20,7 @@ export function deletePost (id, groupId) {
     type: DELETE_POST,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation DeletePost($id: ID) {
           deletePost(id: $id) {
             success
           }
@@ -43,7 +43,7 @@ export function removePost (postId, slug) {
     type: REMOVE_POST,
     graphql: {
       query: gql`
-        mutation ($postId: ID, $slug: String) {
+        mutation RemovePost($postId: ID, $slug: String) {
           removePost(postId: $postId, slug: $slug) {
             success
           }
@@ -67,7 +67,7 @@ export function pinPost (postId, groupId) {
     type: PIN_POST,
     graphql: {
       query: gql`
-        mutation ($postId: ID, $groupId: ID) {
+        mutation PinPost($postId: ID, $groupId: ID) {
           pinPost(postId: $postId, groupId: $groupId) {
             success
           }
@@ -91,7 +91,7 @@ export function fulfillPost (postId) {
     type: FULFILL_POST,
     graphql: {
       query: gql`
-        mutation ($postId: ID) {
+        mutation FullfillPost($postId: ID) {
           fulfillPost (postId: $postId) {
             success
           }

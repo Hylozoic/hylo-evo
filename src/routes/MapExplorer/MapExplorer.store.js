@@ -34,8 +34,8 @@ export function formatBoundingBox (bbox) {
   return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
-const groupPostsQuery = gql`
-  query (
+const GroupPostsQuery = gql`
+  query GroupPosts(
     $afterTime: Date,
     $beforeTime: Date,
     $boundingBox: [PointInput]
@@ -62,8 +62,8 @@ const groupPostsQuery = gql`
   ${GroupViewPostsQueryFragment}
 `
 
-const postsQuery = gql`
-  query (
+const PostsQuery = gql`
+  query PostsQuery(
     $afterTime: Date,
     $beforeTime: Date,
     $boundingBox: [PointInput],
@@ -82,8 +82,8 @@ const postsQuery = gql`
   ${PostsQueryFragment}
 `
 
-const groupMembersQuery = gql`
-  query (
+const GroupMembersQuery = gql`
+  query GroupMembers(
     $boundingBox: [PointInput],
     $slug: String,
     $sortBy: String,
@@ -126,7 +126,7 @@ const groupMembersQuery = gql`
 `
 
 const groupsQuery = gql`
-  query (
+  query Groups(
     $boundingBox: [PointInput]
     $context: String
     $parentSlugs: [String]
@@ -147,11 +147,11 @@ export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boun
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery
+    query = GroupPostsQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
-    query = postsQuery
+    query = PostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -186,7 +186,7 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search, grou
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupMembersQuery
+    query = GroupMembersQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.members')
   } else if (context === 'all') {

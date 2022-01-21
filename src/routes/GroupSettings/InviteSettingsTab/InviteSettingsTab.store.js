@@ -35,7 +35,7 @@ export function createInvitations (groupId, emails, message) {
     type: CREATE_INVITATIONS,
     graphql: {
       query: gql`
-        mutation ($groupId: ID, $data: InviteInput) {
+        mutation CreateInvitations($groupId: ID, $data: InviteInput) {
           createInvitation(groupId: $groupId, data: $data) {
             invitations {
               id,
@@ -68,7 +68,7 @@ export function reinviteAll (groupId) {
     type: REINVITE_ALL,
     graphql: {
       query: gql`
-        mutation ($groupId: ID) {
+        mutation ReinviteAll($groupId: ID) {
           reinviteAll(groupId: $groupId) {
             success
           }
@@ -90,7 +90,7 @@ export function expireInvitation (invitationToken) {
     type: EXPIRE_INVITATION,
     graphql: {
       query: gql`
-        mutation ($invitationToken: ID) {
+        mutation ExpireInvitation($invitationToken: ID) {
           expireInvitation(invitationId: $invitationToken) {
             success
           }
@@ -112,7 +112,7 @@ export function resendInvitation (invitationToken) {
     type: RESEND_INVITATION,
     graphql: {
       query: gql`
-        mutation ($invitationToken: ID) {
+        mutation ResendInvitation($invitationToken: ID) {
           resendInvitation(invitationId: $invitationToken) {
             success
           }
@@ -134,7 +134,7 @@ export function allowGroupInvites (groupId, data) {
     type: ALLOW_GROUP_INVITES,
     graphql: {
       query: gql`
-        mutation ($groupId: ID, $data: Boolean) {
+        mutation AllowGroupInvite($groupId: ID, $data: Boolean) {
           allowGroupInvites(groupId: $groupId, data: $data) {
             id
           }

@@ -5,7 +5,7 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
+        "query": "mutation RemovePost($postId: ID, $slug: String) {
             removePost(postId: $postId, slug: $slug) {
               success
             }
@@ -26,7 +26,7 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
+        "query": "mutation RemovePost($postId: ID, $slug: String) {
             removePost(postId: $postId, slug: $slug) {
               success
             }
@@ -62,7 +62,7 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
+        "query": "mutation RemovePost($postId: ID, $slug: String) {
             removePost(postId: $postId, slug: $slug) {
               success
             }
@@ -94,7 +94,7 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $groupId: ID) {
+        "query": "mutation PinPost($postId: ID, $groupId: ID) {
             pinPost(postId: $postId, groupId: $groupId) {
               success
             }

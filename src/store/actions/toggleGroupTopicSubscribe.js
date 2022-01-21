@@ -1,11 +1,13 @@
+import gql from 'graphql-tag'
 import { TOGGLE_GROUP_TOPIC_SUBSCRIBE } from 'store/constants'
 
-const query =
-`mutation($topicId: ID, $groupId: ID, $isSubscribing: Boolean) {
-  subscribe(topicId: $topicId, groupId: $groupId, isSubscribing: $isSubscribing) {
-    success
+const query = gql`
+  mutation ToggleGroupTopicSubscriptionMutation($topicId: ID, $groupId: ID, $isSubscribing: Boolean) {
+    subscribe(topicId: $topicId, groupId: $groupId, isSubscribing: $isSubscribing) {
+      success
+    }
   }
-}`
+`
 
 export default function (groupTopic) {
   const { topic, group, isSubscribed } = groupTopic

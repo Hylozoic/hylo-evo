@@ -14,7 +14,7 @@ export function acceptGroupRelationshipInvite (groupRelationshipInviteId) {
     type: ACCEPT_GROUP_RELATIONSHIP_INVITE,
     graphql: {
       query: gql`
-        mutation acceptGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
+        mutation AcceptGroupRelationshipInviteMutation ($groupRelationshipInviteId: ID) {
           acceptGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
             success
             groupRelationship {
@@ -49,7 +49,7 @@ export function cancelGroupRelationshipInvite (groupRelationshipInviteId) {
     type: CANCEL_GROUP_RELATIONSHIP_INVITE,
     graphql: {
       query: gql`
-        mutation cancelGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
+        mutation CancelGroupRelationshipInviteMutation ($groupRelationshipInviteId: ID) {
           cancelGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
             success
           }
@@ -70,7 +70,7 @@ export function rejectGroupRelationshipInvite (groupRelationshipInviteId) {
     type: REJECT_GROUP_RELATIONSHIP_INVITE,
     graphql: {
       query: gql`
-        mutation rejectGroupRelationshipInvite ($groupRelationshipInviteId: ID) {
+        mutation RejectGroupRelationshipInviteMutation ($groupRelationshipInviteId: ID) {
           rejectGroupRelationshipInvite(groupRelationshipInviteId: $groupRelationshipInviteId) {
             success
           }
@@ -91,7 +91,7 @@ export function deleteGroupRelationship (parentId, childId) {
     type: DELETE_GROUP_RELATIONSHIP,
     graphql: {
       query: gql`
-        mutation deleteGroupRelationship ($parentId: ID, $childId: ID) {
+        mutation DeleteGroupRelationshipMutation ($parentId: ID, $childId: ID) {
           deleteGroupRelationship(parentId: $parentId, childId: $childId) {
             success
           }
@@ -114,7 +114,7 @@ export function inviteGroupToJoinParent (parentId, childId) {
     type: INVITE_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
       query: gql`
-        mutation ($parentId: ID, $childId: ID) {
+        mutation InviteGroupToJoinParentMutation($parentId: ID, $childId: ID) {
           inviteGroupToJoinParent(parentId: $parentId, childId: $childId) {
             success
             groupRelationship {
@@ -169,7 +169,7 @@ export function requestToAddGroupToParent (parentId, childId, questionAnswers) {
     type: REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
     graphql: {
       query: gql`
-        mutation ($parentId: ID, $childId: ID, $questionAnswers: [QuestionAnswerInput]) {
+        mutation RequestToAddGroupToParentMutation($parentId: ID, $childId: ID, $questionAnswers: [QuestionAnswerInput]) {
           requestToAddGroupToParent(parentId: $parentId, childId: $childId, questionAnswers: $questionAnswers) {
             success
             groupRelationship {

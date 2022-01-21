@@ -7,14 +7,14 @@ export default function fetchGroupDetails (slug) {
     type: FETCH_GROUP_DETAILS,
     graphql: {
       query: gql`
-        query (
+        query GroupDetailsQuery(
           $slug: String
           $withTopics: Boolean = true
           $withJoinQuestions: Boolean = true
           $withPrerequisites: Boolean = true
         ) {
           group(slug: $slug) {
-            ..GroupFieldsFragment
+            ...GroupFieldsFragment
           }
         }
 

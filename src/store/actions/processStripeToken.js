@@ -6,7 +6,7 @@ export default function (postId, token, amount) {
     type: PROCESS_STRIPE_TOKEN,
     graphql: {
       query: gql`
-        mutation ($postId: ID, $token: String, $amount: Int) {
+        mutation ProcessStripTokenMutation($postId: ID, $token: String, $amount: Int) {
           processStripeToken (postId: $postId, token: $token, amount: $amount) {
             success
           }

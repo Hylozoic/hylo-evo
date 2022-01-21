@@ -17,7 +17,7 @@ export const FETCH_SEARCH = `${MODULE_NAME}/FETCH_SEARCH`
 // Actions
 
 const searchQuery = gql`
-  query ($search: String, $type: String, $offset: Int) {
+  query Search($search: String, $type: String, $offset: Int) {
     search(term: $search, first: 10, type: $type, offset: $offset) {
       total
       hasMore

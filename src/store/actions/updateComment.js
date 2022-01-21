@@ -6,7 +6,7 @@ export default function updateComment (id, text, attachments = []) {
     type: UPDATE_COMMENT,
     graphql: {
       query: gql`
-        mutation UpdateComment ($id: ID, $data: CommentInput) {
+        mutation UpdateCommentMutation($id: ID, $data: CommentInput) {
           updateComment(id: $id, data: $data) {
             id
             text

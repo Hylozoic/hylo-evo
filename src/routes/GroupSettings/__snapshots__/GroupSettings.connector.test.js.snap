@@ -34,7 +34,7 @@ Object {
 exports[`mergeProps merges the props 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($slug: String) {
+    "query": "query GroupSettings($slug: String) {
         group(slug: $slug) {
           id
           accessibility
@@ -147,7 +147,7 @@ Object {
 exports[`mergeProps merges the props 2`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($id: ID, $changes: GroupInput) {
+    "query": "mutation UpdateGroupSettings($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
           groupToGroupJoinQuestions {

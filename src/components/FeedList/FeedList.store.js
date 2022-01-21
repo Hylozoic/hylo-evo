@@ -53,7 +53,7 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
 }
 
 const groupQuery = gql`
-  query GroupQuery (
+  query GroupQuery(
     $afterTime: Date,
     $beforeTime: Date,
     $boundingBox: [PointInput],
@@ -83,11 +83,12 @@ const groupQuery = gql`
       ...GroupViewPostsQueryFragment
     }
   }
+
   ${GroupViewPostsQueryFragment}
 `
 
 const postsQuery = gql`
-  query PostsQuery (
+  query PostsQuery(
     $afterTime: Date,
     $beforeTime: Date,
     $boundingBox: [PointInput],

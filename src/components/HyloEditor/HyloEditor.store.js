@@ -22,7 +22,7 @@ export function findMentions (mentionSearchTerm) {
     type: FIND_MENTIONS,
     graphql: {
       query: gql`
-        query ($mentionSearchTerm: String) {
+        query FindMentionsQuery($mentionSearchTerm: String) {
           people(autocomplete: $mentionSearchTerm, first: 5) {
             items {
               id
@@ -51,7 +51,7 @@ export function findTopics (topicsSearchTerm) {
     type: FIND_TOPICS,
     graphql: {
       query: gql`
-        query ($topicsSearchTerm: String) {
+        query FindTopicsQuery($topicsSearchTerm: String) {
           groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
             items {
               topic {

@@ -12,7 +12,7 @@ export function fetchNotifications () {
     type: FETCH_NOTIFICATIONS,
     graphql: {
       query: gql`
-        query (
+        query NotificationsQuery(
           $first: Int = 20,
           $order: String = "desc",
           $resetCount: Boolean = true
@@ -76,7 +76,7 @@ export function markActivityRead (id) {
     type: MARK_ACTIVITY_READ,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation MarkActivityReadMutation($id: ID) {
           markActivityRead(id: $id) {
             id
           }
@@ -96,7 +96,7 @@ export function markAllActivitiesRead () {
     type: MARK_ALL_ACTIVITIES_READ,
     graphql: {
       query: gql`
-        mutation {
+        mutation MarkAllActivitiesReadMutation {
           markAllActivitiesRead {
             success
           }

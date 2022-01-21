@@ -38,7 +38,7 @@ export function invitePeopleToEvent (eventId, inviteeIds) {
     type: INVITE_PEOPLE_TO_EVENT,
     graphql: {
       query: gql`
-        mutation ($eventId: ID, $inviteeIds: [ID]) {
+        mutation InvitePeopleToEvent($eventId: ID, $inviteeIds: [ID]) {
           invitePeopleToEvent(eventId: $eventId, inviteeIds: $inviteeIds) {
             id
             eventInvitations {

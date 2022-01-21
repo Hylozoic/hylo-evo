@@ -3,7 +3,7 @@
 exports[`AddLocation should call updateUserSettings 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($changes: MeInput) {
+    "query": "mutation UpdateUserSettingsMutation($changes: MeInput) {
         updateMe(changes: $changes) {
           id
         }

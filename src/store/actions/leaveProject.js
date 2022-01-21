@@ -6,7 +6,7 @@ export default function (id) {
     type: LEAVE_PROJECT,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation LeaveProjectMutation($id: ID) {
           leaveProject (id: $id) {
             success
           }

@@ -24,7 +24,7 @@ export function joinGroup (groupId) {
     type: JOIN_GROUP,
     graphql: {
       query: gql`
-        mutation ($groupId: ID) {
+        mutation JoinGroupMutation($groupId: ID) {
           joinGroup(groupId: $groupId) {
             id
             role
@@ -60,7 +60,7 @@ export function createJoinRequest (groupId, questionAnswers) {
     type: CREATE_JOIN_REQUEST,
     graphql: {
       query: gql`
-        mutation ($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
+        mutation CreateJoinRequest($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
           createJoinRequest(groupId: $groupId, questionAnswers: $questionAnswers) {
             request {
               id

@@ -3,7 +3,7 @@
 exports[`pinPost matches last snapshot 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($postId: ID, $groupId: ID) {
+    "query": "mutation PinPost($postId: ID, $groupId: ID) {
         pinPost(postId: $postId, groupId: $groupId) {
           success
         }

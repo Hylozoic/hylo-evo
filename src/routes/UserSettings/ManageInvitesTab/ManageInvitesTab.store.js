@@ -18,7 +18,7 @@ export function cancelJoinRequest (id) {
     type: CANCEL_JOIN_REQUEST,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation CancelJoinRequest($id: ID) {
           cancelJoinRequest(joinRequestId: $id) {
             success
           }
@@ -37,7 +37,7 @@ export function declineInvite (id) {
     type: DECLINE_GROUP_INVITE,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation DeclineGroupJoin($id: ID) {
           expireInvitation(invitationId: $id) {
             success
           }

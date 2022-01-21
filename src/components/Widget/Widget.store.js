@@ -8,7 +8,7 @@ export function updateWidget (id, changes) {
     type: UPDATE_WIDGET,
     graphql: {
       query: gql`
-        mutation ($id: ID, $changes: GroupWidgetInput) {
+        mutation UpdateWidget($id: ID, $changes: GroupWidgetInput) {
           updateWidget(id: $id, changes: $changes) {
             id
             isVisible

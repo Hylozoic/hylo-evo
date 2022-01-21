@@ -50,7 +50,7 @@ export function acceptJoinRequest (joinRequestId) {
     type: ACCEPT_JOIN_REQUEST,
     graphql: {
       query: gql`
-        mutation ($joinRequestId: ID) {
+        mutation AcceptJoinRequest($joinRequestId: ID) {
           acceptJoinRequest(joinRequestId: $joinRequestId) {
             id
           }
@@ -70,7 +70,7 @@ export function declineJoinRequest (joinRequestId) {
     type: DECLINE_JOIN_REQUEST,
     graphql: {
       query: gql`
-        mutation ($joinRequestId: ID) {
+        mutation DeclineJoinRequest($joinRequestId: ID) {
           declineJoinRequest(joinRequestId: $joinRequestId) {
             id
           }

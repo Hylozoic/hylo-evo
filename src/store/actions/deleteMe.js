@@ -6,7 +6,7 @@ export default function deleteMe () {
     type: DELETE_ME,
     graphql: {
       query: gql`
-        mutation {
+        mutation DeleteMeMutation {
           deleteMe {
             success
           }

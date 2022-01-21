@@ -10,7 +10,7 @@ export function fetchLocation (data) {
     type: FETCH_LOCATION,
     graphql: {
       query: gql`
-        mutation (
+        mutation FindOrCreateLocationQuery(
           $accuracy: String,
           $addressNumber: String,
           $addressStreet: String,

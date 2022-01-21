@@ -34,7 +34,7 @@ export function deleteGroupTopic (groupTopicId) {
     type: DELETE_GROUP_TOPIC,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation DeleteGroupTopic($id: ID) {
           deleteGroupTopic(id: $id) {
             success
           }

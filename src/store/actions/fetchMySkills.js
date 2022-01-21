@@ -7,7 +7,7 @@ export default function fetchMySkills (type, limit = 20) {
     type: FETCH_MY_SKILLS,
     graphql: {
       query: gql`
-        query ($limit: Int) {
+        query MySkillsQuery($limit: Int) {
           me {
             id
             skills (first: $limit) {

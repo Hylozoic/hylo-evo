@@ -22,7 +22,7 @@ export function createAffiliation ({ role, preposition, orgName, url }) {
     type: CREATE_AFFILIATION,
     graphql: {
       query: gql`
-        mutation ($role: String, $preposition: String, $orgName: String, $url: String) {
+        mutation CreateAffiliation($role: String, $preposition: String, $orgName: String, $url: String) {
           createAffiliation(data: { role: $role, preposition: $preposition, orgName: $orgName, url: $url }) {
             id
             role
@@ -48,7 +48,7 @@ export function deleteAffiliation (id) {
     type: DELETE_AFFILIATION,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation DeleteAffiliation($id: ID) {
           deleteAffiliation(id: $id)
         }
       `,
@@ -66,7 +66,7 @@ export function leaveGroup (id) {
     type: LEAVE_GROUP,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation LeaveGroup($id: ID) {
           leaveGroup(id: $id)
         }
       `,

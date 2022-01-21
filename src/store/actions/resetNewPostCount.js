@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import { RESET_NEW_POST_COUNT } from 'store/constants'
 
 export default function resetNewPostCount (id, type) {
@@ -20,14 +21,18 @@ export default function resetNewPostCount (id, type) {
   }
 }
 
-const GroupTopicQuery = `mutation($id: ID, $data: GroupTopicFollowInput) {
-    updateGroupTopicFollow(id: $id, data: $data) {
-      success
+const GroupTopicQuery = gql`
+  mutation GroupTopicQuery($id: ID, $data: GroupTopicFollowInput) {
+      updateGroupTopicFollow(id: $id, data: $data) {
+        success
+      }
     }
-  }`
+`
 
-const MembershipQuery = `mutation($id: ID, $data: MembershipInput) {
+const MembershipQuery = gql`
+  mutation MembershipQuery($id: ID, $data: MembershipInput) {
     updateMembership(groupId: $id, data: $data) {
       id
     }
-  }`
+  }
+`

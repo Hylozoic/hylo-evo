@@ -7,19 +7,19 @@ import GroupTopicsQueryFragment from 'graphql/fragments/GroupTopicsQueryFragment
 export default function (slug) {
   const query = slug
     ? gql`
-      query ($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
+      query GroupQuery($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
         ...GroupQueryFragment
       }
 
       ${GroupQueryFragment}
-      `
+    `
     : gql`
-      query ($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
+      query GroupTopicsQuery($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
         ...GroupTopicsQueryFragment
        }
 
        ${GroupTopicsQueryFragment}
-      `
+    `
 
   return {
     type: FETCH_FOR_GROUP,

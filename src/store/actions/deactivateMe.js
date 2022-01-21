@@ -6,7 +6,7 @@ export default function deactivateMe () {
     type: DEACTIVATE_ME,
     graphql: {
       query: gql`
-        mutation {
+        mutation DeactivateMeMutation{
           deactivateMe {
             success
           }

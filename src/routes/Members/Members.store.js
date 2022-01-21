@@ -8,38 +8,39 @@ export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 export const REMOVE_MEMBER = 'REMOVE_MEMBER'
 export const REMOVE_MEMBER_PENDING = REMOVE_MEMBER + '_PENDING'
 
-export const groupMembersQuery = `
-query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
-  group (slug: $slug) {
-    id
-    name
-    avatarUrl
-    memberCount
-    members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
-      items {
-        id
-        name
-        avatarUrl
-        location
-        tagline
-        skills {
-          hasMore
-          items {
-            id
-            name
+export const GroupMembersQuery = gql`
+  query GroupMembersQuery($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: String) {
+    group (slug: $slug) {
+      id
+      name
+      avatarUrl
+      memberCount
+      members (first: $first, sortBy: $sortBy, offset: $offset, search: $search) {
+        items {
+          id
+          name
+          avatarUrl
+          location
+          tagline
+          skills {
+            hasMore
+            items {
+              id
+              name
+            }
           }
         }
+        hasMore
       }
-      hasMore
     }
   }
-}`
+`
 
 export function fetchGroupMembers (slug, sortBy, offset, search) {
   return {
     type: FETCH_MEMBERS,
     graphql: {
-      query: groupMembersQuery,
+      query: GroupMembersQuery,
       variables: { slug, first: 20, offset, sortBy, search }
     },
     meta: {
@@ -56,7 +57,7 @@ export function removeMember (personId, groupId) {
     type: REMOVE_MEMBER,
     graphql: {
       query: gql`
-        mutation($personId: ID, $groupId: ID) {
+        mutation RemoveMemberMutation($personId: ID, $groupId: ID) {
           removeMember(personId: $personId, groupId: $groupId) {
             id
             memberCount

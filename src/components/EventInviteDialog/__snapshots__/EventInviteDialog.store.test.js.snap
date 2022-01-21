@@ -3,7 +3,7 @@
 exports[`invitePeopleToEvent matches snapshot 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($eventId: ID, $inviteeIds: [ID]) {
+    "query": "mutation InvitePeopleToEvent($eventId: ID, $inviteeIds: [ID]) {
         invitePeopleToEvent(eventId: $eventId, inviteeIds: $inviteeIds) {
           id
           eventInvitations {

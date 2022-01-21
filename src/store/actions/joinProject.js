@@ -6,7 +6,7 @@ export default function (id) {
     type: JOIN_PROJECT,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation JoinProjectMutation($id: ID) {
           joinProject (id: $id) {
             success
           }

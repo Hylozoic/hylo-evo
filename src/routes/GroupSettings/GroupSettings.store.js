@@ -17,7 +17,7 @@ export function fetchGroupSettings (slug) {
     type: FETCH_GROUP_SETTINGS,
     graphql: {
       query: gql`
-        query ($slug: String) {
+        query GroupSettings($slug: String) {
           group (slug: $slug) {
             id
             accessibility
@@ -137,7 +137,7 @@ export function updateGroupSettings (id, changes) {
     type: UPDATE_GROUP_SETTINGS,
     graphql: {
       query: gql`
-        mutation ($id: ID, $changes: GroupInput) {
+        mutation UpdateGroupSettings($id: ID, $changes: GroupInput) {
           updateGroupSettings(id: $id, changes: $changes) {
             id
             groupToGroupJoinQuestions {
@@ -183,7 +183,7 @@ export function regenerateAccessCode (groupId) {
     type: REGENERATE_ACCESS_CODE,
     graphql: {
       query: gql`
-        mutation ($groupId: ID) {
+        mutation RegenerateAccessCode($groupId: ID) {
           regenerateAccessCode(groupId: $groupId) {
             id
             invitePath
@@ -205,7 +205,7 @@ export function deleteGroup (id) {
     type: DELETE_GROUP,
     graphql: {
       query: gql`
-        mutation ($id: ID) {
+        mutation DeleteGroup($id: ID) {
           deleteGroup(id: $id) {
             success
           }

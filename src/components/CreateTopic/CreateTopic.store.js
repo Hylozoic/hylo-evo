@@ -11,7 +11,7 @@ export function fetchGroupTopic (topicName, groupSlug) {
     type: FETCH_GROUP_TOPIC,
     graphql: {
       query: gql`
-        query ($topicName: String, $groupSlug: String) {
+        query GroupTopic($topicName: String, $groupSlug: String) {
           groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
             id
           }
@@ -34,7 +34,7 @@ export function createTopic (topicName, groupId, isDefault = false, isSubscribin
     type: CREATE_TOPIC,
     graphql: {
       query: gql`
-        mutation ($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
+        mutation CreateTopic($topicName: String, $groupId: ID, $isDefault: Boolean, $isSubscribing: Boolean) {
           createTopic(topicName: $topicName, groupId: $groupId, isDefault: $isDefault, isSubscribing: $isSubscribing) {
             id
             name

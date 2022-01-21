@@ -33,7 +33,7 @@ export function setGroupTopicVisibility (groupTopicId, visibility) {
     type: UPDATE_GROUP_TOPIC,
     graphql: {
       query: gql`
-        mutation ($id: ID, $visibility: Int) {
+        mutation UpdateGroupTopicVisibility($id: ID, $visibility: Int) {
           updateGroupTopic(id: $id, data: { visibility: $visibility }) {
             success
           }
@@ -59,7 +59,7 @@ export function setGroupTopicIsDefault (groupTopicId, isDefault) {
     type: UPDATE_GROUP_TOPIC,
     graphql: {
       query: gql`
-        mutation ($id: ID, $isDefault: Boolean) {
+        mutation SetGroupTopicIsDefault($id: ID, $isDefault: Boolean) {
           updateGroupTopic(id: $id, data: { isDefault: $isDefault }) {
             success
           }

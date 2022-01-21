@@ -22,7 +22,7 @@ export function fetchLinkPreview (url) {
     type: FETCH_LINK_PREVIEW,
     graphql: {
       query: gql`
-        mutation ($url: String) {
+        mutation FetchLinkPreview($url: String) {
           findOrCreateLinkPreviewByUrl(data: {url: $url}) {
             id
             url
