@@ -8,7 +8,6 @@ import CardImageAttachments from 'components/CardImageAttachments'
 import PostBody from './PostBody'
 import EventBody from './EventBody'
 import './PostCard.scss'
-import samplePost from './samplePost'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 
@@ -25,11 +24,6 @@ export default class PostCard extends React.Component {
     expanded: PropTypes.bool,
     constrained: PropTypes.bool,
     className: PropTypes.string
-  }
-
-  static defaultProps = {
-    post: samplePost(),
-    routeParams: {}
   }
 
   shouldShowDetails = element => {
