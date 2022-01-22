@@ -1,13 +1,130 @@
+//
 // Bootstrap setup
 $font-family-base: 'Circular Book', sans-serif;
-$border-width: 1px !default;
+// $body-bg: $color-white;
+// $display4-size: 32px;
+// $font-size-h1: 24px;
+// $font-size-h2: 18px;
+// $font-size-h3: 14px;
 
+// // Spacing
+// // Used in spacing utlities helpers (e.g, mb-1, pt-1, mx-3, etc):
+// // https://v4-alpha.getbootstrap.com/utilities/spacing/
+// $spacer:   1rem !default;
+// $spacer-x: $spacer !default;
+// $spacer-y: $spacer !default;
+// $spacers: (
+//   0: (
+//     x: 0,
+//     y: 0
+//   ),
+//   1: (
+//     x: ($spacer-x * .25),
+//     y: ($spacer-y * .25)
+//   ),
+//   2: (
+//     x: ($spacer-x * .5),
+//     y: ($spacer-y * .5)
+//   ),
+//   3: (
+//     x: ($spacer-x * .75),
+//     y: ($spacer-y * .75)
+//   ),
+//   4: (
+//     x: ($spacer-x),
+//     y: ($spacer-y)
+//   ),
+//   5: (
+//     x: ($spacer-x * 1.25),
+//     y: ($spacer-y * 1.25)
+//   ),
+//   6: (
+//     x: ($spacer-x * 1.50),
+//     y: ($spacer-y * 1.50)
+//   ),
+//   7: (
+//     x: ($spacer-x * 1.75),
+//     y: ($spacer-y * 1.75)
+//   ),
+//   8: (
+//     x: ($spacer-x * 2),
+//     y: ($spacer-y * 2)
+//   ),
+//   9: (
+//     x: ($spacer-x * 2.25),
+//     y: ($spacer-y * 2.25)
+//   ),
+//   10: (
+//     x: ($spacer-x * 2.5),
+//     y: ($spacer-y * 2.5)
+//   ),
+//   11: (
+//     x: ($spacer-x * 2.75),
+//     y: ($spacer-y * 2.75)
+//   ),
+//   12: (
+//     x: ($spacer-x * 3),
+//     y: ($spacer-y * 3)
+//   ),
+//   18: (
+//     x: ($spacer-x * 4),
+//     y: ($spacer-y * 4)
+//   )
+// ) !default;
+//
+$border-width: 1px !default;
+//
+// // This variable affects the `.h-*` and `.w-*` classes.
+// $sizes: (
+//   25: 25%,
+//   50: 50%,
+//   75: 75%,
+//   100: 100%,
+//   125: 125%,
+//   150: 150%,
+//   175: 175%,
+//   200: 200%,
+//   225: 225%,
+//   250: 250%,
+//   275: 275%,
+//   300: 300%,
+//   400: 400%
+// ) !default;
+//
 // Core Bootstrap variables and mixins
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/variables";
-@import "node_modules/bootstrap/scss/mixins";
-@import "node_modules/bootstrap/scss/root";
-@import "node_modules/bootstrap/scss/reboot";
-@import "node_modules/bootstrap/scss/transitions";
-@import "node_modules/bootstrap/scss/utilities";
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+@import 'node_modules/bootstrap/scss/custom';
+
+/*!
+ * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
+ * Copyright 2011-2017 The Bootstrap Authors
+ * Copyright 2011-2017 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// // NOTE: Moved to variables resource file to make globally available in CSS Modules
+// // Core variables and mixins
+// @import "node_modules/bootstrap/scss/variables";
+// @import "node_modules/bootstrap/scss/mixins";
+// @import "node_modules/bootstrap/scss/custom";
+
+// Reset and dependencies
+@import "node_modules/bootstrap/scss/normalize";
 @import "node_modules/bootstrap/scss/print";
+
+// Core CSS
+@import "node_modules/bootstrap/scss/reboot";
+// @import "node_modules/bootstrap/scss/type";
+// @import "node_modules/bootstrap/scss/images";
+// @import "node_modules/bootstrap/scss/code";
+// @import "node_modules/bootstrap/scss/grid";
+// @import "node_modules/bootstrap/scss/tables";
+// @import "node_modules/bootstrap/scss/forms";
+// @import "node_modules/bootstrap/scss/buttons";
+
+// Components
+// @import "node_modules/bootstrap/scss/card";
+
+// Utility classes
+// @import "node_modules/bootstrap/scss/utilities";
