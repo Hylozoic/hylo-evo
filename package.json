@@ -4,7 +4,7 @@
   "version": "3.2.6",
   "private": true,
   "engines": {
-    "node": "15.5.0",
+    "node": "16.13.2",
     "yarn": "^1.2.0"
   },
   "browserslist": [
@@ -163,7 +163,6 @@
     "moment-locales-webpack-plugin": "^1.2.0",
     "moment-timezone": "^0.5.33",
     "newrelic": "^7.0.2",
-    "node-sass": "^5.0.0",
     "normalize.css": "^7.0.0",
     "object-assign": "4.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
@@ -225,6 +224,7 @@
     "rollbar": "^2.3.2",
     "root-path": "^0.2.0",
     "sails.io.js": "1.2.1",
+    "sass": "^1.49.0",
     "sass-loader": "^10.1.1",
     "sass-resources-loader": "^2.1.1",
     "scroll-into-view-if-needed": "^2.2.26",
