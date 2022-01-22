@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useHistory } from 'react-router-dom'
 import { debounce, get, groupBy, isEqual } from 'lodash'
 import cx from 'classnames'
@@ -18,7 +18,10 @@ import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/cluste
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import Map from 'components/Map/Map'
+
+import { lazy } from '@loadable/component'
+const Map = lazy(() => import('components/Map/Map'))
+
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
 import SwitchStyled from 'components/SwitchStyled'
@@ -382,14 +385,16 @@ export class UnwrappedMapExplorer extends React.Component {
 
     return <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
       <div styleName='mapContainer'>
-        <Map
-          layers={[groupIconLayer, clusterLayer]}
-          afterViewportUpdate={this.afterViewportUpdate}
-          onViewportUpdate={this.mapViewPortUpdate}
-          children={this._renderTooltip()}
-          viewport={viewport}
-        />
-        { pending && <Loading className={styles.loading} /> }
+        <Suspense fallback={<Loading className={styles.loading} />}>
+          <Map
+            layers={[groupIconLayer, clusterLayer]}
+            afterViewportUpdate={this.afterViewportUpdate}
+            onViewportUpdate={this.mapViewPortUpdate}
+            children={this._renderTooltip()}
+            viewport={viewport}
+          />
+        </Suspense>
+        {pending && <Loading className={styles.loading} />}
       </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />

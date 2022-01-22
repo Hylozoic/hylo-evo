@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import { get, isEqual, some } from 'lodash/fp'
 import qs from 'querystring'
-import React, { Component, Suspense } from 'react'
+import React, { Component } from 'react'
 import Intercom from 'react-intercom'
 import Joyride from 'react-joyride'
 import {
@@ -11,8 +11,6 @@ import {
   Switch
 } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
-import { lazy } from '@loadable/component'
-
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import AddLocation from 'routes/WelcomeWizard/AddLocation'
@@ -27,10 +25,7 @@ import Drawer from './components/Drawer'
 import Events from 'routes/Events'
 import Feed from 'routes/Feed'
 import Stream from 'routes/Stream'
-
-const MapExplorer = lazy(() => import('routes/MapExplorer'))
-
-// import MapExplorer from 'routes/MapExplorer'
+import MapExplorer from 'routes/MapExplorer'
 import LandingPage from 'routes/LandingPage'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
@@ -331,56 +326,54 @@ export default class PrimaryLayout extends Component {
           <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
 
         <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
-              {welcomeRoutes.map(({ path, child }) =>
-                <Route path={path} key={path} render={props =>
-                  <WelcomeWizardModal {...props} child={child} />} />)}
-              {signupInProgress &&
-                <RedirectToWelcomeFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
-              {!signupInProgress &&
-                <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
-              {/* **** Member Routes **** */}
-              <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
-              <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
-              {/* **** All and Public Routes **** */}
-              <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(all|public)/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
-              <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
-              <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
-              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
-              <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-              <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              {/* **** Group Routes **** */}
-              {/* When viewing a group you are not a member of show group detail page */}
-              {slug && !currentGroupMembership &&
-                <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
-              {/* First time viewing a group redirect to explore page */}
-              {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
-                <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
-              <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
-              <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
-              <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
-              <Route path={`/:context(groups)/:groupSlug/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
-              <Route path={`/:context(groups)/:groupSlug/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
-              <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
-              <Route path={`/:context(groups)/:groupSlug/:view(members)/create`} component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
-              <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
-              <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
-              <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-              <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug`} component={Stream} />
-              {/* Other Routes */}
-              <Route path='/settings' component={UserSettings} />
-              <Route path='/search' component={Search} />
-            </Switch>
-          </Suspense>
+          <Switch>
+            {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
+            {welcomeRoutes.map(({ path, child }) =>
+              <Route path={path} key={path} render={props =>
+                <WelcomeWizardModal {...props} child={child} />} />)}
+            {signupInProgress &&
+              <RedirectToWelcomeFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
+            {!signupInProgress &&
+              <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
+            {/* **** Member Routes **** */}
+            <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
+            <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            {/* **** All and Public Routes **** */}
+            <Route path={`/:context(all|public)/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(all|public)/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
+            <Route path='/:context(all)/:view(topics)' component={AllTopics} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            {/* **** Group Routes **** */}
+            {/* When viewing a group you are not a member of show group detail page */}
+            {slug && !currentGroupMembership &&
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
+            {/* First time viewing a group redirect to explore page */}
+            {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
+              <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug/:view(explore)/${GROUP_DETAIL_MATCH}`} exact component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/:view(explore)/${OPTIONAL_POST_MATCH}`} component={LandingPage} />
+            <Route path={`/:context(groups)/:groupSlug/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path={`/:context(groups)/:groupSlug/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
+            <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
+            <Route path={`/:context(groups)/:groupSlug/:view(members)/create`} component={Members} />
+            <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
+            <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
+            <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+            <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
+            <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
+            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug`} component={Stream} />
+            {/* Other Routes */}
+            <Route path='/settings' component={UserSettings} />
+            <Route path='/search' component={Search} />
+          </Switch>
         </Div100vh>
         {group && currentGroupMembership &&
           <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
