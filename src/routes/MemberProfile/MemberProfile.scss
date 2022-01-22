@@ -135,15 +135,15 @@
     background-color: $color-caribbean-green;
     color: white;
   }
-  &:first-child:not(.action-menu) {
-    margin-right: auto;
-    background-color: $color-caribbean-green;
-    color: white;
-    &:hover, &-hover {
-      background-color: white;
-      color: $color-caribbean-green;
-    }
-  }
+  // &:first-child:not(.action-menu) {
+  //   margin-right: auto;
+  //   background-color: $color-caribbean-green;
+  //   color: white;
+  //   &:hover, &-hover {
+  //     background-color: white;
+  //     color: $color-caribbean-green;
+  //   }
+  // }
   &:last-child {
     margin-right: 0;
   }

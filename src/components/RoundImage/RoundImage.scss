@@ -56,8 +56,8 @@
 }
 
 .tiny {
-  width: $space-7x / 2;
-  height: $space-7x / 2;
+  width: calc($space-7x / 2);
+  height: calc($space-7x / 2);
   border: 0;
 }
 
