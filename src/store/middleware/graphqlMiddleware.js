@@ -6,7 +6,7 @@ export default function graphqlMiddleware (store) {
 
     if (!graphql) return next(action)
 
-    const { query: unknownGraphql, variables } = graphql
+    const { query: unknownGraphql, variables = {} } = graphql
     const query = graphqlToString(unknownGraphql)
 
     const path = '/noo/graphql'
