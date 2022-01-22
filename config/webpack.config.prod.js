@@ -8,6 +8,7 @@ const safePostCssParser = require('postcss-safe-parser')
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const paths = require('./paths')
 const getClientEnvironment = require('./env')
 const sharedConfig = require('./webpack.config.shared')
@@ -312,7 +313,13 @@ module.exports = {
       fileName: 'asset-manifest.json'
     }),
     // To strip all locales except “en”
-    new MomentLocalesPlugin()
+    new MomentLocalesPlugin(),
+    // Generate WebPack bundle size stats (see build/stats.json and )
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'none',
+      generateStatsFile: true,
+      statsFilename: 'bundle-stats.json'
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
