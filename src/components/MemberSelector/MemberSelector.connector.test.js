@@ -1,13 +1,10 @@
 import { mapStateToProps, mapDispatchToProps } from './MemberSelector.connector'
 import { MODULE_NAME } from './MemberSelector.store'
 
-jest.mock('lodash/fp', () => ({
-  ...jest.requireActual('lodash/fp'),
-  debounce: (_, fn) => {
-    fn.cancel = jest.fn()
-    return fn
-  }
-}))
+jest.mock('lodash/debounce', () => fn => {
+  fn.cancel = jest.fn()
+  return fn
+})
 
 jest.mock('./MemberSelector.store', () => ({
   ...jest.requireActual('./MemberSelector.store'),
