@@ -21,7 +21,7 @@ $skill-vertical-margin: 8px;
 
 .avatar {
   @include image($avatar-size);
-  border-radius: $avatar-size/2;
+  border-radius: calc($avatar-size / 2);
 }
 
 .dropdown {

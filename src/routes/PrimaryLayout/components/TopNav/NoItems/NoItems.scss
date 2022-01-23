@@ -14,6 +14,6 @@
   .image {
     background: no-repeat center;
     height: $messages-body-height;
-    background-size: $messages-body-height/2;
+    background-size: calc($messages-body-height/2);
   }
 }

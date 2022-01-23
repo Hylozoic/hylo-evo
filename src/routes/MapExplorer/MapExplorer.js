@@ -389,7 +389,7 @@ export class UnwrappedMapExplorer extends React.Component {
           children={this._renderTooltip()}
           viewport={viewport}
         />
-        { pending && <Loading className={styles.loading} /> }
+        {pending && <Loading className={styles.loading} />}
       </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />

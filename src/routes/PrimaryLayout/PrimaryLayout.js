@@ -11,7 +11,6 @@ import {
   Switch
 } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
-
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import AddLocation from 'routes/WelcomeWizard/AddLocation'
