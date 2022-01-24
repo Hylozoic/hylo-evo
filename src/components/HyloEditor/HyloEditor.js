@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Editor from 'draft-js-plugins-editor'
-import createMentionPlugin from 'draft-js-mention-plugin'
-import createLinkifyPlugin from 'draft-js-linkify-plugin'
+import Editor from '@draft-js-plugins/editor'
+import createMentionPlugin from '@draft-js-plugins/mention'
+import createLinkifyPlugin from '@draft-js-plugins/linkify'
 import { EditorState, ContentState, convertToRaw } from 'draft-js'
 import cx from 'classnames'
 import contentStateToHTML from './contentStateToHTML'
@@ -55,7 +55,9 @@ export default class HyloEditor extends Component {
     return {
       editorState: this.getEditorStateFromHTML(contentHTML),
       didInitialFocus: false,
-      submitOnReturnEnabled: true
+      submitOnReturnEnabled: true,
+      mentionsOpen: false,
+      topicsOpen: false
     }
   }
 
@@ -163,23 +165,19 @@ export default class HyloEditor extends Component {
     }
   }
 
-  enableSubmitOnReturn = () => {
-    this.setState({ submitOnReturnEnabled: true })
-  }
-
-  disableSubmitOnReturn = () => {
-    this.setState({ submitOnReturnEnabled: false })
+  toggleMentionsPluginOpenState = key => status => {
+    this.setState({ [`${key}Open`]: status, submitOnReturnEnabled: !status })
   }
 
   handleMentionsClose = () => {
     this.props.clearMentions()
-    this.enableSubmitOnReturn()
+    this.toggleMentionsPluginOpenState('mentions')(true)
     return true
   }
 
   handleTopicsClose = () => {
     this.props.clearTopics()
-    this.enableSubmitOnReturn()
+    this.toggleMentionsPluginOpenState('topics')(true)
     return true
   }
 
@@ -205,7 +203,7 @@ export default class HyloEditor extends Component {
       this._linkifyPlugin
     ]
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
-    const { topicSearch } = this.state
+    const { topicSearch, mentionsOpen, topicsOpen } = this.state
     const topicSuggestions = !validateTopicName(topicSearch)
       ? [{ id: -1, name: topicSearch }].concat(topicResults)
       : topicResults
@@ -223,14 +221,16 @@ export default class HyloEditor extends Component {
         plugins={plugins}
         ref={this.editor} />
       <MentionSuggestions
+        open={mentionsOpen}
         onSearchChange={this.handleMentionsSearch}
         suggestions={mentionResults}
-        onOpen={this.disableSubmitOnReturn}
+        onOpenChange={this.toggleMentionsPluginOpenState('mentions')}
         onClose={this.handleMentionsClose} />
       <TopicSuggestions
+        open={topicsOpen}
         onSearchChange={this.handleTopicSearch}
         suggestions={topicSuggestions}
-        onOpen={this.disableSubmitOnReturn}
+        onOpenChange={this.toggleMentionsPluginOpenState('topics')}
         onClose={this.handleTopicsClose} />
     </div>
   }
