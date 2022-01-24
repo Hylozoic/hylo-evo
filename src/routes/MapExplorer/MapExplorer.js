@@ -245,7 +245,7 @@ export class UnwrappedMapExplorer extends React.Component {
       ...this.updatedMapFeatures(newBoundingBox),
       totalLoadedBoundingBox: finalBbox
     })
-  }, 300)
+  }, 800)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
