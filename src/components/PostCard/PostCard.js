@@ -26,6 +26,10 @@ export default class PostCard extends React.Component {
     className: PropTypes.string
   }
 
+  static defaultProps = {
+    routeParams: {}
+  }
+
   shouldShowDetails = element => {
     if (element === this.refs.postCard) return true
     if (element.tagName === 'A' || element.tagName === 'LI') return false
