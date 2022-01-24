@@ -5,6 +5,7 @@ import orm from 'store/models'
 import presentTopic from 'store/presenters/presentTopic'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
 import { FETCH_DEFAULT_TOPICS, FETCH_TOPICS, UPDATE_GROUP_TOPIC } from 'store/constants'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'TopicsSettings'
 export const SET_SORT = `${MODULE_NAME}/SET_SORT`
@@ -31,11 +32,13 @@ export function setGroupTopicVisibility (groupTopicId, visibility) {
   return {
     type: UPDATE_GROUP_TOPIC,
     graphql: {
-      query: `mutation ($id: ID, $visibility: Int) {
-        updateGroupTopic(id: $id, data: { visibility: $visibility }) {
-          success
+      query: gql`
+        mutation UpdateGroupTopicVisibility($id: ID, $visibility: Int) {
+          updateGroupTopic(id: $id, data: { visibility: $visibility }) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         id: groupTopicId,
         visibility
@@ -55,11 +58,13 @@ export function setGroupTopicIsDefault (groupTopicId, isDefault) {
   return {
     type: UPDATE_GROUP_TOPIC,
     graphql: {
-      query: `mutation ($id: ID, $isDefault: Boolean) {
-        updateGroupTopic(id: $id, data: { isDefault: $isDefault }) {
-          success
+      query: gql`
+        mutation SetGroupTopicIsDefault($id: ID, $isDefault: Boolean) {
+          updateGroupTopic(id: $id, data: { isDefault: $isDefault }) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         id: groupTopicId,
         isDefault

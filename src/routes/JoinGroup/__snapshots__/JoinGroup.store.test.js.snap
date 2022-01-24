@@ -3,8 +3,8 @@
 exports[`JoinGroup.store checkInvitation action creator generates an action with all expected parameters 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($invitationToken: String, $accessCode: String) {
-        checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+    "query": "query CheckInvitation($invitationToken: String, $accessCode: String) {
+        checkInvitation(invitationToken: $invitationToken, accessCode: $accessCode) {
           valid
         }
       }",
@@ -20,8 +20,8 @@ Object {
 exports[`JoinGroup.store useInvitation action creator generates an action with all expected parameters 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($invitationToken: String, $accessCode: String) {
-        useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+    "query": "mutation UseInvitation($invitationToken: String, $accessCode: String) {
+        useInvitation(invitationToken: $invitationToken, accessCode: $accessCode) {
           membership {
             id
             role

@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
+import gql from 'graphql-tag'
 import { FETCH_POSTS } from 'store/constants'
-import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
-import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import GroupViewPostsQueryFragment from 'graphql/fragments/GroupViewPostsQueryFragment'
+import PostsQueryFragment from 'graphql/fragments/PostsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
@@ -12,11 +13,11 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupQuery
+    query = GroupQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
-    query = postsQuery
+    query = PostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -51,52 +52,62 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
   }
 }
 
-const groupQuery = `query (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput],
-  $filter: String,
-  $first: Int,
-  $offset: Int,
-  $order: String,
-  $search: String,
-  $slug: String,
-  $sortBy: String,
-  $topic: ID
-) {
-  group(slug: $slug, updateLastViewed: true) {
-    id
-    slug
-    name
-    locationObject {
-      center {
-        lat
-        lng
+const GroupQuery = gql`
+  query GroupQuery(
+    $afterTime: Date,
+    $beforeTime: Date,
+    $boundingBox: [PointInput],
+    $filter: String,
+    $first: Int,
+    $offset: Int,
+    $order: String,
+    $search: String,
+    $slug: String,
+    $sortBy: String,
+    $topic: ID,
+    $withComments: Boolean = false
+  ) {
+    group(slug: $slug, updateLastViewed: true) {
+      id
+      slug
+      name
+      locationObject {
+        center {
+          lat
+          lng
+        }
       }
+      avatarUrl
+      bannerUrl
+      postCount
+      ...GroupViewPostsQueryFragment
     }
-    avatarUrl
-    bannerUrl
-    postCount
-    ${groupViewPostsQueryFragment}
   }
-}`
 
-const postsQuery = `query (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput],
-  $context: String,
-  $filter: String,
-  $first: Int,
-  $groupSlugs: [String],
-  $offset: Int,
-  $order: String,
-  $search: String,
-  $sortBy: String,
-  $topic: ID,
-) {
-  ${postsQueryFragment}
-}`
+  ${GroupViewPostsQueryFragment}
+`
+
+const PostsQuery = gql`
+  query PostsQuery(
+    $afterTime: Date,
+    $beforeTime: Date,
+    $boundingBox: [PointInput],
+    $context: String,
+    $filter: String,
+    $first: Int,
+    $groupSlugs: [String],
+    $offset: Int,
+    $order: String,
+    $search: String,
+    $sortBy: String,
+    $topic: ID,
+    $withComments: Boolean = false
+  ) {
+    ...PostsQueryFragment
+  }
+
+  ${PostsQueryFragment}
+`
 
 export function storeFetchPostsParam (props) {
   return {

@@ -3,7 +3,7 @@
 exports[`fetchGroupTopic should match latest snapshot 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($groupSlug: String, $topicName: String) {
+    "query": "query GroupTopic($groupSlug: String, $topicName: String) {
         groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
           id
           postsTotal
@@ -32,7 +32,7 @@ Object {
 exports[`fetchTopic should match latest snapshot 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($name: String, $id: ID) {
+    "query": "query Topic($name: String, $id: ID) {
         topic(name: $name, id: $id) {
           id
           name

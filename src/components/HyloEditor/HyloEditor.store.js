@@ -1,5 +1,6 @@
 import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import gql from 'graphql-tag'
 import { includes, mapKeys } from 'lodash'
 import { get } from 'lodash/fp'
 import presentTopic from 'store/presenters/presentTopic'
@@ -20,15 +21,17 @@ export function findMentions (mentionSearchTerm) {
   return {
     type: FIND_MENTIONS,
     graphql: {
-      query: `query ($mentionSearchTerm: String) {
-        people(autocomplete: $mentionSearchTerm, first: 5) {
-          items {
-            id
-            name
-            avatarUrl
+      query: gql`
+        query FindMentionsQuery($mentionSearchTerm: String) {
+          people(autocomplete: $mentionSearchTerm, first: 5) {
+            items {
+              id
+              name
+              avatarUrl
+            }
           }
         }
-      }`,
+      `,
       variables: {
         mentionSearchTerm
       }
@@ -47,18 +50,20 @@ export function findTopics (topicsSearchTerm) {
   return {
     type: FIND_TOPICS,
     graphql: {
-      query: `query ($topicsSearchTerm: String) {
-        groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
-          items {
-            topic {
-              id
-              name
-              followersTotal
-              postsTotal
+      query: gql`
+        query FindTopicsQuery($topicsSearchTerm: String) {
+          groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
+            items {
+              topic {
+                id
+                name
+                followersTotal
+                postsTotal
+              }
             }
           }
         }
-      }`,
+      `,
       variables: {
         topicsSearchTerm
       }

@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import { get } from 'lodash/fp'
 import { convertCoordinateToLocation, parseCoordinate } from 'util/geo'
 
@@ -8,59 +9,61 @@ export function fetchLocation (data) {
   return {
     type: FETCH_LOCATION,
     graphql: {
-      query: `mutation (
-        $accuracy: String,
-        $addressNumber: String,
-        $addressStreet: String,
-        $bbox: [PointInput],
-        $center: PointInput,
-        $city: String,
-        $country: String,
-        $fullText: String,
-        $geometry: [PointInput],
-        $locality: String,
-        $neighborhood: String,
-        $region: String,
-        $postcode: String,
-        $wikidata: String
-      ) {
-        findOrCreateLocation(data: {
-          accuracy: $accuracy,
-          addressNumber: $addressNumber,
-          addressStreet: $addressStreet,
-          bbox: $bbox,
-          center: $center
-          city: $city
-          country: $country,
-          fullText: $fullText,
-          geometry: $geometry,
-          locality: $locality,
-          neighborhood: $neighborhood,
-          region: $region,
-          postcode: $postcode,
-          wikidata: $wikidata
-        }) {
-          id
-          accuracy
-          addressNumber
-          addressStreet
-          bbox {
-            lat
-            lng
+      query: gql`
+        mutation FindOrCreateLocationQuery(
+          $accuracy: String,
+          $addressNumber: String,
+          $addressStreet: String,
+          $bbox: [PointInput],
+          $center: PointInput,
+          $city: String,
+          $country: String,
+          $fullText: String,
+          $geometry: [PointInput],
+          $locality: String,
+          $neighborhood: String,
+          $region: String,
+          $postcode: String,
+          $wikidata: String
+        ) {
+          findOrCreateLocation(data: {
+            accuracy: $accuracy,
+            addressNumber: $addressNumber,
+            addressStreet: $addressStreet,
+            bbox: $bbox,
+            center: $center
+            city: $city
+            country: $country,
+            fullText: $fullText,
+            geometry: $geometry,
+            locality: $locality,
+            neighborhood: $neighborhood,
+            region: $region,
+            postcode: $postcode,
+            wikidata: $wikidata
+          }) {
+            id
+            accuracy
+            addressNumber
+            addressStreet
+            bbox {
+              lat
+              lng
+            }
+            center {
+              lat
+              lng
+            }
+            city
+            country
+            fullText
+            locality
+            neighborhood
+            region
+            postcode
           }
-          center {
-            lat
-            lng
-          }
-          city
-          country
-          fullText
-          locality
-          neighborhood
-          region
-          postcode
         }
-      }`,
+      `,
       variables: { ...data }
     },
     meta: {

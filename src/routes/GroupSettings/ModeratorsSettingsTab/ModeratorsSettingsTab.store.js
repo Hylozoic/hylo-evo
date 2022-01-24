@@ -1,11 +1,12 @@
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import orm from 'store/models'
+import gql from 'graphql-tag'
 import {
   CLEAR_MODERATOR_SUGGESTIONS,
   FETCH_MODERATOR_SUGGESTIONS,
   ADD_MODERATOR,
   REMOVE_MODERATOR
 } from 'store/constants'
-import { createSelector as ormCreateSelector } from 'redux-orm'
-import orm from 'store/models'
 
 export const MODULE_NAME = 'ModeratorsSettingsTab'
 
@@ -29,19 +30,21 @@ export function fetchModeratorSuggestions (id, autocomplete) {
   return {
     type: FETCH_MODERATOR_SUGGESTIONS,
     graphql: {
-      query: `query ($id: ID, $autocomplete: String) {
-        group (id: $id) {
-          id
-          members (first: 10, autocomplete: $autocomplete) {
-            hasMore
-            items {
-              id
-              name
-              avatarUrl
+      query: gql`
+        query ModeratorSuggestions($id: ID, $autocomplete: String) {
+          group (id: $id) {
+            id
+            members (first: 10, autocomplete: $autocomplete) {
+              hasMore
+              items {
+                id
+                name
+                avatarUrl
+              }
             }
           }
         }
-      }`,
+      `,
       variables: {
         id, autocomplete
       }
@@ -62,18 +65,20 @@ export function addModerator (personId, groupId) {
   return {
     type: ADD_MODERATOR,
     graphql: {
-      query: `mutation ($personId: ID, $groupId: ID) {
-        addModerator(personId: $personId, groupId: $groupId) {
-          id
-          moderators (first: 100) {
-            items {
-              id
-              name
-              avatarUrl
+      query: gql`
+        mutation AddModerator($personId: ID, $groupId: ID) {
+          addModerator(personId: $personId, groupId: $groupId) {
+            id
+            moderators (first: 100) {
+              items {
+                id
+                name
+                avatarUrl
+              }
             }
           }
         }
-      }`,
+      `,
       variables: { personId, groupId }
     },
     meta: {
@@ -88,18 +93,20 @@ export function removeModerator (personId, groupId, isRemoveFromGroup) {
   return {
     type: REMOVE_MODERATOR,
     graphql: {
-      query: `mutation ($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
-        removeModerator(personId: $personId, groupId: $groupId, isRemoveFromGroup: $isRemoveFromGroup) {
-          id
-          moderators (first: 100) {
-            items {
-              id
-              name
-              avatarUrl
+      query: gql`
+        mutation RemoveModerator($personId: ID, $groupId: ID, $isRemoveFromGroup: Boolean) {
+          removeModerator(personId: $personId, groupId: $groupId, isRemoveFromGroup: $isRemoveFromGroup) {
+            id
+            moderators (first: 100) {
+              items {
+                id
+                name
+                avatarUrl
+              }
             }
           }
         }
-      }`,
+      `,
       variables: { personId, groupId, isRemoveFromGroup }
     },
     meta: {

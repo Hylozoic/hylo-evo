@@ -1,53 +1,76 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { compact } from 'lodash/fp'
 import orm from 'store/models'
-import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import gql from 'graphql-tag'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
+import PostFieldsFragment from 'graphql/fragments/PostFieldsFragment'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
-const recentActivityQuery =
-`query RecentActivity (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput],
-  $filter: String,
-  $first: Int,
-  $groupSlugs: [String],
-  $id: ID,
-  $offset: Int,
-  $context: String,
-  $order: String,
-  $search: String,
-  $sortBy: String,
-  $topic: ID
-) {
-  person (id: $id) {
-    id
-    comments (first: $first, order: $order) {
-      items {
-        id
-        text
-        creator {
+const recentActivityQuery = gql`
+  query RecentActivity (
+    $afterTime: Date,
+    $beforeTime: Date,
+    $boundingBox: [PointInput],
+    $filter: String,
+    $first: Int,
+    $groupSlugs: [String],
+    $id: ID,
+    $offset: Int,
+    $context: String,
+    $order: String,
+    $search: String,
+    $sortBy: String,
+    $topic: ID
+    $withComments: Boolean = false
+  ) {
+    person (id: $id) {
+      id
+      comments (first: $first, order: $order) {
+        items {
           id
+          text
+          creator {
+            id
+          }
+          post {
+            id
+            title
+          }
+          attachments {
+            type
+            url
+            position
+            id
+          }
+          createdAt
         }
-        post {
-          id
-          title
+      }
+      posts(
+        afterTime: $afterTime,
+        beforeTime: $beforeTime,
+        boundingBox: $boundingBox,
+        filter: $filter,
+        first: $first,
+        groupSlugs: $groupSlugs,
+        offset: $offset,
+        context: $context,
+        order: $order,
+        sortBy: $sortBy,
+        search: $search,
+        topic: $topic
+      ) {
+        hasMore
+        total
+        items {
+          ...PostFieldsFragment
         }
-        attachments {
-          type
-          url
-          position
-          id
-        }
-        createdAt
       }
     }
-    ${postsQueryFragment}
   }
-}`
+  ${PostFieldsFragment}
+`
 
 export function fetchRecentActivity (id, first = 10, query = recentActivityQuery) {
   return {

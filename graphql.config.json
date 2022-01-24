@@ -1,10 +1,10 @@
 {
-  "schema": "https://www.hylo.com/noo/graphql",
-  "documents": "src/components/**/*.js",
+  "schema": "http://localhost:3001/noo/graphql",
+  "documents": "/src/**/*.js",
   "extension": {
     "endpoints": {
       "default": {
-        "url": "https://www.hylo.com/noo/graphql"
+        "url": "http://localhost:3001/noo/graphql"
       }
     }
   }

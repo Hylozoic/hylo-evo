@@ -2,10 +2,11 @@ import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_GROUPS_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
-import groupsQueryFragment from 'graphql/fragments/groupsQueryFragment'
-import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
-import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import GroupsQueryFragment from 'graphql/fragments/GroupsQueryFragment'
+import GroupViewPostsQueryFragment from 'graphql/fragments/GroupViewPostsQueryFragment'
+import PostsQueryFragment from 'graphql/fragments/PostsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'MapExplorer'
 export const STORE_FETCH_PARAMS = `${MODULE_NAME}/STORE_FETCH_PARAMS`
@@ -33,109 +34,124 @@ export function formatBoundingBox (bbox) {
   return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
-const groupPostsQuery = `query (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput]
-  $filter: String,
-  $first: Int,
-  $offset: Int,
-  $order: String,
-  $search: String,
-  $slug: String,
-  $sortBy: String,
-  $topic: ID
-) {
-  group(slug: $slug, updateLastViewed: true) {
-    id
-    slug
-    name
-    avatarUrl
-    bannerUrl
-    postCount
-    ${groupViewPostsQueryFragment}
-  }
-}`
-
-const postsQuery = `query (
-  $afterTime: Date,
-  $beforeTime: Date,
-  $boundingBox: [PointInput],
-  $context: String,
-  $filter: String,
-  $first: Int,
-  $groupSlugs: [String]
-  $offset: Int,
-  $order: String,
-  $search: String,
-  $sortBy: String,
-  $topic: ID
-) {
-  ${postsQueryFragment}
-}`
-
-const membersFragment = `
-  members(sortBy: $sortBy, order: "desc", boundingBox: $boundingBox, search: $search) {
-    items {
+const GroupPostsQuery = gql`
+  query GroupPosts(
+    $afterTime: Date,
+    $beforeTime: Date,
+    $boundingBox: [PointInput]
+    $filter: String,
+    $first: Int,
+    $offset: Int,
+    $order: String,
+    $search: String,
+    $slug: String,
+    $sortBy: String,
+    $topic: ID,
+    $withComments: Boolean = false
+  ) {
+    group(slug: $slug, updateLastViewed: true) {
       id
+      slug
       name
       avatarUrl
-      tagline
-      locationObject {
-        center {
-          lat
-          lng
+      bannerUrl
+      postCount
+      ...GroupViewPostsQueryFragment
+    }
+  }
+  ${GroupViewPostsQueryFragment}
+`
+
+const PostsQuery = gql`
+  query PostsQuery(
+    $afterTime: Date,
+    $beforeTime: Date,
+    $boundingBox: [PointInput],
+    $context: String,
+    $filter: String,
+    $first: Int,
+    $groupSlugs: [String]
+    $offset: Int,
+    $order: String,
+    $search: String,
+    $sortBy: String,
+    $topic: ID
+  ) {
+    ...PostsQueryFragment
+  }
+  ${PostsQueryFragment}
+`
+
+const GroupMembersQuery = gql`
+  query GroupMembers(
+    $boundingBox: [PointInput],
+    $slug: String,
+    $sortBy: String,
+    $search: String
+  ) {
+    group(slug: $slug, updateLastViewed: true) {
+      id
+      slug
+      name
+      avatarUrl
+      bannerUrl
+      postCount
+      ...MembersFragment
+    }
+  }
+
+  fragment MembersFragment on Group {
+    members(sortBy: $sortBy, order: "desc", boundingBox: $boundingBox, search: $search) {
+      items {
+        id
+        name
+        avatarUrl
+        tagline
+        locationObject {
+          center {
+            lat
+            lng
+          }
         }
-      }
-      skills {
-        hasMore
-        items {
-          id
-          name
+        skills {
+          hasMore
+          items {
+            id
+            name
+          }
         }
       }
     }
   }
 `
 
-const groupMembersQuery = `query (
-  $boundingBox: [PointInput],
-  $slug: String,
-  $sortBy: String,
-  $search: String
-) {
-  group(slug: $slug, updateLastViewed: true) {
-    id
-    slug
-    name
-    avatarUrl
-    bannerUrl
-    postCount
-    ${membersFragment}
+const groupsQuery = gql`
+  query Groups(
+    $boundingBox: [PointInput]
+    $context: String
+    $parentSlugs: [String]
+    $search: String
+    $sortBy: String
+    $visibility: Int
+    $withTopics: Boolean = false
+    $withJoinQuestions: Boolean = false
+    $withPrerequisites: Boolean = false
+  ) {
+    ...GroupsQueryFragment
   }
-}`
-
-const groupsQuery = `query (
-  $boundingBox: [PointInput],
-  $context: String,
-  $parentSlugs: [String],
-  $search: String,
-  $sortBy: String,
-  $visibility: Int
-) {
-  ${groupsQueryFragment}
-}`
+  ${GroupsQueryFragment}
+`
 
 // actions
 export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boundingBox, groupSlugs }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery
+    query = GroupPostsQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
-    query = postsQuery
+    query = PostsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -170,7 +186,7 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search, grou
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupMembersQuery
+    query = GroupMembersQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.members')
   } else if (context === 'all') {

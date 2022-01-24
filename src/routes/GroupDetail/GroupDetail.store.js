@@ -1,5 +1,6 @@
 import { CREATE_JOIN_REQUEST, FETCH_MY_JOIN_REQUESTS } from 'store/constants'
-import fetchMyPendingJoinRequestsQuery from 'graphql/queries/fetchMyPendingJoinRequestsQuery'
+import MyPendingJoinRequestsQuery from 'graphql/queries/MyPendingJoinRequestsQuery'
+import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'GroupDetail'
 
@@ -10,7 +11,7 @@ export function fetchJoinRequests (groupId) {
   return {
     type: FETCH_MY_JOIN_REQUESTS,
     graphql: {
-      query: fetchMyPendingJoinRequestsQuery
+      query: MyPendingJoinRequestsQuery
     },
     meta: {
       extractModel: 'Me'
@@ -22,24 +23,26 @@ export function joinGroup (groupId) {
   return {
     type: JOIN_GROUP,
     graphql: {
-      query: `mutation ($groupId: ID) {
-        joinGroup(groupId: $groupId) {
-          id
-          role
-          hasModeratorRole
-          group {
+      query: gql`
+        mutation JoinGroupMutation($groupId: ID) {
+          joinGroup(groupId: $groupId) {
             id
-            name
-            slug
-          }
-          person {
-            id
-          }
-          settings {
-            showJoinForm
+            role
+            hasModeratorRole
+            group {
+              id
+              name
+              slug
+            }
+            person {
+              id
+            }
+            settings {
+              showJoinForm
+            }
           }
         }
-      }`,
+      `,
       variables: {
         groupId
       }
@@ -56,22 +59,24 @@ export function createJoinRequest (groupId, questionAnswers) {
   return {
     type: CREATE_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
-        createJoinRequest(groupId: $groupId, questionAnswers: $questionAnswers) {
-          request {
-            id
-            user {
+      query: gql`
+        mutation CreateJoinRequest($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
+          createJoinRequest(groupId: $groupId, questionAnswers: $questionAnswers) {
+            request {
               id
+              user {
+                id
+              }
+              group {
+                id
+              }
+              createdAt
+              updatedAt
+              status
             }
-            group {
-              id
-            }
-            createdAt
-            updatedAt
-            status
           }
         }
-      }`,
+      `,
       variables: { groupId, questionAnswers }
     },
     meta: {

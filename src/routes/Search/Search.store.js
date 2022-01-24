@@ -1,9 +1,10 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import orm from 'store/models'
+import gql from 'graphql-tag'
 import { isEmpty, includes, get } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
+import PostFieldsFragment from 'graphql/fragments/PostFieldsFragment'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
 
@@ -15,53 +16,56 @@ export const FETCH_SEARCH = `${MODULE_NAME}/FETCH_SEARCH`
 
 // Actions
 
-const searchQuery =
-`query ($search: String, $type: String, $offset: Int) {
-  search(term: $search, first: 10, type: $type, offset: $offset) {
-    total
-    hasMore
-    items {
-      id
-      content {
-        __typename
-        ... on Person {
-          id
-          name
-          location
-          avatarUrl
-          skills {
-            items {
-              id
-              name
-            }
-          }
-        }
-        ... on Post {
-          ${postFieldsFragment(false)}
-        }
-        ... on Comment {
-          id
-          text
-          createdAt
-          creator {
+const searchQuery = gql`
+  query Search($search: String, $type: String, $offset: Int) {
+    search(term: $search, first: 10, type: $type, offset: $offset) {
+      total
+      hasMore
+      items {
+        id
+        content {
+          __typename
+          ... on Person {
             id
             name
+            location
             avatarUrl
+            skills {
+              items {
+                id
+                name
+              }
+            }
           }
-          post {
-            ${postFieldsFragment(false)}
+          ... on Post {
+            ...PostFieldsFragment
           }
-          attachments {
-            type
-            url
-            position
+          ... on Comment {
             id
+            text
+            createdAt
+            creator {
+              id
+              name
+              avatarUrl
+            }
+            post {
+              ...PostFieldsFragment
+            }
+            attachments {
+              type
+              url
+              position
+              id
+            }
           }
         }
       }
     }
   }
-}`
+  
+  ${PostFieldsFragment}
+`
 
 export function fetchSearchResults ({ search, offset = 0, filter, query = searchQuery }) {
   return {

@@ -3,7 +3,7 @@
 exports[`findTopics queries groupTopics at the top level 1`] = `
 Object {
   "graphql": Object {
-    "query": "query ($topicsSearchTerm: String) {
+    "query": "query FindTopicsQuery($topicsSearchTerm: String) {
         groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
           items {
             topic {

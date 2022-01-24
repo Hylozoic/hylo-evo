@@ -3,8 +3,10 @@
 exports[`flagContent should match the last snapshot 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($category: String, $reason: String, $linkData: LinkDataInput) {
-        flagInappropriateContent(data: {category: $category, reason: $reason, linkData: $linkData}) {
+    "query": "mutation FlagContentMutation($category: String, $reason: String, $linkData: LinkDataInput) {
+        flagInappropriateContent(
+          data: {category: $category, reason: $reason, linkData: $linkData}
+        ) {
           success
         }
       }",

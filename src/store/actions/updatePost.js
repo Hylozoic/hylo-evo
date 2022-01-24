@@ -1,10 +1,10 @@
 import { get } from 'lodash/fp'
 import { textLength } from 'hylo-utils/text'
 import { AnalyticsEvents } from 'hylo-utils/constants'
-import updatePostMutation from 'graphql/mutations/updatePostMutation'
+import UpdatePostMutation from 'graphql/mutations/UpdatePostMutation'
 import { UPDATE_POST } from 'store/constants'
 
-export default function updatePost (post, query = updatePostMutation) {
+export default function updatePost (post, query = UpdatePostMutation) {
   const {
     id,
     type,

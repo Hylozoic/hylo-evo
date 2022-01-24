@@ -1,10 +1,12 @@
+import gql from 'graphql-tag'
 import {
   FETCH_JOIN_REQUESTS,
   FETCH_JOIN_REQUESTS_PENDING,
   ACCEPT_JOIN_REQUEST,
   DECLINE_JOIN_REQUEST
 } from 'store/constants'
-import fetchJoinRequestsQuery from 'graphql/queries/fetchJoinRequestsQuery'
+import JoinRequestsQuery from 'graphql/queries/JoinRequestsQuery'
+
 export const MODULE_NAME = 'MembershipRequestsTab'
 
 const defaultState = []
@@ -34,7 +36,7 @@ export function fetchJoinRequests (groupId) {
   return {
     type: FETCH_JOIN_REQUESTS,
     graphql: {
-      query: fetchJoinRequestsQuery,
+      query: JoinRequestsQuery,
       variables: { groupId }
     },
     meta: {
@@ -47,11 +49,13 @@ export function acceptJoinRequest (joinRequestId) {
   return {
     type: ACCEPT_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($joinRequestId: ID) {
-        acceptJoinRequest(joinRequestId: $joinRequestId) {
-          id
+      query: gql`
+        mutation AcceptJoinRequest($joinRequestId: ID) {
+          acceptJoinRequest(joinRequestId: $joinRequestId) {
+            id
+          }
         }
-      }`,
+      `,
       variables: { joinRequestId }
     },
     meta: {
@@ -65,11 +69,13 @@ export function declineJoinRequest (joinRequestId) {
   return {
     type: DECLINE_JOIN_REQUEST,
     graphql: {
-      query: `mutation ($joinRequestId: ID) {
-        declineJoinRequest(joinRequestId: $joinRequestId) {
-          id
+      query: gql`
+        mutation DeclineJoinRequest($joinRequestId: ID) {
+          declineJoinRequest(joinRequestId: $joinRequestId) {
+            id
+          }
         }
-      }`,
+      `,
       variables: { joinRequestId }
     },
     meta: {

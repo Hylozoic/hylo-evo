@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 export const MODULE_NAME = 'GroupSettings'
 export const REGENERATE_ACCESS_CODE = `${MODULE_NAME}/REGENERATE_ACCESS_CODE`
 export const FETCH_GROUP_SETTINGS = `${MODULE_NAME}/FETCH_GROUP_SETTINGS`
@@ -14,105 +16,107 @@ export function fetchGroupSettings (slug) {
   return {
     type: FETCH_GROUP_SETTINGS,
     graphql: {
-      query: `query ($slug: String) {
-        group (slug: $slug) {
-          id
-          accessibility
-          avatarUrl
-          bannerUrl
-          description
-          location
-          locationObject {
+      query: gql`
+        query GroupSettings($slug: String) {
+          group (slug: $slug) {
             id
-            addressNumber
-            addressStreet
-            bbox {
-              lat
-              lng
-            }
-            center {
-              lat
-              lng
-            }
-            city
-            country
-            fullText
-            locality
-            neighborhood
-            region
-          }
-          invitePath
-          name
-          settings {
-            allowGroupInvites
-            askGroupToGroupJoinQuestions
-            askJoinQuestions
-            publicMemberDirectory
-            showSuggestedSkills
-          }
-          slug
-          visibility
-          childGroups (first: 100) {
-            items {
+            accessibility
+            avatarUrl
+            bannerUrl
+            description
+            location
+            locationObject {
               id
-              name
-              avatarUrl
+              addressNumber
+              addressStreet
+              bbox {
+                lat
+                lng
+              }
+              center {
+                lat
+                lng
+              }
+              city
+              country
+              fullText
+              locality
+              neighborhood
+              region
             }
-          }
-          groupToGroupJoinQuestions {
-            items {
-              id
-              questionId
-              text
+            invitePath
+            name
+            settings {
+              allowGroupInvites
+              askGroupToGroupJoinQuestions
+              askJoinQuestions
+              publicMemberDirectory
+              showSuggestedSkills
             }
-          }
-          joinQuestions {
-            items {
-              id
-              questionId
-              text
+            slug
+            visibility
+            childGroups (first: 100) {
+              items {
+                id
+                name
+                avatarUrl
+              }
             }
-          }
-          moderators (first: 100) {
-            hasMore
-            items {
-              id
-              name
-              avatarUrl
+            groupToGroupJoinQuestions {
+              items {
+                id
+                questionId
+                text
+              }
             }
-          }
-          parentGroups (first: 100) {
-            items {
-              avatarUrl
-              id
-              name
+            joinQuestions {
+              items {
+                id
+                questionId
+                text
+              }
             }
-          }
-          prerequisiteGroups {
-            items {
-              avatarUrl
-              id
-              name
-              slug
+            moderators (first: 100) {
+              hasMore
+              items {
+                id
+                name
+                avatarUrl
+              }
             }
-          }
-          pendingInvitations {
-            hasMore
-            items {
-              id
-              email
-              createdAt
-              lastSentAt
+            parentGroups (first: 100) {
+              items {
+                avatarUrl
+                id
+                name
+              }
             }
-          }
-          suggestedSkills {
-            items {
-              id
-              name
+            prerequisiteGroups {
+              items {
+                avatarUrl
+                id
+                name
+                slug
+              }
+            }
+            pendingInvitations {
+              hasMore
+              items {
+                id
+                email
+                createdAt
+                lastSentAt
+              }
+            }
+            suggestedSkills {
+              items {
+                id
+                name
+              }
             }
           }
         }
-      }`,
+      `,
       variables: {
         slug
       }
@@ -132,33 +136,35 @@ export function updateGroupSettings (id, changes) {
   return {
     type: UPDATE_GROUP_SETTINGS,
     graphql: {
-      query: `mutation ($id: ID, $changes: GroupInput) {
-        updateGroupSettings(id: $id, changes: $changes) {
-          id
-          groupToGroupJoinQuestions {
-            items {
-              id
-              questionId
-              text
+      query: gql`
+        mutation UpdateGroupSettings($id: ID, $changes: GroupInput) {
+          updateGroupSettings(id: $id, changes: $changes) {
+            id
+            groupToGroupJoinQuestions {
+              items {
+                id
+                questionId
+                text
+              }
             }
-          }
-          joinQuestions {
-            items {
-              id
-              questionId
-              text
+            joinQuestions {
+              items {
+                id
+                questionId
+                text
+              }
             }
-          }
-          prerequisiteGroups {
-            items {
-              id
-              avatarUrl
-              name
-              slug
+            prerequisiteGroups {
+              items {
+                id
+                avatarUrl
+                name
+                slug
+              }
             }
           }
         }
-      }`,
+      `,
       variables: {
         id, changes
       }
@@ -176,12 +182,14 @@ export function regenerateAccessCode (groupId) {
   return {
     type: REGENERATE_ACCESS_CODE,
     graphql: {
-      query: `mutation ($groupId: ID) {
-        regenerateAccessCode(groupId: $groupId) {
-          id
-          invitePath
+      query: gql`
+        mutation RegenerateAccessCode($groupId: ID) {
+          regenerateAccessCode(groupId: $groupId) {
+            id
+            invitePath
+          }
         }
-      }`,
+      `,
       variables: {
         groupId
       }
@@ -196,11 +204,13 @@ export function deleteGroup (id) {
   return {
     type: DELETE_GROUP,
     graphql: {
-      query: `mutation ($id: ID) {
-        deleteGroup(id: $id) {
-          success
+      query: gql`
+        mutation DeleteGroup($id: ID) {
+          deleteGroup(id: $id) {
+            success
+          }
         }
-      }`,
+      `,
       variables: {
         id
       }

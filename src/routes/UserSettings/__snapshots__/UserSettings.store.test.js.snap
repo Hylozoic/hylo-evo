@@ -3,7 +3,7 @@
 exports[`registerStripeAccount matches snapshot 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($authorizationCode: String) {
+    "query": "mutation RegisterStripAccount($authorizationCode: String) {
         registerStripeAccount(authorizationCode: $authorizationCode) {
           success
         }

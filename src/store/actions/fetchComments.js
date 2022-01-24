@@ -1,6 +1,6 @@
 import { FETCH_COMMENTS } from 'store/constants'
 import { get } from 'lodash/fp'
-import CommentsQuery from 'graphql/queries/CommentsQuery.graphql'
+import CommentsQuery from 'graphql/queries/CommentsQuery'
 
 export default function fetchComments (id, opts = {}) {
   const { cursor } = opts

@@ -1,7 +1,7 @@
 import { FETCH_PERSON } from 'store/constants'
-import personQuery from 'graphql/queries/personQuery'
+import PersonDetailsQuery from 'graphql/queries/PersonDetailsQuery'
 
-export default function fetchPerson (id, query = personQuery) {
+export default function fetchPerson (id, query = PersonDetailsQuery) {
   return {
     type: FETCH_PERSON,
     graphql: {

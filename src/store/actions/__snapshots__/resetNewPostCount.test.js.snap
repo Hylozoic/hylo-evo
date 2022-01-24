@@ -3,11 +3,11 @@
 exports[`works for GroupTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation($id: ID, $data: GroupTopicFollowInput) {
-    updateGroupTopicFollow(id: $id, data: $data) {
-      success
-    }
-  }",
+    "query": "mutation GroupTopicQuery($id: ID, $data: GroupTopicFollowInput) {
+        updateGroupTopicFollow(id: $id, data: $data) {
+          success
+        }
+      }",
     "variables": Object {
       "data": Object {
         "newPostCount": 0,
@@ -27,11 +27,11 @@ Object {
 exports[`works for Membership 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation($id: ID, $data: MembershipInput) {
-    updateMembership(groupId: $id, data: $data) {
-      id
-    }
-  }",
+    "query": "mutation MembershipQuery($id: ID, $data: MembershipInput) {
+        updateMembership(groupId: $id, data: $data) {
+          id
+        }
+      }",
     "variables": Object {
       "data": Object {
         "newPostCount": 0,

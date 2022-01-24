@@ -5,11 +5,11 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
-        }
-      }",
+        "query": "mutation RemovePost($postId: ID, $slug: String) {
+            removePost(postId: $postId, slug: $slug) {
+              success
+            }
+          }",
         "variables": Object {
           "postId": 1,
           "slug": undefined,
@@ -26,11 +26,11 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
-        }
-      }",
+        "query": "mutation RemovePost($postId: ID, $slug: String) {
+            removePost(postId: $postId, slug: $slug) {
+              success
+            }
+          }",
         "variables": Object {
           "postId": 1,
           "slug": undefined,
@@ -62,11 +62,11 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
-        }
-      }",
+        "query": "mutation RemovePost($postId: ID, $slug: String) {
+            removePost(postId: $postId, slug: $slug) {
+              success
+            }
+          }",
         "variables": Object {
           "postId": 10,
           "slug": "mygroup",
@@ -94,11 +94,11 @@ Array [
   Array [
     Object {
       "graphql": Object {
-        "query": "mutation ($postId: ID, $groupId: ID) {
-        pinPost(postId: $postId, groupId: $groupId) {
-          success
-        }
-      }",
+        "query": "mutation PinPost($postId: ID, $groupId: ID) {
+            pinPost(postId: $postId, groupId: $groupId) {
+              success
+            }
+          }",
         "variables": Object {
           "groupId": 3,
           "postId": 2,

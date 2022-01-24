@@ -1,36 +1,41 @@
+import gql from 'graphql-tag'
 import { get } from 'lodash/fp'
-import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment'
+import GroupTopicsQueryFragment from 'graphql/fragments/GroupTopicsQueryFragment'
 
 export const FETCH_GROUP_TOPICS = 'FETCH_GROUP_TOPICS'
 
-const groupQuery = `
-query (
-  $id: ID,
-  $first: Int,
-  $offset: Int,
-  $sortBy: String,
-  $order: String,
-  $subscribed: Boolean,
-  $autocomplete: String
-) {
-  group (id: $id) {
-    id
-    ${groupTopicsQueryFragment}
+const GroupQuery = gql`
+  query GroupQuery(
+    $id: ID,
+    $first: Int,
+    $offset: Int,
+    $sortBy: String,
+    $order: String,
+    $subscribed: Boolean,
+    $autocomplete: String
+  ) {
+    group (id: $id) {
+      id
+      ...GroupTopicsQueryFragment
+    }
   }
-}
+
+  ${GroupTopicsQueryFragment}
 `
 
-const rootQuery = `
-query (
-  $first: Int,
-  $offset: Int,
-  $sortBy: String,
-  $order: String,
-  $subscribed: Boolean,
-  $autocomplete: String
-) {
-  ${groupTopicsQueryFragment}
-}
+const RootQuery = gql`
+  query RootQuery(
+    $first: Int,
+    $offset: Int,
+    $sortBy: String,
+    $order: String,
+    $subscribed: Boolean,
+    $autocomplete: String
+  ) {
+    ...GroupTopicsQueryFragment
+  }
+
+  ${GroupTopicsQueryFragment}
 `
 
 export default function fetchGroupTopics (groupId, {
@@ -38,11 +43,11 @@ export default function fetchGroupTopics (groupId, {
 }) {
   let query, extractModel, getItems
   if (groupId) {
-    query = groupQuery
+    query = GroupQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.groupTopics')
   } else {
-    query = rootQuery
+    query = RootQuery
     extractModel = 'GroupTopic'
     getItems = get('payload.data.groupTopics')
   }

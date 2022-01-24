@@ -1,6 +1,7 @@
 import { get, isEmpty, includes } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
+import gql from 'graphql-tag'
 import { FETCH_DEFAULT_TOPICS } from 'store/constants'
 import presentTopic from 'store/presenters/presentTopic'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
@@ -20,18 +21,20 @@ export function fetchLinkPreview (url) {
   return {
     type: FETCH_LINK_PREVIEW,
     graphql: {
-      query: `mutation ($url: String) {
-        findOrCreateLinkPreviewByUrl(data: {url: $url}) {
-          id
-          url
-          imageUrl
-          title
-          description
-          imageWidth
-          imageHeight
-          status
+      query: gql`
+        mutation FetchLinkPreview($url: String) {
+          findOrCreateLinkPreviewByUrl(data: {url: $url}) {
+            id
+            url
+            imageUrl
+            title
+            description
+            imageWidth
+            imageHeight
+            status
+          }
         }
-      }`,
+      `,
       variables: {
         url
       }

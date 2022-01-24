@@ -1,29 +1,34 @@
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { compact } from 'lodash/fp'
 import orm from 'store/models'
+import gql from 'graphql-tag'
+import { compact } from 'lodash/fp'
 import presentPost from 'store/presenters/presentPost'
-import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
+import PostFieldsFragment from 'graphql/fragments/PostFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
 export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) {
-  const query = providedQuery ||
-  `query MemberVotes ($id: ID, $order: String, $limit: Int) {
-    person (id: $id) {
-      id
-      votes (first: $limit, order: $order) {
-        items {
-          id
-          post {
-            ${postFieldsFragment(false)}
-          }
-          voter {
+  const query = providedQuery || gql`
+    query MemberVotes ($id: ID, $order: String, $limit: Int) {
+      person (id: $id) {
+        id
+        votes (first: $limit, order: $order) {
+          items {
             id
+            post {
+              ...PostFieldsFragment
+            }
+            voter {
+              id
+            }
+            createdAt
           }
-          createdAt
         }
       }
     }
-  }`
+
+    ${PostFieldsFragment}
+  `
+
   return {
     type: FETCH_MEMBER_VOTES,
     graphql: {

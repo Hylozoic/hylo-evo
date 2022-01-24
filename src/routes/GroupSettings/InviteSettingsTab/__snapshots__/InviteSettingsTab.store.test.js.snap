@@ -3,7 +3,7 @@
 exports[`InviteSettingsTab.store.ormSessionReducer matches the last snapshot for allowGroupInvites 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($groupId: ID, $data: Boolean) {
+    "query": "mutation AllowGroupInvite($groupId: ID, $data: Boolean) {
         allowGroupInvites(groupId: $groupId, data: $data) {
           id
         }

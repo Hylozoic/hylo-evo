@@ -1,7 +1,8 @@
 import { createSelector } from 'redux-orm'
 import orm from 'store/models'
-import getMe from 'store/selectors/getMe'
 import { pick, uniqBy, orderBy, flow, reject, map, reduce } from 'lodash/fp'
+import gql from 'graphql-tag'
+import getMe from 'store/selectors/getMe'
 
 export const MODULE_NAME = 'EventInviteDialog'
 export const INVITE_PEOPLE_TO_EVENT = `${MODULE_NAME}/INVITE_PEOPLE_TO_EVENT`
@@ -36,24 +37,26 @@ export function invitePeopleToEvent (eventId, inviteeIds) {
   return {
     type: INVITE_PEOPLE_TO_EVENT,
     graphql: {
-      query: `mutation ($eventId: ID, $inviteeIds: [ID]) {
-        invitePeopleToEvent(eventId: $eventId, inviteeIds: $inviteeIds) {
-          id
-          eventInvitations {
-            total
-            hasMore
-            items {
-              id
-              response
-              person {
+      query: gql`
+        mutation InvitePeopleToEvent($eventId: ID, $inviteeIds: [ID]) {
+          invitePeopleToEvent(eventId: $eventId, inviteeIds: $inviteeIds) {
+            id
+            eventInvitations {
+              total
+              hasMore
+              items {
                 id
-                name
-                avatarUrl
+                response
+                person {
+                  id
+                  name
+                  avatarUrl
+                }
               }
             }
           }
         }
-      }`,
+      `,
       variables: { eventId, inviteeIds }
     },
     meta: {

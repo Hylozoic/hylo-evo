@@ -1,3 +1,4 @@
+import gql from 'graphql-tag'
 import {
   FETCH_SAVED_SEARCHES,
   DELETE_SAVED_SEARCH,
@@ -5,7 +6,7 @@ import {
   UNLINK_ACCOUNT,
   VIEW_SAVED_SEARCH
 } from 'store/constants'
-import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation.graphql'
+import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation'
 
 export const MODULE_NAME = 'UserSettings'
 
@@ -52,11 +53,13 @@ export function updateUserSettings (changes) {
   return {
     type: UPDATE_USER_SETTINGS,
     graphql: {
-      query: `mutation ($changes: MeInput) {
-        updateMe(changes: $changes) {
-          id
+      query: gql`
+        mutation UpdateUserSettings($changes: MeInput) {
+          updateMe(changes: $changes) {
+            id
+          }
         }
-      }`,
+      `,
       variables: {
         changes
       }
@@ -72,31 +75,33 @@ export function fetchSavedSearches (userId) {
   return {
     type: FETCH_SAVED_SEARCHES,
     graphql: {
-      query: `query ($userId: ID) {
-        savedSearches(userId: $userId) {
-          total
-          hasMore
-          items {
-            id
-            name
-            boundingBox
-            createdAt
-            context
-            group {
+      query: gql`
+        query SavedSearches($userId: ID) {
+          savedSearches(userId: $userId) {
+            total
+            hasMore
+            items {
               id
               name
-              slug
+              boundingBox
+              createdAt
+              context
+              group {
+                id
+                name
+                slug
+              }
+              isActive
+              searchText
+              topics {
+                id
+                name
+              }
+              postTypes
             }
-            isActive
-            searchText
-            topics {
-              id
-              name
-            }
-            postTypes
           }
         }
-      }`,
+      `,
       variables: { userId }
     }
   }
@@ -106,9 +111,11 @@ export function deleteSearch (id) {
   return {
     type: DELETE_SAVED_SEARCH,
     graphql: {
-      query: `mutation ($id: ID) {
-        deleteSavedSearch(id: $id)
-      }`,
+      query: gql`
+        mutation DeleteSearch($id: ID) {
+          deleteSavedSearch(id: $id)
+        }
+      `,
       variables: { id }
     },
     meta: {
@@ -142,11 +149,13 @@ export function unlinkAccount (provider) {
   return {
     type: UNLINK_ACCOUNT,
     graphql: {
-      query: `mutation ($provider: String) {
-        unlinkAccount(provider: $provider) {
-          success
+      query: gql`
+        mutation UnlinkAccount($provider: String) {
+          unlinkAccount(provider: $provider) {
+            success
+          }
         }
-      }`,
+      `,
       variables: { provider }
     }
   }
@@ -156,11 +165,13 @@ export function updateMembershipSettings (groupId, settings) {
   return {
     type: UPDATE_MEMBERSHIP_SETTINGS,
     graphql: {
-      query: `mutation ($groupId: ID, $data: MembershipInput) {
-        updateMembership(groupId: $groupId, data: $data) {
-          id
+      query: gql`
+        mutation UpdateMembershipSettings($groupId: ID, $data: MembershipInput) {
+          updateMembership(groupId: $groupId, data: $data) {
+            id
+          }
         }
-      }`,
+      `,
       variables: {
         data: {
           settings
@@ -176,6 +187,7 @@ export function updateMembershipSettings (groupId, settings) {
   }
 }
 
+// TODO: Graphql string generation / construction, move to parsed
 export function updateAllMemberships (groupIds, settings) {
   const subqueries = groupIds.map(groupId => `
     alias${groupId}: updateMembership(groupId: ${groupId}, data: {settings: ${JSON.stringify(settings).replace(/"/g, '')}}) {
@@ -201,11 +213,13 @@ export function registerStripeAccount (authorizationCode) {
   return {
     type: REGISTER_STRIPE_ACCOUNT,
     graphql: {
-      query: `mutation ($authorizationCode: String) {
-        registerStripeAccount(authorizationCode: $authorizationCode) {
-          success
+      query: gql`
+        mutation RegisterStripAccount($authorizationCode: String) {
+          registerStripeAccount(authorizationCode: $authorizationCode) {
+            success
+          }
         }
-      }`,
+      `,
       variables: { authorizationCode }
     },
     meta: {
