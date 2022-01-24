@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { get, pick } from 'lodash/fp'
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import { IntercomAPI } from 'react-intercom'
 import { Link } from 'react-router-dom'
 import { isMobileDevice, downloadApp } from 'util/mobile'
@@ -12,10 +12,10 @@ import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
 import { baseUrl, personUrl } from 'util/navigation'
-import MessagesDropdown from './MessagesDropdown'
-import NotificationsDropdown from './NotificationsDropdown'
-
 import './TopNav.scss'
+
+const MessagesDropdown = React.lazy(() => import('./MessagesDropdown'))
+const NotificationsDropdown = React.lazy(() => import('./NotificationsDropdown'))
 
 function showIntercom () {
   IntercomAPI('show')
@@ -57,12 +57,16 @@ export default class TopNav extends Component {
         </Link>
         <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
-          <MessagesDropdown renderToggleChildren={showBadge =>
-            <BadgedIcon name='Messages' styleName='icon'
-              showBadge={showBadge} />} />
-          <NotificationsDropdown renderToggleChildren={showBadge =>
-            <BadgedIcon name='Notifications' styleName='icon'
-              showBadge={showBadge} />} />
+          <Suspense fallback={<BadgedIcon name='Messages' styleName='icon' />}>
+            <MessagesDropdown renderToggleChildren={showBadge =>
+              <BadgedIcon name='Messages' styleName='icon'
+                showBadge={showBadge} />} />
+          </Suspense>
+          <Suspense fallback={<BadgedIcon name='Notifications' styleName='icon' />}>
+            <NotificationsDropdown renderToggleChildren={showBadge =>
+              <BadgedIcon name='Notifications' styleName='icon'
+                showBadge={showBadge} />} />
+          </Suspense>
           <Dropdown styleName='user-menu' alignRight
             toggleChildren={
               <RoundImage url={get('avatarUrl', currentUser)} small />

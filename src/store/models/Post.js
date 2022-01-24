@@ -130,5 +130,5 @@ export const POST_PROP_TYPES = {
   imageUrl: PropTypes.string,
   linkPreview: PropTypes.object,
   groups: PropTypes.array,
-  isPublic: PropTypes.boolean
+  isPublic: PropTypes.bool
 }

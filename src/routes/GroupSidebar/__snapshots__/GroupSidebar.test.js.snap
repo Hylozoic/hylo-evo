@@ -75,14 +75,14 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
         data-stylename="image-row"
         imageUrls={
           Array [
-            "https://s3.amazonaws.com/uifaces/faces/twitter/fiterik/128.jpg?26029",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/ramanathan_pdy/128.jpg?68045",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/kapaluccio/128.jpg?10715",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/josevnclch/128.jpg?36352",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/josemarques/128.jpg?42174",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/thomasgeisen/128.jpg?66249",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/arashmanteghi/128.jpg?52422",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg?90195",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1150.jpg?26029",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1099.jpg?68045",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/439.jpg?10715",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/501.jpg?36352",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/178.jpg?42174",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/749.jpg?66249",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/414.jpg?52422",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/369.jpg?90195",
           ]
         }
       />
@@ -121,14 +121,14 @@ exports[`MemberSection Formats total correctly if it's > 999 1`] = `
         data-stylename="image-row"
         imageUrls={
           Array [
-            "https://s3.amazonaws.com/uifaces/faces/twitter/fiterik/128.jpg?26029",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/ramanathan_pdy/128.jpg?68045",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/kapaluccio/128.jpg?10715",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/josevnclch/128.jpg?36352",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/josemarques/128.jpg?42174",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/thomasgeisen/128.jpg?66249",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/arashmanteghi/128.jpg?52422",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg?90195",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1150.jpg?26029",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1099.jpg?68045",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/439.jpg?10715",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/501.jpg?36352",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/178.jpg?42174",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/749.jpg?66249",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/414.jpg?52422",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/369.jpg?90195",
           ]
         }
       />
@@ -162,14 +162,14 @@ exports[`MemberSection Shows invite link if canModerate is true 1`] = `
         data-stylename="image-row"
         imageUrls={
           Array [
-            "https://s3.amazonaws.com/uifaces/faces/twitter/fiterik/128.jpg?26029",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/ramanathan_pdy/128.jpg?68045",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/kapaluccio/128.jpg?10715",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/josevnclch/128.jpg?36352",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/josemarques/128.jpg?42174",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/thomasgeisen/128.jpg?66249",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/arashmanteghi/128.jpg?52422",
-            "https://s3.amazonaws.com/uifaces/faces/twitter/digitalmaverick/128.jpg?90195",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1150.jpg?26029",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1099.jpg?68045",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/439.jpg?10715",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/501.jpg?36352",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/178.jpg?42174",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/749.jpg?66249",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/414.jpg?52422",
+            "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/369.jpg?90195",
           ]
         }
       />

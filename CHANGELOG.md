@@ -4,6 +4,19 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.8] - 2022-01-23
+
+### Added
+- WebPack bundle analyzer. To analyze bundle `yarn build` and once complete `yarn analyze`
+
+## Changed
+- Lazy load Messages and Notifications top menu items to improve initial load time and rendering
+- Replaced deprecated node-sass dependency with sass (Dart SASS)
+- Move to Node 16
+- Change faker dependency used in tests, and remove deprecated feature that was causing it to be included in production bundle
+- Clean-up package.json
+- Minor WebPack optimization config changes
+
 ## [3.2.7] - 2022-01-22
 
 ## Fixed

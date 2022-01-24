@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import PostCard from './PostCard'
-import samplePost from './samplePost'
-import faker from 'faker'
+import { fakePost } from 'util/testData'
+import faker from '@faker-js/faker'
 import timezoneMock from 'timezone-mock'
 
 faker.seed(9000)
@@ -17,7 +17,7 @@ afterEach(() => {
 
 it('renders as expected', () => {
   const post = {
-    ...samplePost(),
+    ...fakePost(),
     updatedAt: new Date('2014-01-17').toISOString()
   }
   const wrapper = shallow(<PostCard post={post} voteOnPost={() => {}} routeParams={{ slug: 'foom' }} />)
