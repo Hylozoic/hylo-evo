@@ -2,7 +2,7 @@ import appMiddleware from './appMiddleware'
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
-  useLayoutEffect: jest.requireActual('react').useEffect,
+  useLayoutEffect: jest.requireActual('react').useEffect
 }))
 
 var req, res
