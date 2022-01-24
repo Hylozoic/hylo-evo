@@ -1,5 +1,5 @@
 import { find } from 'lodash/fp'
-import { boolean, arrayOf, func, number, shape, string, object } from 'prop-types'
+import { bool, arrayOf, func, number, shape, string, object } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 // import CreateTopic from 'components/CreateTopic'
@@ -32,7 +32,7 @@ export default class AllTopics extends Component {
       name: string.isRequired,
       postsTotal: number,
       followersTotal: number,
-      isSubscribed: boolean
+      isSubscribed: bool
     })),
     group: object,
     routeParams: object.isRequired,

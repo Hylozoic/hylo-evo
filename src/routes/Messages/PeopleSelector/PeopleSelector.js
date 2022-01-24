@@ -25,7 +25,8 @@ export default class PeopleSelector extends React.Component {
     this.props.fetchDefaultList()
   }
 
-  componentWillReceiveProps (props) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps (props) {
     const { matchingPeople } = props
     if (!matchingPeople || matchingPeople.length === 0) {
       this.setCurrentMatch()

@@ -405,7 +405,7 @@ export default class PrimaryLayout extends Component {
       </Switch>
       <SocketListener location={location} />
       <SocketSubscriber type='group' id={get('slug', group)} />
-      <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
+      <Intercom appID={isTest ? '' : config.intercom.appId} hide_default_launcher />
       <Joyride
         run={this.state.run}
         continuous

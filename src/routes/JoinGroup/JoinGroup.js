@@ -7,7 +7,8 @@ export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default class JoinGroup extends Component {
-  componentWillMount () {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount () {
     const {
       isLoggedIn, currentUser, fetchForCurrentUser, useInvitation, checkInvitation
     } = this.props
