@@ -18,6 +18,7 @@ import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graph
 import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
 import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import filterDeletedUsers from 'util/filterDeletedUsers'
 
 export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
@@ -190,6 +191,7 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
       const participantIds = participantsQuerystringParam.split(',')
       const participants = Person
         .all()
+        .filter(filterDeletedUsers)
         .toRefArray()
         .filter(person => participantIds.includes(person.id))
 
@@ -204,7 +206,10 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
 
 export const getAllContacts = ormCreateSelector(
   orm,
-  session => session.Person.all().toRefArray()
+  session => session.Person
+    .all()
+    .filter(filterDeletedUsers)
+    .toRefArray()
 )
 
 export const getRecentContacts = ormCreateSelector(
@@ -212,6 +217,7 @@ export const getRecentContacts = ormCreateSelector(
   ({ PersonConnection }) => {
     const recentContacts = PersonConnection
       .all()
+      .filter(filterDeletedUsers)
       .toModelArray()
       .map(connection => presentPersonListItem(connection.person))
 
@@ -226,6 +232,7 @@ export const getMatchingContacts = ormCreateSelector(
     if (!contactsSearch) return null
     const matchingContacts = Person
       .all()
+      .filter(filterDeletedUsers)
       .toModelArray()
       .filter(person =>
         person.name.toLowerCase().includes(contactsSearch.toLowerCase())
