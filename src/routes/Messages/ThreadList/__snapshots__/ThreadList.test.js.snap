@@ -18,6 +18,7 @@ exports[`ThreadList matches the last snapshot 1`] = `
         />
       </div>
       <TextInput
+        noClearButton={true}
         onChange={[Function]}
         placeholder="Search for people..."
       />
