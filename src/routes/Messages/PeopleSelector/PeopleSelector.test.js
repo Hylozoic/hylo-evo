@@ -14,7 +14,8 @@ const defaultProps = {
   removePerson: () => {},
   changeQuerystringParam: () => {},
   selectedPeople: [],
-  onCloseURL: ''
+  onCloseURL: '',
+  peopleSelectorOpen: true
 }
 
 describe('PeopleSelector', () => {
@@ -47,11 +48,11 @@ describe('PeopleSelector', () => {
             selectPerson={selectPerson}
             removePerson={removePerson}
             setPeopleSearch={setPeopleSearch}
-            matchingPeople={[ { id: '1' }, { id: '2' } ]} />
+            people={[ { id: '1' }, { id: '2' } ]}
+          />
         </MemoryRouter>
       )
       peopleSelectorComponent = wrapper.find(PeopleSelector)
-      peopleSelectorComponent.instance().setState({ currentMatch: { id: '1' } })
       input = wrapper.find('input').first()
     })
 
@@ -60,8 +61,8 @@ describe('PeopleSelector', () => {
       expect(fetchPeople).not.toHaveBeenCalled()
     })
 
-    it('hits server when keys other than backspace are pressed', () => {
-      input.simulate('keyDown', { keyCode: keyMap.SPACE })
+    it('hits server when the input value changes', () => {
+      input.simulate('change', { target: { value: 'not empty' }})
       expect(fetchPeople).toHaveBeenCalled()
     })
 
@@ -71,27 +72,9 @@ describe('PeopleSelector', () => {
     })
 
     it('does not remove participant if backspace pressed when autocompleteInput is not empty', () => {
-      peopleSelectorComponent.instance().autocompleteInput.current.value = 'not empty'
+      input.simulate('change', { target: { value: 'not empty' }})
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removePerson).not.toHaveBeenCalled()
-    })
-
-    it('calls arrow with `up` if up arrow pressed', () => {
-      const arrow = PeopleSelector.prototype.arrow
-      PeopleSelector.prototype.arrow = jest.fn()
-      input.simulate('keyDown', { keyCode: keyMap.UP })
-      const calls = PeopleSelector.prototype.arrow.mock.calls
-      expect(calls[calls.length - 1][0]).toBe('up')
-      PeopleSelector.prototype.arrow = arrow
-    })
-
-    it('calls arrow with `down` if down arrow pressed', () => {
-      const arrow = PeopleSelector.prototype.arrow
-      PeopleSelector.prototype.arrow = jest.fn()
-      input.simulate('keyDown', { keyCode: keyMap.DOWN })
-      const calls = PeopleSelector.prototype.arrow.mock.calls
-      expect(calls[calls.length - 1][0]).toBe('down')
-      PeopleSelector.prototype.arrow = arrow
     })
 
     it('does not change active match if at top of list when up arrow pressed', () => {
@@ -101,14 +84,14 @@ describe('PeopleSelector', () => {
     })
 
     it('changes active match if not at top of list when up arrow pressed', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '2' } })
+      input.simulate('keyDown', { keyCode: keyMap.DOWN })
       input.simulate('keyDown', { keyCode: keyMap.UP })
       const actual = wrapper.find(PeopleListItem).last().prop('active')
       expect(actual).toBe(false)
     })
 
     it('does not change active match if at bottom of list when down arrow pressed', () => {
-      wrapper.find(PeopleSelector).instance().setState({ currentMatch: { id: '2' } })
+      input.simulate('keyDown', { keyCode: keyMap.DOWN })
       input.simulate('keyDown', { keyCode: keyMap.DOWN })
       const actual = wrapper.find(PeopleListItem).last().prop('active')
       expect(actual).toBe(true)
@@ -181,11 +164,14 @@ describe('PeopleSelector', () => {
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            selectPerson={selectPerson} />
+            selectPerson={selectPerson}
+            people={[ { id: '1' }, { id: '2' } ]}
+          />
         </MemoryRouter>
       )
-      wrapper.find(PeopleSelector).instance().selectPerson('1')
-      expect(selectPerson).toBeCalledWith('1')
+      const personItem = wrapper.find(PeopleListItem).first()
+      personItem.simulate('click')
+      expect(selectPerson).toBeCalledWith({ id: '1' })
     })
 
     it('resets values after adding a participant', () => {
@@ -194,12 +180,15 @@ describe('PeopleSelector', () => {
         <MemoryRouter>
           <PeopleSelector
             {...defaultProps}
-            setPeopleSearch={setPeopleSearch} />
+            setPeopleSearch={setPeopleSearch}
+            people={[ { id: '1' }, { id: '2' } ]}
+          />
         </MemoryRouter>
       )
       const input = wrapper.find('input').first()
       input.instance().value = 'flargle'
-      wrapper.find(PeopleSelector).instance().selectPerson('1')
+      const personItem = wrapper.find(PeopleListItem).first()
+      personItem.simulate('click')
       expect(input.instance().value).toBeFalsy()
       expect(setPeopleSearch).toBeCalledWith(null)
     })
