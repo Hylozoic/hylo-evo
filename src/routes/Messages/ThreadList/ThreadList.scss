@@ -226,7 +226,7 @@ a.new-message {
   font-size: 12px;
   line-height: 1.8rem;
   border: 3px solid $color-white;
-  border-radius: $space-9x / 2;
+  border-radius: calc($space-9x / 2);
   background: rgba(35, 64, 91, 1.000);
   color: $color-white;
 }

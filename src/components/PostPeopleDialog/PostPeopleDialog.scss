@@ -72,6 +72,6 @@ section .col {
 
 .avatar {
   @include image($avatar-size);
-  border-radius: $avatar-size/2;
+  border-radius: calc($avatar-size / 2);
 }
 

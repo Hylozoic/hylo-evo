@@ -1,9 +1,9 @@
 import cx from 'classnames'
-import isMobile from 'ismobilejs'
 import { get, pick } from 'lodash/fp'
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import { IntercomAPI } from 'react-intercom'
 import { Link } from 'react-router-dom'
+import { isMobileDevice, downloadApp } from 'util/mobile'
 import Badge from 'components/Badge'
 import BadgedIcon from 'components/BadgedIcon'
 import Dropdown from 'components/Dropdown'
@@ -12,34 +12,13 @@ import RoundImage from 'components/RoundImage'
 import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
 import { baseUrl, personUrl } from 'util/navigation'
-import MessagesDropdown from './MessagesDropdown'
-import NotificationsDropdown from './NotificationsDropdown'
-
 import './TopNav.scss'
 
-function isMobileDevice () {
-  return (
-    isMobile.apple.phone ||
-    isMobile.apple.ipod ||
-    isMobile.android.phone ||
-    isMobile.seven_inch
-  )
-}
+const MessagesDropdown = React.lazy(() => import('./MessagesDropdown'))
+const NotificationsDropdown = React.lazy(() => import('./NotificationsDropdown'))
 
 function showIntercom () {
   IntercomAPI('show')
-}
-
-function downloadApp () {
-  if (isMobileDevice()) {
-    if (isMobile.apple.device) {
-      window.open('https://appsto.re/us/0gcV7.i', '_blank')
-    } else if (isMobile.android.device) {
-      window.open('https://play.google.com/store/apps/details?id=com.hylo.hyloandroid', '_blank')
-    } else {
-      return false
-    }
-  }
 }
 
 export default class TopNav extends Component {
@@ -78,12 +57,16 @@ export default class TopNav extends Component {
         </Link>
         <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
-          <MessagesDropdown renderToggleChildren={showBadge =>
-            <BadgedIcon name='Messages' styleName='icon'
-              showBadge={showBadge} />} />
-          <NotificationsDropdown renderToggleChildren={showBadge =>
-            <BadgedIcon name='Notifications' styleName='icon'
-              showBadge={showBadge} />} />
+          <Suspense fallback={<BadgedIcon name='Messages' styleName='icon' />}>
+            <MessagesDropdown renderToggleChildren={showBadge =>
+              <BadgedIcon name='Messages' styleName='icon'
+                showBadge={showBadge} />} />
+          </Suspense>
+          <Suspense fallback={<BadgedIcon name='Notifications' styleName='icon' />}>
+            <NotificationsDropdown renderToggleChildren={showBadge =>
+              <BadgedIcon name='Notifications' styleName='icon'
+                showBadge={showBadge} />} />
+          </Suspense>
           <Dropdown styleName='user-menu' alignRight
             toggleChildren={
               <RoundImage url={get('avatarUrl', currentUser)} small />

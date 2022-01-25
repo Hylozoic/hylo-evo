@@ -1,6 +1,7 @@
 import { get, some } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router'
+import { mobileRedirect } from 'util/mobile'
 import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
@@ -10,7 +11,6 @@ import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
-import mobileRedirect from 'util/mobileRedirect'
 import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
 
 export function mapStateToProps (state, props) {
@@ -49,7 +49,7 @@ export function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
 
   return {
-    fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
+    fetchForCurrentUser: () => dispatch(fetchForCurrentUser()),
     fetchForGroup: () => dispatch(fetchForGroup(slug)),
     toggleDrawer: () => dispatch(toggleDrawer()),
     toggleGroupMenu: () => dispatch(toggleGroupMenu()),

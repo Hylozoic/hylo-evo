@@ -9,6 +9,7 @@ import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FlyToInterpolator } from 'react-map-gl'
+import { isMobileDevice } from 'util/mobile'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
 import { locationObjectToViewport } from 'util/geo'
@@ -70,14 +71,22 @@ export class UnwrappedMapExplorer extends React.Component {
   componentDidMount () {
     this.refs = {}
 
+    // Drawer hidden by default on mobile devices
+    if (isMobileDevice()) {
+      this.setState({ hideDrawer: true })
+    }
+
     // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. push.
+    // e.g. react router / history push
     const { mobileSettingsLayout } = this.context
     if (mobileSettingsLayout) {
       this.props.history.block(tx => {
-        const messageData = {
-          url: tx.pathname
-        }
+        const path = tx.pathname
+        // when in embedded view of map allow web navigation within map
+        // the keeps saved search retrieval from reseting group context in the app
+        if (path.match(/\/map$/)) return true
+        // url will be deprecated for path
+        const messageData = { path, url: path }
         window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
         return false
       })
@@ -369,8 +378,9 @@ export class UnwrappedMapExplorer extends React.Component {
     } = this.state
 
     const { mobileSettingsLayout } = this.context
+    const withoutNav = mobileSettingsLayout
 
-    return <div styleName={cx('container', { 'noUser': !currentUser, containerMobileApp: mobileSettingsLayout })}>
+    return <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
       <div styleName='mapContainer'>
         <Map
           layers={[groupIconLayer, clusterLayer]}
@@ -379,13 +389,13 @@ export class UnwrappedMapExplorer extends React.Component {
           children={this._renderTooltip()}
           viewport={viewport}
         />
-        { pending && <Loading className={styles.loading} /> }
+        {pending && <Loading className={styles.loading} />}
       </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
         <Icon name='Ex' className={styles.closeDrawer} />
       </button>
-      { !hideDrawer ? (
+      {!hideDrawer && (
         <MapDrawer
           currentUser={currentUser}
           features={features}
@@ -395,34 +405,51 @@ export class UnwrappedMapExplorer extends React.Component {
           pending={pending}
           routeParams={routeParams}
           topics={topics}
-        />)
-        : '' }
+        />
+      )}
       <div styleName={cx('searchAutocomplete')}>
         <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
-      <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
+      <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/6</strong>
       </button>
-      { currentUser ? <Icon name='Heart' styleName={`savedSearchesButton${showSavedSearches ? '-open' : ''}`} onClick={this.toggleSavedSearches} /> : '' }
-      { currentUser && showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
-      <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
+      {currentUser && <>
+        <Icon
+          name='Heart'
+          onClick={this.toggleSavedSearches}
+          styleName={cx('savedSearchesButton', { open: showSavedSearches })}
+        />
+        {showSavedSearches && (
+          <SavedSearches
+            deleteSearch={deleteSearch}
+            filters={filters}
+            saveSearch={this.saveSearch}
+            searches={searches}
+            toggle={this.toggleSavedSearches}
+            viewSavedSearch={this.handleViewSavedSearch}
+          />
+        )}
+      </>}
+      <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
         <h3>What do you want to see on the map?</h3>
         {['member', 'request', 'offer', 'resource', 'event', 'project'].map(featureType => {
           let color = FEATURE_TYPES[featureType].primaryColor
 
-          return <div
-            key={featureType}
-            ref={this.refs[featureType]}
-            styleName='featureTypeSwitch'
-          >
-            <SwitchStyled
-              backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
-              name={featureType}
-              checked={filters.featureTypes[featureType]}
-              onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
-            />
-            <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
-          </div>
+          return (
+            <div
+              key={featureType}
+              ref={this.refs[featureType]}
+              styleName='featureTypeSwitch'
+            >
+              <SwitchStyled
+                backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
+                name={featureType}
+                checked={filters.featureTypes[featureType]}
+                onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
+              />
+              <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
+            </div>
+          )
         })}
         <div styleName={cx('pointer')} />
       </div>

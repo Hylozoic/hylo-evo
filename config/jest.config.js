@@ -30,7 +30,8 @@ module.exports = {
     'src'
   ],
   snapshotSerializers: [
-    'enzyme-to-json/serializer'
+    'enzyme-to-json/serializer',
+    'jest-serializer-graphql'
   ],
   testEnvironment: 'jsdom',
   testURL: 'http://localhost',

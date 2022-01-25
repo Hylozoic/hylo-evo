@@ -1,0 +1,11 @@
+{
+  "schema": "https://www.hylo.com/noo/graphql",
+  "documents": "src/components/**/*.js",
+  "extension": {
+    "endpoints": {
+      "default": {
+        "url": "https://www.hylo.com/noo/graphql"
+      }
+    }
+  }
+}
