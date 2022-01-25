@@ -5,7 +5,7 @@ import './CloseMessages.scss'
 
 function CloseMessages ({ onCloseURL }) {
   return <Link to={onCloseURL} styleName='close-messages'>
-    <Icon name='Ex' styleName='close-messages-icon' />
+    <Icon name='ArrowForward' styleName='close-messages-icon' />
   </Link>
 }
 

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get, some, isEmpty, castArray, includes, pick, uniqueId, sortBy } from 'lodash/fp'
+import { get, some, isEmpty, castArray, includes, pick, uniqueId, uniqBy, sortBy } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import orm from 'store/models'
 import { toRefArray } from 'util/reduxOrmMigration'
@@ -13,6 +13,7 @@ import {
   FIND_OR_CREATE_THREAD
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import getMe from 'store/selectors/getMe'
 import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation.graphql'
 import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
 import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
@@ -233,6 +234,17 @@ export const getMatchingContacts = ormCreateSelector(
       .map(presentPersonListItem)
 
     return sortByName(matchingContacts)
+  }
+)
+
+export const getContactsList = ormCreateSelector(
+  orm,
+  getMe,
+  getMatchingContacts,
+  getRecentContacts,
+  getAllContacts,
+  (state, me, matchingContacts, recentContacts, allContacts) => {
+    return (matchingContacts || uniqBy('id', recentContacts.concat(allContacts))).filter(p => p.id !== me.id)
   }
 )
 

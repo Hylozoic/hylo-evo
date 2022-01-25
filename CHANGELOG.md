@@ -5,27 +5,51 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## Changed
+### Changed
 - When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
+
+## [3.2.8] - 2022-01-23
+
+### Added
+- WebPack bundle analyzer. To analyze bundle `yarn build` and once complete `yarn analyze`
+
+### Changed
+- Lazy load Messages and Notifications top menu items to improve initial load time and rendering
+- Replaced deprecated node-sass dependency with sass (Dart SASS)
+- Move to Node 16
+- Change faker dependency used in tests, and remove deprecated feature that was causing it to be included in production bundle
+- Clean-up package.json
+- Minor WebPack optimization config changes
+
+## [3.2.7] - 2022-01-22
+
+### Fixed
+- Remove extra whitespace on right side of Map on full browser windows
+
+## [3.2.6] - 2022-01-21
+
+### Changed
+- Improve initial app load time: remove extra fields from current user query and parallel load current user alongside current group
+>>>>>>> dev
 
 ## [3.2.5] - 2022-01-18
 
-## Changed
+### Changed
 - Minor tidy and refactor of mobile device checking code
 
-## Fixed
+### Fixed
 - MapExplorer drawer hide mobile check corrected so that drawer shows again in web
 
 ## [3.2.4] - 2022-01-17
 
-## Changed
+### Changed
 - Hide MapExplorer drawer by default on mobile browsers and in Hylo App embed
 - Allow MapExplorer Saved Searches navigation to happen when in Hylo App embed
 - Fix hover state for MapExplorer on touch-based devices
 
 ## [3.2.3] - 2022-01-14
 
-## Fixed 
+### Fixed
 - Map styling fixes related to nav-less layout used in the embedded Hylo App WebView
 - Changes login text entry field to "email" from "text" to keep auto-capitalization off in some browsers
 

@@ -42,7 +42,8 @@ module.exports = function (api) {
         }
       ],
       'import-graphql',
-      'inline-import'
+      'inline-import',
+      'lodash'
     ],
     ignore: [
       paths.resolveApp('scripts/templates/*')

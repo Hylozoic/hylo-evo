@@ -17,21 +17,21 @@ exports[`renders as expected 1`] = `
     commenters={
       Array [
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/manigm/128.jpg?1184",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
           "id": 98730,
-          "name": "Van Hudson",
+          "name": "Lorene Hudson",
           "tagline": "Direct Research Consultant",
         },
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/aleinadsays/128.jpg?75497",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
           "id": 66803,
-          "name": "Ms. Dawn Beahan",
+          "name": "Ms. Jeff Beahan",
           "tagline": "National Accounts Architect",
         },
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ultragex/128.jpg?72463",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
           "id": 81915,
-          "name": "Ms. Coleman Krajcik",
+          "name": "Ms. Peggy Krajcik",
           "tagline": "Dynamic Response Specialist",
         },
       ]
@@ -40,9 +40,9 @@ exports[`renders as expected 1`] = `
     context="Stop Wombat Walrus"
     creator={
       Object {
-        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
         "id": 82690,
-        "name": "Frederic Crona",
+        "name": "Ida Crona",
         "tagline": "Legacy Marketing Executive",
       }
     }
@@ -95,21 +95,21 @@ exports[`renders as expected 1`] = `
     commenters={
       Array [
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/manigm/128.jpg?1184",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
           "id": 98730,
-          "name": "Van Hudson",
+          "name": "Lorene Hudson",
           "tagline": "Direct Research Consultant",
         },
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/aleinadsays/128.jpg?75497",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
           "id": 66803,
-          "name": "Ms. Dawn Beahan",
+          "name": "Ms. Jeff Beahan",
           "tagline": "National Accounts Architect",
         },
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ultragex/128.jpg?72463",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
           "id": 81915,
-          "name": "Ms. Coleman Krajcik",
+          "name": "Ms. Peggy Krajcik",
           "tagline": "Dynamic Response Specialist",
         },
       ]
@@ -118,9 +118,9 @@ exports[`renders as expected 1`] = `
     context="Stop Wombat Walrus"
     creator={
       Object {
-        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
         "id": 82690,
-        "name": "Frederic Crona",
+        "name": "Ida Crona",
         "tagline": "Legacy Marketing Executive",
       }
     }
@@ -169,21 +169,21 @@ exports[`renders as expected 1`] = `
     commenters={
       Array [
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/manigm/128.jpg?1184",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
           "id": 98730,
-          "name": "Van Hudson",
+          "name": "Lorene Hudson",
           "tagline": "Direct Research Consultant",
         },
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/aleinadsays/128.jpg?75497",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
           "id": 66803,
-          "name": "Ms. Dawn Beahan",
+          "name": "Ms. Jeff Beahan",
           "tagline": "National Accounts Architect",
         },
         Object {
-          "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/ultragex/128.jpg?72463",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
           "id": 81915,
-          "name": "Ms. Coleman Krajcik",
+          "name": "Ms. Peggy Krajcik",
           "tagline": "Dynamic Response Specialist",
         },
       ]
@@ -192,9 +192,9 @@ exports[`renders as expected 1`] = `
     context="Stop Wombat Walrus"
     creator={
       Object {
-        "avatarUrl": "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg?82483",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
         "id": 82690,
-        "name": "Frederic Crona",
+        "name": "Ida Crona",
         "tagline": "Legacy Marketing Executive",
       }
     }

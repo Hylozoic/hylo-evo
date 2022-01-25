@@ -132,11 +132,11 @@ $search-width: 266px;
   transition: opacity 400ms ease-in;
 }
 
-.leave {
+.exit {
   opacity: 1;
 }
 
-.leave.leave-active {
+.exit.exit-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }

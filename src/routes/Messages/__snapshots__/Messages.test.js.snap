@@ -7,42 +7,36 @@ exports[`renders entire component when not loading 1`] = `
   <div
     data-stylename="content"
   >
-    <withRouter(ThreadList)
-      data-stylename="left-column"
-      messagesOpen={false}
-      threads={Array []}
-      toggleMessages={[Function]}
-    />
     <div
-      data-stylename="right-column"
+      data-stylename="messages-header"
     >
       <div
-        data-stylename="thread"
+        data-stylename="close-messages"
       >
-        <MessageSection
-          fetchMessages={[Function]}
-          messages={Array []}
-          socket={null}
+        <CloseMessages />
+      </div>
+      <div
+        data-stylename="messages-title"
+      >
+        <Icon
+          name="Messages"
         />
-        <div
-          data-stylename="message-form"
-        >
-          <MessageForm
-            formRef={
-              Object {
-                "current": null,
-              }
-            }
-            onSubmit={[Function]}
-            placeholder="Write something..."
-            updateMessageText={[Function]}
-          />
-        </div>
-        <Connect(PeopleTyping)
-          data-stylename="people-typing"
-        />
+        <h3>
+          Messages
+        </h3>
       </div>
     </div>
+    <withRouter(ThreadList)
+      data-stylename="left-column"
+      onFocus={[Function]}
+      threads={Array []}
+    />
+    <Route
+      exact={true}
+      path="/messages/:messageThreadId"
+    >
+      <Component />
+    </Route>
   </div>
 </div>
 `;
@@ -51,6 +45,33 @@ exports[`renders loading when in loading state 1`] = `
 <div
   data-stylename="modal"
 >
-  <Loading />
+  <div
+    data-stylename="content"
+  >
+    <div
+      data-stylename="messages-header"
+    >
+      <div
+        data-stylename="close-messages"
+      >
+        <CloseMessages />
+      </div>
+      <div
+        data-stylename="messages-title"
+      >
+        <Icon
+          name="Messages"
+        />
+        <h3>
+          Messages
+        </h3>
+      </div>
+    </div>
+    <div
+      data-stylename="modal"
+    >
+      <Loading />
+    </div>
+  </div>
 </div>
 `;

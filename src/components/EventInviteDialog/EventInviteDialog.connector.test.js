@@ -2,13 +2,10 @@ import { FETCH_PEOPLE } from 'store/constants'
 import orm from 'store/models'
 import { mapStateToProps, mapDispatchToProps } from './EventInviteDialog.connector'
 
-jest.mock('lodash/fp', () => ({
-  ...jest.requireActual('lodash/fp'),
-  debounce: (_, fn) => {
-    fn.cancel = jest.fn()
-    return fn
-  }
-}))
+jest.mock('lodash/debounce', () => fn => {
+  fn.cancel = jest.fn()
+  return fn
+})
 
 describe('mapStateToProps', () => {
   it('returns the expected keys', () => {

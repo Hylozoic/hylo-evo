@@ -9,13 +9,15 @@ exports[`matches the last snapshot 1`] = `
     medium={true}
     url="https://wombat.life"
   />
-  <span
-    data-stylename="name"
-  >
-    Wombat
-  </span>
-  <span
-    data-stylename="group"
-  />
+  <div>
+    <span
+      data-stylename="name"
+    >
+      Wombat
+    </span>
+    <span
+      data-stylename="group"
+    />
+  </div>
 </li>
 `;
