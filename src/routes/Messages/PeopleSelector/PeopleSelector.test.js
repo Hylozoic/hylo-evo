@@ -51,7 +51,6 @@ describe('PeopleSelector', () => {
           />
         </MemoryRouter>
       )
-      wrapper.find(PeopleSelector)
       input = wrapper.find('input').first()
     })
 
