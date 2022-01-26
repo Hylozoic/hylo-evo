@@ -6,7 +6,7 @@ import {
   UNLINK_ACCOUNT,
   VIEW_SAVED_SEARCH
 } from 'store/constants'
-import CreateSavedSearchMutation from 'graphql/mutations/CreateSavedSearchMutation'
+import CreateSavedSearchMutation from 'graphql/CreateSavedSearchMutation'
 
 export const MODULE_NAME = 'UserSettings'
 

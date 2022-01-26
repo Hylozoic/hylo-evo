@@ -6,7 +6,7 @@ import {
   DECLINE_GROUP_INVITE,
   FETCH_MY_REQUESTS_AND_INVITES
 } from 'store/constants'
-import MyInvitesAndRequestsQuery from 'graphql/queries/MyInvitesAndRequestsQuery'
+import MyInvitesAndRequestsQuery from 'graphql/MyInvitesAndRequestsQuery'
 import presentGroupInvite from 'store/presenters/presentGroupInvite'
 import presentJoinRequest from 'store/presenters/presentJoinRequest'
 import clearCacheFor from 'store/reducers/ormReducer/clearCacheFor'

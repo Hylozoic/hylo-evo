@@ -150,7 +150,7 @@ export function fetchSkillSuggestions (search) {
     type: FETCH_SKILL_SUGGESTIONS,
     graphql: {
       query: gql`
-        query SkillsSuggestions($search: String) {
+        query SkillsSuggestions2($search: String) {
           skills(first: 10, autocomplete: $search) {
             items {
               id

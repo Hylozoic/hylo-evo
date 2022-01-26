@@ -1,6 +1,8 @@
 import gql from 'graphql-tag'
-import CommentFieldsFragment from 'graphql/fragments/CommentFieldsFragment'
-import { INITIAL_SUBCOMMENTS_DISPLAYED } from 'routes/PostDetail/Comments/Comment/Comment'
+import PostCommentsFragment from 'graphql/PostCommentsFragment'
+// TODO: GraphQL - Removing interpolated constant so query will parse
+// and to re-consider how we pass such things
+// import { INITIAL_SUBCOMMENTS_DISPLAYED } from 'routes/PostDetail/Comments/Comment/Comment'
 
 export default gql`
   fragment PostFieldsFragment on Post {
@@ -27,23 +29,7 @@ export default gql`
       avatarUrl
     }
     commentersTotal
-    comments(first: 10, order: "desc") @include(if: $withComments) {
-      items {
-        ...CommentFieldsFragment
-        childComments(first: ${INITIAL_SUBCOMMENTS_DISPLAYED}, order: "desc") {
-          items {
-            ...CommentFieldsFragment
-            post {
-              id
-            }
-          }
-          total
-          hasMore
-        }
-      }
-      total
-      hasMore
-    }
+    ...PostCommentsFragment
     linkPreview {
       id
       title
@@ -125,6 +111,5 @@ export default gql`
       }
     }
   }
-
-  ${CommentFieldsFragment}
+  ${PostCommentsFragment}
 `

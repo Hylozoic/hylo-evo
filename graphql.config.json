@@ -1,7 +1,6 @@
 {
   "schema": "http://localhost:3001/noo/graphql",
-  "documents": "/src/**/*.js",
-  "extension": {
+  "extensions": {
     "endpoints": {
       "default": {
         "url": "http://localhost:3001/noo/graphql"

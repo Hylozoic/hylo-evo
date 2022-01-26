@@ -1,5 +1,5 @@
 import { get } from 'lodash/fp'
-import MessageThreadsQuery from 'graphql/queries/MessageThreadsQuery'
+import MessageThreadsQuery from 'graphql/MessageThreadsQuery'
 import { FETCH_THREADS } from 'store/constants'
 
 export default function (first = 10, offset = 0) {

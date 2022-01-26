@@ -4,7 +4,7 @@ import orm from 'store/models'
 import gql from 'graphql-tag'
 import { isEmpty, includes, get } from 'lodash/fp'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import PostFieldsFragment from 'graphql/fragments/PostFieldsFragment'
+import PostFieldsFragment from 'graphql/PostFieldsFragment'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
 
@@ -63,7 +63,6 @@ const searchQuery = gql`
       }
     }
   }
-  
   ${PostFieldsFragment}
 `
 

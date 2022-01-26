@@ -3,7 +3,7 @@ import {
   FETCH_POST,
   FETCH_COMMENTS
 } from 'store/constants'
-import PostQuery from 'graphql/queries/PostQuery'
+import PostQuery from 'graphql/PostQuery'
 
 export default function fetchPost (id, query = PostQuery) {
   return {

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { FETCH_GROUP_DETAILS } from 'store/constants'
-import GroupFieldsFragment from 'graphql/fragments/GroupFieldsFragment'
+import GroupFieldsFragment from 'graphql/GroupFieldsFragment'
 
 export default function fetchGroupDetails (slug) {
   return {
@@ -17,7 +17,6 @@ export default function fetchGroupDetails (slug) {
             ...GroupFieldsFragment
           }
         }
-
         ${GroupFieldsFragment}
       `,
       variables: { slug }

@@ -9,7 +9,7 @@ export function fetchGroupTopic (topicName, groupSlug) {
     type: FETCH_GROUP_TOPIC,
     graphql: {
       query: gql`
-        query GroupTopic($groupSlug: String, $topicName: String) {
+        query GroupTopic2($groupSlug: String, $topicName: String) {
           groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
             id
             postsTotal

@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
 import { FETCH_DEFAULT_TOPICS, FETCH_TOPICS } from '../constants'
-import TopicsQuery from 'graphql/queries/TopicsQuery'
+import TopicsQuery from 'graphql/TopicsQuery'
 
 export default function (queryVariables = {}) {
   return {

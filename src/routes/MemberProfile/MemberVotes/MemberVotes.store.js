@@ -3,12 +3,12 @@ import orm from 'store/models'
 import gql from 'graphql-tag'
 import { compact } from 'lodash/fp'
 import presentPost from 'store/presenters/presentPost'
-import PostFieldsFragment from 'graphql/fragments/PostFieldsFragment'
+import PostFieldsFragment from 'graphql/PostFieldsFragment'
 import { FETCH_MEMBER_VOTES } from '../MemberProfile.store'
 
 export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery) {
   const query = providedQuery || gql`
-    query MemberVotes ($id: ID, $order: String, $limit: Int) {
+    query MemberVotes ($id: ID, $order: String, $limit: Int, $withComments: Boolean = false) {
       person (id: $id) {
         id
         votes (first: $limit, order: $order) {
@@ -25,7 +25,6 @@ export function fetchMemberVotes (id, order = 'desc', limit = 20, providedQuery)
         }
       }
     }
-
     ${PostFieldsFragment}
   `
 

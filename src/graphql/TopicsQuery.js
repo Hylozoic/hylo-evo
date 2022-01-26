@@ -2,12 +2,12 @@ import gql from 'graphql-tag'
 
 export default gql`
   query TopicsQuery (
-    $groupSlug: String,
-    $autocomplete: String,
-    $isDefault: Boolean,
-    $visibility: [Int],
-    $first: Int,
-    $offset: Int,
+    $groupSlug: String
+    $autocomplete: String
+    $isDefault: Boolean
+    $visibility: [Int]
+    $first: Int
+    $offset: Int
     $sortBy: String
   ) {
     topics (

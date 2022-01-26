@@ -1,6 +1,6 @@
 import { get } from 'lodash/fp'
 import { FETCH_PEOPLE } from 'store/constants'
-import PeopleQuery from 'graphql/queries/PeopleQuery'
+import PeopleQuery from 'graphql/PeopleQuery'
 
 export default function fetchPeople ({ autocomplete, groupIds, first = 20, query = PeopleQuery, offset = 0 }) {
   return {

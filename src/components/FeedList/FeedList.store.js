@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import gql from 'graphql-tag'
 import { FETCH_POSTS } from 'store/constants'
-import GroupViewPostsQueryFragment from 'graphql/fragments/GroupViewPostsQueryFragment'
-import PostsQueryFragment from 'graphql/fragments/PostsQueryFragment'
+import GroupViewPostsQueryFragment from 'graphql/GroupViewPostsQueryFragment'
+import PostsQuery from 'graphql/PostsQuery'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
@@ -53,18 +53,18 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
 }
 
 const GroupQuery = gql`
-  query GroupQuery(
-    $afterTime: Date,
-    $beforeTime: Date,
-    $boundingBox: [PointInput],
-    $filter: String,
-    $first: Int,
-    $offset: Int,
-    $order: String,
-    $search: String,
-    $slug: String,
-    $sortBy: String,
-    $topic: ID,
+  query GroupQuery2(
+    $afterTime: Date
+    $beforeTime: Date
+    $boundingBox: [PointInput]
+    $filter: String
+    $first: Int
+    $offset: Int
+    $order: String
+    $search: String
+    $slug: String
+    $sortBy: String
+    $topic: ID
     $withComments: Boolean = false
   ) {
     group(slug: $slug, updateLastViewed: true) {
@@ -83,30 +83,7 @@ const GroupQuery = gql`
       ...GroupViewPostsQueryFragment
     }
   }
-
   ${GroupViewPostsQueryFragment}
-`
-
-const PostsQuery = gql`
-  query PostsQuery(
-    $afterTime: Date,
-    $beforeTime: Date,
-    $boundingBox: [PointInput],
-    $context: String,
-    $filter: String,
-    $first: Int,
-    $groupSlugs: [String],
-    $offset: Int,
-    $order: String,
-    $search: String,
-    $sortBy: String,
-    $topic: ID,
-    $withComments: Boolean = false
-  ) {
-    ...PostsQueryFragment
-  }
-
-  ${PostsQueryFragment}
 `
 
 export function storeFetchPostsParam (props) {

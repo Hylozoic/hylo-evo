@@ -1,24 +1,49 @@
 import { get } from 'lodash/fp'
 import gql from 'graphql-tag'
 import { FETCH_FOR_GROUP } from 'store/constants'
-import GroupQueryFragment from 'graphql/fragments/GroupQueryFragment'
-import GroupTopicsQueryFragment from 'graphql/fragments/GroupTopicsQueryFragment'
+import GroupFragment from 'graphql/GroupFragment'
+import GroupTopicQuerySetFragment from 'graphql/GroupTopicQuerySetFragment'
 
 export default function (slug) {
   const query = slug
     ? gql`
-      query GroupQuery($slug: String, $first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean, $updateLastViewed: Boolean) {
-        ...GroupQueryFragment
+      query GroupQuery(
+        $slug: String
+        $first: Int
+        $offset: Int
+        $sortBy: String
+        $order: String
+        $autocomplete: String
+        $subscribed: Boolean
+        $updateLastViewed: Boolean
+      ) {
+        group(slug: $slug, updateLastViewed: $updateLastViewed) {
+          ...GroupFragment
+        }
       }
-
-      ${GroupQueryFragment}
+      ${GroupFragment}
     `
     : gql`
-      query GroupTopicsQuery($first: Int, $offset: Int, $sortBy: String, $order: String, $autocomplete: String, $subscribed: Boolean) {
-        ...GroupTopicsQueryFragment
-       }
-
-       ${GroupTopicsQueryFragment}
+      query GroupTopicsQuery3(
+        $first: Int
+        $offset: Int
+        $sortBy: String
+        $order: String
+        $autocomplete: String
+        $subscribed: Boolean
+      ) {
+        groupTopics(
+          first: $first
+          offset: $offset
+          sortBy: $sortBy
+          order: $order
+          subscribed: $subscribed
+          autocomplete: $autocomplete
+        ) {
+          ...GroupTopicQuerySetFragment
+        }
+      }
+      ${GroupTopicQuerySetFragment}
     `
 
   return {

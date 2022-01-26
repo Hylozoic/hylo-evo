@@ -1,5 +1,5 @@
 import { CREATE_JOIN_REQUEST, FETCH_MY_JOIN_REQUESTS } from 'store/constants'
-import MyPendingJoinRequestsQuery from 'graphql/queries/MyPendingJoinRequestsQuery'
+import MyPendingJoinRequestsQuery from 'graphql/MyPendingJoinRequestsQuery'
 import gql from 'graphql-tag'
 
 export const MODULE_NAME = 'GroupDetail'

@@ -13,10 +13,10 @@ import {
   FIND_OR_CREATE_THREAD
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
-import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation'
-import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation'
-import MessageThreadQuery from 'graphql/queries/MessageThreadQuery'
-import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery'
+import FindOrCreateThreadMutation from 'graphql/FindOrCreateThreadMutation'
+import CreateMessageMutation from 'graphql/CreateMessageMutation'
+import MessageThreadQuery from 'graphql/MessageThreadQuery'
+import MessageThreadMessagesQuery from 'graphql/MessageThreadMessagesQuery'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 export const MODULE_NAME = 'Messages'

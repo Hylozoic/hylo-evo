@@ -4,24 +4,24 @@ import orm from 'store/models'
 import gql from 'graphql-tag'
 import presentPost from 'store/presenters/presentPost'
 import presentComment from 'store/presenters/presentComment'
-import PostFieldsFragment from 'graphql/fragments/PostFieldsFragment'
+import PostFieldsFragment from 'graphql/PostFieldsFragment'
 
 export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
 const recentActivityQuery = gql`
   query RecentActivity (
-    $afterTime: Date,
-    $beforeTime: Date,
-    $boundingBox: [PointInput],
-    $filter: String,
-    $first: Int,
-    $groupSlugs: [String],
-    $id: ID,
-    $offset: Int,
-    $context: String,
-    $order: String,
-    $search: String,
-    $sortBy: String,
+    $afterTime: Date
+    $beforeTime: Date
+    $boundingBox: [PointInput]
+    $filter: String
+    $first: Int
+    $groupSlugs: [String]
+    $id: ID
+    $offset: Int
+    $context: String
+    $order: String
+    $search: String
+    $sortBy: String
     $topic: ID
     $withComments: Boolean = false
   ) {
@@ -48,17 +48,17 @@ const recentActivityQuery = gql`
         }
       }
       posts(
-        afterTime: $afterTime,
-        beforeTime: $beforeTime,
-        boundingBox: $boundingBox,
-        filter: $filter,
-        first: $first,
-        groupSlugs: $groupSlugs,
-        offset: $offset,
-        context: $context,
-        order: $order,
-        sortBy: $sortBy,
-        search: $search,
+        afterTime: $afterTime
+        beforeTime: $beforeTime
+        boundingBox: $boundingBox
+        filter: $filter
+        first: $first
+        groupSlugs: $groupSlugs
+        offset: $offset
+        context: $context
+        order: $order
+        sortBy: $sortBy
+        search: $search
         topic: $topic
       ) {
         hasMore

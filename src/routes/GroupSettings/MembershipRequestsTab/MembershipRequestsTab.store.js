@@ -5,7 +5,7 @@ import {
   ACCEPT_JOIN_REQUEST,
   DECLINE_JOIN_REQUEST
 } from 'store/constants'
-import JoinRequestsQuery from 'graphql/queries/JoinRequestsQuery'
+import JoinRequestsQuery from 'graphql/JoinRequestsQuery'
 
 export const MODULE_NAME = 'MembershipRequestsTab'
 

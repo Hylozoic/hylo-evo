@@ -58,7 +58,6 @@
     "@deck.gl/react": "^8.6",
     "@faker-js/faker": "^6.0.0-alpha.3",
     "@math.gl/web-mercator": "^3.5",
-    "@playlyfe/gql": "^2.6.2",
     "@storybook/addon-actions": "^v5.0.10",
     "@storybook/addon-info": "^5.0.10",
     "@storybook/addon-links": "^v5.0.10",

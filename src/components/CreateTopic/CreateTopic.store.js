@@ -11,7 +11,7 @@ export function fetchGroupTopic (topicName, groupSlug) {
     type: FETCH_GROUP_TOPIC,
     graphql: {
       query: gql`
-        query GroupTopic($topicName: String, $groupSlug: String) {
+        query GroupTopic3($topicName: String, $groupSlug: String) {
           groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
             id
           }

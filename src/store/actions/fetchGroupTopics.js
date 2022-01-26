@@ -1,41 +1,57 @@
 import gql from 'graphql-tag'
 import { get } from 'lodash/fp'
-import GroupTopicsQueryFragment from 'graphql/fragments/GroupTopicsQueryFragment'
+import GroupTopicQuerySetFragment from 'graphql/GroupTopicQuerySetFragment'
 
 export const FETCH_GROUP_TOPICS = 'FETCH_GROUP_TOPICS'
 
-const GroupQuery = gql`
-  query GroupQuery(
-    $id: ID,
-    $first: Int,
-    $offset: Int,
-    $sortBy: String,
-    $order: String,
-    $subscribed: Boolean,
+const GroupTopicsQuery = gql`
+  query GroupTopicsQuery(
+    $id: ID
+    $first: Int
+    $offset: Int
+    $sortBy: String
+    $order: String
+    $subscribed: Boolean
     $autocomplete: String
   ) {
     group (id: $id) {
       id
-      ...GroupTopicsQueryFragment
+      groupTopics(
+        first: $first,
+        offset: $offset,
+        sortBy: $sortBy,
+        order: $order,
+        subscribed: $subscribed,
+        autocomplete: $autocomplete
+      ) {
+        ...GroupTopicQuerySetFragment
+      }
     }
   }
-
-  ${GroupTopicsQueryFragment}
+  ${GroupTopicQuerySetFragment}
 `
 
-const RootQuery = gql`
-  query RootQuery(
-    $first: Int,
-    $offset: Int,
-    $sortBy: String,
-    $order: String,
-    $subscribed: Boolean,
+const RootTopicsQuery = gql`
+  query RootTopicsQuery(
+    $first: Int
+    $offset: Int
+    $sortBy: String
+    $order: String
+    $subscribed: Boolean
     $autocomplete: String
   ) {
-    ...GroupTopicsQueryFragment
+    groupTopics(
+      first: $first,
+      offset: $offset,
+      sortBy: $sortBy,
+      order: $order,
+      subscribed: $subscribed,
+      autocomplete: $autocomplete
+    ) {
+      ...GroupTopicQuerySetFragment
+    }
   }
-
-  ${GroupTopicsQueryFragment}
+  ${GroupTopicQuerySetFragment}
 `
 
 export default function fetchGroupTopics (groupId, {
@@ -43,11 +59,11 @@ export default function fetchGroupTopics (groupId, {
 }) {
   let query, extractModel, getItems
   if (groupId) {
-    query = GroupQuery
+    query = GroupTopicsQuery
     extractModel = 'Group'
     getItems = get('payload.data.group.groupTopics')
   } else {
-    query = RootQuery
+    query = RootTopicsQuery
     extractModel = 'GroupTopic'
     getItems = get('payload.data.groupTopics')
   }

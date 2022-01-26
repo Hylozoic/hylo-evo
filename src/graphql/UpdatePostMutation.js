@@ -3,23 +3,24 @@ import PostFieldsFragment from '../fragments/PostFieldsFragment'
 
 export default gql`
   mutation UpdatePostMutation(
-    $id: ID,
-    $type: String,
-    $title: String,
-    $details: String,
-    $linkPreviewId: String,
-    $groupIds: [String],
-    $imageUrls: [String],
-    $fileUrls: [String],
-    $topicNames: [String],
-    $memberIds: [ID],
-    $acceptContributions: Boolean,
-    $eventInviteeIds: [ID],
-    $startTime: Date,
-    $endTime: Date,
-    $location: String,
-    $locationId: ID,
+    $id: ID
+    $type: String
+    $title: String
+    $details: String
+    $linkPreviewId: String
+    $groupIds: [String]
+    $imageUrls: [String]
+    $fileUrls: [String]
+    $topicNames: [String]
+    $memberIds: [ID]
+    $acceptContributions: Boolean
+    $eventInviteeIds: [ID]
+    $startTime: Date
+    $endTime: Date
+    $location: String
+    $locationId: ID
     $isPublic: Boolean
+    $withComments: Boolean = false
   ) {
     updatePost(id: $id, data: {
       type: $type,
@@ -42,6 +43,5 @@ export default gql`
       ...PostFieldsFragment      
     }
   }
-
   ${PostFieldsFragment}
 `

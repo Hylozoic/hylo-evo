@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import CommentFieldsFragment from 'graphql/fragments/CommentFieldsFragment'
+import CommentFieldsFragment from 'graphql/CommentFieldsFragment'
 
 export default gql`
   query SubCommentsQuery(
@@ -20,6 +20,5 @@ export default gql`
       }
     }
   }
-  
   ${CommentFieldsFragment}
 `

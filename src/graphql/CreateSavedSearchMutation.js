@@ -2,14 +2,14 @@ import gql from 'graphql-tag'
 
 export default gql`
   mutation CreateSavedSearchMutation(
-    $boundingBox: [PointInput],
-    $groupSlug: String,
-    $context: String,
-    $lastPostId: ID,
-    $name: String,
-    $postTypes: [String],
-    $searchText: String,
-    $topicIds: [ID],
+    $boundingBox: [PointInput]
+    $groupSlug: String
+    $context: String
+    $lastPostId: ID
+    $name: String
+    $postTypes: [String]
+    $searchText: String
+    $topicIds: [ID]
     $userId: ID
   ) {
     createSavedSearch(data: {

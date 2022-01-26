@@ -2,11 +2,11 @@ import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_GROUPS_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
-import GroupsQueryFragment from 'graphql/fragments/GroupsQueryFragment'
-import GroupViewPostsQueryFragment from 'graphql/fragments/GroupViewPostsQueryFragment'
-import PostsQueryFragment from 'graphql/fragments/PostsQueryFragment'
+import GroupViewPostsQueryFragment from 'graphql/GroupViewPostsQueryFragment'
+import PostsQuery from 'graphql/PostsQuery'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 import gql from 'graphql-tag'
+import GroupFieldsFragment from 'graphql/GroupFieldsFragment'
 
 export const MODULE_NAME = 'MapExplorer'
 export const STORE_FETCH_PARAMS = `${MODULE_NAME}/STORE_FETCH_PARAMS`
@@ -36,17 +36,17 @@ export function formatBoundingBox (bbox) {
 
 const GroupPostsQuery = gql`
   query GroupPosts(
-    $afterTime: Date,
-    $beforeTime: Date,
+    $afterTime: Date
+    $beforeTime: Date
     $boundingBox: [PointInput]
-    $filter: String,
-    $first: Int,
-    $offset: Int,
-    $order: String,
-    $search: String,
-    $slug: String,
-    $sortBy: String,
-    $topic: ID,
+    $filter: String
+    $first: Int
+    $offset: Int
+    $order: String
+    $search: String
+    $slug: String
+    $sortBy: String
+    $topic: ID
     $withComments: Boolean = false
   ) {
     group(slug: $slug, updateLastViewed: true) {
@@ -62,31 +62,11 @@ const GroupPostsQuery = gql`
   ${GroupViewPostsQueryFragment}
 `
 
-const PostsQuery = gql`
-  query PostsQuery(
-    $afterTime: Date,
-    $beforeTime: Date,
-    $boundingBox: [PointInput],
-    $context: String,
-    $filter: String,
-    $first: Int,
-    $groupSlugs: [String]
-    $offset: Int,
-    $order: String,
-    $search: String,
-    $sortBy: String,
-    $topic: ID
-  ) {
-    ...PostsQueryFragment
-  }
-  ${PostsQueryFragment}
-`
-
 const GroupMembersQuery = gql`
   query GroupMembers(
     $boundingBox: [PointInput],
-    $slug: String,
-    $sortBy: String,
+    $slug: String
+    $sortBy: String
     $search: String
   ) {
     group(slug: $slug, updateLastViewed: true) {
@@ -137,9 +117,18 @@ const groupsQuery = gql`
     $withJoinQuestions: Boolean = false
     $withPrerequisites: Boolean = false
   ) {
-    ...GroupsQueryFragment
+    groups(
+      boundingBox: $boundingBox
+      context: $context
+      parentSlugs: $parentSlugs
+      search: $search
+      sortBy: $sortBy
+      visibility: $visibility
+    ) {
+      ...GroupFieldsFragment
+    }
   }
-  ${GroupsQueryFragment}
+  ${GroupFieldsFragment}
 `
 
 // actions
