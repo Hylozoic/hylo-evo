@@ -1,13 +1,18 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import Header, { calculateMaxShown, generateDisplayNames, formatNames } from './Header'
 
 describe('Header', () => {
   it('should match the latest snapshot', () => {
-    const otherParticipants = ['one', 'two', 'three']
+    const participants = [{id: 1, name: 'One'}, {id: 2, name: 'Two'}, {id: 3, name: 'Three'}]
     const props = {
+      currentUser: {
+        id: 1,
+        name: 'One'
+      },
       messageThread: {
-        participants: otherParticipants
+        participants: participants
       }
     }
     const wrapper = shallow(<Header {...props} />)
@@ -53,7 +58,17 @@ describe('formatNames', () => {
     const expected = {
       displayNames: otherParticipants.join(', ')
     }
-    expect(formatNames(otherParticipants, maxShown)).toEqual(expected)
+    expect(formatNames(otherParticipants, maxShown).toString()).toEqual(expected.toString())
+  })
+
+  it('returns a truncated list of Links to user profiles with the user name, and a string of "n others" if maxShown is fewer than total participants', () => {
+    const maxShown = 2
+    const participants = [<Link to="/all/members/1">One</Link>, <Link to="/all/members/2">Two</Link>, <Link to="/all/members/3">Three</Link>, <Link to="/all/members/4">Four</Link>]
+    const expected = {
+      displayNames: ['<Link to="/all/members/1">One</Link>, ', '<Link to="/all/members/2">Two</Link>'],
+      andOthers: ' 2 others'
+    }
+    expect(formatNames(participants, maxShown).toString()).toEqual(expected.toString())
   })
 
   it('returns a truncated list of names, and a string of "n others" if maxShown is fewer than total participants', () => {
@@ -63,15 +78,19 @@ describe('formatNames', () => {
       displayNames: 'a, b',
       andOthers: ' 2 others'
     }
-    expect(formatNames(otherParticipants, maxShown)).toEqual(expected)
+    expect(formatNames(otherParticipants, maxShown).toString()).toEqual(expected.toString())
   })
 })
 
 describe('generateDisplayNames', () => {
   it('returns default if otherParticipants paramater isEmpty', () => {
+    const currentUser = {
+      id: 1,
+      name: 'One'
+    }
     const expected = {
       displayNames: 'You'
     }
-    expect(generateDisplayNames(null, [])).toEqual(expected)
+    expect(generateDisplayNames(null, [], currentUser).toString()).toEqual(expected.toString())
   })
 })
