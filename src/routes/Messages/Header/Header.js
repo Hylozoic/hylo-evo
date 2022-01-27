@@ -93,11 +93,11 @@ export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
 }
 
 export const getFormattedLinkToProfile = (user) => {
-  return <Link key={user.id} to={personUrl(user.id)}>{user.name}</Link> 
+  return <Link key={user.id} to={personUrl(user.id)}>{user.name}</Link>
 }
 
 export function generateDisplayNames (maxShown, participants, currentUser) {
-  const formattedCurrentUser = getFormattedLinkToProfile({id: currentUser.id, name: 'You'})
+  const formattedCurrentUser = getFormattedLinkToProfile({ id: currentUser.id, name: 'You' })
   const formattedOthers = participants.reduce((result, participant) => {
     if (participant.id !== currentUser.id) {
       result.push(getFormattedLinkToProfile(participant))
@@ -117,7 +117,7 @@ export function formatNames (otherParticipants, maxShown) {
     : otherParticipants
   if (maxShown && maxShown !== length) andOthers = truncatedNames.pop()
   const formattedTruncatedNames = truncatedNames.map((name, index) => index === truncatedNames.length - 1 ? name : [name, ', '])
-  
+
   if (andOthers) {
     return { displayNames: formattedTruncatedNames, andOthers: ` ${andOthers}` }
   } else {

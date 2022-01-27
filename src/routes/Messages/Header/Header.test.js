@@ -5,7 +5,7 @@ import Header, { calculateMaxShown, generateDisplayNames, formatNames } from './
 
 describe('Header', () => {
   it('should match the latest snapshot', () => {
-    const participants = [{id: 1, name: 'One'}, {id: 2, name: 'Two'}, {id: 3, name: 'Three'}]
+    const participants = [{ id: 1, name: 'One' }, { id: 2, name: 'Two' }, { id: 3, name: 'Three' }]
     const props = {
       currentUser: {
         id: 1,
@@ -63,7 +63,7 @@ describe('formatNames', () => {
 
   it('returns a truncated list of Links to user profiles with the user name, and a string of "n others" if maxShown is fewer than total participants', () => {
     const maxShown = 2
-    const participants = [<Link to="/all/members/1">One</Link>, <Link to="/all/members/2">Two</Link>, <Link to="/all/members/3">Three</Link>, <Link to="/all/members/4">Four</Link>]
+    const participants = [<Link to='/all/members/1'>One</Link>, <Link to='/all/members/2'>Two</Link>, <Link to='/all/members/3'>Three</Link>, <Link to='/all/members/4'>Four</Link>]
     const expected = {
       displayNames: ['<Link to="/all/members/1">One</Link>, ', '<Link to="/all/members/2">Two</Link>'],
       andOthers: ' 2 others'
