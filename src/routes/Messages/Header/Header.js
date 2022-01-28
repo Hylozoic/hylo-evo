@@ -52,11 +52,11 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { pending } = this.props
-    const participants = get('participants', this.props.messageThread) || []
-    const otherParticipants = this.getOthers(this.props.currentUser, participants)
+    const { currentUser, messageThread, pending } = this.props
+    const participants = get('participants', messageThread) || []
+    const otherParticipants = this.getOthers(currentUser, participants)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
-    const { displayNames, andOthers } = generateDisplayNames(maxShown, participants, this.props.currentUser)
+    const { displayNames, andOthers } = generateDisplayNames(maxShown, participants, currentUser)
     const showArrow = !!andOthers
 
     return <div styleName='header' id='thread-header'>
