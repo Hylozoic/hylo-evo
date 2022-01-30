@@ -1,7 +1,7 @@
 import orm from 'store/models'
 import { mapStateToProps } from './MapExplorer.connector'
 import { buildKey } from 'store/reducers/queryResults'
-import { FETCH_POSTS_MAP } from 'store/constants'
+import { FETCH_POSTS_MAP } from './MapExplorer.store'
 import { times } from 'lodash/fp'
 
 describe('mapStateToProps', () => {
@@ -10,6 +10,8 @@ describe('mapStateToProps', () => {
 
   beforeEach(() => {
     const session = orm.session(orm.getEmptyState())
+
+    session.Group.create({ id: 1, slug: 'foo' })
 
     times(i => {
       session.Post.create({ id: i.toString(), groups: ['1'] })
@@ -48,19 +50,24 @@ describe('mapStateToProps', () => {
     expect(mapStateToProps(state, props)).toEqual(
       expect.objectContaining({
         centerLocation: { lat: 35.442845, lng: 7.916598 },
-        currentUser: undefined,
         context: 'groups',
-        fetchParams: { boundingBox: undefined, slug: 'foo', context: 'groups', groupSlugs: undefined },
+        currentUser: undefined,
+        fetchGroupParams: {boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
+        fetchMemberParams: {context: 'groups', slug: 'foo', sortBy: 'name'},
+        fetchParams: { boundingBox: undefined, slug: 'foo', context: 'groups', groupSlugs: ['foo'] },
+        fetchParamsForDrawer: {context: 'groups', featureTypes: {offer: true, request: true}, groupSlugs: ['foo'], search: '', slug: 'foo', topics: []},
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
           topics: []
         },
-        group: null,
+        group: {id: 1, slug: 'foo'},
         groups: [],
         members: [],
-        pending: undefined,
-        posts: [],
+        pendingPostsDrawer: undefined,
+        pendingPostsMap: undefined,
+        postsForDrawer: [],
+        postsForMap: [],
         hideDrawer: false,
         searches: undefined,
         selectedSearch: {},
@@ -79,6 +86,6 @@ describe('mapStateToProps', () => {
       pending: { [FETCH_POSTS_MAP]: true }
     }
     const result = mapStateToProps(state, props)
-    expect(result).toMatchObject({ pending: true })
+    expect(result).toMatchObject({ pendingPostsMap: true })
   })
 })

@@ -32,7 +32,8 @@ export class UnwrappedMapExplorer extends React.Component {
     centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
     members: [],
-    posts: [],
+    postsForDrawer: [],
+    postsForMap: [],
     groups: [],
     routeParams: {},
     hideDrawer: false,
@@ -48,14 +49,17 @@ export class UnwrappedMapExplorer extends React.Component {
       clusterLayer: null,
       groupIconLayer: null,
       currentBoundingBox: null,
-      features: [],
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
+      // Need this in the state so we can filter them by currentBoundingBox
+      groupsForDrawer: props.groups || [],
+      membersForDrawer: props.members || [],
       selectedObject: null,
       showFeatureFilters: false,
       totalLoadedBoundingBox: null,
+      totalPostsInView: get('postsForMap.length', props) || 0,
       viewport: {
         width: 800,
         height: 600,
@@ -110,22 +114,29 @@ export class UnwrappedMapExplorer extends React.Component {
       context,
       fetchGroups,
       fetchMembers,
-      fetchPosts,
+      fetchPostsForDrawer,
+      fetchPostsForMap,
       fetchParams,
+      filters,
       members,
-      posts,
+      postsForMap,
       groups
     } = this.props
 
     if (!isEqual(prevProps.fetchParams, fetchParams) || prevProps.context !== context) {
+      fetchPostsForDrawer()
       fetchMembers()
-      fetchPosts()
+      fetchPostsForMap()
       fetchGroups()
+    }
+
+    if (!isEqual(prevProps.filters, filters)) {
+      fetchPostsForDrawer()
     }
 
     if (this.state.currentBoundingBox &&
         (!isEqual(prevProps.fetchParams, fetchParams) ||
-         !isEqual(prevProps.posts, posts) ||
+         !isEqual(prevProps.postsForMap, postsForMap) ||
          !isEqual(prevProps.members, members) ||
          !isEqual(prevProps.groups, groups))) {
       this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
@@ -137,14 +148,9 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   updateSavedSearch (search) {
-    const { boundingBox, featureTypes, searchText, groupSlug, context, topics } = generateViewParams(search)
-    const params = { featureTypes, search: searchText, groupSlug, context, topics }
+    const { boundingBox, featureTypes, searchText, topics } = generateViewParams(search)
     this.updateBoundingBoxQuery(boundingBox)
-    this.props.fetchMembers(params)
-    this.props.fetchPosts(params)
-    this.props.fetchGroups(params)
-    this.props.storeFetchParams({ boundingBox })
-    this.props.storeClientFilterParams({ featureTypes, searchText, topics })
+    this.props.storeClientFilterParams({ featureTypes, search: searchText, topics })
     this.updateViewportWithBbox({ bbox: formatBoundingBox(boundingBox) })
   }
 
@@ -153,7 +159,7 @@ export class UnwrappedMapExplorer extends React.Component {
       group,
       groups,
       members,
-      posts
+      postsForMap
     } = this.props
 
     const bbox = bboxPolygon(boundingBox)
@@ -165,7 +171,7 @@ export class UnwrappedMapExplorer extends React.Component {
       }
       return false
     })
-    const viewPosts = posts.filter(post => {
+    const viewPosts = postsForMap.filter(post => {
       const locationObject = post.locationObject
       if (locationObject) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
@@ -189,16 +195,18 @@ export class UnwrappedMapExplorer extends React.Component {
         posts: viewPosts,
         onHover: this.onMapHover,
         onClick: this.onMapClick,
-        boundingBox: this.state.currentBoundingBox
+        boundingBox: boundingBox
       }),
       groupIconLayer: createIconLayerFromGroups({
         groups: viewGroups,
         onHover: this.onMapHover,
         onClick: this.onMapClick,
-        boundingBox: this.state.currentBoundingBox
+        boundingBox: boundingBox
       }),
       currentBoundingBox: boundingBox,
-      features: viewPosts.concat(viewMembers)
+      groupsForDrawer: viewGroups,
+      membersForDrawer: viewMembers,
+      totalPostsInView: viewPosts.length
     }
   }
 
@@ -241,11 +249,14 @@ export class UnwrappedMapExplorer extends React.Component {
       this.props.storeFetchParams({ boundingBox: finalBbox })
     }
 
+    // Update currentBoundingBox in the filters to reload MapDrawer posts
+    this.props.storeClientFilterParams({ currentBoundingBox: newBoundingBox })
+
     this.setState({
       ...this.updatedMapFeatures(newBoundingBox),
       totalLoadedBoundingBox: finalBbox
     })
-  }, 800)
+  }, 200)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
@@ -281,9 +292,9 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   toggleFeatureType = (type, checked) => {
-    const featureTypes = this.props.filters.featureTypes
-    featureTypes[type] = checked
-    this.props.storeClientFilterParams({ featureTypes })
+    const newFeatureTypes = { ...this.props.filters.featureTypes }
+    newFeatureTypes[type] = checked
+    this.props.storeClientFilterParams({ featureTypes: newFeatureTypes })
   }
 
   _renderTooltip = () => {
@@ -325,7 +336,7 @@ export class UnwrappedMapExplorer extends React.Component {
 
   saveSearch = (name) => {
     const { currentBoundingBox } = this.state
-    const { context, currentUser, filters, posts, routeParams } = this.props
+    const { context, currentUser, filters, routeParams } = this.props
     const { featureTypes, search: searchText, topics } = filters
 
     let groupSlug = routeParams.groupSlug
@@ -337,8 +348,6 @@ export class UnwrappedMapExplorer extends React.Component {
       return selected
     }, [])
 
-    const lastPostId = get(posts, '[0].id')
-
     const topicIds = topics.map(t => t.id)
 
     const boundingBox = [
@@ -346,7 +355,7 @@ export class UnwrappedMapExplorer extends React.Component {
       { lat: currentBoundingBox[3], lng: currentBoundingBox[2] }
     ]
 
-    const attributes = { boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }
+    const attributes = { boundingBox, groupSlug, context, name, postTypes, searchText, topicIds, userId }
 
     this.props.saveSearch(attributes)
   }
@@ -357,11 +366,15 @@ export class UnwrappedMapExplorer extends React.Component {
 
   render () {
     const {
+      context,
       currentUser,
       fetchParams,
       deleteSearch,
+      fetchPostsForDrawer,
       filters,
-      pending,
+      pendingPostsMap,
+      pendingPostsDrawer,
+      postsForDrawer,
       routeParams,
       searches,
       topics
@@ -370,10 +383,12 @@ export class UnwrappedMapExplorer extends React.Component {
     const {
       clusterLayer,
       groupIconLayer,
-      features,
       hideDrawer,
+      groupsForDrawer,
+      membersForDrawer,
       showFeatureFilters,
       showSavedSearches,
+      totalPostsInView,
       viewport
     } = this.state
 
@@ -389,7 +404,7 @@ export class UnwrappedMapExplorer extends React.Component {
           children={this._renderTooltip()}
           viewport={viewport}
         />
-        {pending && <Loading className={styles.loading} />}
+        {pendingPostsMap && <Loading className={styles.loading} />}
       </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
@@ -397,12 +412,18 @@ export class UnwrappedMapExplorer extends React.Component {
       </button>
       {!hideDrawer && (
         <MapDrawer
+          context={context}
           currentUser={currentUser}
-          features={features}
           fetchParams={fetchParams}
+          fetchPostsForDrawer={fetchPostsForDrawer}
           filters={filters}
+          groups={groupsForDrawer}
+          members={membersForDrawer}
+          numFetchedPosts={postsForDrawer.length}
+          numTotalPosts={totalPostsInView}
           onUpdateFilters={this.props.storeClientFilterParams}
-          pending={pending}
+          pendingPostsDrawer={pendingPostsDrawer}
+          posts={postsForDrawer}
           routeParams={routeParams}
           topics={topics}
         />
@@ -411,7 +432,7 @@ export class UnwrappedMapExplorer extends React.Component {
         <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
       <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
-        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/6</strong>
+        Features: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/7</strong>
       </button>
       {currentUser && <>
         <Icon
@@ -432,7 +453,7 @@ export class UnwrappedMapExplorer extends React.Component {
       </>}
       <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
         <h3>What do you want to see on the map?</h3>
-        {['member', 'request', 'offer', 'resource', 'event', 'project'].map(featureType => {
+        {['request', 'offer', 'resource', 'project', 'event', 'member', 'group'].map(featureType => {
           let color = FEATURE_TYPES[featureType].primaryColor
 
           return (

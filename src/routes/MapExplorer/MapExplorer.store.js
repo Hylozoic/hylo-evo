@@ -1,8 +1,11 @@
-import { get } from 'lodash/fp'
+import { get, isEmpty } from 'lodash/fp'
 import { createSelector } from 'reselect'
-import { FETCH_MEMBERS_MAP, FETCH_POSTS_MAP, FETCH_GROUPS_MAP, SAVE_SEARCH, FETCH_SAVED_SEARCHES, DELETE_SAVED_SEARCH } from 'store/constants'
+import {
+  DELETE_SAVED_SEARCH,
+  FETCH_SAVED_SEARCHES,
+  SAVE_SEARCH
+} from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
-import groupsQueryFragment from 'graphql/fragments/groupsQueryFragment'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
@@ -10,9 +13,14 @@ import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reduce
 export const MODULE_NAME = 'MapExplorer'
 export const STORE_FETCH_PARAMS = `${MODULE_NAME}/STORE_FETCH_PARAMS`
 export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
+export const FETCH_GROUPS_MAP = `${MODULE_NAME}/FETCH_GROUPS_MAP`
+export const FETCH_MEMBERS_MAP = `${MODULE_NAME}/FETCH_MEMBERS_MAP`
+export const FETCH_POSTS_MAP = `${MODULE_NAME}/FETCH_POSTS_MAP`
+export const FETCH_POSTS_MAP_DRAWER = `${MODULE_NAME}/FETCH_POSTS_MAP_DRAWER`
 
 export const SORT_OPTIONS = [
-  { id: 'updated', label: 'Latest' },
+  { id: 'updated', label: 'Latest Activity' },
+  { id: 'created', label: 'Post Date' },
   { id: 'votes', label: 'Popular' }
 ]
 
@@ -24,8 +32,9 @@ export const FEATURE_TYPES = {
     map: true
   },
   group: {
-    primaryColor: [201, 88, 172, 255],
-    backgroundColor: 'rgba(201, 88, 172, 1.000)'
+    primaryColor: [128, 140, 155, 255],
+    backgroundColor: 'rgba(128, 140, 155, 1.000)',
+    map: true
   }
 }
 
@@ -33,18 +42,20 @@ export function formatBoundingBox (bbox) {
   return bbox ? [{ lng: bbox[0], lat: bbox[1] }, { lng: bbox[2], lat: bbox[3] }] : bbox
 }
 
-const groupPostsQuery = `query (
+const groupPostsQuery = (postsFragment) => `query (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $filter: String,
   $first: Int,
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $slug: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -53,11 +64,11 @@ const groupPostsQuery = `query (
     avatarUrl
     bannerUrl
     postCount
-    ${groupViewPostsQueryFragment}
+    ${postsFragment}
   }
 }`
 
-const postsQuery = `query (
+const postsQuery = (postsFragment) => `query (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -65,17 +76,19 @@ const postsQuery = `query (
   $filter: String,
   $first: Int,
   $groupSlugs: [String]
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
-  ${postsQueryFragment}
+  ${postsFragment}
 }`
 
 const membersFragment = `
-  members(sortBy: $sortBy, order: "desc", boundingBox: $boundingBox, search: $search) {
+  members(sortBy: $sortBy, order: "asc", boundingBox: $boundingBox, search: $search) {
     items {
       id
       name
@@ -123,19 +136,124 @@ const groupsQuery = `query (
   $sortBy: String,
   $visibility: Int
 ) {
-  ${groupsQueryFragment}
+  groups(
+    boundingBox: $boundingBox,
+    context: $context,
+    parentSlugs: $parentSlugs,
+    search: $search,
+    sortBy: $sortBy,
+    visibility: $visibility
+  ) {
+    items {
+      id
+      avatarUrl
+      description
+      memberCount
+      name
+      slug
+      locationObject {
+        id
+        addressNumber
+        addressStreet
+        bbox {
+          lat
+          lng
+        }
+        center {
+          lat
+          lng
+        }
+        city
+        country
+        fullText
+        locality
+        neighborhood
+        region
+      }
+    }
+  }
 }`
 
 // actions
-export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boundingBox, groupSlugs }) {
+export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery
+    query = groupPostsQuery(`posts: viewPosts(
+      afterTime: $afterTime,
+      beforeTime: $beforeTime,
+      boundingBox: $boundingBox,
+      filter: $filter,
+      first: $first,
+      isFulfilled: $isFulfilled,
+      offset: $offset,
+      order: $order,
+      sortBy: $sortBy,
+      search: $search,
+      topic: $topic,
+      topics: $topics
+    ) {
+      hasMore
+      total
+      items {
+        id
+        title
+        type
+        details
+        createdAt
+        updatedAt
+        locationObject {
+          center {
+            lat
+            lng
+          }
+        }
+        topics {
+          id
+          name
+        }
+      }
+    }`)
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
-    query = postsQuery
+    query = postsQuery(`posts(
+      afterTime: $afterTime,
+      beforeTime: $beforeTime,
+      boundingBox: $boundingBox,
+      context: $context,
+      filter: $filter,
+      first: $first,
+      groupSlugs: $groupSlugs,
+      isFulfilled: $isFulfilled,
+      offset: $offset,
+      order: $order,
+      sortBy: $sortBy,
+      search: $search,
+      topic: $topic,
+      topics: $topics
+    ) {
+      hasMore
+      total
+      items {
+        id
+        title
+        type
+        details
+        createdAt
+        updatedAt
+        locationObject {
+          center {
+            lat
+            lng
+          }
+        }
+        topics {
+          id
+          name
+        }
+      }
+    }`)
     extractModel = 'Post'
     getItems = get('payload.data.posts')
   } else {
@@ -148,19 +266,67 @@ export function fetchPosts ({ context, slug, sortBy, search, filter, topic, boun
       query,
       variables: {
         boundingBox: formatBoundingBox(boundingBox),
-        filter,
-        groupSlugs,
         context,
+        filter,
+        first: 500,
+        groupSlugs,
+        isFulfilled: false,
         slug,
         sortBy,
         search,
-        topic
+        topic: null,
+        topics
       }
     },
     meta: {
       extractModel,
       extractQueryResults: {
         getItems
+      }
+    }
+  }
+}
+
+export function fetchPostsForDrawer ({ boundingBox, context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
+  var query, extractModel, getItems
+
+  if (context === 'groups') {
+    query = groupPostsQuery(groupViewPostsQueryFragment)
+    extractModel = 'Group'
+    getItems = get('payload.data.group.posts')
+  } else if (context === 'all' || context === 'public') {
+    query = postsQuery(postsQueryFragment)
+    extractModel = 'Post'
+    getItems = get('payload.data.posts')
+  } else {
+    throw new Error(`FETCH_POSTS_MAP_DRAWER with context=${context} is not implemented`)
+  }
+
+  return {
+    type: FETCH_POSTS_MAP_DRAWER,
+    graphql: {
+      query,
+      variables: {
+        boundingBox: formatBoundingBox(currentBoundingBox || boundingBox),
+        context,
+        filter,
+        first: 10,
+        groupSlugs,
+        isFulfilled: false,
+        offset,
+        slug,
+        sortBy,
+        search,
+        topic: null,
+        topics: !isEmpty(topics) ? topics.map(t => t.id) : null,
+        types: featureTypes
+      }
+    },
+    meta: {
+      extractModel,
+      extractQueryResults: {
+        getItems,
+        replace
       }
     }
   }
@@ -191,10 +357,12 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search, grou
     graphql: {
       query,
       variables: {
-        slug,
-        sortBy,
+        boundingBox: formatBoundingBox(boundingBox),
+        context,
+        groupSlugs,
         search,
-        boundingBox: formatBoundingBox(boundingBox)
+        slug,
+        sortBy
       }
     },
     meta: {
@@ -263,21 +431,26 @@ export const sortBySelector = (state) => {
   return state.MapExplorer.clientFilterParams.sortBy
 }
 
-const getPostResults = makeGetQueryResults(FETCH_POSTS_MAP)
+const getPostsForMapResults = makeGetQueryResults(FETCH_POSTS_MAP)
+const getPostsForDrawerResults = makeGetQueryResults(FETCH_POSTS_MAP_DRAWER)
 
-export const getPosts = makeQueryResultsModelSelector(
-  getPostResults,
-  'Post'
-)
+export const getPostsForMap = makeQueryResultsModelSelector(getPostsForMapResults, 'Post')
+export const getPostsForDrawer = makeQueryResultsModelSelector(getPostsForDrawerResults, 'Post')
 
-export const getPostsFilteredByType = createSelector(
-  getPosts,
+export const getPostsForMapFilteredByType = createSelector(
+  getPostsForMap,
   filterContentTypesSelector,
   (posts, filterContentTypes) => posts.filter(post => filterContentTypes[post.type])
 )
 
-export const getSearchedPosts = createSelector(
-  getPostsFilteredByType,
+export const getPostsForDrawerFilteredByType = createSelector(
+  getPostsForDrawer,
+  filterContentTypesSelector,
+  (posts, filterContentTypes) => posts.filter(post => filterContentTypes[post.type])
+)
+
+export const getSearchedPostsForMap = createSelector(
+  getPostsForMapFilteredByType,
   searchTextSelector,
   (posts, searchText) => {
     const trimmedText = searchText ? searchText.trim() : ''
@@ -290,8 +463,22 @@ export const getSearchedPosts = createSelector(
   }
 )
 
-export const getFilteredPosts = createSelector(
-  getSearchedPosts,
+export const getSearchedPostsForDrawer = createSelector(
+  getPostsForDrawerFilteredByType,
+  searchTextSelector,
+  (posts, searchText) => {
+    const trimmedText = searchText ? searchText.trim() : ''
+    if (trimmedText === '') return posts
+    return posts.filter(post => {
+      return post.title.toLowerCase().includes(searchText) ||
+             post.details.toLowerCase().includes(searchText) ||
+             post.topics.toModelArray().find(topic => topic.name.includes(searchText))
+    })
+  }
+)
+
+export const getFilteredPostsForMap = createSelector(
+  getSearchedPostsForMap,
   filterTopicsSelector,
   (posts, filterTopics) => {
     if (filterTopics.length === 0) return posts
@@ -301,33 +488,29 @@ export const getFilteredPosts = createSelector(
   }
 )
 
-export const getSortedFilteredPosts = createSelector(
-  getFilteredPosts,
-  sortBySelector,
-  (posts, sortBy) => {
-    // TODO: use createdAt or the same updatedAt which includes comments that is used in the stream?
-    return posts.sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal : new Date(b.createdAt) - new Date(a.createdAt))
+export const getFilteredPostsForDrawer = createSelector(
+  getSearchedPostsForDrawer,
+  filterTopicsSelector,
+  (posts, filterTopics) => {
+    if (filterTopics.length === 0) return posts
+    return posts.filter(post => {
+      return post.topics.toModelArray().find(pt => filterTopics.find(ft => pt.name === ft.name))
+    })
   }
 )
 
-const getMemberResults = makeGetQueryResults(FETCH_MEMBERS_MAP)
-
-export const getMembers = makeQueryResultsModelSelector(
-  getMemberResults,
-  'Person'
-)
-
-export const getSortedFilteredMembers = createSelector(
-  getMembers,
-  filterContentTypesSelector,
+export const getSortedFilteredPostsForDrawer = createSelector(
+  getFilteredPostsForDrawer,
   sortBySelector,
-  (members, filterContentTypes, sortBy) => {
-    return filterContentTypes['member'] ? members : []
+  (posts, sortBy) => {
+    return posts.sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal
+      : sortBy === 'updated' ? new Date(b.updatedAt) - new Date(a.updatedAt)
+        : new Date(b.createdAt) - new Date(a.createdAt))
   }
 )
 
 export const getCurrentTopics = createSelector(
-  getFilteredPosts,
+  getFilteredPostsForMap,
   (posts) => {
     const topics = (posts ? posts.reduce((topics, post) => {
       post.topics.toModelArray().forEach((topic) => {
@@ -344,6 +527,44 @@ export const getCurrentTopics = createSelector(
   }
 )
 
+const getMemberResults = makeGetQueryResults(FETCH_MEMBERS_MAP)
+
+export const getMembers = makeQueryResultsModelSelector(
+  getMemberResults,
+  'Person'
+)
+
+export const getMembersFilteredByType = createSelector(
+  getMembers,
+  filterContentTypesSelector,
+  (members, filterContentTypes) => {
+    return filterContentTypes['member'] ? members : []
+  }
+)
+
+export const getMembersFilteredBySearch = createSelector(
+  getMembersFilteredByType,
+  searchTextSelector,
+  (members, searchText) => {
+    return isEmpty(searchText) ? members
+      : members.filter(m => m.name.includes(searchText) ||
+                            (m.tagline && m.tagline.includes(searchText)) ||
+                            (m.skills && m.skills.toModelArray().find(s => s.name === searchText))
+      )
+  }
+)
+
+export const getMembersFilteredByTopics = createSelector(
+  getMembersFilteredBySearch,
+  filterTopicsSelector,
+  (members, filterTopics) => {
+    return isEmpty(filterTopics) ? members
+      : members.filter(m => filterTopics.find(ft => m.tagline.includes(ft.name) ||
+                                                    m.skills.toModelArray().find(s => s.name === ft.name)
+      ))
+  }
+)
+
 const getGroupsResults = makeGetQueryResults(FETCH_GROUPS_MAP)
 
 export const getGroups = makeQueryResultsModelSelector(
@@ -351,11 +572,39 @@ export const getGroups = makeQueryResultsModelSelector(
   'Group'
 )
 
-// export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
+export const getGroupsFilteredByType = createSelector(
+  getGroups,
+  filterContentTypesSelector,
+  (groups, filterContentTypes) => {
+    return filterContentTypes['group'] ? groups : []
+  }
+)
 
-// reducer
+export const getGroupsFilteredBySearch = createSelector(
+  getGroupsFilteredByType,
+  searchTextSelector,
+  (groups, searchText) => {
+    return isEmpty(searchText) ? groups
+      : groups.filter(g => g.name.includes(searchText) ||
+                           (g.description && g.description.includes(searchText)))
+  }
+)
+
+export const getGroupsFilteredByTopics = createSelector(
+  getGroupsFilteredBySearch,
+  filterTopicsSelector,
+  (groups, filterTopics) => {
+    return isEmpty(filterTopics) ? groups
+      : groups.filter(g => filterTopics.find(ft => g.name.includes(ft.name) ||
+                                                   (g.description && g.description.includes(ft.name)))
+      )
+  }
+)
+
+/* ***** Reducer ***** */
 const DEFAULT_STATE = {
   clientFilterParams: {
+    currentBoundingBox: null,
     featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
@@ -376,7 +625,11 @@ export default function (state = DEFAULT_STATE, action) {
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
     return {
       ...state,
-      clientFilterParams: { ...state.clientFilterParams, ...action.payload, featureTypes: action.payload.featureTypes ? { ...action.payload.featureTypes } : state.clientFilterParams.featureTypes }
+      clientFilterParams: {
+        ...state.clientFilterParams,
+        ...action.payload,
+        featureTypes: { ...state.clientFilterParams.featureTypes, ...(action.payload.featureTypes || {}) }
+      }
     }
   }
   if (action.type === FETCH_SAVED_SEARCHES) {
