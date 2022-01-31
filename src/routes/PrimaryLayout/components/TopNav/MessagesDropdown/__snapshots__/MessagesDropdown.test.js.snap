@@ -51,16 +51,24 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
       <Link
         data-stylename="open"
         onClick={[Function]}
-        to="/messages/2?inbox=1"
+        to="/messages/2"
       >
-        Open Messages
+        <Icon
+          data-stylename="open-icon"
+          name="ArrowForward"
+        />
+         Open Messages
       </Link>
       <Link
         data-stylename="new"
         onClick={[Function]}
         to="/messages/new"
       >
-        New
+        <Icon
+          data-stylename="new-icon"
+          name="SmallEdit"
+        />
+         New
       </Link>
     </div>
   }
@@ -77,7 +85,7 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
 <TopNavDropdown
   body={
     <NoItems
-      message="You don't have any conversations yet"
+      message="You don't have any messages yet"
     />
   }
   header={
@@ -89,14 +97,22 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
         onClick={[Function]}
         to="/messages/new"
       >
-        Open Messages
+        <Icon
+          data-stylename="open-icon"
+          name="ArrowForward"
+        />
+         Open Messages
       </Link>
       <Link
         data-stylename="new"
         onClick={[Function]}
         to="/messages/new"
       >
-        New
+        <Icon
+          data-stylename="new-icon"
+          name="SmallEdit"
+        />
+         New
       </Link>
     </div>
   }

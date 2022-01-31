@@ -5,9 +5,11 @@ $min-height: 56px;
   border-radius: 4px;
   width: 100%;
   min-height: $min-height;
-  padding: $space-2x $space-4x $space-2x $space-2x;
+  padding: 5px 10px 5px 5px;
   display: flex;
   background: $color-white;
+  align-items: center;
+  box-shadow: 0px 4px 21px rgba(42, 64, 89, 0.2);
 }
 
 .message-textarea {
@@ -17,7 +19,6 @@ $min-height: 56px;
   resize: none;
   outline: none;
   padding: 0;
-  margin-top: $space-2x;
   max-height: 183px;
   font-size: 16px;
 
@@ -30,4 +31,90 @@ $min-height: 56px;
   position: relative;
   top: 1px;
   margin-right: $space-5x;
+}
+
+button.send-button {
+  border-radius: 5px;
+  background-color: rgba(116, 116, 116, 1.000);
+  border: none;
+  outline: none;
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 30px;
+  padding: 0;
+  max-height: 30px;
+  transition: all .25s ease;
+  box-shadow: 0px 4px 21px rgba(42, 64, 89, 0);
+  text-align: center;
+
+  &:hover, &:active, &:focus {
+    background-color: rgba(0, 156, 263, 1.000);
+    cursor: pointer;
+    box-shadow: 0px 4px 15px rgba(42, 64, 89, 0.4);
+    outline: none;
+  }
+
+  .reply-icon {
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
+.has-focus {
+  .send-button {
+    background-color: rgba(0, 116, 223, 1.000);
+  }
+
+  .message-textarea {
+    caret-color: blue;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .message-form {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .message-textarea {
+    font-size: 14px;
+    margin-top: 0;
+  }
+
+  .user-image {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .message-form {
+    height: auto;
+    padding: 0 5px;
+    min-height: 40px;
+  }
+  .message-textarea {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 5px 0;
+  }
+  button.send-button {
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+
+    .reply-icon {
+      font-size: 11px;
+      width: 20px;
+      height: 20px;
+      position: relative;
+      top: -3px;
+      left: -2px;
+    }
+  }
 }

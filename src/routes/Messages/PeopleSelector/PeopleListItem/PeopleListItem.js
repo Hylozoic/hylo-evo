@@ -7,8 +7,10 @@ import './PeopleListItem.scss'
 export default function PeopleListItem ({ active, onClick, onMouseOver, person }) {
   return <li styleName={cx('person-list-item', { active })} onClick={onClick} onMouseOver={onMouseOver}>
     <RoundImage url={person.avatarUrl} styleName='avatar' medium />
-    <span styleName='name'>{person.name}</span>
-    <span styleName='group'>{person.group}</span>
+    <div>
+      <span styleName='name'>{person.name}</span>
+      <span styleName='group'>{person.group}</span>
+    </div>
   </li>
 }
 

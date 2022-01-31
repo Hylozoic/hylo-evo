@@ -1,7 +1,7 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "3.2.8",
+  "version": "3.2.9",
   "private": true,
   "engines": {
     "node": "16.13.2",
@@ -213,7 +213,7 @@
     "react-stripe-checkout": "^2.6.3",
     "react-textarea-autosize": "^7.1.0",
     "react-tooltip": "^4.2.10",
-    "react-transition-group": "1.x",
+    "react-transition-group": "^4",
     "recursive-readdir": "2.2.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",

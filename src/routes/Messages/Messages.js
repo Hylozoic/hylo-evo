@@ -1,8 +1,12 @@
 import React from 'react'
+import { Link, Route } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
+import CloseMessages from './CloseMessages'
 import PeopleSelector from './PeopleSelector'
 import ThreadList from './ThreadList'
 import Header from './Header'
@@ -25,18 +29,12 @@ export default class Messages extends React.Component {
   constructor (props) {
     super(props)
 
-    let messagesOpen = false
-
-    if (props.messageThreadId && !props.isInbox) {
-      messagesOpen = true
-    }
-
     this.state = {
+      forNewThread: props.messageThreadId === NEW_THREAD_ID,
       loading: true,
+      peopleSelectorOpen: false,
       onCloseURL: props.onCloseURL,
-      messagesOpen: messagesOpen,
-      participants: [],
-      forNewThread: props.messageThreadId === NEW_THREAD_ID
+      participants: []
     }
     this.form = React.createRef()
   }
@@ -86,6 +84,10 @@ export default class Messages extends React.Component {
     createMessage(messageThreadId, messageText).then(() => this.focusForm())
   }
 
+  setPeopleSelectorOpen (val) {
+    this.setState({ peopleSelectorOpen: val })
+  }
+
   async sendNewMessage () {
     const { findOrCreateThread, createMessage, goToThread, messageText } = this.props
     const { participants } = this.state
@@ -109,12 +111,6 @@ export default class Messages extends React.Component {
       participants: !participant
         ? participants.slice(0, participants.length - 1)
         : [...participants.filter(p => p.id !== participant.id)]
-    }))
-  }
-
-  toggleMessages = (e) => {
-    this.setState(state => ({
-      messagesOpen: !this.state.messagesOpen
     }))
   }
 
@@ -149,88 +145,119 @@ export default class Messages extends React.Component {
       fetchRecentContacts,
       fetchPeople,
       setContactsSearch,
-      contacts,
-      matchingContacts,
-      recentContacts
+      contacts
     } = this.props
     const {
       loading,
+      onCloseURL,
       participants,
-      messagesOpen,
-      onCloseURL
+      peopleSelectorOpen
     } = this.state
     const { forNewThread } = this.state
 
-    if (loading) {
-      return <div styleName='modal'>
-        <Loading />
-      </div>
-    }
-
-    return <div styleName={cx('modal', { messagesOpen })}>
+    return <div styleName={cx('modal', { messagesOpen: messageThreadId })}>
       <div styleName='content'>
-        <ThreadList
-          styleName='left-column'
-          setThreadSearch={setThreadSearch}
-          onScrollBottom={fetchMoreThreads}
-          currentUser={currentUser}
-          threadsPending={threadsPending}
-          threads={threads}
-          onCloseURL={onCloseURL}
-          threadSearch={threadSearch}
-          messagesOpen={messagesOpen}
-          toggleMessages={this.toggleMessages}
-        />
-        <div styleName='right-column'>
-          <div styleName='thread'>
-            {forNewThread &&
-              <PeopleSelector
-                currentUser={currentUser}
-                fetchPeople={fetchPeople}
-                fetchDefaultList={fetchRecentContacts}
-                setPeopleSearch={setContactsSearch}
-                people={contacts}
-                recentPeople={recentContacts}
-                matchingPeople={matchingContacts}
-                onCloseURL={onCloseURL}
-                selectedPeople={participants}
-                selectPerson={this.addParticipant}
-                removePerson={this.removeParticipant}
-                messagesOpen={messagesOpen}
-                toggleMessages={this.toggleMessages} />}
-            {!forNewThread && messageThreadId &&
-              <Header
-                messageThread={messageThread}
-                currentUser={currentUser}
-                pending={messagesPending}
-                onCloseURL={onCloseURL}
-                messagesOpen={messagesOpen}
-                toggleMessages={this.toggleMessages} />}
-            {!forNewThread &&
-              <MessageSection
-                socket={socket}
-                currentUser={currentUser}
-                fetchMessages={fetchMessages}
-                messages={messages}
-                hasMore={hasMoreMessages}
-                pending={messagesPending}
-                updateThreadReadTime={updateThreadReadTime}
-                messageThread={messageThread} />}
-            {(!forNewThread || participants.length > 0) &&
-              <div styleName='message-form'>
-                <MessageForm
-                  onSubmit={this.sendMessage}
-                  currentUser={currentUser}
-                  formRef={this.form}
-                  updateMessageText={this.updateMessageText}
-                  messageText={messageText}
-                  sendIsTyping={sendIsTyping}
-                  pending={messageCreatePending} />
-              </div>}
-            <PeopleTyping styleName='people-typing' />
-            {socket && <SocketSubscriber type='post' id={messageThreadId} />}
+        <div styleName='messages-header'>
+          <div styleName='close-messages'>
+            <CloseMessages onCloseURL={onCloseURL} />
+          </div>
+          <div styleName='messages-title'>
+            <Icon name='Messages' />
+            { !forNewThread
+              ? <h3>Messages</h3>
+              : <h3>New Message</h3>
+            }
           </div>
         </div>
+        {loading
+          ? <div styleName='modal'><Loading /></div>
+          : <React.Fragment>
+            <ThreadList
+              styleName='left-column'
+              setThreadSearch={setThreadSearch}
+              onScrollBottom={fetchMoreThreads}
+              currentUser={currentUser}
+              threadsPending={threadsPending}
+              threads={threads}
+              onCloseURL={onCloseURL}
+              onFocus={() => this.setPeopleSelectorOpen(false)}
+              threadSearch={threadSearch}
+            />
+            <Route path='/messages/:messageThreadId' exact>
+              {({ match }) => (
+
+                <CSSTransition
+                  in={match != null}
+                  appear
+                  classNames='right-column'
+                  timeout={{ appear: 300, enter: 300, exit: 200 }}
+                  unmountOnExit
+                >
+                  <div styleName='right-column'>
+                    <div styleName='thread'>
+                      {forNewThread &&
+                        <div>
+                          <div styleName='new-thread-header'>
+                            <Link to='/messages' styleName='back-button'>
+                              <Icon name='ArrowForward' styleName='close-messages-icon' />
+                            </Link>
+                            <div styleName='messages-title'>
+                              <Icon name='Messages' />
+                              <h3>New Message</h3>
+                            </div>
+                          </div>
+                          <PeopleSelector
+                            currentUser={currentUser}
+                            fetchPeople={fetchPeople}
+                            fetchDefaultList={fetchRecentContacts}
+                            setPeopleSearch={setContactsSearch}
+                            people={contacts}
+                            onCloseURL={onCloseURL}
+                            onFocus={() => this.setPeopleSelectorOpen(true)}
+                            selectedPeople={participants}
+                            selectPerson={this.addParticipant}
+                            removePerson={this.removeParticipant}
+                            peopleSelectorOpen={peopleSelectorOpen}
+                          />
+                        </div>}
+                      {!forNewThread && messageThreadId &&
+                        <Header
+                          messageThread={messageThread}
+                          currentUser={currentUser}
+                          pending={messagesPending}
+                          onCloseURL={onCloseURL}
+                        />}
+                      {!forNewThread &&
+                        <MessageSection
+                          socket={socket}
+                          currentUser={currentUser}
+                          fetchMessages={fetchMessages}
+                          messages={messages}
+                          hasMore={hasMoreMessages}
+                          pending={messagesPending}
+                          updateThreadReadTime={updateThreadReadTime}
+                          messageThread={messageThread} />}
+                      {(!forNewThread || participants.length > 0) &&
+                        <div styleName='message-form'>
+                          <MessageForm
+                            onSubmit={this.sendMessage}
+                            onFocus={() => this.setPeopleSelectorOpen(false)}
+                            currentUser={currentUser}
+                            formRef={this.form}
+                            updateMessageText={this.updateMessageText}
+                            messageText={messageText}
+                            sendIsTyping={sendIsTyping}
+                            pending={messageCreatePending} />
+                        </div>}
+                      <PeopleTyping styleName='people-typing' />
+                      {socket && <SocketSubscriber type='post' id={messageThreadId} />}
+                    </div>
+                  </div>
+                </CSSTransition>
+              )}
+            </Route>
+          </React.Fragment>
+        }
       </div>
     </div>
   }

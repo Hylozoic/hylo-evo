@@ -8,31 +8,33 @@ exports[`ThreadList matches the last snapshot 1`] = `
     data-stylename="header"
   >
     <div
-      data-stylename="closeMessages"
+      data-stylename="search"
     >
-      <CloseMessages />
+      <div
+        data-stylename="search-icon"
+      >
+        <Icon
+          name="Search"
+        />
+      </div>
+      <TextInput
+        noClearButton={true}
+        onChange={[Function]}
+        placeholder="Search for people..."
+      />
     </div>
     <Link
+      data-stylename="new-message"
       to="/messages/new"
     >
-      <Button
-        data-stylename="new-message"
-        label="New Message"
+      <span>
+        New
+      </span>
+      <Icon
+        data-stylename="messages-icon"
+        name="Messages"
       />
     </Link>
-    <div
-      data-stylename="header-text"
-    >
-      Messages
-    </div>
-  </div>
-  <div
-    data-stylename="search"
-  >
-    <TextInput
-      onChange={[Function]}
-      placeholder="Search for people..."
-    />
   </div>
   <ul
     data-stylename="list"
@@ -41,7 +43,7 @@ exports[`ThreadList matches the last snapshot 1`] = `
     <div
       data-stylename="no-conversations"
     >
-      You have no active conversations
+      You have no active messages
     </div>
   </ul>
   <ScrollListener

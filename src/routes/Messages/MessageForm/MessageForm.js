@@ -1,67 +1,78 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
 import { onEnterNoShift } from 'util/textInput'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
 import RoundImage from 'components/RoundImage'
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import './MessageForm.scss'
+import styles from './MessageForm.scss'
 
-export default class MessageForm extends React.Component {
-  static defaultProps = {
-    placeholder: 'Write something...'
-  }
+export default function MessageForm (props) {
+  const [hasFocus, setHasFocus] = useState(false)
 
-  submit = event => {
+  const submit = event => {
     if (event) event.preventDefault()
-    this.startTyping.cancel()
-    this.props.sendIsTyping(false)
-    this.props.updateMessageText()
-    this.props.onSubmit()
+    startTyping.cancel()
+    props.sendIsTyping(false)
+    props.updateMessageText()
+    props.onSubmit()
   }
 
-  handleOnChange = event => {
-    this.props.updateMessageText(event.target.value)
+  const handleOnChange = event => {
+    props.updateMessageText(event.target.value)
   }
 
-  handleKeyDown = event => {
-    this.startTyping()
-    onEnterNoShift(this.submit, event)
+  const handleKeyDown = event => {
+    startTyping()
+    onEnterNoShift(submit, event)
   }
 
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
   // We send repeated notifications to make sure that a user gets notified even
   // if they load a comment thread after someone else has already started
   // typing.
-  startTyping = throttle(() => {
-    this.props.sendIsTyping(true)
+  const startTyping = throttle(() => {
+    props.sendIsTyping(true)
   }, STARTED_TYPING_INTERVAL)
 
-  render () {
-    const {
-      messageText,
-      formRef,
-      className,
-      currentUser,
-      pending,
-      placeholder
-    } = this.props
+  const {
+    className,
+    currentUser,
+    formRef,
+    messageText,
+    onFocus,
+    pending,
+    placeholder
+  } = props
 
-    if (pending) return <Loading />
+  if (pending) return <Loading />
 
-    return <form styleName='message-form' className={className} onSubmit={this.submit}>
-      <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
-      <TextareaAutosize
-        value={messageText}
-        styleName='message-textarea'
-        inputRef={formRef}
-        onChange={this.handleOnChange}
-        onKeyDown={this.handleKeyDown}
-        placeholder={placeholder} />
-    </form>
-  }
+  return <form styleName='message-form' className={cx({ className, [styles['has-focus']]: hasFocus })} onSubmit={submit}>
+    <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
+    <TextareaAutosize
+      autoFocus
+      value={messageText}
+      styleName='message-textarea'
+      inputRef={formRef}
+      minRows={1}
+      maxRows={8}
+      onChange={handleOnChange}
+      onKeyDown={handleKeyDown}
+      onFocus={() => { setHasFocus(true); onFocus() }}
+      onBlur={() => setHasFocus(false)}
+      placeholder={placeholder} />
+    <button styleName='send-button'>
+      <Icon name='Reply' styleName='reply-icon' />
+    </button>
+  </form>
+}
+
+MessageForm.defaultProps = {
+  placeholder: 'Write something...'
 }
 
 MessageForm.propTypes = {

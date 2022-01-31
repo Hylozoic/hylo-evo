@@ -1,8 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { isEmpty, filter, get, map } from 'lodash/fp'
 import Icon from 'components/Icon'
-import CloseMessages from '../CloseMessages'
 import { others } from 'store/models/MessageThread'
 import '../Messages.scss'
 
@@ -53,16 +53,16 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { onCloseURL, pending, toggleMessages } = this.props
+    const { pending } = this.props
     const otherParticipants = this.getOthers(this.props)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
     const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
     const showArrow = !!andOthers
 
     return <div styleName='header' id='thread-header'>
-      <div styleName='backButton' onClick={toggleMessages}>
-        <Icon name='ArrowDown' styleName='arrow-down' />
-      </div>
+      <Link to='/messages' styleName='close-thread'>
+        <Icon name='ArrowForward' />
+      </Link>
       <div styleName='header-text'>
         {!pending && <React.Fragment>
           {displayNames}
@@ -71,14 +71,12 @@ export default class Header extends React.Component {
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
-      <CloseMessages onCloseURL={onCloseURL} styleName='closeMessages' />
     </div>
   }
 }
 
 Header.propTypes = {
-  messageThread: PropTypes.any,
-  onCloseURL: PropTypes.any
+  messageThread: PropTypes.any
 }
 
 export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {

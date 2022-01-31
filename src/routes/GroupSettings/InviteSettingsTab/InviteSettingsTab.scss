@@ -185,12 +185,12 @@ $rowHeight: 60px;
   transition: 400ms ease-in;
 }
 
-.leave {
+.exit {
   opacity: 1;
   max-height: $rowHeight;
 }
 
-.leave.leave-active {
+.exit.exit-active {
   opacity: 0.01;
   max-height: 2px;
   transition: 500ms ease-in;
