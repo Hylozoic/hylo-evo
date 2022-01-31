@@ -1,0 +1,249 @@
+.header {
+  margin-bottom: 30px;
+  // background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(242,242,242,1) 16%);
+  z-index: 1;
+  height: 67px;
+  position: relative;
+}
+
+.headerMainRow {
+  position: relative;
+  padding: 0px 15px;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(242,242,242,1) 16%);
+  height: 67px;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.groupCardBackground {
+  width: 20%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 67px;
+  background-size: cover;
+  border-radius: 5px;
+
+  div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #2A4059 -6.16%, rgba(42, 64, 89, 0.23) 109.19%);
+    opacity: 0.89;
+    border-radius: 5px;
+  }
+}
+
+.authorName {
+  /* !empty */
+}
+
+.group-image {
+  margin-right: 15px;
+  min-width: 50px;
+  box-shadow: 0px 2px 6px rgba(41, 64, 90, .2);
+}
+
+.headerText {
+  display: block;
+  position: relative;
+  top: 1px;
+  line-height: 15px;
+}
+
+.constrained.header {
+  margin-bottom: 0;
+  height: 50px;
+  padding: 0 10px;
+}
+
+.groupName {
+  // Extract typography?
+  @include font-bold;
+  color: $color-rhino-80;
+  font-size: 14px;
+  &:hover {
+    color: $color-rhino;
+    text-decoration: none;
+  }
+}
+
+.constrained .groupName {
+  font-size: 12px;
+}
+
+.groupTitle {
+  // Extract typography? this one is very close to bdy-drk-sm
+  @include font-regular;
+  color: $color-rhino-80;
+  font-size: 14px;
+}
+
+.date {
+  line-height: 12px;
+}
+
+.spacer {
+  composes: timestamp from 'css/typography.scss';
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -2px;
+}
+
+.announcementSpacer {
+  composes: timestamp from 'css/typography.scss';
+  margin: 0 7px;
+  font-size: 8px;
+  position: relative;
+  top: -6px;
+}
+
+.timestampRow {
+  align-items: center;
+  display: flex;
+}
+
+.timestamp {
+  composes: timestamp from 'css/typography.scss';
+  white-space: nowrap;
+}
+
+.timeWindow {
+  color: $color-caribbean-green;
+  opacity: 0.75;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.constrained .timeWindow {
+  display: none;
+}
+
+.context {
+  // Extract typography?
+  @include font-regular;
+  color: $color-caribbean-green;
+  font-size: 12px;
+  &:hover {
+    color: $color-gossamer;
+    text-decoration: none;
+  }
+}
+
+.upperRight {
+  margin-left: auto;
+  display: flex;
+  vertical-align: top;
+  justify-content: right;
+  align-items: baseline;
+}
+
+.constrained .upperRight {
+  display: none;
+}
+
+.pinIcon {
+  top: 1px;
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.announcementIcon {
+  top: 1px;
+  margin-right: -3px;
+  margin-left: -4px;
+  font-size: 24px;
+  color: $color-caribbean-green;
+}
+
+.announcementSection {
+  margin-top: -2px;
+}
+
+.label {
+  margin-right: 20px;
+  // remove this positioning. Only necessary because of Dropdown breaking layout
+  position: relative;
+  top: -3px;
+}
+
+.menuLink:hover {
+  text-decoration: none;
+}
+
+.menuLink:hover > span {
+  color: $color-rhino-80;
+}
+
+.close {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+}
+
+.topicsLine {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.constrained .topicsLine {
+  display: none;
+}
+
+.topic {
+  composes: text-button from 'css/typography.scss';
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.newLineForTopics {
+  overflow: initial;
+  text-overflow: initial;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 450px;
+}
+
+@media screen and (max-width: 425px) {
+
+  .headerText {
+    max-width: calc(100% - 160px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .groupTitle {
+    font-size: 10px;
+    opacity: .5;
+    display: block;
+    overflow: hidden;
+    height: 14px;
+  }
+
+  .header {
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+
+  .topicsLine {
+    width: 100%;
+  }
+
+  .groupName {
+    white-space: nowrap;
+  }
+
+  .label {
+    margin-right: 5px;
+  }
+}

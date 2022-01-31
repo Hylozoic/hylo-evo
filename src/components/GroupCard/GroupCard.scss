@@ -1,0 +1,32 @@
+.card {
+  border: 1px solid $color-cape-cod-10;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  color: black;
+  right: 0px;
+  transition: 0.25s;
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    box-shadow: 0px 0px 6px 0px $color-black-10;
+  }
+}
+
+.constrained.card {
+  border-top: 5px solid $color-cape-cod-10;
+  padding-top: 10px;
+}
+
+.expanded,
+.expanded:hover {
+  box-shadow: 0px 4px 6px 0px $color-black-10;
+}
+
+.group-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
