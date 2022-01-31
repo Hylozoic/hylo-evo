@@ -155,7 +155,7 @@ export default () => {
         name
       }
     }
-    openOffersAndRequests: posts(types: ['offer', 'request'], isFulfilled: false, first: 4) {
+    openOffersAndRequests: posts(types: ["offer", "request"], isFulfilled: false, first: 4) {
       items {
         id
         title
