@@ -5,7 +5,7 @@ const getPublicGroups = ormCreateSelector(
   orm,
   (session) => session.Group.filter(g => {
     console.log(g.id, 'vis')
-    // return g.visibility === '1'
+    // return g.visibility === 2
     return true
   }).toModelArray()
 )

@@ -11,9 +11,11 @@ import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './GroupSearch.scss'
 import getPublicGroups from 'store/selectors/getPublicGroups'
 
-export default function GroupSearch ({ sortBy = 'nearest', changeSort = () => {}, search = '', pending = false, groups = [], pageGroups = () => { console.log('I lobve lamp') }, routeParams = {}, selectedGroupId = null }) {
+export default function GroupSearch ({ sortBy = 'nearest', changeSort = () => {}, search = '', pending = false, groups = [], pageGroups = () => { console.log('I love lamp, and I just paged for more groups') }, routeParams = {}, selectedGroupId = null }) {
   // const { sortBy, changeSort } = props
   groups = useSelector(state => getPublicGroups(state))
+
+  // TODO: GroupSearch needs to ensure it requests the required fields
 
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>
@@ -21,7 +23,7 @@ export default function GroupSearch ({ sortBy = 'nearest', changeSort = () => {}
       { makeDropdown(sortBy, sortOptions, changeSort) }
     </div>
     <div styleName='search-input'>
-      <div class='spacer' />
+      <div className='spacer' />
       <input
         styleName='searchBox'
         type='text'
@@ -38,7 +40,7 @@ export default function GroupSearch ({ sortBy = 'nearest', changeSort = () => {}
         placeholder='Search groups by keyword'
         value={search}
       />
-      <div class='spacer' />
+      <div className='spacer' />
     </div>
     <div styleName='group-search-items'>
       {!pending && groups.length === 0 ? <NoPosts message='No results for this search' /> : ''}

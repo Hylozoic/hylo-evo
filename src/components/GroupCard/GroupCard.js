@@ -3,8 +3,9 @@ import cx from 'classnames'
 import './GroupCard.scss'
 import GroupHeader from './GroupHeader'
 import { Link } from 'react-router-dom'
-import { bgImageStyle } from 'util/index'
 import { groupUrl, groupDetailUrl } from 'util/navigation'
+import Pill from 'components/Pill'
+import { capitalize } from 'lodash'
 
 /* 
   Each card needs
@@ -20,7 +21,7 @@ import { groupUrl, groupDetailUrl } from 'util/navigation'
 */
 
 export default function GroupCard ({ group = {}, routeParams = {}, highlightProps = {}, className, expanded = false, constrained = false, onClick = () => {} }) {
-  
+  const topics = group.groupTopics.toModelArray()
   return <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
     <div
       onClick={onClick}
@@ -28,9 +29,16 @@ export default function GroupCard ({ group = {}, routeParams = {}, highlightProp
       className={className}>
       <GroupHeader
         {...group}
+        group={group}
         routeParams={routeParams}
         highlightProps={highlightProps}
         constrained={constrained} />
+      <div styleName='group-description'>
+        {group.description}
+      </div>
+      <div styleName='group-tags'>
+        {topics.map(topic => <Pill styleName='tag-pill' darkText label={capitalize(topic.topic.name.toLowerCase())} id={topic.id} />)}
+      </div>
     </div>
   </Link>
 }
