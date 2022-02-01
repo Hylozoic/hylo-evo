@@ -93,6 +93,11 @@ export default gql`
       person {
         id
       }
+      settings {
+       sendEmail
+       sendPushNotifications
+       showJoinForm
+      }
       group {
         id
         avatarUrl

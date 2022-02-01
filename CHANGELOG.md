@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
 
+## [3.2.9] - 2022-01-25
+
+### Fixed
+- Crash when going to /settings/notifications and trying to change the setting for a group
+
 ## [3.2.8] - 2022-01-23
 
 ### Added
