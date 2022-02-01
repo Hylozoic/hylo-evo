@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
 
+### Added
+- Switched to Node 16
+- Added GraphQL config files for dev tools
+
 ## [3.2.9] - 2022-01-25
 
 ### Fixed
