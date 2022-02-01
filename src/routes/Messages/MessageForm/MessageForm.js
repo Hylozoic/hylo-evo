@@ -54,7 +54,6 @@ export default function MessageForm (props) {
   return <form styleName='message-form' className={cx({ className, [styles['has-focus']]: hasFocus })} onSubmit={submit}>
     <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
     <TextareaAutosize
-      autoFocus
       value={messageText}
       styleName='message-textarea'
       inputRef={formRef}

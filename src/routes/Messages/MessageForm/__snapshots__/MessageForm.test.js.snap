@@ -12,7 +12,6 @@ exports[`component matches the latest snapshot 1`] = `
     url="http://image.com/p.png"
   />
   <TextareaAutosize
-    autoFocus={true}
     data-stylename="message-textarea"
     inputRef={[Function]}
     maxRows={8}
