@@ -6,12 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-- When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
+## [3.3.0] - 2022-02-03
 
 ### Added
-- Switched to Node 16
+- Many improvements to Messages experience:
+-- Render names of people in a message groups as links to user profiles
+-- Only show people selector when focus is on the Add Person box
+-- Make it more obvious when focus is on the Write Something box
+-- Allow for using arrow keys to select a person without having to first type something
+-- Add hover styling in thread list
+-- Make it more obvious which current thread is being viewed
+-- Names in the messages header are links to their profiles
+-- Filter deleted users out of message contact lists and mentions suggest
 - Added GraphQL config files for dev tools
+
+### Changed
+- When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
+- Switched to Node 16
+
+### Fixed
+- While loading messages view show Messages header immediately instead of weird All Groups context header
 
 ## [3.2.9] - 2022-01-25
 
