@@ -1,5 +1,5 @@
 :global .create-modal-enter, :global .create-modal-appear {
-  .create-modal-background {
+  .create-modal-bg {
     opacity: 0;
   }
 
@@ -11,7 +11,7 @@
 }
 
 :global .create-modal-enter.create-modal-enter-active, :global .create-modal-appear.create-modal-appear-active {
-  .create-modal-background {
+  .create-modal-bg {
     opacity: 1;
     transition: opacity 200ms ease-out;
   }
@@ -23,8 +23,8 @@
   }
 }
 
-:global .create-modal-leave {
-  .create-modal-background {
+:global .create-modal-exit {
+  .create-modal-bg {
     opacity: 0;
   }
 
@@ -34,8 +34,8 @@
   }
 }
 
-:global .create-modal-leave.create-modal-leave-active {
-  .create-modal-background {
+:global .create-modal-exit.create-modal-exit-active {
+  .create-modal-bg {
     opacity: 0;
     transition: opacity 300ms ease-out;
   }

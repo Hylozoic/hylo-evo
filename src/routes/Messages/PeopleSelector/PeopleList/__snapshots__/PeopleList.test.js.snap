@@ -2,54 +2,51 @@
 
 exports[`does something 1`] = `
 <div
+  className="people-list-container"
   data-stylename="people-list-container"
 >
-  <div>
-    <h2
-      data-stylename="people-list-header"
-    >
-      All Contacts
-    </h2>
-    <ul
-      data-stylename="people-list"
-    >
-      <PeopleListItem
-        key="1"
-        onClick={[Function]}
-        person={
-          Object {
-            "avatarUrl": "https://flargle.com",
-            "group": "Wombats",
-            "id": "1",
-            "name": "Wombat",
-          }
+  <ul
+    data-stylename="people-list"
+  >
+    <PeopleListItem
+      key="1"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+      person={
+        Object {
+          "avatarUrl": "https://flargle.com",
+          "group": "Wombats",
+          "id": "1",
+          "name": "Wombat",
         }
-      />
-      <PeopleListItem
-        key="2"
-        onClick={[Function]}
-        person={
-          Object {
-            "avatarUrl": "https://argle.com",
-            "group": "Aardvarks",
-            "id": "2",
-            "name": "Aardvark",
-          }
+      }
+    />
+    <PeopleListItem
+      key="2"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+      person={
+        Object {
+          "avatarUrl": "https://argle.com",
+          "group": "Aardvarks",
+          "id": "2",
+          "name": "Aardvark",
         }
-      />
-      <PeopleListItem
-        key="3"
-        onClick={[Function]}
-        person={
-          Object {
-            "avatarUrl": "https://wargle.com",
-            "group": "Ocelots",
-            "id": "3",
-            "name": "Ocelot",
-          }
+      }
+    />
+    <PeopleListItem
+      key="3"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+      person={
+        Object {
+          "avatarUrl": "https://wargle.com",
+          "group": "Ocelots",
+          "id": "3",
+          "name": "Ocelot",
         }
-      />
-    </ul>
-  </div>
+      }
+    />
+  </ul>
 </div>
 `;

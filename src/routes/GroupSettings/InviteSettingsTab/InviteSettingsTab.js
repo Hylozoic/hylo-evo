@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
 import { isEmpty } from 'lodash'
-import { CSSTransitionGroup } from 'react-transition-group'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Icon from 'components/Icon'
 import isMobile from 'ismobilejs'
 import ReactTooltip from 'react-tooltip'
+
+import styles from './InviteSettingsTab.scss'
 
 const { object, func, string } = PropTypes
 
@@ -209,28 +210,30 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
             )}
           </div>
           <div styleName='styles.pending-invites-list'>
-            <CSSTransitionGroup
-              transitionName={{
-                enter: styles['enter'],
-                enterActive: styles['enter-active'],
-                leave: styles['leave'],
-                leaveActive: styles['leave-active']
-              }}
-              transitionEnterTimeout={400}
-              transitionLeaveTimeout={500}>
+            <TransitionGroup>
               {pendingInvites.map(invite => (
-                <div styleName='styles.row' key={invite.id}>
-                  <div style={{ flex: 1 }}>
-                    <span>{invite.email}</span>
-                    <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
+                <CSSTransition
+                  classNames={{
+                    enter: styles['enter'],
+                    enterActive: styles['enter-active'],
+                    exit: styles['exit'],
+                    exitActive: styles['exit-active']
+                  }}
+                  timeout={{ enter: 400, exit: 500 }}
+                >
+                  <div styleName='styles.row' key={invite.id}>
+                    <div style={{ flex: 1 }}>
+                      <span>{invite.email}</span>
+                      <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
+                    </div>
+                    <div styleName='styles.invite-actions'>
+                      <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
+                      <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
+                    </div>
                   </div>
-                  <div styleName='styles.invite-actions'>
-                    <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
-                    <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
-                  </div>
-                </div>
+                </CSSTransition>
               ))}
-            </CSSTransitionGroup>
+            </TransitionGroup>
           </div>
         </div>
       )}

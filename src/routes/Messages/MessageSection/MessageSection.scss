@@ -1,12 +1,13 @@
 .messages-section {
   flex: 1;
-  border-left: $light-border;
-  padding: 0 $space-6x $space-7x;
+  padding: 20px $space-6x 0px;
   overflow-y: auto;
+  display: flex;
 }
 
 .messages-section-inner {
-
+    padding-bottom: 100px;
+    margin-top: auto;
 }
 
 .new-messages {
@@ -24,4 +25,22 @@
   margin-top: 7px;
   border-top: 1px solid $color-caribbean-green-50;
   flex: 1;
+}
+@media screen and (max-width: 650px) {
+  .messages-section {
+    padding:  15px 15px 15px 15px;
+  }
+
+  .messages-section-inner {
+    padding-bottom: 80px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .messages-section {
+    padding: 12px 12px 12px 12px;
+  }
+  .messages-section-inner {
+    padding-bottom: 70px;
+  }
 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { isEmpty, filter, get, map } from 'lodash/fp'
 import Icon from 'components/Icon'
-import CloseMessages from '../CloseMessages'
+import { personUrl } from 'util/navigation'
 import { others } from 'store/models/MessageThread'
 import '../Messages.scss'
 
@@ -41,9 +42,7 @@ export default class Header extends React.Component {
     }
   }
 
-  getOthers ({ currentUser, messageThread }) {
-    const participants = get('participants', messageThread) || []
-
+  getOthers (currentUser, participants) {
     if (!currentUser) return participants
 
     const id = get('id', currentUser)
@@ -53,32 +52,31 @@ export default class Header extends React.Component {
 
   render () {
     const { showAll } = this.state
-    const { onCloseURL, pending, toggleMessages } = this.props
-    const otherParticipants = this.getOthers(this.props)
+    const { currentUser, messageThread, pending } = this.props
+    const participants = get('participants', messageThread) || []
+    const otherParticipants = this.getOthers(currentUser, participants)
     const maxShown = calculateMaxShown(showAll, otherParticipants, MAX_CHARACTERS)
-    const { displayNames, andOthers } = generateDisplayNames(maxShown, otherParticipants)
+    const { displayNames, andOthers } = generateDisplayNames(maxShown, participants, currentUser)
     const showArrow = !!andOthers
 
     return <div styleName='header' id='thread-header'>
-      <div styleName='backButton' onClick={toggleMessages}>
-        <Icon name='ArrowDown' styleName='arrow-down' />
-      </div>
+      <Link to='/messages' styleName='close-thread'>
+        <Icon name='ArrowForward' />
+      </Link>
       <div styleName='header-text'>
         {!pending && <React.Fragment>
-          {displayNames}
+          <div>{displayNames}</div>
           {andOthers && 'and' && <span styleName='toggle-link' onClick={this.toggleShowAll}>{andOthers}</span>}
         </React.Fragment>}
       </div>
       {showArrow && !showAll && <Icon name='ArrowDown' styleName='arrow-down' onClick={this.toggleShowAll} />}
       {showAll && <Icon name='ArrowUp' styleName='arrow-up' onClick={this.toggleShowAll} />}
-      <CloseMessages onCloseURL={onCloseURL} styleName='closeMessages' />
     </div>
   }
 }
 
 Header.propTypes = {
-  messageThread: PropTypes.any,
-  onCloseURL: PropTypes.any
+  messageThread: PropTypes.any
 }
 
 export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
@@ -94,10 +92,21 @@ export function calculateMaxShown (showAll, otherParticipants, maxCharacters) {
   return otherParticipants.length
 }
 
-export function generateDisplayNames (maxShown, otherParticipants) {
-  return isEmpty(otherParticipants)
-    ? { displayNames: 'You' }
-    : formatNames([...otherParticipants], maxShown)
+export const getFormattedLinkToProfile = (user) => {
+  return <Link key={user.id} to={personUrl(user.id)}>{user.name}</Link>
+}
+
+export function generateDisplayNames (maxShown, participants, currentUser) {
+  const formattedCurrentUser = getFormattedLinkToProfile({ id: currentUser.id, name: 'You' })
+  const formattedOthers = participants.reduce((result, participant) => {
+    if (participant.id !== currentUser.id) {
+      result.push(getFormattedLinkToProfile(participant))
+    }
+    return result
+  }, [])
+  const formattedDisplayNames = isEmpty(formattedOthers) ? { displayNames: formattedCurrentUser } : formatNames(formattedOthers, maxShown)
+
+  return formattedDisplayNames
 }
 
 export function formatNames (otherParticipants, maxShown) {
@@ -107,10 +116,11 @@ export function formatNames (otherParticipants, maxShown) {
     ? otherParticipants.slice(0, maxShown).concat([others(length - maxShown)])
     : otherParticipants
   if (maxShown && maxShown !== length) andOthers = truncatedNames.pop()
+  const formattedTruncatedNames = truncatedNames.map((name, index) => index === truncatedNames.length - 1 ? name : [name, ', '])
 
   if (andOthers) {
-    return { displayNames: truncatedNames.join(', '), andOthers: ` ${andOthers}` }
+    return { displayNames: formattedTruncatedNames, andOthers: ` ${andOthers}` }
   } else {
-    return { displayNames: truncatedNames.join(', ') }
+    return { displayNames: formattedTruncatedNames }
   }
 }

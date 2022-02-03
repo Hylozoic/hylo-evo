@@ -4,6 +4,29 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [3.3.0] - 2022-02-03
+
+### Added
+- Many improvements to Messages experience:
+-- Render names of people in a message groups as links to user profiles
+-- Only show people selector when focus is on the Add Person box
+-- Make it more obvious when focus is on the Write Something box
+-- Allow for using arrow keys to select a person without having to first type something
+-- Add hover styling in thread list
+-- Make it more obvious which current thread is being viewed
+-- Names in the messages header are links to their profiles
+-- Filter deleted users out of message contact lists and mentions suggest
+- Added GraphQL config files for dev tools
+
+### Changed
+- When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
+- Switched to Node 16
+
+### Fixed
+- While loading messages view show Messages header immediately instead of weird All Groups context header
+
 ## [3.2.9] - 2022-01-25
 
 ### Fixed
@@ -14,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - WebPack bundle analyzer. To analyze bundle `yarn build` and once complete `yarn analyze`
 
-## Changed
+### Changed
 - Lazy load Messages and Notifications top menu items to improve initial load time and rendering
 - Replaced deprecated node-sass dependency with sass (Dart SASS)
 - Move to Node 16
@@ -24,31 +47,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.2.7] - 2022-01-22
 
-## Fixed
+### Fixed
 - Remove extra whitespace on right side of Map on full browser windows
 
 ## [3.2.6] - 2022-01-21
 
-## Changed
+### Changed
 - Improve initial app load time: remove extra fields from current user query and parallel load current user alongside current group
 
 ## [3.2.5] - 2022-01-18
 
-## Changed
+### Changed
 - Minor tidy and refactor of mobile device checking code
-## Fixed
+
+### Fixed
 - MapExplorer drawer hide mobile check corrected so that drawer shows again in web
 
 ## [3.2.4] - 2022-01-17
 
-## Changed
+### Changed
 - Hide MapExplorer drawer by default on mobile browsers and in Hylo App embed
 - Allow MapExplorer Saved Searches navigation to happen when in Hylo App embed
 - Fix hover state for MapExplorer on touch-based devices
 
 ## [3.2.3] - 2022-01-14
 
-## Fixed 
+### Fixed
 - Map styling fixes related to nav-less layout used in the embedded Hylo App WebView
 - Changes login text entry field to "email" from "text" to keep auto-capitalization off in some browsers
 

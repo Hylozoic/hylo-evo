@@ -22,7 +22,7 @@
   }
 }
 
-:global .post-editor-leave {
+:global .post-editor-exit {
   .post-editor-background {
     opacity: 0;
   }
@@ -33,7 +33,7 @@
   }
 }
 
-:global .post-editor-leave.post-editor-leave-active {
+:global .post-editor-exit.post-editor-exit-active {
   .post-editor-background {
     opacity: 0;
     transition: opacity 300ms ease-out;

@@ -3,7 +3,11 @@ import { mapStateToProps, mapDispatchToProps, mergeProps } from './Messages.conn
 
 describe('mapStateToProps', () => {
   const session = orm.session(orm.getEmptyState())
-  const { MessageThread, Message, Person } = session
+  const { MessageThread, Message, Person, Me } = session
+
+  Me.create({
+    id: '1'
+  })
 
   const people = [
     { id: '1', name: 'Alice' },
