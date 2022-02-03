@@ -15,7 +15,7 @@ import { capitalize } from 'lodash'
   - member sample (for avatars on right )
   - group geography descriptor (indigenous territory, location)
 
-  Then is contents changed based on group type... perhaps passed in as a Content component
+  TODO: Then is contents changed based on group type... perhaps passed in as a Content component
   Default for normie groups is Topics, and if no topics, pass in description
 
 */

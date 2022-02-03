@@ -1,33 +1,19 @@
 import { get } from 'lodash/fp'
-import React from 'react'
+import React, { useState } from 'react'
 import ExplorerBanner from './ExplorerBanner'
 import GroupSearch from './GroupSearch'
 import './GroupExplorer.scss'
 
 /*
   - Take/modify the ExplorerBanner, might need asset from Aaron DONE
-  - Use ViewControls to add filters, etc
+  - Use ViewControls to add filters,
   - control required query/queries; when do we request? when do we page?
   - how can this be smoothly extended to consider other group types?
 */
 
 export default function GroupExplorer ({
-  changeSort,
-  changeTab,
-  changeView,
-  context,
   currentUser,
-  currentUserHasMemberships,
-  group,
-  newPost,
-  routeParams,
-  posts,
-  postTypeFilter,
-  pending,
-  querystringParams,
-  selectedPostId,
-  sortBy,
-  viewMode
+  currentUserHasMemberships
 }) {
   // componentDidMount () {
   //   this.fetchPosts(0)
@@ -54,12 +40,10 @@ export default function GroupExplorer ({
   //   fetchPosts(offset)
   // }
 
-  // const ViewComponent = GroupListItem
-
   return (
     <React.Fragment>
       <ExplorerBanner />
-      <GroupSearch />
+      <GroupSearch sortBy={sortBy} changeSort={setSortBy} routeParams={query} search={search} setSearch={setSearch} />
     </React.Fragment>
   )
 }
