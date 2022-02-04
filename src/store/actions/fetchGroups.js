@@ -1,4 +1,3 @@
-import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
 import { FETCH_GROUPS } from 'store/constants'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
@@ -6,28 +5,24 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchGroups ({ afterTime, beforeTime, filter, offset, order, search, slug, sortBy, topic }) {
+export function fetchGroups ({ offset, order, search, slug, sortBy, coord }) {
   var query, extractModel, getItems
 
   query = groupQuery
   extractModel = 'Group'
-  getItems = get('payload.data.group')
+  getItems = get('payload.data.groups')
 
   return {
     type: FETCH_GROUPS,
     graphql: {
       query,
       variables: {
-        afterTime,
-        beforeTime,
-        filter,
+        coord,
         first: 20,
         offset,
         order,
         search,
-        slug,
-        sortBy,
-        topic
+        sortBy
       }
     },
     meta: {
@@ -41,29 +36,68 @@ export function fetchGroups ({ afterTime, beforeTime, filter, offset, order, sea
 }
 
 const groupQuery = `query (
-  $afterTime: Date,
-  $beforeTime: Date,
   $boundingBox: [PointInput],
-  $filter: String,
   $first: Int,
   $offset: Int,
   $order: String,
   $search: String,
-  $slug: String,
   $sortBy: String,
-  $topic: ID
+  $coord: PointInput
 ) {
-  group(slug: $slug, updateLastViewed: true) {
-    id
-    slug
-    name
-    locationObject {
-      center {
-        lat
-        lng
+  groups( 
+    boundingBox: $boundingBox,
+    first: $first,
+    offset: $offset,
+    order: $order,
+    search: $search,
+    sortBy: $sortBy,
+    coord: $coord
+  ) {
+    hasMore
+    total
+    items {
+      accessibility
+      memberCount
+      description
+      location
+      locationObject {
+        city
+        country
+        fullText
+        locality
+        neighborhood
+        region
+      }
+      id
+      avatarUrl
+      bannerUrl
+      name
+      slug
+      groupTopics(first: 8) {
+        items {
+          id
+          topic {
+            id
+            name
+          }
+          postsTotal
+        }
+      }
+      members(first: 5, sortBy: "last_active_at", order: "desc") {
+        items {
+          id
+          avatarUrl
+          lastActiveAt
+          name
+        }
       }
     }
-    avatarUrl
-    bannerUrl
   }
 }`
+
+const getGroupsResults = makeGetQueryResults(FETCH_GROUPS)
+
+export const getGroups = makeQueryResultsModelSelector(
+  getGroupsResults,
+  'Group'
+)

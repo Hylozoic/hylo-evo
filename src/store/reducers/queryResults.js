@@ -245,7 +245,7 @@ export function makeGetQueryResults (actionType) {
     // they are passed directly to a component. Should buildKey handle both
     // cases?
     const key = buildKey(actionType, props)
-
+    
     // NOTE: cannot use lodash.get here because boundingBox string includes [, ] and . characters which are special in get
     return state.queryResults ? state.queryResults[key] : null
   }
@@ -284,7 +284,8 @@ export const queryParamWhitelist = [
   'filter',
   'topic',
   'type',
-  'page'
+  'page',
+  'coord'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {

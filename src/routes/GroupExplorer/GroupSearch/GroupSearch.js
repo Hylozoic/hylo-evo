@@ -9,20 +9,20 @@ import ScrollListener from 'components/ScrollListener'
 import GroupCard from 'components/GroupCard'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './GroupSearch.scss'
-// import getPublicGroups from 'store/selectors/getPublicGroups'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import useRouter from 'hooks/useRouter'
 import useDebounce from 'hooks/useDebounce'
+import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
+import getMe from 'store/selectors/getMe'
 
-export default function GroupSearch ({ pageGroups = () => { console.log('I love lamp, and I just paged for more groups') } }) {
-  // const { sortBy, changeSort } = props
-  
-  const [sortBy, setSortBy] = useState(SORT_NEAREST)
+export default function GroupSearch () {
+  const currentUser = useSelector(state => getMe(state))
+  const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState(0)
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
-  const { groups = [], pending = false } = ensureSearchedGroups({ sortBy, search: debouncedSearchTerm })
-  // groups = useSelector(state => getPublicGroups(state))
+  const { groups = [], pending = false } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, page })
   const selectedGroupSlug = query.groupSlug
 
   return <React.Fragment>
@@ -48,13 +48,12 @@ export default function GroupSearch ({ pageGroups = () => { console.log('I love 
         return <GroupCard
           styleName={cx({ 'card-item': true, expanded })}
           expanded={expanded}
-          routeParams={routeParams}
+          routeParams={query}
           group={group}
           key={group.id} />
       })}
     </div>
-    {/* Need to change this fetch */}
-    <ScrollListener onBottom={() => pageGroups(groups.length)}
+    <ScrollListener onBottom={() => setPage(page + 1)}
       elementId={CENTER_COLUMN_ID} />
     {pending && <Loading />}
   </React.Fragment>
