@@ -17,7 +17,6 @@ function MapDrawer (props) {
   let {
     context,
     currentUser,
-    fetchParams,
     fetchPostsForDrawer,
     filters,
     groups,
@@ -165,7 +164,7 @@ function MapDrawer (props) {
               member={m}
               key={m.id}
               groupSlug={routeParams.groupSlug}
-              context={fetchParams.context}
+              context={context}
             />)}
           </div>
         </div>

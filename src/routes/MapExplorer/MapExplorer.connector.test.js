@@ -52,10 +52,11 @@ describe('mapStateToProps', () => {
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         context: 'groups',
         currentUser: undefined,
+        featureTypes: ['request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
         fetchGroupParams: {boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
-        fetchMemberParams: {context: 'groups', slug: 'foo', sortBy: 'name'},
-        fetchParams: { boundingBox: undefined, slug: 'foo', context: 'groups', groupSlugs: ['foo'] },
-        fetchParamsForDrawer: {context: 'groups', featureTypes: {offer: true, request: true}, groupSlugs: ['foo'], search: '', slug: 'foo', topics: []},
+        fetchMemberParams: {boundingBox: undefined, context: 'groups', slug: 'foo', sortBy: 'name'},
+        fetchPostsParams: { boundingBox: undefined, context: 'groups', groupSlugs: ['foo'], slug: 'foo' },
+        fetchPostsForDrawerParams: {context: 'groups', currentBoundingBox: undefined, featureTypes: {offer: true, request: true}, groupSlugs: ['foo'], search: '', slug: 'foo', topics: []},
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
@@ -63,17 +64,20 @@ describe('mapStateToProps', () => {
         },
         group: {id: 1, slug: 'foo'},
         groups: [],
+        hideDrawer: false,
         members: [],
         pendingPostsDrawer: undefined,
         pendingPostsMap: undefined,
         postsForDrawer: [],
         postsForMap: [],
-        hideDrawer: false,
+        queryParams: {},
+        routeParams: { context: 'groups', groupSlug: 'foo' },
         searches: undefined,
         selectedSearch: {},
-        routeParams: { context: 'groups', groupSlug: 'foo' },
+        stateFilters: { featureTypes: { offer: true, request: true }, search: '', topics: [] },
         topics: [],
-        zoom: 0
+        totalBoundingBoxLoaded: undefined,
+        zoom: 10
       })
     )
   })

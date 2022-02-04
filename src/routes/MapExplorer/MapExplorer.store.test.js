@@ -28,7 +28,7 @@ describe('fetchPostsforDrawer', () => {
     expect(fetchPostsForDrawer({
       context: 'groups',
       currentBoundingBox: [122.60387590065002, 37.698360551679215, -121.93892409934989, 37.91048712726531],
-      featureTypes: ['offer', 'request'],
+      featureTypes: { offer: true, request: false, event: true },
       groupSlugs: ['foo'],
       offset: 0,
       search: 'food',

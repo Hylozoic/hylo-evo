@@ -11,7 +11,7 @@ import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
-export const STORE_FETCH_PARAMS = `${MODULE_NAME}/STORE_FETCH_PARAMS`
+export const UPDATE_STATE = `${MODULE_NAME}/UPDATE_STATE`
 export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
 export const FETCH_GROUPS_MAP = `${MODULE_NAME}/FETCH_GROUPS_MAP`
 export const FETCH_MEMBERS_MAP = `${MODULE_NAME}/FETCH_MEMBERS_MAP`
@@ -287,7 +287,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
   }
 }
 
-export function fetchPostsForDrawer ({ boundingBox, context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
+export function fetchPostsForDrawer ({ context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -307,7 +307,7 @@ export function fetchPostsForDrawer ({ boundingBox, context, currentBoundingBox,
     graphql: {
       query,
       variables: {
-        boundingBox: formatBoundingBox(currentBoundingBox || boundingBox),
+        boundingBox: formatBoundingBox(currentBoundingBox),
         context,
         filter,
         first: 10,
@@ -319,7 +319,7 @@ export function fetchPostsForDrawer ({ boundingBox, context, currentBoundingBox,
         search,
         topic: null,
         topics: !isEmpty(topics) ? topics.map(t => t.id) : null,
-        types: featureTypes
+        types: !isEmpty(featureTypes) ? Object.keys(featureTypes).filter(ft => featureTypes[ft]) : null
       }
     },
     meta: {
@@ -396,25 +396,21 @@ export function fetchGroups ({ boundingBox, context, groupSlugs, search, slug, s
   }
 }
 
-export function storeFetchParams (params) {
+export function updateState (params) {
   return {
-    type: STORE_FETCH_PARAMS,
-    payload: params
+    type: UPDATE_STATE,
+    payload: Promise.resolve(params) // use promise so we can .then() after dispatching this action
   }
 }
 
 export function storeClientFilterParams (params) {
   return {
     type: STORE_CLIENT_FILTER_PARAMS,
-    payload: params
+    payload: Promise.resolve(params)
   }
 }
 
-// selectors
-export const boundingBoxSelector = (state) => {
-  return state.MapExplorer.fetchParamS ? state.MapExplorer.fetchParamS.boundingBox : null
-}
-
+// Selectors
 export const filterContentTypesSelector = (state) => {
   return state.MapExplorer.clientFilterParams.featureTypes
 }
@@ -559,8 +555,8 @@ export const getMembersFilteredByTopics = createSelector(
   filterTopicsSelector,
   (members, filterTopics) => {
     return isEmpty(filterTopics) ? members
-      : members.filter(m => filterTopics.find(ft => m.tagline.includes(ft.name) ||
-                                                    m.skills.toModelArray().find(s => s.name === ft.name)
+      : members.filter(m => filterTopics.find(ft => (m.tagline && m.tagline.includes(ft.name)) ||
+                                                    (m.skills && m.skills.toModelArray().find(s => s.name === ft.name))
       ))
   }
 )
@@ -603,23 +599,23 @@ export const getGroupsFilteredByTopics = createSelector(
 
 /* ***** Reducer ***** */
 const DEFAULT_STATE = {
+  centerLocation: { lat: 35.442845, lng: 7.916598 },
+  totalBoundingBoxLoaded: null,
+  zoom: 0,
   clientFilterParams: {
     currentBoundingBox: null,
     featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []
-  },
-  fetchParams: {
-    boundingBox: null
   }
 }
 
 export default function (state = DEFAULT_STATE, action) {
-  if (action.type === STORE_FETCH_PARAMS) {
+  if (action.type === UPDATE_STATE) {
     return {
       ...state,
-      fetchParams: action.payload
+      ...action.payload
     }
   }
   if (action.type === STORE_CLIENT_FILTER_PARAMS) {
