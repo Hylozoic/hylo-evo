@@ -188,7 +188,10 @@ module.exports = {
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // To strip all locales except “en”
-    new MomentLocalesPlugin()
+    new MomentLocalesPlugin(),
+    // Required for hylo-shared package, but ideally would be handled by
+    // the package build itself
+    new webpack.IgnorePlugin(/jsdom$/)
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
