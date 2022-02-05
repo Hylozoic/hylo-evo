@@ -1,4 +1,4 @@
-# Hylo.com shared modules
+# HyloShared - Hylo shared modules
 
 ## For Development
 
