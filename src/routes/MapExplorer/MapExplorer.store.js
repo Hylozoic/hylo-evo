@@ -11,12 +11,12 @@ import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'MapExplorer'
-export const UPDATE_STATE = `${MODULE_NAME}/UPDATE_STATE`
-export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
 export const FETCH_GROUPS_MAP = `${MODULE_NAME}/FETCH_GROUPS_MAP`
 export const FETCH_MEMBERS_MAP = `${MODULE_NAME}/FETCH_MEMBERS_MAP`
 export const FETCH_POSTS_MAP = `${MODULE_NAME}/FETCH_POSTS_MAP`
 export const FETCH_POSTS_MAP_DRAWER = `${MODULE_NAME}/FETCH_POSTS_MAP_DRAWER`
+export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
+export const UPDATE_STATE = `${MODULE_NAME}/UPDATE_STATE`
 
 export const SORT_OPTIONS = [
   { id: 'updated', label: 'Latest Activity' },
@@ -449,12 +449,12 @@ export const getSearchedPostsForMap = createSelector(
   getPostsForMapFilteredByType,
   searchTextSelector,
   (posts, searchText) => {
-    const trimmedText = searchText ? searchText.trim() : ''
+    const trimmedText = searchText ? searchText.trim().toLowerCase() : ''
     if (trimmedText === '') return posts
     return posts.filter(post => {
-      return post.title.toLowerCase().includes(searchText) ||
-             post.details.toLowerCase().includes(searchText) ||
-             post.topics.toModelArray().find(topic => topic.name.includes(searchText))
+      return post.title.toLowerCase().includes(trimmedText) ||
+             post.details.toLowerCase().includes(trimmedText) ||
+             post.topics.toModelArray().find(topic => topic.name.toLowerCase().includes(trimmedText))
     })
   }
 )
@@ -463,12 +463,12 @@ export const getSearchedPostsForDrawer = createSelector(
   getPostsForDrawerFilteredByType,
   searchTextSelector,
   (posts, searchText) => {
-    const trimmedText = searchText ? searchText.trim() : ''
+    const trimmedText = searchText ? searchText.trim().toLowerCase() : ''
     if (trimmedText === '') return posts
     return posts.filter(post => {
-      return post.title.toLowerCase().includes(searchText) ||
-             post.details.toLowerCase().includes(searchText) ||
-             post.topics.toModelArray().find(topic => topic.name.includes(searchText))
+      return post.title.toLowerCase().includes(trimmedText) ||
+             post.details.toLowerCase().includes(trimmedText) ||
+             post.topics.toModelArray().find(topic => topic.name.toLowerCase().includes(trimmedText))
     })
   }
 )
@@ -479,7 +479,7 @@ export const getFilteredPostsForMap = createSelector(
   (posts, filterTopics) => {
     if (filterTopics.length === 0) return posts
     return posts.filter(post => {
-      return post.topics.toModelArray().find(pt => filterTopics.find(ft => pt.name === ft.name))
+      return post.topics.toModelArray().find(pt => filterTopics.find(ft => pt.name.toLowerCase() === ft.name.toLowerCase()))
     })
   }
 )
@@ -490,7 +490,7 @@ export const getFilteredPostsForDrawer = createSelector(
   (posts, filterTopics) => {
     if (filterTopics.length === 0) return posts
     return posts.filter(post => {
-      return post.topics.toModelArray().find(pt => filterTopics.find(ft => pt.name === ft.name))
+      return post.topics.toModelArray().find(pt => filterTopics.find(ft => pt.name.toLowerCase() === ft.name.toLowerCase()))
     })
   }
 )
@@ -542,11 +542,11 @@ export const getMembersFilteredBySearch = createSelector(
   getMembersFilteredByType,
   searchTextSelector,
   (members, searchText) => {
-    return isEmpty(searchText) ? members
-      : members.filter(m => m.name.includes(searchText) ||
-                            (m.tagline && m.tagline.includes(searchText)) ||
-                            (m.skills && m.skills.toModelArray().find(s => s.name === searchText))
-      )
+    const searchLower = isEmpty(searchText) ? null : searchText.toLowerCase()
+    return searchLower ? members.filter(m => m.name.toLowerCase().includes(searchLower) ||
+                            (m.tagline && m.tagline.toLowerCase().includes(searchLower)) ||
+                            (m.skills && m.skills.toModelArray().find(s => s.name.toLowerCase() === searchLower)))
+      : members
   }
 )
 
@@ -555,8 +555,8 @@ export const getMembersFilteredByTopics = createSelector(
   filterTopicsSelector,
   (members, filterTopics) => {
     return isEmpty(filterTopics) ? members
-      : members.filter(m => filterTopics.find(ft => (m.tagline && m.tagline.includes(ft.name)) ||
-                                                    (m.skills && m.skills.toModelArray().find(s => s.name === ft.name))
+      : members.filter(m => filterTopics.find(ft => (m.tagline && m.tagline.toLowerCase().includes(ft.name.toLowerCase())) ||
+                                                    (m.skills && m.skills.toModelArray().find(s => s.name.toLowerCase() === ft.name.toLowerCase()))
       ))
   }
 )
@@ -580,9 +580,10 @@ export const getGroupsFilteredBySearch = createSelector(
   getGroupsFilteredByType,
   searchTextSelector,
   (groups, searchText) => {
-    return isEmpty(searchText) ? groups
-      : groups.filter(g => g.name.includes(searchText) ||
-                           (g.description && g.description.includes(searchText)))
+    const searchLower = isEmpty(searchText) ? false : searchText.toLowerCase()
+    return searchLower ? groups.filter(g => g.name.toLowerCase().includes(searchLower) ||
+                           (g.description && g.description.toLowerCase().includes(searchLower)))
+      : groups
   }
 )
 
@@ -591,8 +592,8 @@ export const getGroupsFilteredByTopics = createSelector(
   filterTopicsSelector,
   (groups, filterTopics) => {
     return isEmpty(filterTopics) ? groups
-      : groups.filter(g => filterTopics.find(ft => g.name.includes(ft.name) ||
-                                                   (g.description && g.description.includes(ft.name)))
+      : groups.filter(g => filterTopics.find(ft => g.name.toLowerCase().includes(ft.name.toLowerCase()) ||
+                                                   (g.description.toLowerCase() && g.description.includes(ft.name.toLowerCase())))
       )
   }
 )
@@ -608,7 +609,8 @@ const DEFAULT_STATE = {
     search: '',
     sortBy: SORT_OPTIONS[0].id,
     topics: []
-  }
+  },
+  searches: []
 }
 
 export default function (state = DEFAULT_STATE, action) {
