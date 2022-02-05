@@ -5,7 +5,7 @@
 export const MENTION_ENTITY_TYPE = 'mention'
 export const TOPIC_ENTITY_TYPE = '#mention'
 
-export const AnalyticsEvents  = {
+export const AnalyticsEvents = {
   COMMENT_CREATED: 'Comment Created',
   GROUP_CREATED: 'Group Created',
   GROUP_INVITATION_ACCEPTED: 'Group Invitation Accepted',

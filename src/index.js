@@ -1,11 +1,4 @@
-import * as constants from './constants'
-import * as text from './text'
-import * as validators from './validators'
-import * as contentState from './contentState'
-
-export default {
-  constants,
-  text,
-  validators,
-  contentState
-}
+export * from './constants'
+export * as text from './text'
+export * as validators from './validators'
+export * as contentState from './contentState'

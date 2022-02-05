@@ -1,7 +1,12 @@
 {
   "name": "hylo-shared",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.2.5",
+  "description": "Code shared across Hylo applications for consistency of results",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hylozoic/hylo-shared.git"
+  },
+  "license": "AGPL-1.0",
   "author": "",
   "source": "src/index.js",
   "exports": {
@@ -12,8 +17,9 @@
   "module": "./dist/index.module.js",
   "unpkg": "./dist/index.umd.js",
   "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch"
+    "build": "rm -fr dist/* && microbundle",
+    "start": "rm -fr dist/* && microbundle watch",
+    "test": "jest"
   },
   "dependencies": {
     "buffer": "^6.0.3",

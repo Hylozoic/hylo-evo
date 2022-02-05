@@ -1,20 +1,8 @@
-import cheerio from 'cheerio'
 import { marked } from 'marked'
 import insane from 'insane'
 import truncHtml from 'trunc-html'
 import linkify from './linkify'
 import prettyDate from 'pretty-date'
-
-// Replace any div tag with p. Note that this drops all attributes from the tag.
-// Current used only in mobile
-export function divToP (text) {
-  if (!text || typeof text !== 'string') return ''
-  const $ = cheerio.load(text, null, false)
-  $('div').replaceWith(function () {
-    return $('<p>' + $(this).html() + '</p>')
-  })
-  return $.html()
-}
 
 export function sanitize (text, whitelist, attrWhitelist) {
   if (!text) return ''
@@ -31,31 +19,6 @@ export function sanitize (text, whitelist, attrWhitelist) {
   })
 }
 
-export const markdown = text => {
-  return sanitize(
-    marked.parse(text || '', { gfm: true, breaks: true })
-  )
-}
-
-// increment the number at the end of a string.
-// foo => foo2, foo2 => foo3, etc.
-export const increment = text => {
-  const regex = /\d*$/
-  const word = text.replace(regex, '')
-  const number = Number(text.match(regex)[0] || 1) + 1
-  return `${word}${number}`
-}
-
-export const truncate = (text, length) => {
-  return truncHtml(text, length, {
-    sanitizer: {
-      allowedAttributes: {
-        a: ['href', 'class', 'data-search']
-      }
-    }
-  }).html
-}
-
 export function present (text, opts = {}) {
   const { slug, noLinks, maxlength, noP } = opts
 
@@ -69,17 +32,20 @@ export function present (text, opts = {}) {
   return text
 }
 
-export function appendInP (text, appendee) {
-  text = text.trim()
-  if (text.substr(text.length - 4) === '</p>') {
-    return text.substr(0, text.length - 4) + appendee + '</p>'
-  } else {
-    return text + appendee
-  }
+export const truncate = (text, length) => {
+  return truncHtml(text, length, {
+    sanitizer: {
+      allowedAttributes: {
+        a: ['href', 'class', 'data-search']
+      }
+    }
+  }).html
 }
 
-export function textLength (html) {
-  return html.replace(/<[^>]+>/g, '').length
+export const markdown = text => {
+  return sanitize(
+    marked.parse(text || '', { gfm: true, breaks: true })
+  )
 }
 
 export function humanDate (date, short) {
@@ -108,11 +74,4 @@ export function humanDate (date, short) {
     .replace(/ days?/, 'd')
     .replace(/ weeks?/, 'w')
     .replace(/ month(s?)/, ' mo$1')
-}
-
-// Currently only used on Mobile
-// Assumes current user has already been filtered from `names`
-export function threadNames (names) {
-  if (names.length < 3) return names.join(' & ')
-  return `${names[0]} & ${names.length - 1} others`
 }

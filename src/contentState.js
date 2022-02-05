@@ -9,7 +9,7 @@ function serverDOMBuilder (html) {
   const jsdom = require('jsdom')
   const { JSDOM } = jsdom
 
-  const { document: jsdomDocument, HTMLElement, HTMLAnchorElement } = (new JSDOM(`<!DOCTYPE html>`)).window
+  const { document: jsdomDocument, HTMLElement, HTMLAnchorElement } = (new JSDOM('<!DOCTYPE html>')).window
   // HTMLElement and HTMLAnchorElement needed on global for convertFromHTML to work
   global.HTMLElement = HTMLElement
   global.HTMLAnchorElement = HTMLAnchorElement
@@ -66,8 +66,8 @@ function mentionToLink (originalText, mention, slug) {
     {
       'data-entity-type': MENTION_ENTITY_TYPE,
       'data-user-id': mention.get('id'),
-      'href': mentionUrl(mention.get('id'), slug),
-      'className': 'mention'
+      href: mentionUrl(mention.get('id'), slug),
+      className: 'mention'
     },
     originalText
   )
@@ -87,8 +87,8 @@ function topicToLink (originalText, topic, slug) {
     {
       'data-entity-type': TOPIC_ENTITY_TYPE,
       'data-search': topic.get('name'),
-      'href': tagUrl(topic.get('name'), slug),
-      'className': 'hashtag'
+      href: tagUrl(topic.get('name'), slug),
+      className: 'hashtag'
     },
     originalText
   )
@@ -143,9 +143,8 @@ export const toHTML = (unknownContentState, { slug }) => {
       }
     }
   })(contentState)
-  console.log('!!!!! toHTML', result)
-  return result
 
+  return result
 }
 
 export const toRaw = (unknownContentState) => {
