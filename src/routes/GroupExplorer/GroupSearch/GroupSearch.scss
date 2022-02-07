@@ -62,6 +62,16 @@
   border: 1px solid rgba(203, 208, 212, .95);
 }
 
+.no-more-results {
+  font-family: Circular Std;
+  text-transform: none;
+  font-style: bold;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5rem;
+  text-align: center;
+}
+
 @media screen and (max-width: 425px) {
   .group-search-view-ctrls {
     height: auto;

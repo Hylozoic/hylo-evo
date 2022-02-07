@@ -33,7 +33,6 @@ describe('PeopleSelector', () => {
     let input
     let setPeopleSearch
     let wrapper
-    let peopleSelectorComponent
 
     beforeEach(() => {
       fetchPeople = jest.fn()
@@ -52,7 +51,6 @@ describe('PeopleSelector', () => {
           />
         </MemoryRouter>
       )
-      peopleSelectorComponent = wrapper.find(PeopleSelector)
       input = wrapper.find('input').first()
     })
 
@@ -62,7 +60,7 @@ describe('PeopleSelector', () => {
     })
 
     it('hits server when the input value changes', () => {
-      input.simulate('change', { target: { value: 'not empty' }})
+      input.simulate('change', { target: { value: 'not empty' } })
       expect(fetchPeople).toHaveBeenCalled()
     })
 
@@ -72,7 +70,7 @@ describe('PeopleSelector', () => {
     })
 
     it('does not remove participant if backspace pressed when autocompleteInput is not empty', () => {
-      input.simulate('change', { target: { value: 'not empty' }})
+      input.simulate('change', { target: { value: 'not empty' } })
       input.simulate('keyDown', { keyCode: keyMap.BACKSPACE })
       expect(removePerson).not.toHaveBeenCalled()
     })

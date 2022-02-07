@@ -1,6 +1,5 @@
 import React from 'react'
 import cx from 'classnames'
-import { get } from 'lodash/fp'
 import './GroupHeader.scss'
 import RoundImage from 'components/RoundImage'
 import {

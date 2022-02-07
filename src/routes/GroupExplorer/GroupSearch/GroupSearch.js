@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import cx from 'classnames'
 import { useSelector } from 'react-redux'
 import Dropdown from 'components/Dropdown'
@@ -19,11 +19,17 @@ export default function GroupSearch () {
   const currentUser = useSelector(state => getMe(state))
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(0)
+  const [offset, setOffset] = useState(0)
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
-  const { groups = [], pending = false } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, page })
   const selectedGroupSlug = query.groupSlug
+  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset })
+  useEffect(() => {
+    setOffset(0)
+  }, [search, sortBy])
+  useEffect(() => {
+    setOffset(groups.length)
+  }, [groups])
 
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>
@@ -35,7 +41,7 @@ export default function GroupSearch () {
       <input
         styleName='searchBox'
         type='text'
-        onChange={e => setSearch(e.target.value)} // debounce this
+        onChange={e => setSearch(e.target.value)}
         placeholder='Search groups by keyword'
         value={search}
       />
@@ -53,9 +59,10 @@ export default function GroupSearch () {
           key={group.id} />
       })}
     </div>
-    <ScrollListener onBottom={() => setPage(page + 1)}
+    <ScrollListener onBottom={() => fetchMoreGroups(offset)}
       elementId={CENTER_COLUMN_ID} />
     {pending && <Loading />}
+    {(!hasMore && !!offset) && <div styleName='no-more-results'>No more results</div>}
   </React.Fragment>
 }
 

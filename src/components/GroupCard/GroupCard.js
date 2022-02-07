@@ -7,7 +7,7 @@ import { groupUrl, groupDetailUrl } from 'util/navigation'
 import Pill from 'components/Pill'
 import { capitalize } from 'lodash'
 
-/* 
+/*
   Each card needs
   - group title
   - group icon

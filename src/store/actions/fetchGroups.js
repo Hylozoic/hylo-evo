@@ -1,11 +1,11 @@
 import { get } from 'lodash/fp'
+import { createSelector } from 'reselect'
 import { FETCH_GROUPS } from 'store/constants'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
-
 // actions
-export function fetchGroups ({ offset, order, search, slug, sortBy, coord }) {
+export function fetchGroups ({ offset, order, search, slug, sortBy, coord, pageSize = 20 }) {
   var query, extractModel, getItems
 
   query = groupQuery
@@ -18,8 +18,8 @@ export function fetchGroups ({ offset, order, search, slug, sortBy, coord }) {
       query,
       variables: {
         coord,
-        first: 20,
-        offset,
+        first: pageSize,
+        offset: offset,
         order,
         search,
         sortBy
@@ -96,6 +96,8 @@ const groupQuery = `query (
 }`
 
 const getGroupsResults = makeGetQueryResults(FETCH_GROUPS)
+
+export const getHasMoreGroups = createSelector(getGroupsResults, get('hasMore'))
 
 export const getGroups = makeQueryResultsModelSelector(
   getGroupsResults,
