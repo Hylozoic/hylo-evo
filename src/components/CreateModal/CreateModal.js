@@ -8,17 +8,13 @@ import PostEditor from 'components/PostEditor'
 import './CreateModal.scss'
 
 export default function CreateModal (props) {
-  const { location, match, closeModal, confirmLeaveCreateModal } = props
+  const { location, match, closeModal } = props
   const [isDirty, setIsDirty] = useState()
 
   if (!match) return null
 
   const checkBeforeClose = () => {
-    if (isDirty) {
-      confirmLeaveCreateModal()
-    } else {
-      closeModal()
-    }
+    closeModal(isDirty)
   }
 
   return (
@@ -43,7 +39,6 @@ export default function CreateModal (props) {
                   onClose={closeModal}
                   isDirty={isDirty}
                   setIsDirty={setIsDirty}
-                  onConfirmClose={confirmLeaveCreateModal}
                 />
               )}
             />
