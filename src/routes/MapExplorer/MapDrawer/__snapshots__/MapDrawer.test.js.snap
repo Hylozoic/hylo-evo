@@ -1,99 +1,199 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MapDrawer renders correctly (with min props) 1`] = `
-<ContextProvider>
-  <MapDrawer
-    context="groups"
-    currentUser={
-      Object {
-        "id": 1,
+<div
+  data-stylename="container"
+  id="mapDrawerWrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <input
+      data-stylename="searchBox"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      placeholder="Filter by topics and keywords"
+      type="text"
+      value=""
+    />
+    <Icon
+      name="Filter"
+    />
+    <div
+      data-stylename="currentFilters"
+    />
+    <TabBar
+      currentTab="Posts"
+      pendingPostsDrawer={false}
+      selectTab={[Function]}
+      tabs={
+        Object {
+          "Groups": 0,
+          "Members": 0,
+          "Posts": 0,
+        }
       }
-    }
-    fetchPostsForDrawer={[Function]}
-    filters={
-      Object {
-        "search": "",
-        "sortBy": "name",
-        "topics": Array [],
-      }
-    }
-    groups={Array []}
-    members={Array []}
-    numFetchedPosts={0}
-    numTotalPosts={0}
-    onUpdateFilter={[Function]}
-    onUpdateFilters={[Function]}
-    pendingPostsDrawer={false}
-    posts={Array []}
-    routeParams={
-      Object {
-        "context": "groups",
-        "slug": "group one",
-      }
-    }
-    topics={Array []}
-  />
-</ContextProvider>
+    />
+  </div>
+  <div
+    data-stylename="contentWrapper"
+  >
+    <div
+      data-stylename="postsHeader"
+    >
+      <span>
+        Sort posts by:
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-stylename="sorter"
+        items={
+          Array [
+            Object {
+              "label": "Latest Activity",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Post Date",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Popular",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="sorter-label"
+          >
+            Latest Activity
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+    <div
+      data-stylename="contentListContainer"
+      id="contentList"
+    />
+    <ScrollListener
+      elementId="mapDrawerWrapper"
+      onBottom={[Function]}
+    />
+  </div>
+</div>
 `;
 
 exports[`MapDrawer renders correctly with lots of stuff 1`] = `
-<ContextProvider>
-  <MapDrawer
-    context="groups"
-    currentUser={
-      Object {
-        "id": 1,
-      }
-    }
-    fetchPostsForDrawer={[Function]}
-    filters={
-      Object {
-        "search": "",
-        "sortBy": "name",
-        "topics": Array [],
-      }
-    }
-    groups={
-      Array [
+<div
+  data-stylename="container"
+  id="mapDrawerWrapper"
+>
+  <div
+    data-stylename="header"
+  >
+    <input
+      data-stylename="searchBox"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      placeholder="Filter by topics and keywords"
+      type="text"
+      value=""
+    />
+    <Icon
+      name="Filter"
+    />
+    <div
+      data-stylename="currentFilters"
+    />
+    <TabBar
+      currentTab="Posts"
+      pendingPostsDrawer={false}
+      selectTab={[Function]}
+      tabs={
         Object {
-          "avatarUrl": "https://google.com",
-          "description": "yo",
-          "id": 1,
-          "memberCount": 1,
-          "name": "group one",
-          "slug": "slug2",
-        },
-      ]
-    }
-    members={
-      Array [
-        Object {
-          "id": 2,
-          "name": "hello",
-        },
-      ]
-    }
-    numFetchedPosts={0}
-    numTotalPosts={0}
-    onUpdateFilter={[Function]}
-    onUpdateFilters={[Function]}
-    pendingPostsDrawer={false}
-    posts={
-      Array [
-        Object {
-          "id": 1,
-          "title": "Post",
-          "type": "request",
-        },
-      ]
-    }
-    routeParams={
-      Object {
-        "context": "groups",
-        "slug": "group one",
+          "Groups": 1,
+          "Members": 1,
+          "Posts": 0,
+        }
       }
-    }
-    topics={Array []}
-  />
-</ContextProvider>
+    />
+  </div>
+  <div
+    data-stylename="contentWrapper"
+  >
+    <div
+      data-stylename="postsHeader"
+    >
+      <span>
+        Sort posts by:
+      </span>
+      <Dropdown
+        alignRight={true}
+        data-stylename="sorter"
+        items={
+          Array [
+            Object {
+              "label": "Latest Activity",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Post Date",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Popular",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="sorter-label"
+          >
+            Latest Activity
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+    </div>
+    <div
+      data-stylename="contentListContainer"
+      id="contentList"
+    >
+      <Connect(PostCard)
+        constrained={true}
+        data-stylename="contentCard"
+        expanded={false}
+        key="1"
+        post={
+          Object {
+            "id": 1,
+            "title": "Post",
+            "type": "request",
+          }
+        }
+        routeParams={
+          Object {
+            "context": "groups",
+            "slug": "group one",
+          }
+        }
+      />
+    </div>
+    <ScrollListener
+      elementId="mapDrawerWrapper"
+      onBottom={[Function]}
+    />
+  </div>
+</div>
 `;

@@ -1,121 +1,892 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GroupsWidget renders correctly (with min props) 1`] = `
-<div
-  data-stylename="groups"
+<MemoryRouter
+  initialEntries={
+    Array [
+      "/",
+    ]
+  }
+  keyLength={0}
 >
-  <Slider
-    arrows={true}
-    dots={true}
-    infinite={false}
-    responsive={
-      Array [
-        Object {
-          "breakpoint": 600,
-          "settings": Object {
-            "slidesToScroll": 1,
-            "slidesToShow": 1.1,
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "canGo": [Function],
+        "createHref": [Function],
+        "entries": Array [
+          Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
           },
+        ],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "index": 0,
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
         },
-      ]
+        "push": [Function],
+        "replace": [Function],
+      }
     }
-    slidesToScroll={1}
-    slidesToShow={2.1}
-    speed={500}
   >
-    <div
-      data-stylename="createGroup"
+    <GroupsWidget
+      items={Array []}
+      routeParams={
+        Object {
+          "context": "groups",
+          "slug": "group one",
+        }
+      }
     >
-      <div>
-        <Link
-          to="/all/create/group"
+      <div
+        data-stylename="groups"
+      >
+        <Slider
+          arrows={true}
+          dots={true}
+          infinite={false}
+          responsive={
+            Array [
+              Object {
+                "breakpoint": 600,
+                "settings": Object {
+                  "slidesToScroll": 1,
+                  "slidesToShow": 1.1,
+                },
+              },
+            ]
+          }
+          slidesToScroll={1}
+          slidesToShow={2.1}
+          speed={500}
         >
-          + Create Group
-        </Link>
+          <InnerSlider
+            accessibility={true}
+            adaptiveHeight={false}
+            afterChange={null}
+            appendDots={[Function]}
+            arrows={true}
+            autoplay={false}
+            autoplaySpeed={3000}
+            beforeChange={null}
+            centerMode={false}
+            centerPadding="50px"
+            className=""
+            cssEase="ease"
+            customPaging={[Function]}
+            dots={true}
+            dotsClass="slick-dots"
+            draggable={true}
+            easing="linear"
+            edgeFriction={0.35}
+            fade={false}
+            focusOnSelect={false}
+            infinite={false}
+            initialSlide={0}
+            lazyLoad={null}
+            nextArrow={null}
+            onEdge={null}
+            onInit={null}
+            onLazyLoadError={null}
+            onReInit={null}
+            pauseOnDotsHover={false}
+            pauseOnFocus={false}
+            pauseOnHover={true}
+            prevArrow={null}
+            responsive={
+              Array [
+                Object {
+                  "breakpoint": 600,
+                  "settings": Object {
+                    "slidesToScroll": 1,
+                    "slidesToShow": 1.1,
+                  },
+                },
+              ]
+            }
+            rows={1}
+            rtl={false}
+            slide="div"
+            slidesPerRow={1}
+            slidesToScroll={1}
+            slidesToShow={2.1}
+            speed={500}
+            swipe={true}
+            swipeEvent={null}
+            swipeToSlide={false}
+            touchMove={true}
+            touchThreshold={5}
+            unslick={true}
+            useCSS={true}
+            useTransform={true}
+            variableWidth={false}
+            vertical={false}
+            waitForAnimate={true}
+          >
+            <div
+              className="slick-slider slick-initialized"
+            >
+              <div
+                className="slick-list"
+              >
+                <Track
+                  centerMode={false}
+                  centerPadding="50px"
+                  cssEase="ease"
+                  currentSlide={0}
+                  fade={false}
+                  focusOnSelect={null}
+                  infinite={false}
+                  lazyLoad={null}
+                  lazyLoadedList={
+                    Array [
+                      0,
+                      1,
+                      2,
+                    ]
+                  }
+                  listHeight={0}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onMouseOver={[Function]}
+                  rtl={false}
+                  slideCount={1}
+                  slideHeight={0}
+                  slideWidth={0}
+                  slidesToScroll={1}
+                  slidesToShow={2.1}
+                  speed={500}
+                  targetSlide={0}
+                  trackStyle={
+                    Object {
+                      "WebkitTransform": "translate3d(0px, 0px, 0px)",
+                      "WebkitTransition": "",
+                      "msTransform": "translateX(0px)",
+                      "opacity": 1,
+                      "transform": "translate3d(0px, 0px, 0px)",
+                      "transition": "",
+                    }
+                  }
+                  unslick={true}
+                  useCSS={true}
+                  variableWidth={false}
+                  vertical={false}
+                >
+                  <div
+                    className="slick-track"
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    onMouseOver={[Function]}
+                    style={
+                      Object {
+                        "WebkitTransform": "translate3d(0px, 0px, 0px)",
+                        "WebkitTransition": "",
+                        "msTransform": "translateX(0px)",
+                        "opacity": 1,
+                        "transform": "translate3d(0px, 0px, 0px)",
+                        "transition": "",
+                      }
+                    }
+                  >
+                    <div
+                      aria-hidden={false}
+                      className="slick-slide slick-active slick-current"
+                      data-index={0}
+                      key="original0"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "outline": "none",
+                          "width": 0,
+                        }
+                      }
+                      tabIndex="-1"
+                    >
+                      <div
+                        key="0"
+                      >
+                        <div
+                          data-stylename="createGroup"
+                          key="0"
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "width": "100%",
+                            }
+                          }
+                          tabIndex={-1}
+                        >
+                          <div>
+                            <Link
+                              to="/all/create/group"
+                            >
+                              <LinkAnchor
+                                href="/all/create/group"
+                                navigate={[Function]}
+                              >
+                                <a
+                                  href="/all/create/group"
+                                  onClick={[Function]}
+                                >
+                                  + Create Group
+                                </a>
+                              </LinkAnchor>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Track>
+              </div>
+            </div>
+          </InnerSlider>
+        </Slider>
+        <div
+          data-stylename="groupBumper"
+        />
       </div>
-    </div>
-  </Slider>
-  <div
-    data-stylename="groupBumper"
-  />
-</div>
+    </GroupsWidget>
+  </Router>
+</MemoryRouter>
 `;
 
 exports[`GroupsWidget renders correctly with items 1`] = `
-<div
-  data-stylename="groups"
+<MemoryRouter
+  initialEntries={
+    Array [
+      "/",
+    ]
+  }
+  keyLength={0}
 >
-  <Slider
-    arrows={true}
-    dots={true}
-    infinite={false}
-    responsive={
-      Array [
-        Object {
-          "breakpoint": 600,
-          "settings": Object {
-            "slidesToScroll": 1,
-            "slidesToShow": 1.1,
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "canGo": [Function],
+        "createHref": [Function],
+        "entries": Array [
+          Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
           },
+        ],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "index": 0,
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
         },
-      ]
+        "push": [Function],
+        "replace": [Function],
+      }
     }
-    slidesToScroll={1}
-    slidesToShow={2.1}
-    speed={500}
   >
-    <GroupCard
-      group={
-        Object {
-          "avatarUrl": "https://google.com",
-          "description": "yo",
-          "id": 1,
-          "memberCount": 1,
-          "name": "group one",
-          "slug": "slug2",
-        }
+    <GroupsWidget
+      items={
+        Array [
+          Object {
+            "avatarUrl": "https://google.com",
+            "description": "yo",
+            "id": 1,
+            "memberCount": 1,
+            "name": "group one",
+            "slug": "slug2",
+          },
+          Object {
+            "avatarUrl": "https://google.com",
+            "description": "oy",
+            "id": 2,
+            "memberCount": 10,
+            "name": "group 2",
+            "slug": "slug2",
+          },
+        ]
       }
-      key="1"
       routeParams={
         Object {
           "context": "groups",
           "slug": "group one",
         }
       }
-    />
-    <GroupCard
-      group={
-        Object {
-          "avatarUrl": "https://google.com",
-          "description": "oy",
-          "id": 2,
-          "memberCount": 10,
-          "name": "group 2",
-          "slug": "slug2",
-        }
-      }
-      key="2"
-      routeParams={
-        Object {
-          "context": "groups",
-          "slug": "group one",
-        }
-      }
-    />
-    <div
-      data-stylename="createGroup"
     >
-      <div>
-        <Link
-          to="/all/create/group"
+      <div
+        data-stylename="groups"
+      >
+        <Slider
+          arrows={true}
+          dots={true}
+          infinite={false}
+          responsive={
+            Array [
+              Object {
+                "breakpoint": 600,
+                "settings": Object {
+                  "slidesToScroll": 1,
+                  "slidesToShow": 1.1,
+                },
+              },
+            ]
+          }
+          slidesToScroll={1}
+          slidesToShow={2.1}
+          speed={500}
         >
-          + Create Group
-        </Link>
+          <InnerSlider
+            accessibility={true}
+            adaptiveHeight={false}
+            afterChange={null}
+            appendDots={[Function]}
+            arrows={true}
+            autoplay={false}
+            autoplaySpeed={3000}
+            beforeChange={null}
+            centerMode={false}
+            centerPadding="50px"
+            className=""
+            cssEase="ease"
+            customPaging={[Function]}
+            dots={true}
+            dotsClass="slick-dots"
+            draggable={true}
+            easing="linear"
+            edgeFriction={0.35}
+            fade={false}
+            focusOnSelect={false}
+            infinite={false}
+            initialSlide={0}
+            lazyLoad={null}
+            nextArrow={null}
+            onEdge={null}
+            onInit={null}
+            onLazyLoadError={null}
+            onReInit={null}
+            pauseOnDotsHover={false}
+            pauseOnFocus={false}
+            pauseOnHover={true}
+            prevArrow={null}
+            responsive={
+              Array [
+                Object {
+                  "breakpoint": 600,
+                  "settings": Object {
+                    "slidesToScroll": 1,
+                    "slidesToShow": 1.1,
+                  },
+                },
+              ]
+            }
+            rows={1}
+            rtl={false}
+            slide="div"
+            slidesPerRow={1}
+            slidesToScroll={1}
+            slidesToShow={2.1}
+            speed={500}
+            swipe={true}
+            swipeEvent={null}
+            swipeToSlide={false}
+            touchMove={true}
+            touchThreshold={5}
+            useCSS={true}
+            useTransform={true}
+            variableWidth={false}
+            vertical={false}
+            waitForAnimate={true}
+          >
+            <div
+              className="slick-slider slick-initialized"
+              dir="ltr"
+            >
+              <PrevArrow
+                centerMode={false}
+                clickHandler={[Function]}
+                currentSlide={0}
+                infinite={false}
+                nextArrow={null}
+                prevArrow={null}
+                slideCount={3}
+                slidesToShow={2.1}
+              >
+                <button
+                  className="slick-arrow slick-prev slick-disabled"
+                  data-role="none"
+                  key="0"
+                  onClick={null}
+                  style={
+                    Object {
+                      "display": "block",
+                    }
+                  }
+                  type="button"
+                >
+                   
+                  Previous
+                </button>
+              </PrevArrow>
+              <div
+                className="slick-list"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={null}
+                onMouseMove={null}
+                onMouseUp={[Function]}
+                onTouchCancel={null}
+                onTouchEnd={[Function]}
+                onTouchMove={null}
+                onTouchStart={[Function]}
+                style={Object {}}
+              >
+                <Track
+                  centerMode={false}
+                  centerPadding="50px"
+                  cssEase="ease"
+                  currentSlide={0}
+                  fade={false}
+                  focusOnSelect={null}
+                  infinite={false}
+                  lazyLoad={null}
+                  lazyLoadedList={
+                    Array [
+                      0,
+                      1,
+                      2,
+                    ]
+                  }
+                  listHeight={0}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onMouseOver={[Function]}
+                  rtl={false}
+                  slideCount={3}
+                  slideHeight={0}
+                  slideWidth={0}
+                  slidesToScroll={1}
+                  slidesToShow={2.1}
+                  speed={500}
+                  targetSlide={0}
+                  trackStyle={
+                    Object {
+                      "WebkitTransform": "translate3d(0px, 0px, 0px)",
+                      "WebkitTransition": "",
+                      "msTransform": "translateX(0px)",
+                      "opacity": 1,
+                      "transform": "translate3d(0px, 0px, 0px)",
+                      "transition": "",
+                    }
+                  }
+                  useCSS={true}
+                  variableWidth={false}
+                  vertical={false}
+                >
+                  <div
+                    className="slick-track"
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    onMouseOver={[Function]}
+                    style={
+                      Object {
+                        "WebkitTransform": "translate3d(0px, 0px, 0px)",
+                        "WebkitTransition": "",
+                        "msTransform": "translateX(0px)",
+                        "opacity": 1,
+                        "transform": "translate3d(0px, 0px, 0px)",
+                        "transition": "",
+                      }
+                    }
+                  >
+                    <div
+                      aria-hidden={false}
+                      className="slick-slide slick-active slick-current"
+                      data-index={0}
+                      key="original0"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "outline": "none",
+                          "width": 0,
+                        }
+                      }
+                      tabIndex="-1"
+                    >
+                      <div
+                        key="0"
+                      >
+                        <GroupCard
+                          group={
+                            Object {
+                              "avatarUrl": "https://google.com",
+                              "description": "yo",
+                              "id": 1,
+                              "memberCount": 1,
+                              "name": "group one",
+                              "slug": "slug2",
+                            }
+                          }
+                          key="0"
+                          routeParams={
+                            Object {
+                              "context": "groups",
+                              "slug": "group one",
+                            }
+                          }
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "width": "100%",
+                            }
+                          }
+                          tabIndex={-1}
+                        >
+                          <div
+                            data-stylename="group"
+                            key="1"
+                          >
+                            <div>
+                              <div
+                                data-stylename="content"
+                              >
+                                <div
+                                  data-stylename="group-avatar"
+                                >
+                                  <img
+                                    src="https://google.com"
+                                  />
+                                </div>
+                                <div
+                                  data-stylename="group-name"
+                                >
+                                  group one
+                                </div>
+                                <div
+                                  data-stylename="member-count"
+                                >
+                                  1
+                                   member
+                                </div>
+                                <div
+                                  data-stylename="group-description"
+                                >
+                                  yo
+                                </div>
+                                <div
+                                  data-stylename="isnt-member"
+                                >
+                                  <Link
+                                    to="/all/group/slug2"
+                                  >
+                                    <LinkAnchor
+                                      href="/all/group/slug2"
+                                      navigate={[Function]}
+                                    >
+                                      <a
+                                        href="/all/group/slug2"
+                                        onClick={[Function]}
+                                      >
+                                        <span>
+                                          View
+                                        </span>
+                                        <span
+                                          data-stylename="visit"
+                                        >
+                                          View
+                                        </span>
+                                      </a>
+                                    </LinkAnchor>
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              data-stylename="background"
+                              style={
+                                Object {
+                                  "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
+                                }
+                              }
+                            >
+                              <div
+                                data-stylename="fade"
+                              />
+                            </div>
+                          </div>
+                        </GroupCard>
+                      </div>
+                    </div>
+                    <div
+                      aria-hidden={false}
+                      className="slick-slide slick-active"
+                      data-index={1}
+                      key="original1"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "outline": "none",
+                          "width": 0,
+                        }
+                      }
+                      tabIndex="-1"
+                    >
+                      <div
+                        key="11"
+                      >
+                        <GroupCard
+                          group={
+                            Object {
+                              "avatarUrl": "https://google.com",
+                              "description": "oy",
+                              "id": 2,
+                              "memberCount": 10,
+                              "name": "group 2",
+                              "slug": "slug2",
+                            }
+                          }
+                          key="111"
+                          routeParams={
+                            Object {
+                              "context": "groups",
+                              "slug": "group one",
+                            }
+                          }
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "width": "100%",
+                            }
+                          }
+                          tabIndex={-1}
+                        >
+                          <div
+                            data-stylename="group"
+                            key="2"
+                          >
+                            <div>
+                              <div
+                                data-stylename="content"
+                              >
+                                <div
+                                  data-stylename="group-avatar"
+                                >
+                                  <img
+                                    src="https://google.com"
+                                  />
+                                </div>
+                                <div
+                                  data-stylename="group-name"
+                                >
+                                  group 2
+                                </div>
+                                <div
+                                  data-stylename="member-count"
+                                >
+                                  10
+                                   member
+                                  s
+                                </div>
+                                <div
+                                  data-stylename="group-description"
+                                >
+                                  oy
+                                </div>
+                                <div
+                                  data-stylename="isnt-member"
+                                >
+                                  <Link
+                                    to="/all/group/slug2"
+                                  >
+                                    <LinkAnchor
+                                      href="/all/group/slug2"
+                                      navigate={[Function]}
+                                    >
+                                      <a
+                                        href="/all/group/slug2"
+                                        onClick={[Function]}
+                                      >
+                                        <span>
+                                          View
+                                        </span>
+                                        <span
+                                          data-stylename="visit"
+                                        >
+                                          View
+                                        </span>
+                                      </a>
+                                    </LinkAnchor>
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              data-stylename="background"
+                              style={
+                                Object {
+                                  "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_community_banner.jpg)",
+                                }
+                              }
+                            >
+                              <div
+                                data-stylename="fade"
+                              />
+                            </div>
+                          </div>
+                        </GroupCard>
+                      </div>
+                    </div>
+                    <div
+                      aria-hidden={false}
+                      className="slick-slide slick-active"
+                      data-index={2}
+                      key="original2"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "outline": "none",
+                          "width": 0,
+                        }
+                      }
+                      tabIndex="-1"
+                    >
+                      <div
+                        key="22"
+                      >
+                        <div
+                          data-stylename="createGroup"
+                          key="222"
+                          style={
+                            Object {
+                              "display": "inline-block",
+                              "width": "100%",
+                            }
+                          }
+                          tabIndex={-1}
+                        >
+                          <div>
+                            <Link
+                              to="/all/create/group"
+                            >
+                              <LinkAnchor
+                                href="/all/create/group"
+                                navigate={[Function]}
+                              >
+                                <a
+                                  href="/all/create/group"
+                                  onClick={[Function]}
+                                >
+                                  + Create Group
+                                </a>
+                              </LinkAnchor>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Track>
+              </div>
+              <NextArrow
+                centerMode={false}
+                clickHandler={[Function]}
+                currentSlide={0}
+                infinite={false}
+                nextArrow={null}
+                prevArrow={null}
+                slideCount={3}
+                slidesToShow={2.1}
+              >
+                <button
+                  className="slick-arrow slick-next"
+                  data-role="none"
+                  key="1"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "display": "block",
+                    }
+                  }
+                  type="button"
+                >
+                   
+                  Next
+                </button>
+              </NextArrow>
+              <Dots
+                appendDots={[Function]}
+                clickHandler={[Function]}
+                currentSlide={0}
+                customPaging={[Function]}
+                dotsClass="slick-dots"
+                infinite={false}
+                onMouseEnter={null}
+                onMouseLeave={null}
+                onMouseOver={null}
+                slideCount={3}
+                slidesToScroll={1}
+                slidesToShow={2.1}
+              >
+                <ul
+                  className="slick-dots"
+                  onMouseEnter={null}
+                  onMouseLeave={null}
+                  onMouseOver={null}
+                  style={
+                    Object {
+                      "display": "block",
+                    }
+                  }
+                >
+                  <li
+                    className="slick-active"
+                    key="0"
+                  >
+                    <button
+                      onClick={[Function]}
+                    >
+                      1
+                    </button>
+                  </li>
+                  <li
+                    className=""
+                    key="1"
+                  >
+                    <button
+                      onClick={[Function]}
+                    >
+                      2
+                    </button>
+                  </li>
+                </ul>
+              </Dots>
+            </div>
+          </InnerSlider>
+        </Slider>
+        <div
+          data-stylename="groupBumper"
+        />
       </div>
-    </div>
-  </Slider>
-  <div
-    data-stylename="groupBumper"
-  />
-</div>
+    </GroupsWidget>
+  </Router>
+</MemoryRouter>
 `;
