@@ -20,9 +20,9 @@ import { capitalize } from 'lodash'
 
 */
 
-export default function GroupCard ({ group = {}, routeParams = {}, highlightProps = {}, className, expanded = false, constrained = false, onClick = () => {} }) {
+export default function GroupCard ({ memberships, group = {}, routeParams = {}, highlightProps = {}, className, expanded = false, constrained = false, onClick = () => {} }) {
   const topics = group.groupTopics.toModelArray()
-  return <Link to={group.memberStatus === 'member' ? groupUrl(group.slug, 'groups') : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
+  return <Link to={memberships.includes(group.id) ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
     <div
       onClick={onClick}
       styleName={cx('card', { expanded }, { constrained })}

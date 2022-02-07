@@ -17,6 +17,8 @@ import getMe from 'store/selectors/getMe'
 
 export default function GroupSearch () {
   const currentUser = useSelector(state => getMe(state))
+  // get location from user or... from device?
+  const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
   const [offset, setOffset] = useState(0)
@@ -52,6 +54,7 @@ export default function GroupSearch () {
       {groups.map(group => {
         const expanded = selectedGroupSlug === group.slug
         return <GroupCard
+          memberships={membershipGroupIds}
           styleName={cx({ 'card-item': true, expanded })}
           expanded={expanded}
           routeParams={query}
@@ -68,8 +71,8 @@ export default function GroupSearch () {
 
 const sortOptions = [
   { id: SORT_NAME, label: 'Group Name' },
-  { id: SORT_NEAREST, label: 'Nearest' },
-  { id: SORT_SIZE, label: 'Member Count' }
+  // { id: SORT_NEAREST, label: 'Nearest' },
+  // { id: SORT_SIZE, label: 'Member Count' }
 ]
 
 const makeDropdown = (selected, options, onChange) => (

@@ -72,6 +72,13 @@ const groupQuery = `query (
       avatarUrl
       bannerUrl
       name
+      settings {
+        allowGroupInvites
+        askGroupToGroupJoinQuestions
+        askJoinQuestions
+        publicMemberDirectory
+        showSuggestedSkills
+      }
       slug
       groupTopics(first: 8) {
         items {
