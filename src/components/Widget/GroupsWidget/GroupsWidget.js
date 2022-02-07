@@ -42,7 +42,7 @@ export default class GroupsWidget extends Component {
     return (
       <div styleName='groups'>
         <Slider {...sliderSettings}>
-          {items && items.map(group => <GroupCard group={group} routeParams={routeParams} />)}
+          {items && items.map(group => <GroupCard key={group.id} group={group} routeParams={routeParams} />)}
           <div styleName='createGroup'>
             <div>
               <Link to={createGroupUrl(routeParams)}>+ Create Group</Link>

@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapDrawer renders correctly (with min props) 1`] = `
+<ContextProvider>
+  <MapDrawer
+    context="groups"
+    currentUser={
+      Object {
+        "id": 1,
+      }
+    }
+    fetchPostsForDrawer={[Function]}
+    filters={
+      Object {
+        "search": "",
+        "sortBy": "name",
+        "topics": Array [],
+      }
+    }
+    groups={Array []}
+    members={Array []}
+    numFetchedPosts={0}
+    numTotalPosts={0}
+    onUpdateFilter={[Function]}
+    onUpdateFilters={[Function]}
+    pendingPostsDrawer={false}
+    posts={Array []}
+    routeParams={
+      Object {
+        "context": "groups",
+        "slug": "group one",
+      }
+    }
+    topics={Array []}
+  />
+</ContextProvider>
+`;
+
+exports[`MapDrawer renders correctly with lots of stuff 1`] = `
+<ContextProvider>
+  <MapDrawer
+    context="groups"
+    currentUser={
+      Object {
+        "id": 1,
+      }
+    }
+    fetchPostsForDrawer={[Function]}
+    filters={
+      Object {
+        "search": "",
+        "sortBy": "name",
+        "topics": Array [],
+      }
+    }
+    groups={
+      Array [
+        Object {
+          "avatarUrl": "https://google.com",
+          "description": "yo",
+          "id": 1,
+          "memberCount": 1,
+          "name": "group one",
+          "slug": "slug2",
+        },
+      ]
+    }
+    members={
+      Array [
+        Object {
+          "id": 2,
+          "name": "hello",
+        },
+      ]
+    }
+    numFetchedPosts={0}
+    numTotalPosts={0}
+    onUpdateFilter={[Function]}
+    onUpdateFilters={[Function]}
+    pendingPostsDrawer={false}
+    posts={
+      Array [
+        Object {
+          "id": 1,
+          "title": "Post",
+          "type": "request",
+        },
+      ]
+    }
+    routeParams={
+      Object {
+        "context": "groups",
+        "slug": "group one",
+      }
+    }
+    topics={Array []}
+  />
+</ContextProvider>
+`;

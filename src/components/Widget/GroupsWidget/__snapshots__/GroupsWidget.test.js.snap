@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupsWidget renders correctly (with min props) 1`] = `
+<div
+  data-stylename="groups"
+>
+  <Slider
+    arrows={true}
+    dots={true}
+    infinite={false}
+    responsive={
+      Array [
+        Object {
+          "breakpoint": 600,
+          "settings": Object {
+            "slidesToScroll": 1,
+            "slidesToShow": 1.1,
+          },
+        },
+      ]
+    }
+    slidesToScroll={1}
+    slidesToShow={2.1}
+    speed={500}
+  >
+    <div
+      data-stylename="createGroup"
+    >
+      <div>
+        <Link
+          to="/all/create/group"
+        >
+          + Create Group
+        </Link>
+      </div>
+    </div>
+  </Slider>
+  <div
+    data-stylename="groupBumper"
+  />
+</div>
+`;
+
+exports[`GroupsWidget renders correctly with items 1`] = `
+<div
+  data-stylename="groups"
+>
+  <Slider
+    arrows={true}
+    dots={true}
+    infinite={false}
+    responsive={
+      Array [
+        Object {
+          "breakpoint": 600,
+          "settings": Object {
+            "slidesToScroll": 1,
+            "slidesToShow": 1.1,
+          },
+        },
+      ]
+    }
+    slidesToScroll={1}
+    slidesToShow={2.1}
+    speed={500}
+  >
+    <GroupCard
+      group={
+        Object {
+          "avatarUrl": "https://google.com",
+          "description": "yo",
+          "id": 1,
+          "memberCount": 1,
+          "name": "group one",
+          "slug": "slug2",
+        }
+      }
+      key="1"
+      routeParams={
+        Object {
+          "context": "groups",
+          "slug": "group one",
+        }
+      }
+    />
+    <GroupCard
+      group={
+        Object {
+          "avatarUrl": "https://google.com",
+          "description": "oy",
+          "id": 2,
+          "memberCount": 10,
+          "name": "group 2",
+          "slug": "slug2",
+        }
+      }
+      key="2"
+      routeParams={
+        Object {
+          "context": "groups",
+          "slug": "group one",
+        }
+      }
+    />
+    <div
+      data-stylename="createGroup"
+    >
+      <div>
+        <Link
+          to="/all/create/group"
+        >
+          + Create Group
+        </Link>
+      </div>
+    </div>
+  </Slider>
+  <div
+    data-stylename="groupBumper"
+  />
+</div>
+`;
