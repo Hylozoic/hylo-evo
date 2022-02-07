@@ -15,9 +15,15 @@ export const mapDispatchToProps = (dispatch, props) => {
   const closeUrl = postId
     ? postUrl(postId, urlParams, querystringParams)
     : addQuerystringToPath(baseUrl(urlParams), querystringParams)
+  const closeModal = () => dispatch(push(closeUrl))
 
   return {
-    closeModal: () => dispatch(push(closeUrl))
+    closeModal,
+    confirmLeaveCreateModal: () => {
+      if (window.confirm(`Are you sure you want to exit? You will lose all the information you have entered`)) {
+        closeModal()
+      }
+    }
   }
 }
 

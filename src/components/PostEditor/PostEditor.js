@@ -81,7 +81,7 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ context, editing, currentGroup, post, topic, announcementSelected, postType }) => {
+  buildStateFromProps = ({ context, editing, currentGroup, post, topic, announcementSelected, postType, isDirty }) => {
     const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
       type: postType || PostEditor.defaultProps.post.type,
       groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
@@ -106,7 +106,8 @@ export default class PostEditor extends React.Component {
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
       titleLengthError: false,
-      dateError: false
+      dateError: false,
+      isDirty // prop tracking if form fields were touched from CreateModal
     }
   }
 
@@ -118,6 +119,7 @@ export default class PostEditor extends React.Component {
     this.editor = React.createRef()
     this.groupsSelector = React.createRef()
     this.topicSelector = React.createRef()
+    this.setIsDirty = props.setIsDirty
   }
 
   componentDidMount () {
@@ -210,6 +212,9 @@ export default class PostEditor extends React.Component {
       post: { ...this.state.post, title },
       valid: this.isValid({ title })
     })
+    if (title !== this.state.post.title) {
+      this.setIsDirty(true)
+    }
   }
 
   handleDetailsChange = (editorState, contentChanged) => {
@@ -217,6 +222,7 @@ export default class PostEditor extends React.Component {
       const contentState = editorState.getCurrentContent()
       this.setLinkPreview(contentState)
       this.updateTopics(contentState)
+      this.setIsDirty(true)
     }
   }
 
@@ -278,6 +284,8 @@ export default class PostEditor extends React.Component {
       this.setState({
         detailsTopics: topicNames.map(tn => ({ label: tn, name: tn, id: tn }))
       })
+      // TODO (Annie): figure out why topic changes don't update isDirty
+      this.setIsDirty(true)
     }
   })
 
@@ -293,6 +301,10 @@ export default class PostEditor extends React.Component {
       post: { ...this.state.post, groups },
       valid: this.isValid({ groups })
     })
+    const hasChanged = !isEqual(this.state.post.groups, groups)
+    if (hasChanged) {
+      this.setIsDirty(true)
+    }
   }
 
   togglePublic = () => {
