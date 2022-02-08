@@ -202,7 +202,7 @@ MapDrawer.defaultProps = {
 
 export default MapDrawer
 
-function TabBar ({ currentTab, tabs, selectTab, pendingPostsDrawer }) {
+export function TabBar ({ currentTab, tabs, selectTab, pendingPostsDrawer }) {
   return <ul styleName='tab-bar'>
     {Object.keys(tabs).map(name =>
       <li key={name}
