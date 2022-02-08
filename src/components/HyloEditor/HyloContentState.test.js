@@ -1,4 +1,3 @@
-import { convertFromRaw } from 'draft-js'
 import {
   toHTML,
   fromHTML

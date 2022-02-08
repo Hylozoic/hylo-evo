@@ -5,8 +5,6 @@ module.exports = function (api) {
   if (api) {
     console.log('Using Babel config with environment:', api.env())
     api.cache(true)
-  } else {
-    console.log('Referencing Babel config (not running Babel)')
   }
 
   const reactCSSModulesPlugin = [

@@ -78,7 +78,7 @@ export function fromHTML (html, { raw = false } = {}) {
   const convertor = convertFromHTML(
     {
       htmlToEntity: (nodeName, node, createEntity) => {
-        if (nodeName === 'a' && (node.getAttribute('data-entity-type') === MENTION_ENTITY_TYPE || node.getAttribute('data-user-id'))) {          
+        if (nodeName === 'a' && (node.getAttribute('data-entity-type') === MENTION_ENTITY_TYPE || node.getAttribute('data-user-id'))) {
           return mentionFromLink(createEntity, node)
         } else if (nodeName === 'a' && (node.getAttribute('data-entity-type') === TOPIC_ENTITY_TYPE || node.text[0] === '#')) {
           return topicFromLink(createEntity, node)
