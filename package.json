@@ -1,6 +1,6 @@
 {
   "name": "hylo-shared",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Code shared across Hylo applications for consistency of results",
   "repository": {
     "type": "git",
@@ -9,8 +9,8 @@
   "license": "AGPL-1.0",
   "author": {
     "name": "Hylo Devs",
-		"email": "dev@hylo.com",
-		"url": "https://hylo.com"
+    "email": "dev@hylo.com",
+    "url": "https://hylo.com"
   },
   "source": "src/index.js",
   "exports": {
