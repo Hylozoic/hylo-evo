@@ -7,7 +7,11 @@
     "url": "https://github.com/Hylozoic/hylo-shared.git"
   },
   "license": "AGPL-1.0",
-  "author": "",
+  "author": {
+    "name": "Hylo Devs",
+		"email": "dev@hylo.com",
+		"url": "https://hylo.com"
+  },
   "source": "src/index.js",
   "exports": {
     "require": "./dist/index.js",
@@ -19,13 +23,12 @@
   "scripts": {
     "build": "rm -fr dist/* && microbundle",
     "start": "rm -fr dist/* && microbundle watch",
+    "publish": "yarn build && npm publish",
     "start:native": "concurrently 'yarn start' 'wml start'",
     "test": "jest"
   },
   "dependencies": {
-    "buffer": "^6.0.3",
     "cheerio": "^1.0.0-rc.10",
-    "immutable": "^4.0.0",
     "insane": "^2.6.2",
     "linkify-plugin-hashtag": "^3.0.4",
     "linkify-string": "^3.0.4",
