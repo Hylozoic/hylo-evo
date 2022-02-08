@@ -20,6 +20,6 @@ export const HASHTAG_FULL_REGEX = /^#([A-Za-z][\w_-]+)$/
 export const MENTION_ENTITY_TYPE = 'mention'
 export const TOPIC_ENTITY_TYPE = '#mention'
 
-// When/if ReduxORM models become shared merge these back into Group model
+// When/if ReduxORM models become shared merge add these back into the Group model
 export const ALL_GROUPS_CONTEXT_SLUG = 'all'
 export const PUBLIC_CONTEXT_SLUG = 'public'

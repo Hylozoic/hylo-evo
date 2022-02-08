@@ -21,25 +21,25 @@ describe('sanitize', () => {
   it('removes tags not on a whitelist', () => {
     const expected = 'Wombats are great.<div>They poop square.</div>'
     const unsafe = 'Wombats are great.<em>So great.</em><div>They poop square.</div>'
-    const actual = TextHelpers.sanitize(unsafe, [ 'div' ])
+    const actual = TextHelpers.sanitize(unsafe, ['div'])
     expect(actual).toBe(expected)
   })
 
   it('removes attributes not on a whitelist', () => {
     const expected = '<p id="wombat-data">Wombats are great.</p>'
     const unsafe = '<p id="wombat-data" class="main-wombat">Wombats are great.</p>'
-    const actual = TextHelpers.sanitize(unsafe, [ 'p' ], { p: [ 'id' ] })
+    const actual = TextHelpers.sanitize(unsafe, ['p'], { p: ['id'] })
     expect(actual).toBe(expected)
   })
 })
 
 describe('markdown', () => {
   it('converts to markdown', () => {
-    expect(TextHelpers.markdown('*strong* **italic**')).toBe("<p><em>strong</em> <strong>italic</strong></p>\n")
+    expect(TextHelpers.markdown('*strong* **italic**')).toBe('<p><em>strong</em> <strong>italic</strong></p>\n')
   })
 
   it('sanitizes also', () => {
-    expect(TextHelpers.markdown('*strong* **italic** <i>aa</i>')).toBe("<p><em>strong</em> <strong>italic</strong> </p>\n")
+    expect(TextHelpers.markdown('*strong* **italic** <i>aa</i>')).toBe('<p><em>strong</em> <strong>italic</strong> </p>\n')
   })
 })
 

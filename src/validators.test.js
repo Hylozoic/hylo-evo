@@ -1,5 +1,7 @@
 import * as v from '../src/Validators'
 
+/* eslint-disable no-tabs */
+
 describe('hasDisallowedCharacters', () => {
   it('catches characters on the blacklist', () => {
     expect(v.hasDisallowedCharacters('#%')('flargle%wargle')).not.toBe(null)

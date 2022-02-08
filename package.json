@@ -27,6 +27,24 @@
     "start:native": "concurrently 'yarn start' 'wml start'",
     "test": "jest"
   },
+  "standard": {
+    "parser": "@babel/eslint-parser",
+    "global": [
+      "__DEV__",
+      "window",
+      "afterAll",
+      "afterEach",
+      "alert",
+      "beforeAll",
+      "beforeEach",
+      "expect",
+      "fetch",
+      "it",
+      "describe",
+      "jest",
+      "test"
+    ]
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
     "insane": "^2.6.2",

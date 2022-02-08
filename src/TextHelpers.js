@@ -5,16 +5,18 @@ import prettyDate from 'pretty-date'
 import moment from 'moment-timezone'
 import linkify from './linkify'
 
-export function sanitize (text, whitelist, attrWhitelist) {
+// Text presentation related
+
+export function sanitize (text, allowedTags, allowedAttributes) {
   if (!text) return ''
-  if (whitelist && !Array.isArray(whitelist)) return ''
+  if (allowedTags && !Array.isArray(allowedTags)) return ''
 
   // remove leading &nbsp; (a side-effect of contenteditable)
   const strippedText = text.replace(/<p>&nbsp;/gi, '<p>')
 
   return insane(strippedText, {
-    allowedTags: whitelist || ['a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'ul' ],
-    allowedAttributes: attrWhitelist || {
+    allowedTags: allowedTags || ['a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'ul'],
+    allowedAttributes: allowedAttributes || {
       a: ['href', 'data-user-id', 'data-entity-type', 'target']
     }
   })
@@ -52,6 +54,8 @@ export const markdown = text => {
 export function textLength (html) {
   return html.replace(/<[^>]+>/g, '').length
 }
+
+// Date string related
 
 export function humanDate (date, short) {
   const isString = typeof date === 'string'

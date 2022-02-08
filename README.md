@@ -1,5 +1,6 @@
 # HyloShared - Hylo shared modules
 
+The purpose of this library is the sharing of critical code between the Hylo Web and Mobile front-ends and the backend. A primary focus at this time is text handling to ensure consistency of storage and presentation across the apps.
 ## For Development
 
 1. Edit code in `src/` and build using `yarn build` (or `yarn start` to continuously build)
