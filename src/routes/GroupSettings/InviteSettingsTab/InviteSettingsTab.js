@@ -4,7 +4,7 @@ import Button from 'components/Button'
 import Loading from 'components/Loading'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { humanDate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import { isEmpty } from 'lodash'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Icon from 'components/Icon'
@@ -224,7 +224,7 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
                   <div styleName='styles.row' key={invite.id}>
                     <div style={{ flex: 1 }}>
                       <span>{invite.email}</span>
-                      <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
+                      <span styleName='styles.invite-date'>{TextHelpers.humanDate(invite.lastSentAt)}</span>
                     </div>
                     <div styleName='styles.invite-actions'>
                       <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>

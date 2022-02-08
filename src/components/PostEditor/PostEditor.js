@@ -5,10 +5,10 @@ import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
-import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import * as HyloContentState from 'components/HyloEditor/HyloContentState'
+import { TOPIC_ENTITY_TYPE } from 'hylo-shared'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
-import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
 import RoundImage from 'components/RoundImage'
@@ -25,6 +25,7 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+
 export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
@@ -264,11 +265,11 @@ export default class PostEditor extends React.Component {
     if (!contentState.hasText() && linkPreviewStatus) return clearLinkPreview()
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
     if (linkPreview) return
-    pollingFetchLinkPreview(contentStateToHTML(contentState))
+    pollingFetchLinkPreview(HyloContentState.toHTML(contentState))
   }
 
   updateTopics = throttle(2000, (contentState) => {
-    const html = contentStateToHTML(contentState)
+    const html = HyloContentState.toHTML(contentState)
     const $ = cheerio.load(html, null, false)
     var topicNames = []
     $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
@@ -405,9 +406,9 @@ export default class PostEditor extends React.Component {
           <div>
             <Button {...this.postTypeButtonProps(type)} />
             {showPostTypeMenu && <div styleName='postTypeMenu'>
-              {postTypes.filter(postType => postType !== type).map(postType =>
+              {postTypes.filter(postType => postType !== type).map(postType => (
                 <Button {...this.postTypeButtonProps(postType)} />
-              )}
+              ))}
             </div>}
           </div>
         </div>
@@ -429,8 +430,11 @@ export default class PostEditor extends React.Component {
             onChange={this.handleTitleChange}
             disabled={loading}
             ref={this.titleInput}
-            maxLength={MAX_TITLE_LENGTH} />
-          {titleLengthError && <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>}
+            maxLength={MAX_TITLE_LENGTH}
+          />
+          {titleLengthError && (
+            <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>
+          )}
           <HyloEditor
             styleName='editor'
             placeholder={detailPlaceholder}
@@ -442,22 +446,25 @@ export default class PostEditor extends React.Component {
           />
         </div>
       </div>
-      {linkPreview &&
-        <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />}
+      {linkPreview && (
+        <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />
+      )}
       <AttachmentManager type='post' id={id} attachmentType='image' showAddButton showLabel showLoading />
       <AttachmentManager type='post' id={id} attachmentType='file' showAddButton showLabel showLoading />
       <div styleName='footer'>
-        {isProject && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Project Members</div>
-          <div styleName='footerSection-groups'>
-            <MemberSelector
-              initialMembers={members || []}
-              onChange={this.updateProjectMembers}
-              forGroups={groups}
-              readOnly={loading}
-            />
+        {isProject && (
+          <div styleName='footerSection'>
+            <div styleName='footerSection-label'>Project Members</div>
+            <div styleName='footerSection-groups'>
+              <MemberSelector
+                initialMembers={members || []}
+                onChange={this.updateProjectMembers}
+                forGroups={groups}
+                readOnly={loading}
+              />
+            </div>
           </div>
-        </div>}
+        )}
         <div styleName='footerSection'>
           <div styleName='footerSection-label'>Topics</div>
           <div styleName='footerSection-topics'>
@@ -482,46 +489,56 @@ export default class PostEditor extends React.Component {
           </div>
         </div>
         <PublicToggle togglePublic={this.togglePublic} isPublic={!!post.isPublic} />
-        {canHaveTimes && dateError && <span styleName='title-error'>{'End Time must be after Start Time'}</span>}
-        {canHaveTimes && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Timeframe</div>
-          <div styleName='datePickerModule'>
-            <DatePicker value={startTime} placeholder={'Select Start'} onChange={this.handleStartTimeChange} />
-            <div styleName='footerSection-helper'>To</div>
-            <DatePicker value={endTime} placeholder={'Select End'} onChange={this.handleEndTimeChange} />
+        {(canHaveTimes && dateError) && (
+          <span styleName='title-error'>{'End Time must be after Start Time'}</span>
+        )}
+        {canHaveTimes && (
+          <div styleName='footerSection'>
+            <div styleName='footerSection-label'>Timeframe</div>
+            <div styleName='datePickerModule'>
+              <DatePicker value={startTime} placeholder={'Select Start'} onChange={this.handleStartTimeChange} />
+              <div styleName='footerSection-helper'>To</div>
+              <DatePicker value={endTime} placeholder={'Select End'} onChange={this.handleEndTimeChange} />
+            </div>
           </div>
-        </div>}
-        {hasLocation && <div styleName='footerSection'>
-          <div styleName='footerSection-label alignedLabel'>Location</div>
-          <LocationInput
-            saveLocationToDB
-            locationObject={curLocation}
-            location={location}
-            onChange={this.handleLocationChange}
-            placeholder={`Where is your ${type} located?`}
-          />
-        </div>}
-        {isEvent && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Invite People</div>
-          <div styleName='footerSection-groups'>
-            <MemberSelector
-              initialMembers={eventInvitations || []}
-              onChange={this.updateEventInvitations}
-              forGroups={groups}
-              readOnly={loading}
+        )}
+        {hasLocation && (
+          <div styleName='footerSection'>
+            <div styleName='footerSection-label alignedLabel'>Location</div>
+            <LocationInput
+              saveLocationToDB
+              locationObject={curLocation}
+              location={location}
+              onChange={this.handleLocationChange}
+              placeholder={`Where is your ${type} located?`}
             />
           </div>
-        </div>}
-        {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Accept Contributions</div>
-          {hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions')}>
-            <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
-            {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
-          </div>}
-          {!hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions-help')}>
-            To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
-          </div>}
-        </div>}
+        )}
+        {isEvent && (
+          <div styleName='footerSection'>
+            <div styleName='footerSection-label'>Invite People</div>
+            <div styleName='footerSection-groups'>
+              <MemberSelector
+                initialMembers={eventInvitations || []}
+                onChange={this.updateEventInvitations}
+                forGroups={groups}
+                readOnly={loading}
+              />
+            </div>
+          </div>
+        )}
+        {(isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS)) && (
+          <div styleName='footerSection'>
+            <div styleName='footerSection-label'>Accept Contributions</div>
+            {hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions')}>
+              <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
+              {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
+            </div>}
+            {!hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions-help')}>
+              To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
+            </div>}
+          </div>
+        )}
         <ActionsBar
           id={id}
           addAttachment={addAttachment}
@@ -589,26 +606,29 @@ export function ActionsBar ({
           styleName={cx('action-icon', { 'highlight-icon': showFiles })}
         />
       </UploadAttachmentButton>
-      {canModerate && <span data-tip='Send Announcement' data-for='announcement-tt'>
-        <Icon
-          name='Announcement'
-          onClick={() => setAnnouncement(!announcementSelected)}
-          styleName={cx('action-icon', { 'highlight-icon': announcementSelected })}
+      {canModerate && (
+        <span data-tip='Send Announcement' data-for='announcement-tt'>
+          <Icon
+            name='Announcement'
+            onClick={() => setAnnouncement(!announcementSelected)}
+            styleName={cx('action-icon', { 'highlight-icon': announcementSelected })}
+          />
+          <ReactTooltip
+            effect={'solid'}
+            delayShow={550}
+            id='announcement-tt'
+          />
+        </span>
+      )}
+      {showAnnouncementModal && (
+        <SendAnnouncementModal
+          closeModal={toggleAnnouncementModal}
+          save={save}
+          groupCount={groupCount}
+          myModeratedGroups={myModeratedGroups}
+          groups={groups}
         />
-        <ReactTooltip
-          effect={'solid'}
-          delayShow={550}
-          id='announcement-tt'
-        />
-      </span>}
-      {showAnnouncementModal && <SendAnnouncementModal
-        closeModal={toggleAnnouncementModal}
-        save={save}
-        groupCount={groupCount}
-        myModeratedGroups={myModeratedGroups}
-        groups={groups}
-      />}
-
+      )}
     </div>
     <Button
       onClick={announcementSelected ? toggleAnnouncementModal : save}

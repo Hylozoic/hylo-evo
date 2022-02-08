@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
-import { sanitize } from 'hylo-utils/text'
-import { validateTopicName } from 'hylo-utils/validators'
+import { TextHelpers, Validators } from 'hylo-shared'
 import { topicUrl } from 'util/navigation'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -82,7 +81,7 @@ export default class CreateTopic extends Component {
     })
   }
 
-  safeTopicName = () => sanitize(trim(this.ignoreHash(this.state.topicName)))
+  safeTopicName = () => TextHelpers.sanitize(trim(this.ignoreHash(this.state.topicName)))
 
   submitButtonAction = () => {
     const {
@@ -141,7 +140,7 @@ export default class CreateTopic extends Component {
   }
 
   validate = debounce(500, name => this.setState({
-    nameError: validateTopicName(this.ignoreHash(name))
+    nameError: Validators.validateTopicName(this.ignoreHash(name))
   }))
 
   render () {

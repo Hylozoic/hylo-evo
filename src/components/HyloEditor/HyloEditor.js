@@ -3,17 +3,17 @@ import React, { Component } from 'react'
 import Editor from '@draft-js-plugins/editor'
 import createMentionPlugin from '@draft-js-plugins/mention'
 import createLinkifyPlugin from '@draft-js-plugins/linkify'
-import { EditorState, ContentState, convertToRaw } from 'draft-js'
+import { EditorState } from 'draft-js'
+import { Validators } from 'hylo-shared'
+import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import cx from 'classnames'
-import contentStateToHTML from './contentStateToHTML'
-import contentStateFromHTML from './contentStateFromHTML'
-import 'draft-js/dist/Draft.css'
-import { validateTopicName } from 'hylo-utils/validators'
 import styles from './HyloEditor.scss'
+import 'draft-js/dist/Draft.css'
 
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
+    contentStateRaw: PropTypes.object,
     placeholder: PropTypes.string,
     className: PropTypes.string,
     submitOnReturnHandler: PropTypes.func,
@@ -28,7 +28,8 @@ export default class HyloEditor extends Component {
   }
 
   static defaultProps = {
-    contentHTML: '',
+    contentHTML: null,
+    contentStateRaw: null,
     readOnly: false,
     mentionResults: [],
     topicResults: [],
@@ -51,9 +52,11 @@ export default class HyloEditor extends Component {
     }
   }
 
-  defaultState = ({ contentHTML }) => {
+  defaultState = ({ contentStateRaw, contentHTML }) => {
     return {
-      editorState: this.getEditorStateFromHTML(contentHTML),
+      editorState: contentStateRaw
+        ? this.getEditorStateFromContentStateRaw(contentStateRaw)
+        : this.getEditorStateFromHTML(contentHTML),
       didInitialFocus: false,
       submitOnReturnEnabled: true,
       mentionsOpen: false,
@@ -87,7 +90,10 @@ export default class HyloEditor extends Component {
 
   componentDidUpdate (prevProps) {
     // regenerate state from content if HTML changes
-    if (this.props.contentHTML !== prevProps.contentHTML) {
+    if (
+      this.props.contentHTML !== prevProps.contentHTML ||
+      this.props.contentStateRaw !== prevProps.contentStateRaw
+    ) {
       this.setState(this.defaultState(this.props))
     }
 
@@ -107,10 +113,18 @@ export default class HyloEditor extends Component {
   isEmpty = () =>
     !this.state.editorState.getCurrentContent().hasText()
 
+  getEditorStateFromContentStateRaw = (contentStateRaw) => {
+    const contentState = HyloContentState.fromRaw(contentStateRaw)
+    // Don't create new EditorState once one has already been created as per:
+    // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
+    return this.state && this.state.editorState
+      ? EditorState.push(this.state.editorState, contentState)
+      : EditorState.createWithContent(contentState)
+  }
+
   getEditorStateFromHTML = (contentHTML) => {
-    const contentState = contentStateFromHTML(
-      ContentState.createFromText(''), contentHTML
-    )
+    if (!contentHTML) return EditorState.createEmpty()
+    const contentState = HyloContentState.fromHTML(contentHTML, { raw: false })
     // Don't create new EditorState once one has already been created as per:
     // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     return this.state && this.state.editorState
@@ -120,12 +134,12 @@ export default class HyloEditor extends Component {
 
   getContentHTML = () => {
     const { editorState } = this.state
-    return contentStateToHTML(editorState.getCurrentContent())
+    return HyloContentState.toHTML(editorState.getCurrentContent())
   }
 
   getContentRaw = () => {
     const { editorState } = this.state
-    return convertToRaw(editorState.getCurrentContent())
+    return HyloContentState.toRaw(editorState.getCurrentContent())
   }
 
   setEditorStateFromContentState = (contentState) => {
@@ -204,7 +218,7 @@ export default class HyloEditor extends Component {
     ]
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
     const { topicSearch, mentionsOpen, topicsOpen } = this.state
-    const topicSuggestions = !validateTopicName(topicSearch)
+    const topicSuggestions = !Validators.validateTopicName(topicSearch)
       ? [{ id: -1, name: topicSearch }].concat(topicResults)
       : topicResults
     const { editorState } = this.state

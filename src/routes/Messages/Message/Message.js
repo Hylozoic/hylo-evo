@@ -3,13 +3,13 @@ import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
 import { personUrl } from 'util/navigation'
-import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import './Message.scss'
 
 export default function Message ({ message, isHeader }) {
   const person = message.creator
   const pending = message.id.slice(0, 13) === 'messageThread'
-  let text = present(sanitize(message.text).replace(/\n/g, '<br />'), { noP: true })
+  let text = TextHelpers.present(TextHelpers.sanitize(message.text).replace(/\n/g, '<br />'), { noP: true })
   const sName = cx('message', { messageHeader: isHeader })
 
   return <div styleName={sName}
@@ -19,8 +19,8 @@ export default function Message ({ message, isHeader }) {
     </div>
     <div styleName='content'>
       {isHeader && <div>
-        <span styleName='name'>{sanitize(person.name)}</span>
-        <span styleName='date'>{pending ? 'sending...' : humanDate(message.createdAt)}</span>
+        <span styleName='name'>{TextHelpers.sanitize(person.name)}</span>
+        <span styleName='date'>{pending ? 'sending...' : TextHelpers.humanDate(message.createdAt)}</span>
       </div>}
       <div styleName='text'>
         <span dangerouslySetInnerHTML={{ __html: text }} />

@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import { filter, isEmpty, isFunction } from 'lodash/fp'
-import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
+import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import { personUrl } from 'util/navigation'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
@@ -12,10 +13,10 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloEditor from 'components/HyloEditor'
-import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
+
 import './Comment.scss'
 
 const { object, func } = PropTypes
@@ -48,7 +49,7 @@ export class Comment extends Component {
     }
 
     this.setState({ editing: false })
-    this.props.updateComment(comment.id, contentStateToHTML(editorState.getCurrentContent()))
+    this.props.updateComment(comment.id, HyloContentState.toHTML(editorState.getCurrentContent()))
   }
 
   render () {
@@ -56,7 +57,7 @@ export class Comment extends Component {
     const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
     const profileUrl = personUrl(creator.id, slug)
-    const presentedText = present(sanitize(text), { slug })
+    const presentedText = TextHelpers.present(TextHelpers.sanitize(text), { slug })
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
@@ -72,7 +73,7 @@ export class Comment extends Component {
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
           <span styleName='timestamp'>
             {editing && 'Editing now'}
-            {!editing && humanDate(createdAt)}
+            {!editing && TextHelpers.humanDate(createdAt)}
           </span>
           <div styleName='upperRight'>
             <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
@@ -84,13 +85,18 @@ export class Comment extends Component {
         <CardImageAttachments attachments={attachments} linked styleName='images' />
         <CardFileAttachments attachments={attachments} styleName='files' />
         <ClickCatcher>
-          {editing && <HyloEditor
-            styleName='editor'
-            onChange={this.startTyping}
-            contentHTML={text}
-            parentComponent={'CommentForm'}
-            submitOnReturnHandler={this.saveComment} />}
-          {!editing && <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />}
+          {editing && (
+            <HyloEditor
+              styleName='editor'
+              onChange={this.startTyping}
+              contentHTML={text || ''}
+              parentComponent={'CommentForm'}
+              submitOnReturnHandler={this.saveComment}
+            />
+          )}
+          {!editing && (
+            <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
+          )}
         </ClickCatcher>
       </div>
     )

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './NotificationsDropdown.scss'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
@@ -140,7 +140,7 @@ export function Notification ({ notification, onClick }) {
     <div styleName='content'>
       <NotificationHeader notification={notification} />
       <NotificationBody notification={notification} />
-      <div styleName='date'>{humanDate(notification.createdAt)}</div>
+      <div styleName='date'>{TextHelpers.humanDate(notification.createdAt)}</div>
     </div>
   </li>
 }
@@ -222,7 +222,7 @@ export function NotificationBody ({ notification }) {
   const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
 
   const truncateForBody = text =>
-    text && textLength(text) > 76 ? truncate(text, 76) : text
+    text && TextHelpers.textLength(text) > 76 ? TextHelpers.truncate(text, 76) : text
 
   switch (action) {
     case ACTION_NEW_COMMENT:

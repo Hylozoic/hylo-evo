@@ -1,6 +1,5 @@
 import { get } from 'lodash/fp'
-import { textLength } from 'hylo-utils/text'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { TextHelpers, AnalyticsEvents } from 'hylo-shared'
 import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 import { CREATE_PROJECT } from 'store/constants'
 
@@ -70,7 +69,7 @@ export default function createProject (postParams) {
       },
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
-        detailsLength: textLength(details),
+        detailsLength: TextHelpers.textLength(details),
         isAnnouncement: sendAnnouncement
       }
     }

@@ -5,7 +5,7 @@ import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import { newMessageUrl, messageThreadUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
@@ -127,8 +127,8 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessage
 
   var displayText = lastMessageCreator(message, currentUser, participants) + message.text
 
-  if (textLength(displayText) > maxMessageLength) {
-    displayText = `${truncate(displayText, maxMessageLength)}...`
+  if (TextHelpers.textLength(displayText) > maxMessageLength) {
+    displayText = `${TextHelpers.truncate(displayText, maxMessageLength)}...`
   }
 
   return <li styleName={cx('thread', { unread: isUnread(thread) })}
@@ -139,7 +139,7 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessage
     <div styleName='message-content'>
       <div styleName='name'>{names}</div>
       <div styleName='body'>{displayText}</div>
-      <div styleName='date'>{humanDate(thread.updatedAt)}</div>
+      <div styleName='date'>{TextHelpers.humanDate(thread.updatedAt)}</div>
     </div>
   </li>
 }

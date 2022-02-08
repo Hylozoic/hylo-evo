@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get, isEmpty, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
-import { humanDate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import Badge from 'components/Badge'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -116,7 +116,7 @@ export function ThreadListItem ({
         <div styleName='thread-message-text'>{text}</div>
       </div>
       <div styleName='li-right-content'>
-        <div styleName='message-time'>{humanDate(get('createdAt', latestMessage))}</div>
+        <div styleName='message-time'>{TextHelpers.humanDate(get('createdAt', latestMessage))}</div>
         {unreadCount > 0 && <Badge number={unreadCount} expanded />}
       </div>
     </Link>

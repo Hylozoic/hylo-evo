@@ -1,6 +1,6 @@
 import React from 'react'
 import { pick, get } from 'lodash/fp'
-import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -12,7 +12,7 @@ import './PostDetails.scss'
 const maxDetailsLength = 144
 
 export default function PostDetails ({
-  details,
+  details: providedDetails,
   linkPreview,
   slug,
   constrained,
@@ -25,9 +25,9 @@ export default function PostDetails ({
   canEdit,
   ...post
 }) {
-  details = present(sanitize(details), { slug })
-  if (!expanded && textLength(details) > maxDetailsLength) {
-    details = truncate(details, maxDetailsLength)
+  let details = TextHelpers.present(TextHelpers.sanitize(providedDetails), { slug })
+  if (!expanded && TextHelpers.textLength(details) > maxDetailsLength) {
+    details = TextHelpers.truncate(details, maxDetailsLength)
   }
 
   const postType = get('type', post)

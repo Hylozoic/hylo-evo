@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AsyncCreatableSelect from 'react-select/async-creatable'
 import styles from './TopicSelector.scss'
 import { isEmpty, uniqBy, sortBy } from 'lodash/fp'
-import { validateTopicName } from 'hylo-utils/validators'
+import { Validators } from 'hylo-shared'
 import Icon from 'components/Icon'
 
 const MAX_TOPICS = 3
@@ -98,7 +98,7 @@ export default class TopicSelector extends Component {
 
   handleTopicsChange = (newTopics, action) => {
     let topics = newTopics || []
-    topics = topics.filter(t => !validateTopicName(t.name))
+    topics = topics.filter(t => !Validators.validateTopicName(t.name))
     if (topics.length <= MAX_TOPICS) {
       this.setState({
         selected: topics || [],

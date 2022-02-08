@@ -284,6 +284,7 @@ describe('PostEditor', () => {
       }
       contentStateMock = {
         getBlockMap: () => ([]),
+        getEntityMap: () => ({}),
         hasText: () => true
       }
     })
