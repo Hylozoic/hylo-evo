@@ -49,6 +49,10 @@ export const markdown = text => {
   )
 }
 
+export function textLength (html) {
+  return html.replace(/<[^>]+>/g, '').length
+}
+
 export function humanDate (date, short) {
   const isString = typeof date === 'string'
   const isValidDate = !isNaN(Number(date)) && Number(date) !== 0
