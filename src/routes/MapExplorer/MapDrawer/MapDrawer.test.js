@@ -1,13 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
+import * as LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+
 import MapDrawer from './MapDrawer'
 
 const defaultMinProps = {
   context: 'groups',
   currentUser: { id: 1 },
   fetchPostsForDrawer: () => {},
-  filters: { search: '', sortBy: 'name', topics: []},
+  filters: { search: '', sortBy: 'updated', topics: []},
   groups: [],
   members: [],
   numFetchedPosts: 0,
@@ -21,11 +22,15 @@ const defaultMinProps = {
 
 function renderComponent (renderFunc, props = {}) {
   return renderFunc(
-      <LayoutFlagsProvider><MapDrawer {...{ ...defaultMinProps, ...props }} /></LayoutFlagsProvider>
+    <MapDrawer {...{ ...defaultMinProps, ...props }} />
   )
 }
 
 describe('MapDrawer', () => {
+  beforeAll(() => {
+    jest.spyOn(LayoutFlagsContext, 'useLayoutFlags').mockImplementation(() => ({}))
+  })
+
   it('renders correctly (with min props)', () => {
     const wrapper = renderComponent(shallow)
     expect(wrapper).toMatchSnapshot()
