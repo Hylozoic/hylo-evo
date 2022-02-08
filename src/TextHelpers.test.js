@@ -1,58 +1,6 @@
 import * as TextHelpers from '../src/TextHelpers'
 import moment from 'moment-timezone'
 
-describe('threadNames', () => {
-  it('handles single name correctly', () => {
-    const expected = 'Constantine'
-    const actual = TextHelpers.threadNames([ 'Constantine' ])
-    expect(actual).toBe(expected)
-  })
-
-  it('handles two names correctly', () => {
-    const expected = 'Constantine & Bartholemew'
-    const actual = TextHelpers.threadNames([ 'Constantine', 'Bartholemew' ])
-    expect(actual).toBe(expected)
-  })
-
-  it('handles nine names correctly', () => {
-    const expected = 'Constantine & 8 others'
-    const actual = TextHelpers.threadNames([
-      'Constantine',
-      'Bartholemew',
-      'Gertrude',
-      'Hortense',
-      'Abner',
-      'Zachariah',
-      'Philomena',
-      'Zebediah',
-      'Augustus'
-    ])
-    expect(actual).toBe(expected)
-  })
-})
-
-describe('divToP', () => {
-  it('converts div to p', () => {
-    const expected = 'Wombats are great.<p>They poop square.</p>'
-    const unsafe = 'Wombats are great.<div>They poop square.</div>'
-    const actual = TextHelpers.divToP(unsafe)
-    expect(actual).toBe(expected)
-  })
-
-  it('ignores strings where div is not present', () => {
-    const expected = '<p>I have divulged that you are divine.</p>'
-    const actual = TextHelpers.divToP(expected)
-    expect(actual).toBe(expected)
-  })
-
-  it('does not remove child tags of a div', () => {
-    const expected = 'Wombats are great.<p>They <em>poop</em> square.</p>'
-    const unsafe = 'Wombats are great.<div>They <em>poop</em> square.</div>'
-    const actual = TextHelpers.divToP(unsafe)
-    expect(actual).toBe(expected)
-  })
-})
-
 describe('sanitize', () => {
   it('returns empty string if called without text', () => {
     expect(TextHelpers.sanitize()).toBe('')
