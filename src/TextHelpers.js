@@ -1,8 +1,9 @@
 import { marked } from 'marked'
 import insane from 'insane'
 import truncHtml from 'trunc-html'
-import linkify from './linkify'
 import prettyDate from 'pretty-date'
+import moment from 'moment-timezone'
+import linkify from './linkify'
 
 export function sanitize (text, whitelist, attrWhitelist) {
   if (!text) return ''
@@ -74,4 +75,40 @@ export function humanDate (date, short) {
     .replace(/ days?/, 'd')
     .replace(/ weeks?/, 'w')
     .replace(/ month(s?)/, ' mo$1')
+}
+
+export const formatDatePair = (startTime, endTime, returnAsObj) => {
+  const start = moment.tz(startTime, moment.tz.guess())
+  const end = moment.tz(endTime, moment.tz.guess())
+
+  const now = moment()
+  const isThisYear = start.year() === now.year() && end.year() === now.year()
+
+  let to = ''
+  let from = ''
+
+  if (isThisYear) {
+    from = endTime ? start.format('ddd, MMM D [at] h:mmA') : start.format('ddd, MMM D [at] h:mmA z')
+  } else {
+    from = endTime ? start.format('ddd, MMM D, YYYY [at] h:mmA') : start.format('ddd, MMM D, YYYY [at] h:mmA z')
+  }
+
+  if (endTime) {
+    if (end.year() !== start.year()) {
+      to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
+    } else if (end.month() !== start.month() ||
+               end.day() !== start.day() ||
+               end <= now) {
+      to = end.format('ddd, MMM D [at] h:mmA z')
+    } else {
+      to = end.format('h:mmA z')
+    }
+    to = returnAsObj ? to : ' - ' + to
+  }
+
+  return returnAsObj ? { from, to } : from + to
+}
+
+export function isDateInTheFuture (date) {
+  return moment(date).isAfter(moment())
 }

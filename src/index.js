@@ -1,4 +1,4 @@
+export * as TextHelpers from './TextHelpers'
+export * as PathHelpers from './PathHelpers'
+export * as Validators from './Validators'
 export * from './constants'
-export * as text from './text'
-export * as validators from './validators'
-export * as contentState from './contentState'

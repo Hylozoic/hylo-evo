@@ -3,24 +3,9 @@ import cheerio from 'cheerio'
 import linkifyString from 'linkify-string'
 import 'linkify-plugin-hashtag'
 import { HASHTAG_FULL_REGEX } from './constants'
+import { topicPath, mentionPath } from './PathHelpers'
 
 const MAX_LINK_LENGTH = 48
-
-function tagUrl (tagName, slug) {
-  if (slug) {
-    return `/c/${slug}/tag/${tagName}`
-  } else {
-    return `/tag/${tagName}`
-  }
-}
-
-function mentionUrl (memberId, slug) {
-  if (slug) {
-    return `/c/${slug}/m/${memberId}`
-  } else {
-    return `/m/${memberId}`
-  }
-}
 
 function linkifyjsOptions (slug) {
   return {
@@ -31,7 +16,7 @@ function linkifyjsOptions (slug) {
           : value
     },
     formatHref: {
-      hashtag: href => tagUrl(href.substring(1), slug)
+      hashtag: href => topicPath(href.substring(1), slug)
     },
     attributes: (href, type) => (
       type === 'hashtag'
@@ -62,12 +47,12 @@ function cleanupLink ($, el, slug) {
   const text = $el.text()
   if ($el.data('entity-type') === 'mention') {
     const memberId = $el.data('user-id')
-    $el.attr('href', mentionUrl(memberId, slug))
+    $el.attr('href', mentionPath(memberId, slug))
     $el.attr('class', 'mention')
   } else {
     const match = text.match(HASHTAG_FULL_REGEX)
     if (match) {
-      $el.attr('href', tagUrl(match[1], slug))
+      $el.attr('href', topicPath(match[1], slug))
       $el.attr('data-search', match[0])
       $el.attr('class', 'hashtag')
     }
@@ -83,7 +68,6 @@ function cleanupLink ($, el, slug) {
 // tags in it. it does so by generating a DOM from the text and linkifying only
 // text nodes that aren't inside A tags.
 export default function linkify (text, slug) {
-  // return linkifyHTML(text, linkifyjsOptions(slug))
   const $ = cheerio.load(text, null, false)
   // caveat: this isn't intended to handle arbitrarily complex html
   const run = node =>

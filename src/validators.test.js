@@ -1,4 +1,4 @@
-import * as v from '../src/validators'
+import * as v from '../src/Validators'
 
 describe('hasDisallowedCharacters', () => {
   it('catches characters on the blacklist', () => {
