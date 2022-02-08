@@ -10,11 +10,13 @@ posts: viewPosts(
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
+  isFulfilled: $isFulfilled,
   offset: $offset,
   order: $order,
   sortBy: $sortBy,
   search: $search,
-  topic: $topic
+  topic: $topic,
+  topics: $topics
 ) {
   hasMore
   total

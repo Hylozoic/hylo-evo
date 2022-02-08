@@ -57,12 +57,14 @@ const groupQuery = `query (
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $slug: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -89,11 +91,13 @@ const postsQuery = `query (
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID,
+  $topics: [ID]
 ) {
   ${postsQueryFragment}
 }`

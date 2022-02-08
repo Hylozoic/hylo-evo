@@ -118,15 +118,15 @@ export function deleteSearch (id) {
   }
 }
 
-export function saveSearch ({ boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }) {
+export function saveSearch ({ boundingBox, groupSlug, context, name, postTypes, searchText, topicIds, userId }) {
   return {
     type: SAVE_SEARCH,
     graphql: {
       query: CreateSavedSearchMutation,
-      variables: { boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }
+      variables: { boundingBox, groupSlug, context, name, postTypes, searchText, topicIds, userId }
     },
     meta: {
-      boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId, optimistic: true
+      boundingBox, groupSlug, context, name, postTypes, searchText, topicIds, userId, optimistic: true
     }
   }
 }

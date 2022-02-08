@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapExplorer Matches Snapshot 1`] = `
+<UnwrappedMapExplorer
+  centerLocation={
+    Object {
+      "lat": 35.442845,
+      "lng": 7.916598,
+    }
+  }
+  fetchPosts={[MockFunction]}
+  fetchSavedSearches={[MockFunction]}
+  filters={
+    Object {
+      "featureTypes": Object {
+        "offer": true,
+        "request": true,
+      },
+    }
+  }
+  groups={Array []}
+  hideDrawer={false}
+  match={
+    Object {
+      "params": Object {},
+    }
+  }
+  members={Array []}
+  postsForDrawer={Array []}
+  postsForMap={Array []}
+  routeParams={Object {}}
+  storeFetchPostsParam={[MockFunction]}
+  topics={Array []}
+  zoom={0}
+/>
+`;
