@@ -1991,7 +1991,7 @@ exports[`PostEditor renders contribution button 1`] = `
         <div
           data-stylename="accept-contributions-help"
         >
-          If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.
+          If you turn 'Accept Contributions' on, people will be able to send money to your Stripe connected account to support this project.
         </div>
       </div>
     </div>
