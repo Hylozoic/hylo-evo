@@ -3,12 +3,27 @@ import React, { Component } from 'react'
 import Editor from '@draft-js-plugins/editor'
 import createMentionPlugin from '@draft-js-plugins/mention'
 import createLinkifyPlugin from '@draft-js-plugins/linkify'
+import createToolbarPlugin, { Separator } from '@draft-js-plugins/static-toolbar'
 import { EditorState } from 'draft-js'
 import { Validators } from 'hylo-shared'
 import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import cx from 'classnames'
 import styles from './HyloEditor.scss'
 import 'draft-js/dist/Draft.css'
+import '@draft-js-plugins/static-toolbar/lib/plugin.css'
+import {
+  ItalicButton,
+  BoldButton,
+  // UnderlineButton,
+  // CodeButton,
+  // HeadlineOneButton,
+  // HeadlineTwoButton,
+  // HeadlineThreeButton,
+  UnorderedListButton
+  // OrderedListButton,
+  // BlockquoteButton,
+  // CodeBlockButton,
+} from '@draft-js-plugins/buttons'
 
 export default class HyloEditor extends Component {
   static propTypes = {
@@ -84,8 +99,12 @@ export default class HyloEditor extends Component {
       }
     })
     this._linkifyPlugin = createLinkifyPlugin()
+    this._toolbarPlugin = createToolbarPlugin({
+      // theme: { buttonStyles, toolbarStyles }
+    })
     this.editor = React.createRef()
     this.state = this.defaultState(props)
+    this.Toolbar = this._toolbarPlugin?.Toolbar
   }
 
   componentDidUpdate (prevProps) {
@@ -164,7 +183,7 @@ export default class HyloEditor extends Component {
     return this.props.findTopics(value)
   }
 
-  handleReturn = (event) => {
+  onHandleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
     const { editorState } = this.state
     if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
@@ -211,10 +230,12 @@ export default class HyloEditor extends Component {
   render () {
     const { MentionSuggestions } = this._mentionsPlugin
     const { MentionSuggestions: TopicSuggestions } = this._topicsPlugin
+    const Toolbar = this.Toolbar
     const plugins = [
       this._mentionsPlugin,
       this._topicsPlugin,
-      this._linkifyPlugin
+      this._linkifyPlugin,
+      this._toolbarPlugin
     ]
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
     const { topicSearch, mentionsOpen, topicsOpen } = this.state
@@ -223,29 +244,44 @@ export default class HyloEditor extends Component {
       : topicResults
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })
-    return <div styleName={styleNames} className={className}>
-      <Editor
-        editorState={editorState}
-        spellCheck
-        stripPastedStyles
-        onChange={this.handleChange}
-        readOnly={readOnly}
-        placeholder={placeholder}
-        handleReturn={this.handleReturn}
-        plugins={plugins}
-        ref={this.editor} />
-      <MentionSuggestions
-        open={mentionsOpen}
-        onSearchChange={this.handleMentionsSearch}
-        suggestions={mentionResults}
-        onOpenChange={this.toggleMentionsPluginOpenState('mentions')}
-        onClose={this.handleMentionsClose} />
-      <TopicSuggestions
-        open={topicsOpen}
-        onSearchChange={this.handleTopicSearch}
-        suggestions={topicSuggestions}
-        onOpenChange={this.toggleMentionsPluginOpenState('topics')}
-        onClose={this.handleTopicsClose} />
-    </div>
+    return (
+      <div styleName={styleNames} className={className}>
+        <Toolbar>
+          {(externalProps) => (
+            <>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+              <Separator {...externalProps} />
+              <UnorderedListButton {...externalProps} />
+            </>
+          )}
+        </Toolbar>
+        <Editor
+          editorState={editorState}
+          spellCheck
+          stripPastedStyles
+          onChange={this.handleChange}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          handleReturn={this.onHandleReturn}
+          plugins={plugins}
+          ref={this.editor}
+        />
+        <MentionSuggestions
+          open={mentionsOpen}
+          onSearchChange={this.handleMentionsSearch}
+          suggestions={mentionResults}
+          onOpenChange={this.toggleMentionsPluginOpenState('mentions')}
+          onClose={this.handleMentionsClose}
+        />
+        <TopicSuggestions
+          open={topicsOpen}
+          onSearchChange={this.handleTopicSearch}
+          suggestions={topicSuggestions}
+          onOpenChange={this.toggleMentionsPluginOpenState('topics')}
+          onClose={this.handleTopicsClose}
+        />
+      </div>
+    )
   }
 }
