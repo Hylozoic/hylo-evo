@@ -153,14 +153,14 @@
   border-radius: $space-2x $space-2x 0 0;
   margin-right: 5px;
   font-size: 14px;
-  opacity: 70%;
+  opacity: .7;
 }
 
 .tab-active {
   composes: tab;
 
   color: $color-rhino;
-  opacity: 100%;
+  opacity: 1;
 }
 
 .tabCount {
