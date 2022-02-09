@@ -16,7 +16,21 @@ exports[`Header should match the latest snapshot 1`] = `
   <div
     data-stylename="header-text"
   >
-    one, two, three
+    <div>
+      <Link
+        key="2"
+        to="/all/members/2"
+      >
+        Two
+      </Link>
+      , 
+      <Link
+        key="3"
+        to="/all/members/3"
+      >
+        Three
+      </Link>
+    </div>
   </div>
 </div>
 `;

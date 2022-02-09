@@ -32,7 +32,8 @@ const sliderSettings = {
 export default class GroupsWidget extends Component {
   static propTypes = {
     group: object,
-    items: array
+    items: array,
+    routeParams: object
   }
 
   render () {
@@ -41,26 +42,7 @@ export default class GroupsWidget extends Component {
     return (
       <div styleName='groups'>
         <Slider {...sliderSettings}>
-          {items && items.map(g => <div styleName='group' key={g.id}>
-            <div>
-              <div styleName='content'>
-                <div styleName='group-avatar'><img src={g.avatarUrl || DEFAULT_AVATAR} /></div>
-                <div styleName='group-name'>{g.name}</div>
-                <div styleName='member-count'>{g.memberCount} member{g.memberCount !== 1 ? 's' : ''}</div>
-                <div styleName='group-description'>
-                  {g.description}
-                  {g.description && g.description.length > 140 && <div styleName='descriptionFade' />}
-                </div>
-                {g.memberStatus === 'member'
-                  ? <div styleName='is-member'><Link to={groupUrl(g.slug)}><span>Member</span><span styleName='visit'>Visit</span></Link></div>
-                  : g.memberStatus === 'requested'
-                    ? <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}><span>Pending</span><span styleName='visit'>View</span></Link></div>
-                    : <div styleName='isnt-member'><Link to={groupDetailUrl(g.slug, routeParams)}><span>View</span><span styleName='visit'>View</span></Link></div>
-                }
-              </div>
-            </div>
-            <div styleName='background' style={{ backgroundImage: `url(${g.bannerUrl || DEFAULT_BANNER})` }} ><div styleName='fade' /></div>
-          </div>)}
+          {items && items.map(group => <GroupCard key={group.id} group={group} routeParams={routeParams} />)}
           <div styleName='createGroup'>
             <div>
               <Link to={createGroupUrl(routeParams)}>+ Create Group</Link>
@@ -71,4 +53,27 @@ export default class GroupsWidget extends Component {
       </div>
     )
   }
+}
+
+export function GroupCard ({ group, routeParams, className }) {
+  return <div styleName='group' className={className} key={group.id}>
+    <div>
+      <div styleName='content'>
+        <div styleName='group-avatar'><img src={group.avatarUrl || DEFAULT_AVATAR} /></div>
+        <div styleName='group-name'>{group.name}</div>
+        <div styleName='member-count'>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</div>
+        <div styleName='group-description'>
+          {group.description}
+          {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}
+        </div>
+        {group.memberStatus === 'member'
+          ? <div styleName='is-member'><Link to={groupUrl(group.slug)}><span>Member</span><span styleName='visit'>Visit</span></Link></div>
+          : group.memberStatus === 'requested'
+            ? <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>Pending</span><span styleName='visit'>View</span></Link></div>
+            : <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>View</span><span styleName='visit'>View</span></Link></div>
+        }
+      </div>
+    </div>
+    <div styleName='background' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }} ><div styleName='fade' /></div>
+  </div>
 }
