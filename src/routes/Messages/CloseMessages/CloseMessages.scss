@@ -11,12 +11,11 @@
   }
 }
 
-
 @media screen and (max-width: 650px) {
   .close-messages {
-    position: fixed;
-    left: 10px;
+    position: absolute;
+    left: 7px;
     z-index: 5;
-    top: 20px;
+    top: 22px;
   }
 }

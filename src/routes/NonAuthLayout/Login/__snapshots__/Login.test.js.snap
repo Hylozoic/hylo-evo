@@ -19,7 +19,7 @@ exports[`renders correctly 1`] = `
       label="email"
       name="email"
       onChange={[Function]}
-      type="text"
+      type="email"
       value=""
     />
     <TextInput
@@ -85,7 +85,7 @@ exports[`renders correctly with mobile redirect 1`] = `
       label="email"
       name="email"
       onChange={[Function]}
-      type="text"
+      type="email"
       value=""
     />
     <TextInput

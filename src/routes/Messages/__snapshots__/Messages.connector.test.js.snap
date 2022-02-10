@@ -22,19 +22,18 @@ exports[`mapStateToProps returns expected values 1`] = `
 Object {
   "contacts": Array [
     Object {
-      "id": "1",
-      "name": "Alice",
-    },
-    Object {
       "id": "2",
       "name": "Bob",
     },
   ],
-  "currentUser": undefined,
+  "currentUser": SessionBoundModel {
+    "_fields": Object {
+      "id": "1",
+    },
+    "id": "1",
+  },
   "hasMoreMessages": true,
   "hasMoreThreads": undefined,
-  "isInbox": false,
-  "matchingContacts": null,
   "messageCreatePending": false,
   "messageText": "",
   "messageThread": Object {
@@ -80,7 +79,6 @@ Object {
   "messagesPending": true,
   "onCloseURL": "/",
   "participants": null,
-  "recentContacts": Array [],
   "sendIsTyping": [Function],
   "socket": SailsSocket {
     "_isConnecting": false,

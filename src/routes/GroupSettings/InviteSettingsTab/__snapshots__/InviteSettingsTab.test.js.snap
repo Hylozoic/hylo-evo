@@ -117,9 +117,9 @@ exports[`renders correctly 1`] = `
       useCacheForDOMMeasurements={false}
       value="Hi!
 
-I'm inviting you to join Hylo group on Hylo.
+I'm inviting you to join Hylo on Hylo.
 
-Hylo is using Hylo for our online group: this is our dedicated space for communication & collaboration."
+Hylo is using Hylo for our online community: this is our dedicated space for communication & collaboration."
     />
     <div
       data-stylename="styles.send-invite-button"

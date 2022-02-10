@@ -7,32 +7,57 @@ exports[`Pillbox renders 1`] = `
   <div
     data-stylename="styles.pill-container"
   >
-    <CSSTransitionGroup
-      transitionAppear={false}
-      transitionEnter={true}
-      transitionEnterTimeout={400}
-      transitionLeave={true}
-      transitionLeaveTimeout={300}
-      transitionName={
-        Object {
-          "enter": undefined,
-          "enterActive": undefined,
-          "leave": undefined,
-          "leaveActive": undefined,
-        }
-      }
+    <TransitionGroup
+      childFactory={[Function]}
+      component="div"
     >
-      <Pill
-        id={1}
+      <CSSTransition
+        classNames={
+          Object {
+            "enter": undefined,
+            "enterActive": undefined,
+            "exit": undefined,
+            "exitActive": undefined,
+          }
+        }
         key="1"
-        label="a pill"
-      />
-      <Pill
-        id={2}
+        timeout={
+          Object {
+            "enter": 400,
+            "exit": 300,
+          }
+        }
+      >
+        <Pill
+          id={1}
+          key="1"
+          label="a pill"
+        />
+      </CSSTransition>
+      <CSSTransition
+        classNames={
+          Object {
+            "enter": undefined,
+            "enterActive": undefined,
+            "exit": undefined,
+            "exitActive": undefined,
+          }
+        }
         key="2"
-        label="another pill"
-      />
-    </CSSTransitionGroup>
+        timeout={
+          Object {
+            "enter": 400,
+            "exit": 300,
+          }
+        }
+      >
+        <Pill
+          id={2}
+          key="2"
+          label="another pill"
+        />
+      </CSSTransition>
+    </TransitionGroup>
   </div>
   <ReactTooltip
     clickable={false}

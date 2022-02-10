@@ -11,7 +11,6 @@ import {
   Switch
 } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
-
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import AddLocation from 'routes/WelcomeWizard/AddLocation'
@@ -243,6 +242,7 @@ export default class PrimaryLayout extends Component {
       width
     } = this.props
     const { mobileSettingsLayout } = this.context
+    const withoutNav = mobileSettingsLayout
 
     if (!currentUser) {
       return <div styleName='container'>
@@ -267,7 +267,7 @@ export default class PrimaryLayout extends Component {
       !get('settings.alreadySeenTour', currentUser) &&
       !isSingleColumn && // Don't show tour on non-member group details page
       !get('settings.showJoinForm', currentGroupMembership) && // Show group welcome modal before tour
-      !mobileSettingsLayout
+      !withoutNav
 
     return <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
       {/* Site tour */}
@@ -291,7 +291,7 @@ export default class PrimaryLayout extends Component {
       )}
 
       {/* Context navigation drawer */}
-      {!mobileSettingsLayout && <>
+      {!withoutNav && <>
         <Switch>
           {routesWithDrawer.map(({ path }) => (
             <Route path={path} key={path} render={props => (
@@ -302,7 +302,7 @@ export default class PrimaryLayout extends Component {
         <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
       </>}
 
-      <div styleName={cx('main', { 'map-view': isMapView, 'main--mobile-settings-layout': mobileSettingsLayout })} onClick={this.closeDrawer}>
+      <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={this.closeDrawer}>
         {/* View navigation menu */}
         <Route path='/:context(all|public)' component={props =>
           <Navigation {...props}
@@ -325,7 +325,7 @@ export default class PrimaryLayout extends Component {
         {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
           <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
 
-        <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, 'center--mobile-settings-layout': mobileSettingsLayout })} id={CENTER_COLUMN_ID}>
+        <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
           <Switch>
             {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
             {welcomeRoutes.map(({ path, child }) =>
@@ -405,7 +405,7 @@ export default class PrimaryLayout extends Component {
       </Switch>
       <SocketListener location={location} />
       <SocketSubscriber type='group' id={get('slug', group)} />
-      <Intercom appID={isTest ? null : config.intercom.appId} hide_default_launcher />
+      <Intercom appID={isTest ? '' : config.intercom.appId} hide_default_launcher />
       <Joyride
         run={this.state.run}
         continuous

@@ -1,157 +1,139 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { debounce, throttle } from 'lodash/fp'
-import Icon from 'components/Icon'
 import { getKeyCode, keyMap } from 'util/textInput'
-import CloseMessages from '../CloseMessages'
-import MatchingPeopleList from './MatchingPeopleList'
 import PeopleList from './PeopleList'
 import MatchingPeopleListItem from './MatchingPeopleListItem'
 import './PeopleSelector.scss'
 
 const invalidPersonName = /[^a-z '-]+/gi
 
-export default class PeopleSelector extends React.Component {
-  constructor (props) {
-    super(props)
+export default function PeopleSelector (props) {
+  const [currentMatch, setCurrentMatch] = useState(null)
+  const [currentText, setCurrentText] = useState('')
+  const autocompleteInput = useRef(null)
 
-    this.state = {
-      currentMatch: null
-    }
-    this.autocompleteInput = React.createRef()
-  }
+  const {
+    focusMessage,
+    people,
+    setPeopleSearch,
+    selectedPeople,
+    peopleSelectorOpen
+  } = props
 
-  componentDidMount () {
-    this.props.fetchDefaultList()
-  }
+  useEffect(() => {
+    props.fetchDefaultList()
+  }, [])
 
-  componentWillReceiveProps (props) {
-    const { matchingPeople } = props
-    if (!matchingPeople || matchingPeople.length === 0) {
-      this.setCurrentMatch()
+  useMemo(() => {
+    if (!people || people.length === 0) {
+      setCurrentMatch(null)
       return
     }
 
-    if (matchingPeople.find(m => this.state.currentMatch && m.id === this.state.currentMatch.id)) return
-    this.setState({ currentMatch: matchingPeople[0] })
-  }
+    if (people.find(m => currentMatch && m.id === currentMatch.id)) return
+    setCurrentMatch(people[0])
+  }, [people])
 
-  setCurrentMatch = (person) => this.setState(() => ({ currentMatch: person }))
-
-  selectPerson = (person) => {
-    if (!person) return
-    this.autocompleteInput.current.focus()
-    if (this.props.selectedPeople.find(p => p.id === person.id)) return
-    this.props.setPeopleSearch(null)
-    this.setCurrentMatch()
-    this.autocompleteInput.current.value = null
-    this.props.selectPerson(person)
-  }
-
-  removePerson = (person) => {
-    this.props.removePerson(person)
-  }
-
-  excludeSelectedPeopleAndCurrentUser = (people) => {
-    if (!people) return
-    const { currentUser, selectedPeople } = this.props
+  // exclude selected people from people list
+  const finalPeopleList = useMemo(() => {
+    if (!people) return []
+    if (!selectedPeople || selectedPeople.length === 0) return people
     const selectedPeopleIds = selectedPeople.map(p => p.id)
-    return people
-      .filter(c => currentUser ? c.id !== currentUser.id : true)
-      .filter(c => !selectedPeopleIds.includes(c.id))
+    return people.filter(c => !selectedPeopleIds.includes(c.id))
+  }, [people, selectedPeople])
+
+  const selectPerson = (person) => {
+    if (!person) return
+    autocompleteInput.current.focus()
+    if (selectedPeople.find(p => p.id === person.id)) return
+    setPeopleSearch(null)
+    setCurrentMatch(null)
+    setCurrentText('')
+    props.selectPerson(person)
   }
 
-  arrow (direction, event) {
-    if (this.props.matchingPeople) {
+  const removePerson = (person) => {
+    props.removePerson(person)
+  }
+
+  const arrow = (direction, event) => {
+    if (people) {
       event.preventDefault()
       let delta = 0
-      const idx = this.props.matchingPeople.findIndex(m => m.id === this.state.currentMatch.id)
+      const idx = finalPeopleList.findIndex(m => currentMatch && m.id === currentMatch.id)
       if (direction === 'up') {
         if (idx > 0) delta = -1
       }
       if (direction === 'down') {
-        if (idx < this.props.matchingPeople.length - 1) delta = 1
+        if (idx < people.length - 1) delta = 1
       }
-      this.setCurrentMatch(this.props.matchingPeople[idx + delta])
+      setCurrentMatch(finalPeopleList[idx + delta])
     }
   }
 
-  autocompleteSearch = throttle(1000, this.props.fetchPeople)
+  const autocompleteSearch = throttle(1000, props.fetchPeople)
+  const updatePeopleSearch = debounce(200, setPeopleSearch)
 
-  onChange = debounce(200, () => {
-    const { value } = this.autocompleteInput.current
-    if (!invalidPersonName.exec(value)) {
-      return this.props.setPeopleSearch(value)
+  const onChange = (e) => {
+    const val = e.target.value
+    if (!invalidPersonName.exec(val)) {
+      setCurrentText(val)
+      autocompleteSearch(val)
+      return updatePeopleSearch(val)
     }
-    this.autocompleteInput.current.value = value.replace(invalidPersonName, '')
-  })
+    setCurrentText(val.replace(invalidPersonName, ''))
+  }
 
-  onKeyDown (evt) {
+  const onKeyDown = (evt) => {
     switch (getKeyCode(evt)) {
-      case keyMap.BACKSPACE: return this.autocompleteInput.current.value ? null : this.removePerson()
-      case keyMap.UP: return this.arrow('up', evt)
-      case keyMap.DOWN: return this.arrow('down', evt)
+      case keyMap.BACKSPACE: return currentText ? null : removePerson()
+      case keyMap.UP: return arrow('up', evt)
+      case keyMap.DOWN: return arrow('down', evt)
       case keyMap.COMMA:
       case keyMap.ENTER:
         evt.preventDefault()
-        this.selectPerson(this.state.currentMatch)
-        this.autocompleteInput.current.value = null
-        return this.props.setPeopleSearch(null)
-
-      default:
-        this.autocompleteSearch(this.autocompleteInput.current.value)
+        currentText ? setCurrentText('') : selectedPeople.length > 0 && focusMessage()
+        selectPerson(currentMatch)
+        return setPeopleSearch(null)
     }
   }
 
-  render () {
-    const {
-      people,
-      recentPeople,
-      matchingPeople,
-      onCloseURL,
-      selectedPeople,
-      toggleMessages
-    } = this.props
-    const {
-      currentMatch
-    } = this.state
+  return <div styleName='thread-header' tabIndex='0'>
+    <div styleName='autocomplete-control'>
+      <span styleName='to'>With:</span>
+      {selectedPeople && selectedPeople.map(person =>
+        <MatchingPeopleListItem
+          avatarUrl={person.avatarUrl}
+          name={person.name}
+          onClick={() => removePerson(person)}
+          key={person.id} />
+      )}
+      <div styleName='select-people'>
+        <input styleName='autocomplete'
+          autoFocus
+          ref={autocompleteInput}
+          type='text'
+          spellCheck={false}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          placeholder={'+ Add someone'}
+          onFocus={props.onFocus}
+          value={currentText}
+        />
 
-    return <React.Fragment>
-      <div styleName='thread-header' tabIndex='0'>
-        <div styleName='backButton' onClick={toggleMessages}>
-          <Icon name='ArrowDown' styleName='arrow-down' />
-        </div>
-        <div styleName='autocomplete-control'>
-          {selectedPeople && selectedPeople.map(person =>
-            <MatchingPeopleListItem
-              avatarUrl={person.avatarUrl}
-              name={person.name}
-              onClick={() => this.removePerson(person)}
-              key={person.id} />
-          )}
-          <input styleName='autocomplete'
-            autoFocus
-            ref={this.autocompleteInput}
-            type='text'
-            spellCheck={false}
-            onChange={evt => this.onChange(evt)}
-            onKeyDown={evt => this.onKeyDown(evt)}
-            placeholder={selectedPeople.length ? '' : 'Type in the names of people to message'} />
-        </div>
-        <CloseMessages onCloseURL={onCloseURL} />
+        {peopleSelectorOpen
+          ? <PeopleList
+            people={finalPeopleList}
+            currentMatch={currentMatch}
+            onClick={selectPerson}
+            onMouseOver={setCurrentMatch}
+          />
+          : ''
+        }
       </div>
-      {currentMatch
-        ? <MatchingPeopleList
-          matchingPeople={this.excludeSelectedPeopleAndCurrentUser(matchingPeople)}
-          currentMatch={currentMatch}
-          onClick={this.selectPerson}
-          onMouseOver={this.setCurrentMatch} />
-        : <PeopleList
-          people={this.excludeSelectedPeopleAndCurrentUser(people)}
-          recentPeople={this.excludeSelectedPeopleAndCurrentUser(recentPeople)}
-          onClick={this.selectPerson} />}
-    </React.Fragment>
-  }
+    </div>
+  </div>
 }
 
 PeopleSelector.propTypes = {
@@ -160,7 +142,6 @@ PeopleSelector.propTypes = {
   fetchPeople: PropTypes.func,
   fetchDefaultList: PropTypes.func,
   setPeopleSearch: PropTypes.func,
-  matchingPeople: PropTypes.array,
   onCloseURL: PropTypes.string,
   selectedPeople: PropTypes.array,
   recentPeople: PropTypes.array,

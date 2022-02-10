@@ -49,7 +49,7 @@ export default class Login extends React.Component {
           internalLabel='Email'
           onChange={this.handleChange}
           styleName='field'
-          type='text'
+          type='email'
           value={email}
         />
 

@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { find } from 'lodash/fp'
-import { boolean, arrayOf, func, number, shape, string, object } from 'prop-types'
+import { arrayOf, func, number, shape, string, object, bool } from 'prop-types'
 import React, { Component } from 'react'
 import CreateTopic from 'components/CreateTopic'
 // import { GroupCell } from 'components/GroupsList/GroupsList'
@@ -27,7 +27,7 @@ const topicType = shape({
   name: string.isRequired,
   postsTotal: number,
   followersTotal: number,
-  isSubscribed: boolean
+  isSubscribed: bool
 })
 
 export default class TopicsSettingsTab extends Component {

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { get, some, isEmpty, castArray, includes, pick, uniqueId, sortBy } from 'lodash/fp'
+import { get, some, isEmpty, castArray, includes, pick, uniqueId, uniqBy, sortBy } from 'lodash/fp'
 import { AnalyticsEvents } from 'hylo-utils/constants'
 import orm from 'store/models'
 import { toRefArray } from 'util/reduxOrmMigration'
@@ -13,11 +13,13 @@ import {
   FIND_OR_CREATE_THREAD
 } from 'store/constants'
 import { makeGetQueryResults } from 'store/reducers/queryResults'
+import getMe from 'store/selectors/getMe'
 import FindOrCreateThreadMutation from 'graphql/mutations/FindOrCreateThreadMutation.graphql'
 import CreateMessageMutation from 'graphql/mutations/CreateMessageMutation.graphql'
 import MessageThreadQuery from 'graphql/queries/MessageThreadQuery.graphql'
 import MessageThreadMessagesQuery from 'graphql/queries/MessageThreadMessagesQuery.graphql'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import filterDeletedUsers from 'util/filterDeletedUsers'
 
 export const MODULE_NAME = 'Messages'
 export const UPDATE_MESSAGE_TEXT = `${MODULE_NAME}/UPDATE_MESSAGE_TEXT`
@@ -190,6 +192,7 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
       const participantIds = participantsQuerystringParam.split(',')
       const participants = Person
         .all()
+        .filter(filterDeletedUsers)
         .toRefArray()
         .filter(person => participantIds.includes(person.id))
 
@@ -204,7 +207,10 @@ export const getParticipantsFromQuerystring = ormCreateSelector(
 
 export const getAllContacts = ormCreateSelector(
   orm,
-  session => session.Person.all().toRefArray()
+  session => session.Person
+    .all()
+    .filter(filterDeletedUsers)
+    .toRefArray()
 )
 
 export const getRecentContacts = ormCreateSelector(
@@ -212,6 +218,7 @@ export const getRecentContacts = ormCreateSelector(
   ({ PersonConnection }) => {
     const recentContacts = PersonConnection
       .all()
+      .filter(filterDeletedUsers)
       .toModelArray()
       .map(connection => presentPersonListItem(connection.person))
 
@@ -226,6 +233,7 @@ export const getMatchingContacts = ormCreateSelector(
     if (!contactsSearch) return null
     const matchingContacts = Person
       .all()
+      .filter(filterDeletedUsers)
       .toModelArray()
       .filter(person =>
         person.name.toLowerCase().includes(contactsSearch.toLowerCase())
@@ -233,6 +241,17 @@ export const getMatchingContacts = ormCreateSelector(
       .map(presentPersonListItem)
 
     return sortByName(matchingContacts)
+  }
+)
+
+export const getContactsList = ormCreateSelector(
+  orm,
+  getMe,
+  getMatchingContacts,
+  getRecentContacts,
+  getAllContacts,
+  (state, me, matchingContacts, recentContacts, allContacts) => {
+    return (matchingContacts || uniqBy('id', recentContacts.concat(allContacts))).filter(p => p.id !== me.id)
   }
 )
 

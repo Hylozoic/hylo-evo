@@ -52,11 +52,12 @@ export default function (state = {}, action) {
 
   const { extractQueryResults } = meta || {}
   if (extractQueryResults && payload) {
-    const { getItems, getRouteParams, getType } = extractQueryResults
-    return appendIds(state,
+    const { getItems, getRouteParams, getType, replace } = extractQueryResults
+    return updateIds(state,
       getType ? getType(action) : action.type,
       getRouteParams ? getRouteParams(action) : meta.graphql.variables,
-      getItems(action)
+      getItems(action),
+      replace
     )
   }
 
@@ -184,7 +185,7 @@ export function matchSubCommentsIntoQueryResults (state, { data }) {
 
   if (toplevelComments) {
     toplevelComments.forEach(comment => {
-      state = appendIds(state,
+      state = updateIds(state,
         FETCH_CHILD_COMMENTS,
         { id: comment.id },
         get(`childComments`, comment) || {}
@@ -221,15 +222,17 @@ function appendId (state, type, params, id) {
   }
 }
 
-function appendIds (state, type, params, data) {
+// If replace is false add new ids to the existing list, if true then replace list
+function updateIds (state, type, params, data, replace = false) {
   if (!data) return state
   const { items, total, hasMore } = data
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
+  const newIds = items.map(x => x.id)
   return {
     ...state,
     [key]: {
-      ids: uniq(existingIds.concat(items.map(x => x.id))),
+      ids: replace ? newIds : uniq(existingIds.concat(newIds)),
       total,
       hasMore
     }
@@ -271,20 +274,20 @@ export function buildKey (type, params) {
 }
 
 export const queryParamWhitelist = [
+  'autocomplete',
   'id',
   'context',
-  'slug',
+  'filter',
   'groupSlug',
   'groupSlugs',
-  'parentSlugs',
-  'sortBy',
   'order',
+  'page',
+  'parentSlugs',
   'search',
-  'autocomplete',
-  'filter',
+  'slug',
+  'sortBy',
   'topic',
-  'type',
-  'page'
+  'type'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {

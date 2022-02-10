@@ -52,11 +52,11 @@ body {
     width: 100%;
     max-width: 100%;
   }
+  &.withoutNav {
+    padding-top: 0
+  }
 }
 
-.main--mobile-settings-layout {
-  padding-top: 0
-}
 
 $drawer-width: 367px;
 $drawer-height: 100vh;
@@ -362,10 +362,9 @@ $drawer-z-index: 51;
     height: calc(100vh - 40px);
     padding-bottom: 0px;
   }
-}
-
-.center--mobile-settings-layout {
-  padding-bottom: 0
+  &.withoutNav {
+    padding-bottom: 0
+  }
 }
 
 .singleColumn .center {
@@ -387,6 +386,7 @@ $drawer-z-index: 51;
 
 .center.map-view.collapsedState {
   width: calc(100% - 68px);
+  max-width: calc(100% - 68px);
   flex: 0 0 100%;
 }
 
@@ -590,6 +590,11 @@ $drawer-z-index: 51;
     padding: 0;
   }
 
+  .center.map-view.collapsedState {
+    width: 100%;
+    max-width: 100%;
+  }
+  
   .detail {
     z-index: 110;
   }
