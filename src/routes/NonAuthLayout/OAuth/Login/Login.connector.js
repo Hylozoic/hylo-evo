@@ -4,7 +4,7 @@ import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.sto
 import getRouteParam from 'store/selectors/getRouteParam'
 import getLoginError from 'store/selectors/getLoginError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import mobileRedirect from 'util/mobileRedirect'
+import { mobileRedirect } from 'util/mobile'
 import { login } from './Login.store'
 
 export function mapStateToProps (state, props) {
