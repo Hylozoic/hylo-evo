@@ -16,12 +16,14 @@ const recentActivityQuery =
   $first: Int,
   $groupSlugs: [String],
   $id: ID,
+  $isFulfilled: Boolean,
   $offset: Int,
   $context: String,
   $order: String,
   $search: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
   person (id: $id) {
     id
