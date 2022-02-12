@@ -7,13 +7,13 @@ import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import ScrollListener from 'components/ScrollListener'
 import GroupCard from 'components/GroupCard'
-import { CENTER_COLUMN_ID } from 'util/scrolling'
-import './GroupSearch.scss'
-import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import useRouter from 'hooks/useRouter'
 import useDebounce from 'hooks/useDebounce'
 import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
+import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
+import { CENTER_COLUMN_ID } from 'util/scrolling'
+import './GroupSearch.scss'
 
 export default function GroupSearch () {
   const currentUser = useSelector(state => getMe(state))

@@ -21,7 +21,7 @@ import { capitalize } from 'lodash'
 */
 
 export default function GroupCard ({ memberships, group = {}, routeParams = {}, highlightProps = {}, className, expanded = false, constrained = false, onClick = () => {} }) {
-  const topics = group.groupTopics.toModelArray()
+  const topics = group.groupTopics && group.groupTopics.toModelArray()
   return <Link to={memberships.includes(group.id) ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
     <div
       onClick={onClick}
