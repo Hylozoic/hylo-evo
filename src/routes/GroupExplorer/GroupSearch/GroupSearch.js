@@ -25,7 +25,7 @@ export default function GroupSearch () {
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
-  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, coord })
+  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, coord, visibility: [2, 3] })
   useEffect(() => {
     setOffset(0)
   }, [search, sortBy])
@@ -71,8 +71,8 @@ export default function GroupSearch () {
 
 const sortOptions = (coord) => {
   let options = [
-    { id: SORT_NAME, label: 'Group Name' }
-  // { id: SORT_SIZE, label: 'Member Count' }
+    { id: SORT_NAME, label: 'Group Name' },
+    { id: SORT_SIZE, label: 'Member Count' }
   ]
 
   if (coord) {
