@@ -12,10 +12,6 @@ import reducer, {
   fetchPostsForDrawer,
   fetchPostsForMap,
   formatBoundingBox,
-  FETCH_GROUPS_MAP,
-  FETCH_MEMBERS_MAP,
-  FETCH_POSTS_MAP,
-  FETCH_POSTS_MAP_DRAWER,
   STORE_CLIENT_FILTER_PARAMS,
   UPDATE_STATE,
   getPostsForMapFilteredByType,
@@ -32,7 +28,7 @@ import reducer, {
 
 describe('formatBoundingBox', () => {
   it('formats a bounding box', () => {
-    expect(formatBoundingBox([12, 13, 14, 15])).toEqual([{ lng: 12, lat: 13}, { lng: 14, lat: 15}])
+    expect(formatBoundingBox([12, 13, 14, 15])).toEqual([{ lng: 12, lat: 13 }, { lng: 14, lat: 15 }])
   })
 })
 
@@ -69,7 +65,7 @@ describe('fetchPostsforDrawer', () => {
       offset: 0,
       search: 'food',
       slug: 'foo',
-      sortBy:'updated',
+      sortBy: 'updated',
       topics: []
     })).toMatchSnapshot()
   })
@@ -254,7 +250,6 @@ describe('selectors', () => {
       expect(result.length).toEqual(1)
     })
   })
-
 })
 
 describe('reducer', () => {
@@ -270,13 +265,12 @@ describe('reducer', () => {
         sortBy: 'name',
         topics: []
       },
-      searches: [ { id: '1'}, { id: '2' } ]
+      searches: [ { id: '1' }, { id: '2' } ]
     }
   })
 
   describe(`when ${UPDATE_STATE}`, () => {
     it('updates the state', () => {
-
       const action = {
         type: UPDATE_STATE,
         payload: { zoom: 5 }
@@ -300,7 +294,7 @@ describe('reducer', () => {
     it('replaces searches', () => {
       const action = {
         type: FETCH_SAVED_SEARCHES,
-        payload: { data : { savedSearches: { items: [{ id: '3' }] } } }
+        payload: { data: { savedSearches: { items: [{ id: '3' }] } } }
       }
       expect(reducer(state, action).searches).toEqual([{ id: '3' }])
     })
@@ -310,7 +304,7 @@ describe('reducer', () => {
     it('adds to the searches', () => {
       const action = {
         type: SAVE_SEARCH,
-        payload: { data : { createSavedSearch: { id: '4' } } }
+        payload: { data: { createSavedSearch: { id: '4' } } }
       }
       const searches = reducer(state, action).searches
       expect(searches.find(s => s.id === '4')).toBeTruthy()
@@ -322,7 +316,7 @@ describe('reducer', () => {
     it('removes the search', () => {
       const action = {
         type: DELETE_SAVED_SEARCH,
-        payload: { data : { savedSearches: { items: [{ id: '4' }] } } }
+        payload: { data: { savedSearches: { items: [{ id: '4' }] } } }
       }
       const searches = reducer(state, action).searches
       expect(searches.find(s => s.id === '4')).toBeFalsy()

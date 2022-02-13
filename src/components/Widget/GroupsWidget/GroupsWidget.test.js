@@ -4,13 +4,13 @@ import { mount } from 'enzyme'
 import GroupsWidget from './GroupsWidget'
 
 const defaultMinProps = {
-  routeParams: { context: 'groups', slug: 'group one'},
+  routeParams: { context: 'groups', slug: 'group one' },
   items: []
 }
 
 function renderComponent (renderFunc, props = {}) {
   return renderFunc(
-   <MemoryRouter initialEntries={['/']} keyLength={0}><GroupsWidget {...{ ...defaultMinProps, ...props }} /></MemoryRouter>
+    <MemoryRouter initialEntries={['/']} keyLength={0}><GroupsWidget {...{ ...defaultMinProps, ...props }} /></MemoryRouter>
   )
 }
 
@@ -30,5 +30,4 @@ describe('GroupsWidget', () => {
     const wrapper = renderComponent(mount, props)
     expect(wrapper).toMatchSnapshot()
   })
-
 })
