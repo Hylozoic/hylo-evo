@@ -7,6 +7,13 @@ import linkify from './linkify'
 
 // Text presentation related
 
+const ALLOWED_TAGS_DEFAULT = [
+  'a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'u', 'ul'
+]
+const ALLOWED_ATTRIBUTES_DEFAULT = {
+  a: ['href', 'data-user-id', 'data-entity-type', 'target']
+}
+
 export function sanitize (text, allowedTags, allowedAttributes) {
   if (!text) return ''
   if (allowedTags && !Array.isArray(allowedTags)) return ''
@@ -15,24 +22,44 @@ export function sanitize (text, allowedTags, allowedAttributes) {
   const strippedText = text.replace(/<p>&nbsp;/gi, '<p>')
 
   return insane(strippedText, {
-    allowedTags: allowedTags || ['a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'ul'],
-    allowedAttributes: allowedAttributes || {
-      a: ['href', 'data-user-id', 'data-entity-type', 'target']
-    }
+    allowedTags: allowedTags || ALLOWED_TAGS_DEFAULT,
+    allowedAttributes: allowedAttributes || ALLOWED_ATTRIBUTES_DEFAULT
   })
 }
 
-export function present (text, opts = {}) {
-  const { slug, noLinks, maxlength, noP } = opts
-
+export function present (text, options = {}) {
   if (!text) return ''
-  // wrap in a <p> tag, do this by default, require opt out
-  if (text.substring(0, 3) !== '<p>' && !noP) text = `<p>${text}</p>`
-  // make links and hashtags
-  if (!noLinks) text = linkify(text, slug)
-  if (maxlength) text = truncate(text, maxlength)
 
-  return text
+  const {
+    slug,
+    noLinks,
+    maxlength,
+    noP,
+    sanitize = false,
+    allowedTags,
+    allowedAttributes
+  } = options
+  let processedText = text
+
+  if (sanitize) {
+    processedText = sanitize(text, allowedTags, allowedAttributes)
+  }
+
+  // wrap in a <p> tag, do this by default, require opt out
+  if (processedText.substring(0, 3) !== '<p>' && !noP) {
+    processedText = `<p>${text}</p>`
+  }
+
+  // make links and hashtags
+  if (!noLinks) {
+    processedText = linkify(text, slug)
+  }
+
+  if (maxlength) {
+    processedText = truncate(text, maxlength)
+  }
+
+  return processedText
 }
 
 export const truncate = (text, length) => {

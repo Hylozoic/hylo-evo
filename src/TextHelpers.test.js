@@ -6,6 +6,10 @@ describe('sanitize', () => {
     expect(TextHelpers.sanitize()).toBe('')
   })
 
+  it("doesn't convert UTF8 chars to HTML entities", () => {
+    expect(TextHelpers.sanitize('Communities <=> Food <=> The Land <=> Tech')).toBe('Communities <=> Food <=> The Land <=> Tech')
+  })
+
   it('returns empty string if whitelist is not an array', () => {
     expect(TextHelpers.sanitize('foo', {})).toBe('')
   })
