@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
-import { TextHelpers, Validators } from 'hylo-shared'
+import { Validators } from 'hylo-shared'
 import { topicUrl } from 'util/navigation'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
@@ -81,7 +81,8 @@ export default class CreateTopic extends Component {
     })
   }
 
-  safeTopicName = () => TextHelpers.sanitize(trim(this.ignoreHash(this.state.topicName)))
+  // TODO: Text Formatting -- sanitize only on output, not input
+  safeTopicName = () => trim(this.ignoreHash(this.state.topicName))
 
   submitButtonAction = () => {
     const {

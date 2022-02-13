@@ -25,7 +25,7 @@ export default function PostDetails ({
   canEdit,
   ...post
 }) {
-  let details = TextHelpers.present(TextHelpers.sanitize(providedDetails), { slug })
+  let details = TextHelpers.present(providedDetails, { slug })
   if (!expanded && TextHelpers.textLength(details) > maxDetailsLength) {
     details = TextHelpers.truncate(details, maxDetailsLength)
   }
