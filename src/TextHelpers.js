@@ -1,11 +1,13 @@
 import { marked } from 'marked'
 import insane from 'insane'
-import truncHtml from 'trunc-html'
+import truncHTML from 'trunc-html'
+import truncText from 'trunc-text'
 import prettyDate from 'pretty-date'
 import moment from 'moment-timezone'
 import linkify from './linkify'
-
-// Text presentation related
+import { convert as convertHtmlToText } from 'html-to-text'
+//
+// HTML and Text presentation related
 
 const ALLOWED_TAGS_DEFAULT = [
   'a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'u', 'ul'
@@ -14,7 +16,7 @@ const ALLOWED_ATTRIBUTES_DEFAULT = {
   a: ['href', 'data-user-id', 'data-entity-type', 'target']
 }
 
-export function sanitize (text, allowedTags, allowedAttributes) {
+export function sanitizeHTML (text, allowedTags, allowedAttributes) {
   if (!text) return ''
   if (allowedTags && !Array.isArray(allowedTags)) return ''
 
@@ -27,14 +29,13 @@ export function sanitize (text, allowedTags, allowedAttributes) {
   })
 }
 
-export function present (text, options = {}) {
+export function presentHTML (text, options = {}) {
   if (!text) return ''
 
   const {
     slug,
     noLinks,
-    maxlength,
-    noP,
+    truncate: truncateLength,
     sanitize = false,
     allowedTags,
     allowedAttributes
@@ -42,12 +43,7 @@ export function present (text, options = {}) {
   let processedText = text
 
   if (sanitize) {
-    processedText = sanitize(text, allowedTags, allowedAttributes)
-  }
-
-  // wrap in a <p> tag, do this by default, require opt out
-  if (processedText.substring(0, 3) !== '<p>' && !noP) {
-    processedText = `<p>${text}</p>`
+    processedText = sanitizeHTML(text, allowedTags, allowedAttributes)
   }
 
   // make links and hashtags
@@ -55,15 +51,15 @@ export function present (text, options = {}) {
     processedText = linkify(text, slug)
   }
 
-  if (maxlength) {
-    processedText = truncate(text, maxlength)
+  if (truncateLength) {
+    processedText = truncateHTML(text, truncateLength)
   }
 
   return processedText
 }
 
-export const truncate = (text, length) => {
-  return truncHtml(text, length, {
+export const truncateHTML = (html, length) => {
+  return truncHTML(html, length, {
     sanitizer: {
       allowedAttributes: {
         a: ['href', 'class', 'data-search']
@@ -72,16 +68,25 @@ export const truncate = (text, length) => {
   }).html
 }
 
+export const truncateText = (text, length) => {
+  return truncText(text, length)
+}
+
+export function textLengthHTML (htmlOrText) {
+  return htmlToText(htmlOrText).length
+}
+
 export const markdown = text => {
-  return sanitize(
+  return sanitizeHTML(
     marked.parse(text || '', { gfm: true, breaks: true })
   )
 }
 
-export function textLength (html) {
-  return html.replace(/<[^>]+>/g, '').length
+export function htmlToText (html) {
+  return convertHtmlToText(html)
 }
 
+//
 // Date string related
 
 export function humanDate (date, short) {

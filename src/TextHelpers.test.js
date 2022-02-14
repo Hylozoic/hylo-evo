@@ -1,39 +1,61 @@
 import * as TextHelpers from '../src/TextHelpers'
 import moment from 'moment-timezone'
 
-describe('sanitize', () => {
+describe('sanitizeHTML', () => {
   it('returns empty string if called without text', () => {
-    expect(TextHelpers.sanitize()).toBe('')
-  })
-
-  it("doesn't convert UTF8 chars to HTML entities", () => {
-    expect(TextHelpers.sanitize('Communities <=> Food <=> The Land <=> Tech')).toBe('Communities <=> Food <=> The Land <=> Tech')
+    expect(TextHelpers.sanitizeHTML()).toBe('')
   })
 
   it('returns empty string if whitelist is not an array', () => {
-    expect(TextHelpers.sanitize('foo', {})).toBe('')
+    expect(TextHelpers.sanitizeHTML('foo', {})).toBe('')
   })
 
   it('allows whitelist to be undefined', () => {
-    expect(TextHelpers.sanitize('foo')).toBe('foo')
+    expect(TextHelpers.sanitizeHTML('foo')).toBe('foo')
   })
 
   it('strips leading whitespace in paragraphs', () => {
-    expect(TextHelpers.sanitize('<p>&nbsp;</p>')).toBe('<p></p>')
+    expect(TextHelpers.sanitizeHTML('<p>&nbsp;</p>')).toBe('<p></p>')
   })
 
   it('removes tags not on a whitelist', () => {
     const expected = 'Wombats are great.<div>They poop square.</div>'
     const unsafe = 'Wombats are great.<em>So great.</em><div>They poop square.</div>'
-    const actual = TextHelpers.sanitize(unsafe, ['div'])
+    const actual = TextHelpers.sanitizeHTML(unsafe, ['div'])
     expect(actual).toBe(expected)
   })
 
   it('removes attributes not on a whitelist', () => {
     const expected = '<p id="wombat-data">Wombats are great.</p>'
     const unsafe = '<p id="wombat-data" class="main-wombat">Wombats are great.</p>'
-    const actual = TextHelpers.sanitize(unsafe, ['p'], { p: ['id'] })
+    const actual = TextHelpers.sanitizeHTML(unsafe, ['p'], { p: ['id'] })
     expect(actual).toBe(expected)
+  })
+})
+
+describe('truncateHTML', () => {
+  it('has an ellipses after truncation', () => {
+    expect(TextHelpers.truncateHTML('<a href="">test</a> test test', 5)).toBe('<a href="">test</a> …')
+  })
+
+  it('does not have an ellipses if there was no truncation', () => {
+    expect(TextHelpers.truncateHTML('<a href="">test</a> test test', 100)).toBe('<a href="">test</a> test test')
+  })
+})
+
+describe('truncateText', () => {
+  it('has an ellipses after truncation', () => {
+    expect(TextHelpers.truncateText('<I mean it> test test test', 8)).toBe('<I mean …')
+  })
+
+  it('does not have an ellipses if there was no truncation', () => {
+    expect(TextHelpers.truncateText('<I mean it> test test test', 100)).toBe('<I mean it> test test test')
+  })
+})
+
+describe('textLengthHTML', () => {
+  it('should return lenght of plain text version of the html', () => {
+    expect(TextHelpers.textLengthHTML('<strong>test</strong> <a href="">a link</a>')).toBe(11)
   })
 })
 
