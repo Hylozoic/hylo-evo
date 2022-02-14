@@ -11,7 +11,6 @@ export default function useEnsureSearchedGroups ({ sortBy, search, offset, coord
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log({ sortBy, search, offset })
     dispatch(fetchGroups({ sortBy, search, offset: 0, coord: sortBy === SORT_NEAREST ? coord : null, visibility }))
   }, [dispatch, search, sortBy])
 
