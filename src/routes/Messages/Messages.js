@@ -210,6 +210,7 @@ export default class Messages extends React.Component {
                             currentUser={currentUser}
                             fetchPeople={fetchPeople}
                             fetchDefaultList={fetchRecentContacts}
+                            focusMessage={this.focusForm}
                             setPeopleSearch={setContactsSearch}
                             people={contacts}
                             onCloseURL={onCloseURL}
