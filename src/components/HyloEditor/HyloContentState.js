@@ -1,4 +1,4 @@
-import { createElement } from 'react'
+import React from 'react'
 import Immutable from 'immutable'
 import { convertToHTML, convertFromHTML } from 'draft-convert'
 import { convertToRaw, convertFromRaw } from 'draft-js'
@@ -37,29 +37,25 @@ export function topicFromLink (createEntity, node) {
   )
 }
 
-function mentionToLink (originalText, mention, slug) {
-  return createElement(
-    'a',
-    {
-      'data-entity-type': MENTION_ENTITY_TYPE,
-      'data-user-id': mention.get('id'),
-      href: PathHelpers.mentionPath(mention.get('id'), slug),
-      className: 'mention'
-    },
-    originalText
+function mentionToLink (_, mention, slug) {
+  return (
+    <a
+      href={PathHelpers.mentionPath(mention.get('id'), slug)}
+      data-entity-type={MENTION_ENTITY_TYPE}
+      data-user-id={mention.get('id')}
+      className='mention'
+    />
   )
 }
 
-function topicToLink (originalText, topic, slug) {
-  return createElement(
-    'a',
-    {
-      'data-entity-type': TOPIC_ENTITY_TYPE,
-      'data-search': topic.get('name'),
-      href: PathHelpers.topicPath(topic.get('name'), slug),
-      className: 'hashtag'
-    },
-    originalText
+function topicToLink (_, topic, slug) {
+  return (
+    <a
+      href={PathHelpers.topicPath(topic.get('name'), slug)}
+      data-entity-type={TOPIC_ENTITY_TYPE}
+      data-search={topic.get('name')}
+      className='hashtag'
+    />
   )
 }
 
