@@ -2,8 +2,9 @@ import React from 'react'
 // import Immutable from 'immutable'
 import { shallow, mount } from 'enzyme'
 import { ContentState } from 'draft-js'
-import HyloEditor from './HyloEditor'
 import { MENTION_ENTITY_TYPE, TOPIC_ENTITY_TYPE } from 'hylo-shared'
+import { keyMap } from 'util/textinput'
+import HyloEditor from './HyloEditor'
 
 const emptyFunc = () => {}
 
@@ -54,14 +55,14 @@ describe('HyloEditor', () => {
   describe('#onHandleReturn', () => {
     it('does nothing if props.submitOnReturnHandler is not provided', () => {
       const wrapper = renderComponent(mount)
-      const result = wrapper.instance().onHandleReturn({ shiftKey: false })
-      expect(result).toEqual(undefined)
+      const result = wrapper.instance().onHandleReturn({ which: keyMap.SPACE, getModifierState: () => false })
+      expect(result).toEqual('not-handled')
     })
 
     it('runs props.submitOnReturnHandler if provided', () => {
       const submitOnReturnHandler = jest.fn()
       const wrapper = renderComponent(mount, { submitOnReturnHandler })
-      const result = wrapper.instance().onHandleReturn({ shiftKey: false })
+      const result = wrapper.instance().onHandleReturn({ which: keyMap.SPACE, getModifierState: () => false })
       expect(submitOnReturnHandler.mock.calls).toHaveLength(1)
       expect(result).toEqual('handled')
     })
@@ -69,9 +70,9 @@ describe('HyloEditor', () => {
     it('will not run props.submitOnReturnHandler if provided but shiftKey+returnKey is entered', () => {
       const submitOnReturnHandler = jest.fn()
       const wrapper = renderComponent(mount, { submitOnReturnHandler })
-      const result = wrapper.instance().onHandleReturn({ shiftKey: true })
+      const result = wrapper.instance().onHandleReturn({ which: keyMap.ENTER, getModifierState: () => true })
       expect(submitOnReturnHandler.mock.calls).toHaveLength(0)
-      expect(result).toEqual('not-handled')
+      expect(result).toEqual('handled')
     })
   })
 

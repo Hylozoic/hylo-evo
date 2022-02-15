@@ -52,7 +52,7 @@ describe('fromHTML', () => {
 describe('toHTML', () => {
   it('converts an DraftJS editor Raw ContentState into appropriate output HTML', () => {
     const contentState = rawContentState
-    const expectedHTML = '<p>This is a test of a mention <a data-entity-type="mention" data-user-id="8" href="/all/members/8" class="mention">Loho</a> and a topic <a data-entity-type="#mention" data-search="request" href="/all/topics/request" class="hashtag">#request</a> </p>'
+    const expectedHTML = '<p>This is a test of a mention <a href="/all/members/8" data-entity-type="mention" data-user-id="8" class="mention">Loho</a> and a topic <a href="/all/topics/request" data-entity-type="#mention" data-search="request" class="hashtag">#request</a> </p>'
     expect(toHTML(contentState)).toEqual(expectedHTML)
   })
 })

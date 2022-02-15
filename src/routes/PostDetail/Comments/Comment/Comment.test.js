@@ -53,17 +53,6 @@ describe('Comment', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('sanitizes text', () => {
-    const comment = {
-      ...props.comment,
-      text: '<p>Nice text<script>a sneaky script</script></p>'
-    }
-    const wrapper = shallow(<Comment {...props} comment={comment} />)
-    expect(wrapper.find('div #text').prop('dangerouslySetInnerHTML')).toEqual({
-      __html: '<p>Nice text</p>'
-    })
-  })
-
   it('does not display the delete menu when deleteComment is not defined', () => {
     const wrapper = shallow(<Comment {...props} />)
     expect(wrapper).toMatchSnapshot()

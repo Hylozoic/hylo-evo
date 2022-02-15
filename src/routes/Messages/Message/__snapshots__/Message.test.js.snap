@@ -34,7 +34,7 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
       <span
         dangerouslySetInnerHTML={
           Object {
-            "__html": "test",
+            "__html": "sending...",
           }
         }
       />
