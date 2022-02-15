@@ -20,5 +20,4 @@ export const mapDispatchToProps = (dispatch, props) => {
     hidePostEditor: () => dispatch(push(closeUrl))
   }
 }
-
 export default connect(null, mapDispatchToProps)
