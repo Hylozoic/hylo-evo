@@ -1,3 +1,4 @@
+import merge from 'lodash/fp/merge'
 import { marked } from 'marked'
 import insane from 'insane'
 import truncHTML from 'trunc-html'
@@ -9,24 +10,25 @@ import { convert as convertHtmlToText } from 'html-to-text'
 //
 // HTML and Text presentation related
 
-const ALLOWED_TAGS_DEFAULT = [
-  'a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'u', 'ul'
-]
-const ALLOWED_ATTRIBUTES_DEFAULT = {
-  a: ['href', 'data-user-id', 'data-entity-type', 'target']
-}
-
-export function sanitizeHTML (text, allowedTags, allowedAttributes) {
+export function sanitizeHTML (text, providedOptions) {
   if (!text) return ''
-  if (allowedTags && !Array.isArray(allowedTags)) return ''
+
+  const options = merge(
+    {
+      allowedTags: providedOptions?.allowedTags || [
+        'a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'u', 'ul'
+      ],
+      allowedAttributes: providedOptions?.allowedAttributes || {
+        a: ['href', 'data-user-id', 'data-entity-type', 'target']
+      }
+    },
+    providedOptions
+  )
 
   // remove leading &nbsp; (a side-effect of contenteditable)
   const strippedText = text.replace(/<p>&nbsp;/gi, '<p>')
 
-  return insane(strippedText, {
-    allowedTags: allowedTags || ALLOWED_TAGS_DEFAULT,
-    allowedAttributes: allowedAttributes || ALLOWED_ATTRIBUTES_DEFAULT
-  })
+  return insane(strippedText, options)
 }
 
 export function presentHTML (text, options = {}) {
@@ -37,13 +39,14 @@ export function presentHTML (text, options = {}) {
     noLinks,
     truncate: truncateLength,
     sanitize = false,
-    allowedTags,
-    allowedAttributes
+    sanitizeOptions = {}
   } = options
   let processedText = text
 
+  // Note: Unless used on the backend text should be assumed to
+  // already be sanitized when using this function
   if (sanitize) {
-    processedText = sanitizeHTML(text, allowedTags, allowedAttributes)
+    processedText = sanitizeHTML(text, sanitizeOptions)
   }
 
   // make links and hashtags
@@ -58,22 +61,29 @@ export function presentHTML (text, options = {}) {
   return processedText
 }
 
-export const truncateHTML = (html, length) => {
-  return truncHTML(html, length, {
-    sanitizer: {
-      allowedAttributes: {
-        a: ['href', 'class', 'data-search']
+export const truncateHTML = (html, length, providedOptions = {}) => {
+  const options = merge(
+    {
+      sanitizer: {
+        allowedAttributes: {
+          a: providedOptions?.sanitizer?.allowedAttributes || [
+            'href', 'class', 'data-search'
+          ]
+        }
       }
-    }
-  }).html
+    },
+    providedOptions
+  )
+
+  return truncHTML(html, length, options).html
 }
 
 export const truncateText = (text, length) => {
   return truncText(text, length)
 }
 
-export function textLengthHTML (htmlOrText) {
-  return htmlToText(htmlOrText).length
+export function textLengthHTML (htmlOrText, options) {
+  return htmlToText(htmlOrText, options).length
 }
 
 export const markdown = text => {
@@ -82,8 +92,22 @@ export const markdown = text => {
   )
 }
 
-export function htmlToText (html) {
-  return convertHtmlToText(html)
+export function htmlToText (html, providedOptions = {}) {
+  const options = merge(
+    {
+      selectors: [
+        {
+          selector: 'a',
+          options: {
+            ignoreHref: true
+          }
+        }
+      ]
+    },
+    providedOptions
+  )
+
+  return convertHtmlToText(html, options)
 }
 
 //

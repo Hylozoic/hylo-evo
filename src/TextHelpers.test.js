@@ -6,10 +6,6 @@ describe('sanitizeHTML', () => {
     expect(TextHelpers.sanitizeHTML()).toBe('')
   })
 
-  it('returns empty string if whitelist is not an array', () => {
-    expect(TextHelpers.sanitizeHTML('foo', {})).toBe('')
-  })
-
   it('allows whitelist to be undefined', () => {
     expect(TextHelpers.sanitizeHTML('foo')).toBe('foo')
   })
@@ -21,14 +17,14 @@ describe('sanitizeHTML', () => {
   it('removes tags not on a whitelist', () => {
     const expected = 'Wombats are great.<div>They poop square.</div>'
     const unsafe = 'Wombats are great.<em>So great.</em><div>They poop square.</div>'
-    const actual = TextHelpers.sanitizeHTML(unsafe, ['div'])
+    const actual = TextHelpers.sanitizeHTML(unsafe, { allowedTags: ['div'] })
     expect(actual).toBe(expected)
   })
 
   it('removes attributes not on a whitelist', () => {
     const expected = '<p id="wombat-data">Wombats are great.</p>'
     const unsafe = '<p id="wombat-data" class="main-wombat">Wombats are great.</p>'
-    const actual = TextHelpers.sanitizeHTML(unsafe, ['p'], { p: ['id'] })
+    const actual = TextHelpers.sanitizeHTML(unsafe, { allowTags: ['p'], allowedAttributes: { p: ['id'] } })
     expect(actual).toBe(expected)
   })
 })
@@ -66,6 +62,12 @@ describe('markdown', () => {
 
   it('sanitizes also', () => {
     expect(TextHelpers.markdown('*strong* **italic** <i>aa</i>')).toBe('<p><em>strong</em> <strong>italic</strong> </p>\n')
+  })
+})
+
+describe('htmlToText', () => {
+  it("shouldn't include text of href on links", () => {
+    expect(TextHelpers.htmlToText("<a href='/any/url'>Text</a> more text")).toBe('Text more text')
   })
 })
 

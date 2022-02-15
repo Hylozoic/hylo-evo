@@ -23,7 +23,6 @@
   "scripts": {
     "build": "rm -fr dist/* && microbundle",
     "start": "rm -fr dist/* && microbundle watch",
-    "publish": "yarn build && npm publish",
     "start:native": "concurrently 'yarn start' 'wml start'",
     "test": "jest"
   },
@@ -52,6 +51,7 @@
     "linkify-plugin-hashtag": "^3.0.4",
     "linkify-string": "^3.0.4",
     "linkifyjs": "^3.0.5",
+    "lodash": "~4.17.21",
     "marked": "^4.0.12",
     "moment-timezone": "^0.5.34",
     "pretty-date": "^0.2.0",
