@@ -90,6 +90,11 @@ module.exports = {
           requireEnsure: false
         }
       },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       // Using standard js linter
