@@ -4,7 +4,7 @@ import Editor from '@draft-js-plugins/editor'
 import createMentionPlugin from '@draft-js-plugins/mention'
 import createLinkifyPlugin from '@draft-js-plugins/linkify'
 import createToolbarPlugin, { Separator } from '@draft-js-plugins/static-toolbar'
-import { EditorState } from 'draft-js'
+import { EditorState, RichUtils, KeyBindingUtil } from 'draft-js'
 import { Validators } from 'hylo-shared'
 import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import cx from 'classnames'
@@ -14,7 +14,7 @@ import '@draft-js-plugins/static-toolbar/lib/plugin.css'
 import {
   ItalicButton,
   BoldButton,
-  // UnderlineButton,
+  UnderlineButton,
   // CodeButton,
   // HeadlineOneButton,
   // HeadlineTwoButton,
@@ -186,16 +186,22 @@ export default class HyloEditor extends Component {
   onHandleReturn = (event) => {
     const { submitOnReturnHandler } = this.props
     const { editorState } = this.state
-    if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
-      if (!event.shiftKey) {
-        submitOnReturnHandler(editorState)
-        this.setState({
-          editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
-        })
-        return 'handled'
-      }
-      return 'not-handled'
+
+    if (KeyBindingUtil.isSoftNewlineEvent(event)) {
+      const newEditorState = RichUtils.insertSoftNewline(this.state.editorState)
+      this.handleChange(newEditorState)
+      return 'handled'
     }
+
+    if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
+      submitOnReturnHandler(editorState)
+      this.setState({
+        editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
+      })
+      return 'handled'
+    }
+
+    return 'not-handled'
   }
 
   toggleMentionsPluginOpenState = key => status => {
@@ -251,6 +257,7 @@ export default class HyloEditor extends Component {
             <>
               <BoldButton {...externalProps} />
               <ItalicButton {...externalProps} />
+              <UnderlineButton {...externalProps} />
               <Separator {...externalProps} />
               <UnorderedListButton {...externalProps} />
             </>

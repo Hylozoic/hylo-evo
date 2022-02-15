@@ -3,6 +3,19 @@
     max-height: 175px;
     overflow: auto;
   }
+  // The following styles should mirror presentation formatting
+  // of related HTML elements created once displayed
+  .public-DraftStyleDefault-block {
+    margin-bottom: 1rem
+  }
+  .public-DraftStyleDefault-ul {
+    margin-bottom: 1rem
+  }
+  .public-DraftStyleDefault-unorderedListItem {
+    .public-DraftStyleDefault-block {
+      margin-bottom: 0
+    }
+  }
 }
 
 // @import 'node_modules/draft-js-mention-plugin/lib/plugin.css';

@@ -9,7 +9,8 @@ import './Message.scss'
 export default function Message ({ message, isHeader }) {
   const person = message.creator
   const pending = message.id.slice(0, 13) === 'messageThread'
-  let text = TextHelpers.present(message.text.replace(/\n/g, '<br />'), { noP: true })
+  // The newline `replace` to <br> could be removed if we used HyloEditor here
+  const text = pending ? '' : TextHelpers.presentHTML(message.text.replace(/\n/g, '<br />'))
   const sName = cx('message', { messageHeader: isHeader })
 
   return <div styleName={sName}
