@@ -284,7 +284,7 @@ export const queryParamWhitelist = [
   'topic',
   'type',
   'page',
-  'coord'
+  'nearCoord'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {

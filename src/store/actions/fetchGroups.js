@@ -4,8 +4,8 @@ import { FETCH_GROUPS } from 'store/constants'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
-// actions
-export function fetchGroups ({ offset, order, search, slug, sortBy, coord, pageSize = 20 }) {
+
+export function fetchGroups ({ offset, order, search, slug, sortBy, nearCoord, pageSize = 20 }) {
   var query, extractModel, getItems
 
   query = groupQuery
@@ -17,8 +17,8 @@ export function fetchGroups ({ offset, order, search, slug, sortBy, coord, pageS
     graphql: {
       query,
       variables: {
-        coord,
         first: pageSize,
+        nearCoord,
         offset: offset,
         order,
         search,
@@ -38,20 +38,20 @@ export function fetchGroups ({ offset, order, search, slug, sortBy, coord, pageS
 const groupQuery = `query (
   $boundingBox: [PointInput],
   $first: Int,
+  $nearCoord: PointInput,
   $offset: Int,
   $order: String,
   $search: String,
-  $sortBy: String,
-  $coord: PointInput
+  $sortBy: String
 ) {
   groups( 
     boundingBox: $boundingBox,
     first: $first,
+    nearCoord: $nearCoord,
     offset: $offset,
     order: $order,
     search: $search,
-    sortBy: $sortBy,
-    coord: $coord
+    sortBy: $sortBy
   ) {
     hasMore
     total

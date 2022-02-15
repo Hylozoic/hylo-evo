@@ -17,7 +17,7 @@ import './GroupSearch.scss'
 
 export default function GroupSearch () {
   const currentUser = useSelector(state => getMe(state))
-  const coord = currentUser.locationObject ? { lng: parseFloat(currentUser.locationObject.center.lng), lat: parseFloat(currentUser.locationObject.center.lat) } : null
+  const nearCoord = currentUser.locationObject ? { lng: parseFloat(currentUser.locationObject.center.lng), lat: parseFloat(currentUser.locationObject.center.lat) } : null
   const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
@@ -25,7 +25,7 @@ export default function GroupSearch () {
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
-  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, coord, visibility: [2, 3] })
+  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3] })
   useEffect(() => {
     setOffset(0)
   }, [search, sortBy])
@@ -36,7 +36,7 @@ export default function GroupSearch () {
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>
       <b>Group Search</b>
-      { makeDropdown(sortBy, sortOptions(coord), setSortBy) }
+      { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy) }
     </div>
     <div styleName='search-input'>
       <div className='spacer' />
@@ -69,13 +69,13 @@ export default function GroupSearch () {
   </React.Fragment>
 }
 
-const sortOptions = (coord) => {
+const sortOptions = (nearCoord) => {
   let options = [
     { id: SORT_NAME, label: 'Group Name' },
     { id: SORT_SIZE, label: 'Member Count' }
   ]
 
-  if (coord) {
+  if (nearCoord) {
     options.push({ id: SORT_NEAREST, label: 'Nearest' })
   }
 

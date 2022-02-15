@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches last snapshot 1`] = `
+<Link
+  data-stylename="group-link"
+  to="/all/group/great-cause"
+>
+  <div
+    data-stylename="card"
+    onClick={[Function]}
+  >
+    <GroupHeader
+      constrained={false}
+      description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
+      group={
+        Object {
+          "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
+          "groupTopics": Object {
+            "toModelArray": [Function],
+          },
+          "id": 1,
+          "name": "A Great Cause",
+          "slug": "great-cause",
+        }
+      }
+      groupTopics={
+        Object {
+          "toModelArray": [Function],
+        }
+      }
+      highlightProps={Object {}}
+      id={1}
+      name="A Great Cause"
+      routeParams={Object {}}
+      slug="great-cause"
+    />
+    <div
+      data-stylename="group-description"
+    >
+      the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, 
+    </div>
+    <div
+      data-stylename="group-tags"
+    >
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Life"
+      />
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Love"
+      />
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Light"
+      />
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Lols"
+      />
+    </div>
+  </div>
+</Link>
+`;
+
+exports[`matches last snapshot with different config 1`] = `
+<Link
+  data-stylename="group-link"
+  to="/all/group/great-cause"
+>
+  <div
+    data-stylename="card constrained"
+    onClick={[Function]}
+  >
+    <GroupHeader
+      constrained={true}
+      description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
+      group={
+        Object {
+          "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
+          "groupTopics": Object {
+            "toModelArray": [Function],
+          },
+          "id": 1,
+          "name": "A Great Cause",
+          "slug": "great-cause",
+        }
+      }
+      groupTopics={
+        Object {
+          "toModelArray": [Function],
+        }
+      }
+      highlightProps={Object {}}
+      id={1}
+      name="A Great Cause"
+      routeParams={Object {}}
+      slug="great-cause"
+    />
+    <div
+      data-stylename="group-description"
+    >
+      the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, 
+    </div>
+    <div
+      data-stylename="group-tags"
+    >
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Life"
+      />
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Love"
+      />
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Light"
+      />
+      <Pill
+        darkText={true}
+        data-stylename="tag-pill"
+        label="Lols"
+      />
+    </div>
+  </div>
+</Link>
+`;
