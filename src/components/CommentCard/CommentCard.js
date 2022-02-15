@@ -15,13 +15,11 @@ export default function CommentCard ({
   highlightProps
 }) {
   const { creator, post, slug, attachments } = comment
-  const postTitle = TextHelpers.present(post.title, { maxlength: 25, noP: true, noLinks: true })
-  const commentPresentOpts = {
-    maxlength: expanded ? null : 144,
-    noP: true,
+  const postTitle = TextHelpers.truncateText(post.title, 25)
+  const commentText = TextHelpers.presentHTML(comment.text, {
+    truncate: expanded ? null : 144,
     slug
-  }
-  const commentText = TextHelpers.present(comment.text, commentPresentOpts)
+  })
 
   return <span onClick={() => showDetails(comment.post.id)} styleName='link'>
     <div styleName={cx('comment-card', { expanded })}>

@@ -59,7 +59,7 @@ export default function createPost (postParams) {
       },
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
-        detailsLength: TextHelpers.textLength(details),
+        detailsLength: TextHelpers.textLengthHTML(details),
         isAnnouncement: sendAnnouncement
       }
     }

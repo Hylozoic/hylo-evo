@@ -70,9 +70,11 @@ export default class CommentForm extends Component {
       styleName='commentForm'
       className={className}
     >
-      { currentUser ? <AttachmentManager type='comment' id='new' /> : '' }
+      {currentUser && (
+        <AttachmentManager type='comment' id='new' />
+      )}
       <div styleName={cx('prompt', { 'disabled': !currentUser })}>
-        { currentUser
+        {currentUser
           ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
           : <Icon name='Person' styleName='anonymous-image' />
         }
@@ -88,7 +90,7 @@ export default class CommentForm extends Component {
           contentHTML={editorContent}
         />
 
-        { !currentUser
+        {!currentUser
           ? <Link to={'/login?returnToUrl=' + encodeURIComponent(window.location.pathname)} target={inIframe() ? '_blank' : ''} styleName='signupButton'>Sign up to reply</Link>
           : <UploadAttachmentButton
             type='comment'

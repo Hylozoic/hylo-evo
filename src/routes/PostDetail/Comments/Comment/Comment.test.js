@@ -53,8 +53,6 @@ describe('Comment', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-<<<<<<< HEAD
-=======
   it('sanitizes text', () => {
     const comment = {
       ...props.comment,
@@ -71,7 +69,6 @@ describe('Comment', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
->>>>>>> dev
   it('displays the delete menu when deleteComment is defined', () => {
     const wrapper = shallow(<Comment {...props} currentUser={{ id: 1 }} />)
     expect(wrapper).toMatchSnapshot()

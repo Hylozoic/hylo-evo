@@ -58,7 +58,7 @@ export class Comment extends Component {
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
-    const presentedText = TextHelpers.present(text, { slug })
+    const presentedText = TextHelpers.presentHTML(text, { slug })
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},

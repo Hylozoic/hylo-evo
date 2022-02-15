@@ -121,8 +121,3 @@ export const fromRaw = (unknownContentState) => {
     ? unknownContentState
     : convertFromRaw(unknownContentState)
 }
-
-// export function fromString (contentStateString) {
-//   const contentStateRaw = JSON.parse(contentStateString)
-//   return convertFromRaw(contentStateRaw)
-// }

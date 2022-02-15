@@ -127,8 +127,8 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessage
 
   var displayText = lastMessageCreator(message, currentUser, participants) + message.text
 
-  if (TextHelpers.textLength(displayText) > maxMessageLength) {
-    displayText = `${TextHelpers.truncate(displayText, maxMessageLength)}...`
+  if (TextHelpers.textLengthHTML(displayText) > maxMessageLength) {
+    displayText = `${TextHelpers.truncateHTML(displayText, maxMessageLength)}...`
   }
 
   return <li styleName={cx('thread', { unread: isUnread(thread) })}

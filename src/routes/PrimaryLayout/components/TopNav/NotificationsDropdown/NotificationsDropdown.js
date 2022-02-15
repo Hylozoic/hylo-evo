@@ -23,8 +23,6 @@ import {
   ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST,
   ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED
 } from 'store/models/Notification'
-import striptags from 'striptags'
-import { decode } from 'ent'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
@@ -221,19 +219,19 @@ export function NotificationHeader ({ notification }) {
 export function NotificationBody ({ notification }) {
   const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
 
-  const truncateForBody = text =>
-    text && TextHelpers.textLength(text) > 76 ? TextHelpers.truncate(text, 76) : text
+  const truncateHTML = html => TextHelpers.truncateText(TextHelpers.htmlToText(html), 76)
+  const truncateText = text => TextHelpers.truncateText(text, 76)
 
   switch (action) {
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
-      var text = decode(striptags(truncateForBody(comment.text)))
+      var text = truncateHTML(comment.text)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
     case ACTION_TAG:
     case ACTION_MENTION:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
@@ -250,22 +248,22 @@ export function NotificationBody ({ notification }) {
         <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_ANNOUNCEMENT:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
     case ACTION_DONATION_TO:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>You</span> contributed ${contributionAmount / 100} to "{text}"
       </div>
     case ACTION_DONATION_FROM:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{actor.name}</span> contributed ${contributionAmount / 100} to "{text}"
       </div>
     case ACTION_EVENT_INVITATION:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> invited you to: "{text}"
       </div>

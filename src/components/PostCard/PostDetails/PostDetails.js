@@ -25,9 +25,9 @@ export default function PostDetails ({
   canEdit,
   ...post
 }) {
-  let details = TextHelpers.present(providedDetails, { slug })
-  if (!expanded && TextHelpers.textLength(details) > maxDetailsLength) {
-    details = TextHelpers.truncate(details, maxDetailsLength)
+  let details = TextHelpers.presentHTML(providedDetails, { slug })
+  if (!expanded && TextHelpers.textLengthHTML(details) > maxDetailsLength) {
+    details = TextHelpers.truncateHTML(details, maxDetailsLength)
   }
 
   const postType = get('type', post)
