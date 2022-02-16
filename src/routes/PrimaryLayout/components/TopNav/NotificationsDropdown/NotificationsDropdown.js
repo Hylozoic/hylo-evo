@@ -26,16 +26,16 @@ import {
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
-const { array, string, func } = PropTypes
+const NOTIFICATION_TEXT_MAX = 76
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
-    fetchNotifications: func,
-    markActivityRead: func,
-    markAllActivitiesRead: func,
-    renderToggleChildren: func,
-    notifications: array,
-    className: string
+    fetchNotifications: PropTypes.func,
+    markActivityRead: PropTypes.func,
+    markAllActivitiesRead: PropTypes.func,
+    renderToggleChildren: PropTypes.func,
+    notifications: PropTypes.array,
+    className: PropTypes.string
   }
 
   constructor (props) {
@@ -216,11 +216,12 @@ export function NotificationHeader ({ notification }) {
   return null
 }
 
+export const truncateHTML = html => TextHelpers.truncateText(TextHelpers.htmlToText(html), NOTIFICATION_TEXT_MAX)
+
+export const truncateText = text => TextHelpers.truncateText(text, NOTIFICATION_TEXT_MAX)
+
 export function NotificationBody ({ notification }) {
   const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
-
-  const truncateHTML = html => TextHelpers.truncateText(TextHelpers.htmlToText(html), 76)
-  const truncateText = text => TextHelpers.truncateText(text, 76)
 
   switch (action) {
     case ACTION_NEW_COMMENT:
