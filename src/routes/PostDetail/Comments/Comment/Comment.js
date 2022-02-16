@@ -40,6 +40,8 @@ export class Comment extends Component {
     this.setState({ editing: true })
   }
 
+  handleEscape = () => this.setState({ editing: false })
+
   saveComment = editorState => {
     const { comment } = this.props
     const contentState = editorState.getCurrentContent()
@@ -59,7 +61,6 @@ export class Comment extends Component {
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const presentedText = TextHelpers.presentHTML(text, { slug })
-
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
@@ -80,7 +81,9 @@ export class Comment extends Component {
             <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
             </div>
-            {dropdownItems.length > 0 && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />}
+            {dropdownItems.length > 0 && (
+              <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />
+            )}
           </div>
         </div>
         <CardImageAttachments attachments={attachments} linked styleName='images' />
@@ -92,6 +95,7 @@ export class Comment extends Component {
               onChange={this.startTyping}
               contentHTML={text || ''}
               parentComponent={'CommentForm'}
+              onEscape={this.handleEscape}
               submitOnReturnHandler={this.saveComment}
             />
           )}

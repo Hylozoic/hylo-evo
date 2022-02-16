@@ -183,7 +183,7 @@ export default class HyloEditor extends Component {
     return this.props.findTopics(value)
   }
 
-  onHandleReturn = (event) => {
+  onReturn = (event) => {
     const { submitOnReturnHandler } = this.props
     const { editorState } = this.state
 
@@ -203,6 +203,8 @@ export default class HyloEditor extends Component {
 
     return 'not-handled'
   }
+
+  handleEscape = () => this.props.onEscape && this.props.onEscape()
 
   toggleMentionsPluginOpenState = key => status => {
     this.setState({ [`${key}Open`]: status, submitOnReturnEnabled: !status })
@@ -266,11 +268,12 @@ export default class HyloEditor extends Component {
         <Editor
           editorState={editorState}
           spellCheck
+          onEscape={this.handleEscape}
           stripPastedStyles
           onChange={this.handleChange}
           readOnly={readOnly}
           placeholder={placeholder}
-          handleReturn={this.onHandleReturn}
+          handleReturn={this.onReturn}
           plugins={plugins}
           ref={this.editor}
         />

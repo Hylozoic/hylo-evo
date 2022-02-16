@@ -1,4 +1,5 @@
 import React from 'react'
+import { trim } from 'lodash/fp'
 import Immutable from 'immutable'
 import { convertToHTML, convertFromHTML } from 'draft-convert'
 import { convertToRaw, convertFromRaw } from 'draft-js'
@@ -95,6 +96,11 @@ export const toHTML = (unknownContentState, { slug = ALL_GROUPS_CONTEXT_SLUG } =
     ? unknownContentState
     : convertFromRaw(unknownContentState)
   const result = convertToHTML({
+    blockToHTML: (block) => {
+      if (block.type === 'unstyled' && trim(block.text) === '') {
+        return <br />
+      }
+    },
     entityToHTML: (entity, originalText) => {
       switch (entity.type) {
         case MENTION_ENTITY_TYPE:
