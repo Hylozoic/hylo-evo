@@ -38,39 +38,6 @@ export function topicFromLink (createEntity, node) {
   )
 }
 
-function mentionToLink (_, mention, slug) {
-  return (
-    <a
-      href={PathHelpers.mentionPath(mention.get('id'), slug)}
-      data-entity-type={MENTION_ENTITY_TYPE}
-      data-user-id={mention.get('id')}
-      className='mention'
-    />
-  )
-}
-
-function topicToLink (_, topic, slug) {
-  return (
-    <a
-      href={PathHelpers.topicPath(topic.get('name'), slug)}
-      data-entity-type={TOPIC_ENTITY_TYPE}
-      data-search={topic.get('name')}
-      className='hashtag'
-    />
-  )
-}
-
-// function externalLink (originalText, href) {
-//   return createElement(
-//     'a',
-//     {
-//       href,
-//       target: '_blank'
-//     },
-//     originalText
-//   )
-// }
-
 export function fromHTML (html, { raw = false } = {}) {
   const convertor = convertFromHTML(
     {
@@ -89,6 +56,40 @@ export function fromHTML (html, { raw = false } = {}) {
     ? convertToRaw(contentState)
     : contentState
 }
+
+export function mentionToLink (_, mention, slug) {
+  return (
+    <a
+      href={PathHelpers.mentionPath(mention.get('id'), slug)}
+      data-entity-type={MENTION_ENTITY_TYPE}
+      data-user-id={mention.get('id')}
+      className='mention'
+    />
+  )
+}
+
+export function topicToLink (_, topic, slug) {
+  return (
+    <a
+      href={PathHelpers.topicPath(topic.get('name'), slug)}
+      data-entity-type={TOPIC_ENTITY_TYPE}
+      data-search={topic.get('name')}
+      className='hashtag'
+    />
+  )
+}
+
+// TODO: Can maybe linkify here and then skip in presentHTML (for URLs that are <a hrefs)
+// function externalLink (originalText, href) {
+//   return createElement(
+//     'a',
+//     {
+//       href,
+//       target: '_blank'
+//     },
+//     originalText
+//   )
+// }
 
 export const toHTML = (unknownContentState, { slug = ALL_GROUPS_CONTEXT_SLUG } = {}) => {
   // Automtically converts from raw format if not a contentState object

@@ -9,8 +9,12 @@ import './Message.scss'
 export default function Message ({ message, isHeader }) {
   const person = message.creator
   const pending = message.id.slice(0, 13) === 'messageThread'
-  // The newline `replace` to <br> could be removed if we used HyloEditor here
-  const text = pending ? 'sending...' : TextHelpers.presentHTML(message.text.replace(/\n/g, '<br />'))
+  // TODO: New line replacement is happening on both Web and Mobile
+  //       This would probably be better handled as a markdown editor
+  //       which sends HTML to API or an HTML editor (HyloEditor) in both places
+  const text = pending
+    ? 'sending...'
+    : TextHelpers.presentHTML(TextHelpers.markdown(message.text))
   const sName = cx('message', { messageHeader: isHeader })
 
   return (

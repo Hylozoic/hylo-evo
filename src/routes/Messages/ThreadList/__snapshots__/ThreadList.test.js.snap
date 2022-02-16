@@ -74,6 +74,11 @@ exports[`ThreadListItem matches the last snapshot 1`] = `
         names="Jo and La"
       />
       <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "",
+          }
+        }
         data-stylename="thread-message-text"
       />
     </div>
@@ -109,6 +114,11 @@ exports[`ThreadListItem matches the last snapshot with 2 participants 1`] = `
         names="Jo"
       />
       <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "",
+          }
+        }
         data-stylename="thread-message-text"
       />
     </div>
@@ -144,6 +154,11 @@ exports[`ThreadListItem matches the last snapshot with just you 1`] = `
         names="You"
       />
       <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "",
+          }
+        }
         data-stylename="thread-message-text"
       />
     </div>

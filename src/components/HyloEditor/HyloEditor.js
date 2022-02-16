@@ -4,8 +4,9 @@ import Editor from '@draft-js-plugins/editor'
 import createMentionPlugin from '@draft-js-plugins/mention'
 import createLinkifyPlugin from '@draft-js-plugins/linkify'
 import createToolbarPlugin, { Separator } from '@draft-js-plugins/static-toolbar'
-import { EditorState, RichUtils, KeyBindingUtil } from 'draft-js'
+import { EditorState, RichUtils, KeyBindingUtil, getDefaultKeyBinding } from 'draft-js'
 import { Validators } from 'hylo-shared'
+import { keyMap } from 'util/textInput'
 import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import cx from 'classnames'
 import styles from './HyloEditor.scss'
@@ -204,6 +205,15 @@ export default class HyloEditor extends Component {
     return 'not-handled'
   }
 
+  handleKeyCommand = (command) => {
+    if (command === keyMap.ESC) {
+      this.handleEscape()
+      return 'handled'
+    }
+
+    return 'not-handled'
+  }
+
   handleEscape = () => this.props.onEscape && this.props.onEscape()
 
   toggleMentionsPluginOpenState = key => status => {
@@ -267,15 +277,16 @@ export default class HyloEditor extends Component {
         </Toolbar>
         <Editor
           editorState={editorState}
-          spellCheck
-          onEscape={this.handleEscape}
-          stripPastedStyles
           onChange={this.handleChange}
+          handleReturn={this.onReturn}
+          handleKeyCommand={this.handleKeyCommand}
+          keyBindingFn={hyloEditorKeyBindingFn}
           readOnly={readOnly}
           placeholder={placeholder}
-          handleReturn={this.onReturn}
           plugins={plugins}
           ref={this.editor}
+          stripPastedStyles
+          spellCheck
         />
         <MentionSuggestions
           open={mentionsOpen}
@@ -294,4 +305,12 @@ export default class HyloEditor extends Component {
       </div>
     )
   }
+}
+
+export function hyloEditorKeyBindingFn (e) {
+  if (e.keyCode === keyMap.ESC) {
+    return keyMap.ESC
+  }
+
+  return getDefaultKeyBinding(e)
 }
