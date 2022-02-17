@@ -34,28 +34,6 @@ exports[`Comment displays image attachments 1`] = `
           name="Replies"
         />
       </div>
-      <Dropdown
-        data-stylename="dropdown"
-        items={
-          Array [
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Remove",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
     </div>
   </div>
   <CardImageAttachments
@@ -134,13 +112,13 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
         items={
           Array [
             Object {
-              "icon": "Trash",
-              "label": "Delete",
+              "icon": "Edit",
+              "label": "Edit",
               "onClick": [Function],
             },
             Object {
               "icon": "Trash",
-              "label": "Remove",
+              "label": "Delete",
               "onClick": [Function],
             },
           ]
@@ -216,12 +194,147 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
           Array [
             Object {
               "icon": "Trash",
-              "label": "Delete",
+              "label": "Remove",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
+  </div>
+  <CardImageAttachments
+    attachments={Array []}
+    data-stylename="images"
+    linked={true}
+  />
+  <CardFileAttachments
+    attachments={Array []}
+    data-stylename="files"
+  />
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+  </Connect(ClickCatcher)>
+</div>
+`;
+
+exports[`Comment does not display the delete menu when deleteComment is not defined 1`] = `
+<div>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
+      >
+        <Icon
+          name="Replies"
+        />
+      </div>
+    </div>
+  </div>
+  <CardImageAttachments
+    attachments={Array []}
+    data-stylename="images"
+    linked={true}
+  />
+  <CardFileAttachments
+    attachments={Array []}
+    data-stylename="files"
+  />
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+  </Connect(ClickCatcher)>
+</div>
+`;
+
+exports[`Comment does not display the remove menu when removeComment is not defined 1`] = `
+<div>
+  <div
+    data-stylename="header"
+  >
+    <Avatar
+      avatarUrl="foo.jpg"
+      data-stylename="avatar"
+      url="/groups/foo/members/1"
+    />
+    <Link
+      data-stylename="userName"
+      to="/groups/foo/members/1"
+    >
+      Joe Smith
+    </Link>
+    <span
+      data-stylename="timestamp"
+    >
+      just now
+    </span>
+    <div
+      data-stylename="upperRight"
+    >
+      <div
+        data-for="reply-tip-undefined"
+        data-stylename="commentAction"
+        data-tip="Reply"
+        onClick={[MockFunction]}
+      >
+        <Icon
+          name="Replies"
+        />
+      </div>
+      <Dropdown
+        data-stylename="dropdown"
+        items={
+          Array [
+            Object {
+              "icon": "Edit",
+              "label": "Edit",
               "onClick": [Function],
             },
             Object {
               "icon": "Trash",
-              "label": "Remove",
+              "label": "Delete",
               "onClick": [Function],
             },
           ]
@@ -291,28 +404,6 @@ exports[`Comment renders correctly 1`] = `
           name="Replies"
         />
       </div>
-      <Dropdown
-        data-stylename="dropdown"
-        items={
-          Array [
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Remove",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
     </div>
   </div>
   <CardImageAttachments
@@ -372,28 +463,6 @@ exports[`Comment renders correctly when editing 1`] = `
           name="Replies"
         />
       </div>
-      <Dropdown
-        data-stylename="dropdown"
-        items={
-          Array [
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Remove",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
     </div>
   </div>
   <CardImageAttachments

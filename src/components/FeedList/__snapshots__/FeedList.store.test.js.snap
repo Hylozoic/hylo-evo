@@ -9,12 +9,14 @@ Object {
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $slug: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -36,11 +38,13 @@ posts: viewPosts(
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
+  isFulfilled: $isFulfilled,
   offset: $offset,
   order: $order,
   sortBy: $sortBy,
   search: $search,
-  topic: $topic
+  topic: $topic,
+  topics: $topics
 ) {
   hasMore
   total
@@ -191,11 +195,13 @@ Object {
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID,
+  $topics: [ID]
 ) {
   
 posts(
@@ -205,12 +211,14 @@ posts(
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
+  isFulfilled: $isFulfilled,
   offset: $offset,
   context: $context,
   order: $order,
   sortBy: $sortBy,
   search: $search,
-  topic: $topic
+  topic: $topic,
+  topics: $topics
 ) {
   hasMore
   total

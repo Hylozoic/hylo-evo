@@ -8,12 +8,14 @@ posts(
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
+  isFulfilled: $isFulfilled,
   offset: $offset,
   context: $context,
   order: $order,
   sortBy: $sortBy,
   search: $search,
-  topic: $topic
+  topic: $topic,
+  topics: $topics
 ) {
   hasMore
   total
