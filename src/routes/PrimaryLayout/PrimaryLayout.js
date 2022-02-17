@@ -347,7 +347,6 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
-            {/* Need to actually point to the correct page component in the route below */}
             <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />

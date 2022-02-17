@@ -26,9 +26,11 @@ export default function GroupSearch () {
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
   const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3] })
+
   useEffect(() => {
     setOffset(0)
   }, [search, sortBy])
+
   useEffect(() => {
     setOffset(groups.length)
   }, [groups])
