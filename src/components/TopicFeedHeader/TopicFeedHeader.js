@@ -42,10 +42,11 @@ export default function TopicFeedHeader ({
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
       <PostPrompt
-        firstName={currentUser.firstName()}
-        type={type}
         avatarUrl={currentUser.avatarUrl}
-        newPost={newPost} />
+        firstName={currentUser.firstName()}
+        newPost={newPost}
+        routeParams={{ topicName: topicName }}
+        type={type} />
     </div>
   </div>
 }

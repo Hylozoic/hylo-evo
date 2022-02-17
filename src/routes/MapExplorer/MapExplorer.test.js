@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 import MapExplorer from './MapExplorer'
 
 describe('MapExplorer', () => {
-
   it('Matches Snapshot', () => {
     const wrapper = shallow(<MapExplorer
       centerLocation={{ lat: 35.442845, lng: 7.916598 }}
@@ -34,5 +33,4 @@ describe('MapExplorer', () => {
     />)
     expect(wrapper.find('TabBar')).toBeTruthy()
   })
-
 })
