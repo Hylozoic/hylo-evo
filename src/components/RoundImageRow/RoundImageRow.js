@@ -6,7 +6,17 @@ import './RoundImageRow.scss'
 
 const { array, string, bool } = PropTypes
 
-export default function RoundImageRow ({ imageUrls = [], inline = false, className, vertical, cap, ascending, count, blue, ...rest }) {
+export default function RoundImageRow ({
+  imageUrls = [],
+  inline = false,
+  className,
+  vertical,
+  cap,
+  ascending,
+  count,
+  blue,
+  ...rest
+}) {
   var capped
   var extra
   if (cap && cap < imageUrls.length) {

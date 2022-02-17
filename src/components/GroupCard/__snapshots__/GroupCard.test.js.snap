@@ -11,10 +11,10 @@ exports[`matches last snapshot 1`] = `
   >
     <GroupHeader
       constrained={false}
-      description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
+      description="the description the description the description the description the description "
       group={
         Object {
-          "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
+          "description": "the description the description the description the description the description ",
           "groupTopics": Object {
             "toModelArray": [Function],
           },
@@ -37,7 +37,7 @@ exports[`matches last snapshot 1`] = `
     <div
       data-stylename="group-description"
     >
-      the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, 
+      the description the description the description the description the description 
     </div>
     <div
       data-stylename="group-tags"
@@ -78,10 +78,10 @@ exports[`matches last snapshot with different config 1`] = `
   >
     <GroupHeader
       constrained={true}
-      description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
+      description="the description the description the description the description the description "
       group={
         Object {
-          "description": "the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, ",
+          "description": "the description the description the description the description the description ",
           "groupTopics": Object {
             "toModelArray": [Function],
           },
@@ -104,7 +104,7 @@ exports[`matches last snapshot with different config 1`] = `
     <div
       data-stylename="group-description"
     >
-      the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, the description, which is long enough to add a "Read More" button, 
+      the description the description the description the description the description 
     </div>
     <div
       data-stylename="group-tags"

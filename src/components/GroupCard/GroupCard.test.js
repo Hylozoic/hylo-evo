@@ -1,7 +1,6 @@
 import GroupCard from './GroupCard'
 import { shallow } from 'enzyme'
 import React from 'react'
-// memberships, group = {}, routeParams = {}, highlightProps = {}, className, expanded = false, constrained = false, onClick = () => {}
 const props = {
   group: {
     id: 1,
@@ -27,11 +26,11 @@ const props = {
         } }
       ]
     },
-    description: 'the description, which is long enough to add a "Read More" button, ' +
-      'the description, which is long enough to add a "Read More" button, ' +
-      'the description, which is long enough to add a "Read More" button, ' +
-      'the description, which is long enough to add a "Read More" button, ' +
-      'the description, which is long enough to add a "Read More" button, '
+    description: 'the description ' +
+      'the description ' +
+      'the description ' +
+      'the description ' +
+      'the description '
   },
   expanded: false,
   memberships: [12, 24, 25, 346]

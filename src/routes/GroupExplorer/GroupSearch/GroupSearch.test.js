@@ -97,7 +97,7 @@ afterEach(() => {
 // Disable API mocking after the tests are done.
 afterAll(() => server.close())
 
-it.only('renders view controls', async () => {
+test('GroupSearch integration test', async () => {
   const { queryByText, getByRole } = render(<GroupSearch />, container, providersWithStore)
 
   expect(queryByText('Group Search')).toBeInTheDocument()
