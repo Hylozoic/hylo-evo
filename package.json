@@ -256,5 +256,9 @@
     "webpack-manifest-plugin": "^3.0.0",
     "whatwg-fetch": "2.0.3",
     "xhr": "^2.5.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "msw": "^0.36.8"
   }
 }
