@@ -22,7 +22,6 @@ exports[`CreateModal renders with no props 1`] = `
     >
       <span
         data-stylename="close-button"
-        onClick={[Function]}
       >
         <Icon
           name="Ex"
@@ -52,7 +51,6 @@ exports[`CreateModal renders with no props 1`] = `
     </div>
     <div
       data-stylename="create-modal-bg"
-      onClick={[Function]}
     />
   </div>
 </CSSTransition>
