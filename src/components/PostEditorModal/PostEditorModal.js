@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { omit } from 'lodash/fp'
+import { get, omit } from 'lodash/fp'
 import { CSSTransition } from 'react-transition-group'
 import { useDispatch } from 'react-redux'
 import { addQuerystringToPath, baseUrl, postUrl } from 'util/navigation'
@@ -16,7 +16,7 @@ export default function PostEditorModal (props) {
 
   if (!match) return null
 
-  const routeParams = match?.params || {}
+  const routeParams = get('params', match) || {}
   const querystringParams = getQuerystringParam(['s', 't'], null, { location })
 
   const { postId } = routeParams
@@ -45,7 +45,6 @@ export default function PostEditorModal (props) {
         <PostEditor
           {...props}
           onClose={hidePostEditor}
-          isDirty={isDirty}
           setIsDirty={setIsDirty}
         />
       </div>
