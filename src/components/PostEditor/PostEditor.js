@@ -530,7 +530,8 @@ export default class PostEditor extends React.Component {
       showFiles,
       showImages,
       addAttachment,
-      postTypes
+      postTypes,
+      onClose
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
@@ -593,6 +594,7 @@ export default class PostEditor extends React.Component {
               styleName='editor'
               placeholder={detailPlaceholder}
               onChange={this.handleDetailsChange}
+              onEscape={onClose}
               contentHTML={details}
               readOnly={loading}
               parentComponent={'PostEditor'}
