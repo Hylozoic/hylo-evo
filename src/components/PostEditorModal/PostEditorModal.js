@@ -1,26 +1,55 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import { get, omit } from 'lodash/fp'
 import { CSSTransition } from 'react-transition-group'
+import { useDispatch } from 'react-redux'
+import { addQuerystringToPath, baseUrl, postUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
+import { push } from 'connected-react-router'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import './PostEditorModal.scss'
 
-export default class PostEditorModal extends Component {
-  render () {
-    const { match, hidePostEditor } = this.props
+export default function PostEditorModal (props) {
+  const { match, location } = props
+  const dispatch = useDispatch()
+  const [isDirty, setIsDirty] = useState()
 
-    if (!match) return null
+  if (!match) return null
 
-    return <CSSTransition
-      classNames='post-editor'
-      in
-      appear
-      timeout={{ appear: 400, enter: 400, exit: 300 }}>
-      <div styleName='post-editor-modal' key='post-editor-modal'>
-        <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
-          <span styleName='close-button' onClick={hidePostEditor}><Icon name='Ex' /></span>
-          <PostEditor {...this.props} onClose={hidePostEditor} />
-        </div>
-      </div>
-    </CSSTransition>
+  const routeParams = get('params', match) || {}
+  const querystringParams = getQuerystringParam(['s', 't'], null, { location })
+
+  const { postId } = routeParams
+  const urlParams = omit(['postId', 'action'], routeParams)
+  const closeUrl = postId
+    ? postUrl(postId, urlParams, querystringParams)
+    : addQuerystringToPath(baseUrl(urlParams), querystringParams)
+
+  const hidePostEditor = () => dispatch(push(closeUrl))
+
+  const handleOnClose = () => {
+    const confirmed = !isDirty ||
+      window.confirm('Are you sure you want to exit? Changes won\'t be saved')
+    if (confirmed) {
+      confirmed && hidePostEditor()
+    }
   }
+
+  return <CSSTransition
+    classNames='post-editor'
+    in
+    appear
+    timeout={{ appear: 400, enter: 400, exit: 300 }}>
+    <div styleName='post-editor-modal' key='post-editor-modal'>
+      <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
+        <span styleName='close-button' onClick={handleOnClose}><Icon name='Ex' /></span>
+        <PostEditor
+          {...props}
+          onClose={hidePostEditor}
+          isDirty={isDirty}
+          setIsDirty={setIsDirty}
+        />
+      </div>
+    </div>
+  </CSSTransition>
 }
