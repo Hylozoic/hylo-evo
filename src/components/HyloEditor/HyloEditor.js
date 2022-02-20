@@ -16,14 +16,14 @@ import {
   ItalicButton,
   BoldButton,
   // UnderlineButton,
-  CodeButton,
+  // CodeButton,
   // HeadlineOneButton,
   // HeadlineTwoButton,
   // HeadlineThreeButton,
   UnorderedListButton,
   OrderedListButton,
-  BlockquoteButton,
-  CodeBlockButton
+  BlockquoteButton
+  // CodeBlockButton
 } from '@draft-js-plugins/buttons'
 
 export default class HyloEditor extends Component {
@@ -269,12 +269,10 @@ export default class HyloEditor extends Component {
             <>
               <BoldButton {...externalProps} />
               <ItalicButton {...externalProps} />
-              <CodeButton {...externalProps} />
               <Separator {...externalProps} />
               <UnorderedListButton {...externalProps} />
               <OrderedListButton {...externalProps} />
               <BlockquoteButton {...externalProps} />
-              <CodeBlockButton {...externalProps} />
             </>
           )}
         </Toolbar>
