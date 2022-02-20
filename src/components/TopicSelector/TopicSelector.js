@@ -106,6 +106,7 @@ export default class TopicSelector extends Component {
       })
     }
     this.props.clearTopics()
+    this.props.onChange && this.props.onChange()
   }
 
   render () {

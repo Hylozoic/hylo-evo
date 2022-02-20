@@ -82,21 +82,37 @@ export default class PostEditor extends React.Component {
     loading: false
   }
 
-  buildStateFromProps = ({ context, editing, currentGroup, post, topic, announcementSelected, postType }) => {
-    const defaultPostWithGroupsAndTopic = Object.assign({}, PostEditor.defaultProps.post, {
-      type: postType || PostEditor.defaultProps.post.type,
-      groups: currentGroup ? [currentGroup] : PostEditor.defaultProps.post.groups,
-      topics: topic ? [topic] : [],
-      detailsTopics: [],
-      acceptContributions: false,
-      isPublic: context === 'public'
-    })
-    const currentPost = post ? ({
-      ...post,
-      locationId: post.locationObject ? post.locationObject.id : null,
-      startTime: Moment(post.startTime),
-      endTime: Moment(post.endTime)
-    }) : defaultPostWithGroupsAndTopic
+  buildStateFromProps = ({
+    context,
+    editing,
+    currentGroup,
+    post,
+    topic,
+    announcementSelected,
+    postType
+  }) => {
+    const defaultPostWithGroupsAndTopic = Object.assign(
+      {},
+      PostEditor.defaultProps.post,
+      {
+        type: postType || PostEditor.defaultProps.post.type,
+        groups: currentGroup
+          ? [currentGroup]
+          : PostEditor.defaultProps.post.groups,
+        topics: topic ? [topic] : [],
+        detailsTopics: [],
+        acceptContributions: false,
+        isPublic: context === 'public'
+      }
+    )
+    const currentPost = post
+      ? {
+        ...post,
+        locationId: post.locationObject ? post.locationObject.id : null,
+        startTime: Moment(post.startTime),
+        endTime: Moment(post.endTime)
+      }
+      : defaultPostWithGroupsAndTopic
 
     return {
       post: currentPost,
@@ -153,7 +169,7 @@ export default class PostEditor extends React.Component {
 
   focus = () => this.editor.current && this.editor.current.focus()
 
-  handlePostTypeSelection = event => {
+  handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
     const { changeQueryString, location } = this.props
     changeQueryString({
@@ -173,12 +189,18 @@ export default class PostEditor extends React.Component {
 
   titlePlaceholderForPostType (type) {
     const { titlePlaceholderForPostType } = this.props
-    return titlePlaceholderForPostType[type] || titlePlaceholderForPostType['default']
+    return (
+      titlePlaceholderForPostType[type] ||
+      titlePlaceholderForPostType['default']
+    )
   }
 
   detailPlaceholderForPostType (type) {
     const { detailPlaceholderForPostType } = this.props
-    return detailPlaceholderForPostType[type] || detailPlaceholderForPostType['default']
+    return (
+      detailPlaceholderForPostType[type] ||
+      detailPlaceholderForPostType['default']
+    )
   }
 
   postTypeButtonProps = (forPostType) => {
@@ -193,7 +215,14 @@ export default class PostEditor extends React.Component {
         [styles[`selectable`]]: !loading && !active
       }
     )
-    const label = active ? <span styleName='initial-prompt'><span>{forPostType}</span> <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' /></span> : forPostType
+    const label = active ? (
+      <span styleName='initial-prompt'>
+        <span>{forPostType}</span>{' '}
+        <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
+      </span>
+    ) : (
+      forPostType
+    )
     return {
       label,
       onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection,
@@ -206,7 +235,12 @@ export default class PostEditor extends React.Component {
 
   handleTitleChange = (event) => {
     const title = event.target.value
-    title.length >= MAX_TITLE_LENGTH ? this.setState({ titleLengthError: true }) : this.setState({ titleLengthError: false })
+    title.length >= MAX_TITLE_LENGTH
+      ? this.setState({ titleLengthError: true })
+      : this.setState({ titleLengthError: false })
+    if (title !== this.state.post.title) {
+      this.props.setIsDirty(true)
+    }
     this.setState({
       post: { ...this.state.post, title },
       valid: this.isValid({ title })
@@ -218,17 +252,21 @@ export default class PostEditor extends React.Component {
       const contentState = editorState.getCurrentContent()
       this.setLinkPreview(contentState)
       this.updateTopics(contentState)
+      this.props.setIsDirty(true)
     }
   }
 
   toggleContributions = () => {
-    const { post, post: { acceptContributions } } = this.state
+    const {
+      post,
+      post: { acceptContributions }
+    } = this.state
     this.setState({
       post: { ...post, acceptContributions: !acceptContributions }
     })
   }
 
-  handleStartTimeChange = startTime => {
+  handleStartTimeChange = (startTime) => {
     this.validateTimeChange(startTime, this.state.post.endTime)
 
     this.setState({
@@ -237,7 +275,7 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  handleEndTimeChange = endTime => {
+  handleEndTimeChange = (endTime) => {
     this.validateTimeChange(this.state.post.startTime, endTime)
 
     this.setState({
@@ -248,22 +286,34 @@ export default class PostEditor extends React.Component {
 
   validateTimeChange = (startTime, endTime) => {
     if (endTime) {
-      startTime < endTime ? this.setState({ dateError: false }) : this.setState({ dateError: true })
+      startTime < endTime
+        ? this.setState({ dateError: false })
+        : this.setState({ dateError: true })
     }
   }
 
-  handleLocationChange = locationObject => {
+  handleLocationChange = (locationObject) => {
     this.setState({
-      post: { ...this.state.post, location: locationObject.fullText, locationId: locationObject.id },
+      post: {
+        ...this.state.post,
+        location: locationObject.fullText,
+        locationId: locationObject.id
+      },
       valid: this.isValid({ locationId: locationObject.id })
     })
   }
 
   setLinkPreview = (contentState) => {
-    const { pollingFetchLinkPreview, linkPreviewStatus, clearLinkPreview } = this.props
+    const {
+      pollingFetchLinkPreview,
+      linkPreviewStatus,
+      clearLinkPreview
+    } = this.props
     const { linkPreview } = this.state.post
     if (!contentState.hasText() && linkPreviewStatus) return clearLinkPreview()
-    if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') return
+    if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') {
+      return
+    }
     if (linkPreview) return
     pollingFetchLinkPreview(HyloContentState.toHTML(contentState))
   }
@@ -273,12 +323,18 @@ export default class PostEditor extends React.Component {
     const $ = cheerio.load(html, null, false)
     var topicNames = []
     $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
-      topicNames.push($(el).text().replace('#', '')))
+      topicNames.push($(el).text().replace('#', ''))
+    )
     const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
     if (hasChanged) {
       this.setState({
-        detailsTopics: topicNames.map(tn => ({ label: tn, name: tn, id: tn }))
+        detailsTopics: topicNames.map((tn) => ({
+          label: tn,
+          name: tn,
+          id: tn
+        }))
       })
+      this.props.setIsDirty(true)
     }
   })
 
@@ -289,11 +345,15 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  setSelectedGroups = groups => {
+  setSelectedGroups = (groups) => {
     this.setState({
       post: { ...this.state.post, groups },
       valid: this.isValid({ groups })
     })
+    const hasChanged = !isEqual(this.state.post.groups, groups)
+    if (hasChanged) {
+      this.props.setIsDirty(true)
+    }
   }
 
   togglePublic = () => {
@@ -303,52 +363,101 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  updateProjectMembers = members => {
+  updateProjectMembers = (members) => {
     this.setState({
       post: { ...this.state.post, members }
     })
   }
 
-  updateEventInvitations = eventInvitations => {
+  updateEventInvitations = (eventInvitations) => {
     this.setState({
       post: { ...this.state.post, eventInvitations }
     })
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, groups, startTime, endTime } = Object.assign({}, this.state.post, postUpdates)
+    const { type, title, groups, startTime, endTime } = Object.assign(
+      {},
+      this.state.post,
+      postUpdates
+    )
     const { isEvent } = this.props
 
-    return !!(this.editor.current &&
+    return !!(
+      this.editor.current &&
       groups &&
       type.length > 0 &&
       title.length > 0 &&
       groups.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && (startTime < endTime)))
+      (!isEvent || (endTime && startTime < endTime))
     )
   }
 
   save = async () => {
     const {
-      editing, createPost, updatePost, onClose,
-      goToPost, setAnnouncement, announcementSelected,
-      imageAttachments, fileAttachments, fetchLocation, ensureLocationIdIfCoordinate
+      editing,
+      createPost,
+      updatePost,
+      onClose,
+      goToPost,
+      setAnnouncement,
+      announcementSelected,
+      imageAttachments,
+      fileAttachments,
+      fetchLocation,
+      ensureLocationIdIfCoordinate
     } = this.props
     const {
-      id, type, title, groups, linkPreview, members,
-      acceptContributions, eventInvitations, startTime,
-      endTime, location, locationId, isPublic
+      id,
+      type,
+      title,
+      groups,
+      linkPreview,
+      members,
+      acceptContributions,
+      eventInvitations,
+      startTime,
+      endTime,
+      location,
+      locationId,
+      isPublic
     } = this.state.post
     const details = this.editor.current.getContentHTML()
-    const topicNames = this.topicSelector.current.getSelected().map(t => t.name)
-    const memberIds = members && members.map(m => m.id)
-    const eventInviteeIds = eventInvitations && eventInvitations.map(m => m.id)
-    const imageUrls = imageAttachments && imageAttachments.map(attachment => attachment.url)
-    const fileUrls = fileAttachments && fileAttachments.map(attachment => attachment.url)
-    const actualLocationId = await ensureLocationIdIfCoordinate({ fetchLocation, location, locationId })
+    const topicNames = this.topicSelector.current
+      .getSelected()
+      .map((t) => t.name)
+    const memberIds = members && members.map((m) => m.id)
+    const eventInviteeIds =
+      eventInvitations && eventInvitations.map((m) => m.id)
+    const imageUrls =
+      imageAttachments && imageAttachments.map((attachment) => attachment.url)
+    const fileUrls =
+      fileAttachments && fileAttachments.map((attachment) => attachment.url)
+    const actualLocationId = await ensureLocationIdIfCoordinate({
+      fetchLocation,
+      location,
+      locationId
+    })
     const postToSave = {
-      id, type, title, details, groups, linkPreview, imageUrls, fileUrls, topicNames, sendAnnouncement: announcementSelected, memberIds, acceptContributions, eventInviteeIds, startTime, endTime, location, locationId: actualLocationId, isPublic
+      id,
+      type,
+      title,
+      details,
+      groups,
+      linkPreview,
+      imageUrls,
+      fileUrls,
+      topicNames,
+      sendAnnouncement: announcementSelected,
+      memberIds,
+      acceptContributions,
+      eventInviteeIds,
+      startTime,
+      endTime,
+      location,
+      locationId: actualLocationId,
+      isPublic
     }
     const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)
@@ -380,185 +489,287 @@ export default class PostEditor extends React.Component {
 
   render () {
     const {
-      titlePlaceholder, detailPlaceholder, titleLengthError,
-      dateError, valid, post, detailsTopics = [], showAnnouncementModal, showPostTypeMenu
+      titlePlaceholder,
+      detailPlaceholder,
+      titleLengthError,
+      dateError,
+      valid,
+      post,
+      detailsTopics = [],
+      showAnnouncementModal,
+      showPostTypeMenu
     } = this.state
     const {
-      id, type, title, details, groups, linkPreview, topics, members,
-      acceptContributions, eventInvitations, startTime, endTime, location,
+      id,
+      type,
+      title,
+      details,
+      groups,
+      linkPreview,
+      topics,
+      members,
+      acceptContributions,
+      eventInvitations,
+      startTime,
+      endTime,
+      location,
       locationObject
     } = post
     const {
-      currentGroup, currentUser, groupOptions, defaultTopics, loading, setAnnouncement,
-      announcementSelected, canModerate, myModeratedGroups, isProject,
-      isEvent, showFiles, showImages, addAttachment, postTypes
+      currentGroup,
+      currentUser,
+      groupOptions,
+      defaultTopics,
+      loading,
+      setAnnouncement,
+      announcementSelected,
+      canModerate,
+      myModeratedGroups,
+      isProject,
+      isEvent,
+      showFiles,
+      showImages,
+      addAttachment,
+      postTypes
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
-    const hasLocation = ['event', 'offer', 'request', 'resource', 'project'].includes(type)
+    const hasLocation = [
+      'event',
+      'offer',
+      'request',
+      'resource',
+      'project'
+    ].includes(type)
     const canHaveTimes = type !== 'discussion'
-    // Center location autocomplete either on post's current location, or current group's location, or current user's location
-    const curLocation = locationObject || get('0.locationObject', groups) || get('locationObject', currentUser)
+    // Center location autocomplete either on post's current location,
+    // or current group's location, or current user's location
+    const curLocation =
+      locationObject ||
+      get('0.locationObject', groups) ||
+      get('locationObject', currentUser)
 
-    return <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
-      <div styleName='header'>
-        <div styleName='initial'>
-          <div>
-            <Button {...this.postTypeButtonProps(type)} />
-            {showPostTypeMenu && <div styleName='postTypeMenu'>
-              {postTypes.filter(postType => postType !== type).map(postType => (
-                <Button {...this.postTypeButtonProps(postType)} />
-              ))}
-            </div>}
-          </div>
-        </div>
-      </div>
-      <div styleName='body'>
-        <div styleName='body-column'>
-          <RoundImage
-            medium
-            styleName='titleAvatar'
-            url={currentUser && currentUser.avatarUrl}
-          />
-        </div>
-        <div styleName='body-column'>
-          <input
-            type='text'
-            styleName='titleInput'
-            placeholder={titlePlaceholder}
-            value={title || ''}
-            onChange={this.handleTitleChange}
-            disabled={loading}
-            ref={this.titleInput}
-            maxLength={MAX_TITLE_LENGTH}
-          />
-          {titleLengthError && (
-            <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>
-          )}
-          <HyloEditor
-            styleName='editor'
-            placeholder={detailPlaceholder}
-            onChange={this.handleDetailsChange}
-            contentHTML={details}
-            readOnly={loading}
-            parentComponent={'PostEditor'}
-            ref={this.editor}
-          />
-        </div>
-      </div>
-      {linkPreview && (
-        <LinkPreview linkPreview={linkPreview} onClose={this.removeLinkPreview} />
-      )}
-      <AttachmentManager type='post' id={id} attachmentType='image' showAddButton showLabel showLoading />
-      <AttachmentManager type='post' id={id} attachmentType='file' showAddButton showLabel showLoading />
-      <div styleName='footer'>
-        {isProject && (
-          <div styleName='footerSection'>
-            <div styleName='footerSection-label'>Project Members</div>
-            <div styleName='footerSection-groups'>
-              <MemberSelector
-                initialMembers={members || []}
-                onChange={this.updateProjectMembers}
-                forGroups={groups}
-                readOnly={loading}
-              />
+    return (
+      <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
+        <div styleName='header'>
+          <div styleName='initial'>
+            <div>
+              <Button {...this.postTypeButtonProps(type)} />
+              {showPostTypeMenu && (
+                <div styleName='postTypeMenu'>
+                  {postTypes
+                    .filter((postType) => postType !== type)
+                    .map((postType) => (
+                      <Button {...this.postTypeButtonProps(postType)} />
+                    ))}
+                </div>
+              )}
             </div>
           </div>
-        )}
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Topics</div>
-          <div styleName='footerSection-topics'>
-            <TopicSelector
-              currentGroup={currentGroup}
-              selectedTopics={topics}
-              defaultTopics={defaultTopics}
-              detailsTopics={detailsTopics}
-              ref={this.topicSelector} />
-          </div>
         </div>
-        <div styleName='footerSection'>
-          <div styleName='footerSection-label'>Post in</div>
-          <div styleName='footerSection-groups'>
-            <GroupsSelector
-              options={groupOptions}
-              selected={groups}
-              onChange={this.setSelectedGroups}
+        <div styleName='body'>
+          <div styleName='body-column'>
+            <RoundImage
+              medium
+              styleName='titleAvatar'
+              url={currentUser && currentUser.avatarUrl}
+            />
+          </div>
+          <div styleName='body-column'>
+            <input
+              type='text'
+              styleName='titleInput'
+              placeholder={titlePlaceholder}
+              value={title || ''}
+              onChange={this.handleTitleChange}
+              disabled={loading}
+              ref={this.titleInput}
+              maxLength={MAX_TITLE_LENGTH}
+            />
+            {titleLengthError && (
+              <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>
+            )}
+            <HyloEditor
+              styleName='editor'
+              placeholder={detailPlaceholder}
+              onChange={this.handleDetailsChange}
+              contentHTML={details}
               readOnly={loading}
-              ref={this.groupsSelector}
+              parentComponent={'PostEditor'}
+              ref={this.editor}
             />
           </div>
         </div>
-        <PublicToggle togglePublic={this.togglePublic} isPublic={!!post.isPublic} />
-        {(canHaveTimes && dateError) && (
-          <span styleName='title-error'>{'End Time must be after Start Time'}</span>
+        {linkPreview && (
+          <LinkPreview
+            linkPreview={linkPreview}
+            onClose={this.removeLinkPreview}
+          />
         )}
-        {canHaveTimes && (
-          <div styleName='footerSection'>
-            <div styleName='footerSection-label'>Timeframe</div>
-            <div styleName='datePickerModule'>
-              <DatePicker value={startTime} placeholder={'Select Start'} onChange={this.handleStartTimeChange} />
-              <div styleName='footerSection-helper'>To</div>
-              <DatePicker value={endTime} placeholder={'Select End'} onChange={this.handleEndTimeChange} />
+        <AttachmentManager
+          type='post'
+          id={id}
+          attachmentType='image'
+          showAddButton
+          showLabel
+          showLoading
+        />
+        <AttachmentManager
+          type='post'
+          id={id}
+          attachmentType='file'
+          showAddButton
+          showLabel
+          showLoading
+        />
+        <div styleName='footer'>
+          {isProject && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>Project Members</div>
+              <div styleName='footerSection-groups'>
+                <MemberSelector
+                  initialMembers={members || []}
+                  onChange={this.updateProjectMembers}
+                  forGroups={groups}
+                  readOnly={loading}
+                />
+              </div>
             </div>
-          </div>
-        )}
-        {hasLocation && (
+          )}
           <div styleName='footerSection'>
-            <div styleName='footerSection-label alignedLabel'>Location</div>
-            <LocationInput
-              saveLocationToDB
-              locationObject={curLocation}
-              location={location}
-              onChange={this.handleLocationChange}
-              placeholder={`Where is your ${type} located?`}
-            />
-          </div>
-        )}
-        {isEvent && (
-          <div styleName='footerSection'>
-            <div styleName='footerSection-label'>Invite People</div>
-            <div styleName='footerSection-groups'>
-              <MemberSelector
-                initialMembers={eventInvitations || []}
-                onChange={this.updateEventInvitations}
-                forGroups={groups}
-                readOnly={loading}
+            <div styleName='footerSection-label'>Topics</div>
+            <div styleName='footerSection-topics'>
+              <TopicSelector
+                currentGroup={currentGroup}
+                selectedTopics={topics}
+                defaultTopics={defaultTopics}
+                detailsTopics={detailsTopics}
+                onChange={() => this.props.setIsDirty(true)}
+                ref={this.topicSelector}
               />
             </div>
           </div>
-        )}
-        {(isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS)) && (
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>Accept Contributions</div>
-            {hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions')}>
-              <Switch value={acceptContributions} onClick={this.toggleContributions} styleName='accept-contributions-switch' />
-              {!acceptContributions && <div styleName='accept-contributions-help'>If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.</div>}
-            </div>}
-            {!hasStripeAccount && <div styleName={cx('footerSection-groups', 'accept-contributions-help')}>
-              To accept financial contributions for this project, you have to connect a Stripe account. Go to <a href='/settings/payment'>Settings</a> to set it up. (Remember to save your changes before leaving this form)
-            </div>}
+            <div styleName='footerSection-label'>Post in</div>
+            <div styleName='footerSection-groups'>
+              <GroupsSelector
+                options={groupOptions}
+                selected={groups}
+                onChange={this.setSelectedGroups}
+                readOnly={loading}
+                ref={this.groupsSelector}
+              />
+            </div>
           </div>
-        )}
-        <ActionsBar
-          id={id}
-          addAttachment={addAttachment}
-          showImages={showImages}
-          showFiles={showFiles}
-          valid={valid}
-          loading={loading}
-          submitButtonLabel={this.buttonLabel()}
-          save={() => this.save()}
-          setAnnouncement={setAnnouncement}
-          announcementSelected={announcementSelected}
-          canModerate={canModerate}
-          toggleAnnouncementModal={this.toggleAnnouncementModal}
-          showAnnouncementModal={showAnnouncementModal}
-          groupCount={get('groups', post).length}
-          myModeratedGroups={myModeratedGroups}
-          groups={post.groups}
-        />
+          <PublicToggle
+            togglePublic={this.togglePublic}
+            isPublic={!!post.isPublic}
+          />
+          {canHaveTimes && dateError && (
+            <span styleName='title-error'>
+              {'End Time must be after Start Time'}
+            </span>
+          )}
+          {canHaveTimes && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>Timeframe</div>
+              <div styleName='datePickerModule'>
+                <DatePicker
+                  value={startTime}
+                  placeholder={'Select Start'}
+                  onChange={this.handleStartTimeChange}
+                />
+                <div styleName='footerSection-helper'>To</div>
+                <DatePicker
+                  value={endTime}
+                  placeholder={'Select End'}
+                  onChange={this.handleEndTimeChange}
+                />
+              </div>
+            </div>
+          )}
+          {hasLocation && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label alignedLabel'>Location</div>
+              <LocationInput
+                saveLocationToDB
+                locationObject={curLocation}
+                location={location}
+                onChange={this.handleLocationChange}
+                placeholder={`Where is your ${type} located?`}
+              />
+            </div>
+          )}
+          {isEvent && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>Invite People</div>
+              <div styleName='footerSection-groups'>
+                <MemberSelector
+                  initialMembers={eventInvitations || []}
+                  onChange={this.updateEventInvitations}
+                  forGroups={groups}
+                  readOnly={loading}
+                />
+              </div>
+            </div>
+          )}
+          {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && (
+            <div styleName='footerSection'>
+              <div styleName='footerSection-label'>Accept Contributions</div>
+              {hasStripeAccount && (
+                <div
+                  styleName={cx('footerSection-groups', 'accept-contributions')}
+                >
+                  <Switch
+                    value={acceptContributions}
+                    onClick={this.toggleContributions}
+                    styleName='accept-contributions-switch'
+                  />
+                  {!acceptContributions && (
+                    <div styleName='accept-contributions-help'>
+                      If you turn 'Accept Contributions' on, people will be able
+                      to send money to your Stripe connected account to support
+                      this project.
+                    </div>
+                  )}
+                </div>
+              )}
+              {!hasStripeAccount && (
+                <div
+                  styleName={cx(
+                    'footerSection-groups',
+                    'accept-contributions-help'
+                  )}
+                >
+                  To accept financial contributions for this project, you have
+                  to connect a Stripe account. Go to{' '}
+                  <a href='/settings/payment'>Settings</a> to set it up.
+                  (Remember to save your changes before leaving this form)
+                </div>
+              )}
+            </div>
+          )}
+          <ActionsBar
+            id={id}
+            addAttachment={addAttachment}
+            showImages={showImages}
+            showFiles={showFiles}
+            valid={valid}
+            loading={loading}
+            submitButtonLabel={this.buttonLabel()}
+            save={() => this.save()}
+            setAnnouncement={setAnnouncement}
+            announcementSelected={announcementSelected}
+            canModerate={canModerate}
+            toggleAnnouncementModal={this.toggleAnnouncementModal}
+            showAnnouncementModal={showAnnouncementModal}
+            groupCount={get('groups', post).length}
+            myModeratedGroups={myModeratedGroups}
+            groups={post.groups}
+          />
+        </div>
       </div>
-    </div>
+    )
   }
 }
 
@@ -580,62 +791,68 @@ export function ActionsBar ({
   myModeratedGroups,
   groups
 }) {
-  return <div styleName='actionsBar'>
-    <div styleName='actions'>
-      <UploadAttachmentButton
-        type='post'
-        id={id}
-        attachmentType='image'
-        onSuccess={attachment => addAttachment('post', id, attachment)}
-        allowMultiple
-        disable={showImages}>
-        <Icon
-          name='AddImage'
-          styleName={cx('action-icon', { 'highlight-icon': showImages })}
-        />
-      </UploadAttachmentButton>
-      <UploadAttachmentButton
-        type='post'
-        id={id}
-        attachmentType='file'
-        onSuccess={attachment => addAttachment('post', id, attachment)}
-        allowMultiple
-        disable={showFiles}>
-        <Icon
-          name='Paperclip'
-          styleName={cx('action-icon', { 'highlight-icon': showFiles })}
-        />
-      </UploadAttachmentButton>
-      {canModerate && (
-        <span data-tip='Send Announcement' data-for='announcement-tt'>
+  return (
+    <div styleName='actionsBar'>
+      <div styleName='actions'>
+        <UploadAttachmentButton
+          type='post'
+          id={id}
+          attachmentType='image'
+          onSuccess={(attachment) => addAttachment('post', id, attachment)}
+          allowMultiple
+          disable={showImages}
+        >
           <Icon
-            name='Announcement'
-            onClick={() => setAnnouncement(!announcementSelected)}
-            styleName={cx('action-icon', { 'highlight-icon': announcementSelected })}
+            name='AddImage'
+            styleName={cx('action-icon', { 'highlight-icon': showImages })}
           />
-          <ReactTooltip
-            effect={'solid'}
-            delayShow={550}
-            id='announcement-tt'
+        </UploadAttachmentButton>
+        <UploadAttachmentButton
+          type='post'
+          id={id}
+          attachmentType='file'
+          onSuccess={(attachment) => addAttachment('post', id, attachment)}
+          allowMultiple
+          disable={showFiles}
+        >
+          <Icon
+            name='Paperclip'
+            styleName={cx('action-icon', { 'highlight-icon': showFiles })}
           />
-        </span>
-      )}
-      {showAnnouncementModal && (
-        <SendAnnouncementModal
-          closeModal={toggleAnnouncementModal}
-          save={save}
-          groupCount={groupCount}
-          myModeratedGroups={myModeratedGroups}
-          groups={groups}
-        />
-      )}
+        </UploadAttachmentButton>
+        {canModerate && (
+          <span data-tip='Send Announcement' data-for='announcement-tt'>
+            <Icon
+              name='Announcement'
+              onClick={() => setAnnouncement(!announcementSelected)}
+              styleName={cx('action-icon', {
+                'highlight-icon': announcementSelected
+              })}
+            />
+            <ReactTooltip
+              effect={'solid'}
+              delayShow={550}
+              id='announcement-tt'
+            />
+          </span>
+        )}
+        {showAnnouncementModal && (
+          <SendAnnouncementModal
+            closeModal={toggleAnnouncementModal}
+            save={save}
+            groupCount={groupCount}
+            myModeratedGroups={myModeratedGroups}
+            groups={groups}
+          />
+        )}
+      </div>
+      <Button
+        onClick={announcementSelected ? toggleAnnouncementModal : save}
+        disabled={!valid || loading}
+        styleName='postButton'
+        label={submitButtonLabel}
+        color='green'
+      />
     </div>
-    <Button
-      onClick={announcementSelected ? toggleAnnouncementModal : save}
-      disabled={!valid || loading}
-      styleName='postButton'
-      label={submitButtonLabel}
-      color='green'
-    />
-  </div>
+  )
 }

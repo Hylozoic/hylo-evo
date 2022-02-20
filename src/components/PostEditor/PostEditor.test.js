@@ -145,7 +145,8 @@ describe('PostEditor', () => {
       updatePost: jest.fn(() => new Promise(() => {})),
       showImagePreviews: true,
       ensureLocationIdIfCoordinate: jest.fn().mockResolvedValue('555'),
-      setAnnouncement: jest.fn()
+      setAnnouncement: jest.fn(),
+      setIsDirty: jest.fn()
     }
 
     test('form in editing mode', () => {
@@ -177,6 +178,14 @@ describe('PostEditor', () => {
       await testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
+    })
+
+    test('tracks dirty state when content changes', () => {
+      const setIsDirty = jest.fn()
+      const wrapper = shallow(<PostEditor {...props} setIsDirty={setIsDirty} />)
+      const titleElement = wrapper.find('input').first()
+      titleElement.simulate('change', { target: { value: 'new value' } })
+      expect(setIsDirty).toHaveBeenCalled()
     })
   })
 
