@@ -117,9 +117,10 @@ export function mapStateToProps (state, props) {
     const decodedCenter = decodeURIComponent(centerParam).split(',')
     centerLocation = { lat: decodedCenter[0], lng: decodedCenter[1] }
   } else {
-    centerLocation = group && group.locationObject ? group.locationObject.center
-      : me && me.locationObject ? me.locationObject.center
-        : { lat: 35.442845, lng: 7.916598 }
+    centerLocation = state.MapExplorer.centerLocation ||
+      (group && group.locationObject ? group.locationObject.center
+        : me && me.locationObject ? me.locationObject.center
+          : { lat: 35.442845, lng: 7.916598 })
   }
   centerLocation = { lat: parseFloat(centerLocation.lat), lng: parseFloat(centerLocation.lng) }
 
