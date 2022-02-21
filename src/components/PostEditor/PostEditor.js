@@ -47,6 +47,7 @@ export default class PostEditor extends React.Component {
     pollingFetchLinkPreview: PropTypes.func,
     post: PropTypes.shape(POST_PROP_TYPES),
     removeLinkPreview: PropTypes.func,
+    setIsDirty: PropTypes.func,
     titlePlaceholderForPostType: PropTypes.object,
     updatePost: PropTypes.func,
     fetchLocation: PropTypes.func,
@@ -239,7 +240,7 @@ export default class PostEditor extends React.Component {
       ? this.setState({ titleLengthError: true })
       : this.setState({ titleLengthError: false })
     if (title !== this.state.post.title) {
-      this.props.setIsDirty(true)
+      this.setIsDirty(true)
     }
     this.setState({
       post: { ...this.state.post, title },
@@ -252,7 +253,7 @@ export default class PostEditor extends React.Component {
       const contentState = editorState.getCurrentContent()
       this.setLinkPreview(contentState)
       this.updateTopics(contentState)
-      this.props.setIsDirty(true)
+      this.setIsDirty(true)
     }
   }
 
@@ -334,7 +335,7 @@ export default class PostEditor extends React.Component {
           id: tn
         }))
       })
-      this.props.setIsDirty(true)
+      this.setIsDirty(true)
     }
   })
 
@@ -352,7 +353,7 @@ export default class PostEditor extends React.Component {
     })
     const hasChanged = !isEqual(this.state.post.groups, groups)
     if (hasChanged) {
-      this.props.setIsDirty(true)
+      this.setIsDirty(true)
     }
   }
 
@@ -393,6 +394,8 @@ export default class PostEditor extends React.Component {
       (!isEvent || (endTime && startTime < endTime))
     )
   }
+
+  setIsDirty = isDirty => this.props.setIsDirty && this.props.setIsDirty(isDirty)
 
   save = async () => {
     const {
@@ -646,7 +649,7 @@ export default class PostEditor extends React.Component {
                 selectedTopics={topics}
                 defaultTopics={defaultTopics}
                 detailsTopics={detailsTopics}
-                onChange={() => this.props.setIsDirty(true)}
+                onChange={() => this.setIsDirty(true)}
                 ref={this.topicSelector}
               />
             </div>
