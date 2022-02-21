@@ -11,6 +11,7 @@ export default function TopicFeedHeader ({
   bannerUrl = DEFAULT_BANNER,
   currentUser,
   followersTotal,
+  groupSlug,
   isSubscribed,
   newPost,
   postsTotal,
@@ -45,7 +46,7 @@ export default function TopicFeedHeader ({
         avatarUrl={currentUser.avatarUrl}
         firstName={currentUser.firstName()}
         newPost={newPost}
-        routeParams={{ topicName: topicName }}
+        routeParams={{ topicName: topicName, groupSlug: groupSlug }}
         type={type} />
     </div>
   </div>
