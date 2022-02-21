@@ -3,8 +3,8 @@ import { render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import rootReducer from '../store/reducers'
-import createMiddleware from '../store/middleware'
+import rootReducer from 'store/reducers'
+import createMiddleware from 'store/middleware'
 import '@testing-library/jest-dom/extend-expect' // Added many additional test helpers https://github.com/testing-library/jest-dom
 
 export function generateStore (history, initialState) {

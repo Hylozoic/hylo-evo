@@ -37,7 +37,7 @@ export default function GroupCard ({ memberships, group = {}, routeParams = {}, 
         {group.description}
       </div>
       <div styleName='group-tags'>
-        {topics.map(topic => <Pill styleName='tag-pill' darkText label={capitalize(topic.topic.name.toLowerCase())} id={topic.id} />)}
+        {topics.map(topic => <Pill styleName='tag-pill' darkText label={capitalize(topic.topic.name.toLowerCase())} id={topic.id} key={topic.id} />)}
       </div>
     </div>
   </Link>

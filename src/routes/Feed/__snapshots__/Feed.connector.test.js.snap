@@ -24,7 +24,15 @@ Object {
 }
 `;
 
-exports[`mapDispatchToProps fetchTopic will call fetchGroupTopic if groupSlug and topicName are in the url 1`] = `Promise {}`;
+exports[`mapDispatchToProps fetchTopic will call fetchGroupTopic if groupSlug and topicName are in the url 1`] = `
+Promise {
+  Symbol(async_id_symbol): 269468,
+  Symbol(trigger_async_id_symbol): 269446,
+  Symbol(destroyed): Object {
+    "destroyed": false,
+  },
+}
+`;
 
 exports[`mapDispatchToProps fetchTopic will call fetchTopic if only topicName is in the url 1`] = `
 Object {

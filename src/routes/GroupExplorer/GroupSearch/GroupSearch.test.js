@@ -2,10 +2,10 @@ import React from 'react'
 import { unmountComponentAtNode } from 'react-dom'
 import { graphql } from 'msw'
 import { setupServer } from 'msw/node'
-import { history } from '../../../router'
+import { history } from 'router'
 import { generateStore, render, AllTheProviders, waitFor, fireEvent } from 'util/reactTestingLibraryExtended'
 import GroupSearch from './GroupSearch'
-import orm from '../../../store/models'
+import orm from 'store/models'
 
 let container = null
 let providersWithStore = null
