@@ -397,6 +397,10 @@ export default class PostEditor extends React.Component {
 
   setIsDirty = isDirty => this.props.setIsDirty && this.props.setIsDirty(isDirty)
 
+  handleCancel = () => {
+    this.props.onCancel && this.props.onCancel()
+  }
+
   save = async () => {
     const {
       editing,
@@ -533,8 +537,7 @@ export default class PostEditor extends React.Component {
       showFiles,
       showImages,
       addAttachment,
-      postTypes,
-      onClose
+      postTypes
     } = this.props
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
@@ -597,7 +600,7 @@ export default class PostEditor extends React.Component {
               styleName='editor'
               placeholder={detailPlaceholder}
               onChange={this.handleDetailsChange}
-              onEscape={onClose}
+              onEscape={this.handleCancel}
               contentHTML={details}
               readOnly={loading}
               parentComponent={'PostEditor'}

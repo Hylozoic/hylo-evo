@@ -27,7 +27,7 @@ export default function PostEditorModal (props) {
 
   const hidePostEditor = () => dispatch(push(closeUrl))
 
-  const handleOnClose = () => {
+  const handleOnCancel = () => {
     const confirmed = !isDirty || window.confirm('Are you sure you want to exit? Changes won\'t be saved')
     if (confirmed) {
       hidePostEditor()
@@ -41,10 +41,11 @@ export default function PostEditorModal (props) {
     timeout={{ appear: 400, enter: 400, exit: 300 }}>
     <div styleName='post-editor-modal' key='post-editor-modal'>
       <div styleName='post-editor-wrapper' className='post-editor-wrapper'>
-        <span styleName='close-button' onClick={handleOnClose}><Icon name='Ex' /></span>
+        <span styleName='close-button' onClick={handleOnCancel}><Icon name='Ex' /></span>
         <PostEditor
           {...props}
           onClose={hidePostEditor}
+          onCancel={handleOnCancel}
           setIsDirty={setIsDirty}
         />
       </div>
