@@ -55,6 +55,7 @@ exports[`matches the latest snapshot 1`] = `
       querystringParams={Object {}}
       routeParams={
         Object {
+          "groupSlug": undefined,
           "topicName": "Petitions",
         }
       }

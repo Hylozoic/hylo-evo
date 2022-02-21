@@ -62,7 +62,7 @@ export default class Feed extends Component {
       groupTopic, newPost, currentUserHasMemberships,
       goToCreateGroup, membershipsPending, postTypeFilter, topicLoading, toggleGroupTopicSubscribe
     } = this.props
-    const { topicName, context } = routeParams
+    const { context, groupSlug, topicName } = routeParams
 
     if (topicLoading) return <Loading />
     if (!currentUser) return <Loading />
@@ -79,6 +79,7 @@ export default class Feed extends Component {
               ? () => toggleGroupTopicSubscribe(groupTopic)
               : null
           }
+          groupSlug={groupSlug}
           topicName={topicName}
           postsTotal={postsTotal}
           followersTotal={followersTotal}
