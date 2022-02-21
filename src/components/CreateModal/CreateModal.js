@@ -1,21 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import CreateGroup from 'components/CreateGroup'
 import CreateModalChooser from './CreateModalChooser'
 import Icon from 'components/Icon'
-import PostEditor from 'components/PostEditor'
 import './CreateModal.scss'
+import PostEditorModal from 'components/PostEditorModal/PostEditorModal'
 
 export default function CreateModal (props) {
   const { location, match, closeModal } = props
-  const [isDirty, setIsDirty] = useState()
 
   if (!match) return null
-
-  const checkBeforeClose = () => {
-    closeModal(isDirty)
-  }
 
   return (
     <CSSTransition
@@ -26,19 +21,16 @@ export default function CreateModal (props) {
     >
       <div styleName='create-modal'>
         <div styleName='create-modal-wrapper' className='create-modal-wrapper'>
-          <span styleName='close-button' onClick={checkBeforeClose}>
+          <span styleName='close-button' onClick={closeModal}>
             <Icon name='Ex' />
           </span>
           <Switch>
             <Route
               path={match.path + `/post`}
               children={({ match, location }) => (
-                <PostEditor
+                <PostEditorModal
                   match={match}
                   location={location}
-                  onClose={closeModal}
-                  isDirty={isDirty}
-                  setIsDirty={setIsDirty}
                 />
               )}
             />
@@ -57,7 +49,7 @@ export default function CreateModal (props) {
             </Route>
           </Switch>
         </div>
-        <div styleName='create-modal-bg' onClick={checkBeforeClose} />
+        <div styleName='create-modal-bg' onClick={closeModal} />
       </div>
     </CSSTransition>
   )
