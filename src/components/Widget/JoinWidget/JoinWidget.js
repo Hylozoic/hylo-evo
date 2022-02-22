@@ -9,7 +9,7 @@ import { addSkill, removeSkill } from 'components/SkillsSection/SkillsSection.st
 import { useDispatch } from 'react-redux'
 
 import './Join.scss'
-import { useRouter } from 'hooks/useRouter'
+import useRouter from 'hooks/useRouter'
 import { useCurrentUser } from 'hooks/useCurrentUser'
 import { createJoinRequest, joinGroup } from 'routes/GroupDetail/GroupDetail.store'
 import { useKeyJoinRequestsByGroupId } from 'hooks/useGetJoinRequests'
