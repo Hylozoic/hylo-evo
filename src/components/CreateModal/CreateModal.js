@@ -26,7 +26,7 @@ export default function CreateModal (props) {
 
   if (!routeParams) return {}
 
-  const { postId } = routeParams
+  const { action, postId } = routeParams
   const urlParams = omit(['postId', 'action'], routeParams)
   const closeUrl = postId
     ? postUrl(postId, urlParams, querystringParams)
@@ -53,7 +53,7 @@ export default function CreateModal (props) {
           <span styleName='close-button' onClick={confirmClose}>
             <Icon name='Ex' />
           </span>
-          { postId
+          { postId && action === 'edit'
             ? <PostEditor
               {...props}
               onClose={closeModal}
