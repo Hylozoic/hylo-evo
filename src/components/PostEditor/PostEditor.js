@@ -147,7 +147,8 @@ export default class PostEditor extends React.Component {
 
   componentDidUpdate (prevProps) {
     const linkPreview = this.props.linkPreview
-    if (get('post.id', this.props) !== get('post.id', prevProps)) {
+    if (get('post.id', this.props) !== get('post.id', prevProps) ||
+        get('post.details', this.props) !== get('post.details', prevProps)) {
       this.reset(this.props)
       this.editor.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
