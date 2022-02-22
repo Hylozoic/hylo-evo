@@ -24,7 +24,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
 import getMe from 'store/selectors/getMe'
 import { updateWidget } from './Widget.store'
-import { useRouter } from 'hooks/useRouter'
+import useRouter from 'hooks/useRouter'
 
 const WIDGETS = {
   text_block: {

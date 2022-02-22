@@ -42,6 +42,8 @@ export default function Navigation (props) {
     }
   }
 
+  const isPublic = routeParams.context === 'public'
+
   const links = compact([
     createPath && {
       label: 'Create',
@@ -81,8 +83,8 @@ export default function Navigation (props) {
       icon: 'People',
       to: membersPath
     },
-    hasRelatedGroups && groupsPath && {
-      label: 'Groups',
+    (hasRelatedGroups || isPublic) && groupsPath && {
+      label: isPublic ? 'Group Explorer' : 'Groups',
       icon: 'Groups',
       to: groupsPath
     },
