@@ -49,7 +49,7 @@ export function mapDispatchToProps (dispatch, props) {
   const slug = getSlugFromLocation(null, props)
 
   return {
-    fetchForCurrentUser: () => dispatch(fetchForCurrentUser(slug)),
+    fetchForCurrentUser: () => dispatch(fetchForCurrentUser()),
     fetchForGroup: () => dispatch(fetchForGroup(slug)),
     toggleDrawer: () => dispatch(toggleDrawer()),
     toggleGroupMenu: () => dispatch(toggleGroupMenu()),

@@ -1,9 +1,9 @@
 import React from 'react'
 import './Loading.scss'
 
-export default function Loading ({ type, className }) {
+export default function Loading ({ type, className, size }) {
   let styleName = 'loading'
-  let size = 40
+  let finalSize = size || 40
 
   switch (type) {
     case 'fullscreen':
@@ -17,12 +17,12 @@ export default function Loading ({ type, className }) {
       break
     case 'inline':
       styleName = 'loading-inline'
-      size = 25
+      finalSize = size || 25
       break
   }
 
   return <div className={className} styleName={styleName}>
-    <SvgLoader size={size} />
+    <SvgLoader size={finalSize} />
   </div>
 }
 

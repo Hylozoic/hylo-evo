@@ -23,8 +23,7 @@ export default class UserGroupsTab extends Component {
     memberships: array,
     leaveGroup: func,
     createAffiliation: func,
-    deleteAffiliation: func,
-    fetchForCurrentUser: func
+    deleteAffiliation: func
   }
 
   state = {

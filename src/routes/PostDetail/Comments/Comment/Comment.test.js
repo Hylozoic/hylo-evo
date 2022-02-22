@@ -17,6 +17,10 @@ describe('Comment', () => {
       createdAt: new Date(),
       childComments: []
     },
+    canModerate: false,
+    currentUser: {
+      id: 2
+    },
     slug: 'foo',
     updateComment: jest.fn(),
     deleteComment: jest.fn(),
@@ -58,13 +62,23 @@ describe('Comment', () => {
     })
   })
 
+  it('does not display the delete menu when deleteComment is not defined', () => {
+    const wrapper = shallow(<Comment {...props} />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
   it('displays the delete menu when deleteComment is defined', () => {
-    const wrapper = shallow(<Comment {...props} deleteComment={() => {}} />)
+    const wrapper = shallow(<Comment {...props} currentUser={{ id: 1 }} />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('displays the remove menu when removeComment is defined', () => {
-    const wrapper = shallow(<Comment {...props} removeComment={() => {}} />)
+    const wrapper = shallow(<Comment {...props} canModerate />)
+    expect(wrapper).toMatchSnapshot()
+  })
+
+  it('does not display the remove menu when removeComment is not defined', () => {
+    const wrapper = shallow(<Comment {...props} currentUser={{ id: 1 }} canModerate />)
     expect(wrapper).toMatchSnapshot()
   })
 

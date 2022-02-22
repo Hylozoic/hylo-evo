@@ -16,8 +16,10 @@ export const mapDispatchToProps = (dispatch, props) => {
     ? postUrl(postId, urlParams, querystringParams)
     : addQuerystringToPath(baseUrl(urlParams), querystringParams)
 
+  const closeModal = () => dispatch(push(closeUrl))
+
   return {
-    closeModal: () => dispatch(push(closeUrl))
+    closeModal
   }
 }
 

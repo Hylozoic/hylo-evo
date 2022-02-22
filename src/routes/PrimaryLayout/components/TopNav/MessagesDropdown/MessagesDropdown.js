@@ -1,3 +1,4 @@
+import isMobile from 'ismobilejs'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
@@ -6,6 +7,7 @@ import cx from 'classnames'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
 import { humanDate, textLength, truncate } from 'hylo-utils/text'
 import { newMessageUrl, messageThreadUrl } from 'util/navigation'
+import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
@@ -67,7 +69,7 @@ export default class MessagesDropdown extends Component {
     if (pending) {
       body = <LoadingItems />
     } else if (isEmpty(threads)) {
-      body = <NoItems message="You don't have any conversations yet" />
+      body = <NoItems message="You don't have any messages yet" />
     } else {
       body = <div styleName='threads'>
         {threads.map(thread =>
@@ -82,7 +84,7 @@ export default class MessagesDropdown extends Component {
     }
 
     const firstThreadUrl = !isEmpty(threads)
-      ? messageThreadUrl(threads[0].id) + '?inbox=1'
+      ? isMobile.any ? '/messages' : messageThreadUrl(threads[0].id)
       : newMessageUrl()
 
     return <TopNavDropdown
@@ -93,9 +95,9 @@ export default class MessagesDropdown extends Component {
       header={
         <div styleName='header-content'>
           <Link to={firstThreadUrl} styleName='open' onClick={this.close}>
-            Open Messages
+            <Icon styleName='open-icon' name='ArrowForward' /> Open Messages
           </Link>
-          <Link to={newMessageUrl()} styleName='new' onClick={this.close}>New</Link>
+          <Link to={newMessageUrl()} styleName='new' onClick={this.close}><Icon name='SmallEdit' styleName='new-icon' /> New</Link>
         </div>}
       body={body}
     />

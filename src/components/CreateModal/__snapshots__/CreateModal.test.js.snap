@@ -1,3 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`does something 1`] = `""`;
+exports[`CreateModal renders with no props 1`] = `
+<CSSTransition
+  appear={true}
+  classNames="create-modal"
+  in={true}
+  timeout={
+    Object {
+      "appear": 400,
+      "enter": 400,
+      "exit": 300,
+    }
+  }
+>
+  <div
+    data-stylename="create-modal"
+  >
+    <div
+      className="create-modal-wrapper"
+      data-stylename="create-modal-wrapper"
+    >
+      <span
+        data-stylename="close-button"
+      >
+        <Icon
+          name="Ex"
+        />
+      </span>
+      <Switch>
+        <Route
+          path="/post"
+        >
+          <Component />
+        </Route>
+        <Route
+          path="/group"
+        >
+          <Component />
+        </Route>
+        <Route>
+          <CreateModalChooser
+            match={
+              Object {
+                "path": "",
+              }
+            }
+          />
+        </Route>
+      </Switch>
+    </div>
+    <div
+      data-stylename="create-modal-bg"
+    />
+  </div>
+</CSSTransition>
+`;

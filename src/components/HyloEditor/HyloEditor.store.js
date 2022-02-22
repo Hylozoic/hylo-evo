@@ -13,6 +13,7 @@ import {
   FIND_TOPICS_PENDING,
   CLEAR_TOPICS
 } from './HyloEditor.constants'
+import filterDeletedUsers from 'util/filterDeletedUsers'
 
 // Action Creators
 
@@ -119,6 +120,7 @@ export const getMentionResults = ormCreateSelector(
     const { mentionSearchTerm } = moduleNode
     if (!mentionSearchTerm) return []
     return session.Person.all()
+      .filter(filterDeletedUsers)
       .filter(person => {
         return includes(
           person.name && person.name.toLowerCase(),

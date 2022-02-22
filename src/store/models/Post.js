@@ -82,11 +82,11 @@ export const POST_TYPES = {
     map: false,
     description: 'Talk about what’s important with others'
   },
-  'event': {
-    primaryColor: [254, 72, 80, 255], // $color-medium-purple
-    backgroundColor: 'rgba(254, 72, 80, .2)', // $color-moon-raker
+  'request': {
+    primaryColor: [102, 75, 165, 255], // $color-persimmon;
+    backgroundColor: 'rgba(102, 75, 165, .2)', // $color-peach-schnapps;
     map: true,
-    description: 'Invite people to your event'
+    description: 'What can people help you with?'
   },
   'offer': {
     primaryColor: [0, 199, 157, 255], // $color-caribbean-green
@@ -106,11 +106,11 @@ export const POST_TYPES = {
     map: true,
     description: 'Create a project that people can help with'
   },
-  'request': {
-    primaryColor: [102, 75, 165, 255], // $color-persimmon;
-    backgroundColor: 'rgba(102, 75, 165, .2)', // $color-peach-schnapps;
+  'event': {
+    primaryColor: [254, 72, 80, 255], // $color-medium-purple
+    backgroundColor: 'rgba(254, 72, 80, .2)', // $color-moon-raker
     map: true,
-    description: 'What can people help you with?'
+    description: 'Invite people to your event'
   }
 }
 
@@ -130,5 +130,5 @@ export const POST_PROP_TYPES = {
   imageUrl: PropTypes.string,
   linkPreview: PropTypes.object,
   groups: PropTypes.array,
-  isPublic: PropTypes.boolean
+  isPublic: PropTypes.bool
 }

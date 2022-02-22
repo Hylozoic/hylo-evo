@@ -5,21 +5,32 @@ exports[`Header should match the latest snapshot 1`] = `
   data-stylename="header"
   id="thread-header"
 >
-  <div
-    data-stylename="backButton"
+  <Link
+    data-stylename="close-thread"
+    to="/messages"
   >
     <Icon
-      data-stylename="arrow-down"
-      name="ArrowDown"
+      name="ArrowForward"
     />
-  </div>
+  </Link>
   <div
     data-stylename="header-text"
   >
-    one, two, three
+    <div>
+      <Link
+        key="2"
+        to="/all/members/2"
+      >
+        Two
+      </Link>
+      , 
+      <Link
+        key="3"
+        to="/all/members/3"
+      >
+        Three
+      </Link>
+    </div>
   </div>
-  <CloseMessages
-    data-stylename="closeMessages"
-  />
 </div>
 `;

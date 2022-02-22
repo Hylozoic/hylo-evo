@@ -1,32 +1,21 @@
-import { any, arrayOf, func, shape, string } from 'prop-types'
+import { any, arrayOf, func, object, shape, string } from 'prop-types'
 import React from 'react'
 import PeopleListItem from '../PeopleListItem'
 import './PeopleList.scss'
 
-export default function PeopleList ({ onClick, people, recentPeople }) {
-  return <div styleName='people-list-container'>
-    {recentPeople && recentPeople.length > 0 &&
-      <div>
-        <h2 styleName='people-list-header'>Recent</h2>
-        <ul styleName='people-list'>
-          {recentPeople.map(person =>
-            <PeopleListItem
-              key={person.id}
-              person={person}
-              onClick={() => onClick(person)} />)}
-        </ul>
-      </div>}
+export default function PeopleList ({ currentMatch, onClick, onMouseOver, people }) {
+  return <div styleName='people-list-container' className='people-list-container'>
     {people && people.length > 0 &&
-      <div>
-        <h2 styleName='people-list-header'>All Contacts</h2>
-        <ul styleName='people-list'>
-          {people.map(person =>
-            <PeopleListItem
-              key={person.id}
-              person={person}
-              onClick={() => onClick(person)} />)}
-        </ul>
-      </div>}
+      <ul styleName='people-list'>
+        {people.map(person =>
+          <PeopleListItem
+            key={person.id}
+            active={currentMatch && person.id === currentMatch.id}
+            person={person}
+            onClick={() => onClick(person)}
+            onMouseOver={() => onMouseOver(person)} />)}
+      </ul>
+    }
   </div>
 }
 
@@ -39,6 +28,7 @@ const personType = shape({
 
 PeopleList.propTypes = {
   onClick: func,
-  people: arrayOf(personType),
-  recentPeople: arrayOf(personType)
+  onMouseOver: func.isRequired,
+  currentMatch: object,
+  people: arrayOf(personType)
 }

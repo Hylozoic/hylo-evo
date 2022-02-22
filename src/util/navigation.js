@@ -1,5 +1,5 @@
 import { host } from 'config'
-import { get, isEmpty, omitBy } from 'lodash/fp'
+import { get, isEmpty, isNumber, omitBy } from 'lodash/fp'
 import qs from 'querystring'
 import { matchPath } from 'react-router'
 
@@ -167,7 +167,8 @@ export function topicUrl (topicName, opts) {
 // URL utility functions
 
 export function addQuerystringToPath (path, querystringParams) {
-  querystringParams = omitBy(x => !x, querystringParams)
+  // The weird query needed to ignore empty arrays but allow for boolean values and numbers
+  querystringParams = omitBy(x => isEmpty(x) && x !== true && !isNumber(x), querystringParams)
   return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
 }
 

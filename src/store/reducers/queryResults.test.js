@@ -229,7 +229,7 @@ describe('matchNewPostIntoQueryResults', () => {
         hasMore: true,
         ids: ['18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","filter":"request"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -242,7 +242,7 @@ describe('matchNewPostIntoQueryResults', () => {
         hasMore: true,
         ids: ['17', '18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","filter":"request"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
       }
