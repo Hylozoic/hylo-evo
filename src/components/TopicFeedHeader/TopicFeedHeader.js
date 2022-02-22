@@ -11,6 +11,7 @@ export default function TopicFeedHeader ({
   bannerUrl = DEFAULT_BANNER,
   currentUser,
   followersTotal,
+  groupSlug,
   isSubscribed,
   newPost,
   postsTotal,
@@ -42,10 +43,11 @@ export default function TopicFeedHeader ({
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
       <PostPrompt
-        firstName={currentUser.firstName()}
-        type={type}
         avatarUrl={currentUser.avatarUrl}
-        newPost={newPost} />
+        firstName={currentUser.firstName()}
+        newPost={newPost}
+        routeParams={{ topicName: topicName, groupSlug: groupSlug }}
+        type={type} />
     </div>
   </div>
 }
