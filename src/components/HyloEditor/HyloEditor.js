@@ -22,7 +22,7 @@ import {
   // HeadlineThreeButton,
   UnorderedListButton,
   OrderedListButton,
-  BlockquoteButton
+  // BlockquoteButton
   // CodeBlockButton
 } from '@draft-js-plugins/buttons'
 
@@ -264,7 +264,7 @@ export default class HyloEditor extends Component {
     const styleNames = cx('wrapper', { readOnly })
     return (
       <div styleName={styleNames} className={className}>
-        <Toolbar>
+        {/* <Toolbar>
           {(externalProps) => (
             <>
               <BoldButton {...externalProps} />
@@ -272,10 +272,9 @@ export default class HyloEditor extends Component {
               <Separator {...externalProps} />
               <UnorderedListButton {...externalProps} />
               <OrderedListButton {...externalProps} />
-              <BlockquoteButton {...externalProps} />
             </>
           )}
-        </Toolbar>
+        </Toolbar> */}
         <Editor
           editorState={editorState}
           onChange={this.handleChange}

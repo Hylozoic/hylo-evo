@@ -28,7 +28,7 @@ export default function PostEditorModal (props) {
   const hidePostEditor = () => dispatch(push(closeUrl))
 
   const handleOnCancel = () => {
-    const confirmed = !isDirty || window.confirm('Are you sure you want to exit? Changes won\'t be saved')
+    const confirmed = !isDirty || window.confirm('Changes won\'t be saved. Are you sure you want to cancel?')
     if (confirmed) {
       hidePostEditor()
     }

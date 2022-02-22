@@ -173,6 +173,7 @@ export default class PostEditor extends React.Component {
   handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
     const { changeQueryString, location } = this.props
+    this.setIsDirty(true)
     changeQueryString({
       pathname: location.pathname,
       search: `?newPostType=${type}`
