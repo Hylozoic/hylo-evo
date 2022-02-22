@@ -43,7 +43,7 @@ export function mapDispatchToProps (dispatch, props) {
   const groupSlug = getRouteParam('groupSlug', {}, props)
 
   return {
-    fetchGroup: () => dispatch(fetchGroup(groupSlug)),
+    fetchGroup: () => dispatch(fetchGroup(groupSlug)), // TODO: remove. I don't think this is actually used anywhere in child components
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params }))
   }
 }
