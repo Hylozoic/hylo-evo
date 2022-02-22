@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.4.0] - 2022-02-21
+
+### Added
+- Tabs in the map drawer to see Groups and Members on the map separately from Posts.
+- Ability to hide/show Groups on the map.
+- Can sort map drawer posts by post date.
+- Map parameters, including the center location and zoom, are now added to the URL as they change so you can copy and share an exact map URL with someone.
+
+### Changed
+- Load more posts on the map, more quickly.
+- Searching on the map filters groups and members as well as posts.
+- When adding people to a message, pressing enter without entering text first will jump straight to the message box.
+- Searching on the map now ignores case.
+
+### Fixed
+- Searching for and jumping to a point location (like an address) on the map.
+- When you have data in the create post modal and close it or click off of it, we now ask if you are sure whether you want to closed the modal or not before you lose the entered data.
+- When creating a post in a topic stream add that topic to the post by default and stay in the current group/context.
+- Allow for editing/deleting sub-comments on other people's comments.
+
 ## [3.3.0] - 2022-02-03
 
 ### Added
