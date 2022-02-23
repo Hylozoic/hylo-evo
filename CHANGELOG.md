@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.4.0] - 2022-02-21
+## [3.4.0] - 2022-02-23
 
 ### Added
 - Tabs in the map drawer to see Groups and Members on the map separately from Posts.
