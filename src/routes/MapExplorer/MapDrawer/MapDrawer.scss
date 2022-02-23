@@ -1,7 +1,5 @@
 .container {
   height: 100%;
-  padding: 20px;
-  background: white;
   width: 40%;
   min-width: 450px;
   transition: all .25s ease;
@@ -23,65 +21,15 @@
   }
 }
 
-.contentListContainer {
-  clear: both;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.contentCard {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.contentCard.member {
-  padding: 16px;
-  max-width: none;
-}
-
-.contentListContainer .contentCard:nth-child(even) {
-  margin-left: 5px;
-  width: calc(50% - 5px);
-}
-
-.contentListContainer .contentCard:nth-child(odd) {
-  margin-right: 5px;
-  width: calc(50% - 5px);
-}
-
-.loading {
-  display: inline;
-  vertical-align: middle;
-
-  div {
-    display: inline;
-  }
-}
-
-.sorter {
-  float: right;
-  border: 1px solid #bfc5ce;
-  border-radius: 25px;
-  padding: 0 15px;
-  margin-top: 0px;
-  margin-bottom: 15px;
-  font-size: 14px;
-  line-height: 28px;
-  height: 30px;
-}
-
-.sorter-label {
-  color: gray;
-}
-
-.sorterIcon {
-  vertical-align: middle;
+.header {
+  background: #f5f5f5;
 }
 
 .searchBox {
-  width: 100%;
+  width: calc(100% - 20px);
   border: 0;
   outline: 0;
+  margin: 10px 10px 0px 10px;
   padding: 2px 10px;
   font-size: 14px;
   height: 40px;
@@ -94,7 +42,7 @@
   float: right;
   position: relative;
   top: -28px;
-  right: 10px;
+  right: 20px;
   font-size: 18px;
 }
 
@@ -104,18 +52,20 @@
   top: -2px;
   box-shadow: 0px 4px 15px 0px $color-black-30;
   padding: 5px;
+  margin: 0 10px;
 }
 
 .currentFilters {
-  padding: 10px 5px 5px 5px;
+  padding: 10px;
 }
 
 .topicButton {
   border: 1px solid #B6EDE2;
   color: $color-caribbean-green;
+  background: white;
   padding: 0 8px 0 0;
   margin-right: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   display: inline-block;
   position: relative;
   height: 30px;
@@ -147,6 +97,7 @@
 .currentSearchText {
   cursor: pointer;
   border: 1px solid rgba(224, 229, 233, 1.000);
+  background: white;
   border-radius: 3px;
   padding: 0 10px;
   color: rgba(125, 140, 157, 1.000);
@@ -169,6 +120,121 @@
   font-size: 18px;
   position: relative;
   top: 3px;
+}
+
+.contentWrapper {
+  clear: both;
+  background: white;
+  padding: 10px 10px 0 10px;
+}
+
+.contentListContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tab-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0 10px;
+}
+
+.tab {
+  composes: caption-lt-lg from 'css/typography.scss';
+  padding: 0 $space-4x;
+  height: $space-7x;
+  line-height: $space-7x;
+  list-style: none;
+  cursor: pointer;
+  @include font-bold;
+  background: white;
+  border-radius: $space-2x $space-2x 0 0;
+  margin-right: 5px;
+  font-size: 14px;
+  opacity: .7;
+}
+
+.tab-active {
+  composes: tab;
+
+  color: $color-rhino;
+  opacity: 1;
+}
+
+.tabCount {
+  color: white;
+  background: #3b95d6;
+  border-radius: 8px;
+  padding: 1px 5px;
+  font-size: 11px;
+}
+
+.postsHeader {
+  width: 100%;
+  text-align: right;
+  composes: caption-lt-lg from 'css/typography.scss';
+
+  > span {
+    margin-right: 10px;
+  }
+}
+
+.sorter {
+  border: 1px solid #bfc5ce;
+  border-radius: 25px;
+  padding: 0 15px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  line-height: 28px;
+  height: 30px;
+}
+
+.sorter-label {
+  color: gray;
+}
+
+.sorterIcon {
+  vertical-align: middle;
+}
+
+.contentCard {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.contentCard.member {
+  padding: 16px;
+  max-width: none;
+}
+
+.contentListContainer .contentCard:nth-child(even) {
+  margin-left: 5px;
+  width: calc(50% - 5px);
+}
+
+.contentListContainer .contentCard:nth-child(odd) {
+  margin-right: 5px;
+  width: calc(50% - 5px);
+}
+
+.loading {
+  display: inline;
+  vertical-align: middle;
+  position: relative;
+  top: 3px;
+
+  div {
+    display: inline;
+  }
+}
+
+.groupCard {
+  width: calc(50% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 600px) {

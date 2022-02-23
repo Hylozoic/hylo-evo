@@ -14,6 +14,7 @@ export default function PeopleSelector (props) {
   const autocompleteInput = useRef(null)
 
   const {
+    focusMessage,
     people,
     setPeopleSearch,
     selectedPeople,
@@ -92,8 +93,8 @@ export default function PeopleSelector (props) {
       case keyMap.COMMA:
       case keyMap.ENTER:
         evt.preventDefault()
+        currentText ? setCurrentText('') : selectedPeople.length > 0 && focusMessage()
         selectPerson(currentMatch)
-        setCurrentText('')
         return setPeopleSearch(null)
     }
   }

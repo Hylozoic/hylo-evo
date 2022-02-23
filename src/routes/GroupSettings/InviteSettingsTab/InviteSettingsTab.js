@@ -35,9 +35,9 @@ export default class InviteSettingsTab extends Component {
 
     const defaultMessage = `Hi!
 
-I'm inviting you to join ${props.group.name} group on Hylo.
+I'm inviting you to join ${props.group.name} on Hylo.
 
-${props.group.name} is using Hylo for our online group: this is our dedicated space for communication & collaboration.`
+${props.group.name} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`
     this.state = {
       copied: false,
       reset: false,

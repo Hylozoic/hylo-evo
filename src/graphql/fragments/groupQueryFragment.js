@@ -155,10 +155,11 @@ export default () => {
         name
       }
     }
-    openOffersAndRequests: posts(filter: "offersAndRequests", isFulfilled: false, first: 4) {
+    openOffersAndRequests: posts(types: ["offer", "request"], isFulfilled: false, first: 4) {
       items {
         id
         title
+        type
         creator {
           id
           name

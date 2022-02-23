@@ -49,7 +49,7 @@ To get involved in beta testing, creating onboarding materials, or offering feed
 
 We accept bug reports through Intercom within the Hylo web application, or by creating a ticket on our [GitHub repo](https://github.com/Hylozoic/hylo-evo).
 
-We accept [feature requests here](https://airtable.com/shrAWV0UkgDoM55TW).
+We accept [feature requests here](https://airtable.com/shrSt2NpmQbHhQxoO).
 
 Have more ideas about how you’d like to contribute to Hylo? Please get in touch at hello@hylo.com and let us know how you’d like to help.
 
