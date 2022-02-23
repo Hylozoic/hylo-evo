@@ -600,7 +600,7 @@ export const getGroupsFilteredByTopics = createSelector(
 
 /* ***** Reducer ***** */
 const DEFAULT_STATE = {
-  centerLocation: { lat: 35.442845, lng: 7.916598 },
+  centerLocation: null,
   totalBoundingBoxLoaded: null,
   zoom: 0,
   clientFilterParams: {

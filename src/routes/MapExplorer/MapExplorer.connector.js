@@ -1,7 +1,8 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
-import { debounce, get, isEqual, isEmpty, pick, pickBy } from 'lodash/fp'
+import { get, isEqual, isEmpty, pick, pickBy } from 'lodash/fp'
 import changeQuerystringParam, { changeQuerystringParams } from 'store/actions/changeQuerystringParam'
+import { FETCH_FOR_GROUP } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -112,19 +113,27 @@ export function mapStateToProps (state, props) {
 
   const me = getMe(state)
   const centerParam = getQuerystringParam('center', state, props)
-  let centerLocation
+  let centerLocation, defaultZoom
   if (centerParam) {
     const decodedCenter = decodeURIComponent(centerParam).split(',')
     centerLocation = { lat: decodedCenter[0], lng: decodedCenter[1] }
   } else {
-    centerLocation = group && group.locationObject ? group.locationObject.center
-      : me && me.locationObject ? me.locationObject.center
-        : { lat: 35.442845, lng: 7.916598 }
+    centerLocation = state.MapExplorer.centerLocation ||
+      (group && group.locationObject ? group.locationObject.center
+        : me && me.locationObject ? me.locationObject.center
+          : null)
   }
-  centerLocation = { lat: parseFloat(centerLocation.lat), lng: parseFloat(centerLocation.lng) }
+  if (centerLocation) {
+    centerLocation = { lat: parseFloat(centerLocation.lat), lng: parseFloat(centerLocation.lng) }
+    defaultZoom = 10
+  } else {
+    // Default to viewing whole map
+    centerLocation = { lat: 35.442845, lng: 7.916598 }
+    defaultZoom = 0
+  }
 
   let zoomParam = getQuerystringParam('zoom', state, props)
-  const zoom = zoomParam ? parseFloat(zoomParam) : state.MapExplorer.zoom || (centerLocation ? 10 : 0)
+  const zoom = zoomParam ? parseFloat(zoomParam) : state.MapExplorer.zoom || defaultZoom
 
   return {
     centerLocation,
@@ -138,6 +147,7 @@ export function mapStateToProps (state, props) {
     filters,
     group,
     groups,
+    groupPending: state.pending[FETCH_FOR_GROUP],
     hideDrawer,
     members,
     pendingPostsMap: state.pending[FETCH_POSTS_MAP],
@@ -195,15 +205,15 @@ export function mapDispatchToProps (dispatch, props) {
         updateUrlFromStore(params, true)
       })
     },
-    updateBoundingBox: debounce(800, bbox => dispatch(updateState({ totalBoundingBoxLoaded: bbox }))),
+    updateBoundingBox: bbox => dispatch(updateState({ totalBoundingBoxLoaded: bbox })),
     updateQueryParams: (params, replace) => updateUrlFromStore(params, replace),
-    updateView: debounce(800, ({ centerLocation, zoom }) => {
+    updateView: ({ centerLocation, zoom }) => {
       const newUrlParams = {
         zoom
       }
       newUrlParams['center'] = encodeURIComponent(centerLocation.lat + ',' + centerLocation.lng)
       dispatch(updateState({ centerLocation, zoom })).then(() => dispatch(changeQuerystringParams(props, newUrlParams, true)))
-    }),
+    },
     viewSavedSearch: (search) => {
       const { mapPath } = generateViewParams(search)
       dispatch(viewSavedSearch(search))

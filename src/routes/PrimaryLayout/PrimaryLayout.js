@@ -35,7 +35,6 @@ import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
-import PostEditorModal from 'components/PostEditorModal'
 import WelcomeExplore from 'routes/WelcomeWizard/WelcomeExplore'
 import Search from 'routes/Search'
 import WelcomeWizardModal from 'routes/WelcomeWizard/WelcomeWizardModal'
@@ -401,7 +400,7 @@ export default class PrimaryLayout extends Component {
             <CreateModal match={match} location={location} />} />)}
         {createRoutes.map(({ path }) =>
           <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
-            <PostEditorModal match={match} location={location} />} />)}
+            <CreateModal match={match} location={location} />} />)}
       </Switch>
       <SocketListener location={location} />
       <SocketSubscriber type='group' id={get('slug', group)} />
