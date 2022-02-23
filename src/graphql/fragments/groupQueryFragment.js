@@ -159,6 +159,7 @@ export default () => {
       items {
         id
         title
+        type
         creator {
           id
           name

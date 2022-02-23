@@ -63,6 +63,7 @@ describe('mapStateToProps', () => {
           topics: []
         },
         group: { id: 1, slug: 'foo' },
+        groupPending: undefined,
         groups: [],
         hideDrawer: false,
         members: [],
@@ -77,7 +78,7 @@ describe('mapStateToProps', () => {
         stateFilters: { featureTypes: { offer: true, request: true }, search: '', topics: [] },
         topics: [],
         totalBoundingBoxLoaded: undefined,
-        zoom: 10
+        zoom: 0
       })
     )
   })
