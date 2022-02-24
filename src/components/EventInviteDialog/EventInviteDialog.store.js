@@ -25,7 +25,7 @@ export const peopleSelector = createSelector(
       uniqBy('id'),
       reject(p => currentUser ? currentUser.id === p.id : false),
       map(pick([ 'id', 'name', 'avatarUrl' ])),
-      orderBy('name', 'asc')
+      orderBy([user => user.name.toLowerCase()], ['asc'])
     ]
 
     return flow(processors)(groups)

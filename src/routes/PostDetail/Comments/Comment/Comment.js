@@ -20,7 +20,7 @@ import './Comment.scss'
 
 const { object, func } = PropTypes
 
-const INITIAL_SUBCOMMENTS_DISPLAYED = 2
+export const INITIAL_SUBCOMMENTS_DISPLAYED = 4
 
 export class Comment extends Component {
   static propTypes = {
@@ -52,17 +52,18 @@ export class Comment extends Component {
   }
 
   render () {
-    const { comment, slug, isCreator, onReplyComment, deleteComment, removeComment } = this.props
+    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug } = this.props
     const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
+    const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const presentedText = present(sanitize(text), { slug })
 
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
-      { icon: 'Trash', label: 'Delete', onClick: deleteComment ? () => deleteComment(comment.id) : null },
-      { icon: 'Trash', label: 'Remove', onClick: removeComment ? () => removeComment(comment.id) : null }
+      { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
+      { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
 
     return (
@@ -158,11 +159,8 @@ export default class CommentWithReplies extends Component {
             total={childCommentsTotal + newCommentsAdded}
             hasMore={hasMoreChildComments}
             fetchComments={() => {
-              if (this.state.showLatestOnly) {
-                this.setState({ showLatestOnly: false })
-              } else {
-                fetchChildComments()
-              }
+              this.setState({ showLatestOnly: false })
+              fetchChildComments()
             }} />
         </div>
         {childComments.map(c =>

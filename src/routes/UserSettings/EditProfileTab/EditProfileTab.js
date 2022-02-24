@@ -1,3 +1,4 @@
+import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
@@ -11,6 +12,7 @@ import { bgImageStyle } from 'util/index'
 import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 import './EditProfileTab.scss'
+import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 
 const { object, func, string } = PropTypes
 
@@ -51,7 +53,8 @@ export class SocialControl extends Component {
     value: string,
     updateSettingDirectly: func,
     handleUnlinkAccount: func,
-    onLink: func
+    onLink: func,
+    fetchLocation: func
   }
 
   handleLinkClick () {
@@ -150,7 +153,7 @@ export default class EditProfileTab extends Component {
 
     const {
       name, avatarUrl, bannerUrl, tagline, bio,
-      contactEmail, contactPhone, locationId, location,
+      contactEmail, contactPhone, locationObject, location,
       url, facebookUrl, twitterName, linkedinUrl
     } = currentUser
 
@@ -164,7 +167,7 @@ export default class EditProfileTab extends Component {
         contactPhone: contactPhone || '',
         contactEmail: contactEmail || '',
         location: location || '',
-        locationId: locationId || null,
+        locationId: get('id', locationObject) || null,
         url: url || '',
         facebookUrl,
         twitterName,
@@ -173,20 +176,21 @@ export default class EditProfileTab extends Component {
     })
   }
 
-  updateSetting = (key, setChanged = true) => event => {
+  updateSetting = (key, setChanged = true) => async event => {
+    const { fetchLocation } = this.props
     const { edits, changed } = this.state
     setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
 
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
-      edits['locationId'] = event.target.value.id
+      edits['locationId'] = await ensureLocationIdIfCoordinate({ fetchLocation, location: edits.location, locationId: event.target.value.id })
     } else {
       edits[key] = event.target.value
     }
 
     this.setState({
       changed: setChanged ? true : changed,
-      edits: { ...edits }
+      edits
     })
   }
 

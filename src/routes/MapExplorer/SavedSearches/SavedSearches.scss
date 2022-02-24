@@ -1,10 +1,11 @@
 .container {
+  position: absolute;
   box-shadow: $box-shadow-default;
   transition: all .25s ease;
-  position: absolute;
 }
 
 .triangle {
+  position: absolute;
   min-width: 0 !important;
   @include is-top-triangle($color-caribbean-green, $color-caribbean-green, 14px);
   margin-left: 20px;
@@ -16,9 +17,9 @@
 }
 
 .innerContainer {
-  position: fixed;
+  position: absolute;
   margin-left: 12px;
-  top: 120px;
+  top: 64px;
   width: 300px;
   overflow-y: auto;
   z-index: 20;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactTooltip from 'react-tooltip'
-import { CSSTransitionGroup } from 'react-transition-group'
+import isMobile from 'ismobilejs'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { debounce, includes, isEmpty, delay } from 'lodash'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
@@ -88,23 +89,28 @@ export default class Pillbox extends Component {
 
     return <div styleName='styles.root'>
       <div styleName='styles.pill-container'>
-        <CSSTransitionGroup
-          transitionName={{
-            enter: styles['enter'],
-            enterActive: styles['enter-active'],
-            leave: styles['leave'],
-            leaveActive: styles['leave-active']
-          }}
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={300}>
+        <TransitionGroup>
           {pills.map(pill =>
-            <Pill
+            <CSSTransition
               key={pill.id}
-              {...pill}
-              onClick={handleClick}
-              editable={editable}
-              onRemove={handleDelete} />)}
-        </CSSTransitionGroup>
+              classNames={{
+                enter: styles['enter'],
+                enterActive: styles['enter-active'],
+                exit: styles['exit'],
+                exitActive: styles['exit-active']
+              }}
+              timeout={{ enter: 400, exit: 300 }}
+            >
+              <Pill
+                key={pill.id}
+                {...pill}
+                onClick={handleClick}
+                editable={editable}
+                onRemove={handleDelete}
+              />
+            </CSSTransition>
+          )}
+        </TransitionGroup>
         {editable && <span styleName='styles.add-btn' onClick={addOnClick}>
           {addLabel}
         </span>}
@@ -134,12 +140,14 @@ export default class Pillbox extends Component {
           ref={this.list} />
         }
       </div>}
-      <ReactTooltip place='top'
-        type='dark'
-        id='pill-label'
-        effect='solid'
-        disable={!editable}
-        delayShow={500} />
+      {!isMobile.any && (
+        <ReactTooltip place='top'
+          type='dark'
+          id='pill-label'
+          effect='solid'
+          disable={!editable}
+          delayShow={500} />
+      )}
     </div>
   }
 }

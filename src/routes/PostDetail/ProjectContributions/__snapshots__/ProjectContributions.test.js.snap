@@ -30,7 +30,10 @@ exports[`ProjectContributions disables button on invalid amount 1`] = `
           >
             <input
               data-stylename="input"
+              onAnimationStart={[Function]}
+              onBlur={[Function]}
               onChange={[Function]}
+              onFocus={[Function]}
               onKeyDown={[Function]}
               value="$12fc"
             />

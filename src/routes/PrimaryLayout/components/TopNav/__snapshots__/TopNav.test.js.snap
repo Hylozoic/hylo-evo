@@ -40,12 +40,30 @@ exports[`renders as expected with no group 1`] = `
           name="Search"
         />
       </Link>
-      <Connect(MessagesDropdown)
-        renderToggleChildren={[Function]}
-      />
-      <Connect(NotificationsDropdown)
-        renderToggleChildren={[Function]}
-      />
+      <Suspense
+        fallback={
+          <BadgedIcon
+            data-stylename="icon"
+            name="Messages"
+          />
+        }
+      >
+        <lazy
+          renderToggleChildren={[Function]}
+        />
+      </Suspense>
+      <Suspense
+        fallback={
+          <BadgedIcon
+            data-stylename="icon"
+            name="Notifications"
+          />
+        }
+      >
+        <lazy
+          renderToggleChildren={[Function]}
+        />
+      </Suspense>
       <Dropdown
         alignRight={true}
         data-stylename="user-menu"
@@ -82,7 +100,7 @@ exports[`renders as expected with no group 1`] = `
         <li>
           <a
             data-stylename="hover-highlight"
-            href="http://hylo.com/terms"
+            href="http://hylo.com/terms/"
             target="_blank"
           >
             Terms & Privacy

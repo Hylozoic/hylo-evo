@@ -25,7 +25,7 @@ describe('getMyMemberships', () => {
     const session = orm.session(orm.getEmptyState())
     const group1 = session.Group.create({ id: 'c1' })
     const group2 = session.Group.create({ id: 'c2' })
-    const membership = session.Membership.create({ id: 'm1', group: group1.id })
+    session.Membership.create({ id: 'm1', group: group1.id })
     const me = session.Me.create({ id: 1 })
     session.Membership.create({ id: 'm2', group: group2.id, person: me.id })
     expect(getMyMemberships({ orm: session.state }, {}).length).toEqual(1)
@@ -120,7 +120,7 @@ describe('getCanModerate', () => {
   it('returns true when user can moderate', () => {
     const me = session.Me.first()
     const group = session.Group.create({ id: 1 })
-    const membership = session.Membership.create({ id: 1, group: group.id, hasModeratorRole: true, person: me.id })
+    session.Membership.create({ id: 1, group: group.id, hasModeratorRole: true, person: me.id })
     const state = { orm: session.state }
     const props = { group }
     expect(getCanModerate(state, props)).toEqual(true)

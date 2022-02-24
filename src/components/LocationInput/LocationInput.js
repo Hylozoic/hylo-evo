@@ -66,7 +66,7 @@ export default class LocationInput extends Component {
           onSelect={this.handleSelectLocation}
           onSuggest={this.handleSuggest}
           source='mapbox.places'
-          endpoint='//api.tiles.mapbox.com'
+          endpoint='https://api.tiles.mapbox.com'
           inputClass={inputClass}
           inputPlaceholder={placeholder}
           resultClass={styles.result}

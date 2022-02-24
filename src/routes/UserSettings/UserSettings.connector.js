@@ -7,14 +7,17 @@ import {
   registerStripeAccount
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
-import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
+import { loginWithService, logout } from 'routes/NonAuthLayout/Login/Login.store'
 import { createSelector } from 'reselect'
 import unBlockUser from 'store/actions/unBlockUser'
+import deactivateMe from 'store/actions/deactivateMe'
+import deleteMe from 'store/actions/deleteMe'
 import getBlockedUsers from 'store/selectors/getBlockedUsers'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import { FETCH_FOR_CURRENT_USER } from 'store/constants'
 import { get, every, includes } from 'lodash/fp'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export const getAllGroupsSettings = createSelector(
   getMyMemberships,
@@ -58,14 +61,18 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch) {
   return {
+    deactivateMe: (params) => dispatch(deactivateMe(params)),
+    deleteMe: (params) => dispatch(deleteMe(params)),
     updateUserSettings: (params) => dispatch(updateUserSettings(params)),
     unBlockUser: (params) => dispatch(unBlockUser(params)),
     loginWithService: (params) => dispatch(loginWithService(params)),
+    logout: (params) => dispatch(logout(params)),
     unlinkAccount: (params) => dispatch(unlinkAccount(params)),
     setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
     updateMembershipSettings: (groupId, settings) => dispatch(updateMembershipSettings(groupId, settings)),
     updateAllMemberships: (groupIds, settings) => dispatch(updateAllMemberships(groupIds, settings)),
-    registerStripeAccount: (params) => dispatch(registerStripeAccount(params))
+    registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
+    fetchLocation: (location) => dispatch(fetchLocation(location))
   }
 }
 

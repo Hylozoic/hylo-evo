@@ -5,6 +5,180 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.4.0] - 2022-02-23
+
+### Added
+- Tabs in the map drawer to see Groups and Members on the map separately from Posts.
+- Ability to hide/show Groups on the map.
+- Can sort map drawer posts by post date.
+- Map parameters, including the center location and zoom, are now added to the URL as they change so you can copy and share an exact map URL with someone.
+
+### Changed
+- Load more posts on the map, more quickly.
+- Searching on the map filters groups and members as well as posts.
+- When adding people to a message, pressing enter without entering text first will jump straight to the message box.
+- Searching on the map now ignores case.
+
+### Fixed
+- Searching for and jumping to a point location (like an address) on the map.
+- When you have data in the create post modal and close it or click off of it, we now ask if you are sure whether you want to closed the modal or not before you lose the entered data.
+- When creating a post in a topic stream add that topic to the post by default and stay in the current group/context.
+- Allow for editing/deleting sub-comments on other people's comments.
+
+## [3.3.0] - 2022-02-03
+
+### Added
+- Many improvements to Messages experience:
+-- Render names of people in a message groups as links to user profiles
+-- Only show people selector when focus is on the Add Person box
+-- Make it more obvious when focus is on the Write Something box
+-- Allow for using arrow keys to select a person without having to first type something
+-- Add hover styling in thread list
+-- Make it more obvious which current thread is being viewed
+-- Names in the messages header are links to their profiles
+-- Filter deleted users out of message contact lists and mentions suggest
+- Added GraphQL config files for dev tools
+
+### Changed
+- When clicking on a group on the Groups page go to that group's Home, instead of going to that group's Groups page
+- Switched to Node 16
+
+### Fixed
+- While loading messages view show Messages header immediately instead of weird All Groups context header
+
+## [3.2.9] - 2022-01-25
+
+### Fixed
+- Crash when going to /settings/notifications and trying to change the setting for a group
+
+## [3.2.8] - 2022-01-23
+
+### Added
+- WebPack bundle analyzer. To analyze bundle `yarn build` and once complete `yarn analyze`
+
+### Changed
+- Lazy load Messages and Notifications top menu items to improve initial load time and rendering
+- Replaced deprecated node-sass dependency with sass (Dart SASS)
+- Move to Node 16
+- Change faker dependency used in tests, and remove deprecated feature that was causing it to be included in production bundle
+- Clean-up package.json
+- Minor WebPack optimization config changes
+
+## [3.2.7] - 2022-01-22
+
+### Fixed
+- Remove extra whitespace on right side of Map on full browser windows
+
+## [3.2.6] - 2022-01-21
+
+### Changed
+- Improve initial app load time: remove extra fields from current user query and parallel load current user alongside current group
+
+## [3.2.5] - 2022-01-18
+
+### Changed
+- Minor tidy and refactor of mobile device checking code
+
+### Fixed
+- MapExplorer drawer hide mobile check corrected so that drawer shows again in web
+
+## [3.2.4] - 2022-01-17
+
+### Changed
+- Hide MapExplorer drawer by default on mobile browsers and in Hylo App embed
+- Allow MapExplorer Saved Searches navigation to happen when in Hylo App embed
+- Fix hover state for MapExplorer on touch-based devices
+
+## [3.2.3] - 2022-01-14
+
+### Fixed
+- Map styling fixes related to nav-less layout used in the embedded Hylo App WebView
+- Changes login text entry field to "email" from "text" to keep auto-capitalization off in some browsers
+
+## [3.2.2] - 2022-01-13
+
+### Changed
+- Added needed mobile app layout modifications to MapExplorer
+- Added route interception to MapExplorer when in mobile app context
+- Added HTTPS to MapBox API URL
+
+## [3.2.1] - 2021-12-29
+
+### Changed
+- Cleanup display of post start and end times to be easier to read - don't uppercase text, better syntax.
+- If a post was "completed" before it ended show the end date as the date it was completed
+- Improve copy for comment box placeholder
+
+### Fixed
+- Fix issue where posts without a start/end time would always show as ENDED
+- Make sure you can see the dropdown to block a member
+
+## [3.2.0] - 2021-12-17
+
+### Added
+- New signup/registration flow that includes email verification, password confirmation and in general better security practices.
+- You can now deactivate or delete your account from the Settings -> Account page.
+- You can now use Markdown when editing the welcome message on the explore page for your group. This means links will work as well.
+
+### Changed
+- Attachments on posts now display in a list instead of a row so you can see any number of attachments. Previously you could see only the first 6 or so.
+
+### Fixed
+- Editing welcome message on explore page updates the widget instantly.
+
+## [3.1.11] - 2021-12-3
+### Fixed
+- Display of map icons on latest safari
+- Inviting people to public events
+
+## [3.1.10] - 2021-12-2
+### Added
+- Display timezone for datetimes in requests, offers and resources
+- You can now specify locations for people, groups and posts as coordinates
+- Scrolling will now show more suggested event invites
+
+### Fixed
+- Saving your individual or group settings could erase your location from the map
+- Hylo URLs in posts that dont have www at the front will correctly load in the same tab instead of opening a new one
+
+## [3.1.9] - 2021-11-2
+### Fixed
+- Only most recent 2 child comments appearing in a comment thread
+
+## [3.1.8] - 2021-11-1
+### Added
+- Add Layout Flags context to capture the `layoutFlags` query param and make it available in React context as `<layoutFlag>Layout`
+- Switch on/off site header and footer for `mobileSettingsLayout` 
+- Update and normalize Group Settings area UI, optimizing for small/mobile screens
+
+## [3.1.7] - 2021-10-26
+### Added
+- Contributor guide and code of conduct to the repo
+
+### Changed
+- Clicking on link to a Hylo post from a post loads in same tab not new one
+- Update user Affiliations settings tab to say Groups & Affiliations
+
+### Fixed
+- Resetting of unread counts when viewing a group and a topic
+- Scrolling list of people who have responded to an event
+
+## [3.1.6] - 2021-08-31
+### Added
+- Ability to pass in a group name and slug as URL parameters to group creation modal
+
+### Fixed
+- Signup with social logins works again
+- You can now export data from large groups. The exported CSV file will be sent in an email.
+- Hylo links in posts now load that link in the same tab not in a new tab
+- Bug loading posts on member profile page
+- About button on Explore page stays on Explore page instead of going to Stream
+
+## [3.1.5] - 2021-08-04
+### Changed
+- Events view now show Upcoming events in start time order and has an option to show Past events in descending start time order.
+
 ### Fixed
 - (Un)subscribing to a topic from a topic feed banner
 

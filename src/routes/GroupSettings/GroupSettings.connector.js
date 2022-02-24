@@ -7,9 +7,10 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
 import getMe from 'store/selectors/getMe'
 import {
-  fetchGroupSettings, updateGroupSettings, deleteGroup
+  FETCH_GROUP_SETTINGS, fetchGroupSettings, updateGroupSettings, deleteGroup
 } from './GroupSettings.store'
 import { allGroupsUrl } from 'util/navigation'
+import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export function mapStateToProps (state, props) {
   const slug = getRouteParam('groupSlug', state, props, false)
@@ -21,6 +22,7 @@ export function mapStateToProps (state, props) {
   return {
     canModerate,
     currentUser,
+    fetchPending: state.pending[FETCH_GROUP_SETTINGS],
     group: group ? presentGroup(group) : null,
     parentGroups,
     slug
@@ -31,7 +33,8 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     deleteGroup: id => dispatch(deleteGroup(id)),
     fetchGroupSettingsMaker: slug => () => dispatch(fetchGroupSettings(slug)),
-    updateGroupSettingsMaker: id => changes => dispatch(updateGroupSettings(id, changes))
+    updateGroupSettingsMaker: id => changes => dispatch(updateGroupSettings(id, changes)),
+    fetchLocation: (location) => dispatch(fetchLocation(location))
   }
 }
 

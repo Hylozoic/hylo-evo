@@ -1,5 +1,5 @@
 import { host } from 'config'
-import { get, isEmpty, omitBy } from 'lodash/fp'
+import { get, isEmpty, isNumber, omitBy } from 'lodash/fp'
 import qs from 'querystring'
 import { matchPath } from 'react-router'
 
@@ -13,6 +13,7 @@ export const REQUIRED_EDIT_POST_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})
 
 export const GROUP_DETAIL_MATCH = `:detail(group)/:detailGroupSlug`
 export const OPTIONAL_GROUP_MATCH = `:detail(group)?/(:detailGroupSlug)?`
+export const HYLO_URL_REGEX = /http[s]?:\/\/(?:www\.)?hylo\.com(.*)/g // https://regex101.com/r/0GZMny/1
 
 // Fundamental URL paths
 
@@ -166,7 +167,8 @@ export function topicUrl (topicName, opts) {
 // URL utility functions
 
 export function addQuerystringToPath (path, querystringParams) {
-  querystringParams = omitBy(x => !x, querystringParams)
+  // The weird query needed to ignore empty arrays but allow for boolean values and numbers
+  querystringParams = omitBy(x => isEmpty(x) && x !== true && !isNumber(x), querystringParams)
   return `${path}${!isEmpty(querystringParams) ? '?' + qs.stringify(querystringParams) : ''}`
 }
 
@@ -196,8 +198,8 @@ export const origin = () =>
 
 // Utility path functions
 
-export function isSignupPath (path) {
-  return (path.startsWith('/signup'))
+export function isWelcomePath (path) {
+  return (path.startsWith('/welcome'))
 }
 
 export function isPublicPath (path) {

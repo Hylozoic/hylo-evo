@@ -24,6 +24,6 @@ it('does something', () => {
       group: 'Ocelots'
     }
   ]
-  const wrapper = shallow(<PeopleList people={people} />)
+  const wrapper = shallow(<PeopleList people={people} onMouseOver={jest.fn()} />)
   expect(wrapper).toMatchSnapshot()
 })

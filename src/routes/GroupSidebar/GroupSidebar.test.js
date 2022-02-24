@@ -7,8 +7,8 @@ GroupSidebar,
 } from './GroupSidebar'
 import { shallow } from 'enzyme'
 import React from 'react'
-import { fakePerson } from 'components/PostCard/samplePost'
-import faker from 'faker'
+import faker from '@faker-js/faker'
+import { fakePerson } from 'util/testData'
 
 const group = {
   id: 1,

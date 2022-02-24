@@ -1,33 +1,39 @@
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { debounce, get, groupBy, isEqual, isEmpty } from 'lodash'
+import cx from 'classnames'
 import bbox from '@turf/bbox'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { debounce, get, groupBy, isEqual } from 'lodash'
-import cx from 'classnames'
+import { isMobileDevice } from 'util/mobile'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
+import { locationObjectToViewport } from 'util/geo'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
+import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Map from 'components/Map/Map'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
-import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
-import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import SwitchStyled from 'components/SwitchStyled'
-import styles from './MapExplorer.scss'
 import LocationInput from 'components/LocationInput'
-import { locationObjectToViewport } from 'util/geo'
 
-export default class MapExplorer extends React.Component {
+import styles from './MapExplorer.scss'
+import 'mapbox-gl/dist/mapbox-gl.css'
+
+export class UnwrappedMapExplorer extends React.Component {
   static defaultProps = {
     centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
     members: [],
-    posts: [],
+    postsForDrawer: [],
+    postsForMap: [],
     groups: [],
     routeParams: {},
     hideDrawer: false,
@@ -35,34 +41,63 @@ export default class MapExplorer extends React.Component {
     zoom: 0
   }
 
+  static contextType = LayoutFlagsContext
+
   constructor (props) {
     super(props)
+
+    const defaultViewport = {
+      width: 800,
+      height: 600,
+      latitude: parseFloat(props.centerLocation.lat),
+      longitude: parseFloat(props.centerLocation.lng),
+      zoom: props.zoom,
+      bearing: 0,
+      pitch: 0
+    }
+
     this.state = {
       clusterLayer: null,
-      groupIconLayer: null,
       currentBoundingBox: null,
-      features: [],
+      groupIconLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
       pointerX: 0,
       pointerY: 0,
+      // Need this in the state so we can filter them by currentBoundingBox
+      groupsForDrawer: props.groups || [],
+      membersForDrawer: props.members || [],
       selectedObject: null,
       showFeatureFilters: false,
-      totalLoadedBoundingBox: null,
-      viewport: {
-        width: 800,
-        height: 600,
-        latitude: parseFloat(props.centerLocation.lat),
-        longitude: parseFloat(props.centerLocation.lng),
-        zoom: props.zoom,
-        bearing: 0,
-        pitch: 0
-      }
+      totalPostsInView: get(props, 'postsForMap.length') || 0,
+      viewport: defaultViewport
     }
   }
 
   componentDidMount () {
     this.refs = {}
+
+    // Drawer hidden by default on mobile devices
+    if (isMobileDevice()) {
+      this.setState({ hideDrawer: true })
+    }
+
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. react router / history push
+    const { mobileSettingsLayout } = this.context
+    if (mobileSettingsLayout) {
+      this.props.history.block(tx => {
+        const path = tx.pathname
+        // when in embedded view of map allow web navigation within map
+        // the keeps saved search retrieval from reseting group context in the app
+        if (path.match(/\/map$/)) return true
+        // url will be deprecated for path
+        const messageData = { path, url: path }
+        window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+        return false
+      })
+    }
+
     Object.keys(FEATURE_TYPES).forEach(featureType => {
       this.refs[featureType] = React.createRef()
     })
@@ -72,34 +107,78 @@ export default class MapExplorer extends React.Component {
     if (this.props.selectedSearch) {
       this.updateSavedSearch(this.props.selectedSearch)
     }
+
+    if (get(this.props, 'fetchPostsParams.boundingBox')) {
+      this.props.fetchPostsForDrawer()
+      this.props.fetchMembers()
+      this.props.fetchPostsForMap()
+      this.props.fetchGroups()
+    }
+
+    const { filters, queryParams } = this.props
+
+    // Sync up the values in the state and the URL
+    const missingInUrl = {}
+    const missingInState = {}
+    Object.keys(this.props.stateFilters).forEach(key => {
+      if (isEmpty(queryParams[key])) {
+        missingInUrl[key] = filters[key]
+      } else if (!isEqual(this.props.stateFilters[key], filters[key])) {
+        missingInState[key] = filters[key]
+      }
+    })
+    if (!isEmpty(missingInUrl)) {
+      this.props.updateQueryParams(missingInUrl, true)
+    }
+    if (!isEmpty(missingInState)) {
+      this.props.storeClientFilterParams(missingInState)
+    }
   }
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
 
     const {
-      context,
+      centerLocation,
       fetchGroups,
+      fetchGroupParams,
       fetchMembers,
-      fetchPosts,
-      fetchParams,
+      fetchMemberParams,
+      fetchPostsForDrawer,
+      fetchPostsForDrawerParams,
+      fetchPostsForMap,
+      fetchPostsParams,
+      groupPending,
+      groups,
       members,
-      posts,
-      groups
+      postsForMap,
+      zoom
     } = this.props
 
-    if (!isEqual(prevProps.fetchParams, fetchParams) || prevProps.context !== context) {
-      fetchMembers()
-      fetchPosts()
-      fetchGroups()
+    // When group finishes loading we may want to move the map to the group's location
+    if (prevProps.groupPending !== groupPending && centerLocation && !isEqual(prevProps.centerLocation, centerLocation)) {
+      this.setState({ viewport: { ...this.state.viewport, latitude: centerLocation.lat, longitude: centerLocation.lng, zoom } })
     }
 
-    if (this.state.currentBoundingBox &&
-        (!isEqual(prevProps.fetchParams, fetchParams) ||
-         !isEqual(prevProps.posts, posts) ||
-         !isEqual(prevProps.members, members) ||
+    if (!isEqual(prevProps.fetchPostsParams, fetchPostsParams)) {
+      fetchPostsForMap()
+    }
+    if (!isEqual(prevProps.fetchPostsForDrawerParams, fetchPostsForDrawerParams)) {
+      fetchPostsForDrawer()
+    }
+    if (!isEqual(prevProps.fetchGroupParams, fetchGroupParams)) {
+      fetchGroups()
+    }
+    if (!isEqual(prevProps.fetchMemberParams, fetchMemberParams)) {
+      fetchMembers()
+    }
+
+    const { currentBoundingBox } = this.state
+    if (currentBoundingBox && (
+      !isEqual(prevProps.postsForMap, postsForMap) ||
+        !isEqual(prevProps.members, members) ||
          !isEqual(prevProps.groups, groups))) {
-      this.setState(this.updatedMapFeatures(this.state.currentBoundingBox))
+      this.setState(this.updatedMapFeatures(currentBoundingBox))
     }
 
     if (prevProps.selectedSearch !== this.props.selectedSearch) {
@@ -108,15 +187,10 @@ export default class MapExplorer extends React.Component {
   }
 
   updateSavedSearch (search) {
-    const { boundingBox, featureTypes, searchText, groupSlug, context, topics } = generateViewParams(search)
-    const params = { featureTypes, search: searchText, groupSlug, context, topics }
+    const { boundingBox, featureTypes, searchText, topics } = generateViewParams(search)
     this.updateBoundingBoxQuery(boundingBox)
-    this.props.fetchMembers(params)
-    this.props.fetchPosts(params)
-    this.props.fetchGroups(params)
-    this.props.storeFetchParams({ boundingBox })
-    this.props.storeClientFilterParams({ featureTypes, searchText, topics })
-    this.updateViewportWithBbox({ bbox: formatBoundingBox(boundingBox) })
+    this.props.storeClientFilterParams({ featureTypes, search: searchText, topics })
+    this.updateViewportWithBbox(formatBoundingBox(boundingBox))
   }
 
   updatedMapFeatures (boundingBox) {
@@ -124,21 +198,21 @@ export default class MapExplorer extends React.Component {
       group,
       groups,
       members,
-      posts
+      postsForMap
     } = this.props
 
     const bbox = bboxPolygon(boundingBox)
     const viewMembers = members.filter(member => {
       const locationObject = member.locationObject
-      if (locationObject) {
+      if (locationObject && locationObject.center) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
       }
       return false
     })
-    const viewPosts = posts.filter(post => {
+    const viewPosts = postsForMap.filter(post => {
       const locationObject = post.locationObject
-      if (locationObject) {
+      if (locationObject && locationObject.center) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
       }
@@ -146,12 +220,12 @@ export default class MapExplorer extends React.Component {
     })
     const viewGroups = groups.filter(group => {
       const locationObject = group.locationObject
-      if (locationObject) {
+      if (locationObject && locationObject.center) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    }).concat(group && group.locationObject ? group : [])
+    }).concat(get(group, 'locationObject.center') ? group : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
@@ -160,26 +234,31 @@ export default class MapExplorer extends React.Component {
         posts: viewPosts,
         onHover: this.onMapHover,
         onClick: this.onMapClick,
-        boundingBox: this.state.currentBoundingBox
+        boundingBox: boundingBox
       }),
       groupIconLayer: createIconLayerFromGroups({
         groups: viewGroups,
         onHover: this.onMapHover,
         onClick: this.onMapClick,
-        boundingBox: this.state.currentBoundingBox
+        boundingBox: boundingBox
       }),
       currentBoundingBox: boundingBox,
-      features: viewPosts.concat(viewMembers)
+      groupsForDrawer: viewGroups,
+      membersForDrawer: viewMembers,
+      totalPostsInView: viewPosts.length
     }
   }
 
   handleLocationInputSelection = (value) => {
     if (value.mapboxId) {
-      this.updateViewportWithBbox(value)
+      // If a bounding box area then show the whole area
+      value.bbox ? this.updateViewportWithBbox(value.bbox)
+        // If a specific location without a bounding box zoom to it
+        : this.setState({ viewport: { ...this.state.viewport, latitude: value.center.lat, longitude: value.center.lng, zoom: 12 } })
     }
   }
 
-  updateViewportWithBbox = ({ bbox }) => {
+  updateViewportWithBbox = (bbox) => {
     this.setState({ viewport: locationObjectToViewport(this.state.viewport, { bbox }) })
   }
 
@@ -192,13 +271,18 @@ export default class MapExplorer extends React.Component {
       let bounds = mapRef.getBounds()
       bounds = [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat]
       this.updateBoundingBoxQuery(bounds)
+      const newCenter = { lat: update.latitude, lng: update.longitude }
+      if (!isEqual(this.props.centerLocation, newCenter) || !isEqual(this.props.zoom, update.zoom)) {
+        this.updateView({ centerLocation: newCenter, zoom: update.zoom })
+      }
     }
   }
 
   updateBoundingBoxQuery = debounce((newBoundingBox) => {
     let finalBbox
-    if (this.state.totalLoadedBoundingBox) {
-      const curBbox = bboxPolygon(this.state.totalLoadedBoundingBox)
+    const { totalBoundingBoxLoaded } = this.props
+    if (totalBoundingBoxLoaded) {
+      const curBbox = bboxPolygon(totalBoundingBoxLoaded)
       const newBbox = bboxPolygon(newBoundingBox)
       const fc = featureCollection([curBbox, newBbox])
       const combined = combine(fc)
@@ -208,15 +292,23 @@ export default class MapExplorer extends React.Component {
     }
 
     // Check if we need to look for more posts and groups
-    if (!isEqual(finalBbox, this.state.totalLoadedBoundingBox)) {
-      this.props.storeFetchParams({ boundingBox: finalBbox })
+    if (!isEqual(finalBbox, totalBoundingBoxLoaded)) {
+      this.updateBoundingBox(finalBbox)
+    }
+
+    // Update currentBoundingBox in the filters to reload MapDrawer posts
+    if (!isEqual(this.props.filters.currentBoundingBox, newBoundingBox)) {
+      this.props.storeClientFilterParams({ currentBoundingBox: newBoundingBox })
     }
 
     this.setState({
-      ...this.updatedMapFeatures(newBoundingBox),
-      totalLoadedBoundingBox: finalBbox
+      ...this.updatedMapFeatures(newBoundingBox)
     })
-  }, 300)
+  }, 200)
+
+  updateBoundingBox = debounce((params) => this.props.updateBoundingBox(params), 500)
+
+  updateView = debounce((params) => this.props.updateView(params), 500)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
@@ -252,9 +344,9 @@ export default class MapExplorer extends React.Component {
   }
 
   toggleFeatureType = (type, checked) => {
-    const featureTypes = this.props.filters.featureTypes
-    featureTypes[type] = checked
-    this.props.storeClientFilterParams({ featureTypes })
+    const newFeatureTypes = { ...this.props.filters.featureTypes }
+    newFeatureTypes[type] = checked
+    this.props.storeClientFilterParams({ featureTypes: newFeatureTypes })
   }
 
   _renderTooltip = () => {
@@ -296,7 +388,7 @@ export default class MapExplorer extends React.Component {
 
   saveSearch = (name) => {
     const { currentBoundingBox } = this.state
-    const { context, currentUser, filters, posts, routeParams } = this.props
+    const { context, currentUser, filters, routeParams } = this.props
     const { featureTypes, search: searchText, topics } = filters
 
     let groupSlug = routeParams.groupSlug
@@ -308,8 +400,6 @@ export default class MapExplorer extends React.Component {
       return selected
     }, [])
 
-    const lastPostId = get(posts, '[0].id')
-
     const topicIds = topics.map(t => t.id)
 
     const boundingBox = [
@@ -317,7 +407,7 @@ export default class MapExplorer extends React.Component {
       { lat: currentBoundingBox[3], lng: currentBoundingBox[2] }
     ]
 
-    const attributes = { boundingBox, groupSlug, context, lastPostId, name, postTypes, searchText, topicIds, userId }
+    const attributes = { boundingBox, groupSlug, context, name, postTypes, searchText, topicIds, userId }
 
     this.props.saveSearch(attributes)
   }
@@ -328,11 +418,15 @@ export default class MapExplorer extends React.Component {
 
   render () {
     const {
+      context,
       currentUser,
-      fetchParams,
       deleteSearch,
+      featureTypes,
+      fetchPostsForDrawer,
       filters,
-      pending,
+      pendingPostsMap,
+      pendingPostsDrawer,
+      postsForDrawer,
       routeParams,
       searches,
       topics
@@ -341,14 +435,19 @@ export default class MapExplorer extends React.Component {
     const {
       clusterLayer,
       groupIconLayer,
-      features,
       hideDrawer,
+      groupsForDrawer,
+      membersForDrawer,
       showFeatureFilters,
       showSavedSearches,
+      totalPostsInView,
       viewport
     } = this.state
 
-    return <div styleName={cx('container', { 'noUser': !currentUser })}>
+    const { mobileSettingsLayout } = this.context
+    const withoutNav = mobileSettingsLayout
+
+    return <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
       <div styleName='mapContainer'>
         <Map
           layers={[groupIconLayer, clusterLayer]}
@@ -357,53 +456,83 @@ export default class MapExplorer extends React.Component {
           children={this._renderTooltip()}
           viewport={viewport}
         />
-        { pending && <Loading className={styles.loading} /> }
+        {pendingPostsMap && <Loading className={styles.loading} />}
       </div>
       <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
         <Icon name='Hamburger' className={styles.openDrawer} />
         <Icon name='Ex' className={styles.closeDrawer} />
       </button>
-      { !hideDrawer ? (
+      {!hideDrawer && (
         <MapDrawer
+          context={context}
           currentUser={currentUser}
-          features={features}
-          fetchParams={fetchParams}
+          fetchPostsForDrawer={fetchPostsForDrawer}
           filters={filters}
+          groups={groupsForDrawer}
+          members={membersForDrawer}
+          numFetchedPosts={postsForDrawer.length}
+          numTotalPosts={totalPostsInView}
           onUpdateFilters={this.props.storeClientFilterParams}
-          pending={pending}
+          pendingPostsDrawer={pendingPostsDrawer}
+          posts={postsForDrawer}
           routeParams={routeParams}
           topics={topics}
-        />)
-        : '' }
+        />
+      )}
       <div styleName={cx('searchAutocomplete')}>
         <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
       </div>
-      <button styleName={cx('toggleFeatureFiltersButton', { 'featureFiltersOpen': showFeatureFilters })} onClick={this.toggleFeatureFilters}>
-        Post Types: <strong>{Object.keys(filters.featureTypes).filter(t => filters.featureTypes[t]).length}/6</strong>
+      <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
+        Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
       </button>
-      { currentUser ? <Icon name='Heart' styleName={`savedSearchesButton${showSavedSearches ? '-open' : ''}`} onClick={this.toggleSavedSearches} /> : '' }
-      { currentUser && showSavedSearches ? (<SavedSearches deleteSearch={deleteSearch} filters={filters} saveSearch={this.saveSearch} searches={searches} toggle={this.toggleSavedSearches} viewSavedSearch={this.handleViewSavedSearch} />) : '' }
-      <div styleName={cx('featureTypeFilters', { 'featureFiltersOpen': showFeatureFilters })}>
+      {currentUser && <>
+        <Icon
+          name='Heart'
+          onClick={this.toggleSavedSearches}
+          styleName={cx('savedSearchesButton', { open: showSavedSearches })}
+        />
+        {showSavedSearches && (
+          <SavedSearches
+            deleteSearch={deleteSearch}
+            filters={filters}
+            saveSearch={this.saveSearch}
+            searches={searches}
+            toggle={this.toggleSavedSearches}
+            viewSavedSearch={this.handleViewSavedSearch}
+          />
+        )}
+      </>}
+      <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
         <h3>What do you want to see on the map?</h3>
-        {['member', 'request', 'offer', 'resource', 'event', 'project'].map(featureType => {
+        {featureTypes.map(featureType => {
           let color = FEATURE_TYPES[featureType].primaryColor
 
-          return <div
-            key={featureType}
-            ref={this.refs[featureType]}
-            styleName='featureTypeSwitch'
-          >
-            <SwitchStyled
-              backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
-              name={featureType}
-              checked={filters.featureTypes[featureType]}
-              onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
-            />
-            <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
-          </div>
+          return (
+            <div
+              key={featureType}
+              ref={this.refs[featureType]}
+              styleName='featureTypeSwitch'
+            >
+              <SwitchStyled
+                backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
+                name={featureType}
+                checked={filters.featureTypes[featureType]}
+                onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
+              />
+              <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
+            </div>
+          )
         })}
         <div styleName={cx('pointer')} />
       </div>
     </div>
   }
+}
+
+export default function MapExplorer (props) {
+  const history = useHistory()
+
+  return (
+    <UnwrappedMapExplorer {...props} history={history} />
+  )
 }

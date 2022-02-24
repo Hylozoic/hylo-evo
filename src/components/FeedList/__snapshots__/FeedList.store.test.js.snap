@@ -4,14 +4,19 @@ exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
+  $isFulfilled: Boolean,
   $offset: Int,
+  $order: String,
   $search: String,
   $slug: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -28,14 +33,18 @@ Object {
     postCount
     
 posts: viewPosts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
+  isFulfilled: $isFulfilled,
   offset: $offset,
-  order: \\"desc\\",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
-  topic: $topic
+  topic: $topic,
+  topics: $topics
 ) {
   hasMore
   total
@@ -151,10 +160,13 @@ posts: viewPosts(
   }
 }",
     "variables": Object {
+      "afterTime": undefined,
+      "beforeTime": undefined,
       "context": "groups",
       "filter": "offer",
       "first": 20,
       "offset": 20,
+      "order": undefined,
       "search": "gardening",
       "slug": undefined,
       "sortBy": undefined,
@@ -176,28 +188,37 @@ exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
+  $context: String,
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
+  $isFulfilled: Boolean,
   $offset: Int,
-  $context: String,
+  $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID,
+  $topics: [ID]
 ) {
   
 posts(
+  afterTime: $afterTime,
+  beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   filter: $filter,
   first: $first,
   groupSlugs: $groupSlugs,
+  isFulfilled: $isFulfilled,
   offset: $offset,
   context: $context,
-  order: \\"desc\\",
+  order: $order,
   sortBy: $sortBy,
   search: $search,
-  topic: $topic
+  topic: $topic,
+  topics: $topics
 ) {
   hasMore
   total
@@ -312,10 +333,13 @@ posts(
 }
 }",
     "variables": Object {
+      "afterTime": undefined,
+      "beforeTime": undefined,
       "context": "all",
       "filter": "request",
       "first": 20,
       "offset": 20,
+      "order": undefined,
       "search": "graphic design",
       "slug": undefined,
       "sortBy": undefined,

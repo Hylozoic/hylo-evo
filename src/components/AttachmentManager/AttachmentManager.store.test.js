@@ -55,7 +55,7 @@ describe('AttachmentManager store', () => {
       it('removes an attachment', () => {
         const state = {
           ...defaultState,
-          ['post-new']: [
+          'post-new': [
             { url: 'a.pdf', attachmentType: 'file' },
             { url: 'b.pdf', attachmentType: 'file' },
             { url: 'c.pdf', attachmentType: 'file' },
@@ -76,13 +76,13 @@ describe('AttachmentManager store', () => {
           attachmentKey: 'post-new',
           attachmentType: 'image',
           position1: 1,
-          position2: 2,
+          position2: 2
         }
       }
       it('switches two attachments', () => {
         const state = {
           ...defaultState,
-          ['post-new']: [
+          'post-new': [
             { url: 'a.pdf', attachmentType: 'file' },
             { url: 'b.pdf', attachmentType: 'file' },
             { url: 'c.pdf', attachmentType: 'file' },
@@ -96,8 +96,8 @@ describe('AttachmentManager store', () => {
       })
     })
   })
-  
-  describe('getUploadAttachmentPending', () => {  
+
+  describe('getUploadAttachmentPending', () => {
     const props = {
       type: 'user-avatar',
       id: '123',
@@ -105,11 +105,11 @@ describe('AttachmentManager store', () => {
     }
 
     it('returns false when not pending', () => {
-      const state = { pending: {} }  
+      const state = { pending: {} }
 
       expect(getUploadAttachmentPending(state, props)).toEqual(false)
     })
-  
+
     it("returns false when pending doesn't match settings", () => {
       const state = {
         pending: {
@@ -120,10 +120,10 @@ describe('AttachmentManager store', () => {
           }
         }
       }
-  
+
       expect(getUploadAttachmentPending(state, props)).toEqual(false)
     })
-  
+
     it('returns true when pending matches settings', () => {
       const state = {
         pending: {
@@ -134,7 +134,7 @@ describe('AttachmentManager store', () => {
           }
         }
       }
-  
+
       expect(getUploadAttachmentPending(state, props)).toEqual(true)
     })
 
@@ -148,7 +148,7 @@ describe('AttachmentManager store', () => {
           }
         }
       }
-  
+
       expect(getUploadAttachmentPending(state, { type: props.type, id: props.id })).toEqual(true)
     })
   })

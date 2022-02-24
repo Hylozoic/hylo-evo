@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 import denormalized from './MemberProfile.test.json'
-import MemberProfile, { SocialButtons } from './MemberProfile'
+import MemberProfile from './MemberProfile'
 
 describe('MemberProfile', () => {
   const defaultTestProps = {

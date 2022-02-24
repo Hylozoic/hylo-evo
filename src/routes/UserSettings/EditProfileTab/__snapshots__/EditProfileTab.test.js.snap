@@ -1,5 +1,250 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`EditProfileTab renders correctly 1`] = `
+<div>
+  <input
+    data-stylename="name"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    data-stylename="banner"
+    style={
+      Object {
+        "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg)",
+      }
+    }
+  >
+    <Connect(UploadAttachmentButton)
+      data-stylename="change-banner-button"
+      onSuccess={[Function]}
+      type="userBanner"
+    />
+  </div>
+  <Connect(UploadAttachmentButton)
+    data-stylename="change-avatar-button"
+    onSuccess={[Function]}
+    type="userAvatar"
+  >
+    <div
+      data-stylename="avatar"
+      style={Object {}}
+    >
+      <Icon
+        data-stylename="uploadIcon"
+        name="AddImage"
+      />
+    </div>
+  </Connect(UploadAttachmentButton)>
+  <SettingsControl
+    label="Tagline"
+    maxLength={60}
+    onChange={[Function]}
+    value=""
+  />
+  <SettingsControl
+    label="About Me"
+    onChange={[Function]}
+    type="textarea"
+    value=""
+  />
+  <SettingsControl
+    label="Location"
+    location=""
+    locationObject={
+      Object {
+        "id": 1,
+      }
+    }
+    onChange={[Function]}
+    type="location"
+  />
+  <SettingsControl
+    label="Website"
+    onChange={[Function]}
+    value=""
+  />
+  <SettingsControl
+    label="My Skills & Interests"
+    renderControl={[Function]}
+  />
+  <SettingsControl
+    label="What I'm learning"
+    renderControl={[Function]}
+  />
+  <SettingsControl
+    label="Contact Email"
+    onChange={[Function]}
+    value=""
+  />
+  <SettingsControl
+    label="Contact Phone"
+    onChange={[Function]}
+    value=""
+  />
+  <label
+    data-stylename="social-label"
+  >
+    Social Accounts
+  </label>
+  <SocialControl
+    handleUnlinkAccount={[Function]}
+    label="Facebook"
+    onLink={[Function]}
+    provider="facebook"
+    updateSettingDirectly={[Function]}
+  />
+  <SocialControl
+    handleUnlinkAccount={[Function]}
+    label="Twitter"
+    provider="twitter"
+    updateSettingDirectly={[Function]}
+  />
+  <SocialControl
+    handleUnlinkAccount={[Function]}
+    label="LinkedIn"
+    provider="linkedin"
+    updateSettingDirectly={[Function]}
+  />
+  <div
+    data-stylename="saveChanges"
+  >
+    <span
+      data-stylename="settingChanged"
+    >
+      Changes not saved
+    </span>
+    <Button
+      color="green"
+      data-stylename="save-button"
+      label="Save Changes"
+      onClick={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`EditProfileTab renders correctly without location object 1`] = `
+<div>
+  <input
+    data-stylename="name"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <div
+    data-stylename="banner"
+    style={
+      Object {
+        "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg)",
+      }
+    }
+  >
+    <Connect(UploadAttachmentButton)
+      data-stylename="change-banner-button"
+      onSuccess={[Function]}
+      type="userBanner"
+    />
+  </div>
+  <Connect(UploadAttachmentButton)
+    data-stylename="change-avatar-button"
+    onSuccess={[Function]}
+    type="userAvatar"
+  >
+    <div
+      data-stylename="avatar"
+      style={Object {}}
+    >
+      <Icon
+        data-stylename="uploadIcon"
+        name="AddImage"
+      />
+    </div>
+  </Connect(UploadAttachmentButton)>
+  <SettingsControl
+    label="Tagline"
+    maxLength={60}
+    onChange={[Function]}
+    value=""
+  />
+  <SettingsControl
+    label="About Me"
+    onChange={[Function]}
+    type="textarea"
+    value=""
+  />
+  <SettingsControl
+    label="Location"
+    location=""
+    onChange={[Function]}
+    type="location"
+  />
+  <SettingsControl
+    label="Website"
+    onChange={[Function]}
+    value=""
+  />
+  <SettingsControl
+    label="My Skills & Interests"
+    renderControl={[Function]}
+  />
+  <SettingsControl
+    label="What I'm learning"
+    renderControl={[Function]}
+  />
+  <SettingsControl
+    label="Contact Email"
+    onChange={[Function]}
+    value=""
+  />
+  <SettingsControl
+    label="Contact Phone"
+    onChange={[Function]}
+    value=""
+  />
+  <label
+    data-stylename="social-label"
+  >
+    Social Accounts
+  </label>
+  <SocialControl
+    handleUnlinkAccount={[Function]}
+    label="Facebook"
+    onLink={[Function]}
+    provider="facebook"
+    updateSettingDirectly={[Function]}
+  />
+  <SocialControl
+    handleUnlinkAccount={[Function]}
+    label="Twitter"
+    provider="twitter"
+    updateSettingDirectly={[Function]}
+  />
+  <SocialControl
+    handleUnlinkAccount={[Function]}
+    label="LinkedIn"
+    provider="linkedin"
+    updateSettingDirectly={[Function]}
+  />
+  <div
+    data-stylename="saveChanges"
+  >
+    <span
+      data-stylename=""
+    >
+      Current settings up to date
+    </span>
+    <Button
+      color="gray"
+      data-stylename="save-button"
+      label="Save Changes"
+      onClick={null}
+    />
+  </div>
+</div>
+`;
+
 exports[`facebookPrompt rejects an incorrect facebook Url, calling itself again 1`] = `
 Array [
   Array [

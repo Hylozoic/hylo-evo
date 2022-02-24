@@ -192,6 +192,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -406,6 +407,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -539,7 +541,7 @@ Array [
         "title": "a link",
       },
       "location": undefined,
-      "locationId": null,
+      "locationId": "555",
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -650,6 +652,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -787,6 +790,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -966,6 +970,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1145,6 +1150,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1325,6 +1331,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1389,7 +1396,7 @@ Array [
       "isPublic": undefined,
       "linkPreview": undefined,
       "location": undefined,
-      "locationId": null,
+      "locationId": "666",
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
@@ -1501,6 +1508,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1639,6 +1647,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1777,6 +1786,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1935,6 +1945,7 @@ exports[`PostEditor renders contribution button 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -1980,7 +1991,7 @@ exports[`PostEditor renders contribution button 1`] = `
         <div
           data-stylename="accept-contributions-help"
         >
-          If you turn "Accept Contributions" on, people will be able to send money to your Stripe connected account to support this project.
+          If you turn 'Accept Contributions' on, people will be able to send money to your Stripe connected account to support this project.
         </div>
       </div>
     </div>
@@ -2095,6 +2106,7 @@ exports[`PostEditor renders with min props 1`] = `
       >
         <Connect(TopicSelector)
           detailsTopics={Array []}
+          onChange={[Function]}
         />
       </div>
     </div>
@@ -2162,7 +2174,7 @@ Array [
         "title": "a link",
       },
       "location": undefined,
-      "locationId": null,
+      "locationId": "555",
       "memberIds": undefined,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",

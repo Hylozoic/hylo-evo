@@ -9,12 +9,9 @@
 
 .container {
   background-color: white;
-  // box-shadow: 15px 15px 52px -14px $color-ghost-30;
   box-shadow: 0px 0px 6px 0px $color-black-10;
   padding: 50px 40px 40px;
   border-radius: 8px;
-  // border-top: 1px solid $color-ghost-30;
-  // border-left: 1px solid $color-ghost-30;
   width: 420px;
 }
 
@@ -30,56 +27,16 @@
 }
 
 .field {
-  display: block;
   margin-bottom: 20px;
-  position: relative;
+  height: 50px;
 
-  .field-label {
-    color: rgba(128, 140, 156, 1.00);
-    font-size: 16px;
-    display: block;
-    position: absolute;
-    top: 12px;
-    left: 15px;
-    transition: all .25s ease;
-  }
-
-  .authInput {
+  input {
     height: 50px;
-
-    input {
-      height: 50px;
-      border: 1px solid rgba(225, 229, 233, 1.00);
-      background-color: rgba(251, 252, 253, 1.00);
-      padding-top: 8px;
-    }
-
-    input:-webkit-autofill, input:-internal-autofill-selected {
-      animation-name: onAutoFillStart;
-    }
-
-    input:not(:-webkit-autofill) {
-      animation-name: onAutoFillCancel;
-    }
-
-  }
-
-  .field-label.active {
-    font-size: 11px;
-    top: 4px;
-    left: 16px;
+    border: 1px solid rgba(225, 229, 233, 1.00);
+    background-color: rgba(251, 252, 253, 1.00);
+    padding-top: 8px;
   }
 }
-
-/* the only way to detect autocomplete */
-@keyframes onAutoFillStart {
-    from {/**/}  to {/**/}
-}
-
-@keyframes onAutoFillCancel {
-    from {/**/}  to {/**/}
-}
-
 
 .submit {
   width: 100%;
@@ -94,6 +51,7 @@
   float: right;
   clear: both;
   margin-bottom: 8px;
+  margin-top: -10px;
 }
 
 .connect-label {

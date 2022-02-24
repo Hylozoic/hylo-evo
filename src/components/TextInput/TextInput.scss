@@ -7,6 +7,7 @@ $text-input-height: 40px;
   padding: 0px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .input {
@@ -19,9 +20,51 @@ $text-input-height: 40px;
   color: $color-rhino;
   padding: 0 16px;
   flex: 1;
+
   &::placeholder {
     color: $color-rhino-30;
   }
+
+  &:focus + .internal-label {
+    font-size: 11px;
+    top: 4px;
+    left: 16px;
+  }
+
+  &:-webkit-autofill {
+    animation-name: onAutoFillStart;
+    transition: background-color 50000s ease;
+  }
+
+  &:not(:-webkit-autofill) {
+    animation-name: onAutoFillCancel;
+    transition: background-color 50000s ease;
+  }
+}
+
+.internal-label {
+  color: $color-rhino-30; /* rgba(128, 140, 156, 1.00); */
+  font-size: 16px;
+  display: block;
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  transition: all .25s ease;
+
+  &.active, &:-webkit-autofill {
+    font-size: 11px;
+    top: 4px;
+    left: 16px;
+  }
+}
+
+/* the only way to detect autocomplete */
+@keyframes onAutoFillStart {
+    from {/**/}  to {/**/}
+}
+
+@keyframes onAutoFillCancel {
+    from {/**/}  to {/**/}
 }
 
 .loading {
@@ -34,10 +77,15 @@ $text-input-height: 40px;
 
 .clear {
   composes: faint-lt-sm from 'css/typography.scss';
+  position: absolute;
+  right: 8px;
+  top: 0px;
   &:hover {
     color: $color-rhino-60;
   }
   cursor: pointer;
+
+
   margin-right: $space-1x;
 }
 
@@ -85,5 +133,11 @@ $text-input-height: 40px;
   .modal-input {
     font-size: 14px;
     padding-left: 5px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .clear {
+    top: -4px;
   }
 }

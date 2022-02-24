@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react'
 import { shallow } from 'enzyme'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
@@ -17,7 +18,7 @@ const postEditorCaseDefaultProps = {
   type: 'post',
   showLabel: true,
   showLoading: true,
-  showsAddButton: true,
+  showsAddButton: true
 }
 
 const commentFormCaseDefaultProps = {
@@ -42,49 +43,48 @@ const attachments = [
 
 describe('AttachmentManager', () => {
   it('renders with minProps', () => {
-    const wrapper = 
     expect(shallow(
       <AttachmentManager {...minDefaultProps} />
     ).text()).toBe('')
-  }),
+  })
 
   describe('as used with PostEditor (showLabel, showLoading, showAddButtons)', () => {
     test('when empty', () => {
       expect(shallow(
         <AttachmentManager {...postEditorCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
 
     test('with attachments', () => {
       expect(shallow(
         <AttachmentManager attachments={attachments} {...postEditorCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
 
     test('when loading', () => {
       expect(shallow(
         <AttachmentManager uploadAttachmentPending {...postEditorCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
 
     test('when loading, with attachments', () => {
       expect(shallow(
         <AttachmentManager attachments={attachments} uploadAttachmentPending {...postEditorCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
   })
 
   describe('as used with CommentForm (default case)', () => {
-  test('when empty', () => {
+    test('when empty', () => {
       expect(shallow(
         <AttachmentManager {...commentFormCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
 
     test('with attachments', () => {
       expect(shallow(
         <AttachmentManager attachments={attachments} {...commentFormCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
 
     test('when loading', () => {
@@ -96,7 +96,7 @@ describe('AttachmentManager', () => {
     test('when loading, with attachments', () => {
       expect(shallow(
         <AttachmentManager attachments={attachments} uploadAttachmentPending {...commentFormCaseDefaultProps} />
-      )).toMatchSnapshot()  
+      )).toMatchSnapshot()
     })
   })
 
@@ -105,21 +105,21 @@ describe('AttachmentManager', () => {
       test('with attachments (of both types), when loading', () => {
         expect(shallow(
           <AttachmentManager attachmentType='image' attachments={attachments} uploadAttachmentPending {...minDefaultProps} />
-        )).toMatchSnapshot()    
+        )).toMatchSnapshot()
       })
     })
     describe('"file"', () => {
       test('with attachments (of both types), when loading', () => {
         expect(shallow(
           <AttachmentManager attachmentType='file' attachments={attachments} uploadAttachmentPending {...minDefaultProps} />
-        )).toMatchSnapshot()    
+        )).toMatchSnapshot()
       })
     })
     describe('not provided', () => {
       test('with attachments (of both types), when loading', () => {
         expect(shallow(
           <AttachmentManager attachments={attachments} uploadAttachmentPending {...minDefaultProps} />
-        )).toMatchSnapshot()    
+        )).toMatchSnapshot()
       })
     })
   })

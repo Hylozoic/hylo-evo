@@ -5,7 +5,7 @@ import { shallow } from 'enzyme'
 it('renders a single image', () => {
   expect(shallow(<CardImageAttachments attachments={[
     { url: 'foo', type: 'image' }
-   ]} />)).toMatchSnapshot()
+  ]} />)).toMatchSnapshot()
 })
 
 it('renders multiple images', () => {

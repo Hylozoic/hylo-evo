@@ -19,7 +19,8 @@ import {
   DROP_QUERY_RESULTS,
   FIND_OR_CREATE_THREAD,
   FETCH_THREADS,
-  FETCH_CHILD_COMMENTS
+  FETCH_CHILD_COMMENTS,
+  FETCH_COMMENTS
 } from 'store/constants'
 // import {
 //   FETCH_NETWORK_SETTINGS,
@@ -45,17 +46,18 @@ export default function (state = {}, action) {
 
   // Special case for post query- needs to extract subcomments as well.
   // Toplevel comments are handled by standard extractQueryResults (below).
-  if (type === FETCH_POST) {
+  if (type === FETCH_POST || type === FETCH_COMMENTS) {
     state = matchSubCommentsIntoQueryResults(state, payload)
   }
 
   const { extractQueryResults } = meta || {}
   if (extractQueryResults && payload) {
-    const { getItems, getRouteParams, getType } = extractQueryResults
-    return appendIds(state,
+    const { getItems, getRouteParams, getType, replace } = extractQueryResults
+    return updateIds(state,
       getType ? getType(action) : action.type,
       getRouteParams ? getRouteParams(action) : meta.graphql.variables,
-      getItems(action)
+      getItems(action),
+      replace
     )
   }
 
@@ -113,7 +115,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   */
   const queriesToMatch = []
 
-  // All Groups feed w/ topics
+  // All Groups stream w/ topics
   queriesToMatch.push({ context: 'all' })
   for (let topic of topics) {
     queriesToMatch.push(
@@ -126,7 +128,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     queriesToMatch.push({ context: 'public' })
   }
 
-  // Group feeds w/ topics
+  // Group streams
   return reduce((memo, group) => {
     queriesToMatch.push(
       { context: 'groups', slug: group.slug },
@@ -134,7 +136,10 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       { context: 'groups', slug: group.slug, sortBy: 'updated' },
       { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type },
       { context: 'groups', slug: group.slug, sortBy: 'created' },
-      { context: 'groups', slug: group.slug, sortBy: 'created', filter: type }
+      { context: 'groups', slug: group.slug, sortBy: 'created', filter: type },
+      // For events stream
+      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
+      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'desc' }
     )
     for (let topic of topics) {
       queriesToMatch.push(
@@ -180,7 +185,7 @@ export function matchSubCommentsIntoQueryResults (state, { data }) {
 
   if (toplevelComments) {
     toplevelComments.forEach(comment => {
-      state = appendIds(state,
+      state = updateIds(state,
         FETCH_CHILD_COMMENTS,
         { id: comment.id },
         get(`childComments`, comment) || {}
@@ -217,15 +222,17 @@ function appendId (state, type, params, id) {
   }
 }
 
-function appendIds (state, type, params, data) {
+// If replace is false add new ids to the existing list, if true then replace list
+function updateIds (state, type, params, data, replace = false) {
   if (!data) return state
   const { items, total, hasMore } = data
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
+  const newIds = items.map(x => x.id)
   return {
     ...state,
     [key]: {
-      ids: uniq(existingIds.concat(items.map(x => x.id))),
+      ids: replace ? newIds : uniq(existingIds.concat(newIds)),
       total,
       hasMore
     }
@@ -267,19 +274,20 @@ export function buildKey (type, params) {
 }
 
 export const queryParamWhitelist = [
+  'autocomplete',
   'id',
   'context',
-  'slug',
+  'filter',
   'groupSlug',
   'groupSlugs',
+  'order',
+  'page',
   'parentSlugs',
-  'sortBy',
   'search',
-  'autocomplete',
-  'filter',
+  'slug',
+  'sortBy',
   'topic',
-  'type',
-  'page'
+  'type'
 ]
 
 export function makeQueryResultsModelSelector (resultsSelector, modelName, transform = i => i) {

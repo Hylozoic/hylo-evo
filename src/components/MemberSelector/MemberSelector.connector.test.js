@@ -1,13 +1,10 @@
 import { mapStateToProps, mapDispatchToProps } from './MemberSelector.connector'
 import { MODULE_NAME } from './MemberSelector.store'
 
-jest.mock('lodash/fp', () => ({
-  ...jest.requireActual('lodash/fp'),
-  debounce: (_, fn) => {
-    fn.cancel = jest.fn()
-    return fn
-  }
-}))
+jest.mock('lodash/debounce', () => fn => {
+  fn.cancel = jest.fn()
+  return fn
+})
 
 jest.mock('./MemberSelector.store', () => ({
   ...jest.requireActual('./MemberSelector.store'),
@@ -33,7 +30,7 @@ describe('mapDispatchToProps', () => {
   it('returns the expected action for fetchPeople', () => {
     const dispatch = r => r
     const result = mapDispatchToProps(dispatch)
-    const fetchPeopleResult = result.fetchPeople('searchstring', [1, 2], {})
+    const fetchPeopleResult = result.fetchPeople({ autocomplete: 'searchstring', groupIds: [1, 2], first: 20, query: {} })
     expect(fetchPeopleResult).toMatchSnapshot()
   })
 })

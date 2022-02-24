@@ -3,7 +3,7 @@
 exports[`works for GroupTopic 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation($id: ID, $data: GroupTopicInput) {
+    "query": "mutation($id: ID, $data: GroupTopicFollowInput) {
     updateGroupTopicFollow(id: $id, data: $data) {
       success
     }

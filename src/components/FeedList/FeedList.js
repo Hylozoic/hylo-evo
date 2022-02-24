@@ -120,7 +120,7 @@ export default class FeedList extends React.Component {
         </div>}
       </React.Fragment>}
       <div styleName={cx('FeedListItems', { collapsedState })}>
-        {!pending && posts.length === 0 ? <NoPosts /> : ''}
+        {!pending && posts.length === 0 ? <NoPosts message='Nothing to see here' /> : ''}
 
         {posts.map(post => {
           const expanded = post.id === routeParams.postId

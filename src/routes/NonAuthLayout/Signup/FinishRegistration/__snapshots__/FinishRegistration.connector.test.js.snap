@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FinishRegistration.connector should call signup 1`] = `
+Object {
+  "payload": Object {
+    "api": Object {
+      "method": "post",
+      "params": Object {
+        "email": "test@hylo.com",
+        "email_validated": true,
+        "login": true,
+        "name": "name",
+        "password": "password",
+      },
+      "path": "/noo/user",
+    },
+  },
+  "type": "Signup/REGISTER",
+}
+`;

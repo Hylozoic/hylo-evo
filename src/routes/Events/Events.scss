@@ -1,0 +1,34 @@
+.events-stream {
+  margin: 0 auto;
+  overflow: auto; // prevent margin collapse
+}
+
+.event-card {
+  margin: 0 $space-4x $space-6x;
+}
+
+.expanded {
+  margin: 0 $space-2x $space-6x;
+}
+
+.create-group-prompt {
+  text-align: center;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  color: $color-rhino-50;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.sidebar-image {
+  height: 150px;
+  width: 100%;
+  background: no-repeat center;
+  background-size: contain;
+}
+
+.button {
+  font-size: 14px;
+  margin-bottom: 30px;
+}

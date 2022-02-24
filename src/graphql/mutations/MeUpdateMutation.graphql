@@ -1,7 +1,0 @@
-#import '../fragments/MeCompleteFragment.graphql'
-
-mutation MeUpdateMutation ($changes: MeInput) {
-  updateMe(changes: $changes) {
-    ...MeCompleteFragment
-  }
-}

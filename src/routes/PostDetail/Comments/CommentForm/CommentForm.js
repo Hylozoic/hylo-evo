@@ -64,7 +64,7 @@ export default class CommentForm extends Component {
   render () {
     const { currentUser, className, addAttachment, focusOnRender, editorContent } = this.props
 
-    const placeholder = this.props.placeholder || (currentUser ? `Hi ${currentUser.firstName()}, what's on your mind?` : "Hi! What's on your mind?")
+    const placeholder = this.props.placeholder || 'Add a comment...'
 
     return <div
       styleName='commentForm'

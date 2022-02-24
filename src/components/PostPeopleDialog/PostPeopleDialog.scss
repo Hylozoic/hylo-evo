@@ -14,6 +14,7 @@ $right-side-width: 500px;
   padding-right: 0px;
   display: flex;
   flex-direction: column;
+  height: inherit;
 }
 
 .member-detail {
@@ -71,6 +72,6 @@ section .col {
 
 .avatar {
   @include image($avatar-size);
-  border-radius: $avatar-size/2;
+  border-radius: calc($avatar-size / 2);
 }
 

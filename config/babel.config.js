@@ -27,7 +27,7 @@ module.exports = function (api) {
     presets: [
       [
         '@babel/preset-env',
-        {targets: {node: 'current'}}
+        { targets: { node: 'current' } }
       ],
       '@babel/preset-react'
     ],
@@ -42,7 +42,8 @@ module.exports = function (api) {
         }
       ],
       'import-graphql',
-      'inline-import'
+      'inline-import',
+      'lodash'
     ],
     ignore: [
       paths.resolveApp('scripts/templates/*')

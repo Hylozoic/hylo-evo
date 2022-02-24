@@ -7,6 +7,7 @@ Object {
   "clearLinkPreview": [Function],
   "createPost": [Function],
   "fetchDefaultTopics": [Function],
+  "fetchLocation": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
   "removeLinkPreview": [Function],
@@ -30,6 +31,7 @@ Object {
   "defaultTopics": Array [],
   "editing": false,
   "editingPostId": undefined,
+  "ensureLocationIdIfCoordinate": [Function],
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],
   "groupOptions": Array [
@@ -98,6 +100,7 @@ Object {
   "defaultTopics": Array [],
   "editing": false,
   "editingPostId": undefined,
+  "ensureLocationIdIfCoordinate": [Function],
   "fetchLinkPreviewPending": false,
   "fileAttachments": Array [],
   "groupOptions": Array [

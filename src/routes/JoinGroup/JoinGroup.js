@@ -7,7 +7,8 @@ export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default class JoinGroup extends Component {
-  componentWillMount () {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount () {
     const {
       isLoggedIn, currentUser, fetchForCurrentUser, useInvitation, checkInvitation
     } = this.props
@@ -26,7 +27,7 @@ export default class JoinGroup extends Component {
   }
 
   render () {
-    const { isLoggedIn, groupSlug, hasCheckedValidInvite, isValidInvite } = this.props
+    const { isLoggedIn, groupSlug, hasCheckedValidInvite, isValidInvite, redirectToView } = this.props
     if (!isLoggedIn && hasCheckedValidInvite) {
       if (isValidInvite) {
         return <Redirect to={SIGNUP_PATH} />
@@ -34,7 +35,7 @@ export default class JoinGroup extends Component {
         return <Redirect to={EXPIRED_INVITE_PATH} />
       }
     }
-    if (isLoggedIn && groupSlug) return <Redirect to={groupUrl(groupSlug)} />
+    if (isLoggedIn && groupSlug) return <Redirect to={groupUrl(groupSlug, redirectToView || 'explore')} />
     return <Loading />
   }
 }

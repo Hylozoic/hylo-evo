@@ -2,7 +2,7 @@ import {
   removePostFromUrl,
   postUrl,
   gotoExternalUrl,
-  contextSwitchingUrl,
+  contextSwitchingUrl
 } from './navigation'
 
 describe('postUrl', () => {
@@ -89,7 +89,7 @@ describe('gotoExternalUrl', () => {
     window.open = jest.fn()
     const testUrl = 'https://google.com'
     gotoExternalUrl(testUrl)
-    expect(open).toHaveBeenCalledWith(testUrl, null, "noopener,noreferrer")
+    expect(window.open).toHaveBeenCalledWith(testUrl, null, 'noopener,noreferrer')
     window.open = jsDomWindowOpen
   })
 })

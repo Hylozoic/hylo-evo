@@ -15,92 +15,45 @@ exports[`Signup renders correctly 1`] = `
     >
       Stay connected, organized, and engaged with your group.
     </p>
-    <div
-      data-stylename="field"
+    <p
+      data-stylename="or"
     >
-      <label
-        data-stylename="field-label"
-        htmlFor="name"
-      >
-        Full name
-      </label>
-      <TextInput
-        aria-label="name"
-        autoFocus={true}
-        data-stylename="authInput"
-        id="name"
-        inputRef={[Function]}
-        label="name"
-        name="name"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        type="text"
-      />
-    </div>
-    <div
+      Enter your email to get started:
+    </p>
+    <TextInput
+      aria-label="email"
+      autoComplete="off"
+      autoFocus={true}
       data-stylename="field"
-    >
-      <label
-        data-stylename="field-label"
-        htmlFor="email"
-      >
-        Your email address
-      </label>
-      <TextInput
-        aria-label="email"
-        data-stylename="authInput"
-        id="email"
-        inputRef={[Function]}
-        label="email"
-        name="email"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        type="text"
-      />
-    </div>
-    <div
-      data-stylename="field"
-    >
-      <label
-        data-stylename="field-label"
-        htmlFor="password"
-      >
-        Password
-      </label>
-      <TextInput
-        aria-label="password"
-        data-stylename="authInput"
-        id="password"
-        label="password"
-        name="password"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onEnter={[Function]}
-        onFocus={[Function]}
-        type="password"
-      />
-    </div>
+      id="email"
+      internalLabel="Email"
+      label="email"
+      name="email"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="text"
+      value=""
+    />
     <Button
+      color="gray"
       data-stylename="submit"
-      label="Sign Up"
-      onClick={[Function]}
+      label="Continue"
+      onClick={null}
     />
   </div>
+  <p
+    data-stylename="or"
+  >
+    Or sign in with an existing account: 
+  </p>
   <div
     data-stylename="auth-buttons"
   >
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
   </div>
 </div>
@@ -124,92 +77,45 @@ exports[`Signup renders correctly with mobile redirect 1`] = `
     >
       Stay connected, organized, and engaged with your group.
     </p>
-    <div
-      data-stylename="field"
+    <p
+      data-stylename="or"
     >
-      <label
-        data-stylename="field-label"
-        htmlFor="name"
-      >
-        Full name
-      </label>
-      <TextInput
-        aria-label="name"
-        autoFocus={true}
-        data-stylename="authInput"
-        id="name"
-        inputRef={[Function]}
-        label="name"
-        name="name"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        type="text"
-      />
-    </div>
-    <div
+      Enter your email to get started:
+    </p>
+    <TextInput
+      aria-label="email"
+      autoComplete="off"
+      autoFocus={true}
       data-stylename="field"
-    >
-      <label
-        data-stylename="field-label"
-        htmlFor="email"
-      >
-        Your email address
-      </label>
-      <TextInput
-        aria-label="email"
-        data-stylename="authInput"
-        id="email"
-        inputRef={[Function]}
-        label="email"
-        name="email"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onFocus={[Function]}
-        type="text"
-      />
-    </div>
-    <div
-      data-stylename="field"
-    >
-      <label
-        data-stylename="field-label"
-        htmlFor="password"
-      >
-        Password
-      </label>
-      <TextInput
-        aria-label="password"
-        data-stylename="authInput"
-        id="password"
-        label="password"
-        name="password"
-        onAnimationStart={[Function]}
-        onBlur={[Function]}
-        onChange={[Function]}
-        onEnter={[Function]}
-        onFocus={[Function]}
-        type="password"
-      />
-    </div>
+      id="email"
+      internalLabel="Email"
+      label="email"
+      name="email"
+      onChange={[Function]}
+      onEnter={[Function]}
+      type="text"
+      value=""
+    />
     <Button
+      color="gray"
       data-stylename="submit"
-      label="Sign Up"
-      onClick={[Function]}
+      label="Continue"
+      onClick={null}
     />
   </div>
+  <p
+    data-stylename="or"
+  >
+    Or sign in with an existing account: 
+  </p>
   <div
     data-stylename="auth-buttons"
   >
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
     <FacebookButton
       onClick={[Function]}
-      signUp={true}
     />
   </div>
 </div>

@@ -27,9 +27,9 @@ export default class CreateGroup extends Component {
       accessibility: 1,
       characterCount: 0,
       invitees: [],
-      name: '',
+      name: props.initialGroupName || '',
       parentGroups: this.props.parentGroups || [],
-      slug: '',
+      slug: props.initialGroupSlug || '',
       slugCustomized: false,
       visibility: 1,
 

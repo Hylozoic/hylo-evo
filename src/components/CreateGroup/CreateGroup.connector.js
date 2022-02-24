@@ -4,6 +4,7 @@ import { get, omit } from 'lodash/fp'
 import { GROUP_ACCESSIBILITY } from 'store/models/Group'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMe from 'store/selectors/getMe'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { baseUrl, groupUrl, postUrl } from 'util/navigation'
 import { createGroup, fetchGroupExists } from './CreateGroup.store'
 
@@ -19,6 +20,8 @@ export function mapStateToProps (state, props) {
 
   return {
     groupSlugExists: get('slugExists', state.CreateGroup),
+    initialGroupName: getQuerystringParam('name', state, props),
+    initialGroupSlug: getQuerystringParam('slug', state, props),
     parentGroupOptions,
     // If currently in a group that user can add as a parent then add it as a parent by default
     parentGroups: currentGroup && parentGroupOptions.find(p => p.id === currentGroup.id) ? [currentGroup] : []

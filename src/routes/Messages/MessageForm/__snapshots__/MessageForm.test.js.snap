@@ -2,6 +2,7 @@
 
 exports[`component matches the latest snapshot 1`] = `
 <form
+  className=""
   data-stylename="message-form"
   onSubmit={[Function]}
 >
@@ -13,12 +14,24 @@ exports[`component matches the latest snapshot 1`] = `
   <TextareaAutosize
     data-stylename="message-textarea"
     inputRef={[Function]}
+    maxRows={8}
+    minRows={1}
+    onBlur={[Function]}
     onChange={[Function]}
+    onFocus={[Function]}
     onHeightChange={[Function]}
     onKeyDown={[Function]}
     placeholder="Write something..."
     useCacheForDOMMeasurements={false}
     value="hey you"
   />
+  <button
+    data-stylename="send-button"
+  >
+    <Icon
+      data-stylename="reply-icon"
+      name="Reply"
+    />
+  </button>
 </form>
 `;

@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const getClientEnvironment = require('./env')
 const paths = require('./paths')
 const sharedConfig = require('./webpack.config.shared')
@@ -115,6 +115,7 @@ module.exports = {
                   { helpers: true }
                 ]
               ],
+              ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ],
               cacheDirectory: true,
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
@@ -133,6 +134,13 @@ module.exports = {
           },
           {
             test: /slick-carousel.*\.css$/,
+            use: [
+              'style-loader',
+              'css-loader'
+            ]
+          },
+          {
+            test: /mapbox-gl.*\.css$/,
             use: [
               'style-loader',
               'css-loader'

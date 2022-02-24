@@ -7,18 +7,18 @@ describe('ManageInvitesTab', () => {
     const props = {
       canceledJoinRequests: [],
       pendingGroupInvites: [
-        { id: "1", group: { id: 1, name: 'group1', avatarUrl: null }, creator: { id: 1, name: "Testy Tester" } },
+        { id: '1', group: { id: 1, name: 'group1', avatarUrl: null }, creator: { id: 1, name: 'Testy Tester' } }
       ],
       pendingJoinRequests: [
-        { id: "1", group: { id: 1, name: 'group1', avatarUrl: null } },
-        { id: "2", group: { id: 2, name: 'group2', avatarUrl: null } },
+        { id: '1', group: { id: 1, name: 'group1', avatarUrl: null } },
+        { id: '2', group: { id: 2, name: 'group2', avatarUrl: null } }
       ],
       rejectedJoinRequests: [],
       cancelJoinRequest: () => {},
       fetchMyInvitesAndRequests: jest.fn(() => Promise.resolve({ me: {} }))
     }
 
-    const wrapper = shallow(<ManageInvitesTab {...props } />)
+    const wrapper = shallow(<ManageInvitesTab {...props} />)
     expect(wrapper.find('JoinRequest').length).toEqual(2)
     expect(wrapper).toMatchSnapshot()
   })

@@ -49,11 +49,12 @@ export function formatError (error, action) {
       'no email': 'Please enter a valid email address',
       'no email provided': 'Please enter a valid email address',
       'invalid-email': 'Please enter a valid email address',
-      'duplicate-email': 'Account already exists!',
+      'duplicate-email': 'Account already exists',
       'no password provided': 'Please enter your password',
       'email not found': 'Email address not found',
-      'data and salt arguments required': 'Please enter a password',
-      default: type
+      'invalid code': 'Invalid code, please try again',
+      'invalid-link': 'Link expired, please try again',
+      default: err
     }
 
     return errors[err] || errors.default

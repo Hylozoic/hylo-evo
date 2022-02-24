@@ -19,11 +19,13 @@ export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onCli
 
   return new IconLayer({
     loadOptions: {
-      mode: 'no-cors',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'yes',
-        'Origin': 'bloop'
+      fetch: {
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'yes'
+          // 'Origin': 'bloop'
+        }
       }
     },
     id: 'group-icon-layer',
@@ -34,11 +36,11 @@ export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onCli
     // d.avatarUrl || defaultGroupUrl
     getIcon: d => ({
       url: defaultGroupUrl, // process.env.NODE_ENV === 'development' ? defaultGroupUrl : d.avatarUrl,
-      width: 48,
-      height: 48,
+      width: 42,
+      height: 42,
       anchorY: 0
     }),
-    getSize: d => 48,
+    getSize: d => 32,
     sizeUnits: 'pixels',
     // sizeMinPixels: 20,
     pickable: true,
@@ -48,6 +50,7 @@ export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onCli
   // return new GroupIconLayer({ boundingBox, data, onHover, onClick, getPosition: d => d.coordinates })
 }
 
+// XXX: Not currently used
 export default class GroupIconLayer extends CompositeLayer {
   getPickingInfo ({ info, mode }) {
     const pickedObject = info.object && info.object.properties

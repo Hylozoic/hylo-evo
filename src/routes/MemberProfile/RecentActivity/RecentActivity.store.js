@@ -9,17 +9,21 @@ export const FETCH_RECENT_ACTIVITY = 'FETCH_RECENT_ACTIVITY'
 
 const recentActivityQuery =
 `query RecentActivity (
+  $afterTime: Date,
+  $beforeTime: Date,
   $boundingBox: [PointInput],
   $filter: String,
   $first: Int,
   $groupSlugs: [String],
   $id: ID,
+  $isFulfilled: Boolean,
   $offset: Int,
   $context: String,
   $order: String,
   $search: String,
   $sortBy: String,
-  $topic: ID
+  $topic: ID,
+  $topics: [ID]
 ) {
   person (id: $id) {
     id

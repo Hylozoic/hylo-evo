@@ -35,9 +35,11 @@ function rootRoutes () {
       <Switch>
         <AuthRoute returnToOnAuth path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
         <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinGroup} />
-        <AuthRoute path='/login' component={NonAuthLayout} />
-        <AuthRoute path='/signup' exact component={NonAuthLayout} />
-        <AuthRoute path='/reset-password' exact component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/login' component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/signup/verify-email' exact component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/signup/finish' exact component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/signup' exact component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/reset-password' exact component={NonAuthLayout} />
         <AuthRoute path='/:context(public)' nonAuthComponent={NonAuthLayout} component={PrimaryLayout} />
         <AuthRoute requireAuth path='/' component={PrimaryLayout} />
       </Switch>

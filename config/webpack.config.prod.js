@@ -5,9 +5,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const safePostCssParser = require('postcss-safe-parser')
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const paths = require('./paths')
 const getClientEnvironment = require('./env')
 const sharedConfig = require('./webpack.config.shared')
@@ -154,6 +155,7 @@ module.exports = {
                   { helpers: true }
                 ]
               ],
+              ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ],
               cacheDirectory: true,
               cacheCompression: true,
               // If an error happens in a package, it's possible to be
@@ -172,6 +174,13 @@ module.exports = {
           },
           {
             test: /slick-carousel.*\.css$/,
+            use: [
+              'style-loader',
+              'css-loader'
+            ]
+          },
+          {
+            test: /mapbox-gl.*\.css$/,
             use: [
               'style-loader',
               'css-loader'
@@ -259,7 +268,8 @@ module.exports = {
     // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
     splitChunks: {
       chunks: 'all',
-      name: false
+      name: false,
+      maxInitialRequests: 6
     },
     // Keep the runtime chunk separated to enable long term caching
     // https://twitter.com/wSokra/status/969679223278505985
@@ -304,7 +314,13 @@ module.exports = {
       fileName: 'asset-manifest.json'
     }),
     // To strip all locales except “en”
-    new MomentLocalesPlugin()
+    new MomentLocalesPlugin(),
+    // Generate WebPack bundle size stats (see build/stats.json and )
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'none',
+      generateStatsFile: true,
+      statsFilename: 'bundle-stats.json'
+    })
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

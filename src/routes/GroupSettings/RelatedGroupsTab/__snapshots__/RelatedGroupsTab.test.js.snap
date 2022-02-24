@@ -34,16 +34,20 @@ exports[`RelatedGroupstab renders correctly 1`] = `
 <div
   data-stylename="container"
 >
-  <h1>
+  <div
+    data-stylename="title"
+  >
     Parent Groups
-  </h1>
+  </div>
   <div>
-    <h3>
+    <div
+      data-stylename="subtitle"
+    >
       These are the 3 groups
        that 
       Best Group
        is a member of
-    </h3>
+    </div>
     <div
       data-stylename="group-list"
     >
@@ -156,16 +160,19 @@ exports[`RelatedGroupstab renders correctly 1`] = `
       </span>
     </Button>
   </div>
-  <br />
-  <h1>
+  <div
+    data-stylename="title"
+  >
     Child Groups
-  </h1>
+  </div>
   <div>
-    <h3>
+    <div
+      data-stylename="subtitle"
+    >
       These 3 groups are members
        of 
       Best Group
-    </h3>
+    </div>
     <div
       data-stylename="group-list"
     >

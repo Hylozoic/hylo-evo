@@ -53,7 +53,12 @@ exports[`matches the latest snapshot 1`] = `
       firstName="anybody"
       promptStringFunc={[Function]}
       querystringParams={Object {}}
-      routeParams={Object {}}
+      routeParams={
+        Object {
+          "groupSlug": undefined,
+          "topicName": "Petitions",
+        }
+      }
       type=""
     />
   </div>

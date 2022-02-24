@@ -19,25 +19,36 @@ export function isPromise (value) {
 
 export const inflectedTotal = (word, count) => `${count.toLocaleString()} ${inflection.inflect(word, count)}`
 
-export const formatDatePair = (startTime, endTime) => {
+export const formatDatePair = (startTime, endTime, returnAsObj) => {
   const start = moment.tz(startTime, moment.tz.guess())
   const end = moment.tz(endTime, moment.tz.guess())
 
-  const from = start.format('ddd, MMM D [at] h:mmA z')
+  const now = moment()
+  const isThisYear = start.year() === now.year() && end.year() === now.year()
 
-  var to = ''
+  let to = ''
+  let from = ''
 
-  if (endTime) {
-    if (end.month() !== start.month()) {
-      to = end.format(' - ddd, MMM D [at] h:mmA z')
-    } else if (end.date() !== start.date()) {
-      to = end.format(' - ddd D [at] h:mmA z')
-    } else {
-      to = end.format(' - h:mmA z')
-    }
+  if (isThisYear) {
+    from = endTime ? start.format('ddd, MMM D [at] h:mmA') : start.format('ddd, MMM D [at] h:mmA z')
+  } else {
+    from = endTime ? start.format('ddd, MMM D, YYYY [at] h:mmA') : start.format('ddd, MMM D, YYYY [at] h:mmA z')
   }
 
-  return from + to
+  if (endTime) {
+    if (end.year() !== start.year()) {
+      to = end.format('ddd, MMM D, YYYY [at] h:mmA z')
+    } else if (end.month() !== start.month() ||
+               end.day() !== start.day() ||
+               end <= now) {
+      to = end.format('ddd, MMM D [at] h:mmA z')
+    } else {
+      to = end.format('h:mmA z')
+    }
+    to = returnAsObj ? to : ' - ' + to
+  }
+
+  return returnAsObj ? { from, to } : from + to
 }
 
 export function hexToRgb (hex) {
@@ -51,4 +62,14 @@ export function hexToRgb (hex) {
 
 export function inIframe () {
   return window.location !== window.parent.location
+}
+
+/* eslint-disable */
+export const validateEmail = email => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(email.toLowerCase())
+}
+
+export function isDateInTheFuture (date) {
+  return moment(date).isAfter(moment())
 }

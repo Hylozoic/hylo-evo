@@ -5,6 +5,13 @@ $size-sidebar-width: 13rem;
   overflow-y: scroll;
 }
 
+.modal--modal-settings-layout {
+  overflow-y: scroll;
+  position: 'relative';
+  top: 0;
+  padding: 10px;
+}
+
 .modal.fullWidth {
   width: 100%;
 

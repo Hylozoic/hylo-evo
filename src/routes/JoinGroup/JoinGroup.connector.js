@@ -14,13 +14,14 @@ export function mapStateToProps (state, props) {
   const newMembership = getNewMembership(state)
   const isValidInvite = getValidInvite(state)
   return {
-    currentUser: getMe(state),
-    invitationToken: getQuerystringParam('token', state, props),
     accessCode: getRouteParam('accessCode', state, props),
+    currentUser: getMe(state),
     groupSlug: get('group.slug', newMembership),
-    isLoggedIn: getIsLoggedIn(state),
     hasCheckedValidInvite: !isNil(isValidInvite),
-    isValidInvite
+    isLoggedIn: getIsLoggedIn(state),
+    invitationToken: getQuerystringParam('token', state, props),
+    isValidInvite,
+    redirectToView: getQuerystringParam('redirectToView', state, props)
   }
 }
 

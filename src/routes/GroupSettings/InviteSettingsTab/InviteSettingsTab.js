@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styles from './InviteSettingsTab.scss'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import TextareaAutosize from 'react-textarea-autosize'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { humanDate } from 'hylo-utils/text'
 import { isEmpty } from 'lodash'
-import { CSSTransitionGroup } from 'react-transition-group'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import Icon from 'components/Icon'
+import isMobile from 'ismobilejs'
+import ReactTooltip from 'react-tooltip'
+
+import styles from './InviteSettingsTab.scss'
 
 const { object, func, string } = PropTypes
 
@@ -31,9 +35,9 @@ export default class InviteSettingsTab extends Component {
 
     const defaultMessage = `Hi!
 
-I'm inviting you to join ${props.group.name} group on Hylo.
+I'm inviting you to join ${props.group.name} on Hylo.
 
-${props.group.name} is using Hylo for our online group: this is our dedicated space for communication & collaboration.`
+${props.group.name} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`
     this.state = {
       copied: false,
       reset: false,
@@ -65,14 +69,12 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
 
         const numBad = badEmails.length
         let errorMessage, successMessage
-        if (numBad === 1) {
-          errorMessage = 'The address below is invalid.'
-        } else if (numBad > 1) {
-          errorMessage = `The ${numBad} addresses below are invalid.`
+        if (numBad > 0) {
+          errorMessage = `${numBad} invalid email address/es found (see above). `
         }
         const numGood = invitations.length - badEmails.length
         if (numGood > 0) {
-          successMessage = `Sent ${numGood} ${numGood === 1 ? 'email' : 'emails'}.`
+          successMessage = `Sent ${numGood} ${numGood === 1 ? 'email.' : 'emails.'}`
           trackAnalyticsEvent('Group Invitations Sent', { numGood })
         }
         this.setState({
@@ -95,7 +97,6 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
       resendInvitation,
       reinviteAll
     } = this.props
-    const { name } = group
     const { copied, reset, emails, errorMessage, successMessage } = this.state
 
     const onReset = () => {
@@ -105,7 +106,7 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
       }
     }
 
-    const isPendingInvites = !isEmpty(pendingInvites)
+    const hasPendingInvites = !isEmpty(pendingInvites)
 
     const onCopy = () => this.setTemporatyState('copied', true)
 
@@ -127,89 +128,115 @@ ${props.group.name} is using Hylo for our online group: this is our dedicated sp
       resendInvitation(invitationToken)
     }
 
-    return <div>
+    return <div styleName='styles.container'>
       <div styleName='styles.header'>
         <div styleName='styles.title'>Invite People</div>
-        <div styleName='styles.subtitle'>
-          to {name} on Hylo
-        </div>
       </div>
+
       {pending && <Loading />}
-      {!pending && <div styleName='styles.invite-link-settings'>
-        <div styleName='styles.invite-link-text'>
-          <div styleName='styles.help'>Anyone with this link can join the group</div>
-          {inviteLink && <div styleName='styles.invite-link'>{inviteLink}</div>}
-          {!inviteLink && <div styleName='styles.help'>No link has been set yet</div>}
-        </div>
-        <div styleName='styles.buttons'>
-          <Button onClick={onReset}
-            color={buttonColor(reset)}
-            styleName='styles.reset-button'
-            narrow
-            small>
-            {reset
-              ? 'Reset'
-              : (inviteLink ? 'Reset Link' : 'New Link')}
-          </Button>
-          {inviteLink && <CopyToClipboard text={inviteLink} onCopy={onCopy}>
-            <Button color={buttonColor(copied)} styleName='styles.copy-button' narrow small>
-              {copied ? 'Copied' : 'Copy Link'}
+
+      {!pending && <>
+        <div styleName='styles.invite-link-section'>
+          <div styleName='styles.subtitle'>
+            Share a Join Link
+          </div>
+          <div styleName='styles.help'>
+            Anyone can join <span style={{ fontWeight: 'bold' }}>{group.name}</span> with this link{inviteLink && '. Click or press on it to copy it'}:
+          </div>
+          <div styleName='styles.invite-link-settings'>
+            {inviteLink && <div styleName='styles.invite-link'>
+              {!copied && <>
+                <CopyToClipboard text={inviteLink} onCopy={onCopy}>
+                  <span data-tip='Click to Copy' data-for='invite-link-tooltip'>
+                    {inviteLink}
+                    <Icon name='Copy' styleName='styles.copy-icon' />
+                  </span>
+                </CopyToClipboard>
+                {!isMobile.any && (
+                  <ReactTooltip place='top'
+                    type='dark'
+                    id='invite-link-tooltip'
+                    effect='solid'
+                    delayShow={500}
+                  />
+                )}
+              </>}
+              {copied && 'Copied!'}
+            </div>}
+            <Button onClick={onReset} styleName='styles.invite-link-button' color={buttonColor(reset)}>
+              {inviteLink ? 'Reset Link' : 'Generate a Link'}
             </Button>
-          </CopyToClipboard>}
+          </div>
         </div>
-      </div>}
+      </>}
+
       <div styleName='styles.email-section'>
-        {successMessage && <span styleName='success'>{successMessage}</span>}
-        {errorMessage && <span styleName='error'>{errorMessage}</span>}
-        <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
-          placeholder='Type email addresses'
+        <div styleName='styles.subtitle'>
+          Send Invites via email
+        </div>
+        <div styleName='styles.help'>Email addresses of those you'd like to invite:</div>
+        <TextareaAutosize minRows={1} styleName='styles.invite-msg-input'
+          placeholder='Type email addresses (multiples should be separated by either a comma or new line)'
           value={this.state.emails}
           disabled={pendingCreate}
           onChange={(event) => this.setState({ emails: event.target.value })} />
+        <div styleName='styles.help'>Customize the invite email message (optional):</div>
         <TextareaAutosize minRows={5} styleName='styles.invite-msg-input'
           value={this.state.message}
           disabled={pendingCreate}
           onChange={(event) => this.setState({ message: event.target.value })} />
         <div styleName='styles.send-invite-button'>
+          <div styleName='styles.send-invite-feedback'>
+            {errorMessage && <span styleName='error'>{errorMessage}</span>}
+            {successMessage && <span styleName='success'>{successMessage}</span>}
+          </div>
           <Button color='green' disabled={disableSendBtn} onClick={this.sendInvites} narrow small>
             Send Invite
           </Button>
         </div>
       </div>
 
-      <div styleName='styles.pending-invites-section'>
-        <div styleName='styles.pending-invites-header'>
-          <h1 style={{ flex: 1 }}>{!isPendingInvites && 'No '}Pending Invites</h1>
-          {isPendingInvites && <Button styleName='styles.resend-all-button'
-            color='green-white-green-border'
-            narrow small
-            onClick={resendAllOnClick}>
-            Resend All
-          </Button>}
+      {hasPendingInvites && (
+        <div styleName='styles.pending-invites-section'>
+          <div styleName='styles.pending-invites-header'>
+            <div styleName='styles.subtitle'>Pending Invites</div>
+            {hasPendingInvites && (
+              <Button styleName='styles.resend-all-button'
+                color='green-white-green-border'
+                narrow small
+                onClick={resendAllOnClick}>
+                Resend All
+              </Button>
+            )}
+          </div>
+          <div styleName='styles.pending-invites-list'>
+            <TransitionGroup>
+              {pendingInvites.map(invite => (
+                <CSSTransition
+                  classNames={{
+                    enter: styles['enter'],
+                    enterActive: styles['enter-active'],
+                    exit: styles['exit'],
+                    exitActive: styles['exit-active']
+                  }}
+                  timeout={{ enter: 400, exit: 500 }}
+                >
+                  <div styleName='styles.row' key={invite.id}>
+                    <div style={{ flex: 1 }}>
+                      <span>{invite.email}</span>
+                      <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
+                    </div>
+                    <div styleName='styles.invite-actions'>
+                      <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
+                      <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
+                    </div>
+                  </div>
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
+          </div>
         </div>
-        <div styleName='styles.pending-invites-list'>
-          <CSSTransitionGroup
-            transitionName={{
-              enter: styles['enter'],
-              enterActive: styles['enter-active'],
-              leave: styles['leave'],
-              leaveActive: styles['leave-active']
-            }}
-            transitionEnterTimeout={400}
-            transitionLeaveTimeout={500}>
-            {pendingInvites.map(invite => <div styleName='styles.row' key={invite.id}>
-              <div style={{ flex: 1 }}>
-                <span>{invite.email}</span>
-                <span styleName='styles.invite-date'>{humanDate(invite.lastSentAt)}</span>
-              </div>
-              <div styleName='styles.invite-actions'>
-                <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
-                <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
-              </div>
-            </div>)}
-          </CSSTransitionGroup>
-        </div>
-      </div>
+      )}
     </div>
   }
 }

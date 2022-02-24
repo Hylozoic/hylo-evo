@@ -7,7 +7,7 @@ let container = null
 
 beforeEach(() => {
   // setup a DOM element as a render target
-  container = document.createElement("div")
+  container = document.createElement('div')
   document.body.appendChild(container)
 })
 
@@ -23,33 +23,33 @@ it('renders sort options', () => {
     render(<TabBar />, container)
   })
 
-  expect(container.querySelector("[data-stylename=dropdown]"))
+  expect(container.querySelector('[data-stylename=dropdown]'))
     .toMatchInlineSnapshot(`
-<div
-  data-stylename="dropdown"
->
-  <span
-    data-stylename="dropdown-toggle"
-  >
-    <span
-      data-stylename="sorter-label"
+    <div
+      data-stylename="dropdown"
     >
-      Latest Activity
       <span
-        class="icon-ArrowDown"
-        data-stylename="icon"
-      />
-    </span>
-  </span>
-  <div
-    data-stylename="wrapper alignRight"
-  >
-    <ul
-      data-stylename="dropdown-menu alignRight"
-    />
-  </div>
-</div>
-`)
+        data-stylename="dropdown-toggle"
+      >
+        <span
+          data-stylename="sorter-label"
+        >
+          Latest Activity
+          <span
+            class="icon-ArrowDown"
+            data-stylename="icon"
+          />
+        </span>
+      </span>
+      <div
+        data-stylename="wrapper alignRight"
+      >
+        <ul
+          data-stylename="dropdown-menu alignRight"
+        />
+      </div>
+    </div>
+  `)
 })
 
 it('renders tabs', () => {
@@ -57,49 +57,49 @@ it('renders tabs', () => {
     render(<TabBar />, container)
   })
 
-  expect(container.querySelector("[data-stylename=tabs]"))
+  expect(container.querySelector('[data-stylename=tabs]'))
     .toMatchInlineSnapshot(`
-<div
-  data-stylename="tabs"
->
-  <div
-    data-stylename="filterLabel"
-  >
-    Post types: 
-    <strong>
-      all
-    </strong>
-     
-    <span
-      class="icon-ArrowDown"
-      data-stylename="icon"
-    />
-  </div>
-  <span
-    data-stylename="tab-active"
-  >
-    All
-  </span>
-  <span
-    data-stylename="tab"
-  >
-    Discussions
-  </span>
-  <span
-    data-stylename="tab"
-  >
-    Requests
-  </span>
-  <span
-    data-stylename="tab"
-  >
-    Offers
-  </span>
-  <span
-    data-stylename="tab"
-  >
-    Resources
-  </span>
-</div>
-`)
+    <div
+      data-stylename="tabs"
+    >
+      <div
+        data-stylename="filterLabel"
+      >
+        Post types: 
+        <strong>
+          all
+        </strong>
+         
+        <span
+          class="icon-ArrowDown"
+          data-stylename="icon"
+        />
+      </div>
+      <span
+        data-stylename="tab-active"
+      >
+        All
+      </span>
+      <span
+        data-stylename="tab"
+      >
+        Discussions
+      </span>
+      <span
+        data-stylename="tab"
+      >
+        Requests
+      </span>
+      <span
+        data-stylename="tab"
+      >
+        Offers
+      </span>
+      <span
+        data-stylename="tab"
+      >
+        Resources
+      </span>
+    </div>
+  `)
 })

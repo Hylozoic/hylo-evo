@@ -19,6 +19,7 @@ import AttachmentManager from 'components/AttachmentManager/AttachmentManager.st
 import AuthRoute from 'router/AuthRoute/AuthRoute.store'
 import CreateGroup from 'components/CreateGroup/CreateGroup.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
+import Events from 'routes/Events/Events.store'
 import FeedList from 'components/FeedList/FeedList.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
@@ -58,6 +59,7 @@ export const combinedReducers = combineReducers({
   AttachmentManager,
   CreateGroup,
   CreateTopic,
+  Events,
   FeedList,
   FullPageModal,
   HyloEditor,
