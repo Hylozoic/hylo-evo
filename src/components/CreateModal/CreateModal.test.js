@@ -1,9 +1,5 @@
-import CreateModal from './CreateModal'
-import { shallow } from 'enzyme'
-import React from 'react'
-
 // import React from 'react'
-// import PostEditorModal from './PostEditorModal'
+// import CreateModal from './CreateModal'
 // import { history } from 'router/index'
 // import orm from 'store/models'
 // import { graphql } from 'msw'
