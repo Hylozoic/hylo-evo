@@ -7,6 +7,7 @@ import prettyDate from 'pretty-date'
 import moment from 'moment-timezone'
 import linkify from './linkify'
 import { convert as convertHtmlToText } from 'html-to-text'
+
 //
 // HTML and Text presentation related
 
@@ -87,9 +88,7 @@ export function textLengthHTML (htmlOrText, options) {
 }
 
 export const markdown = text => {
-  return sanitizeHTML(
-    marked.parse(text || '', { gfm: true, breaks: true })
-  )
+  return marked.parse(text || '', { gfm: true, breaks: true })
 }
 
 export function htmlToText (html, providedOptions = {}) {

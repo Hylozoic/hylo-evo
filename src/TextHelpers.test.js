@@ -59,10 +59,6 @@ describe('markdown', () => {
   it('converts to markdown', () => {
     expect(TextHelpers.markdown('*strong* **italic**')).toBe('<p><em>strong</em> <strong>italic</strong></p>\n')
   })
-
-  it('sanitizes also', () => {
-    expect(TextHelpers.markdown('*strong* **italic** <i>aa</i>')).toBe('<p><em>strong</em> <strong>italic</strong> </p>\n')
-  })
 })
 
 describe('htmlToText', () => {
