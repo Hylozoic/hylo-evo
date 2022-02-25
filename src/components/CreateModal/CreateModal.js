@@ -35,7 +35,7 @@ export default function CreateModal (props) {
   const closeModal = () => dispatch(push(closeUrl))
 
   const confirmClose = () => {
-    const confirmed = !isDirty || window.confirm('Are you sure you want to exit? Changes won\'t be saved')
+    const confirmed = !isDirty || window.confirm('Changes won\'t be saved. Are you sure you want to cancel?')
     if (confirmed) {
       closeModal()
     }
@@ -57,6 +57,7 @@ export default function CreateModal (props) {
             ? <PostEditor
               {...props}
               onClose={closeModal}
+              onCancel={confirmClose}
               setIsDirty={setIsDirty}
             />
             : <Switch>
