@@ -26,10 +26,10 @@ import {
 
 export const blockRenderMap = Immutable.Map({
   'paragraph': {
-    element: 'p'
+    element: 'div'
   },
   'unstyled': {
-    element: 'p'
+    element: 'div'
   }
 })
 export default class HyloEditor extends Component {
