@@ -1,31 +1,37 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import Immutable from 'immutable'
 import Editor from '@draft-js-plugins/editor'
 import createMentionPlugin from '@draft-js-plugins/mention'
 import createLinkifyPlugin from '@draft-js-plugins/linkify'
-import createToolbarPlugin, { Separator } from '@draft-js-plugins/static-toolbar'
-import { EditorState, RichUtils, KeyBindingUtil, getDefaultKeyBinding } from 'draft-js'
+import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
+import {
+  EditorState,
+  RichUtils,
+  getDefaultKeyBinding,
+  Modifier,
+  KeyBindingUtil
+} from 'draft-js'
 import { Validators } from 'hylo-shared'
 import { keyMap } from 'util/textInput'
 import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import cx from 'classnames'
 import styles from './HyloEditor.scss'
 import 'draft-js/dist/Draft.css'
-import '@draft-js-plugins/static-toolbar/lib/plugin.css'
+import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
 import {
   ItalicButton,
-  BoldButton,
-  // UnderlineButton,
-  // CodeButton,
-  // HeadlineOneButton,
-  // HeadlineTwoButton,
-  // HeadlineThreeButton,
-  UnorderedListButton,
-  OrderedListButton,
-  // BlockquoteButton
-  // CodeBlockButton
+  BoldButton
 } from '@draft-js-plugins/buttons'
 
+export const blockRenderMap = Immutable.Map({
+  'paragraph': {
+    element: 'p'
+  },
+  'unstyled': {
+    element: 'p'
+  }
+})
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
@@ -100,16 +106,13 @@ export default class HyloEditor extends Component {
       }
     })
     this._linkifyPlugin = createLinkifyPlugin()
-    this._toolbarPlugin = createToolbarPlugin({
-      // theme: { buttonStyles, toolbarStyles }
-    })
+    this._inlineToolbarPlugin = createInlineToolbarPlugin()
     this.editor = React.createRef()
     this.state = this.defaultState(props)
-    this.Toolbar = this._toolbarPlugin?.Toolbar
   }
 
   componentDidUpdate (prevProps) {
-    // regenerate state from content if HTML changes
+    // Regenerate state from content if HTML changes
     if (
       this.props.contentHTML !== prevProps.contentHTML ||
       this.props.contentStateRaw !== prevProps.contentStateRaw
@@ -117,7 +120,7 @@ export default class HyloEditor extends Component {
       this.setState(this.defaultState(this.props))
     }
 
-    // handle initial focus behaviour
+    // Handle initial focus behaviour
     if (this.props.focusOnRender !== prevProps.focusOnRender) {
       this.setState({ didInitialFocus: false })
     }
@@ -187,14 +190,17 @@ export default class HyloEditor extends Component {
   onReturn = (event) => {
     const { submitOnReturnHandler } = this.props
     const { editorState } = this.state
+    const contentState = editorState.getCurrentContent()
 
     if (KeyBindingUtil.isSoftNewlineEvent(event)) {
-      const newEditorState = RichUtils.insertSoftNewline(this.state.editorState)
-      this.handleChange(newEditorState)
+      this.handleChange(RichUtils.insertSoftNewline(editorState))
       return 'handled'
     }
 
-    if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
+    if (
+      this.state.submitOnReturnEnabled &&
+      submitOnReturnHandler
+    ) {
       submitOnReturnHandler(editorState)
       this.setState({
         editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
@@ -202,7 +208,27 @@ export default class HyloEditor extends Component {
       return 'handled'
     }
 
-    return 'not-handled'
+    if (
+      contentState.getLastBlock().getType() === 'unstyled' &&
+      contentState.getLastBlock().getText().slice(-1).match(/^\n$/)
+    ) {
+      const selectionState = editorState.getSelection().merge({
+        anchorOffset: editorState.getSelection().getEndOffset(),
+        focusOffset: editorState.getSelection().getEndOffset() - 1,
+        isBackward: true
+      })
+      this.handleChange(
+        EditorState.push(
+          editorState,
+          Modifier.splitBlock(contentState, selectionState),
+          'split-block'
+        )
+      )
+      return 'handled'
+    }
+
+    this.handleChange(RichUtils.insertSoftNewline(editorState))
+    return 'handled'
   }
 
   handleKeyCommand = (command) => {
@@ -210,7 +236,6 @@ export default class HyloEditor extends Component {
       this.handleEscape()
       return 'handled'
     }
-
     return 'not-handled'
   }
 
@@ -248,12 +273,12 @@ export default class HyloEditor extends Component {
   render () {
     const { MentionSuggestions } = this._mentionsPlugin
     const { MentionSuggestions: TopicSuggestions } = this._topicsPlugin
-    const Toolbar = this.Toolbar
+    const { InlineToolbar } = this._inlineToolbarPlugin
     const plugins = [
       this._mentionsPlugin,
       this._topicsPlugin,
       this._linkifyPlugin,
-      this._toolbarPlugin
+      this._inlineToolbarPlugin
     ]
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
     const { topicSearch, mentionsOpen, topicsOpen } = this.state
@@ -262,23 +287,14 @@ export default class HyloEditor extends Component {
       : topicResults
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })
+
     return (
       <div styleName={styleNames} className={className}>
-        {/* <Toolbar>
-          {(externalProps) => (
-            <>
-              <BoldButton {...externalProps} />
-              <ItalicButton {...externalProps} />
-              <Separator {...externalProps} />
-              <UnorderedListButton {...externalProps} />
-              <OrderedListButton {...externalProps} />
-            </>
-          )}
-        </Toolbar> */}
         <Editor
           editorState={editorState}
           onChange={this.handleChange}
           handleReturn={this.onReturn}
+          blockRenderMap={blockRenderMap}
           handleKeyCommand={this.handleKeyCommand}
           keyBindingFn={hyloEditorKeyBindingFn}
           readOnly={readOnly}
@@ -288,6 +304,14 @@ export default class HyloEditor extends Component {
           stripPastedStyles
           spellCheck
         />
+        <InlineToolbar>
+          {(externalProps) => (
+            <>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+            </>
+          )}
+        </InlineToolbar>
         <MentionSuggestions
           open={mentionsOpen}
           onSearchChange={this.handleMentionsSearch}

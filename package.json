@@ -61,7 +61,7 @@
     "@draft-js-plugins/editor": "^4.1.2",
     "@draft-js-plugins/linkify": "^4.2.0",
     "@draft-js-plugins/mention": "^5.1.1",
-    "@draft-js-plugins/static-toolbar": "^4.1.2",
+    "@draft-js-plugins/inline-toolbar": "^4.1.2",
     "@faker-js/faker": "^6.0.0-alpha.5",
     "@math.gl/web-mercator": "^3.5",
     "@playlyfe/gql": "^2.6.2",

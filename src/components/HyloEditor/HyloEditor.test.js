@@ -53,12 +53,6 @@ describe('HyloEditor', () => {
   })
 
   describe('#onReturn', () => {
-    it('does nothing if props.submitOnReturnHandler is not provided', () => {
-      const wrapper = renderComponent(mount)
-      const result = wrapper.instance().onReturn({ which: keyMap.SPACE, getModifierState: () => false })
-      expect(result).toEqual('not-handled')
-    })
-
     it('runs props.submitOnReturnHandler if provided', () => {
       const submitOnReturnHandler = jest.fn()
       const wrapper = renderComponent(mount, { submitOnReturnHandler })
