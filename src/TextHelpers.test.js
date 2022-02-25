@@ -59,6 +59,9 @@ describe('markdown', () => {
   it('converts to markdown', () => {
     expect(TextHelpers.markdown('*strong* **italic**')).toBe('<p><em>strong</em> <strong>italic</strong></p>\n')
   })
+  it('converts to markdown not autolinking', () => {
+    expect(TextHelpers.markdown('https://www.hylo.com')).toBe('<p>https://www.hylo.com</p>\n')
+  })
 })
 
 describe('htmlToText', () => {

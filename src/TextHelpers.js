@@ -87,6 +87,15 @@ export function textLengthHTML (htmlOrText, options) {
   return htmlToText(htmlOrText, options).length
 }
 
+// https://github.com/markedjs/marked/issues/882#issuecomment-781585009
+marked.use({
+  tokenizer: {
+    url (src) {
+      // having nothing here disables gfm autolinks
+    }
+  }
+})
+
 export const markdown = text => {
   return marked.parse(text || '', { gfm: true, breaks: true })
 }
