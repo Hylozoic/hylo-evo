@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { ContentState } from 'draft-js'
 import { MENTION_ENTITY_TYPE, TOPIC_ENTITY_TYPE } from 'hylo-shared'
-import { keyMap } from 'util/textinput'
+import { keyMap } from 'util/textInput'
 import HyloEditor from './HyloEditor'
 
 const emptyFunc = () => {}
