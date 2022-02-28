@@ -216,7 +216,7 @@ export function NotificationHeader ({ notification }) {
   return null
 }
 
-export const truncateHTML = html => TextHelpers.truncateText(TextHelpers.htmlToText(html), NOTIFICATION_TEXT_MAX)
+export const truncateHTML = html => TextHelpers.presentHTMLToText(html, { truncate: NOTIFICATION_TEXT_MAX })
 
 export const truncateText = text => TextHelpers.truncateText(text, NOTIFICATION_TEXT_MAX)
 

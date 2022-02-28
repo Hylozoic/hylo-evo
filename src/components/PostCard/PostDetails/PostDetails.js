@@ -9,7 +9,7 @@ import PostCompletion from '../PostCompletion'
 import cx from 'classnames'
 import './PostDetails.scss'
 
-const maxDetailsLength = 144
+const MAX_DETAILS_LENGTH = 144
 
 export default function PostDetails ({
   details: providedDetails,
@@ -25,11 +25,10 @@ export default function PostDetails ({
   canEdit,
   ...post
 }) {
-  let details = TextHelpers.presentHTML(providedDetails, { slug })
-  if (!expanded && TextHelpers.textLengthHTML(details) > maxDetailsLength) {
-    details = TextHelpers.truncateHTML(details, maxDetailsLength)
-  }
-
+  const details = TextHelpers.presentHTML(providedDetails, {
+    slug,
+    truncate: !expanded && MAX_DETAILS_LENGTH
+  })
   const postType = get('type', post)
   const typesWithCompletion = ['offer', 'request', 'resource', 'project']
   const canBeCompleted = typesWithCompletion.includes(postType)
@@ -38,23 +37,27 @@ export default function PostDetails ({
   return <Highlight {...highlightProps}>
     <div styleName={cx('postDetails', { constrained })}>
       <div styleName='fade' />
-      {details && !hideDetails &&
+      {details && !hideDetails && (
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         </ClickCatcher>
-      }
-      {canBeCompleted && canEdit && expanded &&
+      )}
+      {canBeCompleted && canEdit && expanded && (
         <PostCompletion
           type={postType}
           startTime={post.startTime}
           endTime={post.endTime}
           isFulfilled={isFulfilled}
           fulfillPost={fulfillPost}
-          unfulfillPost={unfulfillPost} />}
-      {linkPreview &&
-        <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
-      {fileAttachments &&
-        <CardFileAttachments attachments={fileAttachments} />}
+          unfulfillPost={unfulfillPost}
+        />
+      )}
+      {linkPreview && (
+        <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
+      )}
+      {fileAttachments && (
+        <CardFileAttachments attachments={fileAttachments} />
+      )}
     </div>
   </Highlight>
 }

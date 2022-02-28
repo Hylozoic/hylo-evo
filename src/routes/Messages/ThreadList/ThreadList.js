@@ -92,14 +92,12 @@ ThreadList.propTypes = {
   threadsPending: PropTypes.bool
 }
 
-export const MAX_THREAD_PREVIEW_LENGTH = 54
+export const MAX_THREAD_PREVIEW_LENGTH = 70
 
 export function ThreadListItem ({
   currentUser, active, id, thread, latestMessage, unreadCount, isUnread
 }) {
-  const latestMessagePreview = latestMessage?.text
-    ? TextHelpers.truncateText(TextHelpers.htmlToText(latestMessage.text), MAX_THREAD_PREVIEW_LENGTH)
-    : ''
+  const latestMessagePreview = TextHelpers.presentHTMLToText(latestMessage?.text, { truncate: MAX_THREAD_PREVIEW_LENGTH })
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
   return <li styleName={cx({ 'list-item': true, 'unread-list-item': isUnread, 'active': active })}>
@@ -108,7 +106,7 @@ export function ThreadListItem ({
       <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>
         <ThreadNames names={names} />
-        <div styleName='thread-message-text' dangerouslySetInnerHTML={{ __html: latestMessagePreview }} />
+        <div styleName='thread-message-text'>{latestMessagePreview}</div>
       </div>
       <div styleName='li-right-content'>
         <div styleName='message-time'>{TextHelpers.humanDate(get('createdAt', latestMessage))}</div>

@@ -114,7 +114,9 @@ MessagesDropdown.propTypes = {
   threads: PropTypes.array
 }
 
-export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessageLength = 145 }) {
+const MAX_MESSAGE_LENGTH = 145
+
+export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
   if (!thread) return null
 
   const messages = toRefArray(itemsToArray(thread.messages))
@@ -124,12 +126,9 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessage
 
   const participants = toRefArray(thread.participants)
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
+  let displayText = lastMessageCreator(message, currentUser, participants) + message.text
 
-  var displayText = lastMessageCreator(message, currentUser, participants) + message.text
-
-  if (TextHelpers.textLengthHTML(displayText) > maxMessageLength) {
-    displayText = `${TextHelpers.truncateHTML(displayText, maxMessageLength)}...`
-  }
+  displayText = TextHelpers.presentHTMLToText(displayText, { truncate: MAX_MESSAGE_LENGTH })
 
   return <li styleName={cx('thread', { unread: isUnread(thread) })}
     onClick={onClick}>
