@@ -1,31 +1,46 @@
 import * as TextHelpers from '../src/TextHelpers'
 import moment from 'moment-timezone'
 
-describe('sanitizeHTML', () => {
-  it('returns empty string if called without text', () => {
-    expect(TextHelpers.sanitizeHTML()).toBe('')
+describe('presentHTML', () => {
+  it('linkifies mentions and hashtags', () => {
+    const presentResult = TextHelpers.presentHTML(
+      '<p>Sadsadf <a href="#" data-entity-type="mention" data-user-id="26189">Matt Zeltzer Test</a> #test-topic  </p>\n',
+      {
+        slug: 'test'
+      }
+    )
+    expect(presentResult).toBe(
+      '<p>Sadsadf <a href="/groups/test/members/26189" data-entity-type="mention" data-user-id="26189" class="mention">Matt Zeltzer Test</a> <a href="/groups/test/topics/test-topic" class="hashtag" data-search="#test-topic">#test-topic</a>  </p>\n'
+    )
   })
 
-  it('allows whitelist to be undefined', () => {
-    expect(TextHelpers.sanitizeHTML('foo')).toBe('foo')
+  it('truncates', () => {
+    const presentResult = TextHelpers.presentHTML(
+      '<p>Sadsadf <a href="#" data-entity-type="mention" data-user-id="26189">Matt Zeltzer Test</a> #test-topic  </p>\n',
+      {
+        slug: 'test',
+        truncate: 20
+      }
+    )
+    expect(presentResult).toBe(
+      '<p>Sadsadf <a href="/groups/test/members/26189" data-entity-type="mention" data-user-id="26189" class="mention">Matt …</a></p>'
+    )
+    const presentResultWithExtrenalLink = TextHelpers.presentHTML(
+      '<p>Sadsadf <a href="https://google.com" target="_blank">GOOGLE</a></p>',
+      {
+        slug: 'test',
+        truncate: 100
+      }
+    )
+    expect(presentResultWithExtrenalLink).toBe(
+      '<p>Sadsadf <a href="https://google.com" target="_blank">GOOGLE</a></p>'
+    )
   })
+})
 
-  it('strips leading whitespace in paragraphs', () => {
-    expect(TextHelpers.sanitizeHTML('<p>&nbsp;</p>')).toBe('<p></p>')
-  })
-
-  it('removes tags not on a whitelist', () => {
-    const expected = 'Wombats are great.<div>They poop square.</div>'
-    const unsafe = 'Wombats are great.<em>So great.</em><div>They poop square.</div>'
-    const actual = TextHelpers.sanitizeHTML(unsafe, { allowedTags: ['div'] })
-    expect(actual).toBe(expected)
-  })
-
-  it('removes attributes not on a whitelist', () => {
-    const expected = '<p id="wombat-data">Wombats are great.</p>'
-    const unsafe = '<p id="wombat-data" class="main-wombat">Wombats are great.</p>'
-    const actual = TextHelpers.sanitizeHTML(unsafe, { allowTags: ['p'], allowedAttributes: { p: ['id'] } })
-    expect(actual).toBe(expected)
+describe('presentHTMLToText', () => {
+  it("shouldn't include text of href on links", () => {
+    expect(TextHelpers.presentHTMLToText("<a href='/any/url'>Text</a> more text")).toBe('Text more text')
   })
 })
 
@@ -55,6 +70,34 @@ describe('textLengthHTML', () => {
   })
 })
 
+describe('sanitizeHTML', () => {
+  it('returns empty string if called without text', () => {
+    expect(TextHelpers.sanitizeHTML()).toBe('')
+  })
+
+  it('allows whitelist to be undefined', () => {
+    expect(TextHelpers.sanitizeHTML('foo')).toBe('foo')
+  })
+
+  it('strips leading whitespace in paragraphs', () => {
+    expect(TextHelpers.sanitizeHTML('<p>&nbsp;</p>')).toBe('<p></p>')
+  })
+
+  it('removes tags not on a whitelist', () => {
+    const expected = 'Wombats are great.<div>They poop square.</div>'
+    const unsafe = 'Wombats are great.<em>So great.</em><div>They poop square.</div>'
+    const actual = TextHelpers.sanitizeHTML(unsafe, { allowedTags: ['div'] })
+    expect(actual).toBe(expected)
+  })
+
+  it('removes attributes not on a whitelist', () => {
+    const expected = '<p id="wombat-data">Wombats are great.</p>'
+    const unsafe = '<p id="wombat-data" class="main-wombat">Wombats are great.</p>'
+    const actual = TextHelpers.sanitizeHTML(unsafe, { allowTags: ['p'], allowedAttributes: { p: ['id'] } })
+    expect(actual).toBe(expected)
+  })
+})
+
 describe('markdown', () => {
   it('converts to markdown', () => {
     expect(TextHelpers.markdown('*strong* **italic**')).toBe('<p><em>strong</em> <strong>italic</strong></p>\n')
@@ -62,11 +105,8 @@ describe('markdown', () => {
   it('converts to markdown not autolinking', () => {
     expect(TextHelpers.markdown('https://www.hylo.com')).toBe('<p>https://www.hylo.com</p>\n')
   })
-})
-
-describe('htmlToText', () => {
-  it("shouldn't include text of href on links", () => {
-    expect(TextHelpers.htmlToText("<a href='/any/url'>Text</a> more text")).toBe('Text more text')
+  it('converts to markdown in paragraphs', () => {
+    expect(TextHelpers.markdown('asdw\n\n\nasdf')).toBe('<p>asdw</p>\n<p>asdf</p>\n')
   })
 })
 

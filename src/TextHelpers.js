@@ -8,23 +8,27 @@ import moment from 'moment-timezone'
 import linkify from './linkify'
 import { convert as convertHtmlToText } from 'html-to-text'
 
-//
 // HTML and Text presentation related
 
-export function sanitizeHTML (text, providedOptions) {
-  if (!text) return ''
-
-  const options = merge(
+export function insaneOptions (providedInsaneOptions) {
+  return merge(
     {
-      allowedTags: providedOptions?.allowedTags || [
+      allowedTags: providedInsaneOptions?.allowedTags || [
         'a', 'br', 'em', 'li', 'ol', 'p', 'strong', 'u', 'ul'
       ],
-      allowedAttributes: providedOptions?.allowedAttributes || {
-        a: ['href', 'data-user-id', 'data-entity-type', 'target']
+      allowedAttributes: providedInsaneOptions?.allowedAttributes || {
+        a: ['href', 'data-user-id', 'data-entity-type', 'data-search', 'class', 'target']
       }
     },
-    providedOptions
+    providedInsaneOptions
   )
+}
+
+// This should only ever be used from hylo-node / backend output APIs
+export function sanitizeHTML (text, providedInsaneOptions) {
+  if (!text) return ''
+
+  const options = insaneOptions(providedInsaneOptions)
 
   // remove leading &nbsp; (a side-effect of contenteditable)
   const strippedText = text.replace(/<p>&nbsp;/gi, '<p>')
@@ -32,51 +36,62 @@ export function sanitizeHTML (text, providedOptions) {
   return insane(strippedText, options)
 }
 
-export function presentHTML (text, options = {}) {
-  if (!text) return ''
+// exported for testing, always use presentHTML, not this
+export const truncateHTML = (html, truncateLength, providedInsaneOptions = {}) => {
+  const options = {
+    sanitizer: insaneOptions(providedInsaneOptions)
+  }
+
+  return truncHTML(html, truncateLength, options).html
+}
+
+export function presentHTML (html, options = {}) {
+  if (!html) return ''
 
   const {
     slug,
     noLinks,
-    truncate: truncateLength,
-    sanitize = false,
-    sanitizeOptions = {}
+    truncate: truncateLength
   } = options
-  let processedText = text
+  let processedHTML = html
 
-  // Note: Unless used on the backend text should be assumed to
-  // already be sanitized when using this function
-  if (sanitize) {
-    processedText = sanitizeHTML(text, sanitizeOptions)
+  if (truncateLength) {
+    processedHTML = truncateHTML(processedHTML, truncateLength)
   }
 
   // make links and hashtags
   if (!noLinks) {
-    processedText = linkify(text, slug)
+    processedHTML = linkify(processedHTML, slug)
   }
 
+  return processedHTML
+}
+
+export function presentHTMLToText (html, options = {}) {
+  if (!html) return ''
+
+  const { truncate: truncateLength, providedConvertHtmlToTextOptions = {} } = options
+  const convertHtmlToTextOptions = merge(
+    {
+      selectors: [
+        {
+          selector: 'a',
+          options: {
+            ignoreHref: true
+          }
+        }
+      ]
+    },
+    providedConvertHtmlToTextOptions
+  )
+
+  let processedText = convertHtmlToText(html, convertHtmlToTextOptions)
+
   if (truncateLength) {
-    processedText = truncateHTML(text, truncateLength)
+    processedText = truncateText(processedText, truncateLength)
   }
 
   return processedText
-}
-
-export const truncateHTML = (html, length, providedOptions = {}) => {
-  const options = merge(
-    {
-      sanitizer: {
-        allowedAttributes: {
-          a: providedOptions?.sanitizer?.allowedAttributes || [
-            'href', 'class', 'data-search'
-          ]
-        }
-      }
-    },
-    providedOptions
-  )
-
-  return truncHTML(html, length, options).html
 }
 
 export const truncateText = (text, length) => {
@@ -84,7 +99,7 @@ export const truncateText = (text, length) => {
 }
 
 export function textLengthHTML (htmlOrText, options) {
-  return htmlToText(htmlOrText, options).length
+  return presentHTMLToText(htmlOrText, options).length
 }
 
 export const markdown = text => {
@@ -99,25 +114,6 @@ export const markdown = text => {
   return marked.parse(text || '', { gfm: true, breaks: true })
 }
 
-export function htmlToText (html, providedOptions = {}) {
-  const options = merge(
-    {
-      selectors: [
-        {
-          selector: 'a',
-          options: {
-            ignoreHref: true
-          }
-        }
-      ]
-    },
-    providedOptions
-  )
-
-  return convertHtmlToText(html, options)
-}
-
-//
 // Date string related
 
 export function humanDate (date, short) {
