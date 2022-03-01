@@ -110,7 +110,7 @@
     "coordinate-parser": "^1.0.7",
     "cross-spawn": "5.1.0",
     "css-loader": "1.0.0",
-    "css-modules-require-hook": "4.2.3",
+    "css-modules-require-hook": "4.2.1",
     "css-select": "^3.1.2",
     "d3": "^6.6.0",
     "deep-diff": "^0.3.7",
