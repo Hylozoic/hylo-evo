@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Bold and Italic inline formatting pop-up to Post Editor
+
+### Changed
+- Upgrades numerous dependencies
+
+### Fixed
+- Linebreak handling between post editor and display for posts, comments, and messages
+- Numerous bug fixes related to text handling in general including in particular removal of extraneous and destructive input HTML sanitization (santization should on retrieval of content from API)
+
 ## [3.4.0] - 2022-02-23
 
 ### Added

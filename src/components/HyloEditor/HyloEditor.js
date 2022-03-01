@@ -236,7 +236,6 @@ export default class HyloEditor extends Component {
   }
 
   handleKeyCommand = (command) => {
-    console.log('!!! here', command)
     if (command === 'Escape') {
       this.handleEscape()
       return 'handled'
