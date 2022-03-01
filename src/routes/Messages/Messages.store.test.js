@@ -273,30 +273,3 @@ describe('getParticipantsFromQuerystring', () => {
     expect(actual).toEqual(expected)
   })
 })
-
-// No tests
-// describe('connector', () => {
-//   let session = null
-//   // let state = null
-
-//   beforeEach(() => {
-//     session = orm.mutableSession(orm.getEmptyState())
-
-//     people.forEach(person => {
-//       session.Person.create({
-//         ...person,
-//         memberships: person.memberships.map(m => m.id)
-//       })
-//       session.Membership.create({
-//         ...person.memberships[0],
-//         person: person.id,
-//         group: person.memberships[0].group.id
-//       })
-//       session.Group.create(person.memberships[0].group)
-//     })
-//     const me = { id: '999', name: 'Break Wind' }
-//     session.Person.create(me)
-//     session.Me.create(me)
-//     // state = { orm: session.state }
-//   })
-// })
