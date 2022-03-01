@@ -1,4 +1,4 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites, withExtensions }) => `
   id
   accessibility
   avatarUrl
@@ -115,6 +115,15 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
   }
   numPrerequisitesLeft
   ` : ''}
+  ${withExtensions ? `
+  groupExtensions {
+    items {
+      id
+      data
+      type
+      active
+    }
+  }` : ''}
 `
 
 export default groupFieldsFragment
