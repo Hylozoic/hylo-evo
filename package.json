@@ -158,7 +158,7 @@
     "jest-watch-typeahead": "^0.6.1",
     "json-loader": "0.5.7",
     "linkifyjs": "^2.1.5",
-    "lodash": "~> 4.17.11",
+    "lodash": "~> 4.17.21",
     "lru-cache": "^4.1.1",
     "mime": "^2.0.3",
     "mini-css-extract-plugin": "0.5.0",
