@@ -240,7 +240,7 @@
     "standard-loader": "^6.0.1",
     "streamifier": "^0.1.1",
     "strip-ansi": "4.0.0",
-    "striptags": "2.2.1",
+    "striptags": "3.2.0",
     "style-loader": "0.23.1",
     "supercluster": "^7.0.0",
     "terser-webpack-plugin": "^1.2.3",
