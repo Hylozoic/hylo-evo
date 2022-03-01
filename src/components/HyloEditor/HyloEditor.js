@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Immutable from 'immutable'
-import Editor from '@draft-js-plugins/editor'
-import createMentionPlugin from '@draft-js-plugins/mention'
-import createLinkifyPlugin from '@draft-js-plugins/linkify'
-import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
+import { Validators } from 'hylo-shared'
+import cx from 'classnames'
 import {
   EditorState,
   RichUtils,
@@ -12,17 +10,18 @@ import {
   Modifier,
   KeyBindingUtil
 } from 'draft-js'
-import { Validators } from 'hylo-shared'
-import { keyMap } from 'util/textInput'
+import Editor from '@draft-js-plugins/editor'
+import createMentionPlugin from '@draft-js-plugins/mention'
+import createLinkifyPlugin from '@draft-js-plugins/linkify'
+import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
 import * as HyloContentState from 'components/HyloEditor/HyloContentState'
-import cx from 'classnames'
-import styles from './HyloEditor.scss'
-import 'draft-js/dist/Draft.css'
-import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
 import {
   ItalicButton,
   BoldButton
 } from '@draft-js-plugins/buttons'
+import 'draft-js/dist/Draft.css'
+import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
+import styles from './HyloEditor.scss'
 
 export const blockRenderMap = Immutable.Map({
   'paragraph': {
@@ -189,8 +188,13 @@ export default class HyloEditor extends Component {
 
   onReturn = (event) => {
     const { submitOnReturnHandler } = this.props
-    const { editorState } = this.state
+    const { editorState, mentionsOpen, topicsOpen } = this.state
     const contentState = editorState.getCurrentContent()
+
+    // passes event to plugins
+    if (mentionsOpen || topicsOpen) {
+      return undefined
+    }
 
     if (KeyBindingUtil.isSoftNewlineEvent(event)) {
       this.handleChange(RichUtils.insertSoftNewline(editorState))
@@ -232,7 +236,8 @@ export default class HyloEditor extends Component {
   }
 
   handleKeyCommand = (command) => {
-    if (command === keyMap.ESC) {
+    console.log('!!! here', command)
+    if (command === 'Escape') {
       this.handleEscape()
       return 'handled'
     }
@@ -332,8 +337,15 @@ export default class HyloEditor extends Component {
 }
 
 export function hyloEditorKeyBindingFn (e) {
-  if (e.keyCode === keyMap.ESC) {
-    return keyMap.ESC
+  if (e.key === 'Escape') {
+    return e.key
+  }
+
+  // For mention plugin (mentions and topics):
+  // Returning undefined allows these events
+  // to be passed through to the plugins.
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    return undefined
   }
 
   return getDefaultKeyBinding(e)

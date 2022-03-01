@@ -54,37 +54,41 @@ export default function CreateModal (props) {
             <Icon name='Ex' />
           </span>
           { postId && action === 'edit'
-            ? <PostEditor
-              {...props}
-              onClose={closeModal}
-              onCancel={confirmClose}
-              setIsDirty={setIsDirty}
-            />
-            : <Switch>
-              <Route
-                path={match.path + '/post'}
-                children={({ match, location }) => (
-                  <PostEditor
-                    {...props}
-                    onClose={closeModal}
-                    setIsDirty={setIsDirty}
-                  />
-                )}
+            ? (
+              <PostEditor
+                {...props}
+                onClose={closeModal}
+                onCancel={confirmClose}
+                setIsDirty={setIsDirty}
               />
-              <Route
-                path={match.path + `/group`}
-                children={({ match, location }) => (
-                  <CreateGroup
-                    match={match}
-                    location={location}
-                    onClose={closeModal}
-                  />
-                )}
-              />
-              <Route>
-                <CreateModalChooser match={match} location={location} />
-              </Route>
-            </Switch>
+            ) : (
+              <Switch>
+                <Route
+                  path={match.path + '/post'}
+                  children={({ match, location }) => (
+                    <PostEditor
+                      {...props}
+                      onClose={closeModal}
+                      onCancel={confirmClose}
+                      setIsDirty={setIsDirty}
+                    />
+                  )}
+                />
+                <Route
+                  path={match.path + `/group`}
+                  children={({ match, location }) => (
+                    <CreateGroup
+                      match={match}
+                      location={location}
+                      onClose={closeModal}
+                    />
+                  )}
+                />
+                <Route>
+                  <CreateModalChooser match={match} location={location} />
+                </Route>
+              </Switch>
+            )
           }
         </div>
         <div styleName='create-modal-bg' onClick={confirmClose} />
