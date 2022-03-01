@@ -139,6 +139,7 @@ export class UnwrappedMapExplorer extends React.Component {
     if (!prevProps) return
 
     const {
+      centerLocation,
       fetchGroups,
       fetchGroupParams,
       fetchMembers,
@@ -147,10 +148,17 @@ export class UnwrappedMapExplorer extends React.Component {
       fetchPostsForDrawerParams,
       fetchPostsForMap,
       fetchPostsParams,
+      groupPending,
       groups,
       members,
-      postsForMap
+      postsForMap,
+      zoom
     } = this.props
+
+    // When group finishes loading we may want to move the map to the group's location
+    if (prevProps.groupPending !== groupPending && centerLocation && !isEqual(prevProps.centerLocation, centerLocation)) {
+      this.setState({ viewport: { ...this.state.viewport, latitude: centerLocation.lat, longitude: centerLocation.lng, zoom } })
+    }
 
     if (!isEqual(prevProps.fetchPostsParams, fetchPostsParams)) {
       fetchPostsForMap()
@@ -265,7 +273,7 @@ export class UnwrappedMapExplorer extends React.Component {
       this.updateBoundingBoxQuery(bounds)
       const newCenter = { lat: update.latitude, lng: update.longitude }
       if (!isEqual(this.props.centerLocation, newCenter) || !isEqual(this.props.zoom, update.zoom)) {
-        this.props.updateView({ centerLocation: newCenter, zoom: update.zoom })
+        this.updateView({ centerLocation: newCenter, zoom: update.zoom })
       }
     }
   }
@@ -285,7 +293,7 @@ export class UnwrappedMapExplorer extends React.Component {
 
     // Check if we need to look for more posts and groups
     if (!isEqual(finalBbox, totalBoundingBoxLoaded)) {
-      this.props.updateBoundingBox(finalBbox)
+      this.updateBoundingBox(finalBbox)
     }
 
     // Update currentBoundingBox in the filters to reload MapDrawer posts
@@ -297,6 +305,10 @@ export class UnwrappedMapExplorer extends React.Component {
       ...this.updatedMapFeatures(newBoundingBox)
     })
   }, 200)
+
+  updateBoundingBox = debounce((params) => this.props.updateBoundingBox(params), 500)
+
+  updateView = debounce((params) => this.props.updateView(params), 500)
 
   onMapHover = (info) => this.setState({ hoveredObject: info.objects || info.object, pointerX: info.x, pointerY: info.y })
 
