@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import fetchGroup from 'store/actions/fetchGroupDetails'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 import getCanModerate from 'store/selectors/getCanModerate'
 import { getChildGroups } from 'store/selectors/getGroupRelationships'
@@ -40,10 +39,8 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-  const groupSlug = getRouteParam('groupSlug', {}, props)
 
   return {
-    fetchGroup: () => dispatch(fetchGroup(groupSlug)), // TODO: remove. I don't think this is actually used anywhere in child components
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params }))
   }
 }
