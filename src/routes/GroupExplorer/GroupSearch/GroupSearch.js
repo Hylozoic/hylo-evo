@@ -13,27 +13,31 @@ import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
+import { FARM_VIEW } from 'util/constants'
 import './GroupSearch.scss'
 
-export default function GroupSearch () {
+export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
   const nearCoord = currentUser.locationObject ? { lng: parseFloat(currentUser.locationObject.center.lng), lat: parseFloat(currentUser.locationObject.center.lat) } : null
   const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
   const [offset, setOffset] = useState(0)
+  const [groupType, setGroupType] = useState(null)
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
-  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3] })
+  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3], groupType })
 
   useEffect(() => {
     setOffset(0)
-  }, [search, sortBy])
+  }, [search, sortBy, groupType])
 
   useEffect(() => {
     setOffset(groups.length)
   }, [groups])
+
+  useEffect(() => viewFilter === FARM_VIEW ? setGroupType(FARM_VIEW) : setGroupType(null), [viewFilter])
 
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>

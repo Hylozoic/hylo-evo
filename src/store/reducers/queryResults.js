@@ -279,6 +279,7 @@ export const queryParamWhitelist = [
   'filter',
   'groupSlug',
   'groupSlugs',
+  'groupType',
   'order',
   'page',
   'parentSlugs',
