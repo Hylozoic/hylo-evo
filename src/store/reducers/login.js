@@ -7,9 +7,9 @@ export default combineReducers({
     if (error) return state
     switch (type) {
       case SIGNUP:
-      case LOGIN:
-      case VERIFY_EMAIL: return true
-      case CHECK_LOGIN: return !!payload.signedIn
+      case LOGIN: return 'registered'
+      case VERIFY_EMAIL: return 'partial'
+      case CHECK_LOGIN: return payload.signedIn
     }
     return state
   },

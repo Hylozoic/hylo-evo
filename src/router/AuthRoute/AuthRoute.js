@@ -10,6 +10,7 @@ export default function AuthRoute ({
   nonAuthComponent,
   nonAuthOnly,
   requireAuth,
+  requirePartial,
   returnToOnAuth,
   setReturnToURL,
   ...rest
@@ -19,7 +20,7 @@ export default function AuthRoute ({
   }
 
   // If already logged in and going to signup or login route then redirect to the home page
-  if (isLoggedIn && nonAuthOnly) {
+  if (isLoggedIn === 'registered' && nonAuthOnly) {
     return <RedirectRoute to={'/'} />
   }
 
@@ -28,8 +29,16 @@ export default function AuthRoute ({
   // Specifically we don't want any components to do any work but this,
   // namely JoinGroup which utilizes returnToOnAuth) and may attempt
   // to auth the user with a token and send them into sign-up.
-  if (!isLoggedIn && (requireAuth || returnToOnAuth)) {
+  if (isLoggedIn !== 'registered' && (requireAuth || returnToOnAuth)) {
     setReturnToURL(location.pathname + location.search)
+  }
+
+  if (isLoggedIn !== 'partial' && requirePartial) {
+    return <RedirectRoute to={'/signup'} />
+  }
+
+  if (isLoggedIn === 'partial' && requireAuth) {
+    return <RedirectRoute to={'/signup/finish'} />
   }
 
   if (!isLoggedIn && requireAuth) {
