@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
@@ -20,11 +19,13 @@ export const AllTheProviders = (store) => ({ children }) => {
   )
 }
 
-const customRender = (ui, options, providersFunc) =>
-  render(ui, { wrapper: providersFunc, ...options })
-
 // re-export everything
-export * from '@testing-library/react'
 
-// override render method
-export { customRender as render }
+const rtl = require('react-testing-library')
+const customRender = (ui, options, providersFunc) =>
+  rtl.render(ui, { wrapper: providersFunc, ...options })
+
+module.exports = {
+  ...rtl,
+  render: customRender
+}

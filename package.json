@@ -30,7 +30,10 @@
     "analyze": "webpack-bundle-analyzer build/bundle-stats.json"
   },
   "standard": {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
+    "ignore": [
+      "scripts/templates/*"
+    ],
     "global": [
       "afterAll",
       "afterEach",
@@ -130,6 +133,7 @@
     "eslint-config-standard-jsx": "^10.0.0",
     "eslint-config-standard-react": "^11.0.1",
     "eslint-loader": "4.0.2",
+    "eslint-plugin-jsx": "^0.1.0",
     "eslint-plugin-flowtype": "8.0.3",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-jest": "^26.1.1",
