@@ -53,7 +53,7 @@ export default function CreateModal (props) {
           <span styleName='close-button' onClick={confirmClose}>
             <Icon name='Ex' />
           </span>
-          { postId && action === 'edit'
+          {postId && action === 'edit'
             ? (
               <PostEditor
                 {...props}

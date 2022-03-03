@@ -8,9 +8,7 @@ export default function graphqlMiddleware (store) {
 
     const { query: unknownGraphql, variables = {} } = graphql
     const query = graphqlToString(unknownGraphql)
-
     const path = '/noo/graphql'
-
     const then = payload => {
       if (payload.errors) return Promise.reject(payload.errors[0])
       return payload

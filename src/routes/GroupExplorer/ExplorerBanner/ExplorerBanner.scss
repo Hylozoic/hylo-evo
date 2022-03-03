@@ -1,0 +1,49 @@
+.banner {
+  position: relative;
+  z-index: 20;
+}
+
+.imageShape {
+  width: 100%;
+  height: 160px;
+}
+
+.image {
+  composes: imageShape;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.fade {
+  // Note: replace these with pseudo elements
+  composes: imageShape;
+  position: relative;
+}
+
+.header {
+  position: relative;
+  top: -45px;
+  padding-left: 35px;
+  display: flex;
+}
+
+.header-contents {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-text {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 1.1;
+}
+
+.header-name {
+  // Extract typography?
+  @include font-medium;
+  color: $color-white;
+  font-size: 36px;
+  letter-spacing: -0.47px;
+}

@@ -11,8 +11,10 @@
   margin-bottom: 8px;
 
   .display-label {
-    color: $color-slate-gray-80;
+    color: inherit;
   }
+
+
   // onclick bump word to left to make room for X
   // click again to actually remove it
 
@@ -25,7 +27,7 @@
 
     &:hover {
       .remove-label {
-        color: $color-slate-gray-80;
+        color: inherit;
         background: #fff;
       }
     }
@@ -45,6 +47,14 @@
       background-color: $color-amaranth !important;
     }
   }
+}
+
+.dark-text {
+  color: $color-member;
+}
+
+.gray-text {
+  color: $color-slate-gray-80
 }
 
 .remove-label {

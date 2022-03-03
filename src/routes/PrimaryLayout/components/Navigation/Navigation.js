@@ -41,6 +41,11 @@ export default function Navigation (props) {
     }
   }
 
+  // This should probably be normalized between
+  // store/models/Group/PUBLIC_CONTEXT_ID (public-context)
+  // and here and in Drawer, etc (public)
+  const isPublic = routeParams.context === 'public'
+
   const links = compact([
     createPath && {
       label: 'Create',
@@ -75,8 +80,8 @@ export default function Navigation (props) {
       icon: 'People',
       to: membersPath
     },
-    hasRelatedGroups && groupsPath && {
-      label: 'Groups',
+    (hasRelatedGroups || isPublic) && groupsPath && {
+      label: isPublic ? 'Group Explorer' : 'Groups',
       icon: 'Groups',
       to: groupsPath
     },

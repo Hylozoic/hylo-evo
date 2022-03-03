@@ -9,6 +9,7 @@ export default function Pill ({
   onRemove,
   className,
   editable,
+  darkText = false,
   onClick: providedOnClick = () => {}
 }) {
   const [removing, setRemoving] = useState(false)
@@ -29,7 +30,8 @@ export default function Pill ({
       'clickable': !!onClick,
       'removable': editable && onRemove,
       'removing': editable && onRemove && removing
-    }
+    },
+    darkText ? 'dark-text' : 'gray-text'
   )
 
   return <div
