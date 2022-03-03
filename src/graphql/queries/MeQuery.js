@@ -12,6 +12,7 @@ export default gql`
     isAdmin
     name
     avatarUrl
+    hasRegistered
     newNotificationCount
     unseenThreadCount
     location

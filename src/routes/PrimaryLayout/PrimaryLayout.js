@@ -249,6 +249,10 @@ export default class PrimaryLayout extends Component {
       </div>
     }
 
+    if (!currentUser.hasRegistered) {
+      return <Redirect to='/signup/finish' />
+    }
+
     if (isGroupRoute) {
       if (!group && !groupPending) return <NotFound />
     }

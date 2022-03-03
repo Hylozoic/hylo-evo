@@ -36,12 +36,13 @@ function rootRoutes () {
         <AuthRoute returnToOnAuth path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
         <AuthRoute returnToOnAuth path='/h/use-invitation' component={JoinGroup} />
         <AuthRoute nonAuthOnly path='/login' component={NonAuthLayout} />
-        <AuthRoute nonAuthOnly path='/signup/verify-email' exact component={NonAuthLayout} />
-        <AuthRoute nonAuthOnly path='/signup/finish' exact component={NonAuthLayout} />
-        <AuthRoute nonAuthOnly path='/signup' exact component={NonAuthLayout} />
         <AuthRoute nonAuthOnly path='/reset-password' exact component={NonAuthLayout} />
-        <AuthRoute path='/:context(public)' nonAuthComponent={NonAuthLayout} component={PrimaryLayout} />
+        <AuthRoute nonAuthOnly path='/signup' exact component={NonAuthLayout} />
+        <AuthRoute nonAuthOnly path='/signup/verify-email' exact component={NonAuthLayout} />
+        {/* At this point we must be logged in as an inactive, not-yet-registered user */}
+        <AuthRoute requireAuth path='/signup/finish' exact component={NonAuthLayout} />
         <AuthRoute requireAuth path='/' component={PrimaryLayout} />
+        <AuthRoute path='/:context(public)' nonAuthComponent={NonAuthLayout} component={PrimaryLayout} />
       </Switch>
     </LoginCheck>
   </ErrorBoundary>

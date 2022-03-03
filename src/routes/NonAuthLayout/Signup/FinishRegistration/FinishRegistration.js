@@ -1,27 +1,38 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
+import Loading from 'components/Loading'
 import RedirectRoute from 'router/RedirectRoute'
 import { formatError } from '../../util'
 
 import '../Signup.scss'
 
 export default function FinishRegistration (props) {
-  const { className, email } = props
+  const { className, currentUser } = props
+
+  useEffect(() => {
+    props.checkRegistrationStatus()
+  }, [])
+
+  if (!currentUser) return <Loading />
+
+  const { email, hasRegistered, name } = currentUser
 
   if (!email) return <RedirectRoute to='/signup' />
+
+  if (hasRegistered) return <RedirectRoute to='/' />
 
   const [error, setError] = useState('')
 
   const [formValues, setFormValues] = useState({
-    name: '',
+    name: name || '',
     password: '',
     passwordConfirmation: ''
   })
 
   const displayError = props.error || error
-  const canSubmit = formValues.name.length > 0 && formValues.password.length > 0 && !displayError
+  const canSubmit = formValues.name.length > 0 && formValues.password.length > 0 && !error
 
   const submit = () => {
     if (canSubmit) {
