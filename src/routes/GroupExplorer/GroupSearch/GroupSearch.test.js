@@ -90,7 +90,11 @@ afterEach(() => {
 afterAll(() => server.close())
 
 test('GroupSearch integration test', async () => {
-  const { findByText, getByRole } = render(<GroupSearch />, null, providersWithStore)
+  const { findByText, getByRole } = render(
+    <GroupSearch />,
+    null,
+    providersWithStore
+  )
 
   expect(await findByText('Test Group Title')).toBeInTheDocument()
 
