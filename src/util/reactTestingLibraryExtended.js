@@ -24,6 +24,7 @@ const customRender = (ui, options, providersFunc) =>
   render(ui, { wrapper: providersFunc, ...options })
 
 // re-export everything
+
 /* eslint-disable import/export */
 export * from '@testing-library/react'
 
