@@ -14,4 +14,3 @@
   "eslint.lintTask.enable": true,
   "eslint.codeActionsOnSave.mode": "problems"
 }
-  

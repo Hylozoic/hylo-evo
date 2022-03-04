@@ -21,7 +21,7 @@ it('renders', () => {
     providersWithStore
   )
 
-  expect(getByText('What would you like to create?')).toBeTruthy()
+  expect(getByText('What would you like to create?')).toBeInTheDocument()
 })
 
 afterEach(() => {

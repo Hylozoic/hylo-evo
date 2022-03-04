@@ -10,16 +10,11 @@
     "paths": {
       "*": ["src/*"]
     },
-    "outDir": "built"
+    "outDir": "build"
   },
   "exclude": [
     "node_modules",
     "es5",
     "build"
-  ],
-  "include": [
-    "./**/*",
-    "./*",
-    ".eslintrc.js"
   ]
 }
