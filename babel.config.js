@@ -3,9 +3,6 @@ const paths = require('./config/paths')
 
 module.exports = function (api) {
   if (api) {
-    if (process.env.NODE_ENV !== 'test') {
-      console.log('Using Babel config with environment:', api.env())
-    }
     api.cache(true)
   }
 

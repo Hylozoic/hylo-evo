@@ -9,7 +9,7 @@ import orm from 'store/models'
 jest.mock('components/ScrollListener', () => () => <div />) // was throwing errors with this.element().removeEventListener('blabadlbakdbfl')
 
 const server = setupServer(
-  graphql.query('GroupsQuery', (req, res, ctx) => {
+  graphql.operation((req, res, ctx) => {
     const { search } = req.body.variables
     return res(ctx.data({
       groups: {
