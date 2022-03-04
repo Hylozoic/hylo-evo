@@ -9,11 +9,17 @@
     "baseUrl": ".",
     "paths": {
       "*": ["src/*"]
-    }
+    },
+    "outDir": "built"
   },
   "exclude": [
     "node_modules",
     "es5",
     "build"
+  ],
+  "include": [
+    "./**/*",
+    "./*",
+    ".eslintrc.js"
   ]
 }

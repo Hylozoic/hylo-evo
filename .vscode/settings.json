@@ -1,0 +1,17 @@
+{
+  "jest.jestCommandLine": "yarn test",
+  "gitlens.showWelcomeOnInstall": false,
+  "gitlens.showWhatsNewAfterUpgrades": false,
+  "vscode-graphql.cacheSchemaFileForLookup": true,
+  "vscode-graphql.showExecCodelens": true,
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.js"
+  },
+  "standard.enableGlobally": true,
+  "eslint.debug": false,
+  "eslint.format.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.lintTask.enable": true,
+  "eslint.codeActionsOnSave.mode": "problems"
+}
+  

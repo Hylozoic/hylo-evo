@@ -2,18 +2,16 @@ module.exports = {
   root: true,
   parser: '@babel/eslint-parser',
   extends: [
+    'prettier',
     'standard',
-    'standard-react',
     'standard-jsx',
-    'eslint-config-prettier'
+    'standard-react'
   ],
   parserOptions: {
+    // Probably not needed anymore
     requireConfigFile: false,
     babelOptions: {
       configFile: './babel.config.js'
-    },
-    ecmaFeatures: {
-      jsx: true
     },
     project: './tsconfig.json'
   },
@@ -27,6 +25,14 @@ module.exports = {
     'react/jsx-fragments': 'warn',
     'react/jsx-wrap-multilines': 'warn',
     'import/export': 'off'
+  },
+  settings: {
+    react: {
+      version: 'detect'
+    },
+    jest: {
+      version: require('jest/package.json').version
+    }
   },
   env: {
     'jest/globals': true
@@ -64,11 +70,6 @@ module.exports = {
             testIdPattern: '^TestId(__[A-Z]*)?$'
           }
         ]
-      },
-      settings: {
-        jest: {
-          version: require('jest/package.json').version
-        }
       }
     }
   ]
