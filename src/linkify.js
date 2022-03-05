@@ -48,7 +48,7 @@ function cleanupLink ($, el, slug) {
   if ($el.data('entity-type') === 'mention') {
     const memberId = $el.data('user-id')
     $el.attr('href', mentionPath(memberId, slug))
-    $el.attr('class', 'mention')
+    $el.attr('class', 'mention')    
   } else {
     const match = text.match(HASHTAG_FULL_REGEX)
     if (match) {
@@ -57,6 +57,7 @@ function cleanupLink ($, el, slug) {
       $el.attr('class', 'hashtag')
     }
   }
+
   if (text.length >= MAX_LINK_LENGTH) {
     $el.text(text.slice(0, MAX_LINK_LENGTH) + '…')
   }
@@ -64,9 +65,28 @@ function cleanupLink ($, el, slug) {
   return $.html(el)
 }
 
-// unlike the linkifyjs module, this handles text that may already have html
-// tags in it. it does so by generating a DOM from the text and linkifying only
-// text nodes that aren't inside A tags.
+/*
+
+`linkify(text, slug)` matches and transform the following:
+
+  Mentions from: `<a data-entity-type="mention" data-user-id="111">Mary</a>`
+  to: `<a href="/group/path/to/member-profile" class="mention">Mary</a>
+
+  Topics/tags from: `<a>#topic-name</a>` or `#topic-name`
+  to: `<a href="/group/path/to/topic" data-search="#topic-name" class="hashtag">topic-name</a>
+
+  Links from: `<a href="https://anysite.com/path">` Any Site</a>`
+  to: `<a href="https://anysite.com/path" class="linkified" target="_blank">Any Site</a>`
+
+  Links from: `https://anysite.com/path`
+  Links from: `<a href="https://anysite.com/path" class="linkified" target="_blank">https://anysite.com/path</a>`
+
+* The test suite also describe the same including more edge-cases.
+* Unlike the linkifyjs module, this handles text that may already have html
+tags in it. it does so by generating a DOM from the text and linkifying only
+text nodes that aren't inside A tags.
+
+*/
 export default function linkify (text, slug) {
   const $ = cheerio.load(text, null, false)
   // caveat: this isn't intended to handle arbitrarily complex html
