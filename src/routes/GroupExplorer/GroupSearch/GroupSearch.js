@@ -13,7 +13,7 @@ import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
-import { FARM_VIEW } from 'util/constants'
+import { ALL_VIEW, FARM_VIEW } from 'util/constants'
 import './GroupSearch.scss'
 
 export default function GroupSearch ({ viewFilter }) {
@@ -23,6 +23,7 @@ export default function GroupSearch ({ viewFilter }) {
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
   const [offset, setOffset] = useState(0)
+  const [filterToggle, setFilterToggle] = useState(false)
   const [groupType, setGroupType] = useState(null)
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
@@ -37,12 +38,24 @@ export default function GroupSearch ({ viewFilter }) {
     setOffset(groups.length)
   }, [groups])
 
+  useEffect(() => {
+    if (viewFilter === FARM_VIEW) {
+      setSortBy(SORT_NEAREST)
+    }
+  }, [viewFilter])
+
   useEffect(() => viewFilter === FARM_VIEW ? setGroupType(FARM_VIEW) : setGroupType(null), [viewFilter])
 
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>
-      <b>Group Search</b>
+      {viewFilter !== ALL_VIEW ? <div onClick={() => setFilterToggle(!filterToggle)}>filter</div> : <div id='div-left-intentionally-blank' />}
       { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy) }
+    </div>
+    {filterToggle && <div>
+      This is where the filter info lives
+    </div>}
+    <div>
+      This is where the filter tags live
     </div>
     <div styleName='search-input'>
       <div className='spacer' />
