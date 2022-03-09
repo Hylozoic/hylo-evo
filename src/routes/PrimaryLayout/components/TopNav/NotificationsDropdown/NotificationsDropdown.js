@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import './NotificationsDropdown.scss'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { firstName } from 'store/models/Person'
@@ -23,21 +23,19 @@ import {
   ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST,
   ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED
 } from 'store/models/Notification'
-import striptags from 'striptags'
-import { decode } from 'ent'
 import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
 import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
 
-const { array, string, func } = PropTypes
+const NOTIFICATION_TEXT_MAX = 76
 
 export default class NotificationsDropdown extends Component {
   static propTypes = {
-    fetchNotifications: func,
-    markActivityRead: func,
-    markAllActivitiesRead: func,
-    renderToggleChildren: func,
-    notifications: array,
-    className: string
+    fetchNotifications: PropTypes.func,
+    markActivityRead: PropTypes.func,
+    markAllActivitiesRead: PropTypes.func,
+    renderToggleChildren: PropTypes.func,
+    notifications: PropTypes.array,
+    className: PropTypes.string
   }
 
   constructor (props) {
@@ -140,7 +138,7 @@ export function Notification ({ notification, onClick }) {
     <div styleName='content'>
       <NotificationHeader notification={notification} />
       <NotificationBody notification={notification} />
-      <div styleName='date'>{humanDate(notification.createdAt)}</div>
+      <div styleName='date'>{TextHelpers.humanDate(notification.createdAt)}</div>
     </div>
   </li>
 }
@@ -218,22 +216,23 @@ export function NotificationHeader ({ notification }) {
   return null
 }
 
+export const truncateHTML = html => TextHelpers.presentHTMLToText(html, { truncate: NOTIFICATION_TEXT_MAX })
+
+export const truncateText = text => TextHelpers.truncateText(text, NOTIFICATION_TEXT_MAX)
+
 export function NotificationBody ({ notification }) {
   const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
-
-  const truncateForBody = text =>
-    text && textLength(text) > 76 ? truncate(text, 76) : text
 
   switch (action) {
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
-      var text = decode(striptags(truncateForBody(comment.text)))
+      var text = truncateHTML(comment.text)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
     case ACTION_TAG:
     case ACTION_MENTION:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
@@ -250,22 +249,22 @@ export function NotificationBody ({ notification }) {
         <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_ANNOUNCEMENT:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
       </div>
     case ACTION_DONATION_TO:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>You</span> contributed ${contributionAmount / 100} to "{text}"
       </div>
     case ACTION_DONATION_FROM:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{actor.name}</span> contributed ${contributionAmount / 100} to "{text}"
       </div>
     case ACTION_EVENT_INVITATION:
-      text = truncateForBody(post.title)
+      text = truncateText(post.title)
       return <div styleName='body'>
         <span styleName='bold'>{firstName(actor)}</span> invited you to: "{text}"
       </div>

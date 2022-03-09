@@ -30,6 +30,7 @@
 .mentionSuggestionsEntry,
 .mentionSuggestionsEntryFocused {
   background-color: $color-white;
+  width: 100%;
   min-height: 40px;
   display: inline-flex;
   padding: 7px 10px 3px 10px;
@@ -68,7 +69,6 @@
   max-height: 140px;
   overflow-y: auto;
   border: 1px solid #eee;
-  // margin-top: 2.8em;
   position: absolute;
   min-width: 220px;
   max-width: 440px;
@@ -88,7 +88,6 @@
   max-height: 140px;
   overflow-y: auto;
   border: 1px solid #eee;
-  margin-top: -10.5em;
   position: absolute;
   min-width: 220px;
   max-width: 440px;

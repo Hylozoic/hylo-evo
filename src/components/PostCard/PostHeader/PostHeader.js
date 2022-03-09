@@ -9,8 +9,7 @@ import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
 import { personUrl, topicUrl } from 'util/navigation'
-import { formatDatePair, isDateInTheFuture } from 'util/index'
-import { humanDate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
 import { filter, isFunction, isEmpty } from 'lodash'
 import cx from 'classnames'
@@ -75,17 +74,17 @@ export default class PostHeader extends PureComponent {
     // If it was completed/fulfilled before it ended, then use that as the end datetime
     let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
 
-    const { from, to } = formatDatePair(startTime, actualEndTime, true)
+    const { from, to } = TextHelpers.formatDatePair(startTime, actualEndTime, true)
     const startString = fulfilledAt ? false
-      : isDateInTheFuture(startTime) ? `Starts: ${from}`
-        : isDateInTheFuture(endTime) ? `Started: ${from}`
+      : TextHelpers.isDateInTheFuture(startTime) ? `Starts: ${from}`
+        : TextHelpers.isDateInTheFuture(endTime) ? `Started: ${from}`
           : false
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
       endString = `Completed: ${to}`
     } else {
-      endString = endTime !== moment() && isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
     }
 
     let timeWindow = ''
@@ -108,7 +107,7 @@ export default class PostHeader extends PureComponent {
           {creator.tagline && !constrained ? <span styleName='userTitle'>{creator.tagline}</span> : ''}
           <div styleName='timestampRow'>
             <span styleName='timestamp'>
-              {humanDate(createdAt)}
+              {TextHelpers.humanDate(createdAt)}
             </span>
             {announcement && <span styleName='announcementSection'>
               <span styleName='announcementSpacer'>•</span>

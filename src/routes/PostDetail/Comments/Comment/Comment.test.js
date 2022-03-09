@@ -2,7 +2,9 @@ import { Comment } from './Comment'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('components/HyloEditor/contentStateToHTML', () => any => any)
+jest.mock('components/HyloEditor/HyloContentState', () => ({
+  toHTML: () => any => any
+}))
 
 describe('Comment', () => {
   const props = {
@@ -49,17 +51,6 @@ describe('Comment', () => {
     }
     const wrapper = shallow(<Comment {...props} comment={comment} />)
     expect(wrapper).toMatchSnapshot()
-  })
-
-  it('sanitizes text', () => {
-    const comment = {
-      ...props.comment,
-      text: '<p>Nice text<script>a sneaky script</script></p>'
-    }
-    const wrapper = shallow(<Comment {...props} comment={comment} />)
-    expect(wrapper.find('div #text').prop('dangerouslySetInnerHTML')).toEqual({
-      __html: '<p>Nice text</p>'
-    })
   })
 
   it('does not display the delete menu when deleteComment is not defined', () => {

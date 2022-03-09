@@ -4,7 +4,27 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.5.0] - 2022-03-08
+
+### Added
+- Bold and Italic inline formatting pop-up to Post Editor
+- Make PostEditor in CreateModal cancellable with Escape key
+- Adds minimal optional chaining support through `@babel/plugin-proposal-optional-chaining` (e.g. `thing1?.thing2` replacement for `lodash.get('thing2', thing1)`)
+
+### Changed
+- Updates PostEditor to automatically open a new `<p>` after an empty linebreak and always a `<br>` on entry of a Shift-Enter
+- Move to re-written `hylo-shared` from `hylo-utils`
+- Major version updates to `draft-js`, `draft-js-plugin-editor`, and related plugins
+- Removal of extraneous and destructive input HTML sanitization (santization should on retrieval of content from API)
+- Minor version updates to `babel`, `eslint`, and related dependencies including some relate configuration updates
+- Handling of text preview in Messages and Notification dropdowns
+- Treat Message.text as HTML (Comment#text is a backend sanitized HTML field)
+- Code formatting: component returns and optionals (`(thing && ... <SomeComponent />))`) wrapped in `()` with linebreaks and related indentation on most components touched
+
+### Fixed
+- Linebreak handling between post editor and display for posts, comments, and messages
+- Position of Mention and Topic selectors to low within PostEditor
+- Numererous small text and links-in-text handling bugs
 
 ## [3.4.0] - 2022-02-23
 
