@@ -11,6 +11,12 @@
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
 }
 
+.filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .dropdown {
   color: $color-regent;
   padding: 0 12px;
@@ -19,6 +25,10 @@
   margin-right: 1em;
   background-color: rgba(255, 255, 255, 1);
   border: solid #808C9B 1px;
+}
+
+.filter-dropdown {
+  width: 80%;
 }
 
 .dropdown-label {
@@ -31,6 +41,13 @@
     margin-right: 0.25em;
     left: -2px;
   }
+}
+
+.filter-dropdown-label {
+  display: flex;
+  justify-content: space-between;
+  line-height: 2em;
+  position: relative;
 }
 
 .group-search-items {

@@ -276,6 +276,7 @@ export const queryParamWhitelist = [
   'autocomplete',
   'id',
   'context',
+  'farmQuery',
   'filter',
   'groupSlug',
   'groupSlugs',

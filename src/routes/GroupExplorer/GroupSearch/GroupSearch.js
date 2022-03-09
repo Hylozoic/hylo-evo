@@ -13,7 +13,7 @@ import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
-import { ALL_VIEW, FARM_VIEW } from 'util/constants'
+import { ALL_VIEW, FARM_VIEW, FARM_TYPES, PRODUCT_CATAGORIES, MANAGEMENT_PLANS, FARM_CERTIFICATIONS } from 'util/constants'
 import './GroupSearch.scss'
 
 export default function GroupSearch ({ viewFilter }) {
@@ -25,10 +25,14 @@ export default function GroupSearch ({ viewFilter }) {
   const [offset, setOffset] = useState(0)
   const [filterToggle, setFilterToggle] = useState(false)
   const [groupType, setGroupType] = useState(null)
+  const [farmType, setFarmType] = useState(null)
+  const [certOrManagementPlan, setCertOrManagementPlan] = useState(null)
+  const [productCategories, setProductCategories] = useState(null)
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
-  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3], groupType })
+  const [farmQuery, setFarmQuery] = useState({ farmType, certOrManagementPlan, productCategories })
+  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3], groupType, farmQuery })
 
   useEffect(() => {
     setOffset(0)
@@ -44,19 +48,22 @@ export default function GroupSearch ({ viewFilter }) {
     }
   }, [viewFilter])
 
+  useEffect(() => {
+    setFarmQuery({ farmType, certOrManagementPlan, productCategories })
+  }, [farmType, certOrManagementPlan, productCategories])
+
   useEffect(() => viewFilter === FARM_VIEW ? setGroupType(FARM_VIEW) : setGroupType(null), [viewFilter])
 
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>
-      {viewFilter !== ALL_VIEW ? <div onClick={() => setFilterToggle(!filterToggle)}>filter</div> : <div id='div-left-intentionally-blank' />}
-      { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy) }
+      {viewFilter !== ALL_VIEW ? <div onClick={() => setFilterToggle(!filterToggle)}>filters</div> : <div id='div-left-intentionally-blank' />}
+      { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ') }
     </div>
-    {filterToggle && <div>
-      This is where the filter info lives
+    {filterToggle && <div styleName='filter-list'>
+      { makeDropdown(farmType, convertListValueKeyToId(FARM_TYPES), setFarmType, 'Farm Type: ', true) }
+      { makeDropdown(productCategories, convertListValueKeyToId(PRODUCT_CATAGORIES), setProductCategories, 'Operation: ', true) }
+      { makeDropdown(certOrManagementPlan, convertListValueKeyToId(MANAGEMENT_PLANS.concat(FARM_CERTIFICATIONS)), setCertOrManagementPlan, 'Management Techniques: ', true) }
     </div>}
-    <div>
-      This is where the filter tags live
-    </div>
     <div styleName='search-input'>
       <div className='spacer' />
       <input
@@ -101,14 +108,29 @@ const sortOptions = (nearCoord) => {
   return options
 }
 
-const makeDropdown = (selected, options, onChange) => (
-  <Dropdown styleName='dropdown'
-    toggleChildren={<span styleName='dropdown-label'>
-      <Icon name='ArrowDown' />
-      Sort by: <b>{options.find(o => o.id === selected).label}</b>
-    </span>}
-    items={options.map(({ id, label }) => ({
-      label,
-      onClick: () => onChange(id)
-    }))} />
-)
+const makeDropdown = (selected, options, onChange, filterLabel = '', isFilter = false) => {
+  const selectedLabel = selected ? options.find(o => o.id === selected).label : 'All'
+  return (
+    <Dropdown styleName={cx({ 'dropdown': true, 'filter-dropdown': isFilter })}
+      toggleChildren={<span styleName={isFilter ? 'filter-dropdown-label' : 'dropdown-label'}>
+        {!isFilter && <Icon name='ArrowDown' />}
+        {isFilter
+          ? <div>{filterLabel}<b>{selectedLabel}</b></div>
+          : <span>{filterLabel}<b>{selectedLabel}</b></span>
+        }
+        {isFilter && <Icon name='ArrowDown' />}
+      </span>}
+      items={options.map(({ id, label }) => ({
+        label,
+        onClick: () => onChange(id)
+      }))} />)
+}
+
+function convertListValueKeyToId (arrayOfObjects) {
+  return arrayOfObjects.map(object => {
+    return {
+      ...object,
+      id: object.value
+    }
+  })
+}

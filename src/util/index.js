@@ -73,3 +73,13 @@ export const validateEmail = email => {
 export function isDateInTheFuture (date) {
   return moment(date).isAfter(moment())
 }
+
+export function convertListValueKeyToId (arrayOfObjects) {
+  console.log(arrayOfObjects, 'wee')
+  return arrayOfObjects.map( object => {
+    return {
+      ...object,
+      id: object.value
+    }
+  })
+}
