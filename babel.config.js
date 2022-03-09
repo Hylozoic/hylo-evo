@@ -1,9 +1,8 @@
-const sharedConfig = require('./webpack.config.shared')
-const paths = require('./paths')
+const sharedConfig = require('./config/webpack.config.shared')
+const paths = require('./config/paths')
 
 module.exports = function (api) {
   if (api) {
-    console.log('Using Babel config with environment:', api.env())
     api.cache(true)
   }
 

@@ -9,7 +9,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["src/*"]
-    }
+    },
+    "outDir": "build"
   },
   "exclude": [
     "node_modules",
