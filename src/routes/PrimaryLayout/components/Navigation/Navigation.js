@@ -41,6 +41,9 @@ export default function Navigation (props) {
     }
   }
 
+  // This should probably be normalized between
+  // store/models/Group/PUBLIC_CONTEXT_ID (public-context)
+  // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
 
   const links = compact([
@@ -92,26 +95,36 @@ export default function Navigation (props) {
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
   const canView = !group || group.memberCount !== 0
 
-  return <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
-    <div styleName='navigation'>
-      {canView &&
-        <ul styleName='links' id='groupMenu'>
-          {links.map(link =>
-            <NavLink key={link.label} {...link} collapsed={collapsed}
-              onClick={link.onClick} />)}
-          <li styleName={cx('item', 'topicItem')}>
-            <Link to={topicsUrl(routeParams, allGroupsUrl())}>
-              <Icon name='Topics' />
-            </Link>
-          </li>
-        </ul>
-      }
-      {!hideTopics && canView && <TopicNavigation
-        collapsed={collapsed}
-        backUrl={rootPath}
-        routeParams={routeParams}
-        groupId={groupId} />}
+  return (
+    <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
+      <div styleName='navigation'>
+        {canView && (
+          <ul styleName='links' id='groupMenu'>
+            {links.map(link => (
+              <NavLink
+                key={link.label}
+                {...link}
+                collapsed={collapsed}
+                onClick={link.onClick}
+              />)
+            )}
+            <li styleName={cx('item', 'topicItem')}>
+              <Link to={topicsUrl(routeParams, allGroupsUrl())}>
+                <Icon name='Topics' />
+              </Link>
+            </li>
+          </ul>
+        )}
+        {!hideTopics && canView && (
+          <TopicNavigation
+            collapsed={collapsed}
+            backUrl={rootPath}
+            routeParams={routeParams}
+            groupId={groupId}
+          />
+        )}
+      </div>
+      <div styleName='closeBg' onClick={toggleGroupMenu} />
     </div>
-    <div styleName='closeBg' onClick={toggleGroupMenu} />
-  </div>
+  )
 }

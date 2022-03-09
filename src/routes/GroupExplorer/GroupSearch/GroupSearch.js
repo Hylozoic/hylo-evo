@@ -17,7 +17,12 @@ import './GroupSearch.scss'
 
 export default function GroupSearch () {
   const currentUser = useSelector(state => getMe(state))
-  const nearCoord = currentUser.locationObject ? { lng: parseFloat(currentUser.locationObject.center.lng), lat: parseFloat(currentUser.locationObject.center.lat) } : null
+  const nearCoord = currentUser.locationObject
+    ? {
+      lng: parseFloat(currentUser.locationObject.center.lng),
+      lat: parseFloat(currentUser.locationObject.center.lat)
+    }
+    : null
   const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
@@ -25,7 +30,18 @@ export default function GroupSearch () {
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
-  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3] })
+  const {
+    groups = [],
+    pending = false,
+    fetchMoreGroups,
+    hasMore
+  } = useEnsureSearchedGroups({
+    sortBy,
+    search: debouncedSearchTerm,
+    offset,
+    nearCoord,
+    visibility: [3]
+  })
 
   useEffect(() => {
     setOffset(0)
@@ -35,44 +51,54 @@ export default function GroupSearch () {
     setOffset(groups.length)
   }, [groups])
 
-  return <React.Fragment>
-    <div styleName='group-search-view-ctrls'>
-      <b>Group Search</b>
-      { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy) }
-    </div>
-    <div styleName='search-input'>
-      <div className='spacer' />
-      <input
-        styleName='searchBox'
-        type='text'
-        onChange={e => setSearch(e.target.value)}
-        placeholder='Search groups by keyword'
-        value={search}
-      />
-      <div className='spacer' />
-    </div>
-    <div styleName='group-search-items'>
-      {!pending && groups.length === 0 ? <NoPosts message='No results for this search' /> : ''}
-      {groups.map(group => {
-        const expanded = selectedGroupSlug === group.slug
-        return <GroupCard
-          memberships={membershipGroupIds}
-          styleName={cx({ 'card-item': true, expanded })}
-          expanded={expanded}
-          routeParams={query}
-          group={group}
-          key={group.id} />
-      })}
-    </div>
-    <ScrollListener onBottom={() => fetchMoreGroups(offset)}
-      elementId={CENTER_COLUMN_ID} />
-    {pending && <Loading />}
-    {(!hasMore && !!offset) && <div styleName='no-more-results'>No more results</div>}
-  </React.Fragment>
+  return (
+    <>
+      <div styleName='group-search-view-ctrls'>
+        <b>Group Search</b>
+        {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy)}
+      </div>
+      <div styleName='search-input'>
+        <div className='spacer' />
+        <input
+          styleName='searchBox'
+          type='text'
+          onChange={e => setSearch(e.target.value)}
+          placeholder='Search groups by keyword'
+          value={search}
+        />
+        <div className='spacer' />
+      </div>
+      <div styleName='group-search-items'>
+        {(!pending && groups.length === 0) && (
+          <NoPosts message='No results for this search' />
+        )}
+        {groups.map(group => {
+          const expanded = selectedGroupSlug === group.slug
+          return (
+            <GroupCard
+              memberships={membershipGroupIds}
+              styleName={cx({ 'card-item': true, expanded })}
+              expanded={expanded}
+              routeParams={query}
+              group={group}
+              key={group.id}
+            />
+          )
+        })}
+      </div>
+      <ScrollListener onBottom={() => fetchMoreGroups(offset)} elementId={CENTER_COLUMN_ID} />
+      {pending && (
+        <Loading />
+      )}
+      {(!hasMore && !!offset) && (
+        <div styleName='no-more-results'>No more results</div>
+      )}
+    </>
+  )
 }
 
 const sortOptions = (nearCoord) => {
-  let options = [
+  const options = [
     { id: SORT_NAME, label: 'Group Name' },
     { id: SORT_SIZE, label: 'Member Count' }
   ]
@@ -85,13 +111,17 @@ const sortOptions = (nearCoord) => {
 }
 
 const makeDropdown = (selected, options, onChange) => (
-  <Dropdown styleName='dropdown'
-    toggleChildren={<span styleName='dropdown-label'>
-      <Icon name='ArrowDown' />
-      Sort by: <b>{options.find(o => o.id === selected).label}</b>
-    </span>}
+  <Dropdown
+    styleName='dropdown'
+    toggleChildren={
+      <span styleName='dropdown-label'>
+        <Icon name='ArrowDown' />
+        Sort by: <b>{options.find(o => o.id === selected).label}</b>
+      </span>
+    }
     items={options.map(({ id, label }) => ({
       label,
       onClick: () => onChange(id)
-    }))} />
+    }))}
+  />
 )

@@ -4,6 +4,7 @@ import { CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
+import { TextHelpers } from 'hylo-shared'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import CloseMessages from './CloseMessages'
@@ -81,7 +82,7 @@ export default class Messages extends React.Component {
 
   sendForExisting () {
     const { createMessage, messageThreadId, messageText } = this.props
-    createMessage(messageThreadId, messageText).then(() => this.focusForm())
+    createMessage(messageThreadId, TextHelpers.markdown(messageText)).then(() => this.focusForm())
   }
 
   setPeopleSelectorOpen (val) {
@@ -96,7 +97,7 @@ export default class Messages extends React.Component {
     // * This is a Redux vs Apollo data structure thing
     const messageThreadId = get('payload.data.findOrCreateThread.id', createThreadResponse) ||
       get('data.findOrCreateThread.id', createThreadResponse)
-    await createMessage(messageThreadId, messageText, true)
+    await createMessage(messageThreadId, TextHelpers.markdown(messageText), true)
     goToThread(messageThreadId)
   }
 

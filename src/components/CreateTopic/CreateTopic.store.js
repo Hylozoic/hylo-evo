@@ -1,5 +1,5 @@
 import { get, omit } from 'lodash/fp'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 
 export const MODULE_NAME = 'CreateTopic'
 export const CREATE_TOPIC = `${MODULE_NAME}/CREATE_TOPIC`

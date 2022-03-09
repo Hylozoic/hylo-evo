@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { get, some, isEmpty, castArray, includes, pick, uniqueId, uniqBy, sortBy } from 'lodash/fp'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 import orm from 'store/models'
 import { toRefArray } from 'util/reduxOrmMigration'
 import {

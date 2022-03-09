@@ -1,6 +1,5 @@
 import { get } from 'lodash/fp'
-import { textLength } from 'hylo-utils/text'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { TextHelpers, AnalyticsEvents } from 'hylo-shared'
 import createPostMutation from 'graphql/mutations/createPostMutation'
 import { CREATE_POST } from 'store/constants'
 
@@ -60,7 +59,7 @@ export default function createPost (postParams) {
       },
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
-        detailsLength: textLength(details),
+        detailsLength: TextHelpers.textLengthHTML(details),
         isAnnouncement: sendAnnouncement
       }
     }

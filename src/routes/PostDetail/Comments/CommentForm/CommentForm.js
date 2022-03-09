@@ -3,9 +3,9 @@ import { throttle, isEmpty } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import AttachmentManager from 'components/AttachmentManager'
 import HyloEditor from 'components/HyloEditor'
-import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
@@ -50,7 +50,7 @@ export default class CommentForm extends Component {
       // Don't accept empty comments.
       return
     }
-    const text = contentStateToHTML(editorState.getCurrentContent())
+    const text = HyloContentState.toHTML(editorState.getCurrentContent())
 
     this.startTyping.cancel()
     sendIsTyping(false)
@@ -70,9 +70,11 @@ export default class CommentForm extends Component {
       styleName='commentForm'
       className={className}
     >
-      { currentUser ? <AttachmentManager type='comment' id='new' /> : '' }
+      {currentUser && (
+        <AttachmentManager type='comment' id='new' />
+      )}
       <div styleName={cx('prompt', { 'disabled': !currentUser })}>
-        { currentUser
+        {currentUser
           ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
           : <Icon name='Person' styleName='anonymous-image' />
         }
@@ -88,7 +90,7 @@ export default class CommentForm extends Component {
           contentHTML={editorContent}
         />
 
-        { !currentUser
+        {!currentUser
           ? <Link to={'/login?returnToUrl=' + encodeURIComponent(window.location.pathname)} target={inIframe() ? '_blank' : ''} styleName='signupButton'>Sign up to reply</Link>
           : <UploadAttachmentButton
             type='comment'
