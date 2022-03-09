@@ -268,6 +268,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         Location
       </div>
       <Connect(LocationInput)
+        location="undefined, undefined"
         onChange={[Function]}
         placeholder="Where is your request located?"
         saveLocationToDB={true}
@@ -483,6 +484,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         Location
       </div>
       <Connect(LocationInput)
+        location="undefined, undefined"
         onChange={[Function]}
         placeholder="Where is your request located?"
         saveLocationToDB={true}
@@ -855,6 +857,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Location
       </div>
       <Connect(LocationInput)
+        location="undefined, undefined"
         onChange={[Function]}
         placeholder="Where is your offer located?"
         saveLocationToDB={true}
@@ -1035,6 +1038,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Location
       </div>
       <Connect(LocationInput)
+        location="undefined, undefined"
         onChange={[Function]}
         placeholder="Where is your request located?"
         saveLocationToDB={true}
@@ -1215,6 +1219,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         Location
       </div>
       <Connect(LocationInput)
+        location="undefined, undefined"
         onChange={[Function]}
         placeholder="Where is your resource located?"
         saveLocationToDB={true}

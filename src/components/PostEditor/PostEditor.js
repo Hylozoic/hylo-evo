@@ -6,7 +6,6 @@ import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
 import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
-// import { convertCoordinateToLocation, parseCoordinate } from 'util/geo'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
@@ -438,7 +437,6 @@ export default class PostEditor extends React.Component {
       imageAttachments && imageAttachments.map((attachment) => attachment.url)
     const fileUrls =
       fileAttachments && fileAttachments.map((attachment) => attachment.url)
-    // const actualLocation = await fetchLocation(convertCoordinateToLocation(this.state.createPostCoordinates))
     const actualLocationId = await ensureLocationIdIfCoordinate({
       fetchLocation,
       location,
@@ -548,11 +546,12 @@ export default class PostEditor extends React.Component {
       'project'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
-    const params = Object.fromEntries(new URLSearchParams(windowLocation.search))
-    const { lat, lng } = params
-    // this.setState({ createPostCoordinates: coordinates })
-    // console.log('params', params)
-    // Center location autocomplete either on post's current location, or current group's location, or current user's location
+    const params = windowLocation && windowLocation.search ? Object.fromEntries(new URLSearchParams(windowLocation.search)) : null
+    let lat, lng
+    if (params) {
+      lat = params.lat
+      lng = params.lng
+    }
     const curLocation =
       locationObject ||
       get('0.locationObject', groups) ||
