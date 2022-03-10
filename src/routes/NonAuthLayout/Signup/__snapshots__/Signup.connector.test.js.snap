@@ -2,18 +2,38 @@
 
 exports[`Signup should call signup 1`] = `
 Object {
-  "payload": Object {
-    "api": Object {
-      "method": "post",
-      "params": Object {
-        "email": "name",
-        "email_validated": true,
-        "login": true,
-        "name": "test@hylo.com",
-        "password": "testPassword",
-      },
-      "path": "/noo/user",
+  "graphql": Object {
+    "query": "mutation ($name: String, $password: String) {
+        register(name: $name, password: $password) {
+          id
+          email
+          emailValidated
+          hasRegistered
+          name
+          settings {
+            alreadySeenTour
+            digestFrequency
+            dmNotifications
+            commentNotifications
+            signupInProgress
+            streamViewMode
+            streamSortBy
+            streamPostType
+          }
+        }
+      }",
+    "variables": Object {
+      "name": "name",
+      "password": "test@hylo.com",
     },
+  },
+  "meta": Object {
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Me",
+      },
+    ],
   },
   "type": "Signup/REGISTER",
 }

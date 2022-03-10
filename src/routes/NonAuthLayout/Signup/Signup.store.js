@@ -21,34 +21,72 @@ export function sendEmailVerification (email) {
   }
 }
 
-export function verifyEmail (email, code) {
+export function verifyEmail (email, code, token) {
   return {
     type: VERIFY_EMAIL,
-    payload: {
-      api: {
-        method: 'post',
-        path: '/noo/user/verify-email',
-        params: {
-          email,
-          code
+    graphql: {
+      query: `mutation ($code: String, $email: String, $token: String) {
+        verifyEmail(code: $code, email: $email, token: $token) {
+          id
+          active
+          email
+          emailValidated
+          hasRegistered
+          name
         }
+      }`,
+      variables: {
+        code,
+        email,
+        token
       }
+    },
+    meta: {
+      extractModel: [
+        {
+          getRoot: get('verifyEmail'),
+          modelName: 'Me'
+        }
+      ]
     }
   }
 }
 
-export function signup (email, name, password) {
+export function signup (name, password) {
   return {
     type: SIGNUP,
-    payload: {
-      api: {
-        method: 'post',
-        path: '/noo/user/register',
-        params: {
-          name,
-          password
+    graphql: {
+      query: `mutation ($name: String, $password: String) {
+        register(name: $name, password: $password) {
+          id
+          email
+          emailValidated
+          hasRegistered
+          name
+          settings {
+            alreadySeenTour
+            digestFrequency
+            dmNotifications
+            commentNotifications
+            signupInProgress
+            streamViewMode
+            streamSortBy
+            streamPostType
+          }
         }
+      }`,
+      variables: {
+        name,
+        password
       }
+    },
+    meta: {
+      extractModel: [
+        {
+          getRoot: get('register'),
+          modelName: 'Me'
+        }
+      ]
     }
   }
 }
@@ -61,6 +99,7 @@ export function checkRegistrationStatus () {
         me {
           id
           email
+          emailValidated
           hasRegistered
           name
         }
@@ -70,8 +109,7 @@ export function checkRegistrationStatus () {
       extractModel: [
         {
           getRoot: get('me'),
-          modelName: 'Me',
-          append: true
+          modelName: 'Me'
         }
       ]
     }

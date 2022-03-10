@@ -2,15 +2,30 @@
 
 exports[`VerifyEmail.connector should call verifyEmail 1`] = `
 Object {
-  "payload": Object {
-    "api": Object {
-      "method": "post",
-      "params": Object {
-        "code": "acode",
-        "email": "test@hylo.com",
-      },
-      "path": "/noo/user/verify-email",
+  "graphql": Object {
+    "query": "mutation ($code: String, $email: String, $token: String) {
+        verifyEmail(code: $code, email: $email, token: $token) {
+          id
+          active
+          email
+          emailValidated
+          hasRegistered
+          name
+        }
+      }",
+    "variables": Object {
+      "code": "acode",
+      "email": "test@hylo.com",
+      "token": undefined,
     },
+  },
+  "meta": Object {
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Me",
+      },
+    ],
   },
   "type": "Signup/VERIFY_EMAIL",
 }

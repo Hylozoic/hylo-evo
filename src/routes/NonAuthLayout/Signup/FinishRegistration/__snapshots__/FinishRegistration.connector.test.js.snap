@@ -2,18 +2,38 @@
 
 exports[`FinishRegistration.connector should call signup 1`] = `
 Object {
-  "payload": Object {
-    "api": Object {
-      "method": "post",
-      "params": Object {
-        "email": "test@hylo.com",
-        "email_validated": true,
-        "login": true,
-        "name": "name",
-        "password": "password",
-      },
-      "path": "/noo/user",
+  "graphql": Object {
+    "query": "mutation ($name: String, $password: String) {
+        register(name: $name, password: $password) {
+          id
+          email
+          emailValidated
+          hasRegistered
+          name
+          settings {
+            alreadySeenTour
+            digestFrequency
+            dmNotifications
+            commentNotifications
+            signupInProgress
+            streamViewMode
+            streamSortBy
+            streamPostType
+          }
+        }
+      }",
+    "variables": Object {
+      "name": "test@hylo.com",
+      "password": "name",
     },
+  },
+  "meta": Object {
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Me",
+      },
+    ],
   },
   "type": "Signup/REGISTER",
 }

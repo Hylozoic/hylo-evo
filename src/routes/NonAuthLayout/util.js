@@ -53,7 +53,7 @@ export function formatError (error, action) {
       'no password provided': 'Please enter your password',
       'email not found': 'Email address not found',
       'invalid code': 'Invalid code, please try again',
-      'invalid-link': 'Link expired, please try again',
+      'invalid-link': 'Link expired, please start over',
       default: err
     }
 

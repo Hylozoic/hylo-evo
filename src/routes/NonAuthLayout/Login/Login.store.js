@@ -1,11 +1,44 @@
+import { get } from 'lodash/fp'
 import authWithService from './authWithService'
 import { CHECK_LOGIN, LOGIN, LOGOUT } from 'store/constants'
 
 export function login (email, password) {
   return {
     type: LOGIN,
-    payload: {
-      api: { method: 'post', path: '/noo/login', params: { email, password } }
+    graphql: {
+      query: `mutation ($email: String, $password: String) {
+        createSession(email: $email, password: $password) {
+          me {
+            id
+            email
+            emailValidated
+            hasRegistered
+            name
+            settings {
+              alreadySeenTour
+              digestFrequency
+              dmNotifications
+              commentNotifications
+              signupInProgress
+              streamViewMode
+              streamSortBy
+              streamPostType
+            }
+          }
+        }
+      }`,
+      variables: {
+        email,
+        password
+      }
+    },
+    meta: {
+      extractModel: [
+        {
+          getRoot: get('createSession.me'),
+          modelName: 'Me'
+        }
+      ]
     }
   }
 }
@@ -20,8 +53,34 @@ export function loginWithService (name) {
 export function checkLogin () {
   return {
     type: CHECK_LOGIN,
-    payload: {
-      api: { path: '/noo/user/status' }
+    graphql: {
+      query: `query MeQuery {
+        me {
+          id
+          email
+          emailValidated
+          hasRegistered
+          name
+          settings {
+            alreadySeenTour
+            digestFrequency
+            dmNotifications
+            commentNotifications
+            signupInProgress
+            streamViewMode
+            streamSortBy
+            streamPostType
+          }
+        }
+      }`
+    },
+    meta: {
+      extractModel: [
+        {
+          getRoot: get('me'),
+          modelName: 'Me'
+        }
+      ]
     }
   }
 }

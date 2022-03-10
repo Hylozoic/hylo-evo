@@ -4,7 +4,7 @@ import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.sto
 import getLoginError from 'store/selectors/getLoginError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { mobileRedirect } from 'util/mobile'
-import { checkLogin, login, loginWithService } from './Login.store'
+import { login, loginWithService } from './Login.store'
 
 export function mapStateToProps (state, props) {
   return {
@@ -15,7 +15,6 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  checkLogin,
   login,
   loginWithService,
   resetReturnToURL,

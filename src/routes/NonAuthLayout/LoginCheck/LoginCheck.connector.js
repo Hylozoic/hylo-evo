@@ -1,6 +1,6 @@
+import { isNull } from 'lodash'
 import { connect } from 'react-redux'
 import { checkLogin } from '../Login/Login.store'
-import { isNull } from 'lodash'
 
 export function mapStateToProps (state) {
   return {

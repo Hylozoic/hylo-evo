@@ -16,10 +16,9 @@ export default function FinishRegistration (props) {
   }, [])
 
   if (!currentUser) return <Loading />
+  const { email, emailValidated, hasRegistered, name } = currentUser
 
-  const { email, hasRegistered, name } = currentUser
-
-  if (!email) return <RedirectRoute to='/signup' />
+  if (!email || !emailValidated) return <RedirectRoute to='/signup' />
 
   if (hasRegistered) return <RedirectRoute to='/' />
 
@@ -36,8 +35,8 @@ export default function FinishRegistration (props) {
 
   const submit = () => {
     if (canSubmit) {
-      props.signup(email, formValues.name, formValues.password)
-        .then(() => { props.redirectOnSignIn('/') }, (e) => { /* Error */ })
+      props.signup(formValues.name, formValues.password)
+        .then(() => { props.redirectOnSignIn('/welcome/upload-photo') }, (e) => { /* Error */ })
     }
   }
 

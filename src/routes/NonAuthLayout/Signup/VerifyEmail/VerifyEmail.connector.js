@@ -7,9 +7,12 @@ import { verifyEmail } from '../Signup.store'
 
 export function mapStateToProps (state, props) {
   const email = getQuerystringParam('email', state, props)
+  const token = getQuerystringParam('token', state, props)
+
   return {
     error: getLoginError(state),
-    email
+    email,
+    token
   }
 }
 
@@ -19,14 +22,22 @@ export const mapDispatchToProps = {
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { email, token } = stateProps
+
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    verifyEmail: (email, code) => {
-      dispatchProps.verifyEmail(email, code).then(
+    verifyEmail: (code) => {
+      dispatchProps.verifyEmail(email, code, token).then(
         () => { dispatchProps.push('/signup/finish') },
-        (e) => { /* error is added to the state by login reducer but we need to catch it here too */ }
+        (e) => {
+          /* Error is added to the state by login reducer but we need to catch it here too */
+          if (e.message === 'invalid-link') {
+            dispatchProps.push('/signup?error=invalid-link')
+          }
+          // Else just show the error on this page
+        }
       )
     }
   }

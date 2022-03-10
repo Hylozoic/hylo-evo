@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactCodeInput from 'react-code-input'
 import { Link } from 'react-router-dom'
 
@@ -7,11 +7,17 @@ import { formatError } from '../../util'
 import '../Signup.scss'
 
 export default function VerifyEmail (props) {
-  const { className, email, error } = props
+  const { className, email, error, token } = props
   const [code, setCode] = useState('')
 
+  // If we get here through a login link with JWT token then immediately check the code with the link
+  // TODO: show the code getting filled in? Maybe we dont even need a JWT, just pass the link in the URL? Still better to hide in the JWT?
+  if (token) {
+    useEffect(() => props.verifyEmail(), [])
+  }
+
   const submit = (value) => {
-    props.verifyEmail(email, value || code)
+    props.verifyEmail(value || code)
   }
 
   const onChange = (value) => {

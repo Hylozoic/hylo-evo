@@ -36,6 +36,7 @@ export default gql`
       region
     }
     email
+    emailValidated
     bannerUrl
     bio
     contactEmail

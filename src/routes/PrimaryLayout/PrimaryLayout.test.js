@@ -11,7 +11,7 @@ import PrimaryLayout, {
 it('shows NotFound if a currentUser is loaded and the group does not exist', () => {
   const wrapper = shallow(<PrimaryLayout
     isGroupRoute
-    currentUser={{}}
+    currentUser={{ hasRegistered: true }}
     location={{ pathname: '' }} />, { disableLifecycleMethods: true })
   expect(wrapper).toMatchSnapshot()
 })
@@ -28,7 +28,7 @@ it('shows normal children for a group route if the group is loaded', () => {
     isGroupRoute
     location={{ pathname: '/', search: '' }}
     group={{ id: '1' }}
-    currentUser={{ name: 'Testy Face' }} />, { disableLifecycleMethods: true })
+    currentUser={{ name: 'Testy Face', hasRegistered: true }} />, { disableLifecycleMethods: true })
   expect(wrapper.name()).toEqual('Div100vh')
 })
 

@@ -14,7 +14,7 @@ exports[`FinishRegistration renders correctly 1`] = `
       data-stylename="blurb"
     >
       Hi 
-      test@wheee.com
+      hi@bye.com
        we just need to know your name and password and you're in.
     </p>
     <TextInput
@@ -27,7 +27,7 @@ exports[`FinishRegistration renders correctly 1`] = `
       name="name"
       onChange={[Function]}
       type="text"
-      value=""
+      value="Smiley"
     />
     <TextInput
       aria-label="password"
@@ -78,7 +78,7 @@ exports[`FinishRegistration renders correctly with an error 1`] = `
       data-stylename="blurb"
     >
       Hi 
-      test@wheee.com
+      hi@bye.com
        we just need to know your name and password and you're in.
     </p>
     <div
@@ -96,7 +96,7 @@ exports[`FinishRegistration renders correctly with an error 1`] = `
       name="name"
       onChange={[Function]}
       type="text"
-      value=""
+      value="Smiley"
     />
     <TextInput
       aria-label="password"

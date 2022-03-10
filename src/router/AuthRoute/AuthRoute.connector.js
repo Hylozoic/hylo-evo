@@ -9,9 +9,9 @@ import {
 
 export function mapStateToProps (state, props) {
   return {
+    currentUser: getMe(state),
     isMobile: mobileRedirect(),
     isLoggedIn: getIsLoggedIn(state),
-    currentUser: getMe(state),
     returnToURL: getReturnToURL(state)
   }
 }
