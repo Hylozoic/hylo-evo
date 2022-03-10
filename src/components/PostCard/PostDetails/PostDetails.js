@@ -1,6 +1,6 @@
 import React from 'react'
 import { pick, get } from 'lodash/fp'
-import { sanitize, present, textLength, truncate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -9,10 +9,10 @@ import PostCompletion from '../PostCompletion'
 import cx from 'classnames'
 import './PostDetails.scss'
 
-const maxDetailsLength = 144
+const MAX_DETAILS_LENGTH = 144
 
 export default function PostDetails ({
-  details,
+  details: providedDetails,
   linkPreview,
   slug,
   constrained,
@@ -25,11 +25,10 @@ export default function PostDetails ({
   canEdit,
   ...post
 }) {
-  details = present(sanitize(details), { slug })
-  if (!expanded && textLength(details) > maxDetailsLength) {
-    details = truncate(details, maxDetailsLength)
-  }
-
+  const details = TextHelpers.presentHTML(providedDetails, {
+    slug,
+    truncate: !expanded && MAX_DETAILS_LENGTH
+  })
   const postType = get('type', post)
   const typesWithCompletion = ['offer', 'request', 'resource', 'project']
   const canBeCompleted = typesWithCompletion.includes(postType)
@@ -38,23 +37,27 @@ export default function PostDetails ({
   return <Highlight {...highlightProps}>
     <div styleName={cx('postDetails', { constrained })}>
       <div styleName='fade' />
-      {details && !hideDetails &&
+      {details && !hideDetails && (
         <ClickCatcher>
           <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         </ClickCatcher>
-      }
-      {canBeCompleted && canEdit && expanded &&
+      )}
+      {canBeCompleted && canEdit && expanded && (
         <PostCompletion
           type={postType}
           startTime={post.startTime}
           endTime={post.endTime}
           isFulfilled={isFulfilled}
           fulfillPost={fulfillPost}
-          unfulfillPost={unfulfillPost} />}
-      {linkPreview &&
-        <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />}
-      {fileAttachments &&
-        <CardFileAttachments attachments={fileAttachments} />}
+          unfulfillPost={unfulfillPost}
+        />
+      )}
+      {linkPreview && (
+        <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
+      )}
+      {fileAttachments && (
+        <CardFileAttachments attachments={fileAttachments} />
+      )}
     </div>
   </Highlight>
 }

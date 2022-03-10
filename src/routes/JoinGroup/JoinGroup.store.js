@@ -1,5 +1,5 @@
 import { get } from 'lodash/fp'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 
 export const MODULE_NAME = 'JoinGroup'
 export const USE_INVITATION = `${MODULE_NAME}/USE_INVITATION`

@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
-import { humanDate, present, sanitize } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -15,13 +15,11 @@ export default function CommentCard ({
   highlightProps
 }) {
   const { creator, post, slug, attachments } = comment
-  const postTitle = present(sanitize(post.title), { maxlength: 25, noP: true, noLinks: true })
-  const commentPresentOpts = {
-    maxlength: expanded ? null : 144,
-    noP: true,
+  const postTitle = TextHelpers.truncateText(post.title, 25)
+  const commentText = TextHelpers.presentHTML(comment.text, {
+    truncate: expanded ? null : 144,
     slug
-  }
-  const commentText = present(sanitize(comment.text), commentPresentOpts)
+  })
 
   return <span onClick={() => showDetails(comment.post.id)} styleName='link'>
     <div styleName={cx('comment-card', { expanded })}>
@@ -33,7 +31,7 @@ export default function CommentCard ({
             <span styleName='post-title'>{postTitle}</span>
           </div>
         </Highlight>
-        <span styleName='date'>{humanDate(comment.createdAt)}</span>
+        <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
       </div>
       <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
       <CardFileAttachments attachments={attachments} styleName='comment-files' />

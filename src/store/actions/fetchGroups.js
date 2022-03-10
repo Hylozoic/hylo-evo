@@ -6,11 +6,9 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 export function fetchGroups ({ nearCoord, offset, order, pageSize = 20, search, slug, sortBy, groupType, farmQuery }) {
-  var query, extractModel, getItems
-
-  query = groupQuery
-  extractModel = 'Group'
-  getItems = get('payload.data.groups')
+  const query = groupQuery
+  const extractModel = 'Group'
+  const getItems = get('payload.data.groups')
 
   return {
     type: FETCH_GROUPS,
@@ -37,7 +35,8 @@ export function fetchGroups ({ nearCoord, offset, order, pageSize = 20, search, 
   }
 }
 
-const groupQuery = `query (
+const groupQuery = `
+query (
   $boundingBox: [PointInput],
   $first: Int,
   $farmQuery: JSON,
@@ -107,7 +106,8 @@ const groupQuery = `query (
       }
     }
   }
-}`
+}
+`
 
 const getGroupsResults = makeGetQueryResults(FETCH_GROUPS)
 

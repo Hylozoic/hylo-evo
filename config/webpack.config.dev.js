@@ -48,7 +48,11 @@ module.exports = {
     rules: [
       // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
-
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       // Using standard js linter
@@ -63,7 +67,7 @@ module.exports = {
           // enable snazzy output (default = true)
           snazzy: true,
           // other config options to be passed through to standard e.g.
-          parser: 'babel-eslint'
+          parser: '@babel/eslint-parser'
         }
       },
       {
@@ -188,7 +192,10 @@ module.exports = {
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // To strip all locales except “en”
-    new MomentLocalesPlugin()
+    new MomentLocalesPlugin(),
+    // Required for hylo-shared package, but ideally would be handled by
+    // the package build itself
+    new webpack.IgnorePlugin(/jsdom$/)
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

@@ -20,7 +20,12 @@ const baseList = [{ value: '', label: 'All' }]
 
 export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
-  const nearCoord = currentUser.locationObject ? { lng: parseFloat(currentUser.locationObject.center.lng), lat: parseFloat(currentUser.locationObject.center.lat) } : null
+  const nearCoord = currentUser.locationObject
+    ? {
+      lng: parseFloat(currentUser.locationObject.center.lng),
+      lat: parseFloat(currentUser.locationObject.center.lat)
+    }
+    : null
   const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
@@ -34,7 +39,20 @@ export default function GroupSearch ({ viewFilter }) {
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
   const [farmQuery, setFarmQuery] = useState({ farmType, certOrManagementPlan, productCategories })
-  const { groups = [], pending = false, fetchMoreGroups, hasMore } = useEnsureSearchedGroups({ sortBy, search: debouncedSearchTerm, offset, nearCoord, visibility: [3], groupType, farmQuery })
+  const {
+    groups = [],
+    pending = false,
+    fetchMoreGroups,
+    hasMore
+  } = useEnsureSearchedGroups({
+    sortBy,
+    search: debouncedSearchTerm,
+    offset,
+    nearCoord,
+    visibility: [3],
+    groupType,
+    farmQuery
+  })
 
   useEffect(() => {
     setOffset(0)
@@ -45,7 +63,7 @@ export default function GroupSearch ({ viewFilter }) {
   }, [groups])
 
   useEffect(() => {
-    if (viewFilter === FARM_VIEW) {
+    if (viewFilter === FARM_VIEW && nearCoord) {
       setSortBy(SORT_NEAREST)
     }
   }, [viewFilter])
@@ -56,7 +74,7 @@ export default function GroupSearch ({ viewFilter }) {
 
   useEffect(() => viewFilter === FARM_VIEW ? setGroupType(FARM_VIEW) : setGroupType(null), [viewFilter])
 
-  return <React.Fragment>
+  return <>
     <div styleName='group-search-view-ctrls'>
       {viewFilter === FARM_VIEW
         ? <div styleName='filter-container' onClick={() => setFilterToggle(!filterToggle)}>
@@ -100,11 +118,11 @@ export default function GroupSearch ({ viewFilter }) {
       elementId={CENTER_COLUMN_ID} />
     {pending && <Loading />}
     {(!hasMore && !!offset) && <div styleName='no-more-results'>No more results</div>}
-  </React.Fragment>
+  </>
 }
 
 const sortOptions = (nearCoord) => {
-  let options = [
+  const options = [
     { id: SORT_NAME, label: 'Group Name' },
     { id: SORT_SIZE, label: 'Member Count' }
   ]

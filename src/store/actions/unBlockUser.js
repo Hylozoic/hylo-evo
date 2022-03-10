@@ -1,4 +1,4 @@
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 import { UNBLOCK_USER } from '../constants'
 
 export default function unBlockUser (blockedUserId) {

@@ -1,12 +1,9 @@
-const sharedConfig = require('./webpack.config.shared')
-const paths = require('./paths')
+const sharedConfig = require('./config/webpack.config.shared')
+const paths = require('./config/paths')
 
 module.exports = function (api) {
   if (api) {
-    console.log('Using Babel config with environment:', api.env())
     api.cache(true)
-  } else {
-    console.log('Referencing Babel config (not running Babel)')
   }
 
   const reactCSSModulesPlugin = [
@@ -34,6 +31,7 @@ module.exports = function (api) {
     plugins: [
       '@babel/plugin-transform-runtime',
       '@babel/plugin-proposal-class-properties',
+      '@babel/plugin-proposal-optional-chaining',
       [
         'module-resolver',
         {

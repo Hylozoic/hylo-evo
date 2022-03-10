@@ -1,6 +1,6 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 
 export const MODULE_NAME = `CreateGroup`
 export const ADD_GROUP_NAME = `${MODULE_NAME}/ADD_GROUP_NAME`

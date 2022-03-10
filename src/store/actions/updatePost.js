@@ -1,6 +1,5 @@
 import { get } from 'lodash/fp'
-import { textLength } from 'hylo-utils/text'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { TextHelpers, AnalyticsEvents } from 'hylo-shared'
 import updatePostMutation from 'graphql/mutations/updatePostMutation'
 import { UPDATE_POST } from 'store/constants'
 
@@ -61,7 +60,7 @@ export default function updatePost (post, query = updatePostMutation) {
       optimistic: true,
       analytics: {
         eventName: AnalyticsEvents.POST_UPDATED,
-        detailsLength: textLength(details)
+        detailsLength: TextHelpers.textLengthHTML(details)
       }
     }
   }

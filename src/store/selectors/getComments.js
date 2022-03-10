@@ -11,8 +11,11 @@ const normaliseCommentModel = post => comment => ({
   creator: comment.creator,
   attachments: comment.attachments
     .orderBy('position').toRefArray(),
-  childComments: post.comments.filter({ parentComment: comment.id })
-    .orderBy(naturalOrdering).toModelArray()
+  childComments: post
+    .comments
+    .filter({ parentComment: comment.id })
+    .orderBy(naturalOrdering)
+    .toModelArray()
     .map(normaliseCommentModel(post))
 })
 
@@ -23,7 +26,11 @@ export const getComments = createSelector(
     const post = Post.withId(id)
     if (!post) return []
 
-    return post.comments.filter({ parentComment: null }).orderBy(naturalOrdering).toModelArray()
+    return post
+      .comments
+      .filter({ parentComment: null })
+      .orderBy(naturalOrdering)
+      .toModelArray()
       .map(normaliseCommentModel(post))
   }
 )

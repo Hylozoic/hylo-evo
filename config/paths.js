@@ -75,7 +75,7 @@ module.exports = {
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
   rootPath: resolveApp('.'),
-  babelConfigFile: resolveApp('config/babel.config.js'),
+  babelConfigFile: resolveApp('babel.config.js'),
   yarnLockFile: resolveApp('yarn.lock'),
   nodeModules: resolveApp('node_modules'),
   nodePaths: nodePaths

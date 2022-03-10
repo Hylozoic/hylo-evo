@@ -8,7 +8,7 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import cx from 'classnames'
 import { personUrl, groupUrl } from 'util/navigation'
-import { markdown } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import { isEmpty } from 'lodash/fp'
 import './GroupSidebar.scss'
 
@@ -71,7 +71,7 @@ export class AboutSection extends Component {
       </div>
       <div styleName={cx('description', { expanded })}>
         {!expanded && <div styleName='gradient' />}
-        <span dangerouslySetInnerHTML={{ __html: markdown(description) }} />
+        <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(description) }} />
       </div>
       {showExpandButton && <span styleName='expand-button' onClick={onClick}>
         {expanded ? 'Show Less' : 'Read More'}

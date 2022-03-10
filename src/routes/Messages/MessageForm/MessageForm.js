@@ -14,7 +14,7 @@ import styles from './MessageForm.scss'
 export default function MessageForm (props) {
   const [hasFocus, setHasFocus] = useState(false)
 
-  const submit = event => {
+  const handleSubmit = event => {
     if (event) event.preventDefault()
     startTyping.cancel()
     props.sendIsTyping(false)
@@ -28,7 +28,7 @@ export default function MessageForm (props) {
 
   const handleKeyDown = event => {
     startTyping()
-    onEnterNoShift(submit, event)
+    onEnterNoShift(handleSubmit, event)
   }
 
   // broadcast "I'm typing!" every 3 seconds starting when the user is typing.
@@ -51,7 +51,11 @@ export default function MessageForm (props) {
 
   if (pending) return <Loading />
 
-  return <form styleName='message-form' className={cx({ className, [styles['has-focus']]: hasFocus })} onSubmit={submit}>
+  return <form
+    styleName='message-form'
+    className={cx({ className, [styles['has-focus']]: hasFocus })}
+    onSubmit={handleSubmit}
+  >
     <RoundImage url={get('avatarUrl', currentUser)} styleName='user-image' medium />
     <TextareaAutosize
       value={messageText}

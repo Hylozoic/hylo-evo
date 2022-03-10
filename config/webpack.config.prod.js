@@ -90,6 +90,11 @@ module.exports = {
           requireEnsure: false
         }
       },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       // Using standard js linter
@@ -104,7 +109,7 @@ module.exports = {
           // enable snazzy output (default = true)
           snazzy: true,
           // other config options to be passed through to standard e.g.
-          parser: 'babel-eslint'
+          parser: '@babel/eslint-parser'
         }
       },
       {
@@ -315,6 +320,9 @@ module.exports = {
     }),
     // To strip all locales except “en”
     new MomentLocalesPlugin(),
+    // Required for hylo-shared package, but ideally would be handled by
+    // the package build itself
+    new webpack.IgnorePlugin(/jsdom$/),
     // Generate WebPack bundle size stats (see build/stats.json and )
     new BundleAnalyzerPlugin({
       analyzerMode: 'none',
