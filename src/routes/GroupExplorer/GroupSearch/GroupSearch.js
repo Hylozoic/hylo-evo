@@ -75,23 +75,8 @@ export default function GroupSearch ({ viewFilter }) {
   useEffect(() => viewFilter === FARM_VIEW ? setGroupType(FARM_VIEW) : setGroupType(null), [viewFilter])
 
   return <>
-    <div styleName='group-search-view-ctrls'>
-      {viewFilter === FARM_VIEW
-        ? <div styleName='filter-container' onClick={() => setFilterToggle(!filterToggle)}>
-          <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
-          <b styleName={cx({ 'filter-open': filterToggle })}>Filters</b>
-          {filterToggle && <Icon name='Ex' styleName='remove-button' />}
-        </div>
-        : <div id='div-left-intentionally-blank' />}
-      { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ') }
-    </div>
-    {filterToggle && <div styleName='filter-list'>
-      { makeDropdown(farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), setFarmType, 'Farm Type: ', true) }
-      { makeDropdown(productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATAGORIES)), setProductCategories, 'Operation: ', true) }
-      { makeDropdown(certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), setCertOrManagementPlan, 'Management Techniques: ', true) }
-    </div>}
     <div styleName='search-input'>
-      <div className='spacer' />
+      <Icon name='Search' styleName='search-icon' />
       <input
         styleName='searchBox'
         type='text'
@@ -99,7 +84,23 @@ export default function GroupSearch ({ viewFilter }) {
         placeholder='Search groups by keyword'
         value={search}
       />
-      <div className='spacer' />
+    </div>
+    <div>
+      <div styleName='group-search-view-ctrls'>
+        {viewFilter === FARM_VIEW
+          ? <div styleName={cx({ 'filter-container': true, 'filter-open': filterToggle })} onClick={() => setFilterToggle(!filterToggle)}>
+            <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
+            <b styleName={cx({ 'filter-open': filterToggle })}>Filters</b>
+            {filterToggle && <Icon name='Ex' styleName='remove-button' />}
+          </div>
+          : <div id='div-left-intentionally-blank' />}
+        { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ') }
+      </div>
+      {filterToggle && <div styleName='filter-list'>
+        { makeDropdown(farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), setFarmType, 'Farm Type: ', true) }
+        { makeDropdown(productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATAGORIES)), setProductCategories, 'Operation: ', true) }
+        { makeDropdown(certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), setCertOrManagementPlan, 'Management Techniques: ', true) }
+      </div>}
     </div>
     <div styleName='group-search-items'>
       {!pending && groups.length === 0 ? <NoPosts message='No results for this search' /> : ''}
@@ -139,12 +140,11 @@ const makeDropdown = (selected, options, onChange, filterLabel = '', isFilter = 
   return (
     <Dropdown styleName={cx({ 'dropdown': true, 'filter-dropdown': isFilter })}
       toggleChildren={<span styleName={isFilter ? 'filter-dropdown-label' : 'dropdown-label'}>
-        {!isFilter && <Icon name='ArrowDown' />}
         {isFilter
           ? <div>{filterLabel}<b>{selectedLabel}</b></div>
           : <span>{filterLabel}<b>{selectedLabel}</b></span>
         }
-        {isFilter && <Icon name='ArrowDown' />}
+        <Icon name='ArrowDown' />
       </span>}
       items={options.map(({ id, label }) => ({
         label,

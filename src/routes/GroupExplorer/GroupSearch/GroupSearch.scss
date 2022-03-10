@@ -1,6 +1,5 @@
 .group-search-view-ctrls {
-  height: 70px;
-  padding: 17px 20px;
+  padding: 0 20px;
   position: sticky;
   display: flex;
   justify-content: space-between;
@@ -15,18 +14,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10px;
+  border-radius: 5px;
   gap: 8px;
-  padding: 8px;
+  padding: 20px;
+  margin: 10px 20px 0 20px;
+  background-color: rgba(242, 244, 245, 1.000);
 }
 
 .dropdown {
+  height: 40px;
+  line-height: 40px;
   color: $color-regent;
   padding: 0 12px;
   font-size: 12px;
   border-radius: 5px;
-  margin-right: 1em;
   background-color: rgba(255, 255, 255, 1);
-  border: solid #808C9B 1px;
+  border: solid rgba(224, 229, 233, 1.000) 1px;
 }
 
 .filter-dropdown {
@@ -34,14 +38,13 @@
 }
 
 .dropdown-label {
-  line-height: 2em;
+  line-height: 40px;
   position: relative;
   top: -0.15em;
 
   span { // icon positioning
-    top: 6px;
-    margin-right: 0.25em;
-    left: -2px;
+    top: 7px;
+    margin-left: 0.25em;
   }
 }
 
@@ -49,6 +52,30 @@
   display: flex;
   cursor: pointer;
   user-select: none;
+  background-color: rgba(242, 244, 245, 1.000);
+  color: rgba(35, 64, 91, 1.000);
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  border-radius: 5px;
+
+  span {
+    line-height: 40px;
+    font-size: 16px;
+  }
+
+  b {
+    color: rgba(125, 140, 157, 1.000);
+  }
+}
+
+.filter-container.filter-open {
+  height: 60px;
+  margin-bottom: -20px;
+
+  .filter-open {
+    color: rgba(0, 199, 157, 1.000);
+  }
 }
 
 .filter-icon {
@@ -65,12 +92,16 @@
 .filter-dropdown-label {
   display: flex;
   justify-content: space-between;
-  line-height: 2em;
+  line-height: 40px;
   position: relative;
+
+  span {
+    line-height: 40px;
+  }
 }
 
 .group-search-items {
-  margin: 12px auto 0px auto;
+  margin: 20px auto 0px auto;
   overflow: visible;
 }
 
@@ -83,9 +114,26 @@
 }
 
 .search-input {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 18px 1fr 18px;
+  padding: 20px 15px;
+  position: relative;
+
+  input {
+    width: 100%;
+    padding-left: 40px;
+    border: none;
+    height: 50px;
+
+    &:focus {
+      outline: 1px solid rgba(0, 199, 157, 1.000);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 33px;
+    left: 25px;
+    color: rgba(125, 140, 157, 1.000);
+  }
 }
 
 .searchBox {
@@ -99,16 +147,12 @@
 }
 
 .remove-button {
-  border-radius: 50%;
   color: $color-rhino;
   // background-color: $color-rhino;
-  font-size: 0.9rem;
+  font-size: 16px;
   height: 1rem;
   width: 1rem;
-  border: 1px solid $color-rhino;
-  background-clip: padding-box;
   cursor: pointer;
-  top: 4px;
   margin-left: 12px;
 }
 

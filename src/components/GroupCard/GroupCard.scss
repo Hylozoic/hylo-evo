@@ -3,9 +3,7 @@
   border-radius: 4px;
   cursor: pointer;
   position: relative;
-  color: black;
   right: 0px;
-  height: 223px;
   transition: 0.25s;
   display: flex;
   flex-direction: column;
@@ -17,14 +15,14 @@
 
 .group-description {
   @include font-regular;
-  padding: 0 15px;
-  width: 472px;
+  padding: 15px 15px 0 15px;
+  width: 100%;
   font-size: 12px;
   line-height: 1.5;
   color: $color-regent;
   opacity: 0.8;
-  height: 4.5em;
-  margin-bottom: 12px;
+  max-height: 4.5em;
+  margin-bottom: 15px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -33,9 +31,10 @@
 }
 
 .group-tags {
-  height: 78px;
-  width: 472px;
+  max-height: 68px;
   overflow: hidden;
+  padding: 0 15px 0 15px;
+  margin-bottom: 15px;
 }
 
 .tag-pill{
@@ -43,7 +42,7 @@
   text-transform: none;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 11px;
   line-height: 18px;
 }
 
