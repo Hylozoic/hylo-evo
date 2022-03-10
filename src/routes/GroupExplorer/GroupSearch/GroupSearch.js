@@ -13,8 +13,10 @@ import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
-import { ALL_VIEW, FARM_VIEW, FARM_TYPES, PRODUCT_CATAGORIES, MANAGEMENT_PLANS, FARM_CERTIFICATIONS } from 'util/constants'
+import { FARM_VIEW, FARM_TYPES, PRODUCT_CATAGORIES, MANAGEMENT_PLANS, FARM_CERTIFICATIONS } from 'util/constants'
 import './GroupSearch.scss'
+
+const baseList = [{ value: '', label: 'All' }]
 
 export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
@@ -25,9 +27,9 @@ export default function GroupSearch ({ viewFilter }) {
   const [offset, setOffset] = useState(0)
   const [filterToggle, setFilterToggle] = useState(false)
   const [groupType, setGroupType] = useState(null)
-  const [farmType, setFarmType] = useState(null)
-  const [certOrManagementPlan, setCertOrManagementPlan] = useState(null)
-  const [productCategories, setProductCategories] = useState(null)
+  const [farmType, setFarmType] = useState('')
+  const [certOrManagementPlan, setCertOrManagementPlan] = useState('')
+  const [productCategories, setProductCategories] = useState('')
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
@@ -56,13 +58,19 @@ export default function GroupSearch ({ viewFilter }) {
 
   return <React.Fragment>
     <div styleName='group-search-view-ctrls'>
-      {viewFilter !== ALL_VIEW ? <div onClick={() => setFilterToggle(!filterToggle)}>filters</div> : <div id='div-left-intentionally-blank' />}
+      {viewFilter === FARM_VIEW
+        ? <div styleName='filter-container' onClick={() => setFilterToggle(!filterToggle)}>
+          <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
+          <b styleName={cx({ 'filter-open': filterToggle })}>Filters</b>
+          {filterToggle && <Icon name='Ex' styleName='remove-button' />}
+        </div>
+        : <div id='div-left-intentionally-blank' />}
       { makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ') }
     </div>
     {filterToggle && <div styleName='filter-list'>
-      { makeDropdown(farmType, convertListValueKeyToId(FARM_TYPES), setFarmType, 'Farm Type: ', true) }
-      { makeDropdown(productCategories, convertListValueKeyToId(PRODUCT_CATAGORIES), setProductCategories, 'Operation: ', true) }
-      { makeDropdown(certOrManagementPlan, convertListValueKeyToId(MANAGEMENT_PLANS.concat(FARM_CERTIFICATIONS)), setCertOrManagementPlan, 'Management Techniques: ', true) }
+      { makeDropdown(farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), setFarmType, 'Farm Type: ', true) }
+      { makeDropdown(productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATAGORIES)), setProductCategories, 'Operation: ', true) }
+      { makeDropdown(certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), setCertOrManagementPlan, 'Management Techniques: ', true) }
     </div>}
     <div styleName='search-input'>
       <div className='spacer' />
