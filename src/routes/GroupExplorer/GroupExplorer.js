@@ -1,7 +1,6 @@
 import React from 'react'
 import ExplorerBanner from './ExplorerBanner'
 import GroupSearch from './GroupSearch'
-import './GroupExplorer.scss'
 
 /*
   - Take/modify the ExplorerBanner, might need asset from Aaron DONE
@@ -10,14 +9,11 @@ import './GroupExplorer.scss'
   - how can this be smoothly extended to consider other group types?
 */
 
-export default function GroupExplorer ({
-  currentUser,
-  currentUserHasMemberships
-}) {
+export default function GroupExplorer () {
   return (
-    <React.Fragment>
+    <>
       <ExplorerBanner />
       <GroupSearch />
-    </React.Fragment>
+    </>
   )
 }

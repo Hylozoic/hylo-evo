@@ -1,7 +1,6 @@
 /*
 This file is copied from Hylo-Redux. All we're currently using is keyMap and getKeyCode.
 */
-import { hashtagCharacterRegex } from 'hylo-utils/hashtag'
 import { curry, has } from 'lodash'
 
 export const keyMap = {
@@ -26,9 +25,6 @@ export const isKey = (event, keyName) =>
 export const getKeyCode = event => event.which || event.keyCode
 
 export const getCharacter = event => String.fromCharCode(getKeyCode(event))
-
-export const sanitizeTagInput = event =>
-  getCharacter(event).match(hashtagCharacterRegex) || event.preventDefault()
 
 // use like: <input type='text' onKeyDown={onKeyCode(keyMap.ENTER, callback)} />
 const onKeyCode = curry((modifier, keyCode, callback, event) =>

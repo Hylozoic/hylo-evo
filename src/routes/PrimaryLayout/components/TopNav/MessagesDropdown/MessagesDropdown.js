@@ -5,7 +5,7 @@ import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import { toRefArray, itemsToArray } from 'util/reduxOrmMigration'
-import { humanDate, textLength, truncate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import { newMessageUrl, messageThreadUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
@@ -114,7 +114,9 @@ MessagesDropdown.propTypes = {
   threads: PropTypes.array
 }
 
-export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessageLength = 145 }) {
+const MAX_MESSAGE_LENGTH = 145
+
+export function MessagesDropdownItem ({ thread, onClick, currentUser }) {
   if (!thread) return null
 
   const messages = toRefArray(itemsToArray(thread.messages))
@@ -124,12 +126,9 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessage
 
   const participants = toRefArray(thread.participants)
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
+  let displayText = lastMessageCreator(message, currentUser, participants) + message.text
 
-  var displayText = lastMessageCreator(message, currentUser, participants) + message.text
-
-  if (textLength(displayText) > maxMessageLength) {
-    displayText = `${truncate(displayText, maxMessageLength)}...`
-  }
+  displayText = TextHelpers.presentHTMLToText(displayText, { truncate: MAX_MESSAGE_LENGTH })
 
   return <li styleName={cx('thread', { unread: isUnread(thread) })}
     onClick={onClick}>
@@ -139,7 +138,7 @@ export function MessagesDropdownItem ({ thread, onClick, currentUser, maxMessage
     <div styleName='message-content'>
       <div styleName='name'>{names}</div>
       <div styleName='body'>{displayText}</div>
-      <div styleName='date'>{humanDate(thread.updatedAt)}</div>
+      <div styleName='date'>{TextHelpers.humanDate(thread.updatedAt)}</div>
     </div>
   </li>
 }

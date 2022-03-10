@@ -35,7 +35,7 @@ export default function CreateModal (props) {
   const closeModal = () => dispatch(push(closeUrl))
 
   const confirmClose = () => {
-    const confirmed = !isDirty || window.confirm('Are you sure you want to exit? Changes won\'t be saved')
+    const confirmed = !isDirty || window.confirm('Changes won\'t be saved. Are you sure you want to cancel?')
     if (confirmed) {
       closeModal()
     }
@@ -53,37 +53,42 @@ export default function CreateModal (props) {
           <span styleName='close-button' onClick={confirmClose}>
             <Icon name='Ex' />
           </span>
-          { postId && action === 'edit'
-            ? <PostEditor
-              {...props}
-              onClose={closeModal}
-              setIsDirty={setIsDirty}
-            />
-            : <Switch>
-              <Route
-                path={match.path + '/post'}
-                children={({ match, location }) => (
-                  <PostEditor
-                    {...props}
-                    onClose={closeModal}
-                    setIsDirty={setIsDirty}
-                  />
-                )}
+          {postId && action === 'edit'
+            ? (
+              <PostEditor
+                {...props}
+                onClose={closeModal}
+                onCancel={confirmClose}
+                setIsDirty={setIsDirty}
               />
-              <Route
-                path={match.path + `/group`}
-                children={({ match, location }) => (
-                  <CreateGroup
-                    match={match}
-                    location={location}
-                    onClose={closeModal}
-                  />
-                )}
-              />
-              <Route>
-                <CreateModalChooser match={match} location={location} />
-              </Route>
-            </Switch>
+            ) : (
+              <Switch>
+                <Route
+                  path={match.path + '/post'}
+                  children={({ match, location }) => (
+                    <PostEditor
+                      {...props}
+                      onClose={closeModal}
+                      onCancel={confirmClose}
+                      setIsDirty={setIsDirty}
+                    />
+                  )}
+                />
+                <Route
+                  path={match.path + `/group`}
+                  children={({ match, location }) => (
+                    <CreateGroup
+                      match={match}
+                      location={location}
+                      onClose={closeModal}
+                    />
+                  )}
+                />
+                <Route>
+                  <CreateModalChooser match={match} location={location} />
+                </Route>
+              </Switch>
+            )
           }
         </div>
         <div styleName='create-modal-bg' onClick={confirmClose} />

@@ -100,40 +100,43 @@ export default class FeedList extends React.Component {
     const showSortAndFilters = !isProject && !isEvent
 
     return <div styleName='FeedList-container' ref={targetRef}>
-      <ScrollListener
-        elementId={CENTER_COLUMN_ID}
-        onScroll={this.handleScrollEvents} />
-      {showSortAndFilters && <React.Fragment>
-        <div>
-          <TabBar
-            ref={this.tabBar}
-            onChangeTab={changeTab}
-            selectedTab={postTypeFilter}
-            onChangeSort={changeSort}
-            selectedSort={sortBy} />
-        </div>
-        {atTabBar && <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
-          <TabBar onChangeTab={changeTab}
-            selectedTab={postTypeFilter}
-            onChangeSort={changeSort}
-            selectedSort={sortBy} />
-        </div>}
-      </React.Fragment>}
+      <ScrollListener elementId={CENTER_COLUMN_ID} onScroll={this.handleScrollEvents} />
+      {showSortAndFilters && (
+        <React.Fragment>
+          <div>
+            <TabBar
+              ref={this.tabBar}
+              onChangeTab={changeTab}
+              selectedTab={postTypeFilter}
+              onChangeSort={changeSort}
+              selectedSort={sortBy} />
+          </div>
+          {atTabBar && (
+            <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
+              <TabBar onChangeTab={changeTab}
+                selectedTab={postTypeFilter}
+                onChangeSort={changeSort}
+                selectedSort={sortBy} />
+            </div>
+          )}
+        </React.Fragment>
+      )}
       <div styleName={cx('FeedListItems', { collapsedState })}>
         {!pending && posts.length === 0 ? <NoPosts message='Nothing to see here' /> : ''}
 
         {posts.map(post => {
           const expanded = post.id === routeParams.postId
-          return <PostCard
-            routeParams={routeParams}
-            post={post}
-            styleName={cx('FeedListItem', { expanded })}
-            expanded={expanded}
-            key={post.id} />
+          return (
+            <PostCard
+              routeParams={routeParams}
+              post={post}
+              styleName={cx('FeedListItem', { expanded })}
+              expanded={expanded}
+              key={post.id} />
+          )
         })}
       </div>
-      <ScrollListener onBottom={this.fetchMorePosts}
-        elementId={CENTER_COLUMN_ID} />
+      <ScrollListener onBottom={this.fetchMorePosts} elementId={CENTER_COLUMN_ID} />
       {pending && <Loading />}
     </div>
   }

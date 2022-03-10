@@ -4,7 +4,7 @@ import cx from 'classnames'
 import Moment from 'moment'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
-import { humanDate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
@@ -75,7 +75,7 @@ const PostListRow = (props) => {
             </div> }
           </div>
           <div styleName='timestamp'>
-            {humanDate(createdAt)}
+            {TextHelpers.humanDate(createdAt)}
           </div>
         </div>
         {!isEmpty(topics) && (

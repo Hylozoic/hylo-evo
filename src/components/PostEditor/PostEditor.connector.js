@@ -144,15 +144,12 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const pollingFetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)
-  const createPost = postParams =>
-    dispatchProps.createPost({ ...postParams })
   const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ groupSlug })
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    createPost,
     fetchDefaultTopics,
     goToPost,
     pollingFetchLinkPreview

@@ -478,6 +478,7 @@ exports[`Comment renders correctly when editing 1`] = `
     <Connect(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="editor"
+      onEscape={[Function]}
       parentComponent="CommentForm"
       submitOnReturnHandler={[Function]}
     />

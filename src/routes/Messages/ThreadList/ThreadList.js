@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get, isEmpty, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
-import { humanDate } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import Badge from 'components/Badge'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
@@ -92,19 +92,12 @@ ThreadList.propTypes = {
   threadsPending: PropTypes.bool
 }
 
+export const MAX_THREAD_PREVIEW_LENGTH = 70
+
 export function ThreadListItem ({
   currentUser, active, id, thread, latestMessage, unreadCount, isUnread
 }) {
-  const maxTextLength = 54
-  let text = ''
-
-  if (latestMessage && latestMessage.text) {
-    text = latestMessage.text.substring(0, maxTextLength)
-    if (latestMessage.text.length > maxTextLength) {
-      text += '...'
-    }
-  }
-
+  const latestMessagePreview = TextHelpers.presentHTMLToText(latestMessage?.text, { truncate: MAX_THREAD_PREVIEW_LENGTH })
   const { names, avatarUrls } = participantAttributes(thread, currentUser, 2)
 
   return <li styleName={cx({ 'list-item': true, 'unread-list-item': isUnread, 'active': active })}>
@@ -113,10 +106,10 @@ export function ThreadListItem ({
       <ThreadAvatars avatarUrls={avatarUrls} />
       <div styleName='li-center-content'>
         <ThreadNames names={names} />
-        <div styleName='thread-message-text'>{text}</div>
+        <div styleName='thread-message-text'>{latestMessagePreview}</div>
       </div>
       <div styleName='li-right-content'>
-        <div styleName='message-time'>{humanDate(get('createdAt', latestMessage))}</div>
+        <div styleName='message-time'>{TextHelpers.humanDate(get('createdAt', latestMessage))}</div>
         {unreadCount > 0 && <Badge number={unreadCount} expanded />}
       </div>
     </Link>

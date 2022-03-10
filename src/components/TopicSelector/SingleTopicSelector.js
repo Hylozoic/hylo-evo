@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AsyncCreatableSelect from 'react-select/async-creatable'
 import styles from './TopicSelector.scss'
 import { isEmpty, sortBy } from 'lodash/fp'
-import { validateTopicName } from 'hylo-utils/validators'
+import { Validators } from 'hylo-shared'
 import Icon from 'components/Icon'
 import connector from './TopicSelector.connector'
 
@@ -57,7 +57,7 @@ class SingleTopicSelector extends Component {
   }
 
   handleSelectTopic = (newTopic, action) => {
-    const topic = validateTopicName(newTopic) ? newTopic : ''
+    const topic = Validators.validateTopicName(newTopic) ? newTopic : ''
 
     if (this.props.onSelectTopic) {
       this.props.onSelectTopic(topic)

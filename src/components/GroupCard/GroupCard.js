@@ -20,25 +20,49 @@ import { capitalize } from 'lodash'
 
 */
 
-export default function GroupCard ({ memberships, group = {}, routeParams = {}, highlightProps = {}, className, expanded = false, constrained = false, onClick = () => {} }) {
+export default function GroupCard ({
+  memberships,
+  group = {},
+  routeParams = {},
+  highlightProps = {},
+  className,
+  expanded = false,
+  constrained = false,
+  onClick = () => {}
+}) {
   const topics = group.groupTopics && group.groupTopics.toModelArray()
-  return <Link to={memberships.includes(group.id) ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
-    <div
-      onClick={onClick}
-      styleName={cx('card', { expanded }, { constrained })}
-      className={className}>
-      <GroupHeader
-        {...group}
-        group={group}
-        routeParams={routeParams}
-        highlightProps={highlightProps}
-        constrained={constrained} />
-      <div styleName='group-description'>
-        {group.description}
+  const linkTo = memberships.includes(group.id)
+    ? groupUrl(group.slug)
+    : groupDetailUrl(group.slug, routeParams)
+
+  return (
+    <Link to={linkTo} styleName='group-link'>
+      <div
+        onClick={onClick}
+        styleName={cx('card', { expanded }, { constrained })}
+        className={className}>
+        <GroupHeader
+          {...group}
+          group={group}
+          routeParams={routeParams}
+          highlightProps={highlightProps}
+          constrained={constrained}
+        />
+        <div styleName='group-description'>
+          {group.description}
+        </div>
+        <div styleName='group-tags'>
+          {topics.map((topic, index) => (
+            <Pill
+              styleName='tag-pill'
+              darkText
+              label={capitalize(topic.topic.name.toLowerCase())}
+              id={topic.id}
+              key={index}
+            />
+          ))}
+        </div>
       </div>
-      <div styleName='group-tags'>
-        {topics.map(topic => <Pill styleName='tag-pill' darkText label={capitalize(topic.topic.name.toLowerCase())} id={topic.id} key={topic.id} />)}
-      </div>
-    </div>
-  </Link>
+    </Link>
+  )
 }
