@@ -82,7 +82,7 @@ export default function GroupSearch ({ viewFilter }) {
             <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
             <b styleName={cx({ 'filter-open': filterToggle })}>Filters</b>
             {filterToggle && <Icon name='Ex' styleName='remove-button' />}
-          </div>
+            </div>
           : <div id='div-left-intentionally-blank' />}
         {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ')}
       </div>
