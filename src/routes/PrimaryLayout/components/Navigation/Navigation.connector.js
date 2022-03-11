@@ -5,7 +5,7 @@ import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelatio
 import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { baseUrl, isPublicPath } from 'util/navigation'
+import { baseUrl, createUrl, isPublicPath } from 'util/navigation'
 import { toggleGroupMenu } from 'routes/PrimaryLayout/PrimaryLayout.store'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
@@ -22,7 +22,7 @@ export function mapStateToProps (state, props) {
   const groupsPath = `${rootPath}/groups`
   const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
   const mapPath = `${rootPath}/map`
-  const createPath = `${props.location.pathname}/create/`
+  const createPath = createUrl(routeParams)
 
   let badge, groupMembership, hasRelatedGroups
 

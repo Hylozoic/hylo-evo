@@ -67,6 +67,11 @@ export function contextSwitchingUrl (newParams, routeParams) {
   return baseUrl(newRouteParams)
 }
 
+export function createUrl (opts = {}, querystringParams = {}) {
+  let url = baseUrl(opts) + '/create'
+  return addQuerystringToPath(url, querystringParams)
+}
+
 export function createGroupUrl (opts) {
   return baseUrl(opts) + '/create/group'
 }
