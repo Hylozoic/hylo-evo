@@ -68,12 +68,37 @@ export default class PostCard extends React.Component {
         routeParams={routeParams}
         highlightProps={highlightProps}
         editPost={editPost}
-        constrained={constrained} />
+        constrained={constrained}
+      />
       <CardImageAttachments attachments={post.attachments} />
-      {isEvent && <EventBody event={post} slug={routeParams.groupSlug} respondToEvent={respondToEvent} constrained={constrained} />}
-      {!isEvent && <PostBody {...post} slug={routeParams.groupSlug} constrained={constrained} />}
-      <PostGroups isPublic={post.isPublic} groups={post.groups} slug={routeParams.groupSlug} constrained={constrained} />
-      <PostFooter {...post} voteOnPost={voteOnPost} constrained={constrained} currentUser={currentUser} postId={post.id} />
+      {isEvent && (
+        <EventBody
+          event={post}
+          slug={routeParams.groupSlug}
+          respondToEvent={respondToEvent}
+          constrained={constrained}
+        />
+      )}
+      {!isEvent && (
+        <PostBody
+          {...post}
+          slug={routeParams.groupSlug}
+          constrained={constrained}
+        />
+      )}
+      <PostGroups
+        isPublic={post.isPublic}
+        groups={post.groups}
+        slug={routeParams.groupSlug}
+        constrained={constrained}
+      />
+      <PostFooter
+        {...post}
+        voteOnPost={voteOnPost}
+        constrained={constrained}
+        currentUser={currentUser}
+        postId={post.id}
+      />
     </div>
   }
 }

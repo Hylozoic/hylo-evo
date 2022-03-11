@@ -1,4 +1,4 @@
-import { markdown } from 'hylo-utils/text'
+import { TextHelpers } from 'hylo-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -17,7 +17,7 @@ export default class WelcomeWidget extends Component {
     return (
       <div styleName='welcome-widget'>
         <h2>{settings.title || `Welcome to ${group.name}!`}</h2>
-        <p dangerouslySetInnerHTML={{ __html: markdown(message) }} />
+        <p dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(message) }} />
       </div>
     )
   }

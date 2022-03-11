@@ -1,5 +1,5 @@
 import { VOTE_ON_POST } from 'store/constants'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 
 export default function voteOnPost (postId, isUpvote) {
   return {

@@ -1,1 +1,4 @@
-export * from './KeyControlledList'
+export {
+  default,
+  KeyControlledItemList
+} from './KeyControlledList'

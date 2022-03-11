@@ -8,7 +8,7 @@ import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
 import '../PostBody/PostBody.scss'
 import cx from 'classnames'
-import { formatDatePair } from 'util/index'
+import { TextHelpers } from 'hylo-shared'
 
 export default class EventBody extends Component {
   state = {
@@ -29,7 +29,7 @@ export default class EventBody extends Component {
       <div styleName={cx('eventBodyColumn', { constrained })}>
         <PostTitle {...event} constrained={constrained} />
         <div styleName={cx('eventData', { constrained })}>
-          <Icon name='Clock' styleName='icon' /> {formatDatePair(startTime, endTime)}
+          <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair(startTime, endTime)}
         </div>
         {!!location && <div styleName='eventData eventLocation'>
           <Icon name='Location' styleName='icon' /> {location}

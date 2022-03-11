@@ -21,6 +21,7 @@ import GroupSettings from 'routes/GroupSettings'
 import GroupSidebar from 'routes/GroupSidebar'
 import GroupWelcomeModal from 'routes/GroupWelcomeModal'
 import Groups from 'routes/Groups'
+import GroupExplorer from 'routes/GroupExplorer'
 import Drawer from './components/Drawer'
 import Events from 'routes/Events'
 import Feed from 'routes/Feed'
@@ -57,6 +58,7 @@ import './PrimaryLayout.scss'
 // In order of more specific to less specific
 const routesWithDrawer = [
   { path: `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}` },
+  { path: `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}` },
   { path: `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}` },
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
   { path: '/:context(all)/:view(topics)/:topicName' },
@@ -79,6 +81,7 @@ const routesWithDrawer = [
 const detailRoutes = [
   { path: `/:context(all|public)/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
+  { path: `/:context(public)/:view(groups)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
@@ -347,6 +350,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(all|public)/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
             <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
+            <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
             <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
