@@ -5,7 +5,7 @@ import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reduce
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
-export function fetchGroups ({ offset, order, search, slug, sortBy, nearCoord, pageSize = 20 }) {
+export function fetchGroups ({ nearCoord, offset, order, pageSize = 20, search, slug, sortBy, groupType, farmQuery }) {
   const query = groupQuery
   const extractModel = 'Group'
   const getItems = get('payload.data.groups')
@@ -16,11 +16,13 @@ export function fetchGroups ({ offset, order, search, slug, sortBy, nearCoord, p
       query,
       variables: {
         first: pageSize,
+        farmQuery,
         nearCoord,
         offset: offset,
         order,
         search,
-        sortBy
+        sortBy,
+        groupType
       }
     },
     meta: {
@@ -37,20 +39,24 @@ const groupQuery = `
 query (
   $boundingBox: [PointInput],
   $first: Int,
+  $farmQuery: JSON,
   $nearCoord: PointInput,
   $offset: Int,
   $order: String,
   $search: String,
-  $sortBy: String
+  $sortBy: String,
+  $groupType: String
 ) {
   groups( 
     boundingBox: $boundingBox,
     first: $first,
+    farmQuery: $farmQuery
     nearCoord: $nearCoord,
     offset: $offset,
     order: $order,
     search: $search,
-    sortBy: $sortBy
+    sortBy: $sortBy,
+    groupType: $groupType
   ) {
     hasMore
     total
@@ -71,6 +77,7 @@ query (
       avatarUrl
       bannerUrl
       name
+      type
       settings {
         allowGroupInvites
         askGroupToGroupJoinQuestions

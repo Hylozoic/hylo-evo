@@ -39,7 +39,6 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
-
   return {
     fetchPosts: (params) => () => dispatch(fetchPosts({ ...params }))
   }
