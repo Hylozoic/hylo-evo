@@ -9,7 +9,7 @@ import { FARM_VIEW } from 'util/constants'
 
 let providersWithStore = null
 
-export const handlers = [
+const handlers = [
   graphql.operation((req, res, ctx) => {
     const { search, groupType, farmQuery } = req.body.variables
     let items
