@@ -45,13 +45,13 @@ export default function GroupSearch ({ viewFilter }) {
     fetchMoreGroups,
     hasMore
   } = useEnsureSearchedGroups({
-    sortBy,
-    search: debouncedSearchTerm,
-    offset,
-    nearCoord,
-    visibility: [3],
+    farmQuery,
     groupType,
-    farmQuery
+    nearCoord,
+    offset,
+    search: debouncedSearchTerm,
+    sortBy,
+    visibility: [3]
   })
 
   useEffect(() => {
