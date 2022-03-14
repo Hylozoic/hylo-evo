@@ -22,9 +22,9 @@ export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
   const nearCoord = currentUser.locationObject
     ? {
-      lng: parseFloat(currentUser.locationObject.center.lng),
-      lat: parseFloat(currentUser.locationObject.center.lat)
-    }
+        lng: parseFloat(currentUser.locationObject.center.lng),
+        lat: parseFloat(currentUser.locationObject.center.lat)
+      }
     : null
   const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
@@ -32,26 +32,23 @@ export default function GroupSearch ({ viewFilter }) {
   const [offset, setOffset] = useState(0)
   const [filterToggle, setFilterToggle] = useState(false)
   const [groupType, setGroupType] = useState(null)
-  const [farmType, setFarmType] = useState('')
-  const [certOrManagementPlan, setCertOrManagementPlan] = useState('')
-  const [productCategories, setProductCategories] = useState('')
   const debouncedSearchTerm = useDebounce(search, 500)
   const { query } = useRouter()
   const selectedGroupSlug = query.groupSlug
-  const [farmQuery, setFarmQuery] = useState({ farmType, certOrManagementPlan, productCategories })
+  const [farmQuery, setFarmQuery] = useState({ farmType: '', certOrManagementPlan: '', productCategories: '' })
   const {
     groups = [],
     pending = false,
     fetchMoreGroups,
     hasMore
   } = useEnsureSearchedGroups({
-    sortBy,
-    search: debouncedSearchTerm,
-    offset,
-    nearCoord,
-    visibility: [3],
+    farmQuery,
     groupType,
-    farmQuery
+    nearCoord,
+    offset,
+    search: debouncedSearchTerm,
+    sortBy,
+    visibility: [3]
   })
 
   useEffect(() => {
@@ -67,10 +64,6 @@ export default function GroupSearch ({ viewFilter }) {
       setSortBy(SORT_NEAREST)
     }
   }, [viewFilter])
-
-  useEffect(() => {
-    setFarmQuery({ farmType, certOrManagementPlan, productCategories })
-  }, [farmType, certOrManagementPlan, productCategories])
 
   useEffect(() => viewFilter === FARM_VIEW ? setGroupType(FARM_VIEW) : setGroupType(null), [viewFilter])
 
@@ -88,9 +81,9 @@ export default function GroupSearch ({ viewFilter }) {
       </div>
       {filterToggle && viewFilter === FARM_VIEW &&
         <div styleName='filter-list'>
-          {makeDropdown(farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), setFarmType, 'Farm Type: ', true)}
-          {makeDropdown(productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATAGORIES)), setProductCategories, 'Operation: ', true)}
-          {makeDropdown(certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), setCertOrManagementPlan, 'Management Techniques: ', true)}
+          {makeDropdown(farmQuery.farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), (value) => setFarmQuery({ ...farmQuery, farmType: value }), 'Farm Type: ', true)}
+          {makeDropdown(farmQuery.productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATAGORIES)), (value) => setFarmQuery({ ...farmQuery, productCategories: value }), 'Operation: ', true)}
+          {makeDropdown(farmQuery.certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), 'Management Techniques: ', true)}
         </div>}
       <div styleName='search-input'>
         <div className='spacer' />
