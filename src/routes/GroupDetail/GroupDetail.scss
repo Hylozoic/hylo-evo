@@ -455,12 +455,12 @@
   text-align: center;
 }
 
-.skillPills div div span div {
+.skillPills div div div div {
   background-color: rgba(255, 255, 255, 1.00);
   transition: all .25s ease;
 }
 
-.skillPills div div span div.selectedSkill {
+.skillPills div div div div.selectedSkill {
   background-color: rgba(19, 113, 219, 1.00);
 
   span {
