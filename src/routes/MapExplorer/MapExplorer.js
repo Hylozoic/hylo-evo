@@ -62,7 +62,7 @@ export class UnwrappedMapExplorer extends React.Component {
       groupIconLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
-      canCreatePost: false,
+      creatingPost: false,
       coordinates: null,
       pointerX: 0,
       pointerY: 0,
@@ -265,7 +265,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   mapViewPortUpdate = (update) => {
-    this.setState({ viewport: update, canCreatePost: false })
+    this.setState({ viewport: update, creatingPost: false })
   }
 
   afterViewportUpdate = (update, mapRef) => {
@@ -347,9 +347,9 @@ export class UnwrappedMapExplorer extends React.Component {
 
   onMapMouseDown = (e) => {
     const oneSecondInMs = 1000
-    this.setState({ canCreatePost: true })
+    this.setState({ creatingPost: true })
     setTimeout(() => {
-      if (this.state.canCreatePost) {
+      if (this.state.creatingPost) {
         this.setState({ coordinates: { lng: e.lngLat[0], lat: e.lngLat[1] } })
         this.props.showCreateModal(this.state.coordinates)
       }
@@ -357,7 +357,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   onMapMouseUp = (e) => {
-    if (this.state.canCreatePost) this.setState({ canCreatePost: false })
+    if (this.state.creatingPost) this.setState({ creatingPost: false })
   }
 
   toggleFeatureType = (type, checked) => {

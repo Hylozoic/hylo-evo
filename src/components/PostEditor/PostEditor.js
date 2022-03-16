@@ -529,7 +529,7 @@ export default class PostEditor extends React.Component {
       isEvent,
       isProject,
       loading,
-      location: windowLocation,
+      mapLocation,
       myModeratedGroups,
       postTypes,
       setAnnouncement,
@@ -546,17 +546,10 @@ export default class PostEditor extends React.Component {
       'project'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
-    const params = windowLocation && windowLocation.search ? Object.fromEntries(new URLSearchParams(windowLocation.search)) : null
-    let lat, lng
-    if (params) {
-      lat = params.lat
-      lng = params.lng
-    }
     const curLocation =
       locationObject ||
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
-    if (lat && lng) curLocation.center = { lat: lat, lng: lng }
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
         <div styleName='header'>
@@ -702,7 +695,7 @@ export default class PostEditor extends React.Component {
               <LocationInput
                 saveLocationToDB
                 locationObject={curLocation}
-                location={location || `${lat}, ${lng}`}
+                location={location || mapLocation}
                 onChange={this.handleLocationChange}
                 placeholder={`Where is your ${type} located?`}
               />

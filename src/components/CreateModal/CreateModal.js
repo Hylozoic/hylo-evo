@@ -23,6 +23,8 @@ export default function CreateModal (props) {
 
   const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
+  const params = location && location.search ? Object.fromEntries(new URLSearchParams(location.search)) : null
+  const mapLocation = params && params.lat && params.lng ? `${params.lat}, ${params.lng}` : null
 
   if (!routeParams) return {}
 
@@ -65,6 +67,7 @@ export default function CreateModal (props) {
                 children={({ match, location }) => (
                   <PostEditor
                     {...props}
+                    mapLocation={mapLocation}
                     onClose={closeModal}
                     setIsDirty={setIsDirty}
                   />

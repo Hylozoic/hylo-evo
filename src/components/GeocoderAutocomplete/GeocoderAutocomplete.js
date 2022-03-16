@@ -41,7 +41,7 @@ class Geocoder extends Component {
         this.onInput(changeEvent(`${currentValue}0`))
         this.onInput(changeEvent(currentValue))
         setTimeout(() => {
-          console.warn('about to programatically press enter')
+          // programatically press enter
           this.onKeyDown(keyDownEvent(13))
         }, 500)
       }, 50)
