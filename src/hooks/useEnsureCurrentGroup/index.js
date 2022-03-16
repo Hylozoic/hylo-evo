@@ -15,10 +15,12 @@ const selectAndPresentGroup = createSelector(
 
 export default function useEnsureCurrentGroup () {
   const router = useRouter()
-  const groupSlug = router.query.groupSlug
+  const groupSlug = router.query.groupSlug || router.query.detailGroupSlug
+
   const group = useSelector(state => selectAndPresentGroup(state, router))
   const pending = useSelector(state => isPendingFor(FETCH_GROUP_DETAILS, state))
   const dispatch = useDispatch()
+
   useEffect(() => {
     if (!pending && (!group || !group.id)) {
       dispatch(fetchGroup(groupSlug))

@@ -2,6 +2,12 @@ export const STARTED_TYPING_INTERVAL = 3000
 export const ALL_VIEW = 'all'
 export const FARM_VIEW = 'farm'
 
+/*
+  Group types
+*/
+export const TYPE_NORMAL = ''
+export const TYPE_FARM = 'farm'
+
 export const ANIMAL_LIST = [
   { label: 'Dairy Cattle', value: 'dairy_cattle' },
   { label: 'Beef Cattle', value: 'beef_cattle' },

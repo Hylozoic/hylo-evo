@@ -24,6 +24,9 @@ import { getChildGroups } from 'store/selectors/getGroupRelationships'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
+import Loading from 'components/Loading'
+
+// This entire page might be redundant
 
 export default function GroupProfile (props) {
   const groupSlug = useSelector(state => getRouteParam('groupSlug', state, props))
@@ -35,13 +38,13 @@ export default function GroupProfile (props) {
   const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'group_profile')
   const memberships = useSelector(state => getMyMemberships(state, props))
   const joinRequests = useSelector(state => getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending))
-  const childGroups = useSelector(state => getChildGroups(state, { groupSlug }).map(g => {
+  const childGroups = useSelector(state => group && getChildGroups(state, { groupSlug }).map(g => {
     g.memberStatus = memberships.find(m => m.group.id === g.id) ? 'member' : joinRequests.find(jr => jr.group.id === g.id) ? 'requested' : 'not'
     return g
   }))
   // this.props.fetchPosts() TODO: write useEnsurePosts and integrate post selector into that
 
-  return <div styleName={'fullPage group'}>
+  return group ? <div styleName='fullPage group'>
     <div styleName='groupProfileHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
       <div styleName='groupTitleContainer'>
         <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='groupAvatar' />
@@ -82,4 +85,5 @@ export default function GroupProfile (props) {
       )}
     </div>
   </div>
+    : <Loading />
 }

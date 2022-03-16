@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import { topicsUrl, allGroupsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
-
+import { TYPE_FARM } from 'util/constants'
 import './Navigation.scss'
 
 export default function Navigation (props) {
@@ -54,19 +54,19 @@ export default function Navigation (props) {
       to: createPath
     },
     rootPath && {
-      label: group.type === 'farm' ? 'Home' : 'Stream',
-      icon: group.type === 'farm' ? 'Home' : 'Stream',
+      label: group.type === TYPE_FARM ? 'Home' : 'Stream',
+      icon: group.type === TYPE_FARM ? 'Home' : 'Stream',
       to: rootPath,
       badge: badge,
       onClick: homeOnClick,
       exact: true
     },
-    streamPath && group.type === 'farm' && {
+    streamPath && group.type === TYPE_FARM && {
       label: 'Stream',
       icon: 'Stream',
       to: streamPath
     },
-    explorePath && group.type !== 'farm' && {
+    explorePath && group.type !== TYPE_FARM && {
       label: 'Explore',
       icon: 'Binoculars',
       to: explorePath

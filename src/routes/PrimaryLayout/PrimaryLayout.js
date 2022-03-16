@@ -45,6 +45,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/WelcomeWizard/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
+import { TYPE_FARM } from 'util/constants'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
@@ -425,7 +426,7 @@ export default class PrimaryLayout extends Component {
 export function returnDefaultRouteForGroup (group) {
   if (!group) return Stream
   switch (group.type) {
-    case 'farm':
+    case TYPE_FARM:
       return LandingPage
     default:
       return Stream

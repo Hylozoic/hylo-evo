@@ -15,6 +15,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
     showSuggestedSkills
   }
   slug
+  type
   visibility
   childGroups {
     items {
