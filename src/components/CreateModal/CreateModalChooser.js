@@ -16,7 +16,7 @@ export default class CreateModalChooser extends Component {
     const hasLocation = params.includes('lat') && params.includes('lng')
 
     return <div styleName='chooser'>
-      <h1>${hasLocation ? 'New Post at this location: ' : ''}What would vou like to create?</h1>
+      <h1>{hasLocation ? 'New Post at this location: ' : ''}What would vou like to create?</h1>
       {postTypes.map(postType => {
         const postTypeUppercase = postType.charAt(0).toUpperCase() + postType.slice(1)
         const iconName = postType === 'request' ? 'Heart' : postTypeUppercase

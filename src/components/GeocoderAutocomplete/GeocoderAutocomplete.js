@@ -32,20 +32,7 @@ class Geocoder extends Component {
 
   componentDidMount () {
     if (this.props.focusOnMount) ReactDOM.findDOMNode(this.inputRef.current).focus()
-    if (this.props.selectOnMount) {
-      const keyDownEvent = (key) => ({ cancelable: true, which: key, keyCode: key, bubbles: true, preventDefault: () => {} })
-      const changeEvent = (value) => ({ cancelable: true, target: { value: value }, bubbles: true })
-      setTimeout(() => {
-        const currentValue = this.inputRef.current.value
-        ReactDOM.findDOMNode(this.inputRef.current).focus()
-        this.onInput(changeEvent(`${currentValue}0`))
-        this.onInput(changeEvent(currentValue))
-        setTimeout(() => {
-          // programatically press enter
-          this.onKeyDown(keyDownEvent(13))
-        }, 500)
-      }, 50)
-    }
+    if (this.props.defaultInputValue) this.onInput({ target: { value: this.props.defaultInputValue } })
   }
 
   componentDidUpdate (prevProps) {
@@ -79,7 +66,7 @@ class Geocoder extends Component {
       (types ? '&types=' + encodeURIComponent(types) : '')
     xhr(
       {
-        uri: uri,
+        uri,
         json: true
       },
       function (err, res, body) {

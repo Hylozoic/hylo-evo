@@ -42,6 +42,7 @@ export default class PostEditor extends React.Component {
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
+    selectedLocation: PropTypes.string,
     onClose: PropTypes.func,
     pollingFetchLinkPreview: PropTypes.func,
     post: PropTypes.shape(POST_PROP_TYPES),
@@ -510,8 +511,6 @@ export default class PostEditor extends React.Component {
       groups,
       id,
       linkPreview,
-      location,
-      locationObject,
       members,
       startTime,
       title,
@@ -529,14 +528,12 @@ export default class PostEditor extends React.Component {
       isEvent,
       isProject,
       loading,
-      mapLocation,
       myModeratedGroups,
       postTypes,
       setAnnouncement,
       showFiles,
       showImages
     } = this.props
-
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'event',
@@ -546,10 +543,14 @@ export default class PostEditor extends React.Component {
       'project'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
-    const curLocation =
-      locationObject ||
+    const location =
+      post.location ||
+      this.props.selectedLocation
+    const locationObject =
+      post.locationObject ||
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
+
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
         <div styleName='header'>
@@ -694,8 +695,8 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-label alignedLabel'>Location</div>
               <LocationInput
                 saveLocationToDB
-                locationObject={curLocation}
-                location={location || mapLocation}
+                locationObject={locationObject}
+                location={location}
                 onChange={this.handleLocationChange}
                 placeholder={`Where is your ${type} located?`}
               />
