@@ -1,4 +1,4 @@
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 import { BLOCK_USER } from '../constants'
 
 export default function blockUser (blockedUserId) {

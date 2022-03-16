@@ -22,7 +22,10 @@ export const mapDispatchToProps = (dispatch, props) => {
   const { postId, scrollToBottom } = props
   return {
     fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, { cursor })),
-    createComment: commentParams => dispatch(createComment({ postId, ...commentParams })).then(() => scrollToBottom())
+    createComment: async commentParams => {
+      await dispatch(createComment({ postId, ...commentParams }))
+      scrollToBottom()
+    }
   }
 }
 

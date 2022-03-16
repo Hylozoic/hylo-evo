@@ -1,47 +1,29 @@
-// import React from 'react'
-// import CreateModal from './CreateModal'
-// import { history } from 'router/index'
-// import orm from 'store/models'
-// import { graphql } from 'msw'
-// import { setupServer } from 'msw/node'
-// import { generateStore, render, AllTheProviders } from 'util/reactTestingLibraryExtended'
+import React from 'react'
+import { history } from 'router'
+import orm from 'store/models'
+import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
+import CreateModal from './CreateModal'
 
-// export const handlers = [
-//   graphql.operation((req, res, ctx) => {
-//     return res(ctx.data({
-//       topics: {
-//         hasMore: false,
-//         total: 0,
-//         items: []
-//       }
-//     })
-//     )
-//   })
-// ]
+let providersWithStore
 
-// let providersWithStore
-// let graphqlMockServer = setupServer(...handlers)
+beforeEach(() => {
+  const session = orm.mutableSession(orm.getEmptyState())
+  session.Me.create({ id: '1' })
+  const initialState = { orm: session.state }
+  const store = generateStore(history, initialState)
+  providersWithStore = AllTheProviders(store)
+})
 
-// beforeAll(() => {
-//   graphqlMockServer.listen()
-// })
+it('renders', () => {
+  const { getByText } = render(
+    <CreateModal match={{ params: {} }} location={{ pathname: '', search: '' }} />,
+    null,
+    providersWithStore
+  )
 
-// beforeEach(() => {
-//   const session = orm.mutableSession(orm.getEmptyState())
-//   session.Me.create({ id: '1' })
-//   const initialState = { orm: session.state }
-//   const store = generateStore(history, initialState)
-//   providersWithStore = AllTheProviders(store)
-// })
+  expect(getByText('Talk about what’s important with others')).toBeInTheDocument()
+})
 
-// it('does something', async () => {
-//   const { getByPlaceholderText } = render(<CreateModal match={{}} location={{ search: '' }} />, null, providersWithStore)
-//   expect(await getByPlaceholderText('Type group name...')).not.toBe(null)
-// })
-
-// afterEach(() => {
-//   graphqlMockServer.resetHandlers()
-//   providersWithStore = null
-// })
-
-it.skip('needs tests that rely upon React Testing Library', () => {})
+afterEach(() => {
+  providersWithStore = null
+})

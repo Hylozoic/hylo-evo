@@ -112,7 +112,7 @@ describe('CreateTopic', () => {
       expect(instance.createAndNotify).toHaveBeenCalled()
     })
 
-    // Most validation testing is done in hylo-utils, but this is a
+    // Most validation testing is done in hylo-shared, but this is a
     // case specifically handled in the component
     it('allows leading `#` characters', () => {
       instance.updateTopicName({ target: { value: '#flargle' } })

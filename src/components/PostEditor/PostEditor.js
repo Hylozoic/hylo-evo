@@ -5,10 +5,10 @@ import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
-import { TOPIC_ENTITY_TYPE } from 'hylo-utils/constants'
+import * as HyloContentState from 'components/HyloEditor/HyloContentState'
+import { TOPIC_ENTITY_TYPE } from 'hylo-shared'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
-import contentStateToHTML from 'components/HyloEditor/contentStateToHTML'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
 import RoundImage from 'components/RoundImage'
@@ -25,6 +25,7 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+
 export const MAX_TITLE_LENGTH = 50
 
 export default class PostEditor extends React.Component {
@@ -174,6 +175,7 @@ export default class PostEditor extends React.Component {
   handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
     const { changeQueryString, location } = this.props
+    this.setIsDirty(true)
     changeQueryString({
       pathname: location.pathname,
       search: `?newPostType=${type}`
@@ -317,11 +319,11 @@ export default class PostEditor extends React.Component {
       return
     }
     if (linkPreview) return
-    pollingFetchLinkPreview(contentStateToHTML(contentState))
+    pollingFetchLinkPreview(HyloContentState.toHTML(contentState))
   }
 
   updateTopics = throttle(2000, (contentState) => {
-    const html = contentStateToHTML(contentState)
+    const html = HyloContentState.toHTML(contentState)
     const $ = cheerio.load(html, null, false)
     var topicNames = []
     $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
@@ -397,6 +399,10 @@ export default class PostEditor extends React.Component {
   }
 
   setIsDirty = isDirty => this.props.setIsDirty && this.props.setIsDirty(isDirty)
+
+  handleCancel = () => {
+    this.props.onCancel && this.props.onCancel()
+  }
 
   save = async () => {
     const {
@@ -546,6 +552,8 @@ export default class PostEditor extends React.Component {
     const location =
       post.location ||
       this.props.selectedLocation
+    // Center location autocomplete either on post's current location,
+    // or current group's location, or current user's location
     const locationObject =
       post.locationObject ||
       get('0.locationObject', groups) ||
@@ -595,6 +603,7 @@ export default class PostEditor extends React.Component {
               styleName='editor'
               placeholder={detailPlaceholder}
               onChange={this.handleDetailsChange}
+              onEscape={this.handleCancel}
               contentHTML={details}
               readOnly={loading}
               parentComponent={'PostEditor'}

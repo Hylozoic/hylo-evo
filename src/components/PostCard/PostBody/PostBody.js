@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
-import './PostBody.scss'
 import cx from 'classnames'
+import './PostBody.scss'
 
 export default class PostBody extends PureComponent {
   static defaultProps = {
@@ -24,18 +24,21 @@ export default class PostBody extends PureComponent {
     } = this.props
 
     return <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
-      <PostTitle {...post}
+      <PostTitle
+        {...post}
         highlightProp={highlightProps}
         constrained={constrained}
       />
-      <PostDetails {...post}
+      <PostDetails
+        {...post}
         slug={slug}
         highlightProp={highlightProps}
         expanded={expanded}
         constrained={constrained}
         fulfillPost={fulfillPost}
         unfulfillPost={unfulfillPost}
-        canEdit={canEdit} />
+        canEdit={canEdit}
+      />
     </div>
   }
 }
