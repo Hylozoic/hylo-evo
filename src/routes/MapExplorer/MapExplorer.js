@@ -62,8 +62,6 @@ export class UnwrappedMapExplorer extends React.Component {
       groupIconLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
-      creatingPost: false,
-      coordinates: null,
       pointerX: 0,
       pointerY: 0,
       // Need this in the state so we can filter them by currentBoundingBox
@@ -265,7 +263,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   mapViewPortUpdate = (update) => {
-    this.setState({ viewport: update, creatingPost: false })
+    this.setState({ viewport: update })
   }
 
   afterViewportUpdate = (update, mapRef) => {
@@ -343,21 +341,6 @@ export class UnwrappedMapExplorer extends React.Component {
         this.props.showDetails(info.object.id)
       }
     }
-  }
-
-  onMapMouseDown = (e) => {
-    const oneSecondInMs = 1000
-    this.setState({ creatingPost: true })
-    setTimeout(() => {
-      if (this.state.creatingPost) {
-        this.setState({ coordinates: { lng: e.lngLat[0], lat: e.lngLat[1] } })
-        this.props.showCreateModal(this.state.coordinates)
-      }
-    }, oneSecondInMs)
-  }
-
-  onMapMouseUp = (e) => {
-    if (this.state.creatingPost) this.setState({ creatingPost: false })
   }
 
   toggleFeatureType = (type, checked) => {
@@ -472,8 +455,6 @@ export class UnwrappedMapExplorer extends React.Component {
           onViewportUpdate={this.mapViewPortUpdate}
           children={this._renderTooltip()}
           viewport={viewport}
-          onMouseDown={this.onMapMouseDown}
-          onMouseUp={this.onMapMouseUp}
         />
         {pendingPostsMap && <Loading className={styles.loading} />}
       </div>

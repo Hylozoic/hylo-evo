@@ -20,11 +20,9 @@ export default function CreateModal (props) {
 
   const dispatch = useDispatch()
   const [isDirty, setIsDirty] = useState()
+
   const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
-  const mapLocationParams = getQuerystringParam(['lat', 'lng'], null, props)
-  const mapLocation = (mapLocationParams.lat & mapLocationParams.lng) &&
-    `${mapLocationParams.lat}, ${mapLocationParams.lng}`
 
   if (!routeParams) return {}
 
@@ -70,7 +68,6 @@ export default function CreateModal (props) {
                   children={({ match, location }) => (
                     <PostEditor
                       {...props}
-                      selectedLocation={mapLocation}
                       onClose={closeModal}
                       onCancel={confirmClose}
                       setIsDirty={setIsDirty}

@@ -31,7 +31,6 @@ export default class LocationInput extends Component {
     this.state = {
       browserLocation: null
     }
-    this.geocoderRef = React.createRef()
   }
 
   componentDidMount () {
@@ -73,11 +72,9 @@ export default class LocationInput extends Component {
           resultClass={styles.result}
           resultsClass={styles.suggestions}
           resultFocusClass={styles.selectedResult}
-          selectOnMount
           showLoader
           inputPosition='top'
           proximity={centerAt ? centerAt.lng + ',' + centerAt.lat : ''}
-          ref={this.geocoderRef}
           bbox=''
           types=''
         />

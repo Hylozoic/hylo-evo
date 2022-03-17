@@ -5,7 +5,7 @@ import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
 
 function Map (props) {
-  let { children, layers, afterViewportUpdate, onViewportUpdate, viewport, onMouseDown, onMouseUp } = props
+  let { children, layers, afterViewportUpdate, onViewportUpdate, viewport } = props
 
   const [isHovering, setIsHovering] = useState(false)
 
@@ -42,8 +42,6 @@ function Map (props) {
           })
         }
       }}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
       mapboxApiAccessToken={mapbox.token}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
     >

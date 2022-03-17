@@ -340,11 +340,11 @@ export default function ormReducer (state = {}, action) {
       try {
         person = Person.withId(Me.first().id)
         person.skills.remove(meta.skillId)
-      } catch (e) {}
+      } catch(e) {}
       try {
         me = Me.first()
         me.skills.remove(meta.skillId)
-      } catch (e) {}
+      } catch(e) {}
       break
 
     case REMOVE_SKILL_TO_LEARN_PENDING:
