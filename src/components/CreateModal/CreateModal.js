@@ -17,16 +17,15 @@ import './CreateModal.scss'
 export default function CreateModal (props) {
   const { location, match } = props
   if (!match) return null
+  const routeParams = get('match.params', props)
+  if (!routeParams) return null
 
   const dispatch = useDispatch()
   const [isDirty, setIsDirty] = useState()
-  const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
   const mapLocationParams = getQuerystringParam(['lat', 'lng'], null, props)
-  const mapLocation = (mapLocationParams.lat & mapLocationParams.lng) &&
+  const mapLocation = (mapLocationParams.lat && mapLocationParams.lng) &&
     `${mapLocationParams.lat}, ${mapLocationParams.lng}`
-
-  if (!routeParams) return {}
 
   const { action, postId } = routeParams
   const urlParams = omit(['postId', 'action'], routeParams)
