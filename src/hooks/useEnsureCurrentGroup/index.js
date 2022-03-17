@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import fetchGroup from 'store/actions/fetchGroupDetails'
+import fetchGroupDetails from 'store/actions/fetchGroupDetails'
 import { useSelector, useDispatch } from 'react-redux'
 import presentGroup from 'store/presenters/presentGroup'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -23,7 +23,7 @@ export default function useEnsureCurrentGroup () {
 
   useEffect(() => {
     if (!pending && (!group || !group.id)) {
-      dispatch(fetchGroup(groupSlug))
+      dispatch(fetchGroupDetails({ slug: groupSlug, withWidgets: true }))
     }
   }, [dispatch, groupSlug])
 

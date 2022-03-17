@@ -80,7 +80,8 @@ export default class GroupDetail extends Component {
       location,
       moderators,
       onClose,
-      pending
+      pending,
+      routeParams
     } = this.props
 
     if (!group && !pending) return <NotFound />
@@ -121,8 +122,7 @@ export default class GroupDetail extends Component {
       {/* The groupDetailBody can be massively  */}
       <div styleName='g.groupDetailBody'>
         {group.type === TYPE_NORMAL && this.normalGroupBody()}
-        {console.log(group.type, TYPE_FARM)}
-        {group.type === TYPE_FARM && <FarmGroupDetailBody group={group} currentUser={currentUser} />}
+        {group.type === TYPE_FARM && <FarmGroupDetailBody group={group} currentUser={currentUser} routeParams={routeParams} />}
         {/* For farms, we want the below to display but it will only display if this `isAboutCurrentGroup`, which doesn't happen very much. So */}
         { isAboutCurrentGroup || group.type === TYPE_FARM
           ? <div styleName='g.aboutCurrentGroup'>

@@ -58,7 +58,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     addSkill: (name) => dispatch(addSkill(name)),
     removeSkill: (skillId) => dispatch(removeSkill(skillId)),
-    fetchGroup: () => dispatch(fetchGroupDetails(slug)),
+    fetchGroup: () => dispatch(fetchGroupDetails({ slug, withWidgets: true })),
     fetchJoinRequests: () => dispatch(fetchJoinRequests()),
     onClose: getRouteParam('detailGroupSlug', {}, props) ? () => dispatch(push(closeLocation)) : false,
     joinGroup: (groupId) => dispatch(joinGroup(groupId)),

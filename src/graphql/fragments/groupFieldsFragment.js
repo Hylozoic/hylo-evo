@@ -1,4 +1,4 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites, withExtensions }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites, withExtensions, withWidgets = false }) => `
   id
   accessibility
   avatarUrl
@@ -123,6 +123,16 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       data
       type
       active
+    }
+  }` : ''}
+  ${withWidgets ? `
+  widgets {
+    items {
+      id
+      name
+      context
+      order
+      isVisible
     }
   }` : ''}
 `
