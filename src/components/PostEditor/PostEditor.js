@@ -43,6 +43,7 @@ export default class PostEditor extends React.Component {
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
+    selectedLocation: PropTypes.string,
     onClose: PropTypes.func,
     pollingFetchLinkPreview: PropTypes.func,
     post: PropTypes.shape(POST_PROP_TYPES),
@@ -84,13 +85,13 @@ export default class PostEditor extends React.Component {
   }
 
   buildStateFromProps = ({
-    context,
-    editing,
-    currentGroup,
-    post,
-    topic,
     announcementSelected,
-    postType
+    context,
+    currentGroup,
+    editing,
+    post,
+    postType,
+    topic
   }) => {
     const defaultPostWithGroupsAndTopic = Object.assign(
       {},
@@ -498,50 +499,47 @@ export default class PostEditor extends React.Component {
 
   render () {
     const {
-      titlePlaceholder,
-      detailPlaceholder,
-      titleLengthError,
       dateError,
-      valid,
-      post,
+      detailPlaceholder,
       detailsTopics = [],
+      post,
       showAnnouncementModal,
-      showPostTypeMenu
+      showPostTypeMenu,
+      titleLengthError,
+      titlePlaceholder,
+      valid
     } = this.state
     const {
-      id,
-      type,
-      title,
-      details,
-      groups,
-      linkPreview,
-      topics,
-      members,
       acceptContributions,
-      eventInvitations,
-      startTime,
+      details,
       endTime,
-      location,
-      locationObject
+      eventInvitations,
+      groups,
+      id,
+      linkPreview,
+      members,
+      startTime,
+      title,
+      topics,
+      type
     } = post
     const {
-      currentGroup,
-      currentUser,
-      groupOptions,
-      defaultTopics,
-      loading,
-      setAnnouncement,
+      addAttachment,
       announcementSelected,
       canModerate,
-      myModeratedGroups,
-      isProject,
+      currentGroup,
+      currentUser,
+      defaultTopics,
+      groupOptions,
       isEvent,
+      isProject,
+      loading,
+      myModeratedGroups,
+      postTypes,
+      setAnnouncement,
       showFiles,
-      showImages,
-      addAttachment,
-      postTypes
+      showImages
     } = this.props
-
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'event',
@@ -551,10 +549,13 @@ export default class PostEditor extends React.Component {
       'project'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
+    const location =
+      post.location ||
+      this.props.selectedLocation
     // Center location autocomplete either on post's current location,
     // or current group's location, or current user's location
-    const curLocation =
-      locationObject ||
+    const locationObject =
+      post.locationObject ||
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
 
@@ -703,7 +704,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-label alignedLabel'>Location</div>
               <LocationInput
                 saveLocationToDB
-                locationObject={curLocation}
+                locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
                 placeholder={`Where is your ${type} located?`}

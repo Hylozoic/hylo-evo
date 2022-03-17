@@ -8,7 +8,7 @@ import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
-import { personUrl, postUrl, groupDetailUrl } from 'util/navigation'
+import { personUrl, postUrl, groupDetailUrl, createUrl } from 'util/navigation'
 import { generateViewParams } from 'util/savedSearch'
 
 import {
@@ -198,6 +198,7 @@ export function mapDispatchToProps (dispatch, props) {
     saveSearch: (params) => dispatch(saveSearch(params)),
     showDetails: (postId) => dispatch(push(postUrl(postId, { ...routeParams, view: 'map' }, getQuerystringParam(['hideDrawer', 't', 'group'], null, props)))),
     showGroupDetails: (groupSlug) => dispatch(push(groupDetailUrl(groupSlug, { ...routeParams, view: 'map' }, getQuerystringParam(['hideDrawer', 't', 'group'], null, props)))),
+    showCreateModal: (location) => dispatch(push(createUrl(routeParams, location))),
     gotoMember: (memberId) => dispatch(push(personUrl(memberId, routeParams.groupSlug))),
     toggleDrawer: (hidden) => dispatch(changeQuerystringParam(props, 'hideDrawer', hidden)),
     storeClientFilterParams: params => {
