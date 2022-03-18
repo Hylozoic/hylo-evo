@@ -29,7 +29,7 @@ export function mapStateToProps (state, props) {
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
   const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
   const canModerate = getCanModerate(state, { group })
-  const moderators = group && isAboutCurrentGroup ? group.moderators : []
+  const moderators = group && group.moderators
   return {
     canModerate,
     currentUser,
