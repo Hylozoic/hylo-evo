@@ -36,6 +36,10 @@ import {
 import {
   RECEIVE_THREAD
 } from 'components/SocketListener/SocketListener.store'
+import {
+  FETCH_POSTS_MAP,
+  FETCH_POSTS_MAP_DRAWER
+} from 'routes/MapExplorer/MapExplorer.store'
 
 // reducer
 
@@ -132,10 +136,13 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   return reduce((memo, group) => {
     queriesToMatch.push(
       { context: 'groups', slug: group.slug },
+      { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
       { context: 'groups', slug: group.slug, filter: type },
       { context: 'groups', slug: group.slug, sortBy: 'updated' },
+      { context: 'groups', slug: group.slug, sortBy: 'updated', search: "", groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type },
       { context: 'groups', slug: group.slug, sortBy: 'created' },
+      { context: 'groups', slug: group.slug, sortBy: 'created', search: "", groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type },
       // For events stream
       { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
@@ -146,7 +153,10 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
         { context: 'groups', slug: group.slug, topic: topic.id }
       )
     }
+
     return reduce((innerMemo, params) => {
+      innerMemo = prependIdForCreate(innerMemo, FETCH_POSTS_MAP, params, id)
+      innerMemo = prependIdForCreate(innerMemo, FETCH_POSTS_MAP_DRAWER, params, id)
       return prependIdForCreate(innerMemo, FETCH_POSTS, params, id)
     }, memo, queriesToMatch)
   }, state, groups)
