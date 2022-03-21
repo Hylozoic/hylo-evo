@@ -11,7 +11,7 @@ import {
 
 export default function isPendingFor (pendingActionsOrKeys = [], state) {
   const { pending } = state
-  
+
   const pendingKeys = castArray(pendingActionsOrKeys).map(pendingActionOrKey =>
     isFunction(pendingActionOrKey)
       ? get('type', pendingActionOrKey())

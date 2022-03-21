@@ -1,13 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
 import Widget from 'components/Widget'
 import './FarmGroupDetailBody.scss'
-
-/*
-  - Determine what widgets are needed
-  - Do we run the "Widgets" container component or just insert widgets individually
-  - 
-*/
 
 export default function FarmGroupDetailBody ({
   currentUser,
@@ -29,12 +23,12 @@ export default function FarmGroupDetailBody ({
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}
-            // childGroups={childGroups}
+            // childGroups={childGroups} // needs to be verified once other widgets are sorted
             key={widget.id}
             group={group}
             isModerator={false}
-            // posts={posts}
-            routeParams={routeParams} // TODO: replace this with useRouter
+            // posts={posts} // needs to be verified once other widgets are sorted
+            routeParams={routeParams} // TODO: replace this with useRouter?
           />
         )}
 
