@@ -54,6 +54,7 @@ import {
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
+import RedirectRoute from 'router/RedirectRoute'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
@@ -158,7 +159,7 @@ export default class PrimaryLayout extends Component {
   componentDidMount () {
     this.props.fetchForCurrentUser()
     if (this.props.slug) {
-      this.props.fetchForGroup()
+      this.props.fetchForGroup(this.props.slug)
     }
   }
 
@@ -239,6 +240,8 @@ export default class PrimaryLayout extends Component {
       isGroupMenuOpen,
       isGroupRoute,
       location,
+      redirectToURL,
+      resetReturnToURL,
       routeParams,
       showMenuBadge,
       signupInProgress,
@@ -255,6 +258,13 @@ export default class PrimaryLayout extends Component {
         </div>
       )
     }
+
+    // if (!signupInProgress && redirectToURL) {
+    //   resetReturnToURL()
+    //   return (
+    //     <RedirectRoute to={redirectToURL} />
+    //   )
+    // }
 
     if (isGroupRoute) {
       if (!group && !groupPending) return <NotFound />

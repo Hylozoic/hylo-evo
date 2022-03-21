@@ -1,7 +1,15 @@
 import { get } from 'lodash/fp'
 import qs from 'querystring'
+import { LOGIN } from 'store/constants'
 
-export default function authWithService (service) {
+export default function loginWithService (name) {
+  return {
+    type: LOGIN,
+    payload: authWithService(name)
+  }
+}
+
+export function authWithService (service) {
   return new Promise((resolve, reject) => {
     try {
       const popup = openPopup(service)
@@ -29,13 +37,13 @@ export default function authWithService (service) {
 const authContext = 'login'
 
 // this is a singleton
-var messageEventListener
+let messageEventListener
 
 function openPopup (service) {
   setupMessageEventListener()
 
   const { clientWidth, clientHeight } = document.documentElement
-  const [ width, height ] = {
+  const [width, height] = {
     google: [420, 480],
     facebook: [560, 520]
   }[service]

@@ -6,7 +6,7 @@ import getLoginError from 'store/selectors/getLoginError'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
-import { loginWithService } from '../Login/Login.store'
+import loginWithService from 'store/actions/loginWithService'
 import Button from 'components/Button'
 import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
@@ -19,8 +19,8 @@ import './Signup.scss'
 export default function Signup (props) {
   const { className } = props
   const dispatch = useDispatch()
-  const [email, setEmail] = useState('')
-  const [localError, setLocalError] = useState('')
+  const [email, setEmail] = useState()
+  const [localError, setLocalError] = useState()
   const downloadAppUrl = useSelector(mobileRedirect)
   const providedError = useSelector(state =>
     getLoginError(state) || getQuerystringParam('error', state, props)
@@ -38,15 +38,12 @@ export default function Signup (props) {
   }
 
   const sendEmailVerification = async email => {
-    try {
-      const result = await dispatch(sendEmailVerificationAction(email))
-      if (result.payload.data.sendEmailVerification.success) {
-        dispatch(push('/signup/verify-email?email=' + encodeURIComponent(email)))
-      } else {
-        setLocalError('Error')
-      }
-    } catch (e) {
-      /* Error handled by login reducer but we need this here as a catch */
+    const { payload } = await dispatch(sendEmailVerificationAction(email))
+    const { success, error } = payload.getData()
+    if (success) {
+      dispatch(push('/signup/verify-email?email=' + encodeURIComponent(email)))
+    } else if (error) {
+      setLocalError(error)
     }
   }
 
@@ -59,21 +56,21 @@ export default function Signup (props) {
     }
   }
 
-  const handleChange = (e) => {
+  const handleEmailChange = (e) => {
     setEmail(e.target.value)
-    setLocalError('')
+    setLocalError()
   }
 
   const submit = () => {
     if (!validateEmail(email)) {
       setLocalError('Invalid email address')
     } else {
-      setLocalError('')
+      setLocalError()
       sendEmailVerification(email)
     }
   }
 
-  const canSubmit = email.length > 0
+  const canSubmit = email?.length > 0
 
   return (
     <div className={className}>
@@ -89,11 +86,11 @@ export default function Signup (props) {
           autoComplete='off'
           autoFocus
           internalLabel='Email'
-          onChange={handleChange}
+          onChange={handleEmailChange}
           onEnter={submit}
           styleName='field'
           type='text'
-          value={email}
+          value={email || ''}
         />
 
         <Button

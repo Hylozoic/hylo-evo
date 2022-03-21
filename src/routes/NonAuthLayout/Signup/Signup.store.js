@@ -14,12 +14,21 @@ export function sendEmailVerification (email) {
         mutation SendEmailVerification ($email: String!) {
           sendEmailVerification(email: $email) {
             success
+            error
           }
         }
       `,
       variables: {
         email
       }
+    },
+    meta: {
+      extractModel: [
+        {
+          getRoot: get('sendEmailVerification.me'),
+          modelName: 'Me'
+        }
+      ]
     }
   }
 }

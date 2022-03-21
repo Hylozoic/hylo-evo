@@ -8,7 +8,7 @@ import {
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
 import logout from 'store/actions/logout'
-import { loginWithService } from 'routes/NonAuthLayout/Login/Login.store'
+import loginWithService from 'store/actions/loginWithService'
 import { createSelector } from 'reselect'
 import unBlockUser from 'store/actions/unBlockUser'
 import deactivateMe from 'store/actions/deactivateMe'

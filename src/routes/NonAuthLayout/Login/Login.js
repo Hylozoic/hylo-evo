@@ -1,6 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { push } from 'connected-react-router'
 import { formatError } from '../util'
+import { mobileRedirect } from 'util/mobile'
+import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import getLoginError from 'store/selectors/getLoginError'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import checkLogin from 'store/actions/checkLogin'
+import login from 'store/actions/login'
+import loginWithService from 'store/actions/loginWithService'
+import logout from 'store/actions/logout'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import DownloadAppModal from 'components/DownloadAppModal'
@@ -8,94 +18,90 @@ import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
 
-export default class Login extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: '',
-      emailActive: false,
-      error: null,
-      password: '',
-      passwordActive: false
-    }
-  }
+export default function Login (props) {
+  const dispatch = useDispatch()
+  const errorFromStore = useSelector(state =>
+    getLoginError(state) || getQuerystringParam('error', state, props)
+  )
+  const returnToURL = useSelector(state =>
+    getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state)
+  )
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [error, setError] = useState()
+  const downloadAppUrl = mobileRedirect()
+  const displayError = error || errorFromStore
 
-  // async componentDidMount () {
-  //   // Current user data is required to be present for routing
-  //   // to switch to auth'd layouts (i.e. PrimaryLayout)
-  //   await this.props.checkLogin()
+  // const redirectOnSignIn = defaultPath => {
+  //   dispatch(resetReturnToURL())
+  //   dispatch(push(returnToURL || defaultPath))
   // }
 
-  submit = async () => {
-    const result = await this.props.login(this.state.email, this.state.password)
-    const { me, error } = result.payload.data.login
+  const handleEmailChange = event => {
+    setEmail(event.target.value)
+  }
+
+  const handlePasswordChange = event => {
+    setPassword(event.target.value)
+  }
+
+  const handleLogin = async () => {
+    // await dispatch(logout())
+    const { payload } = await dispatch(login(email, password))
+    const { me, error } = payload.getData()
 
     if (!me || error) {
-      this.setState({ error: error || 'Incorrect credentials' })
+      setError(error || 'Sorry, that Email and Password combination didn\'t work.')
     }
   }
 
-  loginAndRedirect = async service => {
-    const result = await this.props.loginWithService(service)
+  const handleLoginWithService = async service => {
+    const result = await dispatch(loginWithService(service))
 
     if (result?.error) {
-      return this.setState({ error: result.error })
+      return setError(result.error)
     }
 
     // Current user data is required to be present for routing
     // to switch to auth'd layouts (i.e. PrimaryLayout)
-    await this.props.checkLogin()
+    dispatch(checkLogin())
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      error: null
-    })
-  }
-
-  render () {
-    const { downloadAppUrl, returnToURL } = this.props
-    const { email, password } = this.state
-    const error = this.props.error || this.state.error
-
-    return (
-      <div className={this.props.className}>
-        <div styleName='formWrapper'>
-          {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />}
-          <h1 styleName='title'>Sign in to Hylo</h1>
-          {error && formatError(error, 'Login')}
-
-          <TextInput
-            aria-label='email' label='email' name='email' id='email'
-            autoFocus
-            internalLabel='Email'
-            onChange={this.handleChange}
-            styleName='field'
-            type='email'
-            value={email}
-          />
-
-          <TextInput
-            aria-label='password' label='password' name='password' id='password'
-            internalLabel='Password'
-            onChange={this.handleChange}
-            onEnter={this.submit}
-            styleName='field'
-            type='password'
-            value={password}
-          />
-          <Link to='/reset-password' styleName='forgot-password'>
-            <span styleName='forgot-password'>Forgot password?</span>
-          </Link>
-
-          <Button styleName='submit' label='Sign in' onClick={this.submit} />
-        </div>
-        <div styleName='auth-buttons'>
-          <FacebookButton onClick={() => this.loginAndRedirect('facebook')} />
-          <GoogleButton onClick={() => this.loginAndRedirect('google')} />
-        </div>
+  return (
+    <div className={props.className}>
+      <div styleName='formWrapper'>
+        {downloadAppUrl && (
+          <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />
+        )}
+        <h1 styleName='title'>Sign in to Hylo</h1>
+        {displayError && formatError(displayError, 'Login')}
+        <TextInput
+          aria-label='email' label='email' name='email' id='email'
+          autoFocus
+          internalLabel='Email'
+          onChange={handleEmailChange}
+          styleName='field'
+          type='email'
+          value={email || ''}
+        />
+        <TextInput
+          aria-label='password' label='password' name='password' id='password'
+          internalLabel='Password'
+          onChange={handlePasswordChange}
+          onEnter={handleLogin}
+          styleName='field'
+          type='password'
+          value={password || ''}
+        />
+        <Link to='/reset-password' styleName='forgot-password'>
+          <span styleName='forgot-password'>Forgot password?</span>
+        </Link>
+        <Button styleName='submit' label='Sign in' onClick={handleLogin} />
       </div>
-    )
-  }
+      <div styleName='auth-buttons'>
+        <FacebookButton onClick={() => handleLoginWithService('facebook')} />
+        <GoogleButton onClick={() => handleLoginWithService('google')} />
+      </div>
+    </div>
+  )
 }

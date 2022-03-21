@@ -2,7 +2,7 @@ import { get, some } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router'
 import { mobileRedirect } from 'util/mobile'
-import { getReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import updateUserSettings from 'store/actions/updateUserSettings'
@@ -50,16 +50,13 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch, props) {
-  const slug = getSlugFromLocation(null, props)
-
-  return {
-    fetchForCurrentUser: () => dispatch(fetchForCurrentUser()),
-    fetchForGroup: () => dispatch(fetchForGroup(slug)),
-    toggleDrawer: () => dispatch(toggleDrawer()),
-    toggleGroupMenu: () => dispatch(toggleGroupMenu()),
-    updateUserSettings: (changes) => dispatch(updateUserSettings(changes))
-  }
+export const mapDispatchToProps = {
+  fetchForCurrentUser,
+  fetchForGroup,
+  resetReturnToURL,
+  toggleDrawer,
+  toggleGroupMenu,
+  updateUserSettings
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
