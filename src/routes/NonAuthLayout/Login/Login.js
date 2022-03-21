@@ -10,7 +10,6 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
 import login from 'store/actions/login'
 import loginWithService from 'store/actions/loginWithService'
-import logout from 'store/actions/logout'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import DownloadAppModal from 'components/DownloadAppModal'
@@ -46,7 +45,6 @@ export default function Login (props) {
   }
 
   const handleLogin = async () => {
-    // await dispatch(logout())
     const { payload } = await dispatch(login(email, password))
     const { me, error } = payload.getData()
 

@@ -165,7 +165,7 @@ export default class PrimaryLayout extends Component {
 
   componentDidUpdate (prevProps) {
     if (this.props.slug && this.props.slug !== prevProps.slug) {
-      this.props.fetchForGroup()
+      this.props.fetchForGroup(this.props.slug)
     }
     if (!isEqual(this.props.routeParams, prevProps.routeParams)) {
       this.scrollToTop()
