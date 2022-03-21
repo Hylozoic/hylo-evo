@@ -139,10 +139,10 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
       { context: 'groups', slug: group.slug, filter: type },
       { context: 'groups', slug: group.slug, sortBy: 'updated' },
-      { context: 'groups', slug: group.slug, sortBy: 'updated', search: "", groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
+      { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type },
       { context: 'groups', slug: group.slug, sortBy: 'created' },
-      { context: 'groups', slug: group.slug, sortBy: 'created', search: "", groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
+      { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type },
       // For events stream
       { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
