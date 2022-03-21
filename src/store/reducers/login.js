@@ -1,14 +1,15 @@
 import { combineReducers } from 'redux'
-import { CHECK_LOGIN, LOGIN, SIGNUP } from 'store/constants'
+import { LOGIN, RESET_RETURN_TO_URL, SET_RETURN_TO_URL, SIGNUP } from 'store/constants'
 import { SEND_EMAIL_VERIFICATION, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store.js'
 
 export default combineReducers({
-  isLoggedIn: (state = null, { type, error: thrownError, payload, meta }) => {
-    if (thrownError) return state
+  returnToURL: (state = null, { type, error, payload, meta}) => {
     switch (type) {
-      case LOGIN:
-      case CHECK_LOGIN: {
-        return !!payload.data.me
+      case SET_RETURN_TO_URL: {
+        return payload.returnToURL
+      }
+      case RESET_RETURN_TO_URL: {
+        return null
       }
     }
 

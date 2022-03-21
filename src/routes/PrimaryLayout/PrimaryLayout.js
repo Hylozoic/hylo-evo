@@ -259,12 +259,12 @@ export default class PrimaryLayout extends Component {
       )
     }
 
-    // if (!signupInProgress && redirectToURL) {
-    //   resetReturnToURL()
-    //   return (
-    //     <RedirectRoute to={redirectToURL} />
-    //   )
-    // }
+    if (!signupInProgress && redirectToURL) {
+      resetReturnToURL()
+      return (
+        <RedirectRoute to={redirectToURL} />
+      )
+    }
 
     if (isGroupRoute) {
       if (!group && !groupPending) return <NotFound />

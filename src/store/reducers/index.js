@@ -16,7 +16,6 @@ import { handleSetState, composeReducers } from './util'
 // generator-marker-local-store-import
 import AllTopics from 'routes/AllTopics/AllTopics.store'
 import AttachmentManager from 'components/AttachmentManager/AttachmentManager.store'
-import AuthRoute from 'router/AuthRoute/AuthRoute.store'
 import CreateGroup from 'components/CreateGroup/CreateGroup.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 import Events from 'routes/Events/Events.store'
@@ -55,7 +54,6 @@ export const combinedReducers = combineReducers({
   // Local store (Component)
   // generator-marker-local-store-reducer
   AllTopics,
-  AuthRoute,
   AttachmentManager,
   CreateGroup,
   CreateTopic,

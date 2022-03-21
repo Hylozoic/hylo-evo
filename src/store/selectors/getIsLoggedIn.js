@@ -1,7 +1,10 @@
 import { createSelector } from 'reselect'
-import { get } from 'lodash/fp'
+import getSignupState, { SignupState } from './getSignupState'
 
 export default createSelector(
-  get('login'),
-  get('isLoggedIn')
+  getSignupState,
+  signupState => {
+    // Maybe should be: [SignupState.InProgress, SignupState.Complete].includes(signupState)
+    return signupState !== SignupState.None
+  }
 )

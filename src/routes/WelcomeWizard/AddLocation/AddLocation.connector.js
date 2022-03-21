@@ -3,7 +3,8 @@ import { push, goBack } from 'connected-react-router'
 import getMe from 'store/selectors/getMe'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import updateUserSettings from 'store/actions/updateUserSettings'
-import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import getReturnToURL from 'store/selectors/getReturnToURL'
+import resetReturnToURL from 'store/actions/resetReturnToURL'
 import { fetchLocation } from 'components/LocationInput/LocationInput.store'
 
 export function mapStateToProps (state, props) {

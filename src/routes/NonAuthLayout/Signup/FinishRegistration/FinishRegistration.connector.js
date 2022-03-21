@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
-
-import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
+import getReturnToURL from 'store/selectors/getReturnToURL'
+import resetReturnToURL from 'store/actions/resetReturnToURL'
 import getLoginError from 'store/selectors/getLoginError'
 import getMe from 'store/selectors/getMe'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
