@@ -20,20 +20,29 @@ export default class Login extends React.Component {
     }
   }
 
-  submit = () => {
-    this.props.login(this.state.email, this.state.password).then(result => {
-      if (!result.payload.data?.login?.me || result.payload.data?.login?.error) {
-        this.setState({ error: result.payload.data?.login?.error || 'Incorrect credentials' })
-      } else {
-        console.log('!!! this not run on error')
-        this.props.redirectOnSignIn('/')
-      }
-    })
+  submit = async () => {
+    const result = await this.props.login(this.state.email, this.state.password)
+    const { me, error } = result.payload.data.login
+
+    if (!me || error) {
+      this.setState({ error: error || 'Incorrect credentials' })
+    } else {
+      this.props.redirectOnSignIn('/')
+    }
   }
 
-  loginAndRedirect = (service) => {
-    this.props.loginWithService(service)
-      .then(({ error }) => error || this.props.redirectOnSignIn('/'))
+  loginAndRedirect = async service => {
+    const result = await this.props.loginWithService(service)
+
+    if (result?.error) {
+      return this.setState({ error: result.error })
+    }
+
+    // Current user data is required to be present for routing
+    // to switch to auth'd layouts (i.e. PrimaryLayout)
+    await this.props.checkLogin()
+
+    this.props.redirectOnSignIn('/')
   }
 
   handleChange = (e) => {

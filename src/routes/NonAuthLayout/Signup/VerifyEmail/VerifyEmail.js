@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { push } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
+import RedirectRoute from 'router/RedirectRoute'
 import { formatError } from '../../util'
 import getLoginError from 'store/selectors/getLoginError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -31,10 +32,13 @@ export default function VerifyEmail (props) {
     }
   }, [])
 
+  if (!email) {
+    return <RedirectRoute to='/signup' />
+  }
+
   const submit = async value => {
     try {
       setLoading(true)
-      console.log('!!! email, token, code:', email, value || code, token)
 
       const result = await dispatch(verifyEmail(email, value || code, token))
       const error = result.payload.data.verifyEmail?.error

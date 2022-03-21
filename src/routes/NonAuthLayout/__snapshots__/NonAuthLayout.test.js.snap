@@ -149,37 +149,18 @@ exports[`NonAuthLayout renders correctly 1`] = `
         />
       </a>
     </div>
-    <Route
-      component={[Function]}
-      path="/login"
-    />
     <Switch>
       <Route
         component={[Function]}
-        exact={true}
+        path="/login"
+      />
+      <Route
+        component={[Function]}
+        path="/reset-password"
+      />
+      <Route
+        component={[Function]}
         path="/signup"
-      />
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/signup/verify-email"
-      />
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/signup/finish"
-      />
-    </Switch>
-    <Route
-      component={[Function]}
-      path="/reset-password"
-    />
-    <Switch>
-      <Redirect
-        exact={true}
-        from="/public/:detail(post)?/:postId(\\\\d+)?/:action(new|edit)?"
-        key="streamToMap"
-        to="/public/map"
       />
       <Route
         component={
@@ -211,6 +192,12 @@ exports[`NonAuthLayout renders correctly 1`] = `
         component={[Function]}
         exact={true}
         path="/:context(public)/:topicName"
+      />
+      <Redirect
+        exact={true}
+        from="/public/:detail(post)?/:postId(\\\\d+)?/:action(new|edit)?"
+        key="streamToMap"
+        to="/public/map"
       />
     </Switch>
     <div
@@ -262,18 +249,20 @@ exports[`NonAuthLayout renders correctly 1`] = `
     <div
       data-stylename="below-container"
     >
-      <Route
-        component={[Function]}
-        path="/signup"
-      />
-      <Route
-        component={[Function]}
-        path="/login"
-      />
-      <Route
-        component={[Function]}
-        path="/reset-password"
-      />
+      <Switch>
+        <Route
+          component={[Function]}
+          path="/signup"
+        />
+        <Route
+          component={[Function]}
+          path="/login"
+        />
+        <Route
+          component={[Function]}
+          path="/reset-password"
+        />
+      </Switch>
     </div>
   </div>
   <a
