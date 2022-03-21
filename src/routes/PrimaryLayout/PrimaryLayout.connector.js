@@ -10,9 +10,9 @@ import { FETCH_FOR_CURRENT_USER, FETCH_FOR_GROUP } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
+import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
 import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
-import getSignupState from 'store/selectors/getSignupState'
 
 export function mapStateToProps (state, props) {
   const memberships = getMyMemberships(state, props)
@@ -22,6 +22,8 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
   const signupState = getSignupState(state)
+  const signupInProgress = signupState === SignupState.InProgress
+
   let routeParams = { context: 'all' }
   const match = matchPath(props.location.pathname, { path: '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?' }) ||
                 matchPath(props.location.pathname, { path: '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?' })
@@ -43,7 +45,7 @@ export function mapStateToProps (state, props) {
     returnToURL: getReturnToURL(state),
     routeParams,
     showMenuBadge,
-    signupState,
+    signupInProgress,
     slug
   }
 }

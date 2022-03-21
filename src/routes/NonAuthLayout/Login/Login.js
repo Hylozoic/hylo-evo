@@ -20,14 +20,18 @@ export default class Login extends React.Component {
     }
   }
 
+  // async componentDidMount () {
+  //   // Current user data is required to be present for routing
+  //   // to switch to auth'd layouts (i.e. PrimaryLayout)
+  //   await this.props.checkLogin()
+  // }
+
   submit = async () => {
     const result = await this.props.login(this.state.email, this.state.password)
     const { me, error } = result.payload.data.login
 
     if (!me || error) {
       this.setState({ error: error || 'Incorrect credentials' })
-    } else {
-      this.props.redirectOnSignIn('/')
     }
   }
 
@@ -41,8 +45,6 @@ export default class Login extends React.Component {
     // Current user data is required to be present for routing
     // to switch to auth'd layouts (i.e. PrimaryLayout)
     await this.props.checkLogin()
-
-    this.props.redirectOnSignIn('/')
   }
 
   handleChange = (e) => {

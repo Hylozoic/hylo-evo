@@ -54,8 +54,6 @@ import {
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
-import { SignupState } from 'store/selectors/getSignupState'
-import RedirectRoute from 'router/RedirectRoute'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
@@ -243,7 +241,7 @@ export default class PrimaryLayout extends Component {
       location,
       routeParams,
       showMenuBadge,
-      signupState,
+      signupInProgress,
       slug,
       width
     } = this.props
@@ -258,17 +256,11 @@ export default class PrimaryLayout extends Component {
       )
     }
 
-    // TODO: May be able to do away with this entirely, but probably not
-    if (![SignupState.InProgress, SignupState.Complete].includes(signupState)) {
-      return <RedirectRoute to='/signup' />
-    }
-
     if (isGroupRoute) {
       if (!group && !groupPending) return <NotFound />
     }
 
     const queryParams = qs.parse(location.search.substring(1))
-    const signupInProgress = signupState === SignupState.InProgress
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes

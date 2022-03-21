@@ -8,7 +8,6 @@ import Particles from 'react-particles-js'
 import particlesjsConfig from './particlesjsConfig'
 import Button from 'components/Button'
 import Login from './Login'
-import Signup from './Signup'
 import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import GroupDetail from 'routes/GroupDetail'
 import MapExplorer from 'routes/MapExplorer'
@@ -17,6 +16,7 @@ import PostDetail from 'routes/PostDetail'
 import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './NonAuthLayout.scss'
+import SignupRouter from './Signup/SignupRouter'
 
 const particlesStyle = {
   position: 'fixed',
@@ -75,7 +75,7 @@ export default function NonAuthLayout (props) {
             path='/signup'
             component={() => (
               <div styleName='signupRow'>
-                <Signup {...props} styleName='form' />
+                <SignupRouter {...props} styleName='form' />
               </div>
             )}
           />

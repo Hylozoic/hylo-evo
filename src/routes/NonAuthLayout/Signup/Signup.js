@@ -1,59 +1,26 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
-import { Route, Switch } from 'react-router-dom'
 import { mobileRedirect } from 'util/mobile'
 import getLoginError from 'store/selectors/getLoginError'
 import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.store'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import { loginWithService } from '../Login/Login.store'
-import RedirectRoute from 'router/RedirectRoute'
 import Button from 'components/Button'
 import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import TextInput from 'components/TextInput'
-import VerifyEmail from './VerifyEmail'
-import FinishRegistration from './FinishRegistration'
 import { formatError } from '../util'
 import { validateEmail } from 'util/index'
 import './Signup.scss'
 
-export default function SignupRouter (props) {
-  return (
-    <Switch>
-      <Route
-        exact
-        path='/signup/verify-email'
-        component={() => (
-          <VerifyEmail {...props} styleName='form' />
-        )}
-      />
-      <Route
-        exact
-        path='/signup/finish'
-        component={() => (
-          <FinishRegistration {...props} styleName='form' />
-        )}
-      />
-      <Route
-        path='/signup'
-        component={() => (
-          <Signup {...props} styleName='form' />
-        )}
-      />
-    </Switch>
-  )
-}
-
-export function Signup (props) {
+export default function Signup (props) {
   const { className } = props
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [localError, setLocalError] = useState('')
-  const signupState = useSelector(getSignupState)
   const downloadAppUrl = useSelector(mobileRedirect)
   const providedError = useSelector(state =>
     getLoginError(state) || getQuerystringParam('error', state, props)
@@ -63,18 +30,6 @@ export function Signup (props) {
     getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state)
   )
   const error = providedError || localError
-
-  switch (signupState) {
-    case SignupState.EmailValidation: {
-      return <RedirectRoute to='/signup/verify-email' />
-    }
-    case SignupState.Registration: {
-      return <RedirectRoute to='/signup/finish' />
-    }
-    case SignupState.InProgress: {
-      return <RedirectRoute to='/' />
-    }
-  }
 
   // TODO: Why is this here instead of relying on it happening in `PrimaryLayout`?
   const redirectOnSignIn = defaultPath => {

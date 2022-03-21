@@ -18,8 +18,6 @@ import RedirectRoute from './RedirectRoute'
 function Router () {
   const dispatch = useDispatch()
   const signupState = useSelector(getSignupState)
-  const signupInProgress = signupState === SignupState.InProgress
-  const signupComplete = signupState === SignupState.Complete
   const [loading, setLoading] = useState(true)
 
   // This should be the only place we check for a session from the API
@@ -42,20 +40,24 @@ function Router () {
   return (
     <ErrorBoundary>
       <Switch>
-        {/* TODO: Confirm that the "|" route match works, confirm that join group works with returnToOnAuth */}
-        <AuthRoute path='/:context(groups)/:groupSlug/join/:accessCode|/h/use-invitation' component={JoinGroup} returnToOnAuth />
-        <AuthRoute path='/login' component={NonAuthLayout} />
-        <AuthRoute path='/reset-password' exact component={NonAuthLayout} />
-        <AuthRoute path='/signup' component={NonAuthLayout} />
-        {!signupComplete && (
-          <AuthRoute path='/:context(public)' component={NonAuthLayout} />
+        <AuthRoute path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} returnToOnAuth />
+        <AuthRoute path='/h/use-invitation' component={JoinGroup} returnToOnAuth />
+        {![SignupState.Complete].includes(signupState) && (
+          <>
+            <AuthRoute path='/login' component={NonAuthLayout} />
+            <AuthRoute path='/reset-password' exact component={NonAuthLayout} />
+            <AuthRoute path='/signup' component={NonAuthLayout} />
+            <AuthRoute path='/:context(public)' component={NonAuthLayout} />
+          </>
         )}
-        {/* TODO: Confirm that join group works with returnToOnAuth */}
-        {(signupInProgress || signupComplete) && (
-          <AuthRoute path='/' component={PrimaryLayout} returnToOnAuth />
+        {[SignupState.InProgress, SignupState.Complete].includes(signupState) && (
+          <>
+            <RedirectRoute path='/(login|reset-password|signup)' to='/' />
+            <AuthRoute path='/' component={PrimaryLayout} returnToOnAuth />
+          </>
         )}
-        {/* TODO: Will this break the proxy webpage situation, probably? Hmm... Maybe we don't need a root route here */}
-        <RedirectRoute path='/' to='/login' />
+        {/* TODO: Would likely break the proxy'd webpage situation. Hmm... Maybe we don't need a root route here */}
+        {/* <RedirectRoute path='/' to='/login' /> */}
       </Switch>
     </ErrorBoundary>
   )
