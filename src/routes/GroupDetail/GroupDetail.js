@@ -91,7 +91,6 @@ export default class GroupDetail extends Component {
 
     return <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
       <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
-        {/* The entirety of the header can be the same for farm groups */}
         {onClose &&
           <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
         <div styleName='g.groupTitleContainer'>
@@ -119,11 +118,9 @@ export default class GroupDetail extends Component {
         </div>
         <div styleName='g.headerBackground' />
       </div>
-      {/* The groupDetailBody can be massively  */}
       <div styleName='g.groupDetailBody'>
         {group.type === TYPE_NORMAL && this.normalGroupBody()}
         {group.type === TYPE_FARM && <FarmGroupDetailBody group={group} currentUser={currentUser} routeParams={routeParams} />}
-        {/* For farms, we want the below to display but it will only display if this `isAboutCurrentGroup`, which doesn't happen very much. So */}
         { isAboutCurrentGroup || group.type === TYPE_FARM
           ? <div styleName='g.aboutCurrentGroup'>
             <h3>Moderators</h3>
@@ -257,7 +254,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
   const setAnswer = (index) => (event) => {
     const answerValue = event.target.value
     setQuestionAnswers(prevAnswers => {
-      const newAnswers = [ ...prevAnswers ]
+      const newAnswers = [...prevAnswers]
       newAnswers[index].answer = answerValue
       setAllQuestionsAnswered(newAnswers.every(a => trim(a.answer).length > 0))
       return newAnswers
@@ -358,14 +355,16 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
     }
   }
 
-  return <div styleName='g.joinQuestion'>
-    <h4>Which of the following skills &amp; interests are relevant to you?</h4>
-    <div styleName='g.skillPills'>
-      <Pillbox
-        pills={pills}
-        handleClick={handleClick}
-        editable={false}
-      />
+  return (
+    <div styleName='g.joinQuestion'>
+      <h4>Which of the following skills &amp; interests are relevant to you?</h4>
+      <div styleName='g.skillPills'>
+        <Pillbox
+          pills={pills}
+          handleClick={handleClick}
+          editable={false}
+        />
+      </div>
     </div>
-  </div>
+  )
 }
