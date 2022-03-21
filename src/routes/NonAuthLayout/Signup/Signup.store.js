@@ -1,7 +1,7 @@
 import { get } from 'lodash/fp'
 
 export const MODULE_NAME = 'Signup'
-export const SIGNUP = `${MODULE_NAME}/REGISTER`
+export const REGISTER = `${MODULE_NAME}/REGISTER`
 export const SEND_EMAIL_VERIFICATION = `${MODULE_NAME}/SEND_EMAIL_VERIFICATION`
 export const VERIFY_EMAIL = `${MODULE_NAME}/VERIFY_EMAIL`
 export const CHECK_REGISTRATION_STATUS = `${MODULE_NAME}/CHECK_REGISTRATION_STATUS`
@@ -9,13 +9,16 @@ export const CHECK_REGISTRATION_STATUS = `${MODULE_NAME}/CHECK_REGISTRATION_STAT
 export function sendEmailVerification (email) {
   return {
     type: SEND_EMAIL_VERIFICATION,
-    payload: {
-      api: {
-        method: 'post',
-        path: '/noo/user/send-email-verification',
-        params: {
-          email
+    graphql: {
+      query: `
+        mutation SendEmailVerification ($email: String!) {
+          sendEmailVerification(email: $email) {
+            success
+          }
         }
+      `,
+      variables: {
+        email
       }
     }
   }
@@ -25,16 +28,30 @@ export function verifyEmail (email, code, token) {
   return {
     type: VERIFY_EMAIL,
     graphql: {
-      query: `mutation ($code: String, $email: String, $token: String) {
-        verifyEmail(code: $code, email: $email, token: $token) {
-          id
-          active
-          email
-          emailValidated
-          hasRegistered
-          name
+      query: `
+        mutation ($email: String!, $code: String, $token: String) {
+          verifyEmail(email: $email, code: $code, token: $token) {
+            me {
+              id
+              email
+              emailValidated
+              hasRegistered
+              name
+              settings {
+                alreadySeenTour
+                digestFrequency
+                dmNotifications
+                commentNotifications
+                signupInProgress
+                streamViewMode
+                streamSortBy
+                streamPostType
+              }
+            }
+            error
+          }
         }
-      }`,
+      `,
       variables: {
         code,
         email,
@@ -44,7 +61,7 @@ export function verifyEmail (email, code, token) {
     meta: {
       extractModel: [
         {
-          getRoot: get('verifyEmail'),
+          getRoot: get('verifyEmail.me'),
           modelName: 'Me'
         }
       ]
@@ -52,29 +69,33 @@ export function verifyEmail (email, code, token) {
   }
 }
 
-export function signup (name, password) {
+export function register (name, password) {
   return {
-    type: SIGNUP,
+    type: REGISTER,
     graphql: {
-      query: `mutation ($name: String, $password: String) {
-        register(name: $name, password: $password) {
-          id
-          email
-          emailValidated
-          hasRegistered
-          name
-          settings {
-            alreadySeenTour
-            digestFrequency
-            dmNotifications
-            commentNotifications
-            signupInProgress
-            streamViewMode
-            streamSortBy
-            streamPostType
+      query: `
+        mutation ($name: String!, $password: String!) {
+          register(name: $name, password: $password) {
+            me {
+              id
+              email
+              emailValidated
+              hasRegistered
+              name
+              settings {
+                alreadySeenTour
+                digestFrequency
+                dmNotifications
+                commentNotifications
+                signupInProgress
+                streamViewMode
+                streamSortBy
+                streamPostType
+              }
+            }
           }
         }
-      }`,
+      `,
       variables: {
         name,
         password
@@ -83,32 +104,7 @@ export function signup (name, password) {
     meta: {
       extractModel: [
         {
-          getRoot: get('register'),
-          modelName: 'Me'
-        }
-      ]
-    }
-  }
-}
-
-export function checkRegistrationStatus () {
-  return {
-    type: CHECK_REGISTRATION_STATUS,
-    graphql: {
-      query: `query MeQuery {
-        me {
-          id
-          email
-          emailValidated
-          hasRegistered
-          name
-        }
-      }`
-    },
-    meta: {
-      extractModel: [
-        {
-          getRoot: get('me'),
+          getRoot: get('register.me'),
           modelName: 'Me'
         }
       ]

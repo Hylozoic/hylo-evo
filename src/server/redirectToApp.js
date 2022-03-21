@@ -1,4 +1,4 @@
-import { checkLogin } from 'routes/NonAuthLayout/Login/Login.store'
+import { checkLogin } from '../store/actions/checkLogin'
 import createStore from '../store'
 import { createMemoryHistory } from 'history'
 

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { CHECK_LOGIN, LOGIN } from 'store/constants'
-import { SEND_EMAIL_VERIFICATION, SIGNUP, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store.js'
+import { CHECK_LOGIN, LOGIN, SIGNUP } from 'store/constants'
+import { SEND_EMAIL_VERIFICATION, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store.js'
 
 export default combineReducers({
   isLoggedIn: (state = null, { type, error, payload, meta }) => {

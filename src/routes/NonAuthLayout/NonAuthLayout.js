@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import CookieConsent from 'react-cookie-consent'
 import { some } from 'lodash/fp'
-import React from 'react'
+import React, { useState } from 'react'
 import Div100vh from 'react-div-100vh'
 import { matchPath, Redirect, Route, Link, Switch } from 'react-router-dom'
 import Particles from 'react-particles-js'
@@ -14,45 +14,37 @@ import GroupDetail from 'routes/GroupDetail'
 import MapExplorer from 'routes/MapExplorer'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import PostDetail from 'routes/PostDetail'
-import VerifyEmail from './Signup/VerifyEmail'
-import FinishRegistration from './Signup/FinishRegistration'
 import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './NonAuthLayout.scss'
 
-export default class NonAuthLayout extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      showCookieInfo: false
-    }
-  }
+const particlesStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%'
+}
 
-  toggleShowCookieInfo = () => {
-    if (this.state.showCookieInfo === true) {
-      this.setState({ showCookieInfo: false })
+export default function NonAuthLayout (props) {
+  const [showCookieInfo, setShowCookieInfo] = useState(false)
+  const { location } = props
+
+  const toggleShowCookieInfo = () => {
+    if (showCookieInfo === true) {
+      setShowCookieInfo(false)
     } else {
-      this.setState({ showCookieInfo: true })
+      setShowCookieInfo(true)
     }
   }
 
-  render () {
-    const { location } = this.props
+  const hasDetail = some(
+    ({ path }) => matchPath(location.pathname, { path, exact: true }),
+    detailRoutes
+  )
 
-    const particlesStyle = {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%'
-    }
-
-    const hasDetail = some(
-      ({ path }) => matchPath(location.pathname, { path, exact: true }),
-      detailRoutes
-    )
-
-    return <Div100vh styleName='nonAuthContainer'>
+  return (
+    <Div100vh styleName='nonAuthContainer'>
       <div styleName='background'>
         <div styleName='particlesBackgroundWrapper'>
           <Particles params={particlesjsConfig} style={particlesStyle} />
@@ -62,75 +54,75 @@ export default class NonAuthLayout extends React.Component {
             <img styleName='logo' src='/assets/hylo.svg' alt='Hylo logo' />
           </a>
         </div>
-
-        <Route path='/login' component={() =>
-          <div styleName='signupRow'>
-            <Login {...this.props} styleName='form' />
-          </div>
-        } />
-
         <Switch>
-          <Route exact path='/signup' component={() =>
-            <div styleName='signupRow'>
-              <Signup {...this.props} styleName='form' />
-            </div>
-          } />
-
-          <Route exact path='/signup/verify-email' component={() =>
-            <div styleName='signupRow'>
-              <VerifyEmail {...this.props} styleName='form' />
-            </div>
-          } />
-
-          <Route exact path='/signup/finish' component={() =>
-            <div styleName='signupRow'>
-              <FinishRegistration {...this.props} styleName='form' />
-            </div>
-          } />
-        </Switch>
-
-        <Route path='/reset-password' component={() =>
-          <div styleName='signupRow'>
-            <PasswordReset {...this.props} styleName='form' />
-          </div>
-        } />
-
-        <Switch>
-          <Redirect from={`/public/${OPTIONAL_POST_MATCH}`} exact to='/public/map' key='streamToMap' />
+          <Route
+            path='/login'
+            component={() => (
+              <div styleName='signupRow'>
+                <Login {...props} styleName='form' />
+              </div>
+            )}
+          />
+          <Route
+            path='/reset-password'
+            component={() => (
+              <div styleName='signupRow'>
+                <PasswordReset {...props} styleName='form' />
+              </div>
+            )}
+          />
+          <Route
+            path='/signup'
+            component={() => (
+              <div styleName='signupRow'>
+                <Signup {...props} styleName='form' />
+              </div>
+            )}
+          />
           <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
           <Route path={`/:context(public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
           <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
+          <Redirect from={`/public/${OPTIONAL_POST_MATCH}`} exact to='/public/map' key='streamToMap' />
         </Switch>
-
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
-            {detailRoutes.map(({ path, component }) =>
-              <Route path={path} component={component} key={path} />)}
+            {detailRoutes.map(({ path, component }) => (
+              <Route path={path} component={component} key={path} />)
+            )}
           </Switch>
         </div>
-
         <div styleName='below-container'>
-          <Route path='/signup' component={() =>
-            <Link to='/login'>
-              Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
-            </Link>
-          } />
-          <Route path='/login' component={() =>
-            <Link tabIndex={-1} to='/signup'>
-              Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-            </Link>
-          } />
-          <Route path='/reset-password' component={() =>
-            <div styleName='resetPasswordBottom'>
-              <Link tabIndex={-1} to='/signup'>
-                <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-              </Link>
-              or
-              <Link to='/login'>
-                <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
-              </Link>
-            </div>
-          } />
+          <Switch>
+            <Route
+              path='/signup'
+              component={() => (
+                <Link to='/login'>
+                  Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
+                </Link>
+              )}
+            />
+            <Route
+              path='/login' component={() => (
+                <Link tabIndex={-1} to='/signup'>
+                  Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+                </Link>
+              )}
+            />
+            <Route
+              path='/reset-password'
+              component={() => (
+                <div styleName='resetPasswordBottom'>
+                  <Link tabIndex={-1} to='/signup'>
+                    <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+                  </Link>
+                  or
+                  <Link to='/login'>
+                    <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
+                  </Link>
+                </div>
+              )}
+            />
+          </Switch>
         </div>
       </div>
 
@@ -143,8 +135,8 @@ export default class NonAuthLayout extends React.Component {
         expires={150}
         onAccept={() => { console.log('here is where we would call a function to store the users cookie preferences') }}
       >
-        Hylo uses cookies to enhance the user experience. <button styleName='viewDetails' onClick={this.toggleShowCookieInfo}>View details</button>
-        <div styleName={cx('cookieInformation', { 'showCookieInfo': this.state.showCookieInfo })}>
+        Hylo uses cookies to enhance the user experience. <button styleName='viewDetails' onClick={toggleShowCookieInfo}>View details</button>
+        <div styleName={cx('cookieInformation', { 'showCookieInfo': showCookieInfo })}>
           <div styleName='content'>
             <div styleName='pad'>
               <h3>How do we use cookies?</h3>
@@ -158,14 +150,14 @@ export default class NonAuthLayout extends React.Component {
               <p>When people on Hylo need help or want to report a bug, they are interacting with a service called intercom. Intercom stores cookies in your browser to keep track of conversations with us, the development team.</p>
               <h4>Local storage &amp; cache</h4>
               <p>We store images, icons and application data in your browser to improve performance and load times.</p>
-              <button styleName='closeButton' onClick={this.toggleShowCookieInfo}>Close</button>
+              <button styleName='closeButton' onClick={toggleShowCookieInfo}>Close</button>
             </div>
           </div>
-          <div styleName='bg' onClick={this.toggleShowCookieInfo} />
+          <div styleName='bg' onClick={toggleShowCookieInfo} />
         </div>
       </CookieConsent>
     </Div100vh>
-  }
+  )
 }
 
 const detailRoutes = [

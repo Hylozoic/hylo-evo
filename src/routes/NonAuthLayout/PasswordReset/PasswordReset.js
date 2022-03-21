@@ -16,7 +16,7 @@ export default class PasswordReset extends Component {
 
   submit () {
     const { email } = this.state
-    this.props.resetPassword(email)
+    this.props.sendPasswordReset(email)
       .then(({ error }) => {
         if (error) {
           this.setState({ error })

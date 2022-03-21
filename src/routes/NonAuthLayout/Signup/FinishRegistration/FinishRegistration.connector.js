@@ -5,7 +5,7 @@ import { getReturnToURL, resetReturnToURL } from 'router/AuthRoute/AuthRoute.sto
 import getLoginError from 'store/selectors/getLoginError'
 import getMe from 'store/selectors/getMe'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import { checkRegistrationStatus, signup } from '../Signup.store'
+import { register } from '../Signup.store'
 
 export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
@@ -18,10 +18,9 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = {
-  checkRegistrationStatus,
   push,
   resetReturnToURL,
-  signup
+  register
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

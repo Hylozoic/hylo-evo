@@ -443,7 +443,6 @@ export class UnwrappedMapExplorer extends React.Component {
       totalPostsInView,
       viewport
     } = this.state
-
     const { mobileSettingsLayout } = this.context
     const withoutNav = mobileSettingsLayout
 

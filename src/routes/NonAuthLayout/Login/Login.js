@@ -14,14 +14,21 @@ export default class Login extends React.Component {
     this.state = {
       email: '',
       emailActive: false,
+      error: null,
       password: '',
       passwordActive: false
     }
   }
 
   submit = () => {
-    return this.props.login(this.state.email, this.state.password)
-      .then(({ error }) => error || this.props.redirectOnSignIn('/'))
+    this.props.login(this.state.email, this.state.password).then(result => {
+      if (!result.payload.data?.login?.me || result.payload.data?.login?.error) {
+        this.setState({ error: result.payload.data?.login?.error || 'Incorrect credentials' })
+      } else {
+        console.log('!!! this not run on error')
+        this.props.redirectOnSignIn('/')
+      }
+    })
   }
 
   loginAndRedirect = (service) => {
@@ -31,49 +38,53 @@ export default class Login extends React.Component {
 
   handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      error: null
     })
   }
 
   render () {
     const { downloadAppUrl, returnToURL } = this.props
     const { email, password } = this.state
+    const error = this.props.error || this.state.error
 
-    return <div className={this.props.className}>
-      <div styleName='formWrapper'>
-        {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />}
-        <h1 styleName='title'>Sign in to Hylo</h1>
-        {this.props.error && formatError(this.props.error, 'Login')}
+    return (
+      <div className={this.props.className}>
+        <div styleName='formWrapper'>
+          {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />}
+          <h1 styleName='title'>Sign in to Hylo</h1>
+          {error && formatError(error, 'Login')}
 
-        <TextInput
-          aria-label='email' label='email' name='email' id='email'
-          autoFocus
-          internalLabel='Email'
-          onChange={this.handleChange}
-          styleName='field'
-          type='email'
-          value={email}
-        />
+          <TextInput
+            aria-label='email' label='email' name='email' id='email'
+            autoFocus
+            internalLabel='Email'
+            onChange={this.handleChange}
+            styleName='field'
+            type='email'
+            value={email}
+          />
 
-        <TextInput
-          aria-label='password' label='password' name='password' id='password'
-          internalLabel='Password'
-          onChange={this.handleChange}
-          onEnter={this.submit}
-          styleName='field'
-          type='password'
-          value={password}
-        />
-        <Link to='/reset-password' styleName='forgot-password'>
-          <span styleName='forgot-password'>Forgot password?</span>
-        </Link>
+          <TextInput
+            aria-label='password' label='password' name='password' id='password'
+            internalLabel='Password'
+            onChange={this.handleChange}
+            onEnter={this.submit}
+            styleName='field'
+            type='password'
+            value={password}
+          />
+          <Link to='/reset-password' styleName='forgot-password'>
+            <span styleName='forgot-password'>Forgot password?</span>
+          </Link>
 
-        <Button styleName='submit' label='Sign in' onClick={this.submit} />
+          <Button styleName='submit' label='Sign in' onClick={this.submit} />
+        </div>
+        <div styleName='auth-buttons'>
+          <FacebookButton onClick={() => this.loginAndRedirect('facebook')} />
+          <GoogleButton onClick={() => this.loginAndRedirect('google')} />
+        </div>
       </div>
-      <div styleName='auth-buttons'>
-        <FacebookButton onClick={() => this.loginAndRedirect('facebook')} />
-        <GoogleButton onClick={() => this.loginAndRedirect('google')} />
-      </div>
-    </div>
+    )
   }
 }
