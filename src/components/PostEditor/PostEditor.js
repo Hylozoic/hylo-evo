@@ -108,7 +108,7 @@ export default class PostEditor extends React.Component {
     )
     const currentPost = post
       ? {
-        ...post,
+          ...post,
         locationId: post.locationObject ? post.locationObject.id : null,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime)
