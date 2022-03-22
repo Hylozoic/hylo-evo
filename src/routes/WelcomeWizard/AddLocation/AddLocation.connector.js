@@ -4,10 +4,12 @@ import getMe from 'store/selectors/getMe'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { fetchLocation } from 'components/LocationInput/LocationInput.store'
+import getReturnToURL from 'store/selectors/getReturnToURL'
 
 export function mapStateToProps (state, props) {
   return {
-    currentUser: getMe(state)
+    currentUser: getMe(state),
+    returnToURL: getReturnToURL(state)
   }
 }
 
@@ -28,8 +30,12 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     goToNextStep: () => {
-      // TODO: Navigate to root if joining group
-      dispatchProps.push('/welcome/explore')
+      if (stateProps.returnToURL) {
+        // Return handling to PrimaryLayout
+        dispatchProps.push('/')
+      } else {
+        dispatchProps.push('/welcome/explore')
+      }
     }
   }
 }

@@ -299,7 +299,7 @@ export default class PrimaryLayout extends Component {
         )}
         {/* First time viewing a group redirect to explore page */}
         {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
-          <RedirectRoute exact path='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />
+          <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupMembership.group.slug}/explore`} />
         )}
         {(signupInProgress && !isWelcomePath(location.pathname)) && (
           <RedirectRoute to='/welcome/upload-photo' />

@@ -5,11 +5,13 @@ export default function checkInvitation (inviteCodes) {
   return {
     type: CHECK_INVITATION,
     graphql: {
-      query: `query ($invitationToken: String, $accessCode: String) {
-        checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
-          valid
+      query: `
+        query ($invitationToken: String, $accessCode: String) {
+          checkInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+            valid
+          }
         }
-      }`,
+      `,
       variables: {
         invitationToken,
         accessCode

@@ -4,38 +4,41 @@ import { AnalyticsEvents } from 'hylo-shared'
 
 export default function useInvitation (inviteCodes = {}) {
   const { invitationToken, accessCode } = inviteCodes
+
   return {
     type: USE_INVITATION,
     graphql: {
-      query: `mutation ($invitationToken: String, $accessCode: String) {
-        useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
-          membership {
-            id
-            role
-            group {
+      query: `
+        mutation ($invitationToken: String, $accessCode: String) {
+          useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
+            membership {
               id
-              accessibility
-              name
-              settings {
-                allowGroupInvites
-                askJoinQuestions
-                askGroupToGroupJoinQuestions
-                publicMemberDirectory
-                showSuggestedSkills
+              role
+              group {
+                id
+                accessibility
+                name
+                settings {
+                  allowGroupInvites
+                  askJoinQuestions
+                  askGroupToGroupJoinQuestions
+                  publicMemberDirectory
+                  showSuggestedSkills
+                }
+                slug
+                visibility
               }
-              slug
-              visibility
+              person {
+                id
+              }
+              settings {
+                showJoinForm
+              }
             }
-            person {
-              id
-            }
-            settings {
-              showJoinForm
-            }
+            error
           }
-          error
         }
-      }`,
+      `,
       variables: {
         invitationToken,
         accessCode
