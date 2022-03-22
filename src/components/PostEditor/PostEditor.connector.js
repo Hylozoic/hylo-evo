@@ -138,7 +138,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const currentParams = getQueryParamsObjectFromString(stateProps.location.search)
+    const currentParams = getQueryParamsObjectFromString(stateProps.location?.search)
     const locationParams = { zoom: currentParams?.zoom, center: currentParams?.center }
     const url = postUrl(id, { ...routeParams, postType }, { ...locationParams, querystringParams })
 
