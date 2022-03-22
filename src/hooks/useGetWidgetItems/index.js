@@ -33,16 +33,19 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
       return childGroups.length > 0 ? childGroups : false
     }
     case 'nearby_relevant_groups': {
-      return [] // TODO: build out data get/fetch hook for relevant groups NOTE: Since this is a switch statement, it CANNOT be the home of a hook, since hooks can *never* be gated by conditional code.
+      return [] // TODO: build out selector for this
     }
-    case 'nearby_relevant_events': {
-      return [] // TODO: build out data get/fetch hook for relevant groups NOTE: Since this is a switch statement, it CANNOT be the home of a hook, since hooks can *never* be gated by conditional code.
+    case 'relevant_events': {
+      return posts.filter((post) => post.type === 'event')
     }
-    case 'nearby_relevant_requests_offers': {
-      return [] // TODO: build out data get/fetch hook for relevant groups NOTE: Since this is a switch statement, it CANNOT be the home of a hook, since hooks can *never* be gated by conditional code.
+    case 'relevant_requests_offers': {
+      return posts.filter((post) => post.type === 'offer' || post.type === 'request')
+    }
+    case 'relevant_project_activity': {
+      return posts.filter((post) => post.type === 'project')
     }
     case 'farm_comparison': {
-      return true // TODO: build out data get/fetch hook for relevant groups NOTE: Since this is a switch statement, it CANNOT be the home of a hook, since hooks can *never* be gated by conditional code.
+      return true
     }
     case 'opportunities_to_collaborate': {
       return [] // TODO: build out selector for this

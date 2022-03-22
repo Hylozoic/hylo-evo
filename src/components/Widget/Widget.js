@@ -64,15 +64,19 @@ const WIDGETS = {
     title: 'Subgroups',
     component: GroupsWidget
   },
-  nearby_relevant_groups: {
+  relevant_project_activity: {
+    title: 'Recently Active Projects',
+    component: ProjectsWidget
+  },
+  relevant_groups: {
     title: 'Nearby Relevant Groups', // TODO: ensure there is a way to customize/overwrite this
     component: GroupsWidget
   },
-  nearby_relevant_events: {
+  relevant_events: {
     title: 'Nearby Relevant Events', // TODO: ensure there is a way to customize/overwrite this
     component: EventsWidget
   },
-  nearby_relevant_requests_offers: {
+  relevant_requests_offers: {
     title: 'Nearby Relevant Offers and Requests', // TODO: ensure there is a way to customize/overwrite this
     component: OffersAndRequestsWidget
   },
