@@ -22,7 +22,6 @@ import Events from 'routes/Events/Events.store'
 import FeedList from 'components/FeedList/FeedList.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
-import JoinGroup from 'routes/JoinGroup/JoinGroup.store'
 import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
 import Messages from 'routes/Messages/Messages.store'
 import Members from 'routes/Members/Members.store'
@@ -61,7 +60,6 @@ export const combinedReducers = combineReducers({
   FeedList,
   FullPageModal,
   HyloEditor,
-  JoinGroup,
   MembershipRequests,
   MapExplorer,
   Members,

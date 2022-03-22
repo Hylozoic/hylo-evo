@@ -7,7 +7,6 @@ import { ConnectedRouter } from 'connected-react-router'
 import checkLogin from 'store/actions/checkLogin'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import PrimaryLayout from 'routes/PrimaryLayout'
-import JoinGroup from 'routes/JoinGroup'
 import PublicLayout from 'routes/PublicLayout'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import Loading from 'components/Loading'
@@ -37,30 +36,24 @@ function Router () {
     )
   }
 
-  // // On mobile we want to only store the intended URL and forward to the
-  // // download app modal (which is currently on the Login component/page)
-  // // Specifically we don't want any components to do any work but this,
-  // // namely JoinGroup which utilizes returnToOnAuth) and may attempt
-  // // to auth the user with a token and send them into sign-up.
-  // if (!isAuthorized) {
-  //   dispatch(setReturnToURL(location.pathname + location.search))
-  // }
+  // TODO: Revisit this in terms of returnToURL
+  // On mobile we want to only store the intended URL and forward to the
+  // download app modal (which is currently on the Login component/page)
+  // Specifically we don't want any components to do any work but this,
+  // namely JoinGroup which utilizes returnToOnAuth) and may attempt
+  // to auth the user with a token and send them into sign-up.
 
   return (
     <ErrorBoundary>
-      <Switch>
-        <Route path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
-        <Route path='/h/use-invitation' component={JoinGroup} />
-        {!isAuthorized && (
+      {!isAuthorized && (
+        <Switch>
           <Route path='/public' component={PublicLayout} />
-        )}
-        {!isAuthorized && (
-          <Route path='/' component={NonAuthLayout} />
-        )}
-        {isAuthorized && (
-          <Route path='/' component={PrimaryLayout} />
-        )}
-      </Switch>
+          <Route component={NonAuthLayout} />
+        </Switch>
+      )}
+      {isAuthorized && (
+        <Route component={PrimaryLayout} />
+      )}
     </ErrorBoundary>
   )
 }

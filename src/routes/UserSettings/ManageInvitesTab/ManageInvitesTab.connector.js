@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
-import { useInvitation } from 'routes/JoinGroup/JoinGroup.store'
+import useInvitation from 'store/actions/useInvitation'
 import { FETCH_MY_REQUESTS_AND_INVITES } from 'store/constants'
 import { groupUrl } from 'util/navigation'
 import {

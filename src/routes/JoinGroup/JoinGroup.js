@@ -1,50 +1,55 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { get, isNil } from 'lodash/fp'
 import { groupUrl } from 'util/navigation'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getMe from 'store/selectors/getMe'
-import getIsLoggedIn from 'store/selectors/getIsLoggedIn'
-import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
-import {
-  getNewMembership, getValidInvite, useInvitation, checkInvitation
-} from './JoinGroup.store'
+import getSignupState, { SignupState } from 'store/selectors/getSignupState'
+import useInvitation from 'store/actions/useInvitation'
+import checkInvitation from 'store/actions/checkInvitation'
 import Loading from 'components/Loading'
 
 export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
 
+// Should receive `token` and `email`query search params
 export default function JoinGroup (props) {
   const dispatch = useDispatch()
-  const newMembership = useSelector(getNewMembership)
-  const currentUser = useSelector(getMe)
-  const isLoggedIn = useSelector(getIsLoggedIn)
-  const isValidInvite = useSelector(getValidInvite)
-  const groupSlug = get('group.slug', newMembership)
+  const signupState = useSelector(getSignupState)
+  const signupComplete = signupState === SignupState.Complete
+  const [newMembership, setNewMembership] = useState()
+  const [isValidInvite, setIsValidInvite] = useState()
   const hasCheckedValidInvite = !isNil(isValidInvite)
-  const invitationToken = getQuerystringParam('token', null, props)
-  const accessCode = getRouteParam('accessCode', null, props)
+  const groupSlug = get('group.slug', newMembership)
+  const invitationTokenAndCode = {
+    invitationToken: getQuerystringParam('token', null, props),
+    accessCode: getRouteParam('accessCode', null, props)
+  }
   // Currently doesn't seem to be sent by anything on the front-end or backend
   const redirectToView = getQuerystringParam('redirectToView', null, props)
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      checkInvitation({ invitationToken, accessCode })
-    } else {
-      fetchForCurrentUser()
-      if (currentUser) dispatch(useInvitation({ invitationToken, accessCode }))
+    const asyncFunc = async () => {
+      if (signupComplete) {
+        const useInvitationResult = await dispatch(useInvitation(invitationTokenAndCode))
+        const newMembership = useInvitationResult?.payload?.getData()?.membership
+        if (newMembership) {
+          setNewMembership(newMembership)
+        }
+      } else {
+        const checkInvitationResult = await dispatch(checkInvitation(invitationTokenAndCode))
+        const isValidInvite = checkInvitationResult?.payload?.getData()?.valid
+        if (isValidInvite) {
+          setIsValidInvite(isValidInvite)
+        }
+      }
     }
-  }, [isLoggedIn, currentUser])
 
-  useEffect(() => {
-    if (currentUser) {
-      dispatch(useInvitation())
-    }
-  }, [dispatch, useInvitation, currentUser])
+    asyncFunc()
+  }, [signupComplete])
 
-  if (!isLoggedIn && hasCheckedValidInvite) {
+  if (!signupComplete && hasCheckedValidInvite) {
     if (isValidInvite) {
       return <Redirect to={SIGNUP_PATH} />
     } else {
@@ -52,7 +57,7 @@ export default function JoinGroup (props) {
     }
   }
 
-  if (isLoggedIn && groupSlug) {
+  if (signupComplete && groupSlug) {
     return <Redirect to={groupUrl(groupSlug, redirectToView || 'explore')} />
   }
 

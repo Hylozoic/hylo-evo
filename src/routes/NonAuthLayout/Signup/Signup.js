@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import { mobileRedirect } from 'util/mobile'
 import getLoginError from 'store/selectors/getLoginError'
-import getReturnToURL from 'store/selectors/getReturnToURL'
-import resetReturnToURL from 'store/actions/resetReturnToURL'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import loginWithService from 'store/actions/loginWithService'
@@ -26,17 +24,7 @@ export default function Signup (props) {
   const providedError = useSelector(state =>
     getLoginError(state) || getQuerystringParam('error', state, props)
   )
-  // TODO: `returnToURL` querystring param could be handled by the Router along with returnToURL logic
-  const returnToURL = useSelector(state =>
-    getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state)
-  )
   const error = providedError || localError
-
-  // TODO: Why is this here instead of relying on it happening in `PrimaryLayout`?
-  const redirectOnSignIn = defaultPath => {
-    dispatch(resetReturnToURL())
-    dispatch(push(returnToURL || defaultPath))
-  }
 
   const sendEmailVerification = async email => {
     const { payload } = await dispatch(sendEmailVerificationAction(email))
@@ -52,8 +40,6 @@ export default function Signup (props) {
     const result = await dispatch(loginWithService(service))
     if (result?.e) {
       setLocalError(result.e)
-    } else {
-      redirectOnSignIn('/')
     }
   }
 

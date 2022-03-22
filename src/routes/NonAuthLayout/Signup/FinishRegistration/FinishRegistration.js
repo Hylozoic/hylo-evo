@@ -20,10 +20,9 @@ export default function FinishRegistration (props) {
   const displayError = props.error || error
   const canSubmit = formValues.name.length > 0 && formValues.password.length > 0 && !error
 
-  const submit = () => {
+  const submit = async () => {
     if (canSubmit) {
-      props.register(formValues.name, formValues.password)
-        .then(() => { props.redirectOnSignIn('/welcome/upload-photo') }, (e) => { /* Error */ })
+      await props.register(formValues.name, formValues.password)
     }
   }
 
@@ -95,8 +94,12 @@ export default function FinishRegistration (props) {
           value={formValues.passwordConfirmation}
         />
 
-        <Button styleName='submit' label='Jump in to Hylo!' color={canSubmit ? 'green' : 'gray'}
-          onClick={canSubmit ? () => submit() : null} />
+        <Button
+          styleName='submit'
+          label='Jump in to Hylo!'
+          color={canSubmit ? 'green' : 'gray'}
+          onClick={canSubmit ? () => submit() : null}
+        />
       </div>
     </div>
   )

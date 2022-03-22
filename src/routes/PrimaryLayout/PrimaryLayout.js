@@ -35,6 +35,7 @@ import GroupExplorer from 'routes/GroupExplorer'
 import Drawer from './components/Drawer'
 import Events from 'routes/Events'
 import Feed from 'routes/Feed'
+import JoinGroup from 'routes/JoinGroup'
 import Stream from 'routes/Stream'
 import MapExplorer from 'routes/MapExplorer'
 import LandingPage from 'routes/LandingPage'
@@ -114,9 +115,9 @@ const welcomeRoutes = [
   { path: '/welcome/explore', child: WelcomeExplore }
 ]
 
-// Redirects from old routes
+// Redirects for legacy and NonAuth routes
 const redirectRoutes = [
-  { from: '/(login|/reset-password|/signup)', to: '/' },
+  { from: '/(login|reset-password|signup)', to: '/' },
   { from: '/:context(public|all)/p/:postId', to: '/:context/post/:postId' },
   { from: '/:context(public|all)/project', to: '/:context/projects' },
   { from: '/:context(public|all)/event', to: '/:context/events' },
@@ -291,11 +292,13 @@ export default class PrimaryLayout extends Component {
         {redirectRoutes.map(({ from, to }) => (
           <RedirectRoute exact path={from} to={to} key={from} />
         ))}
+        <RedirectRoute path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
+        <RedirectRoute path='/h/use-invitation' component={JoinGroup} />
         {lastViewedGroup && (
           <RedirectRoute exact path='/(|app)' to={`/groups/${lastViewedGroup.slug}`} />
         )}
         {/* First time viewing a group redirect to explore page */}
-        {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) && (
+        {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
           <RedirectRoute exact path='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />
         )}
         {(signupInProgress && !isWelcomePath(location.pathname)) && (

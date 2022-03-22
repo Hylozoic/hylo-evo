@@ -28,6 +28,8 @@ export default function SignupRouter (props) {
       redirectTo = '/signup/finish'
       break
     }
+    // Should never be true as SignupRouter is not active at this state,
+    // Routing will have been turned-over to PrimaryLayout
     case SignupState.InProgress: {
       redirectTo = '/'
       break

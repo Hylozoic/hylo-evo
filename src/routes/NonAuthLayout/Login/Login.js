@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatError } from '../util'
 import { mobileRedirect } from 'util/mobile'
-import getReturnToURL from 'store/selectors/getReturnToURL'
 import getLoginError from 'store/selectors/getLoginError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
@@ -17,32 +16,31 @@ import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
 import setReturnToURL from 'store/actions/setReturnToURL'
 
+export const DEFAULT_LOGIN_ERROR = 'Sorry, that Email and Password combination didn\'t work.'
+
 export default function Login (props) {
   const dispatch = useDispatch()
   const errorFromStore = useSelector(state =>
     getLoginError(state) || getQuerystringParam('error', state, props)
   )
-  const returnToURL = useSelector(state =>
-    getQuerystringParam('returnToUrl', state, props) || getReturnToURL(state)
-  )
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [error, setError] = useState()
   const downloadAppUrl = mobileRedirect()
-  const { location } = props
-  const returnToNavigationState = location?.state?.from
   const displayError = error || errorFromStore
+  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', null, props)
+  const returnToNavigationState = props.location?.state?.from
+  const returnToURL = returnToNavigationState
+    ? returnToNavigationState.pathname + returnToNavigationState.search
+    : returnToPathFromQueryString
 
   useEffect(() => {
-    if (returnToNavigationState) {
-      dispatch(setReturnToURL(returnToNavigationState.pathname + returnToNavigationState.search))
+    if (returnToURL) {
+      // Clears location state on page reload
+      props.history.replace()
+      dispatch(setReturnToURL(returnToURL))
     }
-  }, [dispatch, setReturnToURL, returnToNavigationState])
-
-  // const redirectOnSignIn = defaultPath => {
-  //   dispatch(resetReturnToURL())
-  //   dispatch(push(returnToURL || defaultPath))
-  // }
+  }, [dispatch, setReturnToURL, returnToURL])
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -56,8 +54,12 @@ export default function Login (props) {
     const { payload } = await dispatch(login(email, password))
     const { me, error } = payload.getData()
 
-    if (!me || error) {
-      setError(error || 'Sorry, that Email and Password combination didn\'t work.')
+    if (error) {
+      setError(error)
+    }
+
+    if (!me) {
+      setError(DEFAULT_LOGIN_ERROR)
     }
   }
 
@@ -68,8 +70,8 @@ export default function Login (props) {
       return setError(result.error)
     }
 
-    // Current user data is required to be present for routing
-    // to switch to auth'd layouts (i.e. PrimaryLayout)
+    // Required for Me data to be available to cause switch to auth'd
+    // layout (i.e. PrimaryLayout)
     dispatch(checkLogin())
   }
 

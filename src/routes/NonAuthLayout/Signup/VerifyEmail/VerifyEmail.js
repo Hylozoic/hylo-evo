@@ -44,10 +44,6 @@ export default function VerifyEmail (props) {
 
       if (error) {
         setError(error)
-      } else {
-        // Start in loading state, verifyEmail with token taken from search params if avaialble
-        // if valid then immediately redirect to the next Sign Up step (Register)
-        dispatch(push('/signup/finish'))
       }
     } catch (error) {
       // Error is added to the state by login reducer but we need to catch it here too

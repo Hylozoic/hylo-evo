@@ -32,6 +32,7 @@ import {
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
+  USE_INVITATION,
   VOTE_ON_POST_PENDING
 } from 'store/constants'
 import {
@@ -56,9 +57,6 @@ import {
 import {
   CREATE_GROUP
 } from 'components/CreateGroup/CreateGroup.store'
-import {
-  USE_INVITATION
-} from 'routes/JoinGroup/JoinGroup.store'
 import { FETCH_GROUP_WELCOME_DATA } from 'routes/GroupWelcomeModal/GroupWelcomeModal.store'
 
 import {
