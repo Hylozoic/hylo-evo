@@ -286,6 +286,7 @@ export default class PrimaryLayout extends Component {
 
     return (
       <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
+        <RedirectRoute path='/(login|reset-password|signup)' to='/' />
         {/* Site tour */}
         {showTourPrompt && (
           <Route path='/:context(all|public|groups)' component={props =>

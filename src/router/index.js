@@ -9,6 +9,7 @@ import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import setReturnToURL from 'store/actions/setReturnToURL'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import JoinGroup from 'routes/JoinGroup'
+import PublicLayout from 'routes/PublicLayout'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import Loading from 'components/Loading'
 import ErrorBoundary from 'components/ErrorBoundary'
@@ -54,24 +55,13 @@ function Router () {
         <Route path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} returnToOnAuth />
         <Route path='/h/use-invitation' component={JoinGroup} returnToOnAuth />
         {!isAuthorized && (
-          <>
-            <Route path='/login' component={NonAuthLayout} returnToOnAuth />
-            <Route path='/reset-password' exact component={NonAuthLayout} />
-            <Route path='/signup' component={NonAuthLayout} />
-            <Route path='/:context(public)' component={NonAuthLayout} />
-            {/*
-              NOTE: This redirects on `/` (and any other path not matched earlier), but shouldn't
-              interfere with the static pages as those routes are first use `path='/(.+)'`
-              to match anything BUT root if there is any issue.
-            */}
-            <RedirectRoute path='/' to='/login' />
-          </>
+          <Route path='/public' component={PublicLayout} />
+        )}
+        {!isAuthorized && (
+          <Route path='/' component={NonAuthLayout} returnToOnAuth />
         )}
         {isAuthorized && (
-          <>
-            <RedirectRoute path='/(login|reset-password|signup)' to='/' />
-            <Route path='/' component={PrimaryLayout} />
-          </>
+          <Route path='/' component={PrimaryLayout} />
         )}
       </Switch>
     </ErrorBoundary>

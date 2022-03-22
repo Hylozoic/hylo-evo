@@ -80,6 +80,7 @@ export default function Signup (props) {
         <h1 styleName='title'>Welcome to Hylo</h1>
         <p styleName='blurb'>Stay connected, organized, and engaged with your group.</p>
         <p styleName='or'>Enter your email to get started:</p>
+
         {error && formatError(error, 'Signup')}
 
         <TextInput

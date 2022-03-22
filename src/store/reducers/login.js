@@ -3,7 +3,7 @@ import { LOGIN, RESET_RETURN_TO_URL, SET_RETURN_TO_URL, SIGNUP } from 'store/con
 import { SEND_EMAIL_VERIFICATION, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store.js'
 
 export default combineReducers({
-  returnToURL: (state = null, { type, error, payload, meta}) => {
+  returnToURL: (state = null, { type, payload }) => {
     switch (type) {
       case SET_RETURN_TO_URL: {
         return payload.returnToURL
