@@ -13,6 +13,16 @@ import {
 import Div100vh from 'react-div-100vh'
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+import {
+  OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
+  OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
+  REQUIRED_EDIT_POST_MATCH,
+  isAboutPath,
+  isWelcomePath,
+  isMapViewPath
+} from 'util/navigation'
+import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
+import RedirectRoute from 'router/RedirectRoute'
 import AddLocation from 'routes/WelcomeWizard/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
@@ -44,17 +54,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/WelcomeWizard/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
-import {
-  OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
-  OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
-  REQUIRED_EDIT_POST_MATCH,
-  isAboutPath,
-  isWelcomePath,
-  isMapViewPath
-} from 'util/navigation'
-import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PrimaryLayout.scss'
-import RedirectRoute from 'router/RedirectRoute'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
@@ -114,8 +114,9 @@ const welcomeRoutes = [
   { path: '/welcome/explore', child: WelcomeExplore }
 ]
 
+// Redirects from old routes
 const redirectRoutes = [
-  // Redirects from old routes
+  { from: '/(login|/reset-password|/signup)', to: '/' },
   { from: '/:context(public|all)/p/:postId', to: '/:context/post/:postId' },
   { from: '/:context(public|all)/project', to: '/:context/projects' },
   { from: '/:context(public|all)/event', to: '/:context/events' },
@@ -181,14 +182,14 @@ export default class PrimaryLayout extends Component {
     })
   }
 
-  closeTour = () => {
+  handleCloseTour = () => {
     this.props.updateUserSettings({ settings: { alreadySeenTour: true } })
     this.setState({
       closeTheTour: true
     })
   }
 
-  closeDrawer = () => this.props.isDrawerOpen && this.props.toggleDrawer()
+  handleCloseDrawer = () => this.props.isDrawerOpen && this.props.toggleDrawer()
 
   scrollToTop = () => {
     const centerColumn = document.getElementById(CENTER_COLUMN_ID)
@@ -239,8 +240,9 @@ export default class PrimaryLayout extends Component {
       isDrawerOpen,
       isGroupMenuOpen,
       isGroupRoute,
+      lastViewedGroup,
       location,
-      redirectToURL,
+      returnToURL,
       resetReturnToURL,
       routeParams,
       showMenuBadge,
@@ -248,9 +250,6 @@ export default class PrimaryLayout extends Component {
       slug,
       width
     } = this.props
-    const { mobileSettingsLayout } = this.context
-    const withoutNav = mobileSettingsLayout
-
     if (currentUserPending) {
       return (
         <div styleName='container'>
@@ -259,10 +258,10 @@ export default class PrimaryLayout extends Component {
       )
     }
 
-    if (!signupInProgress && redirectToURL) {
+    if (!signupInProgress && returnToURL) {
       resetReturnToURL()
       return (
-        <RedirectRoute to={redirectToURL} />
+        <Redirect to={returnToURL} />
       )
     }
 
@@ -270,13 +269,15 @@ export default class PrimaryLayout extends Component {
       if (!group && !groupPending) return <NotFound />
     }
 
+    const { mobileSettingsLayout } = this.context
+    const withoutNav = mobileSettingsLayout
     const queryParams = qs.parse(location.search.substring(1))
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
     const isMapView = isMapViewPath(location.pathname)
-    const collapsedState = hasDetail || (isMapView && queryParams['hideDrawer'] !== 'true')
+    const collapsedState = hasDetail || (isMapView && queryParams.hideDrawer !== 'true')
     const isSingleColumn = (slug && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
     const showTourPrompt = !signupInProgress &&
       !get('settings.alreadySeenTour', currentUser) &&
@@ -285,73 +286,106 @@ export default class PrimaryLayout extends Component {
       !withoutNav
 
     return (
-      <Div100vh styleName={cx('container', { 'map-view': isMapView, 'singleColumn': isSingleColumn, 'detailOpen': hasDetail })}>
-        <RedirectRoute path='/(login|reset-password|signup)' to='/' />
+      <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
+        {/* Route-based Redirection */}
+        {redirectRoutes.map(({ from, to }) => (
+          <RedirectRoute exact path={from} to={to} key={from} />
+        ))}
+        {lastViewedGroup && (
+          <RedirectRoute exact path='/(|app)' to={`/groups/${lastViewedGroup.slug}`} />
+        )}
+        {/* First time viewing a group redirect to explore page */}
+        {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) && (
+          <RedirectRoute exact path='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />
+        )}
+        {(signupInProgress && !isWelcomePath(location.pathname)) && (
+          <RedirectRoute to='/welcome/upload-photo' />
+        )}
+
         {/* Site tour */}
         {showTourPrompt && (
-          <Route path='/:context(all|public|groups)' component={props =>
-            <div styleName={cx('tourWrapper', { 'tourClosed': this.state.closeTheTour })}>
-              <div styleName='tourPrompt'>
-                <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-                <div styleName='tourExplanation'>
-                  <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
-                  <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
-                  <div>
-                    <button styleName='skipTour' onClick={this.closeTour}>No thanks</button>
-                    <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+          <Route
+            path='/:context(all|public|groups)'
+            component={props => (
+              <div styleName={cx('tourWrapper', { tourClosed: this.state.closeTheTour })}>
+                <div styleName='tourPrompt'>
+                  <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+                  <div styleName='tourExplanation'>
+                    <p><strong>Welcome to Hylo {currentUser.name}!</strong> I’d love to show you how things work, would you like a quick tour?</p>
+                    <p>To follow the tour look for the pulsing beacons! <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
+                    <div>
+                      <button styleName='skipTour' onClick={this.handleCloseTour}>No thanks</button>
+                      <button styleName='startTour' onClick={this.handleClickStartTour}>Show me Hylo</button>
+                    </div>
+                    <div styleName='speechIndicator' />
                   </div>
-                  <div styleName='speechIndicator' />
                 </div>
+                <div styleName='tourBg' onClick={this.handleCloseTour} />
               </div>
-              <div styleName='tourBg' onClick={this.closeTour} />
-            </div>} />
+            )}
+          />
         )}
 
         {/* Context navigation drawer */}
-        {!withoutNav && <>
-          <Switch>
-            {routesWithDrawer.map(({ path }) => (
-              <Route path={path} key={path} render={props => (
-                <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
-              )} />
-            ))}
-          </Switch>
-          <TopNav styleName='top' onClick={this.closeDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
-        </>}
+        {!withoutNav && (
+          <>
+            <Switch>
+              {routesWithDrawer.map(({ path }) => (
+                <Route
+                  path={path}
+                  key={path}
+                  render={props => (
+                    <Drawer {...props} styleName={cx('drawer', { hidden: !isDrawerOpen })} {...{ group }} />
+                  )}
+                />
+              ))}
+            </Switch>
+            <TopNav styleName='top' onClick={this.handleCloseDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
+          </>
+        )}
 
-        <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={this.closeDrawer}>
+        <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={this.handleCloseDrawer}>
           {/* View navigation menu */}
-          <Route path='/:context(all|public)' component={props =>
-            <Navigation {...props}
-              collapsed={collapsedState}
-              styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
-              mapView={isMapView}
-            />}
-          />
-          {group && currentGroupMembership &&
-            <Route path='/:context(groups)/:groupSlug' component={props =>
-              <Navigation {...props}
-                group={group}
+          <Route
+            path='/:context(all|public)'
+            component={props => (
+              <Navigation
+                {...props}
                 collapsed={collapsedState}
-                styleName={cx('left', { 'map-view': isMapView }, { 'hidden': !isGroupMenuOpen })}
+                styleName={cx('left', { 'map-view': isMapView }, { hidden: !isGroupMenuOpen })}
                 mapView={isMapView}
-              />}
+              />
+            )}
+          />
+          {group && currentGroupMembership && (
+            <Route
+              path='/:context(groups)/:groupSlug'
+              component={props => (
+                <Navigation
+                  {...props}
+                  group={group}
+                  collapsed={collapsedState}
+                  styleName={cx('left', { 'map-view': isMapView }, { hidden: !isGroupMenuOpen })}
+                  mapView={isMapView}
+                />
+              )}
             />
-          }
+          )}
           {/* When joining a group by invitation show join form */}
           {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
-            <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupWelcomeModal {...props} group={group} />} />}
+            <Route path='/:context(groups)/:groupSlug' render={props => <GroupWelcomeModal {...props} group={group} />} />}
 
           <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             <Switch>
-              {redirectRoutes.map(({ from, to }) => <Redirect from={from} to={to} exact key={from} />)}
-              {welcomeRoutes.map(({ path, child }) =>
-                <Route path={path} key={path} render={props =>
-                  <WelcomeWizardModal {...props} child={child} />} />)}
-              {signupInProgress &&
-                <RedirectToWelcomeFlow pathname={this.props.location.pathname} currentUser={currentUser} />}
-              {!signupInProgress &&
-                <RedirectToGroup path='/(|app)' currentUser={currentUser} />}
+              {welcomeRoutes.map(({ path, child }) => (
+                <Route
+                  path={path}
+                  key={path}
+                  render={props => (
+                    <WelcomeWizardModal {...props} child={child} />
+                  )}
+                />
+              ))}
               {/* **** Member Routes **** */}
               <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
               <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
@@ -368,10 +402,7 @@ export default class PrimaryLayout extends Component {
               {/* **** Group Routes **** */}
               {/* When viewing a group you are not a member of show group detail page */}
               {slug && !currentGroupMembership &&
-                <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
-              {/* First time viewing a group redirect to explore page */}
-              {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
-                <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
+                <Route path='/:context(groups)/:groupSlug' render={props => <GroupDetail {...props} group={group} />} />}
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
@@ -380,20 +411,20 @@ export default class PrimaryLayout extends Component {
               <Route path={`/:context(groups)/:groupSlug/:view(projects)/${OPTIONAL_POST_MATCH}`} component={Feed} />
               <Route path={`/:context(groups)/:groupSlug/:view(events)/${OPTIONAL_POST_MATCH}`} component={Events} />
               <Route path='/:context(groups)/:groupSlug/:view(groups)' component={Groups} />
-              <Route path={`/:context(groups)/:groupSlug/:view(members)/create`} component={Members} />
+              <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
               <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
               <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
-              <Route path={`/:context(groups)/:groupSlug`} component={Stream} />
+              <Route path='/:context(groups)/:groupSlug' component={Stream} />
               {/* Other Routes */}
               <Route path='/settings' component={UserSettings} />
               <Route path='/search' component={Search} />
             </Switch>
           </Div100vh>
-          {group && currentGroupMembership &&
+          {(group && currentGroupMembership) && (
             <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
               <Switch>
                 <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
@@ -401,7 +432,7 @@ export default class PrimaryLayout extends Component {
                 <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
               </Switch>
             </div>
-          }
+          )}
           <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
             <Switch>
               {detailRoutes.map(({ path, component }) => {
@@ -414,12 +445,24 @@ export default class PrimaryLayout extends Component {
         </div>
         <Route path='/messages/:messageThreadId?' render={props => <Messages {...props} />} />
         <Switch>
-          {createRoutes.map(({ path }) =>
-            <Route path={path + '/create'} key={path + 'create'} children={({ match, location }) =>
-              <CreateModal match={match} location={location} />} />)}
-          {createRoutes.map(({ path }) =>
-            <Route path={path + '/' + REQUIRED_EDIT_POST_MATCH} key={path + 'editpost'} children={({ match, location }) =>
-              <CreateModal match={match} location={location} />} />)}
+          {createRoutes.map(({ path }) => (
+            <Route
+              path={path + '/create'}
+              key={path + 'create'}
+              children={({ match, location }) => (
+                <CreateModal match={match} location={location} />
+              )}
+            />
+          ))}
+          {createRoutes.map(({ path }) => (
+            <Route
+              path={path + '/' + REQUIRED_EDIT_POST_MATCH}
+              key={path + 'editpost'}
+              children={({ match, location }) => (
+                <CreateModal match={match} location={location} />
+              )}
+            />
+          ))}
         </Switch>
         <SocketListener location={location} />
         <SocketSubscriber type='group' id={get('slug', group)} />
@@ -437,26 +480,6 @@ export default class PrimaryLayout extends Component {
   }
 }
 
-export function RedirectToWelcomeFlow ({ pathname }) {
-  if (isWelcomePath(pathname)) return null
-
-  return <Redirect to='/welcome/upload-photo' />
-}
-
-export function RedirectToGroup ({ path, currentUser }) {
-  let redirectToPath = '/all'
-
-  if (currentUser.memberships.count() > 0) {
-    const mostRecentGroup = currentUser.memberships
-      .orderBy(m => new Date(m.lastViewedAt), 'desc')
-      .first()
-      .group
-    redirectToPath = `/groups/${mostRecentGroup.slug}`
-  }
-
-  return <Redirect exact from={path} to={redirectToPath} />
-}
-
 function TourTooltip ({
   continuous,
   index,
@@ -466,30 +489,32 @@ function TourTooltip ({
   primaryProps,
   tooltipProps
 }) {
-  return <div {...tooltipProps} styleName='tooltipWrapper'>
-    <div styleName='tooltipContent'>
-      <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
-      <div>
-        {step.title && <div styleName='stepTitle'>{step.title}</div>}
-        <div>{step.content}</div>
+  return (
+    <div {...tooltipProps} styleName='tooltipWrapper'>
+      <div styleName='tooltipContent'>
+        <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
+        <div>
+          {step.title && <div styleName='stepTitle'>{step.title}</div>}
+          <div>{step.content}</div>
+        </div>
+      </div>
+      <div styleName='tooltipControls'>
+        {index > 0 && (
+          <button styleName='backButton' {...backProps}>
+            Back
+          </button>
+        )}
+        {continuous && (
+          <button styleName='nextButton' {...primaryProps}>
+            Next
+          </button>
+        )}
+        {!continuous && (
+          <button {...closeProps}>
+            Close
+          </button>
+        )}
       </div>
     </div>
-    <div styleName='tooltipControls'>
-      {index > 0 && (
-        <button styleName='backButton' {...backProps}>
-          Back
-        </button>
-      )}
-      {continuous && (
-        <button styleName='nextButton' {...primaryProps}>
-          Next
-        </button>
-      )}
-      {!continuous && (
-        <button {...closeProps}>
-          Close
-        </button>
-      )}
-    </div>
-  </div>
+  )
 }

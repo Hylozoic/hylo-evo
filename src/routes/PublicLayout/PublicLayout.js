@@ -2,7 +2,6 @@ import cx from 'classnames'
 import { some } from 'lodash/fp'
 import React from 'react'
 import Div100vh from 'react-div-100vh'
-import { useLocation } from 'react-router'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
@@ -13,8 +12,8 @@ import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DET
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PublicLayout.scss'
 
-export default function PublicLayout () {
-  const location = useLocation()
+export default function PublicLayout (props) {
+  const { location } = props
   const hasDetail = some(
     ({ path }) => matchPath(location.pathname, { path, exact: true }),
     detailRoutes
@@ -32,7 +31,12 @@ export default function PublicLayout () {
           <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
           <Route path={`/:context(public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
           <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
-          <Redirect from={`/public/${OPTIONAL_POST_MATCH}`} exact to='/public/map' key='streamToMap' />
+          <Redirect
+            exact
+            from={`/public/${OPTIONAL_POST_MATCH}`}
+            to={{ pathname: '/public/map', state: { from: location } }}
+            key='streamToMap'
+          />
         </Switch>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>

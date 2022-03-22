@@ -28,6 +28,7 @@ export default class JoinGroup extends Component {
 
   render () {
     const { isLoggedIn, groupSlug, hasCheckedValidInvite, isValidInvite, redirectToView } = this.props
+
     if (!isLoggedIn && hasCheckedValidInvite) {
       if (isValidInvite) {
         return <Redirect to={SIGNUP_PATH} />
@@ -35,7 +36,11 @@ export default class JoinGroup extends Component {
         return <Redirect to={EXPIRED_INVITE_PATH} />
       }
     }
-    if (isLoggedIn && groupSlug) return <Redirect to={groupUrl(groupSlug, redirectToView || 'explore')} />
+
+    if (isLoggedIn && groupSlug) {
+      return <Redirect to={groupUrl(groupSlug, redirectToView || 'explore')} />
+    }
+
     return <Loading />
   }
 }

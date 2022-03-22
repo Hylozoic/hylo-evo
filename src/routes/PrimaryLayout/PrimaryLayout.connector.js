@@ -14,6 +14,7 @@ import getMyMemberships from 'store/selectors/getMyMemberships'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
 import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
+import getLastViewedGroup from 'store/selectors/getLastViewedGroup'
 
 export function mapStateToProps (state, props) {
   const memberships = getMyMemberships(state, props)
@@ -21,6 +22,7 @@ export function mapStateToProps (state, props) {
   const hasMemberships = memberships.length > 0
   const slug = getSlugFromLocation(null, props)
   const group = getGroupForCurrentRoute(state, props)
+  const lastViewedGroup = getLastViewedGroup(state)
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
   const signupState = getSignupState(state)
   const signupInProgress = signupState === SignupState.InProgress
@@ -34,15 +36,16 @@ export function mapStateToProps (state, props) {
 
   return {
     currentUser: getMe(state),
+    currentUserPending: state.pending[FETCH_FOR_CURRENT_USER],
+    currentGroupMembership,
     downloadAppUrl: mobileRedirect(),
+    group,
+    groupPending: state.pending[FETCH_FOR_GROUP],
+    hasMemberships,
     isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
     isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
     isGroupRoute: isGroupRoute(state, props),
-    group,
-    groupPending: state.pending[FETCH_FOR_GROUP],
-    currentUserPending: state.pending[FETCH_FOR_CURRENT_USER],
-    hasMemberships,
-    currentGroupMembership,
+    lastViewedGroup,
     returnToURL: getReturnToURL(state),
     routeParams,
     showMenuBadge,

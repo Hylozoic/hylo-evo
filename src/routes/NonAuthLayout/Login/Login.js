@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { push } from 'connected-react-router'
 import { formatError } from '../util'
 import { mobileRedirect } from 'util/mobile'
 import getReturnToURL from 'store/selectors/getReturnToURL'
-import resetReturnToURL from 'store/actions/resetReturnToURL'
 import getLoginError from 'store/selectors/getLoginError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
@@ -17,6 +15,7 @@ import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
+import setReturnToURL from 'store/actions/setReturnToURL'
 
 export default function Login (props) {
   const dispatch = useDispatch()
@@ -30,7 +29,15 @@ export default function Login (props) {
   const [password, setPassword] = useState()
   const [error, setError] = useState()
   const downloadAppUrl = mobileRedirect()
+  const { location } = props
+  const returnToNavigationState = location?.state?.from
   const displayError = error || errorFromStore
+
+  useEffect(() => {
+    if (returnToNavigationState) {
+      dispatch(setReturnToURL(returnToNavigationState.pathname + returnToNavigationState.search))
+    }
+  }, [dispatch, setReturnToURL, returnToNavigationState])
 
   // const redirectOnSignIn = defaultPath => {
   //   dispatch(resetReturnToURL())

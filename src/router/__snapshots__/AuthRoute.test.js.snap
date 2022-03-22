@@ -13,7 +13,7 @@ exports[`AuthRoute should render component if is logged in and not on the signup
 `;
 
 exports[`AuthRoute should set the URL to return to and send to login if not logged in and requireAuth is set 1`] = `
-<RedirectRoute
+<Redirect
   to="/login"
 />
 `;

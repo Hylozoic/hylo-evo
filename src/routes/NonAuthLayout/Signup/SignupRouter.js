@@ -1,8 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Switch, useLocation } from 'react-router-dom'
+import { Route, Redirect, Switch, useLocation } from 'react-router-dom'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
-import RedirectRoute from 'router/RedirectRoute'
 import Signup from './Signup'
 import VerifyEmail from './VerifyEmail'
 import FinishRegistration from './FinishRegistration'
@@ -38,7 +37,7 @@ export default function SignupRouter (props) {
   return (
     <Switch>
       {(redirectTo && (redirectTo !== location.pathname)) && (
-        <RedirectRoute to={redirectTo} />
+        <Redirect to={redirectTo} />
       )}
       <Route
         exact
