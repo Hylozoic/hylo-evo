@@ -9,7 +9,7 @@ export default function useInvitation (inviteCodes = {}) {
     type: USE_INVITATION,
     graphql: {
       query: `
-        mutation ($invitationToken: String, $accessCode: String) {
+        mutation UseInvitation ($invitationToken: String, $accessCode: String) {
           useInvitation (invitationToken: $invitationToken, accessCode: $accessCode) {
             membership {
               id

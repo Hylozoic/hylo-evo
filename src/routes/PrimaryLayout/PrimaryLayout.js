@@ -23,7 +23,6 @@ import {
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import RedirectRoute from 'router/RedirectRoute'
-import AddLocation from 'routes/WelcomeWizard/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
@@ -35,9 +34,9 @@ import GroupExplorer from 'routes/GroupExplorer'
 import Drawer from './components/Drawer'
 import Events from 'routes/Events'
 import Feed from 'routes/Feed'
-import JoinGroup from 'routes/JoinGroup'
 import Stream from 'routes/Stream'
 import MapExplorer from 'routes/MapExplorer'
+import JoinGroup from 'routes/JoinGroup'
 import LandingPage from 'routes/LandingPage'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
@@ -47,13 +46,11 @@ import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
-import WelcomeExplore from 'routes/WelcomeWizard/WelcomeExplore'
 import Search from 'routes/Search'
-import WelcomeWizardModal from 'routes/WelcomeWizard/WelcomeWizardModal'
+import WelcomeWizard from 'routes/WelcomeWizard'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
-import UploadPhoto from 'routes/WelcomeWizard/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
 import './PrimaryLayout.scss'
 
@@ -109,15 +106,8 @@ const createRoutes = [
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` }
 ]
 
-const welcomeRoutes = [
-  { path: '/welcome/upload-photo', child: UploadPhoto },
-  { path: '/welcome/add-location', child: AddLocation },
-  { path: '/welcome/explore', child: WelcomeExplore }
-]
-
 // Redirects for legacy and NonAuth routes
 const redirectRoutes = [
-  { from: '/(login|reset-password|signup)', to: '/' },
   { from: '/:context(public|all)/p/:postId', to: '/:context/post/:postId' },
   { from: '/:context(public|all)/project', to: '/:context/projects' },
   { from: '/:context(public|all)/event', to: '/:context/events' },
@@ -140,7 +130,6 @@ const redirectRoutes = [
   { from: '/(c|n)/:groupSlug/m/:personId/p/:postId', to: '/groups/:groupSlug/members/:personId/post/:postId' },
   { from: '/(c|n)/:groupSlug/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
   { from: '/(c|n)/:groupSlug/:topicName/p/:postId', to: '/groups/:groupSlug/topics/:topicName/post/:postId' },
-
   // redirects for context switching into global contexts, since these pages don't exist yet
   { from: '/all/(members|settings)', to: '/all' },
   { from: '/public/(members|topics|settings)', to: '/public' }
@@ -265,6 +254,9 @@ export default class PrimaryLayout extends Component {
         <Redirect to={returnToURL} />
       )
     }
+    const defaultRedirectPath = lastViewedGroup
+      ? `/groups/${lastViewedGroup.slug}`
+      : '/all'
 
     if (isGroupRoute) {
       if (!group && !groupPending) return <NotFound />
@@ -292,11 +284,6 @@ export default class PrimaryLayout extends Component {
         {redirectRoutes.map(({ from, to }) => (
           <RedirectRoute exact path={from} to={to} key={from} />
         ))}
-        <RedirectRoute path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
-        <RedirectRoute path='/h/use-invitation' component={JoinGroup} />
-        {lastViewedGroup && (
-          <RedirectRoute exact path='/(|app)' to={`/groups/${lastViewedGroup.slug}`} />
-        )}
         {/* First time viewing a group redirect to explore page */}
         {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
           <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupMembership.group.slug}/explore`} />
@@ -375,20 +362,17 @@ export default class PrimaryLayout extends Component {
             />
           )}
           {/* When joining a group by invitation show join form */}
-          {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) &&
-            <Route path='/:context(groups)/:groupSlug' render={props => <GroupWelcomeModal {...props} group={group} />} />}
-
+          {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) && (
+            <Route
+              path='/:context(groups)/:groupSlug'
+              render={props => (
+                <GroupWelcomeModal {...props} group={group} />
+              )}
+            />
+          )}
           <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             <Switch>
-              {welcomeRoutes.map(({ path, child }) => (
-                <Route
-                  path={path}
-                  key={path}
-                  render={props => (
-                    <WelcomeWizardModal {...props} child={child} />
-                  )}
-                />
-              ))}
+              <Route path='/welcome' component={WelcomeWizard} />
               {/* **** Member Routes **** */}
               <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
               <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
@@ -403,9 +387,16 @@ export default class PrimaryLayout extends Component {
               <Route path='/:context(all)/:view(topics)' component={AllTopics} />
               <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
               {/* **** Group Routes **** */}
+              <Route path={['/:context(groups)/:groupSlug/join/:accessCode', '/h/use-invitation']} component={JoinGroup} />
               {/* When viewing a group you are not a member of show group detail page */}
-              {slug && !currentGroupMembership &&
-                <Route path='/:context(groups)/:groupSlug' render={props => <GroupDetail {...props} group={group} />} />}
+              {(slug && !currentGroupMembership) && (
+                <Route
+                  path='/:context(groups)/:groupSlug'
+                  render={props => (
+                    <GroupDetail {...props} group={group} />
+                  )}
+                />
+              )}
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(groups)/:groupSlug/:view(stream)/${OPTIONAL_POST_MATCH}`} component={Stream} />
@@ -425,6 +416,10 @@ export default class PrimaryLayout extends Component {
               {/* Other Routes */}
               <Route path='/settings' component={UserSettings} />
               <Route path='/search' component={Search} />
+              {/* Default Route (404) */}
+              {!signupInProgress && (
+                <Redirect to={defaultRedirectPath} />
+              )}
             </Switch>
           </Div100vh>
           {(group && currentGroupMembership) && (
@@ -438,11 +433,10 @@ export default class PrimaryLayout extends Component {
           )}
           <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
             <Switch>
-              {detailRoutes.map(({ path, component }) => {
-                return isAboutPath(location.pathname)
-                  ? <Route path={path} render={props => <GroupDetail {...props} communityId={group.id} />} key={path} />
-                  : <Route path={path} component={component} key={path} />
-              })}
+              {detailRoutes.map(({ path, component }) => isAboutPath(location.pathname)
+                ? <Route path={path} render={props => <GroupDetail {...props} communityId={group.id} />} key={path} />
+                : <Route path={path} component={component} key={path} />
+              )}
             </Switch>
           </div>
         </div>

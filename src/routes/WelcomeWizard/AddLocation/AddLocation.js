@@ -63,37 +63,39 @@ export default class AddLocation extends Component {
       [styles['gray-bottom-border']]: true
     })
 
-    return <div styleName='flex-wrapper'>
-      <div styleName='panel'>
-        <span styleName='step-count'>STEP 2/3</span>
-        <br />
-        <div styleName='center'>
-          <Icon name='Globe' styleName='globe-icon' />
-        </div>
-        <div styleName='center location-input'>
-          <Icon name='Location' styleName='location-icon' />
-          <LocationInput
-            saveLocationToDB
-            inputClass={inputClass}
-            location={this.state.location}
-            locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}
-            onChange={this.handleLocationChange}
-            placeholder='Where do you call home?'
-            onKeyPress={event => {
-              if (event.key === 'Enter') {
-                this.submit()
-              }
-            }}
-            autofocus
-          />
-        </div>
-        <div styleName='instructions'>
-          <p>Add your location to see more relevant content, and find people and projects around you.</p>
-        </div>
-        <div>
-          <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText={'Next: Welcome to Hylo!'} />
+    return (
+      <div styleName='flex-wrapper'>
+        <div styleName='panel'>
+          <span styleName='step-count'>STEP 2/3</span>
+          <br />
+          <div styleName='center'>
+            <Icon name='Globe' styleName='globe-icon' />
+          </div>
+          <div styleName='center location-input'>
+            <Icon name='Location' styleName='location-icon' />
+            <LocationInput
+              saveLocationToDB
+              inputClass={inputClass}
+              location={this.state.location}
+              locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}
+              onChange={this.handleLocationChange}
+              placeholder='Where do you call home?'
+              onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  this.submit()
+                }
+              }}
+              autofocus
+            />
+          </div>
+          <div styleName='instructions'>
+            <p>Add your location to see more relevant content, and find people and projects around you.</p>
+          </div>
+          <div>
+            <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText='Next: Welcome to Hylo!' />
+          </div>
         </div>
       </div>
-    </div>
+    )
   }
 }

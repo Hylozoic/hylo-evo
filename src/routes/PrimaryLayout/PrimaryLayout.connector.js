@@ -1,6 +1,5 @@
 import { get, some } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { matchPath } from 'react-router'
 import { mobileRedirect } from 'util/mobile'
 import getReturnToURL from 'store/selectors/getReturnToURL'
 import resetReturnToURL from 'store/actions/resetReturnToURL'
@@ -26,17 +25,23 @@ export function mapStateToProps (state, props) {
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
   const signupState = getSignupState(state)
   const signupInProgress = signupState === SignupState.InProgress
-
-  let routeParams = { context: 'all' }
-  const match = matchPath(props.location.pathname, { path: '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?' }) ||
-                matchPath(props.location.pathname, { path: '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?' })
-  if (match) {
-    routeParams = match.params
-  }
+  // NOTE: PENDING as we've generally used it can be misleading and may need reconsideration:
+  // Currently the `Pending` state for an action will be `undefined` therefore falsy
+  // before a the action has been called. In this case this was causing the component
+  // to render through without a `currentUser` on initial render which was causing issues.
+  // By default the pendingMiddleware keeps the key once it's been used, so it's value
+  // becomes `null`. In most cases I think we want the pending / loading state to be true
+  // before and during the initial fetch or action is ran.
+  //
+  // Recommentaion: Either update `pendingMiddleware` logic, create a selector which
+  // acknowledges this case, handle the loading state within the component.
+  const currentUserPending = state.pending[FETCH_FOR_CURRENT_USER] ||
+    state.pending[FETCH_FOR_CURRENT_USER] === undefined
+  const routeParams = { context: 'all', ...props.match.params }
 
   return {
     currentUser: getMe(state),
-    currentUserPending: state.pending[FETCH_FOR_CURRENT_USER],
+    currentUserPending,
     currentGroupMembership,
     downloadAppUrl: mobileRedirect(),
     group,

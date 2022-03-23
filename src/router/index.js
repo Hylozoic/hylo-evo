@@ -6,11 +6,11 @@ import { createBrowserHistory, createMemoryHistory } from 'history'
 import { ConnectedRouter } from 'connected-react-router'
 import checkLogin from 'store/actions/checkLogin'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
+import ErrorBoundary from 'components/ErrorBoundary'
+import Loading from 'components/Loading'
 import PrimaryLayout from 'routes/PrimaryLayout'
 import PublicLayout from 'routes/PublicLayout'
 import NonAuthLayout from 'routes/NonAuthLayout'
-import Loading from 'components/Loading'
-import ErrorBoundary from 'components/ErrorBoundary'
 import '../css/global/index.scss'
 
 function Router () {
@@ -52,7 +52,14 @@ function Router () {
         </Switch>
       )}
       {isAuthorized && (
-        <Route component={PrimaryLayout} />
+        <Route
+          path={[
+            '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?',
+            '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
+            '/'
+          ]}
+          component={PrimaryLayout}
+        />
       )}
     </ErrorBoundary>
   )

@@ -36,8 +36,7 @@ const server = setupServer(
               groupTopics: [],
               members: []
             }
-          ]
-          : [
+          ] : [
             {
               accessibility: [3],
               memberCount: 16,

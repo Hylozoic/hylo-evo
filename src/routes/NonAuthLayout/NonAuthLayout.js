@@ -3,6 +3,7 @@ import { Route, Redirect, Link, Switch } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
 import Particles from 'react-particles-js'
 import particlesjsConfig from './particlesjsConfig'
+import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayout/Login'
 import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayout/Signup/SignupRouter'
@@ -34,6 +35,8 @@ export default function NonAuthLayout (props) {
         </div>
         <div styleName='signupRow'>
           <Switch>
+            <Route path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
+            <Route path='/h/use-invitation' component={JoinGroup} />
             <Route
               path='/reset-password'
               component={routeProps => (

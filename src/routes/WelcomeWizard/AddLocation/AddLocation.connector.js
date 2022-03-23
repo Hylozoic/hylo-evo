@@ -30,10 +30,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     goToNextStep: () => {
-      if (stateProps.returnToURL) {
-        // Return handling to PrimaryLayout
-        dispatchProps.push('/')
-      } else {
+      // `returnToURL` handled by PrimaryLayout
+      if (!stateProps.returnToURL) {
         dispatchProps.push('/welcome/explore')
       }
     }
