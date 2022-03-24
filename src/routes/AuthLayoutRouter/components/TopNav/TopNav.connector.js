@@ -2,14 +2,14 @@ import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
 import { push } from 'connected-react-router'
 import logout from 'store/actions/logout'
-import { toggleDrawer, toggleGroupMenu } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import { toggleDrawer, toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 
 export function mapStateToProps (state, props) {
   const isPublic = props.routeParams.context === 'public'
 
   return {
     isPublic,
-    isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state)
+    isGroupMenuOpen: get('AuthLayoutRouter.isGroupMenuOpen', state)
   }
 }
 

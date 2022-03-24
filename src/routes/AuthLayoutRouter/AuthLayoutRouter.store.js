@@ -6,7 +6,7 @@ import {
   FETCH_FOR_GROUP_PENDING
 } from 'store/constants'
 
-export const MODULE_NAME = 'PrimaryLayout'
+export const MODULE_NAME = 'AuthLayoutRouter'
 
 const TOGGLE_DRAWER = `${MODULE_NAME}/TOGGLE_DRAWER`
 

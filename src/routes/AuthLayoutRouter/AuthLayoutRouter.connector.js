@@ -12,7 +12,7 @@ import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
-import { toggleDrawer, toggleGroupMenu } from './PrimaryLayout.store'
+import { toggleDrawer, toggleGroupMenu } from './AuthLayoutRouter.store'
 import getLastViewedGroup from 'store/selectors/getLastViewedGroup'
 
 export function mapStateToProps (state, props) {
@@ -47,8 +47,8 @@ export function mapStateToProps (state, props) {
     group,
     groupPending: state.pending[FETCH_FOR_GROUP],
     hasMemberships,
-    isDrawerOpen: get('PrimaryLayout.isDrawerOpen', state),
-    isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
+    isDrawerOpen: get('AuthLayoutRouter.isDrawerOpen', state),
+    isGroupMenuOpen: get('AuthLayoutRouter.isGroupMenuOpen', state),
     isGroupRoute: isGroupRoute(state, props),
     lastViewedGroup,
     returnToPath: getReturnToPath(state),

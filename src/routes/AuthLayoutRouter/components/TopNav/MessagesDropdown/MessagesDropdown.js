@@ -11,8 +11,8 @@ import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import TopNavDropdown from '../TopNavDropdown'
 import { participantAttributes, isUnread, isUpdatedSince } from 'store/models/MessageThread'
-import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
-import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+import NoItems from 'routes/AuthLayoutRouter/components/TopNav/NoItems'
+import LoadingItems from 'routes/AuthLayoutRouter/components/TopNav/LoadingItems'
 import './MessagesDropdown.scss'
 
 export default class MessagesDropdown extends Component {

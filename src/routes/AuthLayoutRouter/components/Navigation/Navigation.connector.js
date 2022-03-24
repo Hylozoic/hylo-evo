@@ -6,7 +6,7 @@ import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { baseUrl, createUrl, isPublicPath } from 'util/navigation'
-import { toggleGroupMenu } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import { toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
 import { makeDropQueryResults } from 'store/reducers/queryResults'
@@ -44,7 +44,7 @@ export function mapStateToProps (state, props) {
     groupId: get('id', group),
     hasRelatedGroups,
     hideTopics: isPublicPath(props.location.pathname),
-    isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
+    isGroupMenuOpen: get('AuthLayoutRouter.isGroupMenuOpen', state),
     rootPath,
     explorePath,
     membersPath,

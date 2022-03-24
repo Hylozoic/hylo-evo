@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import PrimaryLayout from './PrimaryLayout'
+import AuthLayoutRouter from './AuthLayoutRouter'
 
 it('shows NotFound if a currentUser is loaded and the group does not exist', () => {
   const wrapper = shallow(
-    <PrimaryLayout
+    <AuthLayoutRouter
       isGroupRoute
       currentUser={{ hasRegistered: true }}
       location={{ pathname: '' }}
@@ -17,7 +17,7 @@ it('shows NotFound if a currentUser is loaded and the group does not exist', () 
 
 it('shows nothing for a group route if the group and currentUser are not loaded', () => {
   const wrapper = shallow(
-    <PrimaryLayout
+    <AuthLayoutRouter
       location={{ pathname: '/', search: '' }}
       isGroupRoute
       currentUserPending
@@ -30,7 +30,7 @@ it('shows nothing for a group route if the group and currentUser are not loaded'
 
 it('shows normal children for a group route if the group is loaded', () => {
   const wrapper = shallow(
-    <PrimaryLayout
+    <AuthLayoutRouter
       isGroupRoute
       location={{ pathname: '/', search: '' }}
       group={{ id: '1' }}

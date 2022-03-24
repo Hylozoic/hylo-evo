@@ -1,12 +1,12 @@
 import orm from 'store/models'
-import { mapStateToProps } from './PrimaryLayout.connector'
+import { mapStateToProps } from './AuthLayoutRouter.connector'
 
 const emptyState = {
-  PrimaryLayout: {},
+  AuthLayoutRouter: {},
   pending: {}
 }
 
-describe('PrimaryLayout.connector', () => {
+describe('AuthLayoutRouter.connector', () => {
   it('should get correct value for returnToPath from state', () => {
     const session = orm.session(orm.getEmptyState())
     const returnToPath = '/anything'

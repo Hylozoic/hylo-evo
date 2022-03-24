@@ -23,8 +23,8 @@ import {
   ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST,
   ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED
 } from 'store/models/Notification'
-import NoItems from 'routes/PrimaryLayout/components/TopNav/NoItems'
-import LoadingItems from 'routes/PrimaryLayout/components/TopNav/LoadingItems'
+import NoItems from 'routes/AuthLayoutRouter/components/TopNav/NoItems'
+import LoadingItems from 'routes/AuthLayoutRouter/components/TopNav/LoadingItems'
 
 const NOTIFICATION_TEXT_MAX = 76
 

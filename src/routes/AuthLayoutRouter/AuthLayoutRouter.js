@@ -52,7 +52,7 @@ import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 import UserSettings from 'routes/UserSettings'
-import './PrimaryLayout.scss'
+import './AuthLayoutRouter.scss'
 
 // In order of more specific to less specific
 const routesWithDrawer = [
@@ -166,7 +166,7 @@ const tourSteps = desktopWidth => {
   })
 }
 
-export default class PrimaryLayout extends Component {
+export default class AuthLayoutRouter extends Component {
   static contextType = LayoutFlagsContext
 
   constructor (props) {

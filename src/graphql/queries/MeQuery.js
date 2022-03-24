@@ -86,7 +86,7 @@ export default gql`
       }
     }
     # For memberships only including only what is needed
-    # for initial load in PrimaryLayout
+    # for initial load in AuthLayoutRouter
     memberships {
       id
       lastViewedAt

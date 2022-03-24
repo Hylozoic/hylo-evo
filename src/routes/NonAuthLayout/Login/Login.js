@@ -59,7 +59,7 @@ export default function Login (props) {
     }
 
     // Required for Me data to be available to cause switch to auth'd
-    // layout (i.e. PrimaryLayout)
+    // layout (i.e. AuthLayoutRouter)
     dispatch(checkLogin())
   }
 

@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { createSelector } from 'redux-orm'
 
-import { toggleDrawer } from 'routes/PrimaryLayout/PrimaryLayout.store'
+import { toggleDrawer } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import orm from 'store/models'
 import { ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH } from 'store/models/Group'
 import getCanModerate from 'store/selectors/getCanModerate'

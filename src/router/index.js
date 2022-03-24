@@ -8,7 +8,7 @@ import checkLogin from 'store/actions/checkLogin'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loading from 'components/Loading'
-import PrimaryLayout from 'routes/PrimaryLayout'
+import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import PublicLayout from 'routes/PublicLayout'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import '../css/global/index.scss'
@@ -58,7 +58,7 @@ function Router () {
             '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
             '/'
           ]}
-          component={PrimaryLayout}
+          component={AuthLayoutRouter}
         />
       )}
     </ErrorBoundary>

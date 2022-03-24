@@ -31,7 +31,7 @@ import MemberSelector from 'components/MemberSelector/MemberSelector.store'
 import ModeratorsSettings from 'routes/GroupSettings/ModeratorsSettingsTab/ModeratorsSettingsTab.store'
 import PeopleTyping from 'components/PeopleTyping/PeopleTyping.store'
 import PostEditor from 'components/PostEditor/PostEditor.store'
-import PrimaryLayout from 'routes/PrimaryLayout/PrimaryLayout.store'
+import AuthLayoutRouter from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import RelatedGroups from 'routes/GroupSettings/RelatedGroupsTab/RelatedGroupsTab.store'
 import SavedSearches from 'routes/UserSettings/UserSettings.store'
 import Search from 'routes/Search/Search.store'
@@ -69,7 +69,7 @@ export const combinedReducers = combineReducers({
   Messages,
   ModeratorsSettings,
   PeopleTyping,
-  PrimaryLayout,
+  AuthLayoutRouter,
   PostEditor,
   RelatedGroups,
   SavedSearches,
