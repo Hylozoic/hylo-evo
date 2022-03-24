@@ -20,7 +20,7 @@ export default class ProjectsWidget extends Component {
 
     return (
       <div styleName='projects'>
-        {items && items.map(p => <Link to={postUrl(p.id, { view: 'explore', groupSlug: group.slug })} key={p.id}>
+        {items && items.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
           <div styleName='project'>
             <div styleName='meta'>
               <div styleName='title'>{p.title}</div>

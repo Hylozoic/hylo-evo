@@ -20,7 +20,7 @@ export default class OffersAndRequestsWidget extends Component {
 
     return (
       <div styleName='offers-and-requests'>
-        {items.map(p => <Link to={postUrl(p.id, { view: 'explore', groupSlug: group.slug })} key={p.id}>
+        {items.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
           <div styleName='item'>
             <div styleName='meta'>
               <span styleName='type'>{p.type}</span> from {p.creator.name}

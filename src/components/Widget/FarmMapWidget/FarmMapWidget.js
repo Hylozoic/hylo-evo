@@ -45,6 +45,8 @@ export default function FarmMapWidget ({ group, items }) {
     console.log(info)
     if (info.object && info.object.type === 'group') {
       push(`/groups/${info.object.slug}`)
+    } else if (info.object && info.object.id) {
+      push(`/groups/${info.object.slug}/post/${info.object.id}`)
     }
   }
 
@@ -67,6 +69,8 @@ export default function FarmMapWidget ({ group, items }) {
     const viewPosts = items.filter(post => {
       const locationObject = post.locationObject
       return locationObject && locationObject.center && locationObject.center.lng && locationObject.center.lat
+    }).map((post) => {
+      return { ...post, slug: group.slug }
     })
 
     setPostsLayer(createIconLayerFromPostsAndMembers({

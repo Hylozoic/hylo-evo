@@ -355,7 +355,7 @@ export default class PrimaryLayout extends Component {
             {/* **** Group Routes **** */}
             {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
-              <Route path={`/:context(groups)/:groupSlug`} render={props => <About {...props} group={group} />} />}
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
             {/* First time viewing a group redirect to explore page */}
             {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
               <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
