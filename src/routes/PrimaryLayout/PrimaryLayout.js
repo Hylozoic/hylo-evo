@@ -62,15 +62,15 @@ const routesWithDrawer = [
   { path: `/:context(all|public)/${OPTIONAL_POST_MATCH}` },
   { path: '/:context(all)/:view(topics)/:topicName' },
   { path: '/:context(all)/:view(topics)' },
-  // {/* Group Routes */}
+  // Group Routes
   { path: `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}` },
   { path: `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}` },
   { path: `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}` },
-  // {/* Member Routes */}
+  // Member Routes
   { path: `/:view(members)/:personId/${OPTIONAL_POST_MATCH}` },
-  // {/* Other Routes */}
+  // Other Routes
   { path: '/messages' },
   { path: '/settings' },
   { path: '/search' },
@@ -135,6 +135,37 @@ const redirectRoutes = [
   { from: '/public/(members|topics|settings)', to: '/public' }
 ]
 
+const tourSteps = desktopWidth => {
+  const steps = [
+    {
+      disableBeacon: true,
+      target: '#currentContext',
+      title: desktopWidth ? 'You are here!' : 'Group menu',
+      content: desktopWidth
+        ? 'This is where we show you which group or other view you are looking at. Click here to return to the home page.'
+        : 'Press on the group name or icon to navigate within the current group or view. Discover events, discussions, resources & more!'
+    },
+    {
+      target: '#toggleDrawer',
+      title: 'Switching groups & viewing all',
+      content: 'This menu allows you to switch between groups, or see updates from all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
+    }
+  ]
+  if (desktopWidth) {
+    steps.push({
+      target: '#groupMenu',
+      title: 'Create & navigate',
+      content: 'Here you can switch between types of content and create new content for people in your group or everyone on Hylo!',
+      placement: 'right'
+    })
+  }
+  return steps.concat({
+    target: '#personalSettings',
+    title: 'Messages, notifications & profile',
+    content: 'Search for posts & people. Send messages to group members or people you see on Hylo. Stay up to date with current events and edit your profile.'
+  })
+}
+
 export default class PrimaryLayout extends Component {
   static contextType = LayoutFlagsContext
 
@@ -190,34 +221,7 @@ export default class PrimaryLayout extends Component {
 
   tourSteps = () => {
     const desktopWidth = this.props.width > 600
-    const steps = [
-      {
-        disableBeacon: true,
-        target: '#currentContext',
-        title: desktopWidth ? 'You are here!' : 'Group menu',
-        content: desktopWidth
-          ? 'This is where we show you which group or other view you are looking at. Click here to return to the home page.'
-          : 'Press on the group name or icon to navigate within the current group or view. Discover events, discussions, resources & more!'
-      },
-      {
-        target: '#toggleDrawer',
-        title: 'Switching groups & viewing all',
-        content: 'This menu allows you to switch between groups, or see updates from all your groups at once.\n\nWant to see what else is out there? Navigate over to Public Groups & Posts to see!'
-      }
-    ]
-    if (desktopWidth) {
-      steps.push({
-        target: '#groupMenu',
-        title: 'Create & navigate',
-        content: 'Here you can switch between types of content and create new content for people in your group or everyone on Hylo!',
-        placement: 'right'
-      })
-    }
-    return steps.concat({
-      target: '#personalSettings',
-      title: 'Messages, notifications & profile',
-      content: 'Search for posts & people. Send messages to group members or people you see on Hylo. Stay up to date with current events and edit your profile.'
-    })
+    return tourSteps(desktopWidth)
   }
 
   render () {
@@ -254,9 +258,13 @@ export default class PrimaryLayout extends Component {
         <Redirect to={returnToURL} />
       )
     }
-    const defaultRedirectPath = lastViewedGroup
-      ? `/groups/${lastViewedGroup.slug}`
-      : '/all'
+
+    const defaultRedirectPath = signupInProgress
+      // Blank center column content when signupInProgress
+      ? null
+      : lastViewedGroup
+        ? `/groups/${lastViewedGroup.slug}`
+        : '/all'
 
     if (isGroupRoute) {
       if (!group && !groupPending) return <NotFound />
@@ -417,7 +425,7 @@ export default class PrimaryLayout extends Component {
               <Route path='/settings' component={UserSettings} />
               <Route path='/search' component={Search} />
               {/* Default Route (404) */}
-              {!signupInProgress && (
+              {defaultRedirectPath && (
                 <Redirect to={defaultRedirectPath} />
               )}
             </Switch>
