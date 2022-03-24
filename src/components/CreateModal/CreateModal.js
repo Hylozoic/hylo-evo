@@ -23,10 +23,7 @@ export default function CreateModal (props) {
   const dispatch = useDispatch()
   const [isDirty, setIsDirty] = useState()
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
-  const mapLocationParams = getQuerystringParam(['lat', 'lng'], null, props)
-  const mapLocation = (mapLocationParams.lat && mapLocationParams.lng) &&
-    `${mapLocationParams.lat}, ${mapLocationParams.lng}`
-  
+
   const { action, postId } = routeParams
   const urlParams = omit(['postId', 'action'], routeParams)
   const closeUrl = postId
