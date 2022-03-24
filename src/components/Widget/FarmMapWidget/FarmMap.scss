@@ -1,3 +1,51 @@
 .farm-map-container {
-  
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+}
+
+.icon {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.postTip {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 4px;
+  background-color: white;
+  padding: 0 15px;
+  color: rgba(87, 102, 123, 1.000);
+  box-shadow: $box-shadow-default;
+  line-height: 28px;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.postTip.discussion {
+  color: $color-discussions;
+}
+
+.postTip.event {
+  color: $color-events;
+}
+
+.postTip.offer {
+  color: $color-offers;
+}
+
+.postTip.resource {
+  color: $color-resources;
+}
+
+.postTip.project {
+  color: $color-projects;
+}
+
+.postTip.cluster {
+  color: $color-black;
 }

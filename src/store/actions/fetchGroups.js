@@ -66,6 +66,10 @@ query (
       description
       location
       locationObject {
+        center {
+          lat
+          lng
+        }
         city
         country
         fullText
