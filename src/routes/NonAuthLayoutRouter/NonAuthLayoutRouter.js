@@ -5,12 +5,12 @@ import Div100vh from 'react-div-100vh'
 import Particles from 'react-tsparticles'
 import particlesjsConfig from './particlesjsConfig'
 import JoinGroup from 'routes/JoinGroup'
-import Login from 'routes/NonAuthLayout/Login'
-import PasswordReset from 'routes/NonAuthLayout/PasswordReset'
-import SignupRouter from 'routes/NonAuthLayout/Signup/SignupRouter'
+import Login from 'routes/NonAuthLayoutRouter/Login'
+import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
+import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
 import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
-import './NonAuthLayout.scss'
+import './NonAuthLayoutRouter.scss'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import setReturnToPath from 'store/actions/setReturnToPath'
 
@@ -22,7 +22,7 @@ const particlesStyle = {
   height: '100%'
 }
 
-export default function NonAuthLayout (props) {
+export default function NonAuthLayoutRouter (props) {
   const { location } = props
   const dispatch = useDispatch()
   const returnToPathFromQueryString = getQuerystringParam('returnToUrl', null, props)

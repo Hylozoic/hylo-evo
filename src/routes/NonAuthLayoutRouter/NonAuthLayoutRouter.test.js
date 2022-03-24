@@ -2,7 +2,7 @@ import React from 'react'
 import { history } from 'router'
 import orm from 'store/models'
 import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
-import NonAuthLayout from './NonAuthLayout'
+import NonAuthLayoutRouter from './NonAuthLayoutRouter'
 
 function testProvider () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
@@ -23,7 +23,7 @@ function createRootContainer () {
 
 it('renders correctly', () => {
   const { getByText, queryByText } = render(
-    <NonAuthLayout location={{ search: '' }} />,
+    <NonAuthLayoutRouter location={{ search: '' }} />,
     { container: createRootContainer() },
     testProvider()
   )
@@ -37,7 +37,7 @@ it('renders correctly with mobile redirect', () => {
     .mockImplementation(() => 'mobile/app/url')
 
   const { getByText } = render(
-    <NonAuthLayout downloadAppUrl={url} location={{ search: '' }} />,
+    <NonAuthLayoutRouter downloadAppUrl={url} location={{ search: '' }} />,
     { container: createRootContainer() },
     testProvider()
   )

@@ -10,7 +10,7 @@ import ErrorBoundary from 'components/ErrorBoundary'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import PublicLayoutRouter from 'routes/PublicLayoutRouter'
-import NonAuthLayout from 'routes/NonAuthLayout'
+import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
 import '../css/global/index.scss'
 
 function Router () {
@@ -48,7 +48,7 @@ function Router () {
       {!isAuthorized && (
         <Switch>
           <Route path='/public' component={PublicLayoutRouter} />
-          <Route component={NonAuthLayout} />
+          <Route component={NonAuthLayoutRouter} />
         </Switch>
       )}
       {isAuthorized && (

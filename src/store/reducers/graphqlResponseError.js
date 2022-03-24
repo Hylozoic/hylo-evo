@@ -1,5 +1,5 @@
 import { LOGIN, SIGNUP } from 'store/constants'
-import { SEND_EMAIL_VERIFICATION, VERIFY_EMAIL } from 'routes/NonAuthLayout/Signup/Signup.store.js'
+import { SEND_EMAIL_VERIFICATION, VERIFY_EMAIL } from 'routes/NonAuthLayoutRouter/Signup/Signup.store.js'
 
 export default function graphqlResponseError (state = null, { type, payload }) {
   if (![LOGIN, SIGNUP, VERIFY_EMAIL, SEND_EMAIL_VERIFICATION].includes(type)) return state

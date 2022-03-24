@@ -1,6 +1,6 @@
 import React from 'react'
 import { uniq } from 'lodash'
-import './NonAuthLayout.scss'
+import './NonAuthLayoutRouter.scss'
 
 export function formatError (error, action) {
   if (!error) return
