@@ -7,17 +7,17 @@ const emptyState = {
 }
 
 describe('PrimaryLayout.connector', () => {
-  it('should get correct value for returnToURL from state', () => {
+  it('should get correct value for returnToPath from state', () => {
     const session = orm.session(orm.getEmptyState())
-    const returnToURL = '/anything'
+    const returnToPath = '/anything'
     const state = {
       ...emptyState,
       orm: session.state,
-      login: { returnToURL }
+      returnToPath
     }
     expect(mapStateToProps(state, {
       match: { params: {} },
       location: { pathname: '' }
-    })).toHaveProperty('returnToURL', returnToURL)
+    })).toHaveProperty('returnToPath', returnToPath)
   })
 })

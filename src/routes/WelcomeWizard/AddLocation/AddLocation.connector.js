@@ -4,12 +4,12 @@ import getMe from 'store/selectors/getMe'
 import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import updateUserSettings from 'store/actions/updateUserSettings'
 import { fetchLocation } from 'components/LocationInput/LocationInput.store'
-import getReturnToURL from 'store/selectors/getReturnToURL'
+import getReturnToPath from 'store/selectors/getReturnToPath'
 
 export function mapStateToProps (state, props) {
   return {
     currentUser: getMe(state),
-    returnToURL: getReturnToURL(state)
+    returnToPath: getReturnToPath(state)
   }
 }
 
@@ -30,8 +30,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...dispatchProps,
     ...ownProps,
     goToNextStep: () => {
-      // `returnToURL` handled by PrimaryLayout
-      if (!stateProps.returnToURL) {
+      // Skip welcome/explore if a `returnToPath` is present
+      if (!stateProps.returnToPath) {
         dispatchProps.push('/welcome/explore')
       }
     }

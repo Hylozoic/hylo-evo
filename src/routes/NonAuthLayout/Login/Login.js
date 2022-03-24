@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatError } from '../util'
 import { mobileRedirect } from 'util/mobile'
-import getLoginError from 'store/selectors/getLoginError'
+import getReturnToPath from 'store/selectors/getReturnToPath'
+import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
 import login from 'store/actions/login'
@@ -14,33 +15,20 @@ import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
-import setReturnToURL from 'store/actions/setReturnToURL'
 
 export const DEFAULT_LOGIN_ERROR = 'Sorry, that Email and Password combination didn\'t work.'
 
 export default function Login (props) {
   const dispatch = useDispatch()
   const errorFromStore = useSelector(state =>
-    getLoginError(state) || getQuerystringParam('error', state, props)
+    getGraphqlResponseError(state) || getQuerystringParam('error', state, props)
   )
+  const returnToPath = useSelector(getReturnToPath)
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [error, setError] = useState()
   const downloadAppUrl = mobileRedirect()
   const displayError = error || errorFromStore
-  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', null, props)
-  const returnToNavigationState = props.location?.state?.from
-  const returnToURL = returnToNavigationState
-    ? returnToNavigationState.pathname + returnToNavigationState.search
-    : returnToPathFromQueryString
-
-  useEffect(() => {
-    if (returnToURL) {
-      // Clears location state on page reload
-      props.history.replace()
-      dispatch(setReturnToURL(returnToURL))
-    }
-  }, [dispatch, setReturnToURL, returnToURL])
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -79,7 +67,7 @@ export default function Login (props) {
     <div className={props.className}>
       <div styleName='formWrapper'>
         {downloadAppUrl && (
-          <DownloadAppModal url={downloadAppUrl} returnToURL={returnToURL} />
+          <DownloadAppModal url={downloadAppUrl} returnToPath={returnToPath} />
         )}
         <h1 styleName='title'>Sign in to Hylo</h1>
         {displayError && formatError(displayError, 'Login')}

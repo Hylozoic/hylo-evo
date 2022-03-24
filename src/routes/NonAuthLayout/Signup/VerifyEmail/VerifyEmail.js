@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
 import { formatError } from '../../util'
-import getLoginError from 'store/selectors/getLoginError'
+import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { verifyEmail } from '../Signup.store'
 import Loading from 'components/Loading'
@@ -17,7 +17,7 @@ export default function VerifyEmail (props) {
   const currentUser = useSelector(getMe)
   const email = currentUser?.email || getQuerystringParam('email', null, props)
   const token = getQuerystringParam('token', null, props)
-  const providedError = useSelector(getLoginError)
+  const providedError = useSelector(getGraphqlResponseError)
   const [error, setErrorBase] = useState(providedError)
   const setError = errorMessage => setErrorBase(providedError || errorMessage)
   const [code, setCode] = useState('')

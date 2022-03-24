@@ -236,8 +236,8 @@ export default class PrimaryLayout extends Component {
       isGroupRoute,
       lastViewedGroup,
       location,
-      returnToURL,
-      resetReturnToURL,
+      returnToPath,
+      setReturnToPath,
       routeParams,
       showMenuBadge,
       signupInProgress,
@@ -252,15 +252,15 @@ export default class PrimaryLayout extends Component {
       )
     }
 
-    if (!signupInProgress && returnToURL) {
-      resetReturnToURL()
+    if (!signupInProgress && returnToPath) {
+      setReturnToPath()
       return (
-        <Redirect to={returnToURL} />
+        <Redirect to={returnToPath} />
       )
     }
 
     const defaultRedirectPath = signupInProgress
-      // Blank center column content when signupInProgress
+      // Equatest ot blank center column when `signupInProgress`
       ? null
       : lastViewedGroup
         ? `/groups/${lastViewedGroup.slug}`

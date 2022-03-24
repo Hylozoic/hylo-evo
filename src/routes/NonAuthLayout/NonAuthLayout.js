@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Route, Redirect, Link, Switch } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
-import Particles from 'react-particles-js'
+import Particles from 'react-tsparticles'
 import particlesjsConfig from './particlesjsConfig'
 import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayout/Login'
@@ -10,6 +11,8 @@ import SignupRouter from 'routes/NonAuthLayout/Signup/SignupRouter'
 import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import './NonAuthLayout.scss'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import setReturnToPath from 'store/actions/setReturnToPath'
 
 const particlesStyle = {
   position: 'fixed',
@@ -21,12 +24,26 @@ const particlesStyle = {
 
 export default function NonAuthLayout (props) {
   const { location } = props
+  const dispatch = useDispatch()
+  const returnToPathFromQueryString = getQuerystringParam('returnToUrl', null, props)
+  const returnToNavigationState = props.location?.state?.from
+  const returnToPath = returnToNavigationState
+    ? returnToNavigationState.pathname + returnToNavigationState.search
+    : returnToPathFromQueryString
+
+  useEffect(() => {
+    if (returnToPath && returnToPath !== '/') {
+      // Clears location state on page reload
+      props.history.replace()
+      dispatch(setReturnToPath(returnToPath))
+    }
+  }, [dispatch, setReturnToPath, returnToPath])
 
   return (
     <Div100vh styleName='nonAuthContainer'>
       <div styleName='background'>
         <div styleName='particlesBackgroundWrapper'>
-          <Particles params={particlesjsConfig} style={particlesStyle} />
+          <Particles options={particlesjsConfig} style={particlesStyle} />
         </div>
         <div styleName='topRow'>
           <a href='/'>
@@ -56,9 +73,12 @@ export default function NonAuthLayout (props) {
               )}
             />
             {/*
-              NOTE: This redirects on anything unmatched including `/`. This shouldn't
-              interfere with the static pages as those routes are first use `path='/(.+)'`
-              to match anything BUT root if there is any issue.
+              Default route
+              NOTE: This passes the unmatched location for anything unmatched except `/`
+              into `location.state.from` which persists navigation and will be set as the
+              returnToPath in the `useEffect` in this component. This shouldn't interfere
+              with the static pages as those routes are first use `path='/(.+)'` to match
+              anything BUT root if there is any issue.
             */}
             <Redirect to={{ pathname: '/login', state: { from: location } }} />
           </Switch>

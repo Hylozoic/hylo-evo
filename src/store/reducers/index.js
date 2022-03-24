@@ -3,7 +3,8 @@ import { connectRouter } from 'connected-react-router'
 import { history } from 'router'
 
 import orm from './ormReducer'
-import login from 'store/reducers/login'
+import returnToPath from 'store/reducers/returnToPath'
+import graphqlResponseError from 'store/reducers/graphqlResponseError'
 import pending from './pending'
 import locationHistory from './locationHistory'
 import resetStore from './resetStore'
@@ -43,7 +44,8 @@ export const combinedReducers = combineReducers({
   // Global store
   orm,
   router: connectRouter(history),
-  login,
+  returnToPath,
+  graphqlResponseError,
   pending,
   queryResults,
   locationHistory,

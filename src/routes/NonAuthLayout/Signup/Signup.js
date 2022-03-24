@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import { mobileRedirect } from 'util/mobile'
-import getLoginError from 'store/selectors/getLoginError'
+import { validateEmail } from 'util/index'
+import { formatError } from '../util'
+import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import loginWithService from 'store/actions/loginWithService'
@@ -11,8 +13,6 @@ import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import TextInput from 'components/TextInput'
-import { formatError } from '../util'
-import { validateEmail } from 'util/index'
 import './Signup.scss'
 
 export default function Signup (props) {
@@ -20,7 +20,7 @@ export default function Signup (props) {
   const [email, setEmail] = useState()
   const [localError, setLocalError] = useState()
   const providedError = useSelector(state =>
-    getLoginError(state) || getQuerystringParam('error', state, props)
+    getGraphqlResponseError(state) || getQuerystringParam('error', state, props)
   )
   const downloadAppUrl = mobileRedirect()
   const error = providedError || localError

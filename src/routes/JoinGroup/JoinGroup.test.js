@@ -1,14 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { history } from 'router'
 import { Route } from 'react-router'
-import orm from 'store/models'
 import { graphql } from 'msw'
 import { setupServer } from 'msw/node'
+import orm from 'store/models'
+import getReturnToPath from 'store/selectors/getReturnToPath'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
 import { AllTheProviders, generateStore, render, waitForElementToBeRemoved } from 'util/reactTestingLibraryExtended'
 import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
-import { useSelector } from 'react-redux'
-import getReturnToURL from 'store/selectors/getReturnToURL'
 
 jest.mock('store/selectors/getMixpanel', () => () => ({
   identify: jest.fn(),
@@ -113,7 +113,7 @@ it('checks invitation and forwards to expired invite page when invitation is inv
   expect(getByText(EXPIRED_INVITE_PATH)).toBeInTheDocument()
 })
 
-it('sets redirectToURL and forwards to signup page when invitation is valid and user is not logged-in', async () => {
+it('sets returnToPath and forwards to signup page when invitation is valid and user is not logged-in', async () => {
   mockGraphqlServer.resetHandlers(
     graphql.query('CheckInvitation', (req, res, ctx) => {
       // req.body.variables
@@ -132,10 +132,10 @@ it('sets redirectToURL and forwards to signup page when invitation is valid and 
       <Route
         path='/'
         component={({ location }) => {
-          const returnToURL = useSelector(getReturnToURL)
+          const returnToPath = useSelector(getReturnToPath)
           return (
             <>
-              <div>{returnToURL}</div>
+              <div>{returnToPath}</div>
               <div>{location.pathname}</div>
             </>
           )

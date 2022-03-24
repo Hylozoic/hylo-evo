@@ -1,8 +1,8 @@
 import { get, some } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { mobileRedirect } from 'util/mobile'
-import getReturnToURL from 'store/selectors/getReturnToURL'
-import resetReturnToURL from 'store/actions/resetReturnToURL'
+import getReturnToPath from 'store/selectors/getReturnToPath'
+import setReturnToPath from 'store/actions/setReturnToPath'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
 import updateUserSettings from 'store/actions/updateUserSettings'
@@ -51,7 +51,7 @@ export function mapStateToProps (state, props) {
     isGroupMenuOpen: get('PrimaryLayout.isGroupMenuOpen', state),
     isGroupRoute: isGroupRoute(state, props),
     lastViewedGroup,
-    returnToURL: getReturnToURL(state),
+    returnToPath: getReturnToPath(state),
     routeParams,
     showMenuBadge,
     signupInProgress,
@@ -62,7 +62,7 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = {
   fetchForCurrentUser,
   fetchForGroup,
-  resetReturnToURL,
+  setReturnToPath,
   toggleDrawer,
   toggleGroupMenu,
   updateUserSettings

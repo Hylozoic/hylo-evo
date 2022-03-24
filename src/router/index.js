@@ -36,7 +36,7 @@ function Router () {
     )
   }
 
-  // TODO: Revisit this in terms of returnToURL
+  // TODO: Revisit this in terms of returnToPath
   // On mobile we want to only store the intended URL and forward to the
   // download app modal (which is currently on the Login component/page)
   // Specifically we don't want any components to do any work but this,

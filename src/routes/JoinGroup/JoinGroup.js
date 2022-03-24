@@ -8,7 +8,7 @@ import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import useInvitation from 'store/actions/useInvitation'
 import checkInvitation from 'store/actions/checkInvitation'
 import Loading from 'components/Loading'
-import setReturnToURL from 'store/actions/setReturnToURL'
+import setReturnToPath from 'store/actions/setReturnToPath'
 
 export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
@@ -37,7 +37,7 @@ export default function JoinGroup (props) {
           const checkInvitationResult = await dispatch(checkInvitation(invitationTokenAndCode))
           const isValidInvite = checkInvitationResult?.payload?.getData()?.valid
           if (isValidInvite) {
-            dispatch(setReturnToURL(props.location.pathname))
+            dispatch(setReturnToPath(props.location.pathname + props.location.search))
             setIsValidInvite(true)
           }
         }

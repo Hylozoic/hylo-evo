@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import getLoginError from 'store/selectors/getLoginError'
+import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getMe from 'store/selectors/getMe'
 import { register } from '../Signup.store'
 
@@ -8,7 +8,7 @@ export function mapStateToProps (state, props) {
 
   return {
     currentUser,
-    error: getLoginError(state)
+    error: getGraphqlResponseError(state)
   }
 }
 
