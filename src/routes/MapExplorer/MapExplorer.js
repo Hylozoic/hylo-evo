@@ -66,6 +66,7 @@ export class UnwrappedMapExplorer extends React.Component {
       hoveredObject: null,
       creatingPost: false,
       coordinates: null,
+      isAddingItemToMap: false,
       pointerX: 0,
       pointerY: 0,
       // Need this in the state so we can filter them by currentBoundingBox
@@ -358,11 +359,11 @@ export class UnwrappedMapExplorer extends React.Component {
         const currentParams = getQueryParamsObjectFromString(this.props.location.search)
         this.props.showCreateModal({ ...currentParams, ...this.state.coordinates })
       }
-    }, oneSecondInMs)
+    }, this.state.isAddingItemToMap ? 0 : oneSecondInMs)
   }
 
   onMapMouseUp = (e) => {
-    if (this.state.creatingPost) this.setState({ creatingPost: false })
+    if (this.state.creatingPost) this.setState({ creatingPost: false, isAddingItemToMap: false })
   }
 
   toggleFeatureType = (type, checked) => {
@@ -393,6 +394,10 @@ export class UnwrappedMapExplorer extends React.Component {
       )
     }
     return ''
+  }
+
+  handleAddItemToMap = () => {
+    this.setState({ isAddingItemToMap: true })
   }
 
   toggleDrawer = (e) => {
@@ -458,6 +463,7 @@ export class UnwrappedMapExplorer extends React.Component {
       clusterLayer,
       groupIconLayer,
       hideDrawer,
+      isAddingItemToMap,
       groupsForDrawer,
       membersForDrawer,
       showFeatureFilters,
@@ -477,6 +483,7 @@ export class UnwrappedMapExplorer extends React.Component {
             afterViewportUpdate={this.afterViewportUpdate}
             onViewportUpdate={this.mapViewPortUpdate}
             children={this._renderTooltip()}
+            isAddingItemToMap={isAddingItemToMap}
             viewport={viewport}
             onMouseDown={this.onMapMouseDown}
             onMouseUp={this.onMapMouseUp}
@@ -510,6 +517,11 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
+        <Icon
+          name='Plus'
+          onClick={this.handleAddItemToMap}
+          styleName={cx('addItemToMapButton', { drawerOpen: !hideDrawer })}
+        />
         {currentUser && <>
           <Icon
             name='Heart'

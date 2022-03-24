@@ -116,7 +116,7 @@
 .postTip {
   position: absolute;
   z-index: 1;
-  pointerEvents: none;
+  pointer-events: none;
   border-radius: 4px;
   background-color: white;
   padding: 0 15px;
@@ -232,6 +232,31 @@ button.toggleFeatureFiltersButton {
       color: inherit;
       cursor: inherit;
     }
+  }
+}
+
+.addItemToMapButton {
+  position: absolute;
+  right: 20px;
+  bottom: 40px;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background-color: white;
+  color: $color-regent;
+  font-size: 20px;
+  border-radius: 20px;
+  transition: all .25s ease;
+  box-shadow: $box-shadow-default;
+  cursor: pointer;
+  &.drawerOpen {
+    right: calc(40% + 100px);
+  }
+  &:hover {
+    background-color: $color-picton-blue;
+    color: white;
+    cursor: pointer;  
   }
 }
 
