@@ -13,9 +13,10 @@ describe('PrimaryLayout.connector', () => {
     const state = {
       ...emptyState,
       orm: session.state,
-      AuthRoute: { returnToURL }
+      login: { returnToURL }
     }
     expect(mapStateToProps(state, {
+      match: { params: {} },
       location: { pathname: '' }
     })).toHaveProperty('returnToURL', returnToURL)
   })

@@ -1,30 +1,41 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { history } from 'router'
+import orm from 'store/models'
+import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
 import Signup from './Signup'
 
-describe('Signup', () => {
-  it('renders correctly', () => {
-    const wrapper = shallow(<Signup />)
-    expect(wrapper).toMatchSnapshot()
-  })
-  it('renders correctly with mobile redirect', () => {
-    const url = 'some.url'
-    const wrapper = shallow(<Signup downloadAppUrl={url} />)
-    expect(wrapper).toMatchSnapshot()
-  })
+function testProvider () {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  const reduxState = { orm: ormSession.state }
+  const store = generateStore(history, reduxState)
+  return AllTheProviders(store)
+}
+
+function createRootContainer () {
+  const rootElement = document.createElement('div')
+  rootElement.setAttribute('id', 'root')
+  return document.body.appendChild(rootElement)
+}
+
+it('renders correctly', () => {
+  const { getByText, queryByText } = render(
+    <Signup location={{ search: '' }} />,
+    { container: createRootContainer() },
+    testProvider()
+  )
+  expect(queryByText('View in Hylo app')).not.toBeInTheDocument()
+  expect(getByText('Enter your email to get started:')).toBeInTheDocument()
 })
 
-// From Connector for possible use/adaptation to component tests
-// import { mapDispatchToProps, mapStateToProps } from './Signup.connector'
-
-// describe('Signup', () => {
-//   it('should call signup', () => {
-//     expect(mapDispatchToProps.signup('name', 'test@hylo.com', 'testPassword')).toMatchSnapshot()
-//   })
-//   it('returns the right keys', () => {
-//     expect(mapStateToProps({}, { location: { search: '' } }).hasOwnProperty('downloadAppUrl')).toBeTruthy()
-//     expect(mapStateToProps({}, { location: { search: '' } }).hasOwnProperty('returnToURL')).toBeTruthy()
-//     expect(mapStateToProps({ login: { error: 'no mojo' } }, { location: { search: '' } }).error).toEqual('no mojo')
-//     expect(mapStateToProps({}, { location: { search: '?error=moo' } }).error).toEqual('moo')
-//   })
-// })
+it('renders correctly with mobile redirect', () => {
+  const mobileRedirectSpy = jest.spyOn(require('util/mobile'), 'mobileRedirect')
+    .mockImplementation(() => 'mobile/app/url')
+  const url = 'some.url'
+  const { getByText } = render(
+    <Signup downloadAppUrl={url} location={{ search: '' }} />,
+    { container: createRootContainer() },
+    testProvider()
+  )
+  expect(getByText('View in Hylo app')).toBeInTheDocument()
+  mobileRedirectSpy.mockRestore()
+})

@@ -16,14 +16,13 @@ import { validateEmail } from 'util/index'
 import './Signup.scss'
 
 export default function Signup (props) {
-  const { className } = props
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
   const [localError, setLocalError] = useState()
-  const downloadAppUrl = useSelector(mobileRedirect)
   const providedError = useSelector(state =>
     getLoginError(state) || getQuerystringParam('error', state, props)
   )
+  const downloadAppUrl = mobileRedirect()
   const error = providedError || localError
 
   const sendEmailVerification = async email => {
@@ -60,7 +59,7 @@ export default function Signup (props) {
   const canSubmit = email?.length > 0
 
   return (
-    <div className={className}>
+    <div className={props.className}>
       <div styleName='formWrapper'>
         {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
         <h1 styleName='title'>Welcome to Hylo</h1>

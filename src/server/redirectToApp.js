@@ -1,4 +1,4 @@
-import { checkLogin } from '../store/actions/checkLogin'
+import checkLogin from '../store/actions/checkLogin'
 import createStore from '../store'
 import { createMemoryHistory } from 'history'
 

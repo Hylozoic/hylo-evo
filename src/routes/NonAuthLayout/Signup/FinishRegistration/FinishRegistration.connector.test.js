@@ -13,12 +13,11 @@ describe('FinishRegistration.connector', () => {
   })
 
   it('should call signup', () => {
-    expect(mapDispatchToProps.signup('test@hylo.com', 'name', 'password')).toMatchSnapshot()
+    expect(mapDispatchToProps.register('test@hylo.com', 'name', 'password')).toMatchSnapshot()
   })
 
   it('returns the right keys', () => {
     expect(mapStateToProps(state, { location: { search: '' } }).currentUser.id).toEqual('1')
     expect(mapStateToProps(state, { location: { search: '' } }).hasOwnProperty('error')).toBeTruthy()
-    expect(mapStateToProps(state, { location: { search: '' } }).hasOwnProperty('returnToURL')).toBeTruthy()
   })
 })

@@ -3,25 +3,29 @@
 exports[`FinishRegistration.connector should call signup 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($name: String, $password: String) {
-        register(name: $name, password: $password) {
-          id
-          email
-          emailValidated
-          hasRegistered
-          name
-          settings {
-            alreadySeenTour
-            digestFrequency
-            dmNotifications
-            commentNotifications
-            signupInProgress
-            streamViewMode
-            streamSortBy
-            streamPostType
+    "query": "
+        mutation ($name: String!, $password: String!) {
+          register(name: $name, password: $password) {
+            me {
+              id
+              email
+              emailValidated
+              hasRegistered
+              name
+              settings {
+                alreadySeenTour
+                digestFrequency
+                dmNotifications
+                commentNotifications
+                signupInProgress
+                streamViewMode
+                streamSortBy
+                streamPostType
+              }
+            }
           }
         }
-      }",
+      ",
     "variables": Object {
       "name": "test@hylo.com",
       "password": "name",

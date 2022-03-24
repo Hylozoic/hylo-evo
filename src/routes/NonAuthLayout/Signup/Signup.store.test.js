@@ -1,7 +1,7 @@
-import { signup } from './Signup.store'
+import { register } from './Signup.store'
 
-describe('signup', () => {
+describe('register', () => {
   it('should match latest snapshot', () => {
-    expect(signup('name', 'test@hylo.com', 'testPassword')).toMatchSnapshot()
+    expect(register('name', 'test@hylo.com', 'testPassword')).toMatchSnapshot()
   })
 })
