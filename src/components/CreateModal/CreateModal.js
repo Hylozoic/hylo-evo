@@ -26,7 +26,7 @@ export default function CreateModal (props) {
   const mapLocationParams = getQuerystringParam(['lat', 'lng'], null, props)
   const mapLocation = (mapLocationParams.lat && mapLocationParams.lng) &&
     `${mapLocationParams.lat}, ${mapLocationParams.lng}`
-
+  
   const { action, postId } = routeParams
   const urlParams = omit(['postId', 'action'], routeParams)
   const closeUrl = postId
@@ -69,7 +69,6 @@ export default function CreateModal (props) {
                   children={({ match, location }) => (
                     <PostEditor
                       {...props}
-                      selectedLocation={mapLocation}
                       onClose={closeModal}
                       onCancel={confirmClose}
                       setIsDirty={setIsDirty}

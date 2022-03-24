@@ -16,12 +16,12 @@ beforeEach(() => {
 
 it('renders', () => {
   const { getByText } = render(
-    <CreateModal match={{ params: {} }} location={{ pathname: '', search: '' }} />,
+    <CreateModal match={{ params: {} }} location={{ search: '' }} />,
     null,
     providersWithStore
   )
 
-  expect(getByText('Talk about what’s important with others')).toBeInTheDocument()
+  expect(getByText('What would you like to create?')).toBeInTheDocument()
 })
 
 afterEach(() => {

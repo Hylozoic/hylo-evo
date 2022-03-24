@@ -27,12 +27,10 @@ class Geocoder extends Component {
     this.onInput = this.onInput.bind(this)
     this.onKeyDown = this.onKeyDown.bind(this)
     this.onResult = this.onResult.bind(this)
-    this.inputRef = React.createRef()
   }
 
   componentDidMount () {
-    if (this.props.focusOnMount) ReactDOM.findDOMNode(this.inputRef.current).focus()
-    if (this.props.defaultInputValue) this.onInput({ target: { value: this.props.defaultInputValue } })
+    if (this.props.focusOnMount) ReactDOM.findDOMNode(this.refs.input).focus()
   }
 
   componentDidUpdate (prevProps) {
@@ -66,7 +64,7 @@ class Geocoder extends Component {
       (types ? '&types=' + encodeURIComponent(types) : '')
     xhr(
       {
-        uri,
+        uri: uri,
         json: true
       },
       function (err, res, body) {
@@ -188,7 +186,7 @@ class Geocoder extends Component {
       inputValue: place.place_name
     })
     // focus on the input after click to maintain key traversal
-    ReactDOM.findDOMNode(this.inputRef.current).focus()
+    ReactDOM.findDOMNode(this.refs.input).focus()
     if (e) {
       e.preventDefault()
     }
@@ -208,7 +206,7 @@ class Geocoder extends Component {
     var _this = this
 
     var input = React.createElement('input', {
-      ref: this.inputRef,
+      ref: 'input',
       className: this.props.inputClass,
       // onInput: this.onInput,
       onKeyDown: this.onKeyDown,
