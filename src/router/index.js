@@ -9,7 +9,7 @@ import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
-import PublicLayout from 'routes/PublicLayout'
+import PublicLayoutRouter from 'routes/PublicLayoutRouter'
 import NonAuthLayout from 'routes/NonAuthLayout'
 import '../css/global/index.scss'
 
@@ -47,7 +47,7 @@ function Router () {
     <ErrorBoundary>
       {!isAuthorized && (
         <Switch>
-          <Route path='/public' component={PublicLayout} />
+          <Route path='/public' component={PublicLayoutRouter} />
           <Route component={NonAuthLayout} />
         </Switch>
       )}

@@ -10,9 +10,9 @@ import MapExplorer from 'routes/MapExplorer'
 import PostDetail from 'routes/PostDetail'
 import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
-import './PublicLayout.scss'
+import './PublicLayoutRouter.scss'
 
-export default function PublicLayout (props) {
+export default function PublicLayoutRouter (props) {
   const { location } = props
   const hasDetail = some(
     ({ path }) => matchPath(location.pathname, { path, exact: true }),
