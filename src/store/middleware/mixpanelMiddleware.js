@@ -1,6 +1,6 @@
 import { get, isString, isObject, omit } from 'lodash/fp'
 import getMixpanel from '../selectors/getMixpanel'
-import getIsLoggedIn from '../selectors/getIsLoggedIn'
+import { getAuthenticated } from '../selectors/getSignupState'
 import getMe from '../selectors/getMe'
 import { isDev } from 'config'
 
@@ -17,7 +17,7 @@ export default function mixpanelMiddleware (store) {
       const mixpanel = getMixpanel(state)
       if (isDev || !mixpanel) return next(action)
 
-      const isLoggedIn = getIsLoggedIn(state)
+      const isLoggedIn = getAuthenticated(state)
       const { analytics } = meta
       const trackingEventName = get('eventName', analytics) ||
         (isString(analytics) && analytics) ||

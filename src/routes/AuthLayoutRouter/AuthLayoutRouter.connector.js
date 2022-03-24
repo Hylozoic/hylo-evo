@@ -10,7 +10,7 @@ import { FETCH_FOR_CURRENT_USER, FETCH_FOR_GROUP } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
-import getSignupState, { SignupState } from 'store/selectors/getSignupState'
+import { getSignupInProgress } from 'store/selectors/getSignupState'
 import isGroupRoute, { getSlugFromLocation } from 'store/selectors/isGroupRoute'
 import { toggleDrawer, toggleGroupMenu } from './AuthLayoutRouter.store'
 import getLastViewedGroup from 'store/selectors/getLastViewedGroup'
@@ -23,8 +23,7 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const lastViewedGroup = getLastViewedGroup(state)
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
-  const signupState = getSignupState(state)
-  const signupInProgress = signupState === SignupState.InProgress
+  const signupInProgress = getSignupInProgress(state)
   // NOTE: PENDING as we've generally used it can be misleading and may need reconsideration:
   // Currently the `Pending` state for an action will be `undefined` therefore falsy
   // before a the action has been called. In this case this was causing the component

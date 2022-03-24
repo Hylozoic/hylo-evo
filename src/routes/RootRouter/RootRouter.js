@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Route } from 'react-router'
 import { Switch } from 'react-router-dom'
 import checkLogin from 'store/actions/checkLogin'
-import getSignupState, { SignupState } from 'store/selectors/getSignupState'
+import { getAuthorized } from 'store/selectors/getSignupState'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import PublicLayoutRouter from 'routes/PublicLayoutRouter'
@@ -11,9 +11,8 @@ import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
 
 export default function RootRouter () {
   const dispatch = useDispatch()
-  const signupState = useSelector(getSignupState)
+  const isAuthorized = useSelector(getAuthorized)
   const [loading, setLoading] = useState(true)
-  const isAuthorized = [SignupState.InProgress, SignupState.Complete].includes(signupState)
 
   // This should be the only place we check for a session from the API
   // and it should not load the router until that check is complete

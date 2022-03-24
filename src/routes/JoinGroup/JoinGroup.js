@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { groupUrl } from 'util/navigation'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
-import getSignupState, { SignupState } from 'store/selectors/getSignupState'
+import { getSignupComplete } from 'store/selectors/getSignupState'
 import useInvitation from 'store/actions/useInvitation'
 import checkInvitation from 'store/actions/checkInvitation'
 import Loading from 'components/Loading'
@@ -15,11 +15,10 @@ export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default function JoinGroup (props) {
   const dispatch = useDispatch()
-  const signupState = useSelector(getSignupState)
+  const signupComplete = useSelector(getSignupComplete)
   const [loading, setLoading] = useState(true)
   const [isValidInvite, setIsValidInvite] = useState()
   const [groupSlug, setGroupSlug] = useState()
-  const signupComplete = signupState === SignupState.Complete
   const invitationTokenAndCode = {
     invitationToken: getQuerystringParam('token', null, props),
     accessCode: getRouteParam('accessCode', null, props)
