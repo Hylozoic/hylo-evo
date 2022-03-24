@@ -50,6 +50,7 @@ function currentUserProvider (signupStateComplete) {
   }
   extractModelsFromAction(meWithMembershipResult, ormSession)
   const store = generateStore(history, reduxState)
+
   return AllTheProviders(store)
 }
 
@@ -88,7 +89,7 @@ it('joins and forwards to group when current user is fully signed-up', async () 
 it('checks invitation and forwards to expired invite page when invitation is invalid when not logged-in', async () => {
   mockGraphqlServer.resetHandlers(
     graphql.query('CheckInvitation', (req, res, ctx) => {
-      // req.body.variables
+      // query variables available at req.body.variables
       return res(
         ctx.data({
           checkInvitation: {
@@ -116,7 +117,7 @@ it('checks invitation and forwards to expired invite page when invitation is inv
 it('sets returnToPath and forwards to signup page when invitation is valid and user is not logged-in', async () => {
   mockGraphqlServer.resetHandlers(
     graphql.query('CheckInvitation', (req, res, ctx) => {
-      // req.body.variables
+      // query variables available at req.body.variables
       return res(
         ctx.data({
           checkInvitation: {

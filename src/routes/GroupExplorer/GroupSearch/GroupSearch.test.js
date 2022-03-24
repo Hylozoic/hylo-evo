@@ -17,6 +17,7 @@ function testProviders () {
   ormSession.Me.create({ id: '1' })
   const reduxState = { orm: ormSession.state }
   const store = generateStore(history, reduxState)
+
   return AllTheProviders(store)
 }
 

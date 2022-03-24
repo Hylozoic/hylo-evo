@@ -4,26 +4,21 @@ import orm from 'store/models'
 import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
 import CreateModal from './CreateModal'
 
-let providersWithStore
+function testProviders () {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  ormSession.Me.create({ id: '1' })
+  const reduxState = { orm: ormSession.state }
+  const store = generateStore(history, reduxState)
 
-beforeEach(() => {
-  const session = orm.mutableSession(orm.getEmptyState())
-  session.Me.create({ id: '1' })
-  const initialState = { orm: session.state }
-  const store = generateStore(history, initialState)
-  providersWithStore = AllTheProviders(store)
-})
+  return AllTheProviders(store)
+}
 
 it('renders', () => {
   const { getByText } = render(
     <CreateModal match={{ params: {} }} location={{ search: '' }} />,
     null,
-    providersWithStore
+    testProviders()
   )
 
   expect(getByText('What would you like to create?')).toBeInTheDocument()
-})
-
-afterEach(() => {
-  providersWithStore = null
 })

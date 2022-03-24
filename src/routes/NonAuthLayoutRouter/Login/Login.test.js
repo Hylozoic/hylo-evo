@@ -8,6 +8,7 @@ function testProviders () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
   const store = generateStore(history, reduxState)
+
   return AllTheProviders(store)
 }
 
@@ -17,5 +18,6 @@ it('renders correctly', () => {
     null,
     testProviders()
   )
+
   expect(getByText('Sign in to Hylo')).toBeInTheDocument()
 })
