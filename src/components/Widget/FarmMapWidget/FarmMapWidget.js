@@ -1,11 +1,13 @@
+import React, { useEffect, useState } from 'react'
 import { groupBy } from 'lodash'
 import Map from 'components/Map'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
-import React, { useEffect, useState } from 'react'
+import useRouter from 'hooks/useRouter'
 
 import './FarmMap.scss'
+
 
 export default function FarmMapWidget ({ group, items }) {
   /*
@@ -24,6 +26,7 @@ export default function FarmMapWidget ({ group, items }) {
     pitch: 0,
     mapBoundingBox: null
   }
+  const { push } = useRouter()
   const [viewport, setViewport] = useState(defaultViewport)
   const [groupIconLayer, setGroupIconLayer] = useState(null)
   const [postsLayer, setPostsLayer] = useState([])
@@ -38,18 +41,25 @@ export default function FarmMapWidget ({ group, items }) {
     setPointerY(info.y)
   }
 
+  const onMapClick = (info) => {
+    console.log(info)
+    if (info.object && info.object.type === 'group') {
+      push(`/groups/${info.object.slug}`)
+    }
+  }
+
   useEffect(() => {
     const viewGroups = groups.filter(group => {
       const locationObject = group.ref.locationObject
       return locationObject && locationObject.center && locationObject.center.lng && locationObject.center.lat
     }).map((group) => {
-      return { ...group.ref }
+      return { ...group, locationObject: group.ref.locationObject, name: group.ref.name, slug: group.ref.slug, avatarUrl: group.ref.avatarUrl }
     })
 
     setGroupIconLayer(createIconLayerFromGroups({
       groups: viewGroups,
       onHover: onMapHover,
-      onClick: () => {}
+      onClick: onMapClick
     }))
   }, [groups])
 
@@ -58,12 +68,12 @@ export default function FarmMapWidget ({ group, items }) {
       const locationObject = post.locationObject
       return locationObject && locationObject.center && locationObject.center.lng && locationObject.center.lat
     })
-    console.log(viewport, 'why do dead?')
+
     setPostsLayer(createIconLayerFromPostsAndMembers({
       members: [],
       posts: viewPosts,
       onHover: onMapHover,
-      onClick: () => {},
+      onClick: onMapClick,
       boundingBox: viewport.mapBoundingBox,
       forceUpdate: true
     }))

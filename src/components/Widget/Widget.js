@@ -116,7 +116,7 @@ const WIDGETS = {
 
 export default function Widget (props) {
   const dispatch = useDispatch()
-  const { childGroups, id, isModerator, isVisible, name, posts, settings } = props
+  const { childGroups, id, isModerator, isVisible, name, posts, settings = {} } = props
   const router = useRouter()
   const routeParams = router && router.query
   const { group } = useEnsureCurrentGroup()
