@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatError } from '../util'
-import { mobileRedirect } from 'util/mobile'
-import getReturnToPath from 'store/selectors/getReturnToPath'
 import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
@@ -11,7 +9,6 @@ import login from 'store/actions/login'
 import loginWithService from 'store/actions/loginWithService'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
@@ -23,11 +20,9 @@ export default function Login (props) {
   const errorFromStore = useSelector(state =>
     getGraphqlResponseError(state) || getQuerystringParam('error', state, props)
   )
-  const returnToPath = useSelector(getReturnToPath)
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [error, setError] = useState()
-  const downloadAppUrl = mobileRedirect()
   const displayError = error || errorFromStore
 
   const handleEmailChange = event => {
@@ -66,9 +61,6 @@ export default function Login (props) {
   return (
     <div className={props.className}>
       <div styleName='formWrapper'>
-        {downloadAppUrl && (
-          <DownloadAppModal url={downloadAppUrl} returnToPath={returnToPath} />
-        )}
         <h1 styleName='title'>Sign in to Hylo</h1>
         {displayError && formatError(displayError, 'Login')}
         <TextInput

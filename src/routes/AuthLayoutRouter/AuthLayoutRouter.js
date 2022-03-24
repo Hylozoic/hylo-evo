@@ -288,7 +288,7 @@ export default class AuthLayoutRouter extends Component {
 
     return (
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        {/* Route-based Redirection */}
+        {/* **** Route-based Redirection **** */}
         {redirectRoutes.map(({ from, to }) => (
           <RedirectRoute exact path={from} to={to} key={from} />
         ))}
@@ -421,10 +421,10 @@ export default class AuthLayoutRouter extends Component {
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
               <Route path='/:context(groups)/:groupSlug' component={Stream} />
-              {/* Other Routes */}
+              {/* **** Other Routes **** */}
               <Route path='/settings' component={UserSettings} />
               <Route path='/search' component={Search} />
-              {/* Default Route (404) */}
+              {/* **** Default Route (404) **** */}
               {defaultRedirectPath && (
                 <Redirect to={defaultRedirectPath} />
               )}

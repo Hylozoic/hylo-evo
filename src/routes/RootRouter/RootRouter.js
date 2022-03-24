@@ -32,14 +32,9 @@ export default function RootRouter () {
     )
   }
 
-  // TODO: Revisit this in terms of returnToPath
-  // On mobile we want to only store the intended URL and forward to the
-  // download app modal (which is currently on the Login component/page)
-  // Specifically we don't want any components to do any work but this,
-  // namely JoinGroup which utilizes returnToOnAuth) and may attempt
-  // to auth the user with a token and send them into sign-up.
   if (isAuthorized) {
-    // This pre-load some React Router match params for `AuthLayoutRouter`
+    // The path matching here serves to pre-load React Router route match
+    // params needed in `AuthLayoutRouter`
     return (
       <Route
         path={[

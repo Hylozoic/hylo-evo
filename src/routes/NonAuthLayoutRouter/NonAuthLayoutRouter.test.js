@@ -11,36 +11,15 @@ function testProvider () {
   return AllTheProviders(store)
 }
 
-function createRootContainer () {
-  const rootElement = document.createElement('div')
-  rootElement.setAttribute('id', 'root')
-  return document.body.appendChild(rootElement)
-}
-
 // Currently both tests below are going to default route `/login`
 // so until elabtorated these tests are identical to the Login
 // component tests
 
 it('renders correctly', () => {
-  const { getByText, queryByText } = render(
-    <NonAuthLayoutRouter location={{ search: '' }} />,
-    { container: createRootContainer() },
-    testProvider()
-  )
-  expect(queryByText('View in Hylo app')).not.toBeInTheDocument()
-  expect(getByText('Sign in to Hylo')).toBeInTheDocument()
-})
-
-it('renders correctly with mobile redirect', () => {
-  const url = 'some.url'
-  const mobileRedirectSpy = jest.spyOn(require('util/mobile'), 'mobileRedirect')
-    .mockImplementation(() => 'mobile/app/url')
-
   const { getByText } = render(
-    <NonAuthLayoutRouter downloadAppUrl={url} location={{ search: '' }} />,
-    { container: createRootContainer() },
+    <NonAuthLayoutRouter location={{ search: '' }} />,
+    null,
     testProvider()
   )
-  expect(getByText('View in Hylo app')).toBeInTheDocument()
-  mobileRedirectSpy.mockRestore()
+  expect(getByText('Sign in to Hylo')).toBeInTheDocument()
 })

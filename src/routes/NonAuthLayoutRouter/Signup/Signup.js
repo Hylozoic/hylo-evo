@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
-import { mobileRedirect } from 'util/mobile'
 import { validateEmail } from 'util/index'
 import { formatError } from '../util'
 import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
@@ -9,7 +8,6 @@ import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import loginWithService from 'store/actions/loginWithService'
 import Button from 'components/Button'
-import DownloadAppModal from 'components/DownloadAppModal'
 import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import TextInput from 'components/TextInput'
@@ -22,7 +20,6 @@ export default function Signup (props) {
   const providedError = useSelector(state =>
     getGraphqlResponseError(state) || getQuerystringParam('error', state, props)
   )
-  const downloadAppUrl = mobileRedirect()
   const error = providedError || localError
 
   const sendEmailVerification = async email => {
@@ -61,7 +58,6 @@ export default function Signup (props) {
   return (
     <div className={props.className}>
       <div styleName='formWrapper'>
-        {downloadAppUrl && <DownloadAppModal url={downloadAppUrl} />}
         <h1 styleName='title'>Welcome to Hylo</h1>
         <p styleName='blurb'>Stay connected, organized, and engaged with your group.</p>
         <p styleName='or'>Enter your email to get started:</p>
