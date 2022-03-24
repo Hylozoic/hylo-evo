@@ -253,7 +253,7 @@ button.toggleFeatureFiltersButton {
   &.drawerOpen {
     right: calc(40% + 100px);
   }
-  &:hover {
+  &.active, &:hover {
     background-color: $color-picton-blue;
     color: white;
     cursor: pointer;  

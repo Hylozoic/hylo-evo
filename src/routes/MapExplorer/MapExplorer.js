@@ -520,7 +520,7 @@ export class UnwrappedMapExplorer extends React.Component {
         <Icon
           name='Plus'
           onClick={this.handleAddItemToMap}
-          styleName={cx('addItemToMapButton', { drawerOpen: !hideDrawer })}
+          styleName={cx('addItemToMapButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
         />
         {currentUser && <>
           <Icon
