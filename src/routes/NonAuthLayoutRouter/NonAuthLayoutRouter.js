@@ -52,8 +52,6 @@ export default function NonAuthLayoutRouter (props) {
         </div>
         <div styleName='signupRow'>
           <Switch>
-            <Route path='/:context(groups)/:groupSlug/join/:accessCode' component={JoinGroup} />
-            <Route path='/h/use-invitation' component={JoinGroup} />
             <Route
               path='/reset-password'
               component={routeProps => (
@@ -71,6 +69,13 @@ export default function NonAuthLayoutRouter (props) {
               component={routeProps => (
                 <Login {...props} {...routeProps} styleName='form' />
               )}
+            />
+            <Route
+              path={[
+                '/:context(groups)/:groupSlug/join/:accessCode',
+                '/h/use-invitation'
+              ]}
+              component={JoinGroup}
             />
             {/*
               Default route

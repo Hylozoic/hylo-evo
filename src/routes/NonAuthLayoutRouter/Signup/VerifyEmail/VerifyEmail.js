@@ -26,9 +26,7 @@ export default function VerifyEmail (props) {
   useEffect(() => {
     // If we get here through a login link with JWT token then immediately check the code with the link
     // TODO: show the code getting filled in? Maybe we dont even need a JWT, just pass the link in the URL? Still better to hide in the JWT?
-    if (token) {
-      submit()
-    }
+    if (token) { submit() }
   }, [])
 
   if (!email) {

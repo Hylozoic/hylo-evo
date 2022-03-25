@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { every, isEmpty } from 'lodash/fp'
 import { groupUrl } from 'util/navigation'
+import fetchForGroup from 'store/actions/fetchForGroup'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import { getSignupComplete } from 'store/selectors/getSignupState'
@@ -15,50 +17,54 @@ export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default function JoinGroup (props) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const signupComplete = useSelector(getSignupComplete)
-  const [loading, setLoading] = useState(true)
-  const [isValidInvite, setIsValidInvite] = useState()
-  const [groupSlug, setGroupSlug] = useState()
-  const invitationTokenAndCode = {
-    invitationToken: getQuerystringParam('token', null, props),
-    accessCode: getRouteParam('accessCode', null, props)
-  }
 
   useEffect(() => {
     (async function () {
-      setLoading(true)
       try {
+        const invitationTokenAndCode = {
+          invitationToken: getQuerystringParam('token', null, props),
+          accessCode: getRouteParam('accessCode', null, props)
+        }
+
+        if (every(isEmpty, invitationTokenAndCode)) {
+          throw new Error('Please provide either a `token` query string parameter or `accessCode` route param')
+        }
+
         if (signupComplete) {
           const useInvitationResult = await dispatch(useInvitation(invitationTokenAndCode))
           const newMembership = useInvitationResult?.payload?.getData()?.membership
-          setGroupSlug(newMembership?.group?.slug)
+          const groupSlug = newMembership?.group?.slug
+
+          if (groupSlug) {
+            /*
+              `AuthLayoutRouter` will already try and fetch this group due to the
+              `/groups/:groupSlug/join/<token>` route matching `:groupSlug` before the
+              group has been joined (unauthorized), this could be fixed and this extra
+              fetch removed.
+            */
+            await dispatch(fetchForGroup(groupSlug))
+            history.push(groupUrl(groupSlug))
+          } else {
+            throw new Error('Join group was unsuccessful')
+          }
         } else {
           const checkInvitationResult = await dispatch(checkInvitation(invitationTokenAndCode))
           const isValidInvite = checkInvitationResult?.payload?.getData()?.valid
+
           if (isValidInvite) {
             dispatch(setReturnToPath(props.location.pathname + props.location.search))
-            setIsValidInvite(true)
+            history.push(SIGNUP_PATH)
+          } else {
+            history.push(EXPIRED_INVITE_PATH)
           }
         }
       } catch (error) {
-        console.log('!!!! error in JoinGroup', error)
-      } finally {
-        setLoading(false)
+        history.goBack()
       }
     })()
   }, [])
 
-  if (loading) {
-    return <Loading />
-  }
-
-  if (groupSlug) {
-    return <Redirect to={groupUrl(groupSlug, 'explore')} />
-  }
-
-  if (isValidInvite) {
-    return <Redirect to={SIGNUP_PATH} />
-  } else {
-    return <Redirect to={EXPIRED_INVITE_PATH} />
-  }
+  return <Loading />
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from 'router'
 import orm from 'store/models'
-import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
 import NonAuthLayoutRouter from './NonAuthLayoutRouter'
 
 function testProvider () {
@@ -17,11 +17,11 @@ function testProvider () {
 // component tests
 
 it('renders correctly', () => {
-  const { getByText } = render(
+  render(
     <NonAuthLayoutRouter location={{ search: '' }} />,
     null,
     testProvider()
   )
 
-  expect(getByText('Sign in to Hylo')).toBeInTheDocument()
+  expect(screen.getByText('Sign in to Hylo')).toBeInTheDocument()
 })

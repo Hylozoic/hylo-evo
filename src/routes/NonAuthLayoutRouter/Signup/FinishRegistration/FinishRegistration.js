@@ -1,24 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import { formatError } from '../../util'
-
 import '../Signup.scss'
 
 export default function FinishRegistration (props) {
-  const { className, currentUser } = props
+  const { currentUser } = props
   const { email, name } = currentUser
-
-  const [error, setError] = useState('')
-
+  const [error, setError] = useState()
   const [formValues, setFormValues] = useState({
     name: name || '',
     password: '',
     passwordConfirmation: ''
   })
 
-  const displayError = props.error || error
-  const canSubmit = formValues.name.length > 0 && formValues.password.length > 0 && !error
+  useEffect(() => {
+    if (
+      formValues.password.length > 8 &&
+      (formValues.password !== formValues.passwordConfirmation)
+    ) {
+      setError("Passwords don't match")
+    } else {
+      setError(null)
+    }
+  }, [formValues.password, formValues.passwordConfirmation])
+
+  useEffect(() => {
+    setError(props.graphlResponseError)
+  }, [props.graphlResponseError])
+
+  const canSubmit = formValues.password.length > 8 && !error
 
   const submit = async () => {
     if (canSubmit) {
@@ -29,30 +40,16 @@ export default function FinishRegistration (props) {
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    let newError = ''
 
-    if (name === 'password') {
-      if (value !== formValues.passwordConfirmation) newError = 'Passwords don\'t match'
-      if (value.length > 0 && value.length < 9) newError = 'Passwords must be at least 9 characters long'
-    }
-
-    if (name === 'passwordConfirmation') {
-      if (value !== formValues.password) newError = 'Passwords don\'t match'
-    }
-
-    setError(newError)
-
-    setFormValues(prevState => {
-      return { ...prevState, [name]: value }
-    })
+    setFormValues(prevState => ({ ...prevState, [name]: value }))
   }
 
   return (
-    <div className={className}>
+    <div className={props.className}>
       <div styleName='formWrapper'>
         <h1 styleName='title'>One more step!</h1>
         <p styleName='blurb'>Hi {email} we just need to know your name and password and you're in.</p>
-        {displayError && formatError(displayError, 'Signup')}
+        {error && formatError(error, 'Signup')}
 
         <TextInput
           aria-label='name'
@@ -71,7 +68,7 @@ export default function FinishRegistration (props) {
           aria-label='password'
           autoComplete='off'
           id='password'
-          internalLabel='Password'
+          internalLabel='Password (at least 9 characters)'
           label='password'
           name='password'
           onChange={handleChange}

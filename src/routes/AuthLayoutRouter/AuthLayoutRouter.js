@@ -47,7 +47,7 @@ import Navigation from './components/Navigation'
 import NotFound from 'components/NotFound'
 import PostDetail from 'routes/PostDetail'
 import Search from 'routes/Search'
-import WelcomeWizard from 'routes/WelcomeWizard'
+import WelcomeWizardRouter from 'routes/WelcomeWizardRouter'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
@@ -380,7 +380,7 @@ export default class AuthLayoutRouter extends Component {
           )}
           <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             <Switch>
-              <Route path='/welcome' component={WelcomeWizard} />
+              <Route path='/welcome' component={WelcomeWizardRouter} />
               {/* **** Member Routes **** */}
               <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={props => <MemberProfile {...props} isSingleColumn={isSingleColumn} />} />
               <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
@@ -452,20 +452,13 @@ export default class AuthLayoutRouter extends Component {
         <Switch>
           {createRoutes.map(({ path }) => (
             <Route
-              path={path + '/create'}
+              path={[
+                path + '/create',
+                path + '/' + REQUIRED_EDIT_POST_MATCH
+              ]}
+              // NOTE: Was using `children` vs `component`, why?
+              component={CreateModal}
               key={path + 'create'}
-              children={({ match, location }) => (
-                <CreateModal match={match} location={location} />
-              )}
-            />
-          ))}
-          {createRoutes.map(({ path }) => (
-            <Route
-              path={path + '/' + REQUIRED_EDIT_POST_MATCH}
-              key={path + 'editpost'}
-              children={({ match, location }) => (
-                <CreateModal match={match} location={location} />
-              )}
             />
           ))}
         </Switch>

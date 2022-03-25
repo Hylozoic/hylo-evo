@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Redirect, Switch, useLocation } from 'react-router-dom'
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom'
 import getSignupState, { SignupState } from 'store/selectors/getSignupState'
 import Signup from './Signup'
 import VerifyEmail from './VerifyEmail'
@@ -9,38 +9,45 @@ import './Signup.scss'
 
 export default function SignupRouter (props) {
   const location = useLocation()
+  const history = useHistory()
   const signupState = useSelector(getSignupState)
-  let redirectTo
 
-  if (
-    signupState === SignupState.None &&
-    location.pathname !== '/signup/verify-email'
-  ) {
-    redirectTo = '/signup'
-  }
+  useEffect(() => {
+    (async function () {
+      let redirectTo
 
-  switch (signupState) {
-    case SignupState.EmailValidation: {
-      redirectTo = '/signup/verify-email'
-      break
-    }
-    case SignupState.Registration: {
-      redirectTo = '/signup/finish'
-      break
-    }
-    // Should never be true as SignupRouter is not active at this state,
-    // Routing will have been turned-over to AuthLayoutRouter
-    case SignupState.InProgress: {
-      redirectTo = '/'
-      break
-    }
-  }
+      if (
+        signupState === SignupState.None &&
+        location.pathname !== '/signup/verify-email'
+      ) {
+        redirectTo = '/signup'
+      }
+
+      switch (signupState) {
+        case SignupState.EmailValidation: {
+          redirectTo = '/signup/verify-email'
+          break
+        }
+        case SignupState.Registration: {
+          redirectTo = '/signup/finish'
+          break
+        }
+        // Should never be true as SignupRouter is not active at this state,
+        // Routing will have been turned-over to AuthLayoutRouter
+        case SignupState.InProgress: {
+          redirectTo = '/'
+          break
+        }
+      }
+
+      if (redirectTo && (redirectTo !== location.pathname)) {
+        history.push(redirectTo)
+      }
+    })()
+  })
 
   return (
     <Switch>
-      {(redirectTo && (redirectTo !== location.pathname)) && (
-        <Redirect to={redirectTo} />
-      )}
       <Route
         exact
         path='/signup'

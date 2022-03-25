@@ -8,7 +8,7 @@ export function mapStateToProps (state, props) {
 
   return {
     currentUser,
-    error: getGraphqlResponseError(state)
+    graphlResponseError: getGraphqlResponseError(state)
   }
 }
 
