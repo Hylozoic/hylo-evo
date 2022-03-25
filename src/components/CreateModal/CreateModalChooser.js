@@ -11,12 +11,12 @@ const postTypes = Object.keys(POST_TYPES)
 export default class CreateModalChooser extends Component {
   render () {
     const { location } = this.props
-    const pathname = location.pathname.slice(-1) === '/' ? location.pathname : `${location.pathname}/`
+    const pathname = location.pathname?.slice(-1) === '/' ? location.pathname : `${location.pathname}/`
     const params = location.search ? `&${location.search.substring(1)}` : ''
     const hasLocation = params.includes('lat') && params.includes('lng')
 
     return <div styleName='chooser'>
-      <h1>{hasLocation ? 'New Post at this location: ' : ''}What would vou like to create?</h1>
+      <h1>{hasLocation ? 'New Post at this location: ' : ''}What would you like to create?</h1>
       {postTypes.map(postType => {
         const postTypeUppercase = postType.charAt(0).toUpperCase() + postType.slice(1)
         const iconName = postType === 'request' ? 'Heart' : postTypeUppercase
