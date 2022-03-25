@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from 'router'
 import orm from 'store/models'
-import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
 import CreateModal from './CreateModal'
 
 function testProviders () {
@@ -14,11 +14,11 @@ function testProviders () {
 }
 
 it('renders', () => {
-  const { getByText } = render(
+  render(
     <CreateModal match={{ params: {} }} location={{ search: '' }} />,
     null,
     testProviders()
   )
 
-  expect(getByText('What would you like to create?')).toBeInTheDocument()
+  expect(screen.getByText('What would you like to create?')).toBeInTheDocument()
 })

@@ -7,7 +7,7 @@ import { setupServer } from 'msw/node'
 import orm from 'store/models'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
-import { AllTheProviders, generateStore, render, waitForElementToBeRemoved } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
 import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
 
 jest.mock('store/selectors/getMixpanel', () => () => ({
@@ -55,41 +55,48 @@ function currentUserProvider (signupStateComplete) {
 }
 
 it('joins and forwards to group when current user is fully signed-up', async () => {
+  const testMembership = {
+    id: '2',
+    group: {
+      id: '3',
+      slug: 'test-group'
+    }
+  }
+
   mockGraphqlServer.resetHandlers(
     graphql.mutation('UseInvitation', (req, res, ctx) => {
       return res(
         ctx.data({
           useInvitation: {
-            membership: {
-              id: '2',
-              group: {
-                id: '3',
-                slug: 'test-group'
-              }
-            }
+            membership: testMembership
           }
+        })
+      )
+    }),
+    graphql.query('FetchForGroup', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          group: testMembership.group
         })
       )
     })
   )
-  const { getByText } = render(
+
+  render(
     <>
-      <JoinGroup match={{ params: {} }} location={{ search: '' }} />
+      <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
       <Route path='/' component={({ location }) => location.pathname} />
     </>,
     null,
     currentUserProvider(true)
   )
 
-  await waitForElementToBeRemoved(document.querySelector('[data-stylename="loading"]'))
-
-  expect(getByText('/groups/test-group/explore')).toBeInTheDocument()
+  expect(await screen.findByText('/groups/test-group')).toBeInTheDocument()
 })
 
 it('checks invitation and forwards to expired invite page when invitation is invalid when not logged-in', async () => {
   mockGraphqlServer.resetHandlers(
     graphql.query('CheckInvitation', (req, res, ctx) => {
-      // query variables available at req.body.variables
       return res(
         ctx.data({
           checkInvitation: {
@@ -99,9 +106,9 @@ it('checks invitation and forwards to expired invite page when invitation is inv
       )
     })
   )
-  const { getByText } = render(
+  render(
     <>
-      <JoinGroup match={{ params: {} }} location={{ search: '' }} />
+      <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
       <Route path='/' component={({ location }) => location.pathname} />
     </>
     ,
@@ -109,15 +116,12 @@ it('checks invitation and forwards to expired invite page when invitation is inv
     currentUserProvider(false)
   )
 
-  await waitForElementToBeRemoved(document.querySelector('[data-stylename="loading"]'))
-
-  expect(getByText(EXPIRED_INVITE_PATH)).toBeInTheDocument()
+  expect(await screen.findByText(EXPIRED_INVITE_PATH)).toBeInTheDocument()
 })
 
 it('sets returnToPath and forwards to signup page when invitation is valid and user is not logged-in', async () => {
   mockGraphqlServer.resetHandlers(
     graphql.query('CheckInvitation', (req, res, ctx) => {
-      // query variables available at req.body.variables
       return res(
         ctx.data({
           checkInvitation: {
@@ -127,9 +131,9 @@ it('sets returnToPath and forwards to signup page when invitation is valid and u
       )
     })
   )
-  const { getByText } = render(
+  render(
     <>
-      <JoinGroup match={{ params: {} }} location={{ pathname: 'route/to/join-group', search: '' }} />
+      <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ pathname: 'route/to/join-group', search: '' }} />
       <Route
         path='/'
         component={({ location }) => {
@@ -148,8 +152,6 @@ it('sets returnToPath and forwards to signup page when invitation is valid and u
     currentUserProvider(false)
   )
 
-  await waitForElementToBeRemoved(document.querySelector('[data-stylename="loading"]'))
-
-  expect(getByText('route/to/join-group')).toBeInTheDocument()
-  expect(getByText(SIGNUP_PATH)).toBeInTheDocument()
+  expect(await screen.findByText('route/to/join-group')).toBeInTheDocument()
+  expect(await screen.findByText(SIGNUP_PATH)).toBeInTheDocument()
 })

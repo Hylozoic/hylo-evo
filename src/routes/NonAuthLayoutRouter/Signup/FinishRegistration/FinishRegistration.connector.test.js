@@ -18,6 +18,6 @@ describe('FinishRegistration.connector', () => {
 
   it('returns the right keys', () => {
     expect(mapStateToProps(state, { location: { search: '' } }).currentUser.id).toEqual('1')
-    expect(mapStateToProps(state, { location: { search: '' } }).hasOwnProperty('error')).toBeTruthy()
+    expect(mapStateToProps(state, { location: { search: '' } }).hasOwnProperty('graphlResponseError')).toBeTruthy()
   })
 })

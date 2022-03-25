@@ -1,7 +1,7 @@
 import React from 'react'
 import { history } from 'router'
 import orm from 'store/models'
-import { AllTheProviders, generateStore, render } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
 import Signup from './Signup'
 
 function testProviders () {
@@ -13,11 +13,11 @@ function testProviders () {
 }
 
 it('renders correctly', () => {
-  const { getByText } = render(
+  render(
     <Signup location={{ search: '' }} />,
     null,
     testProviders()
   )
 
-  expect(getByText('Enter your email to get started:')).toBeInTheDocument()
+  expect(screen.getByText('Enter your email to get started:')).toBeInTheDocument()
 })

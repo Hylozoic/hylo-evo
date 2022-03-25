@@ -3,7 +3,8 @@ import { graphql } from 'msw'
 import { setupServer } from 'msw/node'
 import orm from 'store/models'
 import { history } from 'router'
-import { generateStore, render, AllTheProviders, fireEvent } from 'util/reactTestingLibraryExtended'
+import { generateStore, render, screen, AllTheProviders } from 'util/reactTestingLibraryExtended'
+import userEvent from '@testing-library/user-event'
 import GroupSearch from './GroupSearch'
 
 // was throwing errors with this.element().removeEventListener('blabadlbakdbfl')
@@ -55,19 +56,19 @@ test('GroupSearch integration test', async () => {
       }))
     })
   )
-  const { findByText, getByRole } = render(
+  const user = userEvent.setup()
+  render(
     <GroupSearch />,
     null,
     testProviders()
   )
 
-  expect(await findByText('Test Group Title')).toBeInTheDocument()
+  expect(await screen.findByText('Test Group Title')).toBeInTheDocument()
+  expect(screen.queryByText('Search input results')).not.toBeInTheDocument()
 
-  fireEvent.change(getByRole('textbox'), {
-    target: { value: 'different group' }
-  })
+  await user.type(screen.getByRole('textbox'), 'different group')
 
-  expect(await findByText('Search input results')).toBeInTheDocument()
+  expect(await screen.findByText('Search input results')).toBeInTheDocument()
 })
 
 // Disable API mocking after the tests are done.
