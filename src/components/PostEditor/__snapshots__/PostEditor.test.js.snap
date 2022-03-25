@@ -683,6 +683,20 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       isPublic={false}
       togglePublic={[Function]}
     />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
     <ActionsBar
       groupCount={0}
       groups={Array []}
@@ -1366,6 +1380,20 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       isPublic={false}
       togglePublic={[Function]}
     />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
     <ActionsBar
       groupCount={0}
       groups={Array []}
@@ -1544,6 +1572,20 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       isPublic={false}
       togglePublic={[Function]}
     />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
     <ActionsBar
       groupCount={0}
       groups={Array []}
@@ -1684,6 +1726,20 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       isPublic={false}
       togglePublic={[Function]}
     />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
     <ActionsBar
       groupCount={0}
       groups={Array []}
@@ -1824,6 +1880,20 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       isPublic={false}
       togglePublic={[Function]}
     />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
     <ActionsBar
       canModerate={true}
       groupCount={0}
@@ -1988,6 +2058,20 @@ exports[`PostEditor renders contribution button 1`] = `
       data-stylename="footerSection"
     >
       <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
         data-stylename="footerSection-label"
       >
         Accept Contributions
@@ -2146,6 +2230,20 @@ exports[`PostEditor renders with min props 1`] = `
       isPublic={false}
       togglePublic={[Function]}
     />
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label alignedLabel"
+      >
+        Location
+      </div>
+      <Connect(LocationInput)
+        onChange={[Function]}
+        placeholder="Where is your discussion located?"
+        saveLocationToDB={true}
+      />
+    </div>
     <ActionsBar
       groupCount={0}
       groups={Array []}
