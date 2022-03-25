@@ -268,7 +268,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   mapViewPortUpdate = (update) => {
-    this.setState({ viewport: update })
+    this.setState({ viewport: update, creatingPost: false })
   }
 
   afterViewportUpdate = (update, mapRef) => {

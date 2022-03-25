@@ -113,6 +113,11 @@ export function createPostUrl (opts = {}, querystringParams = {}) {
   return addQuerystringToPath(url, querystringParams)
 }
 
+export function createUrl (opts = {}, querystringParams = {}) {
+  let url = baseUrl(opts) + '/create'
+  return addQuerystringToPath(url, querystringParams)
+}
+
 export function editPostUrl (id, opts = {}, querystringParams = {}) {
   return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
