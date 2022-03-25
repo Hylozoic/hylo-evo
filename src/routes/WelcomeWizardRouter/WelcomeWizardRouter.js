@@ -6,7 +6,7 @@ import UploadPhoto from './UploadPhoto'
 import WelcomeExplore from './WelcomeExplore'
 import './WelcomeWizard.scss'
 
-export default function WelcomeWizard () {
+export default function WelcomeWizardRouter () {
   return (
     <CSSTransition
       classNames='welcome-wizard'
