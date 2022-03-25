@@ -542,6 +542,7 @@ export default class PostEditor extends React.Component {
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
+      'discussion',
       'event',
       'offer',
       'request',
