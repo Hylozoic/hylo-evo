@@ -194,6 +194,15 @@ export function getGroupSlugInPath (pathname) {
   return get('params.groupSlug', match)
 }
 
+export function getQueryParamsObjectFromString (queryParamString) {
+  let obj = {}
+  const params = new URLSearchParams(queryParamString)
+  for (const [key, value] of params) {
+    obj[key] = value
+  }
+  return obj
+}
+
 export function gotoExternalUrl (url) {
   return window.open(url, null, 'noopener,noreferrer')
 }

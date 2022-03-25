@@ -520,9 +520,7 @@ export default class PostEditor extends React.Component {
       acceptContributions,
       eventInvitations,
       startTime,
-      endTime,
-      location,
-      locationObject
+      endTime
     } = post
     const {
       currentGroup,
@@ -551,10 +549,13 @@ export default class PostEditor extends React.Component {
       'project'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
+    const location =
+      post.location ||
+      this.props.selectedLocation
     // Center location autocomplete either on post's current location,
     // or current group's location, or current user's location
-    const curLocation =
-      locationObject ||
+    const locationObject =
+      post.locationObject ||
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
 
@@ -703,7 +704,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-label alignedLabel'>Location</div>
               <LocationInput
                 saveLocationToDB
-                locationObject={curLocation}
+                locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
                 placeholder={`Where is your ${type} located?`}

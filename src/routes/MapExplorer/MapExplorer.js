@@ -10,7 +10,7 @@ import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FlyToInterpolator } from 'react-map-gl'
 
-import getQueryParamsObjectFromString from 'store/selectors/getQueryParamsObjectFromString'
+import { getQueryParamsObjectFromString } from 'util/navigation'
 import { isMobileDevice } from 'util/mobile'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
