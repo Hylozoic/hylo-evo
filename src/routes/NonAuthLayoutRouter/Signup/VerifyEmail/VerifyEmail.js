@@ -4,22 +4,18 @@ import { push } from 'connected-react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
 import { formatError } from '../../util'
-import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
+import getMe from 'store/selectors/getMe'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { verifyEmail } from '../Signup.store'
 import Loading from 'components/Loading'
 import '../Signup.scss'
-import getMe from 'store/selectors/getMe'
 
 export default function VerifyEmail (props) {
   const dispatch = useDispatch()
-  const { className } = props
   const currentUser = useSelector(getMe)
   const email = currentUser?.email || getQuerystringParam('email', null, props)
   const token = getQuerystringParam('token', null, props)
-  const providedError = useSelector(getGraphqlResponseError)
-  const [error, setErrorBase] = useState(providedError)
-  const setError = errorMessage => setErrorBase(providedError || errorMessage)
+  const [error, setError] = useState()
   const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -41,10 +37,9 @@ export default function VerifyEmail (props) {
       if (error) {
         setError(error)
       }
-    } catch (error) {
+    } catch (requestError) {
       // Error is added to the state by login reducer but we need to catch it here too
-      dispatch(push(`/signup?error=${error.message}`))
-      // Else just show the error on this page
+      dispatch(push(`/signup?error=${requestError.message}`))
     } finally {
       setLoading(false)
     }
@@ -64,7 +59,7 @@ export default function VerifyEmail (props) {
   }
 
   return (
-    <div className={className}>
+    <div styleName='form'>
       <Link to='/signup' styleName='back-button'>&#8592; back</Link>
       <div styleName='formWrapper'>
         <h1 styleName='title'>Check your email</h1>

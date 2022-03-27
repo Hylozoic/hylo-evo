@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { push } from 'connected-react-router'
 import { validateEmail } from 'util/index'
 import { formatError } from '../util'
-import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import loginWithService from 'store/actions/loginWithService'
@@ -18,7 +17,7 @@ export default function Signup (props) {
   const [email, setEmail] = useState()
   const [localError, setLocalError] = useState()
   const providedError = useSelector(state =>
-    getGraphqlResponseError(state) || getQuerystringParam('error', state, props)
+    getQuerystringParam('error', state, props)
   )
   const error = providedError || localError
 
@@ -56,7 +55,7 @@ export default function Signup (props) {
   const canSubmit = email?.length > 0
 
   return (
-    <div className={props.className}>
+    <div styleName='form'>
       <div styleName='formWrapper'>
         <h1 styleName='title'>Welcome to Hylo</h1>
         <p styleName='blurb'>Stay connected, organized, and engaged with your group.</p>

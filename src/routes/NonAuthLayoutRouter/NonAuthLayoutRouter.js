@@ -53,9 +53,9 @@ export default function NonAuthLayoutRouter (props) {
         <div styleName='signupRow'>
           <Switch>
             <Route
-              path='/reset-password'
+              path='/login'
               component={routeProps => (
-                <PasswordReset {...props} {...routeProps} styleName='form' />
+                <Login {...props} {...routeProps} styleName='form' />
               )}
             />
             <Route
@@ -65,9 +65,9 @@ export default function NonAuthLayoutRouter (props) {
               )}
             />
             <Route
-              path='/login'
+              path='/reset-password'
               component={routeProps => (
-                <Login {...props} {...routeProps} styleName='form' />
+                <PasswordReset {...props} {...routeProps} styleName='form' />
               )}
             />
             <Route

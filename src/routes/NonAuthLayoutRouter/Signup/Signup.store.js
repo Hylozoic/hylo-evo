@@ -83,7 +83,7 @@ export function register (name, password) {
     type: REGISTER,
     graphql: {
       query: `
-        mutation ($name: String!, $password: String!) {
+        mutation Register ($name: String!, $password: String!) {
           register(name: $name, password: $password) {
             me {
               id

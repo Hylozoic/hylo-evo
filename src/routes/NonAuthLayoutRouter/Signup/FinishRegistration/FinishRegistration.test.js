@@ -1,35 +1,118 @@
 import React from 'react'
-import FinishRegistration from './FinishRegistration'
-import { render, screen } from 'util/reactTestingLibraryExtended'
 import userEvent from '@testing-library/user-event'
+import { setupServer } from 'msw/node'
+import { graphql } from 'msw'
+import { history } from 'router'
+import orm from 'store/models'
+import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
+import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
+import FinishRegistration from './FinishRegistration'
 
-const currentUser = { name: 'Smiley', email: 'test@wheee.com' }
+const mockGraphqlServer = setupServer()
+mockGraphqlServer.listen()
+
+function currentUserProvider () {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  const reduxState = { orm: ormSession.state }
+  const meWithMembershipResult = {
+    payload: {
+      data: {
+        me: {
+          id: '1',
+          hasRegistered: false,
+          emailValidated: true,
+          settings: {
+            signupInProgress: true
+          }
+        }
+      }
+    },
+    meta: {
+      extractModel: 'Me'
+    }
+  }
+  extractModelsFromAction(meWithMembershipResult, ormSession)
+  const store = generateStore(history, reduxState)
+
+  return AllTheProviders(store)
+}
 
 it('renders correctly', () => {
   render(
-    <FinishRegistration currentUser={currentUser} />
+    <FinishRegistration />,
+    null,
+    currentUserProvider()
   )
 
   expect(screen.getByText('One more step!')).toBeInTheDocument()
 })
 
-it('renders correctly with an API error', () => {
-  render(
-    <FinishRegistration graphlResponseError='some error' currentUser={currentUser} />
-  )
-
-  expect(screen.getByText('some error')).toBeInTheDocument()
-})
-
-it('renders correctly with an internal error', async () => {
+it('renders password error if it not confirmed', async () => {
   const user = userEvent.setup()
 
   render(
-    <FinishRegistration currentUser={currentUser} />
+    <FinishRegistration />,
+    null,
+    currentUserProvider()
+  )
+
+  await user.type(screen.getByLabelText('name'), 'Smiley Person')
+  await user.type(screen.getByLabelText('password'), '012345678')
+  await user.type(screen.getByLabelText('passwordConfirmation'), '012345671')
+  await user.click(screen.getByText('Jump in to Hylo!'))
+
+  expect(screen.getByText("Passwords don't match")).toBeInTheDocument()
+})
+
+it('does not submit if name is not present, even if password is valid', async () => {
+  const user = userEvent.setup()
+  const registerCalled = jest.fn()
+
+  mockGraphqlServer.resetHandlers(
+    graphql.mutation('Register', (req, res, ctx) => {
+      registerCalled(req.variables)
+
+      // this return is required, results are ignored
+      return res(ctx.data({}))
+    })
+  )
+
+  render(
+    <FinishRegistration />,
+    null,
+    currentUserProvider()
   )
 
   await user.type(screen.getByLabelText('password'), '012345678')
-  await user.type(screen.getByLabelText('passwordConfirmation'), '012345671')
+  await user.type(screen.getByLabelText('passwordConfirmation'), '012345678')
+  await user.click(screen.getByText('Jump in to Hylo!'))
 
-  expect(screen.getByText("Passwords don't match")).toBeInTheDocument()
+  expect(registerCalled).not.toHaveBeenCalled()
+})
+
+it('registers user if a name and valid password provided', async () => {
+  const user = userEvent.setup()
+  const registerCalled = jest.fn()
+
+  mockGraphqlServer.resetHandlers(
+    graphql.mutation('Register', (req, res, ctx) => {
+      registerCalled(req.variables)
+
+      // this return is required, results are ignored
+      return res(ctx.data({}))
+    })
+  )
+
+  render(
+    <FinishRegistration />,
+    null,
+    currentUserProvider()
+  )
+
+  await user.type(screen.getByLabelText('name'), 'Smiley Person')
+  await user.type(screen.getByLabelText('password'), '012345678')
+  await user.type(screen.getByLabelText('passwordConfirmation'), '012345678')
+  await user.click(screen.getByText('Jump in to Hylo!'))
+
+  expect(registerCalled).toHaveBeenCalledWith({ name: 'Smiley Person', password: '012345678' })
 })

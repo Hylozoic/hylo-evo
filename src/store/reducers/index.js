@@ -4,7 +4,6 @@ import { history } from 'router'
 
 import orm from './ormReducer'
 import returnToPath from 'store/reducers/returnToPath'
-import graphqlResponseError from 'store/reducers/graphqlResponseError'
 import pending from './pending'
 import locationHistory from './locationHistory'
 import resetStore from './resetStore'
@@ -45,7 +44,7 @@ export const combinedReducers = combineReducers({
   orm,
   router: connectRouter(history),
   returnToPath,
-  graphqlResponseError,
+  // graphqlResponseError,
   pending,
   queryResults,
   locationHistory,

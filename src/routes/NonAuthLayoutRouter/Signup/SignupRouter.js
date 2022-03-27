@@ -14,60 +14,55 @@ export default function SignupRouter (props) {
 
   useEffect(() => {
     (async function () {
-      let redirectTo
-
-      if (
-        signupState === SignupState.None &&
-        location.pathname !== '/signup/verify-email'
-      ) {
-        redirectTo = '/signup'
+      const redirectTo = path => {
+        if (redirectTo && (path !== location.pathname)) {
+          history.push(path)
+        }
       }
 
       switch (signupState) {
+        case SignupState.None: {
+          if (location.pathname !== '/signup/verify-email') {
+            redirectTo('/signup')
+          }
+          break
+        }
         case SignupState.EmailValidation: {
-          redirectTo = '/signup/verify-email'
+          redirectTo('/signup/verify-email')
           break
         }
         case SignupState.Registration: {
-          redirectTo = '/signup/finish'
+          redirectTo('/signup/finish')
           break
         }
         // Should never be true as SignupRouter is not active at this state,
         // Routing will have been turned-over to AuthLayoutRouter
         case SignupState.InProgress: {
-          redirectTo = '/'
+          redirectTo('/')
           break
         }
       }
-
-      if (redirectTo && (redirectTo !== location.pathname)) {
-        history.push(redirectTo)
-      }
     })()
-  })
+
+    console.log('!! in useEffect')
+  }, [signupState, location.pathname])
 
   return (
     <Switch>
       <Route
         exact
         path='/signup'
-        component={() => (
-          <Signup {...props} styleName='form' />
-        )}
+        component={() => <Signup {...props} />}
       />
       <Route
         exact
         path='/signup/verify-email'
-        component={() => (
-          <VerifyEmail {...props} styleName='form' />
-        )}
+        component={() => <VerifyEmail {...props} />}
       />
       <Route
         exact
         path='/signup/finish'
-        component={() => (
-          <FinishRegistration {...props} styleName='form' />
-        )}
+        component={() => <FinishRegistration {...props} />}
       />
     </Switch>
   )
