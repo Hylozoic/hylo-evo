@@ -7,7 +7,7 @@ const currentUser = { name: 'Smiley', email: 'test@wheee.com' }
 
 it('renders correctly', () => {
   render(
-    <FinishRegistration currentUser={currentUser} />,
+    <FinishRegistration currentUser={currentUser} />
   )
 
   expect(screen.getByText('One more step!')).toBeInTheDocument()

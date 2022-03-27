@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import React from 'react'
 import { uniq } from 'lodash'
 import './NonAuthLayoutRouter.scss'
@@ -6,8 +7,9 @@ export function formatError (error, action) {
   if (!error) return
 
   const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/)
+
   if (noPasswordMatch) {
-    var options = uniq(noPasswordMatch[1].split(',')
+    const options = uniq(noPasswordMatch[1].split(',')
       .map(option => ({
         'google': 'Google',
         'google-token': 'Google',
@@ -17,10 +19,14 @@ export function formatError (error, action) {
         'linkedin-token': 'LinkedIn'
       }[option])))
 
-    return <div styleName='error'>
-      Your account has no password set. <a href='/reset-password'>Set your password here.</a>
-      {options[0] && <span><br />Or log in with {options.join(' or ')}.</span>}
-    </div>
+    return (
+      <div styleName='error'>
+        Your account has no password set. <a href='/reset-password'>Set your password here.</a>
+        {options[0] && (
+          <span><br />Or log in with {options.join(' or ')}.</span>
+        )}
+      </div>
+    )
   }
 
   function testJSON (text) {
@@ -35,7 +41,7 @@ export function formatError (error, action) {
   }
 
   function errorMessages (type) {
-    var err
+    let err
 
     if (testJSON(type)) {
       err = JSON.parse(type)
@@ -52,7 +58,7 @@ export function formatError (error, action) {
       'duplicate-email': 'Account already exists',
       'no password provided': 'Please enter your password',
       'email not found': 'Email address not found',
-      'invalid code': 'Invalid code, please try again',
+      'invalid-code': 'Invalid code, please try again',
       'invalid-link': 'Link expired, please start over',
       default: err
     }

@@ -1,7 +1,7 @@
 import rollbar from 'client/rollbar'
 import { get } from 'lodash/fp'
 
-export default function errorMiddleware (store) {
+export default function rollbarMiddleware (store) {
   return next => action => {
     const { error, type, payload } = action
     if (error) {

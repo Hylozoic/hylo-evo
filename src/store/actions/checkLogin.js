@@ -5,25 +5,27 @@ export default function checkLogin () {
   return {
     type: CHECK_LOGIN,
     graphql: {
-      query: `query MeQuery {
-        me {
-          id
-          email
-          emailValidated
-          hasRegistered
-          name
-          settings {
-            alreadySeenTour
-            digestFrequency
-            dmNotifications
-            commentNotifications
-            signupInProgress
-            streamViewMode
-            streamSortBy
-            streamPostType
+      query: `
+        query CheckLogin {
+          me {
+            id
+            email
+            emailValidated
+            hasRegistered
+            name
+            settings {
+              alreadySeenTour
+              digestFrequency
+              dmNotifications
+              commentNotifications
+              signupInProgress
+              streamViewMode
+              streamSortBy
+              streamPostType
+            }
           }
         }
-      }`
+      `
     },
     meta: {
       extractModel: [
