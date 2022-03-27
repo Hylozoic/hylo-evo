@@ -45,7 +45,7 @@ export default function JoinGroup (props) {
               fetch removed.
             */
             await dispatch(fetchForGroup(groupSlug))
-            history.push(groupUrl(groupSlug))
+            history.push(groupUrl(groupSlug, 'welcome'))
           } else {
             throw new Error('Join group was unsuccessful')
           }

@@ -4,7 +4,6 @@ import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
-import updateUserSettings from 'store/actions/updateUserSettings'
 import { FETCH_FOR_CURRENT_USER, FETCH_FOR_GROUP } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -61,8 +60,7 @@ export const mapDispatchToProps = {
   fetchForGroup,
   setReturnToPath,
   toggleDrawer,
-  toggleGroupMenu,
-  updateUserSettings
+  toggleGroupMenu
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)
