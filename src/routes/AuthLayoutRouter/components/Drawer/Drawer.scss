@@ -33,7 +33,7 @@ $new-group-spacing: 16px;
 
 .groupDrawer {
   background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .groupDrawer {

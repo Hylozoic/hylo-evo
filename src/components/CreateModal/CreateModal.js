@@ -16,6 +16,7 @@ import './CreateModal.scss'
 
 export default function CreateModal (props) {
   const { location, match } = props
+
   if (!match) return null
 
   const dispatch = useDispatch()

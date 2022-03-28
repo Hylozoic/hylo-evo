@@ -214,7 +214,3 @@ export function isPublicPath (path) {
 export function isMapViewPath (path) {
   return (path.includes('/map'))
 }
-
-export function isAboutPath (path) {
-  return (path.includes('/about'))
-}

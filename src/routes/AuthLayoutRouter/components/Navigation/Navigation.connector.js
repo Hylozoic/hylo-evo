@@ -13,7 +13,6 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 
 export function mapStateToProps (state, props) {
   const routeParams = props.match.params
-
   const group = getGroupForCurrentRoute(state, props)
   const rootPath = baseUrl(routeParams)
   const explorePath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/explore` : false

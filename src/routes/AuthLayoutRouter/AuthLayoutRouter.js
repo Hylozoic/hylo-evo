@@ -16,7 +16,6 @@ import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
   REQUIRED_EDIT_POST_MATCH,
-  isAboutPath,
   isWelcomePath,
   isMapViewPath
 } from 'util/navigation'
@@ -39,7 +38,6 @@ import JoinGroup from 'routes/JoinGroup'
 import LandingPage from 'routes/LandingPage'
 import Loading from 'components/Loading'
 import MemberProfile from 'routes/MemberProfile'
-// import MemberSidebar from 'routes/MemberSidebar'
 import Members from 'routes/Members'
 import Messages from 'routes/Messages'
 import Navigation from './components/Navigation'
@@ -277,10 +275,9 @@ export default class AuthLayoutRouter extends Component {
           )}
           <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
             <Switch>
-              {detailRoutes.map(({ path, component }) => isAboutPath(location.pathname)
-                ? <Route path={path} render={props => <GroupDetail {...props} communityId={group.id} />} key={path} />
-                : <Route path={path} component={component} key={path} />
-              )}
+              {detailRoutes.map(({ path, component }) => (
+                <Route path={path} component={component} key={path} />
+              ))}
             </Switch>
           </div>
         </div>
