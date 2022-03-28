@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import { get, omit } from 'lodash/fp'
+import { goBack, push } from 'connected-react-router'
+import { get } from 'lodash/fp'
 import { GROUP_ACCESSIBILITY } from 'store/models/Group'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMe from 'store/selectors/getMe'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import { baseUrl, groupUrl, postUrl } from 'util/navigation'
+import { groupUrl } from 'util/navigation'
 import { createGroup, fetchGroupExists } from './CreateGroup.store'
 
 export function mapStateToProps (state, props) {
@@ -29,17 +29,8 @@ export function mapStateToProps (state, props) {
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const routeParams = get('match.params', props)
-  if (!routeParams) return {}
-
-  const { postId } = routeParams
-  const urlParams = omit(['postId', 'action'], routeParams)
-  const closeUrl = postId
-    ? postUrl(postId, urlParams)
-    : baseUrl(urlParams)
-
   return {
-    closeModal: () => dispatch(push(closeUrl)),
+    goBack: () => dispatch(goBack()),
     createGroup: (data) => dispatch(createGroup(data)),
     fetchGroupExists: (slug) => dispatch(fetchGroupExists(slug)),
     goToGroup: (slug) => dispatch(push(groupUrl(slug)))
