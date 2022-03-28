@@ -16,7 +16,7 @@ export default class OffersAndRequestsWidget extends Component {
   }
 
   render () {
-    const { group, items, routeParams } = this.props
+    const { group, items, routeParams, isMember } = this.props
 
     return (
       <div styleName='offers-and-requests'>
@@ -30,7 +30,7 @@ export default class OffersAndRequestsWidget extends Component {
             <RoundImage url={p.creator.avatarUrl} styleName='author-image' />
           </div>
         </Link>)}
-        {items.length < 3 ? <div styleName='item create-offer-request'>
+        {items.length < 3 && isMember ? <div styleName='item create-offer-request'>
           <div styleName='meta'>
             <span styleName='type'>Create a request or offer!</span>
           </div>

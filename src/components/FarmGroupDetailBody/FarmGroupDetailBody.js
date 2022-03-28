@@ -6,6 +6,7 @@ import './FarmGroupDetailBody.scss'
 
 export default function FarmGroupDetailBody ({
   currentUser,
+  isMember,
   routeParams
 }) {
   const { group } = useEnsureCurrentGroup()
@@ -30,9 +31,10 @@ export default function FarmGroupDetailBody ({
             // childGroups={childGroups} // needs to be verified once other widgets are sorted
             key={widget.id}
             group={group}
+            isMember={isMember}
             isModerator={false}
-            posts={posts} // needs to be verified once other widgets are sorted
-            routeParams={routeParams} // TODO: replace this with useRouter?
+            posts={posts}
+            routeParams={routeParams}
           />
         )}
 

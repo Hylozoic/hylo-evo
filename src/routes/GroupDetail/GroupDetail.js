@@ -120,7 +120,7 @@ export default class GroupDetail extends Component {
       </div>
       <div styleName='g.groupDetailBody'>
         {group.type === TYPE_NORMAL && this.normalGroupBody()}
-        {group.type === TYPE_FARM && <FarmGroupDetailBody group={group} currentUser={currentUser} routeParams={routeParams} />}
+        {group.type === TYPE_FARM && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
         { isAboutCurrentGroup || group.type === TYPE_FARM
           ? <div styleName='g.aboutCurrentGroup'>
             <h3>Moderators</h3>

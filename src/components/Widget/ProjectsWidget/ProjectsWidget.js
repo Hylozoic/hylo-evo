@@ -16,7 +16,7 @@ export default class ProjectsWidget extends Component {
   }
 
   render () {
-    const { group, items, routeParams } = this.props
+    const { group, items, routeParams, isMember } = this.props
 
     return (
       <div styleName='projects'>
@@ -31,7 +31,7 @@ export default class ProjectsWidget extends Component {
             </div>
           </div>
         </Link>)}
-        {items.length < 3 ? <Link to={createPostUrl(routeParams, { newPostType: 'project' })} styleName='new-project'>
+        {items.length < 3 && isMember ? <Link to={createPostUrl(routeParams, { newPostType: 'project' })} styleName='new-project'>
           <div styleName='project'>
             <div styleName='meta'>
               <div>
