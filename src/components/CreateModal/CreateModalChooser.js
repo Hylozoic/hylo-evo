@@ -1,13 +1,10 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
-import { createGroupUrl, createPostUrl } from 'util/navigation'
 import { POST_TYPES } from 'store/models/Post'
 import './CreateModal.scss'
 
 const postTypes = Object.keys(POST_TYPES)
-// For now, pulling description from /store/models/Post.js
-// Next, edit POST_TYPES in CreateModal.connector and add group name to description text.
 
 export default function CreateModalChooser ({ location }) {
   return (

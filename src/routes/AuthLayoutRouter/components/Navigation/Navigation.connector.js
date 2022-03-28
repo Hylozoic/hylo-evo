@@ -5,7 +5,7 @@ import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelatio
 import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { createUrl, isPublicPath, baseUrl, viewUrl } from 'util/navigation'
+import { isPublicPath, baseUrl, viewUrl } from 'util/navigation'
 import { toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'

@@ -1,26 +1,20 @@
 import { push } from 'connected-react-router'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
+import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import CreateModalChooser from './CreateModalChooser'
 import CreateGroup from 'components/CreateGroup'
 import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
-
 import './CreateModal.scss'
 
 export default function CreateModal (props) {
   const dispatch = useDispatch()
+  const previousLocation = useSelector(getPreviousLocation)
+  const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
-  const [initialLocation] = useState(props.location)
-  // Set the return to location to be the initial location without
-  // /create, /create/post, /create/group, or /edit
-  // There is probably a better way, but this is tolerable for now
-  const returnToLocation = {
-    ...initialLocation,
-    pathname: initialLocation.pathname.replace(/(\/create|\/create\/post|\/create\/group|edit)$|/gi, '')
-  }
 
   const closeModal = () => {
     dispatch(push(returnToLocation))
