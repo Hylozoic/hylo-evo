@@ -428,7 +428,6 @@ export default class PostEditor extends React.Component {
       eventInvitations,
       startTime,
       endTime,
-      location,
       locationId,
       isPublic
     } = this.state.post
@@ -443,6 +442,7 @@ export default class PostEditor extends React.Component {
       imageAttachments && imageAttachments.map((attachment) => attachment.url)
     const fileUrls =
       fileAttachments && fileAttachments.map((attachment) => attachment.url)
+    const location = this.state.post.location || this.props.selectedLocation
     const actualLocationId = await ensureLocationIdIfCoordinate({
       fetchLocation,
       location,

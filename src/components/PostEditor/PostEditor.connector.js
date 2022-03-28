@@ -2,7 +2,7 @@ import { get, isEmpty } from 'lodash/fp'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push, replace } from 'connected-react-router'
-import { getQueryParamsObjectFromString, postUrl } from 'util/navigation'
+import { postUrl } from 'util/navigation'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -76,37 +76,37 @@ export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
 
   return {
-    context,
-    currentUser,
-    currentGroup,
-    groupOptions,
-    defaultTopics,
-    postType,
-    isProject,
-    isEvent,
-    editingPostId,
-    post,
-    imageAttachments,
-    fileAttachments,
-    showImages,
-    showFiles,
-    loading,
-    postPending,
-    editing,
-    linkPreview,
-    linkPreviewStatus,
-    fetchLinkPreviewPending,
-    topic,
-    topicName,
-    groupSlug,
     announcementSelected,
     canModerate,
-    myModeratedGroups,
-    uploadFileAttachmentPending,
-    uploadImageAttachmentPending,
+    context,
+    currentGroup,
+    currentUser,
+    defaultTopics,
+    editing,
+    editingPostId,
+    fetchLinkPreviewPending,
+    fileAttachments,
+    groupOptions,
+    groupSlug,
+    imageAttachments,
+    isEvent,
+    isProject,
+    linkPreview,
+    linkPreviewStatus,
+    loading,
     location,
+    myModeratedGroups,
+    post,
+    postPending,
+    postType,
     querystringParams,
     routeParams,
+    showFiles,
+    showImages,
+    topic,
+    topicName,
+    uploadFileAttachmentPending,
+    uploadImageAttachmentPending,
     ensureLocationIdIfCoordinate
   }
 }
@@ -137,8 +137,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const currentParams = getQueryParamsObjectFromString(stateProps.location?.search)
-    const locationParams = { zoom: currentParams?.zoom, center: currentParams?.center }
+    const locationParams = getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, { ...stateProps, ...dispatchProps, ...ownProps })
     const url = postUrl(id, { ...routeParams, postType }, { ...locationParams, querystringParams })
 
     return goToUrl(url)
