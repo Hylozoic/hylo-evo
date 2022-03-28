@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Icon from 'components/Icon'
 import { createGroupUrl, createPostUrl } from 'util/navigation'
 import { POST_TYPES } from 'store/models/Post'
@@ -9,35 +9,37 @@ const postTypes = Object.keys(POST_TYPES)
 // For now, pulling description from /store/models/Post.js
 // Next, edit POST_TYPES in CreateModal.connector and add group name to description text.
 
-export default function CreateModalChooser (props) {
-  const { match } = props
+export default function CreateModalChooser ({ location }) {
+  return (
+    <div styleName='chooser'>
+      <h1>What would you like to create?</h1>
+      {postTypes.map(postType => {
+        const postTypeUppercase = postType.charAt(0).toUpperCase() + postType.slice(1)
+        const iconName = postType === 'request' ? 'Heart' : postTypeUppercase
 
-  return <div styleName='chooser'>
-    <h1>What would you like to create?</h1>
-    {postTypes.map(postType => {
-      const postTypeUppercase = postType.charAt(0).toUpperCase() + postType.slice(1)
-      const iconName = postType === 'request' ? 'Heart' : postTypeUppercase
-
-      return <Link to={createPostUrl(match.params, { newPostType: postType })} key={postType}>
-        <div>
-          <Icon name={iconName} styleName='postIcon' />
+        return (
+          <Link to={`${location.pathname}/post?newPostType=${postType}`} key={postType}>
+            <div>
+              <Icon name={iconName} styleName='postIcon' />
+              <b>
+                <span styleName='postTypeName'>{postType}</span>
+                <span styleName='postTypeDescription'>{POST_TYPES[postType].description}</span>
+              </b>
+              <span styleName='indicator' />
+            </div>
+          </Link>
+        )
+      })}
+      <Link to={`${location.pathname}/group`}>
+        <div key='group'>
+          <Icon name='Groups' styleName='postIcon' />
           <b>
-            <span styleName='postTypeName'>{postType}</span>
-            <span styleName='postTypeDescription'>{POST_TYPES[postType].description}</span>
+            <span styleName='postTypeName'>Group</span>
+            <span styleName='postTypeDescription'>Create a new movement, network, community or group!</span>
           </b>
           <span styleName='indicator' />
         </div>
       </Link>
-    })}
-    <Link to={createGroupUrl(match.params)}>
-      <div key='group'>
-        <Icon name='Groups' styleName='postIcon' />
-        <b>
-          <span styleName='postTypeName'>Group</span>
-          <span styleName='postTypeDescription'>Create a new movement, network, community or group!</span>
-        </b>
-        <span styleName='indicator' />
-      </div>
-    </Link>
-  </div>
+    </div>
+  )
 }

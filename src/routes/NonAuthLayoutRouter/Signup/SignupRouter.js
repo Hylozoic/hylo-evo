@@ -43,8 +43,6 @@ export default function SignupRouter (props) {
         }
       }
     })()
-
-    console.log('!! in useEffect')
   }, [signupState, location.pathname])
 
   return (

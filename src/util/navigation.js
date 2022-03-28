@@ -6,13 +6,13 @@ import { matchPath } from 'react-router'
 export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HYLO_ID_MATCH
 export const OPTIONAL_POST_MATCH = `:detail(post)?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
-export const OPTIONAL_NEW_POST_MATCH = `:detail(post)?/:action(new)?` // TODO: need this?
+export const OPTIONAL_NEW_POST_MATCH = ':detail(post)?/:action(new)?' // TODO: need this?
 export const POST_DETAIL_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit)?`
 
 export const REQUIRED_EDIT_POST_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit)`
 
-export const GROUP_DETAIL_MATCH = `:detail(group)/:detailGroupSlug`
-export const OPTIONAL_GROUP_MATCH = `:detail(group)?/(:detailGroupSlug)?`
+export const GROUP_DETAIL_MATCH = ':detail(group)/:detailGroupSlug'
+export const OPTIONAL_GROUP_MATCH = ':detail(group)?/(:detailGroupSlug)?'
 export const HYLO_URL_REGEX = /http[s]?:\/\/(?:www\.)?hylo\.com(.*)/gi // https://regex101.com/r/0GZMny/1
 
 // Fundamental URL paths
@@ -38,9 +38,9 @@ export function baseUrl ({
   if (safeMemberId) {
     return personUrl(safeMemberId, groupSlug)
   } else if (topicName) {
-    return topicUrl(topicName, { groupSlug, context })
+    return topicUrl(topicName, { context, groupSlug })
   } else if (view) {
-    return viewUrl(view, context, groupSlug, defaultUrl)
+    return viewUrl(view, { context, groupSlug, defaultUrl })
   } else if (groupSlug) {
     return groupUrl(groupSlug)
   } else if (context === 'all') {
@@ -68,7 +68,8 @@ export function contextSwitchingUrl (newParams, routeParams) {
 }
 
 export function createUrl (opts = {}, querystringParams = {}) {
-  let url = baseUrl(opts) + '/create'
+  const url = baseUrl(opts) + '/create'
+
   return addQuerystringToPath(url, querystringParams)
 }
 
@@ -77,8 +78,9 @@ export function createGroupUrl (opts) {
 }
 
 // For specific views of a group like 'map', or 'projects'
-export function viewUrl (view, context, groupSlug, defaultUrl) {
+export function viewUrl (view, { context, groupSlug, defaultUrl }) {
   if (!view) return '/'
+
   const base = baseUrl({ context, groupSlug, defaultUrl })
 
   return `${base}/${view}`
@@ -114,7 +116,7 @@ export function postUrl (id, opts = {}, querystringParams = {}) {
 }
 
 export function createPostUrl (opts = {}, querystringParams = {}) {
-  let url = baseUrl(opts) + '/create/post'
+  const url = baseUrl(opts) + '/create/post'
   return addQuerystringToPath(url, querystringParams)
 }
 
@@ -128,7 +130,7 @@ export function commentUrl (postId, commentId, opts = {}, querystringParams = {}
 
 // Messages URLs
 export function messagesUrl () {
-  return `/messages`
+  return '/messages'
 }
 
 export function newMessageUrl () {
@@ -183,7 +185,7 @@ export function removePostFromUrl (url) {
 }
 
 export function removeGroupFromUrl (url) {
-  const matchForReplaceRegex = `/group/([^/]*)`
+  const matchForReplaceRegex = '/group/([^/]*)'
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 

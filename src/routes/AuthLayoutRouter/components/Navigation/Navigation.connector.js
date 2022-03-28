@@ -5,7 +5,7 @@ import { getChildGroups, getParentGroups } from 'store/selectors/getGroupRelatio
 import getMe from 'store/selectors/getMe'
 import resetNewPostCount from 'store/actions/resetNewPostCount'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { baseUrl, createUrl, isPublicPath } from 'util/navigation'
+import { createUrl, isPublicPath, baseUrl, viewUrl } from 'util/navigation'
 import { toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import orm from 'store/models'
 import { FETCH_POSTS } from 'store/constants'
@@ -14,14 +14,8 @@ import { makeDropQueryResults } from 'store/reducers/queryResults'
 export function mapStateToProps (state, props) {
   const routeParams = props.match.params
   const group = getGroupForCurrentRoute(state, props)
-  const rootPath = baseUrl(routeParams)
-  const explorePath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/explore` : false
-  const projectsPath = `${rootPath}/projects`
-  const eventsPath = `${rootPath}/events`
-  const groupsPath = `${rootPath}/groups`
-  const membersPath = !['/all', '/public'].includes(rootPath) ? `${rootPath}/members` : false
-  const mapPath = `${rootPath}/map`
-  const createPath = createUrl(routeParams)
+  const rootPath = baseUrl({ ...routeParams, view: null })
+  const isAllOrPublicPath = ['/all', '/public'].includes(rootPath)
 
   let badge, groupMembership, hasRelatedGroups
 
@@ -38,22 +32,22 @@ export function mapStateToProps (state, props) {
   }
 
   return {
-    createPath,
-    routeParams,
+    badge,
+    createPath: `${props.location.pathname}/create${props.location.search}`,
+    eventsPath: viewUrl('events', routeParams),
+    explorePath: !isAllOrPublicPath && viewUrl('explore', routeParams),
+    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
     groupId: get('id', group),
+    groupMembership,
+    groupsPath: viewUrl('groups', routeParams),
     hasRelatedGroups,
     hideTopics: isPublicPath(props.location.pathname),
     isGroupMenuOpen: get('AuthLayoutRouter.isGroupMenuOpen', state),
+    mapPath: viewUrl('map', routeParams),
+    membersPath: !isAllOrPublicPath && viewUrl('members', routeParams),
+    projectsPath: viewUrl('projects', routeParams),
     rootPath,
-    explorePath,
-    membersPath,
-    projectsPath,
-    eventsPath,
-    groupsPath,
-    mapPath,
-    badge,
-    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
-    groupMembership
+    routeParams
   }
 }
 
