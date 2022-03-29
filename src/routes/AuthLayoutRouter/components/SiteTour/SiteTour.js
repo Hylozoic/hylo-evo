@@ -9,7 +9,7 @@ import 'routes/AuthLayoutRouter/AuthLayoutRouter.scss'
 export default function SiteTour ({ currentSiteWidth }) {
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
-  const [run, setRun] = useState(true)
+  const [run, setRun] = useState(false)
   const [closeTheTour, setCloseTheTour] = useState(false)
   const desktopWidth = currentSiteWidth > 600
 
@@ -44,7 +44,6 @@ export default function SiteTour ({ currentSiteWidth }) {
 
   const handleClickStartTour = (e) => {
     e.preventDefault()
-    dispatch(updateUserSettings({ settings: { alreadySeenTour: true } }))
     setRun(true)
     setCloseTheTour(true)
   }

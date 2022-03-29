@@ -35,21 +35,18 @@ export default function VerifyEmail (props) {
       const result = await dispatch(verifyEmail(email, value || code, token))
       const error = result.payload.data.verifyEmail?.error
 
-      if (error) {
+      if (!error) {
+        return null
+      } else {
         setError(error)
       }
     } catch (requestError) {
       // Error is added to the state by login reducer but we need to catch it here too
       history.push(`/signup?error=${requestError.message}`)
+      return null
     } finally {
       setLoading(false)
     }
-  }
-
-  if (loading) {
-    return (
-      <Loading />
-    )
   }
 
   const handleChange = (value) => {
@@ -58,6 +55,8 @@ export default function VerifyEmail (props) {
     }
     setCode(value)
   }
+
+  if (loading) return <Loading />
 
   return (
     <div styleName='form'>

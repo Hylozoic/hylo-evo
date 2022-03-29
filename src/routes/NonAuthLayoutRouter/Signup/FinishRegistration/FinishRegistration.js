@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import getMe from 'store/selectors/getMe'
 import { register } from '../Signup.store'
 import TextInput from 'components/TextInput'
@@ -8,6 +9,7 @@ import { formatError } from '../../util'
 import '../Signup.scss'
 
 export default function FinishRegistration () {
+  const history = useHistory()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const { email, name } = currentUser
@@ -26,9 +28,10 @@ export default function FinishRegistration () {
       if (formValues.password !== formValues.passwordConfirmation) {
         setError("Passwords don't match")
       } else {
-        setError(null)
         await dispatch(register(formValues.name, formValues.password))
-        // will switch to AuthLayoutRouter handling once `register` returns the updated `me`
+        // Switchs to AuthLayoutRouter handling once `register` returns the updated `me`
+        history.push('/')
+        return null
       }
     } catch (responseError) {
       setError(responseError.message)
