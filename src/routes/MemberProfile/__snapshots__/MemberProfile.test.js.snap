@@ -128,7 +128,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <div
         data-stylename="profile-subhead"
       >
-        Hylo Communities
+        Hylo Groups
       </div>
       <Membership
         index={0}

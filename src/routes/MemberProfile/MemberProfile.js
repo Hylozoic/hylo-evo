@@ -137,7 +137,7 @@ export default class MemberProfile extends React.Component {
           </div>
           <SkillsToLearnSection personId={personId} editable={false} />
 
-          { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Communities</div> }
+          { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Groups</div> }
           { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />) }
 
           { affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>Other Affiliations</div> }
