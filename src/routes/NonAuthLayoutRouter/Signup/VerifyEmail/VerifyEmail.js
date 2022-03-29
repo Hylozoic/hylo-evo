@@ -41,7 +41,9 @@ export default function VerifyEmail (props) {
         setError(error)
       }
     } catch (requestError) {
-      // Error is added to the state by login reducer but we need to catch it here too
+      // Resolver errors are caught and sent-on as `payload.verifyEmail.error`
+      // so this `catch` is for the the case of a network availability or a server
+      // implementation issue. It probably can and maybe should be removed.
       history.push(`/signup?error=${requestError.message}`)
       return null
     } finally {
