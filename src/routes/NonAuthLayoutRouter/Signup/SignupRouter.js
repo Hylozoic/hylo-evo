@@ -15,7 +15,7 @@ export default function SignupRouter (props) {
   useEffect(() => {
     (async function () {
       const redirectTo = path => {
-        if (redirectTo && (path !== location.pathname)) {
+        if (path && (path !== location.pathname)) {
           history.push(path)
         }
       }

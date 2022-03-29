@@ -14,8 +14,8 @@ export default function RootRouter () {
   const isAuthorized = useSelector(getAuthorized)
   const [loading, setLoading] = useState(true)
 
-  // This should be the only place we check for a session from the API
-  // and it should not load the router until that check is complete
+  // This should be the only place we check for a session from the API.
+  // Routes will not be available until this check is complete.
   useEffect(() => {
     const asyncFunc = async () => {
       setLoading(true)
@@ -32,11 +32,18 @@ export default function RootRouter () {
   }
 
   if (isAuthorized) {
-    // The path matching here serves to pre-load React Router route match
-    // params needed in `AuthLayoutRouter`
     return (
       <Route
         path={[
+          // The routes matching here serves to provide `match.params` to `AuthLayoutRouter`.
+          // It likely better to move away from this, pushing the related routes and features
+          // into their own components below `AuthLayoutRouter` receiving the `match.params`
+          // also already happening from the routes found there. Search for the following
+          // comment to see the places where the `match.params` supplied here are currently
+          // replied-upon:
+          //
+          // "NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)"
+          //
           '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?',
           '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
           '/'

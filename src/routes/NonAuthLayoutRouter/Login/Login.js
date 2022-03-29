@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatError } from '../util'
-import getGraphqlResponseError from 'store/selectors/getGraphqlResponseError'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
 import login from 'store/actions/login'
@@ -17,13 +16,9 @@ export const DEFAULT_LOGIN_ERROR = 'Sorry, that Email and Password combination d
 
 export default function Login (props) {
   const dispatch = useDispatch()
-  const errorFromStore = useSelector(state =>
-    getGraphqlResponseError(state) || getQuerystringParam('error', state, props)
-  )
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  const [error, setError] = useState()
-  const displayError = error || errorFromStore
+  const [error, setError] = useState(getQuerystringParam('error', null, props))
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -62,7 +57,7 @@ export default function Login (props) {
     <div className={props.className}>
       <div styleName='formWrapper'>
         <h1 styleName='title'>Sign in to Hylo</h1>
-        {displayError && formatError(displayError, 'Login')}
+        {error && formatError(error, 'Login')}
         <TextInput
           aria-label='email' label='email' name='email' id='email'
           autoFocus

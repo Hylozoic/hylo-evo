@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { push } from 'connected-react-router'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
 import { formatError } from '../../util'
@@ -11,6 +10,7 @@ import Loading from 'components/Loading'
 import '../Signup.scss'
 
 export default function VerifyEmail (props) {
+  const history = useHistory()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const email = currentUser?.email || getQuerystringParam('email', null, props)
@@ -24,7 +24,8 @@ export default function VerifyEmail (props) {
   }, [])
 
   if (!email) {
-    return <Redirect to='/signup' />
+    history.push('/signup')
+    return null
   }
 
   const submit = async value => {
@@ -39,7 +40,7 @@ export default function VerifyEmail (props) {
       }
     } catch (requestError) {
       // Error is added to the state by login reducer but we need to catch it here too
-      dispatch(push(`/signup?error=${requestError.message}`))
+      history.push(`/signup?error=${requestError.message}`)
     } finally {
       setLoading(false)
     }

@@ -16,8 +16,8 @@ export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default function JoinGroup (props) {
-  const dispatch = useDispatch()
   const history = useHistory()
+  const dispatch = useDispatch()
   const signupComplete = useSelector(getSignupComplete)
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import { validateEmail } from 'util/index'
 import { formatError } from '../util'
@@ -15,11 +15,7 @@ import './Signup.scss'
 export default function Signup (props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
-  const [localError, setLocalError] = useState()
-  const providedError = useSelector(state =>
-    getQuerystringParam('error', state, props)
-  )
-  const error = providedError || localError
+  const [error, setError] = useState(getQuerystringParam('error', null, props))
 
   const sendEmailVerification = async email => {
     const { payload } = await dispatch(sendEmailVerificationAction(email))
@@ -27,27 +23,27 @@ export default function Signup (props) {
     if (success) {
       dispatch(push('/signup/verify-email?email=' + encodeURIComponent(email)))
     } else if (error) {
-      setLocalError(error)
+      setError(error)
     }
   }
 
   const signupAndRedirect = async service => {
     const result = await dispatch(loginWithService(service))
     if (result?.e) {
-      setLocalError(result.e)
+      setError(result.e)
     }
   }
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value)
-    setLocalError()
+    setError()
   }
 
   const submit = () => {
     if (!validateEmail(email)) {
-      setLocalError('Invalid email address')
+      setError('Invalid email address')
     } else {
-      setLocalError()
+      setError()
       sendEmailVerification(email)
     }
   }
