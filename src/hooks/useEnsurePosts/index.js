@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import presentGroup from 'store/presenters/presentGroup'
-// import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import useRouter from 'hooks/useRouter'
 import { createSelector } from 'reselect'
 import isPendingFor from 'store/selectors/isPendingFor'
@@ -9,8 +7,7 @@ import { FETCH_POSTS_FOR_WIDGETS } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
 import {
   fetchPosts,
-  getPosts,
-  // getHasMorePosts
+  getPosts
 } from 'components/FeedList/FeedList.store'
 
 const selectAndPresentPosts = createSelector(
@@ -30,8 +27,6 @@ export default function useEnsurePosts ({ context, sortBy }) {
   const pending = useSelector(state => isPendingFor(FETCH_POSTS_FOR_WIDGETS, state))
   const dispatch = useDispatch()
 
-  // const hasMore = getHasMorePosts(state, fetchPostsParam) // maybe snap this off
-
   /*
     Using this for groupDetail posts
     where will this show up
@@ -50,13 +45,3 @@ export default function useEnsurePosts ({ context, sortBy }) {
 
   return { posts, pending }
 }
-
-// Do I implement hasMore???
-
-//   const fetchMoreGroups = (offset) => {
-//     if (pending || groups.length === 0 || !hasMore) return
-//     dispatch(fetchGroups({ sortBy, search, offset, nearCoord: useNearCoord, visibility, groupType, farmQuery }))
-//   }
-
-//   return { groups, pending, hasMore, fetchMoreGroups }
-// }

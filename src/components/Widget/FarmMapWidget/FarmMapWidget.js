@@ -8,13 +8,7 @@ import useRouter from 'hooks/useRouter'
 
 import './FarmMap.scss'
 
-
 export default function FarmMapWidget ({ group, items }) {
-  /*
-    - Source group from the props, and its location
-    - Source the posts from props; that will get you farm posts on the map
-    - make a separate query for nearby groups, probably the same as the groupExplorer fetch
-  */
   const coord = group.locationObject && group.locationObject.center && { lng: parseFloat(group.locationObject.center.lng), lat: parseFloat(group.locationObject.center.lat) }
   const defaultViewport = {
     width: 400,
@@ -33,7 +27,7 @@ export default function FarmMapWidget ({ group, items }) {
   const [pointerX, setPointerX] = useState(null)
   const [pointerY, setPointerY] = useState(null)
   const [hoveredObject, setHoveredObject] = useState(null)
-  const { pending, groups } = useEnsureSearchedGroups({ sortBy: 'nearest', nearCoord: coord, groupType: 'farm' })
+  const { groups } = useEnsureSearchedGroups({ sortBy: 'nearest', nearCoord: coord, groupType: 'farm' })
 
   const onMapHover = (info) => {
     setHoveredObject(info.objects || info.object)
@@ -42,12 +36,34 @@ export default function FarmMapWidget ({ group, items }) {
   }
 
   const onMapClick = (info) => {
-    console.log(info)
     if (info.object && info.object.type === 'group') {
       push(`/groups/${info.object.slug}`)
     } else if (info.object && info.object.id) {
       push(`/groups/${info.object.slug}/post/${info.object.id}`)
     }
+  }
+
+  const _renderTooltip = () => {
+    if (hoveredObject) {
+      let message
+      let type
+      if (Array.isArray(hoveredObject) && hoveredObject.length > 0) {
+        // cluster
+        const types = groupBy(hoveredObject, 'type')
+        message = Object.keys(types).map(type => <p key={type}>{types[type].length} {type}{types[type].length === 1 ? '' : 's'}</p>)
+        type = 'cluster'
+      } else {
+        message = hoveredObject.message
+        type = hoveredObject.type
+      }
+
+      return (
+        <div styleName='postTip' className={type} style={{ left: pointerX + 15, top: pointerY }}>
+          {message}
+        </div>
+      )
+    }
+    return ''
   }
 
   useEffect(() => {
@@ -82,30 +98,6 @@ export default function FarmMapWidget ({ group, items }) {
       forceUpdate: true
     }))
   }, [items, viewport])
-
-  const _renderTooltip = () => {
-    if (hoveredObject) {
-      let message
-      let type
-      if (Array.isArray(hoveredObject) && hoveredObject.length > 0) {
-        // cluster
-        const types = groupBy(hoveredObject, 'type')
-        message = Object.keys(types).map(type => <p key={type}>{types[type].length} {type}{types[type].length === 1 ? '' : 's'}</p>)
-        type = 'cluster'
-      } else {
-        message = hoveredObject.message
-        type = hoveredObject.type
-        console.log(type, 'type')
-      }
-
-      return (
-        <div styleName='postTip' className={type} style={{ left: pointerX + 15, top: pointerY }}>
-          {message}
-        </div>
-      )
-    }
-    return ''
-  }
 
   return (
     <div styleName='farm-map-container'>

@@ -11,7 +11,7 @@ export default function FarmGroupDetailBody ({
 }) {
   const { group } = useEnsureCurrentGroup()
   const { posts } = useEnsurePosts({ public: true, sortBy: 'updated', context: 'groups' })
-  console.log({ posts })
+
   const widgets = [
     { settings: {}, isVisible: true, name: 'mission' },
     { settings: {}, isVisible: true, name: 'opportunities_to_collaborate' },
@@ -28,7 +28,6 @@ export default function FarmGroupDetailBody ({
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}
-            // childGroups={childGroups} // needs to be verified once other widgets are sorted
             key={widget.id}
             group={group}
             isMember={isMember}
