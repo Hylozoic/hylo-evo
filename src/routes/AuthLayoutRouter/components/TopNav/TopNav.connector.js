@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { get } from 'lodash/fp'
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 import logout from 'store/actions/logout'
 import { toggleDrawer, toggleGroupMenu } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 
@@ -17,7 +17,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     logout: async () => {
       await dispatch(logout())
-      dispatch(push('/login'))
+      dispatch(replace({ pathname: '/login', state: null }))
     },
     toggleDrawer: () => dispatch(toggleDrawer()),
     toggleGroupMenu: props.width > 600 ? () => {} : (e) => { dispatch(toggleGroupMenu()); e.preventDefault() }

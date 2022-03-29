@@ -34,7 +34,7 @@ export default function NonAuthLayoutRouter (props) {
   useEffect(() => {
     if (returnToPath && returnToPath !== '/') {
       // Clears location state on page reload
-      props.history.replace()
+      props.history.replace({ state: null })
       dispatch(setReturnToPath(returnToPath))
     }
   }, [dispatch, setReturnToPath, returnToPath])

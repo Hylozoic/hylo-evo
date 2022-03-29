@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 import { every, isEmpty } from 'lodash/fp'
 import { groupUrl } from 'util/navigation'
 import fetchForGroup from 'store/actions/fetchForGroup'
+import setReturnToPath from 'store/actions/setReturnToPath'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import { getSignupComplete } from 'store/selectors/getSignupState'
 import useInvitation from 'store/actions/useInvitation'
 import checkInvitation from 'store/actions/checkInvitation'
 import Loading from 'components/Loading'
-import setReturnToPath from 'store/actions/setReturnToPath'
 
 export const SIGNUP_PATH = '/signup'
 export const EXPIRED_INVITE_PATH = '/invite-expired'
@@ -19,6 +19,7 @@ export default function JoinGroup (props) {
   const history = useHistory()
   const dispatch = useDispatch()
   const signupComplete = useSelector(getSignupComplete)
+  const [redirectTo, setRedirectTo] = useState()
 
   useEffect(() => {
     (async function () {
@@ -33,8 +34,8 @@ export default function JoinGroup (props) {
         }
 
         if (signupComplete) {
-          const useInvitationResult = await dispatch(useInvitation(invitationTokenAndCode))
-          const newMembership = useInvitationResult?.payload?.getData()?.membership
+          const result = await dispatch(useInvitation(invitationTokenAndCode))
+          const newMembership = result?.payload?.getData()?.membership
           const groupSlug = newMembership?.group?.slug
 
           if (groupSlug) {
@@ -45,30 +46,28 @@ export default function JoinGroup (props) {
               fetch removed.
             */
             await dispatch(fetchForGroup(groupSlug))
-            history.push(groupUrl(groupSlug, 'explore'))
-
-            return null
+            setRedirectTo(groupUrl(groupSlug, 'explore'))
           } else {
             throw new Error('Join group was unsuccessful')
           }
         } else {
-          const checkInvitationResult = await dispatch(checkInvitation(invitationTokenAndCode))
-          const isValidInvite = checkInvitationResult?.payload?.getData()?.valid
+          const result = await dispatch(checkInvitation(invitationTokenAndCode))
+          const isValidInvite = result?.payload?.getData()?.valid
 
           if (isValidInvite) {
             dispatch(setReturnToPath(props.location.pathname + props.location.search))
-            history.push(SIGNUP_PATH)
+            setRedirectTo(SIGNUP_PATH)
           } else {
-            history.push(EXPIRED_INVITE_PATH)
+            setRedirectTo(EXPIRED_INVITE_PATH)
           }
         }
       } catch (error) {
         history.goBack()
-
-        return null
       }
     })()
   }, [])
+
+  if (redirectTo) return <Redirect to={redirectTo} />
 
   return <Loading />
 }

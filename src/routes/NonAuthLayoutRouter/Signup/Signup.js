@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { validateEmail } from 'util/index'
 import { formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -14,20 +14,18 @@ import TextInput from 'components/TextInput'
 import './Signup.scss'
 
 export default function Signup (props) {
-  const history = useHistory()
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
   const [error, setError] = useState(getQuerystringParam('error', null, props))
+  const [redirectTo, setRedirectTo] = useState()
 
   const sendEmailVerification = async email => {
     const { payload } = await dispatch(sendEmailVerificationAction(email))
     const { success, error } = payload.getData()
 
-    if (success) {
-      history.push('/signup/verify-email?email=' + encodeURIComponent(email))
-    } else if (error) {
-      setError(error)
-    }
+    if (error) setError(error)
+
+    if (success) setRedirectTo(`/signup/verify-email?email=${encodeURIComponent(email)}`)
   }
 
   const handleSignupWithService = async service => {
@@ -61,6 +59,8 @@ export default function Signup (props) {
   }
 
   const canSubmit = email?.length > 0
+
+  if (redirectTo) return <Redirect to={redirectTo} />
 
   return (
     <div styleName='form'>

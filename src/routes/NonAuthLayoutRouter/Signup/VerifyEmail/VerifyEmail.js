@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
 import { formatError } from '../../util'
@@ -10,42 +10,33 @@ import Loading from 'components/Loading'
 import '../Signup.scss'
 
 export default function VerifyEmail (props) {
-  const history = useHistory()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const email = currentUser?.email || getQuerystringParam('email', null, props)
   const token = getQuerystringParam('token', null, props)
   const [error, setError] = useState()
   const [code, setCode] = useState('')
+  const [redirectTo, setRedirectTo] = useState()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (token) { submit() }
+    if (token) submit()
   }, [])
 
-  if (!email) {
-    history.push('/signup')
-    return null
-  }
+  if (!email) return <Redirect to='/signup' />
 
   const submit = async value => {
     try {
       setLoading(true)
-
       const result = await dispatch(verifyEmail(email, value || code, token))
-      const error = result.payload.data.verifyEmail?.error
+      const error = result?.payload?.getData()?.error
 
-      if (!error) {
-        return null
-      } else {
-        setError(error)
-      }
+      if (error) setError(error)
     } catch (requestError) {
       // Resolver errors are caught and sent-on as `payload.verifyEmail.error`
       // so this `catch` is for the the case of a network availability or a server
       // implementation issue. It probably can and maybe should be removed.
-      history.push(`/signup?error=${requestError.message}`)
-      return null
+      setRedirectTo(`/signup?error=${requestError.message}`)
     } finally {
       setLoading(false)
     }
@@ -57,6 +48,8 @@ export default function VerifyEmail (props) {
     }
     setCode(value)
   }
+
+  if (redirectTo) return <Redirect to={redirectTo} />
 
   if (loading) return <Loading />
 

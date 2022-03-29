@@ -109,13 +109,17 @@ export default class AuthLayoutRouter extends Component {
       )
     }
 
-    if (!signupInProgress && returnToPath) {
-      setReturnToPath()
-      return (
-        <Redirect to={returnToPath} />
-      )
+    if (signupInProgress && !isWelcomePath(location.pathname)) {
+      return <Redirect to='/welcome' />
     }
 
+    if (!signupInProgress && returnToPath) {
+      setReturnToPath(null)
+
+      return <Redirect to={returnToPath} />
+    }
+
+    // Used in center column. Will redirect if no other match found there.
     const defaultRedirectPath = signupInProgress
       // Equates to blank center column when `signupInProgress`
       ? null
@@ -152,16 +156,13 @@ export default class AuthLayoutRouter extends Component {
 
     return (
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        {/* **** Redirects (also see default route in center column and `returnToPath` handler above) **** */}
+        {/* **** Redirects (see also signup and returnToPath related redirects configured above) **** */}
         {redirectRoutes.map(({ from, to }) => (
           <RedirectRoute exact path={from} to={to} key={from} />
         ))}
         {/* First time viewing a group redirect to explore page */}
         {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
           <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupMembership.group.slug}/explore`} />
-        )}
-        {(signupInProgress && !isWelcomePath(location.pathname)) && (
-          <RedirectRoute to='/welcome/upload-photo' />
         )}
 
         {showTourPrompt && (

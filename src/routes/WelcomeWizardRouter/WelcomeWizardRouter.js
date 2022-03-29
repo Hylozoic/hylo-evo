@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import AddLocation from './AddLocation'
 import UploadPhoto from './UploadPhoto'
@@ -19,6 +19,7 @@ export default function WelcomeWizardRouter () {
             <Route path='/welcome/upload-photo' component={UploadPhoto} />
             <Route path='/welcome/add-location' component={AddLocation} />
             <Route path='/welcome/explore' component={WelcomeExplore} />
+            <Redirect to='/welcome/upload-photo' />
           </Switch>
         </div>
       </div>
