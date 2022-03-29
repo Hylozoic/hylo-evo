@@ -122,6 +122,8 @@ export default function ormReducer (state = {}, action) {
       const skill = payload.data.addSkill
       person = Person.withId(Me.first().id)
       person.updateAppending({ skills: [Skill.create(skill)] })
+      me = Me.first()
+      me.updateAppending({ skills: [Skill.create(skill)] })
       break
     }
 
@@ -332,8 +334,15 @@ export default function ormReducer (state = {}, action) {
       break
 
     case REMOVE_SKILL_PENDING:
-      person = Person.withId(Me.first().id)
-      person.skills.remove(meta.skillId)
+      // Remove from the Me object and the Person object to be safe, catch in case they dont exist there
+      try {
+        person = Person.withId(Me.first().id)
+        person.skills.remove(meta.skillId)
+      } catch (e) {}
+      try {
+        me = Me.first()
+        me.skills.remove(meta.skillId)
+      } catch (e) {}
       break
 
     case REMOVE_SKILL_TO_LEARN_PENDING:

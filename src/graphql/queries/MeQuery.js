@@ -105,6 +105,7 @@ export default gql`
         avatarUrl
         bannerUrl
         name
+        memberCount
         settings {
           showSuggestedSkills
         }

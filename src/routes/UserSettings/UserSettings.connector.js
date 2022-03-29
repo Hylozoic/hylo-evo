@@ -40,7 +40,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const blockedUsers = getBlockedUsers(state, props)
   const allGroupsSettings = getAllGroupsSettings(state, props)
-  const memberships = getMyMemberships(state, props)
+  const memberships = getMyMemberships(state, props).sort((a, b) => a.group.name.localeCompare(b.group.name))
   const messageSettings = getMessageSettings(state, props)
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
