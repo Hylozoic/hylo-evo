@@ -7,7 +7,9 @@ import NonAuthLayoutRouter from './NonAuthLayoutRouter'
 // component test
 
 it('renders correctly', () => {
-  render(<NonAuthLayoutRouter location={{ search: '' }} />)
+  render(
+    <NonAuthLayoutRouter location={{ search: '' }} />
+  )
 
   expect(screen.getByText('Sign in to Hylo')).toBeInTheDocument()
 })

@@ -36,7 +36,10 @@ function currentUserProvider () {
 }
 
 it('renders correctly', () => {
-  render(<FinishRegistration />, currentUserProvider())
+  render(
+    <FinishRegistration />,
+    { wrapper: currentUserProvider() }
+  )
 
   expect(screen.getByText('One more step!')).toBeInTheDocument()
 })
@@ -44,7 +47,10 @@ it('renders correctly', () => {
 it('renders password error if it not confirmed', async () => {
   const user = userEvent.setup()
 
-  render(<FinishRegistration />, currentUserProvider())
+  render(
+    <FinishRegistration />,
+    { wrapper: currentUserProvider() }
+  )
 
   await user.type(screen.getByLabelText('name'), 'Smiley Person')
   await user.type(screen.getByLabelText('password'), '012345678')
@@ -67,7 +73,10 @@ it('does not submit if name is not present, even if password is valid', async ()
     })
   )
 
-  render(<FinishRegistration />, currentUserProvider())
+  render(
+    <FinishRegistration />,
+    { wrapper: currentUserProvider() }
+  )
 
   await user.type(screen.getByLabelText('password'), '012345678')
   await user.type(screen.getByLabelText('passwordConfirmation'), '012345678')
@@ -89,7 +98,10 @@ it('registers user if a name and valid password provided', async () => {
     })
   )
 
-  render(<FinishRegistration />, currentUserProvider())
+  render(
+    <FinishRegistration />,
+    { wrapper: currentUserProvider() }
+  )
 
   await user.type(screen.getByLabelText('name'), 'Smiley Person')
   await user.type(screen.getByLabelText('password'), '012345678')

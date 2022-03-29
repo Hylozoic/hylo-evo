@@ -14,7 +14,7 @@ function testProviders () {
 it('renders', () => {
   render(
     <CreateModal match={{ params: {} }} location={{ search: '' }} />,
-    testProviders()
+    { wrapper: testProviders() }
   )
 
   expect(screen.getByText('What would you like to create?')).toBeInTheDocument()

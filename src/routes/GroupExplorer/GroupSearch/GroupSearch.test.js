@@ -56,7 +56,10 @@ test('GroupSearch integration test', async () => {
   )
   const user = userEvent.setup()
 
-  render(<GroupSearch />, testProviders())
+  render(
+    <GroupSearch />,
+    { wrapper: testProviders() }
+  )
 
   expect(await screen.findByText('Test Group Title')).toBeInTheDocument()
   expect(screen.queryByText('Search input results')).not.toBeInTheDocument()

@@ -80,12 +80,12 @@ it('joins and forwards to group when current user is fully signed-up', async () 
     })
   )
 
-  render(
+  await render(
     <>
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
-      <Route path='/' component={({ location }) => location.pathname} />
+      <Route component={({ location }) => location.pathname} />
     </>,
-    currentUserProvider(true)
+    { wrapper: currentUserProvider(true) }
   )
 
   expect(await screen.findByText('/groups/test-group/welcome')).toBeInTheDocument()
@@ -103,12 +103,13 @@ it('checks invitation and forwards to expired invite page when invitation is inv
       )
     })
   )
+
   render(
     <>
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
-      <Route path='/' component={({ location }) => location.pathname} />
+      <Route component={({ location }) => location.pathname} />
     </>,
-    currentUserProvider(false)
+    { wrapper: currentUserProvider(false) }
   )
 
   expect(await screen.findByText(EXPIRED_INVITE_PATH)).toBeInTheDocument()
@@ -126,11 +127,11 @@ it('sets returnToPath and forwards to signup page when invitation is valid and u
       )
     })
   )
+
   render(
     <>
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ pathname: 'route/to/join-group', search: '' }} />
       <Route
-        path='/'
         component={({ location }) => {
           const returnToPath = useSelector(getReturnToPath)
           return (
@@ -142,7 +143,7 @@ it('sets returnToPath and forwards to signup page when invitation is valid and u
         }}
       />
     </>,
-    currentUserProvider(false)
+    { wrapper: currentUserProvider(false) }
   )
 
   expect(await screen.findByText('route/to/join-group')).toBeInTheDocument()

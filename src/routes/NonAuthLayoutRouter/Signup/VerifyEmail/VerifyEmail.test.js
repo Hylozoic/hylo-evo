@@ -3,7 +3,9 @@ import { render, screen } from 'util/reactTestingLibraryExtended'
 import VerifyEmail from './VerifyEmail'
 
 it('renders correctly', async () => {
-  render(<VerifyEmail location={{ search: '?email=test@hylo.com' }} />)
+  render(
+    <VerifyEmail location={{ search: '?email=test@hylo.com' }} />
+  )
 
   expect(screen.getByText("We've sent a 6 digit code", { exact: false })).toBeInTheDocument()
 })

@@ -73,7 +73,10 @@ const match = {
 }
 
 it('shows groups for current user', () => {
-  render(<Drawer match={match} />, currentUserWithGroupsProvider())
+  render(
+    <Drawer match={match} />,
+    { wrapper: currentUserWithGroupsProvider() }
+  )
 
   expect(screen.getByText(fooGroup.name)).toBeInTheDocument()
   expect(screen.getByText(barGroup.name)).toBeInTheDocument()
