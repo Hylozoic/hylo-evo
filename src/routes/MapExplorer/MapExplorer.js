@@ -490,7 +490,7 @@ export class UnwrappedMapExplorer extends React.Component {
           />
           {pendingPostsMap && <Loading className={styles.loading} />}
         </div>
-        <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
+        <button styleName={cx('toggleDrawerButton drawerAdjacentButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
           <Icon name='Hamburger' className={styles.openDrawer} />
           <Icon name='Ex' className={styles.closeDrawer} />
         </button>
@@ -517,11 +517,12 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-        <Icon
-          name='Plus'
+        <button
+          styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
           onClick={this.handleAddItemToMap}
-          styleName={cx('addItemToMapButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
-        />
+        >
+          <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+        </button>
         {currentUser && <>
           <Icon
             name='Heart'
