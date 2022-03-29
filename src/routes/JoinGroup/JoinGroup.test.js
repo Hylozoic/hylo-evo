@@ -5,7 +5,7 @@ import { graphql } from 'msw'
 import orm from 'store/models'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import getReturnToPath from 'store/selectors/getReturnToPath'
-import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
+import extractModelsForTest from 'util/testing/extractModelsForTest'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
 
@@ -18,33 +18,26 @@ function currentUserProvider (signupStateComplete) {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
 
-  extractModelsFromAction({
-    payload: {
-      data: {
-        me: {
-          id: '1',
-          name: 'Test User',
-          hasRegistered: true,
-          emailValidated: true,
-          settings: {
-            signupInProgress: !signupStateComplete
-          },
-          memberships: [
-            {
-              id: '2',
-              group: {
-                id: '3',
-                slug: 'test-group'
-              }
-            }
-          ]
+  extractModelsForTest({
+    me: {
+      id: '1',
+      name: 'Test User',
+      hasRegistered: true,
+      emailValidated: true,
+      settings: {
+        signupInProgress: !signupStateComplete
+      },
+      memberships: [
+        {
+          id: '2',
+          group: {
+            id: '3',
+            slug: 'test-group'
+          }
         }
-      }
-    },
-    meta: {
-      extractModel: 'Me'
+      ]
     }
-  }, ormSession)
+  }, 'Me', ormSession)
 
   return AllTheProviders(reduxState)
 }

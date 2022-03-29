@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import { graphql } from 'msw'
 import orm from 'store/models'
-import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
+import extractModelsForTest from 'util/testing/extractModelsForTest'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import FinishRegistration from './FinishRegistration'
 
@@ -11,23 +11,16 @@ function currentUserProvider () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
 
-  extractModelsFromAction({
-    payload: {
-      data: {
-        me: {
-          id: '1',
-          hasRegistered: false,
-          emailValidated: true,
-          settings: {
-            signupInProgress: true
-          }
-        }
+  extractModelsForTest({
+    me: {
+      id: '1',
+      hasRegistered: false,
+      emailValidated: true,
+      settings: {
+        signupInProgress: true
       }
-    },
-    meta: {
-      extractModel: 'Me'
     }
-  }, ormSession)
+  }, 'Me', ormSession)
 
   return AllTheProviders(reduxState)
 }
