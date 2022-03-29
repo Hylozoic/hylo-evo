@@ -1,27 +1,13 @@
 import React from 'react'
-import { history } from 'router'
-import orm from 'store/models'
-import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
+import { render, screen } from 'util/reactTestingLibraryExtended'
 import NonAuthLayoutRouter from './NonAuthLayoutRouter'
 
-function testProvider () {
-  const ormSession = orm.mutableSession(orm.getEmptyState())
-  const reduxState = { orm: ormSession.state }
-  const store = generateStore(history, reduxState)
-
-  return AllTheProviders(store)
-}
-
-// Currently both tests below are going to default route `/login`
-// so until elabtorated these tests are identical to the Login
-// component tests
+// Currently the test below is going to default route to `/login`
+// so until more tests are added this test is identical to the `Login`
+// component test
 
 it('renders correctly', () => {
-  render(
-    <NonAuthLayoutRouter location={{ search: '' }} />,
-    null,
-    testProvider()
-  )
+  render(<NonAuthLayoutRouter location={{ search: '' }} />)
 
   expect(screen.getByText('Sign in to Hylo')).toBeInTheDocument()
 })

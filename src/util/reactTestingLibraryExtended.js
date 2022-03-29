@@ -3,31 +3,24 @@ import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { render } from '@testing-library/react'
+import { history } from 'router'
 import rootReducer from 'store/reducers'
 import createMiddleware from 'store/middleware'
+import { getEmptyState } from 'store'
 
-export function generateStore (history, initialState) {
-  return createStore(rootReducer, initialState, createMiddleware(history))
+export function generateStore (initialState) {
+  return createStore(rootReducer, initialState || getEmptyState(), createMiddleware(history))
 }
 
-// To be used in `customRender` (exported as `render`) as follows when needed:
-//
-//   `render(<ComponentUnderTest/>, { container: createRootContainer() }, AllTheProviders())`
-//
-// Generally only needed if the component or any of it's children need to
-// append nodes to the DOM as the `root` node is not in the test DOM by default
-export function createRootContainer () {
-  const rootElement = document.createElement('div')
-  rootElement.setAttribute('id', 'root')
-  return document.body.appendChild(rootElement)
-}
+/*
+  This is used by default with an empty state in `customRender` (exported as render)
+  import and use this directly, providing state, when needing custom state, e.g.:
 
-export const AllTheProviders = (store) => ({ children }) => {
-  // Probably would be helpful to default to providing our
-  // store in it's initial state (so redux-orm included)
-  // either here or as the default for `generateStore` above
+    `render(<ComponentUnderTest />, AllTheProvieders(myOwnReduxState))`
+*/
+export const AllTheProviders = providedState => ({ children }) => {
   return (
-    <Provider store={store || createStore(() => {})}>
+    <Provider store={generateStore(providedState)}>
       <MemoryRouter>
         {children}
       </MemoryRouter>
@@ -35,7 +28,21 @@ export const AllTheProviders = (store) => ({ children }) => {
   )
 }
 
-const customRender = (ui, options, providersFunc) =>
+/*
+  To be used in `customRender` (exported as `render`) as follows when needed:
+
+    `render(<ComponentUnderTest/>, { container: createRootContainer() }, AllTheProviders())`
+
+  Generally only needed if the component or any of it's children need to
+  append nodes to the DOM as the `root` node is not in the test DOM by default
+*/
+export function createRootContainer () {
+  const rootElement = document.createElement('div')
+  rootElement.setAttribute('id', 'root')
+  return document.body.appendChild(rootElement)
+}
+
+const customRender = (ui, providersFunc = AllTheProviders(), options) =>
   render(ui, { wrapper: providersFunc, ...options })
 
 // re-export everything

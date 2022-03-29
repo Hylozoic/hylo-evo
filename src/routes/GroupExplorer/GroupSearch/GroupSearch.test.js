@@ -2,8 +2,7 @@ import React from 'react'
 import { graphql } from 'msw'
 import { setupServer } from 'msw/node'
 import orm from 'store/models'
-import { history } from 'router'
-import { generateStore, render, screen, AllTheProviders } from 'util/reactTestingLibraryExtended'
+import { render, screen, AllTheProviders } from 'util/reactTestingLibraryExtended'
 import userEvent from '@testing-library/user-event'
 import GroupSearch from './GroupSearch'
 
@@ -17,9 +16,8 @@ function testProviders () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   ormSession.Me.create({ id: '1' })
   const reduxState = { orm: ormSession.state }
-  const store = generateStore(history, reduxState)
 
-  return AllTheProviders(store)
+  return AllTheProviders(reduxState)
 }
 
 afterEach(() => {
@@ -57,11 +55,8 @@ test('GroupSearch integration test', async () => {
     })
   )
   const user = userEvent.setup()
-  render(
-    <GroupSearch />,
-    null,
-    testProviders()
-  )
+
+  render(<GroupSearch />, testProviders())
 
   expect(await screen.findByText('Test Group Title')).toBeInTheDocument()
   expect(screen.queryByText('Search input results')).not.toBeInTheDocument()

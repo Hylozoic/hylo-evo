@@ -1,9 +1,8 @@
 import React from 'react'
-import { history } from 'router'
 import { shallow } from 'enzyme'
 import orm from 'store/models'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
-import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
 import Drawer, { ContextRow } from './Drawer'
 
 const fooGroup = {
@@ -23,7 +22,8 @@ const barGroup = {
 function currentUserWithGroupsProvider () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
-  const meWithMembershipResult = {
+
+  extractModelsFromAction({
     payload: {
       data: {
         me: {
@@ -58,12 +58,9 @@ function currentUserWithGroupsProvider () {
     meta: {
       extractModel: 'Me'
     }
-  }
-  extractModelsFromAction(meWithMembershipResult, ormSession)
+  }, ormSession)
 
-  const store = generateStore(history, reduxState)
-
-  return AllTheProviders(store)
+  return AllTheProviders(reduxState)
 }
 
 const match = {
@@ -76,11 +73,7 @@ const match = {
 }
 
 it('shows groups for current user', () => {
-  render(
-    <Drawer match={match} />,
-    null,
-    currentUserWithGroupsProvider()
-  )
+  render(<Drawer match={match} />, currentUserWithGroupsProvider())
 
   expect(screen.getByText(fooGroup.name)).toBeInTheDocument()
   expect(screen.getByText(barGroup.name)).toBeInTheDocument()

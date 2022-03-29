@@ -1,13 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { history } from 'router'
 import { Route } from 'react-router'
 import { graphql } from 'msw'
 import { setupServer } from 'msw/node'
 import orm from 'store/models'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
-import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
 import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
 
 jest.mock('store/selectors/getMixpanel', () => () => ({
@@ -21,7 +20,8 @@ mockGraphqlServer.listen()
 function currentUserProvider (signupStateComplete) {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
-  const meWithMembershipResult = {
+
+  extractModelsFromAction({
     payload: {
       data: {
         me: {
@@ -47,11 +47,9 @@ function currentUserProvider (signupStateComplete) {
     meta: {
       extractModel: 'Me'
     }
-  }
-  extractModelsFromAction(meWithMembershipResult, ormSession)
-  const store = generateStore(history, reduxState)
+  }, ormSession)
 
-  return AllTheProviders(store)
+  return AllTheProviders(reduxState)
 }
 
 it('joins and forwards to group when current user is fully signed-up', async () => {
@@ -87,7 +85,6 @@ it('joins and forwards to group when current user is fully signed-up', async () 
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
       <Route path='/' component={({ location }) => location.pathname} />
     </>,
-    null,
     currentUserProvider(true)
   )
 
@@ -110,9 +107,7 @@ it('checks invitation and forwards to expired invite page when invitation is inv
     <>
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
       <Route path='/' component={({ location }) => location.pathname} />
-    </>
-    ,
-    null,
+    </>,
     currentUserProvider(false)
   )
 
@@ -146,9 +141,7 @@ it('sets returnToPath and forwards to signup page when invitation is valid and u
           )
         }}
       />
-    </>
-    ,
-    null,
+    </>,
     currentUserProvider(false)
   )
 

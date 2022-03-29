@@ -1,22 +1,19 @@
 import React from 'react'
-import { history } from 'router'
 import orm from 'store/models'
-import { AllTheProviders, generateStore, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
 import CreateModal from './CreateModal'
 
 function testProviders () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   ormSession.Me.create({ id: '1' })
   const reduxState = { orm: ormSession.state }
-  const store = generateStore(history, reduxState)
 
-  return AllTheProviders(store)
+  return AllTheProviders(reduxState)
 }
 
 it('renders', () => {
   render(
     <CreateModal match={{ params: {} }} location={{ search: '' }} />,
-    null,
     testProviders()
   )
 
