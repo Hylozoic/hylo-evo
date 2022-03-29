@@ -44,7 +44,6 @@ export const combinedReducers = combineReducers({
   orm,
   router: connectRouter(history),
   returnToPath,
-  // graphqlResponseError,
   pending,
   queryResults,
   locationHistory,
