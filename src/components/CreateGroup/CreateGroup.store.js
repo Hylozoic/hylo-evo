@@ -105,7 +105,9 @@ export function createGroup (data) {
             id
           }
           settings {
+            sendEmail
             showJoinForm
+            sendPushNotifications
           }
         }
       }
