@@ -66,6 +66,7 @@ export default class AuthLayoutRouter extends Component {
     if (this.props.slug && this.props.slug !== prevProps.slug) {
       this.props.fetchForGroup(this.props.slug)
     }
+    // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)
     if (!isEqual(this.props.routeParams, prevProps.routeParams)) {
       this.scrollToTop()
     }
@@ -117,7 +118,7 @@ export default class AuthLayoutRouter extends Component {
     }
 
     const defaultRedirectPath = signupInProgress
-      // Equatest ot blank center column when `signupInProgress`
+      // Equates to blank center column when `signupInProgress`
       ? null
       : lastViewedGroup
         ? `/groups/${lastViewedGroup.slug}`
@@ -134,6 +135,7 @@ export default class AuthLayoutRouter extends Component {
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
     )
+    // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)
     const isMapView = routeParams.view === 'map'
     const collapsedState = hasDetail || (isMapView && queryParams.hideDrawer !== 'true')
     const isSingleColumn = (slug && !currentGroupMembership) || matchPath(location.pathname, { path: '/members/:personId' })
@@ -164,7 +166,8 @@ export default class AuthLayoutRouter extends Component {
         {/* Context navigation drawer */}
         {!withoutNav && (
           <>
-            <Route component={routeProps => <DrawerRouter {...routeProps} hidden={!isDrawerOpen} group={group} />} />
+            <Route component={() => <DrawerRouter hidden={!isDrawerOpen} group={group} />} />
+            {/* // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)  */}
             <TopNav styleName='top' onClick={this.handleCloseDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
           </>
         )}
@@ -190,6 +193,7 @@ export default class AuthLayoutRouter extends Component {
               '/:context(all|public)/:view?'
             ]}
             component={routeProps => {
+              // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)
               if (routeProps.match.params.context === 'groups' && (!group || !currentGroupMembership)) return null
 
               return (

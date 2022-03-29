@@ -17,7 +17,9 @@ export function mapStateToProps (state, props) {
   const memberships = getMyMemberships(state, props)
   const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const hasMemberships = memberships.length > 0
+  // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)
   const slug = getSlugFromLocation(null, props)
+  // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)
   const group = getGroupForCurrentRoute(state, props)
   const lastViewedGroup = getLastViewedGroup(state)
   const currentGroupMembership = group && hasMemberships && memberships.find(m => m.group.id === group.id)
@@ -34,6 +36,7 @@ export function mapStateToProps (state, props) {
   // acknowledges this case, handle the loading state within the component.
   const currentUserPending = state.pending[FETCH_FOR_CURRENT_USER] ||
     state.pending[FETCH_FOR_CURRENT_USER] === undefined
+  // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)
   const routeParams = { context: 'all', ...props.match.params }
 
   return {

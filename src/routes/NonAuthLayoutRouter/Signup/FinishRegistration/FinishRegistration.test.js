@@ -14,7 +14,7 @@ mockGraphqlServer.listen()
 function currentUserProvider () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
-  const meWithMembershipResult = {
+  const meResult = {
     payload: {
       data: {
         me: {
@@ -31,7 +31,7 @@ function currentUserProvider () {
       extractModel: 'Me'
     }
   }
-  extractModelsFromAction(meWithMembershipResult, ormSession)
+  extractModelsFromAction(meResult, ormSession)
   const store = generateStore(history, reduxState)
 
   return AllTheProviders(store)
