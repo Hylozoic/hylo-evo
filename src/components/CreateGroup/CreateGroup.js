@@ -109,6 +109,7 @@ export default class CreateGroup extends Component {
       this.props.createGroup({ accessibility, name, slug, parentIds: parentGroups.map(g => g.id), visibility })
         .then(({ error }) => {
           if (error) {
+            // `state.error` doesn't appear to be displayed anywhere
             this.setState({
               error: 'There was an error, please try again.'
             })

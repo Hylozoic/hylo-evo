@@ -82,8 +82,8 @@ it('shows groups for current user', () => {
     currentUserWithGroupsProvider()
   )
 
-  expect(screen.getByText('Foomunity')).toBeInTheDocument()
-  expect(screen.getByText('Barmunity')).toBeInTheDocument()
+  expect(screen.getByText(fooGroup.name)).toBeInTheDocument()
+  expect(screen.getByText(barGroup.name)).toBeInTheDocument()
 })
 
 describe('ContextRow', () => {

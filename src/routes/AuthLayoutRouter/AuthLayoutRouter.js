@@ -147,7 +147,7 @@ export default class AuthLayoutRouter extends Component {
 
     return (
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        {/* **** Route-based Redirection **** */}
+        {/* **** Redirects (also see default route in center column and `returnToPath` handler above) **** */}
         {redirectRoutes.map(({ from, to }) => (
           <RedirectRoute exact path={from} to={to} key={from} />
         ))}
@@ -159,11 +159,10 @@ export default class AuthLayoutRouter extends Component {
           <RedirectRoute to='/welcome/upload-photo' />
         )}
 
-        {/* **** Global Layout Routes (Drawer, Modals, etc) **** */}
         {showTourPrompt && (
           <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={this.props.width} />} />
         )}
-        {/* Context navigation drawer */}
+
         {!withoutNav && (
           <>
             <Route component={() => <DrawerRouter hidden={!isDrawerOpen} group={group} />} />
@@ -171,7 +170,7 @@ export default class AuthLayoutRouter extends Component {
             <TopNav styleName='top' onClick={this.handleCloseDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
           </>
         )}
-        {/* Create Modal  */}
+
         <Route
           path={[
             '/:context(groups)/:groupSlug/(.*)/create',
@@ -182,8 +181,6 @@ export default class AuthLayoutRouter extends Component {
           ]}
           component={CreateModal}
         />
-        {/* Messages Modal */}
-        <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
 
         <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={this.handleCloseDrawer}>
           {/* View navigation menu */}
@@ -251,10 +248,9 @@ export default class AuthLayoutRouter extends Component {
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
               <Route path='/:context(groups)/:groupSlug' component={Stream} />
               {/* **** Other Routes **** */}
+              <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
               <Route path='/settings' component={UserSettings} />
               <Route path='/search' component={Search} />
-              {/* Don't render anything when on MessagesModal */}
-              <Route path='/messages/:messageThreadId?' />
               {/* **** Default Route (404) **** */}
               {defaultRedirectPath && (
                 <Redirect to={defaultRedirectPath} />
@@ -263,11 +259,14 @@ export default class AuthLayoutRouter extends Component {
           </Div100vh>
           {(group && currentGroupMembership) && (
             <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
-              <Switch>
-                <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
-                <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
-                <Route path={`/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`} component={GroupSidebar} />
-              </Switch>
+              <Route
+                path={[
+                  `/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`,
+                  `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_NEW_POST_MATCH}`,
+                  `/:context(groups)/:groupSlug/${OPTIONAL_NEW_POST_MATCH}`
+                ]}
+                component={GroupSidebar}
+              />
             </div>
           )}
           <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>

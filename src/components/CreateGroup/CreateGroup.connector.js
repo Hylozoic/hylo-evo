@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export const mapDispatchToProps = (dispatch, props) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     goBack: () => dispatch(goBack()),
     createGroup: (data) => dispatch(createGroup(data)),
