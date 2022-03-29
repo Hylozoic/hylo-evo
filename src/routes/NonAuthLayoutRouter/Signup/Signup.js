@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { validateEmail } from 'util/index'
 import { formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import checkLogin from 'store/actions/checkLogin'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import loginWithService from 'store/actions/loginWithService'
 import Button from 'components/Button'
@@ -28,11 +29,16 @@ export default function Signup (props) {
     }
   }
 
-  const signupAndRedirect = async service => {
+  const handleSignupWithService = async service => {
     const result = await dispatch(loginWithService(service))
-    if (result?.e) {
-      setError(result.e)
+
+    if (result?.error) {
+      return setError(result.error)
     }
+
+    // Required for Me data to be available to cause switch to auth'd
+    // layout (i.e. AuthLayoutRouter)
+    dispatch(checkLogin())
   }
 
   const handleEmailChange = (e) => {
@@ -81,8 +87,8 @@ export default function Signup (props) {
       <p styleName='or'>Or sign in with an existing account: </p>
 
       <div styleName='auth-buttons'>
-        <FacebookButton onClick={() => signupAndRedirect('facebook')} />
-        <GoogleButton onClick={() => signupAndRedirect('google')} />
+        <FacebookButton onClick={() => handleSignupWithService('facebook')} />
+        <GoogleButton onClick={() => handleSignupWithService('google')} />
       </div>
     </div>
   )

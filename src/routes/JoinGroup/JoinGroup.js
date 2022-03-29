@@ -45,7 +45,9 @@ export default function JoinGroup (props) {
               fetch removed.
             */
             await dispatch(fetchForGroup(groupSlug))
-            history.push(groupUrl(groupSlug, 'welcome'))
+            history.push(groupUrl(groupSlug, 'explore'))
+
+            return null
           } else {
             throw new Error('Join group was unsuccessful')
           }
@@ -62,6 +64,8 @@ export default function JoinGroup (props) {
         }
       } catch (error) {
         history.goBack()
+
+        return null
       }
     })()
   }, [])

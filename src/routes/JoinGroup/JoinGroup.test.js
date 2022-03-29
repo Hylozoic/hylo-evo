@@ -78,7 +78,7 @@ it('joins and forwards to group when current user is fully signed-up', async () 
     { wrapper: currentUserProvider(true) }
   )
 
-  expect(await screen.findByText('/groups/test-group/welcome')).toBeInTheDocument()
+  expect(await screen.findByText('/groups/test-group/explore')).toBeInTheDocument()
 })
 
 it('checks invitation and forwards to expired invite page when invitation is invalid when not logged-in', async () => {

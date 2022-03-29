@@ -90,7 +90,6 @@ export default class AuthLayoutRouter extends Component {
       groupPending,
       isDrawerOpen,
       isGroupMenuOpen,
-      isGroupRoute,
       lastViewedGroup,
       location,
       returnToPath,
@@ -124,7 +123,13 @@ export default class AuthLayoutRouter extends Component {
         ? `/groups/${lastViewedGroup.slug}`
         : '/all'
 
-    if (isGroupRoute) {
+    // LEJ: When needing to breaking-out into `matchPath` I think it's most clear
+    // and maintainable to do so directly in the router which otherwise routes
+    // the same paths.
+    if (
+      matchPath('/groups/:groupSlug') &&
+      !matchPath('groups/:groupSlug/join')
+    ) {
       if (!group && !groupPending) return <NotFound />
     }
 

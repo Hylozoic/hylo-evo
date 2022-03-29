@@ -8,7 +8,7 @@ it('shows NotFound if a currentUser is loaded and the group does not exist', () 
     <AuthLayoutRouter
       isGroupRoute
       currentUser={{ hasRegistered: true }}
-      location={{ pathname: '' }}
+      location={{ pathname: '', search: '' }}
       routeParams={{ view: '' }}
     />
     , { disableLifecycleMethods: true }
