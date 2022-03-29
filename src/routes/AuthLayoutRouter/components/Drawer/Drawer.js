@@ -17,9 +17,6 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import cx from 'classnames'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
-import getMe from 'store/selectors/getMe'
-import getMyMemberships from 'store/selectors/getMyMemberships'
-import { getMemberships } from 'routes/MemberProfile/MemberProfile.store'
 
 export const defaultContexts = [
   {
