@@ -1,7 +1,6 @@
-import { push } from 'connected-react-router'
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Route, Switch } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Route, Switch, useHistory } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import CreateModalChooser from './CreateModalChooser'
@@ -11,13 +10,14 @@ import PostEditor from 'components/PostEditor'
 import './CreateModal.scss'
 
 export default function CreateModal (props) {
-  const dispatch = useDispatch()
+  const history = useHistory()
   const previousLocation = useSelector(getPreviousLocation)
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
 
   const closeModal = () => {
-    dispatch(push(returnToLocation))
+    history.push(returnToLocation)
+    return null
   }
 
   const confirmClose = () => {

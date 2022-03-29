@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { push } from 'connected-react-router'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import { get } from 'lodash/fp'
 import { useDispatch, useSelector } from 'react-redux'
 import { bgImageStyle } from 'util/index'
@@ -36,15 +35,20 @@ export const defaultContexts = [
 ]
 
 export default function Drawer (props) {
+  const history = useHistory()
+  const currentLocation = useLocation()
   const dispatch = useDispatch()
   const groups = useSelector(getMyGroups)
   const canModerate = useSelector(state => props.group && getCanModerate(state, props))
-  const currentLocation = useLocation()
   const routeParams = props.match.params
   const { group, className } = props
 
   const toggleDrawer = () => dispatch(toggleDrawerAction())
-  const goToCreateGroup = () => dispatch(push(createGroupUrl(get('match.params', props))))
+
+  const goToCreateGroup = () => {
+    history.push(createGroupUrl(get('match.params', props)))
+    return null
+  }
 
   let bannerUrl
 
@@ -114,7 +118,9 @@ export function ContextRow ({ currentLocation, group, routeParams }) {
 
 function Logo ({ group }) {
   if (!group) return null
+
   const { slug, name, location, avatarUrl } = group
+
   return (
     <Link styleName='s.currentGroup' to={groupUrl(slug)}>
       <div styleName='s.avatar' style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />

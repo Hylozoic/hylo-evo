@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { push } from 'connected-react-router'
+import { useHistory } from 'react-router-dom'
 import { validateEmail } from 'util/index'
 import { formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -13,6 +13,7 @@ import TextInput from 'components/TextInput'
 import './Signup.scss'
 
 export default function Signup (props) {
+  const history = useHistory()
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
   const [error, setError] = useState(getQuerystringParam('error', null, props))
@@ -21,7 +22,7 @@ export default function Signup (props) {
     const { payload } = await dispatch(sendEmailVerificationAction(email))
     const { success, error } = payload.getData()
     if (success) {
-      dispatch(push('/signup/verify-email?email=' + encodeURIComponent(email)))
+      history.push('/signup/verify-email?email=' + encodeURIComponent(email))
     } else if (error) {
       setError(error)
     }
