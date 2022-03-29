@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from 'util/reactTestingLibraryExtended'
+import { render, screen } from 'util/testing/reactTestingLibraryExtended'
 import Signup from './Signup'
 
 it('renders correctly', () => {

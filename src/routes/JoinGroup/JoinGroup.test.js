@@ -2,20 +2,17 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Route } from 'react-router'
 import { graphql } from 'msw'
-import { setupServer } from 'msw/node'
 import orm from 'store/models'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
-import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
 
 jest.mock('store/selectors/getMixpanel', () => () => ({
   identify: jest.fn(),
   track: jest.fn()
 }))
-
-const mockGraphqlServer = setupServer()
-mockGraphqlServer.listen()
 
 function currentUserProvider (signupStateComplete) {
   const ormSession = orm.mutableSession(orm.getEmptyState())

@@ -1,14 +1,11 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { setupServer } from 'msw/node'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import { graphql } from 'msw'
 import orm from 'store/models'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
-import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import FinishRegistration from './FinishRegistration'
-
-const mockGraphqlServer = setupServer()
-mockGraphqlServer.listen()
 
 function currentUserProvider () {
   const ormSession = orm.mutableSession(orm.getEmptyState())

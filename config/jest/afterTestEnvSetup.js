@@ -1,5 +1,6 @@
 import { configure } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import mockGraphqlServer from '../../src/util/testing/mockGraphqlServer'
 // Adds additional jest expecations for React Testing Library
 //  https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom'
@@ -10,3 +11,8 @@ import '@testing-library/jest-dom'
 //       You can for example add your custom matchers here.
 
 configure({ adapter: new Adapter() })
+
+// Keep the mockGraphqlServer (msw) tidy between tests
+beforeAll(() => mockGraphqlServer.listen())
+afterEach(() => mockGraphqlServer.resetHandlers())
+afterAll(() => mockGraphqlServer.close())

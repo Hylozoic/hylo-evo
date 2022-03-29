@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import orm from 'store/models'
 import extractModelsFromAction from 'store/reducers/ModelExtractor/extractModelsFromAction'
-import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import Drawer, { ContextRow } from './Drawer'
 
 const fooGroup = {

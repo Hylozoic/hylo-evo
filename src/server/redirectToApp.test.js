@@ -1,13 +1,6 @@
 import { graphql } from 'msw'
-import { setupServer } from 'msw/node'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import redirectToApp, { HYLO_COOKIE_NAME } from './redirectToApp'
-
-const mockGraphqlServer = setupServer()
-mockGraphqlServer.listen()
-
-afterEach(() => {
-  mockGraphqlServer.resetHandlers()
-})
 
 it('just calls next() if the url is not /', () => {
   const req = {

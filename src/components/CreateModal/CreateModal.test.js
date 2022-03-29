@@ -1,6 +1,6 @@
 import React from 'react'
 import orm from 'store/models'
-import { AllTheProviders, render, screen } from 'util/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import CreateModal from './CreateModal'
 
 function testProviders () {

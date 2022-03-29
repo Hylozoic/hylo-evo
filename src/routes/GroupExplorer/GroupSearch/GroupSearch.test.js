@@ -1,16 +1,13 @@
 import React from 'react'
 import { graphql } from 'msw'
-import { setupServer } from 'msw/node'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import orm from 'store/models'
-import { render, screen, AllTheProviders } from 'util/reactTestingLibraryExtended'
+import { render, screen, AllTheProviders } from 'util/testing/reactTestingLibraryExtended'
 import userEvent from '@testing-library/user-event'
 import GroupSearch from './GroupSearch'
 
 // was throwing errors with this.element().removeEventListener('blabadlbakdbfl')
 jest.mock('components/ScrollListener', () => () => <div />)
-
-const mockGraphqlServer = setupServer()
-mockGraphqlServer.listen()
 
 function testProviders () {
   const ormSession = orm.mutableSession(orm.getEmptyState())
@@ -68,6 +65,3 @@ test('GroupSearch integration test', async () => {
 
   expect(await screen.findByText('Search input results')).toBeInTheDocument()
 })
-
-// Disable API mocking after the tests are done.
-afterAll(() => mockGraphqlServer.close())
