@@ -134,10 +134,11 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     fetchLinkPreviewPending, groupSlug, postType, routeParams, querystringParams
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
+  const allProps = { ...stateProps, ...dispatchProps, ...ownProps }
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const locationParams = getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, { ...stateProps, ...dispatchProps, ...ownProps })
+    const locationParams = allProps['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, allProps) : null
     const url = postUrl(id, { ...routeParams, postType }, { ...locationParams, querystringParams })
 
     return goToUrl(url)
