@@ -128,8 +128,8 @@ export default class CreateGroup extends Component {
 
     return (
       <div styleName='wrapper'>
-        <div styleName='header' onClick={goBack}>
-          <button><Icon name='Back' styleName='backIcon' /></button>
+        <div styleName='header'>
+          <button onClick={goBack}><Icon name='Back' styleName='backIcon' /></button>
           <span styleName='headerHeadline'>Create Group</span>
         </div>
         <div styleName='nameAndSlug'>

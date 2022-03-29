@@ -42,15 +42,19 @@ export default function Login (props) {
   }
 
   const handleLoginWithService = async service => {
-    const result = await dispatch(loginWithService(service))
+    try {
+      const result = await dispatch(loginWithService(service))
 
-    if (result?.error) {
-      return setError(result.error)
+      if (result?.error) {
+        return setError(result.error)
+      }
+
+      // Required for Me data to be available to cause switch to auth'd
+      // layout (i.e. AuthLayoutRouter)
+      dispatch(checkLogin())
+    } catch (error) {
+      setError(error.message)
     }
-
-    // Required for Me data to be available to cause switch to auth'd
-    // layout (i.e. AuthLayoutRouter)
-    dispatch(checkLogin())
   }
 
   return (
