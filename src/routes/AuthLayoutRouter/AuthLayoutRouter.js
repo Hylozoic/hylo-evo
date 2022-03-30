@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
@@ -62,14 +62,16 @@ export default function AuthLayoutRouter (props) {
   const { mobileSettingsLayout } = useLayoutFlags()
   const withoutNav = mobileSettingsLayout
 
-  // Setup `pathMatchParams` and `queryParams` (`matchPath` are only made in this section)
+  // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
   const location = props.location
-  const pathMatchParams = matchPath(location.pathname, [
-    '/:context(groups)/:groupSlug/:action(join)',
-    '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?',
-    '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
-    '/:context(all|welcome)'
-  ])?.params || { context: 'all' }
+  const pathMatchParams = useMemo(() => (
+    matchPath(location.pathname, [
+      '/:context(groups)/:groupSlug/:action(join)',
+      '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?',
+      '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
+      '/:context(all|welcome)'
+    ])?.params || { context: 'all' }
+  ), [location.pathname])
   const hasDetail = matchPath(location.pathname, [
     `/(.*)/${POST_DETAIL_MATCH}`,
     `/(.*)/${GROUP_DETAIL_MATCH}`
@@ -102,12 +104,11 @@ export default function AuthLayoutRouter (props) {
     }
   }, [slug])
 
-  // useEffect(() => {
-  //   if (!isEqual(props.pathMatchParams, prevProps.pathMatchParams)) {
-  //     const centerColumn = document.getElementById(CENTER_COLUMN_ID)
-  //     if (centerColumn) centerColumn.scrollTop = 0
-  //   }
-  // })
+  // Scroll to top of center column when context, groupSlug, or view changes (from `pathMatchParams`)
+  useEffect(() => {
+    const centerColumn = document.getElementById(CENTER_COLUMN_ID)
+    if (centerColumn) centerColumn.scrollTop = 0
+  }, [pathMatchParams?.context, pathMatchParams?.groupSlug, pathMatchParams?.view])
 
   if (currentUserPending) {
     return (
