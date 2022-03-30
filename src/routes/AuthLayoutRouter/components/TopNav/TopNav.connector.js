@@ -16,8 +16,8 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   return {
     logout: async () => {
+      dispatch(replace('/login', null))
       await dispatch(logout())
-      dispatch(replace({ pathname: '/login', state: null }))
     },
     toggleDrawer: () => dispatch(toggleDrawer()),
     toggleGroupMenu: props.width > 600 ? () => {} : (e) => { dispatch(toggleGroupMenu()); e.preventDefault() }

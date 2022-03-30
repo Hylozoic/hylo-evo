@@ -3,7 +3,8 @@ import { pick } from 'lodash/fp'
 import rollbar from 'client/rollbar'
 import {
   FETCH_FOR_CURRENT_USER,
-  FETCH_FOR_GROUP_PENDING
+  FETCH_FOR_GROUP_PENDING,
+  LOGOUT_PENDING
 } from 'store/constants'
 
 export const MODULE_NAME = 'AuthLayoutRouter'
@@ -34,7 +35,7 @@ export default function reducer (state = initialState, action) {
 
   // Links current user to rollbar config
   if (action.type === FETCH_FOR_CURRENT_USER) {
-    let { id, name, email } = action.payload.data.me
+    const { id, name, email } = action.payload.data.me
     rollbar.configure({
       payload: {
         person: {
@@ -62,23 +63,29 @@ export function toggleGroupMenu () {
 }
 
 export function ormSessionReducer (
-  { Group, Me, Membership, Network, Person },
+  { Group, Me, Membership, Person },
   { type, meta, payload }
 ) {
-  if (type === FETCH_FOR_GROUP_PENDING) {
-    let group = Group.safeGet({ slug: meta.slug })
-    if (!group) return
-    const me = Me.first()
-    if (!me) return
-    let membership = Membership.safeGet({ group: group.id, person: me.id })
-    if (!membership) return
-    membership.update({ newPostCount: 0 })
-  }
-
-  if (type === FETCH_FOR_CURRENT_USER) {
-    const { me } = payload.data
-    if (!Person.idExists(me.id)) {
-      Person.create(pick(['id', 'name', 'avatarUrl'], me))
+  switch (type) {
+    case LOGOUT_PENDING: {
+      Me.first().delete()
+      break
+    }
+    case FETCH_FOR_GROUP_PENDING: {
+      const group = Group.safeGet({ slug: meta.slug })
+      if (!group) return
+      const me = Me.first()
+      if (!me) return
+      const membership = Membership.safeGet({ group: group.id, person: me.id })
+      if (!membership) return membership.update({ newPostCount: 0 })
+      break
+    }
+    case FETCH_FOR_CURRENT_USER: {
+      const me = payload.data?.me
+      if (me && !Person.idExists(me.id)) {
+        Person.create(pick(['id', 'name', 'avatarUrl'], me))
+      }
+      break
     }
   }
 }
