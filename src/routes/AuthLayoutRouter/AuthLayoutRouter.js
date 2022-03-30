@@ -156,10 +156,10 @@ export default class AuthLayoutRouter extends Component {
 
     return (
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        {/* **** Redirects (see also signup and returnToPath related redirects configured above) **** */}
-        {redirectRoutes.map(({ from, to }) => (
-          <RedirectRoute exact path={from} to={to} key={from} />
-        ))}
+        {/* Redirects for switching into global contexts, since these pages don't exist yet */}
+        <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
+        <RedirectRoute exact path='/:context(all)/(members|settings)' to='/all' />
+
         {/* First time viewing a group redirect to explore page */}
         {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
           <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupMembership.group.slug}/explore`} />
@@ -171,7 +171,32 @@ export default class AuthLayoutRouter extends Component {
 
         {!withoutNav && (
           <>
-            <Route component={() => <DrawerRouter hidden={!isDrawerOpen} group={group} />} />
+            {isDrawerOpen && (
+              <Route
+                path={[
+                  // In order of more specific to less specific
+                  `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}`,
+                  `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}`,
+                  `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`,
+                  `/:context(all|public)/${OPTIONAL_POST_MATCH}`,
+                  '/:context(all)/:view(topics)/:topicName',
+                  '/:context(all)/:view(topics)',
+                  `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
+                  `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`,
+                  `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`,
+                  `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
+                  `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
+                  `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
+                  '/messages',
+                  '/settings',
+                  '/search',
+                  '/confirm-group-delete'
+                ]}
+                component={routeProps => (
+                  <Drawer {...routeProps} styleName={cx('drawer')} {...{ group }} />
+                )}
+              />
+            )}
             {/* // NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)  */}
             <TopNav styleName='top' onClick={this.handleCloseDrawer} {...{ group, currentUser, routeParams, showMenuBadge, width }} />
           </>
@@ -291,37 +316,6 @@ export default class AuthLayoutRouter extends Component {
   }
 }
 
-export function DrawerRouter ({ group, hidden }) {
-  if (hidden) return null
-
-  return (
-    <Route
-      path={[
-        // In order of more specific to less specific
-        `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}`,
-        `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}`,
-        `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-        `/:context(all|public)/${OPTIONAL_POST_MATCH}`,
-        '/:context(all)/:view(topics)/:topicName',
-        '/:context(all)/:view(topics)',
-        `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
-        `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`,
-        `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-        `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
-        `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
-        `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
-        '/messages',
-        '/settings',
-        '/search',
-        '/confirm-group-delete'
-      ]}
-      component={routeProps => (
-        <Drawer {...routeProps} styleName={cx('drawer')} {...{ group }} />
-      )}
-    />
-  )
-}
-
 const detailRoutes = [
   { path: `/:context(all|public)/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
@@ -335,33 +329,4 @@ const detailRoutes = [
   { path: `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`, component: PostDetail },
   { path: `/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`, component: GroupDetail },
   { path: `/:view(members)/:personId/${POST_DETAIL_MATCH}`, component: PostDetail }
-]
-
-// Redirects for legacy and NonAuth routes
-const redirectRoutes = [
-  { from: '/:context(public|all)/p/:postId', to: '/:context/post/:postId' },
-  { from: '/:context(public|all)/project', to: '/:context/projects' },
-  { from: '/:context(public|all)/event', to: '/:context/events' },
-  { from: '/p/:postId', to: '/all/post/:postId' },
-  { from: '/m/:personId', to: '/all/members/:personId' },
-  { from: '/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
-  { from: '/all/m/:personId', to: '/all/members/:personId' },
-  { from: '/all/m/:personId/p/:postId', to: '/all/members/:personId/post/:postId' },
-  { from: '/(c|n)/:groupSlug/join/:accessCode', to: '/groups/:groupSlug/join/:accessCode' },
-  { from: '/(c|n)/:groupSlug/', to: '/groups/:groupSlug/' },
-  { from: '/(c|n)/:groupSlug/event', to: '/groups/:groupSlug/events' },
-  { from: '/(c|n)/:groupSlug/event/:postId', to: '/groups/:groupSlug/events/post/:postId' },
-  { from: '/(c|n)/:groupSlug/project', to: '/groups/:groupSlug/projects' },
-  { from: '/(c|n)/:groupSlug/project/:postId', to: '/groups/:groupSlug/projects/post/:postId' },
-  { from: '/(c|n)/:groupSlug/:view(members|map|settings|topics)', to: '/groups/:groupSlug/:view' },
-  { from: '/(c|n)/:groupSlug/map/p/:postId', to: '/groups/:groupSlug/map/post/:postId' },
-  { from: '/(c|n)/:groupSlug/p/:postId', to: '/groups/:groupSlug/post/:postId' },
-  { from: '/groups/:groupSlug/p/:postId', to: '/groups/:groupSlug/post/:postId' },
-  { from: '/(c|n)/:groupSlug/m/:personId', to: '/groups/:groupSlug/members/:personId' },
-  { from: '/(c|n)/:groupSlug/m/:personId/p/:postId', to: '/groups/:groupSlug/members/:personId/post/:postId' },
-  { from: '/(c|n)/:groupSlug/:topicName', to: '/groups/:groupSlug/topics/:topicName' },
-  { from: '/(c|n)/:groupSlug/:topicName/p/:postId', to: '/groups/:groupSlug/topics/:topicName/post/:postId' },
-  // redirects for switching into global contexts, since these pages don't exist yet
-  { from: '/all/(members|settings)', to: '/all' },
-  { from: '/public/(members|topics|settings)', to: '/public' }
 ]
