@@ -13,6 +13,6 @@ import '@testing-library/jest-dom'
 configure({ adapter: new Adapter() })
 
 // Keep the mockGraphqlServer (msw) tidy between tests
-beforeAll(() => mockGraphqlServer.listen())
+beforeAll(() => mockGraphqlServer.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => mockGraphqlServer.resetHandlers())
 afterAll(() => mockGraphqlServer.close())

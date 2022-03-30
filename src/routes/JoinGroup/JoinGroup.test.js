@@ -70,7 +70,7 @@ it('joins and forwards to group when current user is fully signed-up', async () 
     })
   )
 
-  await render(
+  render(
     <>
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
       <Route component={({ location }) => location.pathname} />

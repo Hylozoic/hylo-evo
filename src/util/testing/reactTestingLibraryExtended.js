@@ -11,9 +11,13 @@ import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
 
 // Note: This is ran by default via `customRender` below, but it's necessary to manually
 // generate the store when pre-populating the ReduxORM in a test. Search across tests to
-// for examples.
-export function generateStore (initialState, providedHistory) {
-  return createStore(rootReducer, initialState || getEmptyState(), createMiddleware(providedHistory || history))
+// for examples. Merges `provideState` over default app empty state
+export function generateStore (providedState, providedHistory) {
+  return createStore(
+    rootReducer,
+    { ...getEmptyState(), ...providedState },
+    createMiddleware(providedHistory || history)
+  )
 }
 
 // This is used by default with an empty state in `customRender` (exported as render)

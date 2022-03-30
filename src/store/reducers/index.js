@@ -8,7 +8,6 @@ import pending from './pending'
 import locationHistory from './locationHistory'
 import resetStore from './resetStore'
 import mixpanel from './mixpanel'
-import intercom from './intercom'
 import queryResults from './queryResults'
 import { handleSetState, composeReducers } from './util'
 
@@ -48,7 +47,6 @@ export const combinedReducers = combineReducers({
   queryResults,
   locationHistory,
   mixpanel,
-  intercom,
 
   // Local store (Component)
   // generator-marker-local-store-reducer

@@ -164,7 +164,7 @@ export function personUrl (id, groupSlug) {
 
 // Topics URLs
 export function topicsUrl (opts, defaultUrl = allGroupsUrl()) {
-  return baseUrl({ ...opts, defaultUrl }) + '/topics'
+  return baseUrl({ ...opts, view: 'topics' }, defaultUrl)
 }
 
 export function topicUrl (topicName, opts) {
@@ -205,14 +205,6 @@ export const origin = () =>
 
 // Utility path functions
 
-export function isWelcomePath (path) {
-  return (path.startsWith('/welcome'))
-}
-
 export function isPublicPath (path) {
   return (path.startsWith('/public'))
-}
-
-export function isMapViewPath (path) {
-  return (path.includes('/map'))
 }

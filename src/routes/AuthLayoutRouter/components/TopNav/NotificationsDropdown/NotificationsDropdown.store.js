@@ -10,7 +10,7 @@ export function fetchNotifications () {
   return {
     type: FETCH_NOTIFICATIONS,
     graphql: {
-      query: `query (
+      query: `query NotificationsQuery (
         $first: Int = 20,
         $order: String = "desc",
         $resetCount: Boolean = true

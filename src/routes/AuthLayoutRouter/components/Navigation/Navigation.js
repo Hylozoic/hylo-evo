@@ -3,7 +3,7 @@ import { compact } from 'lodash/fp'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Icon from 'components/Icon'
-import { topicsUrl, allGroupsUrl } from 'util/navigation'
+import { topicsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 
@@ -57,7 +57,7 @@ export default function Navigation (props) {
       icon: 'Stream',
       to: rootPath,
       badge: badge,
-      onClick: homeOnClick,
+      handleClick: homeOnClick,
       exact: true
     },
     explorePath && {
@@ -105,11 +105,11 @@ export default function Navigation (props) {
                 key={link.label}
                 {...link}
                 collapsed={collapsed}
-                onClick={link.onClick}
+                onClick={link.handleClick}
               />)
             )}
             <li styleName={cx('item', 'topicItem')}>
-              <Link to={topicsUrl(routeParams, allGroupsUrl())}>
+              <Link to={topicsUrl(routeParams)}>
                 <Icon name='Topics' />
               </Link>
             </li>

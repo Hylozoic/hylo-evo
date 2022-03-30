@@ -5,7 +5,6 @@ import { LOGOUT, RESET_STORE } from '../constants'
 export const KEYS_PRESERVED_ON_RESET = [
   'pending',
   'locationHistory',
-  'intercom',
   'mixpanel'
 ]
 

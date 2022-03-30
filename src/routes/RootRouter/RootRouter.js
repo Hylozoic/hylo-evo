@@ -33,23 +33,7 @@ export default function RootRouter () {
 
   if (isAuthorized) {
     return (
-      <Route
-        path={[
-          // The routes matching here serves to provide `match.params` to `AuthLayoutRouter`.
-          // It likely better to move away from this, pushing the related routes and features
-          // into their own components below `AuthLayoutRouter` receiving the `match.params`
-          // also already happening from the routes found there. Search for the following
-          // comment to see the places where the `match.params` supplied here are currently
-          // relied-upon:
-          //
-          // "NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)"
-          //
-          '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?',
-          '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
-          '/'
-        ]}
-        component={AuthLayoutRouter}
-      />
+      <Route component={AuthLayoutRouter} />
     )
   }
 
