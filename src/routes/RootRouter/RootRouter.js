@@ -40,7 +40,7 @@ export default function RootRouter () {
           // into their own components below `AuthLayoutRouter` receiving the `match.params`
           // also already happening from the routes found there. Search for the following
           // comment to see the places where the `match.params` supplied here are currently
-          // replied-upon:
+          // relied-upon:
           //
           // "NOTE: Relies on incoming `match.params` (currently provided by `RootRouter`)"
           //

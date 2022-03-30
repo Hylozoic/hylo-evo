@@ -131,8 +131,8 @@ export default class AuthLayoutRouter extends Component {
     // and maintainable to do so directly in the router which otherwise routes
     // the same paths.
     if (
-      matchPath('/groups/:groupSlug') &&
-      !matchPath('groups/:groupSlug/join')
+      matchPath(location.pathname, '/groups/:groupSlug') &&
+      !matchPath(location.pathname, 'groups/:groupSlug/join')
     ) {
       if (!group && !groupPending) return <NotFound />
     }
@@ -140,6 +140,9 @@ export default class AuthLayoutRouter extends Component {
     const { mobileSettingsLayout } = this.context
     const withoutNav = mobileSettingsLayout
     const queryParams = qs.parse(location.search.substring(1))
+    // Alternatively could be set as follow to eliminate dependence on `detailRoutes`:
+    // const hasDetails = matchPath(location.pathname, '(*.)/GROUP_DETAIL_MATCH') ||
+    //   matchPath(location.pathname, '(*.)/POST_DETAIL_MATCH')
     const hasDetail = some(
       ({ path }) => matchPath(location.pathname, { path }),
       detailRoutes
