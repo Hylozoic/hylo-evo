@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { matchPath, Redirect, Route, Switch, useLocation } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
 import Div100vh from 'react-div-100vh'
