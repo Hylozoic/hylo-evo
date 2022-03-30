@@ -21,6 +21,7 @@ import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import Map from 'components/Map/Map'
+import Tooltip from 'components/Tooltip'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
 import SwitchStyled from 'components/SwitchStyled'
@@ -518,11 +519,16 @@ export class UnwrappedMapExplorer extends React.Component {
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
         <button
+          data-for='addItemToMapTooltip'
+          data-tip='Add item to map'
           styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
           onClick={this.handleAddItemToMap}
         >
           <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
         </button>
+        <Tooltip
+          delay={550}
+          id='addItemToMapTooltip' />
         {currentUser && <>
           <Icon
             name='Heart'
