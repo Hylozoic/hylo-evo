@@ -13,7 +13,6 @@ import {
 import Div100vh from 'react-div-100vh'
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import About from 'routes/GroupProfile'
 import AddLocation from 'routes/WelcomeWizard/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
