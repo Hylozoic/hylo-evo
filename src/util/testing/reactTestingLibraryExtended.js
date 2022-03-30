@@ -7,6 +7,7 @@ import { history } from 'router'
 import rootReducer from 'store/reducers'
 import createMiddleware from 'store/middleware'
 import { getEmptyState } from 'store'
+import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
 
 // Note: This is ran by default via `customRender` below, but it's necessary to manually
 // generate the store when pre-populating the ReduxORM in a test. Search across tests to
@@ -22,11 +23,13 @@ export function generateStore (initialState, providedHistory) {
 //
 export const AllTheProviders = providedState => ({ children }) => {
   return (
-    <Provider store={generateStore(providedState)}>
-      <MemoryRouter>
-        {children}
-      </MemoryRouter>
-    </Provider>
+    <LayoutFlagsProvider>
+      <Provider store={generateStore(providedState)}>
+        <MemoryRouter>
+          {children}
+        </MemoryRouter>
+      </Provider>
+    </LayoutFlagsProvider>
   )
 }
 
