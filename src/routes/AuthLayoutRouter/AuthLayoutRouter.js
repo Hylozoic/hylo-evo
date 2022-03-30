@@ -114,7 +114,7 @@ export default class AuthLayoutRouter extends Component {
     }
 
     if (!signupInProgress && returnToPath) {
-      setReturnToPath(null)
+      setReturnToPath()
 
       return <Redirect to={returnToPath} />
     }
