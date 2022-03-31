@@ -174,7 +174,7 @@ export default function AuthLayoutRouter (props) {
         <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
       )}
 
-      <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} group={currentGroup} />} />
+      <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
 
       {showTourPrompt && (
         <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={width} />} />
