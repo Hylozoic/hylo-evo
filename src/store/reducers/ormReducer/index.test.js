@@ -562,13 +562,15 @@ describe('on CREATE_GROUP', () => {
     type: CREATE_GROUP,
     payload: {
       data: {
-      createGroup: {
+        createGroup: {
           id: 'c2',
           memberships: {
-            items: [{
-              id: 'm2',
-              hasModeratorRole: true
-            }]
+            items: [
+              {
+                id: 'm2',
+                hasModeratorRole: true
+              }
+            ]
           }
         }
       }
