@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
@@ -108,7 +109,7 @@ export default class PostEditor extends React.Component {
     )
     const currentPost = post
       ? {
-          ...post,
+        ...post,
         locationId: post.locationObject ? post.locationObject.id : null,
         startTime: Moment(post.startTime),
         endTime: Moment(post.endTime)

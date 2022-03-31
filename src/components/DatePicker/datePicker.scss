@@ -17,7 +17,12 @@
       background: url('/calendar-icon.svg') 12px 0 no-repeat #D9EBF8;
       color: #40A1DD;
       height: 20px;
+      margin-bottom: -10px;
     }
+  }
+  > div{
+    bottom: 45px;
+    right: -70px;
   }
 }
 
