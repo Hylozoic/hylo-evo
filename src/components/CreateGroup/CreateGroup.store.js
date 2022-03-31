@@ -90,24 +90,26 @@ export function createGroup (data) {
       query: `mutation ($data: GroupInput) {
         createGroup(data: $data) {
           id
-          hasModeratorRole
-          group {
-            id
-            name
-            slug
-            parentGroups {
-              items {
-                id
-              }
+          name
+          slug
+          parentGroups {
+            items {
+              id
             }
           }
-          person {
-            id
-          }
-          settings {
-            sendEmail
-            showJoinForm
-            sendPushNotifications
+          memberships {
+            items {
+              id
+              hasModeratorRole
+              person {
+                id
+              }
+              settings {
+                sendEmail
+                showJoinForm
+                sendPushNotifications
+              }
+            }
           }
         }
       }
@@ -117,7 +119,7 @@ export function createGroup (data) {
       }
     },
     meta: {
-      extractModel: 'Membership',
+      extractModel: 'Group',
       ...data,
       analytics: AnalyticsEvents.GROUP_CREATED
     }
