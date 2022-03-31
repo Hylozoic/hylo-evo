@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, Redirect } from 'react-router-dom'
 import { every, isEmpty } from 'lodash/fp'
 import { groupUrl } from 'util/navigation'
-import fetchForGroup from 'store/actions/fetchForGroup'
 import setReturnToPath from 'store/actions/setReturnToPath'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
@@ -39,13 +38,6 @@ export default function JoinGroup (props) {
           const groupSlug = newMembership?.group?.slug
 
           if (groupSlug) {
-            /*
-              `AuthLayoutRouter` will already try and fetch this group due to the
-              `/groups/:groupSlug/join/<token>` route matching `:groupSlug` before the
-              group has been joined (unauthorized), this could be fixed and this extra
-              fetch removed.
-            */
-            await dispatch(fetchForGroup(groupSlug))
             setRedirectTo(groupUrl(groupSlug, 'explore'))
           } else {
             throw new Error('Join group was unsuccessful')
