@@ -85,7 +85,7 @@ const WIDGETS = {
     component: FarmComparisonWidget
   },
   farm_map: {
-    title: 'Farm Map',
+    title: 'Farm Surrounds & Posts',
     component: FarmMapWidget
   },
   moderators: {
