@@ -77,8 +77,8 @@ export function ormSessionReducer (
       const me = Me.first()
       if (!me) return
       const membership = Membership.safeGet({ group: group.id, person: me.id })
-      if (!membership) return membership.update({ newPostCount: 0 })
-      break
+      if (!membership) return
+      return membership.update({ newPostCount: 0 })
     }
     case FETCH_FOR_CURRENT_USER: {
       const me = payload.data?.me

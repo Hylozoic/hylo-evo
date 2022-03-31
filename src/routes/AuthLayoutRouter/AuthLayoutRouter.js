@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
@@ -8,11 +8,11 @@ import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 import config, { isTest } from 'config'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
-import getReturnToPath from 'store/selectors/getReturnToPath'
-import setReturnToPath from 'store/actions/setReturnToPath'
+import getReturnToPathSelector from 'store/selectors/getReturnToPath'
+import setReturnToPathAction from 'store/actions/setReturnToPath'
 import fetchForCurrentUser from 'store/actions/fetchForCurrentUser'
 import fetchForGroup from 'store/actions/fetchForGroup'
-import { FETCH_FOR_CURRENT_USER, FETCH_FOR_GROUP } from 'store/constants'
+import { FETCH_FOR_GROUP } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
@@ -66,7 +66,7 @@ export default function AuthLayoutRouter (props) {
   const location = props.location
   const pathMatchParams = useMemo(() => (
     matchPath(location.pathname, [
-      '/:context(groups)/:groupSlug/:action(join)',
+      '/groups/:joinGroupSlug/join/:accessCode',
       '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics)?',
       '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
       '/:context(all|welcome)'
@@ -76,33 +76,37 @@ export default function AuthLayoutRouter (props) {
     `/(.*)/${POST_DETAIL_MATCH}`,
     `/(.*)/${GROUP_DETAIL_MATCH}`
   ])
-  const isGroupView = pathMatchParams?.groupSlug && pathMatchParams?.action !== 'join'
+  const isGroupView = pathMatchParams?.groupSlug
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   const isMapView = pathMatchParams?.view === 'map'
-  const slug = pathMatchParams.groupSlug
+  const currentGroupSlug = pathMatchParams.groupSlug
   const queryParams = Object.fromEntries(new URLSearchParams(location.search))
 
   // Store
   const dispatch = useDispatch()
   const currentGroupMembership = useSelector(state => getMyGroupMembership(state, { match: { params: pathMatchParams } }))
   const currentUser = useSelector(getMe)
-  const currentUserPending = useSelector(state => state.pending[FETCH_FOR_CURRENT_USER] ||
-    state.pending[FETCH_FOR_CURRENT_USER] === undefined)
   const group = useSelector(state => getGroupForCurrentRoute(state, { match: { params: pathMatchParams } }))
   const groupPending = useSelector(state => state.pending[FETCH_FOR_GROUP])
   const isDrawerOpen = useSelector(state => get('AuthLayoutRouter.isDrawerOpen', state))
   const isGroupMenuOpen = useSelector(state => get('AuthLayoutRouter.isGroupMenuOpen', state))
   const lastViewedGroup = useSelector(getLastViewedGroup)
   const memberships = useSelector(getMyMemberships)
-  const returnToPath = useSelector(getReturnToPath)
+  const returnToPath = useSelector(getReturnToPathSelector)
   const signupInProgress = useSelector(getSignupInProgress)
 
+  const [currentUserLoading, setCurrentUserLoading] = useState(true)
+
   useEffect(() => {
-    dispatch(fetchForCurrentUser())
-    if (slug) {
-      dispatch(fetchForGroup(slug))
-    }
-  }, [slug])
+    (async function () {
+      await dispatch(fetchForCurrentUser())
+      setCurrentUserLoading(false)
+    })()
+  }, [])
+
+  useEffect(() => {
+    if (currentGroupSlug) dispatch(fetchForGroup(currentGroupSlug))
+  }, [currentGroupSlug])
 
   // Scroll to top of center column when context, groupSlug, or view changes (from `pathMatchParams`)
   useEffect(() => {
@@ -110,7 +114,19 @@ export default function AuthLayoutRouter (props) {
     if (centerColumn) centerColumn.scrollTop = 0
   }, [pathMatchParams?.context, pathMatchParams?.groupSlug, pathMatchParams?.view])
 
-  if (currentUserPending) {
+  // Layout flags and component event handlers
+  const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
+  const showMenuBadge = some(m => m.newPostCount > 0, memberships)
+  const collapsedState = hasDetail || (isMapView && queryParams.hideDrawer !== 'true')
+  const isSingleColumn = (currentGroupSlug && !currentGroupMembership) || matchPath(location.pathname, '/members/:personId')
+  const showTourPrompt = !signupInProgress &&
+    !get('settings.alreadySeenTour', currentUser) &&
+    !isSingleColumn && // Don't show tour on non-member group details page
+    !get('settings.showJoinForm', currentGroupMembership) && // Show group welcome modal before tour
+    !withoutNav
+
+  //  [currentUserPending, signupInProgress, returnToPath, isGroupView, isWelcomeContext, group, groupPending]
+  if (currentUserLoading) {
     return (
       <div styleName='container' data-testid='loading-screen'>
         <Loading type='loading-fullscreen' />
@@ -118,29 +134,21 @@ export default function AuthLayoutRouter (props) {
     )
   }
 
-  if (isGroupView && !group && !groupPending) {
-    return <NotFound />
+  if (!signupInProgress && returnToPath) {
+    if (location.pathname === returnToPath) {
+      dispatch(setReturnToPathAction())
+    } else {
+      return <Redirect push to={returnToPath} />
+    }
   }
 
   if (signupInProgress && !isWelcomeContext) {
     return <Redirect to='/welcome' />
   }
 
-  if (!signupInProgress && returnToPath) {
-    dispatch(setReturnToPath())
-    return <Redirect to={returnToPath} />
+  if (isGroupView && !group && !groupPending) {
+    return <NotFound />
   }
-
-  // Layout flags and component event handlers
-  const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
-  const showMenuBadge = some(m => m.newPostCount > 0, memberships)
-  const collapsedState = hasDetail || (isMapView && queryParams.hideDrawer !== 'true')
-  const isSingleColumn = (slug && !currentGroupMembership) || matchPath(location.pathname, '/members/:personId')
-  const showTourPrompt = !signupInProgress &&
-    !get('settings.alreadySeenTour', currentUser) &&
-    !isSingleColumn && // Don't show tour on non-member group details page
-    !get('settings.showJoinForm', currentGroupMembership) && // Show group welcome modal before tour
-    !withoutNav
 
   return (
     <IntercomProvider
@@ -154,53 +162,69 @@ export default function AuthLayoutRouter (props) {
         userId: currentUser.id
       }}
     >
+      {/* Redirects for switching into global contexts, since these pages don't exist yet */}
+      <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
+      <RedirectRoute exact path='/:context(all)/(members|settings)' to='/all' />
+
+      {/* First time viewing a group redirect to explore page */}
+      {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
+        <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupMembership.group.slug}/explore`} />
+      )}
+
+      {showTourPrompt && (
+        <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={width} />} />
+      )}
+
+      {/* When joining a group by invitation show join form */}
+      {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) && (
+        <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} group={group} />} />
+      )}
+
+      <Route
+        path={[
+          '/:context(groups)/:groupSlug/(.*)/create',
+          '/:context(groups)/:groupSlug/create',
+          '/:context(public|all)/(.*)/create',
+          '/:context(public|all)/create',
+          `(.*)/${REQUIRED_EDIT_POST_MATCH}`
+        ]}
+        component={CreateModal}
+      />
+
+      {!withoutNav && (
+        <>
+          {isDrawerOpen && (
+            <Route
+              path={[
+                // In order of more specific to less specific
+                `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}`,
+                `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}`,
+                `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`,
+                `/:context(all|public)/${OPTIONAL_POST_MATCH}`,
+                '/:context(all)/:view(topics)/:topicName',
+                '/:context(all)/:view(topics)',
+                `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
+                `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`,
+                `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`,
+                `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
+                `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
+                `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
+                '/messages',
+                '/settings',
+                '/search',
+                '/confirm-group-delete'
+              ]}
+              component={routeProps => (
+                <Drawer {...routeProps} styleName={cx('drawer')} {...{ group }} />
+              )}
+            />
+          )}
+          {/* NOTE: Relies on `pathMatchParams`  */}
+          <TopNav styleName='top' onClick={handleCloseDrawer} {...{ group, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
+        </>
+      )}
+
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        {/* Redirects for switching into global contexts, since these pages don't exist yet */}
-        <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
-        <RedirectRoute exact path='/:context(all)/(members|settings)' to='/all' />
-
-        {/* First time viewing a group redirect to explore page */}
-        {(currentGroupMembership && !get('lastViewedAt', currentGroupMembership)) && (
-          <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupMembership.group.slug}/explore`} />
-        )}
-
-        {showTourPrompt && (
-          <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={width} />} />
-        )}
-
-        {!withoutNav && (
-          <>
-            {isDrawerOpen && (
-              <Route
-                path={[
-                  // In order of more specific to less specific
-                  `/:context(all|public)/:view(events|explore|map|projects|stream)/${OPTIONAL_POST_MATCH}`,
-                  `/:context(public)/:view(group)/${OPTIONAL_GROUP_MATCH}`,
-                  `/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-                  `/:context(all|public)/${OPTIONAL_POST_MATCH}`,
-                  '/:context(all)/:view(topics)/:topicName',
-                  '/:context(all)/:view(topics)',
-                  `/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
-                  `/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`,
-                  `/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_GROUP_MATCH}`,
-                  `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
-                  `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
-                  `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
-                  '/messages',
-                  '/settings',
-                  '/search',
-                  '/confirm-group-delete'
-                ]}
-                component={routeProps => (
-                  <Drawer {...routeProps} styleName={cx('drawer')} {...{ group }} />
-                )}
-              />
-            )}
-            {/* NOTE: Relies on `pathMatchParams`  */}
-            <TopNav styleName='top' onClick={handleCloseDrawer} {...{ group, currentUser, routeParams: pathMatchParams, showMenuBadge, width }} />
-          </>
-        )}
-
         <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={handleCloseDrawer}>
           {/* View navigation menu */}
           <Route
@@ -221,26 +245,8 @@ export default function AuthLayoutRouter (props) {
               )
             }}
           />
-
-          <Route
-            path={[
-              '/:context(groups)/:groupSlug/(.*)/create',
-              '/:context(groups)/:groupSlug/create',
-              '/:context(public|all)/(.*)/create',
-              '/:context(public|all)/create',
-              `(.*)/${REQUIRED_EDIT_POST_MATCH}`
-            ]}
-            component={CreateModal}
-          />
-
-          {/* When joining a group by invitation show join form */}
-          {currentGroupMembership && get('settings.showJoinForm', currentGroupMembership) && (
-            <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} group={group} />} />
-          )}
-
           <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             <Switch>
-              <Route path='/welcome' component={WelcomeWizardRouter} />
               {/* **** Member Routes **** */}
               <Route path={`/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} render={routeProps => <MemberProfile {...routeProps} isSingleColumn={isSingleColumn} />} />
               <Route path={`/:context(all)/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
@@ -255,9 +261,9 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(all)/:view(topics)' component={AllTopics} />
               <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
               {/* **** Group Routes **** */}
-              <Route path={['/:context(groups)/:groupSlug/:action(join)/:accessCode', '/h/use-invitation']} component={JoinGroup} />
+              <Route path={['/groups/:joinGroupSlug/join/:accessCode', '/h/use-invitation']} component={JoinGroup} />
               {/* When viewing a group you are not a member of show group detail page */}
-              {(slug && !currentGroupMembership) && (
+              {(currentGroupSlug && !currentGroupMembership) && (
                 <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupDetail {...routeProps} group={group} />} />
               )}
               <Route path={`/:context(groups)/:groupSlug/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
@@ -277,14 +283,12 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
               <Route path='/:context(groups)/:groupSlug' component={Stream} />
               {/* **** Other Routes **** */}
+              <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
               <Route path='/settings' component={UserSettings} />
               <Route path='/search' component={Search} />
               {/* **** Default Route (404) **** */}
-              {/* // Equates to blank center column when `signupInProgress` */}
-              {!signupInProgress && (
-                <Redirect to={lastViewedGroup ? `/groups/${lastViewedGroup.slug}` : '/all'} />
-              )}
+              <Redirect to={lastViewedGroup ? `/groups/${lastViewedGroup.slug}` : '/all'} />
             </Switch>
           </Div100vh>
           {(group && currentGroupMembership) && (
