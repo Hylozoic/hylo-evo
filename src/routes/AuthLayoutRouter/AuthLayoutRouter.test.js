@@ -127,7 +127,7 @@ it('shows group if the group exists', async () => {
     { wrapper: testWrapper() }
   )
 
-  await waitForElementToBeRemoved(() => screen.queryByTestId('loading-screen'))
+  await waitForElementToBeRemoved(screen.queryByTestId('loading-screen'))
 
   expect(screen.getByText('Stream')).toBeInTheDocument()
 })
@@ -210,7 +210,7 @@ it('shows NotFound if the group does not exist', async () => {
     { wrapper: testWrapper() }
   )
 
-  await waitForElementToBeRemoved(() => screen.queryByTestId('loading-screen'))
+  await waitForElementToBeRemoved(screen.queryByTestId('loading-screen'))
 
   expect(screen.getByText('404 Not Found')).toBeInTheDocument()
 })
