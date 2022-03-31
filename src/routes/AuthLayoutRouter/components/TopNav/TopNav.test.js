@@ -1,32 +1,19 @@
-// import TopNav from './TopNav'
-// import { shallow } from 'enzyme'
-// import React from 'react'
-
-// it('renders as expected with no group', () => {
-//   const wrapper = shallow(<TopNav />)
-//   expect(wrapper).toMatchSnapshot()
-
-//   const logo = wrapper.find('Logo').first().dive()
-//   expect(logo.props().style).toEqual({
-//     backgroundImage: 'url(/hylo-merkaba.png)'
-//   })
-// })
-
 import React from 'react'
-import { IntercomProvider } from 'react-use-intercom'
 import { graphql } from 'msw'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import TopNav from './TopNav'
+
+jest.mock('react-use-intercom', () => ({
+  useIntercom: () => ({ show: () => {} })
+}))
 
 function TestWrapper ({ children }) {
   const AllTheProvidersComponent = AllTheProviders()
 
   return (
     <AllTheProvidersComponent>
-      <IntercomProvider>
-        {children}
-      </IntercomProvider>
+      {children}
     </AllTheProvidersComponent>
   )
 }

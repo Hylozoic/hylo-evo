@@ -12,7 +12,20 @@ import '@testing-library/jest-dom'
 
 configure({ adapter: new Adapter() })
 
+// import { IntercomProvider } from 'react-use-intercom'
+
 // Keep the mockGraphqlServer (msw) tidy between tests
 beforeAll(() => mockGraphqlServer.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => mockGraphqlServer.resetHandlers())
 afterAll(() => mockGraphqlServer.close())
+
+// Global Mocks
+jest.mock('react-use-intercom', () => ({
+  IntercomProvider: ({ children }) => children,
+  useIntercom: () => ({ show: () => {} })
+}))
+
+jest.mock('client/rollbar', () => ({
+  error: error => console.log(error),
+  configure: jest.fn()
+}))

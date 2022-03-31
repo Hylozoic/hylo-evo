@@ -13,11 +13,6 @@ jest.mock('store/selectors/getMixpanel', () => () => ({
   }
 }))
 
-jest.mock('client/rollbar', () => ({
-  error: error => console.log(error),
-  configure: jest.fn()
-}))
-
 const { ResizeObserver } = window
 
 beforeEach(() => {
