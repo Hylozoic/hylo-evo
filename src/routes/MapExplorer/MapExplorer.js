@@ -26,6 +26,7 @@ import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
 import SwitchStyled from 'components/SwitchStyled'
 import LocationInput from 'components/LocationInput'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 import styles from './MapExplorer.scss'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -475,6 +476,7 @@ export class UnwrappedMapExplorer extends React.Component {
 
     const { mobileSettingsLayout } = this.context
     const withoutNav = mobileSettingsLayout
+    const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 
     return (
       <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
@@ -498,6 +500,7 @@ export class UnwrappedMapExplorer extends React.Component {
         {!hideDrawer && (
           <MapDrawer
             context={context}
+            locationParams={locationParams}
             currentUser={currentUser}
             fetchPostsForDrawer={fetchPostsForDrawer}
             filters={filters}
