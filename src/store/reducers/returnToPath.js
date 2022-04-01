@@ -7,7 +7,9 @@ import { SET_RETURN_TO_PATH } from 'store/constants'
 // want to do any of this through redux as it's pretty much just doing
 // localstate stuff. Keeping both for now to honor existing use of
 // selectors and actions.
-export const initialState = JSON.parse(window.localStorage.getItem('returnToPath'))
+export const initialState = (typeof window !== 'undefined')
+  ? JSON.parse(window.localStorage.getItem('returnToPath'))
+  : {}
 
 export default function returnToPath (state = initialState, { type, payload }) {
   switch (type) {
@@ -16,7 +18,10 @@ export default function returnToPath (state = initialState, { type, payload }) {
         ? null
         : payload.returnToPath
 
-      window.localStorage.setItem('returnToPath', JSON.stringify(returnToPath))
+      // Needed for production build
+      if ((typeof window !== 'undefined')) {
+        window.localStorage.setItem('returnToPath', JSON.stringify(returnToPath))
+      }
 
       return returnToPath
     }
