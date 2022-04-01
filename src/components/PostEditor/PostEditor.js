@@ -565,13 +565,13 @@ export default class PostEditor extends React.Component {
         <div styleName='header'>
           <div styleName='initial'>
             <div>
-              <Button {...this.postTypeButtonProps(type)} />
+              <Button noDefaultStyles {...this.postTypeButtonProps(type)} />
               {showPostTypeMenu && (
                 <div styleName='postTypeMenu'>
                   {postTypes
                     .filter((postType) => postType !== type)
                     .map((postType) => (
-                      <Button {...this.postTypeButtonProps(postType)} />
+                      <Button noDefaultStyles {...this.postTypeButtonProps(postType)} />
                     ))}
                 </div>
               )}

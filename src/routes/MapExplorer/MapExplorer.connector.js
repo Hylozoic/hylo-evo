@@ -139,7 +139,7 @@ export function mapStateToProps (state, props) {
     centerLocation,
     context,
     currentUser: me,
-    featureTypes: context === 'public' ? ['request', 'offer', 'resource', 'project', 'event', 'group'] : ['request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
+    featureTypes: context === 'public' ? ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'group'] : ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
     fetchGroupParams,
     fetchMemberParams,
     fetchPostsParams,
