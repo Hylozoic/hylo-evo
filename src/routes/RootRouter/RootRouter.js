@@ -17,12 +17,11 @@ export default function RootRouter () {
   // This should be the only place we check for a session from the API.
   // Routes will not be available until this check is complete.
   useEffect(() => {
-    const asyncFunc = async () => {
+    (async function () {
       setLoading(true)
       await dispatch(checkLogin())
       setLoading(false)
-    }
-    asyncFunc()
+    }())
   }, [dispatch, checkLogin, setLoading])
 
   if (loading) {

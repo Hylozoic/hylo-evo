@@ -149,7 +149,8 @@ export default function AuthLayoutRouter (props) {
     !withoutNav
 
   if (!signupInProgress && returnToPath) {
-    if (location.pathname === returnToPath) {
+    const returnToPathName = new URL(returnToPath, 'https://hylo.com')?.pathname
+    if (location.pathname === returnToPathName) {
       dispatch(setReturnToPath())
     } else {
       return <Redirect push to={returnToPath} />
