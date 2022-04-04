@@ -64,15 +64,19 @@ const WIDGETS = {
     title: 'Subgroups',
     component: GroupsWidget
   },
-  nearby_relevant_groups: {
+  relevant_project_activity: {
+    title: 'Recently Active Projects',
+    component: ProjectsWidget
+  },
+  relevant_groups: {
     title: 'Nearby Relevant Groups', // TODO: ensure there is a way to customize/overwrite this
     component: GroupsWidget
   },
-  nearby_relevant_events: {
+  relevant_events: {
     title: 'Nearby Relevant Events', // TODO: ensure there is a way to customize/overwrite this
     component: EventsWidget
   },
-  nearby_relevant_requests_offers: {
+  relevant_requests_offers: {
     title: 'Nearby Relevant Offers and Requests', // TODO: ensure there is a way to customize/overwrite this
     component: OffersAndRequestsWidget
   },
@@ -81,7 +85,7 @@ const WIDGETS = {
     component: FarmComparisonWidget
   },
   farm_map: {
-    title: 'Farm Map',
+    title: 'Farm Surrounds & Posts',
     component: FarmMapWidget
   },
   moderators: {
@@ -112,7 +116,7 @@ const WIDGETS = {
 
 export default function Widget (props) {
   const dispatch = useDispatch()
-  const { childGroups, id, isModerator, isVisible, name, posts, settings } = props
+  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {} } = props
   const router = useRouter()
   const routeParams = router && router.query
   const { group } = useEnsureCurrentGroup()
@@ -162,7 +166,7 @@ export default function Widget (props) {
           updateSettings={updateSettings}
           save={updateWidget} />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
-        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings }) : null)
+        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings, isMember }) : null)
           : isModerator ? <HiddenWidget name={name} /> : null
         }
       </div>

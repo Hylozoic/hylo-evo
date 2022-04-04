@@ -5,7 +5,7 @@ import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
 
 function Map (props) {
-  let { children, layers, afterViewportUpdate, onViewportUpdate, viewport } = props
+  const { children, layers, afterViewportUpdate = () => {}, onViewportUpdate = () => {}, viewport } = props
 
   const [isHovering, setIsHovering] = useState(false)
 
@@ -25,12 +25,22 @@ function Map (props) {
       mapOptions={{ logoPosition: 'bottom-right' }}
       attributionControl={false}
       mapStyle='mapbox://styles/mapbox/light-v9'
-      onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}
+      onViewportChange={nextViewport => {
+        const bounds = mapRef.current.getBounds()
+        return onViewportUpdate(
+          {
+            ...nextViewport,
+            mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
+          },
+          mapRef.current
+        )
+      }}
       onResize={dimensions => {
         // XXX: hack needed because onViewportChange doesn't fire when map width changes
         //      https://github.com/visgl/react-map-gl/issues/1157
         if (mapRef.current) {
           const center = mapRef.current.getCenter()
+          const bounds = mapRef.current.getBounds()
           onViewportUpdate({
             bearing: mapRef.current.getBearing(),
             height: dimensions.height,
@@ -38,7 +48,8 @@ function Map (props) {
             longitude: center.lng,
             pitch: mapRef.current.getPitch(),
             width: dimensions.width,
-            zoom: mapRef.current.getZoom()
+            zoom: mapRef.current.getZoom(),
+            mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
           })
         }
       }}

@@ -23,6 +23,7 @@ export function createIconLayerFromPostsAndMembers ({ boundingBox, members, post
       return {
         id: post.id,
         type: post.type,
+        slug: post.slug,
         message: post.title,
         coordinates: [parseFloat(post.locationObject.center.lng), parseFloat(post.locationObject.center.lat)]
       }

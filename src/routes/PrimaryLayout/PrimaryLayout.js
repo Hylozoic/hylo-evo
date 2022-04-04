@@ -13,7 +13,6 @@ import {
 import Div100vh from 'react-div-100vh'
 import config, { isTest } from 'config'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import About from 'routes/GroupProfile'
 import AddLocation from 'routes/WelcomeWizard/AddLocation'
 import AllTopics from 'routes/AllTopics'
 import CreateModal from 'components/CreateModal'
@@ -45,6 +44,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/WelcomeWizard/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
+import { TYPE_FARM } from 'util/constants'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
@@ -354,7 +354,7 @@ export default class PrimaryLayout extends Component {
             {/* **** Group Routes **** */}
             {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
-              <Route path={`/:context(groups)/:groupSlug`} render={props => <About {...props} group={group} />} />}
+              <Route path={`/:context(groups)/:groupSlug`} render={props => <GroupDetail {...props} group={group} />} />}
             {/* First time viewing a group redirect to explore page */}
             {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) &&
               <Redirect exact from='/:context(groups)/:groupSlug' to='/groups/:groupSlug/explore' />}
@@ -425,7 +425,7 @@ export default class PrimaryLayout extends Component {
 export function returnDefaultRouteForGroup (group) {
   if (!group) return Stream
   switch (group.type) {
-    case 'farm':
+    case TYPE_FARM:
       return LandingPage
     default:
       return Stream
