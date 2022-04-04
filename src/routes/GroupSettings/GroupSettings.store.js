@@ -51,6 +51,7 @@ export function fetchGroupSettings (slug) {
             publicMemberDirectory
             showSuggestedSkills
           }
+          type
           slug
           visibility
           childGroups (first: 100) {
