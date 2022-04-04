@@ -68,7 +68,7 @@ exports[`WelcomeExplore renders correctly 1`] = `
       </div>
     </Link>
     <Link
-      to="/all/create/group"
+      to="/public/create/group?closePath=%2Fpublic"
     >
       <div
         data-stylename="final-step"

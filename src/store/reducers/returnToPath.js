@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash/fp'
-import { SET_RETURN_TO_PATH } from 'store/constants'
+import { LOGOUT, SET_RETURN_TO_PATH } from 'store/constants'
 
 // The initial state is set from localStorage such that on reload
 // the stored `returnToPath` will be retrieved. It is reset along with
@@ -18,14 +18,25 @@ export default function returnToPath (state = initialState, { type, payload }) {
         ? null
         : payload.returnToPath
 
-      // Needed for production build
-      if ((typeof window !== 'undefined')) {
-        window.localStorage.setItem('returnToPath', JSON.stringify(returnToPath))
-      }
+      setReturnToPathLocalState(returnToPath)
 
       return returnToPath
+    }
+    // Handles the case the of logout action firing and then NonAuthLayout capturing
+    // the current auth'd URL as the `returnToPath`. There may be a better way to handle
+    // this, but this works for now.
+    case LOGOUT: {
+      setReturnToPathLocalState(null)
+      return null
     }
   }
 
   return state
+}
+
+export const setReturnToPathLocalState = returnToPath => {
+  // Needed for production build
+  if ((typeof window !== 'undefined')) {
+    window.localStorage.setItem('returnToPath', JSON.stringify(returnToPath))
+  }
 }

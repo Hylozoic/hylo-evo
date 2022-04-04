@@ -16,7 +16,9 @@ export default function CreateModal (props) {
   const [isDirty, setIsDirty] = useState()
 
   const closeModal = () => {
-    history.push(returnToLocation)
+    const querystringParams = new URLSearchParams(props.location.search)
+    const closePathFromParam = querystringParams.get('closePath')
+    history.push(closePathFromParam || returnToLocation)
     return null
   }
 

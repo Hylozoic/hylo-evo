@@ -138,7 +138,8 @@ export default function AuthLayoutRouter (props) {
   const handleCloseDrawer = () => isDrawerOpen && dispatch(toggleDrawerAction())
   const showMenuBadge = some(m => m.newPostCount > 0, memberships)
   const collapsedState = hasDetail || (isMapView && hideDrawer)
-  const isSingleColumn = (currentGroupSlug && !currentGroupMembership) || matchPath(location.pathname, '/members/:personId')
+  const isSingleColumn = (currentGroupSlug && !currentGroupMembership) ||
+    matchPath(location.pathname, '/members/:personId')
   // When joining a group by invitation Group Welcome Modal (join form)
   const showTourPrompt = !signupInProgress &&
     !get('settings.alreadySeenTour', currentUser) &&

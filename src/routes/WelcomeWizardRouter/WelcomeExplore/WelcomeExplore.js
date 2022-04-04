@@ -38,7 +38,7 @@ export default class WelcomeExplore extends Component {
               </div>
             </div>
           </Link>
-          <Link to='/all/create/group'>
+          <Link to={`/public/create/group?closePath=${encodeURIComponent('/public')}`}>
             <div styleName='final-step'>
               <div styleName='step-image group' style={bgImageStyle('/signup-group.png')} />
               <div>
