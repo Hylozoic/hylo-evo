@@ -7,7 +7,7 @@ import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import extractModelsForTest from 'util/testing/extractModelsForTest'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
-import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
+import JoinGroup, { SIGNUP_PATH } from './JoinGroup'
 
 jest.mock('store/selectors/getMixpanel', () => () => ({
   identify: jest.fn(),
@@ -97,12 +97,12 @@ it('checks invitation and forwards to expired invite page when invitation is inv
   render(
     <>
       <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
-      <Route component={({ location }) => location.pathname} />
+      <Route component={({ location }) => location.pathname + location.search} />
     </>,
     { wrapper: currentUserProvider(false) }
   )
 
-  expect(await screen.findByText(EXPIRED_INVITE_PATH)).toBeInTheDocument()
+  expect(await screen.findByText(`${SIGNUP_PATH}?error=`, { exact: false })).toBeInTheDocument()
 })
 
 it('sets returnToPath and forwards to signup page when invitation is valid and user is not logged-in', async () => {

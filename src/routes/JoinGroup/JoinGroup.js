@@ -12,7 +12,6 @@ import checkInvitation from 'store/actions/checkInvitation'
 import Loading from 'components/Loading'
 
 export const SIGNUP_PATH = '/signup'
-export const EXPIRED_INVITE_PATH = '/invite-expired'
 
 export default function JoinGroup (props) {
   const history = useHistory()
@@ -50,7 +49,7 @@ export default function JoinGroup (props) {
             dispatch(setReturnToPath(props.location.pathname + props.location.search))
             setRedirectTo(SIGNUP_PATH)
           } else {
-            setRedirectTo(EXPIRED_INVITE_PATH)
+            setRedirectTo(`${SIGNUP_PATH}?error=invite-expired`)
           }
         }
       } catch (error) {

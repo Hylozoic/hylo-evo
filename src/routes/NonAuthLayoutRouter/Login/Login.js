@@ -61,7 +61,9 @@ export default function Login (props) {
     <div className={props.className}>
       <div styleName='formWrapper'>
         <h1 styleName='title'>Sign in to Hylo</h1>
+
         {error && formatError(error, 'Login')}
+
         <TextInput
           aria-label='email' label='email' name='email' id='email'
           autoFocus
@@ -71,6 +73,7 @@ export default function Login (props) {
           type='email'
           value={email || ''}
         />
+
         <TextInput
           aria-label='password' label='password' name='password' id='password'
           internalLabel='Password'
@@ -80,9 +83,11 @@ export default function Login (props) {
           type='password'
           value={password || ''}
         />
+
         <Link to='/reset-password' styleName='forgot-password'>
           <span styleName='forgot-password'>Forgot password?</span>
         </Link>
+
         <Button styleName='submit' label='Sign in' onClick={handleLogin} />
       </div>
       <div styleName='auth-buttons'>
