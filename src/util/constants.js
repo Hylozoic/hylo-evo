@@ -47,6 +47,26 @@ export const COLLABORATION_INTERESTS = [
   {
     value: 'buy',
     label: 'Buy our products'
+  },
+  {
+    value: 'markets',
+    label: 'Access to new markets'
+  },
+  {
+    value: 'ecosystem_service_markets',
+    label: 'Access to ecosystem service markets'
+  },
+  {
+    value: 'loans',
+    label: 'Low-cost loans'
+  },
+  {
+    value: 'support',
+    label: 'Farm support opportunities'
+  },
+  {
+    value: 'equipment_sharing',
+    label: 'Equipment sharing'
   }
 ]
 

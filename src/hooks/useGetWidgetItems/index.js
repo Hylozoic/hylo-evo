@@ -47,6 +47,9 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     case 'farm_comparison': {
       return true
     }
+    case 'farm_details': {
+      return true
+    }
     case 'opportunities_to_collaborate': {
       return [] // TODO: build out selector for this
     }

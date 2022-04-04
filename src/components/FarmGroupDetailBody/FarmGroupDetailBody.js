@@ -14,6 +14,7 @@ export default function FarmGroupDetailBody ({
 
   const widgets = [
     { settings: {}, isVisible: true, name: 'mission' },
+    { settings: {}, isVisible: true, name: 'farm_details' },
     { settings: {}, isVisible: true, name: 'opportunities_to_collaborate' },
     { settings: {}, isVisible: true, name: 'relevant_requests_offers' },
     { settings: {}, isVisible: true, name: 'relevant_project_activity' },

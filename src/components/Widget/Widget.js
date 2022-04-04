@@ -12,7 +12,7 @@ import WelcomeWidget from 'components/Widget/WelcomeWidget'
 import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 import useGetWidgetItems from 'hooks/useGetWidgetItems'
-import FarmComparisonWidget from './FarmComparisonWidget'
+import FarmDetailsWidget from './FarmDetailsWidget'
 import FarmMapWidget from './FarmMapWidget'
 import ModeratorsWidget from './ModeratorsWidget'
 import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
@@ -80,9 +80,9 @@ const WIDGETS = {
     title: 'Nearby Relevant Offers and Requests', // TODO: ensure there is a way to customize/overwrite this
     component: OffersAndRequestsWidget
   },
-  farm_comparison: {
-    title: 'Farm Comparison',
-    component: FarmComparisonWidget
+  farm_details: {
+    title: 'Farm Details',
+    component: FarmDetailsWidget
   },
   farm_map: {
     title: 'Farm Surrounds & Posts',
@@ -116,7 +116,7 @@ const WIDGETS = {
 
 export default function Widget (props) {
   const dispatch = useDispatch()
-  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {} } = props
+  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {}, key } = props
   const router = useRouter()
   const routeParams = router && router.query
   const { group } = useEnsureCurrentGroup()
@@ -136,7 +136,7 @@ export default function Widget (props) {
   const widgetItems = useGetWidgetItems({ childGroups, currentUser, name, group, posts })
 
   return (
-    <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
+    <div key={key} styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
       {isModerator || (isVisible && widgetItems) ? <div styleName='header'>
         <h3>{(isModerator && WIDGETS[name].moderatorTitle) || WIDGETS[name].title}</h3>
         {isModerator && <div styleName='more'>
