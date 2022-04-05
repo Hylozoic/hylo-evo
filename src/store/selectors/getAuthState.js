@@ -25,7 +25,7 @@ export const AuthState = {
   None: 'None',
   EmailValidation: 'EmailValidation',
   Registration: 'Registration',
-  SignupInProgress: 'InProgress',
+  SignupInProgress: 'SignupInProgress',
   Complete: 'Complete'
 }
 
