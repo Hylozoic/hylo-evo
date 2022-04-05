@@ -2,7 +2,7 @@ import React from 'react'
 import Icon from 'components/Icon'
 import useRouter from 'hooks/useRouter'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
-import getFarmOpportunities from 'store/selectors/getFarmOpportunities'
+import { getFarmOpportunities } from 'store/selectors/farmExtensionSelectors'
 
 import './OpportunitiesToCollaborate.scss'
 

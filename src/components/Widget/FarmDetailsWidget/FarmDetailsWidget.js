@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Pill from 'components/Pill'
-import { capitalize } from 'lodash'
-
+import cx from 'classnames'
+import { capitalize, keyBy } from 'lodash'
+import { animalCountToRange, areaToRange } from 'store/presenters/presentFarmData'
+import {
+  getAnimalProducts,
+  getAnimalTotalCount,
+  getArea,
+  getCertifitcationsCurrentDetail,
+  getClimateZone,
+  getHardinessZone,
+  getManagementPlansCurrentDetail,
+  getOperationTypes,
+  getProductDetail,
+  getProductsAndLandUse,
+  getProductsValueAdded,
+  getUnitPreference
+} from 'store/selectors/farmExtensionSelectors'
+import { ANIMAL_LIST, CLIMATE_ZONES, FARM_PRODUCT_LIST, FARM_CERTIFICATIONS, MANAGEMENT_PLANS, FARM_TYPES } from 'util/constants'
 import './FarmDetailsWidget.scss'
 
-export default function FarmDetailsWidget (props) {
+const animalListLookup = keyBy(ANIMAL_LIST, 'value')
+const productLookup = keyBy(FARM_PRODUCT_LIST, 'value')
+const certificationsLookup = keyBy(FARM_CERTIFICATIONS, 'value')
+const managementPlansLookup = keyBy(MANAGEMENT_PLANS, 'value')
+const operationTypeLookup = keyBy(FARM_TYPES, 'value')
+
+export default function FarmDetailsWidget ({ group }) {
   /*
     Overview
     - acres/hectares (range instead of precise number)
     - animal count (range instead of precise number)
     - climate zone
     - hardiness zone
-    - soil
 
     Breakout
     - animal types
@@ -22,42 +43,66 @@ export default function FarmDetailsWidget (props) {
     - certifications current
     - management techniques
 
-    <div styleName='group-tags'>
-            {topics.map((topic, index) => (
-              <Pill
-                styleName='tag-pill'
-                darkText
-                label={capitalize(topic.topic.name.toLowerCase())}
-                id={topic.id}
-                key={index}
-              />
-            ))}
-          </div>
-
   */
+  const [showMore, setShowMore] = useState(false)
+  const unitPreference = getUnitPreference(group)
 
-  const areaToRange = (area, unit) => {
-   if (!area || typeof area !== 'number') return null
-   if (area < 1) return unit === 'acres' ? 'Less than an acre' : 'Less than half a hectare'
-   if (area <= 5) return unit === 'acres' ? '1-5 acres' : '0.5-2 hectares'
-   if (area <= 20) return unit === 'acres' ? '5-20 acres' : '2-8 hectares'
-   if (area <= 50) return unit === 'acres' ? '20-50 acres' : '8-20 hectares'
-   if (area <= 100) return unit === 'acres' ? '50-100 acres' : '20-40 hectares'
-   if (area <= 500) return unit === 'acres' ? '100-500 acres' : '40-200 hectares'
-   if (area <= 1000) return unit === 'acres' ? '500-1000 acres' : '200-400 hectares'
-   if (area <= 5000) return unit === 'acres' ? '1000-5000 acres' : '400-2000 hectares'
-   if (area <= 10000) return unit === 'acres' ? '5000-10000 acres' : '2000-4000 hectares'
-   if (area <= 50000) return unit === 'acres' ? '10000-50000 acres' : '4000-20000 hectares'
-   return unit === 'acres' ? '50000+ acres' : '20000+ hectares'
-  }
-
-  const overviewLabels = [
-    `Area: `
-  ]
+  let overviewLabels = []
+  if (areaToRange(getArea(group), unitPreference)) overviewLabels.push(`Area: ${areaToRange(getArea(group), unitPreference)}`)
+  if (getAnimalTotalCount(group)) overviewLabels.push(`Livestock: ${animalCountToRange(getAnimalTotalCount(group))}`)
+  if (getClimateZone(group)) overviewLabels.push(`Climate Zone: ${CLIMATE_ZONES.find((zone) => zone.value === getClimateZone(group)).label}`)
+  if (getHardinessZone(group)) overviewLabels.push(`Hardiness Zone: ${getHardinessZone(group)}`)
+  if (getOperationTypes(group).length > 0) overviewLabels = overviewLabels.concat(getOperationTypes(group).map((type) => operationTypeLookup[type].label))
+  let productLabels = []
+  if (getAnimalProducts(group).length > 0) productLabels = productLabels.concat(getAnimalProducts(group).map((product) => animalListLookup[product].label))
+  if (getProductDetail(group).length > 0) productLabels = productLabels.concat(getProductDetail(group).map((product) => capitalize(productLookup[product].label)))
+  if (getProductsValueAdded(group).length > 0) productLabels = productLabels.concat(getProductsValueAdded(group).map((value) => capitalize(value)))
 
   return (
-    <div styleName='farm-details-container'>
-      Nothing to see here
+    <>
+      <div styleName={cx('farm-details-container', { showless: !showMore })}>
+        <div styleName='group-tags'>
+          {overviewLabels.map((attribute, index) => (
+            <Pill
+              styleName='tag-pill'
+              darkText
+              label={attribute}
+              id={attribute}
+              key={index}
+            />
+          ))}
+        </div>
+        {(getAnimalProducts(group).length > 0 || getProductDetail(group).length > 0) && <FarmDetailSection title='Products' items={productLabels} />}
+        {getCertifitcationsCurrentDetail(group).length > 0 && <FarmDetailSection title='Certifications' items={getCertifitcationsCurrentDetail(group).map((cert) => certificationsLookup[cert].label)} />}
+        {getManagementPlansCurrentDetail(group).length > 0 && <FarmDetailSection title='Management Techniques' items={getManagementPlansCurrentDetail(group).map((plan) => managementPlansLookup[plan].label)} />}
+      </div>
+      <div>
+        <div styleName='separator' />
+        <Pill styleName='green-pill' onClick={() => setShowMore(!showMore)} label={showMore ? 'Show Less' : 'Show More'} />
+      </div>
+    </>
+  )
+}
+
+function FarmDetailSection ({ title, items }) {
+  return (
+    <div>
+      <div styleName='header'>
+        <h4>
+          {title}
+        </h4>
+      </div>
+      <div styleName='group-tags'>
+        {items.map((attribute, index) => (
+          <Pill
+            styleName='tag-pill'
+            darkText
+            label={attribute}
+            id={attribute}
+            key={index}
+          />
+        ))}
+      </div>
     </div>
   )
 }
