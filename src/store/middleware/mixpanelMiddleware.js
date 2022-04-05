@@ -1,6 +1,6 @@
 import { get, isString, isObject, omit } from 'lodash/fp'
 import getMixpanel from '../selectors/getMixpanel'
-import { getAuthenticated } from '../selectors/getSignupState'
+import { getAuthenticated } from '../selectors/getAuthState'
 import getMe from '../selectors/getMe'
 import { isDev } from 'config'
 

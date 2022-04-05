@@ -20,8 +20,8 @@ Each state below below implies transition from the previous state has completed,
 
 */
 
-// ONLY use in the `SignupRouter` and in `getSignupState` below
-export const SignupState = {
+// ONLY use in the `SignupRouter` and in `getAuthState` below
+export const AuthState = {
   None: 'None',
   EmailValidation: 'EmailValidation',
   Registration: 'Registration',
@@ -29,19 +29,19 @@ export const SignupState = {
   Complete: 'Complete'
 }
 
-export const getSignupState = createSelector(
+export const getAuthState = createSelector(
   getMe,
   currentUser => {
-    if (!currentUser) return SignupState.None
+    if (!currentUser) return AuthState.None
 
     const { emailValidated, hasRegistered, settings } = currentUser
     const { signupInProgress } = settings
 
-    if (!emailValidated) return SignupState.EmailValidation
-    if (!hasRegistered) return SignupState.Registration
-    if (signupInProgress) return SignupState.InProgress
+    if (!emailValidated) return AuthState.EmailValidation
+    if (!hasRegistered) return AuthState.Registration
+    if (signupInProgress) return AuthState.InProgress
 
-    return SignupState.Complete
+    return AuthState.Complete
   }
 )
 
@@ -49,38 +49,38 @@ export const getSignupState = createSelector(
 // * Should probably only be used for attaching Hylo user to external
 // APIs (i.e. Mixpanel currently) as soon as authentication is complete
 export const getAuthenticated = createSelector(
-  getSignupState,
-  signupState => {
-    return signupState !== SignupState.None
+  getAuthState,
+  authState => {
+    return authState !== AuthState.None
   }
 )
 
 // Authenticated && (Signup In Progress || Signup Complete)
 // * Used by `RootRouter`
 export const getAuthorized = createSelector(
-  getSignupState,
-  signupState => {
+  getAuthState,
+  authState => {
     return [
-      SignupState.InProgress,
-      SignupState.Complete
-    ].includes(signupState)
+      AuthState.InProgress,
+      AuthState.Complete
+    ].includes(authState)
   }
 )
 
 // Authenticated && Authorized && Signup In Progress
 export const getSignupInProgress = createSelector(
-  getSignupState,
-  signupState => {
-    return signupState === SignupState.InProgress
+  getAuthState,
+  authState => {
+    return authState === AuthState.InProgress
   }
 )
 
 // Authenticated && Authorized && Signup Complete
 export const getSignupComplete = createSelector(
-  getSignupState,
-  signupState => {
-    return signupState === SignupState.Complete
+  getAuthState,
+  authState => {
+    return authState === AuthState.Complete
   }
 )
 
-export default getSignupState
+export default getAuthState

@@ -14,7 +14,7 @@ jest.mock('store/selectors/getMixpanel', () => () => ({
   track: jest.fn()
 }))
 
-function currentUserProvider (signupStateComplete) {
+function currentUserProvider (authStateComplete) {
   const ormSession = orm.mutableSession(orm.getEmptyState())
   const reduxState = { orm: ormSession.state }
 
@@ -25,7 +25,7 @@ function currentUserProvider (signupStateComplete) {
       hasRegistered: true,
       emailValidated: true,
       settings: {
-        signupInProgress: !signupStateComplete
+        signupInProgress: !authStateComplete
       },
       memberships: [
         {

@@ -16,7 +16,7 @@ import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import getMyGroupMembership from 'store/selectors/getMyGroupMembership'
-import { getSignupInProgress } from 'store/selectors/getSignupState'
+import { getSignupInProgress } from 'store/selectors/getAuthState'
 import { toggleDrawer as toggleDrawerAction } from './AuthLayoutRouter.store'
 import getLastViewedGroup from 'store/selectors/getLastViewedGroup'
 import {
