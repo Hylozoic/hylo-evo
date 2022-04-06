@@ -17,20 +17,21 @@ import './CreateModal.scss'
 export default function CreateModal (props) {
   const { location, match } = props
   if (!match) return null
+  const routeParams = get('match.params', props)
+  if (!routeParams) return null
 
   const dispatch = useDispatch()
   const [isDirty, setIsDirty] = useState()
-
-  const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
-
-  if (!routeParams) return {}
+  const locationParams = getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, props)
+  const mapLocation = (locationParams.lat && locationParams.lng) &&
+    `${locationParams.lat}, ${locationParams.lng}`
 
   const { action, postId } = routeParams
   const urlParams = omit(['postId', 'action'], routeParams)
   const closeUrl = postId
-    ? postUrl(postId, urlParams, querystringParams)
-    : addQuerystringToPath(baseUrl(urlParams), querystringParams)
+    ? postUrl(postId, urlParams, { ...locationParams, ...querystringParams })
+    : addQuerystringToPath(baseUrl(urlParams), { ...locationParams, ...querystringParams })
 
   const closeModal = () => dispatch(push(closeUrl))
 
@@ -68,6 +69,7 @@ export default function CreateModal (props) {
                   children={({ match, location }) => (
                     <PostEditor
                       {...props}
+                      selectedLocation={mapLocation}
                       onClose={closeModal}
                       onCancel={confirmClose}
                       setIsDirty={setIsDirty}

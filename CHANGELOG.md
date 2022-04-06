@@ -4,6 +4,21 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+- You can now click on the map to create posts at that location. Either click and hold for a couple seconds, or click the (+) button and then click on the map to add a post at that lat,lng on the map.
+
+## [3.5.2] - 2022-03-28
+
+### Fixed
+- Display of member counts on groups in the create post modal
+- Correctly display notification settings for new groups that have just been created
+
+### Changed
+- Update License to be GNU AGPLv3
+- Sort groups alphabetically on notifications settings page
+
 ## [3.5.1] - 2022-03-15
 
 ### Fixed
