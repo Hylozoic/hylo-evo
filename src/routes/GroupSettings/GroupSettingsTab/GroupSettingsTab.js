@@ -53,7 +53,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, location, locationObject, name, joinQuestions, prerequisiteGroups, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, geoShape, groupToGroupJoinQuestions, location, locationObject, name, joinQuestions, prerequisiteGroups, settings, visibility
     } = group
 
     return {
@@ -62,6 +62,7 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
+        geoShape: geoShape || '',
         groupToGroupJoinQuestions: groupToGroupJoinQuestions ? groupToGroupJoinQuestions.concat({ text: '' }) : [{ text: '' }],
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
@@ -113,7 +114,7 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, joinQuestions, location, name, prerequisiteGroups, settings, visibility
+      accessibility, avatarUrl, bannerUrl, description, geoShape, groupToGroupJoinQuestions, joinQuestions, location, name, prerequisiteGroups, settings, visibility
     } = edits
     const { askGroupToGroupJoinQuestions, showSuggestedSkills } = settings
 
@@ -142,6 +143,12 @@ export default class GroupSettingsTab extends Component {
         location={location}
         locationObject={locationObject}
         type='location'
+      />
+      <SettingsControl
+        label='Group Shape'
+        onChange={this.updateSetting('geoShape')}
+        value={geoShape}
+        type='hidden'
       />
       <div styleName='privacy-settings'>
         <SettingsSection>

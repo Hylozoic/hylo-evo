@@ -37,6 +37,19 @@ export default function SettingsControl (props) {
           {...otherProps}
         />
         break
+      case 'hidden':
+        const hiddenInput = <input styleName='control-input'
+          type='hidden'
+          value={value}
+          onChange={onChange}
+          autoCorrect='off'
+          spellCheck='off'
+          {...otherProps}
+        />
+        control = label
+          ? <><label styleName={cx('control-label', { error })}>{label}</label>{ hiddenInput }</>
+          : hiddenInput
+        break
       default:
         control = <input styleName='control-input'
           type='text'
@@ -47,7 +60,7 @@ export default function SettingsControl (props) {
     }
   }
 
-  return <div styleName={cx('control', { error })}>
+  return type === 'hidden' ? control : <div styleName={cx('control', { error })}>
     <label styleName={cx('control-label', { error })}>{label}</label>
     {control}
   </div>
