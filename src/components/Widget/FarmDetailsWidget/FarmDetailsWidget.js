@@ -13,7 +13,6 @@ import {
   getManagementPlansCurrentDetail,
   getOperationTypes,
   getProductDetail,
-  getProductsAndLandUse,
   getProductsValueAdded,
   getUnitPreference
 } from 'store/selectors/farmExtensionSelectors'
@@ -84,7 +83,7 @@ export default function FarmDetailsWidget ({ group }) {
   )
 }
 
-function FarmDetailSection ({ title, items }) {
+export function FarmDetailSection ({ title, items }) {
   return (
     <div>
       <div styleName='header'>

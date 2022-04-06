@@ -380,6 +380,49 @@ export const PRODUCT_CATAGORIES = [
   }
 ]
 
+
+export const LOCATION_PRIVACY = [
+  {
+    label: 'Precise',
+    value: 'precise'
+  },
+  {
+    label: 'Near',
+    value: 'near'
+  },
+  {
+    label: 'Region',
+    value: 'region'
+  }
+]
+
+export const PUBLIC_OFFERINGS = [
+  {
+    value: 'farmstand',
+    label: 'Farmstand'
+  },
+  {
+    value: 'shop',
+    label: 'Shop'
+  },
+  {
+    value: 'upick',
+    label: 'U-pick produce'
+  },
+  {
+    value: 'workshops',
+    label: 'Workshops'
+  },
+  {
+    value: 'events',
+    label: 'Events'
+  },
+  {
+    value: 'tours',
+    label: 'Tours'
+  }
+]
+
 export const CLIMATE_ZONES = [
   {
     value: 'Af',

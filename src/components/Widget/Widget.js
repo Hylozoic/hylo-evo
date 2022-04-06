@@ -13,6 +13,7 @@ import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
 import useGetWidgetItems from 'hooks/useGetWidgetItems'
 import FarmDetailsWidget from './FarmDetailsWidget'
+import FarmOpenToPublic from './FarmOpenToPublic'
 import FarmMapWidget from './FarmMapWidget'
 import ModeratorsWidget from './ModeratorsWidget'
 import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
@@ -83,6 +84,10 @@ const WIDGETS = {
   farm_details: {
     title: 'Farm Details',
     component: FarmDetailsWidget
+  },
+  farm_open_to_public: {
+    title: 'Location & Hours',
+    component: FarmOpenToPublic
   },
   farm_map: {
     title: 'Farm Surrounds & Posts',

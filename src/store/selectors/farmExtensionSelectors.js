@@ -59,7 +59,7 @@ export function getContactPhone (group) {
 
 export function getFarmAddress (group) {
   const farmData = getFarmData(group)
-  if (!farmData || !farmData.location) return null
+  if (!farmData || !farmData.location) return {}
   return farmData.location
 }
 
@@ -218,7 +218,7 @@ export function getLandOwnershipDetail (group) {
   return farmData.land_other_detail
 }
 
-export function getBioOrMission (group) {
+export function getBio (group) {
   const farmData = getFarmData(group)
   if (!farmData || !farmData.bio) return null
   return farmData.bio
@@ -276,4 +276,49 @@ export function getUnitPreference (group) {
   const farmData = getFarmData(group)
   if (!farmData || !farmData.units) return 'metric'
   return farmData.units
+}
+
+/*
+  Hylo sub-profile specific selectors
+*/
+
+export function getHyloSpecificFarmSchemaData (farmData) {
+  if (!farmData || !farmData.flexible || !farmData.flexible.hylo) return {}
+  return farmData.flexible.hylo
+}
+
+export function getOpenToPublic (group) {
+  const farmData = getFarmData(group)
+  const data = getHyloSpecificFarmSchemaData(farmData)
+  return data.open_to_public
+}
+
+export function getAtAGlance (group) {
+  const farmData = getFarmData(group)
+  const data = getHyloSpecificFarmSchemaData(farmData)
+  return data.at_a_glance || []
+}
+
+export function getLocationPrivacy (group) {
+  const farmData = getFarmData(group)
+  const data = getHyloSpecificFarmSchemaData(farmData)
+  return data.location_privacy || 'precise'
+}
+
+export function getMission (group) {
+  const farmData = getFarmData(group)
+  const data = getHyloSpecificFarmSchemaData(farmData)
+  return data.mission || null
+}
+
+export function getPublicOfferings (group) {
+  const farmData = getFarmData(group)
+  const data = getHyloSpecificFarmSchemaData(farmData)
+  return data.public_offerings || []
+}
+
+export function getOpeningHours (group) {
+  const farmData = getFarmData(group)
+  const data = getHyloSpecificFarmSchemaData(farmData)
+  return data.opening_hours || null
 }
