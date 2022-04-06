@@ -52,7 +52,7 @@ describe('mapStateToProps', () => {
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         context: 'groups',
         currentUser: undefined,
-        featureTypes: ['request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
+        featureTypes: ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
         fetchGroupParams: { boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
         fetchMemberParams: { boundingBox: undefined, context: 'groups', slug: 'foo', sortBy: 'name' },
         fetchPostsParams: { boundingBox: undefined, context: 'groups', groupSlugs: ['foo'], slug: 'foo' },

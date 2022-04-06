@@ -113,6 +113,11 @@ export function createPostUrl (opts = {}, querystringParams = {}) {
   return addQuerystringToPath(url, querystringParams)
 }
 
+export function createUrl (opts = {}, querystringParams = {}) {
+  let url = baseUrl(opts) + '/create'
+  return addQuerystringToPath(url, querystringParams)
+}
+
 export function editPostUrl (id, opts = {}, querystringParams = {}) {
   return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
@@ -187,6 +192,15 @@ export function getGroupSlugInPath (pathname) {
     path: '/groups/:groupSlug'
   })
   return get('params.groupSlug', match)
+}
+
+export function getQueryParamsObjectFromString (queryParamString) {
+  let obj = {}
+  const params = new URLSearchParams(queryParamString)
+  for (const [key, value] of params) {
+    obj[key] = value
+  }
+  return obj
 }
 
 export function gotoExternalUrl (url) {

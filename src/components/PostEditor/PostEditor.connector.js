@@ -76,37 +76,37 @@ export function mapStateToProps (state, props) {
   const routeParams = get('match.params', props)
 
   return {
-    context,
-    currentUser,
-    currentGroup,
-    groupOptions,
-    defaultTopics,
-    postType,
-    isProject,
-    isEvent,
-    editingPostId,
-    post,
-    imageAttachments,
-    fileAttachments,
-    showImages,
-    showFiles,
-    loading,
-    postPending,
-    editing,
-    linkPreview,
-    linkPreviewStatus,
-    fetchLinkPreviewPending,
-    topic,
-    topicName,
-    groupSlug,
     announcementSelected,
     canModerate,
-    myModeratedGroups,
-    uploadFileAttachmentPending,
-    uploadImageAttachmentPending,
+    context,
+    currentGroup,
+    currentUser,
+    defaultTopics,
+    editing,
+    editingPostId,
+    fetchLinkPreviewPending,
+    fileAttachments,
+    groupOptions,
+    groupSlug,
+    imageAttachments,
+    isEvent,
+    isProject,
+    linkPreview,
+    linkPreviewStatus,
+    loading,
     location,
+    myModeratedGroups,
+    post,
+    postPending,
+    postType,
     querystringParams,
     routeParams,
+    showFiles,
+    showImages,
+    topic,
+    topicName,
+    uploadFileAttachmentPending,
+    uploadImageAttachmentPending,
     ensureLocationIdIfCoordinate
   }
 }
@@ -134,10 +134,12 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     fetchLinkPreviewPending, groupSlug, postType, routeParams, querystringParams
   } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
+  const allProps = { ...stateProps, ...dispatchProps, ...ownProps }
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const url = postUrl(id, { ...routeParams, postType }, querystringParams)
+    const locationParams = allProps['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, allProps) : null
+    const url = postUrl(id, { ...routeParams, postType }, { ...locationParams, querystringParams })
 
     return goToUrl(url)
   }
