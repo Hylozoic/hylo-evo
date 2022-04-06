@@ -47,6 +47,26 @@ export const COLLABORATION_INTERESTS = [
   {
     value: 'buy',
     label: 'Buy our products'
+  },
+  {
+    value: 'markets',
+    label: 'Access to new markets'
+  },
+  {
+    value: 'ecosystem_service_markets',
+    label: 'Access to ecosystem service markets'
+  },
+  {
+    value: 'loans',
+    label: 'Low-cost loans'
+  },
+  {
+    value: 'support',
+    label: 'Farm support opportunities'
+  },
+  {
+    value: 'equipment_sharing',
+    label: 'Equipment sharing'
   }
 ]
 
@@ -357,6 +377,49 @@ export const PRODUCT_CATAGORIES = [
   {
     value: 'live_animal_sales_export',
     label: 'Live Animal Sales, Export'
+  }
+]
+
+
+export const LOCATION_PRIVACY = [
+  {
+    label: 'Precise',
+    value: 'precise'
+  },
+  {
+    label: 'Near',
+    value: 'near'
+  },
+  {
+    label: 'Region',
+    value: 'region'
+  }
+]
+
+export const PUBLIC_OFFERINGS = [
+  {
+    value: 'farmstand',
+    label: 'Farmstand'
+  },
+  {
+    value: 'shop',
+    label: 'Shop'
+  },
+  {
+    value: 'upick',
+    label: 'U-pick produce'
+  },
+  {
+    value: 'workshops',
+    label: 'Workshops'
+  },
+  {
+    value: 'events',
+    label: 'Events'
+  },
+  {
+    value: 'tours',
+    label: 'Tours'
   }
 ]
 
