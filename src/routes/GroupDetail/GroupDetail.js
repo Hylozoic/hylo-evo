@@ -4,6 +4,7 @@ import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
+import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
@@ -20,6 +21,7 @@ import {
   visibilityIcon,
   visibilityString
 } from 'store/models/Group'
+import { TYPE_FARM, TYPE_NORMAL } from 'util/constants'
 import { inIframe } from 'util/index'
 import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 
@@ -71,7 +73,6 @@ export default class GroupDetail extends Component {
 
   render () {
     const {
-      canModerate,
       currentUser,
       group,
       isAboutCurrentGroup,
@@ -79,13 +80,13 @@ export default class GroupDetail extends Component {
       location,
       moderators,
       onClose,
-      pending
+      pending,
+      routeParams
     } = this.props
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    const topics = group && group.groupTopics
     const fullPage = !onClose
 
     return <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
@@ -118,33 +119,9 @@ export default class GroupDetail extends Component {
         <div styleName='g.headerBackground' />
       </div>
       <div styleName='g.groupDetailBody'>
-        {isAboutCurrentGroup && !group.description && canModerate ? <div styleName='g.no-description'>
-          <div>
-            <h4>Your group doesn't have a description</h4>
-            <p>Add a description, location, suggested topics and more in your group settings</p>
-            <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
-          </div>
-        </div> : <div styleName='g.groupDescription'>
-          {group.description}
-        </div> }
-
-        { !isAboutCurrentGroup && topics && topics.length
-          ? <div styleName='g.groupTopics'>
-            <div styleName='g.groupSubtitle'>Topics</div>
-            {topics.slice(0, 10).map(topic => {
-              return (
-                <span
-                  key={'topic_' + topic.id}
-                  styleName='m.topicButton'
-                >
-                  <span styleName='m.topicCount'>{topic.postsTotal}</span> #{topic.name}
-                </span>
-              )
-            })}
-          </div>
-          : ''
-        }
-        { isAboutCurrentGroup
+        {group.type === TYPE_NORMAL && this.normalGroupBody()}
+        {group.type === TYPE_FARM && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
+        { isAboutCurrentGroup || group.type === TYPE_FARM
           ? <div styleName='g.aboutCurrentGroup'>
             <h3>Moderators</h3>
             <div styleName='g.moderators'>
@@ -174,33 +151,86 @@ export default class GroupDetail extends Component {
     </div>
   }
 
+  normalGroupBody () {
+    const {
+      canModerate,
+      group,
+      isAboutCurrentGroup
+    } = this.props
+
+    const topics = group && group.groupTopics
+
+    return (
+      <>
+        {isAboutCurrentGroup &&
+          !group.description &&
+          canModerate
+          ?
+            <div styleName='g.no-description'>
+              <div>
+                <h4>Your group doesn't have a description</h4>
+                <p>Add a description, location, suggested topics and more in your group settings</p>
+                <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
+              </div>
+            </div>
+          :
+            <div styleName='g.groupDescription'>
+              {group.description}
+            </div>}
+
+        {!isAboutCurrentGroup && topics && topics.length
+          ? <div styleName='g.groupTopics'>
+            <div styleName='g.groupSubtitle'>Topics</div>
+            {topics.slice(0, 10).map(topic => {
+              return (
+                <span
+                  key={'topic_' + topic.id}
+                  styleName='m.topicButton'
+                >
+                  <span styleName='m.topicCount'>{topic.postsTotal}</span> #{topic.name}
+                </span>
+              )
+            })}
+          </div>
+          : ''}
+      </>
+    )
+  }
+
+  normalGroupDetails () {
+    const { group } = this.props
+    return (
+      <div styleName='g.groupDetails'>
+        <div styleName='g.detailContainer'>
+          <div styleName='g.groupSubtitle'>Recent Posts</div>
+          <div styleName='g.detail'>
+            <Icon name='BadgeCheck' />
+            <span styleName='g.detailText'>Only members of this group can see posts</span>
+          </div>
+        </div>
+        <div styleName='g.detailContainer'>
+          <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? 'Members' : 'Member'}</div>
+          {get(group, 'settings.publicMemberDirectory')
+            ? <div>{group.members.map(member => {
+              return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
+            })}</div>
+            : <div styleName='g.detail'>
+              <Icon name='Unlock' />
+              <span styleName='g.detailText'>Join to see</span>
+            </div>
+          }
+        </div>
+      </div>
+    )
+  }
+
   renderGroupDetails () {
     const { addSkill, currentUser, group, joinRequests, onClose, removeSkill, routeParams } = this.props
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
 
-    return (
+    return ( // half of this could be shifted to farm specific widgets
       <div>
-        <div styleName='g.groupDetails'>
-          <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>Recent Posts</div>
-            <div styleName='g.detail'>
-              <Icon name='BadgeCheck' />
-              <span styleName='g.detailText'>Only members of this group can see posts</span>
-            </div>
-          </div>
-          <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {get(group, 'settings.publicMemberDirectory')
-              ? <div>{group.members.map(member => {
-                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
-              })}</div>
-              : <div styleName='g.detail'>
-                <Icon name='Unlock' />
-                <span styleName='g.detailText'>Join to see</span>
-              </div>
-            }
-          </div>
-        </div>
+        {this.normalGroupDetails()}
         <JoinSection
           addSkill={addSkill}
           currentUser={currentUser}
@@ -219,13 +249,12 @@ export default class GroupDetail extends Component {
 
 export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
-
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
 
   const setAnswer = (index) => (event) => {
     const answerValue = event.target.value
     setQuestionAnswers(prevAnswers => {
-      const newAnswers = [ ...prevAnswers ]
+      const newAnswers = [...prevAnswers]
       newAnswers[index].answer = answerValue
       setAllQuestionsAnswered(newAnswers.every(a => trim(a.answer).length > 0))
       return newAnswers
@@ -281,7 +310,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                 <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
               </div>)}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
@@ -293,7 +322,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
                   </div>)}
                   <div styleName='g.center'>
-                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? requestToJoinGroup(group.id, questionAnswers) : () => {}}>
+                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
                       Request Membership in <span styleName='g.requestGroup'>{group.name}</span>
                     </div>
                   </div>
@@ -326,14 +355,16 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
     }
   }
 
-  return <div styleName='g.joinQuestion'>
-    <h4>Which of the following skills &amp; interests are relevant to you?</h4>
-    <div styleName='g.skillPills'>
-      <Pillbox
-        pills={pills}
-        handleClick={handleClick}
-        editable={false}
-      />
+  return (
+    <div styleName='g.joinQuestion'>
+      <h4>Which of the following skills &amp; interests are relevant to you?</h4>
+      <div styleName='g.skillPills'>
+        <Pillbox
+          pills={pills}
+          handleClick={handleClick}
+          editable={false}
+        />
+      </div>
     </div>
-  </div>
+  )
 }

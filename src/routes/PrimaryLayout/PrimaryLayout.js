@@ -44,6 +44,7 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
 import UploadPhoto from 'routes/WelcomeWizard/UploadPhoto'
 import UserSettings from 'routes/UserSettings'
+import { TYPE_FARM } from 'util/constants'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH,
   OPTIONAL_NEW_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH,
@@ -349,7 +350,7 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
             <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
             <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+            <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(group)} />
             {/* **** Group Routes **** */}
             {/* When viewing a group you are not a member of show group detail page */}
             {slug && !currentGroupMembership &&
@@ -371,8 +372,8 @@ export default class PrimaryLayout extends Component {
             <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
             <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
             <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
-            <Route path={`/:context(groups)/:groupSlug`} component={Stream} />
+            <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(group)} />
+            <Route path={`/:context(groups)/:groupSlug`} component={returnDefaultRouteForGroup(group)} />
             {/* Other Routes */}
             <Route path='/settings' component={UserSettings} />
             <Route path='/search' component={Search} />
@@ -418,6 +419,16 @@ export default class PrimaryLayout extends Component {
         steps={this.tourSteps()}
       />
     </Div100vh>
+  }
+}
+
+export function returnDefaultRouteForGroup (group) {
+  if (!group) return Stream
+  switch (group.type) {
+    case TYPE_FARM:
+      return LandingPage
+    default:
+      return Stream
   }
 }
 

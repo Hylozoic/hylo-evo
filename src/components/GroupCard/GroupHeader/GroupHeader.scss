@@ -1,5 +1,4 @@
 .header {
-  margin-bottom: 12px;
   z-index: 1;
   height: 67px;
   position: relative;
@@ -38,6 +37,10 @@
   font-size: 18px;
   line-height: 23px;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 270px;
 }
 
 .group-geo-descriptor{
@@ -45,10 +48,15 @@
   line-height: 15px;
   color: $color-grey-header;
   @include font-regular;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 270px;
 }
 
 .group-member-flavor {
   width: 120px;
+  text-align: right;
 }
 
 .people {
@@ -215,6 +223,23 @@
 }
 
 @media screen and (max-width: 425px) {
+  .header {
+    padding: 0 0 0 10px;
+  }
+
+  .group-member-flavor {
+    display: none;
+  }
+
+  .header-main-row {
+    padding: 0;
+  }
+
+  .group-image {
+    max-height: 30px;
+    max-width: 30px;
+    min-width: 30px;
+  }
 
   .headerText {
     max-width: calc(100% - 160px);
@@ -222,17 +247,13 @@
     overflow: hidden;
   }
 
-  .groupTitle {
-    font-size: 10px;
-    opacity: .5;
-    display: block;
-    overflow: hidden;
-    height: 14px;
+  .group-title {
+    font-size: 14px;
+    max-width: 90%;
   }
 
-  .header {
-    padding: 0 10px;
-    margin-bottom: 20px;
+  .group-geo-descriptor {
+    max-width: 85%;
   }
 
   .topicsLine {

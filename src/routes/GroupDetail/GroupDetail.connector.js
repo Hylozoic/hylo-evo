@@ -29,8 +29,7 @@ export function mapStateToProps (state, props) {
   const isMember = group && currentUser ? myMemberships.find(m => m.group.id === group.id) : false
   const joinRequests = getMyJoinRequests(state, props).filter(jr => jr.status === JOIN_REQUEST_STATUS.Pending)
   const canModerate = getCanModerate(state, { group })
-  const moderators = group && isAboutCurrentGroup ? group.moderators : []
-
+  const moderators = group && group.moderators
   return {
     canModerate,
     currentUser,
@@ -59,7 +58,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     addSkill: (name) => dispatch(addSkill(name)),
     removeSkill: (skillId) => dispatch(removeSkill(skillId)),
-    fetchGroup: () => dispatch(fetchGroupDetails(slug)),
+    fetchGroup: () => dispatch(fetchGroupDetails({ slug, withWidgets: true })),
     fetchJoinRequests: () => dispatch(fetchJoinRequests()),
     onClose: getRouteParam('detailGroupSlug', {}, props) ? () => dispatch(push(closeLocation)) : false,
     joinGroup: (groupId) => dispatch(joinGroup(groupId)),
