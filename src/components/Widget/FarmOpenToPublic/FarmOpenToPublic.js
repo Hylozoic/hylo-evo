@@ -30,6 +30,6 @@ export default function FarmOpenToPublic ({ group }) {
           </div>}
         {publicOfferings.length > 0 && <FarmDetailSection items={publicOfferings.map((offering) => publicOfferingsLookup[offering].label)} title='Public Offerings' />}
       </div>
-    : null
+      : null
   )
 }

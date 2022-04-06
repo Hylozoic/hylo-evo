@@ -56,6 +56,9 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
     case 'opportunities_to_collaborate': {
       return [] // TODO: build out selector for this
     }
+    case 'farm_at_a_glance': {
+      return true
+    }
     case 'farm_map': {
       return posts
     }
