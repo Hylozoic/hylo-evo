@@ -76,6 +76,7 @@ export default () => {
           askJoinQuestions
           publicMemberDirectory
           showSuggestedSkills
+          hideExtensionData
         }
       }
     }
@@ -188,6 +189,7 @@ export default () => {
           askJoinQuestions
           publicMemberDirectory
           showSuggestedSkills
+          hideExtensionData
         }
       }
     }

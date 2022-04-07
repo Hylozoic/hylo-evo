@@ -88,6 +88,7 @@ query (
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills
+        hideExtensionData
       }
       slug
       groupTopics(first: 8) {

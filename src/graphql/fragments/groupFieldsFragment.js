@@ -13,6 +13,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
     askJoinQuestions
     publicMemberDirectory
     showSuggestedSkills
+    hideExtensionData
   }
   slug
   type
@@ -110,6 +111,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills
+        hideExtensionData
       }
       slug
     }
