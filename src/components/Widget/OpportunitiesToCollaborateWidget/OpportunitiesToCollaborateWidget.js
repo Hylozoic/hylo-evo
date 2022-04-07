@@ -40,7 +40,12 @@ const collabTitle = {
   volunteering: 'Volunteer opportunties',
   mentorship: 'Mentorship & advice',
   cooperative: 'Cooperatives',
-  buy: 'Buy from us'
+  buy: 'Buy from us',
+  markets: 'New markets',
+  ecosystem_service_markets: 'Ecosystem services',
+  loans: 'Low-cost loans',
+  support: 'Farm support',
+  equipment_sharing: 'Equipment sharing'
 }
 
 const collabText = (group) => {
@@ -50,6 +55,11 @@ const collabText = (group) => {
     volunteering: `${group.name} has some volunteering opportunities`,
     mentorship: `Contact ${group.name} to learn about their practices`,
     cooperative: `${group.name} is interested in forming a cooperative`,
-    buy: `Buy from ${group.name}`
+    buy: `Buy from ${group.name}`,
+    markets: `${group.name} is seeking new markets`,
+    ecosystem_service_markets: `${group.name} is seeking ecosystem services`,
+    loans: `${group.name} is interested in low-cost loans`,
+    support: `${group.name} is seeking farm support`,
+    equipment_sharing: `${group.name} is interested in equipment sharing`
   }
 }
