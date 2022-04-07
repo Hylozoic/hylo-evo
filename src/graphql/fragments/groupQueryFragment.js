@@ -19,6 +19,7 @@ export default () => {
       askJoinQuestions
       publicMemberDirectory
       showSuggestedSkills
+      hideExtensionData
     }
     slug
     visibility
