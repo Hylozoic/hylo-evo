@@ -13,13 +13,15 @@ export default function Button ({
   active,
   narrow,
   small,
+  noDefaultStyles,
   disabled = false,
   children,
   onClick,
   className,
   tabIndex = 0
 }) {
-  let styleName = cx('button', color, { hover, active, narrow, small, disabled })
+  const buttonClassName = noDefaultStyles ? '' : 'button'
+  let styleName = cx(buttonClassName, color, { hover, active, narrow, small, disabled })
 
   return <div
     role='button'
@@ -43,6 +45,7 @@ Button.propTypes = {
   narrow: bool,
   small: bool,
   children: node,
+  noDefaultStyles: bool,
   onClick: func,
   disabled: bool,
   className: string

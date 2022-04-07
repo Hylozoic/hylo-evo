@@ -79,7 +79,7 @@ export const POST_TYPES = {
   'discussion': {
     primaryColor: [0, 163, 227, 255], // $color-picton-blue
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
-    map: false,
+    map: true,
     description: 'Talk about what’s important with others'
   },
   'request': {
