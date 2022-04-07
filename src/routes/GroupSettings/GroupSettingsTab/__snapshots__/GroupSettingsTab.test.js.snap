@@ -53,6 +53,12 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     onChange={[Function]}
     type="location"
   />
+  <SettingsControl
+    label="Group Shape"
+    onChange={[Function]}
+    type="hidden"
+    value=""
+  />
   <div
     data-stylename="privacy-settings"
   >
