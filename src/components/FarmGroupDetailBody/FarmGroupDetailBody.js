@@ -16,6 +16,7 @@ export default function FarmGroupDetailBody ({
   const bio = getBio(group)
 
   const widgets = [
+    { settings: {}, isVisible: true, name: 'farm_at_a_glance' },
     { settings: { title: mission, text: group.description || bio }, isVisible: true, name: 'mission' },
     { settings: {}, isVisible: true, name: 'farm_details' },
     { settings: {}, isVisible: true, name: 'opportunities_to_collaborate' },

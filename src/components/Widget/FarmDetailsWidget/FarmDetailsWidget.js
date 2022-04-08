@@ -86,21 +86,25 @@ export default function FarmDetailsWidget ({ group }) {
 export function FarmDetailSection ({ title, items }) {
   return (
     <div>
-      <div styleName='header'>
-        <h4>
-          {title}
-        </h4>
-      </div>
+      {title &&
+        <div styleName='header'>
+          <h4>
+            {title}
+          </h4>
+        </div>}
       <div styleName='group-tags'>
-        {items.map((attribute, index) => (
-          <Pill
-            styleName='tag-pill'
-            darkText
-            label={attribute}
-            id={attribute}
-            key={index}
-          />
-        ))}
+        {items.map((attribute, index) => {
+          return (
+            attribute &&
+              <Pill
+                styleName='tag-pill'
+                darkText
+                label={attribute}
+                id={attribute}
+                key={index}
+              />
+          )
+        })}
       </div>
     </div>
   )

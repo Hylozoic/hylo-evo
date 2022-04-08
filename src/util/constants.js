@@ -380,7 +380,6 @@ export const PRODUCT_CATAGORIES = [
   }
 ]
 
-
 export const LOCATION_PRIVACY = [
   {
     label: 'Precise',
