@@ -1,5 +1,5 @@
 /*
-  The farm profile schema is a evolving schema outside the direct management of Hylo. 
+  The farm profile schema is a evolving schema outside the direct management of Hylo.
   The below selector functions will be used to mitigate the risk of changes to that schema.
   If the external schema needs to change, if we only reference it here, in one place,
   we will have minimal places to make changes to ensure things don't break.

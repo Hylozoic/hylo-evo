@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Icon from 'components/Icon'
+import AtAGlanceWidget from 'components/Widget/AtAGlanceWidget'
 import AnnouncementWidget from 'components/Widget/AnnouncementWidget'
 import EventsWidget from 'components/Widget/EventsWidget'
 import GroupsWidget from 'components/Widget/GroupsWidget'
@@ -80,6 +81,10 @@ const WIDGETS = {
   relevant_requests_offers: {
     title: 'Nearby Relevant Offers and Requests', // TODO: ensure there is a way to customize/overwrite this
     component: OffersAndRequestsWidget
+  },
+  farm_at_a_glance: {
+    title: 'At A Glance',
+    component: AtAGlanceWidget
   },
   farm_details: {
     title: 'Farm Details',
