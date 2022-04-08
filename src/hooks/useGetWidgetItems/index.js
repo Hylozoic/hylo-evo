@@ -48,13 +48,13 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
       return true
     }
     case 'farm_details': {
-      return true
+      return !(group.settings && group.settings.hideExtensionData)
     }
     case 'farm_open_to_public': {
-      return true
+      return !(group.settings && group.settings.hideExtensionData)
     }
     case 'opportunities_to_collaborate': {
-      return [] // TODO: build out selector for this
+      return !(group.settings && group.settings.hideExtensionData)
     }
     case 'farm_map': {
       return group.locationObject && group.locationObject.center && posts

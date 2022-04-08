@@ -1,0 +1,125 @@
+// GroupSettingsTab
+
+.dataDetail {
+  color: $color-regent;
+  font-size: 14px;
+  margin: 0;
+}
+
+label {
+  color: $color-regent-70;
+  // LEJ: Commenting-out as has global impact
+  // margin-left: 10px;
+  transition: color .25s ease;
+}
+
+.toggleDescription {
+  display: inline;
+  font-size: 14px;
+  color: rgba(34, 64, 91, .5);
+  padding-left: 15px;
+}
+.on > .switchContainer .toggleDescription {
+  color: rgba(34, 64, 91, 1);
+}
+
+.onOff {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+
+  div {
+    font-size: 10px;
+    height: 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(125, 140, 157, 1.000);
+    color: rgba(125, 140, 157, 1.000);
+    padding: 0 10px;
+    line-height: 20px;
+  }
+
+  .on {
+    display: none;
+    border: 1px solid rgba(0, 163, 227, 1.000);
+    color: rgba(0, 163, 227, 1.000);
+  }
+}
+
+.on > div > .onOff {
+  .off {
+    display: none;
+  }
+
+  .on {
+    display: block;
+  }
+}
+
+.saveChanges {
+  position: fixed;
+  bottom: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,1);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  display: flex;
+  width: inherit;
+  max-width: 95%;
+  margin-top: $space-9x;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    display: inline-block;
+    color: rgba(35, 64, 91, .5);
+    margin-right: 30px;
+    font-size: 14px;
+  }
+
+  span.settingChanged {
+    color: rgba(35, 64, 91, 1);
+  }
+
+  .save-button {
+    margin: 0 auto;
+  }
+}
+
+.switchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-right: 40px;
+  margin-bottom: 20px;
+}
+
+.on .settingDisabled {
+  opacity: 0;
+}
+
+.groupSettings {
+  padding-bottom: 150px;
+}
+
+@media screen and (max-width: 425px) {
+  .save-button {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .saveChanges {
+    bottom: 60px;
+
+    span {
+      font-size: 12px;
+    }
+
+    .save-button {
+      font-size: 12px;
+      min-width: 120px;
+      text-align: center;
+    }
+  }
+}

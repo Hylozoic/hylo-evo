@@ -19,6 +19,7 @@ export default () => {
       askJoinQuestions
       publicMemberDirectory
       showSuggestedSkills
+      hideExtensionData
     }
     slug
     visibility
@@ -75,6 +76,7 @@ export default () => {
           askJoinQuestions
           publicMemberDirectory
           showSuggestedSkills
+          hideExtensionData
         }
       }
     }
@@ -187,6 +189,7 @@ export default () => {
           askJoinQuestions
           publicMemberDirectory
           showSuggestedSkills
+          hideExtensionData
         }
       }
     }
