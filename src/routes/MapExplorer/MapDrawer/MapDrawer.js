@@ -81,9 +81,9 @@ function MapDrawer (props) {
           placeholder='Filter by topics and keywords'
           value={search}
         />
-        <Icon name='Filter' className={styles.filterIcon} />
+        <Icon name='Funnel' className={styles.filterIcon} />
 
-        { isSearching
+        {isSearching
           ? <div styleName='searchFilters'>
             {searchTopics.slice(0, 10).map(topic => {
               return (
