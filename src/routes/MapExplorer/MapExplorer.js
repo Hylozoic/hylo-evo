@@ -519,14 +519,16 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-        <button
-          data-for='addItemToMapTooltip'
-          data-tip='Add item to map'
-          styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
-          onClick={this.handleAddItemToMap}
-        >
-          <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
-        </button>
+        {currentUser && (
+          <button
+            data-for='addItemToMapTooltip'
+            data-tip='Add item to map'
+            styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
+            onClick={this.handleAddItemToMap}
+          >
+            <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+          </button>
+        )}
         <Tooltip
           delay={550}
           id='addItemToMapTooltip' />

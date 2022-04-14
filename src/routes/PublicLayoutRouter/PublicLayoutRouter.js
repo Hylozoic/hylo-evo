@@ -8,7 +8,7 @@ import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import GroupDetail from 'routes/GroupDetail'
 import MapExplorer from 'routes/MapExplorer'
 import PostDetail from 'routes/PostDetail'
-import { OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
+import { OPTIONAL_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PublicLayoutRouter.scss'
 
@@ -28,8 +28,7 @@ export default function PublicLayoutRouter (props) {
           </a>
         </div>
         <Switch>
-          <Route path={`/:context(public)/:view(map)/${OPTIONAL_POST_MATCH}`} exact component={MapExplorer} />
-          <Route path={`/:context(public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} exact component={MapExplorer} />
+          <Route path='/:context(public)/:view(map)' component={MapExplorer} />
           <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
           <Redirect
             exact
