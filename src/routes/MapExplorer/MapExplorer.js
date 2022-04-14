@@ -9,6 +9,7 @@ import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FlyToInterpolator } from 'react-map-gl'
+
 import { isMobileDevice } from 'util/mobile'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
@@ -19,10 +20,12 @@ import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import Map from 'components/Map/Map'
+import Tooltip from 'components/Tooltip'
 import MapDrawer from './MapDrawer'
 import SavedSearches from './SavedSearches'
 import SwitchStyled from 'components/SwitchStyled'
 import LocationInput from 'components/LocationInput'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 import styles from './MapExplorer.scss'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -62,6 +65,9 @@ export class UnwrappedMapExplorer extends React.Component {
       groupIconLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
+      creatingPost: false,
+      coordinates: null,
+      isAddingItemToMap: false,
       pointerX: 0,
       pointerY: 0,
       // Need this in the state so we can filter them by currentBoundingBox
@@ -263,7 +269,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   mapViewPortUpdate = (update) => {
-    this.setState({ viewport: update })
+    this.setState({ viewport: update, creatingPost: false })
   }
 
   afterViewportUpdate = (update, mapRef) => {
@@ -321,15 +327,17 @@ export class UnwrappedMapExplorer extends React.Component {
         const features = featureCollection(info.objects.map(o => point([o.coordinates[0], o.coordinates[1]])))
         const c = center(features)
 
-        this.setState({ viewport: {
-          ...this.state.viewport,
-          longitude: c.geometry.coordinates[0],
-          latitude: c.geometry.coordinates[1],
-          // Don't zoom out if already further in than expansionZoom
-          zoom: Math.max(this.state.viewport.zoom, info.expansionZoom),
-          transitionDuration: 500,
-          transitionInterpolator: new FlyToInterpolator()
-        } })
+        this.setState({
+          viewport: {
+            ...this.state.viewport,
+            longitude: c.geometry.coordinates[0],
+            latitude: c.geometry.coordinates[1],
+            // Don't zoom out if already further in than expansionZoom
+            zoom: Math.max(this.state.viewport.zoom, info.expansionZoom),
+            transitionDuration: 500,
+            transitionInterpolator: new FlyToInterpolator()
+          }
+        })
       }
     } else {
       this.setState({ selectedObject: info.object })
@@ -341,6 +349,22 @@ export class UnwrappedMapExplorer extends React.Component {
         this.props.showDetails(info.object.id)
       }
     }
+  }
+
+  onMapMouseDown = (e) => {
+    const oneSecondInMs = 1000
+    this.setState({ creatingPost: true })
+    setTimeout(() => {
+      if (this.state.creatingPost) {
+        this.setState({ coordinates: { lng: e.lngLat[0], lat: e.lngLat[1] } })
+        const currentParams = Object.fromEntries(new URLSearchParams(this.props.location.search))
+        this.props.showCreateModal({ ...currentParams, ...this.state.coordinates })
+      }
+    }, this.state.isAddingItemToMap ? 0 : oneSecondInMs)
+  }
+
+  onMapMouseUp = (e) => {
+    if (this.state.creatingPost) this.setState({ creatingPost: false, isAddingItemToMap: false })
   }
 
   toggleFeatureType = (type, checked) => {
@@ -366,11 +390,15 @@ export class UnwrappedMapExplorer extends React.Component {
 
       return (
         <div styleName='postTip' className={styles[type]} style={{ left: pointerX + 15, top: pointerY }}>
-          { message }
+          {message}
         </div>
       )
     }
     return ''
+  }
+
+  handleAddItemToMap = () => {
+    this.setState({ isAddingItemToMap: true })
   }
 
   toggleDrawer = (e) => {
@@ -391,7 +419,7 @@ export class UnwrappedMapExplorer extends React.Component {
     const { context, currentUser, filters, routeParams } = this.props
     const { featureTypes, search: searchText, topics } = filters
 
-    let groupSlug = routeParams.groupSlug
+    const groupSlug = routeParams.groupSlug
 
     const userId = currentUser.id
 
@@ -436,6 +464,7 @@ export class UnwrappedMapExplorer extends React.Component {
       clusterLayer,
       groupIconLayer,
       hideDrawer,
+      isAddingItemToMap,
       groupsForDrawer,
       membersForDrawer,
       showFeatureFilters,
@@ -445,86 +474,104 @@ export class UnwrappedMapExplorer extends React.Component {
     } = this.state
     const { mobileSettingsLayout } = this.context
     const withoutNav = mobileSettingsLayout
+    const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 
-    return <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
-      <div styleName='mapContainer'>
-        <Map
-          layers={[groupIconLayer, clusterLayer]}
-          afterViewportUpdate={this.afterViewportUpdate}
-          onViewportUpdate={this.mapViewPortUpdate}
-          children={this._renderTooltip()}
-          viewport={viewport}
-        />
-        {pendingPostsMap && <Loading className={styles.loading} />}
-      </div>
-      <button styleName={cx('toggleDrawerButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
-        <Icon name='Hamburger' className={styles.openDrawer} />
-        <Icon name='Ex' className={styles.closeDrawer} />
-      </button>
-      {!hideDrawer && (
-        <MapDrawer
-          context={context}
-          currentUser={currentUser}
-          fetchPostsForDrawer={fetchPostsForDrawer}
-          filters={filters}
-          groups={groupsForDrawer}
-          members={membersForDrawer}
-          numFetchedPosts={postsForDrawer.length}
-          numTotalPosts={totalPostsInView}
-          onUpdateFilters={this.props.storeClientFilterParams}
-          pendingPostsDrawer={pendingPostsDrawer}
-          posts={postsForDrawer}
-          routeParams={routeParams}
-          topics={topics}
-        />
-      )}
-      <div styleName={cx('searchAutocomplete')}>
-        <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
-      </div>
-      <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
-        Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
-      </button>
-      {currentUser && <>
-        <Icon
-          name='Heart'
-          onClick={this.toggleSavedSearches}
-          styleName={cx('savedSearchesButton', { open: showSavedSearches })}
-        />
-        {showSavedSearches && (
-          <SavedSearches
-            deleteSearch={deleteSearch}
+    return (
+      <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
+        <div styleName='mapContainer'>
+          <Map
+            layers={[groupIconLayer, clusterLayer]}
+            afterViewportUpdate={this.afterViewportUpdate}
+            onViewportUpdate={this.mapViewPortUpdate}
+            children={this._renderTooltip()}
+            isAddingItemToMap={isAddingItemToMap}
+            viewport={viewport}
+            onMouseDown={this.onMapMouseDown}
+            onMouseUp={this.onMapMouseUp}
+          />
+          {pendingPostsMap && <Loading className={styles.loading} />}
+        </div>
+        <button styleName={cx('toggleDrawerButton drawerAdjacentButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
+          <Icon name='Hamburger' className={styles.openDrawer} />
+          <Icon name='Ex' className={styles.closeDrawer} />
+        </button>
+        {!hideDrawer && (
+          <MapDrawer
+            context={context}
+            locationParams={locationParams}
+            currentUser={currentUser}
+            fetchPostsForDrawer={fetchPostsForDrawer}
             filters={filters}
-            saveSearch={this.saveSearch}
-            searches={searches}
-            toggle={this.toggleSavedSearches}
-            viewSavedSearch={this.handleViewSavedSearch}
+            groups={groupsForDrawer}
+            members={membersForDrawer}
+            numFetchedPosts={postsForDrawer.length}
+            numTotalPosts={totalPostsInView}
+            onUpdateFilters={this.props.storeClientFilterParams}
+            pendingPostsDrawer={pendingPostsDrawer}
+            posts={postsForDrawer}
+            routeParams={routeParams}
+            topics={topics}
           />
         )}
+        <div styleName={cx('searchAutocomplete')}>
+          <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
+        </div>
+        <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
+        Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
+        </button>
+        <button
+          data-for='addItemToMapTooltip'
+          data-tip='Add item to map'
+          styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
+          onClick={this.handleAddItemToMap}
+        >
+          <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+        </button>
+        <Tooltip
+          delay={550}
+          id='addItemToMapTooltip' />
+        {currentUser && <>
+          <Icon
+            name='Heart'
+            onClick={this.toggleSavedSearches}
+            styleName={cx('savedSearchesButton', { open: showSavedSearches })}
+          />
+          {showSavedSearches && (
+            <SavedSearches
+              deleteSearch={deleteSearch}
+              filters={filters}
+              saveSearch={this.saveSearch}
+              searches={searches}
+              toggle={this.toggleSavedSearches}
+              viewSavedSearch={this.handleViewSavedSearch}
+            />
+          )}
       </>}
-      <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
-        <h3>What do you want to see on the map?</h3>
-        {featureTypes.map(featureType => {
-          let color = FEATURE_TYPES[featureType].primaryColor
+        <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
+          <h3>What do you want to see on the map?</h3>
+          {featureTypes.map(featureType => {
+            let color = FEATURE_TYPES[featureType].primaryColor
 
-          return (
-            <div
-              key={featureType}
-              ref={this.refs[featureType]}
-              styleName='featureTypeSwitch'
-            >
-              <SwitchStyled
-                backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
-                name={featureType}
-                checked={filters.featureTypes[featureType]}
-                onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
-              />
-              <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
-            </div>
-          )
-        })}
-        <div styleName={cx('pointer')} />
+            return (
+              <div
+                key={featureType}
+                ref={this.refs[featureType]}
+                styleName='featureTypeSwitch'
+              >
+                <SwitchStyled
+                  backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
+                  name={featureType}
+                  checked={filters.featureTypes[featureType]}
+                  onChange={(checked, name) => this.toggleFeatureType(name, !checked)}
+                />
+                <span>{featureType.charAt(0).toUpperCase() + featureType.slice(1)}s</span>
+              </div>
+            )
+          })}
+          <div styleName={cx('pointer')} />
+        </div>
       </div>
-    </div>
+    )
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import CreateModalChooser from './CreateModalChooser'
@@ -10,14 +10,18 @@ import PostEditor from 'components/PostEditor'
 import './CreateModal.scss'
 
 export default function CreateModal (props) {
+  const location = useLocation()
   const history = useHistory()
   const previousLocation = useSelector(getPreviousLocation)
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
 
+  const querystringParams = Object.fromEntries(new URLSearchParams(location.search))
+  const mapLocation = (querystringParams.lat && querystringParams.lng) &&
+    `${querystringParams.lat}, ${querystringParams.lng}`
+
   const closeModal = () => {
-    const querystringParams = new URLSearchParams(props.location.search)
-    const closePathFromParam = querystringParams.get('closePath')
+    const closePathFromParam = querystringParams.closePath
     history.push(closePathFromParam || returnToLocation)
     return null
   }
@@ -46,6 +50,7 @@ export default function CreateModal (props) {
             <Route path={['(.*)/create/post', '(.*)/edit']}>
               <PostEditor
                 {...props}
+                selectedLocation={mapLocation}
                 onClose={closeModal}
                 onCancel={confirmClose}
                 setIsDirty={setIsDirty}
