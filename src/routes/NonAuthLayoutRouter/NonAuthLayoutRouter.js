@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Route, Redirect, Link, Switch } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, Redirect, NavLink, Switch } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
 import Particles from 'react-tsparticles'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import setReturnToPath from 'store/actions/setReturnToPath'
+import { getAuthenticated } from 'store/selectors/getAuthState'
 import particlesjsConfig from './particlesjsConfig'
+import Button from 'components/Button'
+import HyloCookieConsent from 'components/HyloCookieConsent'
 import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayoutRouter/Login'
 import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
-import Button from 'components/Button'
-import HyloCookieConsent from 'components/HyloCookieConsent'
 import './NonAuthLayoutRouter.scss'
-import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import setReturnToPath from 'store/actions/setReturnToPath'
 
 const particlesStyle = {
   position: 'fixed',
@@ -25,6 +26,7 @@ const particlesStyle = {
 export default function NonAuthLayoutRouter (props) {
   const { location } = props
   const dispatch = useDispatch()
+  const isAuthenticated = useSelector(getAuthenticated)
   const returnToPathFromQueryString = getQuerystringParam('returnToUrl', null, props)
   const returnToNavigationState = props.location?.state?.from
   const returnToPath = returnToNavigationState
@@ -36,6 +38,10 @@ export default function NonAuthLayoutRouter (props) {
       // Clears location state on page reload
       props.history.replace({ state: null })
       dispatch(setReturnToPath(returnToPath))
+    }
+
+    if (isAuthenticated) {
+      props.history.replace('/signup')
     }
   }, [dispatch, setReturnToPath, returnToPath])
 
@@ -88,39 +94,42 @@ export default function NonAuthLayoutRouter (props) {
             <Redirect to={{ pathname: '/login', state: { from: location } }} />
           </Switch>
         </div>
-        <div styleName='below-container'>
-          <Switch>
-            <Route
-              path='/signup'
-              component={() => (
-                <Link to='/login'>
-                  Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
-                </Link>
-              )}
-            />
-            <Route
-              path='/reset-password'
-              component={() => (
+        <Switch>
+          <Route
+            path='/signup'
+            exact
+            component={() => (
+              <NavLink to='/login' styleName='below-container'>
+                Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
+              </NavLink>
+            )}
+          />
+          <Route
+            path='/reset-password'
+            component={() => (
+              <div styleName='below-container'>
                 <div styleName='resetPasswordBottom'>
-                  <Link tabIndex={-1} to='/signup'>
+                  <NavLink tabIndex={-1} to='/signup'>
                     <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-                  </Link>
+                  </NavLink>
                   or
-                  <Link to='/login'>
+                  <NavLink to='/login'>
                     <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
-                  </Link>
+                  </NavLink>
                 </div>
-              )}
-            />
-            <Route
-              path='/' component={() => (
-                <Link tabIndex={-1} to='/signup'>
-                  Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-                </Link>
-              )}
-            />
-          </Switch>
-        </div>
+              </div>
+            )}
+          />
+          <Route
+            path='/login'
+            exact
+            component={() => (
+              <NavLink tabIndex={-1} to='/signup' styleName='below-container'>
+                Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+              </NavLink>
+            )}
+          />
+        </Switch>
       </div>
       <HyloCookieConsent />
     </Div100vh>
