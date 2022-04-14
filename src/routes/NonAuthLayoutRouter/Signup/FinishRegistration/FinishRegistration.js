@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { register } from '../Signup.store'
-import TextInput from 'components/TextInput'
+import logout from 'store/actions/logout'
 import Button from 'components/Button'
+import Icon from 'components/Icon'
+import TextInput from 'components/TextInput'
 import { formatError } from '../../util'
 import '../Signup.scss'
 
@@ -21,7 +23,13 @@ export default function FinishRegistration () {
     formValues.password.length > 8 &&
     formValues.passwordConfirmation.length > 8
 
-  const submit = async () => {
+  const handleCancel = () => {
+    if (window.confirm("We're almost done, are you sure you want to cancel?")) {
+      dispatch(logout())
+    }
+  }
+
+  const handleSubmit = async () => {
     try {
       if (formValues.password !== formValues.passwordConfirmation) {
         setError("Passwords don't match")
@@ -46,6 +54,7 @@ export default function FinishRegistration () {
 
   return (
     <div styleName='form'>
+      <Icon name='Ex' styleName='closeIcon' onClick={handleCancel} />
       <div styleName='formWrapper'>
         <h1 styleName='title'>One more step!</h1>
         <p styleName='blurb'>Hi {email} we just need to know your name and password and you're in.</p>
@@ -82,7 +91,7 @@ export default function FinishRegistration () {
           label='passwordConfirmation'
           name='passwordConfirmation'
           onChange={handleChange}
-          onEnter={submit}
+          onEnter={handleSubmit}
           styleName='field'
           type='password'
           value={formValues.passwordConfirmation}
@@ -91,7 +100,7 @@ export default function FinishRegistration () {
           styleName='submit'
           label='Jump in to Hylo!'
           color={canSubmit ? 'green' : 'gray'}
-          onClick={canSubmit ? () => submit() : null}
+          onClick={canSubmit ? () => handleSubmit() : null}
         />
       </div>
     </div>

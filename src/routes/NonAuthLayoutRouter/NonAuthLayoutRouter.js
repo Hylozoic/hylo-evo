@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Redirect, NavLink, Switch } from 'react-router-dom'
+import { Route, Redirect, Link, Switch } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
 import Particles from 'react-tsparticles'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -99,9 +99,11 @@ export default function NonAuthLayoutRouter (props) {
             path='/signup'
             exact
             component={() => (
-              <NavLink to='/login' styleName='below-container'>
-                Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
-              </NavLink>
+              <div styleName='below-container'>
+                <Link to='/login'>
+                  Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
+                </Link>
+              </div>
             )}
           />
           <Route
@@ -109,13 +111,13 @@ export default function NonAuthLayoutRouter (props) {
             component={() => (
               <div styleName='below-container'>
                 <div styleName='resetPasswordBottom'>
-                  <NavLink tabIndex={-1} to='/signup'>
+                  <Link tabIndex={-1} to='/signup'>
                     <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-                  </NavLink>
+                  </Link>
                   or
-                  <NavLink to='/login'>
+                  <Link to='/login'>
                     <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
-                  </NavLink>
+                  </Link>
                 </div>
               </div>
             )}
@@ -124,9 +126,11 @@ export default function NonAuthLayoutRouter (props) {
             path='/login'
             exact
             component={() => (
-              <NavLink tabIndex={-1} to='/signup' styleName='below-container'>
-                Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
-              </NavLink>
+              <div styleName='below-container'>
+                <Link tabIndex={-1} to='/signup'>
+                  Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+                </Link>
+              </div>
             )}
           />
         </Switch>

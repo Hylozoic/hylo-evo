@@ -80,6 +80,11 @@
   cursor: pointer;
 }
 
+.closeIcon {
+  font-size: 14px;
+  margin: 8px;
+}
+
 .connect-label {
   composes: caption-lt-lg from 'css/typography.scss';
   margin-top: $space-4x;
