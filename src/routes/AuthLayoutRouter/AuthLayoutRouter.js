@@ -184,10 +184,14 @@ export default function AuthLayoutRouter (props) {
 
       <Route
         path={[
-          '/:context(groups)/:groupSlug/(.*)/create',
+          '/:context(groups)/:groupSlug/:view(topics)/:topicName/create',
+          '/:context(groups)/:groupSlug/:view(map|events|projects)/create',
           '/:context(groups)/:groupSlug/create',
-          '/:context(public|all)/(.*)/create',
+          '/:context(groups)/:groupSlug/(.*)/create',
+          '/:context(public|all)/:view(topics)/:topicName/create',
+          '/:context(public|all)/:view(map|events|projects)/create',
           '/:context(public|all)/create',
+          '/:context(public|all)/(.*)/create',
           `(.*)/${REQUIRED_EDIT_POST_MATCH}`
         ]}
         component={CreateModal}

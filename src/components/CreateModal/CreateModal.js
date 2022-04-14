@@ -16,14 +16,16 @@ export default function CreateModal (props) {
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
 
-  const querystringParams = Object.fromEntries(new URLSearchParams(location.search))
-  const mapLocation = (querystringParams.lat && querystringParams.lng) &&
-    `${querystringParams.lat}, ${querystringParams.lng}`
+  const querystringParams = new URLSearchParams(location.search)
+  const mapLocation = (querystringParams.has('lat') && querystringParams.has('lng'))
+    ? `${querystringParams.get('lat')}, ${querystringParams.get('lng')}`
+    : null
 
   const closeModal = () => {
-    const closePathFromParam = querystringParams.closePath
+    // `closePath` is currently only passed in the case of arriving here
+    // from the `WelcomeModal` when we want to go back on close or cancel.
+    const closePathFromParam = querystringParams.get('closePath')
     history.push(closePathFromParam || returnToLocation)
-    return null
   }
 
   const confirmClose = () => {

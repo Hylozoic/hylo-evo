@@ -552,7 +552,6 @@ export default class PostEditor extends React.Component {
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
     const location = post.location || this.props.selectedLocation
-    console.log('!!! this.props.selectedLocation', this.props.selectedLocation)
     // Center location autocomplete either on post's current location,
     // or current group's location, or current user's location
     const locationObject =
