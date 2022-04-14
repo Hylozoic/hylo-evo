@@ -7,6 +7,7 @@ import './GroupSettingsTab.scss'
 import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
 import GroupsSelector from 'components/GroupsSelector'
+import EditableMap from 'components/Map/EditableMap'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
@@ -150,6 +151,9 @@ export default class GroupSettingsTab extends Component {
         value={geoShape}
         type='hidden'
       />
+      <div style={{ width: '100%', height: '250px' }}>
+        <EditableMap />
+      </div>
       <div styleName='privacy-settings'>
         <SettingsSection>
           <h3>Visibility</h3>
