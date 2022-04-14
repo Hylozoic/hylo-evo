@@ -519,7 +519,7 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-        {currentUser && (
+        {currentUser && !mobileSettingsLayout && (
           <button
             data-for='addItemToMapTooltip'
             data-tip='Add item to map'
