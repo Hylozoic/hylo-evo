@@ -155,6 +155,7 @@
 }
 
 button.toggleFeatureFiltersButton {
+  cursor: pointer;
   position: absolute;
   bottom: 10px;
   left: 20px;
@@ -171,6 +172,107 @@ button.toggleFeatureFiltersButton {
   &.open {
     color: rgba(255,255,255,1);
     background-color: $color-caribbean-green;
+  }
+}
+
+.featureTypeFilters {
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+  background: white;
+  display: none;
+  padding-bottom: 10px;
+  box-shadow: $box-shadow-default;
+
+  &.open {
+    display: block;
+  }
+
+  h3 {
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
+  }
+}
+
+.featureTypeSwitch {
+  margin: 10px;
+  > span {
+    margin-left: 10px;
+  }
+}
+
+.toggleLayersSelectorButton {
+  cursor: pointer;
+  position: absolute;
+  bottom: 50px;
+  right: calc(40% + 20px);
+  color: rgba(125, 140, 157, 1.000);
+  background-color: rgba(255,255,255,1);
+  border: none;
+  outline: none !important;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: $box-shadow-default;
+  padding: 10px;
+
+  &.open {
+    color: rgba(255,255,255,1);
+    background-color: $color-caribbean-green;
+  }
+}
+
+.layersSelectorContainer {
+  position: absolute;
+  bottom: 50px;
+  right: calc(40% + 70px);
+  background: white;
+  display: none;
+  padding-bottom: 10px;
+  box-shadow: $box-shadow-default;
+
+  &.open {
+    display: block;
+  }
+
+  h3 {
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
+  }
+
+  .layersDropdown {
+    bottom: 0;
+    color: $color-regent;
+    padding: 0 12px;
+    font-size: 12px;
+    border-radius: 30px;
+    margin-left: 1em;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: $box-shadow-default;
+  }
+
+  .layersDropdownLabel {
+    line-height: 2em;
+    position: relative;
+    top: -0.15em;
+
+    span { // icon positioning
+      top: 6px;
+      margin-right: 0.25em;
+      left: -2px;
+    }
+  }
+
+  .layersHeader {
+    background-color: #0DC39F;
+    color: white;
+  }
+
+  .layersList {
+    padding: 2px;
   }
 }
 
@@ -218,50 +320,25 @@ button.toggleFeatureFiltersButton {
   border-radius: 50px;
   transition: all .25s ease;
   cursor: pointer;
-  &.open, &:hover {
+
+  &.open {
     background-color: $color-caribbean-green;
     color: white;
     cursor: pointer;  
   }
+
   // Necessary to keep simulated hover event on touch devices
   // from sticking (Saved Search button was remaining
   // highlighted after closed)
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: inherit;
-      color: inherit;
-      cursor: inherit;
+      background-color: $color-caribbean-green;
+      color: white;
+      cursor: pointer;
     }
   }
 }
 
-.featureTypeFilters {
-  position: absolute;
-  bottom: 50px;
-  left: 20px;
-  background: white;
-  display: none;
-  padding-bottom: 10px;
-  box-shadow: $box-shadow-default;
-
-  &.open {
-    display: block;
-  }
-
-  h3 {
-    font-size: 14px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
-  }
-}
-
-.featureTypeSwitch {
-  margin: 10px;
-  > span {
-    margin-left: 10px;
-  }
-}
 
 @media screen and (max-width: 600px) {
   .toggleDrawerButton.drawerOpen {

@@ -666,6 +666,15 @@ const data = {
     "spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
     "sourceSize": {"w":100,"h":100}
   },
+    /* TODO: this one is not in the atlas, using members-requests-projects for now */
+  "members-requests-resources-projects.png":
+  {
+    "frame": {"x":501,"y":401,"w":98,"h":98},
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": {"x":1,"y":1,"w":98,"h":98},
+    "sourceSize": {"w":100,"h":100}
+  },
 	"members-resources.png":
 	{
 		"frame": {"x":901,"y":401,"w":98,"h":98},

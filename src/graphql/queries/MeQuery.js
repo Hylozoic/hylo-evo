@@ -56,6 +56,7 @@ export default gql`
       digestFrequency
       dmNotifications
       commentNotifications
+      mapBaseLayer
       signupInProgress
       streamViewMode
       streamSortBy
