@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
@@ -428,7 +429,6 @@ export default class PostEditor extends React.Component {
       eventInvitations,
       startTime,
       endTime,
-      location,
       locationId,
       isPublic
     } = this.state.post
@@ -443,6 +443,7 @@ export default class PostEditor extends React.Component {
       imageAttachments && imageAttachments.map((attachment) => attachment.url)
     const fileUrls =
       fileAttachments && fileAttachments.map((attachment) => attachment.url)
+    const location = this.state.post.location || this.props.selectedLocation
     const actualLocationId = await ensureLocationIdIfCoordinate({
       fetchLocation,
       location,
@@ -520,9 +521,7 @@ export default class PostEditor extends React.Component {
       acceptContributions,
       eventInvitations,
       startTime,
-      endTime,
-      location,
-      locationObject
+      endTime
     } = post
     const {
       currentGroup,
@@ -544,6 +543,7 @@ export default class PostEditor extends React.Component {
 
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
+      'discussion',
       'event',
       'offer',
       'request',
@@ -551,10 +551,13 @@ export default class PostEditor extends React.Component {
       'project'
     ].includes(type)
     const canHaveTimes = type !== 'discussion'
+    const location =
+      post.location ||
+      this.props.selectedLocation
     // Center location autocomplete either on post's current location,
     // or current group's location, or current user's location
-    const curLocation =
-      locationObject ||
+    const locationObject =
+      post.locationObject ||
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
 
@@ -563,13 +566,13 @@ export default class PostEditor extends React.Component {
         <div styleName='header'>
           <div styleName='initial'>
             <div>
-              <Button {...this.postTypeButtonProps(type)} />
+              <Button noDefaultStyles {...this.postTypeButtonProps(type)} />
               {showPostTypeMenu && (
                 <div styleName='postTypeMenu'>
                   {postTypes
                     .filter((postType) => postType !== type)
                     .map((postType) => (
-                      <Button {...this.postTypeButtonProps(postType)} />
+                      <Button noDefaultStyles {...this.postTypeButtonProps(postType)} />
                     ))}
                 </div>
               )}
@@ -703,7 +706,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-label alignedLabel'>Location</div>
               <LocationInput
                 saveLocationToDB
-                locationObject={curLocation}
+                locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
                 placeholder={`Where is your ${type} located?`}

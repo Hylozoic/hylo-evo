@@ -13,14 +13,15 @@ export default function PostTitle ({
 }) {
   // Formatting location to display in stream view
   let generalLocation = location || ''
-
   if (locationObject) {
-    if (locationObject.addressNumber !== null && locationObject.addressNumber !== '') {
+    if (locationObject.addressNumber) {
       generalLocation = `${locationObject.addressNumber} ${locationObject.addressStreet}, ${locationObject.city}, ${locationObject.region}`
-    } else if (locationObject.city !== null && locationObject.city !== '') {
+    } else if (locationObject.city) {
       generalLocation = `${locationObject.city}, ${locationObject.region}`
-    } else {
+    } else if (locationObject.fullText) {
       generalLocation = locationObject.fullText
+    } else if (locationObject.center) {
+      generalLocation = `${locationObject.center.lat}, ${locationObject.center.lng}`
     }
   }
 

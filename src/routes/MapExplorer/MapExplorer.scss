@@ -38,26 +38,13 @@
 }
 
 .toggleDrawerButton {
-  position: absolute;
-  right: 20px;
   top: 10px;
-  border-radius: 20px;
-  width: 40px;
-  height: 40px;
-  background: white;
-  transition: all .25s ease;
-  box-shadow: $box-shadow-default;
-  border: none;
-  text-align: center;
   display: block;
   z-index: 10;
 
   &.drawerOpen {
-    right: calc(40% + 20px);
-
     .closeDrawer {
       display: block;
-      position: relative;
       top: 2px;
       width: 25px;
       height: 25px;
@@ -72,13 +59,8 @@
     }
   }
 
-  &:hover {
-    cursor: pointer;
-  }
-
   .openDrawer {
     font-size: 16px;
-    position: relative;
     top: 2px;
     display: block;
     width: 20px;
@@ -91,6 +73,31 @@
 
   .closeDrawer {
     display: none;
+  }
+}
+
+.drawerAdjacentButton {
+  position: absolute;
+  border-radius: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: white;
+  transition: all .25s ease;
+  box-shadow: $box-shadow-default;
+  border: none;
+  text-align: center;
+
+  span {
+    transition: all .25s ease;
+  }
+
+  &.drawerOpen {
+    right: calc(40% + 20px);
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }
 
@@ -116,7 +123,7 @@
 .postTip {
   position: absolute;
   z-index: 1;
-  pointerEvents: none;
+  pointer-events: none;
   border-radius: 4px;
   background-color: white;
   padding: 0 15px;
@@ -204,18 +211,13 @@ button.toggleFeatureFiltersButton {
 }
 
 .toggleLayersSelectorButton {
-  cursor: pointer;
-  position: absolute;
-  bottom: 50px;
-  right: calc(40% + 20px);
+  bottom: 90px;
   color: rgba(125, 140, 157, 1.000);
   background-color: rgba(255,255,255,1);
-  border: none;
   outline: none !important;
   border-radius: 50px;
-  text-align: center;
   box-shadow: $box-shadow-default;
-  padding: 10px;
+  padding: 8px;
 
   &.open {
     color: rgba(255,255,255,1);
@@ -225,12 +227,16 @@ button.toggleFeatureFiltersButton {
 
 .layersSelectorContainer {
   position: absolute;
-  bottom: 50px;
-  right: calc(40% + 70px);
+  bottom: 90px;
+  right: 70px;
   background: white;
   display: none;
   padding-bottom: 10px;
   box-shadow: $box-shadow-default;
+
+  &.drawerOpen {
+    right: calc(40% + 70px);
+  }
 
   &.open {
     display: block;
@@ -273,6 +279,12 @@ button.toggleFeatureFiltersButton {
 
   .layersList {
     padding: 2px;
+  }
+
+  .pointer {
+    bottom: 14px;
+    left: auto;
+    right: -5px
   }
 }
 
@@ -339,6 +351,18 @@ button.toggleFeatureFiltersButton {
   }
 }
 
+.addItemToMapButton {
+  bottom: 40px;
+  padding: 8px;
+
+  &.active, &:hover {
+    background-color: $color-picton-blue;
+
+    span {
+      color: white;
+    }
+  }
+}
 
 @media screen and (max-width: 600px) {
   .toggleDrawerButton.drawerOpen {

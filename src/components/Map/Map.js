@@ -11,7 +11,10 @@ function Map (props) {
     baseLayerStyle = 'light-v10',
     children,
     hyloLayers,
+    isAddingItemToMap,
     mapRef,
+    onMouseDown,
+    onMouseUp,
     onViewportUpdate,
     otherLayers,
     viewport
@@ -55,9 +58,11 @@ function Map (props) {
       mapOptions={{ logoPosition: 'bottom-right' }}
       mapStyle={`mapbox://styles/mapbox/${baseLayerStyle}`}
       onHover={onHover}
+      onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseLeave={() => { setHoveredLayerFeatures([]) }}
       onMouseOut={() => { setHoveredLayerFeatures([]) }}
+      onMouseUp={onMouseUp}
       onResize={dimensions => {
         // XXX: hack needed because onViewportChange doesn't fire when map width changes
         //      https://github.com/visgl/react-map-gl/issues/1157
@@ -94,7 +99,7 @@ function Map (props) {
             setHoveredLayerFeatures([])
           }
         }}
-        getCursor={() => isOverHyloFeature ? 'pointer' : 'grab'}
+        getCursor={() => isOverHyloFeature ? 'pointer' : isAddingItemToMap ? 'url(/assets/create-post-pin.png) 12 31, pointer' : 'grab'}
       >
         {children}
       </DeckGL>

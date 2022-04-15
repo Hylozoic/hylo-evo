@@ -20,6 +20,7 @@ function MapDrawer (props) {
     fetchPostsForDrawer,
     filters,
     groups,
+    locationParams,
     members,
     numFetchedPosts,
     numTotalPosts,
@@ -145,6 +146,7 @@ function MapDrawer (props) {
 
         <div styleName='contentListContainer' id='contentList'>
           {posts.map(p => <PostCard
+            locationParams={locationParams}
             routeParams={routeParams}
             post={p}
             styleName='contentCard'

@@ -9,7 +9,6 @@ import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -18,10 +17,14 @@ import Map from 'components/Map/Map'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import SwitchStyled from 'components/SwitchStyled'
+import Tooltip from 'components/Tooltip'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import { locationObjectToViewport } from 'util/geo'
 import { isMobileDevice } from 'util/mobile'
+import { getQueryParamsObjectFromString } from 'util/navigation'
 import { generateViewParams } from 'util/savedSearch'
+
 import MapDrawer from './MapDrawer'
 import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import SavedSearches from './SavedSearches'
@@ -72,6 +75,9 @@ export class UnwrappedMapExplorer extends React.Component {
       groupIconLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
+      creatingPost: false,
+      coordinates: null,
+      isAddingItemToMap: false,
       pointerX: 0,
       pointerY: 0,
       // Need this in the state so we can filter them by currentBoundingBox
@@ -277,7 +283,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   mapViewPortUpdate = (update) => {
-    this.setState({ viewport: update })
+    this.setState({ viewport: update, creatingPost: false })
   }
 
   afterViewportUpdate = (update) => {
@@ -335,15 +341,17 @@ export class UnwrappedMapExplorer extends React.Component {
         const features = featureCollection(info.objects.map(o => point([o.coordinates[0], o.coordinates[1]])))
         const c = center(features)
 
-        this.setState({ viewport: {
-          ...this.state.viewport,
-          longitude: c.geometry.coordinates[0],
-          latitude: c.geometry.coordinates[1],
-          // Don't zoom out if already further in than expansionZoom
-          zoom: Math.max(this.state.viewport.zoom, info.expansionZoom),
-          transitionDuration: 500,
-          transitionInterpolator: new FlyToInterpolator()
-        } })
+        this.setState({
+          viewport: {
+            ...this.state.viewport,
+            longitude: c.geometry.coordinates[0],
+            latitude: c.geometry.coordinates[1],
+            // Don't zoom out if already further in than expansionZoom
+            zoom: Math.max(this.state.viewport.zoom, info.expansionZoom),
+            transitionDuration: 500,
+            transitionInterpolator: new FlyToInterpolator()
+          }
+        })
       }
     } else {
       this.setState({ selectedObject: info.object })
@@ -355,6 +363,22 @@ export class UnwrappedMapExplorer extends React.Component {
         this.props.showDetails(info.object.id)
       }
     }
+  }
+
+  onMapMouseDown = (e) => {
+    const oneSecondInMs = 1000
+    this.setState({ creatingPost: true })
+    setTimeout(() => {
+      if (this.state.creatingPost) {
+        this.setState({ coordinates: { lng: e.lngLat[0], lat: e.lngLat[1] } })
+        const currentParams = getQueryParamsObjectFromString(this.props.location.search)
+        this.props.showCreateModal({ ...currentParams, ...this.state.coordinates })
+      }
+    }, this.state.isAddingItemToMap ? 0 : oneSecondInMs)
+  }
+
+  onMapMouseUp = (e) => {
+    if (this.state.creatingPost) this.setState({ creatingPost: false, isAddingItemToMap: false })
   }
 
   toggleFeatureType = (type, checked) => {
@@ -406,6 +430,10 @@ export class UnwrappedMapExplorer extends React.Component {
     }
 
     this.setState({ otherLayers: newLayers })
+  }
+
+  handleAddItemToMap = () => {
+    this.setState({ isAddingItemToMap: true })
   }
 
   toggleDrawer = (e) => {
@@ -476,6 +504,7 @@ export class UnwrappedMapExplorer extends React.Component {
       clusterLayer,
       groupIconLayer,
       hideDrawer,
+      isAddingItemToMap,
       groupsForDrawer,
       membersForDrawer,
       otherLayers,
@@ -489,6 +518,8 @@ export class UnwrappedMapExplorer extends React.Component {
     const { mobileSettingsLayout } = this.context
     const withoutNav = mobileSettingsLayout
 
+    const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
+
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
         <div styleName='mapContainer'>
@@ -496,8 +527,11 @@ export class UnwrappedMapExplorer extends React.Component {
             afterViewportUpdate={this.afterViewportUpdate}
             baseLayerStyle={baseLayerStyle}
             hyloLayers={[groupIconLayer, clusterLayer]}
+            isAddingItemToMap={isAddingItemToMap}
             otherLayers={Object.keys(otherLayers)}
             mapRef={this.mapRef}
+            onMouseDown={this.onMapMouseDown}
+            onMouseUp={this.onMapMouseUp}
             onViewportUpdate={this.mapViewPortUpdate}
             viewport={viewport}
           >
@@ -505,13 +539,14 @@ export class UnwrappedMapExplorer extends React.Component {
           </Map>
           {pendingPostsMap && <Loading className={styles.loading} />}
         </div>
-        <button styleName={cx('toggleDrawerButton', { drawerOpen: !hideDrawer })} onClick={this.toggleDrawer}>
+        <button styleName={cx('toggleDrawerButton drawerAdjacentButton', { drawerOpen: !hideDrawer })} onClick={this.toggleDrawer}>
           <Icon name='Hamburger' className={styles.openDrawer} />
           <Icon name='Ex' className={styles.closeDrawer} />
         </button>
         {!hideDrawer && (
           <MapDrawer
             context={context}
+            locationParams={locationParams}
             currentUser={currentUser}
             fetchPostsForDrawer={fetchPostsForDrawer}
             filters={filters}
@@ -529,6 +564,9 @@ export class UnwrappedMapExplorer extends React.Component {
         <div styleName={cx('searchAutocomplete')}>
           <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
         </div>
+        <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
+        Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
+        </button>
         {currentUser && <>
           <Icon
             name='Heart'
@@ -546,14 +584,11 @@ export class UnwrappedMapExplorer extends React.Component {
             />
           )}
         </>}
-        <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
-          Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
-        </button>
+
         <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
           <h3>What do you want to see on the map?</h3>
           {featureTypes.map(featureType => {
             const color = FEATURE_TYPES[featureType].primaryColor
-
             return (
               <div
                 key={featureType}
@@ -572,12 +607,13 @@ export class UnwrappedMapExplorer extends React.Component {
           })}
           <div styleName={cx('pointer')} />
         </div>
+
         <Icon
           name='Stack'
           onClick={this.toggleLayersSelector}
-          styleName={cx('toggleLayersSelectorButton', { open: showLayersSelector, withoutNav })}
+          styleName={cx('toggleLayersSelectorButton drawerAdjacentButton', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}
         />
-        <div styleName={cx('layersSelectorContainer', { open: showLayersSelector, withoutNav })}>
+        <div styleName={cx('layersSelectorContainer', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}>
           <h3>Base Layer:
             <Dropdown
               className={styles.layersDropdown}
@@ -602,7 +638,22 @@ export class UnwrappedMapExplorer extends React.Component {
               onChange={(checked, name) => this.toggleMapLayer('native_territories')}
             /> Native Territories
           </div>
+
+          <div styleName={cx('pointer')} />
         </div>
+
+        <button
+          data-for='addItemToMapTooltip'
+          data-tip='Add item to map'
+          styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
+          onClick={this.handleAddItemToMap}
+        >
+          <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+        </button>
+        <Tooltip
+          delay={550}
+          id='addItemToMapTooltip'
+        />
       </div>
     )
   }

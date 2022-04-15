@@ -4,7 +4,7 @@ import { Layer, Source } from 'react-map-gl'
 
 import './Map.scss'
 
-export default function NativeTerritoriesLayer(props) {
+export default function NativeTerritoriesLayer (props) {
   const { cursorLocation, hoveredLayerFeatures, visibility } = props
 
   const renderTooltip = () => {
