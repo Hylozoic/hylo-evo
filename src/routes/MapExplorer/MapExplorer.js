@@ -90,8 +90,9 @@ export class UnwrappedMapExplorer extends React.Component {
 
     // Relinquishes route handling within the Map entirely to Mobile App
     // e.g. react router / history push
-    const { mobileSettingsLayout } = this.context
-    if (mobileSettingsLayout) {
+    const { hyloAppLayout } = this.context
+
+    if (hyloAppLayout) {
       this.props.history.block(tx => {
         const path = tx.pathname
         // when in embedded view of map allow web navigation within map
@@ -472,8 +473,8 @@ export class UnwrappedMapExplorer extends React.Component {
       totalPostsInView,
       viewport
     } = this.state
-    const { mobileSettingsLayout } = this.context
-    const withoutNav = mobileSettingsLayout
+    const { hyloAppLayout } = this.context
+    const withoutNav = hyloAppLayout
     const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 
     return (
@@ -519,7 +520,7 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-        {currentUser && !mobileSettingsLayout && (
+        {currentUser && !hyloAppLayout && (
           <button
             data-for='addItemToMapTooltip'
             data-tip='Add item to map'

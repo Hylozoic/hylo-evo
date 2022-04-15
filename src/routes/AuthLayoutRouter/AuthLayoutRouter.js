@@ -58,8 +58,8 @@ import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
   const { width } = useResizeDetector({ handleHeight: false })
-  const { mobileSettingsLayout } = useLayoutFlags()
-  const withoutNav = mobileSettingsLayout
+  const { hyloAppLayout } = useLayoutFlags()
+  const withoutNav = hyloAppLayout
 
   // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
   const location = props.location
@@ -146,8 +146,7 @@ export default function AuthLayoutRouter (props) {
     // Show group welcome modal before tour
     !get('settings.showJoinForm', currentGroupMembership) &&
     // Don't show tour on non-member group details page
-    !isSingleColumn &&
-    !withoutNav
+    !isSingleColumn
 
   if (!signupInProgress && returnToPath) {
     const returnToPathName = new URL(returnToPath, 'https://hylo.com')?.pathname
@@ -176,26 +175,15 @@ export default function AuthLayoutRouter (props) {
         <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
       )}
 
-      <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
+      {!hyloAppLayout && (
+        <>
+          <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
 
-      {showTourPrompt && (
-        <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={width} />} />
+          {showTourPrompt && (
+            <Route path='/:context(all|public|groups)' render={() => <SiteTour windowWidth={width} />} />
+          )}
+        </>
       )}
-
-      <Route
-        path={[
-          '/:context(groups)/:groupSlug/:view(topics)/:topicName/create',
-          '/:context(groups)/:groupSlug/:view(map|events|projects)/create',
-          '/:context(groups)/:groupSlug/create',
-          '/:context(groups)/:groupSlug/(.*)/create',
-          '/:context(public|all)/:view(topics)/:topicName/create',
-          '/:context(public|all)/:view(map|events|projects)/create',
-          '/:context(public|all)/create',
-          '/:context(public|all)/(.*)/create',
-          `(.*)/${REQUIRED_EDIT_POST_MATCH}`
-        ]}
-        component={CreateModal}
-      />
 
       {!withoutNav && (
         <>
@@ -229,6 +217,21 @@ export default function AuthLayoutRouter (props) {
           )}
         </>
       )}
+
+      <Route
+        path={[
+          '/:context(groups)/:groupSlug/:view(topics)/:topicName/create',
+          '/:context(groups)/:groupSlug/:view(map|events|projects)/create',
+          '/:context(groups)/:groupSlug/create',
+          '/:context(groups)/:groupSlug/(.*)/create',
+          '/:context(public|all)/:view(topics)/:topicName/create',
+          '/:context(public|all)/:view(map|events|projects)/create',
+          '/:context(public|all)/create',
+          '/:context(public|all)/(.*)/create',
+          `(.*)/${REQUIRED_EDIT_POST_MATCH}`
+        ]}
+        component={CreateModal}
+      />
 
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
         <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={handleCloseDrawer}>
