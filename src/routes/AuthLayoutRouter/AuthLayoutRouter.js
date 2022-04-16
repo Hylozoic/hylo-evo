@@ -58,8 +58,8 @@ import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
   const { width } = useResizeDetector({ handleHeight: false })
-  const { hyloAppLayout } = useLayoutFlags()
-  const withoutNav = hyloAppLayout
+  const { hyloAppLayout, hideNavLayout } = useLayoutFlags()
+  const withoutNav = hyloAppLayout || hideNavLayout
 
   // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
   const location = props.location

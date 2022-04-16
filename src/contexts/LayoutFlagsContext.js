@@ -12,7 +12,7 @@ import { remove, reduce } from 'lodash/fp'
 //
 // For a flag to set it must be in the VALID_FLAGS whitelist below
 
-const VALID_FLAGS = ['hyloApp']
+const VALID_FLAGS = ['hyloApp', 'hideNav']
 
 export const LayoutFlagsContext = React.createContext()
 

@@ -473,8 +473,8 @@ export class UnwrappedMapExplorer extends React.Component {
       totalPostsInView,
       viewport
     } = this.state
-    const { hyloAppLayout } = this.context
-    const withoutNav = hyloAppLayout
+    const { hyloAppLayout, hideNavLayout } = this.context
+    const withoutNav = hyloAppLayout || hideNavLayout
     const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 
     return (

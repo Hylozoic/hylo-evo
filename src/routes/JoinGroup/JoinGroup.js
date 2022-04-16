@@ -19,6 +19,9 @@ export default function JoinGroup (props) {
   const signupComplete = useSelector(getSignupComplete)
   const [redirectTo, setRedirectTo] = useState()
 
+  // This is used in iFrames where we want people to join a group and go directly to a specific page (for OpenTEAM coffee shop for example)
+  const redirectToView = getQuerystringParam('redirectToView', null, props)
+
   useEffect(() => {
     (async function () {
       try {
@@ -37,7 +40,7 @@ export default function JoinGroup (props) {
           const groupSlug = newMembership?.group?.slug
 
           if (groupSlug) {
-            setRedirectTo(groupUrl(groupSlug, 'explore'))
+            setRedirectTo(groupUrl(groupSlug, redirectToView || 'explore'))
           } else {
             throw new Error('Join group was unsuccessful')
           }
