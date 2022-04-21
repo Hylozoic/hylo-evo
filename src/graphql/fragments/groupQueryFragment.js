@@ -9,6 +9,7 @@ export default () => {
     avatarUrl
     bannerUrl
     description
+    geoShape
     location
     memberCount
     name

@@ -70,6 +70,13 @@ label {
   transition: color .25s ease;
 }
 
+.control-label {
+  display: block;
+  composes: tag from 'css/typography.scss';
+  color: $color-rhino-30;
+  margin-bottom: $space-1x;
+}
+
 .privacy-state {
   border: 1px solid $color-regent;
   border-radius: 10px;

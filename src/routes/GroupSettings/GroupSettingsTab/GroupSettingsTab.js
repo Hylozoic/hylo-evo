@@ -63,7 +63,7 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
-        geoShape: geoShape || '',
+        geoShape: geoShape || null,
         groupToGroupJoinQuestions: groupToGroupJoinQuestions ? groupToGroupJoinQuestions.concat({ text: '' }) : [{ text: '' }],
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
@@ -97,6 +97,14 @@ export default class GroupSettingsTab extends Component {
 
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
+
+  savePolygon = (polygon) => {
+    const { edits } = this.state
+    this.setState({
+      changed: true,
+      edits: { ...edits, geoShape: polygon?.geometry }
+    })
+  }
 
   save = async () => {
     this.setState({ changed: false })
@@ -145,14 +153,9 @@ export default class GroupSettingsTab extends Component {
         locationObject={locationObject}
         type='location'
       />
-      <SettingsControl
-        label='Group Shape'
-        onChange={this.updateSetting('geoShape')}
-        value={geoShape}
-        type='hidden'
-      />
-      <div style={{ width: '100%', height: '250px' }}>
-        <EditableMap />
+      <div style={{ width: '100%', height: '275px' }}>
+        <label styleName='control-label'>Group Shape</label>
+        <EditableMap locationObject={group?.locationObject || null} polygon={geoShape} savePolygon={this.savePolygon} />
       </div>
       <div styleName='privacy-settings'>
         <SettingsSection>
