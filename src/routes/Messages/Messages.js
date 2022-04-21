@@ -19,18 +19,19 @@ import './Messages.scss'
 
 export const NEW_THREAD_ID = 'new'
 
+// XXX: flag for internationalization/translation
 const promptLookup = {
-  research: '[Research projects] ',
-  events: '[Event collaboration] ',
-  volunteering: '[Volunteer opportunties] ',
-  mentorship: '[Mentorship & advice] ',
-  cooperative: '[Cooperatives] ',
-  buy: '[Buy from us] ',
-  markets: '[New markets] ',
-  ecosystem_service_markets: '[Ecosystem services] ',
-  loans: '[Low-cost loans] ',
-  support: '[Farm support] ',
-  equipment_sharing: '[Equipment sharing] '
+  research: 'research projects',
+  events: 'event collaboration',
+  volunteering: 'volunteer opportunties',
+  mentorship: 'mentorship & advice',
+  cooperative: 'cooperatives',
+  buy: 'purchasing from you',
+  markets: 'new markets',
+  ecosystem_service_markets: 'ecosystem services',
+  loans: 'low-cost loans',
+  support: 'farm support',
+  equipment_sharing: 'equipment sharing'
 }
 
 export default class Messages extends React.Component {
@@ -68,7 +69,7 @@ export default class Messages extends React.Component {
     }
 
     if (prompt) {
-      this.updateMessageText(promptLookup[prompt])
+      this.updateMessageText(`Hi there, I'd like to talk about ${promptLookup[prompt]}.`)
       this.props.changeQuerystringParam(this.props, 'prompt', null)
     }
   }
