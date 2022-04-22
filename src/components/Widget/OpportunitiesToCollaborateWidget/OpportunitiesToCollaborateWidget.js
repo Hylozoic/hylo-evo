@@ -12,7 +12,7 @@ export default function OpportunitiesToCollaborateWidget () {
   const opportunities = getFarmOpportunities(group)
   const moderatorIds = group.moderators && group.moderators.map((mod) => mod.id)
   const hasMods = moderatorIds.length !== 0
-  
+
   return (
     <div styleName='opportunities-to-collaborate-container'>
       {opportunities && opportunities.length > 0 && opportunities.map((opportunity) => {

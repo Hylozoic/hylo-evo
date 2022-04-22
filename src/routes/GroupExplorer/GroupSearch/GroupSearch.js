@@ -22,9 +22,9 @@ export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
   const nearCoord = currentUser.locationObject
     ? {
-        lng: parseFloat(currentUser.locationObject.center.lng),
-        lat: parseFloat(currentUser.locationObject.center.lat)
-      }
+      lng: parseFloat(currentUser.locationObject.center.lng),
+      lat: parseFloat(currentUser.locationObject.center.lat)
+    }
     : null
   const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
   const [sortBy, setSortBy] = useState(SORT_NAME)
@@ -75,7 +75,7 @@ export default function GroupSearch ({ viewFilter }) {
             <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
             <b styleName={cx({ 'filter-open': filterToggle })}>Filters</b>
             {filterToggle && <Icon name='Ex' styleName='remove-button' />}
-            </div>
+          </div>
           : <div id='div-left-intentionally-blank' />}
         {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ')}
       </div>
@@ -148,7 +148,7 @@ const makeDropdown = (selected, options, onChange, filterLabel = '', isFilter = 
             : <span>{filterLabel}<b>{selectedLabel}</b></span>}
           {isFilter && <Icon name='ArrowDown' />}
         </span>
-        }
+      }
       items={options.map(({ id, label }) => ({
         label,
         onClick: () => onChange(id)

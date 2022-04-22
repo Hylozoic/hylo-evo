@@ -165,18 +165,16 @@ export default class GroupDetail extends Component {
         {isAboutCurrentGroup &&
           !group.description &&
           canModerate
-          ?
-            <div styleName='g.no-description'>
-              <div>
-                <h4>Your group doesn't have a description</h4>
-                <p>Add a description, location, suggested topics and more in your group settings</p>
-                <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
-              </div>
+          ? <div styleName='g.no-description'>
+            <div>
+              <h4>Your group doesn't have a description</h4>
+              <p>Add a description, location, suggested topics and more in your group settings</p>
+              <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
             </div>
-          :
-            <div styleName='g.groupDescription'>
-              {group.description}
-            </div>}
+          </div>
+          : <div styleName='g.groupDescription'>
+            {group.description}
+          </div>}
 
         {!isAboutCurrentGroup && topics && topics.length
           ? <div styleName='g.groupTopics'>
