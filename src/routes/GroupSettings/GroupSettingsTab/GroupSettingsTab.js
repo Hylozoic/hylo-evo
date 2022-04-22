@@ -102,7 +102,7 @@ export default class GroupSettingsTab extends Component {
     const { edits } = this.state
     this.setState({
       changed: true,
-      edits: { ...edits, geoShape: polygon?.geometry }
+      edits: { ...edits, geoShape: JSON.stringify(polygon?.geometry) }
     })
   }
 
@@ -155,6 +155,13 @@ export default class GroupSettingsTab extends Component {
       />
       <div style={{ width: '100%', height: '275px' }}>
         <label styleName='control-label'>Group Shape</label>
+        <input
+          onChange={this.updateSetting('geoShape')}
+          styleName='group-shape'
+          type='text'
+          value={typeof geoShape === 'string' ? geoShape : JSON.stringify(geoShape)}
+        />
+
         <EditableMap locationObject={group?.locationObject || null} polygon={geoShape} savePolygon={this.savePolygon} />
       </div>
       <div styleName='privacy-settings'>
