@@ -19,6 +19,21 @@ import './Messages.scss'
 
 export const NEW_THREAD_ID = 'new'
 
+// XXX: flag for internationalization/translation
+const promptLookup = {
+  research: 'research projects',
+  events: 'event collaboration',
+  volunteering: 'volunteer opportunties',
+  mentorship: 'mentorship & advice',
+  cooperative: 'cooperatives',
+  buy: 'purchasing from you',
+  markets: 'new markets',
+  ecosystem_service_markets: 'ecosystem services',
+  loans: 'low-cost loans',
+  support: 'farm support',
+  equipment_sharing: 'equipment sharing'
+}
+
 export default class Messages extends React.Component {
   static defaultProps = {
     participants: [],
@@ -46,11 +61,16 @@ export default class Messages extends React.Component {
     this.setState(() => ({ loading: false }))
     this.onThreadIdChange()
 
-    const { participants } = this.props
+    const { participants, prompt } = this.props
 
     if (participants) {
       participants.forEach(p => this.addParticipant(p))
       this.props.changeQuerystringParam(this.props, 'participants', null)
+    }
+
+    if (prompt) {
+      this.updateMessageText(`Hi there, I'd like to talk about ${promptLookup[prompt]}.`)
+      this.props.changeQuerystringParam(this.props, 'prompt', null)
     }
   }
 

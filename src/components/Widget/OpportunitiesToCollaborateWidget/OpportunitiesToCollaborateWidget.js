@@ -12,13 +12,15 @@ export default function OpportunitiesToCollaborateWidget () {
   const opportunities = getFarmOpportunities(group)
   const moderatorIds = group.moderators && group.moderators.map((mod) => mod.id)
   const hasMods = moderatorIds.length !== 0
-  const query = new URLSearchParams('')
-  if (hasMods) {
-    query.append('participants', moderatorIds.join(','))
-  }
+  
   return (
     <div styleName='opportunities-to-collaborate-container'>
       {opportunities && opportunities.length > 0 && opportunities.map((opportunity) => {
+        const query = new URLSearchParams('')
+        if (hasMods) {
+          query.append('participants', moderatorIds.join(','))
+          query.append('prompt', opportunity)
+        }
         return (
           <div styleName='collab-item' key={opportunity}>
             <Icon styleName='collab-icon' blue name={opportunity.charAt(0).toUpperCase() + opportunity.slice(1)} />
@@ -26,7 +28,7 @@ export default function OpportunitiesToCollaborateWidget () {
               <div styleName='collab-title'>{collabTitle[opportunity]}</div>
               <div styleName='collab-text'>{collabText(group)[opportunity]}</div>
             </div>
-            <Icon name='Messages' blue={hasMods} styleName={`collab-icon${hasMods ? ' cursor-pointer' : ''}`} onClick={hasMods ? () => push(`/messages/new${hasMods ? '?' + query.toString() : ''}`) : null} />
+            {hasMods && <Icon name='Messages' blue={hasMods} styleName={`collab-icon${hasMods ? ' cursor-pointer' : ''}`} onClick={hasMods ? () => push(`/messages/new${hasMods ? '?' + query.toString() : ''}`) : null} />}
           </div>
         )
       })}

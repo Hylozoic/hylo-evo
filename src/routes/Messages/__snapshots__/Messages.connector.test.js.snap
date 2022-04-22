@@ -79,6 +79,7 @@ Object {
   "messagesPending": true,
   "onCloseURL": "/",
   "participants": null,
+  "prompt": undefined,
   "sendIsTyping": [Function],
   "socket": SailsSocket {
     "_isConnecting": false,
