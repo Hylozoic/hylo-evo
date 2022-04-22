@@ -66,6 +66,12 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     >
       Group Shape
     </label>
+    <input
+      data-stylename="group-shape"
+      onChange={[Function]}
+      type="text"
+      value="null"
+    />
     <EditableMap
       locationObject="Fuji"
       polygon={null}
