@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Major refactor of authorized vs non-authorized routing, see `RootRouter`, `AuthLayoutRouter`, and `NonAuthLayoutRouter`
+- React Testing Library (RTL) setup simplified and notated
+
 ### Added
+- Changes to authorization and authentication flow to accomodate related API changes
+- Adds new RTL-based tests for new and existing components
 - You can now click on the map to create posts at that location. Either click and hold for a couple seconds, or click the (+) button and then click on the map to add a post at that lat,lng on the map.
 
 ## [3.5.2] - 2022-03-28
