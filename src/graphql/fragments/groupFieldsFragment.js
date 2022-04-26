@@ -6,6 +6,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   description
   location
   memberCount
+  moderatorDescriptor
+  moderatorDescriptorPlural
   name
   settings {
     allowGroupInvites
@@ -17,6 +19,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   }
   slug
   type
+  typeDescriptor
+  typeDescriptorPlural
   visibility
   childGroups {
     items {

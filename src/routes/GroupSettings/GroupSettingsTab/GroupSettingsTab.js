@@ -53,23 +53,27 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, location, locationObject, name, joinQuestions, prerequisiteGroups, settings, visibility
+      groupToGroupJoinQuestions,
+      locationObject,
+      joinQuestions
     } = group
 
     return {
       edits: {
-        accessibility: typeof accessibility !== 'undefined' ? accessibility : GROUP_ACCESSIBILITY.Restricted,
-        avatarUrl: avatarUrl || DEFAULT_AVATAR,
-        bannerUrl: bannerUrl || DEFAULT_BANNER,
-        description: description || '',
+        accessibility: group.accessibility || GROUP_ACCESSIBILITY.Restricted,
+        avatarUrl: group.avatarUrl || DEFAULT_AVATAR,
+        bannerUrl: group.bannerUrl || DEFAULT_BANNER,
+        description: group.description || '',
         groupToGroupJoinQuestions: groupToGroupJoinQuestions ? groupToGroupJoinQuestions.concat({ text: '' }) : [{ text: '' }],
-        location: location || '',
+        location: group.location || '',
         locationId: locationObject ? locationObject.id : '',
-        name: name || '',
+        moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
+        moderatorDescriptorPlural: group.moderatorDescriptorPlural || 'Moderators',
+        name: group.name || '',
         joinQuestions: joinQuestions ? joinQuestions.concat({ text: '' }) : [{ text: '' }],
-        prerequisiteGroups: prerequisiteGroups || [],
-        settings: typeof settings !== 'undefined' ? settings : { },
-        visibility: typeof visibility !== 'undefined' ? visibility : GROUP_VISIBILITY.Protected
+        prerequisiteGroups: group.prerequisiteGroups || [],
+        settings: group.settings || { },
+        visibility: group.visibility || GROUP_VISIBILITY.Protected
       },
       changed: false
     }
@@ -113,7 +117,19 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, joinQuestions, location, name, prerequisiteGroups, settings, visibility
+      accessibility,
+      avatarUrl,
+      bannerUrl,
+      description,
+      groupToGroupJoinQuestions,
+      joinQuestions,
+      location,
+      moderatorDescriptor,
+      moderatorDescriptorPlural,
+      name,
+      prerequisiteGroups,
+      settings,
+      visibility
     } = edits
     const { askGroupToGroupJoinQuestions, showSuggestedSkills } = settings
 
@@ -143,6 +159,19 @@ export default class GroupSettingsTab extends Component {
         locationObject={locationObject}
         type='location'
       />
+
+       <SettingsControl
+        label='Word for Group Moderator'
+        onChange={this.updateSetting('moderatorDescriptor')}
+        value={moderatorDescriptor}
+      />
+
+      <SettingsControl
+        label='Plural Word for Group Moderators'
+        onChange={this.updateSetting('moderatorDescriptorPlural')}
+        value={moderatorDescriptorPlural}
+      />
+
       <div styleName='privacy-settings'>
         <SettingsSection>
           <h3>Visibility</h3>

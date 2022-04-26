@@ -123,7 +123,7 @@ export default class GroupDetail extends Component {
         {group.type === TYPE_FARM && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
         { isAboutCurrentGroup || group.type === TYPE_FARM
           ? <div styleName='g.aboutCurrentGroup'>
-            <h3>Moderators</h3>
+            <h3>{group.moderatorDescriptorPlural || 'Moderators'}</h3>
             <div styleName='g.moderators'>
               {moderators.map(p => <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
                 <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />

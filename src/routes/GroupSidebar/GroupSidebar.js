@@ -27,7 +27,7 @@ export default class GroupSidebar extends Component {
 
     if (!group || isEmpty(members)) return <Loading />
 
-    const { name, description, slug, memberCount } = group
+    const { description, memberCount, moderatorDescriptorPlural, name, slug } = group
 
     return <div styleName='group-sidebar'>
       <AboutSection name={name} description={description} />
@@ -37,7 +37,7 @@ export default class GroupSidebar extends Component {
         memberCount={memberCount}
         slug={slug}
         canModerate={canModerate} />
-      <GroupLeaderSection leaders={leaders} slug={slug} />
+      <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} />
     </div>
   }
 }
@@ -111,9 +111,9 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
   </div>
 }
 
-export function GroupLeaderSection ({ leaders, slug }) {
+export function GroupLeaderSection ({ descriptor, leaders, slug }) {
   return <div styleName='leader-section'>
-    <div styleName='header leader-header'>Group Moderators</div>
+    <div styleName='header leader-header'>Group {descriptor}</div>
     {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} />)}
   </div>
 }

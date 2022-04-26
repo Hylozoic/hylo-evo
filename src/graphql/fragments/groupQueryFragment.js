@@ -12,6 +12,8 @@ export default () => {
     type
     location
     memberCount
+    moderatorDescriptor
+    moderatorDescriptorPlural
     name
     settings {
       allowGroupInvites
@@ -22,6 +24,8 @@ export default () => {
       hideExtensionData
     }
     slug
+    typeDescriptor
+    typeDescriptorPlural
     visibility
     activeProjects: posts(filter: "project", sortBy: "updated", order: "desc", first: 4) {
       items {
