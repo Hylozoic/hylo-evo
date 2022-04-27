@@ -1,20 +1,33 @@
-.drawing-icon {
-  font-size: 20px;
-}
-.trash-icon {
-  font-size: 24px;
-}
-.circle-arrow-icon {
-  font-size: 18px;
+div.map-control { 
+  &:not(:empty) {
+    box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.15);;
+  }
+  button {
+    border-radius: 5px;
+    height: 40px;
+    width: 40px;
+    &.active {
+      background-color: #0074D8;
+      span {
+        color: white;
+      }
+      &:hover {
+        background-color: #0074D8;
+      }
+    }
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
-.mapbox-gl-draw_polygon {
-  padding-top: 4px !important;
-}
-.mapbox-gl-draw_trash {
-  padding-top: 2px !important;
-}
+.mapbox-gl-draw_polygon,
+.mapbox-gl-draw_circle-ex,
 .mapbox-gl-draw_reset {
-  padding-top: 5px !important;
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
 }
 

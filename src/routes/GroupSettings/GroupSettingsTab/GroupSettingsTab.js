@@ -153,14 +153,13 @@ export default class GroupSettingsTab extends Component {
         locationObject={locationObject}
         type='location'
       />
-      <label styleName='control-label'>Group Shape</label>
-      <input
+      <SettingsControl
+        label='Group Shape'
         onChange={this.updateSetting('geoShape')}
-        styleName='group-shape'
         type='text'
         value={typeof geoShape === 'string' ? geoShape : JSON.stringify(geoShape)}
       />
-      <div style={{ width: '100%', height: '275px' }}>
+      <div styleName='editable-map-container'>
         <EditableMap locationObject={group?.locationObject || null} polygon={geoShape} savePolygon={this.savePolygon} />
       </div>
       <div styleName='privacy-settings'>

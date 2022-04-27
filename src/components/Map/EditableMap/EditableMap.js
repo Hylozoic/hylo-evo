@@ -64,26 +64,26 @@ export default function EditableMap (props) {
 
   const drawTools = (
     <div className='mapboxgl-ctrl-top-left'>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl'>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
         <button
-          styleName='mapbox-gl-draw_polygon'
+          styleName={`mapbox-gl-draw_polygon${isModeDrawing ? ' active' : ''}`}
           title='New Polygon'
           onClick={() => toggleMode()}
-        ><Icon styleName={'drawing-icon'} name='Drawing' /></button>
+        ><Icon name='Drawing' /></button>
       </div>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl'>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
         <button
-          styleName='mapbox-gl-draw_trash'
+          styleName='mapbox-gl-draw_circle-ex'
           title='Delete Polygon'
           onClick={onDelete}
-        ><Icon styleName={'trash-icon'} name='Trash' /></button>
+        ><Icon name='CircleEx' /></button>
       </div>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl'>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
         <button
           styleName='mapbox-gl-draw_reset'
           title='Reset Drawing'
           onClick={() => setMode(new EditingMode())}
-        ><Icon styleName={'circle-arrow-icon'} name='CircleArrow' /></button>
+        ><Icon name='CircleArrow' /></button>
       </div>
     </div>
   )
