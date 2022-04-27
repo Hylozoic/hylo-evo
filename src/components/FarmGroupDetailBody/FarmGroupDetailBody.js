@@ -15,6 +15,7 @@ export default function FarmGroupDetailBody ({
   const mission = getMission(group)
   const bio = getBio(group)
 
+  // TODO: hide widgets if they have no data, means loading all the data here?
   const widgets = [
     { settings: {}, isVisible: true, name: 'farm_at_a_glance' },
     { settings: { title: mission, text: group.description || bio }, isVisible: true, name: 'mission' },
