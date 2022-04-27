@@ -7,7 +7,7 @@ import './GroupSettingsTab.scss'
 import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
 import GroupsSelector from 'components/GroupsSelector'
-import EditableMap from 'components/Map/EditableMap'
+import EditableMap from 'components/Map/EditableMap/EditableMap'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
@@ -153,15 +153,14 @@ export default class GroupSettingsTab extends Component {
         locationObject={locationObject}
         type='location'
       />
+      <label styleName='control-label'>Group Shape</label>
+      <input
+        onChange={this.updateSetting('geoShape')}
+        styleName='group-shape'
+        type='text'
+        value={typeof geoShape === 'string' ? geoShape : JSON.stringify(geoShape)}
+      />
       <div style={{ width: '100%', height: '275px' }}>
-        <label styleName='control-label'>Group Shape</label>
-        <input
-          onChange={this.updateSetting('geoShape')}
-          styleName='group-shape'
-          type='text'
-          value={typeof geoShape === 'string' ? geoShape : JSON.stringify(geoShape)}
-        />
-
         <EditableMap locationObject={group?.locationObject || null} polygon={geoShape} savePolygon={this.savePolygon} />
       </div>
       <div styleName='privacy-settings'>

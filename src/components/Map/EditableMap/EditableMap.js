@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import MapGL from 'react-map-gl'
 import { Editor, DrawPolygonMode, EditingMode } from 'react-map-gl-draw'
+import Icon from '../../Icon'
 import { mapbox } from 'config'
 
-import { getFeatureStyle, getEditHandleStyle } from './EditableMapStyles'
+import { getEditHandleStyle, getFeatureStyle } from './EditableMapStyles'
+import './EditableMap.scss'
 
 export default function EditableMap (props) {
   const { locationObject, polygon, savePolygon } = props
@@ -12,6 +14,7 @@ export default function EditableMap (props) {
   const [viewport, setViewport] = useState(null)
   const [mode, setMode] = useState(null)
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null)
+  const [isModeDrawing, setIsModeDrawing] = useState(false)
   const editorRef = useRef(null)
   const existingPolygon = polygon ? [{
     geometry: polygon,
@@ -54,19 +57,33 @@ export default function EditableMap (props) {
     }
   }, [])
 
+  const toggleMode = () => {
+    setMode(isModeDrawing ? new EditingMode() : new DrawPolygonMode())
+    setIsModeDrawing(!isModeDrawing)
+  }
+
   const drawTools = (
     <div className='mapboxgl-ctrl-top-left'>
       <div className='mapboxgl-ctrl-group mapboxgl-ctrl'>
         <button
-          className='mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_polygon'
-          title='Polygon tool (p)'
-          onClick={() => setMode(new DrawPolygonMode())}
-        />
+          styleName='mapbox-gl-draw_polygon'
+          title='New Polygon'
+          onClick={() => toggleMode()}
+        ><Icon styleName={'drawing-icon'} name='Drawing' /></button>
+      </div>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl'>
         <button
-          className='mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_trash'
-          title='Delete'
+          styleName='mapbox-gl-draw_trash'
+          title='Delete Polygon'
           onClick={onDelete}
-        />
+        ><Icon styleName={'trash-icon'} name='Trash' /></button>
+      </div>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl'>
+        <button
+          styleName='mapbox-gl-draw_reset'
+          title='Reset Drawing'
+          onClick={() => setMode(new EditingMode())}
+        ><Icon styleName={'circle-arrow-icon'} name='CircleArrow' /></button>
       </div>
     </div>
   )
