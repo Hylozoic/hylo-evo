@@ -53,25 +53,15 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     onChange={[Function]}
     type="location"
   />
+  <SettingsControl
+    label="Group Shape"
+    onChange={[Function]}
+    type="text"
+    value="null"
+  />
   <div
-    style={
-      Object {
-        "height": "275px",
-        "width": "100%",
-      }
-    }
+    data-stylename="editable-map-container"
   >
-    <label
-      data-stylename="control-label"
-    >
-      Group Shape
-    </label>
-    <input
-      data-stylename="group-shape"
-      onChange={[Function]}
-      type="text"
-      value="null"
-    />
     <EditableMap
       locationObject="Fuji"
       polygon={null}
