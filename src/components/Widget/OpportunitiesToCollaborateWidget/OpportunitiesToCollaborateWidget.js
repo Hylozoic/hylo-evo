@@ -12,8 +12,6 @@ export default function OpportunitiesToCollaborateWidget () {
   const { group } = useEnsureCurrentGroup()
   const { push } = useRouter()
   const opportunities = getFarmOpportunities(group)
-  const moderatorIds = group.moderators && group.moderators.map((mod) => mod.id)
-  const hasMods = moderatorIds.length !== 0
   const dispatch = useDispatch()
 
   return (
@@ -31,7 +29,7 @@ export default function OpportunitiesToCollaborateWidget () {
               name='Messages'
               blue
               styleName={`collab-icon cursor-pointer`}
-              onClick={() => dispatch(messageGroupModerators(group.id)).then(a => a.payload?.data?.messageGroupModerators ? push(`/messages/${a.payload.data.messageGroupModerators}?prompt=${encodeURIComponent(prompt)}`) : null )}
+              onClick={() => dispatch(messageGroupModerators(group.id)).then(a => a.payload?.data?.messageGroupModerators ? push(`/messages/${a.payload.data.messageGroupModerators}?prompt=${encodeURIComponent(prompt)}`) : null)}
             />
           </div>
         )
