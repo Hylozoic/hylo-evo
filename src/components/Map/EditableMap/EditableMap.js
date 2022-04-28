@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import MapGL from 'react-map-gl'
 import { Editor, DrawPolygonMode, EditingMode } from 'react-map-gl-draw'
-import Icon from '../../Icon'
+import Icon from 'components/Icon'
 import { mapbox } from 'config'
 
 import { getEditHandleStyle, getFeatureStyle } from './EditableMapStyles'
@@ -16,12 +16,8 @@ export default function EditableMap (props) {
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null)
   const [isModeDrawing, setIsModeDrawing] = useState(false)
   const editorRef = useRef(null)
-  const existingPolygon = polygon ? [{
-    geometry: polygon,
-    properties: { },
-    type: 'Feature'
-  }] : [{
-    geometry: { },
+  const existingPolygon = [{
+    geometry: polygon || {},
     properties: { },
     type: 'Feature'
   }]
