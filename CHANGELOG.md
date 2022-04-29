@@ -4,6 +4,10 @@ All notable changes to Hylo Utils (shared utils for all Hylo products) will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.8]
+## Added
+- LocationHelpers.convertMapboxToLocation function to concvert the response from mapbpx geocoding into the format we use for locations
+
 ## [1.6.5]
 ## Changed
 - Changed markdown library is configured to work in transpiled distribution
