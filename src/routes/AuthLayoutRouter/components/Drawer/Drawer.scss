@@ -1,0 +1,277 @@
+// Still used below for calculated-name-width
+// this value is duplicated in src/routes/AuthLayoutRouter/AuthLayoutRouter.scss
+$drawer-width: 367px;
+
+$close-color: #98AFBE;
+$close-offset-top: 27px;
+$close-offset-right: 18px;
+$close-offset-left: 18px;
+$close-dimension: 24px;
+
+$current-avatar-size: 42px;
+$current-avatar-border-radius: 8px;
+$current-padding-top: 0px;
+$current-padding-bottom: 20px;
+$current-name-margin-bottom: 13px;
+
+$ul-vertical-spacing: 10px;
+$ul-horizontal-spacing: 14px;
+$li-padding: 4px;
+$li-spacing: 14px;
+$li-height: 40px;
+$li-avatar-size: 38px;
+
+$badge-width: 20px;
+
+$group-list-avatar-size: 28px;
+$group-list-font-size: 13px;
+
+$new-group-width: 310px;
+$new-group-vertical-margin: 15px;
+$new-group-font-size: 14px;
+$new-group-spacing: 16px;
+
+.groupDrawer {
+  background-image: linear-gradient(0deg, $color-rhino 0%, $color-chambray 100%);
+  overflow-y: auto;
+}
+
+.groupDrawer {
+  scrollbar-width: thin;
+  scrollbar-color: white rgba(200,200,200,.5);
+}
+
+.groupDrawer::-webkit-scrollbar {
+  background-color: white;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.groupDrawer::-webkit-scrollbar-thumb {
+  background-color: rgba(35, 64, 91, .3);
+  outline: none;
+}
+
+.drawerHeader {
+  position: relative;
+  background-size: cover;
+}
+
+.backgroundFade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #2A4059 0%, rgba(42, 64, 89, 0.2) 0%, rgba(42, 64, 89, 0.5) 100%);
+}
+
+.hyloLogoBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 5px 0 5px;
+  height: 55px;
+  width: 100%;
+}
+
+.drawerBanner {
+  position: relative;
+  z-index: 1;
+}
+
+.closeDrawer {
+  color: $color-white;
+  cursor: pointer;
+  font-size: $close-dimension;
+}
+
+.groupDrawer > .currentGroup {
+  box-shadow: 0px 4px 56px 0px rgba(0,0,0,.5);
+}
+
+a.currentGroup:hover {
+  text-decoration: none;
+}
+
+.currentGroup {
+  padding: $current-padding-top 10px $current-padding-bottom 10px;
+  text-align: center;
+
+  .avatar {
+    @include image($current-avatar-size);
+    margin: 0 auto;
+    border-radius: $current-avatar-border-radius;
+  }
+}
+
+.settingsLink {
+  height: 40px;
+  line-height: 38px;
+  padding: 0 15px;
+  border-radius: 25px;
+  display: inline-block;
+  border: 1px solid $color-white-50;
+  @include font-regular;
+  text-align: center;
+  color: $color-white;
+  margin-top: 15px;
+  font-size: 16px;
+  transition: all .25s ease;
+
+  &:hover {
+    color: rgba(41, 64, 90, 1.00);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 1);
+
+    .settingsIcon {
+      color: rgba(41, 64, 90, 1.00);
+    }
+  }
+}
+
+.settingsIcon {
+  font-size: 16px;
+  color: $color-white;
+  margin-right: 4px;
+  &:hover {
+    color: $color-white;
+    text-decoration: none;
+  }
+}
+
+.sectionTitle {
+  padding-top: 5px;
+  padding-left: $ul-horizontal-spacing;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  font-size: 8pt;
+  font-weight: 300;
+  color: $color-white;
+  opacity: 0.5;
+  letter-spacing: 0.2px;
+}
+
+.sectionTitleSeparator {
+  padding-top: 10px;
+}
+
+.avatar {
+  @include image($li-avatar-size);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: $li-spacing;
+}
+
+.groupsList {
+  margin: 10px 0;
+  padding: 0px;
+  overflow-y: auto;
+  li {
+    list-style: none;
+  }
+}
+
+.contextRowAvatar {
+  @include image($group-list-avatar-size);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  margin-right: $li-spacing;
+}
+
+.contextRow {
+  padding: 6px $ul-horizontal-spacing 6px 28px;
+  transition: all .3s ease;
+  background: rgba(35, 57, 87, 0);
+
+  &:hover {
+    background: rgba(35, 57, 87, 1.000);
+  }
+}
+
+.currentContext {
+  background-color: rgba(58, 160, 223, 1.00);
+}
+
+.contextRowLink {
+  display: flex;
+  align-items: center;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.seeAllBtn {
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px $ul-horizontal-spacing 6px 28px;
+  &:hover {
+    background: $color-black-10;
+  }
+  color: $color-white-80;
+  text-align: center;
+}
+
+.group-name {
+  composes: drawer-inv-li from 'css/typography.scss';
+  flex: 2;
+  vertical-align: middle;
+  margin-right: $li-spacing;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.groupsButton {
+  width: 38px;
+  height: 26px;
+  border-left: 1px solid rgba(#FFF, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowDown {
+  color: $color-white;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+
+.arrowForward {
+  color: $color-white;
+  font-size: 16px;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+
+.group-name {
+  font-size: $group-list-font-size;
+  opacity: 0.9;
+}
+
+.newGroup {
+  text-align: center;
+}
+
+.newGroupBtn {
+  text-align: center;
+  width: 80%;
+  margin: $new-group-vertical-margin auto;
+  font-size: $new-group-font-size;
+  padding: 0;
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,0.05);
+  height: 40px;
+  line-height: 38px;
+  margin-bottom: 70px;
+}
+
+@media screen and (max-width: 600px) {
+  .newGroupBtn {
+      margin-bottom: 250px;
+  }
+}

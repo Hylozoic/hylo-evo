@@ -72,10 +72,6 @@ Object {
   "post": null,
   "postPending": false,
   "postType": undefined,
-  "querystringParams": Object {},
-  "routeParams": Object {
-    "slug": "foo",
-  },
   "showFiles": false,
   "showImages": false,
   "topic": null,
@@ -141,10 +137,6 @@ Object {
   "post": null,
   "postPending": true,
   "postType": undefined,
-  "querystringParams": Object {},
-  "routeParams": Object {
-    "slug": "foo",
-  },
   "showFiles": false,
   "showImages": false,
   "topic": null,

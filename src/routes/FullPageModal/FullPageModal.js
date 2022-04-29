@@ -10,7 +10,7 @@ export default function FullPageModal ({
   content, children, narrow, fullWidth, leftSideBarHidden,
   previousLocation
 }) {
-  const { mobileSettingsLayout } = useLayoutFlags()
+  const { hyloAppLayout } = useLayoutFlags()
   const [entryLocation] = useState(previousLocation)
 
   const onClose = () => {
@@ -26,7 +26,7 @@ export default function FullPageModal ({
 
   const multipleTabs = Array.isArray(content)
 
-  if (mobileSettingsLayout) {
+  if (hyloAppLayout) {
     return (
       <div styleName='modal--modal-settings-layout'>
         {multipleTabs && content.map(tab => (

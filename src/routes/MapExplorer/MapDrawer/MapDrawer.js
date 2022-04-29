@@ -20,6 +20,7 @@ function MapDrawer (props) {
     fetchPostsForDrawer,
     filters,
     groups,
+    locationParams,
     members,
     numFetchedPosts,
     numTotalPosts,
@@ -36,8 +37,8 @@ function MapDrawer (props) {
 
   const searchText = filters.search
 
-  const { mobileSettingsLayout } = useLayoutFlags()
-  const withoutNav = mobileSettingsLayout
+  const { hyloAppLayout, hideNavLayout } = useLayoutFlags()
+  const withoutNav = hyloAppLayout || hideNavLayout
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [currentTab, setCurrentTab] = useState('Posts')
@@ -145,6 +146,7 @@ function MapDrawer (props) {
 
         <div styleName='contentListContainer' id='contentList'>
           {posts.map(p => <PostCard
+            locationParams={locationParams}
             routeParams={routeParams}
             post={p}
             styleName='contentCard'
