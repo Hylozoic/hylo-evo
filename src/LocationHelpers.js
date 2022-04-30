@@ -26,7 +26,8 @@ export function convertMapboxToLocation (mapboxResult) {
     bbox: mapboxResult.bbox ? [{ lng: mapboxResult.bbox[0], lat: mapboxResult.bbox[1] }, { lng: mapboxResult.bbox[2], lat: mapboxResult.bbox[3] }] : null,
     center: { lng: mapboxResult.center[0], lat: mapboxResult.center[1] },
     city,
-    country: countryObject && countryObject.short_code,
+    country: countryObject && countryObject.text,
+    country_code: countryObject && countryObject.short_code,
     fullText: mapboxResult.place_name,
     // geometry: [Point]
     // locality
