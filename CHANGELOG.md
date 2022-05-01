@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changes to authorization and authentication flow to accomodate related API changes
 - Adds new RTL-based tests for new and existing components
 - You can now click on the map to create posts at that location. Either click and hold for a couple seconds, or click the (+) button and then click on the map to add a post at that lat,lng on the map.
+- Discussion posts now can have a location and appear on the map
+
+### Fixed
+- Date/time selector in posts always visible, never disappears below the screen
 
 ## [3.5.2] - 2022-03-28
 
