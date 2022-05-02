@@ -49,7 +49,7 @@ export default class Messages extends React.Component {
       forNewThread: props.messageThreadId === NEW_THREAD_ID,
       loading: true,
       peopleSelectorOpen: false,
-      onCloseURL: props.onCloseURL,
+      onCloseLocation: props.onCloseLocation,
       participants: []
     }
     this.form = React.createRef()
@@ -170,7 +170,7 @@ export default class Messages extends React.Component {
     } = this.props
     const {
       loading,
-      onCloseURL,
+      onCloseLocation,
       participants,
       peopleSelectorOpen
     } = this.state
@@ -180,7 +180,7 @@ export default class Messages extends React.Component {
       <div styleName='content'>
         <div styleName='messages-header'>
           <div styleName='close-messages'>
-            <CloseMessages onCloseURL={onCloseURL} />
+            <CloseMessages onCloseLocation={onCloseLocation} />
           </div>
           <div styleName='messages-title'>
             <Icon name='Messages' />
@@ -200,7 +200,6 @@ export default class Messages extends React.Component {
               currentUser={currentUser}
               threadsPending={threadsPending}
               threads={threads}
-              onCloseURL={onCloseURL}
               onFocus={() => this.setPeopleSelectorOpen(false)}
               threadSearch={threadSearch}
             />
@@ -234,7 +233,6 @@ export default class Messages extends React.Component {
                             focusMessage={this.focusForm}
                             setPeopleSearch={setContactsSearch}
                             people={contacts}
-                            onCloseURL={onCloseURL}
                             onFocus={() => this.setPeopleSelectorOpen(true)}
                             selectedPeople={participants}
                             selectPerson={this.addParticipant}
@@ -247,7 +245,6 @@ export default class Messages extends React.Component {
                           messageThread={messageThread}
                           currentUser={currentUser}
                           pending={messagesPending}
-                          onCloseURL={onCloseURL}
                         />}
                       {!forNewThread &&
                         <MessageSection
@@ -307,7 +304,7 @@ Messages.propTypes = {
   messageThreadPending: PropTypes.bool,
   messages: PropTypes.array,
   messagesPending: PropTypes.bool,
-  onCloseURL: PropTypes.string,
+  onCloseLocation: PropTypes.object,
   participants: PropTypes.array,
   recentContacts: PropTypes.array,
   sendIsTyping: PropTypes.func,

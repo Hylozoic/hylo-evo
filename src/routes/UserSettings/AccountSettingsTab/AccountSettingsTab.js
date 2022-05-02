@@ -16,7 +16,6 @@ export default class AccountSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func,
-    loginWithService: func,
     deleteMe: func,
     deactivateMe: func,
     logout: func

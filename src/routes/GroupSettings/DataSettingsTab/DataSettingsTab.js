@@ -5,8 +5,8 @@ import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
 import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
-const { object } = PropTypes
 import './DataSettingsTab.scss'
+const { object } = PropTypes
 
 export default class GroupSettingsTab extends Component {
   static propTypes = {

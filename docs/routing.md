@@ -1,21 +1,8 @@
 ### routing
-- Initial branching of routes is between auth and non-auth views.
-    - Non-auth views include login, signup, password-reset and the join-group invitation pages. In the future it will include a public map
-- Auth views are all routed through the PrimaryLayout component, which includes many sub-routes.
-- The PrimaryLayout includes
-    - the Drawer (for navigating between your groups),
-    - the TopNav (the top bar, Drawer toggle, user settings, search etc),
-    - the Navigation panel and
-    - a 'center' div that contains all the sub-routes.
-- These routes are all wrapped in a redirect component, that redirects a small subset of all urls to different ones. _Perhaps there was a change in url patterns in the history of the project and it was easier to redirect old patterns to new than hunt down all the uses of old urls across the app?_
-- The bulk of routes use one or a combination of single-letter to represent different resources in the app. The main resources include
-    - g for group,
-    - p (?) for posts and
-    - m for members.
-- These respectively have related url parameters, including
-    - :slug for groups,
-    - :postId for posts and
-    - :personId for members
-- There are a few uses of 'all' mixed into these and the plan for mapping views is to include a /map/  segment in the url where needed.
-- There are some other utility routes that are fairly self evident
-- Post views can kind of be tacked on to several other views. Consequently they are captured in an OPTIONAL_POST_MATCH variable. Not exactly clear what all the moving parts (including some from the navigation utility) are doing here.
+- URL and history routing is exclusively done through use of React Router (see documentation here)[https://v5.reactrouter.com/web/guides/quick-start] and all components that handle routes are under the `src/routes` directory (there may be a few small exceptions)
+- All routes are passed through `RootRouter` which if not-authorized renders either `NonAuthLayoutRouter` or `PublicLayoutRouter` components, and `AuthLayoutRouter` when authorized. Each of these top-level *layout routers* (meaning they render multiple routes in a layout on the page) include many sub-routes and child routers contained either at the root or within subdirectories under `src/routes`
+- Key layout aspects of the `AuthLayoutRouter` include:
+    - `Drawer` which renders navigating to move betwee your groups, etc
+    - `TopNav` which renders the top bar, Drawer toggle, user settings, search, etc)
+    - `Navigation` which renders context-specific navigation (i.e. current group)
+    - `div.center` which contains routes which match to the appropriate components to render the central content of the page

@@ -109,6 +109,7 @@ export default class CreateGroup extends Component {
       this.props.createGroup({ accessibility, name, slug, parentIds: parentGroups.map(g => g.id), visibility })
         .then(({ error }) => {
           if (error) {
+            // `state.error` doesn't appear to be displayed anywhere
             this.setState({
               error: 'There was an error, please try again.'
             })
@@ -120,154 +121,167 @@ export default class CreateGroup extends Component {
   }
 
   render () {
-    const { match, parentGroupOptions } = this.props
+    const { goBack, match, parentGroupOptions } = this.props
     const { accessibility, characterCount, edited, errors, name, parentGroups, slug, visibility } = this.state
 
     if (!match) return null
 
-    return <div styleName='wrapper'>
-      <div styleName='header'>
-        <button><Icon name='Back' styleName='backIcon' /></button>
-        <span styleName='headerHeadline'>Create Group</span>
-      </div>
-      <div styleName='nameAndSlug'>
-        <TextInput
-          autoFocus
-          type='text'
-          name='name'
-          onChange={this.updateField('name')}
-          value={name}
-          theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-          placeholder="Your group's name"
-          noClearButton
-          maxLength='60'
-          onEnter={this.onSubmit}
-          styleName='groupNameInput'
-        />
-        <span styleName='characterCounter'>{characterCount} / 60</span>
-        {errors.name && <span styleName='nameError'>{errors.name}</span>}
-        <span styleName='slug'>
-          <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
-            <Icon name='SmallEdit' />
-            https://hylo.com/groups/
-          </button>
+    return (
+      <div styleName='wrapper'>
+        <div styleName='header'>
+          <button onClick={goBack}><Icon name='Back' styleName='backIcon' /></button>
+          <span styleName='headerHeadline'>Create Group</span>
+        </div>
+        <div styleName='nameAndSlug'>
           <TextInput
+            autoFocus
             type='text'
-            name='slug'
-            onChange={this.updateField('slug')}
-            value={slug}
-            onClick={this.focusSlug}
-            theme={{ input: styles['slugInput'], wrapper: styles['slug-wrapper'] }}
+            name='name'
+            onChange={this.updateField('name')}
+            value={name}
+            theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
+            placeholder="Your group's name"
             noClearButton
+            maxLength='60'
             onEnter={this.onSubmit}
-            maxLength='40'
-            inputRef={this.slugRef}
+            styleName='groupNameInput'
           />
-        </span>
-        {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
-      </div>
+          <span styleName='characterCounter'>{characterCount} / 60</span>
+          {errors.name && <span styleName='nameError'>{errors.name}</span>}
+          <span styleName='slug'>
+            <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
+              <Icon name='SmallEdit' />
+              https://hylo.com/groups/
+            </button>
+            <TextInput
+              type='text'
+              name='slug'
+              onChange={this.updateField('slug')}
+              value={slug}
+              onClick={this.focusSlug}
+              theme={{ input: styles['slugInput'], wrapper: styles['slug-wrapper'] }}
+              noClearButton
+              onEnter={this.onSubmit}
+              maxLength='40'
+              inputRef={this.slugRef}
+            />
+          </span>
+          {errors.slug && <span styleName='slugError'>{errors.slug}</span>}
+        </div>
 
-      <div styleName='privacy'>
-        <div styleName='dropdownContainer'>
-          <Dropdown styleName='privacyDropdown'
-            toggleChildren={
-              <span>
-                <div styleName='dropdownItemSelected'>
-                  <Icon name={visibilityIcon(visibility)} styleName='selectedIcon' />
-                  <div>
-                    <div styleName='dropdownDescription'>WHO CAN SEE THIS GROUP?</div>
-                    <div styleName='selectedString'>
-                      <b>{visibilityString(visibility)}</b>
-                      <span>{visibilityDescription(visibility)}</span>
+        <div styleName='privacy'>
+          <div styleName='dropdownContainer'>
+            <Dropdown
+              styleName='privacyDropdown'
+              toggleChildren={(
+                <span>
+                  <div styleName='dropdownItemSelected'>
+                    <Icon name={visibilityIcon(visibility)} styleName='selectedIcon' />
+                    <div>
+                      <div styleName='dropdownDescription'>WHO CAN SEE THIS GROUP?</div>
+                      <div styleName='selectedString'>
+                        <b>{visibilityString(visibility)}</b>
+                        <span>{visibilityDescription(visibility)}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <Icon name='ArrowDown' styleName='openDropdown' />
-              </span>}
-            items={Object.keys(GROUP_VISIBILITY).map(label => ({
-              key: label,
-              label: <div styleName='dropdownItem'>
-                <Icon name={visibilityIcon(GROUP_VISIBILITY[label])} />
-                <div styleName='selectedString'>
-                  <b>{label}</b>
-                  <span> {visibilityDescription(GROUP_VISIBILITY[label])}</span>
-                </div>
-              </div>,
-              onClick: () => this.updateField('visibility')(GROUP_VISIBILITY[label])
-            }))}
-          />
-        </div>
-        <div styleName='dropdownContainer'>
-          <Dropdown styleName='privacyDropdown'
-            toggleChildren={<span>
-              <div styleName='dropdownItemSelected'>
-                <Icon name={accessibilityIcon(accessibility)} styleName='selectedIcon' />
-                <div>
-                  <div styleName='dropdownDescription'>WHO CAN JOIN THIS GROUP?</div>
-                  <div styleName='selectedString'>
-                    <b>{accessibilityString(accessibility)}</b>
-                    <span>{accessibilityDescription(accessibility)}</span>
+                  <Icon name='ArrowDown' styleName='openDropdown' />
+                </span>
+              )}
+              items={Object.keys(GROUP_VISIBILITY).map(label => ({
+                key: label,
+                label: (
+                  <div styleName='dropdownItem'>
+                    <Icon name={visibilityIcon(GROUP_VISIBILITY[label])} />
+                    <div styleName='selectedString'>
+                      <b>{label}</b>
+                      <span> {visibilityDescription(GROUP_VISIBILITY[label])}</span>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <Icon name='ArrowDown' styleName='openDropdown' />
-            </span>}
-            items={Object.keys(GROUP_ACCESSIBILITY).map(label => ({
-              key: label,
-              label: <div styleName='dropdownItem' key={label}>
-                <Icon name={accessibilityIcon(GROUP_ACCESSIBILITY[label])} />
-                <div styleName='selectedString'>
-                  <b>{label}</b>
-                  <span> {accessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
-                </div>
-              </div>,
-              onClick: () => this.updateField('accessibility')(GROUP_ACCESSIBILITY[label])
-            }))}
-          />
-        </div>
-      </div>
-
-      {/* TODO: turn this on when finished <div styleName='inviteMembers'>
-        <div styleName='memberSelector'>
-          <span styleName='title'>INVITE MEMBERS</span>
-          <TextInput
-            type='text'
-            name='memberInvites'
-            placeholder='Enter names & email addresses'
-          />
-        </div>
-      </div> */}
-
-      {parentGroupOptions && parentGroupOptions.length > 0 && <div styleName='parentGroups'>
-        <div styleName='parentSelector'>
-          <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
-          <div styleName='parentGroupInfo'>
-            ?
-            <div styleName='parentGroupTooltip'>You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it</div>
+                ),
+                onClick: () => this.updateField('visibility')(GROUP_VISIBILITY[label])
+              }))}
+            />
           </div>
-          {/* TODO: somehow show groups that are restricted and will be a join request differently */}
-          <GroupsSelector
-            options={parentGroupOptions}
-            selected={parentGroups}
-            onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
-            readOnly={false}
-            ref={this.groupsSelector}
-          />
+          <div styleName='dropdownContainer'>
+            <Dropdown
+              styleName='privacyDropdown'
+              toggleChildren={(
+                <span>
+                  <div styleName='dropdownItemSelected'>
+                    <Icon name={accessibilityIcon(accessibility)} styleName='selectedIcon' />
+                    <div>
+                      <div styleName='dropdownDescription'>WHO CAN JOIN THIS GROUP?</div>
+                      <div styleName='selectedString'>
+                        <b>{accessibilityString(accessibility)}</b>
+                        <span>{accessibilityDescription(accessibility)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Icon name='ArrowDown' styleName='openDropdown' />
+                </span>
+              )}
+              items={Object.keys(GROUP_ACCESSIBILITY).map(label => ({
+                key: label,
+                label: (
+                  <div styleName='dropdownItem' key={label}>
+                    <Icon name={accessibilityIcon(GROUP_ACCESSIBILITY[label])} />
+                    <div styleName='selectedString'>
+                      <b>{label}</b>
+                      <span> {accessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
+                    </div>
+                  </div>
+                ),
+                onClick: () => this.updateField('accessibility')(GROUP_ACCESSIBILITY[label])
+              }))}
+            />
+          </div>
         </div>
-      </div>}
 
-      <div styleName='createGroupBottom'>
-        <Button
-          color='green-white-green-border'
-          key='create-button'
-          narrow
-          disabled={!edited || !this.isValid()}
-          onClick={this.onSubmit}
-          styleName='submit-button'
-        >
-          <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />Create Group
-        </Button>
+        {/* TODO: turn this on when finished <div styleName='inviteMembers'>
+          <div styleName='memberSelector'>
+            <span styleName='title'>INVITE MEMBERS</span>
+            <TextInput
+              type='text'
+              name='memberInvites'
+              placeholder='Enter names & email addresses'
+            />
+          </div>
+        </div> */}
+
+        {parentGroupOptions && parentGroupOptions.length > 0 && (
+          <div styleName='parentGroups'>
+            <div styleName='parentSelector'>
+              <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
+              <div styleName='parentGroupInfo'>
+                ?
+                <div styleName='parentGroupTooltip'>You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it</div>
+              </div>
+              {/* TODO: somehow show groups that are restricted and will be a join request differently */}
+              <GroupsSelector
+                options={parentGroupOptions}
+                selected={parentGroups}
+                onChange={(newGroups) => { this.updateField('parentGroups')(newGroups) }}
+                readOnly={false}
+                ref={this.groupsSelector}
+              />
+            </div>
+          </div>
+        )}
+
+        <div styleName='createGroupBottom'>
+          <Button
+            color='green-white-green-border'
+            key='create-button'
+            narrow
+            disabled={!edited || !this.isValid()}
+            onClick={this.onSubmit}
+            styleName='submit-button'
+          >
+            <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />Create Group
+          </Button>
+        </div>
       </div>
-    </div>
+    )
   }
 }

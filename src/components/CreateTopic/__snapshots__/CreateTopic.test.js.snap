@@ -39,7 +39,7 @@ exports[`CreateTopic snapshots (various states) matches the last snapshot (modal
 `;
 
 exports[`CreateTopic snapshots (various states) matches the last snapshot for a redirect 1`] = `
-<RedirectRoute
+<Redirect
   to="/groups/wombat-group/topics/ecological-implications-wombat-migration"
 />
 `;

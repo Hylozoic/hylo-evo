@@ -10,6 +10,8 @@ const mockGeolocation = {
 
 global.navigator.geolocation = mockGeolocation
 
+jest.mock('react-tsparticles', () => () => 'ParticlesComponent')
+
 window.Intl = {
   DateTimeFormat: jest.fn().mockImplementation(() => ({
     resolvedOptions: jest.fn().mockImplementation(() => ({
