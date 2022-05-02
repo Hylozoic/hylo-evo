@@ -1,46 +1,85 @@
 import graphqlMiddleware from 'store/middleware/graphqlMiddleware'
 
-describe('graphqlMiddleware', () => {
-  let next, middleware
+it('adds a `then` that rejects when there are errors', async () => {
+  const action = {
+    type: 'FOO',
+    graphql: true,
+    payload: {
+      errors: [{ message: 'problems' }]
+    }
+  }
+  const next = jest.fn(async val => val)
+  const { meta } = await graphqlMiddleware({})(next)(action)
 
-  const expectMetaThenToReject = (shouldReject, action) =>
-    middleware(next)(action)
-      .then(({ meta }) => {
-        expect(next).toHaveBeenCalled()
-        const then = meta.then
-        let rejected = false
-        return Promise.resolve(action.payload)
-          .then(then)
-          .then(result => result, reject => { rejected = true })
-          .then(() => {
-            expect(rejected).toEqual(shouldReject)
-          })
-      })
+  expect(next).toHaveBeenCalled()
 
-  beforeEach(() => {
-    middleware = graphqlMiddleware({})
-    next = jest.fn(val => Promise.resolve(val))
-  })
+  let caughtError
 
-  it('adds a then that rejects when there are errors', () => {
-    const action = {
-      type: 'FOO',
-      graphql: true,
-      payload: {
-        errors: [{ message: 'problems' }]
+  try {
+    await meta.then(action.payload)
+  } catch (error) {
+    caughtError = error
+  }
+
+  expect(caughtError).toEqual(action.payload.errors[0])
+})
+
+it('adds a `then` that passes through `payload` when there are no errors', async () => {
+  const action = {
+    type: 'FOO',
+    graphql: true,
+    payload: {
+      data: 'no problems'
+    }
+  }
+  const next = jest.fn(async val => val)
+  const { meta } = await graphqlMiddleware({})(next)(action)
+
+  expect(next).toHaveBeenCalled()
+
+  let caughtError
+
+  try {
+    await meta.then(action.payload)
+  } catch (error) {
+    caughtError = error
+  }
+
+  expect(caughtError).toEqual(undefined)
+})
+
+it('`meta.then` continuation - runs when there are no errors', async () => {
+  const providedThen = jest.fn(async () => true)
+  const action = {
+    type: 'FOO',
+    graphql: true,
+    meta: {
+      then: providedThen
+    },
+    payload: {
+      data: 'no problems'
+    }
+  }
+  const next = jest.fn(async val => val)
+  const { meta } = await graphqlMiddleware({})(next)(action)
+  await meta.then(action.payload)
+
+  expect(providedThen).toHaveBeenCalled()
+})
+
+it('`payload.getData()` - can get data under root of graphql under operation name', async () => {
+  const action = {
+    type: 'FOO',
+    graphql: true,
+    payload: {
+      data: {
+        myGraphqlOperationName: 'no problems'
       }
     }
-    return expectMetaThenToReject(true, action)
-  })
+  }
+  const next = jest.fn(async val => val)
+  const { meta } = await graphqlMiddleware({})(next)(action)
+  const payload = await meta.then(action.payload)
 
-  it('adds a then that passes through the payload when there are no errors', () => {
-    const action = {
-      type: 'FOO',
-      graphql: true,
-      payload: {
-        data: 'no problems'
-      }
-    }
-    return expectMetaThenToReject(false, action)
-  })
+  expect(payload.getData()).toEqual('no problems')
 })

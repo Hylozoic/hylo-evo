@@ -156,11 +156,13 @@ export function updateMembershipSettings (groupId, settings) {
   return {
     type: UPDATE_MEMBERSHIP_SETTINGS,
     graphql: {
-      query: `mutation ($groupId: ID, $data: MembershipInput) {
-        updateMembership(groupId: $groupId, data: $data) {
-          id
+      query: `
+        mutation UpdateMembershipSettings ($groupId: ID, $data: MembershipInput) {
+          updateMembership(groupId: $groupId, data: $data) {
+            id
+          }
         }
-      }`,
+      `,
       variables: {
         data: {
           settings

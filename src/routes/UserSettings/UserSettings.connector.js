@@ -7,7 +7,8 @@ import {
   registerStripeAccount
 } from './UserSettings.store'
 import { setConfirmBeforeClose } from '../FullPageModal/FullPageModal.store'
-import { loginWithService, logout } from 'routes/NonAuthLayout/Login/Login.store'
+import logout from 'store/actions/logout'
+import loginWithService from 'store/actions/loginWithService'
 import { createSelector } from 'reselect'
 import unBlockUser from 'store/actions/unBlockUser'
 import deactivateMe from 'store/actions/deactivateMe'
@@ -39,7 +40,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const blockedUsers = getBlockedUsers(state, props)
   const allGroupsSettings = getAllGroupsSettings(state, props)
-  const memberships = getMyMemberships(state, props)
+  const memberships = getMyMemberships(state, props).sort((a, b) => a.group.name.localeCompare(b.group.name))
   const messageSettings = getMessageSettings(state, props)
   const confirm = get('FullPageModal.confirm', state)
   const fetchPending = state.pending[FETCH_FOR_CURRENT_USER]
@@ -59,21 +60,19 @@ export function mapStateToProps (state, props) {
   }
 }
 
-export function mapDispatchToProps (dispatch) {
-  return {
-    deactivateMe: (params) => dispatch(deactivateMe(params)),
-    deleteMe: (params) => dispatch(deleteMe(params)),
-    updateUserSettings: (params) => dispatch(updateUserSettings(params)),
-    unBlockUser: (params) => dispatch(unBlockUser(params)),
-    loginWithService: (params) => dispatch(loginWithService(params)),
-    logout: (params) => dispatch(logout(params)),
-    unlinkAccount: (params) => dispatch(unlinkAccount(params)),
-    setConfirmBeforeClose: (params) => dispatch(setConfirmBeforeClose(params)),
-    updateMembershipSettings: (groupId, settings) => dispatch(updateMembershipSettings(groupId, settings)),
-    updateAllMemberships: (groupIds, settings) => dispatch(updateAllMemberships(groupIds, settings)),
-    registerStripeAccount: (params) => dispatch(registerStripeAccount(params)),
-    fetchLocation: (location) => dispatch(fetchLocation(location))
-  }
+export const mapDispatchToProps = {
+  deactivateMe,
+  deleteMe,
+  updateUserSettings,
+  unBlockUser,
+  loginWithService,
+  logout,
+  unlinkAccount,
+  setConfirmBeforeClose,
+  updateMembershipSettings,
+  updateAllMemberships,
+  registerStripeAccount,
+  fetchLocation
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {

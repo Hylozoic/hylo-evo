@@ -2,9 +2,9 @@
 
 exports[`CreateGroup.connector mapDispatchToProps maps the action generators 1`] = `
 Object {
-  "closeModal": [Function],
   "createGroup": [Function],
   "fetchGroupExists": [Function],
+  "goBack": [Function],
   "goToGroup": [Function],
 }
 `;

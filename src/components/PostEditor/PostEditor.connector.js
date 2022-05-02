@@ -72,8 +72,6 @@ export function mapStateToProps (state, props) {
   const postType = getQuerystringParam('newPostType', null, props)
   const isProject = postType === 'project' || get('type', post) === 'project'
   const isEvent = postType === 'event' || get('type', post) === 'event'
-  const querystringParams = getQuerystringParam(['s', 't'], null, props)
-  const routeParams = get('match.params', props)
 
   return {
     announcementSelected,
@@ -99,8 +97,6 @@ export function mapStateToProps (state, props) {
     post,
     postPending,
     postType,
-    querystringParams,
-    routeParams,
     showFiles,
     showImages,
     topic,
@@ -114,9 +110,9 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch) => {
   return {
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
-    goToUrl: url => dispatch(push(url)),
-    changeQueryString: url => dispatch(replace(url)),
     ...bindActionCreators({
+      changeQueryString: replace,
+      goToUrl: push,
       fetchDefaultTopics,
       setAnnouncement,
       removeLinkPreview,
@@ -130,19 +126,22 @@ export const mapDispatchToProps = (dispatch) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const {
-    fetchLinkPreviewPending, groupSlug, postType, routeParams, querystringParams
-  } = stateProps
+  const { fetchLinkPreviewPending, groupSlug } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
-  const allProps = { ...stateProps, ...dispatchProps, ...ownProps }
+
   const goToPost = createPostAction => {
     const id = get('payload.data.createPost.id', createPostAction) ||
       get('payload.data.createProject.id', createPostAction)
-    const locationParams = allProps['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, allProps) : null
-    const url = postUrl(id, { ...routeParams, postType }, { ...locationParams, querystringParams })
+    // * The single letter params are used in the Stream and elsewhere
+    // and translate as follow: `s`(ort), `t`(ab), `q`(uery/search)
+    // The remaining whitelisted params are for the map view.
+    const querystringWhitelist = ['s', 't', 'q', 'zoom', 'center', 'lat', 'lng']
+    const querystringParams = ownProps?.location && getQuerystringParam(querystringWhitelist, null, ownProps)
+    const postPath = postUrl(id, ownProps?.match?.params, querystringParams)
 
-    return goToUrl(url)
+    return goToUrl(postPath)
   }
+
   const pollingFetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)

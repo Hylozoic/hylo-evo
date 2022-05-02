@@ -1,4 +1,3 @@
-import { CookiesProvider } from 'react-cookie'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
@@ -13,11 +12,9 @@ const store = createStore(history)
 
 ReactDOM.render(
   <LayoutFlagsProvider>
-    <CookiesProvider>
-      <Provider store={store}>
-        { clientRouter() }
-      </Provider>
-    </CookiesProvider>
+    <Provider store={store}>
+      {clientRouter()}
+    </Provider>
   </LayoutFlagsProvider>,
   document.getElementById(rootDomId)
 )

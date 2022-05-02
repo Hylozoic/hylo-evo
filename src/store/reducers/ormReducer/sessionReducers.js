@@ -24,7 +24,7 @@ export {
 
 export {
   ormSessionReducer as primaryLayoutReducer
-} from 'routes/PrimaryLayout/PrimaryLayout.store'
+} from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 
 export {
   ormSessionReducer as membersReducer
