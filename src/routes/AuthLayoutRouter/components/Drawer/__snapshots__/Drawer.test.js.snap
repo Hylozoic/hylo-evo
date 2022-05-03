@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContextRow renders with new posts 1`] = `
+<li
+  data-stylename="s.contextRow"
+>
+  <Link
+    data-stylename="s.contextRowLink"
+    title="Barmunity"
+    to="/groups/bar"
+  >
+    <div
+      data-stylename="s.contextRowAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(/bar.png)",
+        }
+      }
+    />
+    <span
+      data-stylename="s.group-name"
+    >
+      Barmunity
+    </span>
+  </Link>
+</li>
+`;
+
+exports[`ContextRow renders with zero new posts 1`] = `
+<li
+  data-stylename="s.contextRow"
+>
+  <Link
+    data-stylename="s.contextRowLink"
+    title="Foomunity"
+    to="/groups/foo"
+  >
+    <div
+      data-stylename="s.contextRowAvatar"
+      style={
+        Object {
+          "backgroundImage": "url(/foo.png)",
+        }
+      }
+    />
+    <span
+      data-stylename="s.group-name"
+    >
+      Foomunity
+    </span>
+  </Link>
+</li>
+`;

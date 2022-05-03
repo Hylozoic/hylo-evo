@@ -6,6 +6,7 @@
                 "appID": "L4KZBPS2F3.com.hylo.HyloA",
                 "paths": [
                     "/noo/login/token",
+                    "/noo/login/jwt",
                     "NOT /noo/*",
                     "*"
                 ]

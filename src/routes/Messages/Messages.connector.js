@@ -41,7 +41,7 @@ export function mapStateToProps (state, props) {
     contacts: getContactsList(state, props),
     participants: getParticipantsFromQuerystring(state, props),
     prompt: getQuerystringParam('prompt', null, props),
-    onCloseURL: getPreviousLocation(state),
+    onCloseLocation: getPreviousLocation(state)?.pathname,
     currentUser: getMe(state),
     messageThreadPending: isPendingFor(fetchThread, state),
     messageThread: getCurrentMessageThread(state, props),

@@ -51,7 +51,7 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
   }
 }
 
-const groupQuery = `query (
+const groupQuery = `query GroupPostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -83,7 +83,7 @@ const groupQuery = `query (
   }
 }`
 
-const postsQuery = `query (
+const postsQuery = `query PostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
