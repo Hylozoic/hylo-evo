@@ -12,6 +12,7 @@ export default gql`
     isAdmin
     name
     avatarUrl
+    hasRegistered
     newNotificationCount
     unseenThreadCount
     location
@@ -35,6 +36,7 @@ export default gql`
       region
     }
     email
+    emailValidated
     bannerUrl
     bio
     contactEmail
@@ -85,7 +87,7 @@ export default gql`
       }
     }
     # For memberships only including only what is needed
-    # for initial load in PrimaryLayout
+    # for initial load in AuthLayoutRouter
     memberships {
       id
       lastViewedAt

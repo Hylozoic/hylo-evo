@@ -1,7 +1,7 @@
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
 
 export default
-`query {
+`query MyPendingJoinRequestsQuery {
   me {
     joinRequests(status: ${JOIN_REQUEST_STATUS.Pending}) {
       total

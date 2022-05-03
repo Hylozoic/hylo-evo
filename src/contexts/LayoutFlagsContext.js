@@ -12,12 +12,12 @@ import { remove, reduce } from 'lodash/fp'
 //
 // For a flag to set it must be in the VALID_FLAGS whitelist below
 
-const VALID_FLAGS = ['mobileSettings']
+const VALID_FLAGS = ['hyloApp', 'hideNav']
 
-const LayoutFlagsContext = React.createContext()
+export const LayoutFlagsContext = React.createContext()
 
-function LayoutFlagsProvider ({ children }) {
-  const [layoutFlags, setLayoutFlags] = React.useState()
+export function LayoutFlagsProvider ({ children }) {
+  const [layoutFlags, setLayoutFlags] = React.useState({})
   const params = new URLSearchParams(window.location.search)
   const layoutFlagsFromURL = remove(flag => !VALID_FLAGS.includes(flag), (params.get('layoutFlags') || '').split(','))
 
@@ -33,7 +33,7 @@ function LayoutFlagsProvider ({ children }) {
   return <LayoutFlagsContext.Provider value={layoutFlags}>{children}</LayoutFlagsContext.Provider>
 }
 
-function useLayoutFlags () {
+export function useLayoutFlags () {
   const context = React.useContext(LayoutFlagsContext)
 
   if (context === undefined) {
@@ -44,4 +44,3 @@ function useLayoutFlags () {
 }
 
 export default LayoutFlagsContext
-export { LayoutFlagsProvider, LayoutFlagsContext, useLayoutFlags }

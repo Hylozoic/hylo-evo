@@ -22,7 +22,7 @@ export default class CommentForm extends Component {
     className: PropTypes.string,
     placeholder: PropTypes.string,
     focusOnRender: PropTypes.bool,
-    editorContent: PropTypes.string, // passed as HTML: wrap in <p></p>
+    editorContent: PropTypes.string,
     // provided by connector
     sendIsTyping: PropTypes.func.isRequired,
     addAttachment: PropTypes.func.isRequired,
@@ -66,44 +66,52 @@ export default class CommentForm extends Component {
 
     const placeholder = this.props.placeholder || 'Add a comment...'
 
-    return <div
-      styleName='commentForm'
-      className={className}
-    >
-      {currentUser && (
-        <AttachmentManager type='comment' id='new' />
-      )}
-      <div styleName={cx('prompt', { 'disabled': !currentUser })}>
-        {currentUser
-          ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
-          : <Icon name='Person' styleName='anonymous-image' />
-        }
-        <HyloEditor
-          ref={this.editor}
-          styleName='editor'
-          readOnly={!currentUser}
-          onChange={this.startTyping}
-          focusOnRender={focusOnRender}
-          placeholder={placeholder}
-          parentComponent={'CommentForm'}
-          submitOnReturnHandler={this.save}
-          contentHTML={editorContent}
-        />
-
-        {!currentUser
-          ? <Link to={'/login?returnToUrl=' + encodeURIComponent(window.location.pathname)} target={inIframe() ? '_blank' : ''} styleName='signupButton'>Sign up to reply</Link>
-          : <UploadAttachmentButton
-            type='comment'
-            id='new'
-            allowMultiple
-            onSuccess={addAttachment}
-            customRender={renderProps =>
-              <UploadButton {...renderProps} styleName='upload-button' />
-            }
+    return (
+      <div
+        styleName='commentForm'
+        className={className}
+      >
+        {currentUser && (
+          <AttachmentManager type='comment' id='new' />
+        )}
+        <div styleName={cx('prompt', { disabled: !currentUser })}>
+          {currentUser
+            ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
+            : <Icon name='Person' styleName='anonymous-image' />
+          }
+          <HyloEditor
+            ref={this.editor}
+            styleName='editor'
+            readOnly={!currentUser}
+            onChange={this.startTyping}
+            focusOnRender={focusOnRender}
+            placeholder={placeholder}
+            parentComponent='CommentForm'
+            submitOnReturnHandler={this.save}
+            contentHTML={editorContent}
           />
-        }
+
+          {!currentUser
+            ? <Link
+              to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
+              target={inIframe() ? '_blank' : ''}
+              styleName='signupButton'
+            >
+              Sign up to reply
+            </Link>
+            : <UploadAttachmentButton
+              type='comment'
+              id='new'
+              allowMultiple
+              onSuccess={addAttachment}
+              customRender={renderProps => (
+                <UploadButton {...renderProps} styleName='upload-button' />
+              )}
+            />
+          }
+        </div>
       </div>
-    </div>
+    )
   }
 }
 
@@ -112,8 +120,10 @@ export function UploadButton ({
   loading,
   className
 }) {
-  return <div onClick={onClick} className={className}>
-    {loading && <Loading type='inline' styleName='upload-button-loading' />}
-    {!loading && <Icon name='AddImage' styleName='upload-button-icon' />}
-  </div>
+  return (
+    <div onClick={onClick} className={className}>
+      {loading && <Loading type='inline' styleName='upload-button-loading' />}
+      {!loading && <Icon name='AddImage' styleName='upload-button-icon' />}
+    </div>
+  )
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
 import { Validators } from 'hylo-shared'
@@ -7,7 +8,6 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
-import RedirectRoute from 'router/RedirectRoute'
 
 import './CreateTopic.scss'
 
@@ -161,7 +161,7 @@ export default class CreateTopic extends Component {
 
     if (redirectTopic && subscribeAfterCreate) {
       const url = topicUrl(encodeURI(redirectTopic), { groupSlug: this.props.groupSlug })
-      if (url !== window.location.pathname) return <RedirectRoute to={url} />
+      if (url !== window.location.pathname) return <Redirect to={url} />
     }
 
     return <React.Fragment>

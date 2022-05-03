@@ -1,4 +1,4 @@
-import { checkLogin } from 'routes/NonAuthLayout/Login/Login.store'
+import checkLogin from '../store/actions/checkLogin'
 import createStore from '../store'
 import { createMemoryHistory } from 'history'
 
@@ -14,10 +14,10 @@ export default function (req, res, next, opts = {}) {
 
   return store.dispatch(checkLogin())
     .then(({ payload }) => {
-      if (payload && payload.signedIn) {
+      if (payload?.getData().me?.id) {
         return res.redirect('/app?rd=1')
       }
       next()
     })
-    .catch(err => next()) // eslint-disable-line handle-callback-err
+    .catch(() => next())
 }
