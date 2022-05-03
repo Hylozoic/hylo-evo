@@ -58,6 +58,7 @@ query (
       accessibility
       memberCount
       description
+      geoShape
       location
       locationObject {
         city

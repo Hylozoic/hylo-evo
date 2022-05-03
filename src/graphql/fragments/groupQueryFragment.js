@@ -64,6 +64,7 @@ export default () => {
         avatarUrl
         bannerUrl
         description
+        geoShape
         memberCount
         name
         slug
@@ -176,6 +177,7 @@ export default () => {
         avatarUrl
         bannerUrl
         description
+        geoShape
         name
         slug
         visibility

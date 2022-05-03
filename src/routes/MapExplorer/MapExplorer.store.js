@@ -148,6 +148,7 @@ const groupsQuery = `query (
       id
       avatarUrl
       description
+      geoShape
       memberCount
       name
       slug

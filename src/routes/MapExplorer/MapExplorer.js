@@ -17,6 +17,7 @@ import { locationObjectToViewport } from 'util/geo'
 import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
+import { createPolygonLayerFromGroups } from 'components/Map/layers/polygonLayer'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import Map from 'components/Map/Map'
@@ -63,6 +64,7 @@ export class UnwrappedMapExplorer extends React.Component {
       clusterLayer: null,
       currentBoundingBox: null,
       groupIconLayer: null,
+      polygonLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
       creatingPost: false,
@@ -227,6 +229,16 @@ export class UnwrappedMapExplorer extends React.Component {
     })
     const viewGroups = groups.filter(group => {
       const locationObject = group.locationObject
+      if (group.geoShape) {
+        const coords = group.geoShape.coordinates[0]
+        const outOfBounds = []
+        coords.forEach((coord, i) => {
+          if (!booleanWithin(point(coord), bbox)) {
+            outOfBounds.push(i)
+          }
+        })
+        return outOfBounds.length < coords.length
+      }
       if (locationObject && locationObject.center) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
@@ -248,6 +260,9 @@ export class UnwrappedMapExplorer extends React.Component {
         onHover: this.onMapHover,
         onClick: this.onMapClick,
         boundingBox: boundingBox
+      }),
+      polygonLayer: createPolygonLayerFromGroups({
+        groups: viewGroups
       }),
       currentBoundingBox: boundingBox,
       groupsForDrawer: viewGroups,
@@ -464,6 +479,7 @@ export class UnwrappedMapExplorer extends React.Component {
     const {
       clusterLayer,
       groupIconLayer,
+      polygonLayer,
       hideDrawer,
       isAddingItemToMap,
       groupsForDrawer,
@@ -481,7 +497,7 @@ export class UnwrappedMapExplorer extends React.Component {
       <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
         <div styleName='mapContainer'>
           <Map
-            layers={[groupIconLayer, clusterLayer]}
+            layers={[groupIconLayer, clusterLayer, polygonLayer]}
             afterViewportUpdate={this.afterViewportUpdate}
             onViewportUpdate={this.mapViewPortUpdate}
             children={this._renderTooltip()}
