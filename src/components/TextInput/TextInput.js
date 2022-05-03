@@ -29,23 +29,27 @@ export default function TextInput (props) {
     setActive(e.animationName === 'onAutoFillStart')
   }
 
-  return <div styleName={theme.wrapperStyle || styleName || 'wrapper'} className={theme.wrapper || className}>
-    <input styleName={theme.inputStyle || 'input'} {...{ onKeyDown, ...otherProps }}
-      ref={inputRef}
-      className={theme.input}
-      aria-label={label || internalLabel}
-      onAnimationStart={handleAnimation}
-      onBlur={onBlur}
-      onFocus={onFocus}
-    />
-    {internalLabel &&
-      <label htmlFor={props.id} styleName={cx('internal-label', active || (value && value.length > 0) ? 'active' : '')}>{internalLabel}</label>
-    }
+  return (
+    <div styleName={theme.wrapperStyle || styleName || 'wrapper'} className={theme.wrapper || className}>
+      <input
+        styleName={theme.inputStyle || 'input'}
+        {...{ onKeyDown, ...otherProps }}
+        ref={inputRef}
+        className={theme.input}
+        aria-label={label || internalLabel}
+        onAnimationStart={handleAnimation}
+        onBlur={onBlur}
+        onFocus={onFocus}
+      />
+      {internalLabel && (
+        <label htmlFor={props.id} styleName={cx('internal-label', active || (value && value.length > 0) ? 'active' : '')}>{internalLabel}</label>
+      )}
 
-    {value && !noClearButton &&
-      <div styleName='clear' className={theme.clear} onClick={clear}>
-        x
-      </div>}
-    {loading && <Loading type='inline' styleName='loading' />}
-  </div>
+      {value && !noClearButton &&
+        <div styleName='clear' className={theme.clear} onClick={clear}>
+          x
+        </div>}
+      {loading && <Loading type='inline' styleName='loading' />}
+    </div>
+  )
 }

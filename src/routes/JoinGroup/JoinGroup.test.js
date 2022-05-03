@@ -1,95 +1,141 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import JoinGroup, { SIGNUP_PATH, EXPIRED_INVITE_PATH } from './JoinGroup'
+import { useSelector } from 'react-redux'
+import { Route } from 'react-router'
+import { graphql } from 'msw'
+import orm from 'store/models'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
+import getReturnToPath from 'store/selectors/getReturnToPath'
+import extractModelsForTest from 'util/testing/extractModelsForTest'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
+import JoinGroup, { SIGNUP_PATH } from './JoinGroup'
 
-const defaultProps = {
-  currentUser: null,
-  invitationToken: null,
-  accessCode: null,
-  groupSlug: null,
-  isLoggedIn: false,
-  hasCheckedValidInvite: false,
-  validInvite: null,
-  useInvitation: () => {},
-  checkInvitation: () => {},
-  match: {
-    accessCode: ''
-  },
-  location: {
-    search: ''
-  }
+jest.mock('store/selectors/getMixpanel', () => () => ({
+  identify: jest.fn(),
+  track: jest.fn()
+}))
+
+function currentUserProvider (authStateComplete) {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  const reduxState = { orm: ormSession.state }
+
+  extractModelsForTest({
+    me: {
+      id: '1',
+      name: 'Test User',
+      hasRegistered: true,
+      emailValidated: true,
+      settings: {
+        signupInProgress: !authStateComplete
+      },
+      memberships: [
+        {
+          id: '2',
+          group: {
+            id: '3',
+            slug: 'test-group'
+          }
+        }
+      ]
+    }
+  }, 'Me', ormSession)
+
+  return AllTheProviders(reduxState)
 }
 
-describe('JoinGroup', () => {
-  it('should check for a valid invitation when not logged-in', () => {
-    const testProps = {
-      ...defaultProps,
-      useInvitation: jest.fn(),
-      checkInvitation: jest.fn()
+it('joins and forwards to group when current user is fully signed-up', async () => {
+  const testMembership = {
+    id: '2',
+    group: {
+      id: '3',
+      slug: 'test-group'
     }
-    shallow(<JoinGroup {...testProps} />)
-    expect(testProps.useInvitation.mock.calls.length).toBe(0)
-    expect(testProps.checkInvitation.mock.calls.length).toBe(1)
-  })
+  }
 
-  it('should redirect to signup if invite is valid when not logged-in', () => {
-    const testProps = {
-      ...defaultProps,
-      isValidInvite: true,
-      hasCheckedValidInvite: true
-    }
-    const wrapper = shallow(<JoinGroup {...testProps} />)
-    expect(wrapper.find('Redirect').props().to).toContain(SIGNUP_PATH)
-  })
-
-  it('should redirect to expired page if invite is invalid when not logged-in', () => {
-    const testProps = {
-      ...defaultProps,
-      isValidInvite: false,
-      hasCheckedValidInvite: true
-    }
-    const wrapper = shallow(<JoinGroup {...testProps} />)
-    expect(wrapper.find('Redirect').props().to).toContain(EXPIRED_INVITE_PATH)
-  })
-
-  it('should use invitation when already logged-in', () => {
-    const testProps = {
-      ...defaultProps,
-      isLoggedIn: true,
-      checkInvitation: jest.fn(),
-      useInvitation: jest.fn(),
-      currentUser: { id: 'validUser' },
-      groupSlug: 'mygroup',
-      fetchForCurrentUser: jest.fn(() => Promise.resolve({ id: 'validUser' }))
-    }
-    const wrapper = shallow(<JoinGroup {...testProps} />)
-    expect(testProps.checkInvitation.mock.calls.length).toBe(0)
-    expect(testProps.useInvitation.mock.calls.length).toBe(1)
-    expect(wrapper.find('Redirect').length).toEqual(1)
-    expect(wrapper.find('Redirect').props().to).toContain(testProps.groupSlug)
-  })
-
-  it('should use invitation when logging in', () => {
-    const testProps = {
-      ...defaultProps,
-      isLoggedIn: true,
-      checkInvitation: jest.fn(),
-      useInvitation: jest.fn(),
-      currentUser: null,
-      fetchForCurrentUser: jest.fn(() => Promise.resolve({ id: 'validUser' }))
-    }
-    const wrapper = shallow(<JoinGroup {...testProps} />)
-    const groupSlug = 'mygroup'
-    wrapper.setProps({
-      isLoggedIn: true,
-      currentUser: {
-        id: 'validUser'
-      },
-      groupSlug
+  mockGraphqlServer.resetHandlers(
+    graphql.mutation('UseInvitation', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          useInvitation: {
+            membership: testMembership
+          }
+        })
+      )
+    }),
+    graphql.query('FetchForGroup', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          group: testMembership.group
+        })
+      )
     })
-    expect(testProps.checkInvitation.mock.calls.length).toBe(0)
-    expect(testProps.fetchForCurrentUser.mock.calls.length).toBe(1)
-    expect(testProps.useInvitation.mock.calls.length).toBe(1)
-    expect(wrapper.find('Redirect').props().to).toContain(groupSlug)
-  })
+  )
+
+  render(
+    <>
+      <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
+      <Route component={({ location }) => location.pathname} />
+    </>,
+    { wrapper: currentUserProvider(true) }
+  )
+
+  expect(await screen.findByText('/groups/test-group/explore')).toBeInTheDocument()
+})
+
+it('checks invitation and forwards to expired invite page when invitation is invalid when not logged-in', async () => {
+  mockGraphqlServer.resetHandlers(
+    graphql.query('CheckInvitation', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          checkInvitation: {
+            valid: false
+          }
+        })
+      )
+    })
+  )
+
+  render(
+    <>
+      <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ search: '' }} />
+      <Route component={({ location }) => location.pathname + location.search} />
+    </>,
+    { wrapper: currentUserProvider(false) }
+  )
+
+  expect(await screen.findByText(`${SIGNUP_PATH}?error=`, { exact: false })).toBeInTheDocument()
+})
+
+it('sets returnToPath and forwards to signup page when invitation is valid and user is not logged-in', async () => {
+  mockGraphqlServer.resetHandlers(
+    graphql.query('CheckInvitation', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          checkInvitation: {
+            valid: true
+          }
+        })
+      )
+    })
+  )
+
+  render(
+    <>
+      <JoinGroup match={{ params: { accessCode: 'anything' } }} location={{ pathname: 'route/to/join-group', search: '' }} />
+      <Route
+        component={({ location }) => {
+          const returnToPath = useSelector(getReturnToPath)
+          return (
+            <>
+              <div>{returnToPath}</div>
+              <div>{location.pathname}</div>
+            </>
+          )
+        }}
+      />
+    </>,
+    { wrapper: currentUserProvider(false) }
+  )
+
+  expect(await screen.findByText('route/to/join-group')).toBeInTheDocument()
+  expect(await screen.findByText(SIGNUP_PATH)).toBeInTheDocument()
 })

@@ -57,10 +57,34 @@ export function getContactPhone (group) {
   return farmData.phone
 }
 
-export function getFarmAddress (group) {
+export function getFarmAddressLine1 (group) {
   const farmData = getFarmData(group)
-  if (!farmData || !farmData.location) return {}
-  return farmData.location
+  if (!farmData || !farmData.location_address_line1) return null
+  return farmData.location_address_line1
+}
+
+export function getFarmLocality (group) {
+  const farmData = getFarmData(group)
+  if (!farmData || !farmData.location_locality) return null
+  return farmData.location_locality
+}
+
+export function getFarmAdministrativeArea (group) {
+  const farmData = getFarmData(group)
+  if (!farmData || !farmData.location_administrative_area) return null
+  return farmData.location_administrative_area
+}
+
+export function getFarmPostalCode (group) {
+  const farmData = getFarmData(group)
+  if (!farmData || !farmData.location_postal_code) return null
+  return farmData.location_postal_code
+}
+
+export function getFarmCountryCode (group) { // Ideally we'll have a country text lookup for this
+  const farmData = getFarmData(group)
+  if (!farmData || !farmData.location_country_code) return null
+  return farmData.location_country_code
 }
 
 export function getCounty (group) {

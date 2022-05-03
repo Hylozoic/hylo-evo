@@ -1,87 +1,72 @@
 import React from 'react'
 import { graphql } from 'msw'
-import { setupServer } from 'msw/node'
-import { history } from 'router'
-import { generateStore, render, AllTheProviders, fireEvent } from 'util/reactTestingLibraryExtended'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
+import { render, AllTheProviders, screen } from 'util/testing/reactTestingLibraryExtended'
 import GroupExplorer from './GroupExplorer'
+import userEvent from '@testing-library/user-event'
 import orm from 'store/models'
 import { FARM_VIEW } from 'util/constants'
 
-let providersWithStore = null
-
-const handlers = [
-  graphql.operation((req, res, ctx) => {
-    const { search, groupType, farmQuery } = req.body.variables
-    let items
-    if (search === '') {
-      items = firstGroupResults
-    } else if (search === 'different group' && !groupType) {
-      items = secondGroupResults
-    } else if (search === 'different group' && groupType === FARM_VIEW && farmQuery.productCategories === '') {
-      items = thirdGroupResults
-    } else if (search === 'different group' && groupType === FARM_VIEW && farmQuery.productCategories === 'vegetables') {
-      items = fourthGroupResults
-    }
-    return res(
-      ctx.data({ groups: { hasMore: false, items, total: 0 } })
-    )
-  })
-]
-
 jest.mock('components/ScrollListener', () => () => <div />) // was throwing errors with this.element().removeEventListener('blabadlbakdbfl')
 
-const server = setupServer(...handlers)
+function testProviders () {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  ormSession.Me.create({ id: '1' })
+  const reduxState = { orm: ormSession.state }
 
-// Enable API mocking before tests.
-beforeAll(() => server.listen())
-
-beforeEach(() => {
-  // setup store
-  const session = orm.mutableSession(orm.getEmptyState())
-  session.Me.create({ id: '1' })
-  const initialState = { orm: session.state }
-  const store = generateStore(history, initialState)
-  providersWithStore = AllTheProviders(store)
-})
+  return AllTheProviders(reduxState)
+}
 
 afterEach(() => {
-  server.resetHandlers()
-  providersWithStore = null
+  mockGraphqlServer.resetHandlers()
 })
 
 // Disable API mocking after the tests are done.
-afterAll(() => server.close())
+afterAll(() => mockGraphqlServer.close())
 
 test('GroupExplorer integration test', async () => {
-  const { findByText, getByRole, getByText } = render(
+  mockGraphqlServer.resetHandlers(
+    graphql.operation((req, res, ctx) => {
+      const { search, groupType, farmQuery } = req.body.variables
+      let items
+      if (search === '') {
+        items = firstGroupResults
+      } else if (search === 'different group' && !groupType) {
+        items = secondGroupResults
+      } else if (search === 'different group' && groupType === FARM_VIEW && farmQuery.productCategories === '') {
+        items = thirdGroupResults
+      } else if (search === 'different group' && groupType === FARM_VIEW && farmQuery.productCategories === 'vegetables') {
+        items = fourthGroupResults
+      }
+      return res(
+        ctx.data({ groups: { hasMore: false, items, total: 0 } })
+      )
+    })
+  )
+  const user = userEvent.setup()
+
+  render(
     <GroupExplorer />,
-    null,
-    providersWithStore
+    { wrapper: testProviders() }
   )
 
-  expect(await findByText('Test Group Title')).toBeInTheDocument()
+  expect(await screen.findByText('Test Group Title')).toBeInTheDocument()
+  expect(screen.queryByText('Search input results')).not.toBeInTheDocument()
 
-  fireEvent.change(getByRole('textbox'), {
-    target: { value: 'different group' }
-  })
+  await user.type(screen.getByRole('textbox'), 'different group')
+  expect(await screen.findByText('Search input results')).toBeInTheDocument()
 
-  expect(await findByText('Search input results')).toBeInTheDocument()
+  await user.click(screen.getByText('Farms'))
+  expect(await screen.findByText('My fav farm')).toBeInTheDocument()
 
-  fireEvent.click(getByText('Farms'))
+  await user.click(screen.getByText('Filters'))
+  expect(await screen.findByText('Operation:')).toBeInTheDocument()
 
-  expect(await findByText('My fav farm')).toBeInTheDocument()
+  await user.click(screen.getByText('Operation:'))
+  expect(await screen.findByText('Vegetables')).toBeInTheDocument()
 
-  fireEvent.click(getByText('Filters'))
-
-  expect(await findByText('Operation:')).toBeInTheDocument()
-
-  fireEvent.click(getByText('Operation:'))
-
-  expect(await findByText('Vegetables')).toBeInTheDocument()
-
-  fireEvent.click(getByText('Vegetables'))
-
-  expect(await findByText('Veggie farm')).toBeInTheDocument()
+  await user.click(screen.getByText('Vegetables'))
+  expect(await screen.findByText('Veggie farm')).toBeInTheDocument()
 })
 
 const firstGroupResults = [

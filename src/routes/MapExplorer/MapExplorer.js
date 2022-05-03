@@ -10,7 +10,6 @@ import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FlyToInterpolator } from 'react-map-gl'
 
-import { getQueryParamsObjectFromString } from 'util/navigation'
 import { isMobileDevice } from 'util/mobile'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { generateViewParams } from 'util/savedSearch'
@@ -91,8 +90,9 @@ export class UnwrappedMapExplorer extends React.Component {
 
     // Relinquishes route handling within the Map entirely to Mobile App
     // e.g. react router / history push
-    const { mobileSettingsLayout } = this.context
-    if (mobileSettingsLayout) {
+    const { hyloAppLayout } = this.context
+
+    if (hyloAppLayout) {
       this.props.history.block(tx => {
         const path = tx.pathname
         // when in embedded view of map allow web navigation within map
@@ -358,7 +358,7 @@ export class UnwrappedMapExplorer extends React.Component {
     setTimeout(() => {
       if (this.state.creatingPost) {
         this.setState({ coordinates: { lng: e.lngLat[0], lat: e.lngLat[1] } })
-        const currentParams = getQueryParamsObjectFromString(this.props.location.search)
+        const currentParams = Object.fromEntries(new URLSearchParams(this.props.location.search))
         this.props.showCreateModal({ ...currentParams, ...this.state.coordinates })
       }
     }, this.state.isAddingItemToMap ? 0 : oneSecondInMs)
@@ -473,9 +473,8 @@ export class UnwrappedMapExplorer extends React.Component {
       totalPostsInView,
       viewport
     } = this.state
-
-    const { mobileSettingsLayout } = this.context
-    const withoutNav = mobileSettingsLayout
+    const { hyloAppLayout, hideNavLayout } = this.context
+    const withoutNav = hyloAppLayout || hideNavLayout
     const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 
     return (
@@ -521,14 +520,16 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-        <button
-          data-for='addItemToMapTooltip'
-          data-tip='Add item to map'
-          styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
-          onClick={this.handleAddItemToMap}
-        >
-          <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
-        </button>
+        {currentUser && !hyloAppLayout && (
+          <button
+            data-for='addItemToMapTooltip'
+            data-tip='Add item to map'
+            styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
+            onClick={this.handleAddItemToMap}
+          >
+            <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+          </button>
+        )}
         <Tooltip
           delay={550}
           id='addItemToMapTooltip' />

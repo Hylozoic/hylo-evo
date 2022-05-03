@@ -126,7 +126,7 @@ const WIDGETS = {
 
 export default function Widget (props) {
   const dispatch = useDispatch()
-  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {}, key } = props
+  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {} } = props
   const router = useRouter()
   const routeParams = router && router.query
   const { group } = useEnsureCurrentGroup()
@@ -146,7 +146,7 @@ export default function Widget (props) {
   const widgetItems = useGetWidgetItems({ childGroups, currentUser, name, group, posts })
 
   return (
-    <div key={key} styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
+    <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
       {isModerator || (isVisible && widgetItems) ? <div styleName='header'>
         <h3>{(isModerator && WIDGETS[name].moderatorTitle) || WIDGETS[name].title}</h3>
         {isModerator && <div styleName='more'>

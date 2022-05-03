@@ -60,7 +60,7 @@ export default class MembershipRequestsTab extends Component {
 }
 
 export function NoRequests ({ group, viewMembers }) {
-  const { mobileSettingsLayout } = useLayoutFlags()
+  const { hyloAppLayout } = useLayoutFlags()
 
   return (
     <React.Fragment>
@@ -71,7 +71,7 @@ export function NoRequests ({ group, viewMembers }) {
           <h2>No new join requests</h2>
           We'll notify you by email when someone wants to join <strong>{group.name}</strong>
         </div>
-        {!mobileSettingsLayout && (
+        {!hyloAppLayout && (
           <Button
             label='View Current Members'
             onClick={viewMembers}

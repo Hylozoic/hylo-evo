@@ -12,8 +12,7 @@ export default function fetchForCurrentUser () {
       extractModel: [
         {
           getRoot: get('me'),
-          modelName: 'Me',
-          append: true
+          modelName: 'Me'
         }
       ]
     }

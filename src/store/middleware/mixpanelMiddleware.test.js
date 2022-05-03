@@ -1,3 +1,4 @@
+import orm from 'store/models'
 import mixpanelMiddleware from './mixpanelMiddleware'
 
 describe('mixpanelMiddleware', () => {
@@ -5,16 +6,27 @@ describe('mixpanelMiddleware', () => {
 
   beforeEach(() => {
     mixpanel = {
-      track: jest.fn()
+      track: jest.fn(),
+      identify: jest.fn()
     }
-    const state = {
-      session: {
-        loggedIn: false
-      },
-      mixpanel
-    }
+    const session = orm.session(orm.getEmptyState())
+    session.Me.create({
+      id: '1',
+      name: 'Test User',
+      hasRegistered: true,
+      emailValidated: true,
+      settings: {
+        signupInProgress: false
+      }
+    })
     const store = {
-      getState: () => state
+      getState: () => ({
+        current: {
+          loggedIn: false
+        },
+        mixpanel,
+        orm: session.state
+      })
     }
     const next = () => {}
     mixpanelMiddlewareInstance = mixpanelMiddleware(store)(next)
