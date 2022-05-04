@@ -129,6 +129,8 @@ export default class GroupSettingsTab extends Component {
 
     const locationObject = group.locationObject || currentUser.locationObject
 
+    const formattedGeoShape = geoShape && typeof geoShape === 'string' ? geoShape : geoShape ? JSON.stringify(geoShape) : ''
+
     return <div styleName='groupSettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
@@ -156,8 +158,9 @@ export default class GroupSettingsTab extends Component {
       <SettingsControl
         label='Group Shape'
         onChange={this.updateSetting('geoShape')}
+        placeholder='Add valid GeoJson geometry array...'
         type='text'
-        value={typeof geoShape === 'string' ? geoShape : JSON.stringify(geoShape)}
+        value={formattedGeoShape}
       />
       <div styleName='editable-map-container'>
         <EditableMap locationObject={group?.locationObject || null} polygon={geoShape} savePolygon={this.savePolygon} />
