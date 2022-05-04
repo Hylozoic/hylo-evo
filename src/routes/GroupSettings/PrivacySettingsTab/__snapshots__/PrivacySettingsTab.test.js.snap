@@ -149,7 +149,7 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       What questions are asked when a group requests to join this group?
     </p>
     <div
-      data-stylename="styles.groupQuestions "
+      data-stylename="styles.groupQuestions"
     >
       <div
         data-stylename="general.switchContainer"
