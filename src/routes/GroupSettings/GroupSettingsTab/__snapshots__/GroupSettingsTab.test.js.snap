@@ -53,6 +53,36 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     onChange={[Function]}
     type="location"
   />
+  <label>
+    Location Display Precision:
+  </label>
+  <Dropdown
+    alignRight={true}
+    items={
+      Array [
+        Object {
+          "label": "Show exact location on the map",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Show nearby location on the map",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Show location as the nearest town or city",
+          "onClick": [Function],
+        },
+      ]
+    }
+    toggleChildren={
+      <span>
+        Show exact location on the map
+        <Icon
+          name="ArrowDown"
+        />
+      </span>
+    }
+  />
   <div
     data-stylename="privacy-settings"
   >

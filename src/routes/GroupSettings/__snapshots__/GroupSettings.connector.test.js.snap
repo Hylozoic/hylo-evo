@@ -68,6 +68,7 @@ Object {
             askGroupToGroupJoinQuestions
             askJoinQuestions
             hideExtensionData
+            locationDisplayPrecision
             publicMemberDirectory
             showSuggestedSkills
           }
