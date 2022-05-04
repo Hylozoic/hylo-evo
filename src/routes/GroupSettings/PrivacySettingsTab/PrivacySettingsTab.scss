@@ -1,0 +1,183 @@
+.dataDetail {
+  color: $color-regent;
+  font-size: 14px;
+  margin: 0;
+}
+
+.groupQuestions {
+  position: relative;
+  margin-left: 13px;
+  padding-top: 10px;
+  transition: all .25s ease;
+
+  .questionList {
+    margin-top: 5px;
+    margin-left: 58px;
+
+    span {
+      transition: all .25s ease;
+      color: rgba(125, 140, 157, 1.000);
+      font-size: 14px;
+      line-height: 18px;
+      position: relative;
+      top: -2px;
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+
+  .question {
+    opacity: .5;
+    transition: all .25s ease;
+    margin-bottom: 8px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    position: relative;
+
+    .deleteInput {
+      position: absolute;
+      top: 8px;
+      right: 6px;
+      font-size: 18px;
+
+      .close {
+        color: rgba(255, 93, 99, 1.000);
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+
+    .createInput {
+      position: absolute;
+      top: 5px;
+      font-size: 20px;
+      right: 10px;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      font-size: 14px;
+      padding: 5px 25px 5px 8px;
+      color: #22405b;
+      border-radius: 3px;
+
+      &::placecholder {
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.groupQuestions.on {
+  .questionList span {
+    color: rgba(35, 64, 91, 1.000);
+  }
+
+  .question {
+    opacity: 1;
+  }
+}
+
+.member-visibility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.privacy-state {
+  border: 1px solid $color-regent;
+  border-radius: 10px;
+  color: $color-regent;
+  font-size: 10px;
+  font-style: bold;
+  transition: color .25s ease;
+  padding: 2px 6px;
+}
+
+.privacy-option-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  line-height: 1;
+  margin-bottom: 25px;
+}
+
+.privacy-option.disabled {
+  color: $color-regent-70;
+}
+
+.privacySetting {
+  padding: 5px 0;
+
+  label {
+    display: flex;
+    align-items: center;
+
+    .settingIcon {
+      margin: 0 40px 0 20px;
+      width: 0px;
+    }
+
+    h4 {
+      font-size: 18px;
+      margin-bottom: 0;
+      transition: all .25s ease;
+    }
+
+    .privacy-option {
+      transition: all .25s ease;
+      color: rgba(125, 140, 157, 1.000);
+      font-size: 14px;
+      margin-left: 0;
+      flex-grow: 1;
+    }
+
+    .settingDescription {
+      line-height: 18px;
+    }
+
+  }
+}
+
+.prerequisiteWarning {
+  margin-top: -15px;
+
+  .prerequisiteIcon {
+    font-size: 16px;
+    position: relative;
+    top: 3px;
+    color: rgba(41, 64, 90, 1.00);
+    margin: 0 3px;
+  }
+
+  strong {
+    color: rgba(41, 64, 90, 1.00);
+  }
+
+  .warning {
+    color: rgba(237, 86, 83, 1.00);
+  }
+}
+
+
+.privacySetting.on {
+  .privacy-state {
+    border: 1px solid $color-picton-blue;
+    color: $color-picton-blue;
+  }
+
+  label {
+    color: $color-regent !important;
+
+    .settingIcon {
+      color: rgba(0, 117, 255, 1.000);
+    }
+
+    h4, .privacy-option {
+      color: rgba(35, 64, 91, 1.000);
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import {
+  MESSAGE_GROUP_MODERATORS,
   UPDATE_WIDGET
 } from 'store/constants'
 
@@ -23,6 +24,18 @@ export function updateWidget (id, changes) {
     },
     meta: {
       extractModel: 'Widget'
+    }
+  }
+}
+
+export function messageGroupModerators (groupId) {
+  return {
+    type: MESSAGE_GROUP_MODERATORS,
+    graphql: {
+      query: `mutation ($groupId: ID) {
+        messageGroupModerators(groupId: $groupId)
+      }`,
+      variables: { groupId }
     }
   }
 }
