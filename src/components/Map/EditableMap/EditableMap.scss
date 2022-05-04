@@ -21,6 +21,11 @@ div.map-control {
   }
 }
 
+.editable-map {
+  &.drawing-mode {
+    cursor: crosshair;
+  }
+}
 .mapbox-gl-draw_polygon,
 .mapbox-gl-draw_circle-ex,
 .mapbox-gl-draw_reset {

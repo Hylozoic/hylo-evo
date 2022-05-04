@@ -87,26 +87,28 @@ export default function EditableMap (props) {
   return (
     <MapGL
       {...viewport}
-      width='100%'
-      height='100%'
-      mapOptions={{ logoPosition: 'bottom-right' }}
       attributionControl={false}
-      mapStyle='mapbox://styles/mapbox/light-v9'
+      height='100%'
       mapboxApiAccessToken={mapbox.token}
+      mapOptions={{ logoPosition: 'bottom-right' }}
+      mapStyle='mapbox://styles/mapbox/light-v9'
       onViewportChange={setViewport}
+      width='100%'
     >
-      <Editor
-        clickRadius={12}
-        editHandleShape={'circle'}
-        editHandleStyle={getEditHandleStyle}
-        featureStyle={getFeatureStyle}
-        features={existingPolygon}
-        mode={mode}
-        onSelect={onSelect}
-        onUpdate={onUpdate}
-        ref={editorRef}
-        style={{ width: '100%', height: '100%' }}
-      />
+      <span styleName={`editable-map${isModeDrawing ? ' drawing-mode' : ''}`}>
+        <Editor
+          clickRadius={12}
+          editHandleShape={'circle'}
+          editHandleStyle={getEditHandleStyle}
+          featureStyle={getFeatureStyle}
+          features={existingPolygon}
+          mode={mode}
+          onSelect={onSelect}
+          onUpdate={onUpdate}
+          ref={editorRef}
+          style={{ width: '100%', height: '100%' }}
+        />
+      </span>
       {drawTools}
     </MapGL>
   )
