@@ -41,7 +41,7 @@ export default function OpportunitiesToCollaborateWidget () {
 const collabTitle = {
   research: 'Research projects',
   events: 'Event collaboration',
-  volunteering: 'Volunteer opportunties',
+  volunteering: 'Volunteer opportunities',
   mentorship: 'Mentorship & advice',
   cooperative: 'Cooperatives',
   buy: 'Buy from us',
@@ -72,7 +72,7 @@ const collabText = (group) => {
 const promptLookup = {
   research: 'research projects',
   events: 'event collaboration',
-  volunteering: 'volunteer opportunties',
+  volunteering: 'volunteer opportunities',
   mentorship: 'mentorship & advice',
   cooperative: 'cooperatives',
   buy: 'purchasing from you',
