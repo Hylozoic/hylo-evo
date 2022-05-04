@@ -248,6 +248,7 @@ export default function AuthLayoutRouter (props) {
               return (
                 <Navigation
                   {...routeProps}
+                  group={currentGroup}
                   collapsed={collapsedState}
                   styleName={cx('left', { 'map-view': isMapView }, { hidden: !isGroupMenuOpen })}
                   mapView={isMapView}

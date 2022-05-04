@@ -54,19 +54,19 @@ export default function Navigation (props) {
       to: createPath
     },
     rootPath && {
-      label: group.type === TYPE_FARM ? 'Home' : 'Stream',
-      icon: group.type === TYPE_FARM ? 'Home' : 'Stream',
+      label: group && group.type === TYPE_FARM ? 'Home' : 'Stream',
+      icon: group && group.type === TYPE_FARM ? 'Home' : 'Stream',
       to: rootPath,
       badge: badge,
       handleClick: homeOnClick,
       exact: true
     },
-    streamPath && group.type === TYPE_FARM && {
+    streamPath && group && group.type === TYPE_FARM && {
       label: 'Stream',
       icon: 'Stream',
       to: streamPath
     },
-    explorePath && group.type !== TYPE_FARM && {
+    explorePath && group && group.type !== TYPE_FARM && {
       label: 'Explore',
       icon: 'Binoculars',
       to: explorePath
