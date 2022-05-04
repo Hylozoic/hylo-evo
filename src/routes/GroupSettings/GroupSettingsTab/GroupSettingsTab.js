@@ -6,6 +6,7 @@ import Icon from 'components/Icon'
 import './GroupSettingsTab.scss'
 import SettingsSection from '../SettingsSection'
 import Button from 'components/Button'
+import Dropdown from 'components/Dropdown'
 import GroupsSelector from 'components/GroupsSelector'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
@@ -21,6 +22,7 @@ import {
   DEFAULT_AVATAR,
   GROUP_ACCESSIBILITY,
   GROUP_VISIBILITY,
+  LOCATION_PRECISION,
   visibilityDescription,
   visibilityIcon,
   visibilityString
@@ -115,7 +117,8 @@ export default class GroupSettingsTab extends Component {
     const {
       accessibility, avatarUrl, bannerUrl, description, groupToGroupJoinQuestions, joinQuestions, location, name, prerequisiteGroups, settings, visibility
     } = edits
-    const { askGroupToGroupJoinQuestions, showSuggestedSkills } = settings
+
+    const { askGroupToGroupJoinQuestions, locationDisplayPrecision, showSuggestedSkills } = settings
 
     const locationObject = group.locationObject || currentUser.locationObject
 
@@ -143,6 +146,21 @@ export default class GroupSettingsTab extends Component {
         locationObject={locationObject}
         type='location'
       />
+
+      <label>Location Display Precision:</label>
+      <Dropdown
+        toggleChildren={<span>
+          {LOCATION_PRECISION[locationDisplayPrecision || 'precise']}
+          <Icon name='ArrowDown' />
+        </span>}
+
+        items={Object.keys(LOCATION_PRECISION).map(value => ({
+          label: LOCATION_PRECISION[value],
+          onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
+        }))}
+        alignRight
+      />
+
       <div styleName='privacy-settings'>
         <SettingsSection>
           <h3>Visibility</h3>

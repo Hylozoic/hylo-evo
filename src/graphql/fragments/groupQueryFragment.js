@@ -17,9 +17,10 @@ export default () => {
       allowGroupInvites
       askGroupToGroupJoinQuestions
       askJoinQuestions
+      hideExtensionData
+      locationDisplayPrecision
       publicMemberDirectory
       showSuggestedSkills
-      hideExtensionData
     }
     slug
     visibility
@@ -74,9 +75,10 @@ export default () => {
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
+          hideExtensionData
+          locationDisplayPrecision
           publicMemberDirectory
           showSuggestedSkills
-          hideExtensionData
         }
       }
     }
@@ -187,9 +189,10 @@ export default () => {
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
+          hideExtensionData
+          locationDisplayPrecision
           publicMemberDirectory
           showSuggestedSkills
-          hideExtensionData
         }
       }
     }
