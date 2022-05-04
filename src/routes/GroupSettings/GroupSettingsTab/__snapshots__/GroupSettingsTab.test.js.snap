@@ -56,8 +56,9 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   <SettingsControl
     label="Group Shape"
     onChange={[Function]}
+    placeholder="Add valid GeoJson object..."
     type="text"
-    value="null"
+    value=""
   />
   <div
     data-stylename="editable-map-container"

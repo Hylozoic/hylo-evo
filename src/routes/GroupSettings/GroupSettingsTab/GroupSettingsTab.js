@@ -158,7 +158,7 @@ export default class GroupSettingsTab extends Component {
       <SettingsControl
         label='Group Shape'
         onChange={this.updateSetting('geoShape')}
-        placeholder='Add valid GeoJson geometry array...'
+        placeholder='Add valid GeoJson object...'
         type='text'
         value={formattedGeoShape}
       />

@@ -9,18 +9,19 @@ import './EditableMap.scss'
 
 export default function EditableMap (props) {
   const { locationObject, polygon, savePolygon } = props
-  const centerAt = locationObject?.center
-  const showLocationOnMap = !polygon && centerAt
   const [viewport, setViewport] = useState(null)
   const [mode, setMode] = useState(null)
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null)
   const [isModeDrawing, setIsModeDrawing] = useState(false)
-  const editorRef = useRef(null)
-  const existingPolygon = [{
+  const [displayPolygon, setDisplayPolygon] = useState([{
     geometry: polygon || {},
     properties: { },
     type: 'Feature'
-  }]
+  }])
+
+  const centerAt = locationObject?.center
+  const showLocationOnMap = !polygon && centerAt
+  const editorRef = useRef(null)
 
   useEffect(() => {
     const defaultLocation = showLocationOnMap ? {
@@ -48,8 +49,10 @@ export default function EditableMap (props) {
   const onUpdate = useCallback((payload) => {
     const { editType, data } = payload
     if (editType === 'addFeature') {
+      const polygonToSave = data[data.length - 1]
       setMode(new EditingMode())
-      savePolygon(data[data.length - 1])
+      savePolygon(polygonToSave)
+      setDisplayPolygon([polygonToSave])
     }
   }, [])
 
@@ -101,7 +104,7 @@ export default function EditableMap (props) {
           editHandleShape={'circle'}
           editHandleStyle={getEditHandleStyle}
           featureStyle={getFeatureStyle}
-          features={existingPolygon}
+          features={displayPolygon}
           mode={mode}
           onSelect={onSelect}
           onUpdate={onUpdate}
