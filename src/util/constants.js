@@ -1140,6 +1140,11 @@ export const FARM_PRODUCT_LIST = [
     id: '6087e76c53709500013da876'
   },
   {
+    label: 'carrots',
+    value: 'carrots',
+    id: '6087e76c53709500013da876'
+  },
+  {
     label: 'fodder carrot',
     value: 'carrot_fodder',
     id: '6087e76c53709500013da877'
