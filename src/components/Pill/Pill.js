@@ -10,7 +10,7 @@ export default function Pill ({
   className,
   editable,
   darkText = false,
-  onClick: providedOnClick = () => {}
+  onClick
 }) {
   const [removing, setRemoving] = useState(false)
   const deletePill = () => {
@@ -22,37 +22,40 @@ export default function Pill ({
       }
     }
   }
-  const onClick = () => providedOnClick(id, label)
+  const providedOnClick = () => onClick(id, label)
   const mouseOut = () => setRemoving(false)
   const pillStyles = cx(
     'pill',
     {
-      'clickable': !!onClick,
-      'removable': editable && onRemove,
-      'removing': editable && onRemove && removing
+      clickable: !!onClick,
+      removable: editable && onRemove,
+      removing: editable && onRemove && removing
     },
     darkText ? 'dark-text' : 'gray-text'
   )
 
-  return <div
-    styleName={pillStyles}
-    className={className}
-    onMouseLeave={mouseOut}
-  >
-    <span
-      data-tip='Click to Search'
-      data-for='pill-label'
-      styleName='display-label'
-      onClick={onClick}
+  return (
+    <div
+      styleName={pillStyles}
+      className={className}
+      onMouseLeave={mouseOut}
     >
-      {label}
-    </span>
-    {editable &&
-      <Icon
-        styleName='remove-label'
-        dataTip='Double click to delete'
-        dataTipFor='pill-label'
-        name='Ex'
-        onClick={deletePill} />}
-  </div>
+      <span
+        data-tip='Click to Search'
+        data-for='pill-label'
+        styleName='display-label'
+        onClick={providedOnClick}
+      >
+        {label}
+      </span>
+      {editable &&
+        <Icon
+          styleName='remove-label'
+          dataTip='Double click to delete'
+          dataTipFor='pill-label'
+          name='Ex'
+          onClick={deletePill}
+        />}
+    </div>
+  )
 }
