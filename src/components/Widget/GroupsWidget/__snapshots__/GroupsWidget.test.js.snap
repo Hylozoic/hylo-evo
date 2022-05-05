@@ -590,7 +590,14 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                 <div
                                   data-stylename="group-description"
                                 >
-                                  yo
+                                  <span
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<p>yo</p>
+",
+                                      }
+                                    }
+                                  />
                                 </div>
                                 <div
                                   data-stylename="isnt-member"
@@ -709,7 +716,14 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                 <div
                                   data-stylename="group-description"
                                 >
-                                  oy
+                                  <span
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<p>oy</p>
+",
+                                      }
+                                    }
+                                  />
                                 </div>
                                 <div
                                   data-stylename="isnt-member"
