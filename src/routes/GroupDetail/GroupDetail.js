@@ -17,11 +17,11 @@ import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
   GROUP_ACCESSIBILITY,
+  GROUP_TYPES,
   visibilityDescription,
   visibilityIcon,
   visibilityString
 } from 'store/models/Group'
-import { TYPE_FARM, TYPE_NORMAL } from 'util/constants'
 import { inIframe } from 'util/index'
 import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 
@@ -89,66 +89,75 @@ export default class GroupDetail extends Component {
 
     const fullPage = !onClose
 
-    return <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
-      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
-        {onClose &&
-          <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
-        <div styleName='g.groupTitleContainer'>
-          <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
-          <div>
-            <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>About </span>}{group.name}</div>
-            <div styleName='g.groupContextInfo'>
-              {!isAboutCurrentGroup && <div>
-                <span styleName='g.group-privacy'>
-                  <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
-                  <div styleName='g.privacy-tooltip'>
-                    <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+    console.log('!!! group.type', group?.type)
+
+    return (
+      <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
+        <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
+          {onClose && (
+            <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>
+          )}
+          <div styleName='g.groupTitleContainer'>
+            <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
+            <div>
+              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>About </span>}{group.name}</div>
+              <div styleName='g.groupContextInfo'>
+                {!isAboutCurrentGroup && (
+                  <div>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+                      </div>
+                    </span>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
+                      </div>
+                    </span>
                   </div>
-                </span>
-                <span styleName='g.group-privacy'>
-                  <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
-                  <div styleName='g.privacy-tooltip'>
-                    <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
-                  </div>
-                </span>
-              </div>}
-              <span styleName='g.group-location'>{group.location}</span>
+                )}
+                <span styleName='g.group-location'>{group.location}</span>
+              </div>
             </div>
           </div>
+          <div styleName='g.headerBackground' />
         </div>
-        <div styleName='g.headerBackground' />
+        <div styleName='g.groupDetailBody'>
+          {group.type === GROUP_TYPES.default && this.normalGroupBody()}
+          {group.type === GROUP_TYPES.farm && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
+          {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
+            ? <div styleName='g.aboutCurrentGroup'>
+              <h3>Moderators</h3>
+              <div styleName='g.moderators'>
+                {moderators.map(p => (
+                  <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
+                    <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
+                    <span>{p.name}</span>
+                  </Link>
+                ))}
+              </div>
+              <h3>Privacy settings</h3>
+              <div styleName='g.privacySetting'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
+                <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
+              </div>
+              <div styleName='g.privacySetting'>
+                <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
+                <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
+              </div>
+            </div>
+            : !currentUser
+              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
+              : isMember
+                ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+                : this.renderGroupDetails()
+          }
+        </div>
+        <SocketSubscriber type='group' id={group.id} />
       </div>
-      <div styleName='g.groupDetailBody'>
-        {group.type === TYPE_NORMAL && this.normalGroupBody()}
-        {group.type === TYPE_FARM && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
-        { isAboutCurrentGroup || group.type === TYPE_FARM
-          ? <div styleName='g.aboutCurrentGroup'>
-            <h3>Moderators</h3>
-            <div styleName='g.moderators'>
-              {moderators.map(p => <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
-                <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
-                <span>{p.name}</span>
-              </Link>)}
-            </div>
-            <h3>Privacy settings</h3>
-            <div styleName='g.privacySetting'>
-              <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
-              <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
-            </div>
-            <div styleName='g.privacySetting'>
-              <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
-              <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
-            </div>
-          </div>
-          : !currentUser
-            ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
-            : isMember
-              ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
-              : this.renderGroupDetails()
-        }
-      </div>
-      <SocketSubscriber type='group' id={group.id} />
-    </div>
+    )
   }
 
   normalGroupBody () {
@@ -162,9 +171,7 @@ export default class GroupDetail extends Component {
 
     return (
       <>
-        {isAboutCurrentGroup &&
-          !group.description &&
-          canModerate
+        {isAboutCurrentGroup && !group.description && canModerate
           ? <div styleName='g.no-description'>
             <div>
               <h4>Your group doesn't have a description</h4>

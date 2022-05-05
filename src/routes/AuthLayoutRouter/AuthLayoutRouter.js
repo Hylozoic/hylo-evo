@@ -53,8 +53,9 @@ import SiteTour from 'routes/AuthLayoutRouter/components/SiteTour'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
+
 import UserSettings from 'routes/UserSettings'
-import { TYPE_FARM } from 'util/constants'
+import { GROUP_TYPES } from 'store/models/Group'
 import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
@@ -355,8 +356,9 @@ export default function AuthLayoutRouter (props) {
 
 export function returnDefaultRouteForGroup (group) {
   if (!group) return Stream
+
   switch (group.type) {
-    case TYPE_FARM:
+    case GROUP_TYPES.farm:
       return LandingPage
     default:
       return Stream
