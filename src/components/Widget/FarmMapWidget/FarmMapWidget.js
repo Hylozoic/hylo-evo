@@ -102,7 +102,7 @@ export default function FarmMapWidget ({ group, items }) {
   return (
     <div styleName='farm-map-container'>
       <Map
-        layers={[groupIconLayer, postsLayer]}
+        hyloLayers={[groupIconLayer, postsLayer]}
         children={_renderTooltip()}
         viewport={viewport}
         onViewportUpdate={setViewport}

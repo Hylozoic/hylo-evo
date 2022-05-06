@@ -38,7 +38,6 @@
 }
 
 .toggleDrawerButton {
-  right: 20px;
   top: 10px;
   display: block;
   z-index: 10;
@@ -80,6 +79,7 @@
 .drawerAdjacentButton {
   position: absolute;
   border-radius: 20px;
+  right: 20px;
   width: 40px;
   height: 40px;
   background: white;
@@ -162,6 +162,7 @@
 }
 
 button.toggleFeatureFiltersButton {
+  cursor: pointer;
   position: absolute;
   bottom: 10px;
   left: 20px;
@@ -178,6 +179,130 @@ button.toggleFeatureFiltersButton {
   &.open {
     color: rgba(255,255,255,1);
     background-color: $color-caribbean-green;
+  }
+}
+
+.featureTypeFilters {
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+  background: white;
+  display: none;
+  padding-bottom: 10px;
+  box-shadow: $box-shadow-default;
+
+  &.open {
+    display: block;
+  }
+
+  h3 {
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
+  }
+}
+
+.featureTypeSwitch {
+  margin: 10px;
+  > span {
+    margin-left: 10px;
+  }
+}
+
+.toggleLayersSelectorButton {
+  bottom: 90px;
+  color: rgba(125, 140, 157, 1.000);
+  background-color: rgba(255,255,255,1);
+  outline: none !important;
+  border-radius: 50px;
+  box-shadow: $box-shadow-default;
+  padding: 8px;
+
+  &.open, &:hover {
+    background-color: $color-caribbean-green;
+
+    span {
+      color: white;
+    }
+  }
+}
+
+.layersSelectorContainer {
+  position: absolute;
+  bottom: 90px;
+  right: 70px;
+  background: white;
+  display: none;
+  padding-bottom: 10px;
+  box-shadow: $box-shadow-default;
+  z-index: 1000;
+
+  &.drawerOpen {
+    right: calc(40% + 70px);
+  }
+
+  &.open {
+    display: block;
+  }
+
+  h3 {
+    font-size: 14px;
+    margin-bottom: 0;
+    padding: 10px;
+    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
+  }
+
+  .layersDropdown {
+    bottom: 0;
+    color: $color-regent;
+    padding: 0 12px;
+    font-size: 12px;
+    border-radius: 30px;
+    margin-left: 1em;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid gray;
+  }
+
+  .layersDropdownLabel {
+    line-height: 2em;
+    position: relative;
+    vertical-align: middle;
+
+    span { // icon positioning
+      vertical-align: middle;
+    }
+  }
+
+  .layersHeader {
+    background-color: #0DC39F;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .layersList {
+    padding: 2px;
+    margin-right: 10px;
+
+    .layerLabel {
+      vertical-align: middle;
+      padding-left: 5px;
+    }
+
+    a {
+      text-decoration: none;
+      padding-left: 5px;
+
+      span {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .pointer {
+    bottom: 14px;
+    left: auto;
+    right: -5px
   }
 }
 
@@ -225,63 +350,52 @@ button.toggleFeatureFiltersButton {
   border-radius: 50px;
   transition: all .25s ease;
   cursor: pointer;
-  &.open, &:hover {
+
+  &.open {
     background-color: $color-caribbean-green;
     color: white;
     cursor: pointer;  
   }
+
   // Necessary to keep simulated hover event on touch devices
   // from sticking (Saved Search button was remaining
   // highlighted after closed)
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: inherit;
-      color: inherit;
-      cursor: inherit;
+      background-color: $color-caribbean-green;
+      color: white;
+      cursor: pointer;
     }
   }
 }
 
 .addItemToMapButton {
-  right: 20px;
   bottom: 40px;
   padding: 8px;
 
-  &.active, &:hover {
-    background-color: $color-picton-blue;
-    
+  &:hover {
+    background-color: $color-caribbean-green;
+
     span {
       color: white;
     }
   }
-}
 
-.featureTypeFilters {
-  position: absolute;
-  bottom: 50px;
-  left: 20px;
-  background: white;
-  display: none;
-  padding-bottom: 10px;
-  box-shadow: $box-shadow-default;
+  &.active {
+    background-color: $color-picton-blue;
 
-  &.open {
-    display: block;
+    span {
+      color: white;
+    }
   }
 
-  h3 {
-    font-size: 14px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-bottom: 1px solid rgba(224, 229, 233, 1.000);
+  &:focus {
+    outline: 0;
   }
 }
 
-.featureTypeSwitch {
-  margin: 10px;
-  > span {
-    margin-left: 10px;
-  }
+.helpTipTwo {
+  z-index: 2000 !important;
 }
 
 @media screen and (max-width: 600px) {
