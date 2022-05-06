@@ -63,7 +63,7 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
-        geoShape: geoShape || null,
+        geoShape: typeof geoShape !== 'string' ? JSON.stringify(geoShape) : geoShape || null,
         groupToGroupJoinQuestions: groupToGroupJoinQuestions ? groupToGroupJoinQuestions.concat({ text: '' }) : [{ text: '' }],
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
@@ -129,8 +129,6 @@ export default class GroupSettingsTab extends Component {
 
     const locationObject = group.locationObject || currentUser.locationObject
 
-    const formattedGeoShape = geoShape && typeof geoShape === 'string' ? geoShape : geoShape ? JSON.stringify(geoShape) : ''
-
     return <div styleName='groupSettings'>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
@@ -160,7 +158,7 @@ export default class GroupSettingsTab extends Component {
         onChange={this.updateSetting('geoShape')}
         placeholder='Add valid GeoJson object...'
         type='text'
-        value={formattedGeoShape}
+        value={geoShape}
       />
       <div styleName='editable-map-container'>
         <EditableMap locationObject={group?.locationObject || null} polygon={geoShape} savePolygon={this.savePolygon} />

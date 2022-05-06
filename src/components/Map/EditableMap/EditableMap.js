@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import MapGL from 'react-map-gl'
 import { Editor, DrawPolygonMode, EditingMode } from 'react-map-gl-draw'
+import centroid from '@turf/centroid'
 import Icon from 'components/Icon'
 import { mapbox } from 'config'
 
@@ -9,32 +10,66 @@ import './EditableMap.scss'
 
 export default function EditableMap (props) {
   const { locationObject, polygon, savePolygon } = props
-  const [viewport, setViewport] = useState(null)
-  const [mode, setMode] = useState(null)
+  const fallbackCoords = {
+    longitude: -122.2712,
+    latitude: 37.8044,
+    zoom: 12
+  }
+  const emptyGeoJsonObject = [{
+    geometry: {},
+    properties: {},
+    type: 'Feature'
+  }]
+  const parsePolygon = (polygonToParse) => {
+    try {
+      return JSON.parse(polygonToParse)
+    } catch (e) {
+      return emptyGeoJsonObject
+    }
+  }
+  const getFormattedPolygon = (polygonToFormat) => {
+    const parsedPolygon = polygonToFormat && typeof polygonToFormat === 'string' ? parsePolygon(polygonToFormat) : polygonToFormat || null
+    if (parsedPolygon?.type === 'Feature') {
+      return parsedPolygon
+    } else if (parsedPolygon?.type === 'Polygon') {
+      return [{
+        geometry: parsedPolygon,
+        properties: {},
+        type: 'Feature'
+      }]
+    } else {
+      return emptyGeoJsonObject
+    }
+  }
+
+  const [viewport, setViewport] = useState(fallbackCoords)
+  const [mode, setMode] = useState(new EditingMode())
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null)
   const [isModeDrawing, setIsModeDrawing] = useState(false)
-  const [displayPolygon, setDisplayPolygon] = useState([{
-    geometry: polygon || {},
-    properties: { },
-    type: 'Feature'
-  }])
+  const [displayPolygon, setDisplayPolygon] = useState(getFormattedPolygon(polygon))
 
   const centerAt = locationObject?.center
-  const showLocationOnMap = !polygon && centerAt
   const editorRef = useRef(null)
 
   useEffect(() => {
-    const defaultLocation = showLocationOnMap ? {
-      latitude: parseFloat(centerAt.lat),
-      longitude: parseFloat(centerAt.lng),
+    const formattedPolygon = getFormattedPolygon(polygon)
+    const polygonCenter = formattedPolygon !== emptyGeoJsonObject ? centroid(formattedPolygon[0]).geometry.coordinates : null
+    const viewportLocation = polygonCenter?.length > 0 ? {
+      longitude: polygonCenter[0],
+      latitude: polygonCenter[1],
       zoom: 12
-    } : {
-      longitude: -122.2712,
-      latitude: 37.8044,
+    } : centerAt ? {
+      longitude: parseFloat(centerAt.lat),
+      latitude: parseFloat(centerAt.lng),
       zoom: 12
-    }
-    setViewport(defaultLocation)
-  }, [locationObject])
+    } : fallbackCoords
+    setViewport(viewportLocation)
+  }, [displayPolygon])
+
+  const toggleMode = () => {
+    setMode(!isModeDrawing ? new DrawPolygonMode() : new EditingMode())
+    setIsModeDrawing(!isModeDrawing)
+  }
 
   const onSelect = useCallback(options => {
     setSelectedFeatureIndex(options && options.selectedFeatureIndex)
@@ -49,17 +84,13 @@ export default function EditableMap (props) {
   const onUpdate = useCallback((payload) => {
     const { editType, data } = payload
     if (editType === 'addFeature') {
-      const polygonToSave = data[data.length - 1]
+      const polygonToSave = getFormattedPolygon(data[data.length - 1])
       setMode(new EditingMode())
+      setIsModeDrawing(false)
       savePolygon(polygonToSave)
       setDisplayPolygon([polygonToSave])
     }
   }, [])
-
-  const toggleMode = () => {
-    setMode(isModeDrawing ? new EditingMode() : new DrawPolygonMode())
-    setIsModeDrawing(!isModeDrawing)
-  }
 
   const drawTools = (
     <div className='mapboxgl-ctrl-top-left'>
@@ -67,7 +98,7 @@ export default function EditableMap (props) {
         <button
           styleName={`mapbox-gl-draw_polygon${isModeDrawing ? ' active' : ''}`}
           title='New Polygon'
-          onClick={() => toggleMode()}
+          onClick={toggleMode}
         ><Icon name='Drawing' /></button>
       </div>
       <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>

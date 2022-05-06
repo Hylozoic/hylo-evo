@@ -58,14 +58,12 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     onChange={[Function]}
     placeholder="Add valid GeoJson object..."
     type="text"
-    value=""
   />
   <div
     data-stylename="editable-map-container"
   >
     <EditableMap
       locationObject="Fuji"
-      polygon={null}
       savePolygon={[Function]}
     />
   </div>

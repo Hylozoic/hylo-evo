@@ -81,6 +81,7 @@
     "@turf/bbox-polygon": "^6.0.1",
     "@turf/boolean-within": "^6.0.1",
     "@turf/center": "^6.0.1",
+    "@turf/centroid": "^6.0.1",
     "@turf/combine": "^6.0.1",
     "@turf/helpers": "^6.1.4",
     "@types/react": "^16.8.14",
