@@ -3,12 +3,6 @@ export const ALL_VIEW = 'all'
 export const FARM_VIEW = 'farm'
 export const FARM_ONBOARDING = 'farm-onboarding'
 
-/*
-  Group types
-*/
-export const TYPE_NORMAL = ''
-export const TYPE_FARM = 'farm'
-
 export const ANIMAL_LIST = [
   { label: 'Dairy Cattle', value: 'dairy_cattle' },
   { label: 'Beef Cattle', value: 'beef_cattle' },
@@ -1137,6 +1131,11 @@ export const FARM_PRODUCT_LIST = [
   {
     label: 'carrot',
     value: 'carrot',
+    id: '6087e76c53709500013da876'
+  },
+  {
+    label: 'carrots',
+    value: 'carrots',
     id: '6087e76c53709500013da876'
   },
   {

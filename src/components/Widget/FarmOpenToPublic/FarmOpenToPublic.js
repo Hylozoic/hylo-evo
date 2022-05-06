@@ -18,8 +18,8 @@ export default function FarmOpenToPublic ({ group }) {
   const openToPublic = getOpenToPublic(group)
 
   return (
-    openToPublic ?
-      <div styleName='farm-open-to-public-container'>
+    openToPublic
+      ? <div styleName='farm-open-to-public-container'>
         <div styleName='opening-hours'>Open {openingHours}</div>
         {getFarmAddressLine1(group) &&
           <div styleName='address'>

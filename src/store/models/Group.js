@@ -6,6 +6,11 @@ export const GROUP_ACCESSIBILITY = {
   Open: 2
 }
 
+export const GROUP_TYPES = {
+  default: null,
+  farm: 'farm'
+}
+
 export function accessibilityDescription (a) {
   switch (a) {
     case GROUP_ACCESSIBILITY.Closed:
