@@ -39,9 +39,14 @@ export default function NativeTerritoriesLayer (props) {
           type='symbol'
           layout={{
             'text-field': ['to-string', ['get', 'Name']],
-            'text-size': 12,
+            'text-size': 14,
             'text-anchor': 'center',
             visibility: visibility ? 'visible' : 'none'
+          }}
+          paint={{
+            'text-halo-color': 'rgba(255, 255, 255, 1)',
+            'text-halo-width': 1,
+            'text-halo-blur': 2
           }}
         />
       </Source>

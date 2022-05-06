@@ -433,7 +433,7 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 
   handleAddItemToMap = () => {
-    this.setState({ isAddingItemToMap: true })
+    this.setState({ isAddingItemToMap: !this.state.isAddingItemToMap })
   }
 
   toggleDrawer = (e) => {
@@ -539,7 +539,12 @@ export class UnwrappedMapExplorer extends React.Component {
           </Map>
           {pendingPostsMap && <Loading className={styles.loading} />}
         </div>
-        <button styleName={cx('toggleDrawerButton drawerAdjacentButton', { drawerOpen: !hideDrawer })} onClick={this.toggleDrawer}>
+        <button
+          data-for='helpTip'
+          data-tip={hideDrawer ? 'Open Drawer' : 'Close Drawer'}
+          styleName={cx('toggleDrawerButton drawerAdjacentButton', { drawerOpen: !hideDrawer })}
+          onClick={this.toggleDrawer}
+        >
           <Icon name='Hamburger' className={styles.openDrawer} />
           <Icon name='Ex' className={styles.closeDrawer} />
         </button>
@@ -567,20 +572,6 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-
-        {currentUser && !hyloAppLayout && (
-          <button
-            data-for='addItemToMapTooltip'
-            data-tip='Add item to map'
-            styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
-            onClick={this.handleAddItemToMap}
-          >
-            <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
-          </button>
-        )}
-        <Tooltip
-          delay={550}
-          id='addItemToMapTooltip' />
 
         {currentUser && <>
           <Icon
@@ -623,19 +614,22 @@ export class UnwrappedMapExplorer extends React.Component {
           <div styleName={cx('pointer')} />
         </div>
 
-        <Icon
-          name='Stack'
+        <button
+          data-for='helpTip'
+          data-tip={showLayersSelector ? null : 'Change Map Layers'}
           onClick={this.toggleLayersSelector}
           styleName={cx('toggleLayersSelectorButton drawerAdjacentButton', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}
-        />
+        >
+          <Icon name='Stack' />
+        </button>
         <div styleName={cx('layersSelectorContainer', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}>
           <h3>Base Layer:
             <Dropdown
               className={styles.layersDropdown}
               menuAbove
               toggleChildren={<span styleName='styles.layersDropdownLabel'>
-                <Icon name='ArrowDown' />
                 {MAP_BASE_LAYERS.find(o => o.id === baseLayerStyle).label}
+                <Icon name='ArrowDown' />
               </span>}
               items={MAP_BASE_LAYERS.map(({ id, label }) => ({
                 label,
@@ -647,27 +641,42 @@ export class UnwrappedMapExplorer extends React.Component {
           <h3 styleName='layersHeader'>Other Layers</h3>
           <div styleName='layersList'>
             <SwitchStyled
-              backgroundColor='blue'
+              backgroundColor='rgb(0, 163, 227)'
               name='Native Territotires'
               checked={!!otherLayers['native_territories']}
               onChange={(checked, name) => this.toggleMapLayer('native_territories')}
-            /> Native Territories
+            />
+            <span styleName='layerLabel'>
+              Native Territories
+              <a href='https://native-land.ca' target='__blank'>
+                <Icon name='Info' dataTip='Credit to native-land.ca' dataTipFor='helpTipTwo' />
+              </a>
+            </span>
           </div>
 
           <div styleName={cx('pointer')} />
         </div>
 
-        <button
-          data-for='addItemToMapTooltip'
-          data-tip='Add item to map'
-          styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
-          onClick={this.handleAddItemToMap}
-        >
-          <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
-        </button>
+        {currentUser && !hyloAppLayout && (
+          <button
+            data-for='helpTip'
+            data-tip='Add item to map'
+            styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
+            onClick={this.handleAddItemToMap}
+          >
+            <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+          </button>
+        )}
         <Tooltip
           delay={550}
-          id='addItemToMapTooltip'
+          id='helpTip'
+          position='left'
+        />
+        <Tooltip
+          delay={550}
+          id='helpTipTwo'
+          position='bottom'
+          className={styles.helpTipTwo}
         />
       </div>
     )

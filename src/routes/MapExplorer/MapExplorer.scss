@@ -219,9 +219,12 @@ button.toggleFeatureFiltersButton {
   box-shadow: $box-shadow-default;
   padding: 8px;
 
-  &.open {
-    color: rgba(255,255,255,1);
+  &.open, &:hover {
     background-color: $color-caribbean-green;
+
+    span {
+      color: white;
+    }
   }
 }
 
@@ -233,6 +236,7 @@ button.toggleFeatureFiltersButton {
   display: none;
   padding-bottom: 10px;
   box-shadow: $box-shadow-default;
+  z-index: 1000;
 
   &.drawerOpen {
     right: calc(40% + 70px);
@@ -244,7 +248,7 @@ button.toggleFeatureFiltersButton {
 
   h3 {
     font-size: 14px;
-    margin-bottom: 15px;
+    margin-bottom: 0;
     padding: 10px;
     border-bottom: 1px solid rgba(224, 229, 233, 1.000);
   }
@@ -257,28 +261,42 @@ button.toggleFeatureFiltersButton {
     border-radius: 30px;
     margin-left: 1em;
     background-color: rgba(255, 255, 255, 1);
-    box-shadow: $box-shadow-default;
+    border: 1px solid gray;
   }
 
   .layersDropdownLabel {
     line-height: 2em;
     position: relative;
-    top: -0.15em;
+    vertical-align: middle;
 
     span { // icon positioning
-      top: 6px;
-      margin-right: 0.25em;
-      left: -2px;
+      vertical-align: middle;
     }
   }
 
   .layersHeader {
     background-color: #0DC39F;
     color: white;
+    margin-bottom: 10px;
   }
 
   .layersList {
     padding: 2px;
+    margin-right: 10px;
+
+    .layerLabel {
+      vertical-align: middle;
+      padding-left: 5px;
+    }
+
+    a {
+      text-decoration: none;
+      padding-left: 5px;
+
+      span {
+        font-size: 16px;
+      }
+    }
   }
 
   .pointer {
@@ -355,13 +373,29 @@ button.toggleFeatureFiltersButton {
   bottom: 40px;
   padding: 8px;
 
-  &.active, &:hover {
+  &:hover {
+    background-color: $color-caribbean-green;
+
+    span {
+      color: white;
+    }
+  }
+
+  &.active {
     background-color: $color-picton-blue;
 
     span {
       color: white;
     }
   }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.helpTipTwo {
+  z-index: 2000 !important;
 }
 
 @media screen and (max-width: 600px) {
