@@ -134,9 +134,10 @@ export default class GroupSettingsTab extends Component {
         type='location'
       />
 
-      <label>Location Display Precision:</label>
+      <label styleName='styles.label'>Location Privacy:</label>
       <Dropdown
-        toggleChildren={<span>
+        styleName='styles.location-obfuscation-dropdown'
+        toggleChildren={<span styleName='styles.location-obfuscation-dropdown-label'>
           {LOCATION_PRECISION[locationDisplayPrecision || 'precise']}
           <Icon name='ArrowDown' />
         </span>}
@@ -145,9 +146,11 @@ export default class GroupSettingsTab extends Component {
           label: LOCATION_PRECISION[value],
           onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
         }))}
-        alignRight
       />
+      <p styleName='general.detailText'>Note: as a moderator you will always see the exact location displayed</p>
 
+      <br />
+      <br />
       <br />
 
       <SettingsSection>
