@@ -2,16 +2,16 @@
 
 exports[`GroupSettingsTab renders correctly 1`] = `
 <div
-  data-stylename="groupSettings"
+  data-stylename="general.groupSettings"
 >
   <input
-    data-stylename="name"
+    data-stylename="styles.name"
     onChange={[Function]}
     type="text"
     value="Foomunity"
   />
   <div
-    data-stylename="banner"
+    data-stylename="styles.banner"
     style={
       Object {
         "backgroundImage": "url(avatar.png)",
@@ -19,14 +19,14 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     }
   >
     <Connect(UploadAttachmentButton)
-      data-stylename="change-banner-button"
+      data-stylename="styles.change-banner-button"
       id={1}
       onSuccess={[Function]}
       type="groupBanner"
     />
   </div>
   <div
-    data-stylename="avatar"
+    data-stylename="styles.avatar"
     style={
       Object {
         "backgroundImage": "url(avatar.png)",
@@ -34,7 +34,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     }
   >
     <Connect(UploadAttachmentButton)
-      data-stylename="change-avatar-button"
+      data-stylename="styles.change-avatar-button"
       id={1}
       onSuccess={[Function]}
       type="groupAvatar"
@@ -53,159 +53,21 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     onChange={[Function]}
     type="location"
   />
-  <div
-    data-stylename="privacy-settings"
-  >
-    <SettingsSection>
-      <h3>
-        Visibility
-      </h3>
-      <p
-        data-stylename="privacyDetail"
-      >
-        Who is able to see 
-        <strong>
-          Foomunity
-        </strong>
-        ?
-      </p>
-      <VisibilitySettingRow
-        currentSetting={1}
-        forSetting={0}
-        key="0"
-        updateSetting={[Function]}
-      />
-      <VisibilitySettingRow
-        currentSetting={1}
-        forSetting={1}
-        key="1"
-        updateSetting={[Function]}
-      />
-      <VisibilitySettingRow
-        currentSetting={1}
-        forSetting={2}
-        key="2"
-        updateSetting={[Function]}
-      />
-    </SettingsSection>
-    <SettingsSection>
-      <h3>
-        Access
-      </h3>
-      <p
-        data-stylename="privacyDetail"
-      >
-        How can people become members of 
-        <strong>
-          Foomunity
-        </strong>
-        ?
-      </p>
-      <AccessibilitySettingRow
-        currentSetting={1}
-        forSetting={0}
-        joinQuestions={
-          Array [
-            Object {
-              "text": "",
-            },
-          ]
-        }
-        key="0"
-        updateSetting={[Function]}
-        updateSettingDirectly={[Function]}
-      />
-      <AccessibilitySettingRow
-        currentSetting={1}
-        forSetting={1}
-        joinQuestions={
-          Array [
-            Object {
-              "text": "",
-            },
-          ]
-        }
-        key="1"
-        updateSetting={[Function]}
-        updateSettingDirectly={[Function]}
-      />
-      <AccessibilitySettingRow
-        currentSetting={1}
-        forSetting={2}
-        joinQuestions={
-          Array [
-            Object {
-              "text": "",
-            },
-          ]
-        }
-        key="2"
-        updateSetting={[Function]}
-        updateSettingDirectly={[Function]}
-      />
-    </SettingsSection>
-    <SettingsSection>
-      <h3>
-        Prerequisite Groups
-      </h3>
-      <p
-        data-stylename="privacyDetail"
-      >
-        When you select a prerequisite group, people must join the selected groups before joining 
-        <strong>
-          Foomunity
-        </strong>
-        . Only parent groups can be added as prerequisite groups.
-      </p>
-      <p
-        data-stylename="prerequisiteWarning"
-      >
-        <strong
-          data-stylename="warning"
-        >
-          Warning:
-        </strong>
-         If you select a prerequisite group that has a visibility setting of 
-        <strong>
-          <Icon
-            data-stylename="prerequisiteIcon"
-            name="Hidden"
-          />
-           Hidden
-        </strong>
-         or 
-        <strong>
-          <Icon
-            data-stylename="prerequisiteIcon"
-            name="Shield"
-          />
-           Protected
-        </strong>
-        , only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
-      </p>
-      <GroupsSelector
-        groupSettings={true}
-        onChange={[Function]}
-        options={Array []}
-        placeholder="Type group name..."
-        selected={Array []}
-      />
-    </SettingsSection>
-  </div>
+  <br />
   <SettingsSection>
     <h3>
       Relevant skills & interests
     </h3>
     <p
-      data-stylename="privacyDetail"
+      data-stylename="general.detailText"
     >
-      What skills and interests are relevant to this group?
+      What skills and interests are particularly relevant to this group?
     </p>
     <div
-      data-stylename="skillsSetting "
+      data-stylename="styles.skillsSetting "
     >
       <div
-        data-stylename="switchContainer"
+        data-stylename="general.switchContainer"
       >
         <SwitchStyled
           backgroundColor="#8B96A4"
@@ -214,20 +76,20 @@ exports[`GroupSettingsTab renders correctly 1`] = `
           onChange={[Function]}
         />
         <span
-          data-stylename="toggleDescription"
+          data-stylename="general.toggleDescription"
         >
-          Ask new members to fill out their skills and interests?
+          Ask new members whether they have these skills and interests?
         </span>
         <div
-          data-stylename="onOff"
+          data-stylename="general.onOff"
         >
           <div
-            data-stylename="off"
+            data-stylename="general.off"
           >
             OFF
           </div>
           <div
-            data-stylename="on"
+            data-stylename="general.on"
           >
             ON
           </div>
@@ -250,62 +112,8 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       placeholder="What skills and interests are most relevant to your group?"
     />
   </SettingsSection>
-  <SettingsSection>
-    <h3>
-      Group Access Questions
-    </h3>
-    <p
-      data-stylename="privacyDetail"
-    >
-      What questions are asked when a group requests to join this group?
-    </p>
-    <div
-      data-stylename="groupQuestions "
-    >
-      <div
-        data-stylename="switchContainer"
-      >
-        <SwitchStyled
-          backgroundColor="#8B96A4"
-          checked={false}
-          disabled={false}
-          onChange={[Function]}
-        />
-        <span
-          data-stylename="toggleDescription"
-        >
-          Require groups to answer questions when requesting to join this group
-        </span>
-        <div
-          data-stylename="onOff"
-        >
-          <div
-            data-stylename="off"
-          >
-            OFF
-          </div>
-          <div
-            data-stylename="on"
-          >
-            ON
-          </div>
-        </div>
-      </div>
-      <QuestionsForm
-        disabled={true}
-        questions={
-          Array [
-            Object {
-              "text": "",
-            },
-          ]
-        }
-        save={[Function]}
-      />
-    </div>
-  </SettingsSection>
   <div
-    data-stylename="saveChanges"
+    data-stylename="general.saveChanges"
   >
     <span
       data-stylename=""
@@ -314,7 +122,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     </span>
     <Button
       color="gray"
-      data-stylename="save-button"
+      data-stylename="general.save-button"
       label="Save Changes"
       onClick={null}
     />

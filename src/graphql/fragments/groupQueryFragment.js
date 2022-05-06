@@ -9,6 +9,7 @@ export default () => {
     avatarUrl
     bannerUrl
     description
+    type
     location
     memberCount
     name
@@ -18,6 +19,7 @@ export default () => {
       askJoinQuestions
       publicMemberDirectory
       showSuggestedSkills
+      hideExtensionData
     }
     slug
     visibility
@@ -61,6 +63,7 @@ export default () => {
         id
         accessibility
         avatarUrl
+        type
         bannerUrl
         description
         memberCount
@@ -73,6 +76,7 @@ export default () => {
           askJoinQuestions
           publicMemberDirectory
           showSuggestedSkills
+          hideExtensionData
         }
       }
     }
@@ -175,6 +179,7 @@ export default () => {
         avatarUrl
         bannerUrl
         description
+        type
         name
         slug
         visibility
@@ -184,6 +189,7 @@ export default () => {
           askJoinQuestions
           publicMemberDirectory
           showSuggestedSkills
+          hideExtensionData
         }
       }
     }
@@ -210,6 +216,7 @@ export default () => {
         name
         isVisible
         order
+        context
         settings {
           text
           title

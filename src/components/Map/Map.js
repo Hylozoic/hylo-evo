@@ -7,7 +7,7 @@ import NativeTerritoriesLayer from './NativeTerritoriesLayers'
 
 function Map (props) {
   const {
-    afterViewportUpdate,
+    afterViewportUpdate = () => {},
     baseLayerStyle = 'light-v10',
     children,
     hyloLayers,
@@ -15,7 +15,7 @@ function Map (props) {
     mapRef,
     onMouseDown,
     onMouseUp,
-    onViewportUpdate,
+    onViewportUpdate = () => {},
     otherLayers,
     viewport
   } = props
@@ -68,6 +68,7 @@ function Map (props) {
         //      https://github.com/visgl/react-map-gl/issues/1157
         if (mapRef.current) {
           const center = mapRef.current.getCenter()
+          const bounds = mapRef.current.getBounds()
           onViewportUpdate({
             bearing: mapRef.current.getBearing(),
             height: dimensions.height,
@@ -75,11 +76,21 @@ function Map (props) {
             longitude: center.lng,
             pitch: mapRef.current.getPitch(),
             width: dimensions.width,
-            zoom: mapRef.current.getZoom()
+            zoom: mapRef.current.getZoom(),
+            mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
           })
         }
       }}
-      onViewportChange={nextViewport => onViewportUpdate(nextViewport, mapRef.current)}
+      onViewportChange={nextViewport => {
+        const bounds = mapRef.current.getBounds()
+        return onViewportUpdate(
+          {
+            ...nextViewport,
+            mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
+          },
+          mapRef.current
+        )
+      }}
       ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
       reuseMaps
     >

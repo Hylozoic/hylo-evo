@@ -19,7 +19,7 @@ const settings = {
   slidesToScroll: 1
 }
 
-export default ({ items, group, routeParams }) => {
+export default ({ items, group, routeParams, isMember }) => {
   const [swiped, setSwiped] = useState(false)
 
   const handleSwiped = useCallback(() => {
@@ -41,7 +41,7 @@ export default ({ items, group, routeParams }) => {
     <div styleName='events'>
       <Slider {...settings} onSwipe={handleSwiped}>
         {items.map(e => <div styleName={cx('event', { narrow: items.length > 1 })} key={e.id}>
-          <Link to={postUrl(e.id, { view: 'explore', groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
+          <Link to={postUrl(e.id, { groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
             <div styleName='content'>
               <div styleName='time'>{moment(e.startTime).format('MMM D YYYY')}</div>
               <div styleName='title'>{e.title}</div>
@@ -50,16 +50,17 @@ export default ({ items, group, routeParams }) => {
           </Link>
           <div styleName='background' style={{ backgroundImage: `url(${e.primaryImage || '/default-event.png'})` }} />
         </div>)}
-        <div styleName='event create-new'>
-          <div styleName='events-cta'>
-            <Link to={createPostUrl(routeParams, { newPostType: 'event' })}>
-              <Icon name='Calendar' styleName='event-icon' />
-              <h4>Bring your group together</h4>
-              <p>What you will do at your next event?</p>
-              <div styleName='button'>+ Create an event</div>
-            </Link>
-          </div>
-        </div>
+        {isMember &&
+          <div styleName='event create-new'>
+            <div styleName='events-cta'>
+              <Link to={createPostUrl(routeParams, { newPostType: 'event' })}>
+                <Icon name='Calendar' styleName='event-icon' />
+                <h4>Bring your group together</h4>
+                <p>What you will do at your next event?</p>
+                <div styleName='button'>+ Create an event</div>
+              </Link>
+            </div>
+          </div>}
       </Slider>
     </div>
   )

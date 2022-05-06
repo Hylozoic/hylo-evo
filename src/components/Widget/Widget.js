@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Icon from 'components/Icon'
+import AtAGlanceWidget from 'components/Widget/AtAGlanceWidget'
 import AnnouncementWidget from 'components/Widget/AnnouncementWidget'
 import EventsWidget from 'components/Widget/EventsWidget'
 import GroupsWidget from 'components/Widget/GroupsWidget'
@@ -11,6 +12,21 @@ import RecentPostsWidget from 'components/Widget/RecentPostsWidget'
 import WelcomeWidget from 'components/Widget/WelcomeWidget'
 import VisibilityToggle from 'components/VisibilityToggle'
 import './Widget.scss'
+import useGetWidgetItems from 'hooks/useGetWidgetItems'
+import FarmDetailsWidget from './FarmDetailsWidget'
+import FarmOpenToPublic from './FarmOpenToPublic'
+import FarmMapWidget from './FarmMapWidget'
+import ModeratorsWidget from './ModeratorsWidget'
+import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
+import PrivacyWidget from './PrivacyWidget'
+import RichTextWidget from './RichTextWidget'
+import JoinWidget from './JoinWidget'
+import TopicsWidget from './TopicsWidget'
+import { useSelector, useDispatch } from 'react-redux'
+import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
+import getMe from 'store/selectors/getMe'
+import { updateWidget } from './Widget.store'
+import useRouter from 'hooks/useRouter'
 
 const WIDGETS = {
   text_block: {
@@ -49,11 +65,73 @@ const WIDGETS = {
   group_affiliations: {
     title: 'Subgroups',
     component: GroupsWidget
+  },
+  relevant_project_activity: {
+    title: 'Recently Active Projects',
+    component: ProjectsWidget
+  },
+  relevant_groups: {
+    title: 'Nearby Relevant Groups', // TODO: ensure there is a way to customize/overwrite this
+    component: GroupsWidget
+  },
+  relevant_events: {
+    title: 'Nearby Relevant Events', // TODO: ensure there is a way to customize/overwrite this
+    component: EventsWidget
+  },
+  relevant_requests_offers: {
+    title: 'Nearby Relevant Offers and Requests', // TODO: ensure there is a way to customize/overwrite this
+    component: OffersAndRequestsWidget
+  },
+  farm_at_a_glance: {
+    title: 'At A Glance',
+    component: AtAGlanceWidget
+  },
+  farm_details: {
+    title: 'Farm Details',
+    component: FarmDetailsWidget
+  },
+  farm_open_to_public: {
+    title: 'Location & Hours',
+    component: FarmOpenToPublic
+  },
+  farm_map: {
+    title: 'Farm Surrounds & Posts',
+    component: FarmMapWidget
+  },
+  moderators: {
+    title: 'Moderators', // TODO: ensure there is a way to customize/overwrite this
+    component: ModeratorsWidget
+  },
+  opportunities_to_collaborate: {
+    title: 'Opportunities to Collaborate',
+    component: OpportunitiesToCollaborateWidget
+  },
+  privacy_settings: {
+    title: 'Privacy',
+    component: PrivacyWidget
+  },
+  mission: {
+    title: 'Our Mission',
+    component: RichTextWidget
+  },
+  join: {
+    title: null,
+    component: JoinWidget
+  },
+  topics: {
+    title: null,
+    component: TopicsWidget
   }
 }
 
 export default function Widget (props) {
-  const { childGroups, currentUser, group, id, isModerator, isVisible, name, posts, routeParams, settings, updateWidget } = props
+  const dispatch = useDispatch()
+  const { childGroups, id, isModerator, isVisible, name, posts, isMember, settings = {} } = props
+  const router = useRouter()
+  const routeParams = router && router.query
+  const { group } = useEnsureCurrentGroup()
+  const currentUser = useSelector(getMe)
+  const handleUpdateWidget = (id, changes) => dispatch(updateWidget(id, changes))
 
   if (!WIDGETS[name]) return null
 
@@ -64,7 +142,8 @@ export default function Widget (props) {
     text: settings.text || ''
   })
 
-  const widgetItems = getWidgetItems({ childGroups, currentUser, name, group, posts })
+  // Changing this to a hook so that we can use other hooks to manage the diverse data requirements of all of the new widgets
+  const widgetItems = useGetWidgetItems({ childGroups, currentUser, name, group, posts })
 
   return (
     <div styleName={`widget ${isEditingSettings ? 'editing-settings' : ''}`}>
@@ -80,7 +159,7 @@ export default function Widget (props) {
                 <VisibilityToggle
                   id={id}
                   checked={isVisible}
-                  onChange={() => updateWidget(id, { isVisible: !isVisible })}
+                  onChange={() => handleUpdateWidget(id, { isVisible: !isVisible })}
                   styleName='widget-visibility'
                   backgroundColor={isVisible ? 'gray' : 'black'} /> <span styleName='visibility-label'>Visibility:</span> {isVisible ? 'Visible' : 'Hidden'}
               </div>
@@ -97,7 +176,7 @@ export default function Widget (props) {
           updateSettings={updateSettings}
           save={updateWidget} />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
-        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings }) : null)
+        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings, isMember }) : null)
           : isModerator ? <HiddenWidget name={name} /> : null
         }
       </div>
@@ -112,41 +191,6 @@ const HiddenWidget = ({ isVisible, name }) => {
       <p>The {WIDGETS[name].moderatorTitle || WIDGETS[name].title} section is not visible to members of this group. Click the three dots (<Icon name='More' styleName='more-icon' />) above this box to change the visibility settings. Only moderators can see this message.</p>
     </div>
   )
-}
-
-const getWidgetItems = ({ currentUser, childGroups, name, group, posts }) => {
-  switch (name) {
-    case 'text_block': {
-      return true
-    }
-    case 'announcements': {
-      return group.announcements.length > 0 ? group.announcements : false
-    }
-    case 'active_members': {
-      return group.members && group.members.length > 2 ? group.members.filter(m => m.id !== currentUser.id).sort((a, b) => b.lastActiveAt - a.lastActiveAt).slice(0, 8) : false
-    }
-    case 'requests_offers': {
-      return group.openOffersAndRequests.length > 0 ? group.openOffersAndRequests : false
-    }
-    case 'posts': {
-      return posts.length > 0 ? posts : false
-    }
-    case 'community_topics': {
-      return group.groupTopics.length > 0 ? group.groupTopics.slice(0, 10) : false
-    }
-    case 'events': {
-      return group.upcomingEvents
-    }
-    case 'project_activity': {
-      return group.activeProjects
-    }
-    case 'group_affiliations': {
-      return childGroups.length > 0 ? childGroups : false
-    }
-    default: {
-      return false
-    }
-  }
 }
 
 const EditForm = ({ id, setIsEditingSettings, setIsMenuOpen, newSettings, updateSettings, save }) => {

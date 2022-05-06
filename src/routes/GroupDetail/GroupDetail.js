@@ -4,6 +4,7 @@ import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Avatar from 'components/Avatar'
+import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
@@ -16,6 +17,7 @@ import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
   GROUP_ACCESSIBILITY,
+  GROUP_TYPES,
   visibilityDescription,
   visibilityIcon,
   visibilityString
@@ -71,7 +73,6 @@ export default class GroupDetail extends Component {
 
   render () {
     const {
-      canModerate,
       currentUser,
       group,
       isAboutCurrentGroup,
@@ -79,56 +80,110 @@ export default class GroupDetail extends Component {
       location,
       moderators,
       onClose,
-      pending
+      pending,
+      routeParams
     } = this.props
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    const topics = group && group.groupTopics
     const fullPage = !onClose
 
-    return <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
-      <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
-        {onClose &&
-          <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>}
-        <div styleName='g.groupTitleContainer'>
-          <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
-          <div>
-            <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>About </span>}{group.name}</div>
-            <div styleName='g.groupContextInfo'>
-              {!isAboutCurrentGroup && <div>
-                <span styleName='g.group-privacy'>
-                  <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
-                  <div styleName='g.privacy-tooltip'>
-                    <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+    console.log('!!! group.type', group?.type)
+
+    return (
+      <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
+        <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
+          {onClose && (
+            <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>
+          )}
+          <div styleName='g.groupTitleContainer'>
+            <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
+            <div>
+              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>About </span>}{group.name}</div>
+              <div styleName='g.groupContextInfo'>
+                {!isAboutCurrentGroup && (
+                  <div>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+                      </div>
+                    </span>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
+                      </div>
+                    </span>
                   </div>
-                </span>
-                <span styleName='g.group-privacy'>
-                  <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
-                  <div styleName='g.privacy-tooltip'>
-                    <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
-                  </div>
-                </span>
-              </div>}
-              <span styleName='g.group-location'>{group.location}</span>
+                )}
+                <span styleName='g.group-location'>{group.location}</span>
+              </div>
             </div>
           </div>
+          <div styleName='g.headerBackground' />
         </div>
-        <div styleName='g.headerBackground' />
+        <div styleName='g.groupDetailBody'>
+          {group.type === GROUP_TYPES.default && this.normalGroupBody()}
+          {group.type === GROUP_TYPES.farm && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
+          {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
+            ? <div styleName='g.aboutCurrentGroup'>
+              <h3>Moderators</h3>
+              <div styleName='g.moderators'>
+                {moderators.map(p => (
+                  <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
+                    <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
+                    <span>{p.name}</span>
+                  </Link>
+                ))}
+              </div>
+              <h3>Privacy settings</h3>
+              <div styleName='g.privacySetting'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
+                <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
+              </div>
+              <div styleName='g.privacySetting'>
+                <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
+                <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
+              </div>
+            </div>
+            : !currentUser
+              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
+              : isMember
+                ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+                : this.renderGroupDetails()
+          }
+        </div>
+        <SocketSubscriber type='group' id={group.id} />
       </div>
-      <div styleName='g.groupDetailBody'>
-        {isAboutCurrentGroup && !group.description && canModerate ? <div styleName='g.no-description'>
-          <div>
-            <h4>Your group doesn't have a description</h4>
-            <p>Add a description, location, suggested topics and more in your group settings</p>
-            <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
-          </div>
-        </div> : <div styleName='g.groupDescription'>
-          {group.description}
-        </div> }
+    )
+  }
 
-        { !isAboutCurrentGroup && topics && topics.length
+  normalGroupBody () {
+    const {
+      canModerate,
+      group,
+      isAboutCurrentGroup
+    } = this.props
+
+    const topics = group && group.groupTopics
+
+    return (
+      <>
+        {isAboutCurrentGroup && !group.description && canModerate
+          ? <div styleName='g.no-description'>
+            <div>
+              <h4>Your group doesn't have a description</h4>
+              <p>Add a description, location, suggested topics and more in your group settings</p>
+              <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
+            </div>
+          </div>
+          : <div styleName='g.groupDescription'>
+            {group.description}
+          </div>}
+
+        {!isAboutCurrentGroup && topics && topics.length
           ? <div styleName='g.groupTopics'>
             <div styleName='g.groupSubtitle'>Topics</div>
             {topics.slice(0, 10).map(topic => {
@@ -142,65 +197,45 @@ export default class GroupDetail extends Component {
               )
             })}
           </div>
-          : ''
-        }
-        { isAboutCurrentGroup
-          ? <div styleName='g.aboutCurrentGroup'>
-            <h3>Moderators</h3>
-            <div styleName='g.moderators'>
-              {moderators.map(p => <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
-                <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
-                <span>{p.name}</span>
-              </Link>)}
-            </div>
-            <h3>Privacy settings</h3>
-            <div styleName='g.privacySetting'>
-              <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
-              <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
-            </div>
-            <div styleName='g.privacySetting'>
-              <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
-              <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
-            </div>
+          : ''}
+      </>
+    )
+  }
+
+  normalGroupDetails () {
+    const { group } = this.props
+    return (
+      <div styleName='g.groupDetails'>
+        <div styleName='g.detailContainer'>
+          <div styleName='g.groupSubtitle'>Recent Posts</div>
+          <div styleName='g.detail'>
+            <Icon name='BadgeCheck' />
+            <span styleName='g.detailText'>Only members of this group can see posts</span>
           </div>
-          : !currentUser
-            ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
-            : isMember
-              ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
-              : this.renderGroupDetails()
-        }
+        </div>
+        <div styleName='g.detailContainer'>
+          <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? 'Members' : 'Member'}</div>
+          {get(group, 'settings.publicMemberDirectory')
+            ? <div>{group.members.map(member => {
+              return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
+            })}</div>
+            : <div styleName='g.detail'>
+              <Icon name='Unlock' />
+              <span styleName='g.detailText'>Join to see</span>
+            </div>
+          }
+        </div>
       </div>
-      <SocketSubscriber type='group' id={group.id} />
-    </div>
+    )
   }
 
   renderGroupDetails () {
     const { addSkill, currentUser, group, joinRequests, onClose, removeSkill, routeParams } = this.props
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
 
-    return (
+    return ( // half of this could be shifted to farm specific widgets
       <div>
-        <div styleName='g.groupDetails'>
-          <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>Recent Posts</div>
-            <div styleName='g.detail'>
-              <Icon name='BadgeCheck' />
-              <span styleName='g.detailText'>Only members of this group can see posts</span>
-            </div>
-          </div>
-          <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
-            {get(group, 'settings.publicMemberDirectory')
-              ? <div>{group.members.map(member => {
-                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
-              })}</div>
-              : <div styleName='g.detail'>
-                <Icon name='Unlock' />
-                <span styleName='g.detailText'>Join to see</span>
-              </div>
-            }
-          </div>
-        </div>
+        {this.normalGroupDetails()}
         <JoinSection
           addSkill={addSkill}
           currentUser={currentUser}
@@ -219,13 +254,12 @@ export default class GroupDetail extends Component {
 
 export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
-
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
 
   const setAnswer = (index) => (event) => {
     const answerValue = event.target.value
     setQuestionAnswers(prevAnswers => {
-      const newAnswers = [ ...prevAnswers ]
+      const newAnswers = [...prevAnswers]
       newAnswers[index].answer = answerValue
       setAllQuestionsAnswered(newAnswers.every(a => trim(a.answer).length > 0))
       return newAnswers
@@ -281,7 +315,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                 <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
               </div>)}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>Join <span styleName='g.requestGroup'>{group.name}</span></div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
@@ -293,7 +327,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder='Type your answer here...' />
                   </div>)}
                   <div styleName='g.center'>
-                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? requestToJoinGroup(group.id, questionAnswers) : () => {}}>
+                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
                       Request Membership in <span styleName='g.requestGroup'>{group.name}</span>
                     </div>
                   </div>

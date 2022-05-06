@@ -48,20 +48,26 @@ export default function GroupCard ({
           highlightProps={highlightProps}
           constrained={constrained}
         />
-        <div styleName='group-description'>
-          {group.description}
-        </div>
-        <div styleName='group-tags'>
-          {topics.map((topic, index) => (
-            <Pill
-              styleName='tag-pill'
-              darkText
-              label={capitalize(topic.topic.name.toLowerCase())}
-              id={topic.id}
-              key={index}
-            />
-          ))}
-        </div>
+        {group.description
+          ? <div styleName='group-description'>
+            {group.description}
+          </div>
+          : ''
+        }
+        {topics.length > 0
+          ? <div styleName='group-tags'>
+            {topics.map((topic, index) => (
+              <Pill
+                styleName='tag-pill'
+                darkText
+                label={capitalize(topic.topic.name.toLowerCase())}
+                id={topic.id}
+                key={index}
+              />
+            ))}
+          </div>
+          : ''
+        }
       </div>
     </Link>
   )

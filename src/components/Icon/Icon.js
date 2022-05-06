@@ -6,6 +6,7 @@ export default function Icon ({
   name,
   className,
   green,
+  blue,
   children,
   onClick,
   dataTip,
@@ -14,7 +15,7 @@ export default function Icon ({
   const iconClassName = `icon-${name}`
 
   return <span
-    styleName={cx('icon', { green })}
+    styleName={cx('icon', { green, blue })}
     className={cx(iconClassName, className)}
     onClick={onClick}
     data-tip={dataTip}

@@ -59,3 +59,11 @@ So to recap, if you want to interact with the backend and ensure some data is av
 - has a graphql query attached to it (or in rare cases, just a appropriate `api` property attached)
 - has an appropriate `meta.modelExtractor`
 - optionally includes a `meta.optimistic === true` property if you want to optimisitically update the local store
+
+### Sockets
+
+Chat, in-app notifications and comments use sockets to update users in real-time. In the future, new posts will also use sockets to show up in real-time.
+
+### Data access via Redux
+
+Much of the application still uses Class Components (As of 2022/01/18). Thus to access data, we still rely on the Redux patterns of `mapStateToProps`, `mapDispatchToProps` and using `connect` from the React-Redux library. However, increasingly we are adding and switching components to Function Components, that rely on React Hooks to manage their state, and in turn, combinations of `useSelector` and `useDispatch` from React-Redux. A new pattern being introduced for the application is the addition of `useEnsureX`, which is a custom hook that handles both selecting `X` from the store and, if it isn't present, also handles the fetching of that data.

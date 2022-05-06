@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { get } from 'lodash/fp'
-import './GroupSettings.scss'
+import PrivacySettingsTab from './PrivacySettingsTab'
 import GroupSettingsTab from './GroupSettingsTab'
 import MembershipRequestsTab from './MembershipRequestsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
@@ -14,6 +14,7 @@ import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { Redirect } from 'react-router'
 import { groupUrl } from 'util/navigation'
+import './GroupSettings.scss'
 
 // NOTE: This area is also rendered and shared with the mobile app.
 // When making changes here or in any of the settings tabs please
@@ -59,6 +60,11 @@ export default function GroupSettings ({
         name: 'Moderators',
         path: groupUrl(slug, 'settings/moderators'),
         component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
+      },
+      {
+        name: 'Privacy & Access',
+        path: groupUrl(slug, 'settings/privacy'),
+        component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
       },
       {
         name: 'Topics',

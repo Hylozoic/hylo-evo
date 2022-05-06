@@ -3,7 +3,6 @@
   line-height: 38px;
   min-width: max-content;
   padding: 0px 40px;
-  border-radius: 25px;
   display: inline-block;
   cursor: pointer;
   user-select: none;
@@ -78,8 +77,35 @@
 }
 
 .gray {
-  color: $color-alto;
-  border: 1px solid $color-alto;
+  border: 1px solid $color-regent;
+  background-color: $color-regent;
+  color: $color-white;
+  &:hover, &.hover {
+    background-color: lighten($color-regent, 2%);
+  }
+  &:active, &.active {
+    background-color: darken($color-regent, 2%);
+  }
+  &.disabled {
+    border-color: lighten(desaturate($color-regent, 40%), 35%);
+    background-color: lighten(desaturate($color-regent, 40%), 35%);
+  }
+}
+
+.whitegray {
+  border: 1px solid $color-regent;
+  background-color: $color-white;
+  color: $color-regent;
+  &:hover, &.hover {
+    background-color: lighten($color-white, 2%);
+  }
+  &:active, &.active {
+    background-color: darken($color-white, 2%);
+  }
+  &.disabled {
+    border-color: lighten(desaturate($color-white, 40%), 35%);
+    background-color: lighten(desaturate($color-white, 40%), 35%);
+  }
 }
 
 .white {

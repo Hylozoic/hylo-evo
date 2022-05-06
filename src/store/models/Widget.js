@@ -15,5 +15,6 @@ Widget.fields = {
   name: attr(),
   isVisible: attr(),
   order: attr(),
+  context: attr(),
   settings: attr()
 }

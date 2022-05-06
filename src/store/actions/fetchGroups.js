@@ -5,7 +5,7 @@ import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reduce
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
-export function fetchGroups ({ offset, order, search, slug, sortBy, nearCoord, pageSize = 20 }) {
+export function fetchGroups ({ farmQuery, groupType, nearCoord, offset, order, pageSize = 20, search, slug, sortBy }) {
   const query = groupQuery
   const extractModel = 'Group'
   const getItems = get('payload.data.groups')
@@ -16,6 +16,8 @@ export function fetchGroups ({ offset, order, search, slug, sortBy, nearCoord, p
       query,
       variables: {
         first: pageSize,
+        farmQuery,
+        groupType,
         nearCoord,
         offset: offset,
         order,
@@ -37,6 +39,8 @@ const groupQuery = `
 query (
   $boundingBox: [PointInput],
   $first: Int,
+  $farmQuery: JSON,
+  $groupType: String,
   $nearCoord: PointInput,
   $offset: Int,
   $order: String,
@@ -46,11 +50,13 @@ query (
   groups( 
     boundingBox: $boundingBox,
     first: $first,
+    farmQuery: $farmQuery
     nearCoord: $nearCoord,
     offset: $offset,
     order: $order,
     search: $search,
-    sortBy: $sortBy
+    sortBy: $sortBy,
+    groupType: $groupType
   ) {
     hasMore
     total
@@ -60,6 +66,10 @@ query (
       description
       location
       locationObject {
+        center {
+          lat
+          lng
+        }
         city
         country
         fullText
@@ -71,12 +81,14 @@ query (
       avatarUrl
       bannerUrl
       name
+      type
       settings {
         allowGroupInvites
         askGroupToGroupJoinQuestions
         askJoinQuestions
         publicMemberDirectory
         showSuggestedSkills
+        hideExtensionData
       }
       slug
       groupTopics(first: 8) {

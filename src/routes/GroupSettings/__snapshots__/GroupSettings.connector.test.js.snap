@@ -67,9 +67,11 @@ Object {
             allowGroupInvites
             askGroupToGroupJoinQuestions
             askJoinQuestions
+            hideExtensionData
             publicMemberDirectory
             showSuggestedSkills
           }
+          type
           slug
           visibility
           childGroups (first: 100) {

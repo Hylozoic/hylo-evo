@@ -47,9 +47,11 @@ export function fetchGroupSettings (slug) {
             allowGroupInvites
             askGroupToGroupJoinQuestions
             askJoinQuestions
+            hideExtensionData
             publicMemberDirectory
             showSuggestedSkills
           }
+          type
           slug
           visibility
           childGroups (first: 100) {
