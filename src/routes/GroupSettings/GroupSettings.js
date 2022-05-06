@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { get } from 'lodash/fp'
-import DataSettingsTab from './DataSettingsTab'
+import PrivacySettingsTab from './PrivacySettingsTab'
 import GroupSettingsTab from './GroupSettingsTab'
 import MembershipRequestsTab from './MembershipRequestsTab'
 import ModeratorsSettingsTab from './ModeratorsSettingsTab'
@@ -62,9 +62,9 @@ export default function GroupSettings ({
         component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
       },
       {
-        name: 'Data Settings',
-        path: groupUrl(slug, 'settings/data'),
-        component: <DataSettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
+        name: 'Privacy & Access',
+        path: groupUrl(slug, 'settings/privacy'),
+        component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
       },
       {
         name: 'Topics',

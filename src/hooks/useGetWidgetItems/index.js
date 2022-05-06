@@ -1,4 +1,4 @@
-// import { useState, useEffect } from 'react'
+import { getAtAGlance, getFarmOpportunities, getOpenToPublic } from 'store/selectors/farmExtensionSelectors'
 
 export default function useGetWidgetItems ({ currentUser, childGroups, name, group, posts }) {
   switch (name) {
@@ -36,13 +36,16 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
       return [] // TODO: build out selector for this
     }
     case 'relevant_events': {
-      return posts.filter((post) => post.type === 'event')
+      const items = posts.filter((post) => post.type === 'event')
+      return items.length > 0 ? items : null
     }
     case 'relevant_requests_offers': {
-      return posts.filter((post) => post.type === 'offer' || post.type === 'request')
+      const items = posts.filter((post) => post.type === 'offer' || post.type === 'request')
+      return items.length > 0 ? items : null
     }
     case 'relevant_project_activity': {
-      return posts.filter((post) => post.type === 'project')
+      const items = posts.filter((post) => post.type === 'project')
+      return items.length > 0 ? items : null
     }
     case 'farm_comparison': {
       return true
@@ -51,13 +54,13 @@ export default function useGetWidgetItems ({ currentUser, childGroups, name, gro
       return !(group.settings && group.settings.hideExtensionData)
     }
     case 'farm_open_to_public': {
-      return !(group.settings && group.settings.hideExtensionData)
+      return !(group.settings && group.settings.hideExtensionData) && getOpenToPublic(group)
     }
     case 'opportunities_to_collaborate': {
-      return !(group.settings && group.settings.hideExtensionData)
+      return !(group.settings && group.settings.hideExtensionData) && getFarmOpportunities(group).length > 0
     }
     case 'farm_at_a_glance': {
-      return true
+      return !(group.settings && group.settings.hideExtensionData) && getAtAGlance(group).length > 0
     }
     case 'farm_map': {
       return group.locationObject && group.locationObject.center && posts

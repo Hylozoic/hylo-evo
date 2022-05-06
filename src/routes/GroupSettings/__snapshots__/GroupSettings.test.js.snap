@@ -32,7 +32,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/moderators",
       },
       Object {
-        "component": <GroupSettingsTab
+        "component": <PrivacySettingsTab
           group={
             Object {
               "id": 1,
@@ -42,8 +42,8 @@ exports[`renders correctly with a group 1`] = `
           }
           slug="foo"
         />,
-        "name": "Data Settings",
-        "path": "/groups/foo/settings/data",
+        "name": "Privacy & Access",
+        "path": "/groups/foo/settings/privacy",
       },
       Object {
         "component": <Memo(Connect(TopicsSettingsTab))
