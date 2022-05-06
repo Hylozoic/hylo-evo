@@ -88,9 +88,12 @@ export default function NonAuthLayoutRouter (props) {
             <Route path='/oauth/login/:uid'>
               <OAuthLogin styleName='form' />
             </Route>
-            <Route path='/oauth/consent/:uid'>
-              <OAuthConsent styleName='form' />
-            </Route>
+            <Route
+              path='/oauth/consent/:uid'
+              component={routeProps => (
+                <OAuthConsent {...routeProps} styleName='form' />
+              )}
+            />
             {/*
               Default route
               NOTE: This passes the unmatched location for anything unmatched except `/`
