@@ -16,7 +16,7 @@ exports[`matches last snapshot 1`] = `
       <div
         dangerouslySetInnerHTML={
           Object {
-            "__html": "<p>the details</p>",
+            "__html": "the details",
           }
         }
         data-stylename="details"

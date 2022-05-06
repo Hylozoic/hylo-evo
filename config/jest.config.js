@@ -2,7 +2,6 @@ const paths = require('./paths')
 
 module.exports = {
   rootDir: paths.rootPath,
-  timers: 'modern',
   transform: {
     '\\.(gql|graphql)$': 'jest-transform-graphql',
     '^.+\\.jsx?$': '<rootDir>/config/jest/transformer.js'

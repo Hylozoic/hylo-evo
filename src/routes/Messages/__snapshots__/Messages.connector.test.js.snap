@@ -77,7 +77,7 @@ Object {
     },
   ],
   "messagesPending": true,
-  "onCloseURL": "/",
+  "onCloseLocation": "/",
   "participants": null,
   "sendIsTyping": [Function],
   "socket": SailsSocket {

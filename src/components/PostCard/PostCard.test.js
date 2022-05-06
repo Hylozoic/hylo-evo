@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import PostCard from './PostCard'
-import { fakePost } from 'util/testData'
+import { fakePost } from 'util/testing/testData'
 import faker from '@faker-js/faker'
 import timezoneMock from 'timezone-mock'
 

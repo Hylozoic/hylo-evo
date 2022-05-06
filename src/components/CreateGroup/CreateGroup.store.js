@@ -1,6 +1,6 @@
 import orm from 'store/models'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { AnalyticsEvents } from 'hylo-utils/constants'
+import { AnalyticsEvents } from 'hylo-shared'
 
 export const MODULE_NAME = `CreateGroup`
 export const ADD_GROUP_NAME = `${MODULE_NAME}/ADD_GROUP_NAME`
@@ -90,22 +90,26 @@ export function createGroup (data) {
       query: `mutation ($data: GroupInput) {
         createGroup(data: $data) {
           id
-          hasModeratorRole
-          group {
-            id
-            name
-            slug
-            parentGroups {
-              items {
-                id
-              }
+          name
+          slug
+          parentGroups {
+            items {
+              id
             }
           }
-          person {
-            id
-          }
-          settings {
-            showJoinForm
+          memberships {
+            items {
+              id
+              hasModeratorRole
+              person {
+                id
+              }
+              settings {
+                sendEmail
+                showJoinForm
+                sendPushNotifications
+              }
+            }
           }
         }
       }
@@ -115,7 +119,7 @@ export function createGroup (data) {
       }
     },
     meta: {
-      extractModel: 'Membership',
+      extractModel: 'Group',
       ...data,
       analytics: AnalyticsEvents.GROUP_CREATED
     }

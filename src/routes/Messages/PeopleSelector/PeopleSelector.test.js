@@ -14,7 +14,7 @@ const defaultProps = {
   removePerson: () => {},
   changeQuerystringParam: () => {},
   selectedPeople: [],
-  onCloseURL: '',
+  onCloseLocation: { pathname: '' },
   peopleSelectorOpen: true
 }
 
@@ -123,6 +123,7 @@ describe('PeopleSelector', () => {
     let wrapper
 
     beforeEach(() => {
+      jest.useFakeTimers()
       setPeopleSearch = jest.fn()
       wrapper = mount(
         <MemoryRouter>
@@ -131,6 +132,10 @@ describe('PeopleSelector', () => {
             setPeopleSearch={setPeopleSearch} />
         </MemoryRouter>
       )
+    })
+
+    afterEach(() => {
+      jest.useRealTimers()
     })
 
     it('updates if user input contains valid characters', () => {

@@ -1,10 +1,60 @@
-# Changelog
+# Changelog 
 All notable changes to Hylo Evo (the Hylo front-end) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.6.0] - 2022-04-28
+
+### Changed
+- Major refactor of authorized vs non-authorized routing, see `RootRouter`, `AuthLayoutRouter`, and `NonAuthLayoutRouter`
+- React Testing Library (RTL) setup simplified and notated
+
+### Added
+- Changes to authorization and authentication flow to accomodate related API changes
+- Adds new RTL-based tests for new and existing components
+- You can now click on the map to create posts at that location. Either click and hold for a couple seconds, or click the (+) button and then click on the map to add a post at that lat,lng on the map.
+- Discussion posts now can have a location and appear on the map
+
+### Fixed
+- Date/time selector in posts always visible, never disappears below the screen
+
+## [3.5.2] - 2022-03-28
+
+### Fixed
+- Display of member counts on groups in the create post modal
+- Correctly display notification settings for new groups that have just been created
+
+### Changed
+- Update License to be GNU AGPLv3
+- Sort groups alphabetically on notifications settings page
+
+## [3.5.1] - 2022-03-15
+
+### Fixed
+- Can once again select suggested skills when joining a group that has that feature turned on
+
+## [3.5.0] - 2022-03-08
+
+### Added
+- Bold and Italic inline formatting pop-up to Post Editor
+- Make PostEditor in CreateModal cancellable with Escape key
+- Adds minimal optional chaining support through `@babel/plugin-proposal-optional-chaining` (e.g. `thing1?.thing2` replacement for `lodash.get('thing2', thing1)`)
+
+### Changed
+- Updates PostEditor to automatically open a new `<p>` after an empty linebreak and always a `<br>` on entry of a Shift-Enter
+- Move to re-written `hylo-shared` from `hylo-utils`
+- Major version updates to `draft-js`, `draft-js-plugin-editor`, and related plugins
+- Removal of extraneous and destructive input HTML sanitization (santization should on retrieval of content from API)
+- Minor version updates to `babel`, `eslint`, and related dependencies including some relate configuration updates
+- Handling of text preview in Messages and Notification dropdowns
+- Treat Message.text as HTML (Comment#text is a backend sanitized HTML field)
+- Code formatting: component returns and optionals (`(thing && ... <SomeComponent />))`) wrapped in `()` with linebreaks and related indentation on most components touched
+
+### Fixed
+- Linebreak handling between post editor and display for posts, comments, and messages
+- Position of Mention and Topic selectors to low within PostEditor
+- Numererous small text and links-in-text handling bugs
 
 ## [3.4.0] - 2022-02-23
 

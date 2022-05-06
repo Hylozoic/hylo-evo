@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
-import { sanitize } from 'hylo-utils/text'
-import { validateTopicName } from 'hylo-utils/validators'
+import { Validators } from 'hylo-shared'
 import { topicUrl } from 'util/navigation'
 import Button from 'components/Button'
 import Icon from 'components/Icon'
 import ModalDialog from 'components/ModalDialog'
 import TextInput from 'components/TextInput'
-import RedirectRoute from 'router/RedirectRoute'
 
 import './CreateTopic.scss'
 
@@ -82,7 +81,8 @@ export default class CreateTopic extends Component {
     })
   }
 
-  safeTopicName = () => sanitize(trim(this.ignoreHash(this.state.topicName)))
+  // TODO: Text Formatting -- sanitize only on output, not input
+  safeTopicName = () => trim(this.ignoreHash(this.state.topicName))
 
   submitButtonAction = () => {
     const {
@@ -141,7 +141,7 @@ export default class CreateTopic extends Component {
   }
 
   validate = debounce(500, name => this.setState({
-    nameError: validateTopicName(this.ignoreHash(name))
+    nameError: Validators.validateTopicName(this.ignoreHash(name))
   }))
 
   render () {
@@ -161,7 +161,7 @@ export default class CreateTopic extends Component {
 
     if (redirectTopic && subscribeAfterCreate) {
       const url = topicUrl(encodeURI(redirectTopic), { groupSlug: this.props.groupSlug })
-      if (url !== window.location.pathname) return <RedirectRoute to={url} />
+      if (url !== window.location.pathname) return <Redirect to={url} />
     }
 
     return <React.Fragment>

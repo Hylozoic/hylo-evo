@@ -1,51 +1,21 @@
-import CreateModal from './CreateModal'
-import { shallow } from 'enzyme'
 import React from 'react'
+import orm from 'store/models'
+import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
+import CreateModal from './CreateModal'
 
-// import React from 'react'
-// import PostEditorModal from './PostEditorModal'
-// import { history } from 'router/index'
-// import orm from 'store/models'
-// import { graphql } from 'msw'
-// import { setupServer } from 'msw/node'
-// import { generateStore, render, AllTheProviders } from 'util/reactTestingLibraryExtended'
+function testProviders () {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  ormSession.Me.create({ id: '1' })
+  const reduxState = { orm: ormSession.state }
 
-// export const handlers = [
-//   graphql.operation((req, res, ctx) => {
-//     return res(ctx.data({
-//       topics: {
-//         hasMore: false,
-//         total: 0,
-//         items: []
-//       }
-//     })
-//     )
-//   })
-// ]
+  return AllTheProviders(reduxState)
+}
 
-// let providersWithStore
-// let graphqlMockServer = setupServer(...handlers)
+it('renders', () => {
+  render(
+    <CreateModal match={{ params: {} }} location={{ search: '' }} />,
+    { wrapper: testProviders() }
+  )
 
-// beforeAll(() => {
-//   graphqlMockServer.listen()
-// })
-
-// beforeEach(() => {
-//   const session = orm.mutableSession(orm.getEmptyState())
-//   session.Me.create({ id: '1' })
-//   const initialState = { orm: session.state }
-//   const store = generateStore(history, initialState)
-//   providersWithStore = AllTheProviders(store)
-// })
-
-// it('does something', async () => {
-//   const { getByPlaceholderText } = render(<CreateModal match={{}} location={{ search: '' }} />, null, providersWithStore)
-//   expect(await getByPlaceholderText('Type group name...')).not.toBe(null)
-// })
-
-// afterEach(() => {
-//   graphqlMockServer.resetHandlers()
-//   providersWithStore = null
-// })
-
-it.skip('needs tests that rely upon React Testing Library', () => {})
+  expect(screen.getByText('What would you like to create?')).toBeInTheDocument()
+})

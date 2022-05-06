@@ -142,7 +142,6 @@ PeopleSelector.propTypes = {
   fetchPeople: PropTypes.func,
   fetchDefaultList: PropTypes.func,
   setPeopleSearch: PropTypes.func,
-  onCloseURL: PropTypes.string,
   selectedPeople: PropTypes.array,
   recentPeople: PropTypes.array,
   selectPerson: PropTypes.func.isRequired,

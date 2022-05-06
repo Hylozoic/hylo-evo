@@ -6,6 +6,7 @@
   border-radius: 50%;
   border: 3px solid $color-white;
   text-align: center;
+  display: inline-block;
 }
 
 .plus { 
@@ -22,6 +23,15 @@
   margin-top: 0;
   background: $color-athens-gray-dark;
   color: $color-regent;
+}
+
+.blue {
+  background: $color-picton-blue;
+  color: $color-white;
+}
+
+.green {
+  background: $color-caribbean-green;
 }
 
 .image {

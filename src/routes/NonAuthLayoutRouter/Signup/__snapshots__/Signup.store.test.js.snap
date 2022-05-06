@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`register should match latest snapshot 1`] = `
+Object {
+  "graphql": Object {
+    "query": "
+        mutation Register ($name: String!, $password: String!) {
+          register(name: $name, password: $password) {
+            me {
+              id
+              email
+              emailValidated
+              hasRegistered
+              name
+              settings {
+                alreadySeenTour
+                digestFrequency
+                dmNotifications
+                commentNotifications
+                signupInProgress
+                streamViewMode
+                streamSortBy
+                streamPostType
+              }
+            }
+          }
+        }
+      ",
+    "variables": Object {
+      "name": "name",
+      "password": "test@hylo.com",
+    },
+  },
+  "meta": Object {
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Me",
+      },
+    ],
+  },
+  "type": "Signup/REGISTER",
+}
+`;

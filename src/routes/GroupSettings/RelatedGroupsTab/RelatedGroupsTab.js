@@ -57,7 +57,6 @@ export default class RelatedGroupsTab extends Component {
   }
 
   handleRequestToAddGroupToParent = (parentGroup, childGroup) => (e) => {
-    console.log(parentGroup, parentGroup.settings, parentGroup.groupToGroupJoinQuestions.toModelArray())
     if (parentGroup.settings.askGroupToGroupJoinQuestions &&
           parentGroup.groupToGroupJoinQuestions &&
           parentGroup.groupToGroupJoinQuestions.toModelArray().length > 0) {

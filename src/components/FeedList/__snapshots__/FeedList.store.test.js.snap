@@ -3,7 +3,7 @@
 exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
-    "query": "query (
+    "query": "query GroupPostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -187,7 +187,7 @@ posts: viewPosts(
 exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
-    "query": "query (
+    "query": "query PostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],

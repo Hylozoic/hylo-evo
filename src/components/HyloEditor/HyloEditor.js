@@ -1,19 +1,40 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import Editor from 'draft-js-plugins-editor'
-import createMentionPlugin from 'draft-js-mention-plugin'
-import createLinkifyPlugin from 'draft-js-linkify-plugin'
-import { EditorState, ContentState, convertToRaw } from 'draft-js'
+import Immutable from 'immutable'
+import { Validators } from 'hylo-shared'
 import cx from 'classnames'
-import contentStateToHTML from './contentStateToHTML'
-import contentStateFromHTML from './contentStateFromHTML'
+import {
+  EditorState,
+  RichUtils,
+  getDefaultKeyBinding,
+  Modifier,
+  KeyBindingUtil
+} from 'draft-js'
+import Editor from '@draft-js-plugins/editor'
+import createMentionPlugin from '@draft-js-plugins/mention'
+import createLinkifyPlugin from '@draft-js-plugins/linkify'
+import createInlineToolbarPlugin from '@draft-js-plugins/inline-toolbar'
+import * as HyloContentState from 'components/HyloEditor/HyloContentState'
+import {
+  ItalicButton,
+  BoldButton
+} from '@draft-js-plugins/buttons'
 import 'draft-js/dist/Draft.css'
-import { validateTopicName } from 'hylo-utils/validators'
+import '@draft-js-plugins/inline-toolbar/lib/plugin.css'
 import styles from './HyloEditor.scss'
 
+export const blockRenderMap = Immutable.Map({
+  'paragraph': {
+    element: 'div'
+  },
+  'unstyled': {
+    element: 'div'
+  }
+})
 export default class HyloEditor extends Component {
   static propTypes = {
     contentHTML: PropTypes.string,
+    contentStateRaw: PropTypes.object,
     placeholder: PropTypes.string,
     className: PropTypes.string,
     submitOnReturnHandler: PropTypes.func,
@@ -28,7 +49,8 @@ export default class HyloEditor extends Component {
   }
 
   static defaultProps = {
-    contentHTML: '',
+    contentHTML: null,
+    contentStateRaw: null,
     readOnly: false,
     mentionResults: [],
     topicResults: [],
@@ -51,11 +73,15 @@ export default class HyloEditor extends Component {
     }
   }
 
-  defaultState = ({ contentHTML }) => {
+  defaultState = ({ contentStateRaw, contentHTML }) => {
     return {
-      editorState: this.getEditorStateFromHTML(contentHTML),
+      editorState: contentStateRaw
+        ? this.getEditorStateFromContentStateRaw(contentStateRaw)
+        : this.getEditorStateFromHTML(contentHTML),
       didInitialFocus: false,
-      submitOnReturnEnabled: true
+      submitOnReturnEnabled: true,
+      mentionsOpen: false,
+      topicsOpen: false
     }
   }
 
@@ -79,17 +105,21 @@ export default class HyloEditor extends Component {
       }
     })
     this._linkifyPlugin = createLinkifyPlugin()
+    this._inlineToolbarPlugin = createInlineToolbarPlugin()
     this.editor = React.createRef()
     this.state = this.defaultState(props)
   }
 
   componentDidUpdate (prevProps) {
-    // regenerate state from content if HTML changes
-    if (this.props.contentHTML !== prevProps.contentHTML) {
+    // Regenerate state from content if HTML changes
+    if (
+      this.props.contentHTML !== prevProps.contentHTML ||
+      this.props.contentStateRaw !== prevProps.contentStateRaw
+    ) {
       this.setState(this.defaultState(this.props))
     }
 
-    // handle initial focus behaviour
+    // Handle initial focus behaviour
     if (this.props.focusOnRender !== prevProps.focusOnRender) {
       this.setState({ didInitialFocus: false })
     }
@@ -105,10 +135,18 @@ export default class HyloEditor extends Component {
   isEmpty = () =>
     !this.state.editorState.getCurrentContent().hasText()
 
+  getEditorStateFromContentStateRaw = (contentStateRaw) => {
+    const contentState = HyloContentState.fromRaw(contentStateRaw)
+    // Don't create new EditorState once one has already been created as per:
+    // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
+    return this.state && this.state.editorState
+      ? EditorState.push(this.state.editorState, contentState)
+      : EditorState.createWithContent(contentState)
+  }
+
   getEditorStateFromHTML = (contentHTML) => {
-    const contentState = contentStateFromHTML(
-      ContentState.createFromText(''), contentHTML
-    )
+    if (!contentHTML) return EditorState.createEmpty()
+    const contentState = HyloContentState.fromHTML(contentHTML, { raw: false })
     // Don't create new EditorState once one has already been created as per:
     // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/FAQ.md
     return this.state && this.state.editorState
@@ -118,12 +156,12 @@ export default class HyloEditor extends Component {
 
   getContentHTML = () => {
     const { editorState } = this.state
-    return contentStateToHTML(editorState.getCurrentContent())
+    return HyloContentState.toHTML(editorState.getCurrentContent())
   }
 
   getContentRaw = () => {
     const { editorState } = this.state
-    return convertToRaw(editorState.getCurrentContent())
+    return HyloContentState.toRaw(editorState.getCurrentContent())
   }
 
   setEditorStateFromContentState = (contentState) => {
@@ -148,38 +186,78 @@ export default class HyloEditor extends Component {
     return this.props.findTopics(value)
   }
 
-  handleReturn = (event) => {
+  onReturn = (event) => {
     const { submitOnReturnHandler } = this.props
-    const { editorState } = this.state
-    if (submitOnReturnHandler && this.state.submitOnReturnEnabled) {
-      if (!event.shiftKey) {
-        submitOnReturnHandler(editorState)
-        this.setState({
-          editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
-        })
-        return 'handled'
-      }
-      return 'not-handled'
+    const { editorState, mentionsOpen, topicsOpen } = this.state
+    const contentState = editorState.getCurrentContent()
+
+    // passes event to plugins
+    if (mentionsOpen || topicsOpen) {
+      return undefined
     }
+
+    if (KeyBindingUtil.isSoftNewlineEvent(event)) {
+      this.handleChange(RichUtils.insertSoftNewline(editorState))
+      return 'handled'
+    }
+
+    if (
+      this.state.submitOnReturnEnabled &&
+      submitOnReturnHandler
+    ) {
+      submitOnReturnHandler(editorState)
+      this.setState({
+        editorState: EditorState.moveFocusToEnd(EditorState.createEmpty())
+      })
+      return 'handled'
+    }
+
+    if (
+      contentState.getLastBlock().getType() === 'unstyled' &&
+      contentState.getLastBlock().getText().slice(-1).match(/^\n$/)
+    ) {
+      const selectionState = editorState.getSelection().merge({
+        anchorOffset: editorState.getSelection().getEndOffset(),
+        focusOffset: editorState.getSelection().getEndOffset() - 1,
+        isBackward: true
+      })
+      this.handleChange(
+        EditorState.push(
+          editorState,
+          Modifier.splitBlock(contentState, selectionState),
+          'split-block'
+        )
+      )
+      return 'handled'
+    }
+
+    this.handleChange(RichUtils.insertSoftNewline(editorState))
+    return 'handled'
   }
 
-  enableSubmitOnReturn = () => {
-    this.setState({ submitOnReturnEnabled: true })
+  handleKeyCommand = (command) => {
+    if (command === 'Escape') {
+      this.handleEscape()
+      return 'handled'
+    }
+    return 'not-handled'
   }
 
-  disableSubmitOnReturn = () => {
-    this.setState({ submitOnReturnEnabled: false })
+  handleEscape = () => this.props.onEscape && this.props.onEscape()
+
+  toggleMentionsPluginOpenState = key => status => {
+    this.setState({ [`${key}Open`]: status, submitOnReturnEnabled: !status })
   }
 
   handleMentionsClose = () => {
     this.props.clearMentions()
-    this.enableSubmitOnReturn()
+    this.toggleMentionsPluginOpenState('mentions')(true)
     return true
   }
 
   handleTopicsClose = () => {
     this.props.clearTopics()
-    this.enableSubmitOnReturn()
+    this.toggleMentionsPluginOpenState('topics')(true)
     return true
   }
 
@@ -199,39 +277,75 @@ export default class HyloEditor extends Component {
   render () {
     const { MentionSuggestions } = this._mentionsPlugin
     const { MentionSuggestions: TopicSuggestions } = this._topicsPlugin
+    const { InlineToolbar } = this._inlineToolbarPlugin
     const plugins = [
       this._mentionsPlugin,
       this._topicsPlugin,
-      this._linkifyPlugin
+      this._linkifyPlugin,
+      this._inlineToolbarPlugin
     ]
     const { placeholder, mentionResults, topicResults, className, readOnly } = this.props
-    const { topicSearch } = this.state
-    const topicSuggestions = !validateTopicName(topicSearch)
+    const { topicSearch, mentionsOpen, topicsOpen } = this.state
+    const topicSuggestions = !Validators.validateTopicName(topicSearch)
       ? [{ id: -1, name: topicSearch }].concat(topicResults)
       : topicResults
     const { editorState } = this.state
     const styleNames = cx('wrapper', { readOnly })
-    return <div styleName={styleNames} className={className}>
-      <Editor
-        editorState={editorState}
-        spellCheck
-        stripPastedStyles
-        onChange={this.handleChange}
-        readOnly={readOnly}
-        placeholder={placeholder}
-        handleReturn={this.handleReturn}
-        plugins={plugins}
-        ref={this.editor} />
-      <MentionSuggestions
-        onSearchChange={this.handleMentionsSearch}
-        suggestions={mentionResults}
-        onOpen={this.disableSubmitOnReturn}
-        onClose={this.handleMentionsClose} />
-      <TopicSuggestions
-        onSearchChange={this.handleTopicSearch}
-        suggestions={topicSuggestions}
-        onOpen={this.disableSubmitOnReturn}
-        onClose={this.handleTopicsClose} />
-    </div>
+
+    return (
+      <div styleName={styleNames} className={className}>
+        <Editor
+          editorState={editorState}
+          onChange={this.handleChange}
+          handleReturn={this.onReturn}
+          blockRenderMap={blockRenderMap}
+          handleKeyCommand={this.handleKeyCommand}
+          keyBindingFn={hyloEditorKeyBindingFn}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          plugins={plugins}
+          ref={this.editor}
+          stripPastedStyles
+          spellCheck
+        />
+        <InlineToolbar>
+          {(externalProps) => (
+            <>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+            </>
+          )}
+        </InlineToolbar>
+        <MentionSuggestions
+          open={mentionsOpen}
+          onSearchChange={this.handleMentionsSearch}
+          suggestions={mentionResults}
+          onOpenChange={this.toggleMentionsPluginOpenState('mentions')}
+          onClose={this.handleMentionsClose}
+        />
+        <TopicSuggestions
+          open={topicsOpen}
+          onSearchChange={this.handleTopicSearch}
+          suggestions={topicSuggestions}
+          onOpenChange={this.toggleMentionsPluginOpenState('topics')}
+          onClose={this.handleTopicsClose}
+        />
+      </div>
+    )
   }
+}
+
+export function hyloEditorKeyBindingFn (e) {
+  if (e.key === 'Escape') {
+    return e.key
+  }
+
+  // For mention plugin (mentions and topics):
+  // Returning undefined allows these events
+  // to be passed through to the plugins.
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    return undefined
+  }
+
+  return getDefaultKeyBinding(e)
 }
