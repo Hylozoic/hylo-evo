@@ -184,7 +184,7 @@ export default class GroupDetail extends Component {
             </div>
           ) : (
             <div styleName='g.groupDescription'>
-              <GroupAboutVideoEmbed uri={group.aboutVideoURI} />
+              <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
               <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
             </div>
           )}
