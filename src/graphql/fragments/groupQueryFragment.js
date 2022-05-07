@@ -5,6 +5,7 @@ import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment
 export default () => {
   return `group(slug: $slug, updateLastViewed: $updateLastViewed) {
     id
+    aboutVideoUri
     accessibility
     avatarUrl
     bannerUrl

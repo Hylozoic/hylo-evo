@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import { TextHelpers } from 'hylo-shared'
 import './GroupCard.scss'
 import GroupHeader from './GroupHeader'
 import { Link } from 'react-router-dom'
@@ -50,7 +51,7 @@ export default function GroupCard ({
         />
         {group.description
           ? <div styleName='group-description'>
-            {group.description}
+            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
           </div>
           : ''
         }

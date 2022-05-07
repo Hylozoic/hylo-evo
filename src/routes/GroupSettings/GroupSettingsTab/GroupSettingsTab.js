@@ -1,7 +1,7 @@
-import cx from 'classnames'
-import { set } from 'lodash'
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { set, trim } from 'lodash'
+import cx from 'classnames'
 import Button from 'components/Button'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -46,11 +46,12 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      avatarUrl, bannerUrl, description, location, locationObject, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, location, locationObject, name, settings
     } = group
 
     return {
       edits: {
+        aboutVideoUri: aboutVideoUri && trim(aboutVideoUri),
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
@@ -99,65 +100,68 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      avatarUrl, bannerUrl, description, location, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, location, name, settings
     } = edits
     const { showSuggestedSkills } = settings
 
     const locationObject = group.locationObject || currentUser.locationObject
 
-    return <div styleName='general.groupSettings'>
-      <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
-      <div style={bgImageStyle(bannerUrl)} styleName='styles.banner'>
-        <UploadAttachmentButton
-          type='groupBanner'
-          id={group.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-          styleName='styles.change-banner-button' />
-      </div>
-      <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar'>
-        <UploadAttachmentButton
-          type='groupAvatar'
-          id={group.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-          styleName='styles.change-avatar-button' />
-      </div>
-      <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />
-      <SettingsControl
-        label='Location'
-        onChange={this.updateSettingDirectly('location', true)}
-        location={location}
-        locationObject={locationObject}
-        type='location'
-      />
+    return (
+      <div styleName='general.groupSettings'>
+        <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
+        <div style={bgImageStyle(bannerUrl)} styleName='styles.banner'>
+          <UploadAttachmentButton
+            type='groupBanner'
+            id={group.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
+            styleName='styles.change-banner-button' />
+        </div>
+        <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar'>
+          <UploadAttachmentButton
+            type='groupAvatar'
+            id={group.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+            styleName='styles.change-avatar-button' />
+        </div>
+        <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />
+        <SettingsControl label='About Video URL' onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
+        <SettingsControl
+          label='Location'
+          onChange={this.updateSettingDirectly('location', true)}
+          location={location}
+          locationObject={locationObject}
+          type='location'
+        />
 
-      <br />
+        <br />
 
-      <SettingsSection>
-        <h3>Relevant skills &amp; interests</h3>
-        <p styleName='general.detailText'>What skills and interests are particularly relevant to this group?</p>
-        <div styleName={'styles.skillsSetting' + ' ' + cx({ 'general.on': showSuggestedSkills })}>
-          <div styleName='general.switchContainer'>
-            <SwitchStyled
-              checked={showSuggestedSkills}
-              onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
-              backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-            <span styleName='general.toggleDescription'>Ask new members whether they have these skills and interests?</span>
-            <div styleName='general.onOff'>
-              <div styleName='general.off'>OFF</div>
-              <div styleName='general.on'>ON</div>
+        <SettingsSection>
+          <h3>Relevant skills &amp; interests</h3>
+          <p styleName='general.detailText'>What skills and interests are particularly relevant to this group?</p>
+          <div styleName={'styles.skillsSetting' + ' ' + cx({ 'general.on': showSuggestedSkills })}>
+            <div styleName='general.switchContainer'>
+              <SwitchStyled
+                checked={showSuggestedSkills}
+                onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
+                backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
+              <span styleName='general.toggleDescription'>Ask new members whether they have these skills and interests?</span>
+              <div styleName='general.onOff'>
+                <div styleName='general.off'>OFF</div>
+                <div styleName='general.on'>ON</div>
+              </div>
             </div>
           </div>
-        </div>
-        <SkillsSection
-          group={group}
-          label='Add a relevant skill or interest'
-          placeholder='What skills and interests are most relevant to your group?' />
-      </SettingsSection>
+          <SkillsSection
+            group={group}
+            label='Add a relevant skill or interest'
+            placeholder='What skills and interests are most relevant to your group?' />
+        </SettingsSection>
 
-      <div styleName='general.saveChanges'>
-        <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='general.save-button' />
+        <div styleName='general.saveChanges'>
+          <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
+          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='general.save-button' />
+        </div>
       </div>
-    </div>
+    )
   }
 }

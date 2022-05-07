@@ -219,6 +219,7 @@
     "react-flip-move": "^3.0.4",
     "react-joyride": "^2.3.2",
     "react-map-gl": "^6",
+    "react-player": "^2.10.0",
     "react-redux": "^7.0.0",
     "react-resize-detector": "^6.6.5",
     "react-router": "^5.2.0",

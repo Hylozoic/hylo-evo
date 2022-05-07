@@ -47,6 +47,10 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     value="Great group"
   />
   <SettingsControl
+    label="About Video URL"
+    onChange={[Function]}
+  />
+  <SettingsControl
     label="Location"
     location=""
     locationObject="Fuji"

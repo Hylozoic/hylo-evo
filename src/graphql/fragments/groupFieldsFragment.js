@@ -1,5 +1,6 @@
 const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites, withExtensions, withWidgets = false }) => `
   id
+  aboutVideoUri
   accessibility
   avatarUrl
   bannerUrl
