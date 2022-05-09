@@ -12,6 +12,7 @@ describe('mapStateToProps', () => {
     const session = orm.session(orm.getEmptyState())
 
     session.Group.create({ id: 1, slug: 'foo' })
+    session.Me.create({ id: 1, settings: {} })
 
     times(i => {
       session.Post.create({ id: i.toString(), groups: ['1'] })
@@ -49,9 +50,13 @@ describe('mapStateToProps', () => {
   it('returns posts in the correct order', () => {
     expect(mapStateToProps(state, props)).toEqual(
       expect.objectContaining({
+        baseLayerStyle: undefined,
         centerLocation: { lat: 35.442845, lng: 7.916598 },
         context: 'groups',
-        currentUser: undefined,
+        currentUser: expect.objectContaining({
+          id: 1,
+          settings: {}
+        }),
         featureTypes: ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
         fetchGroupParams: { boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
         fetchMemberParams: { boundingBox: undefined, context: 'groups', slug: 'foo', sortBy: 'name' },

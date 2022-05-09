@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router'
-import { connect } from 'react-redux'
 import { get, isEqual, isEmpty, pick, pickBy } from 'lodash/fp'
+import { connect } from 'react-redux'
+import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import changeQuerystringParam, { changeQuerystringParams } from 'store/actions/changeQuerystringParam'
 import { FETCH_FOR_GROUP } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
@@ -135,7 +136,12 @@ export function mapStateToProps (state, props) {
   let zoomParam = getQuerystringParam('zoom', state, props)
   const zoom = zoomParam ? parseFloat(zoomParam) : state.MapExplorer.zoom || defaultZoom
 
+  // First look for base layer style in query param, then saved local state, then user settings
+  const baseStyleParam = getQuerystringParam('style', state, props)
+  const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || me.settings.mapBaseLayer
+
   return {
+    baseLayerStyle,
     centerLocation,
     context,
     currentUser: me,
@@ -206,6 +212,7 @@ export function mapDispatchToProps (dispatch, props) {
         updateUrlFromStore(params, true)
       })
     },
+    updateBaseLayerStyle: (style) => dispatch(updateUserSettings({ settings: { mapBaseLayer: style } })).then(() => dispatch(changeQuerystringParams(props, { style }, true))),
     updateBoundingBox: bbox => dispatch(updateState({ totalBoundingBoxLoaded: bbox })),
     updateQueryParams: (params, replace) => updateUrlFromStore(params, replace),
     updateView: ({ centerLocation, zoom }) => {

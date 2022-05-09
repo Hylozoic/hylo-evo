@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip'
 import './Tooltip.scss'
 
 const Tooltip = (props) => {
-  const { id, delay, offset, position } = props
+  const { id, className, delay, offset, position } = props
   return (
     <ReactTooltip
       id={id}
@@ -16,6 +16,7 @@ const Tooltip = (props) => {
       backgroundColor='white'
       offset={offset || { 'top': -2 }}
       delayShow={delay || 500}
+      className={className}
       styleName='tooltip'
       place={position} />
   )

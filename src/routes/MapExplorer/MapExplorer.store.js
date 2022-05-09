@@ -600,6 +600,7 @@ export const getGroupsFilteredByTopics = createSelector(
 
 /* ***** Reducer ***** */
 const DEFAULT_STATE = {
+  baseLayerStyle: null,
   centerLocation: null,
   totalBoundingBoxLoaded: null,
   zoom: 0,
