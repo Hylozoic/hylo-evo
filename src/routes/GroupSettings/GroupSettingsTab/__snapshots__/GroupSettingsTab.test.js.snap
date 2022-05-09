@@ -57,6 +57,47 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     onChange={[Function]}
     type="location"
   />
+  <label
+    data-stylename="styles.label"
+  >
+    Location Privacy:
+  </label>
+  <Dropdown
+    data-stylename="styles.location-obfuscation-dropdown"
+    items={
+      Array [
+        Object {
+          "label": "Display exact location",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Display only nearest city and show nearby location on the map",
+          "onClick": [Function],
+        },
+        Object {
+          "label": "Display only nearest city and don't show on the map",
+          "onClick": [Function],
+        },
+      ]
+    }
+    toggleChildren={
+      <span
+        data-stylename="styles.location-obfuscation-dropdown-label"
+      >
+        Display exact location
+        <Icon
+          name="ArrowDown"
+        />
+      </span>
+    }
+  />
+  <p
+    data-stylename="general.detailText"
+  >
+    Note: as a moderator you will always see the exact location displayed
+  </p>
+  <br />
+  <br />
   <br />
   <SettingsSection>
     <h3>

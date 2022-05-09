@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { set, trim } from 'lodash'
 import cx from 'classnames'
 import Button from 'components/Button'
+import Dropdown from 'components/Dropdown'
+import Icon from 'components/Icon'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SettingsControl from 'components/SettingsControl'
@@ -11,7 +13,8 @@ import SwitchStyled from 'components/SwitchStyled'
 import Loading from 'components/Loading'
 import {
   DEFAULT_BANNER,
-  DEFAULT_AVATAR
+  DEFAULT_AVATAR,
+  LOCATION_PRECISION
 } from 'store/models/Group'
 import { bgImageStyle } from 'util/index'
 import SettingsSection from '../SettingsSection'
@@ -102,7 +105,8 @@ export default class GroupSettingsTab extends Component {
     const {
       aboutVideoUri, avatarUrl, bannerUrl, description, location, name, settings
     } = edits
-    const { showSuggestedSkills } = settings
+
+    const { locationDisplayPrecision, showSuggestedSkills } = settings
 
     const locationObject = group.locationObject || currentUser.locationObject
 
@@ -132,7 +136,23 @@ export default class GroupSettingsTab extends Component {
           locationObject={locationObject}
           type='location'
         />
+        <label styleName='styles.label'>Location Privacy:</label>
+        <Dropdown
+          styleName='styles.location-obfuscation-dropdown'
+          toggleChildren={<span styleName='styles.location-obfuscation-dropdown-label'>
+            {LOCATION_PRECISION[locationDisplayPrecision || 'precise']}
+            <Icon name='ArrowDown' />
+          </span>}
 
+          items={Object.keys(LOCATION_PRECISION).map(value => ({
+            label: LOCATION_PRECISION[value],
+            onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
+          }))}
+        />
+        <p styleName='general.detailText'>Note: as a moderator you will always see the exact location displayed</p>
+
+        <br />
+        <br />
         <br />
 
         <SettingsSection>

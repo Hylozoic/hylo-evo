@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { LocationHelpers } from 'hylo-shared'
 import Geocoder from 'components/GeocoderAutocomplete'
 import { mapbox } from 'config'
-import { convertMapboxToLocation } from './util'
 import styles from './LocationInput.scss'
 
 export default class LocationInput extends Component {
@@ -45,9 +45,9 @@ export default class LocationInput extends Component {
 
   handleSelectLocation = data => {
     if (this.props.saveLocationToDB) {
-      this.props.pollingFetchLocation(convertMapboxToLocation(data), (location) => this.props.onChange(location))
+      this.props.pollingFetchLocation(LocationHelpers.convertMapboxToLocation(data), (location) => this.props.onChange(location))
     } else {
-      this.props.onChange(convertMapboxToLocation(data))
+      this.props.onChange(LocationHelpers.convertMapboxToLocation(data))
     }
   }
 

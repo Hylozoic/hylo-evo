@@ -12,9 +12,10 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
     allowGroupInvites
     askGroupToGroupJoinQuestions
     askJoinQuestions
+    hideExtensionData
+    locationDisplayPrecision
     publicMemberDirectory
     showSuggestedSkills
-    hideExtensionData
   }
   slug
   type
@@ -110,9 +111,10 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
         allowGroupInvites
         askGroupToGroupJoinQuestions
         askJoinQuestions
+        hideExtensionData
+        locationDisplayPrecision
         publicMemberDirectory
         showSuggestedSkills
-        hideExtensionData
       }
       slug
     }
