@@ -11,6 +11,8 @@ import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayoutRouter/Login'
+import OAuthConsent from './OAuth/Consent'
+import OAuthLogin from './OAuth/Login'
 import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
 import './NonAuthLayoutRouter.scss'
@@ -83,6 +85,15 @@ export default function NonAuthLayoutRouter (props) {
               ]}
               component={JoinGroup}
             />
+            <Route path='/oauth/login/:uid'>
+              <OAuthLogin styleName='form' />
+            </Route>
+            <Route
+              path='/oauth/consent/:uid'
+              component={routeProps => (
+                <OAuthConsent {...routeProps} styleName='form' />
+              )}
+            />
             {/*
               Default route
               NOTE: This passes the unmatched location for anything unmatched except `/`
@@ -130,6 +141,22 @@ export default function NonAuthLayoutRouter (props) {
                 <Link tabIndex={-1} to='/signup'>
                   Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
                 </Link>
+              </div>
+            )}
+          />
+          <Route
+            path='/oauth/login'
+            component={(props) => (
+              <div styleName='below-container'>
+                <p>Use your Hylo account to access {getQuerystringParam('name', {}, props) || 'this application'}.</p>
+              </div>
+            )}
+          />
+          <Route
+            path='/oauth/consent'
+            component={(props) => (
+              <div styleName='below-container'>
+                <p>Make sure you trust {getQuerystringParam('name', {}, props) || 'this application'} with your information.</p>
               </div>
             )}
           />
