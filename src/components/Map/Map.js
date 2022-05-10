@@ -59,10 +59,12 @@ function Map (props) {
       mapStyle={`mapbox://styles/mapbox/${baseLayerStyle}`}
       onHover={onHover}
       onMouseDown={onMouseDown}
+      onTouchStart={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseLeave={() => { setHoveredLayerFeatures([]) }}
       onMouseOut={() => { setHoveredLayerFeatures([]) }}
       onMouseUp={onMouseUp}
+      onTouchEnd={onMouseUp}
       onResize={dimensions => {
         // XXX: hack needed because onViewportChange doesn't fire when map width changes
         //      https://github.com/visgl/react-map-gl/issues/1157

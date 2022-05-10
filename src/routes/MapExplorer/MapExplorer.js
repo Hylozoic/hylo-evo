@@ -107,13 +107,17 @@ export class UnwrappedMapExplorer extends React.Component {
 
     if (hyloAppLayout) {
       this.props.history.block(tx => {
-        const path = tx.pathname
+        const { pathname, search } = tx
+
         // when in embedded view of map allow web navigation within map
         // the keeps saved search retrieval from reseting group context in the app
-        if (path.match(/\/map$/)) return true
-        // url will be deprecated for path
-        const messageData = { path, url: path }
+        if (pathname.match(/\/map$/)) return true
+
+        // url will be deprecated for pathname and search
+        const messageData = { pathname, search, url: pathname }
+
         window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+
         return false
       })
     }
