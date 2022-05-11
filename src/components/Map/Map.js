@@ -22,6 +22,8 @@ function Map (props) {
 
   const [isOverHyloFeature, setIsOverHyloFeature] = useState(false)
 
+  const ref = mapRef || React.createRef()
+
   // XXX: Have to do this because onViewPortChange gets called before ref gets set
   //   and we need the ref to get the bounds in the parent component
   useEffect(() => {
@@ -66,38 +68,38 @@ function Map (props) {
       onResize={dimensions => {
         // XXX: hack needed because onViewportChange doesn't fire when map width changes
         //      https://github.com/visgl/react-map-gl/issues/1157
-        if (mapRef.current) {
-          const center = mapRef.current.getCenter()
-          const bounds = mapRef.current.getBounds()
+        if (ref.current) {
+          const center = ref.current.getCenter()
+          const bounds = ref.current.getBounds()
           onViewportUpdate({
-            bearing: mapRef.current.getBearing(),
+            bearing: ref.current.getBearing(),
             height: dimensions.height,
             latitude: center.lat,
             longitude: center.lng,
-            pitch: mapRef.current.getPitch(),
+            pitch: ref.current.getPitch(),
             width: dimensions.width,
-            zoom: mapRef.current.getZoom(),
+            zoom: ref.current.getZoom(),
             mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
           })
         }
       }}
       onViewportChange={nextViewport => {
-        const bounds = mapRef.current.getBounds()
+        const bounds = ref.current.getBounds()
         return onViewportUpdate(
           {
             ...nextViewport,
             mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
           },
-          mapRef.current
+          ref.current
         )
       }}
-      ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
+      ref={r => { ref.current = r && r.getMap(); return r }}
       reuseMaps
     >
       <NativeTerritoriesLayer
         cursorLocation={cursorLocation}
         hoveredLayerFeatures={hoveredLayerFeatures}
-        visibility={otherLayers.includes('native_territories')}
+        visibility={otherLayers && otherLayers.includes('native_territories')}
       />
 
       <DeckGL
