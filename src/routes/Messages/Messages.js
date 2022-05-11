@@ -289,7 +289,7 @@ Messages.propTypes = {
   messageThreadPending: PropTypes.bool,
   messages: PropTypes.array,
   messagesPending: PropTypes.bool,
-  onCloseLocation: PropTypes.object,
+  onCloseLocation: PropTypes.string,
   participants: PropTypes.array,
   recentContacts: PropTypes.array,
   sendIsTyping: PropTypes.func,

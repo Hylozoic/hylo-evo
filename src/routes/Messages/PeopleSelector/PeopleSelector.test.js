@@ -14,7 +14,7 @@ const defaultProps = {
   removePerson: () => {},
   changeQuerystringParam: () => {},
   selectedPeople: [],
-  onCloseLocation: { pathname: '' },
+  onCloseLocation: '',
   peopleSelectorOpen: true
 }
 
