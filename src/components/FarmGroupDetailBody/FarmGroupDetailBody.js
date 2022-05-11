@@ -45,7 +45,7 @@ export default function FarmGroupDetailBody ({
         {widgets && widgets.map(widget =>
           <Widget
             {...widget}
-            key={widget.id}
+            key={widget.name}
             group={group}
             isMember={isMember}
             isModerator={false}
