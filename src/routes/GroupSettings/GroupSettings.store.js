@@ -48,6 +48,7 @@ export function fetchGroupSettings (slug) {
             askGroupToGroupJoinQuestions
             askJoinQuestions
             hideExtensionData
+            locationDisplayPrecision
             publicMemberDirectory
             showSuggestedSkills
           }

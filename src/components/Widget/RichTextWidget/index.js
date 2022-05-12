@@ -1,3 +1,3 @@
-import RichTextWidget from './RichTextWidget'
+import component from './RichTextWidget'
 
-export default RichTextWidget
+export default component

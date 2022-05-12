@@ -1,67 +1,118 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import MapGL from 'react-map-gl'
 import DeckGL from '@deck.gl/react'
 import { mapbox } from 'config'
+import NativeTerritoriesLayer from './NativeTerritoriesLayers'
 
 function Map (props) {
-  const { children, layers, afterViewportUpdate = () => {}, isAddingItemToMap, onViewportUpdate = () => {}, viewport, onMouseDown, onMouseUp } = props
-  const [isHovering, setIsHovering] = useState(false)
+  const {
+    afterViewportUpdate = () => {},
+    baseLayerStyle = 'light-v10',
+    children,
+    hyloLayers,
+    isAddingItemToMap,
+    mapRef,
+    onMouseDown,
+    onMouseUp,
+    onViewportUpdate = () => {},
+    otherLayers,
+    viewport
+  } = props
 
-  const mapRef = useRef()
+  const [isOverHyloFeature, setIsOverHyloFeature] = useState(false)
+
+  const ref = mapRef || React.createRef()
 
   // XXX: Have to do this because onViewPortChange gets called before ref gets set
   //   and we need the ref to get the bounds in the parent component
   useEffect(() => {
-    afterViewportUpdate(viewport, mapRef.current)
+    afterViewportUpdate(viewport)
   }, [viewport])
 
+  const [hoveredLayerFeatures, setHoveredLayerFeatures] = useState([])
+  const [cursorLocation, setCursorLocation] = useState({ x: 0, y: 0 })
+
+  const onHover = event => {
+    const { features } = event
+    setHoveredLayerFeatures(features)
+  }
+
+  const onMouseMove = event => {
+    const {
+      srcEvent: { offsetX, offsetY }
+    } = event
+
+    if (event.target.id === 'deckgl-overlay') {
+      setCursorLocation({ x: offsetX, y: offsetY })
+    }
+  }
+
   return (
+
     <MapGL
       {...viewport}
-      width='100%'
       height='100%'
-      mapOptions={{ logoPosition: 'bottom-right' }}
+      width='100%'
       attributionControl={false}
-      mapStyle='mapbox://styles/mapbox/light-v9'
+      interactiveLayerIds={otherLayers}
+      mapboxApiAccessToken={mapbox.token}
+      mapOptions={{ logoPosition: 'bottom-right' }}
+      mapStyle={`mapbox://styles/mapbox/${baseLayerStyle}`}
+      onHover={onHover}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      onMouseLeave={() => { setHoveredLayerFeatures([]) }}
+      onMouseOut={() => { setHoveredLayerFeatures([]) }}
+      onMouseUp={onMouseUp}
+      onResize={dimensions => {
+        // XXX: hack needed because onViewportChange doesn't fire when map width changes
+        //      https://github.com/visgl/react-map-gl/issues/1157
+        if (ref.current) {
+          const center = ref.current.getCenter()
+          const bounds = ref.current.getBounds()
+          onViewportUpdate({
+            bearing: ref.current.getBearing(),
+            height: dimensions.height,
+            latitude: center.lat,
+            longitude: center.lng,
+            pitch: ref.current.getPitch(),
+            width: dimensions.width,
+            zoom: ref.current.getZoom(),
+            mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
+          })
+        }
+      }}
       onViewportChange={nextViewport => {
-        const bounds = mapRef.current.getBounds()
+        const bounds = ref.current.getBounds()
         return onViewportUpdate(
           {
             ...nextViewport,
             mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
           },
-          mapRef.current
+          ref.current
         )
       }}
-      onResize={dimensions => {
-        // XXX: hack needed because onViewportChange doesn't fire when map width changes
-        //      https://github.com/visgl/react-map-gl/issues/1157
-        if (mapRef.current) {
-          const center = mapRef.current.getCenter()
-          const bounds = mapRef.current.getBounds()
-          onViewportUpdate({
-            bearing: mapRef.current.getBearing(),
-            height: dimensions.height,
-            latitude: center.lat,
-            longitude: center.lng,
-            pitch: mapRef.current.getPitch(),
-            width: dimensions.width,
-            zoom: mapRef.current.getZoom(),
-            mapBoundingBox: [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat] // for use with maps that don't share their bounds in the site URL
-          })
-        }
-      }}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-      mapboxApiAccessToken={mapbox.token}
-      ref={ref => { mapRef.current = ref && ref.getMap(); return ref }}
+      ref={r => { ref.current = r && r.getMap(); return r }}
+      reuseMaps
     >
+      <NativeTerritoriesLayer
+        cursorLocation={cursorLocation}
+        hoveredLayerFeatures={hoveredLayerFeatures}
+        visibility={otherLayers && otherLayers.includes('native_territories')}
+      />
+
       <DeckGL
         viewState={viewport}
-        layers={layers}
-        onHover={({ object }) => setIsHovering(Boolean(object))}
-        getCursor={() => isHovering ? 'pointer' : isAddingItemToMap ? 'url(/assets/create-post-pin.png) 12 31, pointer' : 'grab'}
+        layers={hyloLayers}
+        onHover={({ object }) => {
+          setIsOverHyloFeature(Boolean(object))
+          // if hovering over DeckGL object then turn off hover state of MapGL
+          if (object) {
+            setHoveredLayerFeatures([])
+          }
+        }}
+        getCursor={() => isOverHyloFeature ? 'pointer' : isAddingItemToMap ? 'url(/assets/create-post-pin.png) 12 31, pointer' : 'grab'}
       >
         {children}
       </DeckGL>

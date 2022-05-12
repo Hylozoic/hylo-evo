@@ -3,8 +3,10 @@ import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
+import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
@@ -89,8 +91,6 @@ export default class GroupDetail extends Component {
 
     const fullPage = !onClose
 
-    console.log('!!! group.type', group?.type)
-
     return (
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
@@ -125,8 +125,10 @@ export default class GroupDetail extends Component {
           <div styleName='g.headerBackground' />
         </div>
         <div styleName='g.groupDetailBody'>
-          {group.type === GROUP_TYPES.default && this.normalGroupBody()}
-          {group.type === GROUP_TYPES.farm && <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />}
+          {group.type === GROUP_TYPES.default && this.defaultGroupBody()}
+          {group.type === GROUP_TYPES.farm && (
+            <FarmGroupDetailBody isMember={isMember} group={group} currentUser={currentUser} routeParams={routeParams} />
+          )}
           {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
             ? <div styleName='g.aboutCurrentGroup'>
               <h3>{group.moderatorDescriptorPlural || 'Moderators'}</h3>
@@ -152,7 +154,7 @@ export default class GroupDetail extends Component {
               ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
               : isMember
                 ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
-                : this.renderGroupDetails()
+                : this.renderDefaultGroupDetails()
           }
         </div>
         <SocketSubscriber type='group' id={group.id} />
@@ -160,7 +162,7 @@ export default class GroupDetail extends Component {
     )
   }
 
-  normalGroupBody () {
+  defaultGroupBody () {
     const {
       canModerate,
       group,
@@ -172,19 +174,22 @@ export default class GroupDetail extends Component {
     return (
       <>
         {isAboutCurrentGroup && !group.description && canModerate
-          ? <div styleName='g.no-description'>
-            <div>
-              <h4>Your group doesn't have a description</h4>
-              <p>Add a description, location, suggested topics and more in your group settings</p>
-              <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
+          ? (
+            <div styleName='g.no-description'>
+              <div>
+                <h4>Your group doesn't have a description</h4>
+                <p>Add a description, location, suggested topics and more in your group settings</p>
+                <Link to={groupUrl(group.slug, 'settings')}>Add a group description</Link>
+              </div>
             </div>
-          </div>
-          : <div styleName='g.groupDescription'>
-            {group.description}
-          </div>}
-
-        {!isAboutCurrentGroup && topics && topics.length
-          ? <div styleName='g.groupTopics'>
+          ) : (
+            <div styleName='g.groupDescription'>
+              <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
+              <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            </div>
+          )}
+        {!isAboutCurrentGroup && topics && topics.length && (
+          <div styleName='g.groupTopics'>
             <div styleName='g.groupSubtitle'>Topics</div>
             {topics.slice(0, 10).map(topic => {
               return (
@@ -197,45 +202,39 @@ export default class GroupDetail extends Component {
               )
             })}
           </div>
-          : ''}
+        )}
       </>
     )
   }
 
-  normalGroupDetails () {
-    const { group } = this.props
-    return (
-      <div styleName='g.groupDetails'>
-        <div styleName='g.detailContainer'>
-          <div styleName='g.groupSubtitle'>Recent Posts</div>
-          <div styleName='g.detail'>
-            <Icon name='BadgeCheck' />
-            <span styleName='g.detailText'>Only members of this group can see posts</span>
-          </div>
-        </div>
-        <div styleName='g.detailContainer'>
-          <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? 'Members' : 'Member'}</div>
-          {get(group, 'settings.publicMemberDirectory')
-            ? <div>{group.members.map(member => {
-              return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
-            })}</div>
-            : <div styleName='g.detail'>
-              <Icon name='Unlock' />
-              <span styleName='g.detailText'>Join to see</span>
-            </div>
-          }
-        </div>
-      </div>
-    )
-  }
-
-  renderGroupDetails () {
+  renderDefaultGroupDetails () {
     const { addSkill, currentUser, group, joinRequests, onClose, removeSkill, routeParams } = this.props
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
 
-    return ( // half of this could be shifted to farm specific widgets
+    // half of this could be shifted to farm specific widgets
+    return (
       <div>
-        {this.normalGroupDetails()}
+        <div styleName='g.groupDetails'>
+          <div styleName='g.detailContainer'>
+            <div styleName='g.groupSubtitle'>Recent Posts</div>
+            <div styleName='g.detail'>
+              <Icon name='BadgeCheck' />
+              <span styleName='g.detailText'>Only members of this group can see posts</span>
+            </div>
+          </div>
+          <div styleName='g.detailContainer'>
+            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? 'Members' : 'Member'}</div>
+            {get(group, 'settings.publicMemberDirectory')
+              ? <div>{group.members.map(member => {
+                return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
+              })}</div>
+              : <div styleName='g.detail'>
+                <Icon name='Unlock' />
+                <span styleName='g.detailText'>Join to see</span>
+              </div>
+            }
+          </div>
+        </div>
         <JoinSection
           addSkill={addSkill}
           currentUser={currentUser}

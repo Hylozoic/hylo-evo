@@ -1,4 +1,8 @@
 // GroupSettingsTab
+.label {
+  composes: tag from 'css/typography.scss';
+}
+
 .name {
   height: 60px;
   line-height: 60px;
@@ -6,6 +10,7 @@
   border-radius: 4px;
   margin-bottom: 25px;
   composes: hdr-display from 'css/typography.scss';
+
   background-color: $color-catskill-white;
   border: none;
   width: 100%;
@@ -40,8 +45,29 @@
   width: 30px;
 }
 
+.location-obfuscation-dropdown {
+  composes: text-button from 'css/typography.scss';
+  border: 1px solid $color-grey-keyline-light;
+  box-sizing: border-box;
+  border-radius: 30px;
+  font-size: 16px;
+  padding: 2px 5px;
+  margin-left: 10px;
+  line-height: 22px;
+}
+
+.location-obfuscation-dropdown-label {
+  font-size: 13px;
+  padding: 3px;
+
+  span {
+    vertical-align: middle;
+  }
+}
+
 .skillsSetting {
   padding: 0;
   position: relative;
   margin-left: -15px;
 }
+

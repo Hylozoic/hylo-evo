@@ -111,7 +111,7 @@ const WIDGETS = {
     component: PrivacyWidget
   },
   mission: {
-    title: 'Our Mission',
+    title: null,
     component: RichTextWidget
   },
   join: {

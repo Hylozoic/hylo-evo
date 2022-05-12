@@ -1,5 +1,6 @@
 const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites, withExtensions, withWidgets = false }) => `
   id
+  aboutVideoUri
   accessibility
   avatarUrl
   bannerUrl
@@ -13,9 +14,10 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
     allowGroupInvites
     askGroupToGroupJoinQuestions
     askJoinQuestions
+    hideExtensionData
+    locationDisplayPrecision
     publicMemberDirectory
     showSuggestedSkills
-    hideExtensionData
   }
   slug
   type
@@ -113,9 +115,10 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
         allowGroupInvites
         askGroupToGroupJoinQuestions
         askJoinQuestions
+        hideExtensionData
+        locationDisplayPrecision
         publicMemberDirectory
         showSuggestedSkills
-        hideExtensionData
       }
       slug
     }

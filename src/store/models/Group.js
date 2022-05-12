@@ -69,6 +69,12 @@ export const visibilityString = (visibility) => {
   return Object.keys(GROUP_VISIBILITY).find(key => GROUP_VISIBILITY[key] === visibility)
 }
 
+export const LOCATION_PRECISION = {
+  'precise': 'Display exact location',
+  'near': 'Display only nearest city and show nearby location on the map',
+  'region': 'Display only nearest city and don\'t show on the map'
+}
+
 export class GroupModerator extends Model { }
 GroupModerator.modelName = 'GroupModerator'
 GroupModerator.fields = {

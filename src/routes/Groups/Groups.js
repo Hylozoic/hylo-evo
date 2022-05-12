@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
+import { TextHelpers } from 'hylo-shared'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import GroupNetworkMap from 'components/GroupNetworkMap'
@@ -109,7 +110,9 @@ export function GroupCard ({ group, routeParams }) {
               }
             </div>
           </div>
-          <div styleName='group-description'><span>{group.description}</span></div>
+          <div styleName='group-description'>
+            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+          </div>
         </div>
       </div>
       <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='groupCardBackground'><div /></div>

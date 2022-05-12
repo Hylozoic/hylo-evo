@@ -5,6 +5,7 @@ import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment
 export default () => {
   return `group(slug: $slug, updateLastViewed: $updateLastViewed) {
     id
+    aboutVideoUri
     accessibility
     avatarUrl
     bannerUrl
@@ -19,9 +20,10 @@ export default () => {
       allowGroupInvites
       askGroupToGroupJoinQuestions
       askJoinQuestions
+      hideExtensionData
+      locationDisplayPrecision
       publicMemberDirectory
       showSuggestedSkills
-      hideExtensionData
     }
     slug
     typeDescriptor
@@ -78,9 +80,10 @@ export default () => {
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
+          hideExtensionData
+          locationDisplayPrecision
           publicMemberDirectory
           showSuggestedSkills
-          hideExtensionData
         }
       }
     }
@@ -191,9 +194,10 @@ export default () => {
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
+          hideExtensionData
+          locationDisplayPrecision
           publicMemberDirectory
           showSuggestedSkills
-          hideExtensionData
         }
       }
     }
