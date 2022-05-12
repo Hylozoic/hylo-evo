@@ -131,7 +131,7 @@ export default class GroupDetail extends Component {
           )}
           {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
             ? <div styleName='g.aboutCurrentGroup'>
-              <h3>Moderators</h3>
+              <h3>{group.moderatorDescriptorPlural || 'Moderators'}</h3>
               <div styleName='g.moderators'>
                 {moderators.map(p => (
                   <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>

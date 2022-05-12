@@ -60,6 +60,8 @@ export default class GroupSettingsTab extends Component {
         description: description || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
+        moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
+        moderatorDescriptorPlural: group.moderatorDescriptorPlural || 'Moderators',
         name: name || '',
         settings: typeof settings !== 'undefined' ? settings : { }
       },
@@ -103,7 +105,7 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, location, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
@@ -152,7 +154,19 @@ export default class GroupSettingsTab extends Component {
         <p styleName='general.detailText'>Note: as a moderator you will always see the exact location displayed</p>
 
         <br />
-        <br />
+
+        <SettingsControl
+          label='Word used to describe a group Moderator'
+          onChange={this.updateSetting('moderatorDescriptor')}
+          value={moderatorDescriptor}
+        />
+
+        <SettingsControl
+          label='Plural word used to describe group Moderators'
+          onChange={this.updateSetting('moderatorDescriptorPlural')}
+          value={moderatorDescriptorPlural}
+        />
+
         <br />
 
         <SettingsSection>

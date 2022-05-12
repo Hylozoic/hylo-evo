@@ -57,7 +57,7 @@ export default function GroupSettings ({
         />
       },
       {
-        name: 'Moderators',
+        name: group.moderatorDescriptorPlural || 'Moderators',
         path: groupUrl(slug, 'settings/moderators'),
         component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
       },
