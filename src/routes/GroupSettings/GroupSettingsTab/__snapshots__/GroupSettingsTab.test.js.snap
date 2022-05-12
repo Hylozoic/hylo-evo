@@ -97,7 +97,16 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     Note: as a moderator you will always see the exact location displayed
   </p>
   <br />
-  <br />
+  <SettingsControl
+    label="Word used to describe a group Moderator"
+    onChange={[Function]}
+    value="Moderator"
+  />
+  <SettingsControl
+    label="Plural word used to describe group Moderators"
+    onChange={[Function]}
+    value="Moderators"
+  />
   <br />
   <SettingsSection>
     <h3>

@@ -6,9 +6,7 @@ exports[`Membership matches last snapshot 1`] = `
 >
   <div
     data-stylename="role"
-  >
-    Moderator
-  </div>
+  />
    of
   <Button
     color="green-white"
