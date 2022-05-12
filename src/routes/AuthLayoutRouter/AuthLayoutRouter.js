@@ -73,7 +73,7 @@ export default function AuthLayoutRouter (props) {
       '/:context(all|welcome)'
     ])?.params || { context: 'all' }
   ), [location.pathname])
-  const hasDetail = matchPath(location.pathname, [
+  const hasDetail = !!matchPath(location.pathname, [
     `/(.*)/${POST_DETAIL_MATCH}`,
     `/(.*)/${GROUP_DETAIL_MATCH}`
   ])
