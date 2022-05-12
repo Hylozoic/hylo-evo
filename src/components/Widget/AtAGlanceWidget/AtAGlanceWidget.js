@@ -19,8 +19,8 @@ export default function AtAGlanceWidget ({ group }) {
   return (
     <div styleName='at-a-glance-container'>
       {atAGlance.length > 0 && <FarmDetailSection items={atAGlance.map((item) => capitalize(item))} />}
-      {website && <FancyLink iconName='Website' target='_blank' linkUrl={`https://${website}`} title={`Website for ${group.name}`} />}
-      {socialMedia && <FancyLink iconName='Socials' target='_blank' linkUrl={`https://${socialMedia}`} title={`Social media link for ${group.name}`} />}
+      {website && <FancyLink iconName='Website' target='_blank' linkUrl={website} title={`Website for ${group.name}`} />}
+      {socialMedia && <FancyLink iconName='Socials' target='_blank' linkUrl={socialMedia} title={`Social media link for ${group.name}`} />}
     </div>
   )
 }
