@@ -34,11 +34,12 @@ import {
 
 export function presentMember (person, groupId) {
   return {
-    ...pick([ 'id', 'name', 'avatarUrl', 'locationObject', 'tagline', 'skills' ], person.ref),
+    ...pick(['id', 'name', 'avatarUrl', 'locationObject', 'tagline', 'skills'], person.ref),
     type: 'member',
     skills: person.skills.toModelArray(),
     group: person.memberships.first()
-      ? person.memberships.first().group.name : null
+      ? person.memberships.first().group.name
+      : null
   }
 }
 
@@ -61,7 +62,7 @@ export function mapStateToProps (state, props) {
   const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
   // Map view parameters come from the URL query params first, and if not there then from the Redux state
-  let boundingBox = get('totalBoundingBoxLoaded', state.MapExplorer)
+  const boundingBox = get('totalBoundingBoxLoaded', state.MapExplorer)
 
   const fetchPostsParams = {
     boundingBox,
@@ -76,7 +77,7 @@ export function mapStateToProps (state, props) {
   const queryParams = getQuerystringParam(['search', 'sortBy', 'hide', 'topics'], state, props)
   const filters = {
     ...stateFilters,
-    ...pick([ 'search', 'sortBy' ], queryParams)
+    ...pick(['search', 'sortBy'], queryParams)
   }
   if (queryParams.hide) {
     filters.featureTypes = Object.keys(filters.featureTypes).reduce((types, type) => { types[type] = !queryParams.hide.includes(type); return types }, {})
@@ -133,7 +134,7 @@ export function mapStateToProps (state, props) {
     defaultZoom = 0
   }
 
-  let zoomParam = getQuerystringParam('zoom', state, props)
+  const zoomParam = getQuerystringParam('zoom', state, props)
   const zoom = zoomParam ? parseFloat(zoomParam) : state.MapExplorer.zoom || defaultZoom
 
   // First look for base layer style in query param, then saved local state, then user settings

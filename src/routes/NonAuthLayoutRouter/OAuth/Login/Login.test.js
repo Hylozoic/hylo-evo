@@ -4,7 +4,7 @@ import React from 'react'
 
 it('renders correctly', () => {
   render(
-    <Login location={{ search: '' }} match={{ params: { uid: 'uid' }}} />
+    <Login location={{ search: '' }} match={{ params: { uid: 'uid' } }} />
   )
 
   expect(screen.getByText('Sign in to Hylo')).toBeInTheDocument()
