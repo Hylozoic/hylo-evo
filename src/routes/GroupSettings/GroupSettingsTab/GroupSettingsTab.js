@@ -54,7 +54,7 @@ export default class GroupSettingsTab extends Component {
 
     return {
       edits: {
-        aboutVideoUri: aboutVideoUri && trim(aboutVideoUri),
+        aboutVideoUri: (aboutVideoUri && trim(aboutVideoUri)) || '',
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
