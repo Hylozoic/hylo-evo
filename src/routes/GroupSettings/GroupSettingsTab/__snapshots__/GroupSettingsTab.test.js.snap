@@ -49,6 +49,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   <SettingsControl
     label="About Video URL"
     onChange={[Function]}
+    value=""
   />
   <SettingsControl
     label="Location"
