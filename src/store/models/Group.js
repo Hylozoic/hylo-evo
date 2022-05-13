@@ -166,6 +166,8 @@ Group.fields = {
     through: 'GroupModerator',
     throughFields: [ 'group', 'moderator' ]
   }),
+  moderatorDescriptor: attr(),
+  moderatorDescriptorPlural: attr(),
   name: attr(),
   openOffersAndRequests: many({
     to: 'Post',
