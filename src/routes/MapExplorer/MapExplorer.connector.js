@@ -120,9 +120,9 @@ export function mapStateToProps (state, props) {
     centerLocation = { lat: decodedCenter[0], lng: decodedCenter[1] }
   } else {
     centerLocation = state.MapExplorer.centerLocation ||
-      (group && group.locationObject ? group.locationObject.center
-        : me && me.locationObject ? me.locationObject.center
-          : null)
+      group?.locationObject?.center ||
+        me?.locationObject?.center ||
+          null
   }
   if (centerLocation) {
     centerLocation = { lat: parseFloat(centerLocation.lat), lng: parseFloat(centerLocation.lng) }
@@ -138,7 +138,7 @@ export function mapStateToProps (state, props) {
 
   // First look for base layer style in query param, then saved local state, then user settings
   const baseStyleParam = getQuerystringParam('style', state, props)
-  const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || me.settings.mapBaseLayer
+  const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || me?.settings?.mapBaseLayer
 
   return {
     baseLayerStyle,
@@ -212,7 +212,7 @@ export function mapDispatchToProps (dispatch, props) {
         updateUrlFromStore(params, true)
       })
     },
-    updateBaseLayerStyle: (style) => dispatch(updateUserSettings({ settings: { mapBaseLayer: style } })).then(() => dispatch(changeQuerystringParams(props, { style }, true))),
+    updateBaseLayerStyle: (style) => props.currentUser && dispatch(updateUserSettings({ settings: { mapBaseLayer: style } })).then(() => dispatch(changeQuerystringParams(props, { style }, true))),
     updateBoundingBox: bbox => dispatch(updateState({ totalBoundingBoxLoaded: bbox })),
     updateQueryParams: (params, replace) => updateUrlFromStore(params, replace),
     updateView: ({ centerLocation, zoom }) => {
