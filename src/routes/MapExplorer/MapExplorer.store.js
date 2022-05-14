@@ -591,7 +591,8 @@ export const getGroupsFilteredByTopics = createSelector(
   getGroupsFilteredBySearch,
   filterTopicsSelector,
   (groups, filterTopics) => {
-    return isEmpty(filterTopics) ? groups
+    return isEmpty(filterTopics)
+      ? groups
       : groups.filter(g => filterTopics.find(ft => g.name.toLowerCase().includes(ft.name.toLowerCase()) ||
                                                    (g.description.toLowerCase() && g.description.includes(ft.name.toLowerCase())))
       )
