@@ -276,7 +276,8 @@ export class UnwrappedMapExplorer extends React.Component {
   handleLocationInputSelection = (value) => {
     if (value.mapboxId) {
       // If a bounding box area then show the whole area
-      value.bbox ? this.updateViewportWithBbox(value.bbox)
+      value.bbox
+        ? this.updateViewportWithBbox(value.bbox)
         // If a specific location without a bounding box zoom to it
         : this.setState({ viewport: { ...this.state.viewport, latitude: value.center.lat, longitude: value.center.lng, zoom: 12 } })
     }

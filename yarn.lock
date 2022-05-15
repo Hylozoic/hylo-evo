@@ -5916,7 +5916,7 @@ cookie@0.4.2, cookie@^0.4.1:
 
 coordinate-parser@^1.0.7:
   version "1.0.7"
-  resolved "https://registry.npmjs.org/coordinate-parser/-/coordinate-parser-1.0.7.tgz"
+  resolved "https://registry.yarnpkg.com/coordinate-parser/-/coordinate-parser-1.0.7.tgz#9350485f03146af0f377dd51a0907a0ac684363e"
   integrity sha512-pkcjigkAEjU5JsTYnuXLkRgR6T5fF/7GXR4p9vWJesy8fKwsheN8zC5d3sSvdMmWihHB4u48xWZ5mUCcgBIEpw==
 
 copy-concurrently@^1.0.0:
@@ -9840,12 +9840,13 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-hylo-shared@^1.6.8:
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-1.6.8.tgz#6ed660ce24891dae13cbeadbb153c9f4a75b6408"
-  integrity sha512-fcTH4mCFw7i1h/a6NGe540aKRuJCafYam015v9bnX1s84bz9p4fbL+JqjmzkNIOC7Ld41P52pmNAlKnRFEfJfA==
+hylo-shared@^1.6.9:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-1.6.9.tgz#5c1c2e168f8cc0c4acaf465d77cdba8b8177547d"
+  integrity sha512-KQRtuIGm19zUkGhCs16hfG2NvZ7z5r3iT3aO6aTl2H8PKlW6QL/naxINFNn5eESbdCkJPUVlwabm3OaWOyUXDQ==
   dependencies:
     cheerio "^1.0.0-rc.10"
+    coordinate-parser "^1.0.7"
     html-to-text "^8.1.0"
     insane "^2.6.2"
     linkify-plugin-hashtag "^3.0.4"
