@@ -107,13 +107,17 @@ export class UnwrappedMapExplorer extends React.Component {
 
     if (hyloAppLayout) {
       this.props.history.block(tx => {
-        const path = tx.pathname
+        const { pathname, search } = tx
+
         // when in embedded view of map allow web navigation within map
         // the keeps saved search retrieval from reseting group context in the app
-        if (path.match(/\/map$/)) return true
-        // url will be deprecated for path
-        const messageData = { path, url: path }
+        if (pathname.match(/\/map$/)) return true
+
+        // url will be deprecated for pathname and search
+        const messageData = { pathname, search, url: pathname }
+
         window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+
         return false
       })
     }
@@ -272,7 +276,8 @@ export class UnwrappedMapExplorer extends React.Component {
   handleLocationInputSelection = (value) => {
     if (value.mapboxId) {
       // If a bounding box area then show the whole area
-      value.bbox ? this.updateViewportWithBbox(value.bbox)
+      value.bbox
+        ? this.updateViewportWithBbox(value.bbox)
         // If a specific location without a bounding box zoom to it
         : this.setState({ viewport: { ...this.state.viewport, latitude: value.center.lat, longitude: value.center.lng, zoom: 12 } })
     }
@@ -657,7 +662,7 @@ export class UnwrappedMapExplorer extends React.Component {
           <div styleName={cx('pointer')} />
         </div>
 
-        {currentUser && !hyloAppLayout && (
+        {currentUser && (
           <button
             data-for='helpTip'
             data-tip='Add item to map'
