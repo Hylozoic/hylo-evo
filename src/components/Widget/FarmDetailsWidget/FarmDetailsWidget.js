@@ -76,6 +76,7 @@ export default function FarmDetailsWidget ({ group }) {
         {getManagementPlansCurrentDetail(group).length > 0 && <FarmDetailSection title='Management Techniques' items={getManagementPlansCurrentDetail(group).map((plan) => managementPlansLookup[plan].label)} />}
       </div>
       <div>
+        <div styleName='separator-bg' />
         <div styleName='separator' />
         <Pill styleName='green-pill' onClick={() => setShowMore(!showMore)} label={showMore ? 'Show Less' : 'Show More'} />
       </div>

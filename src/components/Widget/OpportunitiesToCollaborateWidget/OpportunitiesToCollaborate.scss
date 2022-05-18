@@ -6,10 +6,15 @@
 }
 
 .collab-item {
-  width: 90%;
+  width: 100%;
   display: grid;
   grid-template-columns: 50px 1fr 50px;
   align-items: center;
+  padding: 10px;
+  background: #FFFFFF;
+  border: 1px solid #E1E5E9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
 }
 
 .collab-text-container {
