@@ -198,7 +198,13 @@ export const DEFAULT_BANNER = 'https://d3ngex8q79bk55.cloudfront.net/misc/defaul
 export const DEFAULT_AVATAR = 'https://d3ngex8q79bk55.cloudfront.net/misc/default_community_avatar.png'
 
 export const ALL_GROUPS_ID = 'all-groups'
-export const ALL_GROUPS_AVATAR_PATH = '/assets/white-merkaba.png'
+export const ALL_GROUPS_AVATAR_PATH = '/assets/white-merkaba.svg'
+
+export const GROUP_EXPLORER_ID = 'group-explorer'
+export const GROUP_EXPLORER_AVATAR_PATH = '/assets/group-explorer.svg'
+
+export const PUBLIC_MAP_ID = 'public-map'
+export const PUBLIC_MAP_AVATAR_PATH = '/assets/earth.svg'
 
 export const PUBLIC_CONTEXT_ID = 'public-context'
 export const PUBLIC_CONTEXT_AVATAR_PATH = '/public.svg'
