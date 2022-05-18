@@ -81,7 +81,7 @@ export default function Drawer (props) {
       <div styleName={cx('drawerHeader', { 's.currentGroup': group !== null })} style={bgImageStyle(bannerUrl)}>
         <div styleName='drawerBanner'>
           <div styleName='s.hyloLogoBar'>
-            <img src='/assets/hylo-logotype.svg' width='60px' height='26px' />
+            <img src='/hylo.svg' width='50px' height='36px' />
             <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
           </div>
           <Logo group={group} />
