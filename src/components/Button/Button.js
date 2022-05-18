@@ -6,6 +6,7 @@ import './Button.scss'
 const { string, bool, func, object, oneOfType, node } = PropTypes
 
 export default function Button ({
+  borderRadius = '25px',
   label,
   color = 'green',
   hover,
@@ -26,6 +27,7 @@ export default function Button ({
     role='button'
     tabIndex={tabIndex}
     styleName={styleName}
+    style={{ borderRadius }}
     className={className}
     onClick={!disabled ? onClick : undefined}
   >

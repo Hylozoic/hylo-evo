@@ -13,15 +13,11 @@ export function authWithService (service) {
   return new Promise((resolve, reject) => {
     try {
       const popup = openPopup(service)
-      const timeout = setTimeout(() => {
-        reject(new Error('The request timed out; please try again.'))
-      }, 30000)
 
       // the name 'popupDone' is important, because code in the popup (which is
       // set up by hylo-node) will call this callback with that name
       window.popupDone = function ({ context, error, provider }) {
         if (context !== authContext) return
-        clearTimeout(timeout)
         popup.close()
         if (error) return reject(new Error(error))
         resolve()

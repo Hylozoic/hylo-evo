@@ -375,7 +375,7 @@ export function fetchMembers ({ boundingBox, context, slug, sortBy, search, grou
   }
 }
 
-export function fetchGroups ({ boundingBox, context, groupSlugs, search, slug, sortBy }) {
+export function fetchGroups ({ boundingBox, context, parentSlugs, search, slug, sortBy }) {
   return {
     type: FETCH_GROUPS_MAP,
     graphql: {
@@ -383,7 +383,7 @@ export function fetchGroups ({ boundingBox, context, groupSlugs, search, slug, s
       variables: {
         boundingBox: formatBoundingBox(boundingBox),
         context,
-        parentSlugs: groupSlugs,
+        parentSlugs,
         sortBy,
         search
       }
@@ -592,7 +592,8 @@ export const getGroupsFilteredByTopics = createSelector(
   getGroupsFilteredBySearch,
   filterTopicsSelector,
   (groups, filterTopics) => {
-    return isEmpty(filterTopics) ? groups
+    return isEmpty(filterTopics)
+      ? groups
       : groups.filter(g => filterTopics.find(ft => g.name.toLowerCase().includes(ft.name.toLowerCase()) ||
                                                    (g.description.toLowerCase() && g.description.includes(ft.name.toLowerCase())))
       )
@@ -601,6 +602,7 @@ export const getGroupsFilteredByTopics = createSelector(
 
 /* ***** Reducer ***** */
 const DEFAULT_STATE = {
+  baseLayerStyle: null,
   centerLocation: null,
   totalBoundingBoxLoaded: null,
   zoom: 0,

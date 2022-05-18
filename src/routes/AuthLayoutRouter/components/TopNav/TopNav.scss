@@ -138,6 +138,7 @@ a.current-context {
 
 .label {
   composes: tag from 'css/typography.scss';
+  text-transform: uppercase;
 }
 
 .groupName {

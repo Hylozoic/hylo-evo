@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import './GoogleButton.scss'
 
-export default function FacebookButton ({
+export default function GoogleButton ({
   onClick,
   signUp,
   className = ''

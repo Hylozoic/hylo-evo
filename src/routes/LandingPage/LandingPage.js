@@ -43,7 +43,7 @@ export default class LandingPage extends Component {
           </div>
           <div styleName='bg-fade' />
         </div>
-        {widgets && widgets.map(widget =>
+        {widgets && widgets.map(widget => // so each widget already gets childGroups, posts and the group entity
           <Widget
             {...widget}
             childGroups={childGroups}

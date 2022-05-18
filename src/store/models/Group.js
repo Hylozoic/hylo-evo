@@ -6,6 +6,11 @@ export const GROUP_ACCESSIBILITY = {
   Open: 2
 }
 
+export const GROUP_TYPES = {
+  default: null,
+  farm: 'farm'
+}
+
 export function accessibilityDescription (a) {
   switch (a) {
     case GROUP_ACCESSIBILITY.Closed:
@@ -62,6 +67,12 @@ export const accessibilityString = (accessibility) => {
 
 export const visibilityString = (visibility) => {
   return Object.keys(GROUP_VISIBILITY).find(key => GROUP_VISIBILITY[key] === visibility)
+}
+
+export const LOCATION_PRECISION = {
+  'precise': 'Display exact location',
+  'near': 'Display only nearest city and show nearby location on the map',
+  'region': 'Display only nearest city and don\'t show on the map'
 }
 
 export class GroupModerator extends Model { }
@@ -156,6 +167,8 @@ Group.fields = {
     through: 'GroupModerator',
     throughFields: [ 'group', 'moderator' ]
   }),
+  moderatorDescriptor: attr(),
+  moderatorDescriptorPlural: attr(),
   name: attr(),
   openOffersAndRequests: many({
     to: 'Post',

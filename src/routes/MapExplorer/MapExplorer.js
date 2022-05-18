@@ -1,35 +1,43 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { debounce, get, groupBy, isEqual, isEmpty } from 'lodash'
 import cx from 'classnames'
+import { debounce, get, groupBy, isEqual, isEmpty } from 'lodash'
+import React from 'react'
+import { FlyToInterpolator } from 'react-map-gl'
+import { useHistory } from 'react-router-dom'
 import bbox from '@turf/bbox'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-import { FlyToInterpolator } from 'react-map-gl'
-
-import { isMobileDevice } from 'util/mobile'
-import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import { generateViewParams } from 'util/savedSearch'
-import { locationObjectToViewport } from 'util/geo'
-import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import Dropdown from 'components/Dropdown'
+import Icon from 'components/Icon'
+import Loading from 'components/Loading'
+import LocationInput from 'components/LocationInput'
+import Map from 'components/Map/Map'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
 import { createPolygonLayerFromGroups } from 'components/Map/layers/polygonLayer'
-import Icon from 'components/Icon'
-import Loading from 'components/Loading'
-import Map from 'components/Map/Map'
-import Tooltip from 'components/Tooltip'
-import MapDrawer from './MapDrawer'
-import SavedSearches from './SavedSearches'
 import SwitchStyled from 'components/SwitchStyled'
-import LocationInput from 'components/LocationInput'
+import Tooltip from 'components/Tooltip'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import { locationObjectToViewport } from 'util/geo'
+import { isMobileDevice } from 'util/mobile'
+import { generateViewParams } from 'util/savedSearch'
+
+import MapDrawer from './MapDrawer'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import SavedSearches from './SavedSearches'
 
 import styles from './MapExplorer.scss'
 import 'mapbox-gl/dist/mapbox-gl.css'
+
+const MAP_BASE_LAYERS = [
+  { id: 'light-v10', label: 'Basic (Light)' },
+  { id: 'streets-v11', label: 'Streets' },
+  { id: 'satellite-v9', label: 'Satellite' },
+  { id: 'satellite-streets-v11', label: 'Satellite + Streets' }
+]
 
 export class UnwrappedMapExplorer extends React.Component {
   static defaultProps = {
@@ -61,6 +69,7 @@ export class UnwrappedMapExplorer extends React.Component {
     }
 
     this.state = {
+      baseLayerStyle: props.baseLayerStyle || 'light-v10',
       clusterLayer: null,
       currentBoundingBox: null,
       groupIconLayer: null,
@@ -75,11 +84,15 @@ export class UnwrappedMapExplorer extends React.Component {
       // Need this in the state so we can filter them by currentBoundingBox
       groupsForDrawer: props.groups || [],
       membersForDrawer: props.members || [],
+      otherLayers: {},
       selectedObject: null,
       showFeatureFilters: false,
+      showLayersSelector: false,
       totalPostsInView: get(props, 'postsForMap.length') || 0,
       viewport: defaultViewport
     }
+
+    this.mapRef = React.createRef()
   }
 
   componentDidMount () {
@@ -96,13 +109,17 @@ export class UnwrappedMapExplorer extends React.Component {
 
     if (hyloAppLayout) {
       this.props.history.block(tx => {
-        const path = tx.pathname
+        const { pathname, search } = tx
+
         // when in embedded view of map allow web navigation within map
         // the keeps saved search retrieval from reseting group context in the app
-        if (path.match(/\/map$/)) return true
-        // url will be deprecated for path
-        const messageData = { path, url: path }
+        if (pathname.match(/\/map$/)) return true
+
+        // url will be deprecated for pathname and search
+        const messageData = { pathname, search, url: pathname }
+
         window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+
         return false
       })
     }
@@ -274,7 +291,8 @@ export class UnwrappedMapExplorer extends React.Component {
   handleLocationInputSelection = (value) => {
     if (value.mapboxId) {
       // If a bounding box area then show the whole area
-      value.bbox ? this.updateViewportWithBbox(value.bbox)
+      value.bbox
+        ? this.updateViewportWithBbox(value.bbox)
         // If a specific location without a bounding box zoom to it
         : this.setState({ viewport: { ...this.state.viewport, latitude: value.center.lat, longitude: value.center.lng, zoom: 12 } })
     }
@@ -288,9 +306,9 @@ export class UnwrappedMapExplorer extends React.Component {
     this.setState({ viewport: update, creatingPost: false })
   }
 
-  afterViewportUpdate = (update, mapRef) => {
-    if (mapRef) {
-      let bounds = mapRef.getBounds()
+  afterViewportUpdate = (update) => {
+    if (this.mapRef.current) {
+      let bounds = this.mapRef.current.getBounds()
       bounds = [bounds._sw.lng, bounds._sw.lat, bounds._ne.lng, bounds._ne.lat]
       this.updateBoundingBoxQuery(bounds)
       const newCenter = { lat: update.latitude, lng: update.longitude }
@@ -389,7 +407,7 @@ export class UnwrappedMapExplorer extends React.Component {
     this.props.storeClientFilterParams({ featureTypes: newFeatureTypes })
   }
 
-  _renderTooltip = () => {
+  renderTooltip = () => {
     const { hoveredObject, pointerX, pointerY } = this.state || {}
     if (hoveredObject) {
       let message
@@ -413,8 +431,29 @@ export class UnwrappedMapExplorer extends React.Component {
     return ''
   }
 
+  setBaseLayerStyle = (style) => {
+    this.setState({ baseLayerStyle: style })
+    this.props.updateBaseLayerStyle(style)
+  }
+
+  toggleMapLayer = (layer) => {
+    const newLayers = { ...this.state.otherLayers }
+    if (this.state.otherLayers[layer]) {
+      delete newLayers[layer]
+    } else {
+      switch (layer) {
+        case 'native_territories':
+          newLayers[layer] = true
+          // TODO: use deck.gl for this layer? indigenousTerritoriesLayer({ onHover: this.onMapHover })
+          break
+      }
+    }
+
+    this.setState({ otherLayers: newLayers })
+  }
+
   handleAddItemToMap = () => {
-    this.setState({ isAddingItemToMap: true })
+    this.setState({ isAddingItemToMap: !this.state.isAddingItemToMap })
   }
 
   toggleDrawer = (e) => {
@@ -424,6 +463,10 @@ export class UnwrappedMapExplorer extends React.Component {
 
   toggleFeatureFilters = (e) => {
     this.setState({ showFeatureFilters: !this.state.showFeatureFilters })
+  }
+
+  toggleLayersSelector = (e) => {
+    this.setState({ showLayersSelector: !this.state.showLayersSelector })
   }
 
   toggleSavedSearches = (e) => {
@@ -477,6 +520,7 @@ export class UnwrappedMapExplorer extends React.Component {
     } = this.props
 
     const {
+      baseLayerStyle,
       clusterLayer,
       groupIconLayer,
       polygonLayer,
@@ -484,31 +528,44 @@ export class UnwrappedMapExplorer extends React.Component {
       isAddingItemToMap,
       groupsForDrawer,
       membersForDrawer,
+      otherLayers,
       showFeatureFilters,
+      showLayersSelector,
       showSavedSearches,
       totalPostsInView,
       viewport
     } = this.state
+
     const { hyloAppLayout, hideNavLayout } = this.context
     const withoutNav = hyloAppLayout || hideNavLayout
+
     const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 
     return (
-      <div styleName={cx('container', { 'noUser': !currentUser, withoutNav })}>
+      <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
         <div styleName='mapContainer'>
           <Map
-            layers={[groupIconLayer, clusterLayer, polygonLayer]}
             afterViewportUpdate={this.afterViewportUpdate}
-            onViewportUpdate={this.mapViewPortUpdate}
-            children={this._renderTooltip()}
+            baseLayerStyle={baseLayerStyle}
+            hyloLayers={[groupIconLayer, clusterLayer, polygonLayer]}
             isAddingItemToMap={isAddingItemToMap}
-            viewport={viewport}
+            otherLayers={Object.keys(otherLayers)}
+            mapRef={this.mapRef}
             onMouseDown={this.onMapMouseDown}
             onMouseUp={this.onMapMouseUp}
-          />
+            onViewportUpdate={this.mapViewPortUpdate}
+            viewport={viewport}
+          >
+            {this.renderTooltip()}
+          </Map>
           {pendingPostsMap && <Loading className={styles.loading} />}
         </div>
-        <button styleName={cx('toggleDrawerButton drawerAdjacentButton', { 'drawerOpen': !hideDrawer })} onClick={this.toggleDrawer}>
+        <button
+          data-for='helpTip'
+          data-tip={hideDrawer ? 'Open Drawer' : 'Close Drawer'}
+          styleName={cx('toggleDrawerButton drawerAdjacentButton', { drawerOpen: !hideDrawer })}
+          onClick={this.toggleDrawer}
+        >
           <Icon name='Hamburger' className={styles.openDrawer} />
           <Icon name='Ex' className={styles.closeDrawer} />
         </button>
@@ -536,19 +593,7 @@ export class UnwrappedMapExplorer extends React.Component {
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
         Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
-        {currentUser && !hyloAppLayout && (
-          <button
-            data-for='addItemToMapTooltip'
-            data-tip='Add item to map'
-            styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
-            onClick={this.handleAddItemToMap}
-          >
-            <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
-          </button>
-        )}
-        <Tooltip
-          delay={550}
-          id='addItemToMapTooltip' />
+
         {currentUser && <>
           <Icon
             name='Heart'
@@ -565,12 +610,12 @@ export class UnwrappedMapExplorer extends React.Component {
               viewSavedSearch={this.handleViewSavedSearch}
             />
           )}
-      </>}
+        </>}
+
         <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
           <h3>What do you want to see on the map?</h3>
           {featureTypes.map(featureType => {
-            let color = FEATURE_TYPES[featureType].primaryColor
-
+            const color = FEATURE_TYPES[featureType].primaryColor
             return (
               <div
                 key={featureType}
@@ -589,6 +634,71 @@ export class UnwrappedMapExplorer extends React.Component {
           })}
           <div styleName={cx('pointer')} />
         </div>
+
+        <button
+          data-for='helpTip'
+          data-tip={showLayersSelector ? null : 'Change Map Layers'}
+          onClick={this.toggleLayersSelector}
+          styleName={cx('toggleLayersSelectorButton drawerAdjacentButton', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}
+        >
+          <Icon name='Stack' />
+        </button>
+        <div styleName={cx('layersSelectorContainer', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}>
+          <h3>Base Layer:
+            <Dropdown
+              className={styles.layersDropdown}
+              menuAbove
+              toggleChildren={<span styleName='styles.layersDropdownLabel'>
+                {MAP_BASE_LAYERS.find(o => o.id === baseLayerStyle).label}
+                <Icon name='ArrowDown' />
+              </span>}
+              items={MAP_BASE_LAYERS.map(({ id, label }) => ({
+                label,
+                onClick: () => this.setBaseLayerStyle(id)
+              }))}
+            />
+          </h3>
+
+          <h3 styleName='layersHeader'>Other Layers</h3>
+          <div styleName='layersList'>
+            <SwitchStyled
+              backgroundColor='rgb(0, 163, 227)'
+              name='Native Territotires'
+              checked={!!otherLayers['native_territories']}
+              onChange={(checked, name) => this.toggleMapLayer('native_territories')}
+            />
+            <span styleName='layerLabel'>
+              Native Territories
+              <a href='https://native-land.ca' target='__blank'>
+                <Icon name='Info' dataTip='Credit to native-land.ca' dataTipFor='helpTipTwo' />
+              </a>
+            </span>
+          </div>
+
+          <div styleName={cx('pointer')} />
+        </div>
+
+        {currentUser && (
+          <button
+            data-for='helpTip'
+            data-tip='Add item to map'
+            styleName={cx('addItemToMapButton drawerAdjacentButton', { active: isAddingItemToMap, drawerOpen: !hideDrawer })}
+            onClick={this.handleAddItemToMap}
+          >
+            <Icon name='Plus' styleName={cx({ openDrawer: !hideDrawer, closeDrawer: hideDrawer })} />
+          </button>
+        )}
+        <Tooltip
+          delay={550}
+          id='helpTip'
+          position='left'
+        />
+        <Tooltip
+          delay={550}
+          id='helpTipTwo'
+          position='bottom'
+          className={styles.helpTipTwo}
+        />
       </div>
     )
   }

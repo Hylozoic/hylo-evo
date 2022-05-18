@@ -6,7 +6,7 @@ exports[`Pill renders 1`] = `
   label="mountain climbing"
 >
   <div
-    data-stylename="pill clickable gray-text"
+    data-stylename="pill gray-text"
     onMouseLeave={[Function]}
   >
     <span
@@ -28,7 +28,7 @@ exports[`Pill renders when editable 1`] = `
   label="mountain climbing"
 >
   <div
-    data-stylename="pill clickable gray-text"
+    data-stylename="pill gray-text"
     onMouseLeave={[Function]}
   >
     <span

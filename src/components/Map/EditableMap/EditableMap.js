@@ -11,8 +11,8 @@ import './EditableMap.scss'
 export default function EditableMap (props) {
   const { locationObject, polygon, savePolygon } = props
   const fallbackCoords = {
-    longitude: -122.2712,
-    latitude: 37.8044,
+    latitude: 35.442845,
+    longitude: 7.916598,
     zoom: 12
   }
   const emptyGeoJsonObject = [{
@@ -59,8 +59,8 @@ export default function EditableMap (props) {
       latitude: polygonCenter[1],
       zoom: 12
     } : centerAt ? {
-      longitude: parseFloat(centerAt.lat),
-      latitude: parseFloat(centerAt.lng),
+      longitude: parseFloat(centerAt.lng),
+      latitude: parseFloat(centerAt.lat),
       zoom: 12
     } : fallbackCoords
     setViewport(viewportLocation)

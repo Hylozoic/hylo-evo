@@ -19,6 +19,7 @@
 .plus-inline {
   @include plus();
   left: -15px;
+  margin-right: -15px;
   font-size: 0.8rem;
   margin-top: 0;
   background: $color-athens-gray-dark;

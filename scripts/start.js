@@ -159,7 +159,10 @@ function addMiddleware (devServer, protocol) {
     rewrites: [
       // proxy all requests starting with /noo, regardless of accept headers;
       // this is used to serve content for popup-based third-party auth
-      { from: /(^\/noo.*$)/, to: context => context.match[1] }
+      { from: /(^\/noo.*$)/, to: context => context.match[1] },
+      // To make sure the OpenID discovery URL works correctly
+      // TODO: is this the best place to put this?
+      { from: /^\/\.well-known\/openid-configuration$/, to: '/noo/oidc/.well-known/openid-configuration' }
     ]
   }))
   if (proxy) {

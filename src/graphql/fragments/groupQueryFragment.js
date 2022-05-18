@@ -5,6 +5,7 @@ import groupTopicsQueryFragment from 'graphql/fragments/groupTopicsQueryFragment
 export default () => {
   return `group(slug: $slug, updateLastViewed: $updateLastViewed) {
     id
+    aboutVideoUri
     accessibility
     avatarUrl
     bannerUrl
@@ -12,15 +13,22 @@ export default () => {
     geoShape
     location
     memberCount
+    moderatorDescriptor
+    moderatorDescriptorPlural
     name
     settings {
       allowGroupInvites
       askGroupToGroupJoinQuestions
       askJoinQuestions
+      hideExtensionData
+      locationDisplayPrecision
       publicMemberDirectory
       showSuggestedSkills
     }
     slug
+    type
+    typeDescriptor
+    typeDescriptorPlural
     visibility
     activeProjects: posts(filter: "project", sortBy: "updated", order: "desc", first: 4) {
       items {
@@ -62,6 +70,7 @@ export default () => {
         id
         accessibility
         avatarUrl
+        type
         bannerUrl
         description
         geoShape
@@ -73,6 +82,8 @@ export default () => {
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
+          hideExtensionData
+          locationDisplayPrecision
           publicMemberDirectory
           showSuggestedSkills
         }
@@ -185,9 +196,12 @@ export default () => {
           allowGroupInvites
           askGroupToGroupJoinQuestions
           askJoinQuestions
+          hideExtensionData
+          locationDisplayPrecision
           publicMemberDirectory
           showSuggestedSkills
         }
+        type
       }
     }
     upcomingEvents: posts(afterTime: "${new Date().toISOString()}", filter: "event", sortBy: "start_time", order: "asc", first: 4) {
@@ -213,6 +227,7 @@ export default () => {
         name
         isVisible
         order
+        context
         settings {
           text
           title

@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import { topicsUrl } from 'util/navigation'
 import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
-
+import { GROUP_TYPES } from 'store/models/Group'
 import './Navigation.scss'
 
 export default function Navigation (props) {
@@ -21,7 +21,7 @@ export default function Navigation (props) {
     membersPath,
     projectsPath,
     eventsPath,
-    group,
+    group = {},
     groupId,
     groupsPath,
     hasRelatedGroups,
@@ -31,6 +31,7 @@ export default function Navigation (props) {
     mapView,
     routeParams,
     rootPath,
+    streamPath,
     toggleGroupMenu
   } = props
 
@@ -53,14 +54,19 @@ export default function Navigation (props) {
       to: createPath
     },
     rootPath && {
-      label: 'Stream',
-      icon: 'Stream',
+      label: group && group.type === GROUP_TYPES.farm ? 'Home' : 'Stream',
+      icon: group && group.type === GROUP_TYPES.farm ? 'Home' : 'Stream',
       to: rootPath,
       badge: badge,
       handleClick: homeOnClick,
       exact: true
     },
-    explorePath && {
+    streamPath && group && group.type === GROUP_TYPES.farm && {
+      label: 'Stream',
+      icon: 'Stream',
+      to: streamPath
+    },
+    explorePath && group && group.type !== GROUP_TYPES.farm && {
       label: 'Explore',
       icon: 'Binoculars',
       to: explorePath

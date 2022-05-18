@@ -109,7 +109,7 @@ function Title ({ group, isPublic, onClick }) {
   let [label, name] = ['GLOBAL', 'All My Groups']
 
   if (group) {
-    [label, name] = ['GROUP', group.name]
+    [label, name] = [group.typeDescriptor, group.name]
   } else if (isPublic) {
     [label, name] = ['GLOBAL', 'Public Groups & Posts']
   }

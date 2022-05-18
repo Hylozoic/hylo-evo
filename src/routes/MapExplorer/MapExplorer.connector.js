@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router'
-import { connect } from 'react-redux'
 import { get, isEqual, isEmpty, pick, pickBy } from 'lodash/fp'
+import { connect } from 'react-redux'
+import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import changeQuerystringParam, { changeQuerystringParams } from 'store/actions/changeQuerystringParam'
 import { FETCH_FOR_GROUP } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
@@ -33,11 +34,12 @@ import {
 
 export function presentMember (person, groupId) {
   return {
-    ...pick([ 'id', 'name', 'avatarUrl', 'locationObject', 'tagline', 'skills' ], person.ref),
+    ...pick(['id', 'name', 'avatarUrl', 'locationObject', 'tagline', 'skills'], person.ref),
     type: 'member',
     skills: person.skills.toModelArray(),
     group: person.memberships.first()
-      ? person.memberships.first().group.name : null
+      ? person.memberships.first().group.name
+      : null
   }
 }
 
@@ -60,7 +62,7 @@ export function mapStateToProps (state, props) {
   const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
   // Map view parameters come from the URL query params first, and if not there then from the Redux state
-  let boundingBox = get('totalBoundingBoxLoaded', state.MapExplorer)
+  const boundingBox = get('totalBoundingBoxLoaded', state.MapExplorer)
 
   const fetchPostsParams = {
     boundingBox,
@@ -75,7 +77,7 @@ export function mapStateToProps (state, props) {
   const queryParams = getQuerystringParam(['search', 'sortBy', 'hide', 'topics'], state, props)
   const filters = {
     ...stateFilters,
-    ...pick([ 'search', 'sortBy' ], queryParams)
+    ...pick(['search', 'sortBy'], queryParams)
   }
   if (queryParams.hide) {
     filters.featureTypes = Object.keys(filters.featureTypes).reduce((types, type) => { types[type] = !queryParams.hide.includes(type); return types }, {})
@@ -119,9 +121,9 @@ export function mapStateToProps (state, props) {
     centerLocation = { lat: decodedCenter[0], lng: decodedCenter[1] }
   } else {
     centerLocation = state.MapExplorer.centerLocation ||
-      (group && group.locationObject ? group.locationObject.center
-        : me && me.locationObject ? me.locationObject.center
-          : null)
+      group?.locationObject?.center ||
+        me?.locationObject?.center ||
+          null
   }
   if (centerLocation) {
     centerLocation = { lat: parseFloat(centerLocation.lat), lng: parseFloat(centerLocation.lng) }
@@ -132,10 +134,15 @@ export function mapStateToProps (state, props) {
     defaultZoom = 0
   }
 
-  let zoomParam = getQuerystringParam('zoom', state, props)
+  const zoomParam = getQuerystringParam('zoom', state, props)
   const zoom = zoomParam ? parseFloat(zoomParam) : state.MapExplorer.zoom || defaultZoom
 
+  // First look for base layer style in query param, then saved local state, then user settings
+  const baseStyleParam = getQuerystringParam('style', state, props)
+  const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || me?.settings?.mapBaseLayer
+
   return {
+    baseLayerStyle,
     centerLocation,
     context,
     currentUser: me,
@@ -206,6 +213,7 @@ export function mapDispatchToProps (dispatch, props) {
         updateUrlFromStore(params, true)
       })
     },
+    updateBaseLayerStyle: (style) => props.currentUser && dispatch(updateUserSettings({ settings: { mapBaseLayer: style } })).then(() => dispatch(changeQuerystringParams(props, { style }, true))),
     updateBoundingBox: bbox => dispatch(updateState({ totalBoundingBoxLoaded: bbox })),
     updateQueryParams: (params, replace) => updateUrlFromStore(params, replace),
     updateView: ({ centerLocation, zoom }) => {
