@@ -157,6 +157,7 @@ export function updateGroupSettings (id, changes) {
             items {
               id
               avatarUrl
+              geoShape
               name
               slug
             }

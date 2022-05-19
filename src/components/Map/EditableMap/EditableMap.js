@@ -78,6 +78,11 @@ export default function EditableMap (props) {
   const onDelete = useCallback(() => {
     if (selectedFeatureIndex !== null && selectedFeatureIndex >= 0) {
       editorRef.current.deleteFeatures(selectedFeatureIndex)
+      savePolygon(null)
+      setDisplayPolygon([emptyGeoJsonObject])
+    } else {
+      setMode(new EditingMode())
+      setIsModeDrawing(false)
     }
   }, [selectedFeatureIndex])
 

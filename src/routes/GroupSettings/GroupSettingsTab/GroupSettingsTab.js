@@ -94,7 +94,7 @@ export default class GroupSettingsTab extends Component {
     const { edits } = this.state
     this.setState({
       changed: true,
-      edits: { ...edits, geoShape: JSON.stringify(polygon?.geometry) }
+      edits: { ...edits, geoShape: polygon ? JSON.stringify(polygon.geometry) : null }
     })
   }
 
@@ -168,7 +168,7 @@ export default class GroupSettingsTab extends Component {
           onChange={this.updateSetting('geoShape')}
           placeholder='Add valid GeoJson object...'
           type='text'
-          value={geoShape}
+          value={geoShape || ''}
         />
         <div styleName='styles.editable-map-container'>
           <EditableMap locationObject={group?.locationObject || currentUser.locationObject} polygon={geoShape} savePolygon={this.savePolygon} />
