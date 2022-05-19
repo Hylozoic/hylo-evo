@@ -172,6 +172,7 @@ Object {
             items {
               id
               avatarUrl
+              geoShape
               name
               slug
             }
