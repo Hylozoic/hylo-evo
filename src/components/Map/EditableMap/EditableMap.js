@@ -97,6 +97,13 @@ export default function EditableMap (props) {
     }
   }, [])
 
+  const zoomIn = () => {
+    setViewport({ ...viewport, zoom: viewport.zoom + 1 })
+  }
+  const zoomOut = () => {
+    setViewport({ ...viewport, zoom: viewport.zoom - 1 })
+  }
+
   const drawTools = (
     <div className='mapboxgl-ctrl-top-left'>
       <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
@@ -111,14 +118,38 @@ export default function EditableMap (props) {
           styleName='mapbox-gl-draw_circle-ex'
           title='Delete Polygon'
           onClick={onDelete}
-        ><Icon name='CircleEx' /></button>
+        >
+          <Icon name='CircleEx' />
+        </button>
       </div>
-      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+      {/* We may implement this later
+       <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
         <button
           styleName='mapbox-gl-draw_reset'
           title='Reset Drawing'
           onClick={() => setMode(new EditingMode())}
         ><Icon name='CircleArrow' /></button>
+      </div> */}
+    </div>
+  )
+
+  const zoomTools = (
+    <div className='mapboxgl-ctrl-top-right'>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+        <button
+          styleName='mapbox-gl-draw_plus'
+          title='Zoom In'
+          onClick={zoomIn}
+        >
+          <Icon name='Plus' />
+        </button>
+        <button
+          styleName='mapbox-gl-draw_minus'
+          title='Zoom Out'
+          onClick={zoomOut}
+        >
+          <Icon name='Minus' />
+        </button>
       </div>
     </div>
   )
@@ -148,7 +179,7 @@ export default function EditableMap (props) {
           style={{ width: '100%', height: '100%' }}
         />
       </span>
-      {drawTools}
+      {drawTools}{zoomTools}
     </MapGL>
   )
 }
