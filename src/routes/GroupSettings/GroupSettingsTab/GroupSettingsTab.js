@@ -59,7 +59,7 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
-        geoShape: typeof geoShape !== 'string' ? JSON.stringify(geoShape) : geoShape || '',
+        geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
         moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
@@ -171,7 +171,7 @@ export default class GroupSettingsTab extends Component {
           value={geoShape}
         />
         <div styleName='styles.editable-map-container'>
-          <EditableMap locationObject={group?.locationObject || currentUser.locationObject || { center: { lat: 35.442845, lng: 7.916598 } }} polygon={geoShape} savePolygon={this.savePolygon} />
+          <EditableMap locationObject={group?.locationObject || currentUser.locationObject} polygon={geoShape} savePolygon={this.savePolygon} />
         </div>
 
         <br />
