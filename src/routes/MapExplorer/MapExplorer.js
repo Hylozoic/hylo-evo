@@ -279,7 +279,8 @@ export class UnwrappedMapExplorer extends React.Component {
         boundingBox: boundingBox
       }),
       polygonLayer: createPolygonLayerFromGroups({
-        groups: viewGroups
+        groups: viewGroups,
+        onHover: this.onMapHover
       }),
       currentBoundingBox: boundingBox,
       groupsForDrawer: viewGroups,

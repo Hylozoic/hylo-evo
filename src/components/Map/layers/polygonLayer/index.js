@@ -1,11 +1,12 @@
 import { GeoJsonLayer } from '@deck.gl/layers'
 
-export function createPolygonLayerFromGroups ({ groups }) {
+export function createPolygonLayerFromGroups ({ groups, onHover }) {
   const data = groups.filter(group => group.geoShape).map(group => {
     return {
       geometry: group.geoShape || {},
-      properties: { },
-      type: 'Feature'
+      message: 'Group area: ' + group.name,
+      properties: { name: group.name },
+      type: 'GroupShape',
     }
   })
 
@@ -22,6 +23,7 @@ export function createPolygonLayerFromGroups ({ groups }) {
     getFillColor: [64, 161, 221, 51],
     getLineColor: 'black',
     getPointRadius: 100,
-    getLineWidth: 1
+    getLineWidth: 1,
+    onHover
   })
 }
