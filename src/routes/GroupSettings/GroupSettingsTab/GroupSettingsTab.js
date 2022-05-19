@@ -4,6 +4,7 @@ import { set, trim } from 'lodash'
 import cx from 'classnames'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
+import EditableMap from 'components/Map/EditableMap/EditableMap'
 import Icon from 'components/Icon'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -49,7 +50,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, location, locationObject, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, locationObject, name, settings
     } = group
 
     return {
@@ -58,6 +59,7 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
+        geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
         moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
@@ -88,6 +90,14 @@ export default class GroupSettingsTab extends Component {
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
 
+  savePolygon = (polygon) => {
+    const { edits } = this.state
+    this.setState({
+      changed: true,
+      edits: { ...edits, geoShape: JSON.stringify(polygon?.geometry) }
+    })
+  }
+
   save = async () => {
     this.setState({ changed: false })
     const { group, fetchLocation } = this.props
@@ -105,12 +115,10 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
-
-    const locationObject = group.locationObject || currentUser.locationObject
 
     return (
       <div styleName='general.groupSettings'>
@@ -135,7 +143,7 @@ export default class GroupSettingsTab extends Component {
           label='Location'
           onChange={this.updateSettingDirectly('location', true)}
           location={location}
-          locationObject={locationObject}
+          locationObject={group.locationObject}
           type='location'
         />
         <label styleName='styles.label'>Location Privacy:</label>
@@ -152,6 +160,19 @@ export default class GroupSettingsTab extends Component {
           }))}
         />
         <p styleName='general.detailText'>Note: as a moderator you will always see the exact location displayed</p>
+
+        <br />
+
+        <SettingsControl
+          label='Group Shape'
+          onChange={this.updateSetting('geoShape')}
+          placeholder='Add valid GeoJson object...'
+          type='text'
+          value={geoShape}
+        />
+        <div styleName='styles.editable-map-container'>
+          <EditableMap locationObject={group?.locationObject || currentUser.locationObject} polygon={geoShape} savePolygon={this.savePolygon} />
+        </div>
 
         <br />
 

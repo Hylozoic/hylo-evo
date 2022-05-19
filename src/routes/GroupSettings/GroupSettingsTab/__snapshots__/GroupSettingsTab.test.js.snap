@@ -99,6 +99,23 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   </p>
   <br />
   <SettingsControl
+    label="Group Shape"
+    onChange={[Function]}
+    placeholder="Add valid GeoJson object..."
+    type="text"
+    value=""
+  />
+  <div
+    data-stylename="styles.editable-map-container"
+  >
+    <EditableMap
+      locationObject="Fuji"
+      polygon=""
+      savePolygon={[Function]}
+    />
+  </div>
+  <br />
+  <SettingsControl
     label="Word used to describe a group Moderator"
     onChange={[Function]}
     value="Moderator"

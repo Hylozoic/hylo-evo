@@ -150,6 +150,7 @@ Group.fields = {
     throughFields: [ 'childGroup', 'parentGroup' ]
   }),
   feedOrder: attr(),
+  geoShape: attr(),
   groupToGroupJoinQuestions: many('GroupToGroupJoinQuestion'),
   id: attr(),
   joinQuestions: many('GroupJoinQuestion'),
