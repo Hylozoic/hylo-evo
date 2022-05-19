@@ -5,7 +5,7 @@ const defaultGroupUrl = '/assets/default_group_avatar.png'
 
 // Icon Layer for Groups
 export function createIconLayerFromGroups ({ boundingBox, groups, onHover, onClick }) {
-  let data = groups.filter(group => group.locationObject && group.locationObject.center && !group.geoShape)
+  let data = groups.filter(group => group.locationObject && group.locationObject.center)
     .map(group => {
       return {
         id: group.id,
