@@ -6,7 +6,7 @@ export function createPolygonLayerFromGroups ({ groups, onHover }) {
       geometry: group.geoShape || {},
       message: 'Group area: ' + group.name,
       properties: { name: group.name },
-      type: 'GroupShape',
+      type: 'GroupShape'
     }
   })
 
