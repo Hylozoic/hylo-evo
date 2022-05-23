@@ -10,6 +10,7 @@ import DeleteSettingsTab from './DeleteSettingsTab'
 import RelatedGroupsTab from './RelatedGroupsTab'
 import TopicsSettingsTab from './TopicsSettingsTab'
 import ExportDataTab from './ExportDataTab'
+import PlansTab from 'components/PlansTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { Redirect } from 'react-router'
@@ -41,77 +42,90 @@ export default function GroupSettings ({
   if (!group) return <Loading />
   if (!canModerate) return <Redirect to={groupUrl(slug)} />
 
-  return <FullPageModal goToOnClose={groupUrl(slug)}
-    content={[
-      {
-        name: 'Settings',
-        path: groupUrl(slug, 'settings'),
-        component: <GroupSettingsTab
-          fetchLocation={fetchLocation}
-          fetchPending={fetchPending}
-          currentUser={currentUser}
-          group={group}
-          parentGroups={parentGroups}
-          prerequisiteGroups={prerequisiteGroups}
-          updateGroupSettings={updateGroupSettings}
-        />
-      },
-      {
-        name: group.moderatorDescriptorPlural || 'Moderators',
-        path: groupUrl(slug, 'settings/moderators'),
-        component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
-      },
-      {
-        name: 'Privacy & Access',
-        path: groupUrl(slug, 'settings/privacy'),
-        component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
-      },
-      {
-        name: 'Topics',
-        path: groupUrl(slug, 'settings/topics'),
-        component: <TopicsSettingsTab group={group} />
-      },
-      {
-        name: 'Invite',
-        path: groupUrl(slug, 'settings/invite'),
-        component: <InviteSettingsTab group={group} />
-      },
-      {
-        name: 'Join Requests',
-        path: groupUrl(slug, 'settings/requests'),
-        component: <MembershipRequestsTab
-          group={group}
-          currentUser={currentUser}
-        />
-      },
-      {
-        name: 'Related Groups',
-        path: groupUrl(slug, 'settings/relationships'),
-        component: <RelatedGroupsTab
-          group={group}
-          currentUser={currentUser}
-        />
-      },
-      {
-        name: '',
-        path: groupUrl(slug, 'settings/import'),
-        component: <ImportExportSettingsTab
-          group={group}
-          upload={upload}
-        />
-      },
-      {
-        name: 'Export Data',
-        path: groupUrl(slug, 'settings/export'),
-        component: <ExportDataTab
-          group={group}
-        />
-      },
-      {
-        name: 'Delete',
-        path: groupUrl(slug, 'settings/delete'),
-        component: <DeleteSettingsTab group={group} deleteGroup={deleteGroup} />
-      }
-    ]}
+  return (
+    <FullPageModal
+      goToOnClose={groupUrl(slug)}
+      content={[
+        {
+          name: 'Settings',
+          path: groupUrl(slug, 'settings'),
+          component:
+  <GroupSettingsTab
+    fetchLocation={fetchLocation}
+    fetchPending={fetchPending}
+    currentUser={currentUser}
+    group={group}
+    parentGroups={parentGroups}
+    prerequisiteGroups={prerequisiteGroups}
+    updateGroupSettings={updateGroupSettings}
   />
+        },
+        {
+          name: group.moderatorDescriptorPlural || 'Moderators',
+          path: groupUrl(slug, 'settings/moderators'),
+          component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
+        },
+        {
+          name: 'Privacy & Access',
+          path: groupUrl(slug, 'settings/privacy'),
+          component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
+        },
+        {
+          name: 'Plans',
+          path: groupUrl(slug, 'settings/plans'),
+          component: <PlansTab group={group} />
+        },
+        {
+          name: 'Topics',
+          path: groupUrl(slug, 'settings/topics'),
+          component: <TopicsSettingsTab group={group} />
+        },
+        {
+          name: 'Invite',
+          path: groupUrl(slug, 'settings/invite'),
+          component: <InviteSettingsTab group={group} />
+        },
+        {
+          name: 'Join Requests',
+          path: groupUrl(slug, 'settings/requests'),
+          component:
+  <MembershipRequestsTab
+    group={group}
+    currentUser={currentUser}
+  />
+        },
+        {
+          name: 'Related Groups',
+          path: groupUrl(slug, 'settings/relationships'),
+          component:
+  <RelatedGroupsTab
+    group={group}
+    currentUser={currentUser}
+  />
+        },
+        {
+          name: '',
+          path: groupUrl(slug, 'settings/import'),
+          component:
+  <ImportExportSettingsTab
+    group={group}
+    upload={upload}
+  />
+        },
+        {
+          name: 'Export Data',
+          path: groupUrl(slug, 'settings/export'),
+          component:
+  <ExportDataTab
+    group={group}
+  />
+        },
+        {
+          name: 'Delete',
+          path: groupUrl(slug, 'settings/delete'),
+          component: <DeleteSettingsTab group={group} deleteGroup={deleteGroup} />
+        }
+      ]}
+    />
+  )
 }
