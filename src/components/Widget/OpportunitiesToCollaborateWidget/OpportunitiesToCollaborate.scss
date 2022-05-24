@@ -1,0 +1,50 @@
+.opportunities-to-collaborate-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.collab-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+  padding: 10px;
+  background: #FFFFFF;
+  border: 1px solid #E1E5E9;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+.collab-text-container {
+  width: 100%;
+  text-align: start;
+  height: 40px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.collab-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-member;
+  text-overflow: ellipsis;
+}
+
+.collab-text {
+  font-size: 12px;
+  color: $color-regent;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.collab-icon {
+  font-size: 24px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

@@ -46,11 +46,16 @@ export default class Messages extends React.Component {
     this.setState(() => ({ loading: false }))
     this.onThreadIdChange()
 
-    const { participants } = this.props
+    const { participants, prompt } = this.props
 
     if (participants) {
       participants.forEach(p => this.addParticipant(p))
       this.props.changeQuerystringParam(this.props, 'participants', null)
+    }
+
+    if (prompt) {
+      this.updateMessageText(prompt)
+      this.props.changeQuerystringParam(this.props, 'prompt', null)
     }
   }
 
@@ -284,7 +289,7 @@ Messages.propTypes = {
   messageThreadPending: PropTypes.bool,
   messages: PropTypes.array,
   messagesPending: PropTypes.bool,
-  onCloseLocation: PropTypes.object,
+  onCloseLocation: PropTypes.string,
   participants: PropTypes.array,
   recentContacts: PropTypes.array,
   sendIsTyping: PropTypes.func,

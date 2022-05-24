@@ -1,5 +1,5 @@
 import { get } from 'lodash/fp'
-import { convertCoordinateToLocation, parseCoordinate } from 'util/geo'
+import { LocationHelpers } from 'hylo-shared'
 
 export const MODULE_NAME = 'LocationInput'
 export const FETCH_LOCATION = `${MODULE_NAME}/FETCH_LOCATION`
@@ -89,10 +89,10 @@ export function pollingFetchLocation (dispatch, locationData, callback) {
 }
 
 export async function ensureLocationIdIfCoordinate ({ fetchLocation, location, locationId }) {
-  if (!locationId && !parseCoordinate(location).error) { // if there is a locationId already, its a mapbox address and if it fails coordinate parsing, its "Joanna's house" or some other string
-    const coordinate = parseCoordinate(location).coordinate
+  if (!locationId && !LocationHelpers.parseCoordinate(location).error) { // if there is a locationId already, its a mapbox address and if it fails coordinate parsing, its "Joanna's house" or some other string
+    const coordinate = LocationHelpers.parseCoordinate(location).coordinate
     // TODO: add call to Mapbox here to get other details about the location
-    const locationFromBackend = await fetchLocation(convertCoordinateToLocation(coordinate))
+    const locationFromBackend = await fetchLocation(LocationHelpers.convertCoordinateToLocation(coordinate))
     return locationFromBackend.meta.extractModel.getRoot(locationFromBackend.payload.data).id
   }
   return locationId

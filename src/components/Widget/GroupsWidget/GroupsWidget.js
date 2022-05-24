@@ -1,7 +1,8 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
+import { TextHelpers } from 'hylo-shared'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { createGroupUrl, groupUrl, groupDetailUrl } from 'util/navigation'
 
@@ -46,6 +47,7 @@ export default class GroupsWidget extends Component {
           <div styleName='createGroup'>
             <div>
               <Link to={createGroupUrl(routeParams)}>+ Create Group</Link>
+              {/* might have to make this conditional, to suit a wider range of uses */}
             </div>
           </div>
         </Slider>
@@ -56,24 +58,25 @@ export default class GroupsWidget extends Component {
 }
 
 export function GroupCard ({ group, routeParams, className }) {
-  return <div styleName='group' className={className} key={group.id}>
-    <div>
-      <div styleName='content'>
-        <div styleName='group-avatar'><img src={group.avatarUrl || DEFAULT_AVATAR} /></div>
-        <div styleName='group-name'>{group.name}</div>
-        <div styleName='member-count'>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</div>
-        <div styleName='group-description'>
-          {group.description}
-          {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}
+  return (
+    <div styleName='group' className={className} key={group.id}>
+      <div>
+        <div styleName='content'>
+          <div styleName='group-avatar'><img src={group.avatarUrl || DEFAULT_AVATAR} /></div>
+          <div styleName='group-name'>{group.name}</div>
+          <div styleName='member-count'>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</div>
+          <div styleName='group-description'>
+            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}
+          </div>
+          {group.memberStatus === 'member'
+            ? <div styleName='is-member'><Link to={groupUrl(group.slug)}><span>Member</span><span styleName='visit'>Visit</span></Link></div>
+            : group.memberStatus === 'requested'
+              ? <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>Pending</span><span styleName='visit'>View</span></Link></div>
+              : <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>View</span><span styleName='visit'>View</span></Link></div>}
         </div>
-        {group.memberStatus === 'member'
-          ? <div styleName='is-member'><Link to={groupUrl(group.slug)}><span>Member</span><span styleName='visit'>Visit</span></Link></div>
-          : group.memberStatus === 'requested'
-            ? <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>Pending</span><span styleName='visit'>View</span></Link></div>
-            : <div styleName='isnt-member'><Link to={groupDetailUrl(group.slug, routeParams)}><span>View</span><span styleName='visit'>View</span></Link></div>
-        }
       </div>
+      <div styleName='background' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }} ><div styleName='fade' /></div>
     </div>
-    <div styleName='background' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }} ><div styleName='fade' /></div>
-  </div>
+  )
 }

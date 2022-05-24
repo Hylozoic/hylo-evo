@@ -40,6 +40,7 @@ export function mapStateToProps (state, props) {
     groupId: get('id', group),
     groupMembership,
     groupsPath: viewUrl('groups', routeParams),
+    streamPath: viewUrl('stream', routeParams),
     hasRelatedGroups,
     hideTopics: isPublicPath(props.location.pathname),
     isGroupMenuOpen: get('AuthLayoutRouter.isGroupMenuOpen', state),

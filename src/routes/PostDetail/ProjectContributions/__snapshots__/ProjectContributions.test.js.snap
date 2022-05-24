@@ -102,6 +102,11 @@ exports[`ProjectContributions disables button on invalid amount 1`] = `
           data-stylename="button gray narrow small"
           onClick={[Function]}
           role="button"
+          style={
+            Object {
+              "borderRadius": "25px",
+            }
+          }
           tabIndex={0}
         >
           Cancel
@@ -164,6 +169,11 @@ exports[`ProjectContributions renders error message 1`] = `
         data-stylename="button green narrow small"
         onClick={[Function]}
         role="button"
+        style={
+          Object {
+            "borderRadius": "25px",
+          }
+        }
         tabIndex={0}
       >
         Contribute

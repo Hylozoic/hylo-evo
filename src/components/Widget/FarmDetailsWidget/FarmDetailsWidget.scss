@@ -1,0 +1,68 @@
+.farm-details-container{
+  display: block;
+  text-align: left;
+  padding-bottom: 30px;
+}
+
+.showless {
+  height: 180px;
+  overflow: hidden;
+}
+
+.group-tags {
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.green-pill {
+  color: $color-caribbean-green;
+  z-index: 115;
+  background-color: white;
+  position: relative;
+  box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.15);
+  border-radius: 30px;
+  border: none;
+}
+
+.separator-bg {
+  height: 70px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  width: 100%;
+  margin-top: -60px;
+  z-index: 100;
+  position: relative;
+  margin-bottom: -15px;
+}
+
+.separator {
+  border-bottom: 1px dashed #C0C5CD;
+  z-index: 110;
+  position: relative;
+  top: 16px;
+}
+
+.tag-pill{
+  font-family: Circular Std;
+  text-transform: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+
+  h4 {
+    min-width: 230px;
+    font-size: 12px;
+    line-height: 12px;
+    text-transform: uppercase;
+    opacity: .4;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+}

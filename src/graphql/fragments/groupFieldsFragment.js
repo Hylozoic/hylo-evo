@@ -1,20 +1,28 @@
-const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites }) => `
+const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites, withExtensions, withWidgets = false }) => `
   id
+  aboutVideoUri
   accessibility
   avatarUrl
   bannerUrl
   description
   location
   memberCount
+  moderatorDescriptor
+  moderatorDescriptorPlural
   name
   settings {
     allowGroupInvites
     askGroupToGroupJoinQuestions
     askJoinQuestions
+    hideExtensionData
+    locationDisplayPrecision
     publicMemberDirectory
     showSuggestedSkills
   }
   slug
+  type
+  typeDescriptor
+  typeDescriptorPlural
   visibility
   childGroups {
     items {
@@ -107,6 +115,8 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
         allowGroupInvites
         askGroupToGroupJoinQuestions
         askJoinQuestions
+        hideExtensionData
+        locationDisplayPrecision
         publicMemberDirectory
         showSuggestedSkills
       }
@@ -115,6 +125,25 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites 
   }
   numPrerequisitesLeft
   ` : ''}
+  ${withExtensions ? `
+  groupExtensions {
+    items {
+      id
+      data
+      type
+      active
+    }
+  }` : ''}
+  ${withWidgets ? `
+  widgets {
+    items {
+      id
+      name
+      context
+      order
+      isVisible
+    }
+  }` : ''}
 `
 
 export default groupFieldsFragment

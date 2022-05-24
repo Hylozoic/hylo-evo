@@ -19,7 +19,7 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
       value=""
     />
     <Icon
-      name="Filter"
+      name="Funnel"
     />
     <div
       data-stylename="currentFilters"
@@ -108,7 +108,7 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
       value=""
     />
     <Icon
-      name="Filter"
+      name="Funnel"
     />
     <div
       data-stylename="currentFilters"
@@ -244,7 +244,7 @@ exports[`MapDrawer searching updates map filters 1`] = `
       value=""
     />
     <Icon
-      name="Filter"
+      name="Funnel"
     />
     <div
       data-stylename="searchFilters"

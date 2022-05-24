@@ -10,6 +10,7 @@ import fetchThreads from 'store/actions/fetchThreads'
 import fetchPeople from 'store/actions/fetchPeople'
 import fetchRecentContacts from 'store/actions/fetchRecentContacts'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getMe from 'store/selectors/getMe'
 import {
   createMessage,
@@ -39,6 +40,7 @@ export function mapStateToProps (state, props) {
     messageThreadId,
     contacts: getContactsList(state, props),
     participants: getParticipantsFromQuerystring(state, props),
+    prompt: getQuerystringParam('prompt', null, props),
     onCloseLocation: getPreviousLocation(state)?.pathname,
     currentUser: getMe(state),
     messageThreadPending: isPendingFor(fetchThread, state),

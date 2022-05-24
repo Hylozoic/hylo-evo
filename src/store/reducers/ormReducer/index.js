@@ -269,8 +269,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       if (meta.slug) {
         group = Group.safeGet({ slug: meta.slug })
         me = Me.first()
+        if (!me) break
         membership = Membership.safeGet({ group: group.id, person: me.id })
-        membership.update({ lastViewedAt: (new Date()).toISOString() })
+        if (!membership) break
+        membership && membership.update({ lastViewedAt: (new Date()).toISOString() }) // now non-members can possibly see the posts of a group, so in that instance, don't update
       }
       break
     }

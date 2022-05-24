@@ -4,6 +4,27 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+- Our first custom group type - Farms! Right now farms can only be created through our API integration with OpenTEAM, by onboarding a farm through a SurveyStack survey using the Common Onboarding question set developed in relationship with OpenTEAM.
+-- Display unique farm data from these common onboarding questions in the farm About/Details Page
+-- Add farm specific searching and filtering to the Group Explorer
+- Add a widget for messaging all the moderators of a group you are not a member of so you can reach out about collaborating with that group. This also pre-fills a message based on the type of collaboration the person is looking for.
+- Add a widget to display the group location and posts for a specific group on the group details page
+- UI supporting the oAuth 2.0 flow for Sign in With Hylo functionality
+- Group setting to hide the custom "extension" data for custom group types like farm from the public.
+- Ability to change the base layer of the map to severl options including sattelite and street view. This selection will be remembered across page loads.
+- Ability to display indigenous territories as a layer on the map using data from native-land.ca
+- New group setting to obfuscate the group's location on the map. Options are precise (show exact location), near (show location offset by a slight amount and display a location string that only shows city, region & country) or region (don't show a location on the map at all, and the location string shows only city, region & country). Group moderators always see the precise location and location display string.
+- Add a group setting for an About Video which if it is a YouTube or Vimeo link displays the video embed above the group description in the about/details page/panel
+- New group settings to change the word (and plural word) used to describe a Moderator within the group.
+- New group setting to change the word used to describe the group type in the app. This cannot actually be set manually yet, only via the API.
+
+## Changed
+- All Privacy & Access related group settings moved into their own Settings tab.
+- Clicking add item to map a second time deactivates the mode
+
 ## [3.6.0] - 2022-04-28
 
 ### Changed

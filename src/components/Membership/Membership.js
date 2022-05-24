@@ -17,7 +17,7 @@ export default function Membership ({ membership, index, archive }) {
 
   return (
     <div styleName={`membership ${index % 2 === 0 ? 'even' : 'odd'}`}>
-      <div styleName='role'>{hasModeratorRole ? 'Moderator' : 'Member'}</div> of
+      <div styleName='role'>{hasModeratorRole ? group.moderatorDescriptor : 'Member'}</div> of
       <Button styleName='group' small color={'green-white'}>
         <Link to={groupUrl(group.slug)}>
           <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} small />

@@ -6,7 +6,7 @@ import { bgImageStyle } from 'util/index'
 import { contextSwitchingUrl, createGroupUrl, groupUrl } from 'util/navigation'
 import {
   ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, DEFAULT_AVATAR,
-  PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH
+  PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH, GROUP_EXPLORER_ID, GROUP_EXPLORER_AVATAR_PATH, PUBLIC_MAP_ID, PUBLIC_MAP_AVATAR_PATH
 } from 'store/models/Group'
 import { toggleDrawer as toggleDrawerAction } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import getMyGroups from 'store/selectors/getMyGroups'
@@ -20,19 +20,37 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 export const defaultContexts = [
   {
     id: PUBLIC_CONTEXT_ID,
-    name: 'Public Groups & Posts',
+    name: 'Public Stream',
     groups: [],
     context: 'public',
+    explicitPath: '/public/',
     avatarUrl: PUBLIC_CONTEXT_AVATAR_PATH
   },
   {
-    id: ALL_GROUPS_ID,
-    name: 'All My Groups',
+    id: GROUP_EXPLORER_ID,
+    name: 'Public Groups',
     groups: [],
-    context: 'all',
-    avatarUrl: ALL_GROUPS_AVATAR_PATH
+    context: 'public',
+    explicitPath: '/public/groups/',
+    avatarUrl: GROUP_EXPLORER_AVATAR_PATH
+  },
+  {
+    id: PUBLIC_MAP_ID,
+    name: 'Public Map',
+    groups: [],
+    context: 'public',
+    explicitPath: '/public/map/',
+    avatarUrl: PUBLIC_MAP_AVATAR_PATH
   }
 ]
+
+export const allMyGroups = {
+  id: ALL_GROUPS_ID,
+  name: 'All My Groups',
+  groups: [],
+  context: 'all',
+  avatarUrl: ALL_GROUPS_AVATAR_PATH
+}
 
 export default function Drawer (props) {
   const history = useHistory()
@@ -63,7 +81,7 @@ export default function Drawer (props) {
       <div styleName={cx('drawerHeader', { 's.currentGroup': group !== null })} style={bgImageStyle(bannerUrl)}>
         <div styleName='drawerBanner'>
           <div styleName='s.hyloLogoBar'>
-            <img src='/hylo.svg' width='50px' />
+            <img src='/hylo.svg' width='50px' height='36px' />
             <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
           </div>
           <Logo group={group} />
@@ -77,12 +95,14 @@ export default function Drawer (props) {
       </div>
       <div>
         <ul styleName='s.groupsList'>
+          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Public</li>
           {defaultContexts && defaultContexts.map(context =>
-            <ContextRow currentLocation={currentLocation} group={context} routeParams={routeParams} key={context.id} />
+            <ContextRow currentLocation={currentLocation} group={context} routeParams={routeParams} key={context.id} explicitPath={context.explicitPath} />
           )}
         </ul>
         <ul styleName='s.groupsList'>
           <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Groups</li>
+          <ContextRow currentLocation={currentLocation} group={allMyGroups} routeParams={routeParams} />
           {groups.map(group =>
             <ContextRow currentLocation={currentLocation} group={group} routeParams={routeParams} key={group.id} />
           )}
@@ -100,14 +120,14 @@ export default function Drawer (props) {
   )
 }
 
-export function ContextRow ({ currentLocation, group, routeParams }) {
+export function ContextRow ({ currentLocation, group, routeParams, explicitPath }) {
   const { avatarUrl, context, name, newPostCount, slug } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
-  const path = contextSwitchingUrl({ groupSlug: slug, context }, routeParams)
+  const path = contextSwitchingUrl({ groupSlug: slug, context, explicitPath }, routeParams)
   return (
     <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation === path })}>
-      <Link to={contextSwitchingUrl({ context: context || 'groups', groupSlug: slug }, routeParams)} styleName='s.contextRowLink' title={name}>
+      <Link to={explicitPath || contextSwitchingUrl({ context: context || 'groups', groupSlug: slug }, routeParams)} styleName='s.contextRowLink' title={name}>
         <div styleName='s.contextRowAvatar' style={imageStyle} />
         <span styleName='s.group-name'>{name}</span>
         {showBadge && <Badge expanded number={newPostCount} />}

@@ -29,6 +29,10 @@ $dropdown-border-color: $color-box-shadow;
   right: 0;
 }
 
+.wrapper.menuAbove {
+  bottom: 15px;
+}
+
 .dropdown-menu {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

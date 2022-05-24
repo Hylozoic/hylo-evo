@@ -1,8 +1,8 @@
 .section {
   background: rgba(244, 247, 250, 0.56);
   border: 1px dashed #E1E5E9;
-  padding: 25px;
-  margin-bottom: 25px;
+  padding: 20px 25px;
+  margin-bottom: 20px;
   position: relative;
 
   h3 {
@@ -15,7 +15,7 @@
   }
 
   p {
-    color: $color-black-30;
+    color: $color-black-60;
     font-size: 12px;
     padding-bottom: 20px;
     transition: all .25s ease;

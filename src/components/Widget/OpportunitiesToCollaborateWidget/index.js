@@ -1,0 +1,3 @@
+import OpportunitiesToCollaborateWidget from './OpportunitiesToCollaborateWidget'
+
+export default OpportunitiesToCollaborateWidget

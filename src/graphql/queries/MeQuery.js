@@ -58,6 +58,7 @@ export default gql`
       digestFrequency
       dmNotifications
       commentNotifications
+      mapBaseLayer
       signupInProgress
       streamViewMode
       streamSortBy
@@ -106,6 +107,8 @@ export default gql`
         bannerUrl
         name
         memberCount
+        moderatorDescriptor
+        moderatorDescriptorPlural
         settings {
           showSuggestedSkills
         }

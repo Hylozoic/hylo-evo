@@ -53,7 +53,9 @@ import SiteTour from 'routes/AuthLayoutRouter/components/SiteTour'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
+
 import UserSettings from 'routes/UserSettings'
+import { GROUP_TYPES } from 'store/models/Group'
 import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
@@ -71,7 +73,7 @@ export default function AuthLayoutRouter (props) {
       '/:context(all|welcome)'
     ])?.params || { context: 'all' }
   ), [location.pathname])
-  const hasDetail = matchPath(location.pathname, [
+  const hasDetail = !!matchPath(location.pathname, [
     `/(.*)/${POST_DETAIL_MATCH}`,
     `/(.*)/${GROUP_DETAIL_MATCH}`
   ])
@@ -247,6 +249,7 @@ export default function AuthLayoutRouter (props) {
               return (
                 <Navigation
                   {...routeProps}
+                  group={currentGroup}
                   collapsed={collapsedState}
                   styleName={cx('left', { 'map-view': isMapView }, { hidden: !isGroupMenuOpen })}
                   mapView={isMapView}
@@ -274,7 +277,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
               <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
               <Route path='/:context(all)/:view(topics)' component={AllTopics} />
-              <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(currentGroup)} />
               {/* **** Group Routes **** */}
               <Route path={['/groups/:joinGroupSlug/join/:accessCode', '/h/use-invitation']} component={JoinGroup} />
               {currentGroupLoading && (
@@ -303,8 +306,8 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
-              <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={Stream} />
-              <Route path='/:context(groups)/:groupSlug' component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
+              <Route path='/:context(groups)/:groupSlug' component={returnDefaultRouteForGroup(currentGroup)} />
               {/* **** Other Routes **** */}
               <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
@@ -349,4 +352,15 @@ export default function AuthLayoutRouter (props) {
       </Div100vh>
     </IntercomProvider>
   )
+}
+
+export function returnDefaultRouteForGroup (group) {
+  if (!group) return Stream
+
+  switch (group.type) {
+    case GROUP_TYPES.farm:
+      return LandingPage
+    default:
+      return Stream
+  }
 }
