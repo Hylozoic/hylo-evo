@@ -63,12 +63,12 @@ export default class GroupDetail extends Component {
     this.setState(initialState)
   }
 
-  joinGroup = (groupId) => () => {
+  joinGroup = (groupId) => {
     const { joinGroup } = this.props
     joinGroup(groupId)
   }
 
-  requestToJoinGroup = (groupId, questionAnswers) => () => {
+  requestToJoinGroup = (groupId, questionAnswers) => {
     const { createJoinRequest } = this.props
     createJoinRequest(groupId, questionAnswers)
   }
@@ -150,11 +150,15 @@ export default class GroupDetail extends Component {
                 <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
               </div>
             </div>
-            : !currentUser
+            : ''
+          }
+          {!isAboutCurrentGroup
+            ? !currentUser
               ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>Signup or Login to connect with <span styleName='g.requestGroup'>{group.name}</span></Link></div>
               : isMember
                 ? <div styleName='g.existingMember'>You are a member of <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
                 : this.renderDefaultGroupDetails()
+            : ''
           }
         </div>
         <SocketSubscriber type='group' id={group.id} />
