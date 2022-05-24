@@ -1,3 +1,15 @@
 .title {
   composes: title from 'routes/UserSettings/NotificationSettingsTab/NotificationSettingsTab.scss';
 }
+
+.sub-title {
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-rhino-80;
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 1.5rem;
+}
+
+.list-container{
+
+}
