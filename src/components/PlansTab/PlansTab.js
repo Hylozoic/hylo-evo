@@ -1,7 +1,16 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { bgImageStyle } from 'util/index'
+import { capitalize } from 'lodash'
 import { useCurrentUser } from 'hooks/useCurrentUser'
 import { useEnsureGroupPlans } from 'hooks/useEnsureGroupPlans'
 import { useEnsureUserPlans } from 'hooks/useEnsureUserPlans'
-import React from 'react'
+import Pill from 'components/Pill'
+import RoundImage from 'components/RoundImage'
+import {
+  DEFAULT_BANNER,
+  DEFAULT_AVATAR
+} from 'store/models/Group'
 
 import './plansTab.scss'
 
@@ -31,12 +40,19 @@ export default function PlansTab ({ group = {} }) {
   return (
     <div>
       <div styleName='title'>
-        Plans
+        Payment Plans
       </div>
       {
         isGroupView &&
-          <div styleName='sub-title'>
-            Plans that include this group
+          <div>
+            <div styleName='sub-title'>
+              Payment plans for this group
+            </div>
+            <div styleName='list-container'>
+              {groupPlans.map((plan, index) => {
+                return (<PlanCard key={index} plan={plan} group={group} currentUser={currentUser} isGroupView={isGroupView} />)
+              })}
+            </div>
           </div>
       }
       {
@@ -46,7 +62,7 @@ export default function PlansTab ({ group = {} }) {
               moderatorPlans.length > 0 &&
                 <div>
                   <div styleName='sub-title'>
-                    Plans you manage
+                    Payment plans you manage
                   </div>
                   <div styleName='list-container'>
                     yaya
@@ -55,7 +71,7 @@ export default function PlansTab ({ group = {} }) {
             }
             <div>
               <div styleName='sub-title'>
-                Plans you subscribe to
+                Payment plans you subscribe to
               </div>
               {userPlans.length > 0
                 ?
@@ -64,13 +80,82 @@ export default function PlansTab ({ group = {} }) {
                   </div>
                 :
                   <div>
-                    You haven't subscribed to any plans
+                    You aren't on any payment plans
                   </div>
               }
             </div>
           </>
       }
-      
     </div>
   )
+}
+
+const PlanCard = ({ plan, group, currentUser, isGroupView }) => {
+  const { atAGlance, pitch } = plan
+  const linkTo = `/plans/${plan.id}`
+  return (
+    <Link to={linkTo} styleName='plan-link'>
+      {
+        !plan.active &&
+          <div styleName='inactive'><div styleName='inactive-text'>Inactive</div></div>
+      }
+      <div styleName='card'>
+        <PlanHeader
+          plan={plan}
+          group={group}
+          isGroupView={isGroupView}
+          // highlightProps={highlightProps}
+        />
+        {pitch &&
+          <div styleName='plan-description'>
+            {pitch}
+          </div>}
+        {atAGlance.length > 0
+          ? <div styleName='plan-tags'>
+            {atAGlance.map((value, index) => (
+              <Pill
+                styleName='tag-pill'
+                darkText
+                label={capitalize(value.toLowerCase())}
+                id={value.id}
+                key={index}
+              />
+            ))}
+          </div>
+          : ''
+        }
+      </div>
+    </Link>
+  )
+}
+
+function PlanHeader ({ constrained = false, group, plan, isGroupView }) {
+  return <div styleName='header' >
+    <div style={bgImageStyle(plan.bannerUrl || group.bannerUrl || DEFAULT_BANNER)} styleName='plan-card-background'><div /></div>
+    <div styleName='header-main-row'>
+      <RoundImage url={plan.avatarUrl || group.avatarUrl || DEFAULT_AVATAR} styleName='plan-image' size='50px' />
+      <div styleName='plan-label'>
+        <div styleName='plan-title'>{plan.name}
+        </div>
+        <div styleName='plan-geo-descriptor'>
+          Payment plan for {group.name}
+        </div>
+      </div>
+      <div styleName='plan-details'>
+        <div>
+          <div styleName='detail-label'>Term</div>
+          <div styleName='detail-value'>{plan.term}</div>
+        </div>
+        <div>
+          <div styleName='detail-label'>Charge</div>
+          <div styleName='detail-value'>${plan.charge}</div>
+        </div>
+        {isGroupView &&
+          <div>
+            <div styleName='detail-label'>#</div>
+            <div styleName='detail-value'>{plan.planCount}</div>
+          </div>}
+      </div>
+    </div>
+  </div>
 }

@@ -71,7 +71,7 @@ export default function GroupSettings ({
           component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
         },
         {
-          name: 'Plans',
+          name: 'Payment Plans',
           path: groupUrl(slug, 'settings/plans'),
           component: <PlansTab group={group} />
         },

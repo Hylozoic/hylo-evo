@@ -92,7 +92,7 @@ export default class UserSettings extends Component {
         component: <SavedSearchesTab />
       },
       {
-        name: 'Plans',
+        name: 'Payment Plans',
         path: '/settings/plans',
         component: <PlansTab />
       }
