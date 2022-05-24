@@ -96,6 +96,11 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/saved-searches",
       },
       Object {
+        "component": <PlansTab />,
+        "name": "Payment Plans",
+        "path": "/settings/plans",
+      },
+      Object {
         "component": <BlockedUsersTab
           loading={true}
         />,

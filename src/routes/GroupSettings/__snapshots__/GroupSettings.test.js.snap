@@ -46,6 +46,19 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/privacy",
       },
       Object {
+        "component": <PlansTab
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Payment Plans",
+        "path": "/groups/foo/settings/plans",
+      },
+      Object {
         "component": <Memo(Connect(TopicsSettingsTab))
           group={
             Object {

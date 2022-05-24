@@ -10,10 +10,52 @@
   font-size: 1.5rem;
 }
 
+.sub-title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .list-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 8px;
+}
+
+.button {
+  border-radius: 16px;
+  width: 31px;
+  height: 31px;
+  background: white;
+  transition: all 0.25s ease;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border: none;
+  text-align: center;
+}
+
+.add-plan {
+  bottom: 40px;
+  padding: 4px 2px 3px 3px;
+
+  &:hover {
+    background-color: $color-caribbean-green;
+    text-decoration: none;
+    span {
+      color: white;
+    }
+  }
+
+  &.active {
+    background-color: $color-picton-blue;
+
+    span {
+      color: white;
+    }
+  }
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .card {

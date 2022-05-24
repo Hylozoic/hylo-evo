@@ -6,6 +6,7 @@ import { useCurrentUser } from 'hooks/useCurrentUser'
 import { useEnsureGroupPlans } from 'hooks/useEnsureGroupPlans'
 import { useEnsureUserPlans } from 'hooks/useEnsureUserPlans'
 import Pill from 'components/Pill'
+import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import {
   DEFAULT_BANNER,
@@ -17,14 +18,14 @@ import './plansTab.scss'
 export default function PlansTab ({ group = {} }) {
   const currentUser = useCurrentUser()
   const isGroupView = !!group.id
-  const { moderatorPlans, userPlans } = useEnsureUserPlans()
+  const { moderatorPlans, userPlans } = useEnsureUserPlans(currentUser.id)
   const groupPlans = useEnsureGroupPlans(group.id)
 
   /*
     What data is needed?
     - group from props
     - currentUser
-    - (groupTab) all plans assocaited with a group
+    - (groupTab) all plans associated with a group
     - (userTab) all plans for groups the user moderates
     - (userTab) all plans a user is subscribed to
 
@@ -45,12 +46,17 @@ export default function PlansTab ({ group = {} }) {
       {
         isGroupView &&
           <div>
-            <div styleName='sub-title'>
-              Payment plans for this group
+            <div styleName='sub-title-container'>
+              <div styleName='sub-title'>
+                Payment plans for this group
+              </div>
+              <Link to={`/plans/create/groups/${group.id}`} styleName='add-plan button'>
+                <Icon name='Plus' />
+              </Link>
             </div>
             <div styleName='list-container'>
               {groupPlans.map((plan, index) => {
-                return (<PlanCard key={index} plan={plan} group={group} currentUser={currentUser} isGroupView={isGroupView} />)
+                return (<PlanCard key={index} plan={plan} group={group} isGroupView={isGroupView} />)
               })}
             </div>
           </div>
@@ -65,7 +71,9 @@ export default function PlansTab ({ group = {} }) {
                     Payment plans you manage
                   </div>
                   <div styleName='list-container'>
-                    yaya
+                    {moderatorPlans.map((plan, index) => {
+                      return (<PlanCard key={index} plan={plan} isGroupView={isGroupView} />)
+                    })}
                   </div>
                 </div>
             }
@@ -74,15 +82,14 @@ export default function PlansTab ({ group = {} }) {
                 Payment plans you subscribe to
               </div>
               {userPlans.length > 0
-                ?
-                  <div styleName='list-container'>
-                    yaya
+                ? <div styleName='list-container'>
+                  {userPlans.map((plan, index) => {
+                    return (<PlanCard key={index} plan={plan} isGroupView={isGroupView} />)
+                  })}
                   </div>
-                :
-                  <div>
-                    You aren't on any payment plans
-                  </div>
-              }
+                : <div>
+                  You aren't on any payment plans
+                </div>}
             </div>
           </>
       }
@@ -129,33 +136,35 @@ const PlanCard = ({ plan, group, currentUser, isGroupView }) => {
   )
 }
 
-function PlanHeader ({ constrained = false, group, plan, isGroupView }) {
-  return <div styleName='header' >
-    <div style={bgImageStyle(plan.bannerUrl || group.bannerUrl || DEFAULT_BANNER)} styleName='plan-card-background'><div /></div>
-    <div styleName='header-main-row'>
-      <RoundImage url={plan.avatarUrl || group.avatarUrl || DEFAULT_AVATAR} styleName='plan-image' size='50px' />
-      <div styleName='plan-label'>
-        <div styleName='plan-title'>{plan.name}
+function PlanHeader ({ constrained = false, group = {}, plan, isGroupView }) {
+  return (
+    <div styleName='header' >
+      <div style={bgImageStyle(plan.bannerUrl || group?.bannerUrl || DEFAULT_BANNER)} styleName='plan-card-background'><div /></div>
+      <div styleName='header-main-row'>
+        <RoundImage url={plan.avatarUrl || group?.avatarUrl || DEFAULT_AVATAR} styleName='plan-image' size='50px' />
+        <div styleName='plan-label'>
+          <div styleName='plan-title'>{plan.name}
+          </div>
+          <div styleName='plan-geo-descriptor'>
+            { group.name && `Payment plan for ${group.name}`}
+          </div>
         </div>
-        <div styleName='plan-geo-descriptor'>
-          Payment plan for {group.name}
-        </div>
-      </div>
-      <div styleName='plan-details'>
-        <div>
-          <div styleName='detail-label'>Term</div>
-          <div styleName='detail-value'>{plan.term}</div>
-        </div>
-        <div>
-          <div styleName='detail-label'>Charge</div>
-          <div styleName='detail-value'>${plan.charge}</div>
-        </div>
-        {isGroupView &&
+        <div styleName='plan-details'>
           <div>
-            <div styleName='detail-label'>#</div>
-            <div styleName='detail-value'>{plan.planCount}</div>
-          </div>}
+            <div styleName='detail-label'>Term</div>
+            <div styleName='detail-value'>{plan.term}</div>
+          </div>
+          <div>
+            <div styleName='detail-label'>Charge</div>
+            <div styleName='detail-value'>${plan.charge}</div>
+          </div>
+          {isGroupView &&
+            <div>
+              <div styleName='detail-label'>#</div>
+              <div styleName='detail-value'>{plan.planCount}</div>
+            </div>}
+        </div>
       </div>
     </div>
-  </div>
+  )
 }
