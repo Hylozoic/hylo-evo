@@ -55,6 +55,7 @@ $new-group-spacing: 16px;
 .drawerHeader {
   position: relative;
   background-size: cover;
+  padding: $current-padding-top 10px 10px 10px;
 }
 
 .backgroundFade {
@@ -71,7 +72,7 @@ $new-group-spacing: 16px;
   display: flex;
   justify-content: space-between;
   padding: 15px 5px 0 5px;
-  height: 55px;
+  height: 46px;
   width: 100%;
 }
 
@@ -95,8 +96,8 @@ a.currentGroup:hover {
 }
 
 .currentGroup {
-  padding: $current-padding-top 10px $current-padding-bottom 10px;
   text-align: center;
+  padding-bottom: 20px;
 
   .avatar {
     @include image($current-avatar-size);
