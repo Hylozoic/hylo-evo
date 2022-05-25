@@ -111,7 +111,6 @@ const PlanCard = ({ plan, group, currentUser, isGroupView }) => {
           plan={plan}
           group={group}
           isGroupView={isGroupView}
-          // highlightProps={highlightProps}
         />
         {pitch &&
           <div styleName='plan-description'>
