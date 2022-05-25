@@ -66,20 +66,24 @@ export default function EditableMap (props) {
     setViewport(viewportLocation)
   }, [displayPolygon])
 
+  useEffect(() => {
+    editorRef.current && console.log({ editorFeatures: editorRef.current.getFeatures() })
+  }, [isModeDrawing, mode])
+
   const toggleMode = () => {
     setMode(!isModeDrawing ? new DrawPolygonMode() : new EditingMode())
     setIsModeDrawing(!isModeDrawing)
   }
 
   const onSelect = useCallback(options => {
-    setSelectedFeatureIndex(options && options.selectedFeatureIndex)
+    setSelectedFeatureIndex(options?.selectedFeatureIndex || 0)
   }, [])
 
   const onDelete = useCallback(() => {
     if (selectedFeatureIndex !== null && selectedFeatureIndex >= 0) {
       editorRef.current.deleteFeatures(selectedFeatureIndex)
       savePolygon(null)
-      setDisplayPolygon([emptyGeoJsonObject])
+      setDisplayPolygon(emptyGeoJsonObject)
     } else {
       setMode(new EditingMode())
       setIsModeDrawing(false)
