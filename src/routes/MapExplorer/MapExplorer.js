@@ -261,7 +261,7 @@ export class UnwrappedMapExplorer extends React.Component {
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    }).concat(get(group, 'locationObject.center') ? group : [])
+    }).concat(get(group, 'locationObject.center') || get(group, 'geoShape') ? group : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
