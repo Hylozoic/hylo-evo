@@ -39,6 +39,7 @@ export default function RootRouter () {
   if (!isAuthorized) {
     return (
       <Switch>
+        <Route path='/public/groups' exact component={NonAuthLayoutRouter} />
         <Route path='/public' component={PublicLayoutRouter} />
         <Route component={NonAuthLayoutRouter} />
       </Switch>

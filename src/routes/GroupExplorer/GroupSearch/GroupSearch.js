@@ -20,13 +20,13 @@ const baseList = [{ value: '', label: 'All' }]
 
 export default function GroupSearch ({ viewFilter }) {
   const currentUser = useSelector(state => getMe(state))
-  const nearCoord = currentUser.locationObject
+  const nearCoord = currentUser && currentUser.locationObject
     ? {
       lng: parseFloat(currentUser.locationObject.center.lng),
       lat: parseFloat(currentUser.locationObject.center.lat)
     }
     : null
-  const membershipGroupIds = currentUser.memberships.toModelArray().map(membership => membership.group.id)
+  const membershipGroupIds = currentUser ? currentUser.memberships.toModelArray().map(membership => membership.group.id) : []
   const [sortBy, setSortBy] = useState(SORT_NAME)
   const [search, setSearch] = useState('')
   const [offset, setOffset] = useState(0)
