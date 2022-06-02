@@ -221,6 +221,7 @@ export class UnwrappedMapExplorer extends React.Component {
 
   updatedMapFeatures (boundingBox) {
     const {
+      context,
       group,
       groups,
       members,
@@ -278,7 +279,7 @@ export class UnwrappedMapExplorer extends React.Component {
         onClick: this.onMapClick,
         boundingBox: boundingBox
       }),
-      polygonLayer: createPolygonLayerFromGroups({
+      polygonLayer: context !== 'public' && createPolygonLayerFromGroups({
         groups: viewGroups,
         onHover: this.onMapHover
       }),
