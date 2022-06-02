@@ -228,6 +228,7 @@ export default class PostEditor extends React.Component {
       forPostType
     )
     return {
+      borderRadius: '5px',
       label,
       onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection,
       disabled: loading,
