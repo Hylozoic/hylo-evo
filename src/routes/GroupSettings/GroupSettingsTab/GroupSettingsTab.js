@@ -22,6 +22,7 @@ import SettingsSection from '../SettingsSection'
 
 import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
 import styles from './GroupSettingsTab.scss' // eslint-disable-line no-unused-vars
+import EditableMapModal from 'components/Map/EditableMap/EditableMapModal'
 
 const { object, func } = PropTypes
 
@@ -60,6 +61,7 @@ export default class GroupSettingsTab extends Component {
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
         geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
+        isModal: false,
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
         moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
@@ -98,6 +100,12 @@ export default class GroupSettingsTab extends Component {
     })
   }
 
+  toggleModal = () => {
+    this.setState({
+      isModal: !this.state.isModal
+    })
+  }
+
   save = async () => {
     this.setState({ changed: false })
     const { group, fetchLocation } = this.props
@@ -119,6 +127,7 @@ export default class GroupSettingsTab extends Component {
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
+    const editableMapLocation = group?.locationObject || currentUser.locationObject
 
     return (
       <div styleName='general.groupSettings'>
@@ -171,9 +180,22 @@ export default class GroupSettingsTab extends Component {
           value={geoShape || ''}
         />
         <div styleName='styles.editable-map-container'>
-          <EditableMap locationObject={group?.locationObject || currentUser.locationObject} polygon={geoShape} savePolygon={this.savePolygon} />
+          { this.state.isModal
+            ? <EditableMapModal group={group} toggleModal={this.toggleModal}>
+              <EditableMap
+                locationObject={editableMapLocation}
+                polygon={geoShape}
+                savePolygon={this.savePolygon}
+                toggleModal={this.toggleModal}
+              />
+            </EditableMapModal>
+            : <EditableMap
+              locationObject={editableMapLocation}
+              polygon={geoShape}
+              savePolygon={this.savePolygon}
+              toggleModal={this.toggleModal}
+            /> }
         </div>
-
         <br />
 
         <SettingsControl

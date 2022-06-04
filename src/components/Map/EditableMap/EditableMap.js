@@ -9,7 +9,7 @@ import { getEditHandleStyle, getFeatureStyle } from './EditableMapStyles'
 import './EditableMap.scss'
 
 export default function EditableMap (props) {
-  const { locationObject, polygon, savePolygon } = props
+  const { locationObject, polygon, savePolygon, toggleModal } = props
   const fallbackCoords = {
     latitude: 35.442845,
     longitude: 7.916598,
@@ -107,6 +107,9 @@ export default function EditableMap (props) {
   const zoomOut = () => {
     setViewport({ ...viewport, zoom: viewport.zoom - 1 })
   }
+  const expand = () => {
+    toggleModal()
+  }
 
   const drawTools = (
     <div className='mapboxgl-ctrl-top-left'>
@@ -158,6 +161,20 @@ export default function EditableMap (props) {
     </div>
   )
 
+  const expandTools = (
+    <div className='mapboxgl-ctrl-bottom-left'>
+      <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
+        <button
+          styleName='mapbox-gl-expand'
+          title='Expand'
+          onClick={expand}
+        >
+          <Icon name='Expand' />
+        </button>
+      </div>
+    </div>
+  )
+
   return (
     <MapGL
       {...viewport}
@@ -183,7 +200,7 @@ export default function EditableMap (props) {
           style={{ width: '100%', height: '100%' }}
         />
       </span>
-      {drawTools}{zoomTools}
+      {drawTools}{zoomTools}{expandTools}
     </MapGL>
   )
 }
