@@ -58,8 +58,13 @@ it('just calls next() if user is not logged in', async () => {
 })
 
 it('redirects to /app when user is logged in', async () => {
-  const req = {
-    url: '/',
+  const reqWithTrailingSlash = {
+    url: '',
+    cookies: { [HYLO_COOKIE_NAME]: 'yeah' },
+    headers: { cookie: 'yeah' }
+  }
+  const reqWithoutTrailingSlash = {
+    url: '',
     cookies: { [HYLO_COOKIE_NAME]: 'yeah' },
     headers: { cookie: 'yeah' }
   }
@@ -80,7 +85,12 @@ it('redirects to /app when user is logged in', async () => {
     })
   )
 
-  await redirectToApp(req, res, next)
+  await redirectToApp(reqWithoutTrailingSlash, res, next)
+
+  expect(next).not.toBeCalled()
+  expect(res.redirect).toBeCalledWith('/app?rd=1')
+
+  await redirectToApp(reqWithTrailingSlash, res, next)
 
   expect(next).not.toBeCalled()
   expect(res.redirect).toBeCalledWith('/app?rd=1')
