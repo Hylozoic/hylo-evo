@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history'
 export const HYLO_COOKIE_NAME = 'hylo.sid.1'
 
 export default function (req, res, next, opts = {}) {
-  if ((req.url !== '/' && req.url !== '') || !req.cookies[HYLO_COOKIE_NAME]) {
+  if ((req.url && req.url !== '/' && !req.url !== '') || !req.cookies[HYLO_COOKIE_NAME]) {
     return next()
   }
 
