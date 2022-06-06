@@ -2,11 +2,8 @@ import checkLogin from '../store/actions/checkLogin'
 import createStore from '../store'
 import { createMemoryHistory } from 'history'
 
-// this is defined in hylo-node:config/session.js
-export const HYLO_COOKIE_NAME = 'hylo.sid.1'
-
 export default function (req, res, next, opts = {}) {
-  if ((req.url && req.url !== '/' && !req.url !== '') || !req.cookies[HYLO_COOKIE_NAME]) {
+  if (req.url !== '/' || !req.cookies[process.env.HYLO_COOKIE_NAME]) {
     return next()
   }
 
@@ -14,7 +11,7 @@ export default function (req, res, next, opts = {}) {
 
   return store.dispatch(checkLogin())
     .then(({ payload }) => {
-      if (payload?.getData().me?.id) {
+      if (payload?.data?.me?.id) {
         return res.redirect('/app?rd=1')
       }
       next()
