@@ -549,7 +549,7 @@ export class UnwrappedMapExplorer extends React.Component {
           <Map
             afterViewportUpdate={this.afterViewportUpdate}
             baseLayerStyle={baseLayerStyle}
-            hyloLayers={[groupIconLayer, clusterLayer, polygonLayer]}
+            hyloLayers={[polygonLayer, groupIconLayer, clusterLayer]}
             isAddingItemToMap={isAddingItemToMap}
             otherLayers={Object.keys(otherLayers)}
             mapRef={this.mapRef}
