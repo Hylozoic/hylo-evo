@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import mixpanel from 'mixpanel-browser'
 import { Route } from 'react-router'
 import { Switch } from 'react-router-dom'
 import checkLogin from 'store/actions/checkLogin'
@@ -8,6 +9,11 @@ import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import PublicLayoutRouter from 'routes/PublicLayoutRouter'
 import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
+import config, { isProduction, isTest } from 'config'
+
+if (!isTest) {
+  mixpanel.init(config.mixpanel.token, { debug: !isProduction })
+}
 
 export default function RootRouter () {
   const dispatch = useDispatch()
