@@ -1,17 +1,17 @@
+import { capitalize } from 'lodash'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { bgImageStyle } from 'util/index'
-import { capitalize } from 'lodash'
+import Icon from 'components/Icon'
+import Pill from 'components/Pill'
+import RoundImage from 'components/RoundImage'
 import { useCurrentUser } from 'hooks/useCurrentUser'
 import { useEnsureGroupPlans } from 'hooks/useEnsureGroupPlans'
 import { useEnsureUserPlans } from 'hooks/useEnsureUserPlans'
-import Pill from 'components/Pill'
-import Icon from 'components/Icon'
-import RoundImage from 'components/RoundImage'
 import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR
 } from 'store/models/Group'
+import { bgImageStyle } from 'util/index'
 
 import './plansTab.scss'
 
