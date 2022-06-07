@@ -27,9 +27,7 @@ const EditableMapModal = (props) => {
             <div styleName='fade' />
           </div>
           <div styleName='editable-map-content'>
-            <div styleName='editable-map-map-wrapper'>
-              {props.children}
-            </div>
+            {props.children}
           </div>
         </div>
       </div>

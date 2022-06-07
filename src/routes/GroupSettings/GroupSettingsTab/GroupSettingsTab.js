@@ -61,7 +61,6 @@ export default class GroupSettingsTab extends Component {
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
         geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
-        isModal: false,
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
         moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
@@ -69,7 +68,8 @@ export default class GroupSettingsTab extends Component {
         name: name || '',
         settings: typeof settings !== 'undefined' ? settings : { }
       },
-      changed: false
+      changed: false,
+      isModal: false
     }
   }
 

@@ -128,23 +128,10 @@
 
 .editable-map-content {
   width: 100%;
-  height: 100%;
-  display: flex;
-  
-  .editable-map-map-wrapper {
-    align-items: stretch;
-    height: 59vh;
-    > div {
-      position: inherit !important; // override default mapbox-gl styles
-      > div {
-        display: flex;
-        position: inherit !important; // override default mapbox-gl styles
-      }
-    }
-    .mapboxgl-map {
-      position: absolute;
-    }
-  }
+  max-width: 90vw;
+  height: 59vh;
+  margin: 0;
+  padding: 0;
 }
 :global .mapboxgl-map {
   border-radius: 0 0 4px 4px !important; // override default mapbox-gl styles
