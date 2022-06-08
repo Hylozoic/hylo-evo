@@ -79,9 +79,17 @@ export class UnwrappedGroupDetail extends Component {
     this.setState(initialState)
   }
 
-  joinGroup = (groupId) => {
-    const { joinGroup } = this.props
-    joinGroup(groupId)
+  joinGroup = async (groupId) => {
+    const { hyloAppLayout } = this.context
+    const { joinGroup, group } = this.props
+
+    await joinGroup(group.id)
+
+    if (hyloAppLayout) {
+      const messageData = { eventName: 'JOIN_GROUP', groupSlug: group.slug }
+
+      window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+    }
   }
 
   requestToJoinGroup = (groupId, questionAnswers) => {
