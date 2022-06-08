@@ -10,6 +10,7 @@ import PaymentSettingsTab from './PaymentSettingsTab/PaymentSettingsTab'
 import SavedSearchesTab from './SavedSearchesTab/SavedSearchesTab'
 import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import PlansTab from 'components/PlansTab'
 import './UserSettings.scss'
 
 // NOTE: This area is also rendered and shared with the mobile app.
@@ -89,6 +90,11 @@ export default class UserSettings extends Component {
         name: 'Saved Searches',
         path: '/settings/saved-searches',
         component: <SavedSearchesTab />
+      },
+      {
+        name: 'Payment Plans',
+        path: '/settings/plans',
+        component: <PlansTab />
       }
     ]
 
