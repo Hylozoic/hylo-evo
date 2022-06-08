@@ -6,6 +6,7 @@ import Div100vh from 'react-div-100vh'
 import { get, some } from 'lodash/fp'
 import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
+import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
@@ -104,6 +105,17 @@ export default function AuthLayoutRouter (props) {
       setCurrentUserLoading(false)
     })()
   }, [])
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      mixpanel.identify(currentUser.id)
+      mixpanel.people.set({
+        $name: currentUser.name,
+        $email: currentUser.email,
+        $location: currentUser.location
+      })
+    }
+  }, [currentUser?.id])
 
   useEffect(() => {
     (async function () {

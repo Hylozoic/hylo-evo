@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Mixpanel instance is moved out of Redux and Mixpanel identification is move into a `useEffect` on `AuthLayoutRouter`
+### Fixed
+- Fixes: hylo.com takes users to static landing page, even if they are logged #1207
+
+
 ## [4.0.0] - 2022-05-24
 
 ### Added

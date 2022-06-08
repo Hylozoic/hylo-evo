@@ -1,14 +1,16 @@
 import orm from 'store/models'
 import mixpanelMiddleware from './mixpanelMiddleware'
+import mixpanel from 'mixpanel-browser'
+
+jest.mock('mixpanel-browser', () => ({
+  track: jest.fn(),
+  identify: jest.fn()
+}))
 
 describe('mixpanelMiddleware', () => {
-  let mixpanelMiddlewareInstance, mixpanel
+  let mixpanelMiddlewareInstance
 
   beforeEach(() => {
-    mixpanel = {
-      track: jest.fn(),
-      identify: jest.fn()
-    }
     const session = orm.session(orm.getEmptyState())
     session.Me.create({
       id: '1',
@@ -24,7 +26,6 @@ describe('mixpanelMiddleware', () => {
         current: {
           loggedIn: false
         },
-        mixpanel,
         orm: session.state
       })
     }
