@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'components/Icon'
 import useRouter from 'hooks/useRouter'
@@ -11,30 +11,46 @@ import './OpportunitiesToCollaborate.scss'
 
 export default function OpportunitiesToCollaborateWidget () {
   const { group } = useEnsureCurrentGroup()
-  const { push } = useRouter()
   const opportunities = getFarmOpportunities(group)
-  const currentUser = useSelector(state => getMe(state))
-  const dispatch = useDispatch()
+
   return (
     <div styleName='opportunities-to-collaborate-container'>
-      {opportunities && opportunities.length > 0 && opportunities.map((opportunity) => {
-        const prompt = `Hi there ${group.name}, I'd like to talk about ${promptLookup[opportunity]}.`
-        return (
-          <div styleName='collab-item' key={opportunity}>
-            <Icon styleName='collab-icon' blue name={opportunity.charAt(0).toUpperCase() + opportunity.slice(1)} />
-            <div styleName='collab-text-container'>
-              <div styleName='collab-title'>{collabTitle[opportunity]}</div>
-              <div styleName='collab-text'>{collabText(group)[opportunity]}</div>
-            </div>
-            {currentUser && <Icon
-              name='Messages'
-              blue
-              styleName='collab-icon cursor-pointer'
-              onClick={() => dispatch(messageGroupModerators(group.id)).then(a => a.payload?.data?.messageGroupModerators ? push(`/messages/${a.payload.data.messageGroupModerators}?prompt=${encodeURIComponent(prompt)}`) : null)}
-            />}
-          </div>
-        )
-      })}
+      {opportunities && opportunities.length > 0 && opportunities.map((opportunity, index) => (
+        <OpportunityToCollaborate group={group} opportunity={opportunity} key={index} />
+      ))}
+    </div>
+  )
+}
+
+export function OpportunityToCollaborate ({ group, opportunity }) {
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => getMe(state))
+  const { push } = useRouter()
+  const prompt = `Hi there ${group.name}, I'd like to talk about ${promptLookup[opportunity]}.`
+  const goToGroupModeratorsMessage = useCallback(() => {
+    (async function () {
+      const response = await dispatch(messageGroupModerators(group.id))
+      const groupModeratorsThreadId = response.payload?.getData()
+
+      groupModeratorsThreadId && push(`/messages/${groupModeratorsThreadId}?prompt=${encodeURIComponent(prompt)}`)
+    }())
+  }, [group?.id, prompt])
+
+  return (
+    <div styleName='collab-item' key={opportunity}>
+      <Icon styleName='collab-icon' blue name={opportunity.charAt(0).toUpperCase() + opportunity.slice(1)} />
+      <div styleName='collab-text-container'>
+        <div styleName='collab-title'>{collabTitle[opportunity]}</div>
+        <div styleName='collab-text'>{collabText(group)[opportunity]}</div>
+      </div>
+      {currentUser && (
+        <Icon
+          name='Messages'
+          blue
+          styleName='collab-icon cursor-pointer'
+          onClick={goToGroupModeratorsMessage}
+        />
+      )}
     </div>
   )
 }

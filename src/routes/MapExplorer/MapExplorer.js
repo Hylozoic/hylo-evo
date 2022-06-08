@@ -101,10 +101,10 @@ export class UnwrappedMapExplorer extends React.Component {
       this.setState({ hideDrawer: true })
     }
 
-    // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. react router / history push
     const { hyloAppLayout } = this.context
 
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. react router / history push
     if (hyloAppLayout) {
       this.props.history.block(tx => {
         const { pathname, search } = tx
@@ -113,8 +113,7 @@ export class UnwrappedMapExplorer extends React.Component {
         // the keeps saved search retrieval from reseting group context in the app
         if (pathname.match(/\/map$/)) return true
 
-        // url will be deprecated for pathname and search
-        const messageData = { pathname, search, url: pathname }
+        const messageData = { pathname, search }
 
         window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
 
