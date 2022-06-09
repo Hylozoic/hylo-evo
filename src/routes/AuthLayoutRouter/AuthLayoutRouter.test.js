@@ -5,15 +5,15 @@ import mockGraphqlServer from 'util/testing/mockGraphqlServer'
 import { AllTheProviders, render, screen, waitForElementToBeRemoved } from 'util/testing/reactTestingLibraryExtended'
 import AuthLayoutRouter from './AuthLayoutRouter'
 
-jest.mock('store/selectors/getMixpanel', () => () => ({
-  identify: jest.fn(),
+const { ResizeObserver } = window
+
+jest.mock('mixpanel-browser', () => ({
   track: jest.fn(),
+  identify: jest.fn(),
   people: {
     set: jest.fn()
   }
 }))
-
-const { ResizeObserver } = window
 
 beforeEach(() => {
   delete window.ResizeObserver

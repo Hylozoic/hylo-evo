@@ -1,11 +1,11 @@
 import { graphql } from 'msw'
 import mockGraphqlServer from 'util/testing/mockGraphqlServer'
-import redirectToApp, { HYLO_COOKIE_NAME } from './redirectToApp'
+import redirectToApp from './redirectToApp'
 
 it('just calls next() if the url is not /', () => {
   const req = {
     url: '/foo',
-    cookies: { [HYLO_COOKIE_NAME]: 'yeah' }
+    cookies: { [process.env.HYLO_COOKIE_NAME]: 'yeah' }
   }
   const res = { redirect: jest.fn() }
   const next = jest.fn()
@@ -33,7 +33,7 @@ it('just calls next() if there is no matching cookie', () => {
 it('just calls next() if user is not logged in', async () => {
   const req = {
     url: '/',
-    cookies: { [HYLO_COOKIE_NAME]: 'yeah' },
+    cookies: { [process.env.HYLO_COOKIE_NAME]: 'yeah' },
     headers: { cookie: 'yeah' }
   }
   const res = { redirect: jest.fn() }
@@ -60,7 +60,7 @@ it('just calls next() if user is not logged in', async () => {
 it('redirects to /app when user is logged in', async () => {
   const req = {
     url: '/',
-    cookies: { [HYLO_COOKIE_NAME]: 'yeah' },
+    cookies: { [process.env.HYLO_COOKIE_NAME]: 'yeah' },
     headers: { cookie: 'yeah' }
   }
   const res = { redirect: jest.fn() }
@@ -70,10 +70,8 @@ it('redirects to /app when user is logged in', async () => {
     graphql.query('CheckLogin', (req, res, ctx) => {
       return res(
         ctx.data({
-          checkLogin: {
-            me: {
-              id: '1'
-            }
+          me: {
+            id: '1'
           }
         })
       )
