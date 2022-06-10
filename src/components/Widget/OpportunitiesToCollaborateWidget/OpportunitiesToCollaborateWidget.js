@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Icon from 'components/Icon'
 import useRouter from 'hooks/useRouter'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
 import { getFarmOpportunities } from 'store/selectors/farmExtensionSelectors'
-import { messageGroupModerators } from '../Widget.store'
 import getMe from 'store/selectors/getMe'
 
 import './OpportunitiesToCollaborate.scss'
@@ -23,16 +22,14 @@ export default function OpportunitiesToCollaborateWidget () {
 }
 
 export function OpportunityToCollaborate ({ group, opportunity }) {
-  const dispatch = useDispatch()
   const currentUser = useSelector(state => getMe(state))
   const { push } = useRouter()
   const prompt = `Hi there ${group.name}, I'd like to talk about ${promptLookup[opportunity]}.`
   const goToGroupModeratorsMessage = useCallback(() => {
     (async function () {
-      const response = await dispatch(messageGroupModerators(group.id))
-      const groupModeratorsThreadId = response.payload?.getData()
+      const messageToModeratorsPath = `/messages/new?participants=${group.moderators.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
 
-      groupModeratorsThreadId && push(`/messages/${groupModeratorsThreadId}?prompt=${encodeURIComponent(prompt)}`)
+      push(messageToModeratorsPath)
     }())
   }, [group?.id, prompt])
 

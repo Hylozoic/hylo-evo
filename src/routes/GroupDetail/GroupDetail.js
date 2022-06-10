@@ -36,6 +36,10 @@ export const initialState = {
   membership: undefined,
   request: undefined
 }
+
+// TODO: Move into hylo-shared and use in related code here and on Web
+export const JOINED_GROUP = 'JOINED_GROUP'
+
 export class UnwrappedGroupDetail extends Component {
   static propTypes = {
     group: PropTypes.object,
@@ -86,7 +90,7 @@ export class UnwrappedGroupDetail extends Component {
     await joinGroup(group.id)
 
     if (hyloAppLayout) {
-      const messageData = { eventName: 'JOIN_GROUP', groupSlug: group.slug }
+      const messageData = { eventName: JOINED_GROUP, groupSlug: group.slug }
 
       window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
     }
