@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import Icon from 'components/Icon'
+import { newMessageUrl } from 'util/navigation'
 import useRouter from 'hooks/useRouter'
 import useEnsureCurrentGroup from 'hooks/useEnsureCurrentGroup'
 import { getFarmOpportunities } from 'store/selectors/farmExtensionSelectors'
 import getMe from 'store/selectors/getMe'
+import Icon from 'components/Icon'
 
 import './OpportunitiesToCollaborate.scss'
 
@@ -26,11 +27,9 @@ export function OpportunityToCollaborate ({ group, opportunity }) {
   const { push } = useRouter()
   const prompt = `Hi there ${group.name}, I'd like to talk about ${promptLookup[opportunity]}.`
   const goToGroupModeratorsMessage = useCallback(() => {
-    (async function () {
-      const messageToModeratorsPath = `/messages/new?participants=${group.moderators.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
-
-      push(messageToModeratorsPath)
-    }())
+    push(
+      `${newMessageUrl()}?participants=${group.moderators.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
+    )
   }, [group?.id, prompt])
 
   return (
