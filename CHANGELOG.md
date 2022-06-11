@@ -4,6 +4,14 @@ All notable changes to Hylo Utils (shared utils for all Hylo products) will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0]
+
+## Added
+- `HyloApp` for handling native `WebView` messaging between Web and App
+
+## Added
+- `LocationHelpers.parseCoordinate` and `convertCoordinateToLocation` relocated from `hylo-evo`
+
 ## [1.6.9]
 ## Added
 - `LocationHelpers.parseCoordinate` and `convertCoordinateToLocation` relocated from `hylo-evo`
