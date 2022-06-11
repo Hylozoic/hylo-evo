@@ -2,9 +2,9 @@ import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import PropTypes from 'prop-types'
-import { TextHelpers } from 'hylo-shared'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+import { TextHelpers, HyloApp } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
@@ -37,9 +37,6 @@ export const initialState = {
   request: undefined
 }
 
-// TODO: Move into hylo-shared and use in related code here and on Web
-export const JOINED_GROUP = 'JOINED_GROUP'
-
 export class UnwrappedGroupDetail extends Component {
   static propTypes = {
     group: PropTypes.object,
@@ -60,12 +57,8 @@ export class UnwrappedGroupDetail extends Component {
     // Relinquishes route handling within the Map entirely to Mobile App
     // e.g. react router / history push
     if (hyloAppLayout) {
-      this.props.history.block(tx => {
-        const { pathname, search } = tx
-        const messageData = { pathname, search }
-
-        window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
-
+      this.props.history.block(({ pathname, search }) => {
+        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
         return false
       })
     }
@@ -90,9 +83,7 @@ export class UnwrappedGroupDetail extends Component {
     await joinGroup(group.id)
 
     if (hyloAppLayout) {
-      const messageData = { eventName: JOINED_GROUP, groupSlug: group.slug }
-
-      window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+      HyloApp.sendMessageToWebView(HyloApp.JOINED_GROUP, { groupSlug: group.slug })
     }
   }
 
