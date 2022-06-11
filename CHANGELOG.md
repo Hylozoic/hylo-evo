@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Hylo App WebView events/interface to `GroupDetail` and related components
+
+### Changed
+- Behaviour of "Opportunies to Connect" on Group Detail to create a New Message via Moderator personIds
+
 ## [4.0.1] - 2022-06-08
 
 ### Changed
