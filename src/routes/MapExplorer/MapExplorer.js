@@ -9,6 +9,8 @@ import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
+import { HyloApp } from 'hylo-shared'
+import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -25,7 +27,6 @@ import { isMobileDevice } from 'util/mobile'
 import { generateViewParams } from 'util/savedSearch'
 
 import MapDrawer from './MapDrawer'
-import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import SavedSearches from './SavedSearches'
 
 import styles from './MapExplorer.scss'
@@ -101,22 +102,17 @@ export class UnwrappedMapExplorer extends React.Component {
       this.setState({ hideDrawer: true })
     }
 
-    // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. react router / history push
     const { hyloAppLayout } = this.context
 
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. react router / history push
     if (hyloAppLayout) {
-      this.props.history.block(tx => {
-        const { pathname, search } = tx
-
+      this.props.history.block(({ pathname, search }) => {
         // when in embedded view of map allow web navigation within map
         // the keeps saved search retrieval from reseting group context in the app
         if (pathname.match(/\/map$/)) return true
 
-        // url will be deprecated for pathname and search
-        const messageData = { pathname, search, url: pathname }
-
-        window.ReactNativeWebView.postMessage(JSON.stringify(messageData))
+        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
 
         return false
       })
