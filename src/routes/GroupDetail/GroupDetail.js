@@ -1,9 +1,10 @@
 import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { TextHelpers } from 'hylo-shared'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+import { TextHelpers, HyloApp } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
@@ -26,7 +27,6 @@ import {
 } from 'store/models/Group'
 import { inIframe } from 'util/index'
 import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
-
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
@@ -36,7 +36,8 @@ export const initialState = {
   membership: undefined,
   request: undefined
 }
-export default class GroupDetail extends Component {
+
+export class UnwrappedGroupDetail extends Component {
   static propTypes = {
     group: PropTypes.object,
     routeParams: PropTypes.object,
@@ -44,11 +45,23 @@ export default class GroupDetail extends Component {
     fetchGroup: PropTypes.func
   }
 
+  static contextType = LayoutFlagsContext
+
   state = initialState
 
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
+    const { hyloAppLayout } = this.context
+
+    // Relinquishes route handling within the Map entirely to Mobile App
+    // e.g. react router / history push
+    if (hyloAppLayout) {
+      this.props.history.block(({ pathname, search }) => {
+        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
+        return false
+      })
+    }
   }
 
   componentDidUpdate (prevProps) {
@@ -63,9 +76,15 @@ export default class GroupDetail extends Component {
     this.setState(initialState)
   }
 
-  joinGroup = (groupId) => {
-    const { joinGroup } = this.props
-    joinGroup(groupId)
+  joinGroup = async (groupId) => {
+    const { hyloAppLayout } = this.context
+    const { joinGroup, group } = this.props
+
+    await joinGroup(group.id)
+
+    if (hyloAppLayout) {
+      HyloApp.sendMessageToWebView(HyloApp.JOINED_GROUP, { groupSlug: group.slug })
+    }
   }
 
   requestToJoinGroup = (groupId, questionAnswers) => {
@@ -374,5 +393,13 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
         />
       </div>
     </div>
+  )
+}
+
+export default function GroupDetail (props) {
+  const history = useHistory()
+
+  return (
+    <UnwrappedGroupDetail {...props} history={history} />
   )
 }

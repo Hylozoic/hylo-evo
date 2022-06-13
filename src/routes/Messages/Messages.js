@@ -56,6 +56,7 @@ export default class Messages extends React.Component {
     if (prompt) {
       this.updateMessageText(prompt)
       this.props.changeQuerystringParam(this.props, 'prompt', null)
+      this.focusForm()
     }
   }
 
