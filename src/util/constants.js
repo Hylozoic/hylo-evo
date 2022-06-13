@@ -61,6 +61,62 @@ export const COLLABORATION_INTERESTS = [
   {
     value: 'equipment_sharing',
     label: 'Equipment sharing'
+  },
+  {
+    value: 'increase_sales',
+    label: 'Increasing sales'
+  },
+  {
+    value: 'communication',
+    label: 'Communication & marketing'
+  },
+  {
+    value: 'new_products_methods',
+    label: 'New methods & practices'
+  },
+  {
+    value: 'carbon',
+    label: 'Carbon markets'
+  },
+  {
+    value: 'environmental_impact',
+    label: 'Environmental impact'
+  },
+  {
+    value: 'benchmarking',
+    label: 'Benchmarking'
+  },
+  {
+    value: 'insetting',
+    label: 'Insetting'
+  },
+  {
+    value: 'reduce_risk',
+    label: 'Hazard risk mitigation'
+  },
+  {
+    value: 'farm_valuation',
+    label: 'Farm valuation'
+  },
+  {
+    value: 'certifications',
+    label: 'Certifications'
+  },
+  {
+    value: 'food_nutrition',
+    label: 'Nutrient density'
+  },
+  {
+    value: 'biodiversity',
+    label: 'Biodiversity'
+  },
+  {
+    value: 'product_quality',
+    label: 'Product quality'
+  },
+  {
+    value: 'animal_welfare',
+    label: 'Animal welfare'
   }
 ]
 
