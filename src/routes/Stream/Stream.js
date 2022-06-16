@@ -7,6 +7,7 @@ import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostListRow from 'components/PostListRow'
 import PostCard from 'components/PostCard'
+import PostGridItem from 'components/PostGridItem'
 import ScrollListener from 'components/ScrollListener'
 import ViewControls from 'components/StreamViewControls'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
@@ -15,8 +16,9 @@ import './Stream.scss'
 const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== get(sel, prevProps)
 
 const viewComponent = {
-  card: PostCard,
-  list: PostListRow
+  cards: PostCard,
+  list: PostListRow,
+  grid: PostGridItem
 }
 
 export default class Stream extends Component {
@@ -77,7 +79,7 @@ export default class Stream extends Component {
       viewMode
     } = this.props
 
-    const ViewComponent = viewMode === 'cards' ? viewComponent['card'] : viewComponent['list']
+    const ViewComponent = viewComponent[viewMode]
 
     return (
       <React.Fragment>

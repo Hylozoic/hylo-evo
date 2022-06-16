@@ -28,13 +28,13 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const defaultSortBy = get('settings.streamSortBy', currentUser) || 'updated'
-  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
+  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards' // TODO: add soemthing here to change default for projects
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = getQuerystringParam('v', state, props) || defaultViewMode
+  const viewMode = getQuerystringParam('v', state, props) || defaultViewMode // TODO: or do we just create a default for projects/prize by adding something to the url in links?
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
