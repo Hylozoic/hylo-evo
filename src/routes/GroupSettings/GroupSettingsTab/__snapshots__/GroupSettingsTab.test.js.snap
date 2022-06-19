@@ -112,6 +112,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       locationObject="Fuji"
       polygon=""
       savePolygon={[Function]}
+      toggleModal={[Function]}
     />
   </div>
   <br />

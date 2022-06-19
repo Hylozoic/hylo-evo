@@ -10,6 +10,8 @@ import './EditableMap.scss'
 
 export default function EditableMap (props) {
   const { locationObject, polygon, savePolygon, toggleModal } = props
+  const [isPolygonSelected, setIsPolygonSelected] = useState(false)
+
   const fallbackCoords = {
     latitude: 35.442845,
     longitude: 7.916598,
@@ -76,10 +78,12 @@ export default function EditableMap (props) {
   }
 
   const onSelect = useCallback(options => {
+    setIsPolygonSelected(true)
     setSelectedFeatureIndex(options?.selectedFeatureIndex || 0)
   }, [])
 
   const onDelete = useCallback(() => {
+    setIsPolygonSelected(false)
     if (selectedFeatureIndex !== null && selectedFeatureIndex >= 0) {
       editorRef.current.deleteFeatures(selectedFeatureIndex)
       savePolygon(null)
@@ -123,8 +127,9 @@ export default function EditableMap (props) {
       <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
         <button
           styleName='mapbox-gl-draw_circle-ex'
-          title='Delete Polygon'
+          title='Delete polygon, click polygon to select'
           onClick={onDelete}
+          disabled={!isPolygonSelected}
         >
           <Icon name='CircleEx' />
         </button>

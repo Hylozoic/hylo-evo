@@ -18,6 +18,11 @@ div.map-control {
     &:focus {
       outline: none;
     }
+    &:disabled {
+      span {
+        color: lightgray
+      }
+    }
   }
 }
 
