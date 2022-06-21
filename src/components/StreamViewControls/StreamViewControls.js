@@ -47,7 +47,7 @@ const StreamViewControls = (props) => {
           <Icon name='CardView' />
         </div>
         <div
-          styleName={cx({ 'mode-active': viewMode !== 'cards' })}
+          styleName={cx({ 'mode-active': viewMode === 'list' })}
           onClick={() => changeView('list')}
           data-tip='List view' data-for='stream-viewmode-tip'
         >

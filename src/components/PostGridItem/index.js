@@ -1,3 +1,4 @@
 import component from './PostGridItem'
+import connector from '../PostListRow/PostListRow.connector'
 
-export default component
+export default connector(component)

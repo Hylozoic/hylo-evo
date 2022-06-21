@@ -42,3 +42,11 @@
     margin: 0 0 10px 5px;
   }
 }
+
+.stream-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
+}

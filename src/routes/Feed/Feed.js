@@ -38,10 +38,11 @@ export default class Feed extends Component {
 
   getFeedProps () {
     const { routeParams, querystringParams } = this.props
-    const { context } = routeParams
+    const { context, view } = routeParams
 
     return {
       context,
+      view,
       routeParams,
       querystringParams,
       topic: get('id', this.props.topic),

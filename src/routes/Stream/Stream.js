@@ -82,7 +82,7 @@ export default class Stream extends Component {
     const ViewComponent = viewComponent[viewMode]
 
     return (
-      <React.Fragment>
+      <>
         <FeedBanner
           group={group}
           currentUser={currentUser}
@@ -98,22 +98,26 @@ export default class Stream extends Component {
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView}
         />
-        <div styleName='stream-items'>
+        <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
             const expanded = selectedPostId === post.id
-            return <ViewComponent
-              styleName={cx({ 'card-item': viewMode === 'cards', expanded })}
-              expanded={expanded}
-              routeParams={routeParams}
-              post={post}
-              key={post.id} />
+            return (
+              <ViewComponent
+                styleName={cx({ 'card-item': viewMode === 'cards', expanded })}
+                expanded={expanded}
+                routeParams={routeParams}
+                post={post}
+                key={post.id}
+              />
+            )
           })}
         </div>
         <ScrollListener onBottom={() => this.fetchPosts(posts.length)}
-          elementId={CENTER_COLUMN_ID} />
+          elementId={CENTER_COLUMN_ID}
+        />
         {pending && <Loading />}
-      </React.Fragment>
+      </>
     )
   }
 }
