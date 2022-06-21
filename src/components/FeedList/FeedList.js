@@ -159,7 +159,7 @@ export default class FeedList extends React.Component {
                 />
               )
             })}
-        </div>}
+          </div>}
         <ScrollListener onBottom={this.fetchMorePosts} elementId={CENTER_COLUMN_ID} />
         {pending && <Loading />}
       </div>
