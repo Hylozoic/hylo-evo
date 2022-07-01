@@ -1,4 +1,4 @@
-import { isEmpty, isEqual } from 'lodash/fp'
+import { isEqual } from 'lodash/fp'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import MapGL from 'react-map-gl'
 import { Editor, DrawPolygonMode, EditingMode } from 'react-map-gl-draw'
