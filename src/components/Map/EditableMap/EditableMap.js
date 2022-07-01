@@ -1,3 +1,4 @@
+import { isEmpty, isEqual } from 'lodash/fp'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import MapGL from 'react-map-gl'
 import { Editor, DrawPolygonMode, EditingMode } from 'react-map-gl-draw'
@@ -54,8 +55,11 @@ export default function EditableMap (props) {
   const editorRef = useRef(null)
 
   useEffect(() => {
-    const formattedPolygon = getFormattedPolygon(polygon)
-    const polygonCenter = formattedPolygon !== emptyGeoJsonObject ? centroid(formattedPolygon[0]).geometry.coordinates : null
+    setDisplayPolygon(getFormattedPolygon(polygon))
+  }, [polygon])
+
+  useEffect(() => {
+    const polygonCenter = !isEqual(displayPolygon, emptyGeoJsonObject) ? centroid(displayPolygon[0]).geometry.coordinates : null
     const viewportLocation = polygonCenter?.length > 0 ? {
       longitude: polygonCenter[0],
       latitude: polygonCenter[1],
@@ -78,7 +82,7 @@ export default function EditableMap (props) {
   }
 
   const onSelect = useCallback(options => {
-    setIsPolygonSelected(true)
+    setIsPolygonSelected(!!options.selectedFeature)
     setSelectedFeatureIndex(options?.selectedFeatureIndex || 0)
   }, [])
 
@@ -127,7 +131,7 @@ export default function EditableMap (props) {
       <div className='mapboxgl-ctrl-group mapboxgl-ctrl' styleName='map-control'>
         <button
           styleName='mapbox-gl-draw_circle-ex'
-          title='Delete polygon, click polygon to select'
+          title='Delete selected polygon, click polygon to select'
           onClick={onDelete}
           disabled={!isPolygonSelected}
         >
