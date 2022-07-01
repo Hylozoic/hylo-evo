@@ -9,9 +9,12 @@ import extractModelsForTest from 'util/testing/extractModelsForTest'
 import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
 import JoinGroup, { SIGNUP_PATH } from './JoinGroup'
 
-jest.mock('store/selectors/getMixpanel', () => () => ({
+jest.mock('mixpanel-browser', () => ({
+  track: jest.fn(),
   identify: jest.fn(),
-  track: jest.fn()
+  people: {
+    set: jest.fn()
+  }
 }))
 
 function currentUserProvider (authStateComplete) {

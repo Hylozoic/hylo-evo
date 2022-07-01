@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
-import './UserGroupsTab.scss'
+import get from 'lodash/get'
+import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
+import { HyloApp } from 'hylo-shared'
 import {
   CREATE_AFFILIATION,
   DELETE_AFFILIATION,
@@ -11,8 +13,7 @@ import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import Membership from 'components/Membership'
-
-import get from 'lodash/get'
+import './UserGroupsTab.scss'
 
 const { array, func, object, string } = PropTypes
 
@@ -25,6 +26,8 @@ export default class UserGroupsTab extends Component {
     createAffiliation: func,
     deleteAffiliation: func
   }
+
+  static contextType = LayoutFlagsContext
 
   state = {
     affiliations: this.props.affiliations,
@@ -47,7 +50,7 @@ export default class UserGroupsTab extends Component {
         <div styleName='description'>This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
 
         <h2 styleName='subhead'>Hylo Groups</h2>
-        { action === LEAVE_GROUP && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
+        {action === LEAVE_GROUP && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {memberships.map((m, index) =>
           <Membership
             membership={m}
@@ -57,7 +60,7 @@ export default class UserGroupsTab extends Component {
           />)}
 
         <h2 styleName='subhead'>Other Affiliations</h2>
-        { action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
+        {action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
           <Affiliation
             affiliation={a}
@@ -86,10 +89,10 @@ export default class UserGroupsTab extends Component {
     deleteAffiliation(affiliationId)
       .then(res => {
         let errorMessage, successMessage
-        if (res.error) errorMessage = `Error deleting this affiliation.`
+        if (res.error) errorMessage = 'Error deleting this affiliation.'
         const deletedAffiliationId = get(res, 'payload.data.deleteAffiliation')
         if (deletedAffiliationId) {
-          successMessage = `Your affiliation was deleted.`
+          successMessage = 'Your affiliation was deleted.'
           affiliations.items = affiliations.items.filter((a) => a.id !== deletedAffiliationId)
         }
         return this.setState({ affiliations, errorMessage, successMessage })
@@ -98,6 +101,7 @@ export default class UserGroupsTab extends Component {
 
   leaveGroup = (group) => {
     const { leaveGroup } = this.props
+    const { hyloAppLayout } = this.context
     let { memberships } = this.state
 
     leaveGroup(group.id)
@@ -109,6 +113,11 @@ export default class UserGroupsTab extends Component {
           successMessage = `You left ${group.name || 'this group'}.`
           memberships = memberships.filter((m) => m.group.id !== deletedGroupId)
         }
+
+        if (hyloAppLayout) {
+          HyloApp.sendMessageToWebView(HyloApp.LEFT_GROUP, { groupId: deletedGroupId })
+        }
+
         return this.setState({ memberships, errorMessage, successMessage })
       })
   }
@@ -121,7 +130,7 @@ export default class UserGroupsTab extends Component {
         if (res.error) errorMessage = get(res, 'payload.message', 'Error adding your affiliation.')
         const affiliation = get(res, 'payload.data.createAffiliation')
         if (affiliation) {
-          successMessage = `Your affiliation was added`
+          successMessage = 'Your affiliation was added'
           affiliations.items.push(affiliation)
         }
         return this.setState({ affiliations, errorMessage, successMessage, showAddAffiliations: !!errorMessage })
@@ -172,10 +181,12 @@ export function AddAffiliation ({ close, save }) {
         </div>
 
         <Dropdown
-          toggleChildren={<span >
-            {PREPOSITIONS.find(p => p === preposition)}
-            <Icon name='ArrowDown' />
-          </span>}
+          toggleChildren={
+            <span>
+              {PREPOSITIONS.find(p => p === preposition)}
+              <Icon name='ArrowDown' />
+            </span>
+          }
           items={PREPOSITIONS.map(p => ({
             label: p,
             onClick: () => setPreposition(p)

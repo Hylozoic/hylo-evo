@@ -6,10 +6,11 @@ import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import GroupDetail from 'routes/GroupDetail'
+import GroupExplorer from 'routes/GroupExplorer'
 import MapExplorer from 'routes/MapExplorer'
 import PostDetail from 'routes/PostDetail'
 import { OPTIONAL_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
-import { DETAIL_COLUMN_ID } from 'util/scrolling'
+import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PublicLayoutRouter.scss'
 
 export default function PublicLayoutRouter (props) {
@@ -27,16 +28,19 @@ export default function PublicLayoutRouter (props) {
             <img styleName='logo' src='/assets/hylo.svg' alt='Hylo logo' />
           </a>
         </div>
-        <Switch>
-          <Route path='/:context(public)/:view(map)' component={MapExplorer} />
-          <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
-          <Redirect
-            exact
-            from={`/public/${OPTIONAL_POST_MATCH}`}
-            to={{ pathname: '/public/map', state: { from: location } }}
-            key='streamToMap'
-          />
-        </Switch>
+        <Div100vh id={CENTER_COLUMN_ID}>
+          <Switch>
+            <Route path='/:context(public)/:view(map)' component={MapExplorer} />
+            <Route path='/:context(public)/groups' exact component={GroupExplorer} />
+            <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
+            <Redirect
+              exact
+              from={`/public/${OPTIONAL_POST_MATCH}`}
+              to={{ pathname: '/public/map', state: { from: location } }}
+              key='streamToMap'
+            />
+          </Switch>
+        </Div100vh>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
             {detailRoutes.map(({ path, component }) => (

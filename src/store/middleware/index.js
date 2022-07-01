@@ -8,7 +8,6 @@ import graphqlMiddleware from './graphqlMiddleware'
 import apiMiddleware from './apiMiddleware'
 import pendingMiddleware from './pendingMiddleware'
 import optimisticMiddleware from './optimisticMiddleware'
-import userFetchedMiddleware from './userFetchedMiddleware'
 import userBlockingMiddleware from './userBlockingMiddleware'
 import mixpanelMiddleware from './mixpanelMiddleware'
 import rollbarMiddleware from './rollbarMiddleware'
@@ -21,7 +20,6 @@ export default function createMiddleware (history, req) {
     optimisticMiddleware,
     pendingMiddleware,
     promiseMiddleware,
-    userFetchedMiddleware,
     userBlockingMiddleware,
     mixpanelMiddleware,
     rollbarMiddleware,

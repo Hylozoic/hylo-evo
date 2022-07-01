@@ -10212,10 +10212,10 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-hylo-shared@^1.6.9:
-  version "1.6.9"
-  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-1.6.9.tgz#5c1c2e168f8cc0c4acaf465d77cdba8b8177547d"
-  integrity sha512-KQRtuIGm19zUkGhCs16hfG2NvZ7z5r3iT3aO6aTl2H8PKlW6QL/naxINFNn5eESbdCkJPUVlwabm3OaWOyUXDQ==
+hylo-shared@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-1.7.0.tgz#0a59ab435259663c67ad9ce89fee2a0f1eff427b"
+  integrity sha512-Q8Wt4jqlJTs6eHixkx8wvXRdlozMK4o0MCjwWzZ5sg/uXr/nJRcucUGp9Wy6ThM2ls09Oz+Em9IrIVM5S/cX8A==
   dependencies:
     cheerio "^1.0.0-rc.10"
     coordinate-parser "^1.0.7"

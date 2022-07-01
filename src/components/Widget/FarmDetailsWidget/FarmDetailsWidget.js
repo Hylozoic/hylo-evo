@@ -57,6 +57,15 @@ export default function FarmDetailsWidget ({ group }) {
   if (getProductDetail(group).length > 0) productLabels = productLabels.concat(getProductDetail(group).map((product) => capitalize(productLookup[product].label)))
   if (getProductsValueAdded(group).length > 0) productLabels = productLabels.concat(getProductsValueAdded(group).map((value) => capitalize(value)))
 
+  const numProducts = getAnimalProducts(group).length + getProductDetail(group).length
+  const numCertifications = getCertifitcationsCurrentDetail(group).length
+  const numManagementPlans = getManagementPlansCurrentDetail(group).length
+  let numOfSections = 0
+  if (numProducts) numOfSections += 1
+  if (numCertifications) numOfSections += 1
+  if (numManagementPlans) numOfSections += 1
+  const isThereMoreToShow = (numOfSections > 1 || numProducts + numCertifications + numManagementPlans > 6)
+
   return (
     <>
       <div styleName={cx('farm-details-container', { showless: !showMore })}>
@@ -71,15 +80,16 @@ export default function FarmDetailsWidget ({ group }) {
             />
           ))}
         </div>
-        {(getAnimalProducts(group).length > 0 || getProductDetail(group).length > 0) && <FarmDetailSection title='Products' items={productLabels} />}
-        {getCertifitcationsCurrentDetail(group).length > 0 && <FarmDetailSection title='Certifications' items={getCertifitcationsCurrentDetail(group).map((cert) => certificationsLookup[cert].label)} />}
-        {getManagementPlansCurrentDetail(group).length > 0 && <FarmDetailSection title='Management Techniques' items={getManagementPlansCurrentDetail(group).map((plan) => managementPlansLookup[plan].label)} />}
+        {numProducts > 0 && <FarmDetailSection title='Products' items={productLabels} />}
+        {numCertifications > 0 && <FarmDetailSection title='Certifications' items={getCertifitcationsCurrentDetail(group).map((cert) => certificationsLookup[cert].label)} />}
+        {numManagementPlans > 0 && <FarmDetailSection title='Management Techniques' items={getManagementPlansCurrentDetail(group).map((plan) => managementPlansLookup[plan].label)} />}
       </div>
-      <div>
-        <div styleName='separator-bg' />
-        <div styleName='separator' />
-        <Pill styleName='green-pill' onClick={() => setShowMore(!showMore)} label={showMore ? 'Show Less' : 'Show More'} />
-      </div>
+      {isThereMoreToShow &&
+        <div>
+          <div styleName='separator-bg' />
+          <div styleName='separator' />
+          <Pill styleName='green-pill' onClick={() => setShowMore(!showMore)} label={showMore ? 'Show Less' : 'Show More'} />
+        </div>}
     </>
   )
 }

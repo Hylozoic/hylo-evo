@@ -4,7 +4,24 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [4.0.2] - 2022-06-11
+
+### Added
+- Hylo App WebView events/interface to `GroupDetail` and related components
+
+### Changed
+- Behaviour of "Opportunies to Connect" on Group Detail to create a New Message via Moderator personIds
+
+## [4.0.1] - 2022-06-08
+
+### Changed
+- Mixpanel instance is moved out of Redux and Mixpanel identification is move into a `useEffect` on `AuthLayoutRouter`
+- Hide showMore if not needed for farm details
+- Redirect /public/groups to login screen
+
+### Fixed
+- Fixes: hylo.com takes users to static landing page, even if they are logged #1207
+- Border radius on post type button on post editor
 
 ## [4.0.0] - 2022-05-24
 
