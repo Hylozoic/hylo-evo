@@ -80,11 +80,12 @@ export default function Consent (props) {
 
         {offlineAccessRequested
           ? <div>
-            {appName} is asking to have offline access to Hylo
-            {isEmpty(missingOIDCScopes) || missingOIDCScopes.includes('offline_access')
+            {appName} is asking to have offline access to Hylo.
+             { /* XXX: Don't know currently how to tell here if the client is asking for offline_access but already granted it
+              {isEmpty(missingOIDCScopes) || !missingOIDCScopes.includes('offline_access')
               ? <p>(which you've previously granted)</p>
               : ''
-            }
+            }*/}
           </div>
           : ''
         }

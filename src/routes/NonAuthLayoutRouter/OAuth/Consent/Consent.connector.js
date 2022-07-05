@@ -7,6 +7,10 @@ import { cancel, confirm } from './Consent.store'
 export function mapStateToProps (state, props) {
   let missingOIDCScopes = getQuerystringParam('missingScopes', state, props) || []
 
+  // XXX: ideally we would know offline_access was requested even if it's not missing, so we can tell user they already granted it
+  //      but i don't know how to get that from the back-end yet.
+  const offlineAccessRequested = missingOIDCScopes.includes('offline_access')
+
   if (!isEmpty(missingOIDCScopes)) {
     if (!Array.isArray(missingOIDCScopes)) {
       missingOIDCScopes = [missingOIDCScopes]
@@ -22,7 +26,6 @@ export function mapStateToProps (state, props) {
 
   const missingResourceScopes = getQuerystringParam('missingResourceScopes', state, props) || []
   const previousAuthsOnly = !isEmpty(missingOIDCScopes) && !isEmpty(missingOIDCClaims) && !isEmpty(missingResourceScopes)
-  const offlineAccessRequested = get('offline_access', getQuerystringParam('scope', state, props))
 
   return {
     missingOIDCClaims,
