@@ -173,32 +173,6 @@ export default class GroupSettingsTab extends Component {
         <br />
 
         <SettingsControl
-          label='Group Shape'
-          onChange={this.updateSetting('geoShape')}
-          placeholder='Add valid GeoJson object...'
-          type='text'
-          value={geoShape || ''}
-        />
-        <div styleName='styles.editable-map-container'>
-          { this.state.isModal
-            ? <EditableMapModal group={group} toggleModal={this.toggleModal}>
-              <EditableMap
-                locationObject={editableMapLocation}
-                polygon={geoShape}
-                savePolygon={this.savePolygon}
-                toggleModal={this.toggleModal}
-              />
-            </EditableMapModal>
-            : <EditableMap
-              locationObject={editableMapLocation}
-              polygon={geoShape}
-              savePolygon={this.savePolygon}
-              toggleModal={this.toggleModal}
-            /> }
-        </div>
-        <br />
-
-        <SettingsControl
           label='Word used to describe a group Moderator'
           onChange={this.updateSetting('moderatorDescriptor')}
           value={moderatorDescriptor}
@@ -233,6 +207,34 @@ export default class GroupSettingsTab extends Component {
             label='Add a relevant skill or interest'
             placeholder='What skills and interests are most relevant to your group?' />
         </SettingsSection>
+
+        <br />
+
+        <SettingsControl
+          label='What area does your group cover?'
+          onChange={this.updateSetting('geoShape')}
+          placeholder='For place based groups, draw the area where your group is active (or paste in GeoJSON here)'
+          type='text'
+          value={geoShape || ''}
+        />
+        <div styleName='styles.editable-map-container'>
+          { this.state.isModal
+            ? <EditableMapModal group={group} toggleModal={this.toggleModal}>
+              <EditableMap
+                locationObject={editableMapLocation}
+                polygon={geoShape}
+                savePolygon={this.savePolygon}
+                toggleModal={this.toggleModal}
+              />
+            </EditableMapModal>
+            : <EditableMap
+              locationObject={editableMapLocation}
+              polygon={geoShape}
+              savePolygon={this.savePolygon}
+              toggleModal={this.toggleModal}
+            /> }
+        </div>
+        <br />
 
         <div styleName='general.saveChanges'>
           <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
