@@ -43,7 +43,7 @@ export function getFeatureStyle ({ feature, index, state }) {
         stroke: 'rgb(60, 178, 208)',
         strokeWidth: 2,
         fill: 'rgb(60, 178, 208)',
-        fillOpacity: 0.1
+        fillOpacity: 0.3
       }
   }
 }

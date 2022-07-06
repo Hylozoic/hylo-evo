@@ -191,7 +191,7 @@ export default function EditableMap (props) {
       height='100%'
       mapboxApiAccessToken={mapbox.token}
       mapOptions={{ logoPosition: 'bottom-right' }}
-      mapStyle='mapbox://styles/mapbox/light-v9'
+      mapStyle='mapbox://styles/mapbox/satellite-v9'
       onViewportChange={setViewport}
       width='100%'
     >
