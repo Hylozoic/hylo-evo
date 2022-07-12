@@ -30,9 +30,12 @@ export default function PublicLayoutRouter (props) {
         </div>
         <Div100vh id={CENTER_COLUMN_ID}>
           <Switch>
+            <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
             <Route path='/:context(public)/:view(map)' component={MapExplorer} />
             <Route path='/:context(public)/groups' exact component={GroupExplorer} />
             <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
+            {/* Remove this once we show the public stream */}
+            <Redirect exact from='/public/post/:id' to='/post/:id' />
             <Redirect
               exact
               from={`/public/${OPTIONAL_POST_MATCH}`}

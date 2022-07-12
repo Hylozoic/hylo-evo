@@ -219,6 +219,7 @@ export default function AuthLayoutRouter (props) {
                 `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
                 `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
+                `/${POST_DETAIL_MATCH}`,
                 '/messages',
                 '/settings',
                 '/search',
@@ -320,6 +321,7 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path='/:context(groups)/:groupSlug' component={returnDefaultRouteForGroup(currentGroup)} />
+              <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
               {/* **** Other Routes **** */}
               <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
