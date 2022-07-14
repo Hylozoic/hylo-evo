@@ -4,6 +4,19 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   accessibility
   avatarUrl
   bannerUrl
+  customViews {
+    items {
+      id
+      activePostsOnly
+      externalLink
+      isActive
+      icon
+      name
+      postTypes
+      viewMode
+      order
+    }
+  }
   description
   location
   memberCount

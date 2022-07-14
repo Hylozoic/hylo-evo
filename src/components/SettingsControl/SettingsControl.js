@@ -1,6 +1,7 @@
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import LocationInput from 'components/LocationInput'
+import IconSelector from 'components/IconSelector'
 import cx from 'classnames'
 import './SettingsControl.scss'
 
@@ -19,6 +20,14 @@ export default function SettingsControl (props) {
           value={value}
           onChange={onChange}
           {...otherProps} />
+        break
+      case 'icon-selector':
+        control = (
+          <IconSelector
+            selectedIcon={value}
+            updateIcon={onChange}
+          />
+        )
         break
       case 'password':
         control = <input styleName='control-input'
