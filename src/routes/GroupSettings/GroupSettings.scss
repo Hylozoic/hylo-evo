@@ -92,6 +92,12 @@ label {
 
   span.settingChanged {
     color: rgba(35, 64, 91, 1);
+    white-space: pre-line;
+  }
+
+  span.settingIncorrect {
+    color: $color-amaranth;
+    white-space: pre-line;
   }
 
   .save-button {

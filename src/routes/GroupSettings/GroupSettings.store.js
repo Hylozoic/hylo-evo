@@ -13,7 +13,7 @@ export function orderFromSort (sortBy) {
 export function fetchGroupSettings (slug) {
   return {
     type: FETCH_GROUP_SETTINGS,
-    graphql: {
+    graphql: { // TODO: integrate custom views into this call
       query: `query ($slug: String) {
         group (slug: $slug) {
           id
@@ -60,6 +60,19 @@ export function fetchGroupSettings (slug) {
               id
               name
               avatarUrl
+            }
+          }
+          customViews {
+            items {
+              id
+              activePostsOnly
+              externalLink
+              isActive
+              icon
+              name
+              postTypes
+              order
+              viewMode
             }
           }
           groupToGroupJoinQuestions {
@@ -134,7 +147,7 @@ export function updateGroupSettings (id, changes) {
 
   return {
     type: UPDATE_GROUP_SETTINGS,
-    graphql: {
+    graphql: { // TODO: integrate custom views into this query
       query: `mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id

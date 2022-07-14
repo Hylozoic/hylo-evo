@@ -71,3 +71,17 @@
   margin-left: -15px;
 }
 
+.warning {
+  color: $color-amaranth;
+}
+
+.custom-view-container{
+  /* empty */
+}
+
+.help-text{
+  color: $color-black-60;
+  font-size: 0.75rem;
+  transition: all .25s ease;
+  padding-bottom: 8px;
+}

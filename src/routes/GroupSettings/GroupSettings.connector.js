@@ -29,6 +29,8 @@ export function mapStateToProps (state, props) {
   }
 }
 
+// custom view updating just goes into
+
 export function mapDispatchToProps (dispatch, props) {
   return {
     deleteGroup: id => dispatch(deleteGroup(id)),
@@ -70,7 +72,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deleteGroup,
     fetchGroupSettings,
-    updateGroupSettings
+    updateGroupSettings,
+    // TODO: need to add a way to update custom_view
   }
 }
 
