@@ -1,0 +1,127 @@
+import React from 'react'
+import Icon from 'components/Icon'
+
+import './IconSelector.scss'
+
+const iconList = [
+  'EmailNotification',
+  'InAppNotification',
+  'PushNotification',
+  'Announcement',
+  'Invite',
+  'Post',
+  'Star',
+  'Plus',
+  'Settings',
+  'ArrowForward',
+  'Document',
+  'Download',
+  'Send',
+  'Checkmark',
+  'Empty',
+  'Back',
+  'AddImage',
+  'Clock',
+  'StarCircle',
+  'ProfileUrl',
+  'ProfileTwitter',
+  'ProfileLinkedin',
+  'ProfileFacebook',
+  'Reply',
+  'LinkedIn',
+  'Google',
+  'Facebook',
+  'Ex',
+  'NewCommunity',
+  'Projects',
+  'Events',
+  'Home',
+  'Topics',
+  'Members',
+  'Messages',
+  'Notifications',
+  'Search',
+  'Share',
+  'More',
+  'ArrowUp',
+  'ArrowDown',
+  'Location',
+  'Trash',
+  'Pin',
+  'Complete',
+  'Flag',
+  'Circle',
+  'Paperclip',
+  'Globe',
+  'Stack',
+  'Calendar',
+  'Public',
+  'Funnel',
+  'Hamburger',
+  'BadgeCheck',
+  'Unlock',
+  'Person',
+  'Eye',
+  'Letter',
+  'Phone',
+  'Email',
+  'Copy',
+  'Heart',
+  'Info',
+  'Create',
+  'Groups',
+  'Project',
+  'Resource',
+  'Discussion',
+  'Event',
+  'Offer',
+  'SmallEdit',
+  'Replies',
+  'Smiley',
+  'CardView',
+  'ListView',
+  'Stream',
+  'Enter-Door',
+  'Lock',
+  'Shield',
+  'Hand',
+  'Hidden',
+  'CircleEx',
+  'Circle-Plus',
+  'Handshake',
+  'SpeechBubble',
+  'People',
+  'Binoculars',
+  'Buy',
+  'Cooperative',
+  'Filter',
+  'Mentorship',
+  'Message',
+  'Volunteering',
+  'Research',
+  'Equipment_sharing',
+  'Support',
+  'Loans',
+  'Ecosystem_service_markets',
+  'Markets',
+  'Socials',
+  'Website',
+  'Twitter',
+  'Edit'
+]
+
+export default function IconSelector ({ selectedIcon, updateIcon }) {
+  return (
+    <div styleName='icon-selector-container'>
+      <div styleName='selected-icon'>
+        {selectedIcon ? <Icon green name={selectedIcon} /> : <div styleName='text'>No icon selected</div>}
+        {selectedIcon && <span styleName='text'>Icon name: {selectedIcon}</span>}
+      </div>
+      <div styleName='icon-options'>
+        {iconList.map((icon) => (
+          <Icon key={icon} styleName='icon' name={icon} onClick={() => updateIcon(icon)} />
+        ))}
+      </div>
+    </div>
+  )
+}

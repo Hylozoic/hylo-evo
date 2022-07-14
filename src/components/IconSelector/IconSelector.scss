@@ -1,0 +1,24 @@
+.icon-selector-container {
+  width: 100%;
+}
+
+.selected-icon {
+  
+}
+
+.icon-options {
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+}
+
+.icon {
+  padding: 2px;
+}
+
+.text{
+  color: $color-black-60;
+  font-size: 0.75rem;
+  padding-left: 4px;
+  transition: all .25s ease;
+}
