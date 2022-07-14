@@ -23,6 +23,11 @@ export const CREATE_MESSAGE = 'CREATE_MESSAGE'
 export const CREATE_MESSAGE_PENDING = CREATE_MESSAGE + _PENDING
 export const CREATE_POST = 'CREATE_POST'
 export const CREATE_PROJECT = 'CREATE_PROJECT'
+export const CUSTOM_VIEW_MODES = {
+  grid: 'Grid View',
+  stream: 'Steam View',
+  list: 'List View'
+}
 export const DEACTIVATE_ME = 'DEACTIVATE_ME'
 export const DELETE_AFFILIATION = 'DELETE_AFFILIATION'
 export const DECLINE_GROUP_INVITE = 'DECLINE_GROUP_INVITE'

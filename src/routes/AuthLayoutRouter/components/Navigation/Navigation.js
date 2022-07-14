@@ -47,6 +47,8 @@ export default function Navigation (props) {
   // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
 
+  // TODO: add custom link conditional here
+
   const links = compact([
     createPath && {
       label: 'Create',
