@@ -21,8 +21,19 @@ export function mapStateToProps (state, props) {
   let group
   let groupId = 0
 
-  const routeParams = get('match.params', props)
   const groupSlug = getRouteParam('groupSlug', state, props)
+
+  if (groupSlug) {
+    group = getGroupForCurrentRoute(state, props)
+    groupId = group.id
+  }
+
+  const customView = group && group.customViews & group.customViews.item && group.customViews.items[0]
+  const customPostType = customView && customView.postTypes[0]
+  const customViewMode = customView && customView.viewMode
+  const activePostsOnly = (customView && customView.activePostsOnly)
+
+  const routeParams = get('match.params', props)
   const context = getRouteParam('context', state, props)
 
   const currentUser = getMe(state, props)
@@ -32,20 +43,16 @@ export function mapStateToProps (state, props) {
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
-  const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
+  const postTypeFilter = customPostType || getQuerystringParam('t', state, props) || defaultPostType
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = getQuerystringParam('v', state, props) || defaultViewMode
-
-  if (groupSlug) {
-    group = getGroupForCurrentRoute(state, props)
-    groupId = group.id
-  }
+  const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
 
   const fetchPostsParam = {
     filter: postTypeFilter,
     slug: groupSlug,
     context,
-    sortBy
+    sortBy,
+    activePostsOnly
   }
 
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))

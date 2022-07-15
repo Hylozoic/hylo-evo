@@ -153,7 +153,7 @@ export default class GroupSettingsTab extends Component {
       <div styleName='styles.custom-view-container'>
         <SettingsControl label='Custom View Label' onChange={this.updateSetting('customview.name')} value={name} />
         <SettingsControl label='Select Icon' onChange={(value) => this.updateSettingDirectly('customview.icon')(value)} value={icon} type='icon-selector' />
-        <SettingsControl label='External link' onChange={this.updateSetting('customview.externalLink')} value={externalLink} />
+        <SettingsControl label='External link' onChange={this.updateSetting('customview.externalLink')} value={sanitizeURL(externalLink)} />
         {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>Must be a valid URL!</div>}
         <div styleName='styles.help-text'>You can put in a URL or specify filters for your groups posts</div>
 
@@ -193,25 +193,15 @@ export default class GroupSettingsTab extends Component {
           />
           <span styleName='general.toggleDescription'>Include only active posts?</span>
         </div>
-        {(!isEqual(this.state.edits.customViews[0], emptyCustomView)) && <div style={{ paddingTop: '4px' }} styleName='general.switchContainer'>
-          <SwitchStyled
-            checked={isActive}
-            onChange={() => this.updateSettingDirectly('customview.isActive')(!isActive)}
-            backgroundColor={isActive ? '#0DC39F' : '#8B96A4'}
-          />
-          <span styleName='general.toggleDescription'>Keep this custom view active?</span>
-        </div>}
-        {/*
-          Required inputs
-          - text input for name
-          - icon selector
-          external
-            - text input for url
-          internal
-            - post type selector
-            - view_mode for grid/stream/list/map views
-            - filter toggle for active posts
-        */}
+        {(!isEqual(this.state.edits.customViews[0], emptyCustomView)) &&
+          <div style={{ paddingTop: '4px' }} styleName='general.switchContainer'>
+            <SwitchStyled
+              checked={isActive}
+              onChange={() => this.updateSettingDirectly('customview.isActive')(!isActive)}
+              backgroundColor={isActive ? '#0DC39F' : '#8B96A4'}
+            />
+            <span styleName='general.toggleDescription'>Keep this custom view active?</span>
+          </div>}
       </div>
     )
   }

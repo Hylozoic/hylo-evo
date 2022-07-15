@@ -47,7 +47,7 @@ export default function Navigation (props) {
   // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
 
-  // TODO: add custom link conditional here
+  const customView = group.customViews && group.customViews.items && group.customViews.items[0]
 
   const links = compact([
     createPath && {
@@ -97,6 +97,13 @@ export default function Navigation (props) {
       label: 'Map',
       icon: 'Globe',
       to: mapPath
+    },
+    customView && customView.name && {
+      label: customView.name,
+      icon: customView.icon,
+      to: customView.externalLink ? customView.externalLink : `custom/${customView.order}`,
+      customView: true,
+      externalLink: customView.externalLink
     }
   ])
 
@@ -111,6 +118,7 @@ export default function Navigation (props) {
             {links.map(link => (
               <NavLink
                 key={link.label}
+                externalLink={link.externalLink}
                 {...link}
                 collapsed={collapsed}
                 onClick={link.handleClick}
