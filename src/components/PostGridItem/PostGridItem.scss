@@ -1,59 +1,11 @@
 .post-grid-item-container{
-  width: 160px;
+  width: 100%;
   height: 160px;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0px 3px 5px 0px #d8d8d8;
-}
-
-.type-author {
-  display: flex;
-  align-items: center;
-  height: 36px;
-  justify-content: space-between;
-
-  .post-type {
-    border-radius: 3px;
-    padding: 2px 4px;
-    font-size: 8px;
-    text-transform: uppercase;
-    margin-right: 5px;
-    margin-top: 1px;
-  }
-
-  .post-type.event {
-    border: 1px solid rgba(237, 86, 83, .25);
-    color: rgba(237, 86, 83, 1);
-  }
-
-  .post-type.discussion {
-    border: 1px solid rgba(58, 160, 223, .25);
-    color: rgba(58, 160, 223, 1);
-  }
-
-  .post-type.offer {
-    border: 1px solid rgba(0, 196, 159, .25);
-    color: rgba(0, 196, 159, 1);
-  }
-
-  .post-type.resource {
-    border: 1px solid rgba(254, 214, 55, .25);
-    color: rgba(254, 214, 55, 1);
-  }
-
-  .post-type.project {
-    border: 1px solid rgba(238, 134, 14, .25);
-    color: rgba(238, 134, 14, 1);
-  }
-
-  .post-type.request {
-    border: 1px solid rgba(98, 75, 162, .25);
-    color: rgba(98, 75, 162, 1);
-  }
-
-  .date span {
-    display: inline-block;
-  }
+  position: relative;
+  overflow: hidden;
 }
 
 .content-summary {
@@ -61,12 +13,66 @@
   flex-direction: column;
   padding: 4px 5px;
   flex: 1 1 auto;
-  position: relative;
   overflow: hidden;
+
+  .image-bg {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .grid-fade {
+    z-index: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 49.48%, #FFFFFF 100%);
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+  }
+
+  .grid-meta {
+    display: flex;
+    z-index: 3;
+    position: absolute;
+    bottom:0;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 3px;
+
+    .type-author {
+      display: block;
+      height: 36px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 30px;
+      color: $color-grey-keyline;
+      font-size: 12px;
+      position: relative;
+      top: 9px;
+
+      .avatar {
+        margin-right: 5px;
+        margin-top: 3px;
+      }
+
+      span {
+        display: inline-block;
+        margin-left: 3px;
+      }
+    }
+  }
 }
 
 .participants, .details, .timestamp, .topics {
   font-size: 12px;
+}
+
+.date {
+  color: red;
 }
 
 .topics {
@@ -76,32 +82,19 @@
     opacity: .5;
 }
 
-.participants {
-  color: $color-grey-keyline;
-
-  div {
-    display: flex;
-    align-items: center;
-
-    span {
-      display: inline-block;
-      margin-left: 3px;
-    }
-  }
-}
-
-.avatar {
-  margin-right: 5px;
-}
-
 .title {
   color: $color-member;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 18px;
   margin: 0;
   display: flex;
   max-height: 72px;
   text-overflow: ellipsis;
+  padding: 5px;
   overflow: hidden;
+  display: block;
+  white-space: nowrap;
+
   span {
     font-size: 10px;
     font-weight: normal;
@@ -110,18 +103,16 @@
 
 .details {
   color: $color-regent;
-  height: 2em;
+  height: auto;
   width: 100%;
+  font-size: 11px;
+  padding: 0 5px;
 }
 
 .title .details p {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.vote {
-  
 }
 
 .vote-button {
@@ -158,6 +149,9 @@
 
 .timestamp {
   color: $color-grey-keyline;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 // unread state overrides
@@ -193,5 +187,9 @@
 
   .post-row {
     padding: 10px;
+  }
+
+  .post-grid-item-container{
+    height: 120px;
   }
 }

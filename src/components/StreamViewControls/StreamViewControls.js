@@ -56,9 +56,9 @@ const StreamViewControls = (props) => {
         <div
           styleName={cx({ 'mode-active': viewMode === 'grid' })}
           onClick={() => changeView('grid')}
-          data-tip='grid view' data-for='stream-viewmode-tip'
+          data-tip='Grid view' data-for='stream-viewmode-tip'
         >
-          <Icon name='Topics' />
+          <Icon name='GridView' styleName='grid-view-icon' />
         </div>
       </div>
       { makeDropdown(sortBy, sortOptions, changeSort) }
