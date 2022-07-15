@@ -10,7 +10,7 @@ import DeleteSettingsTab from './DeleteSettingsTab'
 import RelatedGroupsTab from './RelatedGroupsTab'
 import TopicsSettingsTab from './TopicsSettingsTab'
 import ExportDataTab from './ExportDataTab'
-import PlansTab from 'components/PlansTab'
+import PaymentPlansTab from './PaymentPlansTab'
 import Loading from 'components/Loading'
 import FullPageModal from 'routes/FullPageModal'
 import { Redirect } from 'react-router'
@@ -24,14 +24,15 @@ export default function GroupSettings ({
   canModerate,
   currentUser,
   deleteGroup,
+  fetchGroupSettings,
+  fetchLocation,
   fetchPending,
   group,
   parentGroups,
   prerequisiteGroups,
+  queryParams,
   updateGroupSettings,
-  fetchGroupSettings,
-  upload,
-  fetchLocation
+  upload
 }) {
   const slug = get('slug', group)
 
@@ -73,7 +74,7 @@ export default function GroupSettings ({
         {
           name: 'Payment Plans',
           path: groupUrl(slug, 'settings/plans'),
-          component: <PlansTab group={group} />
+          component: <PaymentPlansTab group={group} queryParams={queryParams} />
         },
         {
           name: 'Topics',

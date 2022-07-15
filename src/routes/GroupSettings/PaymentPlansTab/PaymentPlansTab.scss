@@ -1,0 +1,311 @@
+.title {
+  composes: title from 'routes/UserSettings/NotificationSettingsTab/NotificationSettingsTab.scss';
+}
+
+.sub-title {
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-rhino-80;
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 1.5rem;
+}
+
+.sub-title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.error-notification {
+  composes: caption-lt-lg from 'css/typography.scss';
+  border: 1px solid $color-amaranth;
+  color: $color-amaranth;
+  padding: 5px 10px;
+  margin-bottom: 25px;
+  border-radius: 4px;
+}
+
+.success-notification {
+  composes: caption-lt-lg from 'css/typography.scss';
+  border: 1px solid $color-mountain-meadow;
+  color: $color-mountain-meadow;
+  padding: 5px 10px;
+  margin-bottom: 25px;
+  border-radius: 4px;
+}
+
+.prompt {
+  composes: bdy-drk-sm from 'css/typography.scss';
+  margin-bottom: 20px;
+}
+
+.button {
+  border-radius: 16px;
+  width: 31px;
+  height: 31px;
+  background: white;
+  transition: all 0.25s ease;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border: none;
+  text-align: center;
+}
+
+.add-plan {
+  bottom: 40px;
+  padding: 4px 2px 3px 3px;
+
+  &:hover {
+    background-color: $color-caribbean-green;
+    text-decoration: none;
+    span {
+      color: white;
+    }
+  }
+
+  &.active {
+    background-color: $color-picton-blue;
+
+    span {
+      color: white;
+    }
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.card {
+  border: 1px solid $color-cape-cod-10;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  right: 0px;
+  transition: 0.25s;
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    box-shadow: 0px 0px 6px 0px $color-black-10;
+    text-decoration: none;
+  }
+}
+
+.inactive{
+  background-color: azure;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+.inactive-text{
+  text-align: center;
+  composes: hdr-headline from 'css/typography.scss';
+  color: $color-persimmon;
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 2rem;
+  margin-top: 80px;
+  opacity: 1;
+}
+
+.plan-description {
+  @include font-regular;
+  padding: 15px 15px 0 15px;
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.5;
+  color: $color-regent;
+  opacity: 0.8;
+  max-height: 4.5em;
+  margin-bottom: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plan-tags {
+  max-height: 68px;
+  overflow: hidden;
+  padding: 0 15px 0 15px;
+  margin-bottom: 15px;
+}
+
+.tag-pill{
+  font-family: Circular Std;
+  text-transform: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.constrained.card {
+  border-top: 5px solid $color-cape-cod-10;
+  padding-top: 10px;
+}
+
+.expanded,
+.expanded:hover {
+  box-shadow: 0px 4px 6px 0px $color-black-10;
+}
+
+.plan-link {
+  text-decoration: none;
+  position: relative;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.header {
+  z-index: 1;
+  height: 67px;
+  position: relative;
+}
+
+.header-main-row {
+  position: relative;
+  padding: 0px 15px;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(242,242,242,1) 12%);
+  height: 67px;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+}
+
+.plan-details {
+  display: flex;
+  gap: 12px;
+}
+
+.detail-label {
+  font-size: 12px;
+  line-height: 15px;
+  color: $color-rhino-80;
+  @include font-regular;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 12px;
+  line-height: 15px;
+  color: $color-grey-header;
+  @include font-regular;
+}
+
+.plan-card-background {
+  width: 15%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 67px;
+  background-size: cover;
+  border-radius: 5px;
+}
+
+.plan-label {
+  flex-grow: 4;
+}
+
+.plan-title {
+  @include font-bold;
+  color: $color-member;
+  font-size: 18px;
+  line-height: 23px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 270px;
+}
+
+.plan-geo-descriptor{
+  font-size: 12px;
+  line-height: 15px;
+  color: $color-grey-header;
+  @include font-regular;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 270px;
+}
+
+.plan-member-flavor {
+  width: 120px;
+  text-align: right;
+}
+
+.plan-image {
+  margin-right: 15px;
+  min-width: 50px;
+  box-shadow: 0px 2px 6px rgba(41, 64, 90, .2);
+}
+
+.headerText {
+  display: block;
+  position: relative;
+  top: 1px;
+  line-height: 15px;
+}
+
+.label {
+  margin-right: 20px;
+  // remove this positioning. Only necessary because of Dropdown breaking layout
+  position: relative;
+  top: -3px;
+}
+
+.menuLink:hover {
+  text-decoration: none;
+}
+
+.menuLink:hover > span {
+  color: $color-rhino-80;
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    padding: 0 0 0 10px;
+  }
+
+  .header-main-row {
+    padding: 0;
+  }plan
+
+  .plan-image {
+    max-height: 30px;
+    max-width: 30px;
+    min-width: 30px;
+  }
+
+  .headerText {
+    max-width: calc(100% - 160px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .plan-title {
+    font-size: 14px;
+    max-width: 90%;
+  }
+
+  .plan-geo-descriptor {
+    max-width: 85%;
+  }
+}

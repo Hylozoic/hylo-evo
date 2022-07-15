@@ -4,6 +4,7 @@ export const FETCH_GROUP_SETTINGS = `${MODULE_NAME}/FETCH_GROUP_SETTINGS`
 export const UPDATE_GROUP_SETTINGS = `${MODULE_NAME}/UPDATE_GROUP_SETTINGS`
 export const UPDATE_GROUP_SETTINGS_PENDING = UPDATE_GROUP_SETTINGS + '_PENDING'
 export const DELETE_GROUP = `${MODULE_NAME}/DELETE_GROUP`
+export const CONNECT_TO_STRIPE = `${MODULE_NAME}/CONNECT_TO_STRIPE`
 
 export function orderFromSort (sortBy) {
   if (sortBy === 'name') return 'asc'
@@ -211,6 +212,22 @@ export function deleteGroup (id) {
     meta: {
       optimistic: true,
       id
+    }
+  }
+}
+
+export function connectGroupToStripe (groupId) {
+  return {
+    type: CONNECT_TO_STRIPE,
+    graphql: {
+      query: `mutation ($groupId: ID) {
+        connectGroupToStripe(groupId: $groupId) {
+          redirectURL
+        }
+      }`,
+      variables: {
+        groupId
+      }
     }
   }
 }
