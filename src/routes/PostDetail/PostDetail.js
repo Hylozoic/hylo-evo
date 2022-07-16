@@ -176,7 +176,7 @@ export default class PostDetail extends Component {
           routeParams={routeParams}
           slug={routeParams.groupSlug}
           {...post} />}
-        {isProject && <div styleName='join-project-button-container'>
+        {isProject && currentUser && <div styleName='join-project-button-container'>
           <JoinProjectButton
             joinProject={joinProject}
             leaveProject={leaveProject}

@@ -21,12 +21,16 @@ export default function PublicLayoutRouter (props) {
   )
 
   return (
-    <Div100vh styleName='publicContainer'>
+    <Div100vh styleName='public-container'>
       <div styleName='background'>
-        <div styleName='topRow'>
+        <div styleName='header'>
           <a href='/'>
-            <img styleName='logo' src='/assets/hylo.svg' alt='Hylo logo' />
+            <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />
           </a>
+          <div styleName='access-controls'>
+            <a href='/login'>Sign in</a>
+            <a styleName='sign-up' href='/signup'>Sign up</a>
+          </div>
         </div>
         <Div100vh id={CENTER_COLUMN_ID}>
           <Switch>

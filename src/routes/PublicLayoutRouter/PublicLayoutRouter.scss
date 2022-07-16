@@ -1,5 +1,6 @@
-.publicContainer {
+.public-container {
   overflow-y: auto;
+  padding-top: 56px;
 }
 
 .background {
@@ -12,24 +13,61 @@
   align-items: center;
 }
 
-.topRow {
+.header {
   position: absolute;
   top: 0px;
   width: 100%;
   display: flex;
+  padding: 0 20px;
+  height: 56px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 56px 0px rgb(42 64 89 / 30%);
+  z-index: 100;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+
+  .logo {
+    height: 30px;
+  }
+
+  .access-controls {
+    a {
+      height: 30px;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 4px 15px rgba(42, 64, 89, 0.29);
+      border-radius: 30px;
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 15px;
+      margin: 0 5px;
+      color: rgba(35, 65, 91, 1.0);
+      transition: all .25s ease;
+
+      &.sign-up {
+        background-color: rgba(0, 199, 157, 1.0);
+        color: rgba(255, 255, 255, 1.0);
+      }
+
+      &:hover {
+        text-decoration: none;
+        background-color: rgba(0, 118, 223, 1);
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+
 }
 
-.logo {
-  /* !empty */
+.post {
+  max-width: 960px;
 }
 
 .detail {
   background-color: white;
   position: absolute;
   z-index: 30;
-  top: 0;
+  top: 56px;
   right: 0px;
   height: 100%;
   width: $detail-column-width;
@@ -48,7 +86,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .topRow {
+  .header {
     padding: 10px;
     position: relative;
   }

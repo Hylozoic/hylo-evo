@@ -60,14 +60,17 @@ export default class Comments extends Component {
           postId={postId}
           onReplyThread={this.scrollToReplyInput.bind(this)} />
       ))}
-      <div styleName='form-wrapper' style={style}>
-        <CommentForm
-          currentUser={currentUser}
-          createComment={createComment}
-          postId={postId}
-        />
-        <PeopleTyping styleName='people-typing' />
-      </div>
+      {currentUser
+        ? <div styleName='form-wrapper' style={style}>
+          <CommentForm
+            currentUser={currentUser}
+            createComment={createComment}
+            postId={postId}
+          />
+          <PeopleTyping styleName='people-typing' />
+        </div>
+        : ' '
+      }
     </div>
   }
 }

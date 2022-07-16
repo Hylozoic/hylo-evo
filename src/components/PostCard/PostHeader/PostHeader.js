@@ -41,6 +41,7 @@ export default class PostHeader extends PureComponent {
       close,
       className,
       constrained,
+      currentUser,
       editPost,
       deletePost,
       removePost,
@@ -128,7 +129,7 @@ export default class PostHeader extends PureComponent {
           {type && <PostLabel type={type} styleName='label' />}
           {dropdownItems.length > 0 &&
             <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
-          {close &&
+          {close && currentUser &&
             <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
         </div>
         {flaggingVisible && <FlagContent type='post'
