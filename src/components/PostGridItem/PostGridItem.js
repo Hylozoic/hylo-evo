@@ -17,9 +17,13 @@ export default function PostGridItem (props) {
     title,
     details,
     creator,
-    createdAt
+    createdAt,
+    attachments
   } = post
 
+  const firstAttachment = attachments[0] || {}
+  const { attachmentType, attachmentUrl } = firstAttachment
+  console.log(attachmentType, attachmentUrl, 'these should reliably be valid variables if they actually exist, or undefined.')
   if (!creator) { // PostCard guards against this, so it must be important? ;P
     return null
   }
@@ -43,7 +47,9 @@ export default function PostGridItem (props) {
         /* : ' '} */}
 
         {/* TODO for tom:
-        // Retrieve attachments. If there are attachments print attachment[0] type. If attachment[0] is an image, print url
+          Retrieve attachments. If there are attachments print attachment[0] type. If attachment[0] is an image, print url
+
+          From Tom: Now the attachment variables can be used to display the different views that you are keen for.
         */}
 
         <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
