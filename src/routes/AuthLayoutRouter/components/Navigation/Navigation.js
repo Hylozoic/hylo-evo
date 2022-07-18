@@ -47,7 +47,7 @@ export default function Navigation (props) {
   // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
 
-  const customView = group.customViews && group.customViews.items && group.customViews.items[0]
+  const customView = group && group.customViews && group.customViews.items && group.customViews.items[0]
 
   const links = compact([
     createPath && {
@@ -101,8 +101,7 @@ export default function Navigation (props) {
     customView && customView.name && {
       label: customView.name,
       icon: customView.icon,
-      to: customView.externalLink ? customView.externalLink : `custom/${customView.order}`,
-      customView: true,
+      to: customView.externalLink ? customView.externalLink : `${rootPath}/custom/${customView.order}`,
       externalLink: customView.externalLink
     }
   ])

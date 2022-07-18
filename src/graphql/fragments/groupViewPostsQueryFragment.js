@@ -5,6 +5,7 @@ import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 // redux-orm sets up the relationship between group and posts correctly
 const groupViewPostsQueryFragment = `
 posts: viewPosts(
+  activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,

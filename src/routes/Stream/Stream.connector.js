@@ -28,7 +28,7 @@ export function mapStateToProps (state, props) {
     groupId = group.id
   }
 
-  const customView = group && group.customViews & group.customViews.item && group.customViews.items[0]
+  const customView = group && group.customViews && group.customViews.items && group.customViews.items[0]
   const customPostType = customView && customView.postTypes[0]
   const customViewMode = customView && customView.viewMode
   const activePostsOnly = (customView && customView.activePostsOnly)
@@ -46,11 +46,6 @@ export function mapStateToProps (state, props) {
   const postTypeFilter = customPostType || getQuerystringParam('t', state, props) || defaultPostType
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
   const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
-
-  if (groupSlug) {
-    group = getGroupForCurrentRoute(state, props)
-    groupId = group.id
-  }
 
   const fetchPostsParam = {
     filter: postTypeFilter,

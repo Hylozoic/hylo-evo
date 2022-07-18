@@ -2,6 +2,7 @@ import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
 const postsQueryFragment = `
 posts(
+  activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,

@@ -11,7 +11,8 @@ describe('GroupSettingsTab', () => {
       locationObject: 'Fuji',
       description: 'Great group',
       avatarUrl: 'avatar.png',
-      bannerUrl: 'avatar.png'
+      bannerUrl: 'avatar.png',
+      customViews: { items: [] }
     }
     const wrapper = shallow(<GroupSettingsTab group={group} />)
     expect(wrapper).toMatchSnapshot()

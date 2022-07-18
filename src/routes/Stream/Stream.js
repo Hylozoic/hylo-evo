@@ -80,6 +80,7 @@ export default class Stream extends Component {
     } = this.props
 
     const ViewComponent = viewComponent[viewMode]
+    const isCustomView = routeParams && routeParams.view === 'custom'
 
     return (
       <>
@@ -93,11 +94,12 @@ export default class Stream extends Component {
           querystringParams={querystringParams}
           currentUserHasMemberships={currentUserHasMemberships}
         />
-        <ViewControls
-          routeParams={routeParams}
-          postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
-          changeTab={changeTab} changeSort={changeSort} changeView={changeView}
-        />
+        {!isCustomView &&
+          <ViewControls
+            routeParams={routeParams}
+            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
+            changeTab={changeTab} changeSort={changeSort} changeView={changeView}
+          />}
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
@@ -113,7 +115,8 @@ export default class Stream extends Component {
             )
           })}
         </div>
-        <ScrollListener onBottom={() => this.fetchPosts(posts.length)}
+        <ScrollListener
+          onBottom={() => this.fetchPosts(posts.length)}
           elementId={CENTER_COLUMN_ID}
         />
         {pending && <Loading />}

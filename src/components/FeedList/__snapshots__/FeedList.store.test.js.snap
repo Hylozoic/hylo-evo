@@ -4,6 +4,7 @@ exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query GroupPostsQuery (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -33,6 +34,7 @@ Object {
     postCount
     
 posts: viewPosts(
+  activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
@@ -160,6 +162,7 @@ posts: viewPosts(
   }
 }",
     "variables": Object {
+      "activePostsOnly": false,
       "afterTime": undefined,
       "beforeTime": undefined,
       "context": "groups",
@@ -188,6 +191,7 @@ exports[`works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query PostsQuery (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -205,6 +209,7 @@ Object {
 ) {
   
 posts(
+  activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
@@ -333,6 +338,7 @@ posts(
 }
 }",
     "variables": Object {
+      "activePostsOnly": false,
       "afterTime": undefined,
       "beforeTime": undefined,
       "context": "all",

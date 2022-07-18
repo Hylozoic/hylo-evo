@@ -235,7 +235,7 @@ function appendId (state, type, params, id) {
 // If replace is false add new ids to the existing list, if true then replace list
 function updateIds (state, type, params, data, replace = false) {
   if (!data) return state
-  const { items, total, hasMore } = data
+  const { items = [], total, hasMore } = data
   const key = buildKey(type, params)
   const existingIds = get('ids', state[key]) || []
   const newIds = items.map(x => x.id)
@@ -284,6 +284,7 @@ export function buildKey (type, params) {
 
 export const queryParamWhitelist = [
   'autocomplete',
+  'activePostsOnly',
   'id',
   'context',
   'farmQuery',

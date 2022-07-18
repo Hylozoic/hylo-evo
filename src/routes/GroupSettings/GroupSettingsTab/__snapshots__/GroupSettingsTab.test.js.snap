@@ -156,6 +156,9 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         Object {
           "avatarUrl": "avatar.png",
           "bannerUrl": "avatar.png",
+          "customViews": Object {
+            "items": Array [],
+          },
           "description": "Great group",
           "id": 1,
           "locationObject": "Fuji",
@@ -166,6 +169,157 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       label="Add a relevant skill or interest"
       placeholder="What skills and interests are most relevant to your group?"
     />
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
+      Manage Custom Views
+    </h3>
+    <div
+      data-stylename="styles.help-text"
+    >
+      Add and edit a custom link for the navigation panel of your group
+    </div>
+    <div
+      data-stylename="styles.custom-view-container"
+    >
+      <SettingsControl
+        label="Custom View Label"
+        onChange={[Function]}
+        value=""
+      />
+      <SettingsControl
+        label="Select Icon"
+        onChange={[Function]}
+        type="icon-selector"
+        value=""
+      />
+      <SettingsControl
+        label="External link"
+        onChange={[Function]}
+        value={null}
+      />
+      <div
+        data-stylename="styles.help-text"
+      >
+        You can put in a URL or specify filters for your groups posts
+      </div>
+      <h5>
+         Custom Internal View
+      </h5>
+      <label
+        data-stylename="styles.label"
+      >
+        View Style
+      </label>
+      <Dropdown
+        data-stylename="styles.location-obfuscation-dropdown"
+        items={
+          Array [
+            Object {
+              "label": "Grid View",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Steam View",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "List View",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="styles.location-obfuscation-dropdown-label"
+          >
+            Steam View
+            <Icon
+              name="ArrowDown"
+            />
+          </span>
+        }
+      />
+      <div
+        style={
+          Object {
+            "paddinBottom": "4px",
+            "paddingTop": "4px",
+          }
+        }
+      >
+        <label
+          data-stylename="styles.label"
+        >
+          Post Types
+        </label>
+        <Dropdown
+          data-stylename="styles.location-obfuscation-dropdown"
+          items={
+            Array [
+              Object {
+                "label": "Discussion",
+                "onClick": [Function],
+              },
+              Object {
+                "label": "Request",
+                "onClick": [Function],
+              },
+              Object {
+                "label": "Offer",
+                "onClick": [Function],
+              },
+              Object {
+                "label": "Resource",
+                "onClick": [Function],
+              },
+              Object {
+                "label": "Project",
+                "onClick": [Function],
+              },
+              Object {
+                "label": "Event",
+                "onClick": [Function],
+              },
+              Object {
+                "label": "No filter",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <span
+              data-stylename="styles.location-obfuscation-dropdown-label"
+            >
+              No filter
+              <Icon
+                name="ArrowDown"
+              />
+            </span>
+          }
+        />
+      </div>
+      <div
+        data-stylename="general.switchContainer"
+        style={
+          Object {
+            "paddingTop": "4px",
+          }
+        }
+      >
+        <SwitchStyled
+          backgroundColor="#8B96A4"
+          checked={false}
+          disabled={false}
+          onChange={[Function]}
+        />
+        <span
+          data-stylename="general.toggleDescription"
+        >
+          Include only active posts?
+        </span>
+      </div>
+    </div>
   </SettingsSection>
   <div
     data-stylename="general.saveChanges"
