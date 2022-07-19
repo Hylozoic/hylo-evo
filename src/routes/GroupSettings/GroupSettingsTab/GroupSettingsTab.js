@@ -4,6 +4,7 @@ import { set, trim, isEqual } from 'lodash'
 import cx from 'classnames'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
+import EditableMap from 'components/Map/EditableMap/EditableMap'
 import Icon from 'components/Icon'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -21,6 +22,7 @@ import SettingsSection from '../SettingsSection'
 
 import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
 import styles from './GroupSettingsTab.scss' // eslint-disable-line no-unused-vars
+import EditableMapModal from 'components/Map/EditableMap/EditableMapModal'
 import { sanitizeURL } from 'util/url'
 import { CUSTOM_VIEW_MODES } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
@@ -85,7 +87,7 @@ export default class GroupSettingsTab extends Component {
     if (!group) return { edits: {}, changed: false }
 
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, location, locationObject, name, settings, customViews
+      aboutVideoUri, avatarUrl, bannerUrl, customViews, description, geoShape, location, locationObject, name, settings
     } = group
 
     return {
@@ -94,6 +96,7 @@ export default class GroupSettingsTab extends Component {
         avatarUrl: avatarUrl || DEFAULT_AVATAR,
         bannerUrl: bannerUrl || DEFAULT_BANNER,
         description: description || '',
+        geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
         moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
@@ -102,7 +105,8 @@ export default class GroupSettingsTab extends Component {
         settings: typeof settings !== 'undefined' ? settings : { },
         customViews: customViews.items[0] ? customViews.items : [emptyCustomView]
       },
-      changed: false
+      changed: false,
+      isModal: false
     }
   }
 
@@ -129,6 +133,20 @@ export default class GroupSettingsTab extends Component {
 
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
+
+  savePolygon = (polygon) => {
+    const { edits } = this.state
+    this.setState({
+      changed: true,
+      edits: { ...edits, geoShape: polygon ? JSON.stringify(polygon.geometry) : null }
+    })
+  }
+
+  toggleModal = () => {
+    this.setState({
+      isModal: !this.state.isModal
+    })
+  }
 
   save = async () => {
     this.setState({ changed: false })
@@ -220,12 +238,11 @@ export default class GroupSettingsTab extends Component {
 
     const { edits, changed } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
-
-    const locationObject = group.locationObject || currentUser.locationObject
+    const editableMapLocation = group?.locationObject || currentUser.locationObject
 
     return (
       <div styleName='general.groupSettings'>
@@ -252,7 +269,7 @@ export default class GroupSettingsTab extends Component {
           label='Location'
           onChange={this.updateSettingDirectly('location', true)}
           location={location}
-          locationObject={locationObject}
+          locationObject={group.locationObject}
           type='location'
         />
         <label styleName='styles.label'>Location Privacy:</label>
@@ -312,6 +329,34 @@ export default class GroupSettingsTab extends Component {
           <div styleName='styles.help-text'>Add and edit a custom link for the navigation panel of your group</div>
           {this.renderCustomViewUI()}
         </SettingsSection>
+
+        <br />
+
+        <SettingsControl
+          label='What area does your group cover?'
+          onChange={this.updateSetting('geoShape')}
+          placeholder='For place based groups, draw the area where your group is active (or paste in GeoJSON here)'
+          type='text'
+          value={geoShape || ''}
+        />
+        <div styleName='styles.editable-map-container'>
+          { this.state.isModal
+            ? <EditableMapModal group={group} toggleModal={this.toggleModal}>
+              <EditableMap
+                locationObject={editableMapLocation}
+                polygon={geoShape}
+                savePolygon={this.savePolygon}
+                toggleModal={this.toggleModal}
+              />
+            </EditableMapModal>
+            : <EditableMap
+              locationObject={editableMapLocation}
+              polygon={geoShape}
+              savePolygon={this.savePolygon}
+              toggleModal={this.toggleModal}
+            /> }
+        </div>
+        <br />
 
         <div styleName='general.saveChanges'>
           <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>

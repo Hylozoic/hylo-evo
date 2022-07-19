@@ -1,0 +1,46 @@
+div.map-control { 
+  &:not(:empty) {
+    box-shadow: 0px 5px 15px rgba(42, 64, 89, 0.15);;
+  }
+  button {
+    border-radius: 5px;
+    height: 40px;
+    width: 40px;
+    &.active {
+      background-color: #0074D8;
+      span {
+        color: white;
+      }
+      &:hover {
+        background-color: #0074D8;
+      }
+    }
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      span {
+        color: lightgray
+      }
+    }
+  }
+}
+
+.editable-map {
+  &.drawing-mode {
+    cursor: crosshair;
+  }
+}
+.mapbox-gl-draw_polygon,
+.mapbox-gl-draw_circle-ex,
+.mapbox-gl-draw_plus,
+.mapbox-gl-draw_minus,
+.mapbox-gl-expand,
+.mapbox-gl-draw_reset {
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+}
+

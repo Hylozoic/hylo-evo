@@ -23,6 +23,7 @@ Object {
       id
       avatarUrl
       description
+      geoShape
       memberCount
       name
       slug

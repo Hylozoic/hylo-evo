@@ -21,6 +21,7 @@ export function fetchGroupSettings (slug) {
           avatarUrl
           bannerUrl
           description
+          geoShape
           location
           locationObject {
             id
@@ -169,6 +170,7 @@ export function updateGroupSettings (id, changes) {
             items {
               id
               avatarUrl
+              geoShape
               name
               slug
             }

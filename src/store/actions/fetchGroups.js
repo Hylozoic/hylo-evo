@@ -64,6 +64,7 @@ query (
       accessibility
       memberCount
       description
+      geoShape
       location
       locationObject {
         center {

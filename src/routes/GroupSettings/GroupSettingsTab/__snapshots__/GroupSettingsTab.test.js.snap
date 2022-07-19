@@ -321,6 +321,25 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       </div>
     </div>
   </SettingsSection>
+  <br />
+  <SettingsControl
+    label="What area does your group cover?"
+    onChange={[Function]}
+    placeholder="For place based groups, draw the area where your group is active (or paste in GeoJSON here)"
+    type="text"
+    value=""
+  />
+  <div
+    data-stylename="styles.editable-map-container"
+  >
+    <EditableMap
+      locationObject="Fuji"
+      polygon=""
+      savePolygon={[Function]}
+      toggleModal={[Function]}
+    />
+  </div>
+  <br />
   <div
     data-stylename="general.saveChanges"
   >
