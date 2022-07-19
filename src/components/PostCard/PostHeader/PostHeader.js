@@ -47,10 +47,15 @@ export default class PostHeader extends PureComponent {
       pinPost,
       highlightProps,
       topicsOnNewline,
-      announcement
+      announcement,
+      postUrl
     } = this.props
 
     if (!creator) return null
+
+    const copyLink = () => {
+      navigator.clipboard.writeText(`${window.location.protocol}${window.location.host}${postUrl}`)
+    }
 
     const creatorUrl = personUrl(creator.id, routeParams.groupSlug)
     const { flaggingVisible } = this.state
@@ -63,6 +68,7 @@ export default class PostHeader extends PureComponent {
     const dropdownItems = filter([
       { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
       { icon: 'Edit', label: 'Edit', onClick: editPost },
+      { icon: 'Share', label: 'Copy Link', onClick: copyLink },
       { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
       { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
       { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
