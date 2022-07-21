@@ -405,7 +405,7 @@ export default class PostEditor extends React.Component {
       this.state.post,
       postUpdates
     )
-    const { isEvent } = this.props
+    const { isEvent, isProject } = this.props
 
     return !!(
       this.editor.current &&
@@ -415,8 +415,8 @@ export default class PostEditor extends React.Component {
       groups.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && startTime < endTime)) &&
-      sanitizeURL(donationsLink) &&
-      sanitizeURL(projectManagementLink)
+      (!isProject || sanitizeURL(donationsLink) || donationsLink === undefined) &&
+      (!isProject || sanitizeURL(projectManagementLink) || projectManagementLink === undefined)
     )
   }
 
