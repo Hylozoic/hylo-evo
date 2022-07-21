@@ -28,14 +28,16 @@ export default class PostFooter extends React.PureComponent {
     const {
       currentUser,
       commenters,
-      constrained,
-      eventInvitations,
       commentersTotal,
-      votesTotal,
-      myVote,
+      constrained,
+      donationsLink,
+      eventInvitations,
       members,
+      myVote,
       postId,
-      type
+      projectManagementLink,
+      type,
+      votesTotal
     } = this.props
     const onClick = isFunction(this.props.onClick) ? this.props.onClick : undefined
     const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
@@ -85,30 +87,44 @@ export default class PostFooter extends React.PureComponent {
         )
     }
 
-    if (type === 'project') {
-
-    } else {
-
-    }
-
     const tooltipId = 'postfooter-tt-' + postId
 
     const { caption, avatarUrls } = peopleRowResult
 
-    return <div styleName={cx('footer', { constrained })}>
-      <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
-      <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
-        {caption}
-      </span>
-      { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
-        data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
-        <Icon name='ArrowUp' styleName='arrowIcon' />
-        {votesTotal}
-      </a> : '' }
-      <Tooltip
-        delay={550}
-        id={tooltipId} />
-    </div>
+    return (
+      <div styleName={cx('footer', { constrained })}>
+        {donationsLink &&
+          <a data-tip='Donate to this project' data-for={tooltipId + '-donate'} styleName='icon-links' href={donationsLink} target='_blank' rel='noreferrer'>
+            <Icon green styleName='icon' name='Loans' />
+            <Tooltip
+              delay={550}
+              id={tooltipId + '-donate'}
+            />
+          </a>}
+        {projectManagementLink &&
+          <a data-tip='Look at the project management tool' data-for={tooltipId + '-manage'} styleName='icon-links' href={projectManagementLink} target='_blank' rel='noreferrer'>
+            <Icon green styleName='icon' name='Mentorship' />
+            <Tooltip
+              delay={550}
+              id={tooltipId + '-manage'}
+            />
+          </a>}
+        <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
+        <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
+          {caption}
+        </span>
+        { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
+          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
+          <Icon name='ArrowUp' styleName='arrowIcon' />
+          {votesTotal}
+        </a> : '' }
+        <Tooltip
+          delay={550}
+          id={tooltipId}
+        />
+
+      </div>
+      )
   }
 }
 

@@ -122,7 +122,6 @@ export default class PostDetail extends Component {
     const isEvent = get('type', post) === 'event'
 
     const { acceptContributions, totalContributions } = post || {}
-
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
