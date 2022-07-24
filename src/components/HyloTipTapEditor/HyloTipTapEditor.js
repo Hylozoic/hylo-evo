@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useImperativeHandle } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import Iframe from './iframe.ts'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
@@ -25,8 +25,25 @@ export const HyloTipTapEditor = React.forwardRef(({
     ],
     content: contentHTML
   })
+  const editorRef = useRef(null)
 
-  console.log(editor && editor.getHTML())
+  useImperativeHandle(ref, () => ({
+    getHTML: () => {
+      return editorRef.current?.getHTML()
+    },
+    focus: () => {
+      editorRef.current?.commands.focus()
+    },
+    reset: () => {
+      editorRef.current?.commands.clearContent()
+    }
+  }))
+
+  if (!editor) return null
+
+  editorRef.current = editor
+
+  // console.log(editor && editor.getHTML())
 
   return (
     <>

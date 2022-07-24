@@ -152,7 +152,7 @@ export default class PostEditor extends React.Component {
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
       this.reset(this.props)
-      this.editor.current.focus()
+      this.editor.current?.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
       this.setState({
         post: { ...this.state.post, linkPreview }
@@ -165,12 +165,12 @@ export default class PostEditor extends React.Component {
   }
 
   reset = (props) => {
-    this.editor.current.reset()
+    this.editor.current?.reset()
     this.groupsSelector.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
-  focus = () => this.editor.current && this.editor.current.focus()
+  focus = () => this.editor.current?.focus()
 
   handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
@@ -433,7 +433,7 @@ export default class PostEditor extends React.Component {
       locationId,
       isPublic
     } = this.state.post
-    const details = this.editor.current.getContentHTML()
+    const details = this.editor.current.getHTML()
     const topicNames = this.topicSelector.current
       .getSelected()
       .map((t) => t.name)
