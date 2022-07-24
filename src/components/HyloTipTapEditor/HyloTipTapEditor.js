@@ -4,7 +4,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import Iframe from './iframe.ts'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import StarterKit from '@tiptap/starter-kit'
-import HyloTipTapEditorBottomMenuBar from './HyloTipTapEditorBottomMenuBar'
+import Highlight from '@tiptap/extension-highlight'
 import './HyloTipTapEditor.scss'
 
 export const HyloTipTapEditor = React.forwardRef(({
@@ -22,6 +22,7 @@ export const HyloTipTapEditor = React.forwardRef(({
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Highlight,
       Placeholder.configure({
         placeholder
       }),
@@ -78,7 +79,6 @@ export const HyloTipTapEditor = React.forwardRef(({
     <>
       <HyloTipTapEditorMenuBar editor={editor} />
       <EditorContent className={className} editor={editor} />
-      <HyloTipTapEditorBottomMenuBar editor={editor} />
     </>
   )
 })

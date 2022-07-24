@@ -3013,6 +3013,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-heading/-/extension-heading-2.0.0-beta.29.tgz#d017d216c0fd1962c266f6f61a335093f9749862"
   integrity sha512-q92jYcsT5bPhvuQaB0h44Z9r+Ii22tDYo082KMVnR4+tknHT/3xx+p4JC8KHjh+/5W8Quyafqy6mS8L8VX0zsQ==
 
+"@tiptap/extension-highlight@^2.0.0-beta.35":
+  version "2.0.0-beta.35"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-highlight/-/extension-highlight-2.0.0-beta.35.tgz#0738102b23f69f9c8ddada4f05ccb580d1d50133"
+  integrity sha512-xvEKOyuTj4mhQ8GIOItaSymJhGkWt2gGuCvmFWnTVZAaJJQOlgUTdkmayLCtwoDDP7biiuDhRJokTukGGmhUZw==
+
 "@tiptap/extension-history@^2.0.0-beta.26":
   version "2.0.0-beta.26"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-history/-/extension-history-2.0.0-beta.26.tgz#ae4c0ee8d19b3530e72d99cb5d0f69aefcf96d04"
@@ -10391,10 +10396,10 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-hylo-shared@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-1.7.0.tgz#0a59ab435259663c67ad9ce89fee2a0f1eff427b"
-  integrity sha512-Q8Wt4jqlJTs6eHixkx8wvXRdlozMK4o0MCjwWzZ5sg/uXr/nJRcucUGp9Wy6ThM2ls09Oz+Em9IrIVM5S/cX8A==
+hylo-shared@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-1.8.0.tgz#3fd15e3443dbc7aed0ddfd5640b68f2a5f01a49b"
+  integrity sha512-LJBAsj3LwSAVVTrxZU1h7CD4KXXw6lJJ0M3kgBdA3nRGLhBcw0YzvIEoWnZHwACOm+IZ8zk0mrSHBnfuHUTsyg==
   dependencies:
     cheerio "^1.0.0-rc.10"
     coordinate-parser "^1.0.7"

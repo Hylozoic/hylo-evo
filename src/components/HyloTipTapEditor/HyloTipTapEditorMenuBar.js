@@ -1,8 +1,9 @@
 import React from 'react'
 import {
-  RiBold, RiItalic, RiCodeBoxLine, RiStrikethrough, RiParagraph,
-  RiH1, RiH2, RiH3, RiH4, RiH5, RiH6, RiListUnordered, RiListOrdered,
-  RiIndentIncrease, RiSeparator, RiTextWrap, RiFilmLine, RiCodeView
+  RiBold, RiItalic, RiCodeBoxLine, RiStrikethrough,
+  RiH1, RiH2, RiH3, RiListUnordered, RiListOrdered,
+  RiIndentIncrease, RiFilmLine, RiCodeView,
+  RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
 import './HyloTipTapEditor.scss'
 
@@ -46,12 +47,12 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
 
       <div styleName='divider' />
 
-      <button
+      {/* <button
         onClick={() => editor.chain().focus().setParagraph().run()}
         className={editor.isActive('paragraph') ? 'is-active' : ''}
       >
         <RiParagraph />
-      </button>
+      </button> */}
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
@@ -70,7 +71,7 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
       >
         <RiH3 />
       </button>
-      <button
+      {/* <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
         className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
       >
@@ -87,10 +88,16 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
         className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
       >
         <RiH6 />
-      </button>
+      </button> */}
 
       <div styleName='divider' />
 
+      <button
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        className={editor.isActive('blockquote') ? 'is-active' : ''}
+      >
+        <RiIndentIncrease />
+      </button>
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive('bulletList') ? 'is-active' : ''}
@@ -112,23 +119,32 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
       >
         <RiCodeBoxLine />
       </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive('blockquote') ? 'is-active' : ''}
-      >
-        <RiIndentIncrease />
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+      {/* <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
         <RiSeparator />
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
+      </button> */}
+      {/* <button onClick={() => editor.chain().focus().setHardBreak().run()}>
         <RiTextWrap />
-      </button>
+      </button> */}
       <button
         onClick={() => addIframe(editor)}
         className='embedButton'
       >
         <RiFilmLine />
+      </button>
+
+      <div styleName='divider' />
+
+      <button onClick={() => editor.chain().focus().undo().run()}>
+        <RiArrowGoBackLine />
+      </button>
+      <button onClick={() => editor.chain().focus().redo().run()}>
+        <RiArrowGoForwardLine />
+      </button>
+      {/* <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+        clear formatting in selection
+      </button> */}
+      <button onClick={() => editor.chain().focus().clearNodes().run()}>
+        <RiFormatClear />
       </button>
     </div>
   )

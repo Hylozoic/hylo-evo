@@ -1,5 +1,13 @@
 // Global Typography
 
+blockquote {
+  margin-left: 0.25em;
+  padding: 0.5em;
+  padding-bottom: 0.25em;
+  border-left: solid 1px gainsboro;
+  background-color: ghostwhite;
+}
+
 /* override draft-js placeholder */
 .public-DraftEditorPlaceholder-root {
   color: $color-rhino-30 !important;

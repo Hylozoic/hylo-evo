@@ -1,11 +1,19 @@
+:global .ProseMirror:focus {
+  outline: none;
+}
+
 .topMenuBar,
 .bottomMenuBar {
+  background-color: whitesmoke;
+  border: solid 1px gainsboro;
+  line-height: 1em;
   button {
     background-color: none;
     margin: 0;
     background: none;
     border: 0;
     color: gray;
+    font-size: 14px;
   }
   .divider {
     display: inline-block;
@@ -16,3 +24,4 @@
     width: 2px;
   }
 }
+
