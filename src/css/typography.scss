@@ -4,8 +4,13 @@ blockquote {
   margin-left: 0.25em;
   padding: 0.5em;
   padding-bottom: 0.25em;
-  border-left: solid 1px gainsboro;
-  background-color: ghostwhite;
+  border-left: solid 2px $color-rhino-30;
+  color: $color-rhino-30;
+}
+
+ol li p:last-child,
+ul li p:last-child {
+  margin-bottom: 0;
 }
 
 /* override draft-js placeholder */

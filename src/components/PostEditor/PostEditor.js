@@ -255,6 +255,8 @@ export default class PostEditor extends React.Component {
     // onChange returns contentChanged, this business should maybe be moved here
     if (contentChanged) {
       // const contentState = editorState.getCurrentContent()
+      console.log('!!! setting link preview for', contentHTML)
+
       this.setLinkPreview(contentHTML)
       this.updateTopics(contentHTML)
       this.setIsDirty(true)
@@ -315,12 +317,16 @@ export default class PostEditor extends React.Component {
       clearLinkPreview
     } = this.props
     const { linkPreview } = this.state.post
+
     // TODO: This isn't actually going to notice if it's empty because of default <p> content
-    if (!this.editor.current.isEmpty && linkPreviewStatus) return clearLinkPreview()
+    if (this.editor.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
+
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') {
       return
     }
+
     if (linkPreview) return
+
     pollingFetchLinkPreview(contentHTML)
   }
 

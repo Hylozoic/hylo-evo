@@ -43,7 +43,7 @@ export const HyloTipTapEditor = React.forwardRef(({
     ],
     onUpdate: ({ editor }) => {
       // Write this to match actual changes... Default content seems to `<p></p>` currently
-      onChange(editor, contentHTML !== editor.getHTML())
+      onChange(editor.getHTML(), contentHTML !== editor.getHTML())
     },
     content: contentHTML
   })
