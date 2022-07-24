@@ -45,7 +45,7 @@ export const truncateHTML = (html, truncateLength, providedInsaneOptions = {}) =
   return truncHTML(html, truncateLength, options).html
 }
 
-export function presentHTML (html, options = {}) {
+export function presentHTML (html, options = {}, providedInsaneOptions = {}) {
   if (!html) return ''
 
   const {
@@ -56,7 +56,7 @@ export function presentHTML (html, options = {}) {
   let processedHTML = html
 
   if (truncateLength) {
-    processedHTML = truncateHTML(processedHTML, truncateLength)
+    processedHTML = truncateHTML(processedHTML, truncateLength, providedInsaneOptions)
   }
 
   // make links and hashtags
