@@ -185,8 +185,8 @@ $wrapperBorderRadius: 8px;
 .editor {
   min-height: 100px;
   max-height: 200px;
-  margin-bottom: $space-6x;
   color: $color-rhino-80;
+  overflow: auto;
 }
 
 // Footer area

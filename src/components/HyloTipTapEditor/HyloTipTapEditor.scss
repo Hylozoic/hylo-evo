@@ -1,0 +1,18 @@
+.topMenuBar,
+.bottomMenuBar {
+  button {
+    background-color: none;
+    margin: 0;
+    background: none;
+    border: 0;
+    color: gray;
+  }
+  .divider {
+    display: inline-block;
+    background-color: #0000001a;
+    height: 1.25rem;
+    margin-left: .5rem;
+    margin-right: .75rem;
+    width: 2px;
+  }
+}

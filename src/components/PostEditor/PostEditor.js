@@ -6,7 +6,6 @@ import { get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
-import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import { TOPIC_ENTITY_TYPE } from 'hylo-shared'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
@@ -152,7 +151,7 @@ export default class PostEditor extends React.Component {
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
       this.reset(this.props)
-      this.editor.current?.focus()
+      this.editor.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
       this.setState({
         post: { ...this.state.post, linkPreview }
@@ -165,12 +164,12 @@ export default class PostEditor extends React.Component {
   }
 
   reset = (props) => {
-    this.editor.current?.reset()
+    this.editor.current.reset()
     this.groupsSelector.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
-  focus = () => this.editor.current?.focus()
+  focus = () => this.editor.current.focus()
 
   handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
@@ -252,11 +251,12 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  handleDetailsChange = (editorState, contentChanged) => {
+  handleDetailsChange = (contentHTML, contentChanged) => {
+    // onChange returns contentChanged, this business should maybe be moved here
     if (contentChanged) {
-      const contentState = editorState.getCurrentContent()
-      this.setLinkPreview(contentState)
-      this.updateTopics(contentState)
+      // const contentState = editorState.getCurrentContent()
+      this.setLinkPreview(contentHTML)
+      this.updateTopics(contentHTML)
       this.setIsDirty(true)
     }
   }
@@ -308,29 +308,32 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  setLinkPreview = (contentState) => {
+  setLinkPreview = contentHTML => {
     const {
       pollingFetchLinkPreview,
       linkPreviewStatus,
       clearLinkPreview
     } = this.props
     const { linkPreview } = this.state.post
-    if (!contentState.hasText() && linkPreviewStatus) return clearLinkPreview()
+    // TODO: This isn't actually going to notice if it's empty because of default <p> content
+    if (!this.editor.current.isEmpty && linkPreviewStatus) return clearLinkPreview()
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') {
       return
     }
     if (linkPreview) return
-    pollingFetchLinkPreview(HyloContentState.toHTML(contentState))
+    pollingFetchLinkPreview(contentHTML)
   }
 
-  updateTopics = throttle(2000, (contentState) => {
-    const html = HyloContentState.toHTML(contentState)
-    const $ = cheerio.load(html, null, false)
-    var topicNames = []
+  updateTopics = throttle(2000, contentHTML => {
+    const $ = cheerio.load(contentHTML, null, false)
+    const topicNames = []
+
     $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
       topicNames.push($(el).text().replace('#', ''))
     )
+
     const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
+
     if (hasChanged) {
       this.setState({
         detailsTopics: topicNames.map((tn) => ({

@@ -1,23 +1,26 @@
 import React from 'react'
-// import styles from './HyloTipTapEditor.scss'
+import {
+  RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
+} from 'react-icons/ri'
+import './HyloTipTapEditor.scss'
 
 export default function HyloTipTapEditorBottomMenuBar ({ editor }) {
   if (!editor) return null
 
   return (
-    <>
+    <div styleName='bottomMenuBar'>
       <button onClick={() => editor.chain().focus().undo().run()}>
-        undo
+        <RiArrowGoBackLine />
       </button>
       <button onClick={() => editor.chain().focus().redo().run()}>
-        redo
+        <RiArrowGoForwardLine />
       </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+      {/* <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
         clear formatting in selection
-      </button>
+      </button> */}
       <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear all formatting
+        <RiFormatClear />
       </button>
-    </>
+    </div>
   )
 }

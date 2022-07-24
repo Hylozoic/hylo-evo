@@ -1,54 +1,83 @@
-import React, { useRef, useImperativeHandle } from 'react'
-import { useEditor, EditorContent } from '@tiptap/react'
+import React, { useRef, useImperativeHandle, useEffect } from 'react'
+import { useEditor, EditorContent, Extension } from '@tiptap/react'
+import Placeholder from '@tiptap/extension-placeholder'
 import Iframe from './iframe.ts'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
-// import styles from './HyloTipTapEditor.scss'
-
 import StarterKit from '@tiptap/starter-kit'
 import HyloTipTapEditorBottomMenuBar from './HyloTipTapEditorBottomMenuBar'
+import './HyloTipTapEditor.scss'
 
 export const HyloTipTapEditor = React.forwardRef(({
   className,
   placeholder,
   onChange,
   onEscape,
+  // Should the default be empty or a paragraph?
   contentHTML,
   readOnly,
-  parentComponent,
   submitOnReturnHandler,
-  focusOnRender
+  focusOnRender,
+  parentComponent
 }, ref) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Iframe
+      Placeholder.configure({
+        placeholder
+      }),
+      // Rename to iframeExtension?,
+      Iframe,
+      // // Extract to it's own keyboard shortcuts / Escape Extension
+      Extension.create({
+        addKeyboardShortcuts () {
+          return {
+            Escape: () => {
+              onEscape()
+              // TODO: Maybe should return true here to keep active for other extensions (i.e. Mentions)
+              return false
+            }
+          }
+        }
+      })
     ],
+    onUpdate: ({ editor }) => {
+      // Write this to match actual changes... Default content seems to `<p></p>` currently
+      onChange(editor, contentHTML !== editor.getHTML())
+    },
     content: contentHTML
   })
+
   const editorRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
     getHTML: () => {
-      return editorRef.current?.getHTML()
+      return editorRef.current.getHTML()
     },
     focus: () => {
-      editorRef.current?.commands.focus()
+      editorRef.current.commands.focus()
     },
     reset: () => {
-      editorRef.current?.commands.clearContent()
+      editorRef.current.commands.clearContent()
+    },
+    isEmpty: () => {
+      return editorRef.current.isEmpty
     }
   }))
+
+  useEffect(() => {
+    if (!editor) return undefined
+
+    editor.setEditable(!readOnly)
+  }, [editor, readOnly])
 
   if (!editor) return null
 
   editorRef.current = editor
 
-  // console.log(editor && editor.getHTML())
-
   return (
     <>
       <HyloTipTapEditorMenuBar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent className={className} editor={editor} />
       <HyloTipTapEditorBottomMenuBar editor={editor} />
     </>
   )
