@@ -1,8 +1,48 @@
 import React, { useState } from 'react'
 // import { Validators } from 'hylo-shared'
 import cx from 'classnames'
-import { Plate } from '@udecode/plate'
+import {
+  createBlockquotePlugin,
+  createBoldPlugin,
+  createCodePlugin,
+  createHeadingPlugin,
+  createItalicPlugin,
+  createParagraphPlugin,
+  createPlugins,
+  createStrikethroughPlugin,
+  createUnderlinePlugin,
+  createPlateUI,
+  Plate,
+  ELEMENT_CODE_BLOCK
+} from '@udecode/plate'
 import './HyloEditor.scss'
+
+const plateUI = createPlateUI({
+  // disabled for the sandbox as prismjs is throwing an error sometimes
+  // [ELEMENT_CODE_BLOCK]: null
+})
+
+const plugins = createPlugins(
+  [
+    createParagraphPlugin(),
+    createBlockquotePlugin(),
+    // createCodeBlockPlugin({
+    //   // You can either pass a component per plugin
+    //   component: CodeBlockElement,
+    // }),
+    createHeadingPlugin(),
+
+    createBoldPlugin(),
+    createItalicPlugin(),
+    createUnderlinePlugin(),
+    createStrikethroughPlugin(),
+    createCodePlugin()
+  ],
+  {
+    // Or pass all components at once
+    components: plateUI
+  }
+)
 
 export default React.forwardRef(({
   // contentHTML,
@@ -31,6 +71,7 @@ export default React.forwardRef(({
         onChange={(value) => setValue(value)}
         editableProps={editableProps}
         editableRef={editableRef}
+        plugins={plugins}
         // value='test'
         // initialValue={contentHTML}
       />

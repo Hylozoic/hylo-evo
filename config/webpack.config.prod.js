@@ -170,6 +170,9 @@ module.exports = {
               sourceMaps: false
             }
           },
+          // Also support TypeScript
+          sharedConfig.tsLoader,
+          // JS and CSS loaders for specific libraries
           {
             test: /draft-js.*\.css$/,
             use: [
