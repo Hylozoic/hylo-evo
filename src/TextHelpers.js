@@ -24,7 +24,13 @@ export function insaneOptions (providedInsaneOptions) {
           'class', 'target', 'href', 
           'data-type', 'data-id','data-label',
           'data-user-id', 'data-entity-type', 'data-search'
+        ],
+        span: [
+          'class', 'target', 'href', 
+          'data-type', 'data-id','data-label',
+          'data-user-id', 'data-entity-type', 'data-search'
         ]
+
       }
     },
     providedInsaneOptions
