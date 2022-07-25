@@ -5,14 +5,15 @@ import {
   clearTopics,
   getTopicResults,
   getTopicsSearchTerm
-} from '../HyloEditor/HyloEditor.store'
+} from './TopicSelector.store'
 
 export function mapStateToProps (state, props) {
-  // TODO: move this into a store file somewhere... but where?
-  const defaultTopics = props.defaultTopics && getTopicsSearchTerm(state) ? props.defaultTopics.filter(topic => includes(
-    topic.name && topic.name.toLowerCase(),
-    getTopicsSearchTerm(state).toLowerCase()
-  )) : props.defaultTopics
+  const defaultTopics = props.defaultTopics && getTopicsSearchTerm(state)
+    ? props.defaultTopics.filter(topic => includes(
+      topic.name && topic.name.toLowerCase(),
+      getTopicsSearchTerm(state).toLowerCase()
+    ))
+    : props.defaultTopics
 
   return {
     defaultTopics,

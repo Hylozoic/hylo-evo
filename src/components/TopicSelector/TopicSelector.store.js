@@ -1,48 +1,14 @@
 import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { includes, mapKeys } from 'lodash'
+import { includes } from 'lodash'
 import { get } from 'lodash/fp'
 import presentTopic from 'store/presenters/presentTopic'
 
-import {
-  MODULE_NAME,
-  FIND_MENTIONS,
-  FIND_MENTIONS_PENDING,
-  CLEAR_MENTIONS,
-  FIND_TOPICS,
-  FIND_TOPICS_PENDING,
-  CLEAR_TOPICS
-} from './HyloEditor.constants'
-import filterDeletedUsers from 'util/filterDeletedUsers'
+export const MODULE_NAME = 'TopicSelector'
+export const FIND_TOPICS = 'FIND_TOPICS'
+export const FIND_TOPICS_PENDING = 'FIND_TOPICS_PENDING'
+export const CLEAR_TOPICS = 'CLEAR_TOPICS'
 
-// Action Creators
-// Moved to TopicSelector.store
-export function findMentions (mentionSearchTerm) {
-  return {
-    type: FIND_MENTIONS,
-    graphql: {
-      query: `query ($mentionSearchTerm: String) {
-        people(autocomplete: $mentionSearchTerm, first: 5) {
-          items {
-            id
-            name
-            avatarUrl
-          }
-        }
-      }`,
-      variables: {
-        mentionSearchTerm
-      }
-    },
-    meta: { extractModel: 'Person' }
-  }
-}
-
-export function clearMentions (searchText) {
-  return { type: CLEAR_MENTIONS }
-}
-
-// Moved to TopicSelector.store
 export function findTopics (topicsSearchTerm) {
   const collectTopics = results =>
     results.groupTopics.items.map(get('topic'))
@@ -75,7 +41,6 @@ export function findTopics (topicsSearchTerm) {
   }
 }
 
-// Moved to TopicSelector.store
 export function clearTopics (searchText) {
   return { type: CLEAR_TOPICS }
 }
@@ -83,8 +48,7 @@ export function clearTopics (searchText) {
 // Reducer
 
 export const defaultState = {
-  topicResults: null,
-  mentionSearchTerm: null
+  topicResults: null
 }
 
 export default function reducer (state = defaultState, action) {
@@ -92,14 +56,8 @@ export default function reducer (state = defaultState, action) {
   if (error) return state
 
   switch (type) {
-    case FIND_MENTIONS_PENDING:
-      return { ...state, mentionSearchTerm: action.meta.graphql.variables.mentionSearchTerm }
-    case CLEAR_MENTIONS:
-      return { ...state, mentionSearchTerm: null }
-    // Moved to TopicSelector.store
     case FIND_TOPICS_PENDING:
       return { ...state, topicsSearchTerm: action.meta.graphql.variables.topicsSearchTerm }
-    // Moved to TopicSelector.store
     case CLEAR_TOPICS:
       return { ...state, topicsSearchTerm: null }
     default:
@@ -113,37 +71,10 @@ export const moduleSelector = (state) => {
   return state[MODULE_NAME]
 }
 
-// Moved to TopicSelector.store
 export const getTopicsSearchTerm = (state) => {
   return state[MODULE_NAME].topicsSearchTerm
 }
 
-export const getMentionResults = ormCreateSelector(
-  orm,
-  moduleSelector,
-  (session, moduleNode) => {
-    const { mentionSearchTerm } = moduleNode
-    if (!mentionSearchTerm) return []
-    return session.Person.all()
-      .filter(filterDeletedUsers)
-      .filter(person => {
-        return includes(
-          person.name && person.name.toLowerCase(),
-          mentionSearchTerm.toLowerCase()
-        )
-      })
-      .toRefArray()
-      .map(person => {
-        return mapKeys(person, (value, key) => {
-          return {
-            avatarUrl: 'avatar'
-          }[key] || key
-        })
-      })
-  }
-)
-
-// Moved to TopicSelector.store
 export const getTopicResults = ormCreateSelector(
   orm,
   getTopicsSearchTerm,
