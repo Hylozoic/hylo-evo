@@ -1,4 +1,5 @@
 import React, { useRef, useImperativeHandle, useEffect } from 'react'
+import { isEmpty } from 'lodash'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
 import Placeholder from '@tiptap/extension-placeholder'
 import Iframe from './iframe.ts'
@@ -6,6 +7,8 @@ import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import './HyloTipTapEditor.scss'
+
+export const EMPTY_EDITOR_CONTENT_HTML = '<p></p>'
 
 export const HyloTipTapEditor = React.forwardRef(({
   className,
@@ -42,8 +45,12 @@ export const HyloTipTapEditor = React.forwardRef(({
       })
     ],
     onUpdate: ({ editor }) => {
-      // Write this to match actual changes... Default content seems to `<p></p>` currently
-      onChange(editor.getHTML(), contentHTML !== editor.getHTML())
+      if (
+        (contentHTML === editor.getHTML()) ||
+        ((editor.getHTML() === EMPTY_EDITOR_CONTENT_HTML) && isEmpty(contentHTML))
+      ) return
+
+      onChange(editor.getHTML())
     },
     content: contentHTML
   }, [placeholder, contentHTML])

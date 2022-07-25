@@ -255,13 +255,10 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  handleDetailsChange = (contentHTML, contentChanged) => {
-    // onChange returns contentChanged, this business should maybe be moved here
-    if (contentChanged) {
-      this.setLinkPreview()
-      this.updateTopics(contentHTML)
-      this.setIsDirty(true)
-    }
+  handleDetailsChange = contentHTML => {
+    this.setLinkPreview()
+    this.updateTopics(contentHTML)
+    this.setIsDirty(true)
   }
 
   toggleContributions = () => {
