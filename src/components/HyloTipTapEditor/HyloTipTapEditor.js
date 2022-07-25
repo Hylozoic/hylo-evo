@@ -3,10 +3,15 @@ import { isEmpty } from 'lodash'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
 import Placeholder from '@tiptap/extension-placeholder'
 import Iframe from './extensions/iframe.ts'
+import Mention from '@tiptap/extension-mention'
+import suggestion from './extensions/mentions/suggestion'
+
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import './HyloTipTapEditor.scss'
+import { useDispatch } from 'react-redux'
+import { findMentions } from './extensions/mentions/MentionList.store'
 
 export const EMPTY_EDITOR_CONTENT_HTML = '<p></p>'
 
@@ -21,6 +26,7 @@ export const HyloTipTapEditor = React.forwardRef(({
   readOnly,
   hideMenu
 }, ref) => {
+  const dispatch = useDispatch()
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -30,10 +36,24 @@ export const HyloTipTapEditor = React.forwardRef(({
       }),
       // Rename to iframeExtension?,
       Iframe,
+      Mention.configure({
+        HTMLAttributes: {
+          class: 'mention'
+        },
+        suggestion: {
+          render: suggestion.render,
+          items: async (props) => {
+            // Debounce this
+            const matchedPeople = await dispatch(findMentions(props.query))
+            return matchedPeople?.payload.getData()?.items
+          }
+        }
+      }),
       // Extract to it's own keyboard shortcuts / Escape Extension
       Extension.create({
         addKeyboardShortcuts () {
           return {
+            // Check if in Mentions or Topics tippy popup
             Escape: () => {
               if (!onEscape) return false
 
