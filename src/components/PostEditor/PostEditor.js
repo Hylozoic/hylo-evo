@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { get, isEqual, throttle } from 'lodash/fp'
+import { debounce, get, isEqual, throttle } from 'lodash/fp'
 import cheerio from 'cheerio'
 import cx from 'classnames'
 import Moment from 'moment'
@@ -153,14 +153,18 @@ export default class PostEditor extends React.Component {
       this.reset(this.props)
       this.editor.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
-      this.setState({
-        post: { ...this.state.post, linkPreview }
-      })
+      this.onUpdate()
     }
   }
 
   componentWillUnmount () {
     this.props.clearLinkPreview()
+  }
+
+  onUpdate () {
+    this.setState({
+      post: { ...this.state.post, linkPreview: this.props.linkPreview }
+    })
   }
 
   reset = (props) => {
@@ -254,10 +258,7 @@ export default class PostEditor extends React.Component {
   handleDetailsChange = (contentHTML, contentChanged) => {
     // onChange returns contentChanged, this business should maybe be moved here
     if (contentChanged) {
-      // const contentState = editorState.getCurrentContent()
-      console.log('!!! setting link preview for', contentHTML)
-
-      this.setLinkPreview(contentHTML)
+      this.setLinkPreview()
       this.updateTopics(contentHTML)
       this.setIsDirty(true)
     }
@@ -310,7 +311,12 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  setLinkPreview = contentHTML => {
+  // Note: Checks for linkPreview every second,
+  // Currently if the link preview is removed, another link preview
+  // will not be generated unless the editor content is cleared
+  // entirely, and another link is added.
+  setLinkPreview = debounce(500, () => {
+    const contentText = this.editor.current.getText()
     const {
       pollingFetchLinkPreview,
       linkPreviewStatus,
@@ -318,18 +324,19 @@ export default class PostEditor extends React.Component {
     } = this.props
     const { linkPreview } = this.state.post
 
-    // TODO: This isn't actually going to notice if it's empty because of default <p> content
+    // TODO: This may currently not if it's empty because of default <p> content?
     if (this.editor.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
+
+    if (linkPreview) return
 
     if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') {
       return
     }
 
-    if (linkPreview) return
+    pollingFetchLinkPreview(contentText)
+  })
 
-    pollingFetchLinkPreview(contentHTML)
-  }
-
+  // TODO: replace with raw #.*\s (or whatever regex) matching?
   updateTopics = throttle(2000, contentHTML => {
     const $ = cheerio.load(contentHTML, null, false)
     const topicNames = []
@@ -550,7 +557,6 @@ export default class PostEditor extends React.Component {
       addAttachment,
       postTypes
     } = this.props
-
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'discussion',

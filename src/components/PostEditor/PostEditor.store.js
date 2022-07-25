@@ -1,5 +1,6 @@
 import { get, isEmpty, includes } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+// import { TextHelpers } from 'hylo-shared'
 import orm from 'store/models'
 import { FETCH_DEFAULT_TOPICS } from 'store/constants'
 import presentTopic from 'store/presenters/presentTopic'
@@ -45,20 +46,31 @@ export function fetchLinkPreview (url) {
   }
 }
 
-export function pollingFetchLinkPreview (dispatch, htmlContent) {
-  const poll = (url, delay) => {
-    if (delay > 4) return
-    dispatch(fetchLinkPreview(url)).then(value => {
-      if (!value) return
-      const linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data)
-      if (!linkPreviewFound) {
-        setTimeout(() => poll(url, delay * 2), delay * 1000)
-      }
-    })
+export async function pollingFetchLinkPreview (dispatch, contentText) {
+  const MAX_RETRIES = 4
+  const poll = async (url, retry = 1) => {
+    if (retry > MAX_RETRIES) return
+
+    const value = await dispatch(fetchLinkPreview(url))
+
+    if (!value) return
+
+    const linkPreviewFound = value.meta.extractModel.getRoot(value.payload.data)
+
+    if (!linkPreviewFound) {
+      setTimeout(() => poll(url, retry + 1), retry * 0.5 * 1000)
+    }
   }
-  if (linkMatcher.test(htmlContent)) {
-    const urlMatch = linkMatcher.match(htmlContent)[0].url
-    poll(urlMatch, 0.5)
+
+  if (linkMatcher.test(contentText)) {
+    // const linksHTML = TextHelpers.sanitizeHTML(htmlContent, {
+    //   allowedTags: ['a'],
+    //   allowedAttributes: { a: ['href'] }
+    // })
+    const linksFound = linkMatcher.match(contentText)
+    const urlMatch = linksFound[0].url
+
+    poll(urlMatch)
   }
 }
 
@@ -124,6 +136,7 @@ export default function reducer (state = defaultState, action) {
   switch (type) {
     case FETCH_LINK_PREVIEW:
       const linkPreview = (meta.extractModel.getRoot(payload.data))
+
       if (linkPreview && !linkPreview.title) {
         return { ...state, linkPreviewId: null, linkPreviewStatus: 'invalid' }
       }
