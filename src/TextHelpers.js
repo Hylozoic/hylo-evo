@@ -17,7 +17,7 @@ export function insaneOptions (providedInsaneOptions) {
         'a', 'br', 'em', 's', 'li', 'ol', 'p', 'strong', 'ul', 'code',
         'pre', 'blockquote', 'hr',
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'iframe', 'div', 'mark'
+        'iframe', 'div', 'mark', 'span'
       ],
       allowedAttributes: providedInsaneOptions?.allowedAttributes || {
         a: ['href', 'data-user-id', 'data-entity-type', 'data-search', 'class', 'target']
