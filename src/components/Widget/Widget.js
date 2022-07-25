@@ -174,7 +174,8 @@ export default function Widget (props) {
           setIsMenuOpen={setIsMenuOpen}
           newSettings={newSettings}
           updateSettings={updateSettings}
-          save={updateWidget} />}
+          save={handleUpdateWidget}
+        />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
         {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings, isMember }) : null)
           : isModerator ? <HiddenWidget name={name} /> : null
@@ -218,10 +219,15 @@ const EditForm = ({ id, setIsEditingSettings, setIsMenuOpen, newSettings, update
       </div>
 
       <div styleName='buttons'>
-        <span styleName='cancel' onClick={() => {
-          setIsEditingSettings(false)
-          setIsMenuOpen(true)
-        }}>Cancel</span>
+        <span
+          styleName='cancel'
+          onClick={() => {
+            setIsEditingSettings(false)
+            setIsMenuOpen(true)
+          }}
+        >
+          Cancel
+        </span>
         <span styleName='save' onClick={() => { save(id, { settings: newSettings }); setIsEditingSettings(false); setIsMenuOpen(false) }}>Save</span>
       </div>
 
