@@ -2,9 +2,8 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
-import { filter, isEmpty, isFunction } from 'lodash/fp'
+import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
-import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import { personUrl } from 'util/navigation'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
@@ -12,7 +11,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
-import HyloEditor from 'components/HyloEditor'
+import HyloTipTapEditor, { EMPTY_EDITOR_CONTENT_HTML } from 'components/HyloTipTapEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
@@ -42,16 +41,15 @@ export class Comment extends Component {
 
   handleEscape = () => this.setState({ editing: false })
 
-  saveComment = editorState => {
+  handleSave = contentHTML => {
     const { comment } = this.props
-    const contentState = editorState.getCurrentContent()
-    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(comment.attachments)) {
-      // Don't accept empty comments.
+
+    if (contentHTML === EMPTY_EDITOR_CONTENT_HTML) {
       return
     }
 
     this.setState({ editing: false })
-    this.props.updateComment(comment.id, HyloContentState.toHTML(editorState.getCurrentContent()))
+    this.props.updateComment(comment.id, contentHTML)
   }
 
   render () {
@@ -90,13 +88,13 @@ export class Comment extends Component {
         <CardFileAttachments attachments={attachments} styleName='files' />
         <ClickCatcher>
           {editing && (
-            <HyloEditor
+            <HyloTipTapEditor
               styleName='editor'
-              onChange={this.startTyping}
+              // onChange={this.startTyping}
               contentHTML={text || ''}
-              parentComponent={'CommentForm'}
+              hideMenu
               onEscape={this.handleEscape}
-              submitOnReturnHandler={this.saveComment}
+              onEnter={this.handleSave}
             />
           )}
           {!editing && (
@@ -130,6 +128,7 @@ export default class CommentWithReplies extends Component {
     newCommentsAdded: 0 // tracks number of comments added without a requery, to adjust ShowMore pagination totals
   }
 
+  editor = React.createRef()
   replyBox = React.createRef()
 
   onReplyComment = (e, toMember) => {
@@ -189,8 +188,7 @@ export default class CommentWithReplies extends Component {
               .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
           }}
           placeholder={`Reply to ${comment.creator.name}`}
-          editorContent={this.state.prefillEditor}
-          focusOnRender />
+          editorContent={this.state.prefillEditor} />
       </div>}
       <Tooltip id={`reply-tip-${comment.id}`} />
     </div>

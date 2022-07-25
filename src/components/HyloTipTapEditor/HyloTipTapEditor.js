@@ -15,12 +15,11 @@ export const HyloTipTapEditor = React.forwardRef(({
   placeholder,
   onChange,
   onEscape,
+  onEnter,
   // Should the default be empty or a paragraph?
   contentHTML,
   readOnly,
-  submitOnReturnHandler,
-  focusOnRender,
-  parentComponent
+  hideMenu
 }, ref) => {
   const editor = useEditor({
     extensions: [
@@ -36,15 +35,26 @@ export const HyloTipTapEditor = React.forwardRef(({
         addKeyboardShortcuts () {
           return {
             Escape: () => {
+              if (!onEscape) return false
+
               onEscape()
-              // TODO: Maybe should return true here to keep active for other extensions (i.e. Mentions)
-              return false
+
+              return true
+            },
+            Enter: ({ editor }) => {
+              if (!onEnter) return false
+
+              onEnter(editor.getHTML())
+
+              return true
             }
           }
         }
       })
     ],
     onUpdate: ({ editor }) => {
+      if (!onChange) return
+
       if (
         (contentHTML === editor.getHTML()) ||
         ((editor.getHTML() === EMPTY_EDITOR_CONTENT_HTML) && isEmpty(contentHTML))
@@ -87,7 +97,9 @@ export const HyloTipTapEditor = React.forwardRef(({
 
   return (
     <>
-      <HyloTipTapEditorMenuBar editor={editor} />
+      {!hideMenu && (
+        <HyloTipTapEditorMenuBar editor={editor} />
+      )}
       <EditorContent className={className} editor={editor} />
     </>
   )

@@ -479,7 +479,6 @@ exports[`Comment renders correctly when editing 1`] = `
       contentHTML="<p>text of the comment</p>"
       data-stylename="editor"
       onEscape={[Function]}
-      parentComponent="CommentForm"
       submitOnReturnHandler={[Function]}
     />
   </Connect(ClickCatcher)>

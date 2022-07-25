@@ -619,7 +619,6 @@ export default class PostEditor extends React.Component {
               onEscape={this.handleCancel}
               contentHTML={details}
               readOnly={loading}
-              parentComponent={'PostEditor'}
               ref={this.editor}
             />
           </div>
