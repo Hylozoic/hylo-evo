@@ -20,7 +20,11 @@ export function insaneOptions (providedInsaneOptions) {
         'iframe', 'div', 'mark', 'span'
       ],
       allowedAttributes: providedInsaneOptions?.allowedAttributes || {
-        a: ['href', 'data-user-id', 'data-entity-type', 'data-search', 'class', 'target']
+        a: [
+          'class', 'target', 'href', 
+          'data-type', 'data-id','data-label',
+          'data-user-id', 'data-entity-type', 'data-search'
+        ]
       }
     },
     providedInsaneOptions
