@@ -3,6 +3,7 @@
 exports[`mapDispatchToProps  1`] = `
 Object {
   "editPost": [Function],
+  "postUrl": "/all/post/1",
   "respondToEvent": [Function],
   "showDetails": [Function],
   "voteOnPost": [Function],
