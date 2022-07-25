@@ -92,7 +92,7 @@ exports[`matches announcement snapshot 1`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -182,7 +182,7 @@ exports[`matches announcement snapshot 2`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -280,7 +280,7 @@ exports[`matches announcement snapshot 3`] = `
               "onClick": [Function],
             },
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -348,7 +348,7 @@ exports[`matches snapshot 1`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -411,7 +411,7 @@ exports[`matches snapshot 2`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -482,7 +482,7 @@ exports[`matches snapshot 3`] = `
               "onClick": [Function],
             },
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -554,7 +554,7 @@ exports[`renders human readable dates 1`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -622,7 +622,7 @@ exports[`renders human readable dates 2`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
@@ -690,7 +690,7 @@ exports[`renders human readable dates 3`] = `
         items={
           Array [
             Object {
-              "icon": "Share",
+              "icon": "Copy",
               "label": "Copy Link",
               "onClick": [Function],
             },
