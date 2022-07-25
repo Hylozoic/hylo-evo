@@ -4,16 +4,22 @@
 
 .topMenuBar,
 .bottomMenuBar {
+  display: flex;
+  justify-content: space-between;
+  line-height: 1em;
   background-color: whitesmoke;
   border: solid 1px gainsboro;
-  line-height: 1em;
   button {
     background-color: none;
     margin: 0;
     background: none;
     border: 0;
-    color: gray;
+    color: $color-rhino-60;
     font-size: 14px;
+    &.is-active {
+      background-color: $color-rhino-80;
+      color: whitesmoke;
+    }
   }
   .divider {
     display: inline-block;
@@ -24,4 +30,3 @@
     width: 2px;
   }
 }
-

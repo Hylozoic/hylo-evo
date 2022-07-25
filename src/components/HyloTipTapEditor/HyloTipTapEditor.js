@@ -2,7 +2,7 @@ import React, { useRef, useImperativeHandle, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
 import Placeholder from '@tiptap/extension-placeholder'
-import Iframe from './iframe.ts'
+import Iframe from './extensions/iframe.ts'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
@@ -30,7 +30,7 @@ export const HyloTipTapEditor = React.forwardRef(({
       }),
       // Rename to iframeExtension?,
       Iframe,
-      // // Extract to it's own keyboard shortcuts / Escape Extension
+      // Extract to it's own keyboard shortcuts / Escape Extension
       Extension.create({
         addKeyboardShortcuts () {
           return {

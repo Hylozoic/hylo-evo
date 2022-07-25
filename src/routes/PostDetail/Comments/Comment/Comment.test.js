@@ -2,10 +2,6 @@ import { Comment } from './Comment'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('components/HyloEditor/HyloContentState', () => ({
-  toHTML: () => any => any
-}))
-
 describe('Comment', () => {
   const props = {
     comment: {
