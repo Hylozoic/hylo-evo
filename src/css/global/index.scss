@@ -15,11 +15,13 @@
 
   .hashtag, .mention {
     color: $color-caribbean-green;
+    cursor: pointer;
     &:hover {
       text-decoration: none;
       color: $color-gossamer;
     }
   }
+
   .linkified {
     color: #0275d8
   }
