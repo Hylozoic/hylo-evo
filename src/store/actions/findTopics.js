@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import gql from 'graphql-tag'
 import { FIND_TOPICS } from 'store/constants'
 
 export default function findTopics (autocomplete) {

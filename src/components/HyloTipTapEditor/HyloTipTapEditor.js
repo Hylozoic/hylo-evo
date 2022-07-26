@@ -83,9 +83,18 @@ export const HyloTipTapEditor = React.forwardRef(({
             render: suggestion.render,
             items: asyncDebounce(200, async ({ query }) => {
               const matchedTopics = await dispatch(findTopics(query))
-
               // TODO: uniqBy-- Backend method should be de-duping these entries
-              return uniqBy('id', matchedTopics?.payload.getData().items.map(t => t.topic))
+              const results = uniqBy('id', matchedTopics?.payload.getData().items.map(t => t.topic))
+
+              // Add current topic search to suggestions if 2 characters
+              // or more and isn't currenlty in result set
+              // Note: Will show "No Result" while loading results,
+              // which can be easily fixed if it is a bad UX
+              if (query?.trim().length > 2 && !results?.find(r => r.name === query)) {
+                results.unshift({ id: -1, label: query, name: query })
+              }
+
+              return results
             }).bind(this)
           }
         }),
