@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isEmpty } from 'lodash/fp'
+import { isEmpty, uniqBy } from 'lodash/fp'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
 import { PluginKey } from 'prosemirror-state'
 import asyncDebounce from 'util/asyncDebounce'
@@ -82,9 +82,10 @@ export const HyloTipTapEditor = React.forwardRef(({
             pluginKey: new PluginKey('topic'),
             render: suggestion.render,
             items: asyncDebounce(200, async ({ query }) => {
-              const matchedPeople = await dispatch(findTopics(query))
+              const matchedTopics = await dispatch(findTopics(query))
 
-              return matchedPeople?.payload.getData().items.map(t => t.topic)
+              // TODO: uniqBy-- Backend method should be de-duping these entries
+              return uniqBy('id', matchedTopics?.payload.getData().items.map(t => t.topic))
             }).bind(this)
           }
         }),

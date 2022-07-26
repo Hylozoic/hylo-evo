@@ -5,18 +5,20 @@ export default function findTopics (autocomplete) {
   return {
     type: FIND_TOPICS,
     graphql: {
-      query: `query ($autocomplete: String) {
-        groupTopics(autocomplete: $autocomplete, first: 8) {
-          items {
-            topic {
-              id
-              name
-              followersTotal
-              postsTotal
+      query: gql`
+        query FindTopicsQuery ($autocomplete: String) {
+          groupTopics(autocomplete: $autocomplete, first: 8) {
+            items {
+              topic {
+                id
+                name
+                followersTotal
+                postsTotal
+              }
             }
           }
         }
-      }`,
+      `,
       variables: {
         autocomplete
       }
