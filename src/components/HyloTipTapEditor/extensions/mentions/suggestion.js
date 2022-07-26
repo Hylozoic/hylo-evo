@@ -25,6 +25,7 @@ export default {
           showOnCreate: true,
           interactive: true,
           trigger: 'manual',
+          offset: -10,
           placement: 'bottom-start'
         })
       },
