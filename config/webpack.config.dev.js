@@ -129,14 +129,6 @@ module.exports = {
               sourceMaps: false
             }
           },
-          // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
-          {
-            test: /draft-js.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
           {
             test: /slick-carousel.*\.css$/,
             use: [

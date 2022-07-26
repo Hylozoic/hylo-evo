@@ -160,7 +160,7 @@ module.exports = {
                   { helpers: true }
                 ]
               ],
-              ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ],
+              ignore: ['./node_modules/mapbox-gl/dist/mapbox-gl.js'],
               cacheDirectory: true,
               cacheCompression: true,
               // If an error happens in a package, it's possible to be
@@ -171,13 +171,6 @@ module.exports = {
             }
           },
           sharedConfig.tsLoader,
-          {
-            test: /draft-js.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
           {
             test: /slick-carousel.*\.css$/,
             use: [

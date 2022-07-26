@@ -48,12 +48,6 @@ ul li p:last-child {
   color: #014c8c
 }
 
-/* override draft-js placeholder */
-.public-DraftEditorPlaceholder-root {
-  color: $color-rhino-30 !important;
-  padding-left: 2px;
-}
-
 .hdr-display {
   @include font-bold;
   font-size: 32px;
