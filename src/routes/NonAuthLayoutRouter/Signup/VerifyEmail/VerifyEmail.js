@@ -5,7 +5,7 @@ import ReactCodeInput from 'react-code-input'
 import { formatError } from '../../util'
 import getMe from 'store/selectors/getMe'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import { verifyEmail } from '../Signup.store'
+import { sendEmailVerification as sendEmailVerificationAction, verifyEmail } from '../Signup.store'
 import Loading from 'components/Loading'
 import '../Signup.scss'
 
@@ -18,6 +18,15 @@ export default function VerifyEmail (props) {
   const [code, setCode] = useState('')
   const [redirectTo, setRedirectTo] = useState()
   const [loading, setLoading] = useState(false)
+
+  const sendEmailVerification = async email => {
+    const { payload } = await dispatch(sendEmailVerificationAction(email))
+    const { success, error } = payload.getData()
+
+    if (error) setError(error)
+
+    if (success) setRedirectTo(`/signup/verify-email?email=${encodeURIComponent(email)}`)
+  }
 
   useEffect(() => {
     if (token) submit()
@@ -64,6 +73,7 @@ export default function VerifyEmail (props) {
           <ReactCodeInput type='text' fields={6} onChange={handleChange} />
         </div>
       </div>
+      <div onClick={() => sendEmailVerification(email)} styleName='resend'>Resend code</div>
     </div>
   )
 }
