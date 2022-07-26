@@ -1,17 +1,18 @@
 import React, { useRef, useImperativeHandle, useEffect } from 'react'
-import { isEmpty } from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
+import { isEmpty } from 'lodash/fp'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
+import asyncDebounce from 'util/asyncDebounce'
+import getMyGroups from 'store/selectors/getMyGroups'
+import { findMentions } from './extensions/mentions/MentionList.store'
+import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import Placeholder from '@tiptap/extension-placeholder'
 import Iframe from './extensions/iframe.ts'
 import Mention from '@tiptap/extension-mention'
 import suggestion from './extensions/mentions/suggestion'
-
-import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import './HyloTipTapEditor.scss'
-import { useDispatch } from 'react-redux'
-import { findMentions } from './extensions/mentions/MentionList.store'
 
 export const EMPTY_EDITOR_CONTENT_HTML = '<p></p>'
 
@@ -27,6 +28,8 @@ export const HyloTipTapEditor = React.forwardRef(({
   hideMenu
 }, ref) => {
   const dispatch = useDispatch()
+  const myGroups = useSelector(getMyGroups)
+  const myGroupIds = myGroups?.map(g => g.id)
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -40,13 +43,18 @@ export const HyloTipTapEditor = React.forwardRef(({
         HTMLAttributes: {
           class: 'mention'
         },
+        renderLabel: ({ options, node }) => {
+          return node.attrs.label || node.attrs.id
+        },
         suggestion: {
           render: suggestion.render,
-          items: async (props) => {
-            // Debounce this
-            const matchedPeople = await dispatch(findMentions(props.query))
-            return matchedPeople?.payload.getData()?.items
-          }
+          items: asyncDebounce(200, async (props) => {
+            const matchedPeople = await dispatch(findMentions({
+              autocomplete: props.query, groupIds: myGroupIds
+            }))
+
+            return matchedPeople?.payload.getData().items
+          }).bind(this)
         }
       }),
       // Extract to it's own keyboard shortcuts / Escape Extension

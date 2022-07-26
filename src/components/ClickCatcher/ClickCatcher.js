@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { HYLO_URL_REGEX } from 'util/navigation'
 
+// TIPTAP: Add span.mention click catching for mentions (using `data-id`), make sure doesn't break current behaviour
 export default function ClickCatcher ({ tag, handleMouseOver, navigate, ...props }) {
   if (!['div', 'span', 'p'].includes(tag)) {
     throw new Error(`invalid tag for ClickCatcher: ${tag}`)

@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import Avatar from 'components/Avatar'
 import './MentionList.scss'
 
 export default forwardRef((props, ref) => {
@@ -56,7 +57,7 @@ export default forwardRef((props, ref) => {
             key={index}
             onClick={() => selectItem(index)}
           >
-            {item.name}
+            <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' /> {item.name}
           </button>
         ))
         : <div styleName='item'>No result</div>}
