@@ -17,9 +17,10 @@ code {
 
 pre code {
   color: $color-white-80;
-  background-color: $color-rhino-80;
-  border-radius: 0.25em;
+  background-color: $color-rhino;
+  border-radius: 0.5em;
   display: flex;
+  overflow: auto;
   font-size: 14px;
   padding: 1em 1.25em;
 }
