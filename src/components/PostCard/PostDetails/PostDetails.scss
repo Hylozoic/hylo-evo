@@ -63,16 +63,6 @@
   max-height: 100px;
 }
 
-:global {
-  .hashtag, .mention {
-    color: $color-caribbean-green;
-    &:hover {
-      text-decoration: none;
-      color: $color-gossamer;
-    }
-  }
-}
-
 @media screen and (max-width: 425px) {
   .details.cardPadding {
     padding: 0 5px;

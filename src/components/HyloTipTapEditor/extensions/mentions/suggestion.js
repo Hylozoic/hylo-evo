@@ -48,10 +48,11 @@ export default {
           return true
         }
 
-        return component.ref?.onKeyDown(props)
+        return component?.ref?.onKeyDown(props)
       },
 
       onExit () {
+        console.log('!!! onExit called -- early?')
         popup[0].destroy()
         component.destroy()
       }
