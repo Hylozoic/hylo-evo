@@ -89,7 +89,16 @@ export default class TopicSelector extends Component {
       await this.props.findTopics(input)
       const { currentGroup, defaultTopics, topicResults } = this.props
       const sortedTopics = sortBy([t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
-      return defaultTopics ? [ { label: currentGroup ? currentGroup.name : 'Default' + ' Topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
+      return defaultTopics
+        ? [
+          {
+            label: currentGroup ? currentGroup.name : 'Default' + ' Topics',
+            options: defaultTopics
+          }, {
+            label: 'All Topics',
+            options: sortedTopics
+          }
+        ] : sortedTopics
     } else {
       this.props.clearTopics()
       return []
@@ -114,7 +123,15 @@ export default class TopicSelector extends Component {
     const { selected } = this.state
 
     // If at max # topics don't show more default topics to select
-    const defaultsToShow = selected.length >= MAX_TOPICS ? [] : defaultTopics ? [ { label: currentGroup ? currentGroup.name : 'Default' + ' Topics', options: defaultTopics } ] : []
+    const defaultsToShow = selected.length >= MAX_TOPICS
+      ? []
+      : defaultTopics
+        ? [
+          {
+            label: currentGroup ? currentGroup.name : 'Default' + ' Topics',
+            options: defaultTopics
+          }
+        ] : []
 
     return (
       <AsyncCreatableSelect
@@ -148,21 +165,23 @@ export default class TopicSelector extends Component {
           if (item.__isNew__) {
             return <div>Create topic &quot;#{item.value}&quot;</div>
           }
-          const { name, postsTotal, followersTotal } = item
 
+          const { name, postsTotal, followersTotal } = item
           const formatCount = count => isNaN(count)
             ? 0
             : count < 1000
               ? count
               : (count / 1000).toFixed(1) + 'k'
 
-          return <div className={styles.item}>
-            <div styleName='menuTopicLabel'>#{name}</div>
-            <div styleName='suggestionMeta'>
-              <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
-              <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
+          return (
+            <div className={styles.item}>
+              <div styleName='menuTopicLabel'>#{name}</div>
+              <div styleName='suggestionMeta'>
+                <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
+                <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
+              </div>
             </div>
-          </div>
+          )
         }}
       />
     )

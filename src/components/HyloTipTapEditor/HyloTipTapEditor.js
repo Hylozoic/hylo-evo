@@ -24,6 +24,8 @@ export const HyloTipTapEditor = React.forwardRef(({
   onChange,
   onEscape,
   onEnter,
+  onAddMention,
+  onAddTopic,
   // Should the default be empty or a paragraph?
   contentHTML,
   readOnly,
@@ -40,7 +42,9 @@ export const HyloTipTapEditor = React.forwardRef(({
       }),
       // Mentions (https://github.com/ueberdosis/tiptap/issues/2219#issuecomment-984662243)
       Mention
-        .extend({ name: 'mention' })
+        .extend({
+          name: 'mention'
+        })
         .configure({
           HTMLAttributes: {
             class: 'mention'
@@ -63,7 +67,9 @@ export const HyloTipTapEditor = React.forwardRef(({
         }),
       // Topics
       Mention
-        .extend({ name: 'topic' })
+        .extend({
+          name: 'topic'
+        })
         .configure({
           HTMLAttributes: {
             class: 'topic'
@@ -108,10 +114,30 @@ export const HyloTipTapEditor = React.forwardRef(({
       Iframe,
       Highlight
     ],
-    onUpdate: ({ editor }) => {
-      if (!onChange) return
+    onUpdate: ({ editor, transaction }) => {
+      const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
+
+      switch (firstTransactionStepName) {
+        case 'topic': {
+          if (onAddTopic) {
+            const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
+
+            onAddTopic(attrs)
+          }
+          break
+        }
+        case 'mention': {
+          if (onAddMention) {
+            const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
+
+            onAddMention(attrs)
+          }
+          break
+        }
+      }
 
       if (
+        !onChange ||
         (contentHTML === editor.getHTML()) ||
         ((editor.getHTML() === EMPTY_EDITOR_CONTENT_HTML) && isEmpty(contentHTML))
       ) return

@@ -2,11 +2,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { debounce, get, isEqual, throttle } from 'lodash/fp'
-import cheerio from 'cheerio'
+import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
 import Moment from 'moment'
-import { TOPIC_ENTITY_TYPE } from 'hylo-shared'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
@@ -101,7 +99,6 @@ export default class PostEditor extends React.Component {
           ? [currentGroup]
           : PostEditor.defaultProps.post.groups,
         topics: topic ? [topic] : [],
-        detailsTopics: [],
         acceptContributions: false,
         isPublic: context === 'public'
       }
@@ -228,8 +225,7 @@ export default class PostEditor extends React.Component {
           <span>{forPostType}</span>{' '}
           <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
         </span>
-      )
-      : forPostType
+      ) : forPostType
     return {
       borderRadius: '5px',
       label,
@@ -257,7 +253,6 @@ export default class PostEditor extends React.Component {
 
   handleDetailsChange = contentHTML => {
     this.setLinkPreview()
-    this.updateTopics(contentHTML)
     this.setIsDirty(true)
   }
 
@@ -335,28 +330,22 @@ export default class PostEditor extends React.Component {
     pollingFetchLinkPreview(contentText)
   })
 
-  // TODO: replace with raw #.*\s (or whatever regex) matching?
-  updateTopics = throttle(2000, contentHTML => {
-    const $ = cheerio.load(contentHTML, null, false)
-    const topicNames = []
+  handleAddTopic = topic => {
+    const { post } = this.state
 
-    $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
-      topicNames.push($(el).text().replace('#', ''))
-    )
+    this.setState({
+      post: {
+        ...post,
+        topics: [
+          ...post.topics,
+          // TODO: Probably update TopicSelector to use only label or name, doesn't need both
+          { ...topic, value: topic.label, name: topic.label }
+        ]
+      }
+    })
 
-    const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
-
-    if (hasChanged) {
-      this.setState({
-        detailsTopics: topicNames.map((tn) => ({
-          label: tn,
-          name: tn,
-          id: tn
-        }))
-      })
-      this.setIsDirty(true)
-    }
-  })
+    this.setIsDirty(true)
+  }
 
   removeLinkPreview = () => {
     this.props.removeLinkPreview()
@@ -366,11 +355,13 @@ export default class PostEditor extends React.Component {
   }
 
   setSelectedGroups = (groups) => {
+    const hasChanged = !isEqual(this.state.post.groups, groups)
+
     this.setState({
       post: { ...this.state.post, groups },
       valid: this.isValid({ groups })
     })
-    const hasChanged = !isEqual(this.state.post.groups, groups)
+
     if (hasChanged) {
       this.setIsDirty(true)
     }
@@ -521,7 +512,6 @@ export default class PostEditor extends React.Component {
       dateError,
       valid,
       post,
-      detailsTopics = [],
       showAnnouncementModal,
       showPostTypeMenu
     } = this.state
@@ -619,6 +609,7 @@ export default class PostEditor extends React.Component {
               placeholder={detailPlaceholder}
               onChange={this.handleDetailsChange}
               onEscape={this.handleCancel}
+              onAddTopic={this.handleAddTopic}
               contentHTML={details}
               readOnly={loading}
               ref={this.editor}
@@ -668,7 +659,6 @@ export default class PostEditor extends React.Component {
                 currentGroup={currentGroup}
                 selectedTopics={topics}
                 defaultTopics={defaultTopics}
-                detailsTopics={detailsTopics}
                 onChange={() => this.setIsDirty(true)}
                 ref={this.topicSelector}
               />
