@@ -251,7 +251,7 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  handleDetailsChange = contentHTML => {
+  handleDetailsChange = () => {
     this.setLinkPreview()
     this.setIsDirty(true)
   }
@@ -318,7 +318,9 @@ export default class PostEditor extends React.Component {
     } = this.props
     const { linkPreview } = this.state.post
 
-    // TODO: This may currently not if it's empty because of default <p> content?
+    // Keep this around a litte longer for debugging:
+    // console.log('!!! this.editor.current.isEmpty(), linkPreviewStatus, linkPreview:', this.editor.current.isEmpty(), linkPreviewStatus, linkPreview)
+
     if (this.editor.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
 
     if (linkPreview) return

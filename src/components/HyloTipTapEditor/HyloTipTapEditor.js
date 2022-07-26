@@ -37,13 +37,19 @@ export const HyloTipTapEditor = React.forwardRef(({
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Placeholder.configure({
-        placeholder
-      }),
+
+      Placeholder.configure({ placeholder }),
+
       // Mentions (https://github.com/ueberdosis/tiptap/issues/2219#issuecomment-984662243)
       Mention
         .extend({
-          name: 'mention'
+          name: 'mention',
+          // NOTE: When mark is at the end of a block without a trailing space `getText()`
+          // runs it into the next block's text. This fixes that, but will result in an
+          // extra space in plain text output.
+          renderText ({ node }) {
+            return this.options.renderLabel({ node, options: this.options }) + ' '
+          }
         })
         .configure({
           HTMLAttributes: {
@@ -65,10 +71,15 @@ export const HyloTipTapEditor = React.forwardRef(({
             }).bind(this)
           }
         }),
+
       // Topics
       Mention
         .extend({
-          name: 'topic'
+          name: 'topic',
+          // * See note on `renderText` for mention above
+          renderText ({ node }) {
+            return this.options.renderLabel({ node, options: this.options }) + ' '
+          }
         })
         .configure({
           HTMLAttributes: {
@@ -98,6 +109,7 @@ export const HyloTipTapEditor = React.forwardRef(({
             }).bind(this)
           }
         }),
+
       // Extract to it's own keyboard shortcuts / Escape Extension
       Extension.create({
         addKeyboardShortcuts () {
@@ -120,29 +132,27 @@ export const HyloTipTapEditor = React.forwardRef(({
           }
         }
       }),
+
       // Embed (Video)
       Iframe,
+
       Highlight
     ],
     onUpdate: ({ editor, transaction }) => {
       const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
 
-      switch (firstTransactionStepName) {
-        case 'topic': {
-          if (onAddTopic) {
-            const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
+      if (firstTransactionStepName) {
+        const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
 
-            onAddTopic(attrs)
+        switch (firstTransactionStepName) {
+          case 'topic': {
+            if (onAddTopic) onAddTopic(attrs)
+            break
           }
-          break
-        }
-        case 'mention': {
-          if (onAddMention) {
-            const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
-
-            onAddMention(attrs)
+          case 'mention': {
+            if (onAddMention) onAddMention(attrs)
+            break
           }
-          break
         }
       }
 
@@ -154,7 +164,9 @@ export const HyloTipTapEditor = React.forwardRef(({
 
       onChange(editor.getHTML())
     },
+
     // parseOptions: { preserveWhitespace: true },
+
     content: contentHTML
   }, [placeholder, contentHTML])
 

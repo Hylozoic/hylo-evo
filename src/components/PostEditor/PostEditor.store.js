@@ -69,6 +69,7 @@ export async function pollingFetchLinkPreview (dispatch, contentText) {
     // })
     const linksFound = linkMatcher.match(contentText)
     const urlMatch = linksFound[0].url
+    console.log('!!! linksFound', contentText, linksFound)
 
     poll(urlMatch)
   }
@@ -136,7 +137,7 @@ export default function reducer (state = defaultState, action) {
   switch (type) {
     case FETCH_LINK_PREVIEW:
       const linkPreview = (meta.extractModel.getRoot(payload.data))
-
+      console.log('!!! linkPreview in reducer', linkPreview)
       if (linkPreview && !linkPreview.title) {
         return { ...state, linkPreviewId: null, linkPreviewStatus: 'invalid' }
       }
