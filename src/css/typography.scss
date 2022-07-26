@@ -1,16 +1,50 @@
 // Global Typography
 
 blockquote {
+  border-left: solid 2px $color-rhino-30;
+  color: $color-rhino-30;
   margin-left: 0.25em;
   padding: 0.5em;
   padding-bottom: 0.25em;
-  border-left: solid 2px $color-rhino-30;
-  color: $color-rhino-30;
+}
+
+code {
+  background-color: $color-athens-gray-medium;
+  border-radius: 0.25em;
+  font-size: 0.9em;
+  padding: 0.2em;
+}
+
+pre code {
+  color: $color-white-80;
+  background-color: $color-rhino-80;
+  border-radius: 0.25em;
+  display: flex;
+  font-size: 14px;
+  padding: 1em 1.25em;
 }
 
 ol li p:last-child,
 ul li p:last-child {
   margin-bottom: 0;
+}
+
+.hashtag, .mention {
+  color: $color-caribbean-green;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
+}
+
+.linkified {
+  color: #0275d8
+}
+
+.linkified:focus,
+.linkified:hover {
+  color: #014c8c
 }
 
 /* override draft-js placeholder */
@@ -27,7 +61,7 @@ ul li p:last-child {
   color: $color-rhino;
 }
 
-.hdr-headline {
+.hdr-headline, h1 {
   @include font-medium;
   font-size: 24px;
   letter-spacing: 0;
@@ -36,7 +70,7 @@ ul li p:last-child {
   word-wrap: break-word;
 }
 
-.hdr-subheadline {
+.hdr-subheadline, h2 {
   @include font-regular;
   font-size: 18px;
   letter-spacing: 0;
@@ -44,7 +78,7 @@ ul li p:last-child {
   color: $color-rhino;
 }
 
-.hdr-minor {
+.hdr-minor, h3 {
   @include font-regular;
   font-size: 14px;
   letter-spacing: 0;

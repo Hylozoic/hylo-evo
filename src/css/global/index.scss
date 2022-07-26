@@ -12,22 +12,4 @@
   body {
     overflow-x: hidden;
   }
-
-  .hashtag, .mention {
-    color: $color-caribbean-green;
-    cursor: pointer;
-    &:hover {
-      text-decoration: none;
-      color: $color-gossamer;
-    }
-  }
-
-  .linkified {
-    color: #0275d8
-  }
-
-  .linkified:focus,
-  .linkified:hover {
-    color: #014c8c
-  }
 }
