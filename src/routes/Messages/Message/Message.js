@@ -11,7 +11,7 @@ export default function Message ({ message, isHeader }) {
   const pending = message.id.slice(0, 13) === 'messageThread'
   // TODO: New line replacement is happening on both Web and Mobile
   //       This would probably be better handled as a markdown editor
-  //       which sends HTML to API or an HTML editor (HyloEditor) in both places
+  //       which sends HTML to API or an HTML editor (HyloTipTapEditor) in both places
   const text = pending
     ? 'sending...'
     : TextHelpers.presentHTML(TextHelpers.markdown(message.text))

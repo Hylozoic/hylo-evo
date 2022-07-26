@@ -475,7 +475,7 @@ exports[`Comment renders correctly when editing 1`] = `
     data-stylename="files"
   />
   <Connect(ClickCatcher)>
-    <Connect(HyloEditor)
+    <Connect(HyloTipTapEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="editor"
       onEscape={[Function]}
