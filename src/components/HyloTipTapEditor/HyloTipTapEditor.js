@@ -118,6 +118,7 @@ export const HyloTipTapEditor = React.forwardRef(({
 
       onChange(editor.getHTML())
     },
+    // parseOptions: { preserveWhitespace: true },
     content: contentHTML
   }, [placeholder, contentHTML])
 

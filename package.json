@@ -287,5 +287,8 @@
   },
   "devDependencies": {
     "standard": "12.0.1"
+  },
+  "resolutions": {
+    "cheerio": "1.0.0-rc.10"
   }
 }

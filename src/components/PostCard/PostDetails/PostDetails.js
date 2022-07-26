@@ -34,30 +34,32 @@ export default function PostDetails ({
   const canBeCompleted = typesWithCompletion.includes(postType)
   const isFulfilled = get('fulfilledAt', post) !== null
 
-  return <Highlight {...highlightProps}>
-    <div styleName={cx('postDetails', { constrained })}>
-      <div styleName='fade' />
-      {details && !hideDetails && (
-        <ClickCatcher>
-          <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
-        </ClickCatcher>
-      )}
-      {canBeCompleted && canEdit && expanded && (
-        <PostCompletion
-          type={postType}
-          startTime={post.startTime}
-          endTime={post.endTime}
-          isFulfilled={isFulfilled}
-          fulfillPost={fulfillPost}
-          unfulfillPost={unfulfillPost}
-        />
-      )}
-      {linkPreview && (
-        <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
-      )}
-      {fileAttachments && (
-        <CardFileAttachments attachments={fileAttachments} />
-      )}
-    </div>
-  </Highlight>
+  return (
+    <Highlight {...highlightProps}>
+      <div styleName={cx('postDetails', { constrained })}>
+        <div styleName='fade' />
+        {details && !hideDetails && (
+          <ClickCatcher>
+            <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
+          </ClickCatcher>
+        )}
+        {canBeCompleted && canEdit && expanded && (
+          <PostCompletion
+            type={postType}
+            startTime={post.startTime}
+            endTime={post.endTime}
+            isFulfilled={isFulfilled}
+            fulfillPost={fulfillPost}
+            unfulfillPost={unfulfillPost}
+          />
+        )}
+        {linkPreview && (
+          <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
+        )}
+        {fileAttachments && (
+          <CardFileAttachments attachments={fileAttachments} />
+        )}
+      </div>
+    </Highlight>
+  )
 }

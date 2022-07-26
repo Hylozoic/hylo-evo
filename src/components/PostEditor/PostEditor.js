@@ -198,7 +198,7 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholderForPostType } = this.props
     return (
       titlePlaceholderForPostType[type] ||
-      titlePlaceholderForPostType['default']
+      titlePlaceholderForPostType.default
     )
   }
 
@@ -206,7 +206,7 @@ export default class PostEditor extends React.Component {
     const { detailPlaceholderForPostType } = this.props
     return (
       detailPlaceholderForPostType[type] ||
-      detailPlaceholderForPostType['default']
+      detailPlaceholderForPostType.default
     )
   }
 
@@ -215,21 +215,21 @@ export default class PostEditor extends React.Component {
     const { type } = this.state.post
     const active = type === forPostType
     const className = cx(
-      styles['postType'],
+      styles.postType,
       styles[`postType-${forPostType}`],
       {
-        [styles[`active`]]: active,
-        [styles[`selectable`]]: !loading && !active
+        [styles.active]: active,
+        [styles.selectable]: !loading && !active
       }
     )
-    const label = active ? (
-      <span styleName='initial-prompt'>
-        <span>{forPostType}</span>{' '}
-        <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
-      </span>
-    ) : (
-      forPostType
-    )
+    const label = active
+      ? (
+        <span styleName='initial-prompt'>
+          <span>{forPostType}</span>{' '}
+          <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
+        </span>
+      )
+      : forPostType
     return {
       borderRadius: '5px',
       label,
@@ -312,6 +312,8 @@ export default class PostEditor extends React.Component {
   // Currently if the link preview is removed, another link preview
   // will not be generated unless the editor content is cleared
   // entirely, and another link is added.
+  // TODO: Probably better to throttle this like updateTopic
+  //       Also, get editor content in the function or send in?
   setLinkPreview = debounce(500, () => {
     const contentText = this.editor.current.getText()
     const {
@@ -583,7 +585,7 @@ export default class PostEditor extends React.Component {
                   {postTypes
                     .filter((postType) => postType !== type)
                     .map((postType) => (
-                      <Button noDefaultStyles {...this.postTypeButtonProps(postType)} />
+                      <Button noDefaultStyles {...this.postTypeButtonProps(postType)} key={postType} />
                     ))}
                 </div>
               )}
