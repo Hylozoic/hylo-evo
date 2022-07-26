@@ -57,7 +57,7 @@ export default forwardRef((props, ref) => {
             key={index}
             onClick={() => selectItem(index)}
           >
-            <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' /> {item.name}
+            {item.avatarURL && <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' />}{item.name}
           </button>
         ))
         : <div styleName='item'>No result</div>}

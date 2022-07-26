@@ -1,47 +1,13 @@
 import orm from 'store/models/index'
 import { createSelector as ormCreateSelector } from 'redux-orm'
-import { includes } from 'lodash'
-import { get } from 'lodash/fp'
+import { includes } from 'lodash/fp'
+import { FIND_TOPICS_PENDING } from 'store/constants'
 import presentTopic from 'store/presenters/presentTopic'
 
 export const MODULE_NAME = 'TopicSelector'
-export const FIND_TOPICS = 'FIND_TOPICS'
-export const FIND_TOPICS_PENDING = 'FIND_TOPICS_PENDING'
 export const CLEAR_TOPICS = 'CLEAR_TOPICS'
 
-export function findTopics (topicsSearchTerm) {
-  const collectTopics = results =>
-    results.groupTopics.items.map(get('topic'))
-  return {
-    type: FIND_TOPICS,
-    graphql: {
-      query: `query ($topicsSearchTerm: String) {
-        groupTopics(autocomplete: $topicsSearchTerm, first: 8) {
-          items {
-            topic {
-              id
-              name
-              followersTotal
-              postsTotal
-            }
-          }
-        }
-      }`,
-      variables: {
-        topicsSearchTerm
-      }
-    },
-    meta: {
-      extractModel: {
-        getRoot: collectTopics,
-        modelName: 'Topic',
-        append: true
-      }
-    }
-  }
-}
-
-export function clearTopics (searchText) {
+export function clearTopics () {
   return { type: CLEAR_TOPICS }
 }
 
@@ -86,8 +52,8 @@ export const getTopicResults = ormCreateSelector(
     return session.Topic.all()
       .filter(topic => {
         return includes(
-          topic.name && topic.name.toLowerCase(),
-          searchTerm.toLowerCase()
+          searchTerm.toLowerCase(),
+          topic.name && topic.name.toLowerCase()
         )
       })
       .toModelArray().map(topic => presentTopic(topic, {}))

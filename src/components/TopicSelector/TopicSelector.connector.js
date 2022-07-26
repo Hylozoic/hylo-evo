@@ -1,7 +1,7 @@
 import { includes } from 'lodash'
 import { connect } from 'react-redux'
+import findTopics from 'store/actions/findTopics'
 import {
-  findTopics,
   clearTopics,
   getTopicResults,
   getTopicsSearchTerm
