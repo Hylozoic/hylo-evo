@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, Redirect } from 'react-router-dom'
 import { every, isEmpty } from 'lodash/fp'
-import { groupUrl } from 'util/navigation'
+import { baseUrl, groupUrl } from 'util/navigation'
 import setReturnToPath from 'store/actions/setReturnToPath'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
@@ -29,7 +29,6 @@ export default function JoinGroup (props) {
           invitationToken: getQuerystringParam('token', null, props),
           accessCode: getRouteParam('accessCode', null, props)
         }
-
         if (every(isEmpty, invitationTokenAndCode)) {
           throw new Error('Please provide either a `token` query string parameter or `accessCode` route param')
         }
@@ -56,7 +55,8 @@ export default function JoinGroup (props) {
           }
         }
       } catch (error) {
-        history.goBack()
+        window.alert('Sorry, your invitation to this group is expired, has already been used, or invalid. Please contact a group moderator for another one.')
+        history.push(baseUrl({}))
       }
     })()
   }, [])
