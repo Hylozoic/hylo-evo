@@ -60,7 +60,7 @@ export function formatError (error, action) {
       'email not found': 'Email address not found',
       'invalid-code': 'Invalid code, please try again',
       'invalid-link': 'Link expired, please start over',
-      'invite-expired': 'Sorry, your invitation to this group is expired, has already been used, or invalid. Please contact a group moderator for another one.',
+      'invite-expired': 'Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group moderator for another one.',
       // From oidc-provider
       'invalid_request': 'Request expired, please start over',
       default: err
