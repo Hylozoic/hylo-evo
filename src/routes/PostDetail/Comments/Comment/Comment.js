@@ -58,7 +58,7 @@ export class Comment extends Component {
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
-    const presentedText = TextHelpers.presentHTML(text, { slug })
+    const presentedText = TextHelpers.presentHTML(text, { slug, noLinks: true })
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
@@ -86,21 +86,21 @@ export class Comment extends Component {
         </div>
         <CardImageAttachments attachments={attachments} linked styleName='images' />
         <CardFileAttachments attachments={attachments} styleName='files' />
-        <ClickCatcher>
-          {editing && (
-            <HyloTipTapEditor
-              styleName='editor'
-              // onChange={this.startTyping}
-              contentHTML={text || ''}
-              hideMenu
-              onEscape={this.handleEscape}
-              onEnter={this.handleSave}
-            />
-          )}
-          {!editing && (
+        {editing && (
+          <HyloTipTapEditor
+            styleName='editor'
+            // onChange={this.startTyping}
+            contentHTML={text || ''}
+            hideMenu
+            onEscape={this.handleEscape}
+            onEnter={this.handleSave}
+          />
+        )}
+        {!editing && (
+          <ClickCatcher groupSlug={slug}>
             <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
-          )}
-        </ClickCatcher>
+          </ClickCatcher>
+        )}
       </div>
     )
   }
@@ -159,38 +159,47 @@ export default class CommentWithReplies extends Component {
       childComments = childComments.slice(-1 * (INITIAL_SUBCOMMENTS_DISPLAYED + newCommentsAdded))
     }
 
-    return <div styleName='comment'>
-      <Comment {...this.props} onReplyComment={this.onReplyComment} />
-      {childComments && childComments && <div styleName='subreply'>
-        <div styleName='more-wrap'>
-          <ShowMore
-            commentsLength={childComments.length}
-            total={childCommentsTotal + newCommentsAdded}
-            hasMore={hasMoreChildComments}
-            fetchComments={() => {
-              this.setState({ showLatestOnly: false })
-              fetchChildComments()
-            }} />
-        </div>
-        {childComments.map(c =>
-          <Comment key={c.id}
-            {...this.props}
-            comment={c}
-            // sets child comments to toggle reply box one level deep, rather than allowing recursion
-            onReplyComment={(e) => this.onReplyComment(e, c.creator)}
-          />)
-        }
-      </div>}
-      {replying && <div styleName='replybox' ref={this.replyBox}>
-        <CommentForm
-          createComment={c => {
-            createComment(c)
-              .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
-          }}
-          placeholder={`Reply to ${comment.creator.name}`}
-          editorContent={this.state.prefillEditor} />
-      </div>}
-      <Tooltip id={`reply-tip-${comment.id}`} />
-    </div>
+    return (
+      <div styleName='comment'>
+        <Comment {...this.props} onReplyComment={this.onReplyComment} />
+        {childComments && (
+          <div styleName='subreply'>
+            <div styleName='more-wrap'>
+              <ShowMore
+                commentsLength={childComments.length}
+                total={childCommentsTotal + newCommentsAdded}
+                hasMore={hasMoreChildComments}
+                fetchComments={() => {
+                  this.setState({ showLatestOnly: false })
+                  fetchChildComments()
+                }}
+              />
+            </div>
+            {childComments.map(c => (
+              <Comment
+                key={c.id}
+                {...this.props}
+                comment={c}
+                // sets child comments to toggle reply box one level deep, rather than allowing recursion
+                onReplyComment={(e) => this.onReplyComment(e, c.creator)}
+              />
+            ))}
+          </div>
+        )}
+        {replying && (
+          <div styleName='replybox' ref={this.replyBox}>
+            <CommentForm
+              createComment={c => {
+                createComment(c)
+                  .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
+              }}
+              placeholder={`Reply to ${comment.creator.name}`}
+              editorContent={this.state.prefillEditor}
+            />
+          </div>
+        )}
+        <Tooltip id={`reply-tip-${comment.id}`} />
+      </div>
+    )
   }
 }

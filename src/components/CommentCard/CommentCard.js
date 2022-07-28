@@ -18,29 +18,32 @@ export default function CommentCard ({
   const postTitle = TextHelpers.truncateText(post.title, 25)
   const commentText = TextHelpers.presentHTML(comment.text, {
     truncate: expanded ? null : 144,
-    slug
+    slug,
+    noLinks: true
   })
 
-  return <span onClick={() => showDetails(comment.post.id)} styleName='link'>
-    <div styleName={cx('comment-card', { expanded })}>
-      <div styleName='comment-header'>
-        <RoundImage url={creator.avatarUrl} styleName='profileImage' />
-        <Highlight {...highlightProps}>
-          <div styleName='comment-meta'>
-            <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
-            <span styleName='post-title'>{postTitle}</span>
-          </div>
-        </Highlight>
-        <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
+  return (
+    <span onClick={() => showDetails(comment.post.id)} styleName='link'>
+      <div styleName={cx('comment-card', { expanded })}>
+        <div styleName='comment-header'>
+          <RoundImage url={creator.avatarUrl} styleName='profileImage' />
+          <Highlight {...highlightProps}>
+            <div styleName='comment-meta'>
+              <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
+              <span styleName='post-title'>{postTitle}</span>
+            </div>
+          </Highlight>
+          <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
+        </div>
+        <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
+        <CardFileAttachments attachments={attachments} styleName='comment-files' />
+        <ClickCatcher groupSlug={slug}>
+          <Highlight {...highlightProps}>
+            <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
+          </Highlight>
+        </ClickCatcher>
+        <div styleName='comment-footer' />
       </div>
-      <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
-      <CardFileAttachments attachments={attachments} styleName='comment-files' />
-      <ClickCatcher>
-        <Highlight {...highlightProps}>
-          <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
-        </Highlight>
-      </ClickCatcher>
-      <div styleName='comment-footer' />
-    </div>
-  </span>
+    </span>
+  )
 }

@@ -25,6 +25,7 @@ import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 
 export const MAX_TITLE_LENGTH = 50
+export const MAX_POST_TOPICS = 3
 
 export default class PostEditor extends React.Component {
   static propTypes = {
@@ -121,7 +122,8 @@ export default class PostEditor extends React.Component {
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
       titleLengthError: false,
-      dateError: false
+      dateError: false,
+      allowAddTopic: true
     }
   }
 
@@ -132,7 +134,6 @@ export default class PostEditor extends React.Component {
     this.titleInput = React.createRef()
     this.editor = React.createRef()
     this.groupsSelector = React.createRef()
-    this.topicSelector = React.createRef()
   }
 
   componentDidMount () {
@@ -144,7 +145,8 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidUpdate (prevProps) {
-    const linkPreview = this.props.linkPreview
+    const { linkPreview } = this.props
+
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
       this.reset(this.props)
@@ -256,7 +258,7 @@ export default class PostEditor extends React.Component {
     this.setIsDirty(true)
   }
 
-  toggleContributions = () => {
+  handleToggleContributions = () => {
     const {
       post,
       post: { acceptContributions }
@@ -332,31 +334,31 @@ export default class PostEditor extends React.Component {
     pollingFetchLinkPreview(contentText)
   })
 
-  handleAddTopic = topic => {
-    const { post } = this.state
-
+  handleTopicSelectorOnChange = topics => {
     this.setState({
-      post: {
-        ...post,
-        topics: [
-          ...post.topics,
-          // TODO: Probably update TopicSelector to use only label or name, doesn't need both
-          { ...topic, value: topic.label, name: topic.label }
-        ]
-      }
+      post: { ...this.state.post, topics },
+      allowAddTopic: false
     })
-
     this.setIsDirty(true)
   }
 
-  removeLinkPreview = () => {
+  handleAddTopic = topic => {
+    const { post, allowAddTopic } = this.state
+
+    if (!allowAddTopic || post?.topics?.length >= MAX_POST_TOPICS) return
+
+    this.setState({ post: { ...post, topics: [...post.topics, topic] } })
+    this.setIsDirty(true)
+  }
+
+  handleRemoveLinkPreview = () => {
     this.props.removeLinkPreview()
     this.setState({
       post: { ...this.state.post, linkPreview: null }
     })
   }
 
-  setSelectedGroups = (groups) => {
+  handleSetSelectedGroups = (groups) => {
     const hasChanged = !isEqual(this.state.post.groups, groups)
 
     this.setState({
@@ -376,13 +378,13 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  updateProjectMembers = (members) => {
+  handleUpdateProjectMembers = (members) => {
     this.setState({
       post: { ...this.state.post, members }
     })
   }
 
-  updateEventInvitations = (eventInvitations) => {
+  handleUpdateEventInvitations = (eventInvitations) => {
     this.setState({
       post: { ...this.state.post, eventInvitations }
     })
@@ -434,6 +436,7 @@ export default class PostEditor extends React.Component {
       groups,
       linkPreview,
       members,
+      topics,
       acceptContributions,
       eventInvitations,
       startTime,
@@ -442,9 +445,7 @@ export default class PostEditor extends React.Component {
       isPublic
     } = this.state.post
     const details = this.editor.current.getHTML()
-    const topicNames = this.topicSelector.current
-      .getSelected()
-      .map((t) => t.name)
+    const topicNames = topics?.map((t) => t.name)
     const memberIds = members && members.map((m) => m.id)
     const eventInviteeIds =
       eventInvitations && eventInvitations.map((m) => m.id)
@@ -621,7 +622,7 @@ export default class PostEditor extends React.Component {
         {linkPreview && (
           <LinkPreview
             linkPreview={linkPreview}
-            onClose={this.removeLinkPreview}
+            onClose={this.handleRemoveLinkPreview}
           />
         )}
         <AttachmentManager
@@ -647,7 +648,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={members || []}
-                  onChange={this.updateProjectMembers}
+                  onChange={this.handleUpdateProjectMembers.updateProjectMembers}
                   forGroups={groups}
                   readOnly={loading}
                 />
@@ -661,8 +662,7 @@ export default class PostEditor extends React.Component {
                 currentGroup={currentGroup}
                 selectedTopics={topics}
                 defaultTopics={defaultTopics}
-                onChange={() => this.setIsDirty(true)}
-                ref={this.topicSelector}
+                onChange={this.handleTopicSelectorOnChange}
               />
             </div>
           </div>
@@ -672,7 +672,7 @@ export default class PostEditor extends React.Component {
               <GroupsSelector
                 options={groupOptions}
                 selected={groups}
-                onChange={this.setSelectedGroups}
+                onChange={this.handleSetSelectedGroups}
                 readOnly={loading}
                 ref={this.groupsSelector}
               />
@@ -723,7 +723,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={eventInvitations || []}
-                  onChange={this.updateEventInvitations}
+                  onChange={this.handleUpdateEventInvitations}
                   forGroups={groups}
                   readOnly={loading}
                 />
@@ -739,7 +739,7 @@ export default class PostEditor extends React.Component {
                 >
                   <Switch
                     value={acceptContributions}
-                    onClick={this.toggleContributions}
+                    onClick={this.handleToggleContributions}
                     styleName='accept-contributions-switch'
                   />
                   {!acceptContributions && (

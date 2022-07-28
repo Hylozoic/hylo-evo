@@ -24,7 +24,7 @@ const inputStyles = {
   clearIndicator: styles => ({ ...styles, cursor: 'pointer' }),
   dropdownIndicator: styles => ({ display: 'none' }),
   indicatorSeparator: styles => ({ display: 'none' }),
-  placeholder: styles => ({ color: 'rgb(192, 197, 205)' })
+  placeholder: styles => ({ ...styles, color: 'rgb(192, 197, 205)' })
 }
 
 class SingleTopicSelector extends Component {
@@ -56,7 +56,7 @@ class SingleTopicSelector extends Component {
     }
   }
 
-  handleSelectTopic = (newTopic, action) => {
+  handleSelectTopic = newTopic => {
     const topic = Validators.validateTopicName(newTopic) ? newTopic : ''
 
     if (this.props.onSelectTopic) {

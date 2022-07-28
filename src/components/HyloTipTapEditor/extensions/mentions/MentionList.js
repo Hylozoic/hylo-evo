@@ -2,30 +2,30 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'rea
 import Avatar from 'components/Avatar'
 import './MentionList.scss'
 
-export default forwardRef((props, ref) => {
+export default forwardRef(({ items, command, ...props }, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const selectItem = index => {
-    const item = props.items[index]
+    const item = items[index]
 
     if (item) {
-      props.command({ id: item.id, label: item.name })
+      command(item)
     }
   }
 
   const upHandler = () => {
-    setSelectedIndex((selectedIndex + props.items.length - 1) % props.items.length)
+    setSelectedIndex((selectedIndex + items.length - 1) % items.length)
   }
 
   const downHandler = () => {
-    setSelectedIndex((selectedIndex + 1) % props.items.length)
+    setSelectedIndex((selectedIndex + 1) % items.length)
   }
 
   const enterHandler = () => {
     selectItem(selectedIndex)
   }
 
-  useEffect(() => setSelectedIndex(0), [props.items])
+  useEffect(() => setSelectedIndex(0), [items])
 
   useImperativeHandle(ref, () => ({
     onKeyDown: ({ event }) => {
@@ -44,20 +44,28 @@ export default forwardRef((props, ref) => {
         return true
       }
 
+      if (event.key === ' ') {
+        selectItem(selectedIndex)
+        return true
+      }
+
       return false
     }
   }))
 
   return (
     <div styleName='items'>
-      {props.items.length
-        ? props.items.map((item, index) => (
+      {items.length > 0
+        ? items.map((item, index) => (
           <button
             styleName={`item ${index === selectedIndex ? 'is-selected' : ''}`}
             key={index}
             onClick={() => selectItem(index)}
           >
-            {item.avatarURL && <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' />}{item.name}
+            {item.avatarURL && (
+              <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' />
+            )}
+            {item.label}
           </button>
         ))
         : <div styleName='item'>No result</div>}

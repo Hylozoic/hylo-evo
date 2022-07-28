@@ -69,7 +69,6 @@ export async function pollingFetchLinkPreview (dispatch, contentText) {
     // })
     const linksFound = linkMatcher.match(contentText)
     const urlMatch = linksFound[0].url
-    console.log('!!! linksFound', contentText, linksFound)
 
     poll(urlMatch)
   }
@@ -132,25 +131,32 @@ export const defaultState = {
 
 export default function reducer (state = defaultState, action) {
   const { error, type, payload, meta } = action
+
   if (error) return state
 
   switch (type) {
-    case FETCH_LINK_PREVIEW:
-      const linkPreview = (meta.extractModel.getRoot(payload.data))
-      console.log('!!! linkPreview in reducer', linkPreview)
+    case FETCH_LINK_PREVIEW: {
+      const linkPreview = meta.extractModel.getRoot(payload.data)
+
       if (linkPreview && !linkPreview.title) {
         return { ...state, linkPreviewId: null, linkPreviewStatus: 'invalid' }
       }
       return { ...state, linkPreviewId: get('id')(linkPreview), linkPreviewStatus: null }
-    case REMOVE_LINK_PREVIEW:
+    }
+    case REMOVE_LINK_PREVIEW: {
       return { ...state, linkPreviewId: null, linkPreviewStatus: 'removed' }
-    case CLEAR_LINK_PREVIEW:
+    }
+    case CLEAR_LINK_PREVIEW: {
       return { ...state, linkPreviewId: null, linkPreviewStatus: 'cleared' }
-    case SHOW_ANNOUNCEMENT_CONFIRMATION:
+    }
+    case SHOW_ANNOUNCEMENT_CONFIRMATION: {
       return { ...state, showAnnouncementConfirmation: payload }
-    case SET_ANNOUNCEMENT:
+    }
+    case SET_ANNOUNCEMENT: {
       return { ...state, announcement: payload }
-    default:
+    }
+    default: {
       return state
+    }
   }
 }

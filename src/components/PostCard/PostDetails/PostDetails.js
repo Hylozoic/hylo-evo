@@ -1,6 +1,7 @@
 import React from 'react'
 import { pick, get } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
+import HyloTipTapRender from 'components/HyloTipTapEditor/HyloTipTapRender'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -27,7 +28,8 @@ export default function PostDetails ({
 }) {
   const details = TextHelpers.presentHTML(providedDetails, {
     slug,
-    truncate: !expanded && MAX_DETAILS_LENGTH
+    truncate: !expanded && MAX_DETAILS_LENGTH,
+    noLinks: true
   })
   const postType = get('type', post)
   const typesWithCompletion = ['offer', 'request', 'resource', 'project']
@@ -39,9 +41,7 @@ export default function PostDetails ({
       <div styleName={cx('postDetails', { constrained })}>
         <div styleName='fade' />
         {details && !hideDetails && (
-          <ClickCatcher>
-            <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
-          </ClickCatcher>
+          <PostDetailsContent details={details} slug={slug} />
         )}
         {canBeCompleted && canEdit && expanded && (
           <PostCompletion
@@ -61,5 +61,23 @@ export default function PostDetails ({
         )}
       </div>
     </Highlight>
+  )
+}
+
+export function PostDetailsContent ({ details, slug }) {
+  return (
+    <ClickCatcher groupSlug={slug}>
+      <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
+    </ClickCatcher>
+  )
+}
+
+export function PostDetailsContentTipTap ({ details, slug }) {
+  if (!details || details.length < 20) return null
+
+  return (
+    <ClickCatcher groupSlug={slug}>
+      <HyloTipTapRender styleName='details' contentHTML={details} />
+    </ClickCatcher>
   )
 }

@@ -9,19 +9,18 @@ blockquote {
 }
 
 code {
-  background-color: $color-athens-gray-medium;
+  color: $color-white-80;
+  background-color: $color-rhino;
   border-radius: 0.25em;
-  font-size: 0.9em;
+  font-size: 12px;
   padding: 0.2em;
 }
 
 pre code {
-  color: $color-white-80;
-  background-color: $color-rhino;
   border-radius: 0.5em;
-  display: flex;
+  display: block;
   overflow: auto;
-  font-size: 14px;
+  font-size: 12px;
   padding: 1em 1.25em;
 }
 
@@ -30,7 +29,7 @@ ul li p:last-child {
   margin-bottom: 0;
 }
 
-.hashtag, .mention {
+.mention, .topic, .hastag {
   color: $color-caribbean-green;
   cursor: pointer;
   &:hover {

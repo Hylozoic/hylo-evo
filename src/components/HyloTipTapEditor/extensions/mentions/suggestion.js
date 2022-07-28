@@ -31,11 +31,9 @@ export default {
       },
 
       onUpdate (props) {
-        component.updateProps(props)
+        if (!props.clientRect || !component) return
 
-        if (!props.clientRect) {
-          return
-        }
+        component.updateProps(props)
 
         popup[0].setProps({
           getReferenceClientRect: props.clientRect
@@ -53,9 +51,9 @@ export default {
       },
 
       onExit () {
-        console.log('!!! onExit called -- early?')
-        popup[0].destroy()
-        component.destroy()
+        console.log('!!! Mention Plugin `suggestion.onExit()` called early?')
+        popup && popup[0].destroy()
+        component && component.destroy()
       }
     }
   }
