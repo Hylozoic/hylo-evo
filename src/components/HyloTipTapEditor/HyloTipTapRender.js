@@ -1,24 +1,27 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import { PluginKey } from 'prosemirror-state'
-import { lowlight } from 'lowlight'
 import { useEditor, EditorContent } from '@tiptap/react'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import StarterKit from '@tiptap/starter-kit'
 import Mention from '@tiptap/extension-mention'
+// import { lowlight } from 'lowlight'
+// import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
 export const EMPTY_EDITOR_CONTENT_HTML = '<p></p>'
 
-export default function HyloTipTapRender ({ className, contentHTML, readOnly = true }) {
+export default function HyloTipTapRender ({ className, contentHTML }) {
   const editor = useEditor({
+    content: contentHTML,
+    editable: false,
     extensions: [
       StarterKit.configure({
-        codeBlock: false,
+        // codeBlock: false,
         heading: {
           levels: [1, 2, 3]
         }
       }),
 
-      // Mentions (https://github.com/ueberdosis/tiptap/issues/2219#issuecomment-984662243)
+      // CodeBlockLowlight.configure({ lowlight })
+
       Mention
         .extend({
           name: 'mention'
@@ -52,24 +55,11 @@ export default function HyloTipTapRender ({ className, contentHTML, readOnly = t
             char: '#',
             pluginKey: new PluginKey('topic')
           }
-        }),
-
-      CodeBlockLowlight.configure({ lowlight })
-    ],
-    content: contentHTML
+        })
+    ]
   }, [contentHTML])
 
-  const editorRef = useRef(null)
-
-  useEffect(() => {
-    if (!editor) return undefined
-
-    editor.setEditable(!readOnly)
-  }, [editor, readOnly])
-
   if (!editor) return null
-
-  editorRef.current = editor
 
   return (
     <EditorContent className={className} editor={editor} />
