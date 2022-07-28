@@ -10,10 +10,10 @@ The purpose of this library is the sharing of critical code between the Hylo Web
 
 ## For Release
 
-Once you've completed, tested, committed and pushed changes and are ready to make a new release:
-
-1. Commit changes and `git push`
-2. Run `npm version <patch|minor|major>`. **⚠️ patch versions should never have breaking changes from previous version**
-3. Run `yarn build` 
-4. Run `git push --tags` to push the version tags to the origin
-5. Run `npm publish` to publish this new version to the NPM registry. This should be published under the `hylodevs` NPM account (see password manager for needed credentials)
+1. Run tests and make sure they're all passing: `yarn test`
+2. Run `yarn build` 
+3. Commit changes and `git push`
+4. Run `npm version <patch|minor|major>`. **⚠️ patch versions should never have breaking changes from previous version**
+5. Run `git push --tags` to push the version tags to the origin
+6. Run `npm publish` to publish this new version to the NPM registry. This should be published under the `hylodevs` NPM account (see password manager for needed credentials)
+7. Update dependency pinned version in all related projects

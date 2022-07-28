@@ -1,7 +1,7 @@
 import { isEmpty, toPairs } from 'lodash'
 import cheerio from 'cheerio'
 import linkifyString from 'linkify-string'
-import 'linkify-plugin-hashtag'
+// import 'linkify-plugin-hashtag'
 import { HASHTAG_FULL_REGEX } from './constants'
 import { topicPath, mentionPath } from './PathHelpers'
 

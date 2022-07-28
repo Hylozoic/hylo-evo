@@ -14,10 +14,11 @@ export function insaneOptions (providedInsaneOptions) {
   return merge(
     {
       allowedTags: providedInsaneOptions?.allowedTags || [
-        'a', 'br', 'em', 's', 'li', 'ol', 'p', 'strong', 'ul', 'code',
-        'pre', 'blockquote', 'hr',
+        'a', 'br', 'em', 's', 'p', 'strong',
+        'li', 'ol', 'ul',
+        'code', 'pre', 'blockquote',
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'iframe', 'div', 'mark', 'span'
+        'hr', 'iframe', 'div', 'mark', 'span'
       ],
       allowedAttributes: providedInsaneOptions?.allowedAttributes || {
         a: [
@@ -29,6 +30,13 @@ export function insaneOptions (providedInsaneOptions) {
           'class', 'target', 'href', 
           'data-type', 'data-id','data-label',
           'data-user-id', 'data-entity-type', 'data-search'
+        ],
+        code: [
+          'class'
+        ],
+        iframe: [
+          'src', 'title', 'frameborder', 'height', 'width',
+          'allow', 'allowfullscreen'
         ]
 
       }
@@ -63,7 +71,7 @@ export function presentHTML (html, options = {}, providedInsaneOptions = {}) {
 
   const {
     slug,
-    noLinks,
+    noLinks = true,
     truncate: truncateLength
   } = options
   let processedHTML = html
