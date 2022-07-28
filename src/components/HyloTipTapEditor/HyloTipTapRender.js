@@ -6,8 +6,6 @@ import Mention from '@tiptap/extension-mention'
 // import { lowlight } from 'lowlight'
 // import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 
-export const EMPTY_EDITOR_CONTENT_HTML = '<p></p>'
-
 export default function HyloTipTapRender ({ className, contentHTML }) {
   const editor = useEditor({
     content: contentHTML,
