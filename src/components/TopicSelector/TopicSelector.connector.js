@@ -1,29 +1,17 @@
-import { includes } from 'lodash'
 import { connect } from 'react-redux'
+import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import findTopics from 'store/actions/findTopics'
-import {
-  clearTopics,
-  getTopicResults,
-  getTopicsSearchTerm
-} from './TopicSelector.store'
+import getDefaultTopics from 'store/selectors/getDefaultTopics'
 
 export function mapStateToProps (state, props) {
-  const defaultTopics = props.defaultTopics && getTopicsSearchTerm(state)
-    ? props.defaultTopics.filter(topic => includes(
-      topic.name && topic.name.toLowerCase(),
-      getTopicsSearchTerm(state).toLowerCase()
-    ))
-    : props.defaultTopics
-
   return {
-    defaultTopics,
-    topicResults: getTopicResults(state, props)
+    defaultTopics: getDefaultTopics(state, { groups: props.forGroups })
   }
 }
 
 export const mapDispatchToProps = {
   findTopics,
-  clearTopics
+  fetchDefaultTopics
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })

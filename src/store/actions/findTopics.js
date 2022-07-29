@@ -34,5 +34,4 @@ export default function findTopics (autocomplete) {
   }
 }
 
-// Moved to TopicSelector.store
 const collectTopics = results => results.groupTopics.items.map(get('topic'))

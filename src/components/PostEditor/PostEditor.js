@@ -35,7 +35,6 @@ export default class PostEditor extends React.Component {
     createPost: PropTypes.func,
     currentUser: PropTypes.object,
     currentGroup: PropTypes.object,
-    defaultTopics: PropTypes.array,
     detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
     fetchDefaultTopics: PropTypes.func,
@@ -146,6 +145,10 @@ export default class PostEditor extends React.Component {
 
   componentDidUpdate (prevProps) {
     const { linkPreview } = this.props
+
+    // if ((get('post.groups[0].slug', this.props) !== get('post.groups[0]', prevProps))) {
+    //   this.props.fetchDefaultTopics()
+    // }
 
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
@@ -536,7 +539,6 @@ export default class PostEditor extends React.Component {
       currentGroup,
       currentUser,
       groupOptions,
-      defaultTopics,
       loading,
       setAnnouncement,
       announcementSelected,
@@ -659,9 +661,8 @@ export default class PostEditor extends React.Component {
             <div styleName='footerSection-label'>Topics</div>
             <div styleName='footerSection-topics'>
               <TopicSelector
-                currentGroup={currentGroup}
+                forGroups={post?.groups || [currentGroup]}
                 selectedTopics={topics}
-                defaultTopics={defaultTopics}
                 onChange={this.handleTopicSelectorOnChange}
               />
             </div>
