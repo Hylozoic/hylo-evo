@@ -70,7 +70,7 @@ export default class TopicSelector extends Component {
 
   componentDidMount () {
     this.updateSelected()
-    this.props.fetchDefaultTopics({ groups: this.props.forGroups })
+    this.props.fetchDefaultTopics({ groupSlug: get('forGroups[0].slug', this.props) })
   }
 
   componentDidUpdate (prevProps) {
@@ -79,7 +79,7 @@ export default class TopicSelector extends Component {
     }
 
     if (!isEqual(this.props.forGroups, prevProps.forGroups)) {
-      this.props.fetchDefaultTopics({ groups: this.props.forGroups })
+      this.props.fetchDefaultTopics({ groupSlug: get('forGroups[0].slug', this.props) })
     }
   }
 

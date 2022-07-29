@@ -28,18 +28,12 @@ export default function (queryVariables = {}) {
 }
 
 export function fetchDefaultTopics (queryVariables = {}) {
-  // Note: Update backend to accept multiple `groupSlugs`.
-  //       Currenly this fetch will respond to a singular provided `groupSlug`
-  //       or the `slug` ofthe first in a provided array of `groups`.
-  const groupSlug = queryVariables.groupSlug || get('groups[0].slug', queryVariables)
-
   return {
     type: FETCH_DEFAULT_TOPICS,
     graphql: {
       query: topicsQuery,
       variables: {
         ...queryVariables,
-        groupSlug,
         sortBy: 'name',
         isDefault: true,
         visibility: [1, 2]
