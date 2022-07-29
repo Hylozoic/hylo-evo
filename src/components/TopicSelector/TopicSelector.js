@@ -5,12 +5,22 @@ import { isEmpty, isEqual, uniqBy, sortBy, get, includes } from 'lodash/fp'
 import { Validators } from 'hylo-shared'
 import Icon from 'components/Icon'
 
-const MAX_TOPICS = 3
-// const MAX_TOPIC_NAME_LENGTH = 10
-// if (input.length > MAX_TOPIC_NAME_LENGTH) {
-//   return
-// }
+/*
 
+`TopicSelector`
+
+  * Don't be mislead by `forGroups`, only the first in that array will be used.
+    The implemenation here is mostly ready to handle fetching and presenting
+    default topics for multiple groups (i.e. when a Post is posted to multiple
+    groups), but the backend endpoint to `fetchDefaultTopics` needs to be
+    updated to allow the query of multiple groups. Alternatively separately fetch
+    for each group in the list, but deciding against that for now.
+
+  * TODO: Topic name selection should be confined some `MAX_TOPIC_NAME_LENGTH`
+
+*/
+
+const MAX_TOPICS = 3
 const inputStyles = {
   container: styles => ({
     ...styles,
