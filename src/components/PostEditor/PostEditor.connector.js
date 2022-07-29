@@ -19,7 +19,6 @@ import {
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
 import updatePost from 'store/actions/updatePost'
-import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import {
   addAttachment,
   getAttachments,
@@ -146,7 +145,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchDefaultTopics,
     goToPost,
     pollingFetchLinkPreview
   }

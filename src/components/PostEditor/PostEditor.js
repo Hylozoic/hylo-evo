@@ -37,7 +37,6 @@ export default class PostEditor extends React.Component {
     currentGroup: PropTypes.object,
     detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
-    fetchDefaultTopics: PropTypes.func,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
@@ -136,8 +135,6 @@ export default class PostEditor extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchDefaultTopics()
-
     setTimeout(() => {
       this.titleInput.current.focus()
     }, 100)
@@ -145,10 +142,6 @@ export default class PostEditor extends React.Component {
 
   componentDidUpdate (prevProps) {
     const { linkPreview } = this.props
-
-    // if ((get('post.groups[0].slug', this.props) !== get('post.groups[0]', prevProps))) {
-    //   this.props.fetchDefaultTopics()
-    // }
 
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
