@@ -5,15 +5,7 @@ import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
 describe('PostEditor', () => {
-  let baseProps = {
-    fetchDefaultTopics: jest.fn()
-  }
-
-  beforeEach(() => {
-    baseProps = {
-      fetchDefaultTopics: jest.fn()
-    }
-  })
+  const baseProps = {}
 
   it('renders with min props', () => {
     const wrapper = shallow(<PostEditor {...baseProps} />)
