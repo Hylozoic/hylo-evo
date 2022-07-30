@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import HyloTipTapEditorMobile from 'components/HyloTipTapEditor/HyloTipTapEditorMobile'
-import './HyloAppRouter.scss'
 
 export default function HyloAppRouter () {
   return (

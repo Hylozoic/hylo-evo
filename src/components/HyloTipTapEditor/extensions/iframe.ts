@@ -10,10 +10,7 @@ export interface IframeOptions {
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     iframe: {
-      /**
-       * Add an iframe
-       */
-      setIframe: (options: { src: string }) => ReturnType,
+      setIframe: (options: { src: string }) => ReturnType
     }
   }
 }
@@ -25,41 +22,36 @@ export default Node.create<IframeOptions>({
 
   atom: true,
 
-  addOptions() {
+  addOptions () {
     return {
       allowFullscreen: true,
       HTMLAttributes: {
-        class: 'iframe-wrapper',
+        class: 'iframe-wrapper'
       },
     }
   },
 
-  addAttributes() {
+  addAttributes () {
     return {
       src: {
         default: null,
       },
-      frameborder: {
-        default: 0,
-      },
       allowfullscreen: {
         default: this.options.allowFullscreen,
-        parseHTML: () => this.options.allowFullscreen,
+        parseHTML: () => this.options.allowFullscreen
       },
     }
   },
 
-  parseHTML() {
-    return [{
-      tag: 'iframe',
-    }]
+  parseHTML () {
+    return [{ tag: 'iframe' }]
   },
 
-  renderHTML({ HTMLAttributes }) {
+  renderHTML ({ HTMLAttributes }) {
     return ['div', this.options.HTMLAttributes, ['iframe', HTMLAttributes]]
   },
 
-  addCommands() {
+  addCommands () {
     return {
       setIframe: (options: { src: string }) => ({ tr, dispatch }) => {
         const { selection } = tr
@@ -70,7 +62,20 @@ export default Node.create<IframeOptions>({
         }
 
         return true
-      },
+      }
     }
-  },
+  }
+
+  // From link extension, suppressing clickable
+  // addProseMirrorPlugins() {
+  //   const plugins = []
+
+  //   if (this.options.clickable) {
+  //     plugins.push(clickHandler({
+  //       type: this.type,
+  //     }))
+  //   }
+
+  //   return plugins
+  // }
 })
