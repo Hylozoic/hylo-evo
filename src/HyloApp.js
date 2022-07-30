@@ -1,3 +1,4 @@
+// WebView Message Types
 export const JOINED_GROUP = 'JOINED_GROUP'
 export const LEFT_GROUP = 'LEFT_GROUP'
 export const NAVIGATION = 'NAVIGATION'
@@ -9,7 +10,7 @@ export const EDITOR = {
 }
 
 export function sendMessageToWebView (type, data) {
-  if (!(window && window.ReactNativeWebView)) {
+  if (!(window?.ReactNativeWebView)) {
     throw new Error('`window.ReactNativeWebView` was not found')
   }
 
