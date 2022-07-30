@@ -55,7 +55,7 @@ export const HyloTipTapEditor = React.forwardRef(({
 
               onEnter(editor.getHTML())
 
-              return true
+              return false
             }
           }
         }
@@ -92,7 +92,7 @@ export const HyloTipTapEditor = React.forwardRef(({
           },
           suggestion: {
             char: '@',
-            pluginKey: new PluginKey('mention'),
+            pluginKey: new PluginKey('mentionSuggestion'),
             render: suggestion.render,
             items: asyncDebounce(200, async ({ query }) => {
               const matchedPeople = await dispatch(findMentions({
@@ -123,7 +123,7 @@ export const HyloTipTapEditor = React.forwardRef(({
           },
           suggestion: {
             char: '#',
-            pluginKey: new PluginKey('topic'),
+            pluginKey: new PluginKey('topicSuggestion'),
             render: suggestion.render,
             items: asyncDebounce(200, async ({ query }) => {
               // Note: Will show "No Result" while loading results.

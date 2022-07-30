@@ -8,7 +8,7 @@ export default function findTopics (autocomplete) {
     graphql: {
       query: gql`
         query FindTopicsQuery ($autocomplete: String) {
-          groupTopics(autocomplete: $autocomplete, first: 8) {
+          groupTopics(autocomplete: $autocomplete, first: 7) {
             items {
               topic {
                 id

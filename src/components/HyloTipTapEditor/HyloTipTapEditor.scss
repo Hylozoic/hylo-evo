@@ -3,13 +3,26 @@
 }
 
 /* Placeholder (at the top) */
-:global
-.ProseMirror p.is-editor-empty:first-child::before {
+:global .ProseMirror p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
   height: 0;
   pointer-events: none;
+}
+
+:global .iframe-wrapper {
+  position: relative;
+  // width: 80%;
+  height: 0;
+  padding-bottom: 56.25%;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ } 
 }
 
 .topMenuBar,
@@ -39,4 +52,13 @@
     margin-right: .75rem;
     width: 2px;
   }
+}
+
+// Mobile 
+.hylo-app-container {
+  // 
+}
+
+.editor {
+  // 
 }

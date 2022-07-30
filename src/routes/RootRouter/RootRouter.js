@@ -9,6 +9,7 @@ import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import PublicLayoutRouter from 'routes/PublicLayoutRouter'
 import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
+import HyloAppRouter from 'routes/HyloAppRouter'
 import config, { isProduction, isTest } from 'config'
 
 if (!isTest) {
@@ -38,7 +39,10 @@ export default function RootRouter () {
 
   if (isAuthorized) {
     return (
-      <Route component={AuthLayoutRouter} />
+      <Switch>
+        <Route path='/hyloApp' component={HyloAppRouter} />
+        <Route component={AuthLayoutRouter} />
+      </Switch>
     )
   }
 
@@ -47,6 +51,7 @@ export default function RootRouter () {
       <Switch>
         <Route path='/public/groups' exact component={NonAuthLayoutRouter} />
         <Route path='/public' component={PublicLayoutRouter} />
+        <Route path='/hyloApp' component={HyloAppRouter} />
         <Route component={NonAuthLayoutRouter} />
       </Switch>
     )
