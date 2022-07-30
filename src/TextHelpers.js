@@ -37,8 +37,10 @@ export function insaneOptions (providedInsaneOptions) {
         iframe: [
           'src', 'title', 'frameborder', 'height', 'width',
           'allow', 'allowfullscreen'
+        ],
+        div: [
+          'class'
         ]
-
       }
     },
     providedInsaneOptions
