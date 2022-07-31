@@ -16,10 +16,11 @@ export const WebViewMessageTypes = {
   LEFT_GROUP: 'LEFT_GROUP',
   NAVIGATION: 'NAVIGATION',
   EDITOR: {
-    ON_CHANGE: 'ON_CHANGE',
+    LOADED: 'LOADED',
     ON_ADD_TOPIC: 'ON_ADD_TOPIC',
+    ON_CHANGE: 'ON_CHANGE',
     ON_ENTER: 'ON_ENTER',
-    SET_CONTENT: 'SET_CONTENT'
+    SET_PROPS: 'SET_PROPS',
   }
 }
 
