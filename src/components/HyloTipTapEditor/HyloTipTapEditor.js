@@ -25,6 +25,7 @@ export const HyloTipTapEditor = React.forwardRef(({
   className,
   placeholder,
   onChange,
+  onBeforeCreate = () => {},
   onEscape,
   onEnter,
   onAddMention,
@@ -32,12 +33,46 @@ export const HyloTipTapEditor = React.forwardRef(({
   // Should the default be empty or a paragraph?
   contentHTML,
   readOnly,
-  hideMenu
+  hideMenu,
+  groupIds
 }, ref) => {
   const dispatch = useDispatch()
   const myGroups = useSelector(getMyGroups)
-  const myGroupIds = myGroups?.map(g => g.id)
+  const myGroupIds = groupIds || myGroups?.map(g => g.id)
   const editor = useEditor({
+    content: contentHTML,
+
+    onBeforeCreate,
+
+    onUpdate: ({ editor, transaction }) => {
+      // Look into `doc.descendents` for possible better or more idiomatic way to get this last node
+      const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
+
+      if (firstTransactionStepName) {
+        const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
+
+        // Maybe move these to onUpdate for each respective plugin?
+        switch (firstTransactionStepName) {
+          case 'topic': {
+            if (onAddTopic) onAddTopic({ id: attrs.id, name: attrs.label })
+            break
+          }
+          case 'mention': {
+            if (onAddMention) onAddMention(attrs)
+            break
+          }
+        }
+      }
+
+      if (
+        !onChange ||
+        (contentHTML === editor.getHTML()) ||
+        ((editor.getHTML() === EMPTY_EDITOR_CONTENT_HTML) && isEmpty(contentHTML))
+      ) return
+
+      onChange(editor.getHTML())
+    },
+
     extensions: [
       // Key events respond are last extension first, these will be last
       Extension.create({
@@ -155,37 +190,7 @@ export const HyloTipTapEditor = React.forwardRef(({
       Iframe,
 
       Highlight
-    ],
-    onUpdate: ({ editor, transaction }) => {
-      // Look into `doc.descendents` for possible better or more idiomatic way to get this last node
-      const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
-
-      if (firstTransactionStepName) {
-        const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
-
-        // Maybe move these to onUpdate for each respective plugin?
-        switch (firstTransactionStepName) {
-          case 'topic': {
-            if (onAddTopic) onAddTopic({ id: attrs.id, name: attrs.label })
-            break
-          }
-          case 'mention': {
-            if (onAddMention) onAddMention(attrs)
-            break
-          }
-        }
-      }
-
-      if (
-        !onChange ||
-        (contentHTML === editor.getHTML()) ||
-        ((editor.getHTML() === EMPTY_EDITOR_CONTENT_HTML) && isEmpty(contentHTML))
-      ) return
-
-      onChange(editor.getHTML())
-    },
-
-    content: contentHTML
+    ]
   }, [placeholder, contentHTML])
 
   const editorRef = useRef(null)

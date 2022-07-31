@@ -39,6 +39,13 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
         <RiStrikethrough />
       </button>
 
+      <button
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        styleName={editor.isActive('code') ? 'is-active' : ''}
+      >
+        <RiCodeView />
+      </button>
+
       <div styleName='divider' />
 
       <button
@@ -108,12 +115,6 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
       <div styleName='divider' />
 
       <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        styleName={editor.isActive('code') ? 'is-active' : ''}
-      >
-        <RiCodeView />
-      </button>
-      <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         styleName={editor.isActive('codeBlock') ? 'is-active' : ''}
       >
@@ -125,8 +126,6 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
       {/* <button onClick={() => editor.chain().focus().setHardBreak().run()}>
         <RiTextWrap />
       </button> */}
-
-      <div styleName='divider' />
 
       <button
         onClick={() => addIframe(editor)}

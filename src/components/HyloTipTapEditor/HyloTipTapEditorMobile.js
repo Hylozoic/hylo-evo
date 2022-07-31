@@ -1,23 +1,30 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
-import useRouter from 'hooks/useRouter'
 import HyloTipTapEditor from 'components/HyloTipTapEditor'
 import './HyloTipTapEditor.scss'
 
+// Note: This Mobile editor can be tested in a browser at `hyloApp/editor`.
+//       To control the editor manually post messages via the Web Console, e.g.:
+//
+//       `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
+//
 export default function HyloTipTapEditorMobile (props) {
-  const { query } = useRouter()
   const editorRef = useRef()
-  const hideMenu = query?.hideMenu
-  const readOnly = query?.readOnly
-  const placeholder = query?.placeholder
+  const [contentHTML, setContentHTML] = useState()
+  const [hideMenu, setHideMenu] = useState(false)
+  const [readOnly, setReadOnly] = useState(false)
+  const [placeholder, setPlaceholder] = useState()
+  const [groupIds, setGroupIds] = useState()
 
   // Sending Messages
-  const handleChange = useCallback(contentHTML => {
-    console.log('!!! onChange -- contentHTML', contentHTML)
+  const handleBeforeCreate = () => {
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.LOADED)
+  }
 
-    return sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_CHANGE, contentHTML)
-  })
+  const handleChange = useCallback(contentHTML => (
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_CHANGE, contentHTML)
+  ))
 
   const handleEnter = useCallback(() =>
     sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
@@ -28,18 +35,26 @@ export default function HyloTipTapEditorMobile (props) {
   ))
 
   const handleMessage = message => {
-    console.log('!!! handleMessage', editorRef.current, message.data)
-    const { type, data } = JSON.parse(message.data)
+    try {
+      const { type, data } = JSON.parse(message.data)
 
-    switch (type) {
-      case WebViewMessageTypes.EDITOR.SET_CONTENT: {
-        editorRef.current.setContent(data)
+      switch (type) {
+        case WebViewMessageTypes.EDITOR.SET_PROPS: {
+          if (data.content !== undefined) setContentHTML(data.content)
+          if (data.readOnly !== undefined) setReadOnly(data.readOnly)
+          if (data.hideMenu !== undefined) setHideMenu(data.hideMenu)
+          if (data.placeholder !== undefined) setPlaceholder(data.placeholder)
+          if (data.groupIds !== undefined) setGroupIds(data.groupIds)
+          break
+        }
       }
+    } catch (err) {
+      console.log('!!! error in handleMessage', err)
     }
   }
 
   useEffect(() => {
-    window.addEventListener('message', handleMessage.bind(this))
+    window.addEventListener('message', handleMessage)
 
     return () => window.removeEventListener('message')
   }, [])
@@ -47,15 +62,17 @@ export default function HyloTipTapEditorMobile (props) {
   return (
     <HyloTipTapEditor
       styleName='hylo-app-container'
-      placeholder={placeholder}
       onChange={handleChange}
       onEnter={handleEnter}
+      onBeforeCreate={handleBeforeCreate}
       // onAddMention={handleAddMention}
       onAddTopic={handleAddTopic}
       // Should the default be empty or a paragraph?
-      contentHTML
+      contentHTML={contentHTML}
+      placeholder={placeholder}
       readOnly={readOnly}
       hideMenu={hideMenu}
+      groupIds={groupIds}
       ref={editorRef}
     />
   )

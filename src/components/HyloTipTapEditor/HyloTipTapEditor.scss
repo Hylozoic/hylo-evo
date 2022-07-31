@@ -29,6 +29,7 @@
 .bottomMenuBar {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   line-height: 1em;
   background-color: whitesmoke;
   border: solid 1px gainsboro;
@@ -48,8 +49,8 @@
     display: inline-block;
     background-color: #0000001a;
     height: 1.25rem;
-    margin-left: .5rem;
-    margin-right: .75rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
     width: 2px;
   }
 }
