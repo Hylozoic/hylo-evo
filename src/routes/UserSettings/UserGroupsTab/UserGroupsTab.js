@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
 import get from 'lodash/get'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import { HyloApp } from 'hylo-shared'
+import { WebViewMessageTypes } from 'hylo-shared'
+import { sendMessageToWebView } from 'util/webView'
 import {
   CREATE_AFFILIATION,
   DELETE_AFFILIATION,
@@ -115,7 +116,7 @@ export default class UserGroupsTab extends Component {
         }
 
         if (hyloAppLayout) {
-          HyloApp.sendMessageToWebView(HyloApp.LEFT_GROUP, { groupId: deletedGroupId })
+          sendMessageToWebView(WebViewMessageTypes.LEFT_GROUP, { groupId: deletedGroupId })
         }
 
         return this.setState({ memberships, errorMessage, successMessage })

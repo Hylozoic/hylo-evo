@@ -191,20 +191,23 @@ export const HyloTipTapEditor = React.forwardRef(({
   const editorRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
+    focus: () => {
+      editorRef.current.commands.focus()
+    },
     getHTML: () => {
       return editorRef.current.getHTML()
     },
     getText: () => {
       return editorRef.current.getText()
     },
-    focus: () => {
-      editorRef.current.commands.focus()
+    isEmpty: () => {
+      return editorRef.current.isEmpty
     },
     reset: () => {
       editorRef.current.commands.clearContent()
     },
-    isEmpty: () => {
-      return editorRef.current.isEmpty
+    setContent: content => {
+      editorRef.current.commands.setContent(content)
     }
   }))
 

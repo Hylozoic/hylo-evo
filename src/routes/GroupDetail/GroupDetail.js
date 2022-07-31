@@ -4,7 +4,8 @@ import React, { Component, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import { TextHelpers, HyloApp } from 'hylo-shared'
+import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
+import { sendMessageToWebView } from 'util/webView'
 import Avatar from 'components/Avatar'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
@@ -58,7 +59,7 @@ export class UnwrappedGroupDetail extends Component {
     // e.g. react router / history push
     if (hyloAppLayout) {
       this.props.history.block(({ pathname, search }) => {
-        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
+        sendMessageToWebView(WebViewMessageTypes.NAVIGATION, { pathname, search })
         return false
       })
     }
@@ -83,7 +84,7 @@ export class UnwrappedGroupDetail extends Component {
     await joinGroup(group.id)
 
     if (hyloAppLayout) {
-      HyloApp.sendMessageToWebView(HyloApp.JOINED_GROUP, { groupSlug: group.slug })
+      sendMessageToWebView(WebViewMessageTypes.JOINED_GROUP, { groupSlug: group.slug })
     }
   }
 

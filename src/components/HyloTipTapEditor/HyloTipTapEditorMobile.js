@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react'
-import { HyloApp } from 'hylo-shared'
+import { WebViewMessageTypes } from 'hylo-shared'
+import { sendMessageToWebView } from 'util/webView'
 import useRouter from 'hooks/useRouter'
 import HyloTipTapEditor from 'components/HyloTipTapEditor'
 import './HyloTipTapEditor.scss'
@@ -15,39 +16,33 @@ export default function HyloTipTapEditorMobile (props) {
   const handleChange = useCallback(contentHTML => {
     console.log('!!! onChange -- contentHTML', contentHTML)
 
-    return HyloApp.sendMessageToWebView(HyloApp.EDITOR.onChange, contentHTML)
+    return sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_CHANGE, contentHTML)
   })
 
   const handleEnter = useCallback(() =>
-    HyloApp.sendMessageToWebView(HyloApp.EDITOR.onEnter, editorRef.current.getHTML())
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
   )
 
   const handleAddTopic = useCallback(topic => (
-    HyloApp.sendMessageToWebView(HyloApp.EDITOR.onAddTopic, topic)
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
   ))
 
   const handleMessage = message => {
-    const { type, data } = JSON.parse(message)
+    console.log('!!! handleMessage', editorRef.current, message.data)
+    const { type, data } = JSON.parse(message.data)
 
     switch (type) {
-      case HyloApp.EDITOR.setContent: {
+      case WebViewMessageTypes.EDITOR.SET_CONTENT: {
         editorRef.current.setContent(data)
       }
     }
   }
 
-  // Receiving Messages
-  // TOOD: Not working yet
   useEffect(() => {
-    const element = editorRef.current
+    window.addEventListener('message', handleMessage.bind(this))
 
-    if (element && element.addEventListener) {
-      console.log('!!!! element in event listerer:', element)
-      element.addEventListener('message', handleMessage)
-
-      return () => element.removeEventListener('message')
-    }
-  }, [editorRef.current])
+    return () => window.removeEventListener('message')
+  }, [])
 
   return (
     <HyloTipTapEditor
