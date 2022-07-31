@@ -11,6 +11,18 @@ export const AnalyticsEvents = {
   UNBLOCK_USER: 'User Un-Blocked'
 }
 
+export const WebViewMessageTypes = {
+  JOINED_GROUP: 'JOINED_GROUP',
+  LEFT_GROUP: 'LEFT_GROUP',
+  NAVIGATION: 'NAVIGATION',
+  EDITOR: {
+    ON_CHANGE: 'ON_CHANGE',
+    ON_ADD_TOPIC: 'ON_ADD_TOPIC',
+    ON_ENTER: 'ON_ENTER',
+    SET_CONTENT: 'SET_CONTENT'
+  }
+}
+
 export const HASHTAG_FULL_REGEX = /^#([A-Za-z][\w_-]+)$/
 
 // These are used when creating posts and comments with mentions and topic tags
