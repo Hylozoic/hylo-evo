@@ -1,11 +1,10 @@
 import React, { useRef, useImperativeHandle, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { isEmpty, uniqBy } from 'lodash/fp'
 // import { lowlight } from 'lowlight/lib/common'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
 import { PluginKey } from 'prosemirror-state'
 import asyncDebounce from 'util/asyncDebounce'
-import getMyGroups from 'store/selectors/getMyGroups'
 import findMentions from 'store/actions/findMentions'
 import findTopics from 'store/actions/findTopics'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
@@ -37,8 +36,6 @@ export const HyloTipTapEditor = React.forwardRef(({
   groupIds
 }, ref) => {
   const dispatch = useDispatch()
-  const myGroups = useSelector(getMyGroups)
-  const myGroupIds = groupIds || myGroups?.map(g => g.id)
   const editor = useEditor({
     content: contentHTML,
 
@@ -131,12 +128,14 @@ export const HyloTipTapEditor = React.forwardRef(({
             render: suggestion.render,
             items: asyncDebounce(200, async ({ query }) => {
               const matchedPeople = await dispatch(findMentions({
-                autocomplete: query, groupIds: myGroupIds
+                autocomplete: query,
+                // TODO: `groupIds` will not be refreshed. Set those on extension data on change (in a `useEffect`)
+                groupIds
               }))
 
               return matchedPeople?.payload.getData().items
                 .map(person => ({ id: person.id, label: person.name, avatarUrl: person.avatarUrl }))
-            }).bind(this)
+            })
           }
         }),
 
@@ -173,7 +172,7 @@ export const HyloTipTapEditor = React.forwardRef(({
 
               // Re. `uniqBy`: Backend method should be de-duping these entries.
               return uniqBy('label', results)
-            }).bind(this)
+            })
           }
         }),
 
@@ -217,7 +216,7 @@ export const HyloTipTapEditor = React.forwardRef(({
   }))
 
   useEffect(() => {
-    if (!editor) return undefined
+    if (!editor) return
 
     editor.setEditable(!readOnly)
   }, [editor, readOnly])

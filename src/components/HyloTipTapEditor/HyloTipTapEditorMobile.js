@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { pickBy } from 'lodash/fp'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
 import HyloTipTapEditor from 'components/HyloTipTapEditor'
@@ -9,7 +10,7 @@ import './HyloTipTapEditor.scss'
 //
 //       `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
 //
-export default function HyloTipTapEditorMobile (props) {
+export default function HyloTipTapEditorMobile () {
   const editorRef = useRef()
   const [contentHTML, setContentHTML] = useState()
   const [hideMenu, setHideMenu] = useState(false)
@@ -38,15 +39,14 @@ export default function HyloTipTapEditorMobile (props) {
     try {
       const { type, data } = JSON.parse(message.data)
 
-      switch (type) {
-        case WebViewMessageTypes.EDITOR.SET_PROPS: {
-          if (data.content !== undefined) setContentHTML(data.content)
-          if (data.readOnly !== undefined) setReadOnly(data.readOnly)
-          if (data.hideMenu !== undefined) setHideMenu(data.hideMenu)
-          if (data.placeholder !== undefined) setPlaceholder(data.placeholder)
-          if (data.groupIds !== undefined) setGroupIds(data.groupIds)
-          break
-        }
+      if (type === WebViewMessageTypes.EDITOR.SET_PROPS) {
+        const propsToSet = pickBy(p => p !== undefined, data)
+
+        if ('content' in propsToSet) setContentHTML(propsToSet.content)
+        if ('readOnly' in propsToSet) setReadOnly(propsToSet.readOnly)
+        if ('hideMenu' in propsToSet) setHideMenu(propsToSet.hideMenu)
+        if ('placeholder' in propsToSet) setPlaceholder(propsToSet.placeholder)
+        if ('groupIds' in propsToSet) setGroupIds(propsToSet.groupIds)
       }
     } catch (err) {
       console.log('!!! error in handleMessage', err)

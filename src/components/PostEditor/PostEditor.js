@@ -542,6 +542,7 @@ export default class PostEditor extends React.Component {
       addAttachment,
       postTypes
     } = this.props
+    const groupIds = groupOptions && groupOptions.map(g => g.id)
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'discussion',
@@ -607,6 +608,7 @@ export default class PostEditor extends React.Component {
               onEscape={this.handleCancel}
               onAddTopic={this.handleAddTopic}
               contentHTML={details}
+              groupIds={groupIds}
               readOnly={loading}
               ref={this.editor}
             />
