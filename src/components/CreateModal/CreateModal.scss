@@ -49,7 +49,7 @@
 
 .create-modal {
   position: fixed;
-  z-index: 100;
+  z-index: 200;
   top: 0;
   left: 0;
   right: 0;
@@ -74,7 +74,7 @@
 
 .create-modal-wrapper {
   width: 100%;
-  max-width: 590px;
+  max-width: 750px;
   margin-top: auto;
   margin-bottom: auto;
   position: relative;
