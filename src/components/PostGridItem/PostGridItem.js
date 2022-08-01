@@ -4,6 +4,7 @@ import cx from 'classnames'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
+import Icon from 'components/Icon'
 import './PostGridItem.scss'
 
 export default function PostGridItem (props) {
@@ -21,9 +22,10 @@ export default function PostGridItem (props) {
     attachments
   } = post
 
-  const firstAttachment = attachments[0] || {}
-  const { attachmentType, attachmentUrl } = firstAttachment
-  console.log(attachmentType, attachmentUrl, 'these should reliably be valid variables if they actually exist, or undefined.')
+  const numAttachments = attachments.length || 0
+  const firstAttachment = attachments[0] || 0
+  const attachmentType = firstAttachment.type || 0
+  const attachmentUrl = firstAttachment.url || 0
   if (!creator) { // PostCard guards against this, so it must be important? ;P
     return null
   }
@@ -34,7 +36,7 @@ export default function PostGridItem (props) {
   /* const startTimeMoment = Moment(post.startTime) */
 
   return (
-    <div styleName={cx('post-grid-item-container', { unread, expanded })} onClick={showDetails}>
+    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
         <h3 styleName='title'>{title}</h3>
 
@@ -51,6 +53,19 @@ export default function PostGridItem (props) {
 
           From Tom: Now the attachment variables can be used to display the different views that you are keen for.
         */}
+        {attachmentType === 'image'
+          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
+          : attachmentType === 'file'
+            ? <div styleName='file-attachment'>
+              {numAttachments > 1
+                ? <div styleName='attachment-number'>{numAttachments} attachments</div>
+                : ' '
+              }
+              <Icon name='Document' styleName='file-icon' />
+              <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
+            </div>
+            : ' '
+        }
 
         <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         <div styleName='grid-meta'>
