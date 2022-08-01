@@ -39,17 +39,25 @@ export class Comment extends Component {
     this.setState({ editing: true })
   }
 
-  handleEscape = () => this.setState({ editing: false })
+  handleEscape = () => {
+    this.setState({ editing: false })
+
+    return true
+  }
 
   handleSave = contentHTML => {
     const { comment } = this.props
 
     if (contentHTML === EMPTY_EDITOR_CONTENT_HTML) {
-      return
+      // Do nothing and stop propagation
+      return true
     }
 
     this.setState({ editing: false })
     this.props.updateComment(comment.id, contentHTML)
+
+    // Tell Editor this keyboard event was handled and to end propagation.
+    return true
   }
 
   render () {
@@ -89,7 +97,6 @@ export class Comment extends Component {
         {editing && (
           <HyloTipTapEditor
             styleName='editor'
-            // onChange={this.startTyping}
             contentHTML={text || ''}
             hideMenu
             onEscape={this.handleEscape}

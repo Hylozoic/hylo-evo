@@ -405,7 +405,11 @@ export default class PostEditor extends React.Component {
   setIsDirty = isDirty => this.props.setIsDirty && this.props.setIsDirty(isDirty)
 
   handleCancel = () => {
-    this.props.onCancel && this.props.onCancel()
+    if (this.props.onCancel) {
+      this.props.onCancel()
+
+      return true
+    }
   }
 
   save = async () => {

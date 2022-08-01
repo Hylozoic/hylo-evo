@@ -30,10 +30,8 @@ export default class CommentForm extends Component {
 
   editor = React.createRef()
 
-  startTyping = throttle(STARTED_TYPING_INTERVAL, (editorState, stateChanged) => {
-    if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
-      this.props.sendIsTyping(true)
-    }
+  startTyping = throttle(STARTED_TYPING_INTERVAL, () => {
+    this.props.sendIsTyping(true)
   })
 
   handleSave = contentHTML => {
@@ -45,7 +43,8 @@ export default class CommentForm extends Component {
     } = this.props
 
     if (contentHTML === EMPTY_EDITOR_CONTENT_HTML) {
-      return
+      // Do nothing and stop propagation
+      return true
     }
 
     this.editor.current.reset()
@@ -53,11 +52,13 @@ export default class CommentForm extends Component {
     sendIsTyping(false)
     createComment({ text: contentHTML, attachments })
     clearAttachments()
+
+    // Tell Editor this keyboard event was handled and to end propagation.
+    return true
   }
 
   render () {
     const { currentUser, className, addAttachment, editorContent } = this.props
-
     const placeholder = this.props.placeholder || 'Add a comment...'
 
     return (
@@ -79,8 +80,7 @@ export default class CommentForm extends Component {
             styleName='editor'
             readOnly={!currentUser}
             hideMenu
-            // onChange={this.startTyping}
-            // TODO: Probably needs to set focus in lifecyle even of this component? Check if issue.
+            onChange={this.startTyping}
             placeholder={placeholder}
             ref={this.editor}
           />

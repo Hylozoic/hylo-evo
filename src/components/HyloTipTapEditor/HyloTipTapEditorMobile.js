@@ -27,9 +27,12 @@ export default function HyloTipTapEditorMobile () {
     sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_CHANGE, contentHTML)
   ))
 
-  const handleEnter = useCallback(() =>
+  const handleEnter = useCallback(() => {
     sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
-  )
+
+    // Tell Editor this keyboard event was handled and to end propagation.
+    return true
+  })
 
   const handleAddTopic = useCallback(topic => (
     sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)

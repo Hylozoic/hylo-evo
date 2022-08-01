@@ -78,16 +78,12 @@ export const HyloTipTapEditor = React.forwardRef(({
             Escape: () => {
               if (!onEscape) return false
 
-              onEscape()
-
-              return true
+              return onEscape()
             },
             Enter: ({ editor }) => {
               if (!onEnter) return false
 
-              onEnter(editor.getHTML())
-
-              return false
+              return onEnter(editor.getHTML())
             }
           }
         }
