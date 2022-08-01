@@ -12,16 +12,10 @@ exports[`matches last snapshot 1`] = `
     <div
       data-stylename="fade"
     />
-    <Connect(ClickCatcher)>
-      <div
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "the details",
-          }
-        }
-        data-stylename="details"
-      />
-    </Connect(ClickCatcher)>
+    <PostDetailsContent
+      details="the details"
+      slug="foomunity"
+    />
     <LinkPreview
       imageUrl="foo.png"
       title="a walk in the park"

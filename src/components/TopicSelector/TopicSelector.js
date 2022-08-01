@@ -53,7 +53,6 @@ export default class TopicSelector extends Component {
   static defaultProps = {
     forGroups: [],
     defaultTopics: [],
-    detailsTopics: [],
     placeholder: 'Enter up to three topics...',
     selectedTopics: []
   }
@@ -89,7 +88,7 @@ export default class TopicSelector extends Component {
     const selected = uniqBy(
       t => t.name,
       this.state.selected.concat(this.props.selectedTopics)
-    ).slice(0, 3)
+    ).slice(0, MAX_TOPICS)
 
     this.setState({ selected })
   }
@@ -196,7 +195,7 @@ export default class TopicSelector extends Component {
             } : null
         }}
         noOptionsMessage={() => {
-          return selected.length >= MAX_TOPICS ? 'You can only select up to 3 topics' : 'Start typing to add a topic'
+          return selected.length >= MAX_TOPICS ? `You can only select up to ${MAX_TOPICS} topics` : 'Start typing to add a topic'
         }}
         formatOptionLabel={(item, { context }) => {
           if (item.name === '') {

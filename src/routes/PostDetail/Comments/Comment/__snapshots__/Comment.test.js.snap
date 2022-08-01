@@ -59,7 +59,9 @@ exports[`Comment displays image attachments 1`] = `
     }
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
+  <ClickCatcher
+    groupSlug="foo"
+  >
     <div
       dangerouslySetInnerHTML={
         Object {
@@ -69,7 +71,7 @@ exports[`Comment displays image attachments 1`] = `
       data-stylename="text"
       id="text"
     />
-  </Connect(ClickCatcher)>
+  </ClickCatcher>
 </div>
 `;
 
@@ -140,7 +142,9 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     attachments={Array []}
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
+  <ClickCatcher
+    groupSlug="foo"
+  >
     <div
       dangerouslySetInnerHTML={
         Object {
@@ -150,7 +154,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       data-stylename="text"
       id="text"
     />
-  </Connect(ClickCatcher)>
+  </ClickCatcher>
 </div>
 `;
 
@@ -216,7 +220,9 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     attachments={Array []}
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
+  <ClickCatcher
+    groupSlug="foo"
+  >
     <div
       dangerouslySetInnerHTML={
         Object {
@@ -226,7 +232,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       data-stylename="text"
       id="text"
     />
-  </Connect(ClickCatcher)>
+  </ClickCatcher>
 </div>
 `;
 
@@ -275,7 +281,9 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
     attachments={Array []}
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
+  <ClickCatcher
+    groupSlug="foo"
+  >
     <div
       dangerouslySetInnerHTML={
         Object {
@@ -285,7 +293,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       data-stylename="text"
       id="text"
     />
-  </Connect(ClickCatcher)>
+  </ClickCatcher>
 </div>
 `;
 
@@ -356,7 +364,9 @@ exports[`Comment does not display the remove menu when removeComment is not defi
     attachments={Array []}
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
+  <ClickCatcher
+    groupSlug="foo"
+  >
     <div
       dangerouslySetInnerHTML={
         Object {
@@ -366,7 +376,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       data-stylename="text"
       id="text"
     />
-  </Connect(ClickCatcher)>
+  </ClickCatcher>
 </div>
 `;
 
@@ -415,7 +425,9 @@ exports[`Comment renders correctly 1`] = `
     attachments={Array []}
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
+  <ClickCatcher
+    groupSlug="foo"
+  >
     <div
       dangerouslySetInnerHTML={
         Object {
@@ -425,7 +437,7 @@ exports[`Comment renders correctly 1`] = `
       data-stylename="text"
       id="text"
     />
-  </Connect(ClickCatcher)>
+  </ClickCatcher>
 </div>
 `;
 
@@ -474,13 +486,12 @@ exports[`Comment renders correctly when editing 1`] = `
     attachments={Array []}
     data-stylename="files"
   />
-  <Connect(ClickCatcher)>
-    <Connect(HyloTipTapEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="editor"
-      onEscape={[Function]}
-      submitOnReturnHandler={[Function]}
-    />
-  </Connect(ClickCatcher)>
+  <ForwardRef
+    contentHTML="<p>text of the comment</p>"
+    data-stylename="editor"
+    hideMenu={true}
+    onEnter={[Function]}
+    onEscape={[Function]}
+  />
 </div>
 `;

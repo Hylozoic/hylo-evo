@@ -129,13 +129,13 @@ export default class PostEditor extends React.Component {
     super(props)
 
     this.state = this.buildStateFromProps(props)
-    this.titleInput = React.createRef()
-    this.editor = React.createRef()
-    this.groupsSelector = React.createRef()
+    this.titleInputRef = React.createRef()
+    this.editorRef = React.createRef()
+    this.groupsSelectorRef = React.createRef()
   }
 
   componentDidMount () {
-    setTimeout(() => { this.titleInput.current && this.titleInput.current.focus() }, 100)
+    setTimeout(() => { this.titleInputRef.current && this.titleInputRef.current.focus() }, 100)
   }
 
   componentDidUpdate (prevProps) {
@@ -144,7 +144,7 @@ export default class PostEditor extends React.Component {
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
       this.reset(this.props)
-      this.editor.current.focus()
+      this.editorRef.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
       this.onUpdate()
     }
@@ -161,12 +161,12 @@ export default class PostEditor extends React.Component {
   }
 
   reset = (props) => {
-    this.editor.current.reset()
-    this.groupsSelector.current.reset()
+    this.editorRef.current.reset()
+    this.groupsSelectorRef.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
-  focus = () => this.editor.current.focus()
+  focus = () => this.editorRef.current.focus()
 
   handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
@@ -299,25 +299,24 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  // Note: Checks for linkPreview every second,
+  // Note: Checks for linkPreview every 1/2 second
   // Currently if the link preview is removed, another link preview
   // will not be generated unless the editor content is cleared
   // entirely, and another link is added.
   // TODO: Probably better to throttle this like updateTopic
   //       Also, get editor content in the function or send in?
   setLinkPreview = debounce(500, () => {
-    const contentText = this.editor.current.getText()
+    const contentText = this.editorRef.current.getText()
     const {
       pollingFetchLinkPreview,
       linkPreviewStatus,
       clearLinkPreview
     } = this.props
     const { linkPreview } = this.state.post
-
     // Keep this around a litte longer for debugging:
-    // console.log('!!! this.editor.current.isEmpty(), linkPreviewStatus, linkPreview:', this.editor.current.isEmpty(), linkPreviewStatus, linkPreview)
+    // console.log('!!! this.editorRef.current.getText(), linkPreviewStatus, linkPreview:', this.editorRef.current.getText(), linkPreviewStatus, linkPreview)
 
-    if (this.editor.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
+    if (this.editorRef.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
 
     if (linkPreview) return
 
@@ -393,7 +392,7 @@ export default class PostEditor extends React.Component {
     const { isEvent } = this.props
 
     return !!(
-      this.editor.current &&
+      this.editorRef.current &&
       groups &&
       type.length > 0 &&
       title.length > 0 &&
@@ -438,7 +437,7 @@ export default class PostEditor extends React.Component {
       locationId,
       isPublic
     } = this.state.post
-    const details = this.editor.current.getHTML()
+    const details = this.editorRef.current.getHTML()
     const topicNames = topics?.map((t) => t.name)
     const memberIds = members && members.map((m) => m.id)
     const eventInviteeIds =
@@ -595,7 +594,7 @@ export default class PostEditor extends React.Component {
               value={title || ''}
               onChange={this.handleTitleChange}
               disabled={loading}
-              ref={this.titleInput}
+              ref={this.titleInputRef}
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
@@ -610,7 +609,7 @@ export default class PostEditor extends React.Component {
               contentHTML={details}
               groupIds={groupIds}
               readOnly={loading}
-              ref={this.editor}
+              ref={this.editorRef}
             />
           </div>
         </div>
@@ -668,7 +667,7 @@ export default class PostEditor extends React.Component {
                 selected={groups}
                 onChange={this.handleSetSelectedGroups}
                 readOnly={loading}
-                ref={this.groupsSelector}
+                ref={this.groupsSelectorRef}
               />
             </div>
           </div>

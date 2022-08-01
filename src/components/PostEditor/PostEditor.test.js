@@ -4,6 +4,11 @@ import { merge } from 'lodash'
 import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
+jest.mock('lodash/debounce', () => fn => {
+  fn.cancel = jest.fn()
+  return fn
+})
+
 describe('PostEditor', () => {
   const baseProps = {}
 
@@ -71,7 +76,7 @@ describe('PostEditor', () => {
             { id: '1', name: 'test group 1' },
             { id: '2', name: 'test group 2' }
           ],
-          topicNames: ['design'],
+          topics: [{ name: 'design' }],
           startTime: new Date(1551908483315),
           endTime: new Date(1551908483315)
         },
@@ -83,20 +88,16 @@ describe('PostEditor', () => {
         }
       }
       const editorMock = {
-        getContentHTML: () => props.post.details,
+        getHTML: () => props.post.details,
         reset: jest.fn()
-      }
-      const topicSelectorMock = {
-        getSelected: () => [{ id: 1, name: 'design' }]
       }
       const groupsSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.editor.current = editorMock
-      testInstance.topicSelector.current = topicSelectorMock
-      testInstance.groupsSelector.current = groupsSelectorMock
+      testInstance.editorRef.current = editorMock
+      testInstance.groupsSelectorRef.current = groupsSelectorMock
       await testInstance.save()
       expect(props.createPost.mock.calls).toHaveLength(1)
       expect(props.createPost.mock.calls).toMatchSnapshot()
@@ -130,7 +131,7 @@ describe('PostEditor', () => {
           { id: '1', name: 'test group 1' },
           { id: '2', name: 'test group 2' }
         ],
-        topicNames: ['design'],
+        topics: [{ name: 'design' }],
         startTime: new Date(1551908483315),
         endTime: new Date(1551908483315)
       },
@@ -153,20 +154,16 @@ describe('PostEditor', () => {
 
     test('saving a post will update a post', async () => {
       const editorMock = {
-        getContentHTML: () => props.post.details,
+        getHTML: () => props.post.details,
         reset: jest.fn()
-      }
-      const topicSelectorMock = {
-        getSelected: () => [{ id: 1, name: 'design' }]
       }
       const groupsSelectorMock = {
         reset: jest.fn()
       }
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.editor.current = editorMock
-      testInstance.topicSelector.current = topicSelectorMock
-      testInstance.groupsSelector.current = groupsSelectorMock
+      testInstance.editorRef.current = editorMock
+      testInstance.groupsSelectorRef.current = groupsSelectorMock
       await testInstance.save()
       expect(props.updatePost.mock.calls).toHaveLength(1)
       expect(props.updatePost.mock.calls).toMatchSnapshot()
@@ -214,7 +211,7 @@ describe('PostEditor', () => {
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor.current = { isEmpty: jest.fn(() => false) }
+      testInstance.editorRef.current = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeTruthy()
     })
 
@@ -228,7 +225,7 @@ describe('PostEditor', () => {
         }
       }
       const testInstance = shallow(<PostEditor {...props} />).instance()
-      testInstance.editor = { isEmpty: jest.fn(() => false) }
+      testInstance.editorRef = { isEmpty: jest.fn(() => false) }
       expect(testInstance.isValid(props.post, {})).toBeFalsy()
     })
   })
@@ -246,7 +243,7 @@ describe('PostEditor', () => {
           { id: '1', name: 'test group 1' },
           { id: '2', name: 'test group 2' }
         ],
-        topicNames: ['design'],
+        topics: [{ name: 'design' }],
         startTime: new Date(1551908483315),
         endTime: new Date(1551908483315)
       },
@@ -255,27 +252,23 @@ describe('PostEditor', () => {
       ensureLocationIdIfCoordinate: jest.fn().mockResolvedValue('555')
     }
     const editorMock = {
-      getContentHTML: () => props.post.details,
+      getHTML: () => props.post.details,
       reset: jest.fn()
-    }
-    const topicSelectorMock = {
-      getSelected: () => [{ id: 1, name: 'design' }]
     }
     const groupsSelectorMock = {
       reset: jest.fn()
     }
     const wrapper = shallow(<PostEditor {...props} />)
     const testInstance = wrapper.instance()
-    testInstance.editor.current = editorMock
-    testInstance.topicSelector.current = topicSelectorMock
-    testInstance.groupsSelector.current = groupsSelectorMock
+    testInstance.editorRef.current = editorMock
+    testInstance.groupsSelectorRef.current = groupsSelectorMock
     await testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()
   })
 
   describe('linkPreview handling', () => {
-    let linkPreviewProps, contentStateMock
+    let linkPreviewProps, contentText, editorMock, emptyEditorMock
     beforeEach(() => {
       linkPreviewProps = {
         ...baseProps,
@@ -283,18 +276,17 @@ describe('PostEditor', () => {
         pollingFetchLinkPreview: jest.fn(),
         clearLinkPreview: jest.fn()
       }
-      contentStateMock = {
-        getBlockMap: () => ([]),
-        getEntityMap: () => ({}),
-        hasText: () => true
-      }
+      contentText = ' none.com '
+      editorMock = { isEmpty: () => false, getText: () => contentText }
+      emptyEditorMock = { isEmpty: () => true, getText: () => null }
     })
 
     it('should fetch for a linkPreview', () => {
       const props = linkPreviewProps
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.setLinkPreview(contentStateMock)
+      testInstance.editorRef.current = { isEmpty: () => false, getText: () => contentText }
+      testInstance.setLinkPreview()
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(1)
     })
 
@@ -307,7 +299,8 @@ describe('PostEditor', () => {
       })
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.setLinkPreview(contentStateMock)
+      testInstance.editorRef.current = editorMock
+      testInstance.setLinkPreview()
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
     })
 
@@ -317,7 +310,8 @@ describe('PostEditor', () => {
       })
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.setLinkPreview(contentStateMock)
+      testInstance.editorRef.current = editorMock
+      testInstance.setLinkPreview()
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
     })
 
@@ -327,28 +321,24 @@ describe('PostEditor', () => {
       })
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.setLinkPreview(contentStateMock)
+      testInstance.editorRef.current = editorMock
+      testInstance.setLinkPreview()
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
     })
 
     it('should reset linkPreview when there is no text and any linkStatus is present', () => {
-      contentStateMock = {
-        hasText: () => false
-      }
       const props = merge(linkPreviewProps, {
         linkPreviewStatus: 'any'
       })
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.setLinkPreview(contentStateMock)
+      testInstance.editorRef.current = emptyEditorMock
+      testInstance.setLinkPreview()
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
       expect(props.clearLinkPreview.mock.calls).toHaveLength(1)
     })
 
     it('should not reset linkPreview when there is no text but there is a linkPreview present', () => {
-      contentStateMock = {
-        hasText: () => false
-      }
       const props = merge(linkPreviewProps, {
         linkPreviewStatus: null,
         post: {
@@ -357,7 +347,8 @@ describe('PostEditor', () => {
       })
       const wrapper = shallow(<PostEditor {...props} />)
       const testInstance = wrapper.instance()
-      testInstance.setLinkPreview(contentStateMock)
+      testInstance.editorRef.current = emptyEditorMock
+      testInstance.setLinkPreview()
       expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
       expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
     })

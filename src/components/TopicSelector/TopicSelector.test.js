@@ -3,7 +3,9 @@ import { shallow } from 'enzyme'
 import TopicSelector from './TopicSelector'
 
 describe('TopicSelector', () => {
-  const defaultMinProps = { }
+  const defaultMinProps = {
+    fetchDefaultTopics: () => {}
+  }
 
   function renderComponent (renderFunc, props = {}) {
     return renderFunc(
@@ -19,10 +21,9 @@ describe('TopicSelector', () => {
   describe('componentDidMount', () => {
     it('calls updateSelected', () => {
       const wrapper = renderComponent(shallow, {
-        selectedTopics: [{ name: 'one' }],
-        detailsTopics: [{ name: 'two' }]
+        selectedTopics: [{ name: 'one' }]
       })
-      expect(wrapper.instance().state.selected).toEqual([{ name: 'one' }, { name: 'two' }])
+      expect(wrapper.instance().state.selected).toEqual([{ name: 'one' }])
     })
   })
 
@@ -55,8 +56,7 @@ describe('TopicSelector', () => {
 
     it('combines selected, props.selectedTopics and props.detailsTopics, truncating at 3', () => {
       const props = {
-        selectedTopics: [{ name: 'one' }],
-        detailsTopics: [{ name: 'two' }, { name: 'three' }]
+        selectedTopics: [{ name: 'one' }, { name: 'two' }, { name: 'three' }]
       }
       const wrapper = renderComponent(shallow, props)
       wrapper.instance().setState({ selected: [{ name: 'zero' }] })
@@ -83,23 +83,13 @@ describe('TopicSelector', () => {
     })
   })
 
-  describe('handleInputChange', () => {
+  describe('loadOptions', () => {
     it('sets state and calls findTopics on a non empty input', () => {
-      const findTopics = jest.fn()
+      const findTopics = jest.fn(() => ({ payload: { getData: () => ({ items: [] }) } }))
       const wrapper = renderComponent(shallow, { findTopics })
       const theInput = 'hithere'
-      wrapper.instance().handleInputChange(theInput)
-      expect(wrapper.instance().state.input).toEqual(theInput)
+      wrapper.instance().loadOptions(theInput)
       expect(findTopics).toHaveBeenCalledWith(theInput)
-    })
-
-    it('sets state and calls clearTopics on empty input', () => {
-      const clearTopics = jest.fn()
-      const wrapper = renderComponent(shallow, { clearTopics })
-      const theInput = ''
-      wrapper.instance().handleInputChange(theInput)
-      expect(wrapper.instance().state.input).toEqual(theInput)
-      expect(clearTopics).toHaveBeenCalled()
     })
   })
 
@@ -111,7 +101,7 @@ describe('TopicSelector', () => {
       wrapper.setState({ selected: [{ name: 'zero' }] })
       wrapper.instance().handleTopicsChange(topics)
       expect(wrapper.instance().state.selected).toEqual([{ name: 'one' }])
-      expect(clearTopics).toHaveBeenCalledWith()
+      // expect(clearTopics).toHaveBeenCalledWith()
     })
   })
 })

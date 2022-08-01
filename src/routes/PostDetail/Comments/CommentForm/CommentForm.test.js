@@ -19,9 +19,8 @@ const minDefaultProps = {
 describe('CommentForm', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<CommentForm {...minDefaultProps} />)
-
-    expect(wrapper.find('Connect(HyloTipTapEditor)')).toHaveLength(1)
-    expect(wrapper.find('Connect(HyloTipTapEditor)').prop('placeholder'))
+    expect(wrapper.find('ForwardRef')).toHaveLength(1)
+    expect(wrapper.find('ForwardRef').prop('placeholder'))
       .toEqual('Add a comment...')
   })
 })

@@ -1,21 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TopicSelector renders correctly (with min props) 1`] = `
-<Async
-  cacheOptions={false}
+<ForwardRef
   classNamePrefix="topic-selector"
-  defaultOptions={
-    Array [
-      Object {
-        "label": "Default Topics",
-        "options": Array [],
-      },
-    ]
-  }
-  filterOption={null}
+  defaultOptions={Array []}
   formatOptionLabel={[Function]}
   getNewOptionData={[Function]}
-  isLoading={false}
   isMulti={true}
   loadOptions={[Function]}
   name="topics"
@@ -32,6 +22,7 @@ exports[`TopicSelector renders correctly (with min props) 1`] = `
       "multiValue": [Function],
       "multiValueRemove": [Function],
       "placeholder": [Function],
+      "valueContainer": [Function],
     }
   }
   value={Array []}

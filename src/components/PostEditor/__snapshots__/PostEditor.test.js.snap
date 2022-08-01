@@ -144,8 +144,9 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         type="text"
         value="valid title"
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -193,8 +194,26 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={
+            Array [
+              Object {
+                "id": "1",
+                "name": "test group 1",
+              },
+              Object {
+                "id": "2",
+                "name": "test group 2",
+              },
+            ]
+          }
           onChange={[Function]}
+          selectedTopics={
+            Array [
+              Object {
+                "name": "design",
+              },
+            ]
+          }
         />
       </div>
     </div>
@@ -361,8 +380,9 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         type="text"
         value="valid title"
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -410,8 +430,26 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={
+            Array [
+              Object {
+                "id": "1",
+                "name": "test group 1",
+              },
+              Object {
+                "id": "2",
+                "name": "test group 2",
+              },
+            ]
+          }
           onChange={[Function]}
+          selectedTopics={
+            Array [
+              Object {
+                "name": "design",
+              },
+            ]
+          }
         />
       </div>
     </div>
@@ -619,8 +657,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -657,7 +696,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -773,8 +812,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -811,7 +851,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -955,8 +995,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -993,7 +1034,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -1137,8 +1178,9 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Describe the resource that is available"
@@ -1175,7 +1217,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -1319,9 +1361,10 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         contentHTML=""
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -1358,7 +1401,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -1512,9 +1555,10 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         contentHTML=""
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -1551,7 +1595,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -1667,9 +1711,10 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         contentHTML=""
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -1706,7 +1751,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -1822,9 +1867,10 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         contentHTML=""
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -1861,7 +1907,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -1978,9 +2024,10 @@ exports[`PostEditor renders contribution button 1`] = `
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         contentHTML=""
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -2019,7 +2066,6 @@ exports[`PostEditor renders contribution button 1`] = `
         <Connect(MemberSelector)
           forGroups={Array []}
           initialMembers={Array []}
-          onChange={[Function]}
           readOnly={false}
         />
       </div>
@@ -2036,7 +2082,7 @@ exports[`PostEditor renders contribution button 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>
@@ -2174,9 +2220,10 @@ exports[`PostEditor renders with min props 1`] = `
         type="text"
         value=""
       />
-      <Connect(HyloTipTapEditor)
+      <ForwardRef
         contentHTML=""
         data-stylename="editor"
+        onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
         placeholder="Add a description"
@@ -2213,7 +2260,7 @@ exports[`PostEditor renders with min props 1`] = `
         data-stylename="footerSection-topics"
       >
         <Connect(TopicSelector)
-          detailsTopics={Array []}
+          forGroups={Array []}
           onChange={[Function]}
         />
       </div>

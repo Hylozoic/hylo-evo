@@ -1,21 +1,21 @@
 import { Node } from '@tiptap/core'
 
-export interface IframeOptions {
-  allowFullscreen: boolean,
-  HTMLAttributes: {
-    [key: string]: any
-  },
-}
+// export interface IframeOptions {
+//   allowFullscreen: boolean,
+//   HTMLAttributes: {
+//     [key: string]: any
+//   },
+// }
 
-declare module '@tiptap/core' {
-  interface Commands<ReturnType> {
-    iframe: {
-      setIframe: (options: { src: string }) => ReturnType
-    }
-  }
-}
+// declare module '@tiptap/core' {
+//   interface Commands<ReturnType> {
+//     iframe: {
+//       setIframe: (options: { src: string }) => ReturnType
+//     }
+//   }
+// }
 
-export default Node.create<IframeOptions>({
+export default Node.create({
   name: 'iframe',
 
   group: 'block',
@@ -27,19 +27,19 @@ export default Node.create<IframeOptions>({
       allowFullscreen: true,
       HTMLAttributes: {
         class: 'iframe-wrapper'
-      },
+      }
     }
   },
 
   addAttributes () {
     return {
       src: {
-        default: null,
+        default: null
       },
       allowfullscreen: {
         default: this.options.allowFullscreen,
         parseHTML: () => this.options.allowFullscreen
-      },
+      }
     }
   },
 
@@ -53,7 +53,7 @@ export default Node.create<IframeOptions>({
 
   addCommands () {
     return {
-      setIframe: (options: { src: string }) => ({ tr, dispatch }) => {
+      setIframe: (options) => ({ tr, dispatch }) => {
         const { selection } = tr
         const node = this.type.create(options)
 

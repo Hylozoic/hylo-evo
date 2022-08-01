@@ -65,7 +65,7 @@ exports[`displays image an image attachments 1`] = `
       }
       data-stylename="comment-files"
     />
-    <Connect(ClickCatcher)>
+    <ClickCatcher>
       <Highlight
         component="span"
         highlightClassName="highlight"
@@ -80,7 +80,7 @@ exports[`displays image an image attachments 1`] = `
           data-stylename="comment-body"
         />
       </Highlight>
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <div
       data-stylename="comment-footer"
     />
@@ -139,7 +139,7 @@ exports[`matches last snapshot 1`] = `
       attachments={Array []}
       data-stylename="comment-files"
     />
-    <Connect(ClickCatcher)>
+    <ClickCatcher>
       <Highlight
         component="span"
         highlightClassName="highlight"
@@ -154,7 +154,7 @@ exports[`matches last snapshot 1`] = `
           data-stylename="comment-body"
         />
       </Highlight>
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <div
       data-stylename="comment-footer"
     />
@@ -213,7 +213,7 @@ exports[`matches last snapshot with different config 1`] = `
       attachments={Array []}
       data-stylename="comment-files"
     />
-    <Connect(ClickCatcher)>
+    <ClickCatcher>
       <Highlight
         component="span"
         highlightClassName="highlight"
@@ -228,7 +228,7 @@ exports[`matches last snapshot with different config 1`] = `
           data-stylename="comment-body"
         />
       </Highlight>
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <div
       data-stylename="comment-footer"
     />
