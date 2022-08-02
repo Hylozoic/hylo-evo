@@ -53,52 +53,58 @@ export default class PostCard extends React.Component {
       expanded,
       constrained,
       className,
-      respondToEvent
+      respondToEvent,
+      postUrl
     } = this.props
 
     const postType = get('type', post)
     const isEvent = get('type', post) === 'event'
 
-    return <div ref='postCard'
-      onClick={this.onClick}
-      styleName={cx('card', postType, { expanded }, { constrained })}
-      className={className}>
-      <PostHeader
-        {...post}
-        routeParams={routeParams}
-        highlightProps={highlightProps}
-        editPost={editPost}
-        constrained={constrained}
-      />
-      <CardImageAttachments attachments={post.attachments} />
-      {isEvent && (
-        <EventBody
-          event={post}
-          slug={routeParams.groupSlug}
-          respondToEvent={respondToEvent}
-          constrained={constrained}
-        />
-      )}
-      {!isEvent && (
-        <PostBody
+    return (
+      <div
+        ref='postCard'
+        onClick={this.onClick}
+        styleName={cx('card', postType, { expanded }, { constrained })}
+        className={className}
+      >
+        <PostHeader
           {...post}
+          routeParams={routeParams}
+          highlightProps={highlightProps}
+          editPost={editPost}
+          postUrl={postUrl}
+          constrained={constrained}
+        />
+        <CardImageAttachments attachments={post.attachments} />
+        {isEvent && (
+          <EventBody
+            event={post}
+            slug={routeParams.groupSlug}
+            respondToEvent={respondToEvent}
+            constrained={constrained}
+          />
+        )}
+        {!isEvent && (
+          <PostBody
+            {...post}
+            slug={routeParams.groupSlug}
+            constrained={constrained}
+          />
+        )}
+        <PostGroups
+          isPublic={post.isPublic}
+          groups={post.groups}
           slug={routeParams.groupSlug}
           constrained={constrained}
         />
-      )}
-      <PostGroups
-        isPublic={post.isPublic}
-        groups={post.groups}
-        slug={routeParams.groupSlug}
-        constrained={constrained}
-      />
-      <PostFooter
-        {...post}
-        voteOnPost={voteOnPost}
-        constrained={constrained}
-        currentUser={currentUser}
-        postId={post.id}
-      />
-    </div>
+        <PostFooter
+          {...post}
+          voteOnPost={voteOnPost}
+          constrained={constrained}
+          currentUser={currentUser}
+          postId={post.id}
+        />
+      </div>
+    )
   }
 }
