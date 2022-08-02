@@ -4,6 +4,12 @@ import { personUrl, topicUrl } from 'util/navigation'
 
 export const HYLO_URL_REGEX = /http[s]?:\/\/(?:www\.)?hylo\.com(.*)/gi // https://regex101.com/r/0GZMny/1
 
+export const getTopicName = element => {
+  const text = element.textContent.trim()
+
+  return text[0] === '#' ? text.slice(1) : text
+}
+
 export default function ClickCatcher ({ handleMouseOver, groupSlug, ...props }) {
   const history = useHistory()
 
@@ -15,10 +21,18 @@ export const handleClick = (push, groupSlug) => event => {
 
   switch (element?.nodeName.toLowerCase()) {
     case 'a': {
-      // Legacy mention
-      if (element.getAttribute('data-user-id') || element.getAttribute('data-search')) {
-        event.preventDefault()
-        push(element.getAttribute('href'))
+      // Legacy Topic
+      if (element.getAttribute('data-entity-type') === '#mention') {
+        // Note: The topic name is also found on `element.getAttribute('data-search')`
+        // but earliest content didn't have this extra attribute.
+        push(topicUrl(getTopicName(element), { groupSlug }))
+
+        return
+      }
+
+      // Legacy Mention
+      if (element.getAttribute('data-entity-type') === 'mention' && element.getAttribute('data-user-id')) {
+        push(personUrl(element.getAttribute('data-user-id'), groupSlug))
 
         return
       }
@@ -32,6 +46,7 @@ export const handleClick = (push, groupSlug) => event => {
 
       if (matches[0] && matches[0].length === 2) {
         event.preventDefault()
+
         const urlPath = matches[0][1] === '' ? '/' : matches[0][1]
 
         element.setAttribute('target', '_self')
@@ -39,7 +54,7 @@ export const handleClick = (push, groupSlug) => event => {
         push(element.getAttribute('href'))
       }
 
-      return
+      break
     }
 
     case 'span': {

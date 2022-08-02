@@ -486,7 +486,7 @@ exports[`Comment renders correctly when editing 1`] = `
     attachments={Array []}
     data-stylename="files"
   />
-  <ForwardRef
+  <ForwardRef(HyloTipTapEditor)
     contentHTML="<p>text of the comment</p>"
     data-stylename="editor"
     hideMenu={true}

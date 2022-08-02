@@ -29,7 +29,7 @@ export default function PostDetails ({
   const details = TextHelpers.presentHTML(providedDetails, {
     slug,
     truncate: !expanded && MAX_DETAILS_LENGTH,
-    noLinks: true
+    noLinks: false
   })
   const postType = get('type', post)
   const typesWithCompletion = ['offer', 'request', 'resource', 'project']

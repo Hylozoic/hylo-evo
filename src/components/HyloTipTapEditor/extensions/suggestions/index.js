@@ -1,6 +1,6 @@
 import { ReactRenderer } from '@tiptap/react'
 import tippy from 'tippy.js'
-import MentionList from './MentionList'
+import SuggestionList from './SuggestionList'
 
 export default {
   render: () => {
@@ -22,7 +22,7 @@ export default {
 
     return {
       onStart: props => {
-        component = new ReactRenderer(MentionList, {
+        component = new ReactRenderer(SuggestionList, {
           props,
           editor: props.editor
         })

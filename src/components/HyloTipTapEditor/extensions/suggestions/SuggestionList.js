@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import Avatar from 'components/Avatar'
-import './MentionList.scss'
+import './SuggestionList.scss'
 
 export default forwardRef(({ items, command }, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
