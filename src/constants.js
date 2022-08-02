@@ -21,6 +21,7 @@ export const WebViewMessageTypes = {
     ON_CHANGE: 'ON_CHANGE',
     ON_ENTER: 'ON_ENTER',
     SET_PROPS: 'SET_PROPS',
+    CLEAR_CONTENT: 'CLEAR_CONTENT'
   }
 }
 

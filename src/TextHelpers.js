@@ -14,11 +14,11 @@ export function insaneOptions (providedInsaneOptions) {
   return merge(
     {
       allowedTags: providedInsaneOptions?.allowedTags || [
-        'a', 'br', 'em', 's', 'p', 'strong',
+        'a', 'br', 'em', 'p', 's', 'strong',
         'li', 'ol', 'ul',
-        'code', 'pre', 'blockquote',
-        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'hr', 'iframe', 'div', 'mark', 'span'
+        'div', 'iframe', 'mark', 'span',
+        'blockquote', 'code', 'hr', 'pre',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
       ],
       allowedAttributes: providedInsaneOptions?.allowedAttributes || {
         a: [
