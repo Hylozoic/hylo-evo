@@ -91,7 +91,7 @@ describe('Comment', () => {
       }
       const instance = wrapper.instance()
       instance.setState({ editing: true })
-      instance.handleSave(editorState)
+      instance.handleOnEnter(editorState)
       expect(instance.state.editing).toEqual(false)
       expect(props.updateComment).toHaveBeenCalled()
     })
