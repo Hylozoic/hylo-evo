@@ -161,7 +161,7 @@ export default class PostEditor extends React.Component {
   }
 
   reset = (props) => {
-    this.editorRef.current.reset()
+    this.editorRef.current.clearContent()
     this.groupsSelectorRef.current.reset()
     this.setState(this.buildStateFromProps(props))
   }

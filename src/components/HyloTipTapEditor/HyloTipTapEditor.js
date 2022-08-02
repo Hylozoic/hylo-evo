@@ -108,7 +108,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
     isEmpty: () => {
       return editorRef.current.isEmpty
     },
-    reset: () => {
+    clearContent: () => {
       editorRef.current.commands.clearContent()
     },
     setContent: content => {

@@ -47,7 +47,7 @@ export default class CommentForm extends Component {
       return true
     }
 
-    this.editor.current.reset()
+    this.editor.current.clearContent()
     this.startTyping.cancel()
     sendIsTyping(false)
     createComment({ text: contentHTML, attachments })

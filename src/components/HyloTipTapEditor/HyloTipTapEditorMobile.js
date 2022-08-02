@@ -28,10 +28,12 @@ export default function HyloTipTapEditorMobile () {
   ))
 
   const handleEnter = useCallback(() => {
-    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
+    if (editorRef.current) {
+      sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
 
-    // Tell Editor this keyboard event was handled and to end propagation.
-    return true
+      // Tell Editor this keyboard event was handled and to end propagation.
+      return true
+    }
   })
 
   const handleAddTopic = useCallback(topic => (
@@ -42,14 +44,22 @@ export default function HyloTipTapEditorMobile () {
     try {
       const { type, data } = JSON.parse(message.data)
 
-      if (type === WebViewMessageTypes.EDITOR.SET_PROPS) {
-        const propsToSet = pickBy(p => p !== undefined, data)
+      switch (type) {
+        case WebViewMessageTypes.EDITOR.CLEAR_CONTENT: {
+          editorRef.current && editorRef.current.clearContent()
+          break
+        }
 
-        if ('content' in propsToSet) setContentHTML(propsToSet.content)
-        if ('readOnly' in propsToSet) setReadOnly(propsToSet.readOnly)
-        if ('hideMenu' in propsToSet) setHideMenu(propsToSet.hideMenu)
-        if ('placeholder' in propsToSet) setPlaceholder(propsToSet.placeholder)
-        if ('groupIds' in propsToSet) setGroupIds(propsToSet.groupIds)
+        case WebViewMessageTypes.EDITOR.SET_PROPS: {
+          const propsToSet = pickBy(p => p !== undefined, data)
+
+          if ('content' in propsToSet) setContentHTML(propsToSet.content)
+          if ('readOnly' in propsToSet) setReadOnly(propsToSet.readOnly)
+          if ('hideMenu' in propsToSet) setHideMenu(propsToSet.hideMenu)
+          if ('placeholder' in propsToSet) setPlaceholder(propsToSet.placeholder)
+          if ('groupIds' in propsToSet) setGroupIds(propsToSet.groupIds)
+          break
+        }
       }
     } catch (err) {
       console.log('!!! error in handleMessage', err)
