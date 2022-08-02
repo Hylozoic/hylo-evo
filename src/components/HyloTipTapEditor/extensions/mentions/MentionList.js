@@ -44,11 +44,6 @@ export default forwardRef(({ items, command }, ref) => {
         return true
       }
 
-      if (event.key === ' ') {
-        selectItem(selectedIndex)
-        return true
-      }
-
       return false
     }
   }))
