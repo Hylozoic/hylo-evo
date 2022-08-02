@@ -7,6 +7,19 @@ export default {
     let component
     let popup
 
+    const createPopup = clientRect => {
+      return tippy('body', {
+        getReferenceClientRect: clientRect,
+        appendTo: () => document.body,
+        content: component.element,
+        showOnCreate: true,
+        interactive: true,
+        trigger: 'manual',
+        offset: -10,
+        placement: 'bottom-start'
+      })
+    }
+
     return {
       onStart: props => {
         component = new ReactRenderer(MentionList, {
@@ -18,16 +31,7 @@ export default {
           return
         }
 
-        popup = tippy('body', {
-          getReferenceClientRect: props.clientRect,
-          appendTo: () => document.body,
-          content: component.element,
-          showOnCreate: true,
-          interactive: true,
-          trigger: 'manual',
-          offset: -10,
-          placement: 'bottom-start'
-        })
+        popup = createPopup(props.clientRect)
       },
 
       onUpdate (props) {
@@ -35,14 +39,20 @@ export default {
 
         component.updateProps(props)
 
-        popup[0].setProps({
-          getReferenceClientRect: props.clientRect
-        })
+        if (popup[0].state.isDestroyed) {
+          popup = createPopup(props.clientRect)
+        } else {
+          popup[0].setProps({
+            getReferenceClientRect: props.clientRect
+          })
+        }
       },
 
       onKeyDown (props) {
         if (props.event.key === 'Escape') {
-          popup[0].hide()
+          // Seems to be better to destroy and re-create in this case
+          // popup[0].hide()
+          this.onExit()
 
           return true
         }
@@ -51,7 +61,7 @@ export default {
       },
 
       onExit () {
-        console.log('!!! Mention Plugin `suggestion.onExit()` called early?')
+        // console.log('!!! Mention Plugin `suggestion.onExit()` called early?')
         popup && popup[0].destroy()
         component && component.destroy()
       }

@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'rea
 import Avatar from 'components/Avatar'
 import './MentionList.scss'
 
-export default forwardRef(({ items, command, ...props }, ref) => {
+export default forwardRef(({ items, command }, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const selectItem = index => {

@@ -29,7 +29,13 @@ ul li p:last-child {
   margin-bottom: 0;
 }
 
-.mention, .topic, .hastag {
+.mention,
+.topic,
+.hashtag,
+// NOTE: Extra not `href` and `tabindex` stuff is to grab back from bootstrap
+a:not([href]):not([tabindex])[data-entity-type="#mention"],
+a:not([href]):not([tabindex])[data-entity-type="mention"]
+{
   color: $color-caribbean-green;
   cursor: pointer;
   &:hover {

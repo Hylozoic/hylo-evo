@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import AttachmentManager from 'components/AttachmentManager'
-import HyloTipTapEditor, { EMPTY_EDITOR_CONTENT_HTML } from 'components/HyloTipTapEditor'
+import HyloTipTapEditor from 'components/HyloTipTapEditor'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
@@ -34,7 +34,7 @@ export default class CommentForm extends Component {
     this.props.sendIsTyping(true)
   })
 
-  handleSave = contentHTML => {
+  handleOnEnter = contentHTML => {
     const {
       createComment,
       sendIsTyping,
@@ -42,8 +42,8 @@ export default class CommentForm extends Component {
       clearAttachments
     } = this.props
 
-    if (contentHTML === EMPTY_EDITOR_CONTENT_HTML) {
-      // Do nothing and stop propagation
+    if (this.editor?.current && this.editor.current.isEmpty()) {
+      // Do nothing and stop event propagation
       return true
     }
 
@@ -76,7 +76,7 @@ export default class CommentForm extends Component {
           }
           <HyloTipTapEditor
             contentHTML={editorContent}
-            onEnter={this.handleSave}
+            onEnter={this.handleOnEnter}
             styleName='editor'
             readOnly={!currentUser}
             hideMenu

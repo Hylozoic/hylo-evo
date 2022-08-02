@@ -18,24 +18,22 @@ import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import './HyloTipTapEditor.scss'
 
-export const EMPTY_EDITOR_CONTENT_HTML = '<p></p>'
-
 export const HyloTipTapEditor = React.forwardRef(({
   className,
   placeholder,
   onChange,
   onBeforeCreate = () => {},
-  onEscape,
   onEnter,
   onAddMention,
   onAddTopic,
-  // Should the default be empty or a paragraph?
   contentHTML,
   readOnly,
   hideMenu,
+  // Mention suggestions will use this to filter if provided
   groupIds
 }, ref) => {
   const dispatch = useDispatch()
+  const editorRef = useRef(null)
   const editor = useEditor({
     content: contentHTML,
 
@@ -44,6 +42,7 @@ export const HyloTipTapEditor = React.forwardRef(({
     onUpdate: ({ editor, transaction }) => {
       // Look into `doc.descendents` for possible better or more idiomatic way to get this last node
       const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
+      console.log('!!! editor.schema', editor.getText())
 
       if (firstTransactionStepName) {
         const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
@@ -64,7 +63,7 @@ export const HyloTipTapEditor = React.forwardRef(({
       if (
         !onChange ||
         (contentHTML === editor.getHTML()) ||
-        ((editor.getHTML() === EMPTY_EDITOR_CONTENT_HTML) && isEmpty(contentHTML))
+        (editor.isEmpty && isEmpty(contentHTML))
       ) return
 
       onChange(editor.getHTML())
@@ -75,14 +74,8 @@ export const HyloTipTapEditor = React.forwardRef(({
       Extension.create({
         addKeyboardShortcuts () {
           return {
-            Escape: () => {
-              if (!onEscape) return false
-
-              return onEscape()
-            },
             Enter: ({ editor }) => {
               if (!onEnter) return false
-
               return onEnter(editor.getHTML())
             }
           }
@@ -104,11 +97,11 @@ export const HyloTipTapEditor = React.forwardRef(({
       Mention
         .extend({
           name: 'mention',
-          // NOTE: When mark is at the end of a block without a trailing space `getText()`
-          // runs it into the next block's text. This fixes that, but will result in an
-          // extra space in plain text output.
-          renderText ({ node }) {
-            return this.options.renderLabel({ node, options: this.options }) + ' '
+          addStorage () {
+            return {
+              loading: false,
+              groupIds
+            }
           }
         })
         .configure({
@@ -122,13 +115,15 @@ export const HyloTipTapEditor = React.forwardRef(({
             char: '@',
             pluginKey: new PluginKey('mentionSuggestion'),
             render: suggestion.render,
-            items: asyncDebounce(200, async ({ query }) => {
+            items: asyncDebounce(200, async ({ query, editor }) => {
+              editor.extensionStorage.topic.loading = true
+
               const matchedPeople = await dispatch(findMentions({
                 autocomplete: query,
-                // TODO: `groupIds` will not be refreshed. Set those on extension data on change (in a `useEffect`)
-                groupIds
+                groupIds: editor.extensionStorage.mention.groupIds
               }))
 
+              editor.extensionStorage.topic.loading = false
               return matchedPeople?.payload.getData().items
                 .map(person => ({ id: person.id, label: person.name, avatarUrl: person.avatarUrl }))
             })
@@ -139,9 +134,10 @@ export const HyloTipTapEditor = React.forwardRef(({
       Mention
         .extend({
           name: 'topic',
-          // * See note on `renderText` for mention above
-          renderText ({ node }) {
-            return this.options.renderLabel({ node, options: this.options }) + ' '
+          addStorage () {
+            return {
+              loading: false
+            }
           }
         })
         .configure({
@@ -155,10 +151,12 @@ export const HyloTipTapEditor = React.forwardRef(({
             char: '#',
             pluginKey: new PluginKey('topicSuggestion'),
             render: suggestion.render,
-            items: asyncDebounce(200, async ({ query }) => {
+            items: asyncDebounce(200, async ({ query, editor }) => {
               // Note: Will show "No Result" while loading results.
               //       Can be fixed if it is a bad UX.
+              editor.extensionStorage.topic.loading = true
               const matchedTopics = await dispatch(findTopics(query))
+              editor.extensionStorage.topic.loading = false
               const results = matchedTopics?.payload.getData().items
                 .map(t => ({ id: t.topic.id, label: t.topic.name }))
 
@@ -166,7 +164,9 @@ export const HyloTipTapEditor = React.forwardRef(({
                 results.unshift({ id: query, label: query })
               }
 
-              // Re. `uniqBy`: Backend method should be de-duping these entries.
+              editor.extensionStorage.topic.loading = false
+
+              // Re. `uniqBy`: It would be better if the backend didn't send duplicate entries
               return uniqBy('label', results)
             })
           }
@@ -174,10 +174,10 @@ export const HyloTipTapEditor = React.forwardRef(({
 
       Link.configure({
         openOnClick: false
-        // NOTE: This is needed due to `linkifyjs-hashtag` being included by
+        // NOTE: This was needed due to `linkifyjs-hashtag` being included by
         //       `hylo-shared` and it causing TipTap's extension (which uses linkifyjs)
         //       to identify hashtags as links. Can be removed if the linkify situation
-        //       changes.
+        //       changes. Linkify Hashtag extension has now been removed.
         // validate: href => /^\w/.test(href)
       }),
 
@@ -187,8 +187,6 @@ export const HyloTipTapEditor = React.forwardRef(({
       Highlight
     ]
   }, [placeholder, contentHTML])
-
-  const editorRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
     focus: () => {
@@ -213,9 +211,9 @@ export const HyloTipTapEditor = React.forwardRef(({
 
   useEffect(() => {
     if (!editor) return
-
+    if (groupIds) editor.extensionStorage.mention.groupIds = groupIds
     editor.setEditable(!readOnly)
-  }, [editor, readOnly])
+  }, [editor, groupIds, readOnly])
 
   if (!editor) return null
 
@@ -238,7 +236,7 @@ export default HyloTipTapEditor
 //   console.log(
 //     '!!! in onUpdate for Mention Topic plug - transaction',
 //     // transaction
-//     get('steps[0x].slice.content.content[0].marks', transaction),
+//     get('steps[0].slice.content.content[0].marks', transaction),
 //     get('steps', transaction)
 //     // transaction.doc.descendants(node => console.log('!!! test', node.marks))
 //   )

@@ -11,7 +11,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
-import HyloTipTapEditor, { EMPTY_EDITOR_CONTENT_HTML } from 'components/HyloTipTapEditor'
+import HyloTipTapEditor from 'components/HyloTipTapEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
@@ -31,6 +31,8 @@ export class Comment extends Component {
     removeComment: func
   }
 
+  editor = React.createRef()
+
   state = {
     editing: false
   }
@@ -39,16 +41,16 @@ export class Comment extends Component {
     this.setState({ editing: true })
   }
 
-  handleEscape = () => {
+  handleOnEscape = () => {
     this.setState({ editing: false })
 
     return true
   }
 
-  handleSave = contentHTML => {
+  handleOnEnter = contentHTML => {
     const { comment } = this.props
 
-    if (contentHTML === EMPTY_EDITOR_CONTENT_HTML) {
+    if (this.editor?.current && this.editor.current.isEmpty()) {
       // Do nothing and stop propagation
       return true
     }
@@ -99,8 +101,9 @@ export class Comment extends Component {
             styleName='editor'
             contentHTML={text || ''}
             hideMenu
-            onEscape={this.handleEscape}
-            onEnter={this.handleSave}
+            onEscape={this.handleOnEscape}
+            onEnter={this.handleOnEnter}
+            ref={this.editor}
           />
         )}
         {!editing && (

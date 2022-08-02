@@ -1,1 +1,3 @@
-export { HyloTipTapEditor as default, EMPTY_EDITOR_CONTENT_HTML } from './HyloTipTapEditor'
+import component from './HyloTipTapEditor'
+
+export default component
