@@ -1,59 +1,24 @@
 import React from 'react'
-import { PluginKey } from 'prosemirror-state'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Mention from '@tiptap/extension-mention'
-// import { lowlight } from 'lowlight'
-// import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Link from '@tiptap/extension-link'
+import Highlight from '@tiptap/extension-highlight'
+import TopicMentions from './extensions/TopicMentions'
+import PeopleMentions from './extensions/PeopleMentions'
+import Iframe from './extensions/Iframe'
 
 export default function HyloTipTapRender ({ className, contentHTML }) {
   const editor = useEditor({
     content: contentHTML,
     editable: false,
     extensions: [
-      StarterKit.configure({
-        // codeBlock: false,
-        heading: {
-          levels: [1, 2, 3]
-        }
-      }),
-
-      // CodeBlockLowlight.configure({ lowlight })
-
-      Mention
-        .extend({
-          name: 'mention'
-        })
-        .configure({
-          HTMLAttributes: {
-            class: 'mention'
-          },
-          renderLabel: ({ node }) => {
-            return node.attrs.label
-          },
-          suggestion: {
-            char: '@',
-            pluginKey: new PluginKey('mention')
-          }
-        }),
-
-      // Topics
-      Mention
-        .extend({
-          name: 'topic'
-        })
-        .configure({
-          HTMLAttributes: {
-            class: 'topic'
-          },
-          renderLabel: ({ options, node }) => {
-            return `${options.suggestion.char}${node.attrs.label}`
-          },
-          suggestion: {
-            char: '#',
-            pluginKey: new PluginKey('topic')
-          }
-        })
+      StarterKit,
+      PeopleMentions(),
+      TopicMentions(),
+      // These may not be needed for render
+      Link,
+      Iframe, // Embed (Video)
+      Highlight
     ]
   }, [contentHTML])
 
@@ -64,34 +29,17 @@ export default function HyloTipTapRender ({ className, contentHTML }) {
   )
 }
 
-// import React, { useMemo } from 'react'
-// import { lowlight } from 'lowlight/lib/common'
-// import { generateJSON } from '@tiptap/core'
-// import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-// import Link from '@tiptap/extension-link'
-// import StarterKit from '@tiptap/starter-kit'
-// import Highlight from '@tiptap/extension-highlight'
-// // Option 1: Browser + server-side
-
+// == Working Notes ==
+//
+// How to generate ProseMirror JSON from HTML:
 // export function generateProsemirrorJSONFromHTML ({ contentHTML, className }) => {
 //   const output = useMemo(() => {
 //     return generateJSON(contentHTML , [
-//       StarterKit.configure({
-//         codeBlock: false
-//       }),
-//       Link,
-//       CodeBlockLowlight.configure({
-//         lowlight
-//       }),
-//       Highlight
+//       // ... as above
 //     ])
 //   }, [contentHTML])
-
+//
 //   return (
 //     <div className={className} dangerouslySetInnerHTML={{ __html: output }} />
 //   )
 // }
-
-// {/* <pre>
-// <code>{JSON.stringify(output, null, 2)}</code>
-// </pre> */}
