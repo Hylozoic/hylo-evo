@@ -169,12 +169,11 @@ export default class GroupSettingsTab extends Component {
       .concat([{ label: 'No filter', onClick: () => this.updateSettingDirectly('customview.postTypes')([]) }])
     return (
       <div styleName='styles.custom-view-container'>
-        <SettingsControl label='Custom View Label' onChange={this.updateSetting('customview.name')} value={name} />
+        {icon ? <Icon green name={icon} /> : null}<SettingsControl label='Custom View Label' onChange={this.updateSetting('customview.name')} value={name} />
         <SettingsControl label='Select Icon' onChange={(value) => this.updateSettingDirectly('customview.icon')(value)} value={icon} type='icon-selector' />
         <SettingsControl label='External link' onChange={this.updateSetting('customview.externalLink')} value={sanitizeURL(externalLink)} />
+        <div styleName='styles.help-text'>You can point to an external URL, OR display a customized view of your group's posts</div>
         {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>Must be a valid URL!</div>}
-        <div styleName='styles.help-text'>You can put in a URL or specify filters for your groups posts</div>
-
         <h5> Custom Internal View</h5>
         <label styleName='styles.label'>View Style</label>
         <Dropdown
@@ -190,7 +189,7 @@ export default class GroupSettingsTab extends Component {
             onClick: () => this.updateSettingDirectly('customview.viewMode')(value)
           }))}
         />
-        <div style={{ paddingTop: '4px', paddinBottom: '4px' }}>
+        <div style={{ paddingTop: '4px', paddingBottom: '4px' }}>
           <label styleName='styles.label'>Post Types</label>
           <Dropdown
             styleName='styles.location-obfuscation-dropdown'
@@ -325,8 +324,8 @@ export default class GroupSettingsTab extends Component {
             placeholder='What skills and interests are most relevant to your group?' />
         </SettingsSection>
         <SettingsSection>
-          <h3>Manage Custom Views</h3>
-          <div styleName='styles.help-text'>Add and edit a custom link for the navigation panel of your group</div>
+          <h3>Custom View</h3>
+          <div styleName='styles.help-text'>Add a custom link orview to your group's navigation</div>
           {this.renderCustomViewUI()}
         </SettingsSection>
 

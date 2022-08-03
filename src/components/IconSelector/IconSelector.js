@@ -119,7 +119,7 @@ export default function IconSelector ({ selectedIcon, updateIcon }) {
       </div>
       <div styleName='icon-options'>
         {iconList.map((icon) => (
-          <Icon key={icon} styleName='icon' name={icon} onClick={() => updateIcon(icon)} />
+          <Icon key={icon} styleName='icon' name={icon} onClick={() => updateIcon(icon)} green={icon === selectedIcon} />
         ))}
       </div>
     </div>
