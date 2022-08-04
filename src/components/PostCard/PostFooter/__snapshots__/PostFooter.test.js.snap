@@ -4,26 +4,34 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
 <div
   data-stylename="footer"
 >
-  <RoundImageRow
-    data-stylename="people"
-    imageUrls={
+  <PeopleInfo
+    excludePersonId="2"
+    people={
       Array [
-        "",
-        "",
-        "",
+        Object {
+          "avatarUrl": "",
+          "id": "1",
+          "name": "Joe Smith",
+        },
+        Object {
+          "avatarUrl": "",
+          "id": "2",
+          "name": "Sue Jones",
+        },
+        Object {
+          "avatarUrl": "",
+          "id": "3",
+          "name": "Scary Terry",
+        },
+        Object {
+          "avatarUrl": "",
+          "id": "4",
+          "name": "John Larkin",
+        },
       ]
     }
+    peopleTotal={4}
   />
-  <span
-    data-stylename="caption"
-    style={
-      Object {
-        "cursor": "inherit",
-      }
-    }
-  >
-    Joe, Scary and 2 others commented
-  </span>
   <a
     data-for="postfooter-tt-undefined"
     data-stylename="vote-button"
@@ -48,26 +56,34 @@ exports[`PostFooter matches the latest snapshot 1`] = `
 <div
   data-stylename="footer"
 >
-  <RoundImageRow
-    data-stylename="people"
-    imageUrls={
+  <PeopleInfo
+    excludePersonId="2"
+    people={
       Array [
-        "",
-        "",
-        "",
+        Object {
+          "avatarUrl": "",
+          "id": "1",
+          "name": "Joe Smith",
+        },
+        Object {
+          "avatarUrl": "",
+          "id": "2",
+          "name": "Sue Jones",
+        },
+        Object {
+          "avatarUrl": "",
+          "id": "3",
+          "name": "Scary Terry",
+        },
+        Object {
+          "avatarUrl": "",
+          "id": "4",
+          "name": "John Larkin",
+        },
       ]
     }
+    peopleTotal={4}
   />
-  <span
-    data-stylename="caption"
-    style={
-      Object {
-        "cursor": "inherit",
-      }
-    }
-  >
-    Joe, Scary and 2 others commented
-  </span>
   <a
     data-for="postfooter-tt-undefined"
     data-stylename="vote-button voted"
@@ -92,20 +108,10 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
 <div
   data-stylename="footer"
 >
-  <RoundImageRow
-    data-stylename="people"
-    imageUrls={Array []}
+  <PeopleInfo
+    people={Array []}
+    peopleTotal={0}
   />
-  <span
-    data-stylename="caption"
-    style={
-      Object {
-        "cursor": "inherit",
-      }
-    }
-  >
-    No one is attending yet
-  </span>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -117,24 +123,11 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
 <div
   data-stylename="footer"
 >
-  <RoundImageRow
-    data-stylename="people"
-    imageUrls={
-      Array [
-        "",
-      ]
-    }
+  <PeopleInfo
+    excludePersonId="2"
+    people={Array []}
+    peopleTotal={0}
   />
-  <span
-    data-stylename="caption"
-    style={
-      Object {
-        "cursor": "inherit",
-      }
-    }
-  >
-    Sarah is a member
-  </span>
   <a
     data-for="postfooter-tt-undefined"
     data-stylename="vote-button"

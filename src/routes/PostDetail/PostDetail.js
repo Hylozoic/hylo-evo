@@ -23,6 +23,7 @@ import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import ProjectContributions from './ProjectContributions'
 import PostPeopleDialog from 'components/PostPeopleDialog'
+import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
@@ -150,7 +151,6 @@ export default class PostDetail extends Component {
     const postFooter = <PostFooter
       {...post}
       voteOnPost={voteOnPost}
-      onClick={togglePeopleDialog}
       currentUser={currentUser}
     />
 
@@ -164,10 +164,12 @@ export default class PostDetail extends Component {
         <CardImageAttachments attachments={post.attachments} linked />
         <PostTags tags={post.tags} />
         {isEvent && <EventBody
+          currentUser={currentUser}
           styleName='body'
           expanded
           slug={routeParams.groupSlug}
           event={post}
+          togglePeopleDialog={togglePeopleDialog}
           respondToEvent={respondToEvent} />}
         {!isEvent && <PostBody
           styleName='body'
@@ -176,10 +178,14 @@ export default class PostDetail extends Component {
           slug={routeParams.groupSlug}
           {...post} />}
         {isProject && <div styleName='join-project-button-container'>
-          <JoinProjectButton
+          <JoinProjectSection
+            currentUser={currentUser}
             joinProject={joinProject}
             leaveProject={leaveProject}
-            leaving={isProjectMember} />
+            leaving={isProjectMember}
+            members={post.members}
+            togglePeopleDialog={togglePeopleDialog}
+          />
         </div>}
         {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
           <ProjectContributions
@@ -219,16 +225,32 @@ export function PostTags ({ tags, slug }) {
   </div>
 }
 
-export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
+export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {
   const buttonText = leaving ? 'Leave Project' : 'Join Project'
   const onClick = () => leaving ? leaveProject() : joinProject()
 
-  return <Button
-    color='green'
-    key='join-project-button'
-    narrow
-    onClick={onClick}
-    styleName='join-project-button'>
-    {buttonText}
-  </Button>
+  return (
+    <div>
+      <PeopleInfo
+        people={members}
+        peopleTotal={members.length}
+        excludePersonId={get('id', currentUser)}
+        onClick={togglePeopleDialog}
+        phrases={{
+          emptyMessage: 'No project members',
+          phraseSingular: 'is a member',
+          mePhraseSingular: 'are a member',
+          pluralPhrase: 'are members'
+        }}
+      />
+      <Button
+        color='green'
+        key='join-project-button'
+        narrow
+        onClick={onClick}
+        styleName='join-project-button'>
+        {buttonText}
+      </Button>
+    </div>
+  )
 }
