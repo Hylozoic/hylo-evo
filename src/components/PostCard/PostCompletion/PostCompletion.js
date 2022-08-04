@@ -3,10 +3,10 @@ import './PostCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
 const promptOptions = {
-  request: 'Is this still needed?',
-  offer: 'Is this still available?',
-  resource: 'Is this still available?',
-  project: 'Is this still active?'
+  request: 'Is this project still needed?',
+  offer: 'Is this project still available?',
+  resource: 'Is this project still available?',
+  project: 'Is this project still active?'
 }
 
 const messages = {
