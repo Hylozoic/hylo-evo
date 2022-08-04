@@ -8,7 +8,7 @@ export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ activePostsOnly = false, afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic }) {
+export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
