@@ -29,18 +29,7 @@ const messages = {
 }
 
 export default function PostCompletion ({ type, startTime, endTime, isFulfilled, fulfillPost, unfulfillPost }) {
-  var label
-
-  switch (isFulfilled) {
-    case false:
-      label = messages[type].find(choice => choice.value === false).label
-      break
-    case true:
-      label = messages[type].find(choice => choice.value === true).label
-      break
-    default:
-      label = 'This is still needed'
-  }
+  const label = messages[type].find(choice => choice.value === !!isFulfilled).label
 
   const prompt = promptOptions[type]
   const choices = messages[type]
