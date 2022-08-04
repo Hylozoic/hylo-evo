@@ -18,7 +18,6 @@ export default class PostFooter extends React.PureComponent {
     constrained: PropTypes.bool,
     votesTotal: PropTypes.number,
     myVote: PropTypes.bool,
-    members: PropTypes.arrayOf(PropTypes.shape(PERSON_PROP_TYPES)),
     voteOnPost: PropTypes.func.isRequired,
     onClick: PropTypes.func
   }
@@ -29,10 +28,9 @@ export default class PostFooter extends React.PureComponent {
       commenters,
       commentersTotal,
       constrained,
-      donationsLink,
       myVote,
       postId,
-      projectManagementLink,
+      type,
       votesTotal
     } = this.props
     const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
@@ -41,22 +39,6 @@ export default class PostFooter extends React.PureComponent {
 
     return (
       <div styleName={cx('footer', { constrained })}>
-        {donationsLink &&
-          <a data-tip='Donate to this project' data-for={tooltipId + '-donate'} styleName='icon-links' href={donationsLink} target='_blank' rel='noreferrer'>
-            <Icon green styleName='icon' name='Loans' />
-            <Tooltip
-              delay={550}
-              id={tooltipId + '-donate'}
-            />
-          </a>}
-        {projectManagementLink &&
-          <a data-tip='Look at the project management tool' data-for={tooltipId + '-manage'} styleName='icon-links' href={projectManagementLink} target='_blank' rel='noreferrer'>
-            <Icon green styleName='icon' name='Mentorship' />
-            <Tooltip
-              delay={550}
-              id={tooltipId + '-manage'}
-            />
-          </a>}
         <PeopleInfo people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
         { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
           data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
@@ -67,7 +49,6 @@ export default class PostFooter extends React.PureComponent {
           delay={550}
           id={tooltipId}
         />
-
       </div>
     )
   }

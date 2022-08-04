@@ -122,6 +122,12 @@ export default class PostDetail extends Component {
     const isProject = get('type', post) === 'project'
     const isEvent = get('type', post) === 'event'
 
+    const m = post.projectManagementLink ? post.projectManagementLink.match(/(asana|trello|airtable|clickup|confluence|teamwork|notion|wrike|zoho)/) : null
+    const projectManagementTool = m ? m[1] : null
+
+    const d = post.donationsLink ? post.donationsLink.match(/(cash|clover|gofundme|opencollective|paypal|squareup|venmo)/) : null
+    const donationService = d ? d[1] : null
+
     const { acceptContributions, totalContributions } = post || {}
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
@@ -177,15 +183,36 @@ export default class PostDetail extends Component {
           routeParams={routeParams}
           slug={routeParams.groupSlug}
           {...post} />}
-        {isProject && <div styleName='join-project-button-container'>
-          <JoinProjectSection
-            currentUser={currentUser}
-            joinProject={joinProject}
-            leaveProject={leaveProject}
-            leaving={isProjectMember}
-            members={post.members}
-            togglePeopleDialog={togglePeopleDialog}
-          />
+        {isProject && <div>
+          <div styleName='join-project-button-container'>
+            <JoinProjectSection
+              currentUser={currentUser}
+              joinProject={joinProject}
+              leaveProject={leaveProject}
+              leaving={isProjectMember}
+              members={post.members}
+              togglePeopleDialog={togglePeopleDialog}
+            />
+          </div>
+          {post.projectManagementLink && projectManagementTool &&
+            <div styleName='project-management-tool'>
+              <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
+              <div><a styleName='project-button' href={post.projectManagementLink}>View tasks</a></div>
+            </div>}
+          {post.projectManagementLink && !projectManagementTool &&
+            <div>
+              View project management tool {post.projectManagementLink}
+            </div>}
+
+          {post.donationsLink && donationService &&
+            <div styleName='donate'>
+              <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
+              <div><a styleName='project-button' href={post.donationsLink}>Contribute</a></div>
+            </div>}
+          {post.donationsLink && !donationService &&
+            <div>
+              Contribute financially to this project at {post.donationsLink}
+            </div>}
         </div>}
         {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
           <ProjectContributions
@@ -230,7 +257,7 @@ export function JoinProjectSection ({ currentUser, members, leaving, joinProject
   const onClick = () => leaving ? leaveProject() : joinProject()
 
   return (
-    <div>
+    <div styleName='join-project'>
       <PeopleInfo
         people={members}
         peopleTotal={members.length}
@@ -244,11 +271,9 @@ export function JoinProjectSection ({ currentUser, members, leaving, joinProject
         }}
       />
       <Button
-        color='green'
         key='join-project-button'
-        narrow
         onClick={onClick}
-        styleName='join-project-button'>
+        styleName='project-button'>
         {buttonText}
       </Button>
     </div>
