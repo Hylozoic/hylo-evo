@@ -8,6 +8,7 @@ import NoPosts from 'components/NoPosts'
 import PostListRow from 'components/PostListRow'
 import PostCard from 'components/PostCard'
 import PostGridItem from 'components/PostGridItem'
+import PostBigGridItem from 'components/PostBigGridItem'
 import ScrollListener from 'components/ScrollListener'
 import ViewControls from 'components/StreamViewControls'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
@@ -18,7 +19,8 @@ const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== 
 const viewComponent = {
   cards: PostCard,
   list: PostListRow,
-  grid: PostGridItem
+  grid: PostGridItem,
+  bigGrid: PostBigGridItem
 }
 
 export default class Stream extends Component {
@@ -98,7 +100,7 @@ export default class Stream extends Component {
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView}
         />
-        <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid' })}>
+        <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
             const expanded = selectedPostId === post.id

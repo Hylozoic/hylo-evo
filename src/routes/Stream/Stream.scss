@@ -11,6 +11,19 @@
   gap: 8px;
 }
 
+.big-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.big-grid-item {
+  border: 1px solid red;
+}
+
 // :DUPE: @see FeedList.scss
 .card-item {
   margin: 0 $space-4x $space-6x;
