@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
-import { PERSON_PROP_TYPES } from 'store/models/Person'
 import { find, get, sortBy, isFunction } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
@@ -11,7 +10,6 @@ import Tooltip from 'components/Tooltip'
 
 export default class PostFooter extends React.PureComponent {
   static propTypes= {
-    type: PropTypes.string,
     currentUser: PropTypes.shape(CURRENT_USER_PROP_TYPES),
     commenters: PropTypes.array,
     commentersTotal: PropTypes.number,
@@ -30,7 +28,6 @@ export default class PostFooter extends React.PureComponent {
       constrained,
       myVote,
       postId,
-      type,
       votesTotal
     } = this.props
     const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined

@@ -9,10 +9,10 @@ const commenters = [
   { name: 'John Larkin', id: '4', avatarUrl: '' }
 ]
 
-const commentersUnsorted = [
-  { name: 'Sue Jones', id: '2', avatarUrl: '' },
-  { name: 'Joe Smith', id: '1', avatarUrl: '' }
-]
+// const commentersUnsorted = [
+//   { name: 'Sue Jones', id: '2', avatarUrl: '' },
+//   { name: 'Joe Smith', id: '1', avatarUrl: '' }
+// ]
 
 describe('PostFooter', () => {
   it('matches the latest snapshot', () => {
