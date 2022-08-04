@@ -124,7 +124,7 @@ export default class PostFooter extends React.PureComponent {
         />
 
       </div>
-      )
+    )
   }
 }
 

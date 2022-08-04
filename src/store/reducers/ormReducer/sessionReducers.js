@@ -11,10 +11,6 @@ export {
 } from 'components/PostCard/PostHeader/PostHeader.store'
 
 export {
-  ormSessionReducer as postBodyReducer
-} from 'components/PostCard/PostBody/PostBody.store'
-
-export {
   ormSessionReducer as inviteSettingsTabReducer
 } from 'routes/GroupSettings/InviteSettingsTab/InviteSettingsTab.store'
 

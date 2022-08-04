@@ -157,7 +157,7 @@ export default class PostDetail extends Component {
     return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
       <div styleName={cx('post', { 'noUser': !currentUser })}>
         <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
+        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} expanded />
         {atHeader && <div styleName='header-sticky' style={headerStyle}>
           <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
         </div>}
