@@ -38,7 +38,6 @@ export default function PostBigGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
-        <h3 styleName='title'>{title}</h3>
 
         {/*  Will fix this after I get attachment variables */}
         {/* {post.type === 'event' */
@@ -69,17 +68,20 @@ export default function PostBigGridItem (props) {
 
         <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         <div styleName='grid-meta'>
+          <h3 styleName='title'>{title}</h3>
           <div styleName='project-actions'>
             <div styleName='project-action'>
               Contribute on <img src='/assets/payment-services/paypal.svg' />
             </div>
           </div>
-          <div styleName='type-author'>
-            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
-            {creator.name}
-          </div>
-          <div styleName='timestamp'>
-            {TextHelpers.humanDate(createdAt)}
+          <div styleName='author'>
+            <div styleName='type-author'>
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+              {creator.name}
+            </div>
+            <div styleName='timestamp'>
+              {TextHelpers.humanDate(createdAt)}
+            </div>
           </div>
         </div>
       </div>

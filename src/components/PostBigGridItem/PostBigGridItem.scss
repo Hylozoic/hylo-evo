@@ -12,16 +12,6 @@
   .content-summary {
     padding: 0;
 
-    .title {
-      color: white;
-      background-color: rgba(35, 65, 91, 0);
-      position: absolute;
-      bottom: 120px;
-      font-size: 16px;
-      width: 100%;
-      z-index: 5;
-    }
-
     .first-image {
       position: absolute;
       top: 0;
@@ -39,6 +29,16 @@
       z-index: 1;
       height: auto;
       background: linear-gradient(180deg, rgba(42, 64, 89, .3) 0%, rgba(42, 64, 89, 0.79) 61.98%, rgba(42, 64, 89, 0.85) 100%);
+
+      .title {
+        color: white;
+        background-color: rgba(35, 65, 91, 0);
+        position: relative;
+        bottom: initial;
+        font-size: 16px;
+        width: 100%;
+        z-index: 5;
+      }
     }
   }
 
@@ -85,26 +85,6 @@
   flex: 1 1 auto;
   overflow: hidden;
 
-
-  .title {
-    color: $color-member;
-    font-size: 14px;
-    line-height: 18px;
-    margin: 0;
-    display: flex;
-    max-height: 72px;
-    text-overflow: ellipsis;
-    padding: 5px;
-    overflow: hidden;
-    display: block;
-    white-space: nowrap;
-
-    span {
-      font-size: 10px;
-      font-weight: normal;
-    }
-  }
-
   .details {
     color: $color-regent;
     height: auto;
@@ -130,6 +110,27 @@
     padding-right: 15px;
     padding-left: 3px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 49.48%, #FFFFFF 100%);
+
+
+    .title {
+      color: $color-member;
+      font-size: 14px;
+      line-height: 18px;
+      margin: 0;
+      display: flex;
+      max-height: 72px;
+      text-overflow: ellipsis;
+      padding: 5px;
+      overflow: hidden;
+      display: block;
+      white-space: nowrap;
+
+      span {
+        font-size: 10px;
+        font-weight: normal;
+      }
+    }
+
 
     .project-actions {
       padding: 10px;
