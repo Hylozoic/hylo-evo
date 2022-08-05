@@ -38,7 +38,7 @@ export default function PostBigGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
-
+        <h3 styleName='title'>{title}</h3>
         {/*  Will fix this after I get attachment variables */}
         {/* {post.type === 'event' */
         /* ? <div styleName='date'> */
