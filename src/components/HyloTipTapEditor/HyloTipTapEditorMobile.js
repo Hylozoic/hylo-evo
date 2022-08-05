@@ -31,8 +31,8 @@ export default function HyloTipTapEditorMobile () {
     if (editorRef.current) {
       sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
 
-      // Tell Editor this keyboard event was handled and to end propagation.
-      return true
+      // Editor will continue propagation
+      return false
     }
   })
 
