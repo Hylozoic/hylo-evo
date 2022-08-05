@@ -23,6 +23,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   contentHTML,
   readOnly,
   hideMenu,
+  maxSuggestions = 7,
   // People Mention suggestions will use this to filter if provided
   groupIds
 }, ref) {
@@ -83,9 +84,9 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 
       Placeholder.configure({ placeholder }),
 
-      PeopleMentions({ groupIds, dispatch }),
+      PeopleMentions({ maxSuggestions, groupIds, dispatch }),
 
-      TopicMentions({ groupIds, dispatch }),
+      TopicMentions({ maxSuggestions, groupIds, dispatch }),
 
       Link.configure({ openOnClick: false }),
 

@@ -4,7 +4,7 @@ import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findMentions from 'store/actions/findMentions'
 
-export const PeopleMentions = ({ dispatch, groupIds }) =>
+export const PeopleMentions = ({ dispatch, maxSuggestions, groupIds }) =>
   // Mentions (https://github.com/ueberdosis/tiptap/issues/2219#issuecomment-984662243)
   Mention
     .extend({
@@ -33,7 +33,8 @@ export const PeopleMentions = ({ dispatch, groupIds }) =>
           // TODO: Integrate `getPeopleBySearchTerm` selector to reduce queries and speed results
           const matchedPeople = await dispatch(findMentions({
             autocomplete: query,
-            groupIds: editor.extensionStorage.mention.groupIds
+            groupIds: editor.extensionStorage.mention.groupIds,
+            maxItems: maxSuggestions
           }))
 
           editor.extensionStorage.topic.loading = false

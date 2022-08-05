@@ -1,13 +1,13 @@
 import gql from 'graphql-tag'
 import { FIND_MENTIONS } from 'store/constants'
 
-export default function findMentions ({ autocomplete, groupIds }) {
+export default function findMentions ({ autocomplete, groupIds, maxItems = 5 }) {
   return {
     type: FIND_MENTIONS,
     graphql: {
       query: gql`
-        query FindPeopleForMentions ($autocomplete: String, $groupIds: [String]) {
-          people(autocomplete: $autocomplete, first: 5, groupIds: $groupIds) {
+        query FindPeopleForMentions ($autocomplete: String, $groupIds: [String], $maxItems: Int) {
+          people(autocomplete: $autocomplete, first: $maxItems, groupIds: $groupIds) {
             items {
               id
               name
@@ -18,7 +18,8 @@ export default function findMentions ({ autocomplete, groupIds }) {
       `,
       variables: {
         autocomplete,
-        groupIds
+        groupIds,
+        maxItems
       }
     },
     meta: { extractModel: 'Person' }

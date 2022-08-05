@@ -2,13 +2,13 @@ import { get } from 'lodash/fp'
 import gql from 'graphql-tag'
 import { FIND_TOPICS } from 'store/constants'
 
-export default function findTopics (autocomplete) {
+export default function findTopics ({ autocomplete, maxItems = 7 }) {
   return {
     type: FIND_TOPICS,
     graphql: {
       query: gql`
-        query FindTopicsQuery ($autocomplete: String) {
-          groupTopics(autocomplete: $autocomplete, first: 7) {
+        query FindTopicsQuery ($autocomplete: String, $maxItems: Int) {
+          groupTopics(autocomplete: $autocomplete, first: $maxItems) {
             items {
               topic {
                 id
@@ -21,7 +21,8 @@ export default function findTopics (autocomplete) {
         }
       `,
       variables: {
-        autocomplete
+        autocomplete,
+        maxItems
       }
     },
     meta: {

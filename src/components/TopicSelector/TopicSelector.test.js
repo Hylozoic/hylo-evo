@@ -89,7 +89,7 @@ describe('TopicSelector', () => {
       const wrapper = renderComponent(shallow, { findTopics })
       const theInput = 'hithere'
       wrapper.instance().loadOptions(theInput)
-      expect(findTopics).toHaveBeenCalledWith(theInput)
+      expect(findTopics).toHaveBeenCalledWith({ autocomplete: theInput })
     })
   })
 

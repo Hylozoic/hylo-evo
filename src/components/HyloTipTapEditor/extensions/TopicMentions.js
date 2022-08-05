@@ -5,7 +5,7 @@ import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findTopics from 'store/actions/findTopics'
 
-export const TopicMentions = ({ dispatch, groupIds }) =>
+export const TopicMentions = ({ dispatch, maxSuggestions, groupIds }) =>
   Mention
     .extend({
       name: 'topic',
@@ -33,7 +33,10 @@ export const TopicMentions = ({ dispatch, groupIds }) =>
           editor.extensionStorage.topic.loading = true
 
           // TODO: Integrate `getTopicsBySearchTerm` selector to reduce queries and speed results
-          const matchedTopics = await dispatch(findTopics(query))
+          const matchedTopics = await dispatch(findTopics({
+            autocomplete: query,
+            maxItems: maxSuggestions
+          }))
 
           editor.extensionStorage.topic.loading = false
 

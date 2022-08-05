@@ -123,7 +123,7 @@ export default class TopicSelector extends Component {
     // if (this.state.selected.length >= MAX_TOPICS) return []
 
     const { findTopics, defaultTopics } = this.props
-    const response = await findTopics(input)
+    const response = await findTopics({ autocomplete: input })
     const topicResults = response.payload.getData().items.map(get('topic'))
     const sortedTopicResults = sortBy(
       [t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'],

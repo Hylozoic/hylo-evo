@@ -46,7 +46,7 @@ class SingleTopicSelector extends Component {
   handleInputChange = async (value) => {
     this.setState({ value })
     if (!isEmpty(value)) {
-      await this.props.findTopics(value)
+      await this.props.findTopics({ autocomplete: value })
       const { currentGroup, defaultTopics, topicResults } = this.props
       const sortedTopics = sortBy([t => t.name === value ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
       return defaultTopics ? [ { label: currentGroup.name + ' topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics

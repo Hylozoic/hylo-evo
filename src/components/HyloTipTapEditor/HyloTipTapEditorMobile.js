@@ -75,6 +75,7 @@ export default function HyloTipTapEditorMobile () {
   return (
     <HyloTipTapEditor
       styleName='hylo-app-container'
+      maxSuggestions={3}
       onChange={handleChange}
       onEnter={handleEnter}
       onBeforeCreate={handleBeforeCreate}
