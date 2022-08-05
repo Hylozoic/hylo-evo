@@ -58,7 +58,7 @@ const StreamViewControls = (props) => {
           onClick={() => changeView('grid')}
           data-tip='Grid view' data-for='stream-viewmode-tip'
         >
-          <Icon name='GridView' styleName='grid-view-icon' />
+          <Icon name='SmallGridView' styleName='grid-view-icon' />
         </div>
 
         <div
