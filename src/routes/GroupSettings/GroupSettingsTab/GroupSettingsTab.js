@@ -180,7 +180,7 @@ export default class GroupSettingsTab extends Component {
           styleName='styles.location-obfuscation-dropdown'
           toggleChildren={
             <span styleName='styles.location-obfuscation-dropdown-label'>
-              {CUSTOM_VIEW_MODES[viewMode || 'stream']}
+              {CUSTOM_VIEW_MODES[viewMode || 'cards']}
               <Icon name='ArrowDown' />
             </span>
             }
