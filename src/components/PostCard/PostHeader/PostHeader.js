@@ -1,3 +1,5 @@
+import cx from 'classnames'
+import { filter, isFunction, isEmpty } from 'lodash'
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
@@ -8,11 +10,10 @@ import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
 import FlagContent from 'components/FlagContent'
 import Icon from 'components/Icon'
+import PostCompletion from '../PostCompletion'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
-import { filter, isFunction, isEmpty } from 'lodash'
-import cx from 'classnames'
 
 export default class PostHeader extends PureComponent {
   static defaultProps = {
@@ -29,8 +30,10 @@ export default class PostHeader extends PureComponent {
   render () {
     const {
       routeParams,
+      canEdit,
       creator,
       createdAt,
+      expanded,
       type,
       id,
       startTime,
@@ -47,7 +50,9 @@ export default class PostHeader extends PureComponent {
       pinPost,
       highlightProps,
       topicsOnNewline,
-      announcement
+      announcement,
+      fulfillPost,
+      unfulfillPost
     } = this.props
 
     if (!creator) return null
@@ -70,6 +75,9 @@ export default class PostHeader extends PureComponent {
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
     const canHaveTimes = typesWithTimes.includes(type)
+
+    const typesWithCompletion = ['offer', 'request', 'resource', 'project']
+    const canBeCompleted = typesWithCompletion.includes(type)
 
     // If it was completed/fulfilled before it ended, then use that as the end datetime
     let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
@@ -98,6 +106,16 @@ export default class PostHeader extends PureComponent {
     }
 
     return <div styleName={cx('header', { constrained })} className={className}>
+      {canBeCompleted && canEdit && expanded && (
+        <PostCompletion
+          type={type}
+          startTime={startTime}
+          endTime={endTime}
+          isFulfilled={!!fulfilledAt}
+          fulfillPost={fulfillPost}
+          unfulfillPost={unfulfillPost}
+        />
+      )}
       <div styleName='headerMainRow'>
         <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
         <div styleName='headerText'>

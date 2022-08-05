@@ -19,10 +19,28 @@ $footer-height: 56px;
   height: 46px;
 }
 
+.icon-links{
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.icon {
+  width:30px;
+  height:30px;
+  margin: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+
 
 .people {
   margin-right: 20px;
-    white-space: nowrap;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .caption {

@@ -69,6 +69,8 @@ Post.fields = {
   startsAt: attr(),
   endsAt: attr(),
   fulfilledAt: attr(),
+  donationsLink: attr(),
+  projectManagementLink: attr(),
   votesTotal: attr(),
   myVote: attr(),
   topics: many('Topic'),

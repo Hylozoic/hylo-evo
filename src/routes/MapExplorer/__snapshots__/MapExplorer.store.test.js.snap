@@ -23,6 +23,7 @@ Object {
       id
       avatarUrl
       description
+      geoShape
       memberCount
       name
       slug
@@ -206,6 +207,8 @@ posts: viewPosts(
   fulfilledAt
   startTime
   endTime
+  donationsLink
+  projectManagementLink
   myEventResponse
   commenters(first: 3) {
     id

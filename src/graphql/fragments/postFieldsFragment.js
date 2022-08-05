@@ -38,6 +38,8 @@ const postFieldsFragment = withComments => `
   fulfilledAt
   startTime
   endTime
+  donationsLink
+  projectManagementLink
   myEventResponse
   commenters(first: 3) {
     id
