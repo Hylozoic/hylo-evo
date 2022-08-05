@@ -41,6 +41,7 @@ Object {
           avatarUrl
           bannerUrl
           description
+          geoShape
           location
           locationObject {
             id
@@ -171,6 +172,7 @@ Object {
             items {
               id
               avatarUrl
+              geoShape
               name
               slug
             }

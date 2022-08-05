@@ -15,7 +15,9 @@ export default function createProject (postParams) {
     topicNames,
     sendAnnouncement,
     memberIds = [],
-    acceptContributions
+    acceptContributions,
+    donationsLink,
+    projectManagementLink
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const groupIds = groups.map(c => c.id)
@@ -24,28 +26,32 @@ export default function createProject (postParams) {
     type: CREATE_PROJECT,
     graphql: {
       query: `mutation (
-        $title: String,
-        $details: String,
-        $linkPreviewId: String,
-        $groupIds: [String],
-        $imageUrls: [String],
-        $fileUrls: [String],
+        $title: String
+        $details: String
+        $linkPreviewId: String
+        $groupIds: [String]
+        $imageUrls: [String]
+        $fileUrls: [String]
         $announcement: Boolean
         $topicNames: [String]
-        $memberIds: [ID],
+        $memberIds: [ID]
         $acceptContributions: Boolean
+        $donationsLink: String
+        $projectManagementLink: String
       ) {
         createProject(data: {
-          title: $title,
-          details: $details,
-          linkPreviewId: $linkPreviewId,
-          groupIds: $groupIds,
-          imageUrls: $imageUrls,
-          fileUrls: $fileUrls,
+          title: $title
+          details: $details
+          linkPreviewId: $linkPreviewId
+          groupIds: $groupIds
+          imageUrls: $imageUrls
+          fileUrls: $fileUrls
           announcement: $announcement
           topicNames: $topicNames
           memberIds: $memberIds
           acceptContributions: $acceptContributions
+          donationsLink: $donationsLink
+          projectManagementLink: $projectManagementLink
         }) {${postFieldsFragment(false)}}
       }`,
       variables: {
@@ -59,7 +65,9 @@ export default function createProject (postParams) {
         announcement: sendAnnouncement,
         topicNames,
         memberIds,
-        acceptContributions
+        acceptContributions,
+        donationsLink,
+        projectManagementLink
       }
     },
     meta: {

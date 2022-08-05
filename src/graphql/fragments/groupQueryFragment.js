@@ -10,7 +10,7 @@ export default () => {
     avatarUrl
     bannerUrl
     description
-    type
+    geoShape
     location
     memberCount
     moderatorDescriptor
@@ -26,6 +26,7 @@ export default () => {
       showSuggestedSkills
     }
     slug
+    type
     typeDescriptor
     typeDescriptorPlural
     visibility
@@ -72,6 +73,7 @@ export default () => {
         type
         bannerUrl
         description
+        geoShape
         memberCount
         name
         slug
@@ -186,7 +188,7 @@ export default () => {
         avatarUrl
         bannerUrl
         description
-        type
+        geoShape
         name
         slug
         visibility
@@ -199,6 +201,7 @@ export default () => {
           publicMemberDirectory
           showSuggestedSkills
         }
+        type
       }
     }
     upcomingEvents: posts(afterTime: "${new Date().toISOString()}", filter: "event", sortBy: "start_time", order: "asc", first: 4) {

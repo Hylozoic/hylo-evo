@@ -54,6 +54,7 @@ Object {
   "fulfillPost": [Function],
   "pinPost": [Function],
   "removePost": [Function],
+  "unfulfillPost": [Function],
 }
 `;
 

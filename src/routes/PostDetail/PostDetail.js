@@ -23,6 +23,7 @@ import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import ProjectContributions from './ProjectContributions'
 import PostPeopleDialog from 'components/PostPeopleDialog'
+import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
@@ -121,8 +122,13 @@ export default class PostDetail extends Component {
     const isProject = get('type', post) === 'project'
     const isEvent = get('type', post) === 'event'
 
-    const { acceptContributions, totalContributions } = post || {}
+    const m = post.projectManagementLink ? post.projectManagementLink.match(/(asana|trello|airtable|clickup|confluence|teamwork|notion|wrike|zoho)/) : null
+    const projectManagementTool = m ? m[1] : null
 
+    const d = post.donationsLink ? post.donationsLink.match(/(cash|clover|gofundme|opencollective|paypal|squareup|venmo)/) : null
+    const donationService = d ? d[1] : null
+
+    const { acceptContributions, totalContributions } = post || {}
     const scrollToBottom = () => {
       const detail = document.getElementById(DETAIL_COLUMN_ID)
       detail.scrollTop = detail.scrollHeight
@@ -151,24 +157,25 @@ export default class PostDetail extends Component {
     const postFooter = <PostFooter
       {...post}
       voteOnPost={voteOnPost}
-      onClick={togglePeopleDialog}
       currentUser={currentUser}
     />
 
     return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
       <div styleName={cx('post', { 'noUser': !currentUser })}>
         <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
+        <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} expanded />
         {atHeader && <div styleName='header-sticky' style={headerStyle}>
           <PostHeader styleName='header' topicsOnNewline {...post} routeParams={routeParams} close={onClose} />
         </div>}
         <CardImageAttachments attachments={post.attachments} linked />
         <PostTags tags={post.tags} />
         {isEvent && <EventBody
+          currentUser={currentUser}
           styleName='body'
           expanded
           slug={routeParams.groupSlug}
           event={post}
+          togglePeopleDialog={togglePeopleDialog}
           respondToEvent={respondToEvent} />}
         {!isEvent && <PostBody
           styleName='body'
@@ -176,11 +183,36 @@ export default class PostDetail extends Component {
           routeParams={routeParams}
           slug={routeParams.groupSlug}
           {...post} />}
-        {isProject && <div styleName='join-project-button-container'>
-          <JoinProjectButton
-            joinProject={joinProject}
-            leaveProject={leaveProject}
-            leaving={isProjectMember} />
+        {isProject && <div>
+          <div styleName='join-project-button-container'>
+            <JoinProjectSection
+              currentUser={currentUser}
+              joinProject={joinProject}
+              leaveProject={leaveProject}
+              leaving={isProjectMember}
+              members={post.members}
+              togglePeopleDialog={togglePeopleDialog}
+            />
+          </div>
+          {post.projectManagementLink && projectManagementTool &&
+            <div styleName='project-management-tool'>
+              <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
+              <div><a styleName='project-button' href={post.projectManagementLink}>View tasks</a></div>
+            </div>}
+          {post.projectManagementLink && !projectManagementTool &&
+            <div>
+              View project management tool {post.projectManagementLink}
+            </div>}
+
+          {post.donationsLink && donationService &&
+            <div styleName='donate'>
+              <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
+              <div><a styleName='project-button' href={post.donationsLink}>Contribute</a></div>
+            </div>}
+          {post.donationsLink && !donationService &&
+            <div>
+              Contribute financially to this project at {post.donationsLink}
+            </div>}
         </div>}
         {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
           <ProjectContributions
@@ -220,16 +252,30 @@ export function PostTags ({ tags, slug }) {
   </div>
 }
 
-export function JoinProjectButton ({ leaving, joinProject, leaveProject }) {
+export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {
   const buttonText = leaving ? 'Leave Project' : 'Join Project'
   const onClick = () => leaving ? leaveProject() : joinProject()
 
-  return <Button
-    color='green'
-    key='join-project-button'
-    narrow
-    onClick={onClick}
-    styleName='join-project-button'>
-    {buttonText}
-  </Button>
+  return (
+    <div styleName='join-project'>
+      <PeopleInfo
+        people={members}
+        peopleTotal={members.length}
+        excludePersonId={get('id', currentUser)}
+        onClick={togglePeopleDialog}
+        phrases={{
+          emptyMessage: 'No project members',
+          phraseSingular: 'is a member',
+          mePhraseSingular: 'are a member',
+          pluralPhrase: 'are members'
+        }}
+      />
+      <Button
+        key='join-project-button'
+        onClick={onClick}
+        styleName='project-button'>
+        {buttonText}
+      </Button>
+    </div>
+  )
 }

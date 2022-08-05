@@ -83,7 +83,7 @@ exports[`renders as expected 1`] = `
       ]
     }
   />
-  <Connect(PostBody)
+  <PostBody
     attachments={
       Array [
         Object {

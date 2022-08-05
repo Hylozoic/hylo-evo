@@ -5,6 +5,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   avatarUrl
   bannerUrl
   description
+  geoShape
   location
   memberCount
   moderatorDescriptor
@@ -30,6 +31,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       accessibility
       avatarUrl
       bannerUrl
+      geoShape
       memberCount
       name
       slug
@@ -75,6 +77,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       accessibility
       avatarUrl
       bannerUrl
+      geoShape
       name
       slug
       visibility
