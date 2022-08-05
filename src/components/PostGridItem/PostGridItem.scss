@@ -14,9 +14,11 @@
 
     .title {
       color: white;
-      background-color: rgba(35, 65, 91, .8);
-      position: relative;
+      background-color: rgba(35, 65, 91, 0);
+      position: absolute;
       z-index: 5;
+      bottom: 30px;
+      width: 100%;
     }
 
     .first-image {
@@ -34,7 +36,7 @@
 
     .grid-fade {
       z-index: 1;
-      background: linear-gradient(180deg, rgba(42, 64, 89, 0) 0%, rgba(42, 64, 89, 0.79) 61.98%, rgba(42, 64, 89, 0.85) 100%);
+      background: linear-gradient(180deg, rgba(42, 64, 89, .3) 0%, rgba(42, 64, 89, 0.79) 61.98%, rgba(42, 64, 89, 0.85) 100%);
     }
   }
 
@@ -94,6 +96,7 @@
     overflow: hidden;
     display: block;
     white-space: nowrap;
+
 
     span {
       font-size: 10px;
