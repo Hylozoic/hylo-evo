@@ -35,8 +35,15 @@ export default function PostBigGridItem (props) {
   // will reintegrate once I have attachment vars
   /* const startTimeMoment = Moment(post.startTime) */
 
+  const m = post.projectManagementLink ? post.projectManagementLink.match(/(asana|trello|airtable|clickup|confluence|teamwork|notion|wrike|zoho)/) : null
+  const projectManagementTool = m ? m[1] : null
+
+  const d = post.donationsLink ? post.donationsLink.match(/(cash|clover|gofundme|opencollective|paypal|squareup|venmo)/) : null
+  const donationService = d ? d[1] : null
+
+
   return (
-    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
+    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={attachmentType !== 'image' ? showDetails : null}>
       <div styleName='content-summary'>
         <h3 styleName='title'>{title}</h3>
         {/*  Will fix this after I get attachment variables */}
@@ -53,28 +60,48 @@ export default function PostBigGridItem (props) {
           From Tom: Now the attachment variables can be used to display the different views that you are keen for.
         */}
         {attachmentType === 'image'
-          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
-          : attachmentType === 'file'
+          ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image'  onClick={showDetails}/>
+          : ' '
+        }
+
+        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
+        <div styleName='grid-meta'>
+          <h3 styleName='title' onClick={showDetails}>{title}</h3>
+          <div styleName='project-actions'>
+            {post.projectManagementLink && projectManagementTool &&
+              <div styleName='project-management-tool'>
+                <div><img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
+                <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
+              </div>}
+            {post.projectManagementLink && !projectManagementTool &&
+              <div>
+                View project management tool {post.projectManagementLink}
+              </div>}
+
+            {post.donationsLink && donationService &&
+              <div styleName='donate'>
+                <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+              </div>}
+            {post.donationsLink && !donationService &&
+              <div>
+                Contribute financially to this project at {post.donationsLink}
+              </div>}
+
+            {attachmentType === 'file'
             ? <div styleName='file-attachment'>
               {numAttachments > 1
                 ? <div styleName='attachment-number'>{numAttachments} attachments</div>
                 : ' '
               }
-              <Icon name='Document' styleName='file-icon' />
-              <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
+              <div styleName='file'>
+                <Icon name='Document' styleName='file-icon' />
+                <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
+              </div>
             </div>
-            : ' '
-        }
-
-        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
-        <div styleName='grid-meta'>
-          <h3 styleName='title'>{title}</h3>
-          <div styleName='project-actions'>
-            <div styleName='project-action'>
-              Contribute on <img src='/assets/payment-services/paypal.svg' />
-            </div>
+            : ' '}
           </div>
-          <div styleName='author'>
+          <div styleName='author' onClick={showDetails}>
             <div styleName='type-author'>
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name}
