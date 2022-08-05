@@ -5,7 +5,7 @@ exports[`renders correctly if fulfilled 1`] = `
   data-stylename="postCompletion"
 >
   <div>
-    Is this still active?
+    Is this project still active?
   </div>
   <DropdownButton
     choices={
@@ -31,7 +31,7 @@ exports[`renders correctly if not fulfilled 1`] = `
   data-stylename="postCompletion"
 >
   <div>
-    Is this still available?
+    Is this project still available?
   </div>
   <DropdownButton
     choices={
