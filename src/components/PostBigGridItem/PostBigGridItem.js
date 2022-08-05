@@ -69,6 +69,11 @@ export default function PostBigGridItem (props) {
 
         <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
         <div styleName='grid-meta'>
+          <div styleName='project-actions'>
+            <div styleName='project-action'>
+              Contribute on <img src='/assets/payment-services/paypal.svg' />
+            </div>
+          </div>
           <div styleName='type-author'>
             <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
             {creator.name}
@@ -77,7 +82,6 @@ export default function PostBigGridItem (props) {
             {TextHelpers.humanDate(createdAt)}
           </div>
         </div>
-        <div styleName='grid-fade' />
       </div>
     </div>
   )

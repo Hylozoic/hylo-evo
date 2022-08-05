@@ -14,8 +14,11 @@
 
     .title {
       color: white;
-      background-color: rgba(35, 65, 91, .8);
-      position: relative;
+      background-color: rgba(35, 65, 91, 0);
+      position: absolute;
+      bottom: 120px;
+      font-size: 16px;
+      width: 100%;
       z-index: 5;
     }
 
@@ -32,9 +35,10 @@
       display: none;
     }
 
-    .grid-fade {
+    .grid-meta {
       z-index: 1;
-      background: linear-gradient(180deg, rgba(42, 64, 89, 0) 0%, rgba(42, 64, 89, 0.79) 61.98%, rgba(42, 64, 89, 0.85) 100%);
+      height: auto;
+      background: linear-gradient(180deg, rgba(42, 64, 89, .3) 0%, rgba(42, 64, 89, 0.79) 61.98%, rgba(42, 64, 89, 0.85) 100%);
     }
   }
 
@@ -117,46 +121,52 @@
     width: 100%;
   }
 
-  .grid-fade {
-    z-index: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 49.48%, #FFFFFF 100%);
-    position: absolute;
-    bottom: 0;
-    height: 60px;
-    width: 100%;
-  }
 
   .grid-meta {
-    display: flex;
     z-index: 3;
     position: absolute;
     bottom:0;
-    justify-content: space-between;
     width: 100%;
     padding-right: 15px;
     padding-left: 3px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 49.48%, #FFFFFF 100%);
 
-    .type-author {
-      display: block;
-      height: 36px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 30px;
-      color: $color-grey-keyline;
-      font-size: 12px;
-      position: relative;
-      top: 9px;
+    .project-actions {
+      padding: 10px;
 
-      .avatar {
-        margin-right: 5px;
-        position: relative;
-        top: 2px;
+      .project-action {
+        background-color: white;
+        border-radius: 15px;
       }
+    }
 
-      span {
-        display: inline-block;
-        margin-left: 3px;
+    .author {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .type-author {
+        display: block;
+        height: 36px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 30px;
+        color: $color-grey-keyline;
+        font-size: 12px;
+        position: relative;
+        top: 9px;
+
+        .avatar {
+          margin-right: 5px;
+          position: relative;
+          top: 2px;
+        }
+
+        span {
+          display: inline-block;
+          margin-left: 3px;
+        }
       }
     }
   }
