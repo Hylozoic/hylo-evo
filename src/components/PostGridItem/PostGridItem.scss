@@ -85,6 +85,9 @@
   flex: 1 1 auto;
   overflow: hidden;
 
+  p {
+    overflow: hidden;
+  }
 
   .title {
     color: $color-member;
