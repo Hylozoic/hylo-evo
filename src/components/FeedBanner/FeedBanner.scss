@@ -125,10 +125,12 @@
 .shadow {
   composes: postPromptShape;
   background-color: transparent;
-  box-shadow: 0px 4px 42px 0px darken($color-seashell, 10%);
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;
   z-index: -10;
+  transition: all .25s ease;
+
   &.hover {
-    box-shadow: 0px 4px 42px 0px darken($color-seashell, 30%);
+    box-shadow: 0 4px 15px rgba(35, 65, 91, .5);
   }
 }
 

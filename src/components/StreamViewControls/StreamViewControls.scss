@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .dropdown {
@@ -14,7 +14,7 @@
   border-radius: 30px;
   margin-right: 1em;
   background-color: rgba(255, 255, 255, 1);
-  box-shadow: $box-shadow-default;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
 }
 
 .dropdown-label {
@@ -32,7 +32,7 @@
 .view-mode {
   float: right;
   background: $color-white;
-  box-shadow: $box-shadow-default;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
   border-radius: 5px;
 
   .grid-view-icon {
