@@ -18,6 +18,10 @@
   margin-bottom: 12px;
 }
 
+.smallMargin .eventTop {
+  display: none;
+}
+
 .constrained.smallMargin {
   margin-bottom: 0;
 }
@@ -91,7 +95,7 @@
 
 .eventBody {
   display: flex;
-  padding: 0px 30px;
+  padding: 0px 10px;
   position: relative;
   flex-direction: column;
 }
