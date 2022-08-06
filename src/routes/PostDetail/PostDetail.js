@@ -182,7 +182,7 @@ export default class PostDetail extends Component {
           expanded
           routeParams={routeParams}
           slug={routeParams.groupSlug}
-          post={post}
+          {...post}
         />}
         {isProject && <div>
           <div styleName='join-project-button-container'>
