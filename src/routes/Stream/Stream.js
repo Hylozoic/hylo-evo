@@ -76,6 +76,7 @@ export default class Stream extends Component {
       postTypeFilter,
       pending,
       querystringParams,
+      respondToEvent,
       selectedPostId,
       sortBy,
       viewMode
@@ -111,6 +112,7 @@ export default class Stream extends Component {
                 routeParams={routeParams}
                 post={post}
                 key={post.id}
+                respondToEvent={respondToEvent}
               />
             )
           })}

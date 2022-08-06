@@ -23,7 +23,7 @@ export default class DropdownButton extends Component {
   }
 
   render () {
-    const { label, className, choices } = this.props
+    const { label, className, choices, position } = this.props
     const { expanded } = this.state
 
     return <div>
@@ -34,9 +34,9 @@ export default class DropdownButton extends Component {
         onClick={this.toggleExpanded}>
         {label}&nbsp;&nbsp;|&nbsp;&nbsp;▾
       </div>
-      <div styleName={cx('dropdown', { expanded })}>
+      <div styleName={cx('dropdown', { expanded, top: position === 'top' })}>
         {choices.map(({ label, value }) =>
-          <span styleName='choice' key={value} onClick={() => this.onChoose(value, label)}>{label}</span>)}
+          <span styleName='choice' key={value} onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.onChoose(value, label) }}>{label}</span>)}
       </div>
     </div>
   }

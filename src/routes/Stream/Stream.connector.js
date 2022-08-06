@@ -15,6 +15,8 @@ import {
 } from 'components/FeedList/FeedList.store'
 import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import presentPost from 'store/presenters/presentPost'
+import respondToEvent from 'store/actions/respondToEvent'
+
 import { createPostUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
@@ -75,6 +77,7 @@ export function mapDispatchToProps (dispatch, props) {
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
 
   return {
+    respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
     updateUserSettings: updateSettings,
     changeTab: tab => {
       updateSettings({ settings: { streamPostType: tab || '' } })

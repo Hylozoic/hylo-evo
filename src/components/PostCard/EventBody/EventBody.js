@@ -25,12 +25,26 @@ export default class EventBody extends Component {
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations, groups } = event
 
+    const numAttachments = event.attachments.length || 0
+    const firstAttachment = numAttachments ? event.attachments[0] || 0 : null
+    const attachmentType = firstAttachment ? firstAttachment.type || 0 : null
+
     const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
 
-    return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded }, { constrained })} className={className}>
-      <div styleName='calendarDate'>
-        <EventDate {...event} />
+    return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded, eventImage: attachmentType === 'image' }, { constrained })} className={className}>
+
+      <div styleName='eventTop'>
+        <div styleName='calendarDate'>
+          <EventDate {...event} />
+        </div>
+        <div styleName='eventResponseTop'>
+          <div styleName='rsvp'>
+            <EventRSVP {...event} respondToEvent={respondToEvent} />
+          </div>
+          <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+        </div>
       </div>
+
       <div styleName={cx('eventBodyColumn', { constrained })}>
         <PostTitle {...event} constrained={constrained} />
         <div styleName={cx('eventData', { constrained })}>
@@ -43,22 +57,32 @@ export default class EventBody extends Component {
           <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} constrained={constrained} />
         </div>
       </div>
-      <div styleName='eventRightColumn'>
-        <EventRSVP {...event} respondToEvent={respondToEvent} />
-        <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+
+      <div styleName='eventAttendance'>
+        <div styleName='people'>
+          <div styleName='fade' />
+          <PeopleInfo
+            people={eventAttendees}
+            peopleTotal={eventAttendees.length}
+            excludePersonId={get('id', currentUser)}
+            onClick={togglePeopleDialog}
+            phrases={{
+              emptyMessage: 'No one is attending yet',
+              phraseSingular: 'is attending',
+              mePhraseSingular: 'are attending',
+              pluralPhrase: 'attending'
+            }}
+          />
+        </div>
+
+        <div styleName='eventResponse'>
+          <div styleName='rsvp'>
+            <EventRSVP {...event} respondToEvent={respondToEvent} />
+          </div>
+          <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+        </div>
+
       </div>
-      <PeopleInfo
-        people={eventAttendees}
-        peopleTotal={eventAttendees.length}
-        excludePersonId={get('id', currentUser)}
-        onClick={togglePeopleDialog}
-        phrases={{
-          emptyMessage: 'No one is attending yet',
-          phraseSingular: 'is attending',
-          mePhraseSingular: 'are attending',
-          pluralPhrase: 'attending'
-        }}
-      />
       {showInviteDialog && <EventInviteDialog
         eventId={id}
         eventInvitations={eventInvitations}

@@ -3,9 +3,11 @@
   height: 160px;
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0px 3px 5px 0px #d8d8d8;
+  box-shadow: 0px 4px 4px rgba(42, 64, 89, 0.3);
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  transition: all .25s ease;
 }
 
 .post-grid-item-container.image {
@@ -233,9 +235,15 @@
 // active state overrides
 .expanded {
   margin: 0 0 5px 5px;
-  padding: 3px 4px;
   border-radius: 5px;
-  box-shadow: 0px 8px 15px 0px #d8d8d8;
+  box-shadow: 0px 10px 20px rgba(42, 64, 89, 0.6);
+  width: 110%;
+  height: 190px;
+  margin: -15px -5%;
+  z-index: 10;
+  border: 1px solid rgba(0, 118, 223, 1.0);
+  border-top: 3px solid rgba(0, 118, 223, 1.0);
+  background-color: rgba(255,255,255,1);
 }
 
 

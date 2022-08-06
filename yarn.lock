@@ -15786,6 +15786,11 @@ react-map-gl@^6:
     resize-observer-polyfill "^1.5.1"
     viewport-mercator-project "^7.0.4"
 
+react-multiline-clamp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-multiline-clamp/-/react-multiline-clamp-2.0.0.tgz#913a2092368ef1b52c1c79364d506ba4af27e019"
+  integrity sha512-iPm3HxFD6LO63lE5ZnThiqs+6A3c+LW3WbsEM0oa0iNTa0qN4SKx/LK/6ZToSmXundEcQXBFVNzKDvgmExawTw==
+
 react-player@^2.10.0:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/react-player/-/react-player-2.10.1.tgz#f2ee3ec31393d7042f727737545414b951ffc7e4"

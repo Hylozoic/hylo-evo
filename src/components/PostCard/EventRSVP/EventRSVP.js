@@ -3,7 +3,7 @@ import './EventRSVP.scss'
 import DropdownButton from 'components/DropdownButton'
 import { RESPONSES } from 'store/models/EventInvitation'
 
-export default function EventRSVP ({ myEventResponse, respondToEvent }) {
+export default function EventRSVP ({ myEventResponse, respondToEvent, position }) {
   var label
 
   switch (myEventResponse) {
@@ -29,6 +29,7 @@ export default function EventRSVP ({ myEventResponse, respondToEvent }) {
   return <div styleName='eventRSVP'>
     <DropdownButton label={label}
       choices={choices}
-      onChoose={response => respondToEvent(response)} />
+      onChoose={response => respondToEvent(response)}
+      position={position} />
   </div>
 }

@@ -183,7 +183,7 @@ export default class PostDetail extends Component {
           routeParams={routeParams}
           slug={routeParams.groupSlug}
           post={post}
-          />}
+        />}
         {isProject && <div>
           <div styleName='join-project-button-container'>
             <JoinProjectSection
@@ -198,7 +198,7 @@ export default class PostDetail extends Component {
           {post.projectManagementLink && projectManagementTool &&
             <div styleName='project-management-tool'>
               <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
-              <div><a styleName='project-button' href={post.projectManagementLink}>View tasks</a></div>
+              <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
             </div>}
           {post.projectManagementLink && !projectManagementTool &&
             <div>
@@ -208,7 +208,7 @@ export default class PostDetail extends Component {
           {post.donationsLink && donationService &&
             <div styleName='donate'>
               <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
-              <div><a styleName='project-button' href={post.donationsLink}>Contribute</a></div>
+              <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
             </div>}
           {post.donationsLink && !donationService &&
             <div>
