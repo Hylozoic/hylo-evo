@@ -1,6 +1,5 @@
 .card {
   padding-top: 15px;
-  border: 1px solid $color-cape-cod-10;
   border-radius: 4px;
   cursor: pointer;
   position: relative;
@@ -8,9 +7,6 @@
   transition: 0.25s;
   display: flex;
   flex-direction: column;
-  &:hover {
-    box-shadow: 0px 0px 6px 0px $color-black-10;
-  }
 }
 
 .constrained.card {
