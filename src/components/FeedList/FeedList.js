@@ -8,7 +8,7 @@ import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
-import PostGridItem from 'components/PostGridItem'
+import PostBigGridItem from 'components/PostBigGridItem'
 import './FeedList.scss'
 
 export default class FeedList extends React.Component {
@@ -150,7 +150,7 @@ export default class FeedList extends React.Component {
             {posts.map(post => {
               const expanded = routeParams.postId === post.id
               return (
-                <PostGridItem
+                <PostBigGridItem
                   styleName={cx({ expanded })}
                   expanded={expanded}
                   routeParams={routeParams}

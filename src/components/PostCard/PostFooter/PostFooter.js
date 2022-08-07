@@ -93,7 +93,7 @@ export function PeopleInfo ({
     caption = `${names} ${phrase}`
     avatarUrls = people.map(p => p.avatarUrl)
   }
-  return <span>
+  return <span styleName='commenters'>
     <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
     <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
       {caption}

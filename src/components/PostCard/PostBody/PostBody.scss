@@ -7,12 +7,16 @@
   margin-bottom: 36px;
   display: flex;
   composes: cardPadding;
-  padding-top: 20px;
+  padding-top: 60px;
   flex-direction: column;
 }
 
 .eventBody {
   flex-direction: row;
+}
+
+.cardPadding.eventBody {
+  padding-top: 60px;
 }
 
 .smallMargin {
@@ -104,7 +108,7 @@
 
 .eventImage .eventResponseTop {
   position: absolute;
-  top: -30px;
+  top: 16px;
   right: 20px;
   display: flex;
   align-items: center;
@@ -138,7 +142,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   flex-direction: column;
-  padding-top: 20px;
 }
 
 .constrained .eventBodyColumn .eventLocation {
@@ -211,7 +214,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px 15px 15px;
+  padding: 0 0 20px 10px;
 }
 
 .constrained .eventData {
@@ -237,7 +240,7 @@
 }
 
 .eventImage .calendarDate {
-    margin: -57px 0 10px 0;
+    margin: -50px 0 10px 0;
 }
 
 .eventDetails {
@@ -262,6 +265,10 @@
     padding: 0 15px 0 15px;
     position: relative;
     flex-direction: column;
+  }
+
+  .eventAttendance {
+    margin: 8px 0 0 0;
   }
 
   .calendarDate {

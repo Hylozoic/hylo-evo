@@ -1,7 +1,11 @@
 .commentForm {
   margin-bottom: $space-10x;
-  box-shadow: 0px 4px 21px 2px $color-rhino-30;
+  box-shadow: 0px 15px 20px 0px rgb(44 64 89 / 20%);
   border-radius: 4px;
+  border-top: 1px solid rgba(222, 224, 228, 0.5);
+  border-bottom: 2px solid rgba(38, 68, 93, .25);
+  border-right: 1px solid rgba(38, 68, 93, .15);
+  border-left: 1px solid rgba(38, 68, 93, .15);
 }
 
 .icon {
@@ -16,7 +20,6 @@
   width: 100%;
   min-height: 56px;
   background-color: $color-white;
-  box-shadow: 0px 4px 21px 2px $color-rhino-30;
   composes: bdy-lt-sm from 'css/typography.scss';
   color: $color-rhino-80;
   font-size: 16px;
@@ -28,7 +31,7 @@
 
 .image {
   margin-right: 10px;
-  margin-left: 20px;
+  margin-left: 15px;
   position: relative;
   top: 18px;
 }

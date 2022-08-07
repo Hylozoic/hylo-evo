@@ -13,14 +13,16 @@
   align-items: center;
   padding: 5px;
   border-bottom: 1px solid rgba(235, 235, 235, 1.0);
-  background: linear-gradient(180deg, rgba(42, 64, 89, 0) 10%, rgba(42, 64, 89, 0) 70%, rgba(42, 64, 89, .05) 100%);
   border-radius: 5px 5px 0 0;
 }
 
 .subheader {
   display: flex;
   justify-content: space-between;
-  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(42, 64, 89, 0.1) 0%, rgba(42, 64, 89, 0) 20%);
+  position: absolute;
+  z-index: 11;
+  width: 100%;
 }
 
 .authorName {
@@ -232,6 +234,14 @@
 
 @media screen and (max-width: 425px) {
 
+  .subheader {
+    flex-direction: column;
+  }
+
+  .timeWindow {
+    margin: 0 8px 8px 8px;
+  }
+
   .headerText {
     max-width: calc(100% - 160px);
     text-overflow: ellipsis;
@@ -244,11 +254,6 @@
     display: block;
     overflow: hidden;
     height: 14px;
-  }
-
-  .header {
-    padding: 0 10px;
-    margin-bottom: 20px;
   }
 
   .topicsLine {

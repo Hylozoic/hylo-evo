@@ -1,17 +1,22 @@
 // Footer Height
-$footer-height: 56px;
+$footer-height: 44px;
 
 .footer {
-  padding-left: $space-4x;
+  padding-left: 8px;
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: $footer-height;
   border-top: 1px dashed $color-cape-cod-10;
+  background: linear-gradient(180deg, rgba(225, 229, 233, 0.3) 0%, rgba(225, 229, 233, 0) 100%);
   overflow: hidden;
-}
 
+  .people div {
+    width: 30px;
+    height: 30px;
+  }
+}
 
 .footer.constrained {
   padding-left: 5px;
@@ -34,9 +39,13 @@ $footer-height: 56px;
   text-decoration: none;
 }
 
+.commenters {
+  display: flex;
+  align-items: center;
+}
 
 .people {
-  margin-right: 10px;
+  margin-right: 4px;
   white-space: nowrap;
   display: inline-block;
   vertical-align: middle;

@@ -12,7 +12,12 @@ $comment-row-padding: 25px;
 }
 
 .avatar {
-  margin-right: 25px;
+  margin-right: 5px;
+
+  div {
+    height: 30px;
+    width: 30px;
+  }
 }
 
 .userName {
@@ -59,7 +64,12 @@ $comment-row-padding: 25px;
 
 .text {
   composes: bdy-lt-sm from 'css/typography.scss';
-  margin-left: $comment-left-margin;
+  margin-left: 35px;
+
+  strong {
+    font-family: 'Circular Bold';
+    color: rgba(66, 94, 114, 1.0);
+  }
 }
 
 .reply {
@@ -96,11 +106,12 @@ $comment-row-padding: 25px;
 }
 
 .replybox {
-  margin-left: $comment-left-margin;
+  margin-left: 33px;
 }
 
 .subreply {
-  margin-left: $comment-left-margin;
+    margin-left: 30px;
+    margin-top: 15px;
 }
 
 .editor {
@@ -121,6 +132,6 @@ $comment-row-padding: 25px;
   }
 
   .text {
-    margin-left: 54px;
+    margin-left: 40px;
   }
 }
