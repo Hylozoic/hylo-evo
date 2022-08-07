@@ -2,9 +2,9 @@ import urlRegexSafe from 'url-regex-safe'
 import { inputRules, InputRule } from 'prosemirror-inputrules'
 import { Extension } from '@tiptap/react'
 
-// This forces the input rule to only match after a matching character below is typed
+// Input rule requires the final character be one of these trigger characters:
 export const TRIGGER_CHARACTER_REGEX_STRING = '([\\s!,;])$'
-export const TRIGGER_CHARACTER_REGEX = new RegExp(TRIGGER_CHARACTER_REGEX_STRING) // originally // /([.;,!])$/
+export const TRIGGER_CHARACTER_REGEX = new RegExp(TRIGGER_CHARACTER_REGEX_STRING)
 export const LINK_REGEX = new RegExp(
   `${urlRegexSafe({ returnString: true })}${TRIGGER_CHARACTER_REGEX_STRING}`
 )
@@ -26,7 +26,7 @@ export function validateEmail (url) {
     )
 }
 
-export function normalizeUrl (url) {
+function normalizeUrl (url) {
   const target = url.toLowerCase()
 
   if (target.startsWith('mailto:')) return url
@@ -37,10 +37,45 @@ export function normalizeUrl (url) {
   return url
 }
 
+export function getAttrs (match) {
+  let url = match[0]
+
+  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+
+  if (punctuation) {
+    url = url.replace(TRIGGER_CHARACTER_REGEX, '')
+  }
+
+  if (validateEmail(url)) {
+    return { href: `mailto:${url}`, text: url }
+  }
+
+  return { href: normalizeUrl(url) }
+}
+
+export function getText (match) {
+  const url = match[0]
+  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+
+  if (punctuation) {
+    return url.replace(TRIGGER_CHARACTER_REGEX, '')
+  }
+
+  return url
+}
+
+export function getTextAfter (match) {
+  const url = match[0]
+  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+
+  return punctuation ? punctuation[0] : ''
+}
+
+
 // ====== Curvenote Editor Input Utils
 // https://github.com/curvenote/editor/blob/main/packages/editor/src/prosemirror/inputrules/utils.ts
 // https://discuss.prosemirror.net/t/input-rules-for-wrapping-marks/537/11
-export function markInputRule (regexp, markType, options) {
+export function proseMirrorMarkInputRule (regexp, markType, options) {
   return new InputRule(regexp, (state, match, start, end) => {
     const { getAttrs, getText, getTextAfter } = options || {}
     const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs
@@ -67,39 +102,6 @@ export function markInputRule (regexp, markType, options) {
   })
 }
 
-function normalize (match) {
-  let url = match[0]
-  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
-
-  if (punctuation) {
-    url = url.replace(TRIGGER_CHARACTER_REGEX, '')
-  }
-
-  if (validateEmail(url)) {
-    return { href: `mailto:${url}`, text: url }
-  }
-
-  return { href: normalizeUrl(url) }
-}
-
-function getLinkText (match) {
-  const url = match[0]
-  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
-
-  if (punctuation) {
-    return url.replace(TRIGGER_CHARACTER_REGEX, '')
-  }
-
-  return url
-}
-
-function getTextAfter (match) {
-  const url = match[0]
-  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
-
-  return punctuation ? punctuation[0] : ''
-}
-
 // TODO: This should be also possible, but need to reconcile slight difference
 // between a TipTap InputRule and ProseMirror's:
 // Link.extend({
@@ -119,9 +121,9 @@ export const LinkInputRules = Extension.create({
     return [
       inputRules({
         rules: [
-          markInputRule(LINK_REGEX, this.editor.schema.marks.link, {
-            getAttrs: normalize,
-            getText: getLinkText,
+          proseMirrorMarkInputRule(LINK_REGEX, this.editor.schema.marks.link, {
+            getAttrs,
+            getText,
             getTextAfter
           })
         ]
