@@ -1,26 +1,21 @@
+import urlRegexSafe from 'url-regex-safe'
 import { inputRules, InputRule } from 'prosemirror-inputrules'
 import { Extension } from '@tiptap/react'
 
+// This forces the input rule to only match after a matching character below is typed
+export const TRIGGER_CHARACTER_REGEX_STRING = '([\\s!,;])$'
+export const TRIGGER_CHARACTER_REGEX = new RegExp(TRIGGER_CHARACTER_REGEX_STRING) // originally // /([.;,!])$/
+export const LINK_REGEX = new RegExp(
+  `${urlRegexSafe({ returnString: true })}${TRIGGER_CHARACTER_REGEX_STRING}`
+)
 // ====== Curvenote Editor Store Action Utils
 // https://github.com/curvenote/editor/blob/main/packages/editor/src/store/actions/utils.ts
-export const TEST_LINK_SPACE =
-  /((?:https?:\/\/)(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b(?:[-a-zA-Z0-9@:%_+.~#?&//=]*))([\s!,;])$/
-export const TEST_LINK_COMMON_SPACE =
-  /((?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.(?:com|ca|space|xyz|org|app|dev|io|net|gov|edu)\b(?:[-a-zA-Z0-9@:%_+.~#?&//=]*))([\s!,;])$/
+// export const TEST_LINK_SPACE =
+//   /((?:https?:\/\/)(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b(?:[-a-zA-Z0-9@:%_+.~#?&//=]*))([\s!,;])$/
+// export const TEST_LINK_COMMON_SPACE =
+//   /((?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.(?:com|ca|space|xyz|org|app|dev|io|net|gov|edu)\b(?:[-a-zA-Z0-9@:%_+.~#?&//=]*))([\s!,;])$/
 export const TEST_LINK_COMMON =
   /^[-a-zA-Z0-9@:%._+~#=]{2,256}\.(?:com|ca|space|xyz|org|app|dev|io|net|gov|edu)\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/
-
-const VALID_PROTOCOLS = new Set(['http:', 'https:', 'ftp:'])
-export function validateUrl (url) {
-  if (url.includes(' ')) return false
-  try {
-    const valid = new URL(url)
-    if (VALID_PROTOCOLS.has(valid.protocol)) return true
-    return false
-  } catch (e) {
-    return false
-  }
-}
 
 // used by chromium: https://stackoverflow.com/a/46181/5465086
 export function validateEmail (url) {
@@ -54,7 +49,7 @@ export function markInputRule (regexp, markType, options) {
     }
     const mark = markType.create(attrs)
     tr.delete(start, end)
-    const text = getText?.(match) || match[1]
+    const text = getText?.(match) || match[0]
     tr.insertText(text)
     tr.addMark(start, start + text.length, mark)
     tr.removeStoredMark(markType)
@@ -63,40 +58,45 @@ export function markInputRule (regexp, markType, options) {
   })
 }
 
-const ENDING_PUNCTUATION = /([.;,!])$/
 function normalize (match) {
-  let url = match[1]
-  const punctuation = url.match(ENDING_PUNCTUATION)
+  let url = match[0]
+  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
   if (punctuation) {
-    url = url.replace(ENDING_PUNCTUATION, '')
+    url = url.replace(TRIGGER_CHARACTER_REGEX, '')
   }
   if (validateEmail(url)) {
     return { href: `mailto:${url}`, text: url }
   }
   return { href: normalizeUrl(url) }
 }
+
 function getLinkText (match) {
-  const url = match[1]
-  const punctuation = url.match(ENDING_PUNCTUATION)
+  const url = match[0]
+  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
   if (punctuation) {
-    return url.replace(ENDING_PUNCTUATION, '')
+    return url.replace(TRIGGER_CHARACTER_REGEX, '')
   }
   return url
 }
+
 function getTextAfter (match) {
-  const url = match[1]
-  const punctuation = url.match(ENDING_PUNCTUATION)
-  return punctuation ? `${punctuation[1]}${match[2]}` : match[2]
+  const url = match[0]
+  const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+  return punctuation ? punctuation[0] : ''
 }
 
-// Ideally would do this but it seems TipTap InputRules are slightly different than
-// ProseMirror's
+// TODO: This should be also possible, but need to reconcile slight difference
+// between a TipTap InputRule and ProseMirror's:
 // Link.extend({
 //   addInputRules() {
-//     return linkInputRules(this.type)
+//     return [
+//       markInputRule({
+//         find: LINK_REGEX,
+//         type: this.type
+//       })
+//     ]
 //   }
 // })
-
 export const LinkInputRules = Extension.create({
   name: 'linkInputRules',
 
@@ -104,12 +104,7 @@ export const LinkInputRules = Extension.create({
     return [
       inputRules({
         rules: [
-          markInputRule(TEST_LINK_SPACE, this.editor.schema.marks.link, {
-            getAttrs: normalize,
-            getText: getLinkText,
-            getTextAfter
-          }),
-          markInputRule(TEST_LINK_COMMON_SPACE, this.editor.schema.marks.link, {
+          markInputRule(LINK_REGEX, this.editor.schema.marks.link, {
             getAttrs: normalize,
             getText: getLinkText,
             getTextAfter
