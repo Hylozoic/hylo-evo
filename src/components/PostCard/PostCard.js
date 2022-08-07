@@ -72,7 +72,9 @@ export default class PostCard extends React.Component {
           constrained={constrained}
         />
       </div>
-      <CardImageAttachments attachments={post.attachments} />
+      <div onClick={isEvent ? this.onClick : null}>
+        <CardImageAttachments attachments={post.attachments} />
+      </div>
       {isEvent && (
         <div styleName='bodyWrapper'>
           <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
