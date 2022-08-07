@@ -2,18 +2,18 @@ import React from 'react'
 import {
   RiBold, RiItalic, RiCodeBoxLine, RiStrikethrough,
   RiH1, RiH2, RiH3, RiListUnordered, RiListOrdered,
-  RiIndentIncrease, RiFilmLine, RiCodeView,
+  RiIndentIncrease, RiCodeView,
   RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
 import './HyloTipTapEditor.scss'
 
-export function addIframe (editor) {
-  const url = window.prompt('URL of video or content to embed')
+// export function addIframe (editor) {
+//   const url = window.prompt('URL of video or content to embed')
 
-  if (url) {
-    editor.chain().focus().setIframe({ src: url }).run()
-  }
-}
+//   if (url) {
+//     editor.chain().focus().setIframe({ src: url }).run()
+//   }
+// }
 
 export default function HyloTipTapEditorMenuBar ({ editor }) {
   if (!editor) return null
@@ -127,11 +127,11 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
         <RiTextWrap />
       </button> */}
 
-      <button
+      {/* <button
         onClick={() => addIframe(editor)}
       >
         <RiFilmLine />
-      </button>
+      </button> */}
 
       <div styleName='divider' />
 

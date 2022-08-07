@@ -1247,6 +1247,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@curvenote/prosemirror-utils@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@curvenote/prosemirror-utils/-/prosemirror-utils-1.0.4.tgz#2db17a8994f67fccb9441bdbb3e8c87a58fa08a5"
+  integrity sha512-b1KiayAIR83rO/TA2a6APOz2TbOCoDD+1bFiBlU73SVi4jlrZ4xO4r7zszMfToDjVmb+GDJW8h/sA6unmfDl/Q==
+
 "@deck.gl/core@^8.7":
   version "8.8.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.8.5.tgz#87eec9ef3706df4bf3e8f91e9ba4622db11d8ecc"
@@ -15867,6 +15872,14 @@ prosemirror-history@1.3.0:
     prosemirror-state "^1.2.2"
     prosemirror-transform "^1.0.0"
     rope-sequence "^1.3.0"
+
+prosemirror-inputrules@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/prosemirror-inputrules/-/prosemirror-inputrules-1.2.0.tgz#476dde2dc244050b3aca00cf58a82adfad6749e7"
+  integrity sha512-eAW/M/NTSSzpCOxfR8Abw6OagdG0MiDAiWHQMQveIsZtoKVYzm0AflSPq/ymqJd56/Su1YPbwy9lM13wgHOFmQ==
+  dependencies:
+    prosemirror-state "^1.0.0"
+    prosemirror-transform "^1.0.0"
 
 prosemirror-keymap@1.2.0, prosemirror-keymap@^1.0.0:
   version "1.2.0"

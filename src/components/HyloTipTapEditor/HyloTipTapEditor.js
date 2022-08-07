@@ -2,14 +2,14 @@ import React, { useRef, useImperativeHandle, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { isEmpty } from 'lodash/fp'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
-import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
-import Placeholder from '@tiptap/extension-placeholder'
-import Iframe from './extensions/Iframe'
+import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
+import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
+import LinkInputRules from './extensions/LinkInputRules'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
-import Highlight from '@tiptap/extension-highlight'
+import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
 import './HyloTipTapEditor.scss'
 
 export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
@@ -82,15 +82,20 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
+      Link.configure({
+        openOnClick: false,
+        autolink: false
+      }),
+
+      LinkInputRules,
+
       Placeholder.configure({ placeholder }),
 
       PeopleMentions({ maxSuggestions, groupIds, dispatch }),
 
       TopicMentions({ maxSuggestions, groupIds, dispatch }),
 
-      Link.configure({ openOnClick: false }),
-
-      Iframe, // Embed (Video)
+      // Iframe, // Embed (Video)
 
       Highlight
     ]
@@ -140,50 +145,3 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 })
 
 export default HyloTipTapEditor
-
-// == WORKING NOTES ==
-
-// Accessing tiptap/prosemirror transaction content state
-// onUpdate ({ editor, transaction }) {
-//   console.log(
-//     '!!! in onUpdate for Mention Topic plug - transaction',
-//     // transaction
-//     get('steps[0].slice.content.content[0].marks', transaction),
-//     get('steps', transaction)
-//     // transaction.doc.descendants(node => console.log('!!! test', node.marks))
-//   )
-// }
-
-// The below was needed in `Linkify.configure` due to `linkifyjs-hashtag` being
-// included by `hylo-shared` and it causing TipTap's extension (which uses linkifyjs)
-// to identify hashtags as links. Can be removed if the linkify situation changes.
-// Linkify Hashtag extension has now been removed.
-// validate: href => /^\w/.test(href)
-
-// Sample of creating and adding a ProseMirror plugin within TipTap Editor config:
-// import { linkifyPlugin } from './plugins/linkifyPlugin.ts'
-// Extension.create({
-//   addProseMirrorPlugins () {
-//     return [
-//       linkifyPlugin,
-//       new Plugin({
-//         key: new PluginKey('escapeHandler'),
-//         props: {
-//           handleKeyDown (view, event) {
-//             if (event.key === 'Escape') {
-//               onEscape()
-
-//               return true
-//             }
-//           },
-//           handleDOMEvents: {
-//             keyup (view, event) {
-//               // event.preventDefault()
-//               return true
-//             }
-//           }
-//         }
-//       })
-//     ]
-//   }
-// })
