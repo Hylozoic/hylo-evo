@@ -1,15 +1,16 @@
 .post-row {
-  border-bottom: 1px solid $color-cape-cod-10;
   cursor: pointer;
   display: flex;
   position: relative;
   transition: all .25s ease;
   margin-left: 0 0;
   padding: 12px 20px;
+  border: 1px solid rgba(0, 118, 223, 0);
   background-color: rgba(233, 248, 245, 0);
+  border-bottom: 1px dashed $color-cape-cod-10;
 
   &:first-child {
-    border-top: 1px solid $color-cape-cod-10;
+    border-top: 1px dashed $color-cape-cod-10;
   }
 }
 
@@ -184,7 +185,9 @@
   background-color: rgba(255, 255, 255, 1);
   padding: 17px 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+  border: 1px solid rgba(0, 118, 223, 0.5);
+  border-top: 3px solid rgba(0, 118, 223, 0.5);
 }
 
 

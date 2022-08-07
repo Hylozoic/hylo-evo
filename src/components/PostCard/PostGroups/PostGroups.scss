@@ -3,7 +3,7 @@
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
-  border-top: 1px solid $color-cape-cod-10;
+  border-top: 1px dashed $color-cape-cod-10;
   overflow: hidden;
   min-height: 40px;
 }
@@ -28,8 +28,6 @@
 }
 
 .bottomBorder {
-  border-bottom: 1px solid $color-cape-cod-10;
-  margin-bottom: 10px;
 }
 
 .expanded {

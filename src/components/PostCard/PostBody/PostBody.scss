@@ -7,6 +7,7 @@
   margin-bottom: 36px;
   display: flex;
   composes: cardPadding;
+  padding-top: 20px;
   flex-direction: column;
 }
 
@@ -137,6 +138,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   flex-direction: column;
+  padding-top: 20px;
 }
 
 .constrained .eventBodyColumn .eventLocation {

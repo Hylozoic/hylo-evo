@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { filter, isFunction, isEmpty } from 'lodash'
+import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
@@ -49,7 +49,6 @@ export default class PostHeader extends PureComponent {
       removePost,
       pinPost,
       highlightProps,
-      topicsOnNewline,
       announcement,
       fulfillPost,
       unfulfillPost
@@ -106,6 +105,50 @@ export default class PostHeader extends PureComponent {
     }
 
     return <div styleName={cx('header', { constrained })} className={className}>
+      <div styleName='headerMainRow'>
+        <div styleName='headerTopRow'>
+          <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
+          <div styleName='headerText'>
+            <Highlight {...highlightProps}>
+              <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
+            </Highlight>
+            <div styleName='timestampRow'>
+              <span styleName='timestamp'>
+                {TextHelpers.humanDate(createdAt)}
+              </span>
+              {announcement && <span styleName='announcementSection'>
+                <span styleName='announcementSpacer'>•</span>
+                <span data-tip='Announcement' data-for='announcement-tt'>
+                  <Icon name='Announcement' styleName='announcementIcon' />
+                </span>
+                <ReactTooltip
+                  effect={'solid'}
+                  delayShow={0}
+                  id='announcement-tt' />
+              </span>}
+            </div>
+          </div>
+          <div styleName='upperRight'>
+            {pinned && <Icon name='Pin' styleName='pinIcon' />}
+            {fulfilledAt && <PostLabel type={'completed'} styleName='label' />}
+            {type && <PostLabel type={type} styleName='label' />}
+            {dropdownItems.length > 0 &&
+              <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
+            {close &&
+              <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
+          </div>
+        </div>
+        {flaggingVisible && <FlagContent type='post'
+          linkData={flagPostData}
+          onClose={() => this.setState({ flaggingVisible: false })} />
+        }
+      </div>
+      <div styleName='subheader'>
+        {topics.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
+        {canHaveTimes && timeWindow.length > 0 && <div styleName='timeWindow'>
+          {timeWindow}
+        </div>}
+      </div>
       {canBeCompleted && canEdit && expanded && (
         <PostCompletion
           type={type}
@@ -116,55 +159,12 @@ export default class PostHeader extends PureComponent {
           unfulfillPost={unfulfillPost}
         />
       )}
-      <div styleName='headerMainRow'>
-        <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
-        <div styleName='headerText'>
-          <Highlight {...highlightProps}>
-            <Link to={creatorUrl} styleName='userName'>{creator.name}{creator.tagline && !constrained && ', '}</Link>
-          </Highlight>
-          {creator.tagline && !constrained ? <span styleName='userTitle'>{creator.tagline}</span> : ''}
-          <div styleName='timestampRow'>
-            <span styleName='timestamp'>
-              {TextHelpers.humanDate(createdAt)}
-            </span>
-            {announcement && <span styleName='announcementSection'>
-              <span styleName='announcementSpacer'>•</span>
-              <span data-tip='Announcement' data-for='announcement-tt'>
-                <Icon name='Announcement' styleName='announcementIcon' />
-              </span>
-              <ReactTooltip
-                effect={'solid'}
-                delayShow={550}
-                id='announcement-tt' />
-            </span>}
-            {!topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
-          </div>
-        </div>
-        <div styleName='upperRight'>
-          {pinned && <Icon name='Pin' styleName='pinIcon' />}
-          {fulfilledAt && <PostLabel type={'completed'} styleName='label' />}
-          {type && <PostLabel type={type} styleName='label' />}
-          {dropdownItems.length > 0 &&
-            <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
-          {close &&
-            <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
-        </div>
-        {flaggingVisible && <FlagContent type='post'
-          linkData={flagPostData}
-          onClose={() => this.setState({ flaggingVisible: false })} />
-        }
-      </div>
-      {topicsOnNewline && !isEmpty(topics) && <TopicsLine topics={topics} slug={routeParams.groupSlug} newLine />}
-      {canHaveTimes && <div styleName='timeWindow'>
-        {timeWindow}
-      </div>}
     </div>
   }
 }
 
 export function TopicsLine ({ topics, slug, newLine }) {
   return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
-    {!newLine && <span styleName='spacer'>•</span>}
     {topics.slice(0, 3).map(t =>
       <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
   </div>

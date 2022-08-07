@@ -1,11 +1,10 @@
 .post {
-  padding-top: 25px;
   background-color: white;
   overflow-x: hidden;
 }
 
 .header {
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .donate, .project-management-tool, .join-project {
@@ -39,12 +38,15 @@
   }
 }
 
+.project-actions-wrapper {
+  padding-bottom: 5px;
+}
+
 .header-sticky {
   position: fixed;
   top: 49px;
-  background-image: linear-gradient(0deg, rgba(255,255,255,0.00) 0%, $color-white 25%);
-  padding: 25px 5px 25px 0;
   z-index: 10;
+  padding-right: 5px;
 }
 
 .noUser .header-sticky {
@@ -54,13 +56,12 @@
 .activity-sticky {
   z-index: 10;
   position: fixed;
-  top: $topnav-height;
+  top: 21px;
   background: $color-white;
 }
 
 .body {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 20px 20px 0 20px;
 }
 
 .activity-header {

@@ -38,6 +38,8 @@
 .expanded {
   margin: 0 $space-2x $space-6x;
   box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+  border: 1px solid rgba(0, 118, 223, .50);
+  border-top: 3px solid rgba(0, 118, 223, .50);
 
   &:hover {
     box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;

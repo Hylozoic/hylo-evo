@@ -1,12 +1,26 @@
 .header {
-  padding: 0px 15px;
-  margin-bottom: 30px;
+
 }
 
 .headerMainRow {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.headerTopRow {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid rgba(235, 235, 235, 1.0);
+  background: linear-gradient(180deg, rgba(42, 64, 89, 0) 10%, rgba(42, 64, 89, 0) 70%, rgba(42, 64, 89, .05) 100%);
+  border-radius: 5px 5px 0 0;
+}
+
+.subheader {
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .authorName {
@@ -15,6 +29,11 @@
 
 .avatar {
   margin-right: 10px;
+
+  div {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .constrained .avatar {
@@ -22,9 +41,7 @@
 }
 
 .headerText {
-  display: block;
-  position: relative;
-  top: 1px;
+  display: flex;
   line-height: 15px;
 }
 
@@ -38,6 +55,8 @@
   // Extract typography?
   @include font-bold;
   color: $color-rhino-80;
+  display: flex;
+  align-items: center;
   font-size: 14px;
   &:hover {
     color: $color-rhino;
@@ -79,6 +98,7 @@
 .timestampRow {
   align-items: center;
   display: flex;
+  margin-left: 10px;
 }
 
 .timestamp {
@@ -87,11 +107,16 @@
 }
 
 .timeWindow {
-  color: $color-caribbean-green;
-  opacity: 0.75;
+  color: rgba(201, 89, 172, 1.0);
   font-size: 12px;
   font-weight: bold;
-  margin: 10px;
+  width: auto;
+  text-align: center;
+  border: 1px solid rgba(235, 186, 221, 1.0);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  margin: 8px;
+  padding: 5px 8px;
 }
 
 .constrained .timeWindow {
@@ -140,7 +165,7 @@
 }
 
 .label {
-  margin-right: 20px;
+  margin-right: 6px;
   // remove this positioning. Only necessary because of Dropdown breaking layout
   position: relative;
   top: -3px;
@@ -158,16 +183,27 @@
   display: inline-block;
   cursor: pointer;
   position: relative;
-  top: 2px;
 }
 
 .topicsLine {
   composes: text-button from 'css/typography.scss';
   font-size: 12px;
-  display: inline-block;
+  display: flex;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
+  padding-bottom: 8px;
+
+  a {
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    margin: 8px 0 0 8px;
+    background-color: rgba(255,255,255,1);
+  }
 }
 
 .constrained .topicsLine {

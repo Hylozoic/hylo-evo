@@ -60,16 +60,18 @@ export default class PostCard extends React.Component {
     const isEvent = get('type', post) === 'event'
 
     return <div ref='postCard'
-      onClick={this.onClick}
+      onClick={!isEvent ? this.onClick : null}
       styleName={cx('card', postType, { expanded }, { constrained })}
       className={className}>
-      <PostHeader
-        {...post}
-        routeParams={routeParams}
-        highlightProps={highlightProps}
-        editPost={editPost}
-        constrained={constrained}
-      />
+      <div onClick={isEvent ? this.onClick : null}>
+        <PostHeader
+          {...post}
+          routeParams={routeParams}
+          highlightProps={highlightProps}
+          editPost={editPost}
+          constrained={constrained}
+        />
+      </div>
       <CardImageAttachments attachments={post.attachments} />
       {isEvent && (
         <EventBody

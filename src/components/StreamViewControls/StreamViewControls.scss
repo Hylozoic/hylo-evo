@@ -3,7 +3,7 @@
   padding: 17px 20px;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 12;
   background: linear-gradient(180deg, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
@@ -11,7 +11,7 @@
   color: $color-regent;
   padding: 0 12px;
   font-size: 12px;
-  border-radius: 30px;
+  border-radius: 5px;
   margin-right: 1em;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
@@ -20,12 +20,15 @@
 .dropdown-label {
   line-height: 2em;
   position: relative;
-  top: -0.15em;
+  display: flex;
+  align-items: center;
+  height: 30px;
 
   span { // icon positioning
-    top: 6px;
     margin-right: 0.25em;
     left: -2px;
+    font-size: 16px;
+    opacity: .3;
   }
 }
 
@@ -36,10 +39,10 @@
   border-radius: 5px;
 
   .grid-view-icon {
-    font-size: 18px;
+    font-size: 19px;
     position: relative;
     top: 2px;
-    left: 3px;
+    left: 2px;
   }
 
   div {
@@ -75,7 +78,7 @@
 // icon colouring
 .view-mode {
   span::before {
-    color: $color-grey-filter-icon;
+    color: rgba(191, 197, 206, 1.0);
   }
 }
 .mode-active {

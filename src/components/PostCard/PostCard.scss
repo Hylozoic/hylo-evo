@@ -1,5 +1,4 @@
 .card {
-  padding-top: 15px;
   border-radius: 4px;
   cursor: pointer;
   position: relative;
@@ -7,6 +6,8 @@
   transition: 0.25s;
   display: flex;
   flex-direction: column;
+  transition: all .25s ease;
+  border: 1px solid rgba(0, 118, 223, 0);
 }
 
 .constrained.card {
@@ -17,6 +18,8 @@
 .expanded,
 .expanded:hover {
   box-shadow: 0px 4px 6px 0px $color-black-10;
+  border: 1px solid rgba(0, 118, 223, 0.5);
+  border-top: 3px solid rgba(0, 118, 223, 0.5);
 }
 
 .constrained.discussion {

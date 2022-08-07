@@ -184,7 +184,7 @@ export default class PostDetail extends Component {
           slug={routeParams.groupSlug}
           {...post}
         />}
-        {isProject && <div>
+        {isProject && <div styleName='project-actions-wrapper'>
           <div styleName='join-project-button-container'>
             <JoinProjectSection
               currentUser={currentUser}
@@ -225,7 +225,6 @@ export default class PostDetail extends Component {
           groups={post.groups}
           slug={routeParams.groupSlug}
           showBottomBorder />
-        <div styleName='activity-header' ref={this.activityHeader}>ACTIVITY</div>
         {postFooter}
         {showPeopleDialog && <PostPeopleDialog
           title={postPeopleDialogTitle}
@@ -233,7 +232,6 @@ export default class PostDetail extends Component {
           onClose={togglePeopleDialog}
           slug={routeParams.groupSlug} />}
         {atActivity && <div styleName='activity-sticky' style={activityStyle}>
-          <div styleName='activity-header'>ACTIVITY</div>
           {postFooter}
         </div>}
         <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />

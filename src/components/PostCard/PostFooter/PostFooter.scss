@@ -8,8 +8,7 @@ $footer-height: 56px;
   justify-content: flex-start;
   align-items: center;
   height: $footer-height;
-  border-top: 1px solid $color-cape-cod-10;
-  border-bottom: 1px solid $color-cape-cod-10;
+  border-top: 1px dashed $color-cape-cod-10;
   overflow: hidden;
 }
 
@@ -80,7 +79,7 @@ $footer-height: 56px;
   height: $footer-height;
   line-height: $footer-height;
   text-align: center;
-  border-left: 1px solid $color-cape-cod-10;
+  border-left: 1px dashed $color-cape-cod-10;
   border-bottom-right-radius: 4px;
   width: 90px;
 
