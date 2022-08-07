@@ -139,7 +139,7 @@
   display: flex;
   vertical-align: top;
   justify-content: right;
-  align-items: baseline;
+  align-items: center;
 }
 
 .constrained .upperRight {
@@ -183,6 +183,12 @@
   display: inline-block;
   cursor: pointer;
   position: relative;
+  top: 2px;
+  padding: 0 3px;
+
+  span {
+    font-size: 30px;
+  }
 }
 
 .topicsLine {

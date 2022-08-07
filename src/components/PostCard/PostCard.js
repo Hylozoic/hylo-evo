@@ -74,12 +74,15 @@ export default class PostCard extends React.Component {
       </div>
       <CardImageAttachments attachments={post.attachments} />
       {isEvent && (
-        <EventBody
-          event={post}
-          slug={routeParams.groupSlug}
-          respondToEvent={respondToEvent}
-          constrained={constrained}
-        />
+        <div styleName='bodyWrapper'>
+          <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
+          <EventBody
+            event={post}
+            slug={routeParams.groupSlug}
+            respondToEvent={respondToEvent}
+            constrained={constrained}
+          />
+        </div>
       )}
       {!isEvent && (
         <PostBody
