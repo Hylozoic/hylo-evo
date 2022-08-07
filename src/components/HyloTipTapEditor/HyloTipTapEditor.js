@@ -66,6 +66,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
     extensions: [
       // Key events respond are last extension first, these will be last
       Extension.create({
+        name: 'KeyboardShortcuts',
         // Keep around for debugging for now:
         // onTransaction: ({ editor, transaction }) => {
         //   console.log('!!!!! looking how to get all link marks', transaction)

@@ -28,10 +28,12 @@ export function validateEmail (url) {
 
 export function normalizeUrl (url) {
   const target = url.toLowerCase()
+
   if (target.startsWith('mailto:')) return url
   if (/^(?:ftp|https?|file):\/\//.test(target)) return url
   // prepend http if no protocol and a common url
   if (TEST_LINK_COMMON.test(url)) return `http://${url}`
+
   return url
 }
 
@@ -44,16 +46,23 @@ export function markInputRule (regexp, markType, options) {
     const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs
     const textAfter = getTextAfter instanceof Function ? getTextAfter(match) : getTextAfter
     const { tr } = state
+
     if (state.doc.rangeHasMark(start, end, markType)) {
       return null
     }
+
     const mark = markType.create(attrs)
+
     tr.delete(start, end)
+
     const text = getText?.(match) || match[0]
+
     tr.insertText(text)
     tr.addMark(start, start + text.length, mark)
     tr.removeStoredMark(markType)
+
     if (textAfter) tr.insertText(textAfter)
+
     return tr
   })
 }
@@ -61,27 +70,33 @@ export function markInputRule (regexp, markType, options) {
 function normalize (match) {
   let url = match[0]
   const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+
   if (punctuation) {
     url = url.replace(TRIGGER_CHARACTER_REGEX, '')
   }
+
   if (validateEmail(url)) {
     return { href: `mailto:${url}`, text: url }
   }
+
   return { href: normalizeUrl(url) }
 }
 
 function getLinkText (match) {
   const url = match[0]
   const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+
   if (punctuation) {
     return url.replace(TRIGGER_CHARACTER_REGEX, '')
   }
+
   return url
 }
 
 function getTextAfter (match) {
   const url = match[0]
   const punctuation = url.match(TRIGGER_CHARACTER_REGEX)
+
   return punctuation ? punctuation[0] : ''
 }
 
@@ -98,7 +113,7 @@ function getTextAfter (match) {
 //   }
 // })
 export const LinkInputRules = Extension.create({
-  name: 'linkInputRules',
+  name: 'LinkInputRules',
 
   addProseMirrorPlugins () {
     return [
