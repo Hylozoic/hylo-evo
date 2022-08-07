@@ -121,16 +121,12 @@ export default class PostHeader extends PureComponent {
                 <span data-tip='Announcement' data-for='announcement-tt'>
                   <Icon name='Announcement' styleName='announcementIcon' />
                 </span>
-                <ReactTooltip
-                  effect={'solid'}
-                  delayShow={0}
-                  id='announcement-tt' />
               </span>}
             </div>
           </div>
           <div styleName='upperRight'>
             {pinned && <Icon name='Pin' styleName='pinIcon' />}
-            {fulfilledAt && <PostLabel type={'completed'} styleName='label' />}
+            {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type={'completed'} styleName='label' /></div>}
             {type && <PostLabel type={type} styleName='label' />}
             {dropdownItems.length > 0 &&
               <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
@@ -159,6 +155,11 @@ export default class PostHeader extends PureComponent {
           unfulfillPost={unfulfillPost}
         />
       )}
+
+      <ReactTooltip
+        effect={'solid'}
+        delayShow={0}
+        id='announcement-tt' />
     </div>
   }
 }

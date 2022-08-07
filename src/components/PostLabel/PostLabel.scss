@@ -24,9 +24,14 @@
 }
 
 .completed {
-  border: 2px solid rgba(13, 195, 159, .3);
+  display: flex;
   color: $color-caribbean-green;
   height: auto;
+
+  span {
+    font-size: 20px;
+    top: 0px;
+  }
 }
 
 .starIcon {
