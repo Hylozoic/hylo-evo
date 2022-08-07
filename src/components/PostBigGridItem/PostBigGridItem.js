@@ -30,6 +30,7 @@ export default function PostBigGridItem (props) {
   const attachmentType = firstAttachment.type || 0
   const attachmentUrl = firstAttachment.url || 0
 
+  console.log(numAttachments)
   if (!creator) { // PostCard guards against this, so it must be important? ;P
     return null
   }

@@ -16,7 +16,7 @@
 }
 
 .cardPadding.eventBody {
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 .smallMargin {
@@ -108,7 +108,7 @@
 
 .eventImage .eventResponseTop {
   position: absolute;
-  top: 16px;
+  top: -25px;
   right: 20px;
   display: flex;
   align-items: center;
@@ -215,6 +215,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 0 20px 10px;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .constrained .eventData {
@@ -240,7 +243,7 @@
 }
 
 .eventImage .calendarDate {
-    margin: -50px 0 10px 0;
+    margin: -30px 0 10px 0;
 }
 
 .eventDetails {
