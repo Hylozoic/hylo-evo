@@ -71,7 +71,6 @@ export function getTextAfter (match) {
   return punctuation ? punctuation[0] : ''
 }
 
-
 // ====== Curvenote Editor Input Utils
 // https://github.com/curvenote/editor/blob/main/packages/editor/src/prosemirror/inputrules/utils.ts
 // https://discuss.prosemirror.net/t/input-rules-for-wrapping-marks/537/11
