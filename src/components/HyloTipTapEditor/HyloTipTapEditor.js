@@ -3,10 +3,9 @@ import { useDispatch } from 'react-redux'
 import { isEmpty } from 'lodash/fp'
 import { useEditor, EditorContent, Extension } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
-import Link from '@tiptap/extension-link'
-import { createLinkInputRule } from './utils/createLinkInputRule'
 import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
+import LinkNode from './extensions/LinkNode'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
@@ -90,18 +89,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      Link
-        .extend({
-          addInputRules () {
-            return [
-              createLinkInputRule(this)
-            ]
-          }
-        })
-        .configure({
-          openOnClick: false,
-          autolink: false
-        }),
+      LinkNode,
 
       Placeholder.configure({ placeholder }),
 

@@ -1,19 +1,14 @@
-import { InputRule, getMarksBetween, callOrReturn } from '@tiptap/react'
+import Link from '@tiptap/extension-link'
+import { InputRule, getMarksBetween, callOrReturn, nodeInputRule } from '@tiptap/react'
 import linkMatcher from 'util/linkMatcher'
 
-// Below: Is the sketch how to do this without Linkify,
-// which makes the implemenation of the TipTap InputRule
-// much more clear, but doesn't produce as good of links.
+// Looks for a least 5 non-whitespace characters that are not in the trigger character
+// set of ` !,;`, and appear at the end of the current string terminated by
+// one of the trigger set characters. Triggers don't currently include a period.
 //
-// import urlRegexSafe from 'url-regex-safe'
-// export const TRIGGER_CHARACTER_REGEX_STRING = '[\\s!,;]$'
-// export const TRIGGER_CHARACTER_REGEX_STRING = '\\S+([ !,;])$'
-// export const TRIGGER_CHARACTER_REGEX = new RegExp(TRIGGER_CHARACTER_REGEX_STRING)
-// export const LINK_REGEX = new RegExp(
-//   `(${urlRegexSafe({ returnString: true })})(${TRIGGER_CHARACTER_REGEX_STRING})`
-// )
-
-const LINK_AT_END_REGEX = /([\w|.|@|:|?|//]+)([ !,;])$/
+// This is used to keep the amount of linkify matching lower and to extra the trigger
+// character
+const LINK_AT_END_REGEX = /([^\s!,;]{5,})([ !,;]{1})$/
 
 export function triggerMarkInputRule (config) {
   return new InputRule({
@@ -66,7 +61,7 @@ export function triggerMarkInputRule (config) {
   })
 }
 
-export function createLinkInputRule (mark) {
+export function createLinkMarkInputRule (mark) {
   return triggerMarkInputRule({
     type: mark.type,
 
@@ -92,4 +87,19 @@ export function createLinkInputRule (mark) {
       }
     }
   })
+}
+
+export default function createLinkExtenion () {
+  return Link
+    .extend({
+      addInputRules () {
+        return [
+          createLinkMarkInputRule(this)
+        ]
+      }
+    })
+    .configure({
+      openOnClick: false,
+      autolink: false
+    })
 }
