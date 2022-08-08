@@ -15,7 +15,7 @@
 }
 
 .cardPadding.eventBody {
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .smallMargin {
@@ -204,7 +204,7 @@
 .eventData {
   composes: caption-lt-lg from 'css/typography.scss';
   display: flex;
-  padding: 0px 20px;
+  padding: 0px 8px;
   margin-bottom: 15px;
 }
 
@@ -213,7 +213,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 0 20px 10px;
-  position: absolute;
+  position: relative;
   top: 0;
   width: 100%;
 }
@@ -238,6 +238,10 @@
   width: 45px;
   box-shadow: 0px 4px 15px rgb(17 39 64 / 20%);
   border-radius: 5px;
+}
+
+.eventImage .eventTop {
+  margin-top: -18px;
 }
 
 .eventImage .calendarDate {
