@@ -86,8 +86,11 @@ export class Comment extends Component {
             )}
           </div>
         </div>
-        <CardImageAttachments attachments={attachments} linked styleName='images' />
-        <CardFileAttachments attachments={attachments} styleName='files' />
+        {attachments &&
+          <div>
+            <CardImageAttachments attachments={attachments} linked styleName='images' />
+            <CardFileAttachments attachments={attachments} styleName='files' />
+          </div>}
         <ClickCatcher>
           {editing && (
             <HyloEditor

@@ -103,7 +103,8 @@ $comment-row-padding: 25px;
 
 .files {
   display: flex;
-  margin-left: $comment-left-margin
+  margin-left: $comment-left-margin;
+  padding-bottom: 0;
 }
 
 .replybox {

@@ -12,7 +12,6 @@ export default function PostLabel ({ type, className }) {
 
   const typeLowercase = type.toLowerCase()
   const typeName = type.charAt(0).toUpperCase() + typeLowercase.slice(1)
-  console.log(typeName)
 
   return <div styleName={styleName} className={className}>
     <div styleName='label-inner' data-tip={typeName} data-for='typeTip'><Icon name={typeName} styleName='typeIcon' /></div>

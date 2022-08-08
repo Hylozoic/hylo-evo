@@ -40,7 +40,7 @@
 
 .headerLocation {
   display: block;
-  margin: -10px 0 10px 15px;
+  margin: -10px 0 10px 10px;
   composes: timestamp from 'css/typography.scss';
   text-overflow: ellipsis;
   overflow: hidden;

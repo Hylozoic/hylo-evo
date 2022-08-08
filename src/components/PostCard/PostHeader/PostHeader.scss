@@ -16,10 +16,23 @@
   border-radius: 5px 5px 0 0;
 }
 
+.detailHasImage .subheader {
+  position: absolute;
+  z-index: 11;
+  width: 100%;
+
+  &.showNormal {
+    position: relative;
+  }
+}
+
 .subheader {
   display: flex;
   justify-content: space-between;
   background: linear-gradient(180deg, rgba(42, 64, 89, 0.1) 0%, rgba(42, 64, 89, 0) 20%);
+}
+
+.hasImage {
   position: absolute;
   z-index: 11;
   width: 100%;

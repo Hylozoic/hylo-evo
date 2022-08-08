@@ -31,6 +31,10 @@
   margin: 0 $space-4x $space-6x;
   box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
 
+  &> div:nth-child(2) > div:nth-child(1) {
+    margin-bottom: 0;
+  }
+
   &:hover {
     box-shadow: 0 4px 10px rgba(35, 65, 91, .3);
   }

@@ -14,8 +14,6 @@ export default function PostBody (props) {
     ...post
   } = props
 
-  console.log(post)
-
   return <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
     <PostTitle
       {...post}

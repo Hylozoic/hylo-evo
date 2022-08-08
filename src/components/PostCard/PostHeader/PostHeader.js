@@ -33,10 +33,12 @@ export default class PostHeader extends PureComponent {
       canEdit,
       creator,
       createdAt,
+      detailHasImage,
       expanded,
       type,
       id,
       startTime,
+      hasImage,
       endTime,
       fulfilledAt,
       pinned,
@@ -104,7 +106,9 @@ export default class PostHeader extends PureComponent {
       timeWindow = startString
     }
 
-    return <div styleName={cx('header', { constrained })} className={className}>
+    const showNormal = ((canBeCompleted && canEdit && expanded) && (topics.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
+
+    return <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
       <div styleName='headerMainRow'>
         <div styleName='headerTopRow'>
           <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
@@ -139,7 +143,7 @@ export default class PostHeader extends PureComponent {
           onClose={() => this.setState({ flaggingVisible: false })} />
         }
       </div>
-      <div styleName='subheader'>
+      <div styleName={cx('subheader', { hasImage }, { showNormal })} >
         {topics.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
         {canHaveTimes && timeWindow.length > 0 && <div styleName='timeWindow'>
           {timeWindow}

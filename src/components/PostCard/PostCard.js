@@ -59,6 +59,10 @@ export default class PostCard extends React.Component {
     const postType = get('type', post)
     const isEvent = get('type', post) === 'event'
 
+    const firstAttachment = post.attachments[0] || 0
+    const attachmentType = firstAttachment.type || 0
+    const hasImage = attachmentType === 'image' || false
+
     return <div ref='postCard'
       onClick={!isEvent ? this.onClick : null}
       styleName={cx('card', postType, { expanded }, { constrained })}
@@ -70,6 +74,7 @@ export default class PostCard extends React.Component {
           highlightProps={highlightProps}
           editPost={editPost}
           constrained={constrained}
+          hasImage={hasImage}
         />
       </div>
       <div onClick={isEvent ? this.onClick : null}>
