@@ -79,14 +79,16 @@
         display: block;
 
         div {
-          background-color: white;
+          background-color: rgba(255, 72, 80, 1.0);
           margin-top: 0;
+          color: white;
           height: 20px;
+          display: inline-flex;
+          align-items: center;
           line-height: 20px;
-          width: 80px;
 
           span {
-            font-size: 11px !important;
+            font-size: 12px !important;
           }
         }
       }
@@ -174,19 +176,21 @@
     flex-direction: row;
     height: 20px;
     line-height: 20px;
-    width: 80px;
     text-align: center;
-    border: 2px solid rgba(254, 72, 80, 1);
     margin: 8px;
     padding: 0;
+    padding-right: 5px;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    padding-left: 3px;
 
     span {
-      width: 50%;
-      font-size: 11px !important;
+      padding: 0 5px;
+      font-size: 12px !important;
     }
 
     span:last-child {
-      background-color: rgba(255, 72, 80, 1.0);
       color: white;
     }
   }
