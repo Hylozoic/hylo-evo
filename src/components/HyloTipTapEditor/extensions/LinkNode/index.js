@@ -7,16 +7,20 @@ import linkMatcher from 'util/linkMatcher'
 //
 // This is used to keep the amount of linkify matching lower and to extra the trigger
 // character
-const LINK_AT_END_REGEX = /([^\s!,;]{5,})([ !,;]{1})$/
+export const LINK_TRIGGER_REGEX_STRING = '([ !,;]{1})$'
+export const LINK_TRIGGER_REGEX = new RegExp(LINK_TRIGGER_REGEX_STRING)
+export const LINK_AT_END_REGEX = new RegExp(`([^\\s!,;]{5,})${LINK_TRIGGER_REGEX_STRING}`)
 
 const LinkNode = Node.create({
   name: 'linkNode',
 
   group: 'inline',
 
+  // content: 'inline*',
+
   inline: true,
 
-  selectable: false,
+  selectable: true,
 
   atom: true,
 
@@ -37,7 +41,9 @@ const LinkNode = Node.create({
     return {
       href: {
         default: null,
-        parseHTML: element => element.getAttribute('href'),
+        parseHTML: element => {
+          return element.getAttribute('href')
+        },
         renderHTML: attributes => {
           if (!attributes.href) return {}
           return { href: attributes.href }
@@ -49,10 +55,10 @@ const LinkNode = Node.create({
       class: {
         default: this.options.HTMLAttributes.class
       },
-      label: {
+      textContent: {
         default: null,
-        parseHTML: element => element.innerText,
-        renderHTML: null
+        parseHTML: element => element.textContent,
+        renderHTML: attributes => ({ textContent: attributes.textContent })
       }
     }
   },
@@ -65,18 +71,16 @@ const LinkNode = Node.create({
     ]
   },
 
-  renderHTML ({ HTMLAttributes, ...rest }) {
-    const { href } = HTMLAttributes
-
+  renderHTML ({ HTMLAttributes }) {
     return [
       'a',
-      mergeAttributes(this.options.HTMLAttributes, { href }),
-      HTMLAttributes.label
+      mergeAttributes(this.options.HTMLAttributes, { href: HTMLAttributes.href }),
+      HTMLAttributes.textContent
     ]
   },
 
   renderText (props) {
-    return props.label
+    return props.node.textContent
   },
 
   addInputRules () {
@@ -103,7 +107,7 @@ const LinkNode = Node.create({
 
           return {
             ...this.options.HTMLAttributes,
-            label: match[1],
+            textContent: match[1],
             href: currentLink.url
           }
         }
@@ -118,6 +122,11 @@ const LinkNode = Node.create({
 
     return allow
   }
+
+  // For possibly later:
+  // addNodeView () {
+  //   return ReactNodeViewRenderer(Component)
+  // }
 })
 
 export default LinkNode

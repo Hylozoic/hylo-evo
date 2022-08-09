@@ -1,10 +1,12 @@
 import React from 'react'
 import {
   RiBold, RiItalic, RiCodeBoxLine, RiStrikethrough,
-  RiH1, RiH2, RiH3, RiListUnordered, RiListOrdered,
+  // RiH1, RiH2, RiH3,
+  RiListUnordered, RiListOrdered,
   RiIndentIncrease, RiCodeView,
   RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
+// import { VscPreview } from 'react-icons/vsc'
 import './HyloTipTapEditor.scss'
 
 // export function addIframe (editor) {
@@ -67,7 +69,14 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
         <RiIndentIncrease />
       </button>
 
-      <div styleName='divider' />
+      {/* <div styleName='divider' /> */}
+
+      {/* <button
+        onClick={() => editor.chain().focus().setParagraph().run()}
+        // styleName={editor.isActive('paragraph') ? 'is-active' : ''}
+      >
+        <VscPreview />
+      </button> */}
 
       {/* <button
         onClick={() => editor.chain().focus().setParagraph().run()}
@@ -75,7 +84,7 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
       >
         <RiParagraph />
       </button> */}
-      <button
+      {/* <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         styleName={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
       >
@@ -92,7 +101,7 @@ export default function HyloTipTapEditorMenuBar ({ editor }) {
         styleName={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
       >
         <RiH3 />
-      </button>
+      </button> */}
       {/* <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
         styleName={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}

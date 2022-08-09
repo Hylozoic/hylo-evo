@@ -11,6 +11,10 @@
   pointer-events: none;
 }
 
+:global .ProseMirror a {
+  cursor: pointer;
+}
+
 :global .iframe-wrapper {
   position: relative;
   // width: 80%;
@@ -34,6 +38,21 @@
 
 .editor {
   // 
+}
+
+.addLinkPreviewButton {
+  display: flex;
+  align-items: center;
+  color: $color-white-80;
+  cursor: pointer;
+  &:hover {
+    color: white;
+  }
+  font-size: 0.7em;
+  svg {
+    margin-right: 0.3em;
+    font-size: 1.5em;
+  }
 }
 
 .topMenuBar,

@@ -1,14 +1,15 @@
-import React, { useRef, useImperativeHandle, useEffect } from 'react'
+import React, { useRef, useImperativeHandle, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { isEmpty } from 'lodash/fp'
-import { useEditor, EditorContent, Extension } from '@tiptap/react'
+import { useEditor, EditorContent, Extension, BubbleMenu } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
-import LinkNode from './extensions/LinkNode'
+import HyloLink from './extensions/HyloLink'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
+import { VscPreview } from 'react-icons/vsc'
 import './HyloTipTapEditor.scss'
 
 export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
@@ -19,6 +20,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   onEnter,
   onAddMention,
   onAddTopic,
+  onAddLinkPreview,
   contentHTML,
   readOnly,
   hideMenu,
@@ -28,6 +30,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 }, ref) {
   const dispatch = useDispatch()
   const editorRef = useRef(null)
+  const [selectedLink, setSelectedLink] = useState()
   const editor = useEditor({
     content: contentHTML,
 
@@ -89,7 +92,8 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      LinkNode,
+      // LinkNode,
+      HyloLink({ onAddLinkPreview }),
 
       Placeholder.configure({ placeholder }),
 
@@ -132,9 +136,18 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
     editor.setEditable(!readOnly)
   }, [editor, groupIds, readOnly])
 
+  const shouldShowBubbleMenu = ({ editor }) => {
+    if (editor.isActive('link')) {
+      setSelectedLink(editor.getAttributes('link'))
+      console.log('editor.getAttributes', editor.getAttributes('link'))
+      return true
+    }
+  }
   if (!editor) return null
 
   editorRef.current = editor
+
+  console.log('selectedLink', selectedLink)
 
   return (
     <>
@@ -142,6 +155,29 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         <HyloTipTapEditorMenuBar editor={editor} />
       )}
       <EditorContent className={className} editor={editor} />
+      {editor && (
+        <BubbleMenu
+          editor={editor}
+          tippyOptions={{
+            duration: 100,
+            arrow: true,
+            hideOnClick: true,
+            placement: 'bottom',
+            offset: [0, 6]
+          }}
+          shouldShow={shouldShowBubbleMenu}
+        >
+          <span
+            onClick={() => {
+              onAddLinkPreview(selectedLink?.href, true)
+              console.log(editor)
+            }}
+            styleName='addLinkPreviewButton'
+          >
+            <VscPreview /> Add Preview
+          </span>
+        </BubbleMenu>
+      )}
     </>
   )
 })

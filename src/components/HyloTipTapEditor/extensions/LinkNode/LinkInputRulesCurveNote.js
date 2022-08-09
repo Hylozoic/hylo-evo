@@ -101,18 +101,6 @@ export function proseMirrorMarkInputRule (regexp, markType, options) {
   })
 }
 
-// TODO: This should be also possible, but need to reconcile slight difference
-// between a TipTap InputRule and ProseMirror's:
-// Link.extend({
-//   addInputRules() {
-//     return [
-//       markInputRule({
-//         find: LINK_REGEX,
-//         type: this.type
-//       })
-//     ]
-//   }
-// })
 export const LinkInputRules = Extension.create({
   name: 'LinkInputRules',
 
