@@ -1,7 +1,6 @@
 import { get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import orm from 'store/models'
-import linkMatcher from 'util/linkMatcher'
 
 export const MODULE_NAME = 'PostEditor'
 export const FETCH_LINK_PREVIEW = `${MODULE_NAME}/FETCH_LINK_PREVIEW`
@@ -42,7 +41,7 @@ export function fetchLinkPreview (url) {
   }
 }
 
-export async function pollingFetchLinkPreview (dispatch, contentText) {
+export async function pollingFetchLinkPreview (dispatch, url) {
   const MAX_RETRIES = 4
   const poll = async (url, retry = 1) => {
     if (retry > MAX_RETRIES) return
@@ -58,16 +57,7 @@ export async function pollingFetchLinkPreview (dispatch, contentText) {
     }
   }
 
-  if (linkMatcher.test(contentText)) {
-    // const linksHTML = TextHelpers.sanitizeHTML(htmlContent, {
-    //   allowedTags: ['a'],
-    //   allowedAttributes: { a: ['href'] }
-    // })
-    const linksFound = linkMatcher.match(contentText)
-    const urlMatch = linksFound[0].url
-
-    poll(urlMatch)
-  }
+  poll(url)
 }
 
 export function removeLinkPreview () {

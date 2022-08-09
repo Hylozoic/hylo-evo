@@ -48,7 +48,7 @@ export function mapStateToProps (state, props) {
   const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
-  const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
+  const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || postPending
   let post = null
   let editing = false
   if (getRouteParam('action', null, props) === 'edit') {

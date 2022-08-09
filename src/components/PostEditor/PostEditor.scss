@@ -151,7 +151,7 @@ $wrapperBorderRadius: 8px;
 // Body area
 
 .body {
-  padding: 0 $space-4x;
+  padding: 0 $space-5x 0 $space-4x;
   display: flex;
   flex-direction: row;
   &-column:last-child {

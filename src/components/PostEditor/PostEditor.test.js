@@ -1,6 +1,5 @@
 /* eslint-env jest */
 import React from 'react'
-import { merge } from 'lodash'
 import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
@@ -265,93 +264,6 @@ describe('PostEditor', () => {
     await testInstance.save()
     expect(props.updatePost.mock.calls).toHaveLength(1)
     expect(props.updatePost.mock.calls).toMatchSnapshot()
-  })
-
-  describe('linkPreview handling', () => {
-    let linkPreviewProps, contentText, editorMock, emptyEditorMock
-    beforeEach(() => {
-      linkPreviewProps = {
-        ...baseProps,
-        post: { groups: [] },
-        pollingFetchLinkPreview: jest.fn(),
-        clearLinkPreview: jest.fn()
-      }
-      contentText = ' none.com '
-      editorMock = { isEmpty: () => false, getText: () => contentText }
-      emptyEditorMock = { isEmpty: () => true, getText: () => null }
-    })
-
-    it('should fetch for a linkPreview', () => {
-      const props = linkPreviewProps
-      const wrapper = shallow(<PostEditor {...props} />)
-      const testInstance = wrapper.instance()
-      testInstance.editorRef.current = { isEmpty: () => false, getText: () => contentText }
-      testInstance.setLinkPreview()
-      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(1)
-    })
-
-    it('should not fetch for linkPreview when a post.linkPreview is present', () => {
-      const props = merge(linkPreviewProps, {
-        post: {
-          linkPreview: {},
-          groups: []
-        }
-      })
-      const wrapper = shallow(<PostEditor {...props} />)
-      const testInstance = wrapper.instance()
-      testInstance.editorRef.current = editorMock
-      testInstance.setLinkPreview()
-      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-    })
-
-    it('should not fetch for linkPreview when linkStatus is "removed"', () => {
-      const props = merge(linkPreviewProps, {
-        linkPreviewStatus: 'removed'
-      })
-      const wrapper = shallow(<PostEditor {...props} />)
-      const testInstance = wrapper.instance()
-      testInstance.editorRef.current = editorMock
-      testInstance.setLinkPreview()
-      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-    })
-
-    it('should not fetch for linkPreview when linkStatus is "invalid"', () => {
-      const props = merge(linkPreviewProps, {
-        linkPreviewStatus: 'invalid'
-      })
-      const wrapper = shallow(<PostEditor {...props} />)
-      const testInstance = wrapper.instance()
-      testInstance.editorRef.current = editorMock
-      testInstance.setLinkPreview()
-      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-    })
-
-    it('should reset linkPreview when there is no text and any linkStatus is present', () => {
-      const props = merge(linkPreviewProps, {
-        linkPreviewStatus: 'any'
-      })
-      const wrapper = shallow(<PostEditor {...props} />)
-      const testInstance = wrapper.instance()
-      testInstance.editorRef.current = emptyEditorMock
-      testInstance.setLinkPreview()
-      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-      expect(props.clearLinkPreview.mock.calls).toHaveLength(1)
-    })
-
-    it('should not reset linkPreview when there is no text but there is a linkPreview present', () => {
-      const props = merge(linkPreviewProps, {
-        linkPreviewStatus: null,
-        post: {
-          linkPreview: {}
-        }
-      })
-      const wrapper = shallow(<PostEditor {...props} />)
-      const testInstance = wrapper.instance()
-      testInstance.editorRef.current = emptyEditorMock
-      testInstance.setLinkPreview()
-      expect(props.pollingFetchLinkPreview.mock.calls).toHaveLength(0)
-      expect(props.clearLinkPreview.mock.calls).toHaveLength(0)
-    })
   })
 
   it('renders contribution button', () => {

@@ -248,7 +248,6 @@ export default class PostEditor extends React.Component {
   }
 
   handleDetailsChange = () => {
-    this.setLinkPreview()
     this.setIsDirty(true)
   }
 
@@ -305,26 +304,25 @@ export default class PostEditor extends React.Component {
   // entirely, and another link is added.
   // TODO: Probably better to throttle this like updateTopic
   //       Also, get editor content in the function or send in?
-  setLinkPreview = debounce(500, () => {
-    const contentText = this.editorRef.current.getText()
+  handleAddLinkPreview = debounce(500, (url, force) => {
     const {
-      pollingFetchLinkPreview,
-      linkPreviewStatus,
-      clearLinkPreview
+      pollingFetchLinkPreview
+      // linkPreviewStatus,
+      // clearLinkPreview
     } = this.props
     const { linkPreview } = this.state.post
     // Keep this around a litte longer for debugging:
     // console.log('!!! this.editorRef.current.getText(), linkPreviewStatus, linkPreview:', this.editorRef.current.getText(), linkPreviewStatus, linkPreview)
 
-    if (this.editorRef.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
+    // if (this.editorRef.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
 
-    if (linkPreview) return
+    // if (linkPreviewStatus === 'invalid') {
+    //   return
+    // }
 
-    if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') {
-      return
-    }
+    if (linkPreview && !force) return
 
-    pollingFetchLinkPreview(contentText)
+    pollingFetchLinkPreview(url)
   })
 
   handleTopicSelectorOnChange = topics => {
@@ -543,7 +541,8 @@ export default class PostEditor extends React.Component {
       showFiles,
       showImages,
       addAttachment,
-      postTypes
+      postTypes,
+      fetchLinkPreviewPending
     } = this.props
     // Note: Providing `groupIds` to HyloTipTapEditor would cause
     // mentions to only be posisble to people in the groups being posted
@@ -614,6 +613,7 @@ export default class PostEditor extends React.Component {
               onChange={this.handleDetailsChange}
               onEscape={this.handleCancel}
               onAddTopic={this.handleAddTopic}
+              onAddLinkPreview={this.handleAddLinkPreview}
               contentHTML={details}
               // groupIds={groupIds}
               readOnly={loading}
@@ -621,8 +621,9 @@ export default class PostEditor extends React.Component {
             />
           </div>
         </div>
-        {linkPreview && (
+        {(linkPreview || fetchLinkPreviewPending) && (
           <LinkPreview
+            loading={fetchLinkPreviewPending}
             linkPreview={linkPreview}
             onClose={this.handleRemoveLinkPreview}
           />
