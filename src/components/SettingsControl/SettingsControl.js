@@ -6,7 +6,7 @@ import cx from 'classnames'
 import './SettingsControl.scss'
 
 export default function SettingsControl (props) {
-  const { label, value = '', onChange, renderControl, type, error, ...otherProps } = props
+  const { label, value = '', onChange, renderControl, type, error, controlClass, ...otherProps } = props
   let control
 
   if (renderControl) {
@@ -26,6 +26,7 @@ export default function SettingsControl (props) {
           <IconSelector
             selectedIcon={value}
             updateIcon={onChange}
+            {...otherProps}
           />
         )
         break
@@ -56,7 +57,7 @@ export default function SettingsControl (props) {
     }
   }
 
-  return <div styleName={cx('control', { error })}>
+  return <div styleName={cx('control', { error })} className={controlClass}>
     <label styleName={cx('control-label', { error })}>{label}</label>
     {control}
   </div>

@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
-import { set, trim, isEqual } from 'lodash'
+import { set, trim } from 'lodash'
 import cx from 'classnames'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
-import EditableMap from 'components/Map/EditableMap/EditableMap'
 import Icon from 'components/Icon'
+import Loading from 'components/Loading'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
-import UploadAttachmentButton from 'components/UploadAttachmentButton'
+import EditableMap from 'components/Map/EditableMap/EditableMap'
+import PostLabel from 'components/PostLabel'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
 import SwitchStyled from 'components/SwitchStyled'
-import Loading from 'components/Loading'
+import TopicSelector from 'components/TopicSelector'
+import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
@@ -24,40 +26,25 @@ import general from '../GroupSettings.scss' // eslint-disable-line no-unused-var
 import styles from './GroupSettingsTab.scss' // eslint-disable-line no-unused-vars
 import EditableMapModal from 'components/Map/EditableMap/EditableMapModal'
 import { sanitizeURL } from 'util/url'
-import { CUSTOM_VIEW_MODES } from 'store/constants'
 import { POST_TYPES } from 'store/models/Post'
 
 const emptyCustomView = {
   name: '',
-  icon: '',
+  icon: 'Public',
   postTypes: [],
   activePostsOnly: false,
   externalLink: '',
-  viewMode: '',
+  viewMode: 'externalLink',
   isActive: true,
-  order: 1
+  order: 1,
+  topics: []
 }
 
-const validCustomView = ({ name, icon, postTypes, activePostsOnly, externalLink, viewMode, isActive }) => {
-  let errorString = 'Incomplete custom view: \n'
-  let valid = true
-  if (externalLink.length > 0) {
-    if (!sanitizeURL(externalLink)) {
-      valid = false
-      errorString += 'The external link has to be a valid URL. \n'
-    }
-  }
-
-  if (name.length < 2) {
-    valid = false
-    errorString += 'Name needs to be at least two characters long. \n'
-  }
-  if (icon.length < 1) {
-    valid = false
-    errorString += 'An icon needs to be selected. '
-  }
-
-  return { valid, errorString }
+const CUSTOM_VIEW_TYPES = {
+  externalLink: 'External Link',
+  cards: 'Posts - Cards View',
+  list: 'Posts - List View',
+  grid: 'Posts - Grid View'
 }
 
 const { object, func } = PropTypes
@@ -84,7 +71,7 @@ export default class GroupSettingsTab extends Component {
   defaultEditState () {
     const { group } = this.props
 
-    if (!group) return { edits: {}, changed: false }
+    if (!group) return { edits: {}, changed: false, valid: false }
 
     const {
       aboutVideoUri, avatarUrl, bannerUrl, customViews, description, geoShape, location, locationObject, name, settings
@@ -103,10 +90,12 @@ export default class GroupSettingsTab extends Component {
         moderatorDescriptorPlural: group.moderatorDescriptorPlural || 'Moderators',
         name: name || '',
         settings: typeof settings !== 'undefined' ? settings : { },
-        customViews: customViews.items[0] ? customViews.items : [emptyCustomView]
+        customViews: customViews || []
       },
+      error: null,
       changed: false,
-      isModal: false
+      isModal: false,
+      postTypesModalOpen: false
     }
   }
 
@@ -148,6 +137,29 @@ export default class GroupSettingsTab extends Component {
     })
   }
 
+  validate = () => {
+    const { edits } = this.state
+
+    let errorString = ''
+
+    edits.customViews.forEach(cv => {
+      const { externalLink, name, icon } = cv
+      if (externalLink.length > 0) {
+        if (!sanitizeURL(externalLink)) {
+          errorString += 'External link has to be a valid URL. \n'
+        }
+      }
+
+      if (name.length < 2) {
+        errorString += 'View name needs to be at least two characters long. \n'
+      }
+      if (icon.length < 1) {
+        errorString += 'An icon needs to be selected for ev view. '
+      }
+    })
+    this.setState({ error: errorString })
+  }
+
   save = async () => {
     this.setState({ changed: false })
     const { group, fetchLocation } = this.props
@@ -155,89 +167,59 @@ export default class GroupSettingsTab extends Component {
     if (group && this.state.edits.location !== group.location) {
       locationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId })
     }
-
-    this.props.updateGroupSettings({ ...this.state.edits, locationId })
+    const customViews = this.state.edits.customViews.map(cv => { cv.topics = cv.topics.map(t => ({ name: t.name, id: t.id })); return cv })
+    this.props.updateGroupSettings({ ...this.state.edits, locationId, customViews })
   }
 
-  renderCustomViewUI = () => {
-    const { name, icon, externalLink, postTypes, viewMode, activePostsOnly, isActive } = this.state.edits.customViews[0]
+  addCustomView = () => {
+    this.setState({
+      edits: { ...this.state.edits, customViews: [ ...this.state.edits.customViews ].concat({ ...emptyCustomView }) }
+    })
+  }
 
-    let postTypeOptions = Object.keys(POST_TYPES).map(value => ({
-      label: POST_TYPES[value].label,
-      onClick: () => this.updateSettingDirectly('customview.postTypes')([value])
-    }))
-      .concat([{ label: 'No filter', onClick: () => this.updateSettingDirectly('customview.postTypes')([]) }])
-    return (
-      <div styleName='styles.custom-view-container'>
-        {icon ? <Icon green name={icon} /> : null}<SettingsControl label='Custom View Label' onChange={this.updateSetting('customview.name')} value={name} />
-        <SettingsControl label='Select Icon' onChange={(value) => this.updateSettingDirectly('customview.icon')(value)} value={icon} type='icon-selector' />
-        <SettingsControl label='External link' onChange={this.updateSetting('customview.externalLink')} value={sanitizeURL(externalLink)} />
-        <div styleName='styles.help-text'>You can point to an external URL, OR display a customized view of your group's posts</div>
-        {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>Must be a valid URL!</div>}
-        <h5> Custom Internal View</h5>
-        <label styleName='styles.label'>View Style</label>
-        <Dropdown
-          styleName='styles.location-obfuscation-dropdown'
-          toggleChildren={
-            <span styleName='styles.location-obfuscation-dropdown-label'>
-              {CUSTOM_VIEW_MODES[viewMode || 'cards']}
-              <Icon name='ArrowDown' />
-            </span>
-            }
-          items={Object.keys(CUSTOM_VIEW_MODES).map(value => ({
-            label: CUSTOM_VIEW_MODES[value],
-            onClick: () => this.updateSettingDirectly('customview.viewMode')(value)
-          }))}
-        />
-        <div style={{ paddingTop: '4px', paddingBottom: '4px' }}>
-          <label styleName='styles.label'>Post Types</label>
-          <Dropdown
-            styleName='styles.location-obfuscation-dropdown'
-            toggleChildren={
-              <span styleName='styles.location-obfuscation-dropdown-label'>
-                {POST_TYPES[postTypes[0]]?.label || 'No filter'}
-                <Icon name='ArrowDown' />
-              </span>
-              }
-            items={postTypeOptions}
-          />
-        </div>
-        <div style={{ paddingTop: '4px' }} styleName='general.switchContainer'>
-          <SwitchStyled
-            checked={activePostsOnly}
-            onChange={() => this.updateSettingDirectly('customview.activePostsOnly')(!activePostsOnly)}
-            backgroundColor={activePostsOnly ? '#0DC39F' : '#8B96A4'}
-          />
-          <span styleName='general.toggleDescription'>Include only active posts?</span>
-        </div>
-        {(!isEqual(this.state.edits.customViews[0], emptyCustomView)) &&
-          <div style={{ paddingTop: '4px' }} styleName='general.switchContainer'>
-            <SwitchStyled
-              checked={isActive}
-              onChange={() => this.updateSettingDirectly('customview.isActive')(!isActive)}
-              backgroundColor={isActive ? '#0DC39F' : '#8B96A4'}
-            />
-            <span styleName='general.toggleDescription'>Keep this custom view active?</span>
-          </div>}
-      </div>
-    )
+  deleteCustomView = (i) => () => {
+    if (window.confirm('Are you sure you want to delete this custom view?')) {
+      const newViews = [...this.state.edits.customViews]
+      newViews.splice(i, 1)
+      this.setState({
+        changed: true,
+        edits: { ...this.state.edits, customViews: newViews }
+      }, () => {
+        this.validate()
+      })
+    }
+  }
+
+  updateCustomView = (i) => (key) => (v) => {
+    let value = typeof (v.target) !== 'undefined' ? v.target.value : v
+    if (key === 'topics') {
+      value = value.map(t => ({ name: t.name, id: parseInt(t.id) }))
+    }
+    let cv = { ...this.state.edits.customViews[i] }
+    cv[key] = value
+    let customViews = [ ...this.state.edits.customViews ]
+    customViews[i] = cv
+    this.setState({ changed: true, edits: { ...this.state.edits, customViews } }, () => {
+      this.validate()
+    })
   }
 
   saveButtonContent () {
-    const { changed, edits } = this.state
+    const { changed, error } = this.state
     if (!changed) return { color: 'gray', style: '', text: 'Current settings up to date' }
-    if (isEqual(edits.customViews[0], emptyCustomView)) return { color: 'green', style: 'general.settingChanged', text: 'Changes not saved' }
-    if (validCustomView(edits.customViews[0]).valid) return { color: 'green', style: 'general.settingChanged', text: 'Changes not saved' }
-    return { color: 'purple', style: 'general.settingIncorrect', text: validCustomView(edits.customViews[0]).errorString }
+    if (error) {
+      return { color: 'purple', style: 'general.settingIncorrect', text: error }
+    }
+    return { color: 'green', style: 'general.settingChanged', text: 'Changes not saved' }
   }
 
   render () {
     const { currentUser, group } = this.props
     if (!group) return <Loading />
 
-    const { edits, changed } = this.state
+    const { changed, edits, error } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, customViews, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
@@ -324,9 +306,10 @@ export default class GroupSettingsTab extends Component {
             placeholder='What skills and interests are most relevant to your group?' />
         </SettingsSection>
         <SettingsSection>
-          <h3>Custom View</h3>
-          <div styleName='styles.help-text'>Add a custom link orview to your group's navigation</div>
-          {this.renderCustomViewUI()}
+          <h3>Custom Views</h3>
+          <div styleName='styles.help-text'>Add custom links or filtered post views to your group's navigation</div>
+          {customViews.map((cv, i) => <CustomViewRow group={group} key={i} index={i} {...cv} onChange={this.updateCustomView(i)} onDelete={this.deleteCustomView(i)} />)}
+          <Button onClick={this.addCustomView}>Add Custom View</Button>
         </SettingsSection>
 
         <br />
@@ -359,9 +342,95 @@ export default class GroupSettingsTab extends Component {
 
         <div styleName='general.saveChanges'>
           <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label='Save Changes' color={this.saveButtonContent().color} onClick={changed && validCustomView(this.state.edits.customViews[0]).valid ? this.save : null} styleName='general.save-button' />
+          <Button label='Save Changes' color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} styleName='general.save-button' />
         </div>
       </div>
     )
   }
+}
+
+function CustomViewRow ({ group, index, name, icon, externalLink, postTypes, viewMode, activePostsOnly, isActive, onChange, onDelete, topics }) {
+  const [postTypesModalOpen, setPostTypesModalOpen] = useState(false)
+
+  const togglePostType = (type, checked) => {
+    let newPostTypes = [ ...postTypes ]
+    if (checked) {
+      newPostTypes = newPostTypes.concat(type)
+    } else {
+      newPostTypes = newPostTypes.filter(p => p !== type)
+    }
+    onChange('postTypes')(newPostTypes)
+  }
+
+  return (
+    <div styleName='styles.custom-view-container'>
+      <h4>Custom View #{parseInt(index) + 1} <Icon name='Trash' onClick={onDelete} /></h4>
+      <SettingsControl label='Icon' controlClass={styles['inline-control']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
+      <SettingsControl label='Label' controlClass={styles['inline-control']} onChange={onChange('name')} value={name} />
+      <div>
+        <label styleName='styles.label'>Custom View Type</label>
+        <Dropdown
+          styleName='styles.location-obfuscation-dropdown'
+          toggleChildren={
+            <span styleName='styles.location-obfuscation-dropdown-label'>
+              {CUSTOM_VIEW_TYPES[viewMode || 'externalLink']}
+              <Icon name='ArrowDown' />
+            </span>
+          }
+          items={Object.keys(CUSTOM_VIEW_TYPES).map(value => ({
+            label: CUSTOM_VIEW_TYPES[value],
+            onClick: () => onChange('viewMode')(value)
+          }))}
+        />
+      </div>
+      {viewMode === 'externalLink' ? (
+        <div>
+          <SettingsControl label='External link' onChange={onChange('externalLink')} value={externalLink || ''} placeholder='Will open this URL in a new tab' />
+          {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>Must be a valid URL!</div>}
+        </div>)
+        : <div styleName={cx('styles.custom-posts-view')}>
+          <div styleName='styles.post-types'>
+            <label styleName='styles.label'>What post types to display?</label>
+            <div styleName='styles.post-types-chosen'>
+              <span onClick={() => setPostTypesModalOpen(!postTypesModalOpen)}>
+                {postTypes.length === 0 ? 'None' : postTypes.map((p, i) => <PostLabel key={p} type={p} styleName='styles.post-type' />)}
+              </span>
+              <div styleName={cx('styles.post-types-selector', { 'styles.open': postTypesModalOpen })}>
+                <Icon name='Ex' styleName='styles.close-button' onClick={() => setPostTypesModalOpen(!postTypesModalOpen)} />
+                {Object.keys(POST_TYPES).map(postType => {
+                  const color = POST_TYPES[postType].primaryColor
+                  return (
+                    <div
+                      key={postType}
+                      styleName='styles.post-type-switch'
+                    >
+                      <SwitchStyled
+                        backgroundColor={`rgba(${color[0]}, ${color[1]}, ${color[2]}, ${color[3] / 255})`}
+                        name={postType}
+                        checked={postTypes.includes(postType)}
+                        onChange={(checked, name) => togglePostType(postType, !checked)}
+                      />
+                      <span>{postType.charAt(0).toUpperCase() + postType.slice(1)}s</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ paddingTop: '8px' }} styleName='general.switchContainer'>
+            <label styleName='styles.label'>Include only active posts?</label>
+            <SwitchStyled
+              checked={activePostsOnly}
+              onChange={() => onChange('activePostsOnly')(!activePostsOnly)}
+              backgroundColor={activePostsOnly ? '#0DC39F' : '#8B96A4'}
+            />
+          </div>
+
+          <label styleName='styles.label'>Include only posts that match any of these topics:</label>
+          <TopicSelector currentGroup={group} selectedTopics={topics} onChange={onChange('topics')} />
+        </div>
+      }
+    </div>
+  )
 }

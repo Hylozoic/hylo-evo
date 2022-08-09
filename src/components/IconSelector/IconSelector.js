@@ -1,102 +1,80 @@
+import cx from 'classnames'
 import React from 'react'
 import Icon from 'components/Icon'
 
 import './IconSelector.scss'
 
 const iconList = [
+  'Public',
+  'ProfileUrl',
+  'Document',
+  'SmallEdit',
+  'Post',
+  'Letter',
   'EmailNotification',
+  'Notifications',
   'InAppNotification',
   'PushNotification',
+  'Phone',
+  'Email',
   'Announcement',
-  'Invite',
-  'Post',
   'Star',
   'Plus',
-  'Settings',
   'ArrowForward',
-  'Document',
-  'Download',
+  'Reply',
   'Send',
   'Checkmark',
+  'Complete',
+  'Settings',
+  'Download',
   'Empty',
-  'Back',
+  'Circle',
+  'CircleEx',
+  'Circle-Plus',
   'AddImage',
   'Clock',
   'StarCircle',
-  'ProfileUrl',
-  'ProfileTwitter',
-  'ProfileLinkedin',
-  'ProfileFacebook',
-  'Reply',
-  'LinkedIn',
-  'Google',
-  'Facebook',
   'Ex',
-  'NewCommunity',
-  'Projects',
-  'Events',
-  'Home',
   'Topics',
+  'Smiley',
+  'Person',
+  'Invite',
+  'NewCommunity',
   'Members',
   'Messages',
-  'Notifications',
+  'Message',
+  'Discussion',
+  'SpeechBubble',
+  'Replies',
   'Search',
   'Share',
-  'More',
   'ArrowUp',
   'ArrowDown',
   'Location',
   'Trash',
   'Pin',
-  'Complete',
   'Flag',
-  'Circle',
   'Paperclip',
-  'Globe',
   'Stack',
   'Calendar',
-  'Public',
-  'Funnel',
-  'Hamburger',
-  'BadgeCheck',
-  'Unlock',
-  'Person',
-  'Eye',
-  'Letter',
-  'Phone',
-  'Email',
-  'Copy',
-  'Heart',
-  'Info',
-  'Create',
-  'Groups',
-  'Project',
-  'Resource',
-  'Discussion',
   'Event',
-  'Offer',
-  'SmallEdit',
-  'Replies',
-  'Smiley',
-  'CardView',
-  'ListView',
-  'Stream',
+  'Funnel',
+  'BadgeCheck',
+  'Shield',
   'Enter-Door',
   'Lock',
-  'Shield',
-  'Hand',
+  'Unlock',
+  'Eye',
   'Hidden',
-  'CircleEx',
-  'Circle-Plus',
+  'Copy',
+  'Resource',
+  'Offer',
+  'Hand',
   'Handshake',
-  'SpeechBubble',
-  'People',
-  'Binoculars',
   'Buy',
   'Cooperative',
   'Filter',
   'Mentorship',
-  'Message',
   'Volunteering',
   'Research',
   'Equipment_sharing',
@@ -106,20 +84,29 @@ const iconList = [
   'Markets',
   'Socials',
   'Website',
+  'Edit',
+  'ProfileTwitter',
+  'ProfileLinkedin',
+  'ProfileFacebook',
   'Twitter',
-  'Edit'
+  'LinkedIn',
+  'Facebook',
+  'Google'
 ]
 
-export default function IconSelector ({ selectedIcon, updateIcon }) {
+export default function IconSelector ({ selectedIcon, updateIcon, selectedIconClass }) {
+  const [modalOpen, setModalOpen] = React.useState(false)
+
+  const toggleModalOpen = () => setModalOpen(!modalOpen)
+
   return (
     <div styleName='icon-selector-container'>
-      <div styleName='selected-icon'>
-        {selectedIcon ? <Icon green name={selectedIcon} /> : <div styleName='text'>No icon selected</div>}
-        {selectedIcon && <span styleName='text'>Icon name: {selectedIcon}</span>}
+      <div styleName='selected-icon' onClick={toggleModalOpen}>
+        {selectedIcon ? <Icon green name={selectedIcon} className={selectedIconClass} /> : <div styleName='text'>No icon selected</div>}
       </div>
-      <div styleName='icon-options'>
+      <div styleName={cx('icon-options', { open: modalOpen })}>
         {iconList.map((icon) => (
-          <Icon key={icon} styleName='icon' name={icon} onClick={() => updateIcon(icon)} green={icon === selectedIcon} />
+          <Icon key={icon} styleName='icon' name={icon} onClick={() => { updateIcon(icon); setModalOpen(false) }} green={icon === selectedIcon} />
         ))}
       </div>
     </div>

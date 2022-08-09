@@ -13,6 +13,7 @@ Object {
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],
+    "customViews": Array [],
     "groupToGroupJoinQuestions": Array [],
     "groupTopics": Array [],
     "id": "99",
@@ -88,12 +89,17 @@ Object {
               id
               activePostsOnly
               externalLink
+              groupId
               isActive
               icon
               name
               postTypes
               order
               viewMode
+              topics {
+                id
+                name
+              }
             }
           }
           groupToGroupJoinQuestions {
@@ -167,6 +173,24 @@ Object {
     "query": "mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          customViews {
+            items {
+              id
+              activePostsOnly
+              externalLink
+              groupId
+              isActive
+              icon
+              name
+              postTypes
+              order
+              viewMode
+              topics {
+                id
+                name
+              }
+            }
+          }
           groupToGroupJoinQuestions {
             items {
               id
@@ -224,6 +248,7 @@ Object {
   "group": Object {
     "activeProjects": Array [],
     "announcements": Array [],
+    "customViews": Array [],
     "groupToGroupJoinQuestions": Array [],
     "groupTopics": Array [],
     "id": "99",

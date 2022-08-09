@@ -8,6 +8,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
     items {
       id
       activePostsOnly
+      groupId
       externalLink
       isActive
       icon
@@ -15,6 +16,10 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       postTypes
       viewMode
       order
+      topics {
+        id
+        name
+      }
     }
   }
   description

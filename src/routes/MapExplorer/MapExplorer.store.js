@@ -178,7 +178,7 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({activePostsOnly = false, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
+export function fetchPostsForMap ({ activePostsOnly = false, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {

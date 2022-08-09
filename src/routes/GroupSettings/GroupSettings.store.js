@@ -68,12 +68,17 @@ export function fetchGroupSettings (slug) {
               id
               activePostsOnly
               externalLink
+              groupId
               isActive
               icon
               name
               postTypes
               order
               viewMode
+              topics {
+                id
+                name
+              }
             }
           }
           groupToGroupJoinQuestions {
@@ -152,6 +157,24 @@ export function updateGroupSettings (id, changes) {
       query: `mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          customViews {
+            items {
+              id
+              activePostsOnly
+              externalLink
+              groupId
+              isActive
+              icon
+              name
+              postTypes
+              order
+              viewMode
+              topics {
+                id
+                name
+              }
+            }
+          }
           groupToGroupJoinQuestions {
             items {
               id

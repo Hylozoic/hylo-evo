@@ -149,6 +149,7 @@ Group.fields = {
     through: 'GroupRelationship',
     throughFields: ['childGroup', 'parentGroup']
   }),
+  customViews: many('CustomView'),
   feedOrder: attr(),
   geoShape: attr(),
   groupToGroupJoinQuestions: many('GroupToGroupJoinQuestion'),

@@ -11,7 +11,7 @@ export default function NavLink ({ to, exact, label, icon, badge, onClick, colla
   if (externalLink) {
     return (
       <li styleName={cx('item')}>
-        <a href={to} target='_blank' rel='noreferrer' styleName={cx('link', { collapsed: collapsed })} onClick={onClick}>
+        <a href={externalLink} target='_blank' rel='noreferrer' styleName={cx('link', { collapsed: collapsed })} onClick={onClick}>
           <BadgedIcon name={icon} showBadge={collapsed && badge} styleName='icon' />
           <span styleName='label'>{label}</span>
           <Badge number={badge} expanded={!collapsed} />

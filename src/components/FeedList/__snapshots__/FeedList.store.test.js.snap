@@ -162,7 +162,7 @@ posts: viewPosts(
   }
 }",
     "variables": Object {
-      "activePostsOnly": false,
+      "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
       "context": "groups",
@@ -174,6 +174,8 @@ posts: viewPosts(
       "slug": undefined,
       "sortBy": undefined,
       "topic": undefined,
+      "topics": undefined,
+      "types": undefined,
     },
   },
   "meta": Object {
@@ -205,7 +207,8 @@ Object {
   $search: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   
 posts(
@@ -338,7 +341,7 @@ posts(
 }
 }",
     "variables": Object {
-      "activePostsOnly": false,
+      "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
       "context": "all",
@@ -350,6 +353,8 @@ posts(
       "slug": undefined,
       "sortBy": undefined,
       "topic": undefined,
+      "topics": undefined,
+      "types": undefined,
     },
   },
   "meta": Object {

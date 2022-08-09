@@ -47,7 +47,7 @@ export default function Navigation (props) {
   // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
 
-  const customView = group && group.customViews && group.customViews.items && group.customViews.items[0]
+  const customViews = (group && group.customViews && group.customViews.toRefArray()) || []
 
   const links = compact([
     createPath && {
@@ -98,12 +98,12 @@ export default function Navigation (props) {
       icon: 'Globe',
       to: mapPath
     },
-    customView && customView.name && {
-      label: customView.name,
-      icon: customView.icon,
-      to: customView.externalLink ? customView.externalLink : `${rootPath}/custom/${customView.order}`,
-      externalLink: customView.externalLink
-    }
+    ...customViews.filter(cv => cv.name && (cv.viewMode !== 'externalLink' || cv.externalLink)).map(cv => ({
+      label: cv.name,
+      icon: cv.icon,
+      to: cv.viewMode !== 'externalLink' ? `${rootPath}/custom/${cv.id}` : false,
+      externalLink: cv.viewMode === 'externalLink' ? cv.externalLink : false
+    }))
   ])
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
@@ -114,9 +114,9 @@ export default function Navigation (props) {
       <div styleName='navigation'>
         {canView && (
           <ul styleName='links' id='groupMenu'>
-            {links.map(link => (
+            {links.map((link, i) => (
               <NavLink
-                key={link.label}
+                key={link.label + i}
                 externalLink={link.externalLink}
                 {...link}
                 collapsed={collapsed}

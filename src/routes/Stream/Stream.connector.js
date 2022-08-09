@@ -10,6 +10,7 @@ import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import {
   fetchPosts,
+  getCustomView,
   getPosts,
   getHasMorePosts
 } from 'components/FeedList/FeedList.store'
@@ -29,12 +30,12 @@ export function mapStateToProps (state, props) {
   }
 
   const routeParams = get('match.params', props)
-  const isCustomView = routeParams && routeParams.view === 'custom'
-  const customView = isCustomView && group && group.customViews && group.customViews.items && group.customViews.items[0]
-  const customPostType = customView && customView.postTypes[0]
+
+  const customView = getCustomView(state, props)
+  const customPostTypes = customView && customView.postTypes
   const customViewMode = customView && customView.viewMode
-  console.log("customviewmode", customViewMode)
-  const activePostsOnly = (customView && customView.activePostsOnly)
+  const activePostsOnly = customView && customView.activePostsOnly
+  const customViewTopics = customView && customView.topics
 
   const context = getRouteParam('context', state, props)
 
@@ -42,30 +43,33 @@ export function mapStateToProps (state, props) {
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const defaultSortBy = get('settings.streamSortBy', currentUser) || 'updated'
   const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards' // TODO: add soemthing here to change default for projects
-  console.log("defaultViewMode", defaultViewMode)
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
-  const postTypeFilter = customPostType || getQuerystringParam('t', state, props) || defaultPostType
+  const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
   const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
-  console.log("stream.connmect", viewMode)
 
   const fetchPostsParam = {
     filter: postTypeFilter,
+    types: customPostTypes,
     slug: groupSlug,
     context,
     sortBy,
-    activePostsOnly
+    activePostsOnly,
+    topics: customViewTopics?.toModelArray().map(t => t.id) || []
   }
 
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
+    customActivePostsOnly: activePostsOnly,
     context,
     currentUser,
     currentUserHasMemberships,
+    customViewTopics: customViewTopics?.toModelArray(),
+    customPostTypes,
     fetchPostsParam,
     group,
     hasMore,

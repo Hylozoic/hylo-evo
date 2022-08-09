@@ -12,6 +12,7 @@ export default () => {
     customViews {
       items {
         id
+        groupId
         activePostsOnly
         externalLink
         isActive
@@ -20,6 +21,10 @@ export default () => {
         postTypes
         viewMode
         order
+        topics {
+          id
+          name
+        }
       }
     }
     description

@@ -72,8 +72,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     deleteGroup,
     fetchGroupSettings,
-    updateGroupSettings,
-    // TODO: need to add a way to update custom_view
+    updateGroupSettings
   }
 }
 
