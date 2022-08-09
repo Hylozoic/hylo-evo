@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { pick, get } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
+import ReactPlayer from 'react-player'
 import HyloTipTapRender from 'components/HyloTipTapEditor/HyloTipTapRender'
 import Highlight from 'components/Highlight'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
+import Feature from 'components/PostCard/Feature'
 import LinkPreview from '../LinkPreview'
 import PostCompletion from '../PostCompletion'
 import cx from 'classnames'
@@ -26,6 +28,15 @@ export default function PostDetails ({
   canEdit,
   ...post
 }) {
+  const [isVideo, setIsVideo] = useState()
+
+  useEffect(() => {
+    if (linkPreview?.url) {
+      const isVideo = ReactPlayer.canPlay(linkPreview?.url)
+      setIsVideo(isVideo)
+    }
+  }, [linkPreview?.url])
+
   const details = TextHelpers.presentHTML(providedDetails, {
     slug,
     truncate: !expanded && MAX_DETAILS_LENGTH,
@@ -40,6 +51,9 @@ export default function PostDetails ({
     <Highlight {...highlightProps}>
       <div styleName={cx('postDetails', { constrained })}>
         <div styleName='fade' />
+        {linkPreview?.url && isVideo && (
+          <Feature url={linkPreview.url} />
+        )}
         {details && !hideDetails && (
           <PostDetailsContent details={details} slug={slug} />
         )}
@@ -53,7 +67,7 @@ export default function PostDetails ({
             unfulfillPost={unfulfillPost}
           />
         )}
-        {linkPreview && (
+        {linkPreview && !isVideo && (
           <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
         )}
         {fileAttachments && (
