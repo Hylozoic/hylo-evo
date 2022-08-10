@@ -146,7 +146,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       />
       <ForwardRef(HyloTipTapEditor)
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -383,7 +383,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       />
       <ForwardRef(HyloTipTapEditor)
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -661,7 +661,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
       <ForwardRef(HyloTipTapEditor)
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -817,7 +817,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
       <ForwardRef(HyloTipTapEditor)
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -1001,7 +1001,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
       <ForwardRef(HyloTipTapEditor)
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -1185,7 +1185,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       />
       <ForwardRef(HyloTipTapEditor)
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -1370,7 +1370,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       <ForwardRef(HyloTipTapEditor)
         contentHTML=""
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -1565,7 +1565,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       <ForwardRef(HyloTipTapEditor)
         contentHTML=""
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -1722,7 +1722,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       <ForwardRef(HyloTipTapEditor)
         contentHTML=""
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -1879,7 +1879,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       <ForwardRef(HyloTipTapEditor)
         contentHTML=""
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -2037,7 +2037,7 @@ exports[`PostEditor renders contribution button 1`] = `
       <ForwardRef(HyloTipTapEditor)
         contentHTML=""
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}
@@ -2234,7 +2234,7 @@ exports[`PostEditor renders with min props 1`] = `
       <ForwardRef(HyloTipTapEditor)
         contentHTML=""
         data-stylename="editor"
-        onAddLinkPreview={[Function]}
+        onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         onEscape={[Function]}

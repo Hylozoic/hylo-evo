@@ -20,7 +20,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   onEnter,
   onAddMention,
   onAddTopic,
-  onAddLinkPreview,
+  onAddLink,
   contentHTML,
   readOnly,
   hideMenu,
@@ -93,7 +93,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
       }),
 
       // LinkNode,
-      HyloLink({ onAddLinkPreview }),
+      HyloLink({ onAddLink }),
 
       Placeholder.configure({ placeholder }),
 
@@ -169,7 +169,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         >
           <span
             onClick={() => {
-              onAddLinkPreview(selectedLink?.href, true)
+              onAddLink(selectedLink?.href, true)
               console.log(editor)
             }}
             styleName='addLinkPreviewButton'

@@ -81,7 +81,7 @@ export function createLinkMarkInputRule (mark) {
       const matchedLinks = linkMatcher.match(match[1])
       const currentLink = matchedLinks[matchedLinks.length - 1]
 
-      this.storage.onAddLinkPreview(currentLink.url)
+      this.storage.onAddLink(currentLink.url)
 
       return {
         ...mark.options.HTMLAttributes,
@@ -123,7 +123,7 @@ export function linkAround (state, pos) {
   return { from: startPos, to: endPos }
 }
 
-export default function HyloLink ({ onAddLinkPreview }) {
+export default function HyloLink ({ onAddLink }) {
   return Link
     .extend({
       addInputRules () {
@@ -132,7 +132,7 @@ export default function HyloLink ({ onAddLinkPreview }) {
         ]
       },
       addStorage: {
-        onAddLinkPreview
+        onAddLink
       },
       addKeyboardShortcuts () {
         return {
