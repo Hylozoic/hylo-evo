@@ -9,6 +9,7 @@ $footer-height: 44px;
   align-items: center;
   height: $footer-height;
   border-top: 1px dashed $color-cape-cod-10;
+  background: linear-gradient(180deg, rgba(225, 229, 233, 0.3) 0%, rgba(225, 229, 233, 0) 100%);
   overflow: hidden;
 
   .people div {
