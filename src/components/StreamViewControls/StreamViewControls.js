@@ -65,7 +65,7 @@ const StreamViewControls = (props) => {
         </div>
 
         <div
-          styleName={cx({ 'mode-active': viewMode === 'grid' })}
+          styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
           onClick={() => changeView('grid')}
           data-tip='Small Grid' data-for='stream-viewmode-tip'
         >

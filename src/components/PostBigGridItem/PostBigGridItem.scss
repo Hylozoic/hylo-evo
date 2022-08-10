@@ -415,4 +415,25 @@
   .post-grid-item-container{
     height: 120px;
   }
+
+  .content-summary {
+
+    .title {
+      font-size: 14px;
+      line-height: 18px;
+      padding: 0 5px;
+    }
+
+    .details {
+      font-size: 11px;
+      padding: 5px;
+    }
+  }
+
+  .post-grid-item-container.image .content-summary .grid-meta .title {
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0 5px;
+    margin-bottom:0;
+  }
 }

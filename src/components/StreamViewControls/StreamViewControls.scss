@@ -95,8 +95,13 @@
     padding: 10px 5px;
   }
 
+  .view-mode div.small-grid {
+    display: none;
+  }
+
   .dropdown {
     margin-right: 5px;
+    padding: 0 7px;
   }
 
   .dropdown-label span {
