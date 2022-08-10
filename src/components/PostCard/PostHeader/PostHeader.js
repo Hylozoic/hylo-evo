@@ -29,6 +29,7 @@ export default class PostHeader extends PureComponent {
   render () {
     const {
       routeParams,
+      context,
       creator,
       createdAt,
       type,
@@ -135,7 +136,8 @@ export default class PostHeader extends PureComponent {
           {type && <PostLabel type={type} styleName='label' />}
           {dropdownItems.length > 0 &&
             <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
-          {close && currentUser &&
+          {/* Don't display close button if context is undefined because that means its full screen post view */}
+          {close && context &&
             <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
         </div>
         {flaggingVisible && <FlagContent type='post'
