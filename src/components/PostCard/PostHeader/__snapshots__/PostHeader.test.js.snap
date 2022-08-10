@@ -86,7 +86,25 @@ exports[`matches announcement snapshot 1`] = `
     </div>
     <div
       data-stylename="upperRight"
-    />
+    >
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
 </div>
 `;
@@ -158,6 +176,23 @@ exports[`matches announcement snapshot 2`] = `
       <PostLabel
         data-stylename="label"
         type="request"
+      />
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
       />
     </div>
   </div>
@@ -245,6 +280,11 @@ exports[`matches announcement snapshot 3`] = `
               "onClick": [Function],
             },
             Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+            Object {
               "icon": "Trash",
               "label": "Delete",
               "onClick": [Function],
@@ -302,7 +342,25 @@ exports[`matches snapshot 1`] = `
     </div>
     <div
       data-stylename="upperRight"
-    />
+    >
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
+    </div>
   </div>
 </div>
 `;
@@ -347,6 +405,23 @@ exports[`matches snapshot 2`] = `
       <PostLabel
         data-stylename="label"
         type="request"
+      />
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
       />
     </div>
   </div>
@@ -404,6 +479,11 @@ exports[`matches snapshot 3`] = `
             Object {
               "icon": "Edit",
               "label": "Edit",
+              "onClick": [Function],
+            },
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
               "onClick": [Function],
             },
             Object {
@@ -469,6 +549,23 @@ exports[`renders human readable dates 1`] = `
         data-stylename="label"
         type="request"
       />
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
     </div>
   </div>
   <div
@@ -520,6 +617,23 @@ exports[`renders human readable dates 2`] = `
         data-stylename="label"
         type="request"
       />
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
+      />
     </div>
   </div>
   <div
@@ -570,6 +684,23 @@ exports[`renders human readable dates 3`] = `
       <PostLabel
         data-stylename="label"
         type="request"
+      />
+      <Dropdown
+        alignRight={true}
+        items={
+          Array [
+            Object {
+              "icon": "Copy",
+              "label": "Copy Link",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <Icon
+            name="More"
+          />
+        }
       />
     </div>
   </div>

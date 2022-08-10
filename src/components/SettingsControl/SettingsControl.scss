@@ -28,6 +28,10 @@
   }
 }
 
+input::placeholder {
+  color: $color-rhino-30;
+}
+
 textarea.control-input {
   resize: vertical;
   height: $space-20x;

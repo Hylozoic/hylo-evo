@@ -18,6 +18,7 @@ import LocationInput from 'components/LocationInput'
 import Map from 'components/Map/Map'
 import { createIconLayerFromPostsAndMembers } from 'components/Map/layers/clusterLayer'
 import { createIconLayerFromGroups } from 'components/Map/layers/iconLayer'
+import { createPolygonLayerFromGroups } from 'components/Map/layers/polygonLayer'
 import SwitchStyled from 'components/SwitchStyled'
 import Tooltip from 'components/Tooltip'
 import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
@@ -73,6 +74,7 @@ export class UnwrappedMapExplorer extends React.Component {
       clusterLayer: null,
       currentBoundingBox: null,
       groupIconLayer: null,
+      polygonLayer: null,
       hideDrawer: props.hideDrawer,
       hoveredObject: null,
       creatingPost: false,
@@ -215,6 +217,7 @@ export class UnwrappedMapExplorer extends React.Component {
 
   updatedMapFeatures (boundingBox) {
     const {
+      context,
       group,
       groups,
       members,
@@ -240,12 +243,22 @@ export class UnwrappedMapExplorer extends React.Component {
     })
     const viewGroups = groups.filter(group => {
       const locationObject = group.locationObject
+      if (group.geoShape) {
+        const coords = group.geoShape.coordinates[0]
+        const outOfBounds = []
+        coords.forEach((coord, i) => {
+          if (!booleanWithin(point(coord), bbox)) {
+            outOfBounds.push(i)
+          }
+        })
+        return outOfBounds.length < coords.length
+      }
       if (locationObject && locationObject.center) {
         const centerPoint = point([locationObject.center.lng, locationObject.center.lat])
         return booleanWithin(centerPoint, bbox)
       }
       return false
-    }).concat(get(group, 'locationObject.center') ? group : [])
+    }).concat(get(group, 'locationObject.center') || get(group, 'geoShape') ? group : [])
 
     // TODO: update the existing layers instead of creating a new ones?
     return {
@@ -261,6 +274,10 @@ export class UnwrappedMapExplorer extends React.Component {
         onHover: this.onMapHover,
         onClick: this.onMapClick,
         boundingBox: boundingBox
+      }),
+      polygonLayer: context !== 'public' && createPolygonLayerFromGroups({
+        groups: viewGroups,
+        onHover: this.onMapHover
       }),
       currentBoundingBox: boundingBox,
       groupsForDrawer: viewGroups,
@@ -504,6 +521,7 @@ export class UnwrappedMapExplorer extends React.Component {
       baseLayerStyle,
       clusterLayer,
       groupIconLayer,
+      polygonLayer,
       hideDrawer,
       isAddingItemToMap,
       groupsForDrawer,
@@ -527,7 +545,7 @@ export class UnwrappedMapExplorer extends React.Component {
           <Map
             afterViewportUpdate={this.afterViewportUpdate}
             baseLayerStyle={baseLayerStyle}
-            hyloLayers={[groupIconLayer, clusterLayer]}
+            hyloLayers={[polygonLayer, groupIconLayer, clusterLayer]}
             isAddingItemToMap={isAddingItemToMap}
             otherLayers={Object.keys(otherLayers)}
             mapRef={this.mapRef}
