@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { some } from 'lodash/fp'
-import React from 'react'
+import React,  { useMemo } from 'react'
 import Div100vh from 'react-div-100vh'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import HyloCookieConsent from 'components/HyloCookieConsent'
@@ -15,13 +15,22 @@ import './PublicLayoutRouter.scss'
 
 export default function PublicLayoutRouter (props) {
   const { location } = props
+
+  const pathMatchParams = useMemo(() => (
+    matchPath(location.pathname, [
+      '/:context(public)/:view(groups|map)?'
+    ])?.params || { context: 'public' }
+  ), [location.pathname])
+
   const hasDetail = some(
     ({ path }) => matchPath(location.pathname, { path, exact: true }),
     detailRoutes
   )
 
+  const isMapView = pathMatchParams?.view === 'map'
+
   return (
-    <Div100vh styleName='public-container'>
+    <Div100vh styleName={cx('public-container', { 'map-view': isMapView })}>
       <div styleName='background'>
         <div styleName='header'>
           <a href='/'>
@@ -32,7 +41,7 @@ export default function PublicLayoutRouter (props) {
             <a styleName='sign-up' href='/signup'>Sign up</a>
           </div>
         </div>
-        <Div100vh id={CENTER_COLUMN_ID}>
+        <Div100vh styleName='center-column' id={CENTER_COLUMN_ID}>
           <Switch>
             <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
             <Route path='/:context(public)/:view(map)' component={MapExplorer} />
