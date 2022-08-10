@@ -139,10 +139,11 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   const shouldShowBubbleMenu = ({ editor }) => {
     if (editor.isActive('link')) {
       setSelectedLink(editor.getAttributes('link'))
-      console.log('editor.getAttributes', editor.getAttributes('link'))
+
       return true
     }
   }
+
   if (!editor) return null
 
   editorRef.current = editor
@@ -170,7 +171,6 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
           <span
             onClick={() => {
               onAddLink(selectedLink?.href, true)
-              console.log(editor)
             }}
             styleName='addLinkPreviewButton'
           >
