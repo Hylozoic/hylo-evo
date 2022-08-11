@@ -47,17 +47,29 @@ $preview-height: 80px;
   color: $color-dove-gray-50;
   font-size: 12px;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .wrapper {
-    padding: 0;
+    padding: 0 5px;
+    padding-top: 15px;
   }
 
   .linkPreview {
     margin-bottom: 0;
+    height: 60px;
   }
-}
 
-@media screen and (max-width: 325px) {
+  .previewText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .previewImage {
+    width: 60px;
+    height: 60px;
+  }
+
   .previewTitle {
     font-size: 12px;
     line-height: 12px;
@@ -68,9 +80,5 @@ $preview-height: 80px;
   .linkPreview {
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .wrapper {
-    padding: 0 0;
   }
 }

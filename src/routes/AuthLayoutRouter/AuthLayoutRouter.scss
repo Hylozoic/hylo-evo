@@ -619,7 +619,7 @@ $drawer-z-index: 51;
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .detail {
     width: 100%;
     margin-top: 0;
@@ -638,7 +638,6 @@ $drawer-z-index: 51;
   .center.map-view {
     overflow-y: auto;
   }
-
 
   .tourWrapper .tourPrompt .tourGuide {
     min-width: 40px;

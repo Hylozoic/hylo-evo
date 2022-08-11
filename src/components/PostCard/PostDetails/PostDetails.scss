@@ -73,9 +73,14 @@
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .details.cardPadding {
     padding: 0 5px;
+    margin: 0;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
 
   .details {

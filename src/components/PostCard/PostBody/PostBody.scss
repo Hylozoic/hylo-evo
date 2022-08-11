@@ -265,7 +265,7 @@
   font-size: 20px;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .eventBody {
     padding: 0 15px 0 15px;
     position: relative;
@@ -273,7 +273,7 @@
   }
 
   .eventAttendance {
-    margin: 8px 0 0 0;
+    margin: 0 0 8px 0;
   }
 
   .calendarDate {
@@ -302,6 +302,10 @@
   }
 
   .cardPadding {
-    padding: 0 10px;
+    padding: 15px 10px 0 10px;
+  }
+
+  .body {
+    padding-bottom: 10px;
   }
 }

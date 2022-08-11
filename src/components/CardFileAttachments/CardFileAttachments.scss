@@ -41,3 +41,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@media screen and (max-width: 500px) {
+  .file-attachments {
+    padding: 15px 10px 0 10px;
+  }
+
+  .file-attachment {
+    margin-right: 0;
+  }
+}
