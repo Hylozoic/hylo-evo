@@ -47,7 +47,8 @@ export default class Stream extends Component {
     if (hasChanged('postTypeFilter') ||
       hasChanged('sortBy') ||
       hasChanged('context') ||
-      hasChanged('group.id')) {
+      hasChanged('group.id') ||
+      hasChanged('view')) {
       this.fetchPosts(0)
     }
   }

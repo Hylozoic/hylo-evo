@@ -38,6 +38,7 @@ export function mapStateToProps (state, props) {
   const customViewTopics = customView && customView.topics
 
   const context = getRouteParam('context', state, props)
+  const view = getRouteParam('view', state, props)
 
   const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
@@ -51,13 +52,13 @@ export function mapStateToProps (state, props) {
   const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
 
   const fetchPostsParam = {
-    filter: postTypeFilter,
-    types: customPostTypes,
-    slug: groupSlug,
-    context,
-    sortBy,
     activePostsOnly,
-    topics: customViewTopics?.toModelArray().map(t => t.id) || []
+    context,
+    filter: postTypeFilter,
+    slug: groupSlug,
+    sortBy,
+    topics: customViewTopics?.toModelArray().map(t => t.id) || [],
+    types: customPostTypes
   }
 
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
@@ -80,6 +81,7 @@ export function mapStateToProps (state, props) {
     routeParams,
     selectedPostId: getRouteParam('postId', state, props),
     sortBy,
+    view,
     viewMode
   }
 }
