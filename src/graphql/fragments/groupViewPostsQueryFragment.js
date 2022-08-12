@@ -17,7 +17,8 @@ posts: viewPosts(
   sortBy: $sortBy,
   search: $search,
   topic: $topic,
-  topics: $topics
+  topics: $topics,
+  types: $types
 ) {
   hasMore
   total

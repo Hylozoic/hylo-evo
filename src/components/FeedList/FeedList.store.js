@@ -72,7 +72,8 @@ const groupQuery = `query GroupPostsQuery (
   $slug: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
