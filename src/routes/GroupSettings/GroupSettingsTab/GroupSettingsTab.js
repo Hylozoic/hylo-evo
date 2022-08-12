@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
-import { set, trim } from 'lodash'
+import { trim } from 'lodash'
 import cx from 'classnames'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
