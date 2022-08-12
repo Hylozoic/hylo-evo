@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import FeedBanner from 'components/FeedBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
+import PostLabel from 'components/PostLabel'
 import PostListRow from 'components/PostListRow'
 import PostCard from 'components/PostCard'
 import PostGridItem from 'components/PostGridItem'
@@ -48,7 +49,8 @@ export default class Stream extends Component {
     if (hasChanged('postTypeFilter') ||
       hasChanged('sortBy') ||
       hasChanged('context') ||
-      hasChanged('group.id')) {
+      hasChanged('group.id') ||
+      hasChanged('view')) {
       this.fetchPosts(0)
     }
   }
@@ -63,12 +65,15 @@ export default class Stream extends Component {
 
   render () {
     const {
+      customActivePostsOnly,
       changeSort,
       changeTab,
       changeView,
       context,
       currentUser,
       currentUserHasMemberships,
+      customPostTypes,
+      customViewTopics,
       group,
       newPost,
       routeParams,
@@ -83,6 +88,7 @@ export default class Stream extends Component {
     } = this.props
 
     const ViewComponent = viewComponent[viewMode]
+    const isCustomView = routeParams && routeParams.view === 'custom'
 
     return (
       <>
@@ -96,11 +102,19 @@ export default class Stream extends Component {
           querystringParams={querystringParams}
           currentUserHasMemberships={currentUserHasMemberships}
         />
-        <ViewControls
-          routeParams={routeParams}
-          postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
-          changeTab={changeTab} changeSort={changeSort} changeView={changeView}
-        />
+        {isCustomView ? (
+          <div>
+            Displaying all&nbsp;
+            {customActivePostsOnly ? 'Active ' : ''}
+            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <PostLabel key={p} type={p} styleName='post-type' />)}
+            {customViewTopics.length > 0 && <div>Filtered by topics: {customViewTopics.map(t => <span key={t.id}>#{t.name}</span>)}</div>}
+          </div>)
+          : <ViewControls
+            routeParams={routeParams}
+            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
+            changeTab={changeTab} changeSort={changeSort} changeView={changeView}
+          />
+        }
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
@@ -117,7 +131,8 @@ export default class Stream extends Component {
             )
           })}
         </div>
-        <ScrollListener onBottom={() => this.fetchPosts(posts.length)}
+        <ScrollListener
+          onBottom={() => this.fetchPosts(posts.length)}
           elementId={CENTER_COLUMN_ID}
         />
         {pending && <Loading />}

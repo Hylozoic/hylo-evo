@@ -11,12 +11,23 @@ describe('GroupSettingsTab', () => {
       locationObject: 'Fuji',
       description: 'Great group',
       avatarUrl: 'avatar.png',
-      bannerUrl: 'avatar.png'
+      bannerUrl: 'avatar.png',
+      customViews: [{
+        name: 'custommm baby',
+        icon: 'Public',
+        postTypes: [],
+        activePostsOnly: false,
+        externalLink: 'https://google.com',
+        viewMode: 'externalLink',
+        isActive: true,
+        order: 1,
+        topics: []
+      }]
     }
     const wrapper = shallow(<GroupSettingsTab group={group} />)
     expect(wrapper).toMatchSnapshot()
-    expect(wrapper.find('Button').prop('color')).toEqual('gray')
+    expect(wrapper.find('Button[label="Save Changes"]').prop('color')).toEqual('gray')
     wrapper.setState({ changed: true })
-    expect(wrapper.find('Button').prop('color')).toEqual('green')
+    expect(wrapper.find('Button[label="Save Changes"]').prop('color')).toEqual('green')
   })
 })

@@ -43,6 +43,7 @@ export function formatBoundingBox (bbox) {
 }
 
 const groupPostsQuery = (postsFragment) => `query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput]
@@ -69,6 +70,7 @@ const groupPostsQuery = (postsFragment) => `query (
 }`
 
 const postsQuery = (postsFragment) => `query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -176,11 +178,12 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
+export function fetchPostsForMap ({ activePostsOnly = false, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
     query = groupPostsQuery(`posts: viewPosts(
+      activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
@@ -219,6 +222,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
     query = postsQuery(`posts(
+      activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
@@ -266,6 +270,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
     graphql: {
       query,
       variables: {
+        activePostsOnly,
         boundingBox: formatBoundingBox(boundingBox),
         context,
         filter,
@@ -288,7 +293,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
   }
 }
 
-export function fetchPostsForDrawer ({ context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
+export function fetchPostsForDrawer ({ activePostsOnly = false, context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -308,6 +313,7 @@ export function fetchPostsForDrawer ({ context, currentBoundingBox, featureTypes
     graphql: {
       query,
       variables: {
+        activePostsOnly,
         boundingBox: formatBoundingBox(currentBoundingBox),
         context,
         filter,

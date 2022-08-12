@@ -5,15 +5,16 @@
   height: 40px;
   line-height: 40px;
   border-radius: 5px;
-
+  text-decoration: none;
 }
 
 .link {
   display: flex;
   align-items: center;
   color: $color-rhino-60;
-  text-decoration: none;
-  &:hover {
+  text-decoration: none !important;
+
+  &:hover, &:visited, &:active, &:link {
     text-decoration: none;
     color: $color-rhino;
   }

@@ -454,6 +454,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         group = Group.withId(meta.id)
         clearCacheFor(Group, meta.id)
       }
+      if (payload.data.updateGroupSettings && (payload.data.updateGroupSettings.customViews)) {
+        group = Group.withId(meta.id)
+        clearCacheFor(Group, meta.id)
+      }
       break
     }
 

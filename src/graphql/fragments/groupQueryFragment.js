@@ -9,6 +9,24 @@ export default () => {
     accessibility
     avatarUrl
     bannerUrl
+    customViews {
+      items {
+        id
+        groupId
+        activePostsOnly
+        externalLink
+        isActive
+        icon
+        name
+        postTypes
+        viewMode
+        order
+        topics {
+          id
+          name
+        }
+      }
+    }
     description
     geoShape
     location

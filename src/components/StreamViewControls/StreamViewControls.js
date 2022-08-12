@@ -12,7 +12,7 @@ const sortOptions = [
 ]
 
 const postTypeOptions = [
-  { id: undefined, label: 'All' },
+  { id: undefined, label: 'All Posts' },
   { id: 'discussion', label: 'Discussions' },
   { id: 'event', label: 'Events' },
   { id: 'offer', label: 'Offers' },

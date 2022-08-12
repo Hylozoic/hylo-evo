@@ -10,6 +10,7 @@ import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import {
   fetchPosts,
+  getCustomView,
   getPosts,
   getHasMorePosts
 } from 'components/FeedList/FeedList.store'
@@ -23,9 +24,23 @@ export function mapStateToProps (state, props) {
   let group
   let groupId = 0
 
-  const routeParams = get('match.params', props)
   const groupSlug = getRouteParam('groupSlug', state, props)
+
+  if (groupSlug) {
+    group = getGroupForCurrentRoute(state, props)
+    groupId = group.id
+  }
+
+  const routeParams = get('match.params', props)
+
+  const customView = getCustomView(state, props)
+  const customPostTypes = customView && customView.postTypes
+  const customViewMode = customView && customView.viewMode
+  const activePostsOnly = customView && customView.activePostsOnly
+  const customViewTopics = customView && customView.topics
+
   const context = getRouteParam('context', state, props)
+  const view = getRouteParam('view', state, props)
 
   const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
@@ -36,27 +51,28 @@ export function mapStateToProps (state, props) {
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = getQuerystringParam('v', state, props) || defaultViewMode // TODO: or do we just create a default for projects/prize by adding something to the url in links?
-
-  if (groupSlug) {
-    group = getGroupForCurrentRoute(state, props)
-    groupId = group.id
-  }
+  const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
 
   const fetchPostsParam = {
+    activePostsOnly,
+    context,
     filter: postTypeFilter,
     slug: groupSlug,
-    context,
-    sortBy
+    sortBy,
+    topics: customViewTopics?.toModelArray().map(t => t.id) || [],
+    types: customPostTypes
   }
 
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
+    customActivePostsOnly: activePostsOnly,
     context,
     currentUser,
     currentUserHasMemberships,
+    customViewTopics: customViewTopics?.toModelArray(),
+    customPostTypes,
     fetchPostsParam,
     group,
     hasMore,
@@ -67,6 +83,7 @@ export function mapStateToProps (state, props) {
     routeParams,
     selectedPostId: getRouteParam('postId', state, props),
     sortBy,
+    view,
     viewMode
   }
 }

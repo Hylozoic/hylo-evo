@@ -77,3 +77,92 @@
   margin-left: -15px;
 }
 
+.warning {
+  color: $color-amaranth;
+}
+
+.custom-view-container {
+  margin-bottom: 30px;
+
+  /* For delete icon */
+  h4 {
+    span {
+      vertical-align: bottom;
+      cursor: pointer;
+    }
+  }
+}
+
+.custom-posts-view.disabled {
+  opacity: 40%;
+  pointer-events: none;
+}
+
+.inline-control {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 5px;
+
+  input {
+    min-width: 400px;
+  }
+}
+
+.selectedIcon {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.post-types {
+
+  .post-types-chosen {
+    margin: 0 8px;
+    padding: 1px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+  }
+
+  .post-type {
+    margin: 0px 5px;
+  }
+}
+
+.post-types-selector {
+  display: none;
+  position: absolute;
+  background: white;
+  z-index: 100;
+  border: 1px solid black;
+  padding: 3px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  margin-top: 5px;
+  width: 180px;
+
+  &.open {
+    display: block;
+  }
+
+  .post-type-switch {
+    margin: 5px;
+    > span {
+      margin-left: 10px;
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+  }
+}
+
+.help-text{
+  color: $color-black-60;
+  font-size: 0.75rem;
+  transition: all .25s ease;
+  padding-bottom: 8px;
+}

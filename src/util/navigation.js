@@ -31,6 +31,7 @@ export function baseUrl ({
   topicName,
   groupSlug,
   view,
+  order,
   defaultUrl = allGroupsUrl()
 }) {
   const safeMemberId = personId || memberId
@@ -40,7 +41,7 @@ export function baseUrl ({
   } else if (topicName) {
     return topicUrl(topicName, { context, groupSlug })
   } else if (view) {
-    return viewUrl(view, { context, groupSlug, defaultUrl })
+    return viewUrl(view, { context, groupSlug, defaultUrl, order })
   } else if (groupSlug) {
     return groupUrl(groupSlug)
   } else if (context === 'all') {
@@ -78,12 +79,12 @@ export function createGroupUrl (opts) {
 }
 
 // For specific views of a group like 'map', or 'projects'
-export function viewUrl (view, { context, groupSlug, defaultUrl }) {
+export function viewUrl (view, { context, groupSlug, defaultUrl, order }) {
   if (!view) return '/'
 
   const base = baseUrl({ context, groupSlug, defaultUrl })
 
-  return `${base}/${view}`
+  return `${base}/${view}${order ? '/' + order : ''}`
 }
 
 // Group URLS

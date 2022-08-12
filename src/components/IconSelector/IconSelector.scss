@@ -1,0 +1,41 @@
+.icon-selector-container {
+  width: 100%;
+}
+
+.selected-icon {
+  cursor: pointer;
+}
+
+.icon-options {
+  position: absolute;
+  display: none;
+  width: 415px;
+  z-index: 100;
+  background: white;
+  border: 1px solid black;
+  padding: 5px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+
+  &.open {
+    display: block;
+  }
+}
+
+.icon {
+  padding: 2px;
+  cursor: pointer;
+  width: 40px;
+  display: inline-block;
+  text-align: center;
+
+  &:hover {
+    color: #0DC39F;
+  }
+}
+
+.text {
+  color: $color-black-60;
+  font-size: 0.75rem;
+  padding-left: 4px;
+  transition: all .25s ease;
+}

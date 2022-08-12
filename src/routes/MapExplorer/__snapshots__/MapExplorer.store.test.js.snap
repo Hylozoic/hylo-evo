@@ -151,6 +151,7 @@ exports[`fetchPostsforDrawer works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput]
@@ -174,6 +175,7 @@ Object {
     postCount
     
 posts: viewPosts(
+  activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
@@ -303,6 +305,7 @@ posts: viewPosts(
   }
 }",
     "variables": Object {
+      "activePostsOnly": false,
       "boundingBox": Array [
         Object {
           "lat": 37.698360551679215,
@@ -347,6 +350,7 @@ exports[`fetchPostsforMap works for a group 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput]
@@ -369,6 +373,7 @@ Object {
     bannerUrl
     postCount
     posts: viewPosts(
+      activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
@@ -406,6 +411,7 @@ Object {
   }
 }",
     "variables": Object {
+      "activePostsOnly": false,
       "boundingBox": Array [
         Object {
           "lat": 37.698360551679215,
@@ -444,6 +450,7 @@ exports[`fetchPostsforMap works for all groups 1`] = `
 Object {
   "graphql": Object {
     "query": "query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -460,6 +467,7 @@ Object {
   $topics: [ID]
 ) {
   posts(
+      activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
@@ -498,6 +506,7 @@ Object {
     }
 }",
     "variables": Object {
+      "activePostsOnly": false,
       "boundingBox": Array [
         Object {
           "lat": 37.698360551679215,

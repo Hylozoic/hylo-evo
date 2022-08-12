@@ -1,11 +1,12 @@
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import LocationInput from 'components/LocationInput'
+import IconSelector from 'components/IconSelector'
 import cx from 'classnames'
 import './SettingsControl.scss'
 
 export default function SettingsControl (props) {
-  const { label, value = '', onChange, renderControl, type, error, ...otherProps } = props
+  const { label, value = '', onChange, renderControl, type, error, controlClass, ...otherProps } = props
   let control
 
   if (renderControl) {
@@ -19,6 +20,15 @@ export default function SettingsControl (props) {
           value={value}
           onChange={onChange}
           {...otherProps} />
+        break
+      case 'icon-selector':
+        control = (
+          <IconSelector
+            selectedIcon={value}
+            updateIcon={onChange}
+            {...otherProps}
+          />
+        )
         break
       case 'password':
         control = <input styleName='control-input'
@@ -47,7 +57,7 @@ export default function SettingsControl (props) {
     }
   }
 
-  return <div styleName={cx('control', { error })}>
+  return <div styleName={cx('control', { error })} className={controlClass}>
     <label styleName={cx('control-label', { error })}>{label}</label>
     {control}
   </div>

@@ -16,7 +16,6 @@ export function mapStateToProps (state, props) {
   const group = getGroupForCurrentRoute(state, props)
   const rootPath = baseUrl({ ...routeParams, view: null })
   const isAllOrPublicPath = ['/all', '/public'].includes(rootPath)
-
   let badge, groupMembership, hasRelatedGroups
 
   if (group) {

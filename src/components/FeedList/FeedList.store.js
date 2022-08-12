@@ -1,14 +1,18 @@
-import { createSelector } from 'reselect'
 import { get } from 'lodash/fp'
-import { FETCH_POSTS } from 'store/constants'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { createSelector } from 'reselect'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
+import { FETCH_POSTS } from 'store/constants'
+import orm from 'store/models'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import getRouteParam from 'store/selectors/getRouteParam'
+
 export const MODULE_NAME = 'FeedList'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 // actions
-export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic }) {
+export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic, topics, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -28,6 +32,7 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
     graphql: {
       query,
       variables: {
+        activePostsOnly,
         afterTime,
         beforeTime,
         context,
@@ -38,7 +43,9 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
         search,
         slug,
         sortBy,
-        topic
+        topic,
+        topics,
+        types
       }
     },
     meta: {
@@ -52,6 +59,7 @@ export function fetchPosts ({ afterTime, beforeTime, context, filter, offset, or
 }
 
 const groupQuery = `query GroupPostsQuery (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -64,7 +72,8 @@ const groupQuery = `query GroupPostsQuery (
   $slug: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -84,6 +93,7 @@ const groupQuery = `query GroupPostsQuery (
 }`
 
 const postsQuery = `query PostsQuery (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -97,7 +107,8 @@ const postsQuery = `query PostsQuery (
   $search: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   ${postsQueryFragment}
 }`
@@ -118,6 +129,12 @@ export const getPosts = makeQueryResultsModelSelector(
 )
 
 export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
+
+export const getCustomView = ormCreateSelector(
+  orm,
+  (session, props) => getRouteParam('customViewId', session, props),
+  (session, id) => session.CustomView.safeGet({ id })
+)
 
 // reducer
 export default function (state = {}, action) {
