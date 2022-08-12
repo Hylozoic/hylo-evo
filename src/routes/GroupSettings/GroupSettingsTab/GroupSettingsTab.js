@@ -105,13 +105,6 @@ export default class GroupSettingsTab extends Component {
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
       edits['locationId'] = event.target.value.id
-    } else {
-      if (key.includes('customview.')) {
-        const modKey = key.slice(11)
-        set(edits.customViews[0], modKey, event.target.value)
-      } else {
-        set(edits, key, event.target.value)
-      }
     }
 
     this.setState({
@@ -167,7 +160,11 @@ export default class GroupSettingsTab extends Component {
     if (group && this.state.edits.location !== group.location) {
       locationId = await ensureLocationIdIfCoordinate({ fetchLocation, location: this.state.edits.location, locationId })
     }
-    const customViews = this.state.edits.customViews.map(cv => { cv.topics = cv.topics.map(t => ({ name: t.name, id: t.id })); return cv })
+    const customViews = this.state.edits.customViews.map(cv => {
+      cv.topics = cv.topics.map(t => ({ name: t.name, id: t.id }))
+      if (cv.externalLink) cv.externalLink = sanitizeURL(cv.externalLink)
+      return cv
+    })
     this.props.updateGroupSettings({ ...this.state.edits, locationId, customViews })
   }
 
