@@ -14,7 +14,7 @@ $about-height: 116px;
 }
 
 .group-sidebar {
-  padding: 25px 0;
+  padding: 25px 10px;
   overflow: scroll;
   height: calc(100vh - 40px);
 }
@@ -42,7 +42,7 @@ $about-height: 116px;
 
 .gradient {
   position: absolute;
-  background-image: linear-gradient(0, white, rgba(255,255,255,0) 50%, rgba(255,255,255,0));
+  background-image: linear-gradient(0, rgba(246, 247, 248, 1.0), rgba(255,255,255,0) 50%, rgba(255,255,255,0));
   height: $about-height;
   width: 100%;
   bottom: -1px;
@@ -62,18 +62,41 @@ $about-height: 116px;
   display: block;
   margin-bottom: 20px;
   composes: text-button from 'css/typography.scss';
-  height: 30px;
-  line-height: 28px;
-  border: 1px solid rgba(37, 195, 159, 1.00);
+  height: 40px;
+  line-height: 40px;
   border-radius: 30px;
+  color: rgba(12, 195, 159, 1.0);
+  border: none;
   display: inline-block;
+  font-size: 14px;
   padding: 0 15px;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+  background-color: rgba(255, 255, 255, 1);
+  transition: all .25s ease;
 
   .settings-icon {
+    margin: 0 8px;
     font-size: 18px;
     color: rgba(37, 195, 159, 1.00);
     position: relative;
     top: 3px;
+    transition: all .25s ease;
+  }
+
+  .invite-icon {
+    color: rgba(12, 195, 159, 1.0);
+    font-size: 18px;
+    position: relative;
+    transition: all .25s ease;
+    top: 2px;
+  }
+
+  &:hover {
+    background-color: rgba(12, 195, 159, 1.0);
+  }
+
+  &:hover, &:hover .settings-icon, &:hover .invite-icon {
+    color: rgba(255, 255, 255, 1);
   }
 }
 

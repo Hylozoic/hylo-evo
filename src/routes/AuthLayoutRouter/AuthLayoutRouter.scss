@@ -6,7 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   align-content: stretch;
-  background-color: rgba(255,255,255, 1);
+  background-color: rgba(225, 229, 233, 0.3);
   align-items: stretch;
   height: 100vh;
   overflow: hidden;
@@ -344,8 +344,6 @@ $drawer-z-index: 51;
 
 .center {
   padding-left: 3px;
-  background: $color-white;
-  // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
   height: calc(100vh - 56px);
