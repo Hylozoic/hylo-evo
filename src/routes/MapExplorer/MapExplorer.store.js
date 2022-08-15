@@ -56,7 +56,8 @@ const groupPostsQuery = (postsFragment) => `query (
   $slug: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -84,7 +85,8 @@ const postsQuery = (postsFragment) => `query (
   $search: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   ${postsFragment}
 }`
@@ -178,7 +180,7 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({ activePostsOnly = false, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
+export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -195,7 +197,8 @@ export function fetchPostsForMap ({ activePostsOnly = false, context, slug, sort
       sortBy: $sortBy,
       search: $search,
       topic: $topic,
-      topics: $topics
+      topics: $topics,
+      types: $types
     ) {
       hasMore
       total
@@ -236,7 +239,8 @@ export function fetchPostsForMap ({ activePostsOnly = false, context, slug, sort
       sortBy: $sortBy,
       search: $search,
       topic: $topic,
-      topics: $topics
+      topics: $topics,
+      types: $types
     ) {
       hasMore
       total
@@ -293,7 +297,7 @@ export function fetchPostsForMap ({ activePostsOnly = false, context, slug, sort
   }
 }
 
-export function fetchPostsForDrawer ({ activePostsOnly = false, context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
+export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
