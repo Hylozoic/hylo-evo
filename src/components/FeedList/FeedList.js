@@ -61,9 +61,9 @@ export default class FeedList extends React.Component {
   handleScrollEvents = throttle(100, event => {
     const { scrollTop } = event.target
     const { atTabBar, scrollOffset } = this.state
-    if (atTabBar && scrollTop < scrollOffset) {
+    if (atTabBar && scrollTop < (scrollOffset - 20)) {
       this.setState({ atTabBar: false })
-    } else if (!atTabBar && scrollTop > scrollOffset) {
+    } else if (!atTabBar && scrollTop > (scrollOffset - 20)) {
       this.setState({ atTabBar: true })
     }
   })
@@ -106,7 +106,7 @@ export default class FeedList extends React.Component {
         <ScrollListener elementId={CENTER_COLUMN_ID} onScroll={this.handleScrollEvents} />
         {showSortAndFilters && (
           <>
-            <div>
+            <div styleName={cx('tabbar-normal', { 'sticky-show': atTabBar })}>
               <TabBar
                 ref={this.tabBar}
                 onChangeTab={changeTab}

@@ -140,8 +140,12 @@
 }
 
 :global {
-  .active-topic-nav-link {
-    color: $color-caribbean-green !important;
+  a.active-topic-nav-link {
+    padding: 5px 8px;
+    background-color: rgba(0, 118, 223, 0.1);
+    color: rgba(0, 118, 223, 1);
+    font-family: "Circular Bold", sans-serif;
+    border-radius: 5px;
   }
 }
 
