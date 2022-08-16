@@ -24,29 +24,56 @@ $search-width: 460px;
 
 .content {
   padding: 0 $space-6x;
+
+  .controls {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .search {
-  width: calc(100% - 90px);
+  margin-right: 15px;
+  width: 100%;
+
+  input {
+    width: 100%;
+    min-height: 56px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 15px 20px 0px rgb(44 64 89 / 20%);
+    border-radius: 4px;
+    border-top: 1px solid rgba(222, 224, 228, 0.6);
+    border-bottom: 2px solid rgba(38, 68, 93, 0.45);
+    border-right: 1px solid rgba(38, 68, 93, 0.15);
+    border-left: 4px solid #0076df;
+    color: rgba(44, 64, 89, 0.8);
+    font-size: 16px;
+  }
 }
 
 .sort-dropdown {
-  float: right;
   > a {
     display: block;
   }
 }
 
 .sort-label {
-  composes: bdy-lt-sm from 'css/typography.scss';
-  display: block;
-  height: 40px;
+  box-shadow: 0px 15px 20px 0px rgb(44 64 89 / 20%);
+  display: flex;
+  height: 56px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
   line-height: 40px;
-  vertical-align: middle;
+  font-size: 12px;
+  align-items: center;
+  padding: 0 8px;
+  color: rgba(125, 137, 152, 1.0);
 
   span {
-    display: inline-block;
-    vertical-align: middle;
+    white-space: nowrap;
+
+    strong {
+      font-family: 'Circular Bold', sans-serif;
+    }
   }
 }
 

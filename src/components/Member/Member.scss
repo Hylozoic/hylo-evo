@@ -9,10 +9,11 @@ $skill-vertical-margin: 8px;
   padding: $member-padding;
   padding-bottom: $member-padding - $skill-vertical-margin;
   text-align: center;
-  border: 1px solid rgba(54,60,60,0.10);
   border-radius: 4px;
   max-width: $member-width;
   cursor: pointer;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 5px rgb(42 64 89 / 20%);
 
   &:hover {
     text-decoration: none;
@@ -22,6 +23,8 @@ $skill-vertical-margin: 8px;
 .avatar {
   @include image($avatar-size);
   border-radius: calc($avatar-size / 2);
+  box-shadow: 0px 4px 5px rgb(42 64 89 / 20%);
+
 }
 
 .dropdown {
@@ -62,6 +65,8 @@ $skill-vertical-margin: 8px;
   margin-left: 4px;
   margin-right: 4px;
   margin-bottom: $skill-vertical-margin;
+  font-size: 9px;
+  padding: 3px 8px;
 }
 
 

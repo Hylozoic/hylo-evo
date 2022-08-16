@@ -98,7 +98,7 @@ export function SearchBar ({
     <TextInput theme={styles}
       inputRef={x => x && x.focus()}
       value={searchForInput || searchFromQueryString}
-      placeholder='Search'
+      placeholder='Search by keyword for people, posts and groups'
       onChange={onSearchChange} />
   </div>
 }
