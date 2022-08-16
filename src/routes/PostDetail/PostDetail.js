@@ -236,16 +236,17 @@ export default class PostDetail extends Component {
           groups={post.groups}
           slug={routeParams.groupSlug}
           showBottomBorder />
+        <div ref={this.activityHeader} />
         {postFooter}
+        {atActivity && <div styleName='activity-sticky' style={activityStyle}>
+          {postFooter}
+        </div>}
+        <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />
         {showPeopleDialog && <PostPeopleDialog
           title={postPeopleDialogTitle}
           members={people}
           onClose={togglePeopleDialog}
           slug={routeParams.groupSlug} />}
-        {atActivity && <div styleName='activity-sticky' style={activityStyle}>
-          {postFooter}
-        </div>}
-        <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />
         <SocketSubscriber type='post' id={post.id} />
       </div>
     }</ReactResizeDetector>
