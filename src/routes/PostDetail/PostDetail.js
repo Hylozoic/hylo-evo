@@ -175,7 +175,7 @@ export default class PostDetail extends Component {
           expanded
           detailHasImage={detailHasImage}
         />
-        {atHeader && <div styleName='header-sticky' style={headerStyle}>
+        {atHeader && <div styleName={cx('header-sticky', { 'at-activity': atActivity })} style={headerStyle}>
           <PostHeader styleName='header' {...post} routeParams={routeParams} close={onClose} />
         </div>}
         <CardImageAttachments attachments={post.attachments} linked />
@@ -236,8 +236,8 @@ export default class PostDetail extends Component {
           groups={post.groups}
           slug={routeParams.groupSlug}
           showBottomBorder />
-        <div ref={this.activityHeader} />
         {postFooter}
+        <div ref={this.activityHeader} />
         {atActivity && <div styleName='activity-sticky' style={activityStyle}>
           {postFooter}
         </div>}
