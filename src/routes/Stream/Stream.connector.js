@@ -32,7 +32,6 @@ export function mapStateToProps (state, props) {
   }
 
   const routeParams = get('match.params', props)
-
   const customView = getCustomView(state, props)
   const customPostTypes = customView && customView.postTypes
   const customViewMode = customView && customView.viewMode

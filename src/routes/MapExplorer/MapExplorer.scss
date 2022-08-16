@@ -398,6 +398,16 @@ button.toggleFeatureFiltersButton {
   z-index: 2000 !important;
 }
 
+@media screen and (max-width: 930px) {
+  .addItemToMapButton {
+    bottom: 70px;
+  }
+
+  .toggleLayersSelectorButton {
+    bottom: 120px;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .toggleDrawerButton.drawerOpen {
     left: 10px;

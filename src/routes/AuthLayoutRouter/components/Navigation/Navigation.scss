@@ -9,11 +9,11 @@
   // Add a `max-width` to ensure content within each column does not blow out
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
-  max-width: 15%;
+  max-width: 17%;
   transition: 0.5s;
   // // overriding bootstrap default. Seems broken
   // padding: 0 0 !important;
-  margin: 0 $layout-spacing 0 15px;
+  margin: 0 30px 15px;
   overflow: hidden;
   white-space: nowrap;
   height: calc(100vh - 56px);
@@ -25,11 +25,11 @@
 
 .collapser-collapsed {
   composes: collapser;
-  flex: 0 0 3rem;
+  flex: 0 0 60px;
   // Add a `max-width` to ensure content within each column does not blow out
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
-  max-width: 3rem;
+  max-width: 60px;
   margin: 0 15px;
 }
 

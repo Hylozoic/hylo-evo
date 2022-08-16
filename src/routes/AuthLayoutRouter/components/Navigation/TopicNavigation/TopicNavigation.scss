@@ -40,7 +40,7 @@
 
 .topics {
   list-style: none;
-  padding: 0 0 0 46px;
+  padding: 0 0 0 0;
   line-height: 27px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -50,6 +50,10 @@
 
 .collapsed {
   .topics {
+    display: none;
+  }
+
+  .allTopics {
     display: none;
   }
 }

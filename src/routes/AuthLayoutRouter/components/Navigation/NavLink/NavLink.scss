@@ -9,6 +9,10 @@
   text-decoration: none;
 }
 
+.item.collapsed {
+  margin-right: 0;
+}
+
 .link {
   display: flex;
   align-items: center;

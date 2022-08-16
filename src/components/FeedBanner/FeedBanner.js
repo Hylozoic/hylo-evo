@@ -45,7 +45,7 @@ export default function FeedBanner ({
   } else {
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
-
+  console.log(customPostTypes, customViewTopics)
   let numCustomFilters = isCustomView ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
 
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>

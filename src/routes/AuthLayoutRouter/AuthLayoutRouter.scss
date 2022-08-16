@@ -348,8 +348,8 @@ $drawer-z-index: 51;
   position: relative;
   min-height: 1px; // Prevent collapsing
   height: calc(100vh - 56px);
-  flex: 0 0 $center-column-width;
-  max-width: $center-column-width;
+  flex: 0 0 50%;
+  max-width: 50%;
   overflow-y: auto;
   overflow-x: hidden;
   transition: all .45s ease;
@@ -359,7 +359,7 @@ $drawer-z-index: 51;
     max-width: $map-center-column-width;
     flex: 0 0 $map-center-column-width;
     height: calc(100vh - 40px);
-    padding-bottom: 0px;
+    padding: 0 0 0 0;
   }
   &.withoutNav {
     padding-bottom: 0
@@ -384,8 +384,8 @@ $drawer-z-index: 51;
 }
 
 .center.map-view.collapsedState {
-  width: calc(100% - 68px);
-  max-width: calc(100% - 68px);
+  width: calc(100% - 88px);
+  max-width: calc(100% - 88px);
   flex: 0 0 100%;
 }
 
@@ -412,7 +412,7 @@ $drawer-z-index: 51;
   transition-duration: 0.3s;
   top: 0;
   right: 0px;
-  padding: 0 16px 0 $layout-spacing;
+  padding: 0 16px 0 30px;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -501,7 +501,7 @@ $drawer-z-index: 51;
   }
 
   .center.map-view {
-    max-width: 93%;
+    max-width: calc(100% - 80px);
     flex-basis: 93%;
     left: 0;
   }
@@ -590,12 +590,13 @@ $drawer-z-index: 51;
     max-width: 100%;
     flex: 0 0 100%;
     left: 0;
-    padding: 0;
+    padding: 0 0 0 0;
   }
 
   .center.map-view.collapsedState {
     width: 100%;
     max-width: 100%;
+    padding: 0 0 0 0;
   }
   
   .detail {

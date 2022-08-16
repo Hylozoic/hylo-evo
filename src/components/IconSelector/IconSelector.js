@@ -91,7 +91,23 @@ const iconList = [
   'Twitter',
   'LinkedIn',
   'Facebook',
-  'Google'
+  'Google',
+  'Instagram',
+  'Figma',
+  'OpenHands',
+  'GoogleDrive',
+  'GitHub',
+  'Miro',
+  'Notion',
+  'Gitbook',
+  'Slack',
+  'Discord',
+  'WhatsApp',
+  'Telegram',
+  'Gallery',
+  'Commonwealth',
+  'Docs',
+  'PDF'
 ]
 
 export default function IconSelector ({ selectedIcon, updateIcon, selectedIconClass }) {
