@@ -17,6 +17,76 @@
   overflow: hidden;
 }
 
+.post-type {
+  margin: 0 5px;
+
+  span {
+    color: white;
+  }
+}
+
+.post-typelabel {
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  background-color: rgba(255, 255, 255, 1);
+
+  span {
+    font-size: 32px;
+  }
+}
+
+.displaying {
+  display: inline;
+  position: relative;
+  top: -3px;
+}
+
+.filtered-topics {
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline;
+  position: relative;
+  top: -3px;
+}
+
+.filtered-topic {
+  position: relative;
+  top: -3px;
+  padding-right: 5px;
+}
+
+.num-filters {
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(35, 65, 91, .8);
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin: 0 0 0 5px;
+  top: -2px;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.custom-filters {
+  display: block;
+  align-items: center;
+}
+
 .fade {
   // Note: replace these with pseudo elements
   composes: imageShape;

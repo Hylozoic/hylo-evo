@@ -103,6 +103,7 @@ export default function IconSelector ({ selectedIcon, updateIcon, selectedIconCl
     <div styleName='icon-selector-container'>
       <div styleName='selected-icon' onClick={toggleModalOpen}>
         {selectedIcon ? <Icon green name={selectedIcon} className={selectedIconClass} /> : <div styleName='text'>No icon selected</div>}
+        <Icon name='ArrowDown' />
       </div>
       <div styleName={cx('icon-options', { open: modalOpen })}>
         {iconList.map((icon) => (

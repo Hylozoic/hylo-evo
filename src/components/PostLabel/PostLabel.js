@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Icon from 'components/Icon'
-import Tooltip from 'components/Tooltip'
+import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import './PostLabel.scss'
 
@@ -16,7 +16,12 @@ export default function PostLabel ({ type, className }) {
   return <div styleName={styleName} className={className}>
     <div styleName='label-inner' data-tip={typeName} data-for='typeTip'><Icon name={typeName} styleName='typeIcon' /></div>
     {type === 'completed' && <div styleName='completed'><Icon name='Star' styleName='starIcon' /></div>}
-    <Tooltip id='typeTip' position='bottom' styleName='typeTip' />
+
+    <ReactTooltip
+      backgroundColor={'rgba(35, 65, 91, 1.0)'}
+      effect={'solid'}
+      delayShow={0}
+      id='typeTip' />
   </div>
 }
 PostLabel.propTypes = {

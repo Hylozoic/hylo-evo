@@ -73,7 +73,9 @@ export default class Events extends Component {
         newPost={newPost}
         routeParams={routeParams}
         querystringParams={querystringParams}
-        currentUserHasMemberships={currentUserHasMemberships} />
+        currentUserHasMemberships={currentUserHasMemberships}
+        icon='Events'
+        label='Events' />
 
       <div styleName='viewStyles.stream-view-ctrls'>
         <Dropdown className={viewStyles.dropdown}

@@ -306,7 +306,10 @@ export default class GroupSettingsTab extends Component {
           <h3>Custom Views</h3>
           <div styleName='styles.help-text'>Add custom links or filtered post views to your group's navigation</div>
           {customViews.map((cv, i) => <CustomViewRow group={group} key={i} index={i} {...cv} onChange={this.updateCustomView(i)} onDelete={this.deleteCustomView(i)} />)}
-          <Button onClick={this.addCustomView}>Add Custom View</Button>
+          <div styleName='styles.add-custom-view' onClick={this.addCustomView}>
+            <h4>Create new custom view</h4>
+            <Icon name='Circle-Plus' styleName='styles.new-custom-view' />
+          </div>
         </SettingsSection>
 
         <br />
@@ -361,10 +364,15 @@ function CustomViewRow ({ group, index, name, icon, externalLink, postTypes, vie
 
   return (
     <div styleName='styles.custom-view-container'>
-      <h4>Custom View #{parseInt(index) + 1} <Icon name='Trash' onClick={onDelete} /></h4>
-      <SettingsControl label='Icon' controlClass={styles['inline-control']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
-      <SettingsControl label='Label' controlClass={styles['inline-control']} onChange={onChange('name')} value={name} />
-      <div>
+      <h4>
+        <div><strong>Custom View #{parseInt(index) + 1}</strong>{name}</div>
+        <Icon name='Trash' onClick={onDelete} />
+      </h4>
+      <div styleName='styles.custom-view-row'>
+        <SettingsControl label='Icon' controlClass={styles['icon-button']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
+        <SettingsControl label='Label' controlClass={styles['custom-view-label']} onChange={onChange('name')} value={name} />
+      </div>
+      <div styleName='styles.custom-view-row'>
         <label styleName='styles.label'>Custom View Type</label>
         <Dropdown
           styleName='styles.location-obfuscation-dropdown'
@@ -386,7 +394,7 @@ function CustomViewRow ({ group, index, name, icon, externalLink, postTypes, vie
           {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>Must be a valid URL!</div>}
         </div>)
         : <div styleName={cx('styles.custom-posts-view')}>
-          <div styleName='styles.post-types'>
+          <div styleName='styles.post-types styles.custom-view-row'>
             <label styleName='styles.label'>What post types to display?</label>
             <div styleName='styles.post-types-chosen'>
               <span onClick={() => setPostTypesModalOpen(!postTypesModalOpen)}>
@@ -415,7 +423,7 @@ function CustomViewRow ({ group, index, name, icon, externalLink, postTypes, vie
             </div>
           </div>
 
-          <div style={{ paddingTop: '8px' }} styleName='general.switchContainer'>
+          <div styleName='styles.custom-view-row'>
             <label styleName='styles.label'>Include only active posts?</label>
             <SwitchStyled
               checked={activePostsOnly}
@@ -423,9 +431,10 @@ function CustomViewRow ({ group, index, name, icon, externalLink, postTypes, vie
               backgroundColor={activePostsOnly ? '#0DC39F' : '#8B96A4'}
             />
           </div>
-
-          <label styleName='styles.label'>Include only posts that match any of these topics:</label>
-          <TopicSelector currentGroup={group} selectedTopics={topics} onChange={onChange('topics')} />
+          <div styleName='styles.custom-view-last-row'>
+            <label styleName='styles.label'>Include only posts that match any of these topics:</label>
+            <TopicSelector currentGroup={group} selectedTopics={topics} onChange={onChange('topics')} />
+          </div>
         </div>
       }
     </div>

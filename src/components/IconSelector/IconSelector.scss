@@ -4,6 +4,10 @@
 
 .selected-icon {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 5px;
 }
 
 .icon-options {
@@ -25,6 +29,7 @@
   padding: 2px;
   cursor: pointer;
   width: 40px;
+  font-size: 24px;
   display: inline-block;
   text-align: center;
 

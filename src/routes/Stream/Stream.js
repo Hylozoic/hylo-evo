@@ -5,7 +5,6 @@ import React, { Component } from 'react'
 import FeedBanner from 'components/FeedBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
-import PostLabel from 'components/PostLabel'
 import PostListRow from 'components/PostListRow'
 import PostCard from 'components/PostCard'
 import PostGridItem from 'components/PostGridItem'
@@ -84,6 +83,8 @@ export default class Stream extends Component {
       respondToEvent,
       selectedPostId,
       sortBy,
+      viewIcon,
+      viewName,
       viewMode
     } = this.props
 
@@ -93,23 +94,23 @@ export default class Stream extends Component {
     return (
       <>
         <FeedBanner
-          group={group}
-          currentUser={currentUser}
-          type={postTypeFilter}
+          customPostTypes={customPostTypes}
+          customActivePostsOnly={customActivePostsOnly}
+          customViewTopics={customViewTopics}
+          isCustomView={isCustomView}
           context={context}
-          newPost={newPost}
-          routeParams={routeParams}
-          querystringParams={querystringParams}
+          currentUser={currentUser}
           currentUserHasMemberships={currentUserHasMemberships}
+          group={group}
+          newPost={newPost}
+          querystringParams={querystringParams}
+          routeParams={routeParams}
+          type={postTypeFilter}
+          icon={viewIcon}
+          label={viewName}
         />
-        {isCustomView ? (
-          <div>
-            Displaying all&nbsp;
-            {customActivePostsOnly ? 'Active ' : ''}
-            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <PostLabel key={p} type={p} styleName='post-type' />)}
-            {customViewTopics.length > 0 && <div>Filtered by topics: {customViewTopics.map(t => <span key={t.id}>#{t.name}</span>)}</div>}
-          </div>)
-          : <ViewControls
+        {!isCustomView &&
+          <ViewControls
             routeParams={routeParams}
             postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
             changeTab={changeTab} changeSort={changeSort} changeView={changeView}

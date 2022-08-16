@@ -38,6 +38,18 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: auto;
+}
+
+.navigation::-webkit-scrollbar {
+  background-color:transparent;
+  width: 5px;
+  border-radius: 5px;
+}
+
+.navigation::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,.5);
+  outline: none;
 }
 
 .links {

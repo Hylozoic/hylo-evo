@@ -36,8 +36,13 @@ export function mapStateToProps (state, props) {
   const customView = getCustomView(state, props)
   const customPostTypes = customView && customView.postTypes
   const customViewMode = customView && customView.viewMode
+  const customViewName = customView && customView.name
+  const customViewIcon = customView && customView.icon
   const activePostsOnly = customView && customView.activePostsOnly
   const customViewTopics = customView && customView.topics
+
+  const viewName = customViewName
+  const viewIcon = customViewIcon
 
   const context = getRouteParam('context', state, props)
   const view = getRouteParam('view', state, props)
@@ -84,6 +89,8 @@ export function mapStateToProps (state, props) {
     selectedPostId: getRouteParam('postId', state, props),
     sortBy,
     view,
+    viewIcon,
+    viewName,
     viewMode
   }
 }

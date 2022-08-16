@@ -336,6 +336,7 @@ $drawer-z-index: 51;
 
 .left {
   transition: all .45s ease;
+  overflow: visible;
 }
 
 .left .map-field {
@@ -493,6 +494,10 @@ $drawer-z-index: 51;
     max-width: 80%;
     flex: 0 0 80%;
     left: 5%;
+  }
+
+  .left {
+    overflow: hidden;
   }
 
   .center.map-view {

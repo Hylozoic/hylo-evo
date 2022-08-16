@@ -1,8 +1,10 @@
 import React from 'react'
+import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
+import PostLabel from 'components/PostLabel'
 import './FeedBanner.scss'
 import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
 import { createPostUrl } from 'util/navigation'
@@ -13,6 +15,12 @@ export default function FeedBanner ({
   context,
   currentUserHasMemberships,
   currentUser,
+  customActivePostsOnly,
+  customPostTypes,
+  customViewTopics,
+  label,
+  isCustomView,
+  icon,
   group,
   newPost,
   querystringParams,
@@ -38,18 +46,30 @@ export default function FeedBanner ({
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
+  let numCustomFilters = isCustomView ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
+
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+        {icon
+          ? <div styleName='custom-icon'>
+            <Icon name={icon} />
+          </div>
+          : <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} /> }
         <div styleName='header-text'>
           <div styleName='header-contents'>
-            <span styleName='header-name'>{name}</span>
-            {location && <div styleName='header-subtitle'>
+            <span styleName='header-name'>{label || name}</span>
+
+            {location && !icon && <div styleName='header-subtitle'>
               <Icon name='Location' styleName='header-icon' />
               {location}
             </div>}
+
+            {numCustomFilters &&
+              <div styleName='num-filters' data-tip='' data-for='announcement-tt'>{numCustomFilters} Filters</div>
+            }
+
             {subtitle && <div styleName='header-subtitle'>
               {subtitle}
             </div>}
@@ -65,6 +85,28 @@ export default function FeedBanner ({
       routeParams={routeParams}
       type={type}
     />}
+
+    <ReactTooltip
+      backgroundColor={'rgba(35, 65, 91, 1.0)'}
+      effect={'solid'}
+      delayShow={0}
+      getContent={function () {
+        return (isCustomView
+          ? <div styleName='custom-filters'>
+            <span styleName='displaying'>
+              Displaying &nbsp;
+              {customActivePostsOnly ? 'active' : ''}
+            </span>
+            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s</span>)}
+            {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
+            {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
+          </div>
+          : ''
+        )
+      }}
+      multiline={1}
+      place={'bottom'}
+      id='announcement-tt' />
   </div>
 }
 

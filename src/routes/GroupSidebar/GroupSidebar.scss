@@ -73,9 +73,10 @@ $about-height: 116px;
   box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
   background-color: rgba(255, 255, 255, 1);
   transition: all .25s ease;
+  margin-right: 8px;
 
   .settings-icon {
-    margin: 0 8px;
+    margin-right: 5px;
     font-size: 18px;
     color: rgba(37, 195, 159, 1.00);
     position: relative;

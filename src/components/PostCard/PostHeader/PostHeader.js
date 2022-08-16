@@ -167,6 +167,7 @@ export default class PostHeader extends PureComponent {
       )}
 
       <ReactTooltip
+        backgroundColor={'rgba(35, 65, 91, 1.0)'}
         effect={'solid'}
         delayShow={0}
         id='announcement-tt' />
