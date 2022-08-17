@@ -30,6 +30,20 @@ export default function PostBigGridItem (props) {
   const attachmentType = firstAttachment.type || 0
   const attachmentUrl = firstAttachment.url || 0
 
+  const detailLength = details.length
+  console.log(detailLength)
+  let detailClass = null
+
+  detailLength < 75
+    ? detailClass = 'detail-extra-short'
+    : detailLength < 150
+      ? detailClass = 'detail-short'
+      : detailLength < 300
+        ? detailClass = 'detail-mid'
+        : detailLength < 500
+          ? detailClass = 'detail-full'
+          : detailClass = null
+
   if (!creator) { // PostCard guards against this, so it must be important? ;P
     return null
   }
@@ -44,7 +58,7 @@ export default function PostBigGridItem (props) {
   }
 
   return (
-    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
+    <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
       <div styleName='content-summary'>
         {post.type === 'event' &&
           <div styleName='date' onClick={showDetailsTargeted}>
