@@ -68,6 +68,7 @@
       z-index: 1;
       height: auto;
       background: linear-gradient(180deg, rgba(42, 64, 89, .6) 0%, rgba(42, 64, 89, 0.79) 61.98%, rgba(42, 64, 89, 0.95) 100%);
+      padding: 15px 6px 0 6px;
 
       .content-snippet {
         display: block;
@@ -162,7 +163,7 @@
     }
 
     .details {
-      display: none;
+      text-align: left;
     }
   }
 }
