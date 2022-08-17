@@ -37,24 +37,24 @@ $dropdown-border-color: $color-box-shadow;
 }
 
 .dropdown-toggle {
-  opacity: 1;
+  display: block;
   transition: all .25s ease;
 }
 
 .dropdown-toggle.toggled {
-  opacity: 0;
+  display: none;
 }
 
 .close-dropdown {
-  opacity: 0;
-  position: absolute;
+  display: none;
+  position: relative;
   top: 0;
   left: 0;
   transition: all .25s ease;
 }
 
 .close-dropdown.toggled {
-  opacity: 1;
+  display: block;
 }
 
 .dropdown-menu {
