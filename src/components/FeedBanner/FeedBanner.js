@@ -97,7 +97,7 @@ export default function FeedBanner ({
               Displaying &nbsp;
               {customActivePostsOnly ? 'active' : ''}
             </span>
-            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s</span>)}
+            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s</span>)}
             {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
             {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
           </div>
