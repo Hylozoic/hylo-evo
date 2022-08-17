@@ -414,7 +414,11 @@
   }
 
   .post-grid-item-container{
-    height: 120px;
+    height: 220px;
+  }
+
+  .event-response {
+    font-size: 11px;
   }
 
   .content-summary {
@@ -436,5 +440,11 @@
     line-height: 18px;
     padding: 0 5px;
     margin-bottom:0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .event-response, .donate {
+    display: none;
   }
 }

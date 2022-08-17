@@ -27,7 +27,7 @@ import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
-const STICKY_HEADER_SCROLL_OFFSET = 69
+const STICKY_HEADER_SCROLL_OFFSET = 70
 
 export default class PostDetail extends Component {
   static propTypes = {

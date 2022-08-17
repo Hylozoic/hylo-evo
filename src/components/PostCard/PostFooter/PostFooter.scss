@@ -81,9 +81,18 @@ $footer-height: 40px;
   color: $color-caribbean-green;
 }
 
+a:not([href]):not([tabindex]).vote-button {
+  color: rgba(0, 199, 157, 1.0);
+}
+
+a:not([href]):not([tabindex]).voted.vote-button {
+  color: rgba(255, 255, 255, 1);
+}
+
 .vote-button {
   composes: text-button from 'css/typography.scss';
-  color: $color-caribbean-green !important;
+  color: rgba(0, 199, 157, 1.0);
+  background-color: rgba(255, 255, 255, 0);
   margin-left: auto;
   height: $footer-height;
   line-height: $footer-height;
@@ -91,6 +100,7 @@ $footer-height: 40px;
   border-left: 1px dashed $color-cape-cod-10;
   border-bottom-right-radius: 4px;
   width: 90px;
+  transition: all .25s ease;
 
   &:hover {
     &, .arrowIcon {
@@ -99,8 +109,8 @@ $footer-height: 40px;
   }
 
   &.voted {
-    background-color: $color-caribbean-green;
-    color: white;
+    background-color: rgba(0, 199, 157, 1.0);
+    color: rgba(255, 255, 255, 1);
     &, .arrowIcon {
       color: white !important;
     }
