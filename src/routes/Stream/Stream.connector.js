@@ -33,13 +33,12 @@ export function mapStateToProps (state, props) {
 
   const routeParams = get('match.params', props)
   const customView = getCustomView(state, props)
-  const customPostTypes = customView && customView.postTypes
-  const customViewMode = customView && customView.viewMode
-  const customViewName = customView && customView.name
-  const customViewIcon = customView && customView.icon
-  const activePostsOnly = customView && customView.activePostsOnly
-  const customViewTopics = customView && customView.topics
-
+  const customPostTypes = customView?.postTypes
+  const customViewMode = customView?.viewMode
+  const customViewName = customView?.name
+  const customViewIcon = customView?.icon
+  const activePostsOnly = customView?.activePostsOnly
+  const customViewTopics = customView?.topics
   const viewName = customViewName
   const viewIcon = customViewIcon
 
@@ -72,6 +71,7 @@ export function mapStateToProps (state, props) {
 
   return {
     customActivePostsOnly: activePostsOnly,
+    customViewId: customView?.id,
     context,
     currentUser,
     currentUserHasMemberships,
