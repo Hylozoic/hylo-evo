@@ -10,7 +10,6 @@ $skill-vertical-margin: 8px;
   padding-bottom: $member-padding - $skill-vertical-margin;
   text-align: center;
   border-radius: 4px;
-  max-width: $member-width;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0px 4px 5px rgb(42 64 89 / 20%);
@@ -38,20 +37,17 @@ $skill-vertical-margin: 8px;
   composes: hdr-headline from 'css/typography.scss';
   margin-top: $member-padding;
   word-wrap: break-word;
-  max-width: 242px;
 }
 
 .location {
   composes: caption-lt-lg from 'css/typography.scss';
   word-wrap: break-word;
-  max-width: 242px;
 }
 
 .tagline {
   composes: bdy-lt-sm from 'css/typography.scss';
   margin-top: $member-padding;
   word-wrap: break-word;
-  max-width: 242px;
 }
 
 .skills {
