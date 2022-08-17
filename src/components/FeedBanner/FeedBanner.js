@@ -45,7 +45,7 @@ export default function FeedBanner ({
   } else {
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
-  console.log(customPostTypes, customViewTopics)
+
   let numCustomFilters = isCustomView ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
 
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
@@ -66,9 +66,9 @@ export default function FeedBanner ({
               {location}
             </div>}
 
-            {numCustomFilters &&
-              <div styleName='num-filters' data-tip='' data-for='announcement-tt'>{numCustomFilters} Filters</div>
-            }
+            {numCustomFilters
+              ? <div styleName='num-filters' data-tip='' data-for='announcement-tt'>{numCustomFilters} Filters</div>
+              : ''}
 
             {subtitle && <div styleName='header-subtitle'>
               {subtitle}
@@ -97,14 +97,14 @@ export default function FeedBanner ({
               Displaying &nbsp;
               {customActivePostsOnly ? 'active' : ''}
             </span>
-            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s</span>)}
+
+            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
             {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
             {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
           </div>
           : ''
         )
       }}
-      multiline={1}
       place={'bottom'}
       id='announcement-tt' />
   </div>
