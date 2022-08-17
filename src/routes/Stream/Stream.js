@@ -49,6 +49,7 @@ export default class Stream extends Component {
       hasChanged('sortBy') ||
       hasChanged('context') ||
       hasChanged('group.id') ||
+      hasChanged('customViewId') ||
       hasChanged('view')) {
       this.fetchPosts(0)
     }
