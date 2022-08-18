@@ -67,7 +67,7 @@ export default function FeedBanner ({
             </div>}
 
             {numCustomFilters
-              ? <div styleName='num-filters' data-tip='' data-for='announcement-tt'>{numCustomFilters} Filters</div>
+              ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
               : ''}
 
             {subtitle && <div styleName='header-subtitle'>
@@ -87,6 +87,7 @@ export default function FeedBanner ({
     />}
 
     <ReactTooltip
+      id='feed-banner-tip'
       backgroundColor={'rgba(35, 65, 91, 1.0)'}
       effect={'solid'}
       delayShow={0}
@@ -106,7 +107,7 @@ export default function FeedBanner ({
         )
       }}
       place={'bottom'}
-      id='announcement-tt' />
+    />
   </div>
 }
 

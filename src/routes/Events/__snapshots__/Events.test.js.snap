@@ -9,6 +9,8 @@ exports[`Events renders a post list 1`] = `
       }
     }
     currentUserHasMemberships={true}
+    icon="Events"
+    label="Events"
     querystringParams={Object {}}
     routeParams={Object {}}
     type="event"

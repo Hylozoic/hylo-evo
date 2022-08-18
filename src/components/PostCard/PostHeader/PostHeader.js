@@ -113,7 +113,7 @@ export default class PostHeader extends PureComponent {
       timeWindow = startString
     }
 
-    const showNormal = ((canBeCompleted && canEdit && expanded) && (topics.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
+    const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
 
     return <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
       <div styleName='headerMainRow'>
@@ -151,7 +151,7 @@ export default class PostHeader extends PureComponent {
         }
       </div>
       <div styleName={cx('subheader', { hasImage }, { showNormal })} >
-        {topics.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
+        {topics?.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
         {canHaveTimes && timeWindow.length > 0 && <div styleName='timeWindow'>
           {timeWindow}
         </div>}

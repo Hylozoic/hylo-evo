@@ -228,11 +228,18 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       topics={Array []}
       viewMode="externalLink"
     />
-    <Button
+    <div
+      data-stylename="styles.add-custom-view"
       onClick={[Function]}
     >
-      Add Custom View
-    </Button>
+      <h4>
+        Create new custom view
+      </h4>
+      <Icon
+        data-stylename="styles.new-custom-view"
+        name="Circle-Plus"
+      />
+    </div>
   </SettingsSection>
   <br />
   <SettingsControl

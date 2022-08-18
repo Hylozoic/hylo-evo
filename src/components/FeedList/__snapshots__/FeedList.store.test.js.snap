@@ -17,7 +17,8 @@ Object {
   $slug: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -46,7 +47,8 @@ posts: viewPosts(
   sortBy: $sortBy,
   search: $search,
   topic: $topic,
-  topics: $topics
+  topics: $topics,
+  types: $types
 ) {
   hasMore
   total
@@ -228,7 +230,8 @@ posts(
   sortBy: $sortBy,
   search: $search,
   topic: $topic,
-  topics: $topics
+  topics: $topics,
+  types: $types
 ) {
   hasMore
   total

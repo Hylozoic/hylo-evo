@@ -33,7 +33,8 @@ describe('mapStateToProps', () => {
         clientFilterParams: {
           featureTypes: { request: true, offer: true },
           search: '',
-          topics: []
+          topics: [],
+          types: ['request', 'offer']
         }
       },
       SavedSearches: {
@@ -61,11 +62,12 @@ describe('mapStateToProps', () => {
         fetchGroupParams: { boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
         fetchMemberParams: { boundingBox: undefined, context: 'groups', slug: 'foo', sortBy: 'name' },
         fetchPostsParams: { boundingBox: undefined, context: 'groups', groupSlugs: ['foo'], slug: 'foo' },
-        fetchPostsForDrawerParams: { context: 'groups', currentBoundingBox: undefined, featureTypes: { offer: true, request: true }, groupSlugs: ['foo'], search: '', slug: 'foo', topics: [] },
+        fetchPostsForDrawerParams: { context: 'groups', currentBoundingBox: undefined, featureTypes: { offer: true, request: true }, groupSlugs: ['foo'], search: '', slug: 'foo', topics: [], types: ['request', 'offer'] },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',
-          topics: []
+          topics: [],
+          types: ['request', 'offer']
         },
         group: { id: 1, slug: 'foo' },
         groupPending: undefined,
@@ -80,7 +82,7 @@ describe('mapStateToProps', () => {
         routeParams: { context: 'groups', groupSlug: 'foo' },
         searches: undefined,
         selectedSearch: {},
-        stateFilters: { featureTypes: { offer: true, request: true }, search: '', topics: [] },
+        stateFilters: { featureTypes: { offer: true, request: true }, search: '', topics: [], types: ['request', 'offer'] },
         topics: [],
         totalBoundingBoxLoaded: undefined,
         zoom: 0
