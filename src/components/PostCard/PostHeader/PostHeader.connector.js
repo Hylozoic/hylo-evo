@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { removePostFromUrl, editPostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
+import getRouteParam from 'store/selectors/getRouteParam'
 import {
   deletePost,
   unfulfillPost,
@@ -14,8 +15,10 @@ import {
 export function mapStateToProps (state, props) {
   const group = getGroup(state, props)
   const url = postUrl(props.id, props.routeParams)
+  const context = props.routeParams.context
 
   return {
+    context,
     currentUser: getMe(state, props),
     group,
     postUrl: url

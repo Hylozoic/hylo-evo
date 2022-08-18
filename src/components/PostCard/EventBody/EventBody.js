@@ -37,12 +37,12 @@ export default class EventBody extends Component {
         <div styleName='calendarDate'>
           <EventDate {...event} />
         </div>
-        <div styleName='eventResponseTop'>
+        {currentUser && <div styleName='eventResponseTop'>
           <div styleName='rsvp'>
             <EventRSVP {...event} respondToEvent={respondToEvent} />
           </div>
           <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
-        </div>
+        </div>}
       </div>
 
       <div styleName={cx('eventBodyColumn', { constrained })}>
@@ -75,12 +75,12 @@ export default class EventBody extends Component {
           />
         </div>
 
-        <div styleName='eventResponse'>
+        {currentUser && <div styleName='eventResponse'>
           <div styleName='rsvp'>
             <EventRSVP {...event} respondToEvent={respondToEvent} />
           </div>
           <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
-        </div>
+        </div>}
 
       </div>
       {showInviteDialog && <EventInviteDialog

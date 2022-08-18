@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
@@ -60,7 +60,9 @@ import { GROUP_TYPES } from 'store/models/Group'
 import './AuthLayoutRouter.scss'
 
 export default function AuthLayoutRouter (props) {
-  const { width } = useResizeDetector({ handleHeight: false })
+  const resizeRef = useRef()
+  const { width } = useResizeDetector({ handleHeight: false, targetRef: resizeRef })
+
   const { hyloAppLayout, hideNavLayout } = useLayoutFlags()
   const withoutNav = hyloAppLayout || hideNavLayout
 
@@ -220,6 +222,7 @@ export default function AuthLayoutRouter (props) {
                 `/:context(groups)/:groupSlug/:view(custom)/:customViewId/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
                 `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
+                `/${POST_DETAIL_MATCH}`,
                 '/messages',
                 '/settings',
                 '/search',
@@ -249,7 +252,7 @@ export default function AuthLayoutRouter (props) {
       />
 
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        <div styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={handleCloseDrawer}>
+        <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={handleCloseDrawer}>
           {/* View navigation menu */}
           <Route
             path={[
@@ -322,6 +325,7 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path='/:context(groups)/:groupSlug' component={returnDefaultRouteForGroup(currentGroup)} />
+              <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
               {/* **** Other Routes **** */}
               <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />

@@ -17,7 +17,23 @@
   bottom: -3px;
 }
 
+.signup-button, .signup-button:visited {
+  line-height: 2em;
+  background: #40A1DD;
+  border-radius: 15px;
+  color: white;
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 2em;
+  text-align: center;
+  text-decoration: none;
 
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
 
 @media screen and (max-width: 320px) {
   .form-wrapper {
