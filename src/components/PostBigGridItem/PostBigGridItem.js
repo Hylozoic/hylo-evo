@@ -36,11 +36,11 @@ export default function PostBigGridItem (props) {
 
   detailLength < 75
     ? detailClass = 'detail-extra-short'
-    : detailLength < 150
+    : detailLength < 120
       ? detailClass = 'detail-short'
-      : detailLength < 300
+      : detailLength < 250
         ? detailClass = 'detail-mid'
-        : detailLength < 500
+        : detailLength < 400
           ? detailClass = 'detail-full'
           : detailClass = null
 
