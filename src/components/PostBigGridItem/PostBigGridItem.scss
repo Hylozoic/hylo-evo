@@ -85,6 +85,7 @@
 .post-grid-item-container.detail-extra-short, .post-grid-item-container.detail-extra-short.file {
   display: flex;
   align-items: center;
+  padding-bottom: 50px;
 
   .title {
     font-size: 32px;
@@ -95,6 +96,10 @@
   }
 
   .content-summary {
+    .date {
+      text-align: center;
+    }
+
     .details {
       font-size: 24px;
       line-height: 32px;
@@ -107,6 +112,7 @@
 .post-grid-item-container.detail-short, .post-grid-item-container.detail-short.file {
   display: flex;
   align-items: center;
+  padding-bottom: 50px;
 
   .title {
     font-size: 32px;
@@ -117,6 +123,10 @@
   }
 
   .content-summary {
+    .date {
+      text-align: center;
+    }
+
     .details {
       font-size: 20px;
       line-height: 32px;
@@ -129,6 +139,7 @@
 .post-grid-item-container.detail-mid, .post-grid-item-container.detail-mid.file {
   display: flex;
   align-items: center;
+  padding-bottom: 50px;
 
   .title {
     font-size: 24px;
@@ -139,6 +150,10 @@
   }
 
   .content-summary {
+    .date {
+      text-align: center;
+    }
+
     .details {
       font-size: 18px;
       line-height: 24px;
@@ -151,6 +166,7 @@
 .post-grid-item-container.detail-full, .post-grid-item-container.detail-full.file {
   display: flex;
   align-items: center;
+  padding-bottom: 50px;
 
   .title {
     font-size: 20px;
@@ -161,6 +177,10 @@
   }
 
   .content-summary {
+    .date {
+      text-align: center;
+    }
+
     .details {
       font-size: 16px;
       line-height: 20px;
