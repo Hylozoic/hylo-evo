@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
-import { trim } from 'lodash'
+import { set, trim } from 'lodash'
 import cx from 'classnames'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
@@ -105,6 +105,8 @@ export default class GroupSettingsTab extends Component {
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
       edits['locationId'] = event.target.value.id
+    } else {
+      set(edits, key, event.target.value)
     }
 
     this.setState({
