@@ -91,6 +91,7 @@ export function mapStateToProps (state, props) {
     slug,
     groupSlugs,
     ...filters,
+    types: !isEmpty(filters.featureTypes) ? Object.keys(filters.featureTypes).filter(ft => filters.featureTypes[ft]) : null,
     currentBoundingBox: filters.currentBoundingBox || boundingBox
   }
 
