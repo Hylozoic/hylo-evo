@@ -297,7 +297,7 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
   }
 }
 
-export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
+export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -330,7 +330,7 @@ export function fetchPostsForDrawer ({ activePostsOnly, context, currentBounding
         search,
         topic: null,
         topics: !isEmpty(topics) ? topics.map(t => t.id) : null,
-        types: !isEmpty(featureTypes) ? Object.keys(featureTypes).filter(ft => featureTypes[ft]) : null
+        types
       }
     },
     meta: {
