@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { removePostFromUrl, editPostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
-import getRouteParam from 'store/selectors/getRouteParam'
 import {
   deletePost,
   unfulfillPost,

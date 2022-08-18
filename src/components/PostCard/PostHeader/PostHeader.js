@@ -47,7 +47,6 @@ export default class PostHeader extends PureComponent {
       close,
       className,
       constrained,
-      currentUser,
       editPost,
       deletePost,
       removePost,

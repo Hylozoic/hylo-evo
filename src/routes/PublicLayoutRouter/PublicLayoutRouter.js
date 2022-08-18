@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { some } from 'lodash/fp'
-import React,  { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Div100vh from 'react-div-100vh'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import HyloCookieConsent from 'components/HyloCookieConsent'
@@ -41,7 +41,7 @@ export default function PublicLayoutRouter (props) {
             <a styleName='sign-up' href='/signup'>Sign up</a>
           </div>
         </div>
-        <Div100vh styleName='center-column' id={CENTER_COLUMN_ID}>
+        <div styleName='center-column' id={CENTER_COLUMN_ID}>
           <Switch>
             <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
             <Route path='/:context(public)/:view(map)' component={MapExplorer} />
@@ -56,7 +56,7 @@ export default function PublicLayoutRouter (props) {
               key='streamToMap'
             />
           </Switch>
-        </Div100vh>
+        </div>
         <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
           <Switch>
             {detailRoutes.map(({ path, component }) => (
