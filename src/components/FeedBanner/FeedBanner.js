@@ -25,6 +25,7 @@ export default function FeedBanner ({
   newPost,
   querystringParams,
   routeParams,
+  isTesting,
   type
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -86,11 +87,13 @@ export default function FeedBanner ({
       type={type}
     />}
 
-    <ReactTooltip
+    {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
+    {!isTesting && <ReactTooltip
       id='feed-banner-tip'
-      backgroundColor={'rgba(35, 65, 91, 1.0)'}
-      effect={'solid'}
+      backgroundColor='rgba(35, 65, 91, 1.0)'
+      effect='solid'
       delayShow={0}
+      place='bottom'
       getContent={function () {
         return (isCustomView
           ? <div styleName='custom-filters'>
@@ -106,8 +109,7 @@ export default function FeedBanner ({
           : ''
         )
       }}
-      place={'bottom'}
-    />
+    />}
   </div>
 }
 
