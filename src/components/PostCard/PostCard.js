@@ -86,6 +86,7 @@ export default class PostCard extends React.Component {
           <div styleName='bodyWrapper'>
             <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
             <EventBody
+              currentUser={currentUser}
               event={post}
               slug={routeParams.groupSlug}
               respondToEvent={respondToEvent}
