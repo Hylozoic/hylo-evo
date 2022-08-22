@@ -44,7 +44,8 @@ const CUSTOM_VIEW_TYPES = {
   externalLink: 'External Link',
   cards: 'Posts - Cards View',
   list: 'Posts - List View',
-  grid: 'Posts - Grid View'
+  bigGrid: 'Posts - Big Grid View',
+  grid: 'Posts - Small Grid View'
 }
 
 const { object, func } = PropTypes
