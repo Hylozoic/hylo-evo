@@ -42,13 +42,13 @@ $new-group-spacing: 16px;
 }
 
 .groupDrawer::-webkit-scrollbar {
-  background-color: white;
+  background-color: rgba(48, 76, 115, 1.0);
   width: 5px;
   border-radius: 5px;
 }
 
 .groupDrawer::-webkit-scrollbar-thumb {
-  background-color: rgba(35, 64, 91, .3);
+  background-color: rgba(35, 64, 91, 1);
   outline: none;
 }
 

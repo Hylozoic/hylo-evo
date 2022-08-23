@@ -30,8 +30,11 @@ export default class GroupSidebar extends Component {
     const { description, memberCount, moderatorDescriptorPlural, name, slug } = group
 
     return <div styleName='group-sidebar'>
-      <AboutSection name={name} description={description} />
       <SettingsLink canModerate={canModerate} group={group} />
+      {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
+        <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> Invite People</Button>
+      </Link>}
+      <AboutSection name={name} description={description} />
       <MemberSection
         members={members}
         memberCount={memberCount}
@@ -105,9 +108,6 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
         </span>}
       </div>
     </Link>
-    {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
-      <Button color='green-white-green-border'>Invite People</Button>
-    </Link>}
   </div>
 }
 

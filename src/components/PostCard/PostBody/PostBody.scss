@@ -4,9 +4,9 @@
 
 .body {
   flex: 1;
-  margin-bottom: 36px;
   display: flex;
   composes: cardPadding;
+  padding-top: 20px;
   flex-direction: column;
 }
 
@@ -14,8 +14,16 @@
   flex-direction: row;
 }
 
+.cardPadding.eventBody {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .smallMargin {
-  margin-bottom: 12px;
+}
+
+.smallMargin .eventTop {
+  display: none;
 }
 
 .constrained.smallMargin {
@@ -91,7 +99,37 @@
 
 .eventBody {
   display: flex;
-  padding: 0px 30px;
+  padding: 0px 10px;
+  position: relative;
+  flex-direction: column;
+}
+
+
+.eventImage .eventResponseTop {
+  position: absolute;
+  top: -25px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+
+}
+
+.eventResponseTop {
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+
+  .rsvp {
+    box-shadow: 0px 4px 15px rgba(17, 39, 64, 0.20);
+    border-radius: 20px;
+    margin-right: 10px;
+  }
+
+  .inviteButton {
+    margin-top: 0;
+    box-shadow: 0px 4px 15px rgba(17, 39, 64, 0.20);
+  }
 }
 
 .constrained.eventBody {
@@ -113,17 +151,72 @@
   display: none;
 }
 
-.eventRightColumn {
+.eventResponse {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-left: auto;
+  align-items: center;
+
+  .inviteButton {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+}
+
+.eventAttendance {
+  padding: 15px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 15px rgba(17, 39, 64, 0.20);
+  border-radius: 5px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: $color-regent;
+  line-height: 30px;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+
+  .people {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+
+    .fade {
+      position: absolute;
+      width: 60px;
+      height: 100%;
+      top: 0;
+      right: 0;
+      background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0.71) 42.71%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 20px;
+    }
+  }
 }
 
 .eventData {
   composes: caption-lt-lg from 'css/typography.scss';
   display: flex;
-  padding: 0px 20px;
+  padding: 0px 8px;
   margin-bottom: 15px;
+}
+
+.eventTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 20px 10px;
+  position: relative;
+  top: 0;
+  width: 100%;
 }
 
 .constrained .eventData {
@@ -138,6 +231,22 @@
 
 .constrained .calendarDate {
   display: none;
+}
+
+.calendarDate {
+  position: relative;
+  background-color: rgba(255, 255, 255, 1);
+  width: 45px;
+  box-shadow: 0px 4px 15px rgb(17 39 64 / 20%);
+  border-radius: 5px;
+}
+
+.eventImage .eventTop {
+  margin-top: -18px;
+}
+
+.eventImage .calendarDate {
+    margin: -30px 0 10px 0;
 }
 
 .eventDetails {
@@ -157,19 +266,19 @@
   font-size: 20px;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .eventBody {
     padding: 0 15px 0 15px;
     position: relative;
     flex-direction: column;
   }
 
+  .eventAttendance {
+    margin: 0 0 8px 0;
+  }
+
   .calendarDate {
     margin-top: 0px;
-
-    > div {
-      background-color: rgba(255, 255, 255, 1);
-    }
   }
 
   .eventRightColumn {
@@ -190,6 +299,10 @@
   }
 
   .cardPadding {
-    padding: 0 10px;
+    padding: 15px 10px 0 10px;
+  }
+
+  .body {
+    padding-bottom: 10px;
   }
 }

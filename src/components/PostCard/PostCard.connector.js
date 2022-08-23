@@ -15,10 +15,9 @@ export function mapStateToProps (state, props) {
 
 export function mapDispatchToProps (dispatch, props) {
   const { locationParams, post, routeParams, querystringParams } = props
-  const url = postUrl(post.id, routeParams, { ...locationParams, ...querystringParams })
+
   return {
-    showDetails: () => dispatch(push(url)),
-    postUrl: url,
+    showDetails: () => dispatch(push(postUrl(post.id, routeParams, { ...locationParams, ...querystringParams }))),
     editPost: () => dispatch(push(editPostUrl(post.id, routeParams, querystringParams))),
     voteOnPost: () => dispatch(voteOnPost(post.id, !post.myVote)),
     respondToEvent: response => dispatch(respondToEvent(post.id, response))

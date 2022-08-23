@@ -12,7 +12,7 @@ const sortOptions = [
 ]
 
 const postTypeOptions = [
-  { id: undefined, label: 'All' },
+  { id: undefined, label: 'All Posts' },
   { id: 'discussion', label: 'Discussions' },
   { id: 'event', label: 'Events' },
   { id: 'offer', label: 'Offers' },
@@ -39,6 +39,7 @@ const StreamViewControls = (props) => {
   return (
     <div styleName='stream-view-ctrls'>
       <div styleName='view-mode'>
+
         <div
           styleName={cx({ 'mode-active': viewMode === 'cards' })}
           onClick={() => changeView('cards')}
@@ -46,12 +47,29 @@ const StreamViewControls = (props) => {
         >
           <Icon name='CardView' />
         </div>
+
         <div
-          styleName={cx({ 'mode-active': viewMode !== 'cards' })}
+          styleName={cx({ 'mode-active': viewMode === 'list' })}
           onClick={() => changeView('list')}
           data-tip='List view' data-for='stream-viewmode-tip'
         >
           <Icon name='ListView' />
+        </div>
+
+        <div
+          styleName={cx({ 'mode-active': viewMode === 'bigGrid' })}
+          onClick={() => changeView('bigGrid')}
+          data-tip='Large Grid' data-for='stream-viewmode-tip'
+        >
+          <Icon name='GridView' styleName='grid-view-icon' />
+        </div>
+
+        <div
+          styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
+          onClick={() => changeView('grid')}
+          data-tip='Small Grid' data-for='stream-viewmode-tip'
+        >
+          <Icon name='SmallGridView' styleName='grid-view-icon' />
         </div>
       </div>
       { makeDropdown(sortBy, sortOptions, changeSort) }

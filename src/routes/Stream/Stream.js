@@ -7,6 +7,8 @@ import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostListRow from 'components/PostListRow'
 import PostCard from 'components/PostCard'
+import PostGridItem from 'components/PostGridItem'
+import PostBigGridItem from 'components/PostBigGridItem'
 import ScrollListener from 'components/ScrollListener'
 import ViewControls from 'components/StreamViewControls'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
@@ -15,8 +17,10 @@ import './Stream.scss'
 const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== get(sel, prevProps)
 
 const viewComponent = {
-  card: PostCard,
-  list: PostListRow
+  cards: PostCard,
+  list: PostListRow,
+  grid: PostGridItem,
+  bigGrid: PostBigGridItem
 }
 
 export default class Stream extends Component {
@@ -44,7 +48,9 @@ export default class Stream extends Component {
     if (hasChanged('postTypeFilter') ||
       hasChanged('sortBy') ||
       hasChanged('context') ||
-      hasChanged('group.id')) {
+      hasChanged('group.id') ||
+      hasChanged('customViewId') ||
+      hasChanged('view')) {
       this.fetchPosts(0)
     }
   }
@@ -59,12 +65,15 @@ export default class Stream extends Component {
 
   render () {
     const {
+      customActivePostsOnly,
       changeSort,
       changeTab,
       changeView,
       context,
       currentUser,
       currentUserHasMemberships,
+      customPostTypes,
+      customViewTopics,
       group,
       newPost,
       routeParams,
@@ -72,46 +81,64 @@ export default class Stream extends Component {
       postTypeFilter,
       pending,
       querystringParams,
+      respondToEvent,
       selectedPostId,
       sortBy,
+      viewIcon,
+      viewName,
       viewMode
     } = this.props
 
-    const ViewComponent = viewMode === 'cards' ? viewComponent['card'] : viewComponent['list']
+    const ViewComponent = viewComponent[viewMode]
+    const isCustomView = routeParams && routeParams.view === 'custom'
 
     return (
-      <React.Fragment>
+      <>
         <FeedBanner
-          group={group}
-          currentUser={currentUser}
-          type={postTypeFilter}
+          customPostTypes={customPostTypes}
+          customActivePostsOnly={customActivePostsOnly}
+          customViewTopics={customViewTopics}
+          isCustomView={isCustomView}
           context={context}
-          newPost={newPost}
-          routeParams={routeParams}
-          querystringParams={querystringParams}
+          currentUser={currentUser}
           currentUserHasMemberships={currentUserHasMemberships}
-        />
-        <ViewControls
+          group={group}
+          newPost={newPost}
+          querystringParams={querystringParams}
           routeParams={routeParams}
-          postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
-          changeTab={changeTab} changeSort={changeSort} changeView={changeView}
+          type={postTypeFilter}
+          icon={viewIcon}
+          label={viewName}
         />
-        <div styleName='stream-items'>
+        {!isCustomView &&
+          <ViewControls
+            routeParams={routeParams}
+            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
+            changeTab={changeTab} changeSort={changeSort} changeView={changeView}
+          />
+        }
+        <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
             const expanded = selectedPostId === post.id
-            return <ViewComponent
-              styleName={cx({ 'card-item': viewMode === 'cards', expanded })}
-              expanded={expanded}
-              routeParams={routeParams}
-              post={post}
-              key={post.id} />
+            return (
+              <ViewComponent
+                styleName={cx({ 'card-item': viewMode === 'cards', expanded })}
+                expanded={expanded}
+                routeParams={routeParams}
+                post={post}
+                key={post.id}
+                respondToEvent={respondToEvent}
+              />
+            )
           })}
         </div>
-        <ScrollListener onBottom={() => this.fetchPosts(posts.length)}
-          elementId={CENTER_COLUMN_ID} />
+        <ScrollListener
+          onBottom={() => this.fetchPosts(posts.length)}
+          elementId={CENTER_COLUMN_ID}
+        />
         {pending && <Loading />}
-      </React.Fragment>
+      </>
     )
   }
 }

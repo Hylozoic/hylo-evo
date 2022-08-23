@@ -1,26 +1,36 @@
 .label {
   display: inline-block;
-  text-transform: uppercase;
-  min-width: 80px;
-  height: 25px;
+  min-width: 26px;
+  height: 26px;
   padding: 0 6px 0 6px;
-  border-radius: 2px;
+  border-radius: 5px;
   line-height: 25px;
   font-size: 8pt;
   font-family: 'Circular Medium';
   text-align: center;
   letter-spacing: 0.6px;
+  top: 0px;
+}
+
+.typeTip {
+  border: 1px solid red;
 }
 
 .label-inner {
   display: flex;
+  height: 26px;
   align-items: center;
 }
 
 .completed {
-  border: 2px solid rgba(13, 195, 159, .3);
+  display: flex;
   color: $color-caribbean-green;
   height: auto;
+
+  span {
+    font-size: 20px;
+    top: 0px;
+  }
 }
 
 .starIcon {
@@ -28,6 +38,11 @@
   font-size: 14px;
   margin: 2px;
   top: 2px;
+}
+
+.typeIcon {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .discussion {
@@ -68,7 +83,6 @@
   .completed {
     width: 40px;
     height: 25px;
-    top: -3px;
     line-height: 20px;
     overflow: hidden;
   }

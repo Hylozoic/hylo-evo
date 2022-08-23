@@ -8,11 +8,10 @@
 .comment-card {
   composes: bdy-lt-sm from 'css/typography.scss';
   $padding-left: $space-18x;
-
-  border: 1px solid $color-cape-cod-10;
   border-radius: $space-1x;
   padding: $space-4x $space-5x;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     box-shadow: 0px 2px 6px 0px $color-black-10;
@@ -88,6 +87,9 @@
   color: $color-rhino-30;
   font-size: 12px;
   white-space: nowrap;
+  position: absolute;
+  top: 2px;
+  right: 10px;
 }
 
 .reply-button {

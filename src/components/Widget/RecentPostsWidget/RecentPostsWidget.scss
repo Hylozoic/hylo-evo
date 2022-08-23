@@ -18,6 +18,10 @@
   user-drag: none;
   -webkit-user-drag: none;
 
+  &:focus, &:hover {
+    color: $color-white;
+  }
+
   .bg {
     position: absolute;
     width: 100%;

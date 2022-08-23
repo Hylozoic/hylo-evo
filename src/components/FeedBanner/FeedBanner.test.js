@@ -20,6 +20,7 @@ const group = {
 it('renders with a group', () => {
   const node = mount(<FeedBanner
     group={group}
+    isTesting={true}
   />)
   expect(node).toMatchSnapshot()
 })

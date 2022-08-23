@@ -1,15 +1,14 @@
 .groups {
-  padding-left: $space-4x;
   padding-right: 0;
   display: flex;
   justify-content: flex-start;
-  border-top: 1px solid $color-cape-cod-10;
+  border-bottom: 1px solid rgba(235, 235, 235, 1.0);
   overflow: hidden;
   min-height: 40px;
+  background-color: rgba(246, 247, 249, 1.0);
 }
 
 .constrained.groups {
-  padding-left: 10px;
 }
 
 .groupList {
@@ -28,8 +27,6 @@
 }
 
 .bottomBorder {
-  border-bottom: 1px solid $color-cape-cod-10;
-  margin-bottom: 10px;
 }
 
 .expanded {
@@ -43,6 +40,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 0 8px;
 }
 
 .label {
@@ -57,8 +55,10 @@
 }
 
 .expandLink {
-  margin-left: auto;
+  margin-left: 5px;
   margin-right: 22px;
+  display: flex;
+  align-items: center;
 }
 
 .expandIcon {

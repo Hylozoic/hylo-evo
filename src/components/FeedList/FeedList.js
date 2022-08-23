@@ -8,6 +8,7 @@ import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
+import PostBigGridItem from 'components/PostBigGridItem'
 import './FeedList.scss'
 
 export default class FeedList extends React.Component {
@@ -60,9 +61,9 @@ export default class FeedList extends React.Component {
   handleScrollEvents = throttle(100, event => {
     const { scrollTop } = event.target
     const { atTabBar, scrollOffset } = this.state
-    if (atTabBar && scrollTop < scrollOffset) {
+    if (atTabBar && scrollTop < (scrollOffset - 20)) {
       this.setState({ atTabBar: false })
-    } else if (!atTabBar && scrollTop > scrollOffset) {
+    } else if (!atTabBar && scrollTop > (scrollOffset - 20)) {
       this.setState({ atTabBar: true })
     }
   })
@@ -89,7 +90,8 @@ export default class FeedList extends React.Component {
       changeSort,
       posts,
       pending,
-      targetRef
+      targetRef,
+      view
     } = this.props
     const { atTabBar, tabBarWidth } = this.state
     const stickyTabBarStyle = {
@@ -99,45 +101,68 @@ export default class FeedList extends React.Component {
     const isEvent = routeParams.view === 'events'
     const showSortAndFilters = !isProject && !isEvent
 
-    return <div styleName='FeedList-container' ref={targetRef}>
-      <ScrollListener elementId={CENTER_COLUMN_ID} onScroll={this.handleScrollEvents} />
-      {showSortAndFilters && (
-        <React.Fragment>
-          <div>
-            <TabBar
-              ref={this.tabBar}
-              onChangeTab={changeTab}
-              selectedTab={postTypeFilter}
-              onChangeSort={changeSort}
-              selectedSort={sortBy} />
-          </div>
-          {atTabBar && (
-            <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
-              <TabBar onChangeTab={changeTab}
+    return (
+      <div styleName='FeedList-container' ref={targetRef}>
+        <ScrollListener elementId={CENTER_COLUMN_ID} onScroll={this.handleScrollEvents} />
+        {showSortAndFilters && (
+          <>
+            <div styleName={cx('tabbar-normal', { 'sticky-show': atTabBar })}>
+              <TabBar
+                ref={this.tabBar}
+                onChangeTab={changeTab}
                 selectedTab={postTypeFilter}
                 onChangeSort={changeSort}
-                selectedSort={sortBy} />
+                selectedSort={sortBy}
+              />
             </div>
-          )}
-        </React.Fragment>
-      )}
-      <div styleName={cx('FeedListItems', { collapsedState })}>
-        {!pending && posts.length === 0 ? <NoPosts message='Nothing to see here' /> : ''}
+            {atTabBar && (
+              <div styleName='tabbar-sticky' style={stickyTabBarStyle}>
+                <TabBar
+                  onChangeTab={changeTab}
+                  selectedTab={postTypeFilter}
+                  onChangeSort={changeSort}
+                  selectedSort={sortBy}
+                />
+              </div>
+            )}
+          </>
+        )}
+        {view !== 'projects' &&
+          <div styleName={cx('FeedListItems', { collapsedState })}>
+            {!pending && posts.length === 0 ? <NoPosts message='Nothing to see here' /> : ''}
 
-        {posts.map(post => {
-          const expanded = post.id === routeParams.postId
-          return (
-            <PostCard
-              routeParams={routeParams}
-              post={post}
-              styleName={cx('FeedListItem', { expanded })}
-              expanded={expanded}
-              key={post.id} />
-          )
-        })}
+            {posts.map(post => {
+              const expanded = post.id === routeParams.postId
+              return (
+                <PostCard
+                  routeParams={routeParams}
+                  post={post}
+                  styleName={cx('FeedListItem', { expanded })}
+                  expanded={expanded}
+                  key={post.id}
+                />
+              )
+            })}
+          </div>}
+        {view === 'projects' &&
+          <div styleName='stream-grid'>
+            {!pending && posts.length === 0 ? <NoPosts message='Nothing to see here' /> : ''}
+            {posts.map(post => {
+              const expanded = routeParams.postId === post.id
+              return (
+                <PostBigGridItem
+                  styleName={cx({ expanded })}
+                  expanded={expanded}
+                  routeParams={routeParams}
+                  post={post}
+                  key={post.id}
+                />
+              )
+            })}
+          </div>}
+        <ScrollListener onBottom={this.fetchMorePosts} elementId={CENTER_COLUMN_ID} />
+        {pending && <Loading />}
       </div>
-      <ScrollListener onBottom={this.fetchMorePosts} elementId={CENTER_COLUMN_ID} />
-      {pending && <Loading />}
-    </div>
+    )
   }
 }

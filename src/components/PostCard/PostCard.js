@@ -53,36 +53,46 @@ export default class PostCard extends React.Component {
       expanded,
       constrained,
       className,
-      respondToEvent,
-      postUrl
+      respondToEvent
     } = this.props
 
     const postType = get('type', post)
     const isEvent = get('type', post) === 'event'
 
+    const firstAttachment = post.attachments[0] || 0
+    const attachmentType = firstAttachment.type || 0
+    const hasImage = attachmentType === 'image' || false
+
     return (
-      <div
-        ref='postCard'
-        onClick={this.onClick}
+      <div ref='postCard'
+        onClick={!isEvent ? this.onClick : null}
         styleName={cx('card', postType, { expanded }, { constrained })}
         className={className}
       >
-        <PostHeader
-          {...post}
-          routeParams={routeParams}
-          highlightProps={highlightProps}
-          editPost={editPost}
-          postUrl={postUrl}
-          constrained={constrained}
-        />
-        <CardImageAttachments attachments={post.attachments} />
-        {isEvent && (
-          <EventBody
-            event={post}
-            slug={routeParams.groupSlug}
-            respondToEvent={respondToEvent}
+        <div onClick={isEvent ? this.onClick : null}>
+          <PostHeader
+            {...post}
+            routeParams={routeParams}
+            highlightProps={highlightProps}
+            editPost={editPost}
             constrained={constrained}
+            hasImage={hasImage}
           />
+        </div>
+        <div onClick={isEvent ? this.onClick : null}>
+          <CardImageAttachments attachments={post.attachments} />
+        </div>
+        {isEvent && (
+          <div styleName='bodyWrapper'>
+            <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
+            <EventBody
+              currentUser={currentUser}
+              event={post}
+              slug={routeParams.groupSlug}
+              respondToEvent={respondToEvent}
+              constrained={constrained}
+            />
+          </div>
         )}
         {!isEvent && (
           <PostBody
@@ -97,6 +107,7 @@ export default class PostCard extends React.Component {
           slug={routeParams.groupSlug}
           constrained={constrained}
         />
+
         <PostFooter
           {...post}
           voteOnPost={voteOnPost}

@@ -147,8 +147,9 @@ Group.fields = {
     to: 'Group',
     relatedName: 'parentGroups',
     through: 'GroupRelationship',
-    throughFields: [ 'childGroup', 'parentGroup' ]
+    throughFields: ['childGroup', 'parentGroup']
   }),
+  customViews: many('CustomView'),
   feedOrder: attr(),
   geoShape: attr(),
   groupToGroupJoinQuestions: many('GroupToGroupJoinQuestion'),
@@ -165,7 +166,7 @@ Group.fields = {
     to: 'Person',
     relatedName: 'moderatedGroups',
     through: 'GroupModerator',
-    throughFields: [ 'group', 'moderator' ]
+    throughFields: ['group', 'moderator']
   }),
   moderatorDescriptor: attr(),
   moderatorDescriptorPlural: attr(),

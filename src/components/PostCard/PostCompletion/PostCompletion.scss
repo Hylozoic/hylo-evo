@@ -5,6 +5,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 15px;
+  margin: 8px;
   padding: 15px;
+  background: rgba(213, 236, 250, .3);
+  border: 1px dashed rgba(213, 236, 250, 1);
+  border-radius: 5px;
+
+  div { line-height: 29px; }
 }

@@ -42,8 +42,8 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         items={
           Array [
             Object {
-              "hideTooltip": true,
-              "iconName": "Letter",
+              "hideCopyTip": true,
+              "iconName": "Messages",
               "onClick": [Function],
               "value": "Message Member",
             },

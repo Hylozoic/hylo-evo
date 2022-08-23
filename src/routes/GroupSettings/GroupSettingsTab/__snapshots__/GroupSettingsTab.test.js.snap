@@ -156,6 +156,19 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         Object {
           "avatarUrl": "avatar.png",
           "bannerUrl": "avatar.png",
+          "customViews": Array [
+            Object {
+              "activePostsOnly": false,
+              "externalLink": "https://google.com",
+              "icon": "Public",
+              "isActive": true,
+              "name": "custommm baby",
+              "order": 1,
+              "postTypes": Array [],
+              "topics": Array [],
+              "viewMode": "externalLink",
+            },
+          ],
           "description": "Great group",
           "id": 1,
           "locationObject": "Fuji",
@@ -166,6 +179,67 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       label="Add a relevant skill or interest"
       placeholder="What skills and interests are most relevant to your group?"
     />
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
+      Custom Views
+    </h3>
+    <div
+      data-stylename="styles.help-text"
+    >
+      Add custom links or filtered post views to your group's navigation
+    </div>
+    <CustomViewRow
+      activePostsOnly={false}
+      externalLink="https://google.com"
+      group={
+        Object {
+          "avatarUrl": "avatar.png",
+          "bannerUrl": "avatar.png",
+          "customViews": Array [
+            Object {
+              "activePostsOnly": false,
+              "externalLink": "https://google.com",
+              "icon": "Public",
+              "isActive": true,
+              "name": "custommm baby",
+              "order": 1,
+              "postTypes": Array [],
+              "topics": Array [],
+              "viewMode": "externalLink",
+            },
+          ],
+          "description": "Great group",
+          "id": 1,
+          "locationObject": "Fuji",
+          "name": "Foomunity",
+          "slug": "foo",
+        }
+      }
+      icon="Public"
+      index={0}
+      isActive={true}
+      key="0"
+      name="custommm baby"
+      onChange={[Function]}
+      onDelete={[Function]}
+      order={1}
+      postTypes={Array []}
+      topics={Array []}
+      viewMode="externalLink"
+    />
+    <div
+      data-stylename="styles.add-custom-view"
+      onClick={[Function]}
+    >
+      <h4>
+        Create new custom view
+      </h4>
+      <Icon
+        data-stylename="styles.new-custom-view"
+        name="Circle-Plus"
+      />
+    </div>
   </SettingsSection>
   <br />
   <SettingsControl

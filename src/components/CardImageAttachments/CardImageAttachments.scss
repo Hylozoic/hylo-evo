@@ -3,7 +3,7 @@
   background-size: cover;
   @include fluid-height(62%);
   width: 100%;
-  margin: 0 auto $space-2x auto;
+  margin: 0 auto 0 auto;
 }
 
 .link {
@@ -16,9 +16,11 @@
 .others {
   position: absolute;
   width: 100%;
-  bottom: 0.6rem;
+  bottom: 15px;
+  right: 0;
   display: flex;
   overflow-x: auto;
+  padding: 10px 0;
   padding-left: $space-2x;
 }
 
@@ -34,9 +36,11 @@
     width: 80px;
     height: 80px;
     border-radius: 3px;
-    margin-right: 0.6rem;
+    margin-right: 20px;
     background-size: cover;
     border: 1px solid $color-cape-cod-10;
+    box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.3);
+
     &:hover {
       filter: brightness(110%);
     }

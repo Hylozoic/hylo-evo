@@ -15,6 +15,7 @@ describe('PostDetail', () => {
 
     const post = {
       id: '91',
+      attachments: [],
       imageUrl,
       tags,
       details,

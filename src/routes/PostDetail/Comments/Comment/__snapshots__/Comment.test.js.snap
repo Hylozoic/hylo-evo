@@ -36,29 +36,31 @@ exports[`Comment displays image attachments 1`] = `
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "foo.png",
-        },
-      ]
-    }
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "foo.png",
-        },
-      ]
-    }
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -131,15 +133,17 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -207,15 +211,17 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -266,15 +272,17 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -347,15 +355,17 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -406,15 +416,17 @@ exports[`Comment renders correctly 1`] = `
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <div
       dangerouslySetInnerHTML={
@@ -465,15 +477,17 @@ exports[`Comment renders correctly when editing 1`] = `
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <Connect(ClickCatcher)>
     <Connect(HyloEditor)
       contentHTML="<p>text of the comment</p>"

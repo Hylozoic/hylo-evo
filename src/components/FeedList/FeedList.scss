@@ -1,5 +1,6 @@
 .FeedList-container {
   position: relative;
+  padding: 15px 0;
 }
 
 .FeedListItems {
@@ -9,17 +10,44 @@
 
 .FeedListItem {
   margin: 0 $space-4x $space-6x;
+  box-shadow: 0px 4px 10px rgb(42 64 89 / 30%);
 }
 
 .expanded {
   margin: 0 $space-2x $space-6x;
 }
 
+.sticky-show {
+  opacity: 0;
+}
+
+.tabbar-normal {
+  margin-bottom: 15px;
+}
+
+@keyframes append-animate {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .tabbar-sticky {
   position: fixed;
-  top: $topnav-height;
+  top: 77px;
   z-index: 22;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0));
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgb(42 64 89 / 30%);
+  animation: append-animate .3s ease;
+}
+
+
+/* animate new box */
+.new-box {
+  animation: append-animate .3s linear;
 }
 
 .collapsedState {
@@ -41,4 +69,12 @@
     padding-top: 10px;
     margin: 0 0 10px 5px;
   }
+}
+
+.stream-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
 }

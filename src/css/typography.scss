@@ -55,7 +55,7 @@ input, textarea {
 
 .bdy-lt-lg {
   @include font-regular;
-  color: $color-rhino-60;
+  color: rgba(44, 64, 89, 0.7);
   font-size: 17px;
   letter-spacing: 0;
   line-height: 25px;
@@ -71,7 +71,7 @@ input, textarea {
 
 .bdy-lt-sm {
   @include font-regular;
-  color: $color-rhino-60;
+  color: rgba(44, 64, 89, 0.7);
   font-size: 15px;
   letter-spacing: 0;
   line-height: 22px;
@@ -200,7 +200,7 @@ input, textarea {
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .hdr-headline {
     font-size: 16px;
     line-height: 20px;

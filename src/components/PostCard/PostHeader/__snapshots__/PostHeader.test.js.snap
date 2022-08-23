@@ -30,82 +30,91 @@ exports[`matches announcement snapshot 1`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
-        />
-        <span
-          data-stylename="announcementSection"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
         >
           <span
-            data-stylename="announcementSpacer"
-          >
-            •
-          </span>
-          <span
-            data-for="announcement-tt"
-            data-tip="Announcement"
-          >
-            <Icon
-              data-stylename="announcementIcon"
-              name="Announcement"
-            />
-          </span>
-          <ReactTooltip
-            clickable={false}
-            delayShow={550}
-            effect="solid"
-            id="announcement-tt"
-            insecure={true}
-            resizeHide={true}
-            wrapper="div"
+            data-stylename="timestamp"
           />
-        </span>
+          <span
+            data-stylename="announcementSection"
+          >
+            <span
+              data-stylename="announcementSpacer"
+            >
+              •
+            </span>
+            <span
+              data-for="announcement-tt"
+              data-tip="Announcement"
+            >
+              <Icon
+                data-stylename="announcementIcon"
+                name="Announcement"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
 </div>
 `;
 
@@ -116,88 +125,94 @@ exports[`matches announcement snapshot 2`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
-        />
-        <span
-          data-stylename="announcementSection"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
         >
           <span
-            data-stylename="announcementSpacer"
-          >
-            •
-          </span>
+            data-stylename="timestamp"
+          />
           <span
-            data-for="announcement-tt"
-            data-tip="Announcement"
+            data-stylename="announcementSection"
           >
-            <Icon
-              data-stylename="announcementIcon"
-              name="Announcement"
-            />
+            <span
+              data-stylename="announcementSpacer"
+            >
+              •
+            </span>
+            <span
+              data-for="announcement-tt"
+              data-tip="Announcement"
+            >
+              <Icon
+                data-stylename="announcementIcon"
+                name="Announcement"
+              />
+            </span>
           </span>
-          <ReactTooltip
-            clickable={false}
-            delayShow={550}
-            effect="solid"
-            id="announcement-tt"
-            insecure={true}
-            resizeHide={true}
-            wrapper="div"
-          />
-        </span>
+        </div>
       </div>
-    </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
     </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
   />
 </div>
 `;
@@ -209,99 +224,105 @@ exports[`matches announcement snapshot 3`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
-        />
-        <span
-          data-stylename="announcementSection"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
         >
           <span
-            data-stylename="announcementSpacer"
-          >
-            •
-          </span>
+            data-stylename="timestamp"
+          />
           <span
-            data-for="announcement-tt"
-            data-tip="Announcement"
+            data-stylename="announcementSection"
           >
-            <Icon
-              data-stylename="announcementIcon"
-              name="Announcement"
-            />
+            <span
+              data-stylename="announcementSpacer"
+            >
+              •
+            </span>
+            <span
+              data-for="announcement-tt"
+              data-tip="Announcement"
+            >
+              <Icon
+                data-stylename="announcementIcon"
+                name="Announcement"
+              />
+            </span>
           </span>
-          <ReactTooltip
-            clickable={false}
-            delayShow={550}
-            effect="solid"
-            id="announcement-tt"
-            insecure={true}
-            resizeHide={true}
-            wrapper="div"
-          />
-        </span>
+        </div>
       </div>
-    </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Edit",
-              "label": "Edit",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-              "red": true,
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Edit",
+                "label": "Edit",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
     </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
   />
 </div>
 `;
@@ -313,55 +334,73 @@ exports[`matches snapshot 1`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
         />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
 </div>
 `;
 
@@ -372,61 +411,76 @@ exports[`matches snapshot 2`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
         />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
   />
 </div>
 `;
@@ -438,72 +492,87 @@ exports[`matches snapshot 3`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Edit",
+                "label": "Edit",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
         />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Edit",
-              "label": "Edit",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-              "red": true,
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
   />
 </div>
 `;
@@ -515,64 +584,83 @@ exports[`renders human readable dates 1`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
         />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
   >
-    Started: Sun, Nov 29, 2020 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+    <div
+      data-stylename="timeWindow"
+    >
+      Started: Sun, Nov 29, 2020 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+    </div>
   </div>
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
 </div>
 `;
 
@@ -583,64 +671,83 @@ exports[`renders human readable dates 2`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
         />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
   >
-    Starts: Tue, Nov 29, 2022 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+    <div
+      data-stylename="timeWindow"
+    >
+      Starts: Tue, Nov 29, 2022 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+    </div>
   </div>
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
 </div>
 `;
 
@@ -651,63 +758,82 @@ exports[`renders human readable dates 3`] = `
   <div
     data-stylename="headerMainRow"
   >
-    <Avatar
-      avatarUrl="foo.png"
-      data-stylename="avatar"
-      url="/all/members/123"
-    />
     <div
-      data-stylename="headerText"
+      data-stylename="headerTopRow"
     >
-      <Highlight
-        component="span"
-        highlightClassName="highlight"
-      >
-        <Link
-          data-stylename="userName"
-          to="/all/members/123"
-        >
-          JJ
-        </Link>
-      </Highlight>
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
       <div
-        data-stylename="timestampRow"
+        data-stylename="headerText"
       >
-        <span
-          data-stylename="timestamp"
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <PostLabel
+          data-stylename="label"
+          type="request"
+        />
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
         />
       </div>
     </div>
-    <div
-      data-stylename="upperRight"
-    >
-      <PostLabel
-        data-stylename="label"
-        type="request"
-      />
-      <Dropdown
-        alignRight={true}
-        items={
-          Array [
-            Object {
-              "icon": "Copy",
-              "label": "Copy Link",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
-    </div>
   </div>
   <div
-    data-stylename="timeWindow"
+    data-stylename="subheader"
   >
-    Ended: Sun, Nov 29, 2020 at 12:00AM GMT
+    <div
+      data-stylename="timeWindow"
+    >
+      Ended: Sun, Nov 29, 2020 at 12:00AM GMT
+    </div>
   </div>
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
 </div>
 `;

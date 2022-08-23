@@ -31,8 +31,8 @@ export default function CommentCard ({
             <span styleName='post-title'>{postTitle}</span>
           </div>
         </Highlight>
-        <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
       </div>
+      <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
       <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
       <CardFileAttachments attachments={attachments} styleName='comment-files' />
       <ClickCatcher>

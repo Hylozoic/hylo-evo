@@ -22,15 +22,40 @@ $dropdown-border-color: $color-box-shadow;
   position: absolute;
   left: 0;
   z-index: 2;
+  box-shadow: 0px 4px 5px rgb(42 64 89 / 20%);
+  border-radius: 5px;
 }
 
 .wrapper.alignRight {
   left: auto;
   right: 0;
+  z-index: 20;
 }
 
 .wrapper.menuAbove {
   bottom: 15px;
+}
+
+.dropdown-toggle {
+  display: block;
+  transition: all .25s ease;
+}
+
+.dropdown-toggle.toggled {
+  display: none;
+}
+
+.close-dropdown {
+  display: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: all .25s ease;
+}
+
+.close-dropdown.toggled {
+  display: block;
+  cursor: pointer;
 }
 
 .dropdown-menu {
@@ -47,6 +72,7 @@ $dropdown-border-color: $color-box-shadow;
     background-color: white;
     border: 1px solid $color-black-squeeze;
     white-space: nowrap;
+    margin-bottom: 0;
   }
 }
 

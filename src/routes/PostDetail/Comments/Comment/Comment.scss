@@ -3,7 +3,7 @@ $comment-row-padding: 25px;
 
 .comment {
   padding: 0px $comment-row-padding;
-  margin-bottom: $space-6x;
+  margin-bottom: 20px;
  }
 
 .header {
@@ -12,7 +12,12 @@ $comment-row-padding: 25px;
 }
 
 .avatar {
-  margin-right: 25px;
+  margin-right: 5px;
+
+  div {
+    height: 30px;
+    width: 30px;
+  }
 }
 
 .userName {
@@ -59,7 +64,12 @@ $comment-row-padding: 25px;
 
 .text {
   composes: bdy-lt-sm from 'css/typography.scss';
-  margin-left: $comment-left-margin;
+  margin-left: 35px;
+
+  strong {
+    font-family: 'Circular Bold';
+    color: rgba(66, 94, 114, 1.0);
+  }
 }
 
 .reply {
@@ -87,20 +97,23 @@ $comment-row-padding: 25px;
   padding-top: 0px;
   margin-left: $comment-left-margin;
   width: 70%;
+  margin-bottom: 0;
   border-radius: 20px;
 }
 
 .files {
   display: flex;
-  margin-left: $comment-left-margin
+  margin-left: $comment-left-margin;
+  padding-bottom: 0;
 }
 
 .replybox {
-  margin-left: $comment-left-margin;
+  margin-left: 33px;
 }
 
 .subreply {
-  margin-left: $comment-left-margin;
+    margin-left: 30px;
+    margin-top: 15px;
 }
 
 .editor {
@@ -111,7 +124,7 @@ $comment-row-padding: 25px;
 }
 
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .comment {
     padding: 0 10px;
   }
@@ -121,6 +134,6 @@ $comment-row-padding: 25px;
   }
 
   .text {
-    margin-left: 54px;
+    margin-left: 40px;
   }
 }

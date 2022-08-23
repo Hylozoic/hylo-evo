@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { get } from 'lodash/fp'
+import { get, startCase } from 'lodash/fp'
 import { isEmpty } from 'lodash'
 import {
   FETCH_POSTS, FETCH_FOR_CURRENT_USER,
@@ -44,6 +44,8 @@ export function mapStateToProps (state, props) {
   const postTypeFilter = view === 'projects' ? 'project' : (view === 'events' ? 'event' : getQuerystringParam('t', state, props))
   const sortBy = getQuerystringParam('s', state, props)
 
+  const viewName = startCase(view)
+
   return {
     routeParams,
     querystringParams,
@@ -63,7 +65,8 @@ export function mapStateToProps (state, props) {
     selectedPostId: getRouteParam('postId', state, props),
     membershipsPending: state.pending[FETCH_FOR_CURRENT_USER],
     postCount: get('postCount', group),
-    pending: state.pending[FETCH_POSTS]
+    pending: state.pending[FETCH_POSTS],
+    viewName
   }
 }
 

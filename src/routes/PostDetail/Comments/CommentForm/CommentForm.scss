@@ -1,7 +1,11 @@
 .commentForm {
-  margin-bottom: $space-10x;
-  box-shadow: 0px 4px 21px 2px $color-rhino-30;
+  margin-bottom: 20px;
+  box-shadow: 0px 15px 20px 0px rgb(44 64 89 / 20%);
   border-radius: 4px;
+  border-top: 1px solid rgba(222, 224, 228, 0.6);
+  border-bottom: 2px solid rgba(38, 68, 93, .45);
+  border-right: 1px solid rgba(38, 68, 93, .15);
+  border-left: 4px solid rgba(0, 199, 157, 1.0);
 }
 
 .icon {
@@ -16,7 +20,6 @@
   width: 100%;
   min-height: 56px;
   background-color: $color-white;
-  box-shadow: 0px 4px 21px 2px $color-rhino-30;
   composes: bdy-lt-sm from 'css/typography.scss';
   color: $color-rhino-80;
   font-size: 16px;
@@ -28,9 +31,9 @@
 
 .image {
   margin-right: 10px;
-  margin-left: 20px;
+  margin-left: 15px;
   position: relative;
-  top: 14px;
+  top: 18px;
 }
 
 .anonymous-image {
@@ -73,7 +76,7 @@
 .editor {
   width: 90%;
   position: relative;
-  top: 18px;
+  top: 22px;
   padding: 0 30px 30px 0;
   overflow-wrap: break-word;
   cursor: text;

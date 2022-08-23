@@ -1,7 +1,7 @@
 .topicNavigation {
   padding: 32px 12.5px 0 12.5px;
   color: $color-rhino-60;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -31,6 +31,7 @@
 .title {
   flex: 1;
   vertical-align: top;
+  color: rgba(34, 64, 88, 1.0);
 
   a, a:hover {
     color: $color-rhino-60;
@@ -40,7 +41,7 @@
 
 .topics {
   list-style: none;
-  padding: 0 0 0 46px;
+  padding: 0 0 0 0;
   line-height: 27px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -50,6 +51,10 @@
 
 .collapsed {
   .topics {
+    display: none;
+  }
+
+  .allTopics {
     display: none;
   }
 }
@@ -136,8 +141,12 @@
 }
 
 :global {
-  .active-topic-nav-link {
-    color: $color-caribbean-green !important;
+  a.active-topic-nav-link {
+    padding: 5px 8px;
+    background-color: rgba(0, 118, 223, 0.1);
+    color: rgba(0, 118, 223, 1);
+    font-family: "Circular Bold", sans-serif;
+    border-radius: 5px;
   }
 }
 

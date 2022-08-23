@@ -46,6 +46,7 @@ exports[`renders with a group 1`] = `
       "name": "Spacebase",
     }
   }
+  isTesting={true}
 >
   <div
     data-stylename="banner"
