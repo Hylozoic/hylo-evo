@@ -55,6 +55,7 @@ $dropdown-border-color: $color-box-shadow;
 
 .close-dropdown.toggled {
   display: block;
+  cursor: pointer;
 }
 
 .dropdown-menu {
