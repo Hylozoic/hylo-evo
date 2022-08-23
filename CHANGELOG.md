@@ -4,6 +4,31 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2022-08-19
+
+### Added
+- Add Custom Views to the navigation bar for groups. These can either be a link to an external URL or a filtered view of posts in the group.
+- Add a Project Management Link and Donations Link to Projects which display uniquely on Project posts. These use custom icons for certain websites like Trello, Asana, GitHub, PayPal, Open Collective and more.
+- You can now view public posts even if not logged in to Hylo.
+- Small and large Grid views for the Stream.
+- Link to resend verification code on the verify email interface in case the first one did't come through or expired.
+- New item in post menu to copy the post's current URL to the clipboard.
+
+### Changed
+- Many style improvements to posts to make them easier to read and interact with. Reorganized various information to make it easier to find
+- Cleaned up style of search page
+- Change the icon for the button to message someone from their profile to match the chat icon used elsewhere in the app
+- Better handling of broken invite links for logged in users
+- Increased visibility, readability, content density throughout the app
+- Left navigation menu scroll behavior change, now the whole menu scrolls instead of just the topics
+- Updated post cards to have better visual hierarchy, and to make it easier to see the content. Reorganized the header and footer.
+- Updated the members page styles to bring it in line with other new styles, including updating the search input and giving the cards a shadow.
+
+### Fixed
+- Bug that could unset a location or group area polygon when saving group settings
+- Setting of prerequisite groups
+- Editing of welcome message on Explore view.
+
 ## [4.0.3] - 2022-07-05
 
 ### Added
