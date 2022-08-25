@@ -110,6 +110,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       if (newGroupRelationship) {
         childGroup = Group.withId(newGroupRelationship.childGroup.id)
         Group.withId(newGroupRelationship.parentGroup.id).updateAppending({ childGroups: [childGroup] })
+        GroupRelationshipInvite.withId(meta.id).delete()
         clearCacheFor(Group, childGroup.id)
       }
       break
