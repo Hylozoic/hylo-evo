@@ -13,7 +13,7 @@ import useEnsureSearchedGroups from 'hooks/useEnsureSearchedGroups'
 import getMe from 'store/selectors/getMe'
 import { SORT_NAME, SORT_NEAREST, SORT_SIZE } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
-import { FARM_VIEW, FARM_TYPES, PRODUCT_CATAGORIES, MANAGEMENT_PLANS, FARM_CERTIFICATIONS } from 'util/constants'
+import { FARM_VIEW, FARM_TYPES, PRODUCT_CATEGORIES, MANAGEMENT_PLANS, FARM_CERTIFICATIONS } from 'util/constants'
 import './GroupSearch.scss'
 
 const baseList = [{ value: '', label: 'All' }]
@@ -82,7 +82,7 @@ export default function GroupSearch ({ viewFilter }) {
       {filterToggle && viewFilter === FARM_VIEW &&
         <div styleName='filter-list'>
           {makeDropdown(farmQuery.farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), (value) => setFarmQuery({ ...farmQuery, farmType: value }), 'Farm Type: ', true)}
-          {makeDropdown(farmQuery.productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATAGORIES)), (value) => setFarmQuery({ ...farmQuery, productCategories: value }), 'Operation: ', true)}
+          {makeDropdown(farmQuery.productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATEGORIES)), (value) => setFarmQuery({ ...farmQuery, productCategories: value }), 'Operation: ', true)}
           {makeDropdown(farmQuery.certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), 'Management Techniques: ', true)}
         </div>}
       <div styleName='search-input'>

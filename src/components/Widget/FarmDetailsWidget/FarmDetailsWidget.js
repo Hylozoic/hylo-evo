@@ -7,7 +7,7 @@ import {
   getAnimalProducts,
   getAnimalTotalCount,
   getArea,
-  getCertifitcationsCurrentDetail,
+  getCertificationsCurrentDetail,
   getClimateZone,
   getHardinessZone,
   getManagementPlansCurrentDetail,
@@ -16,12 +16,11 @@ import {
   getProductsValueAdded,
   getUnitPreference
 } from 'store/selectors/farmExtensionSelectors'
-import { ANIMAL_LIST, CLIMATE_ZONES, FARM_PRODUCT_LIST, FARM_CERTIFICATIONS, MANAGEMENT_PLANS, FARM_TYPES } from 'util/constants'
+import { ANIMAL_LIST, CLIMATE_ZONES, FARM_PRODUCT_LIST, MANAGEMENT_PLANS, FARM_TYPES } from 'util/constants'
 import './FarmDetailsWidget.scss'
 
 const animalListLookup = keyBy(ANIMAL_LIST, 'value')
 const productLookup = keyBy(FARM_PRODUCT_LIST, 'value')
-const certificationsLookup = keyBy(FARM_CERTIFICATIONS, 'value')
 const managementPlansLookup = keyBy(MANAGEMENT_PLANS, 'value')
 const operationTypeLookup = keyBy(FARM_TYPES, 'value')
 
@@ -58,7 +57,8 @@ export default function FarmDetailsWidget ({ group }) {
   if (getProductsValueAdded(group).length > 0) productLabels = productLabels.concat(getProductsValueAdded(group).map((value) => capitalize(value)))
 
   const numProducts = getAnimalProducts(group).length + getProductDetail(group).length
-  const numCertifications = getCertifitcationsCurrentDetail(group).length
+  const certifications = getCertificationsCurrentDetail(group)
+  const numCertifications = certifications.length
   const numManagementPlans = getManagementPlansCurrentDetail(group).length
   let numOfSections = 0
   if (numProducts) numOfSections += 1
@@ -81,8 +81,8 @@ export default function FarmDetailsWidget ({ group }) {
           ))}
         </div>
         {numProducts > 0 && <FarmDetailSection title='Products' items={productLabels} />}
-        {numCertifications > 0 && <FarmDetailSection title='Certifications' items={getCertifitcationsCurrentDetail(group).map((cert) => certificationsLookup[cert].label)} />}
-        {numManagementPlans > 0 && <FarmDetailSection title='Management Techniques' items={getManagementPlansCurrentDetail(group).map((plan) => managementPlansLookup[plan].label)} />}
+        {numCertifications > 0 && <FarmDetailSection title='Certifications' items={certifications} />}
+        {numManagementPlans > 0 && <FarmDetailSection title='Management Techniques' items={getManagementPlansCurrentDetail(group).map((plan) => managementPlansLookup[plan]?.label)} />}
       </div>
       {isThereMoreToShow &&
         <div>

@@ -7,7 +7,10 @@
   like `farmData.product_categories`
 */
 
+import { keyBy } from 'lodash'
+import { createSelector } from 'reselect'
 import getFarmData from 'store/selectors/getFarmData'
+import { FARM_CERTIFICATIONS } from 'util/constants'
 
 export function getAnimalProducts (group) {
   const farmData = getFarmData(group)
@@ -93,17 +96,22 @@ export function getCounty (group) {
   return farmData.county
 }
 
-export function getCertifitcationsCurrent (group) {
+export function getCertificationsCurrent (group) {
   const farmData = getFarmData(group)
   if (!farmData || !farmData.certifications_current) return null
   return farmData.certifications_current
 }
 
-export function getCertifitcationsCurrentDetail (group) {
-  const farmData = getFarmData(group)
-  if (!farmData || !farmData.certifications_current_detail) return []
-  return farmData.certifications_current_detail
-}
+const certificationsLookup = keyBy(FARM_CERTIFICATIONS, 'value')
+
+export const getCertificationsCurrentDetail = createSelector(
+  getFarmData,
+  (farmData, group) => {
+    const certifications = farmData?.certifications_current_detail || []
+    // Lookup certifications by label. If we don't find it then assume it's user entered data and display anyway
+    return certifications.map(c => certificationsLookup[c]?.label || c)
+  }
+)
 
 export function getManagementPlansCurrent (group) {
   const farmData = getFarmData(group)
