@@ -3,6 +3,7 @@ import './newrelic' // this must be second
 import express from 'express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 import appMiddleware from './appMiddleware'
 import apiProxy from './apiProxy'
 import redirectToApp from './redirectToApp'
@@ -14,6 +15,15 @@ export default function () {
   const server = express()
   server.use(cookieParser())
   server.use(compression())
+  // Enable pre-flight CORS
+  const corsOptions = {
+    origin: '*', //['https://hylo.com','https://api.hylo.com','https://staging.hylo.com','https://localhost:3000', 'https://localhost:3000', 'http://localhost:4000', 'https://localhost:3001']
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    preflightContinue: true
+  }
+  server.options('*', cors(corsOptions)) // include before other routes
+  server.use(cors(corsOptions))
   server.use(apiProxy)
   server.use(redirectToApp)
   handleStaticPages(server)

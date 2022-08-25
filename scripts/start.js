@@ -6,6 +6,7 @@ process.env.NODE_ENV = 'development'
 // https://github.com/motdotla/dotenv
 require('dotenv').config({ silent: true })
 
+var cors = require('cors')
 var chalk = require('chalk')
 var webpack = require('webpack')
 var fs = require('fs')
@@ -166,6 +167,8 @@ function addMiddleware (devServer, protocol) {
     ]
   }))
   if (proxy) {
+        console.log("proxy yes")
+
     if (typeof proxy !== 'string') {
       console.log(chalk.red('When specified, "proxy" in package.json must be a string.'))
       console.log(chalk.red('Instead, the type of "proxy" was "' + typeof proxy + '".'))
@@ -190,6 +193,7 @@ function addMiddleware (devServer, protocol) {
         // Browers may send Origin headers even with same-origin
         // requests. To prevent CORS issues, we have to change
         // the Origin to match the target URL.
+        console.log("prexyreq", proxyReq.getHeader('origin'))
         if (proxyReq.getHeader('origin')) {
           proxyReq.setHeader('origin', proxy)
         }
@@ -200,6 +204,16 @@ function addMiddleware (devServer, protocol) {
       ws: true
     })
     devServer.use(mayProxy, hpm)
+
+    console.log("cors setup??")
+    const corsOptions = {
+      origin: '*', //['https://hylo.com','https://api.hylo.com','https://staging.hylo.com','https://localhost:3000', 'https://localhost:3000', 'http://localhost:4000', 'https://localhost:3001']
+      credentials: true,
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+      preflightContinue: true
+    }
+    //devServer.options('*', cors(corsOptions)) // include before other routes
+    devServer.use(cors(corsOptions))
 
     // Listen for the websocket 'upgrade' event and upgrade the connection.
     // If this is not done, httpProxyMiddleware will not try to upgrade until
@@ -268,7 +282,11 @@ function runDevServer (host, port, protocol) {
       key: fs.readFileSync(path.resolve(__dirname, `../config/ssl/${process.env.LOCAL_CERT}.key`)),
       cert: fs.readFileSync(path.resolve(__dirname, `../config/ssl/${process.env.LOCAL_CERT}.crt`))
     } : true : false,
-    host: host
+    host: host,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    }
   })
 
   // Our custom middleware proxies requests to /index.html or a remote API.
