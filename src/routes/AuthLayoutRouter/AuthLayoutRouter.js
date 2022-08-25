@@ -70,6 +70,7 @@ export default function AuthLayoutRouter (props) {
   const location = props.location
   const pathMatchParams = useMemo(() => (
     matchPath(location.pathname, [
+      `/${POST_DETAIL_MATCH}`,
       '/groups/:joinGroupSlug/join/:accessCode',
       '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)?',
       '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
