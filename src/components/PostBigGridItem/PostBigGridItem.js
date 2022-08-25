@@ -31,7 +31,6 @@ export default function PostBigGridItem (props) {
   const attachmentUrl = firstAttachment.url || 0
 
   const detailLength = details.length
-  console.log(detailLength)
   let detailClass = null
 
   detailLength < 75
