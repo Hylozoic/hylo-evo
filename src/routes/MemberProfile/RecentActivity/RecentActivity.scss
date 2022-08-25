@@ -4,7 +4,10 @@
 }
 
 .activity-item {
-  margin: $space-5x 0;
+  margin: 20px 0;
+  background-color: rgba(255,255,255,1);
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgb(35 65 90 / 20%);
 
   a:first-child {
     text-decoration: none;
