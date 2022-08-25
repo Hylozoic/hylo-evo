@@ -38,6 +38,7 @@ export default class PostDetail extends Component {
   }
 
   state = {
+    atBottom: false,
     atHeader: false,
     headerWidth: 0,
     headerScrollOffset: 0,
@@ -78,7 +79,7 @@ export default class PostDetail extends Component {
   }
 
   handleScroll = throttle(100, event => {
-    const { scrollTop } = event.target
+    const { scrollTop, scrollHeight, clientHeight } = event.target
     const {
       atHeader,
       atActivity,
@@ -95,6 +96,14 @@ export default class PostDetail extends Component {
       this.setState({ atHeader: true })
     } else if (atHeader && scrollTop <= headerScrollOffset) {
       this.setState({ atHeader: false })
+    }
+
+    console.log('scroll', scrollTop + clientHeight, scrollHeight, scrollTop + clientHeight === scrollHeight)
+
+    if (scrollTop + clientHeight === scrollHeight) {
+      this.setState({ atBottom: true })
+    } else {
+      this.setState({ atBottom: false })
     }
   })
 

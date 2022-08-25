@@ -1,15 +1,28 @@
 .comments {
   padding-top: 25px;
-  padding-bottom: 100px;
   border-top: 1px dashed $color-cape-cod-10;
+
+  // padding-bottom: 100px;
+
+  &.at-bottom {
+    padding-bottom: 0px;
+  }
+
+  //  > div:last-child {
+  //   scroll-snap-align: end;
+  // }
 }
 
 .form-wrapper {
-  position: fixed;
+  position: relative;
   bottom: 0;
   background-color: rgba(255,255,255,.9);
   padding: 0 20px;
   z-index: 1;
+
+  &.at-bottom {
+    position: relative;
+  }
 }
 
 .people-typing {
