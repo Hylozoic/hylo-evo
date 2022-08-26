@@ -367,7 +367,7 @@ export const PREFERRED_CONTACT_METHODS = [
   }
 ]
 
-export const PRODUCT_CATAGORIES = [
+export const PRODUCT_CATEGORIES = [
   {
     value: 'grains_other',
     label: 'Grains and other row crops'
@@ -417,8 +417,8 @@ export const PRODUCT_CATAGORIES = [
     label: 'Wool'
   },
   {
-    value: 'feedlot',
-    label: 'Feedlot'
+    value: 'feed_lot',
+    label: 'Feed Lots'
   },
   {
     value: 'live_animal_sales_domestic',
