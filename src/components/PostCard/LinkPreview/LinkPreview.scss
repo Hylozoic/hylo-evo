@@ -1,76 +1,65 @@
 
-$preview-height: 80px;
+$preview-image-dimension: $space-20x;
 
-.wrapper {
-  padding: 0 $space-4x;
-}
-
-.linkPreview {
-  height: $preview-height + 2;
+.container {
+  display: flex;
   background-color: $color-athens-gray;
   border: 1px solid $color-athens-gray-dark;
   border-radius: 4px;
-  padding-top: $space-2x;
-  padding-right: $space-3x;
+  padding: $space-2x;
   margin-bottom: 25px;
-
-  a, a:hover {
+  align-items: top;
+  &:hover {
     text-decoration: none;
   }
 }
 
-.noImage {
-  // Note: this class is a hack. We should be using flexbox for this component
-  padding-left: $space-3x;
-}
-
-.previewImage {
-  @include image($preview-height);
-  margin-top: -$space-2x;
+.image {
+  width: 100%;
+  max-height: $preview-image-dimension;
+  max-width: $preview-image-dimension;
+  background: no-repeat center;
+  background-size: cover;
   margin-right: 15px;
-  float: left;
 }
 
-.previewText {
-  display: inline;
-  vertical-align: top;
+.text {
+  display: flex;
+  flex-direction: column;
 }
 
-.previewTitle {
+.title {
   composes: bdy-drk-sm from 'css/typography.scss';
   color: $color-rhino-80;
+  margin-bottom: $space-1x;
+  // ellipses
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.previewDomain {
-  // Extract typography: Very close to BDY-DRK-SM
-  @include font-regular;
+.description {
+  color: $color-dove-gray-75;
+  font-size: 12px;
+  margin-bottom: $space-1x;
+  // ellipses
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.domain {
   color: $color-dove-gray-50;
   font-size: 12px;
-}
-@media screen and (max-width: 425px) {
-  .wrapper {
-    padding: 0;
-  }
-
-  .linkPreview {
-    margin-bottom: 0;
-  }
-}
-
-@media screen and (max-width: 325px) {
-  .previewTitle {
-    font-size: 12px;
-    line-height: 12px;
-    display: block;
-    font-weight: bold;
-  }
-
-  .linkPreview {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .wrapper {
-    padding: 0 0;
-  }
-}
+  display: -webkit-box;
+  // ellipses
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}  

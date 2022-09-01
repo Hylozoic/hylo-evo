@@ -68,7 +68,7 @@ export default function PostDetails ({
           />
         )}
         {linkPreview && !isVideo && (
-          <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
+          <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} />
         )}
         {fileAttachments && (
           <CardFileAttachments attachments={fileAttachments} />

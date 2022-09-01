@@ -1,23 +1,19 @@
 import React from 'react'
 import { bgImageStyle } from 'util/index'
 import { parse } from 'url'
-import cx from 'classnames'
 import './LinkPreview.scss'
 
-export default function LinkPreview ({ title, url, imageUrl }) {
+export default function LinkPreview ({ title, url, imageUrl, description }) {
   const domain = url && parse(url).hostname.replace('www.', '')
 
   return (
-    <div styleName='wrapper'>
-      <div styleName={cx('linkPreview', { noImage: !imageUrl })}>
-        <a href={url} target='_blank' rel='noreferrer'>
-          {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='previewImage' />}
-          <div styleName='previewText'>
-            <span styleName='previewTitle'>{title}</span>
-            <div styleName='previewDomain'>{domain}</div>
-          </div>
-        </a>
+    <a styleName='container' href={url} target='_blank' rel='noreferrer'>
+      {imageUrl && <div style={bgImageStyle(imageUrl)} styleName='image' />}
+      <div styleName='text'>
+        <div styleName='title'>{title}</div>
+        <div styleName='description'>{description}</div>
+        <div styleName='domain'>{domain}</div>
       </div>
-    </div>
+    </a>
   )
 }

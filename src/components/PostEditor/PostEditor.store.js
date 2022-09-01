@@ -23,8 +23,6 @@ export function fetchLinkPreview (url) {
           imageUrl
           title
           description
-          imageWidth
-          imageHeight
           status
         }
       }`,
