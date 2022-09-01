@@ -17,6 +17,7 @@ const MAX_DETAILS_LENGTH = 144
 export default function PostDetails ({
   details: providedDetails,
   linkPreview,
+  linkPreviewFeatured,
   slug,
   constrained,
   expanded,
@@ -51,7 +52,7 @@ export default function PostDetails ({
     <Highlight {...highlightProps}>
       <div styleName={cx('postDetails', { constrained })}>
         <div styleName='fade' />
-        {linkPreview?.url && isVideo && (
+        {linkPreview?.url && linkPreviewFeatured && isVideo && (
           <Feature url={linkPreview.url} />
         )}
         {details && !hideDetails && (
@@ -67,7 +68,7 @@ export default function PostDetails ({
             unfulfillPost={unfulfillPost}
           />
         )}
-        {linkPreview && !isVideo && (
+        {linkPreview && !linkPreviewFeatured && (
           <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} />
         )}
         {fileAttachments && (

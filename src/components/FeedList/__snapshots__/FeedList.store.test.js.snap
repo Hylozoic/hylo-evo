@@ -81,6 +81,7 @@ posts: viewPosts(
     title
     url
   }
+  linkPreviewFeatured
   location
   locationObject {
     id
@@ -256,6 +257,7 @@ posts(
     title
     url
   }
+  linkPreviewFeatured
   location
   locationObject {
     id

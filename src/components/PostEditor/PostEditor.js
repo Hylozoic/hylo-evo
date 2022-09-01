@@ -298,27 +298,10 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  // Note: Checks for linkPreview every 1/2 second
-  // Currently if the link preview is removed, another link preview
-  // will not be generated unless the editor content is cleared
-  // entirely, and another link is added.
-  // TODO: Probably better to throttle this like updateTopic
-  //       Also, get editor content in the function or send in?
+  // Checks for linkPreview every 1/2 second
   handleAddLinkPreview = debounce(500, (url, force) => {
-    const {
-      pollingFetchLinkPreview
-      // linkPreviewStatus,
-      // clearLinkPreview
-    } = this.props
+    const { pollingFetchLinkPreview } = this.props
     const { linkPreview } = this.state.post
-    // Keep this around a litte longer for debugging:
-    // console.log('!!! this.editorRef.current.getText(), linkPreviewStatus, linkPreview:', this.editorRef.current.getText(), linkPreviewStatus, linkPreview)
-
-    // if (this.editorRef.current.isEmpty() && linkPreviewStatus) return clearLinkPreview()
-
-    // if (linkPreviewStatus === 'invalid') {
-    //   return
-    // }
 
     if (linkPreview && !force) return
 
@@ -342,10 +325,16 @@ export default class PostEditor extends React.Component {
     this.setIsDirty(true)
   }
 
+  handleFeatureLinkPreview = featured => {
+    this.setState({
+      post: { ...this.state.post, linkPreviewFeatured: featured }
+    })
+  }
+
   handleRemoveLinkPreview = () => {
     this.props.removeLinkPreview()
     this.setState({
-      post: { ...this.state.post, linkPreview: null }
+      post: { ...this.state.post, linkPreview: null, linkPreviewFeatured: false }
     })
   }
 
@@ -430,6 +419,7 @@ export default class PostEditor extends React.Component {
       title,
       groups,
       linkPreview,
+      linkPreviewFeatured,
       members,
       topics,
       acceptContributions,
@@ -461,6 +451,7 @@ export default class PostEditor extends React.Component {
       details,
       groups,
       linkPreview,
+      linkPreviewFeatured,
       imageUrls,
       fileUrls,
       topicNames,
@@ -520,6 +511,7 @@ export default class PostEditor extends React.Component {
       details,
       groups,
       linkPreview,
+      linkPreviewFeatured,
       topics,
       members,
       acceptContributions,
@@ -625,6 +617,8 @@ export default class PostEditor extends React.Component {
           <LinkPreview
             loading={fetchLinkPreviewPending}
             linkPreview={linkPreview}
+            featured={linkPreviewFeatured}
+            onFeatured={this.handleFeatureLinkPreview}
             onClose={this.handleRemoveLinkPreview}
           />
         )}

@@ -163,6 +163,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       }
     }
     onClose={[Function]}
+    onFeatured={[Function]}
   />
   <Connect(AttachmentManager)
     attachmentType="image"
@@ -400,6 +401,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       }
     }
     onClose={[Function]}
+    onFeatured={[Function]}
   />
   <Connect(AttachmentManager)
     attachmentType="image"
@@ -584,6 +586,7 @@ Array [
         "id": "1",
         "title": "a link",
       },
+      "linkPreviewFeatured": undefined,
       "location": undefined,
       "locationId": "555",
       "memberIds": undefined,
@@ -1487,6 +1490,7 @@ Array [
       "imageUrls": undefined,
       "isPublic": undefined,
       "linkPreview": undefined,
+      "linkPreviewFeatured": undefined,
       "location": undefined,
       "locationId": "666",
       "memberIds": undefined,
@@ -2354,6 +2358,7 @@ Array [
         "id": "1",
         "title": "a link",
       },
+      "linkPreviewFeatured": undefined,
       "location": undefined,
       "locationId": "555",
       "memberIds": undefined,

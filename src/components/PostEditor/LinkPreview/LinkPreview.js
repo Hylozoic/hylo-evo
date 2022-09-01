@@ -7,20 +7,29 @@ import Loading from 'components/Loading'
 import cx from 'classnames'
 import './LinkPreview.scss'
 
-export default function LinkPreview ({ loading, ...props }) {
+export default function LinkPreview ({ loading, featured: providedFeatured, ...props }) {
   const [isVideo, setIsVideo] = useState()
-  const [featured, setFeatured] = useState()
-  const { linkPreview, onClose, className } = props
+  const [featured, setFeatured] = useState(providedFeatured)
+  const { linkPreview, onClose, onFeatured, className } = props
   const url = linkPreview?.url
+
+  const toggleFeatured = () => {
+    setFeatured(!featured)
+    onFeatured(!featured)
+  }
 
   useEffect(() => {
     if (url) {
       const isVideo = ReactPlayer.canPlay(url)
 
       setIsVideo(isVideo)
-      setFeatured(isVideo)
+
+      if (typeof providedFeatured === 'undefined') {
+        setFeatured(isVideo)
+        onFeatured(isVideo)
+      }
     }
-  }, [url])
+  }, [url, loading])
 
   if (loading) return <Loading />
 
@@ -40,10 +49,10 @@ export default function LinkPreview ({ loading, ...props }) {
           {imageUrl && (
             <div style={imageStyle} styleName='image'>
               {isVideo && !featured && (
-                <ImEnlarge styleName={cx('feature-button', { featured })} onClick={() => setFeatured(!featured)} />
+                <ImEnlarge styleName={cx('feature-button', { featured })} onClick={toggleFeatured} />
               )}
               {isVideo && featured && (
-                <ImShrink styleName={cx('feature-button', { featured })} onClick={() => setFeatured(!featured)} />
+                <ImShrink styleName={cx('feature-button', { featured })} onClick={toggleFeatured} />
               )}
             </div>
           )}
