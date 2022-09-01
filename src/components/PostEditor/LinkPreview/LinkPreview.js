@@ -9,7 +9,7 @@ import './LinkPreview.scss'
 
 export default function LinkPreview ({ loading, featured: providedFeatured, ...props }) {
   const [isVideo, setIsVideo] = useState()
-  const [featured, setFeatured] = useState(providedFeatured)
+  const [featured, setFeatured] = useState()
   const { linkPreview, onClose, onFeatured, className } = props
   const url = linkPreview?.url
 
@@ -24,12 +24,14 @@ export default function LinkPreview ({ loading, featured: providedFeatured, ...p
 
       setIsVideo(isVideo)
 
-      if (typeof providedFeatured === 'undefined') {
+      if (typeof providedFeatured !== 'undefined') {
+        setFeatured(providedFeatured)
+      } else {
         setFeatured(isVideo)
         onFeatured(isVideo)
       }
     }
-  }, [url, loading])
+  }, [url, providedFeatured])
 
   if (loading) return <Loading />
 
