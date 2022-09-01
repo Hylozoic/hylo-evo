@@ -3,7 +3,6 @@ import mime from 'mime'
 import request from 'request'
 import streamifier from 'streamifier'
 import { gzip } from 'zlib'
-import { parse } from 'url'
 
 const cache = LRU(50)
 
@@ -69,7 +68,7 @@ export function handlePage (req, res) {
     return res.status(503).send('Service Unavailable')
   }
 
-  const pathname = parse(req.url).pathname
+  const pathname = new URL(req.url).pathname
   const newUrl = transformPathname(pathname)
   const cachedValue = cache.get(newUrl)
 
