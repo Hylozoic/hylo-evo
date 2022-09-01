@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import ReactPlayer from 'react-player'
+import { ImEnlarge, ImShrink } from 'react-icons/im'
+import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
-import { bgImageStyle } from 'util/index'
-import { ImEnlarge, ImShrink } from 'react-icons/im'
-import ReactPlayer from 'react-player'
 import cx from 'classnames'
 import './LinkPreview.scss'
 
@@ -26,6 +26,7 @@ export default function LinkPreview ({ loading, ...props }) {
 
   const { title, description, imageUrl } = linkPreview
   const imageStyle = bgImageStyle(imageUrl)
+  const domain = url && new URL(url).hostname.replace('www.', '')
 
   return (
     <>
@@ -53,7 +54,8 @@ export default function LinkPreview ({ loading, ...props }) {
                 <Icon name='Ex' styleName='icon' />
               </span>
             </div>
-            <span styleName='description'>{description}</span>
+            <div styleName='description'>{description}</div>
+            <div styleName='domain'>{domain}</div>
           </div>
         </div>
       </div>

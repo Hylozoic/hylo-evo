@@ -1,13 +1,14 @@
+$preview-image-dimension: $space-20x;
+
 .container {
   display: flex;
   flex-direction: column;
   margin-left: $space-14x;
-  // align-self: center;
   margin-right: $space-5x;
   margin-top: $space-2x;
   margin-bottom: $space-2x;
-  border: solid 1px $color-ghost;
-  border-radius: 8px;
+  background-color: $color-athens-gray;
+  border: 1px solid $color-athens-gray-dark;
 }
 
 .link-preview {
@@ -15,18 +16,13 @@
   padding: 0.6em;
 }
 
-.video-player {
-  width: 230px;
-}
-
 .image {
   margin-right: 12px;
-  width: 96px;
-  height: 96px;
+  width: $preview-image-dimension;
+  height: $preview-image-dimension;
   border-radius: 8px;
   background-size: cover;
   background-position: center;
-  text-align: center;
   &:has(.feature-button) {
     .feature-button {
       display: none;
@@ -46,19 +42,10 @@
   }
 }
 
-.text {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
 .feature-button {
   text-align: right;
   color: $color-rhino-60;
-  // padding: 0.2em;
   font-size: 14px;
-  // width: 1.15em;
-  // height: 1.15em;
   border-radius: 0.1em;
   color: $color-caribbean-green;
   cursor: pointer;
@@ -68,8 +55,6 @@
   display: flex;
   align-items: center;
   font-size: 0.75em;
-  // margin: 0 $space-5x;
-  // margin-bottom: -$space-2x;
   border-radius: 0.5em 0.5em 0 0;
   padding: 0.5em;
   background-color: $color-regent;
@@ -78,11 +63,6 @@
 
 .header {
   display: flex;
-}
-
-.title {
-  composes: hdr-subheadline from 'css/typography.scss';
-  font-size: 14px;
 }
 
 .close {
@@ -94,7 +74,20 @@
   font-size: 18px;
 }
 
-.description {
-  composes: caption-lt-lg from 'css/typography.scss';
+.text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 
+.title {
+  composes: title from 'components/LinkPreview/LinkPreview.scss';
+}
+
+.description {
+  composes: description from 'components/LinkPreview/LinkPreview.scss';
+}
+
+.domain {
+  composes: domain from 'components/LinkPreview/LinkPreview.scss';
 }

@@ -1,10 +1,9 @@
 import React from 'react'
 import { bgImageStyle } from 'util/index'
-import { parse } from 'url'
 import './LinkPreview.scss'
 
 export default function LinkPreview ({ title, url, imageUrl, description }) {
-  const domain = url && parse(url).hostname.replace('www.', '')
+  const domain = url && new URL(url).hostname.replace('www.', '')
 
   return (
     <a styleName='container' href={url} target='_blank' rel='noreferrer'>

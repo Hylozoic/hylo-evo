@@ -1,4 +1,3 @@
-
 $preview-image-dimension: $space-20x;
 
 .container {
@@ -18,9 +17,10 @@ $preview-image-dimension: $space-20x;
   width: 100%;
   max-height: $preview-image-dimension;
   max-width: $preview-image-dimension;
-  background: no-repeat center;
+  border-radius: 8px;
   background-size: cover;
-  margin-right: 15px;
+  background-position: center;
+  margin-right: 12px;
 }
 
 .text {
