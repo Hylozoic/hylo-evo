@@ -36,6 +36,10 @@ export default function HyloTipTapEditorMobile () {
     }
   })
 
+  const handleAddLink = useCallback(url => {
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
+  })
+
   const handleAddTopic = useCallback(topic => (
     sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
   ))
@@ -80,6 +84,7 @@ export default function HyloTipTapEditorMobile () {
       onEnter={handleEnter}
       onBeforeCreate={handleBeforeCreate}
       // onAddMention={handleAddMention}
+      onAddLink={handleAddLink}
       onAddTopic={handleAddTopic}
       // Should the default be empty or a paragraph?
       contentHTML={contentHTML}
