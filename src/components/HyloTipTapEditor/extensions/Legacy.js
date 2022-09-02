@@ -4,10 +4,10 @@ import { Node } from '@tiptap/core'
 // <a data-entity-type="mention" data-user-id="22955" href="/groups/test-community2/members/22955" class="mention">Loren Johnson</a>
 // <a data-entity-type="#mention" href="/groups/test-community2/topics/test" data-search="#test" class="hashtag">#test</a>
 // <a href="/groups/test-community2/topics/offer" data-search="#offer" class="hashtag">#offer</a>
-//
+
 // Current
-// <span data-type=​"mention" class="mention" data-id=​"13998" data-label=​"Edward Test">​Edward Test​</span>​
-// <span data-type=​"topic" class=​"topic" data-id=​"13452" data-label=​"Testcheck">​#Testcheck​</span>​
+// <span data-type="mention" class="mention" data-id="13998" data-label="Edward Test">Edward Test</span>
+// <span data-type="topic" class="topic" data-id="13452" data-label="Testcheck">#Testcheck</span>
 
 export const Legacy = Node.create({
   name: 'legacy',
