@@ -55,7 +55,7 @@ $preview-image-dimension: $space-20x;
 .domain {
   color: $color-dove-gray-50;
   font-size: 12px;
-  display: -webkit-box;
+  text-transform: uppercase;
   // ellipses
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;

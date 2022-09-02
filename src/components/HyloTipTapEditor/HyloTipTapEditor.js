@@ -6,6 +6,7 @@ import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
 import HyloLink from './extensions/HyloLink'
+import Legacy from './extensions/Legacy'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
@@ -92,7 +93,6 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      // LinkNode,
       HyloLink({ onAddLink }),
 
       Placeholder.configure({ placeholder }),
@@ -101,7 +101,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 
       TopicMentions({ maxSuggestions, groupIds, dispatch }),
 
-      // Iframe, // Embed (Video)
+      Legacy,
 
       Highlight
     ]
@@ -147,8 +147,6 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   if (!editor) return null
 
   editorRef.current = editor
-
-  console.log('selectedLink', selectedLink)
 
   return (
     <>
