@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Breakage when a farm has an unknown certification, instead just display it as its user entered data
+- Styling of comments in activity section of user profile
+- Remove group to group join request upon accepting it
 
 ## [4.1.0] - 2022-08-19
 
