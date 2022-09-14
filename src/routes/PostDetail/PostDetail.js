@@ -210,21 +210,26 @@ export default class PostDetail extends Component {
             <div styleName='project-management-tool'>
               <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
               <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
-            </div>}
+            </div>
+          }
           {post.projectManagementLink && !projectManagementTool &&
-            <div>
-              View project management tool {post.projectManagementLink}
-            </div>}
-
+            <div styleName='project-management-tool'>
+              <div>View project management tool</div>
+              <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
+            </div>
+          }
           {post.donationsLink && donationService &&
             <div styleName='donate'>
               <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
               <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-            </div>}
+            </div>
+          }
           {post.donationsLink && !donationService &&
-            <div>
-              Contribute financially to this project at {post.donationsLink}
-            </div>}
+            <div styleName='donate'>
+              <div>Support this project</div>
+              <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+            </div>
+          }
         </div>}
         {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
           <ProjectContributions

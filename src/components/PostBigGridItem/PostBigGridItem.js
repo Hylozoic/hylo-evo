@@ -92,7 +92,7 @@ export default function PostBigGridItem (props) {
                 <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
               </div>}
             {post.donationsLink && !donationService &&
-              <div>
+              <div styleName='donate'>
                 <div>Support this project</div>
                 <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
               </div>}
