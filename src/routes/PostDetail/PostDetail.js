@@ -212,8 +212,8 @@ export default class PostDetail extends Component {
               <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
             </div>}
           {post.projectManagementLink && !projectManagementTool &&
-            <div>
-              View project management tool {post.projectManagementLink}
+            <div styleName='project-management-tool'>
+              <a styleName='project-button' href={post.projectManagementLink} target='_blank'>View project management tool</a>
             </div>}
 
           {post.donationsLink && donationService &&
@@ -222,8 +222,8 @@ export default class PostDetail extends Component {
               <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
             </div>}
           {post.donationsLink && !donationService &&
-            <div>
-              Contribute financially to this project at {post.donationsLink}
+            <div styleName='donate'>
+              <a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute financially to this project</a>
             </div>}
         </div>}
         {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
