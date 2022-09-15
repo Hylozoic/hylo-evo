@@ -2,19 +2,6 @@ import * as TextHelpers from '../src/TextHelpers'
 import moment from 'moment-timezone'
 
 describe('presentHTML', () => {
-  // it('linkifies mentions and hashtags', () => {
-  //   const presentResult = TextHelpers.presentHTML(
-  //     '<p>Sadsadf <a href="#" data-entity-type="mention" data-user-id="26189">Matt Zeltzer Test</a> #test-topic  </p>\n',
-  //     {
-  //       slug: 'test',
-  //       noLinks: false
-  //     }
-  //   )
-  //   expect(presentResult).toBe(
-  //     '<p>Sadsadf <a href="/groups/test/members/26189" data-entity-type="mention" data-user-id="26189" class="mention">Matt Zeltzer Test</a> <a href="/groups/test/topics/test-topic" class="hashtag" data-search="#test-topic">#test-topic</a>  </p>\n'
-  //   )
-  // })
-
   it('truncates', () => {
     const presentResult = TextHelpers.presentHTML(
       '<p>Sadsadf <a href="#" data-entity-type="mention" data-user-id="26189">Matt Zeltzer Test</a> #test-topic  </p>\n',
@@ -25,7 +12,7 @@ describe('presentHTML', () => {
       }
     )
     expect(presentResult).toBe(
-      '<p>Sadsadf <a href="/groups/test/members/26189" data-entity-type="mention" data-user-id="26189" class="mention">Matt …</a></p>'
+      '<p>Sadsadf <a href="/groups/test/members/26189" data-entity-type="mention" data-user-id="26189" target="_self" class="mention">Matt …</a></p>'
     )
     const presentResultWithExtrenalLink = TextHelpers.presentHTML(
       '<p>Sadsadf <a href="https://google.com" target="_blank">GOOGLE</a></p>',

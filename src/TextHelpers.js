@@ -1,14 +1,21 @@
 import merge from 'lodash/fp/merge'
+import forEach from 'lodash/fp/forEach'
 import { marked } from 'marked'
 import insane from 'insane'
 import truncHTML from 'trunc-html'
 import truncText from 'trunc-text'
 import prettyDate from 'pretty-date'
 import moment from 'moment-timezone'
-import linkify from './linkify'
+import linkifyHTML from 'linkify-html'
 import { convert as convertHtmlToText } from 'html-to-text'
+import { personUrl, topicUrl } from './NavigationHelpers'
+// NOTE: May still wish to use this if some legacy content proves to not have linked topics
+// import { HASHTAG_FULL_REGEX } from './constants'
 
 // HTML and Text presentation related
+
+export const MAX_LINK_LENGTH = 48
+export const HYLO_URL_REGEX = /http[s]?:\/\/(?:www\.)?hylo\.com(.*)/gi // https://regex101.com/r/0GZMny/1
 
 export function insaneOptions (providedInsaneOptions) {
   return merge(
@@ -68,23 +75,90 @@ export const truncateHTML = (html, truncateLength, providedInsaneOptions = {}) =
   return truncHTML(html, truncateLength, options).html
 }
 
+export function processHTML (contentHTML, groupSlug) {
+  const linkifiedContentHTML = linkifyHTML(contentHTML)
+  let dom
+
+  // Node
+  if (typeof window === 'undefined') {
+    const { JSDOM } = require('jsdom')
+    const jsdom = new JSDOM(linkifiedContentHTML)
+    dom = jsdom.window.document
+  // Browser
+  } else {
+    const parser = new window.DOMParser()
+    dom = parser.parseFromString(linkifiedContentHTML, 'text/html')
+  }
+  
+  // Make Hylo `anchors` relative links with `target='_self'`, otherwise `target=_blank`
+  forEach(el => {
+    if (el.getAttribute('href')) {
+      if (el.textContent.length > MAX_LINK_LENGTH) {
+        el.innerHTML = `${el.textContent.slice(0, MAX_LINK_LENGTH)}…`
+      }
+
+      const hyloLinksMatch = [...el.getAttribute('href').matchAll(HYLO_URL_REGEX)]
+
+      if (hyloLinksMatch[0] && hyloLinksMatch[0].length === 2) {
+        const relativeURLPath = hyloLinksMatch[0][1] === '' ? '/' : hyloLinksMatch[0][1]
+
+        el.setAttribute('target', '_self')
+        el.setAttribute('href', relativeURLPath)
+      } else {
+        el.setAttribute('target', '_blank')
+      }
+    }
+  }, dom.querySelectorAll('a'))
+
+  // Convert Mention and Topic `spans` to `anchors`
+  const spanToAnchor = forEach(el => {
+    const anchorElement = dom.createElement('a')
+    const href = el.className === 'mention'
+      ? personUrl(el.getAttribute('data-id'), groupSlug)
+      : topicUrl(el.getAttribute('data-id'), { groupSlug })
+
+    for (const attr of el.attributes) {
+      anchorElement.setAttribute(attr.name, attr.value)
+    }
+
+    anchorElement.innerHTML = el.innerHTML
+    anchorElement.setAttribute('href', href)
+    anchorElement.setAttribute('target', '_self')
+
+    el.parentNode.replaceChild(anchorElement, el)
+  })
+  spanToAnchor(dom.querySelectorAll('span.topic'))
+  spanToAnchor(dom.querySelectorAll('span.mention'))
+
+  // Normalize legacy Mention and Topic `anchors`
+  const convertLegacyLink = forEach(el => {
+    let href
+
+    if (el.getAttribute('data-entity-type') === 'mention') {
+      el.className = 'mention'
+      href = personUrl(el.getAttribute('data-user-id'), groupSlug)
+    } else {
+      el.className = 'topic'
+      href = topicUrl(el.getAttribute('data-id'), { groupSlug })
+    }
+
+    el.setAttribute('href', href)
+    el.setAttribute('target', '_self')
+  })
+  convertLegacyLink(dom.querySelectorAll('a[data-entity-type="#mention"]'))
+  convertLegacyLink(dom.querySelectorAll('a[data-entity-type="mention"], a[data-user-id]'))
+
+  return dom.querySelector('body').innerHTML
+}
+
 export function presentHTML (html, options = {}, providedInsaneOptions = {}) {
   if (!html) return ''
 
-  const {
-    slug,
-    noLinks = true,
-    truncate: truncateLength
-  } = options
-  let processedHTML = html
+  const { slug, truncate: truncateLength } = options
+  let processedHTML = processHTML(html, slug)
 
   if (truncateLength) {
     processedHTML = truncateHTML(processedHTML, truncateLength, providedInsaneOptions)
-  }
-
-  // make links and hashtags
-  if (!noLinks) {
-    processedHTML = linkify(processedHTML, slug)
   }
 
   return processedHTML
