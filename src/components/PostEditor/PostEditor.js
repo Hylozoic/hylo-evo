@@ -415,8 +415,8 @@ export default class PostEditor extends React.Component {
       groups.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && startTime < endTime)) &&
-      (!isProject || sanitizeURL(donationsLink) || donationsLink === undefined) &&
-      (!isProject || sanitizeURL(projectManagementLink) || projectManagementLink === undefined)
+      (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
+      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink)
     )
   }
 
@@ -790,7 +790,7 @@ export default class PostEditor extends React.Component {
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: donationsLink !== undefined && !sanitizeURL(donationsLink) })}>Donation Link</div>
+              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>Donation Link</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'
@@ -805,7 +805,7 @@ export default class PostEditor extends React.Component {
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: projectManagementLink !== undefined && !sanitizeURL(projectManagementLink) })}>Project Management</div>
+              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>Project Management</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'
