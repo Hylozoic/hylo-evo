@@ -9,13 +9,13 @@ import moment from 'moment-timezone'
 import linkifyHTML from 'linkify-html'
 import { convert as convertHtmlToText } from 'html-to-text'
 import { personUrl, topicUrl } from './NavigationHelpers'
-// NOTE: May still wish to use this if some legacy content proves to not have linked topics
-// import { HASHTAG_FULL_REGEX } from './constants'
 
 // HTML and Text presentation related
 
 export const MAX_LINK_LENGTH = 48
 export const HYLO_URL_REGEX = /http[s]?:\/\/(?:www\.)?hylo\.com(.*)/gi // https://regex101.com/r/0GZMny/1
+// NOTE: May still wish to use this if some legacy content proves to not have linked topics
+export const HASHTAG_FULL_REGEX = /^#([A-Za-z][\w_-]+)$/
 
 export function insaneOptions (providedInsaneOptions) {
   return merge(
@@ -97,10 +97,10 @@ export function processHTML (contentHTML, groupSlug) {
         el.innerHTML = `${el.textContent.slice(0, MAX_LINK_LENGTH)}…`
       }
 
-      const hyloLinksMatch = [...el.getAttribute('href').matchAll(HYLO_URL_REGEX)]
+      const hyloLinksMatch = el.getAttribute('href').matchAll(HYLO_URL_REGEX).next()
 
-      if (hyloLinksMatch[0] && hyloLinksMatch[0].length === 2) {
-        const relativeURLPath = hyloLinksMatch[0][1] === '' ? '/' : hyloLinksMatch[0][1]
+      if (hyloLinksMatch?.value && hyloLinksMatch?.value?.length === 2) {
+        const relativeURLPath = hyloLinksMatch.value[1] === '' ? '/' : hyloLinksMatch.value[1]
 
         el.setAttribute('target', '_self')
         el.setAttribute('href', relativeURLPath)
@@ -111,7 +111,7 @@ export function processHTML (contentHTML, groupSlug) {
   }, dom.querySelectorAll('a'))
 
   // Convert Mention and Topic `spans` to `anchors`
-  const spanToAnchor = forEach(el => {
+  const convertSpansToAnchors = forEach(el => {
     const anchorElement = dom.createElement('a')
     const href = el.className === 'mention'
       ? personUrl(el.getAttribute('data-id'), groupSlug)
@@ -127,11 +127,12 @@ export function processHTML (contentHTML, groupSlug) {
 
     el.parentNode.replaceChild(anchorElement, el)
   })
-  spanToAnchor(dom.querySelectorAll('span.topic'))
-  spanToAnchor(dom.querySelectorAll('span.mention'))
+  convertSpansToAnchors(dom.querySelectorAll(
+    'span.topic, span.mention'
+  ))
 
   // Normalize legacy Mention and Topic `anchors`
-  const convertLegacyLink = forEach(el => {
+  const convertLegacyAnchors = forEach(el => {
     let href
 
     if (el.getAttribute('data-entity-type') === 'mention') {
@@ -139,14 +140,15 @@ export function processHTML (contentHTML, groupSlug) {
       href = personUrl(el.getAttribute('data-user-id'), groupSlug)
     } else {
       el.className = 'topic'
-      href = topicUrl(el.getAttribute('data-id'), { groupSlug })
+      href = topicUrl(el.getAttribute('data-search') || el.textContent?.slice(1), { groupSlug })
     }
 
     el.setAttribute('href', href)
     el.setAttribute('target', '_self')
   })
-  convertLegacyLink(dom.querySelectorAll('a[data-entity-type="#mention"]'))
-  convertLegacyLink(dom.querySelectorAll('a[data-entity-type="mention"], a[data-user-id]'))
+  convertLegacyAnchors(dom.querySelectorAll(
+    'a[data-entity-type="#mention"], a[data-entity-type="mention"], a[data-user-id], a.hashtag'
+  ))
 
   return dom.querySelector('body').innerHTML
 }
@@ -155,6 +157,7 @@ export function presentHTML (html, options = {}, providedInsaneOptions = {}) {
   if (!html) return ''
 
   const { slug, truncate: truncateLength } = options
+
   let processedHTML = processHTML(html, slug)
 
   if (truncateLength) {

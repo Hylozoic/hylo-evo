@@ -1,14 +1,25 @@
 import * as TextHelpers from '../src/TextHelpers'
 import moment from 'moment-timezone'
 
+
+describe('processHTML', () => {
+  it('converts Hylo.com URLs to relative hrefs', () => {
+    const processResult = TextHelpers.processHTML(
+      '<a href="https://www.hylo.com/groups/exit-to-community" target="_blank">https://www.hylo.com/groups/exit-to-community</a>',
+    )
+    expect(processResult).toBe(
+      '<a href="/groups/exit-to-community" target="_self">https://www.hylo.com/groups/exit-to-community</a>'
+    )
+  })
+})
+
 describe('presentHTML', () => {
   it('truncates', () => {
     const presentResult = TextHelpers.presentHTML(
       '<p>Sadsadf <a href="#" data-entity-type="mention" data-user-id="26189">Matt Zeltzer Test</a> #test-topic  </p>\n',
       {
         slug: 'test',
-        truncate: 20,
-        noLinks: false
+        truncate: 20
       }
     )
     expect(presentResult).toBe(
@@ -18,8 +29,7 @@ describe('presentHTML', () => {
       '<p>Sadsadf <a href="https://google.com" target="_blank">GOOGLE</a></p>',
       {
         slug: 'test',
-        truncate: 100,
-        noLinks: false
+        truncate: 100
       }
     )
     expect(presentResultWithExtrenalLink).toBe(
