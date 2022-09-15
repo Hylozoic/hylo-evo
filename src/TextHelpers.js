@@ -115,7 +115,7 @@ export function processHTML (contentHTML, groupSlug) {
     const anchorElement = dom.createElement('a')
     const href = el.className === 'mention'
       ? personUrl(el.getAttribute('data-id'), groupSlug)
-      : topicUrl(el.getAttribute('data-id'), { groupSlug })
+      : topicUrl(el.getAttribute('data-label'), { groupSlug })
 
     for (const attr of el.attributes) {
       anchorElement.setAttribute(attr.name, attr.value)
