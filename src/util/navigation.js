@@ -1,7 +1,6 @@
 import { host } from 'config'
 import { get, isEmpty, isNumber, omitBy } from 'lodash/fp'
 import qs from 'querystring'
-import { matchPath } from 'react-router'
 
 export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HYLO_ID_MATCH
@@ -186,13 +185,6 @@ export function removePostFromUrl (url) {
 export function removeGroupFromUrl (url) {
   const matchForReplaceRegex = '/group/([^/]*)'
   return url.replace(new RegExp(matchForReplaceRegex), '')
-}
-
-export function getGroupSlugInPath (pathname) {
-  const match = matchPath(pathname, {
-    path: '/groups/:groupSlug'
-  })
-  return get('params.groupSlug', match)
 }
 
 export function gotoExternalUrl (url) {

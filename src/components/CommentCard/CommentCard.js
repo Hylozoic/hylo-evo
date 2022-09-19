@@ -16,11 +16,7 @@ export default function CommentCard ({
 }) {
   const { creator, post, slug, attachments } = comment
   const postTitle = TextHelpers.truncateText(post.title, 25)
-  const commentText = TextHelpers.presentHTML(comment.text, {
-    truncate: expanded ? null : 144,
-    slug,
-    noLinks: true
-  })
+  const commentText = expanded ? comment.text : TextHelpers.truncateHTML(comment.text, 144)
 
   return (
     <span onClick={() => showDetails(comment.post.id)} styleName='link'>

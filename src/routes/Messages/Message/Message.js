@@ -14,7 +14,7 @@ export default function Message ({ message, isHeader }) {
   //       which sends HTML to API or an HTML editor (HyloTipTapEditor) in both places
   const text = pending
     ? 'sending...'
-    : TextHelpers.presentHTML(TextHelpers.markdown(message.text), { noLinks: true })
+    : TextHelpers.markdown(message.text)
   const sName = cx('message', { messageHeader: isHeader })
 
   return (

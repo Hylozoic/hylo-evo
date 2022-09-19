@@ -1,23 +1,31 @@
 import React from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Link from '@tiptap/extension-link'
 import Highlight from '@tiptap/extension-highlight'
 import TopicMentions from './extensions/TopicMentions'
 import PeopleMentions from './extensions/PeopleMentions'
-import Iframe from './extensions/Iframe'
+import Legacy from './extensions/Legacy'
+import HyloLink from './extensions/HyloLink'
 
 export default function HyloTipTapRender ({ className, contentHTML }) {
   const editor = useEditor({
     content: contentHTML,
     editable: false,
     extensions: [
-      StarterKit,
-      PeopleMentions(),
-      TopicMentions(),
-      // These may not be needed for render
-      Link,
-      Iframe, // Embed (Video)
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3]
+        }
+      }),
+
+      HyloLink({ onAddLink: () => {} }),
+
+      PeopleMentions({ maxSuggestions: 0, groupIds: [], dispatch: () => {} }),
+
+      TopicMentions({ maxSuggestions: 0, groupIds: [], dispatch: () => {} }),
+
+      Legacy,
+
       Highlight
     ]
   }, [contentHTML])

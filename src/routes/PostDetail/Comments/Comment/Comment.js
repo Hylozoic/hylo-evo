@@ -68,7 +68,6 @@ export class Comment extends Component {
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
-    const presentedText = TextHelpers.presentHTML(text, { slug, noLinks: true })
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
@@ -108,7 +107,7 @@ export class Comment extends Component {
         )}
         {!editing && (
           <ClickCatcher groupSlug={slug}>
-            <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
+            <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: text }} />
           </ClickCatcher>
         )}
       </div>

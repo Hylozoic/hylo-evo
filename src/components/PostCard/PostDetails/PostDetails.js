@@ -38,11 +38,7 @@ export default function PostDetails ({
     }
   }, [linkPreview?.url])
 
-  const details = TextHelpers.presentHTML(providedDetails, {
-    slug,
-    truncate: !expanded && MAX_DETAILS_LENGTH,
-    noLinks: false
-  })
+  const details = expanded ? providedDetails : TextHelpers.truncateHTML(providedDetails, MAX_DETAILS_LENGTH)
   const postType = get('type', post)
   const typesWithCompletion = ['offer', 'request', 'resource', 'project']
   const canBeCompleted = typesWithCompletion.includes(postType)
@@ -56,7 +52,7 @@ export default function PostDetails ({
           <Feature url={linkPreview.url} />
         )}
         {details && !hideDetails && (
-          <PostDetailsContent details={details} slug={slug} />
+          <PostDetailsContent details={details} groupSlug={slug} />
         )}
         {canBeCompleted && canEdit && expanded && (
           <PostCompletion
@@ -79,9 +75,9 @@ export default function PostDetails ({
   )
 }
 
-export function PostDetailsContent ({ details, slug }) {
+export function PostDetailsContent ({ details, groupSlug }) {
   return (
-    <ClickCatcher groupSlug={slug}>
+    <ClickCatcher groupSlug={groupSlug}>
       <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
     </ClickCatcher>
   )
