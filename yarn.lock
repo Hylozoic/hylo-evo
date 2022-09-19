@@ -4114,6 +4114,11 @@ js-yaml@^4.1.0:
   dependencies:
     argparse "^2.0.1"
 
+jsdom-jscore@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/jsdom-jscore/-/jsdom-jscore-0.1.0.tgz#f08c5bf120cbf1f6db09d04984036575e9c577ac"
+  integrity sha512-brn2FaM1ezbuXLraykWUIVlDavnqb744XvjfPv/D6McksYrAqg79kNn5qDr0HnTsufr3S156jitFWHqIIBfB+Q==
+
 jsdom@^16.6.0:
   version "16.7.0"
   resolved "https://registry.npmjs.org/jsdom/-/jsdom-16.7.0.tgz"

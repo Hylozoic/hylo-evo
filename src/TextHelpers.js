@@ -8,7 +8,7 @@ import prettyDate from 'pretty-date'
 import moment from 'moment-timezone'
 import linkifyHTML from 'linkify-html'
 import { convert as convertHtmlToText } from 'html-to-text'
-import { personUrl, topicUrl } from './NavigationHelpers'
+import { topicPath, mentionPath } from './PathHelpers'
 
 // HTML and Text presentation related
 
@@ -75,20 +75,25 @@ export const truncateHTML = (html, truncateLength, providedInsaneOptions = {}) =
   return truncHTML(html, truncateLength, options).html
 }
 
-export function processHTML (contentHTML, groupSlug) {
-  const linkifiedContentHTML = linkifyHTML(contentHTML)
-  let dom
-
+export function getDom (contentHTML) {
   // Node
   if (typeof window === 'undefined') {
     const { JSDOM } = require('jsdom')
-    const jsdom = new JSDOM(linkifiedContentHTML)
-    dom = jsdom.window.document
+    const jsdom = new JSDOM(contentHTML)
+    return jsdom.window.document
+  // // React Native
+  // } else if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+  //   const DomParser = require('react-native-html-parser').DOMParser
+  //   return new DomParser().parseFromString(contentHTML,'text/html')
   // Browser
   } else {
     const parser = new window.DOMParser()
-    dom = parser.parseFromString(linkifiedContentHTML, 'text/html')
+    return parser.parseFromString(contentHTML, 'text/html')
   }
+}
+
+export function processHTML (contentHTML, groupSlug) {
+  const dom = getDom(linkifyHTML(contentHTML))
   
   // Make Hylo `anchors` relative links with `target='_self'`, otherwise `target=_blank`
   forEach(el => {
@@ -114,8 +119,8 @@ export function processHTML (contentHTML, groupSlug) {
   const convertSpansToAnchors = forEach(el => {
     const anchorElement = dom.createElement('a')
     const href = el.className === 'mention'
-      ? personUrl(el.getAttribute('data-id'), groupSlug)
-      : topicUrl(el.getAttribute('data-label'), { groupSlug })
+      ? mentionPath(el.getAttribute('data-id'), groupSlug)
+      : topicPath(el.getAttribute('data-label'), groupSlug)
 
     for (const attr of el.attributes) {
       anchorElement.setAttribute(attr.name, attr.value)
@@ -137,10 +142,10 @@ export function processHTML (contentHTML, groupSlug) {
 
     if (el.getAttribute('data-entity-type') === 'mention') {
       el.className = 'mention'
-      href = personUrl(el.getAttribute('data-user-id'), groupSlug)
+      href = mentionPath(el.getAttribute('data-user-id'), groupSlug)
     } else {
       el.className = 'topic'
-      href = topicUrl(el.getAttribute('data-search') || el.textContent?.slice(1), { groupSlug })
+      href = topicPath(el.getAttribute('data-search') || el.textContent?.slice(1), { groupSlug })
     }
 
     el.setAttribute('href', href)
@@ -151,20 +156,6 @@ export function processHTML (contentHTML, groupSlug) {
   ))
 
   return dom.querySelector('body').innerHTML
-}
-
-export function presentHTML (html, options = {}, providedInsaneOptions = {}) {
-  if (!html) return ''
-
-  const { slug, truncate: truncateLength } = options
-
-  let processedHTML = processHTML(html, slug)
-
-  if (truncateLength) {
-    processedHTML = truncateHTML(processedHTML, truncateLength, providedInsaneOptions)
-  }
-
-  return processedHTML
 }
 
 export function presentHTMLToText (html, options = {}) {
