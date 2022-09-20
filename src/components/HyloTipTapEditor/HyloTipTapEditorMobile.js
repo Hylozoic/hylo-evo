@@ -71,7 +71,9 @@ export default function HyloTipTapEditorMobile () {
   }
 
   useEffect(() => {
-    window.addEventListener('message', handleMessage)
+    // Note: Final `true` parameter is essential for this call
+    // to work in both iOS and Android.
+    window.addEventListener('message', handleMessage, true)
 
     return () => window.removeEventListener('message')
   }, [])
