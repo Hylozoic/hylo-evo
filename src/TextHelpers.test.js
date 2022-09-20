@@ -1,30 +1,9 @@
 import * as TextHelpers from '../src/TextHelpers'
 import moment from 'moment-timezone'
 
-describe('processHTML', () => {
-  it('converts Hylo.com URLs to relative hrefs', () => {
-    const processResult = TextHelpers.processHTML(
-      '<a href="https://www.hylo.com/groups/exit-to-community" target="_blank">https://www.hylo.com/groups/exit-to-community</a>',
-    )
-    expect(processResult).toBe(
-      '<a href="/groups/exit-to-community" target="_self">https://www.hylo.com/groups/exit-to-community</a>'
-    )
-  })
-})
-
 describe('presentHTMLToText', () => {
   it("shouldn't include text of href on links", () => {
     expect(TextHelpers.presentHTMLToText("<a href='/any/url'>Text</a> more text")).toBe('Text more text')
-  })
-})
-
-describe('truncateHTML', () => {
-  it('has an ellipses after truncation', () => {
-    expect(TextHelpers.truncateHTML('<a href="">test</a> test test', 5)).toBe('<a href="">test</a> …')
-  })
-
-  it('does not have an ellipses if there was no truncation', () => {
-    expect(TextHelpers.truncateHTML('<a href="">test</a> test test', 100)).toBe('<a href="">test</a> test test')
   })
 })
 
@@ -41,34 +20,6 @@ describe('truncateText', () => {
 describe('textLengthHTML', () => {
   it('should return lenght of plain text version of the html', () => {
     expect(TextHelpers.textLengthHTML('<strong>test</strong> <a href="">a link</a>')).toBe(11)
-  })
-})
-
-describe('sanitizeHTML', () => {
-  it('returns empty string if called without text', () => {
-    expect(TextHelpers.sanitizeHTML()).toBe('')
-  })
-
-  it('allows whitelist to be undefined', () => {
-    expect(TextHelpers.sanitizeHTML('foo')).toBe('foo')
-  })
-
-  it('strips leading whitespace in paragraphs', () => {
-    expect(TextHelpers.sanitizeHTML('<p>&nbsp;</p>')).toBe('<p></p>')
-  })
-
-  it('removes tags not on a whitelist', () => {
-    const expected = 'Wombats are great.<div>They poop square.</div>'
-    const unsafe = 'Wombats are great.<em>So great.</em><div>They poop square.</div>'
-    const actual = TextHelpers.sanitizeHTML(unsafe, { allowedTags: ['div'] })
-    expect(actual).toBe(expected)
-  })
-
-  it('removes attributes not on a whitelist', () => {
-    const expected = '<p id="wombat-data">Wombats are great.</p>'
-    const unsafe = '<p id="wombat-data" class="main-wombat">Wombats are great.</p>'
-    const actual = TextHelpers.sanitizeHTML(unsafe, { allowTags: ['p'], allowedAttributes: { p: ['id'] } })
-    expect(actual).toBe(expected)
   })
 })
 
