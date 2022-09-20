@@ -5,6 +5,7 @@ import { find, get, sortBy, isFunction } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
+import EmojiPicker from 'components/EmojiPicker'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
 
@@ -37,11 +38,12 @@ export default class PostFooter extends React.PureComponent {
     return (
       <div styleName={cx('footer', { constrained })}>
         <PeopleInfo people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
-        { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
+        {/* { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
           data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
           <Icon name='ArrowUp' styleName='arrowIcon' />
           {votesTotal}
-        </a> : '' }
+        </a> : '' } */}
+        { currentUser ? <EmojiPicker /> : '' }
         <Tooltip
           delay={550}
           id={tooltipId}
