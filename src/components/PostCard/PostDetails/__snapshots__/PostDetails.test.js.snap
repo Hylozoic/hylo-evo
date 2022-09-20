@@ -14,7 +14,7 @@ exports[`matches last snapshot 1`] = `
     />
     <PostDetailsContent
       details="the details"
-      slug="foomunity"
+      groupSlug="foomunity"
     />
     <LinkPreview
       imageUrl="foo.png"

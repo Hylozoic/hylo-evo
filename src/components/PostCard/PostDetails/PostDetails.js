@@ -83,11 +83,11 @@ export function PostDetailsContent ({ details, groupSlug }) {
   )
 }
 
-export function PostDetailsContentTipTap ({ details, slug }) {
+export function PostDetailsContentTipTap ({ details, groupSlug }) {
   if (!details || details.length < 20) return null
 
   return (
-    <ClickCatcher groupSlug={slug}>
+    <ClickCatcher groupSlug={groupSlug}>
       <HyloTipTapRender styleName='details' contentHTML={details} />
     </ClickCatcher>
   )
