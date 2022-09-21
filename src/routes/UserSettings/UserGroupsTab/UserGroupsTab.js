@@ -126,15 +126,14 @@ export default class UserGroupsTab extends Component {
     const { affiliations } = this.state
     this.props.createAffiliation({ role, preposition, orgName, url })
       .then(res => {
-        let errorMessage, successMessage
-        if (res.error) errorMessage = get(res, 'payload.message', 'Error adding your affiliation.')
+        let successMessage
         const affiliation = get(res, 'payload.data.createAffiliation')
         if (affiliation) {
           successMessage = 'Your affiliation was added'
           affiliations.items.push(affiliation)
         }
-        return this.setState({ affiliations, errorMessage, successMessage, showAddAffiliations: !!errorMessage })
-      })
+        return this.setState({ affiliations, successMessage, errorMessage: '', showAddAffiliations: false })
+      }).catch((e) => this.setState({ errorMessage: e.message, showAddAffiliations: true }))
   }
 
   resetMessage = () => {
