@@ -65,6 +65,10 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
                   "label": "Offensive",
                 },
                 Object {
+                  "id": "abusive",
+                  "label": "Abusive",
+                },
+                Object {
                   "id": "illegal",
                   "label": "Illegal",
                 },
@@ -118,6 +122,12 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
                   value="offensive"
                 >
                   Offensive
+                </option>
+                <option
+                  key="abusive"
+                  value="abusive"
+                >
+                  Abusive
                 </option>
                 <option
                   key="illegal"
@@ -225,6 +235,10 @@ exports[`FlagContent changes title based on type 1`] = `
                 "label": "Offensive",
               },
               Object {
+                "id": "abusive",
+                "label": "Abusive",
+              },
+              Object {
                 "id": "illegal",
                 "label": "Illegal",
               },
@@ -302,6 +316,10 @@ exports[`FlagContent matches the last snapshot 1`] = `
               Object {
                 "id": "offensive",
                 "label": "Offensive",
+              },
+              Object {
+                "id": "abusive",
+                "label": "Abusive",
               },
               Object {
                 "id": "illegal",
