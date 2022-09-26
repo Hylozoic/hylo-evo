@@ -104,7 +104,7 @@ export default class PostDetail extends Component {
     const {
       routeParams,
       post,
-      voteOnPost,
+      reactOnPost,
       isProjectMember,
       joinProject,
       leaveProject,
@@ -160,7 +160,7 @@ export default class PostDetail extends Component {
     const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
     const postFooter = <PostFooter
       {...post}
-      voteOnPost={voteOnPost}
+      reactOnPost={reactOnPost}
       currentUser={currentUser}
     />
 

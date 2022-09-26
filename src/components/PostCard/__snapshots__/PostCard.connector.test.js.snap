@@ -5,6 +5,6 @@ Object {
   "editPost": [Function],
   "respondToEvent": [Function],
   "showDetails": [Function],
-  "voteOnPost": [Function],
+  "reactOnPost": [Function],
 }
 `;

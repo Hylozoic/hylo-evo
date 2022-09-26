@@ -228,7 +228,7 @@ exports[`renders as expected 1`] = `
     title="We put this together as a PDF for hand-out at your next event or university class"
     type="offer"
     updatedAt="2014-01-17T00:00:00.000Z"
-    voteOnPost={[Function]}
+    reactOnPost={[Function]}
     votesTotal={11519}
   />
 </div>

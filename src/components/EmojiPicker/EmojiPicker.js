@@ -14,6 +14,10 @@ export default function EmojiPicker (props) {
   const [modalOpen, setModalOpen] = useState(false)
   const [modalY, setModalY] = useState()
   const [modalX, setModalX] = useState()
+  const handleClick = (data) => {
+    props.onClick(data)
+    setModalOpen(!modalOpen)
+  }
   const toggleModalOpen = (evt) => {
     let yAdjustment = 0
     let xAdjustment = 0
@@ -37,7 +41,7 @@ export default function EmojiPicker (props) {
       </div>
       {modalOpen &&
         <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
-          <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} />
+          <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} onClick={handleClick} />
         </div>}
     </div>
   )

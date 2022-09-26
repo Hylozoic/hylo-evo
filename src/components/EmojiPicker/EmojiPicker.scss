@@ -1,6 +1,5 @@
 .emoji-picker-container {
   width: 50px;
-  margin-left: auto;
   display: flex;
   align-items: center;
 }
@@ -26,8 +25,4 @@
   border: 1px solid black;
   padding: 5px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-
-  // &.open {
-  //   display: block;
-  // }
 }

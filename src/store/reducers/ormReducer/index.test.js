@@ -11,7 +11,7 @@ import {
   TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_COMMENT_PENDING,
   UPDATE_POST_PENDING,
-  VOTE_ON_POST_PENDING
+  REACT_ON_POST_PENDING
 } from 'store/constants'
 import {
   DELETE_POST_PENDING,
@@ -103,7 +103,7 @@ it('ignores an action with meta.extractModel that is a promise', () => {
   expect(newState).toEqual(state)
 })
 
-describe('on VOTE_ON_POST_PENDING', () => {
+describe('on REACT_ON_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
 
   session.Post.create({ id: '1', votesTotal: 7, myVote: false })
@@ -112,7 +112,7 @@ describe('on VOTE_ON_POST_PENDING', () => {
   const state = session.state
 
   const action = {
-    type: VOTE_ON_POST_PENDING
+    type: REACT_ON_POST_PENDING
   }
 
   describe('when myVote is false', () => {

@@ -6,6 +6,7 @@ import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import EmojiPicker from 'components/EmojiPicker'
+import EmojiPill from 'components/EmojiPill'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
 
@@ -15,9 +16,9 @@ export default class PostFooter extends React.PureComponent {
     commenters: PropTypes.array,
     commentersTotal: PropTypes.number,
     constrained: PropTypes.bool,
-    votesTotal: PropTypes.number,
-    myVote: PropTypes.bool,
-    voteOnPost: PropTypes.func.isRequired,
+    myReactions: PropTypes.array,
+    postReactions: PropTypes.array,
+    reactOnPost: PropTypes.func.isRequired,
     onClick: PropTypes.func
   }
 
@@ -27,23 +28,44 @@ export default class PostFooter extends React.PureComponent {
       commenters,
       commentersTotal,
       constrained,
-      myVote,
+      // myVote,
       postId,
-      votesTotal
+      // votesTotal
+      postReactions,
+      myReactions
     } = this.props
-    const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
-
+    // const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
+    // const react = isFunction(this.props.reactOnPost) ? (emojiFull) => this.props.reactOnPost(emojiFull) : undefined
+    const handleReaction = (emojiFull) => this.props.reactOnPost(emojiFull)
     const tooltipId = 'postfooter-tt-' + postId
+    const myEmojis = myReactions.map((reaction) => reaction.emojiFull)
+    const usersReactions = postReactions.reduce((accum, postReaction) => {
+      if (accum[postReaction.emojiFull]) {
+        const { userList } = accum[postReaction.emojiFull]
+        accum[postReaction.emojiFull] = { emojiFull: postReaction.emojiFull, userList: [...userList, postReaction.user.name] }
+      } else {
+        accum[postReaction.emojiFull] = { emojiFull: postReaction.emojiFull, userList: [postReaction.user.name] }
+      }
+
+      if (myEmojis.includes(postReaction.emojiFull)) accum[postReaction.emojiFull] = { ...accum[postReaction.emojiFull], loggedInUser: true }
+
+      return accum
+    }, {})
 
     return (
       <div styleName={cx('footer', { constrained })}>
         <PeopleInfo people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
-        {/* { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
-          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
-          <Icon name='ArrowUp' styleName='arrowIcon' />
-          {votesTotal}
-        </a> : '' } */}
-        { currentUser ? <EmojiPicker /> : '' }
+        {postReactions && <div styleName={cx('footer-reactions', { constrained })}>
+          {Object.values(usersReactions).map(reaction => (
+            <EmojiPill
+              onClick={handleReaction}
+              key={reaction.emojiFull}
+              emojiFull={reaction.emojiFull}
+              count={reaction.userList.length}
+            />
+          ))}
+          {currentUser ? <EmojiPicker onClick={handleReaction} /> : ''}
+        </div>}
         <Tooltip
           delay={550}
           id={tooltipId}

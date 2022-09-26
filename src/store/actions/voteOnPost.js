@@ -1,21 +1,22 @@
-import { VOTE_ON_POST } from 'store/constants'
+import { REACT_ON_POST } from 'store/constants'
 import { AnalyticsEvents } from 'hylo-shared'
 
-export default function voteOnPost (postId, isUpvote) {
+export default function reactOnPost (postId, data) {
+
+  console.log(postId, data)
   return {
-    type: VOTE_ON_POST,
+    type: REACT_ON_POST,
     graphql: {
-      query: `mutation($postId: ID, $isUpvote: Boolean) {
-        vote(postId: $postId, isUpvote: $isUpvote) {
+      query: `mutation($entityId: ID, $data: ReactionInput) {
+        vote(entityId: $entityId, data: $data) {
           id
-          votesTotal
         }
       }`,
-      variables: { postId, isUpvote }
+      variables: { entityId: postId, data }
     },
     meta: {
       postId,
-      isUpvote,
+      data,
       optimistic: true,
       analytics: AnalyticsEvents.VOTED_ON_POST
     }

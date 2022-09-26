@@ -17,7 +17,7 @@ const commenters = [
 describe('PostFooter', () => {
   it('matches the latest snapshot', () => {
     const wrapper = shallow(<PostFooter
-      voteOnPost={() => {}}
+      reactOnPost={() => {}}
       commenters={commenters}
       commentersTotal={4}
       currentUser={commenters[1]}
@@ -28,7 +28,7 @@ describe('PostFooter', () => {
 
   it('enables tooltip when myvote is false', () => {
     const wrapper = shallow(<PostFooter
-      voteOnPost={() => {}}
+      reactOnPost={() => {}}
       commenters={commenters}
       commentersTotal={4}
       currentUser={commenters[1]}
@@ -44,7 +44,7 @@ describe('PostFooter', () => {
       avatarUrl: ''
     }]
     const wrapper = shallow(<PostFooter
-      voteOnPost={() => {}}
+      reactOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
       currentUser={commenters[1]}
@@ -63,7 +63,7 @@ describe('PostFooter', () => {
     //   }
     // ]
     const wrapper = shallow(<PostFooter
-      voteOnPost={() => {}}
+      reactOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
       currentUser={null}

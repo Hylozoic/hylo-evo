@@ -18,7 +18,7 @@ const PostListRow = (props) => {
     routeParams,
     post,
     showDetails,
-    voteOnPost,
+    reactOnPost,
     expanded
   } = props
   const {
@@ -45,8 +45,8 @@ const PostListRow = (props) => {
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
       <div styleName='votes'>
         <a
-          onClick={(e) => {
-            voteOnPost(e)
+          onClick={(e) => { // is this passing in the right thing?
+            reactOnPost(e)
             stopEvent(e)
           }}
           styleName={cx('vote-button', { voted: myVote })}

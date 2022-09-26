@@ -9,7 +9,7 @@ Object {
   "onClose": [Function],
   "processStripeToken": [Function],
   "respondToEvent": [Function],
-  "voteOnPost": [Function],
+  "reactOnPost": [Function],
 }
 `;
 

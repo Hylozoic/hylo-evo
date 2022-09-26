@@ -19,7 +19,7 @@ export default class PostCard extends React.Component {
     post: PropTypes.shape(POST_PROP_TYPES),
     editPost: PropTypes.func,
     showDetails: PropTypes.func,
-    voteOnPost: PropTypes.func,
+    reactOnPost: PropTypes.func,
     highlightProps: PropTypes.object,
     expanded: PropTypes.bool,
     constrained: PropTypes.bool,
@@ -48,7 +48,7 @@ export default class PostCard extends React.Component {
       routeParams,
       post,
       editPost,
-      voteOnPost,
+      reactOnPost,
       highlightProps,
       expanded,
       constrained,
@@ -110,7 +110,7 @@ export default class PostCard extends React.Component {
 
         <PostFooter
           {...post}
-          voteOnPost={voteOnPost}
+          reactOnPost={reactOnPost}
           constrained={constrained}
           currentUser={currentUser}
           postId={post.id}

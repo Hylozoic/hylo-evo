@@ -28,7 +28,7 @@ describe('PostDetail', () => {
       post={post}
       routeParams={routeParams}
       fetchPost={jest.fn()}
-      voteOnPost={jest.fn()} />)
+      reactOnPost={jest.fn()} />)
     expect(wrapper).toMatchSnapshot()
   })
 })

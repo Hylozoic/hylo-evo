@@ -33,7 +33,7 @@ import {
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
   USE_INVITATION,
-  VOTE_ON_POST_PENDING
+  REACT_ON_POST_PENDING
 } from 'store/constants'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -530,8 +530,8 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
-    case VOTE_ON_POST_PENDING: {
-      post = session.Post.withId(meta.postId)
+    case REACT_ON_POST_PENDING: {
+      post = session.Post.withId(meta.postId) // TODO: more stuff here
       if (post.myVote) {
         !meta.isUpvote && post.update({ myVote: false, votesTotal: (post.votesTotal || 1) - 1 })
       } else {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { postUrl, editPostUrl } from 'util/navigation'
-import voteOnPost from 'store/actions/voteOnPost'
+import reactOnPost from 'store/actions/reactOnPost'
 import respondToEvent from 'store/actions/respondToEvent'
 import getMe from 'store/selectors/getMe'
 
@@ -19,7 +19,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     showDetails: () => dispatch(push(postUrl(post.id, routeParams, { ...locationParams, ...querystringParams }))),
     editPost: () => dispatch(push(editPostUrl(post.id, routeParams, querystringParams))),
-    voteOnPost: () => dispatch(voteOnPost(post.id, !post.myVote)),
+    reactOnPost: emojiFull => dispatch(reactOnPost(post.id, emojiFull)),
     respondToEvent: response => dispatch(respondToEvent(post.id, response))
   }
 }
