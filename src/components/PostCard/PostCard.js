@@ -110,6 +110,7 @@ export default class PostCard extends React.Component {
 
         <PostFooter
           {...post}
+          onClick={this.onClick}
           voteOnPost={voteOnPost}
           constrained={constrained}
           currentUser={currentUser}

@@ -27,6 +27,7 @@ export default class PostFooter extends React.PureComponent {
       commentersTotal,
       constrained,
       myVote,
+      onClick,
       postId,
       votesTotal
     } = this.props
@@ -36,7 +37,7 @@ export default class PostFooter extends React.PureComponent {
 
     return (
       <div styleName={cx('footer', { constrained })}>
-        <PeopleInfo people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
+        <PeopleInfo onClick={onClick} people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
         { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
           data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
           <Icon name='ArrowUp' styleName='arrowIcon' />
