@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -22,22 +22,30 @@ const postTypeOptions = [
 ]
 
 const makeDropdown = (selected, options, onChange) => (
-  <Dropdown styleName='dropdown'
-    toggleChildren={<span styleName='dropdown-label'>
-      <Icon name='ArrowDown' />
-      {options.find(o => o.id === selected).label}
-    </span>}
+  <Dropdown
+    styleName='dropdown'
+    toggleChildren={
+      <span styleName='dropdown-label'>
+        <Icon name='ArrowDown' />
+        {options.find(o => o.id === selected).label}
+      </span>
+      }
     items={options.map(({ id, label }) => ({
       label,
       onClick: () => onChange(id)
-    }))} />
+    }))}
+  />
 )
 
 const StreamViewControls = (props) => {
   const { sortBy, postTypeFilter, viewMode, changeSort, changeTab, changeView } = props
-
+  const [searchActive, setSearchActive] = useState(false)
+  const handleSearchToggle = () => setSearchActive(!searchActive)
   return (
     <div styleName='stream-view-ctrls'>
+      <div styleName={cx('search-toggle', { active: searchActive })} onClick={handleSearchToggle}>
+        <Icon name='Search' styleName={cx('search-icon', { active: searchActive })} />
+      </div>
       <div styleName='view-mode'>
 
         <div

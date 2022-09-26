@@ -37,6 +37,7 @@
   background: $color-white;
   box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
   border-radius: 5px;
+  margin-right: 12px;
 
   .grid-view-icon {
     font-size: 19px;
@@ -87,6 +88,31 @@
   span::before {
     color: $color-white;
   }
+}
+
+.search-toggle {
+  float: right;
+  background: $color-white;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
+  border-radius: 5px;
+  height: 31px;
+  cursor: pointer;
+
+  .search-icon {
+    font-size: 26px;
+    position: relative;
+    top: 3px;
+    padding: 1px;
+  }
+
+  .active {
+    color: $color-white;
+  }
+}
+
+.active {
+  background: $color-picton-blue;
+  color: $color-white;
 }
 
 @media screen and (max-width: 425px) {
