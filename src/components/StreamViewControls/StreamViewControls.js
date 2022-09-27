@@ -38,7 +38,7 @@ const makeDropdown = (selected, options, onChange) => (
 )
 
 const StreamViewControls = (props) => {
-  const { sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue } = props
+  const { sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
   const handleSearchToggle = () => {
@@ -84,8 +84,8 @@ const StreamViewControls = (props) => {
             <Icon name='SmallGridView' styleName='grid-view-icon' />
           </div>
         </div>
-        { makeDropdown(sortBy, sortOptions, changeSort) }
-        { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
+        {makeDropdown(sortBy, sortOptions, changeSort)}
+        {!['projects'].includes(view) && makeDropdown(postTypeFilter, postTypeOptions, changeTab)}
         <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>
       {searchActive && !searchValue &&

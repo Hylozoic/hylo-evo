@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Dropdown from 'components/Dropdown'
-import FeedBanner from 'components/FeedBanner'
+import StreamBanner from 'components/StreamBanner'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
@@ -65,7 +65,7 @@ export default class Events extends Component {
     if (membershipsPending) return <Loading />
 
     return <div>
-      <FeedBanner
+      <StreamBanner
         group={group}
         currentUser={currentUser}
         type='event'

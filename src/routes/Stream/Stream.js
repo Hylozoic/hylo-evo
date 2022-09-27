@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import FeedBanner from 'components/FeedBanner'
+import StreamBanner from 'components/StreamBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostListRow from 'components/PostListRow'
@@ -88,6 +88,7 @@ export default class Stream extends Component {
       search,
       selectedPostId,
       sortBy,
+      view,
       viewIcon,
       viewName,
       viewMode
@@ -98,7 +99,7 @@ export default class Stream extends Component {
 
     return (
       <>
-        <FeedBanner
+        <StreamBanner
           customPostTypes={customPostTypes}
           customActivePostsOnly={customActivePostsOnly}
           customViewTopics={customViewTopics}
@@ -115,7 +116,7 @@ export default class Stream extends Component {
           label={viewName}
         />
         <ViewControls
-          routeParams={routeParams}
+          routeParams={routeParams} view={view}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
         />
