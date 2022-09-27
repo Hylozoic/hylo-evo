@@ -114,13 +114,11 @@ export default class Stream extends Component {
           icon={viewIcon}
           label={viewName}
         />
-        {!isCustomView &&
-          <ViewControls
-            routeParams={routeParams}
-            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
-            changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
-          />
-        }
+        <ViewControls
+          routeParams={routeParams}
+          postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
+          changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
+        />
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
