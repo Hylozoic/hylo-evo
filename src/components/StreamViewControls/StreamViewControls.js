@@ -29,7 +29,7 @@ const makeDropdown = (selected, options, onChange) => (
         <Icon name='ArrowDown' />
         {options.find(o => o.id === selected).label}
       </span>
-      }
+    }
     items={options.map(({ id, label }) => ({
       label,
       onClick: () => onChange(id)
@@ -38,51 +38,82 @@ const makeDropdown = (selected, options, onChange) => (
 )
 
 const StreamViewControls = (props) => {
-  const { sortBy, postTypeFilter, viewMode, changeSort, changeTab, changeView } = props
-  const [searchActive, setSearchActive] = useState(false)
-  const handleSearchToggle = () => setSearchActive(!searchActive)
+  const { sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue } = props
+  const [searchActive, setSearchActive] = useState(!!searchValue)
+  const [searchState, setSearchState] = useState('')
+  const handleSearchToggle = () => {
+    changeSearch('')
+    setSearchActive(!searchActive)
+  }
   return (
-    <div styleName='stream-view-ctrls'>
-      <div styleName={cx('search-toggle', { active: searchActive })} onClick={handleSearchToggle}>
-        <Icon name='Search' styleName={cx('search-icon', { active: searchActive })} />
+    <div styleName={cx('stream-view-container', { 'search-active': searchActive })}>
+      <div styleName='stream-view-ctrls'>
+        <div styleName={cx('search-toggle', { active: searchActive })} onClick={handleSearchToggle}>
+          <Icon name='Search' styleName={cx('search-icon', { active: searchActive })} />
+        </div>
+        <div styleName='view-mode'>
+          <div
+            styleName={cx({ 'mode-active': viewMode === 'cards' })}
+            onClick={() => changeView('cards')}
+            data-tip='Card view' data-for='stream-viewmode-tip'
+          >
+            <Icon name='CardView' />
+          </div>
+
+          <div
+            styleName={cx({ 'mode-active': viewMode === 'list' })}
+            onClick={() => changeView('list')}
+            data-tip='List view' data-for='stream-viewmode-tip'
+          >
+            <Icon name='ListView' />
+          </div>
+
+          <div
+            styleName={cx({ 'mode-active': viewMode === 'bigGrid' })}
+            onClick={() => changeView('bigGrid')}
+            data-tip='Large Grid' data-for='stream-viewmode-tip'
+          >
+            <Icon name='GridView' styleName='grid-view-icon' />
+          </div>
+
+          <div
+            styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
+            onClick={() => changeView('grid')}
+            data-tip='Small Grid' data-for='stream-viewmode-tip'
+          >
+            <Icon name='SmallGridView' styleName='grid-view-icon' />
+          </div>
+        </div>
+        { makeDropdown(sortBy, sortOptions, changeSort) }
+        { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
+        <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>
-      <div styleName='view-mode'>
-
+      {searchActive && !searchValue &&
+        <div>
+          <input
+            autoFocus
+            styleName='search-box'
+            type='text'
+            onChange={e => setSearchState(e.target.value)}
+            onKeyUp={e => {
+              if (e.keyCode === 13) {
+                setSearchState('')
+                changeSearch(e.target.value)
+                e.target.blur()
+              }
+            }}
+            placeholder='Search posts'
+            value={searchState}
+          />
+        </div>}
+      {searchValue &&
         <div
-          styleName={cx({ 'mode-active': viewMode === 'cards' })}
-          onClick={() => changeView('cards')}
-          data-tip='Card view' data-for='stream-viewmode-tip'
+          styleName='search-value'
+          onClick={() => changeSearch('')}
         >
-          <Icon name='CardView' />
-        </div>
-
-        <div
-          styleName={cx({ 'mode-active': viewMode === 'list' })}
-          onClick={() => changeView('list')}
-          data-tip='List view' data-for='stream-viewmode-tip'
-        >
-          <Icon name='ListView' />
-        </div>
-
-        <div
-          styleName={cx({ 'mode-active': viewMode === 'bigGrid' })}
-          onClick={() => changeView('bigGrid')}
-          data-tip='Large Grid' data-for='stream-viewmode-tip'
-        >
-          <Icon name='GridView' styleName='grid-view-icon' />
-        </div>
-
-        <div
-          styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
-          onClick={() => changeView('grid')}
-          data-tip='Small Grid' data-for='stream-viewmode-tip'
-        >
-          <Icon name='SmallGridView' styleName='grid-view-icon' />
-        </div>
-      </div>
-      { makeDropdown(sortBy, sortOptions, changeSort) }
-      { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
-      <Tooltip id='stream-viewmode-tip' position='bottom' />
+          &quot;{searchValue}&quot;
+          <Icon name='Ex' styleName='text-ex' />
+        </div>}
     </div>
   )
 }
