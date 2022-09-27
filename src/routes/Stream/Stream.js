@@ -116,7 +116,7 @@ export default class Stream extends Component {
           label={viewName}
         />
         <ViewControls
-          routeParams={routeParams} view={view}
+          routeParams={routeParams} view={view} customPostTypes={customPostTypes}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
         />
