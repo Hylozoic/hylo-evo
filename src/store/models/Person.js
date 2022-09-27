@@ -40,8 +40,7 @@ Person.fields = {
     through: 'PersonSkillsToLearn',
     throughFields: [ 'person', 'skillToLearn' ]
   }),
-  postsTotal: attr(),
-  votesTotal: attr()
+  postsTotal: attr()
 }
 
 export const PERSON_PROP_TYPES = {

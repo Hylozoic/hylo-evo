@@ -33,7 +33,8 @@ export default class Stream extends Component {
     fetchPosts: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     changeSort: PropTypes.func.isRequired,
-    changeView: PropTypes.func.isRequired
+    changeView: PropTypes.func.isRequired,
+    changeSearch: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -49,6 +50,7 @@ export default class Stream extends Component {
       hasChanged('sortBy') ||
       hasChanged('context') ||
       hasChanged('group.id') ||
+      hasChanged('search') ||
       hasChanged('customViewId') ||
       hasChanged('view')) {
       this.fetchPosts(0)
@@ -66,6 +68,7 @@ export default class Stream extends Component {
   render () {
     const {
       customActivePostsOnly,
+      changeSearch,
       changeSort,
       changeTab,
       changeView,
@@ -82,6 +85,7 @@ export default class Stream extends Component {
       pending,
       querystringParams,
       respondToEvent,
+      search,
       selectedPostId,
       sortBy,
       viewIcon,
@@ -113,8 +117,8 @@ export default class Stream extends Component {
         {!isCustomView &&
           <ViewControls
             routeParams={routeParams}
-            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
-            changeTab={changeTab} changeSort={changeSort} changeView={changeView}
+            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
+            changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
           />
         }
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
@@ -129,6 +133,7 @@ export default class Stream extends Component {
                 post={post}
                 key={post.id}
                 respondToEvent={respondToEvent}
+                querystringParams={querystringParams}
               />
             )
           })}
