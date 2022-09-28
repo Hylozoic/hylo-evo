@@ -48,14 +48,15 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const defaultSortBy = get('settings.streamSortBy', currentUser) || 'updated'
-  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards' // TODO: add soemthing here to change default for projects
+  const projectsDefault = view === 'projects' ? 'bigGrid' : null
+  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
   const search = getQuerystringParam('search', state, props)
   const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
+  const viewMode = customViewMode || getQuerystringParam('v', state, props) || projectsDefault || defaultViewMode
 
   const fetchPostsParam = {
     activePostsOnly,

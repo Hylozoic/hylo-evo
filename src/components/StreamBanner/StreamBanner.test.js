@@ -1,5 +1,5 @@
 import React from 'react'
-import FeedBanner, { postPromptString } from './FeedBanner'
+import StreamBanner, { postPromptString } from './StreamBanner'
 import { mount } from 'enzyme'
 
 const currentUser = {
@@ -18,7 +18,7 @@ const group = {
 }
 
 it('renders with a group', () => {
-  const node = mount(<FeedBanner
+  const node = mount(<StreamBanner
     group={group}
     isTesting
   />)
@@ -26,7 +26,7 @@ it('renders with a group', () => {
 })
 
 it('renders for all groups', () => {
-  const node = mount(<FeedBanner
+  const node = mount(<StreamBanner
     all
     currentUser={currentUser}
     currentUserHasMemberships
@@ -35,7 +35,7 @@ it('renders for all groups', () => {
 })
 
 it('matches the snapshot for an orphan user', () => {
-  const node = mount(<FeedBanner
+  const node = mount(<StreamBanner
     all
     currentUser={currentUser}
     currentUserHasMemberships={false}
