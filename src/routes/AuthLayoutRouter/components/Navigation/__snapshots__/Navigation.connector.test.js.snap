@@ -5,7 +5,7 @@ Object {
   "badge": 1,
   "bar": 2,
   "clearBadge": [Function],
-  "clearFeedList": undefined,
+  "clearStream": undefined,
   "dropPostResultsMaker": [MockFunction] {
     "calls": Array [
       Array [
