@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import FeedBanner from 'components/FeedBanner'
+import StreamBanner from 'components/StreamBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostListRow from 'components/PostListRow'
@@ -33,7 +33,8 @@ export default class Stream extends Component {
     fetchPosts: PropTypes.func.isRequired,
     changeTab: PropTypes.func.isRequired,
     changeSort: PropTypes.func.isRequired,
-    changeView: PropTypes.func.isRequired
+    changeView: PropTypes.func.isRequired,
+    changeSearch: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -49,6 +50,7 @@ export default class Stream extends Component {
       hasChanged('sortBy') ||
       hasChanged('context') ||
       hasChanged('group.id') ||
+      hasChanged('search') ||
       hasChanged('customViewId') ||
       hasChanged('view')) {
       this.fetchPosts(0)
@@ -66,6 +68,7 @@ export default class Stream extends Component {
   render () {
     const {
       customActivePostsOnly,
+      changeSearch,
       changeSort,
       changeTab,
       changeView,
@@ -82,8 +85,10 @@ export default class Stream extends Component {
       pending,
       querystringParams,
       respondToEvent,
+      search,
       selectedPostId,
       sortBy,
+      view,
       viewIcon,
       viewName,
       viewMode
@@ -94,7 +99,7 @@ export default class Stream extends Component {
 
     return (
       <>
-        <FeedBanner
+        <StreamBanner
           customPostTypes={customPostTypes}
           customActivePostsOnly={customActivePostsOnly}
           customViewTopics={customViewTopics}
@@ -110,13 +115,11 @@ export default class Stream extends Component {
           icon={viewIcon}
           label={viewName}
         />
-        {!isCustomView &&
-          <ViewControls
-            routeParams={routeParams}
-            postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode}
-            changeTab={changeTab} changeSort={changeSort} changeView={changeView}
-          />
-        }
+        <ViewControls
+          routeParams={routeParams} view={view} customPostTypes={customPostTypes}
+          postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
+          changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
+        />
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
@@ -129,6 +132,7 @@ export default class Stream extends Component {
                 post={post}
                 key={post.id}
                 respondToEvent={respondToEvent}
+                querystringParams={querystringParams}
               />
             )
           })}

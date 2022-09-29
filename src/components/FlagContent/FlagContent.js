@@ -78,6 +78,7 @@ export default class FlagContent extends PureComponent {
       { label: 'Inappropriate Content', id: 'inappropriate' },
       { label: 'Spam', id: 'spam' },
       { label: 'Offensive', id: 'offensive' },
+      { label: 'Abusive', id: 'abusive' },
       { label: 'Illegal', id: 'illegal' },
       { label: 'Other', id: 'other' }
     ]

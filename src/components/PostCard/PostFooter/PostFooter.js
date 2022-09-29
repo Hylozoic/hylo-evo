@@ -28,7 +28,6 @@ export default class PostFooter extends React.PureComponent {
       commenters,
       commentersTotal,
       constrained,
-      // myVote,
       postId,
       // votesTotal
       postReactions,
