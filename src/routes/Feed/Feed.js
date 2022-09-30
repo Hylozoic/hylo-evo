@@ -4,7 +4,7 @@ import { get, pick } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
-import FeedBanner from 'components/FeedBanner'
+import StreamBanner from 'components/StreamBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
 import './Feed.scss'
@@ -100,7 +100,7 @@ export default class Feed extends Component {
           currentUser={currentUser}
           bannerUrl={group && group.bannerUrl}
           newPost={newPost} />
-        : <FeedBanner
+        : <StreamBanner
           group={group}
           currentUser={currentUser}
           type={postTypeFilter}

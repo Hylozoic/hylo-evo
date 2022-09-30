@@ -50,13 +50,15 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const defaultSortBy = get('settings.streamSortBy', currentUser) || 'updated'
-  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards' // TODO: add soemthing here to change default for projects
+  const projectsDefault = view === 'projects' ? 'bigGrid' : null
+  const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
-  const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
-  const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
+  const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
+  const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
+  const search = getQuerystringParam('search', state, props)
   const sortBy = customViewSort || getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
+  const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
 
   const fetchPostsParam = {
     activePostsOnly,
@@ -64,6 +66,7 @@ export function mapStateToProps (state, props) {
     filter: postTypeFilter,
     forCollection: customView?.type === 'collection' ? customView?.collectionId : null,
     slug: groupSlug,
+    search,
     sortBy,
     topics: customViewTopics?.toModelArray().map(t => t.id) || [],
     types: customPostTypes
@@ -89,6 +92,7 @@ export function mapStateToProps (state, props) {
     posts,
     querystringParams,
     routeParams,
+    search,
     selectedPostId: getRouteParam('postId', state, props),
     sortBy,
     view,
@@ -117,6 +121,9 @@ export function mapDispatchToProps (dispatch, props) {
     changeView: view => {
       updateSettings({ settings: { streamViewMode: view } })
       return dispatch(changeQuerystringParam(props, 'v', view, 'all'))
+    },
+    changeSearch: search => {
+      return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))

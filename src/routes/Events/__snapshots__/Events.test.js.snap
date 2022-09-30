@@ -2,7 +2,7 @@
 
 exports[`Events renders a post list 1`] = `
 <div>
-  <FeedBanner
+  <StreamBanner
     currentUser={
       Object {
         "id": 1,

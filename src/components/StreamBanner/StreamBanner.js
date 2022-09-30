@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import PostLabel from 'components/PostLabel'
-import './FeedBanner.scss'
+import './StreamBanner.scss'
 import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
 import { createPostUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
-export default function FeedBanner ({
+export default function StreamBanner ({
   context,
   currentUserHasMemberships,
   currentUser,

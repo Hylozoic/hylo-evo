@@ -30,12 +30,12 @@ describe('Feed', () => {
     })
   })
 
-  it('displays the regular FeedBanner if on the main feed', () => {
+  it('displays the regular StreamBanner if on the main feed', () => {
     const props = {
       currentUser: { id: 1 }
     }
     const wrapper = shallow(<Feed {...props} />)
-    expect(wrapper.find('FeedBanner')).toHaveLength(1)
+    expect(wrapper.find('StreamBanner')).toHaveLength(1)
     expect(wrapper.find('Connect(TopicFeedHeader)')).toHaveLength(0)
   })
 
@@ -48,7 +48,7 @@ describe('Feed', () => {
       currentUser: { id: 1 }
     }
     const wrapper = shallow(<Feed {...props} fetchTopic={jest.fn()} />)
-    expect(wrapper.find('FeedBanner')).toHaveLength(0)
+    expect(wrapper.find('StreamBanner')).toHaveLength(0)
     expect(wrapper.find('TopicFeedHeader')).toHaveLength(1)
   })
 })
