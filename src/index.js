@@ -1,7 +1,8 @@
 import React from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-
 import { rootDomId } from 'client/util'
 import './client/websockets'
 import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
@@ -12,9 +13,11 @@ const store = createStore(history)
 
 ReactDOM.render(
   <LayoutFlagsProvider>
-    <Provider store={store}>
-      {clientRouter()}
-    </Provider>
+    <DndProvider backend={HTML5Backend}>
+      <Provider store={store}>
+        {clientRouter()}
+      </Provider>
+    </DndProvider>
   </LayoutFlagsProvider>,
   document.getElementById(rootDomId)
 )

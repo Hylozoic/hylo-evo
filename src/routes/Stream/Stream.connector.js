@@ -33,12 +33,14 @@ export function mapStateToProps (state, props) {
 
   const routeParams = get('match.params', props)
   const customView = getCustomView(state, props)
-  const customPostTypes = customView?.postTypes
-  const customViewMode = customView?.viewMode
+  const customViewType = customView?.type
+  const customPostTypes = customViewType === 'stream' ? customView?.postTypes : null
+  const customViewMode = customView?.defaultViewMode
   const customViewName = customView?.name
   const customViewIcon = customView?.icon
-  const activePostsOnly = customView?.activePostsOnly
-  const customViewTopics = customView?.topics
+  const activePostsOnly = customViewType === 'stream' ? customView?.activePostsOnly : false
+  const customViewTopics = customViewType === 'stream' ? customView?.topics : null
+  const customViewSort = customView?.defaultSort
   const viewName = customViewName
   const viewIcon = customViewIcon
 
@@ -53,13 +55,14 @@ export function mapStateToProps (state, props) {
 
   const querystringParams = getQuerystringParam(['s', 't', 'v'], null, props)
   const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
-  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
+  const sortBy = customViewSort || getQuerystringParam('s', state, props) || defaultSortBy
   const viewMode = customViewMode || getQuerystringParam('v', state, props) || defaultViewMode
 
   const fetchPostsParam = {
     activePostsOnly,
     context,
     filter: postTypeFilter,
+    forCollection: customView?.type === 'collection' ? customView?.collectionId : null,
     slug: groupSlug,
     sortBy,
     topics: customViewTopics?.toModelArray().map(t => t.id) || [],
@@ -72,6 +75,7 @@ export function mapStateToProps (state, props) {
   return {
     customActivePostsOnly: activePostsOnly,
     customViewId: customView?.id,
+    customViewType,
     context,
     currentUser,
     currentUserHasMemberships,

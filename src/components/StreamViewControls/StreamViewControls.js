@@ -3,15 +3,11 @@ import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
+import { STREAM_SORT_OPTIONS } from 'util/constants'
+
 import './StreamViewControls.scss'
 
-const sortOptions = [
-  { id: 'updated', label: 'Latest activity' },
-  { id: 'created', label: 'Post Date' },
-  { id: 'votes', label: 'Popular' }
-]
-
-const postTypeOptions = [
+const POST_TYPE_OPTIONS = [
   { id: undefined, label: 'All Posts' },
   { id: 'discussion', label: 'Discussions' },
   { id: 'event', label: 'Events' },
@@ -72,8 +68,8 @@ const StreamViewControls = (props) => {
           <Icon name='SmallGridView' styleName='grid-view-icon' />
         </div>
       </div>
-      { makeDropdown(sortBy, sortOptions, changeSort) }
-      { makeDropdown(postTypeFilter, postTypeOptions, changeTab) }
+      { makeDropdown(sortBy, STREAM_SORT_OPTIONS, changeSort) }
+      { makeDropdown(postTypeFilter, POST_TYPE_OPTIONS, changeTab) }
       <Tooltip id='stream-viewmode-tip' position='bottom' />
     </div>
   )

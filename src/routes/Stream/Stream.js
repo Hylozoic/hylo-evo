@@ -74,6 +74,7 @@ export default class Stream extends Component {
       currentUserHasMemberships,
       customPostTypes,
       customViewTopics,
+      customViewType,
       group,
       newPost,
       routeParams,
@@ -98,7 +99,7 @@ export default class Stream extends Component {
           customPostTypes={customPostTypes}
           customActivePostsOnly={customActivePostsOnly}
           customViewTopics={customViewTopics}
-          isCustomView={isCustomView}
+          customViewType={customViewType}
           context={context}
           currentUser={currentUser}
           currentUserHasMemberships={currentUserHasMemberships}
