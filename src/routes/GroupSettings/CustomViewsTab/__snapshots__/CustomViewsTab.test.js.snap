@@ -1,185 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GroupSettingsTab renders correctly 1`] = `
+exports[`CustomViewsTab renders correctly 1`] = `
 <div
   data-stylename="general.groupSettings"
 >
-  <input
-    data-stylename="styles.name"
-    onChange={[Function]}
-    type="text"
-    value="Foomunity"
-  />
-  <div
-    data-stylename="styles.banner"
-    style={
-      Object {
-        "backgroundImage": "url(avatar.png)",
-      }
-    }
-  >
-    <Connect(UploadAttachmentButton)
-      data-stylename="styles.change-banner-button"
-      id={1}
-      onSuccess={[Function]}
-      type="groupBanner"
-    />
-  </div>
-  <div
-    data-stylename="styles.avatar"
-    style={
-      Object {
-        "backgroundImage": "url(avatar.png)",
-      }
-    }
-  >
-    <Connect(UploadAttachmentButton)
-      data-stylename="styles.change-avatar-button"
-      id={1}
-      onSuccess={[Function]}
-      type="groupAvatar"
-    />
-  </div>
-  <SettingsControl
-    label="Description"
-    onChange={[Function]}
-    type="textarea"
-    value="Great group"
-  />
-  <SettingsControl
-    label="About Video URL"
-    onChange={[Function]}
-    value=""
-  />
-  <SettingsControl
-    label="Location"
-    location=""
-    locationObject="Fuji"
-    onChange={[Function]}
-    type="location"
-  />
-  <label
-    data-stylename="styles.label"
-  >
-    Location Privacy:
-  </label>
-  <Dropdown
-    data-stylename="styles.location-obfuscation-dropdown"
-    items={
-      Array [
-        Object {
-          "label": "Display exact location",
-          "onClick": [Function],
-        },
-        Object {
-          "label": "Display only nearest city and show nearby location on the map",
-          "onClick": [Function],
-        },
-        Object {
-          "label": "Display only nearest city and don't show on the map",
-          "onClick": [Function],
-        },
-      ]
-    }
-    toggleChildren={
-      <span
-        data-stylename="styles.location-obfuscation-dropdown-label"
-      >
-        Display exact location
-        <Icon
-          name="ArrowDown"
-        />
-      </span>
-    }
-  />
-  <p
-    data-stylename="general.detailText"
-  >
-    Note: as a moderator you will always see the exact location displayed
-  </p>
-  <br />
-  <SettingsControl
-    label="Word used to describe a group Moderator"
-    onChange={[Function]}
-    value="Moderator"
-  />
-  <SettingsControl
-    label="Plural word used to describe group Moderators"
-    onChange={[Function]}
-    value="Moderators"
-  />
-  <br />
-  <SettingsSection>
-    <h3>
-      Relevant skills & interests
-    </h3>
-    <p
-      data-stylename="general.detailText"
-    >
-      What skills and interests are particularly relevant to this group?
-    </p>
-    <div
-      data-stylename="styles.skillsSetting "
-    >
-      <div
-        data-stylename="general.switchContainer"
-      >
-        <SwitchStyled
-          backgroundColor="#8B96A4"
-          checked={false}
-          disabled={false}
-          onChange={[Function]}
-        />
-        <span
-          data-stylename="general.toggleDescription"
-        >
-          Ask new members whether they have these skills and interests?
-        </span>
-        <div
-          data-stylename="general.onOff"
-        >
-          <div
-            data-stylename="general.off"
-          >
-            OFF
-          </div>
-          <div
-            data-stylename="general.on"
-          >
-            ON
-          </div>
-        </div>
-      </div>
-    </div>
-    <Connect(SkillsSection)
-      group={
-        Object {
-          "avatarUrl": "avatar.png",
-          "bannerUrl": "avatar.png",
-          "customViews": Array [
-            Object {
-              "activePostsOnly": false,
-              "externalLink": "https://google.com",
-              "icon": "Public",
-              "isActive": true,
-              "name": "custommm baby",
-              "order": 1,
-              "postTypes": Array [],
-              "topics": Array [],
-              "viewMode": "externalLink",
-            },
-          ],
-          "description": "Great group",
-          "id": 1,
-          "locationObject": "Fuji",
-          "name": "Foomunity",
-          "slug": "foo",
-        }
-      }
-      label="Add a relevant skill or interest"
-      placeholder="What skills and interests are most relevant to your group?"
-    />
-  </SettingsSection>
   <SettingsSection>
     <h3>
       Custom Views
@@ -206,7 +30,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
               "order": 1,
               "postTypes": Array [],
               "topics": Array [],
-              "viewMode": "externalLink",
+              "type": "externalLink",
             },
           ],
           "description": "Great group",
@@ -226,7 +50,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       order={1}
       postTypes={Array []}
       topics={Array []}
-      viewMode="externalLink"
+      type="externalLink"
     />
     <div
       data-stylename="styles.add-custom-view"
@@ -241,24 +65,6 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       />
     </div>
   </SettingsSection>
-  <br />
-  <SettingsControl
-    label="What area does your group cover?"
-    onChange={[Function]}
-    placeholder="For place based groups, draw the area where your group is active (or paste in GeoJSON here)"
-    type="text"
-    value=""
-  />
-  <div
-    data-stylename="styles.editable-map-container"
-  >
-    <EditableMap
-      locationObject="Fuji"
-      polygon=""
-      savePolygon={[Function]}
-      toggleModal={[Function]}
-    />
-  </div>
   <br />
   <div
     data-stylename="general.saveChanges"

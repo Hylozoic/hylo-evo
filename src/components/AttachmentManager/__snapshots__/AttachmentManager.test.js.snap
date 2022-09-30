@@ -6,7 +6,7 @@ exports[`AttachmentManager as used with CommentForm (default case) when loading 
 
 exports[`AttachmentManager as used with CommentForm (default case) when loading, with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -57,7 +57,7 @@ exports[`AttachmentManager as used with CommentForm (default case) when loading,
 
 exports[`AttachmentManager as used with CommentForm (default case) with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -108,7 +108,7 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
 
 exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when loading 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={Array []}
     clearAttachments={[Function]}
@@ -143,7 +143,7 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
 
 exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when loading, with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -200,7 +200,7 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
 
 exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -284,7 +284,7 @@ exports[`AttachmentManager when attachmentType "file" with attachments (of both 
 
 exports[`AttachmentManager when attachmentType "image" with attachments (of both types), when loading 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachmentType="image"
     attachments={
@@ -313,7 +313,7 @@ exports[`AttachmentManager when attachmentType "image" with attachments (of both
 
 exports[`AttachmentManager when attachmentType not provided with attachments (of both types), when loading 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
