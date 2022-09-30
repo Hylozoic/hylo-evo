@@ -1,3 +1,4 @@
+import { omit } from 'lodash/fp'
 import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -111,10 +112,10 @@ export default class CustomViewsTab extends Component {
 
   save = async () => {
     this.setState({ changed: false })
-    const customViews = this.state.customViews.map(cv => {
+    const customViews = [...this.state.customViews].map(cv => {
       cv.topics = cv.topics.map(t => ({ name: t.name, id: t.id }))
       if (cv.externalLink) cv.externalLink = sanitizeURL(cv.externalLink)
-      return cv
+      return omit('collection', cv)
     })
     this.props.updateGroupSettings({ customViews })
   }
