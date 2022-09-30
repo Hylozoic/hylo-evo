@@ -96,7 +96,6 @@ export default class Stream extends Component {
     } = this.props
 
     const ViewComponent = viewComponent[viewMode]
-    const isCustomView = routeParams && routeParams.view === 'custom'
 
     return (
       <>
