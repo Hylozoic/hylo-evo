@@ -20,8 +20,8 @@ describe('CustomViewsTab', () => {
         name: 'custommm baby',
         order: 1,
         postTypes: [],
-        topics: []
-        type: 'externalLink',
+        topics: [],
+        type: 'externalLink'
       }]
     }
     const wrapper = shallow(<CustomViewsTab group={group} />)

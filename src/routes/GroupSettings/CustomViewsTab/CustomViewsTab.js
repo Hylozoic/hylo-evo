@@ -20,7 +20,7 @@ import styles from './CustomViewsTab.scss' // eslint-disable-line no-unused-vars
 
 const emptyCustomView = {
   activePostsOnly: false,
-  collection: null,
+  collectionId: null,
   defaultSort: 'created',
   defaultViewMode: 'cards',
   externalLink: '',
