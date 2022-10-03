@@ -3,7 +3,7 @@ import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
-import { STREAM_SORT_OPTIONS } from 'util/constants'
+import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
 
 import './StreamViewControls.scss'
 
@@ -34,7 +34,7 @@ const makeDropdown = (selected, options, onChange) => (
 )
 
 const StreamViewControls = (props) => {
-  const { sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view, customPostTypes } = props
+  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view, customPostTypes } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
   const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? POST_TYPE_OPTIONS.filter(postType => postType.label === 'All Posts' || customPostTypes.includes(postType.id)) : POST_TYPE_OPTIONS
@@ -82,7 +82,7 @@ const StreamViewControls = (props) => {
             <Icon name='SmallGridView' styleName='grid-view-icon' />
           </div>
         </div>
-        {makeDropdown(sortBy, STREAM_SORT_OPTIONS, changeSort)}
+        {makeDropdown(sortBy, customViewType === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS, changeSort)}
         {!['projects'].includes(view) && makeDropdown(postTypeFilter, postTypeOptionsForFilter, changeTab)}
         <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>

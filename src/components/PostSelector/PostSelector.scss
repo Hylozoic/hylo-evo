@@ -4,24 +4,40 @@
 
   li {
     position: relative;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 1px 40px 1px 3px;
-    cursor: move;
+    padding: 1px 5px 1px 3px;
     box-shadow: 0px 2px 6px 0px $color-black-10;
     margin-bottom: 3px;
+    display: flex;
 
     &:hover {
       background: #eee;
     }
   }
+
+  .postTitle {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .selectedPostAvatar {
+    margin-right: 5px;
+  }
+}
+
+.selectedPostIcon {
+  float: right;
 }
 
 .removePost {
-  position: absolute;
-  right: 10px;
   cursor: pointer;
+}
+
+.dragHandle {
+  top: 4px;
+  padding-left: 4px;
+  font-size: 16px;
 }
 
 .search {

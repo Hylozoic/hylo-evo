@@ -16,7 +16,7 @@ import './PostSelector.scss'
 
 const PAGE_SIZE = 10
 
-export default function PostSelector ({ collection, group, onRemovePost, onReorderPost, onSelectPost, posts }) {
+export default function PostSelector ({ collection, draggable, group, onRemovePost, onReorderPost, onSelectPost, posts }) {
   const dispatch = useDispatch()
   const [autocomplete, setAutocomplete] = useState('')
   const [suggestions, setSuggestions] = useState([])
@@ -115,7 +115,16 @@ export default function PostSelector ({ collection, group, onRemovePost, onReord
   return (
     <div>
       <ul styleName='selectedPosts'>
-        {selectedPosts.map((p, i) => <SelectedPost key={p.id} post={p} index={i} movePost={movePost} handleDelete={handleDelete} />)}
+        {selectedPosts.map((p, i) => (
+          <SelectedPost
+            draggable={draggable}
+            handleDelete={handleDelete}
+            index={i}
+            key={p.id}
+            movePost={movePost}
+            post={p}
+          />)
+        )}
       </ul>
       <div styleName='search'>
         <div>
@@ -149,7 +158,7 @@ export default function PostSelector ({ collection, group, onRemovePost, onReord
   )
 }
 
-export function SelectedPost ({ post, index, movePost, handleDelete }) {
+export function SelectedPost ({ draggable, post, index, movePost, handleDelete }) {
   const ref = useRef(null)
 
   const [{ handlerId }, drop] = useDrop({ // eslint-disable-line no-unused-vars
@@ -208,12 +217,15 @@ export function SelectedPost ({ post, index, movePost, handleDelete }) {
     })
   })
   const opacity = isDragging ? 0 : 1
+  if (draggable) {
   drag(drop(ref))
+  }
 
-  return <li key={post.id} ref={ref} style={{ opacity }}>
-    <RoundImage url={post.creator.avatarUrl} styleName='suggestionAvatar' small />
-    {post.title}
-    <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost' dataTip='Remove Post' />
+  return <li key={post.id} ref={ref} style={{ opacity, cursor: draggable ? 'move' : 'default' }}>
+    <RoundImage url={post.creator.avatarUrl} styleName='selectedPostAvatar' small />
+    <span styleName='postTitle'>{post.title}</span>
+    <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost selectedPostIcon' dataTip='Remove Post' />
+    {draggable && <Icon name='Draggable' styleName='selectedPostIcon dragHandle' />}
   </li>
 }
 

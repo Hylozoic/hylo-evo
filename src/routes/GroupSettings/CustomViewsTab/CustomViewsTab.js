@@ -12,7 +12,7 @@ import SettingsControl from 'components/SettingsControl'
 import SwitchStyled from 'components/SwitchStyled'
 import TopicSelector from 'components/TopicSelector'
 import { POST_TYPES } from 'store/models/Post'
-import { STREAM_SORT_OPTIONS } from 'util/constants'
+import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 import SettingsSection from '../SettingsSection'
 
@@ -262,7 +262,8 @@ function CustomViewRow ({
   // needed because of external links which have empty default_view_mode or old 'externalLink' value
   const defaultViewModeVal = !defaultViewMode || defaultViewMode === 'externalLink' ? 'cards' : defaultViewMode
 
-  const defaultSortVal = defaultSort || 'created'
+  const sortOptions = type === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS
+  const defaultSortVal = defaultSort || (type === 'collection' ? 'order' : 'created')
 
   return (
     <div styleName='styles.custom-view-container'>
@@ -318,11 +319,11 @@ function CustomViewRow ({
                   styleName='styles.dropdown'
                   toggleChildren={
                     <span styleName='styles.dropdown-label'>
-                      {STREAM_SORT_OPTIONS.find(o => o.id === defaultSortVal).label}
+                      {sortOptions.find(o => o.id === defaultSortVal).label}
                       <Icon name='ArrowDown' />
                     </span>
                   }
-                  items={STREAM_SORT_OPTIONS.map(({ id, label }) => ({
+                  items={sortOptions.map(({ id, label }) => ({
                     label: label,
                     onClick: () => onChange('defaultSort')(id)
                   }))}
@@ -379,6 +380,7 @@ function CustomViewRow ({
                   <PostSelector
                     collection={collection}
                     group={group}
+                    draggable={defaultSort === 'order'}
                     onRemovePost={removePost}
                     onReorderPost={reorderPost}
                     onSelectPost={selectPost}
