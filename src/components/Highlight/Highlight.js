@@ -75,7 +75,7 @@ export default class Highlight extends React.Component {
     // takes and returns a html string
     const domTree = cheerio.parseHTML(html)
     const parsedDomTree = flatten(domTree.map(el => this.domParseElement(el)))
-    const $el = cheerio.load([].concat(parsedDomTree), null, false)
+    const $el = cheerio.load([].concat(parsedDomTree), { _useHtmlParser2: true }, false)
 
     if (parsedDomTree.length > 1) {
       return `<span>${$el.html()}</span>`
