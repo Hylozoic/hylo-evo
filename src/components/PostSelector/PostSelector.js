@@ -48,10 +48,6 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
     }
   })
 
-  // const reset = () => {
-  //   setSuggestions([])
-  // }
-
   const hideSuggestions = () => setSuggestionsOpen(false)
 
   useEffect(() => {
