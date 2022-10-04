@@ -69,10 +69,12 @@ export default class CustomViewsTab extends Component {
     if (prevProps.fetchCollectionPostsPending && !this.props.fetchCollectionPostsPending) {
       // Update collections posts
       const updatedCustomViews = [...this.state.customViews]
-      this.state.customViews.filter(cv => cv.type === 'collection').forEach((cv, i) => {
-        const collection = { ...cv.collection }
-        collection.posts = this.props.group.customViews[i]?.collection?.posts
-        updatedCustomViews[i].collection = collection
+      this.state.customViews.forEach((cv, i) => {
+        if (cv.type === 'collection') {
+          const collection = { ...cv.collection }
+          collection.posts = this.props.group.customViews[i]?.collection?.posts
+          updatedCustomViews[i].collection = collection
+        }
       })
       this.setState({ customViews: updatedCustomViews })
     }
