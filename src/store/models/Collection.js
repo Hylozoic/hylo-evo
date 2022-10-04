@@ -1,15 +1,21 @@
 import { attr, fk, many, Model } from 'redux-orm'
 
-class Collection extends Model {
+export class CollectionPost extends Model { }
+CollectionPost.modelName = 'CollectionPost'
+CollectionPost.fields = {
+  id: attr(),
+  order: attr(),
+  collectionId: attr(),
+  post: fk('Post'),
+  user: fk('Person')
+}
+
+export default class Collection extends Model {
   toString () {
     return `Collection: ${this.name}`
   }
 }
-
-export default Collection
-
 Collection.modelName = 'Collection'
-
 Collection.fields = {
   id: attr(),
   createdAt: attr(),
@@ -17,6 +23,7 @@ Collection.fields = {
   updatedAt: attr(),
 
   group: fk('Group'),
+  linkedPosts: many('CollectionPost'),
   posts: many('Post'),
   user: fk('Person')
 }

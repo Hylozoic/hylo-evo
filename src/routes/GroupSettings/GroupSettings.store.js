@@ -76,17 +76,6 @@ export function fetchGroupSettings (slug) {
               collection {
                 id
                 name
-                posts {
-                  items {
-                    id
-                    title
-                    creator {
-                      id
-                      name
-                      avatarUrl
-                    }
-                  }
-                }
               }
               defaultSort
               defaultViewMode
@@ -253,14 +242,18 @@ export function fetchCollectionPosts (groupId) {
               id
               collection {
                 id
-                posts {
+                linkedPosts {
                   items {
                     id
-                    title
-                    creator {
+                    order
+                    post {
                       id
-                      name
-                      avatarUrl
+                      title
+                      creator {
+                        id
+                        name
+                        avatarUrl
+                      }
                     }
                   }
                 }

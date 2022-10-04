@@ -7,6 +7,7 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
 import getMe from 'store/selectors/getMe'
 import {
+  FETCH_COLLECTION_POSTS,
   FETCH_GROUP_SETTINGS,
   addPostToCollection,
   createCollection,
@@ -31,6 +32,7 @@ export function mapStateToProps (state, props) {
     canModerate,
     currentUser,
     fetchPending: state.pending[FETCH_GROUP_SETTINGS],
+    fetchCollectionPostsPending: state.pending[FETCH_COLLECTION_POSTS],
     group: group ? presentGroup(group) : null,
     parentGroups,
     slug

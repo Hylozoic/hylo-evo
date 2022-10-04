@@ -63,10 +63,18 @@ export default class CustomViewsTab extends Component {
     if (prevProps.fetchPending && !this.props.fetchPending) {
       this.setState(this.defaultEditState())
 
-      const collectionCustomViews = (this.props.group?.customViews || []).filter(c => c.type === 'collection' && c.collectionId)
-      collectionCustomViews.forEach(cv => {
-        this.props.fetchCollectionPosts(this.props.group.id)
+      this.props.fetchCollectionPosts(this.props.group.id)
+    }
+
+    if (prevProps.fetchCollectionPostsPending && !this.props.fetchCollectionPostsPending) {
+      // Update collections posts
+      const updatedCustomViews = [...this.state.customViews]
+      this.state.customViews.filter(cv => cv.type === 'collection').forEach((cv, i) => {
+        const collection = {...cv.collection}
+        collection.posts = this.props.group.customViews[i]?.collection?.posts
+        updatedCustomViews[i].collection = collection
       })
+      this.setState({ customViews: updatedCustomViews })
     }
   }
 
@@ -149,7 +157,7 @@ export default class CustomViewsTab extends Component {
 
     if (key === 'type' && value === 'collection' && cv.type !== 'collection') {
       if (cv.collection) {
-        this.props.fetchCollectionPosts(cv.collection.id)
+        this.props.fetchCollectionPosts(this.props.group.id)
       } else {
         this.props.createCollection({ name: cv.name, groupId: this.props.group.id }).then((resp) => {
           this.updateCustomView(i)('collectionId')(resp?.payload?.data?.createCollection?.id)

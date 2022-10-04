@@ -9,6 +9,7 @@ Object {
     },
     "id": "1",
   },
+  "fetchCollectionPostsPending": undefined,
   "fetchPending": undefined,
   "group": Object {
     "activeProjects": Array [],
@@ -91,17 +92,6 @@ Object {
               collection {
                 id
                 name
-                posts {
-                  items {
-                    id
-                    title
-                    creator {
-                      id
-                      name
-                      avatarUrl
-                    }
-                  }
-                }
               }
               defaultSort
               defaultViewMode
@@ -266,6 +256,7 @@ Object {
   },
   "deleteGroup": [Function],
   "fetchCollectionPosts": [Function],
+  "fetchCollectionPostsPending": undefined,
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "fetchLocation": [Function],

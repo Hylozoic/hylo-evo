@@ -28,6 +28,7 @@ export default function GroupSettings ({
   currentUser,
   deleteGroup,
   fetchCollectionPosts,
+  fetchCollectionPostsPending,
   fetchGroupSettings,
   fetchLocation,
   fetchPending,
@@ -81,6 +82,7 @@ export default function GroupSettings ({
           addPostToCollection={addPostToCollection}
           createCollection={createCollection}
           fetchCollectionPosts={fetchCollectionPosts}
+          fetchCollectionPostsPending={fetchCollectionPostsPending}
           fetchPending={fetchPending}
           removePostFromCollection={removePostFromCollection}
           reorderPostInCollection={reorderPostInCollection}
