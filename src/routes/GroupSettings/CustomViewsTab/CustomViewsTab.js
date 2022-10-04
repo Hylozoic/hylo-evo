@@ -157,13 +157,19 @@ export default class CustomViewsTab extends Component {
       value = value.map(t => ({ name: t.name, id: parseInt(t.id) }))
     }
 
-    if (key === 'type' && value === 'collection' && cv.type !== 'collection') {
-      if (cv.collection) {
-        this.props.fetchCollectionPosts(this.props.group.id)
-      } else {
-        this.props.createCollection({ name: cv.name, groupId: this.props.group.id }).then((resp) => {
-          this.updateCustomView(i)('collectionId')(resp?.payload?.data?.createCollection?.id)
-        })
+    if (key === 'type' && value !== cv.type) {
+      if (value === 'collection') {
+        if (cv.collection) {
+          this.props.fetchCollectionPosts(this.props.group.id)
+        } else {
+          this.props.createCollection({ name: cv.name, groupId: this.props.group.id }).then((resp) => {
+            this.updateCustomView(i)('collectionId')(resp?.payload?.data?.createCollection?.id)
+          })
+        }
+      }
+      // Streams can't use manual sort order, so revert to created
+      if (value === 'stream' && cv.defaultSort === 'order') {
+        cv['defaultSort'] = 'created'
       }
     }
 
