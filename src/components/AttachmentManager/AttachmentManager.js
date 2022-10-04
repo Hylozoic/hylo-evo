@@ -113,7 +113,7 @@ export function ImageManager (props) {
   </div>
 }
 
-function ImagePreview (props) {
+export function ImagePreview (props) {
   const {
     attachment, index, removeImage, switchImages
   } = props

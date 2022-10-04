@@ -70,7 +70,7 @@ export default class CustomViewsTab extends Component {
       // Update collections posts
       const updatedCustomViews = [...this.state.customViews]
       this.state.customViews.filter(cv => cv.type === 'collection').forEach((cv, i) => {
-        const collection = {...cv.collection}
+        const collection = { ...cv.collection }
         collection.posts = this.props.group.customViews[i]?.collection?.posts
         updatedCustomViews[i].collection = collection
       })
