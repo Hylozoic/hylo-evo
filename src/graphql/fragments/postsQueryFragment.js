@@ -2,6 +2,7 @@ import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
 const postsQueryFragment = `
 posts(
+  activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
@@ -15,7 +16,8 @@ posts(
   sortBy: $sortBy,
   search: $search,
   topic: $topic,
-  topics: $topics
+  topics: $topics,
+  types: $types
 ) {
   hasMore
   total

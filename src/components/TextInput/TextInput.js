@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { omit } from 'lodash/fp'
 import React, { useState } from 'react'
 
+import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { onEnter } from 'util/textInput'
 
@@ -47,7 +48,7 @@ export default function TextInput (props) {
 
       {value && !noClearButton &&
         <div styleName='clear' className={theme.clear} onClick={clear}>
-          x
+          <Icon name='Ex' />
         </div>}
       {loading && <Loading type='inline' styleName='loading' />}
     </div>

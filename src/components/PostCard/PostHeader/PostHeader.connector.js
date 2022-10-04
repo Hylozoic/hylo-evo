@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { removePostFromUrl, editPostUrl } from 'util/navigation'
+import { removePostFromUrl, editPostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import {
   deletePost,
+  unfulfillPost,
   fulfillPost,
   removePost,
   pinPost,
@@ -12,10 +13,14 @@ import {
 
 export function mapStateToProps (state, props) {
   const group = getGroup(state, props)
+  const url = postUrl(props.id, props.routeParams)
+  const context = props.routeParams.context
 
   return {
+    context,
     currentUser: getMe(state, props),
-    group
+    group,
+    postUrl: url
   }
 }
 
@@ -39,6 +44,9 @@ export function mapDispatchToProps (dispatch, props) {
     fulfillPost: postId => props.fulfillPost
       ? props.fulfillPost(postId)
       : dispatch(fulfillPost(postId)),
+    unfulfillPost: postId => props.unfulfillPost
+      ? props.unfulfillPost(postId)
+      : dispatch(unfulfillPost(postId)),
     removePost: postId => props.removePost
       ? props.removePost(postId)
       : dispatch(removePost(postId, groupSlug)),
@@ -51,7 +59,7 @@ export function mapDispatchToProps (dispatch, props) {
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser, group } = stateProps
   const { id, creator } = ownProps
-  const { deletePost, editPost, fulfillPost, removePost, pinPost } = dispatchProps
+  const { deletePost, editPost, fulfillPost, unfulfillPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(group)
@@ -63,6 +71,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     deletePost: isCreator ? () => deletePost(id, group ? group.id : null) : undefined,
     editPost: canEdit ? () => editPost(id) : undefined,
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
+    unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,
     canFlag: !isCreator,
     pinPost: canModerate && group ? () => pinPost(id, group.id) : undefined,
     removePost: !isCreator && canModerate ? () => removePost(id) : undefined,

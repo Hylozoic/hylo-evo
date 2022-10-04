@@ -1,16 +1,17 @@
 .post-row {
-  border-bottom: 1px solid $color-cape-cod-10;
   cursor: pointer;
   display: flex;
   position: relative;
   transition: all .25s ease;
   margin-left: 0 0;
   padding: 12px 20px;
-  background-color: rgba(233, 248, 245, 0);
+  background-color: white;
+  box-shadow: 0 5px 8px rgb(35 65 91 / 10%);
+  border-bottom: 1px solid rgba(35, 65, 91, .1);
+}
 
-  &:first-child {
-    border-top: 1px solid $color-cape-cod-10;
-  }
+div .post-row:nth-child(1) {
+  border-radius: 5px 5px 0 0;
 }
 
 .type-author {
@@ -140,7 +141,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(37, 195, 159, .5);
+  border: 1px solid rgba(37, 195, 159, .3);
   background: $color-white;
   border-radius: 3px;
   font-size: 12px;
@@ -180,10 +181,14 @@
 
 // active state overrides
 .expanded {
-  margin: 0 0 5px 5px;
+  margin: -6px -4px -6px -4px;
+  background-color: rgba(255, 255, 255, 1);
   padding: 17px 20px;
+  z-index: 10;
   border-radius: 5px;
-  box-shadow: 0px 8px 15px 0px #d8d8d8;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+  border: 1px solid rgba(0, 118, 223, 0.5);
+  border-top: 3px solid rgba(0, 118, 223, 0.5);
 }
 
 

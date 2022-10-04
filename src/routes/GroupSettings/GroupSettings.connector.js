@@ -29,6 +29,8 @@ export function mapStateToProps (state, props) {
   }
 }
 
+// custom view updating just goes into
+
 export function mapDispatchToProps (dispatch, props) {
   return {
     deleteGroup: id => dispatch(deleteGroup(id)),

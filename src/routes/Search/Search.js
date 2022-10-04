@@ -94,12 +94,12 @@ export function SearchBar ({
     updateQueryParam(value) // debounced
   }
   return <div styleName='search-bar'>
+    <TabBar setSearchFilter={setSearchFilter} filter={filter} />
     <TextInput theme={styles}
       inputRef={x => x && x.focus()}
       value={searchForInput || searchFromQueryString}
-      placeholder='Search'
+      placeholder='Search by keyword for people, posts and groups'
       onChange={onSearchChange} />
-    <TabBar setSearchFilter={setSearchFilter} filter={filter} />
   </div>
 }
 
@@ -112,6 +112,7 @@ const tabs = [
 
 export function TabBar ({ filter, setSearchFilter }) {
   return <div styleName='tabs'>
+    <h1>Search</h1>
     {tabs.map(({ id, label }) => <span
       key={id}
       styleName={id === filter ? 'tab-active' : 'tab'}

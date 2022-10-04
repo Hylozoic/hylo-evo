@@ -4,7 +4,7 @@ import { get, pick } from 'lodash/fp'
 import { bgImageStyle } from 'util/index'
 import FeedList from 'components/FeedList'
 import Loading from 'components/Loading'
-import FeedBanner from 'components/FeedBanner'
+import StreamBanner from 'components/StreamBanner'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import Button from 'components/Button'
 import './Feed.scss'
@@ -38,10 +38,11 @@ export default class Feed extends Component {
 
   getFeedProps () {
     const { routeParams, querystringParams } = this.props
-    const { context } = routeParams
+    const { context, view } = routeParams
 
     return {
       context,
+      view,
       routeParams,
       querystringParams,
       topic: get('id', this.props.topic),
@@ -58,9 +59,21 @@ export default class Feed extends Component {
 
   render () {
     const {
-      routeParams, querystringParams, group, currentUser, postsTotal, followersTotal,
-      groupTopic, newPost, currentUserHasMemberships,
-      goToCreateGroup, membershipsPending, postTypeFilter, topicLoading, toggleGroupTopicSubscribe
+      routeParams,
+      querystringParams,
+      group,
+      currentUser,
+      postsTotal,
+      followersTotal,
+      groupTopic,
+      newPost,
+      currentUserHasMemberships,
+      goToCreateGroup,
+      membershipsPending,
+      postTypeFilter,
+      topicLoading,
+      toggleGroupTopicSubscribe,
+      viewName
     } = this.props
     const { context, groupSlug, topicName } = routeParams
 
@@ -87,7 +100,7 @@ export default class Feed extends Component {
           currentUser={currentUser}
           bannerUrl={group && group.bannerUrl}
           newPost={newPost} />
-        : <FeedBanner
+        : <StreamBanner
           group={group}
           currentUser={currentUser}
           type={postTypeFilter}
@@ -95,7 +108,9 @@ export default class Feed extends Component {
           newPost={newPost}
           routeParams={routeParams}
           querystringParams={querystringParams}
-          currentUserHasMemberships={currentUserHasMemberships} />}
+          currentUserHasMemberships={currentUserHasMemberships}
+          icon={viewName}
+          label={viewName} />}
       {(currentUserHasMemberships || isPublicStream) && <FeedList {...this.getFeedProps()} />}
       {!membershipsPending && !currentUserHasMemberships && !isPublicStream && <CreateGroupPrompt
         goToCreateGroup={goToCreateGroup}

@@ -79,7 +79,9 @@ $text-input-height: 40px;
   composes: faint-lt-sm from 'css/typography.scss';
   position: absolute;
   right: 8px;
-  top: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+
   &:hover {
     color: $color-rhino-60;
   }
@@ -137,7 +139,4 @@ $text-input-height: 40px;
 }
 
 @media screen and (max-width: 650px) {
-  .clear {
-    top: -4px;
-  }
 }

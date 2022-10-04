@@ -23,10 +23,13 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import { sanitizeURL } from 'util/url'
 
 export const MAX_TITLE_LENGTH = 50
 export const MAX_POST_TOPICS = 3
 
+const donationsLinkPlaceholder = 'Add a donation link (must be valid URL)'
+const projectManagementLinkPlaceholder = 'Add a project management link (must be valid URL)'
 export default class PostEditor extends React.Component {
   static propTypes = {
     context: PropTypes.string,
@@ -279,6 +282,22 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  handledonationsLinkChange = (evt) => {
+    const donationsLink = evt.target.value
+    this.setState({
+      post: { ...this.state.post, donationsLink },
+      valid: this.isValid({ donationsLink })
+    })
+  }
+
+  handleProjectManagementLinkChange = (evt) => {
+    const projectManagementLink = evt.target.value
+    this.setState({
+      post: { ...this.state.post, projectManagementLink },
+      valid: this.isValid({ projectManagementLink })
+    })
+  }
+
   validateTimeChange = (startTime, endTime) => {
     if (endTime) {
       startTime < endTime
@@ -371,12 +390,12 @@ export default class PostEditor extends React.Component {
   }
 
   isValid = (postUpdates = {}) => {
-    const { type, title, groups, startTime, endTime } = Object.assign(
+    const { type, title, groups, startTime, endTime, donationsLink, projectManagementLink } = Object.assign(
       {},
       this.state.post,
       postUpdates
     )
-    const { isEvent } = this.props
+    const { isEvent, isProject } = this.props
 
     return !!(
       this.editorRef.current &&
@@ -385,7 +404,9 @@ export default class PostEditor extends React.Component {
       title.length > 0 &&
       groups.length > 0 &&
       title.length <= MAX_TITLE_LENGTH &&
-      (!isEvent || (endTime && startTime < endTime))
+      (!isEvent || (endTime && startTime < endTime)) &&
+      (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
+      (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink)
     )
   }
 
@@ -423,6 +444,8 @@ export default class PostEditor extends React.Component {
       members,
       topics,
       acceptContributions,
+      donationsLink,
+      projectManagementLink,
       eventInvitations,
       startTime,
       endTime,
@@ -458,6 +481,8 @@ export default class PostEditor extends React.Component {
       sendAnnouncement: announcementSelected,
       memberIds,
       acceptContributions,
+      donationsLink: sanitizeURL(donationsLink),
+      projectManagementLink: sanitizeURL(projectManagementLink),
       eventInviteeIds,
       startTime,
       endTime,
@@ -517,7 +542,9 @@ export default class PostEditor extends React.Component {
       acceptContributions,
       eventInvitations,
       startTime,
-      endTime
+      endTime,
+      donationsLink,
+      projectManagementLink
     } = post
     const {
       currentGroup,
@@ -564,7 +591,7 @@ export default class PostEditor extends React.Component {
         <div styleName='header'>
           <div styleName='initial'>
             <div>
-              <Button noDefaultStyles {...this.postTypeButtonProps(type)} />
+              {type && <Button noDefaultStyles {...this.postTypeButtonProps(type)} />}
               {showPostTypeMenu && (
                 <div styleName='postTypeMenu'>
                   {postTypes
@@ -760,6 +787,36 @@ export default class PostEditor extends React.Component {
                   (Remember to save your changes before leaving this form)
                 </div>
               )}
+            </div>
+          )}
+          {isProject && (
+            <div styleName='footerSection'>
+              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>Donation Link</div>
+              <div styleName='footerSection-groups'>
+                <input
+                  type='text'
+                  styleName='textInput'
+                  placeholder={donationsLinkPlaceholder}
+                  value={donationsLink || ''}
+                  onChange={this.handledonationsLinkChange}
+                  disabled={loading}
+                />
+              </div>
+            </div>
+          )}
+          {isProject && (
+            <div styleName='footerSection'>
+              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>Project Management</div>
+              <div styleName='footerSection-groups'>
+                <input
+                  type='text'
+                  styleName='textInput'
+                  placeholder={projectManagementLinkPlaceholder}
+                  value={projectManagementLink || ''}
+                  onChange={this.handleProjectManagementLinkChange}
+                  disabled={loading}
+                />
+              </div>
             </div>
           )}
           <ActionsBar

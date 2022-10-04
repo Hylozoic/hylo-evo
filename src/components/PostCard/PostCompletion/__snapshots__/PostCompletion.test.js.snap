@@ -5,7 +5,7 @@ exports[`renders correctly if fulfilled 1`] = `
   data-stylename="postCompletion"
 >
   <div>
-    Is this still active?
+    Is this project still active?
   </div>
   <DropdownButton
     choices={
@@ -13,10 +13,6 @@ exports[`renders correctly if fulfilled 1`] = `
         Object {
           "label": "Active",
           "value": false,
-        },
-        Object {
-          "label": "Inactive",
-          "value": "expired",
         },
         Object {
           "label": "Completed",
@@ -35,7 +31,7 @@ exports[`renders correctly if not fulfilled 1`] = `
   data-stylename="postCompletion"
 >
   <div>
-    Is this still available?
+    Is this resource still available?
   </div>
   <DropdownButton
     choices={
@@ -43,10 +39,6 @@ exports[`renders correctly if not fulfilled 1`] = `
         Object {
           "label": "Available",
           "value": false,
-        },
-        Object {
-          "label": "Expired",
-          "value": "expired",
         },
         Object {
           "label": "Unavailable",

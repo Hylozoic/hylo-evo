@@ -5,15 +5,21 @@
   height: 40px;
   line-height: 40px;
   border-radius: 5px;
+  margin-right: 5px;
+  text-decoration: none;
+}
 
+.item.collapsed {
+  margin-right: 0;
 }
 
 .link {
   display: flex;
   align-items: center;
   color: $color-rhino-60;
-  text-decoration: none;
-  &:hover {
+  text-decoration: none !important;
+
+  &:hover, &:visited, &:active, &:link {
     text-decoration: none;
     color: $color-rhino;
   }
@@ -26,11 +32,20 @@
 }
 
 .active {
-  background-color: $color-iceberg;
+  background-color: rgba(0, 118, 223, .1);
+
+  .collapsed.link span.label {
+    color: transparent;
+  }
 
   .link {
     text-decoration: none;
-    color: $color-rhino;
+    color: rgba(0, 118, 223, 1.0);
+
+    span {
+      color: rgba(0, 118, 223, 1.0);
+    }
+
     &.collapsed {
       color: transparent;
     }
@@ -45,6 +60,8 @@
 
 .label {
   padding-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 930px) {

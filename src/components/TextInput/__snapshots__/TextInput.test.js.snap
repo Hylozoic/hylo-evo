@@ -17,7 +17,9 @@ exports[`TextInput renders correctly 1`] = `
     data-stylename="clear"
     onClick={[Function]}
   >
-    x
+    <Icon
+      name="Ex"
+    />
   </div>
 </div>
 `;

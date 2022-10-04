@@ -12,6 +12,8 @@ export const PIN_POST = `${MODULE_NAME}/PIN_POST`
 export const PIN_POST_PENDING = `${PIN_POST}_PENDING`
 export const FULFILL_POST = `${MODULE_NAME}/FULFILL_POST`
 export const FULFILL_POST_PENDING = `${MODULE_NAME}/FULFILL_POST_PENDING`
+export const UNFULFILL_POST = `${MODULE_NAME}/UNFULFILL_POST`
+export const UNFULFILL_POST_PENDING = `${MODULE_NAME}/UNFULFILL_POST_PENDING`
 
 // Action Creators
 export function deletePost (id, groupId) {
@@ -99,6 +101,26 @@ export function fulfillPost (postId) {
   }
 }
 
+export function unfulfillPost (postId) {
+  return {
+    type: UNFULFILL_POST,
+    graphql: {
+      query: `mutation ($postId: ID) {
+        unfulfillPost (postId: $postId) {
+          success
+        }
+      }`,
+      variables: {
+        postId
+      }
+    },
+    meta: {
+      optimistic: true,
+      postId
+    }
+  }
+}
+
 export const getGroup = ormCreateSelector(
   orm,
   (_, { routeParams }) => routeParams,
@@ -150,5 +172,16 @@ export function ormSessionReducer ({ Group, Post }, { type, meta }) {
       let postMembership = post.postMemberships.filter(p =>
         Number(p.group) === Number(meta.groupId)).toModelArray()[0]
       postMembership && postMembership.update({ pinned: !postMembership.pinned })
+      break
+
+    case FULFILL_POST_PENDING:
+      post = Post.withId(meta.postId)
+      post.update({ fulfilledAt: (new Date()).toISOString() })
+      break
+
+    case UNFULFILL_POST_PENDING:
+      post = Post.withId(meta.postId)
+      post.update({ fulfilledAt: null })
+      break
   }
 }

@@ -6,6 +6,7 @@ import React from 'react'
 describe('Comments', () => {
   it('renders correctly', () => {
     const props = {
+      currentUser: { id: 1 },
       comments: [{ id: 1, parentComment: null }, { id: 2, parentComment: null }, { id: 3, parentComment: null }],
       total: 9,
       hasMore: true,

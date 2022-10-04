@@ -1,22 +1,31 @@
 import React from 'react'
+import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
-import './FeedBanner.scss'
+import PostLabel from 'components/PostLabel'
+import './StreamBanner.scss'
 import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
 import { createPostUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 
-export default function FeedBanner ({
+export default function StreamBanner ({
   context,
   currentUserHasMemberships,
   currentUser,
+  customActivePostsOnly,
+  customPostTypes,
+  customViewTopics,
+  label,
+  isCustomView,
+  icon,
   group,
   newPost,
   querystringParams,
   routeParams,
+  isTesting,
   type
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
@@ -38,18 +47,30 @@ export default function FeedBanner ({
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
+  let numCustomFilters = isCustomView ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
+
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
       <div styleName='fade'><div styleName='fade2' /></div>
       <div styleName='header'>
-        <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} />
+        {icon
+          ? <div styleName='custom-icon'>
+            <Icon name={icon} />
+          </div>
+          : <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} /> }
         <div styleName='header-text'>
           <div styleName='header-contents'>
-            <span styleName='header-name'>{name}</span>
-            {location && <div styleName='header-subtitle'>
+            <span styleName='header-name'>{label || name}</span>
+
+            {location && !icon && <div styleName='header-subtitle'>
               <Icon name='Location' styleName='header-icon' />
               {location}
             </div>}
+
+            {numCustomFilters
+              ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
+              : ''}
+
             {subtitle && <div styleName='header-subtitle'>
               {subtitle}
             </div>}
@@ -64,6 +85,30 @@ export default function FeedBanner ({
       querystringParams={querystringParams}
       routeParams={routeParams}
       type={type}
+    />}
+
+    {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
+    {!isTesting && <ReactTooltip
+      id='feed-banner-tip'
+      backgroundColor='rgba(35, 65, 91, 1.0)'
+      effect='solid'
+      delayShow={0}
+      place='bottom'
+      getContent={function () {
+        return (isCustomView
+          ? <div styleName='custom-filters'>
+            <span styleName='displaying'>
+              Displaying &nbsp;
+              {customActivePostsOnly ? 'active' : ''}
+            </span>
+
+            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
+            {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
+            {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
+          </div>
+          : ''
+        )
+      }}
     />}
   </div>
 }

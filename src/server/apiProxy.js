@@ -8,7 +8,6 @@ export default function apiProxy (req, res, next) {
     !req.originalUrl.startsWith('/admin/kue')) return next()
 
   let url = API_HOST + req.originalUrl
-  console.log(`${req.method} ${url}`)
 
   request.delete = request.delete || request.del
   const method = request[req.method.toLowerCase()]

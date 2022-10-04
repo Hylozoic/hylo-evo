@@ -1,10 +1,7 @@
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  bool, func, string, arrayOf, shape
-} from 'prop-types'
-
+import { bool, func, string, arrayOf, shape } from 'prop-types'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -68,17 +65,19 @@ export default class Members extends Component {
         </div>
       </div>
       <div styleName='content'>
-        <Dropdown styleName='sort-dropdown'
-          toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
-          alignRight
-          items={Object.keys(sortKeys).map(k => ({
-            label: sortKeys[k],
-            onClick: () => changeSort(k)
-          }))} />
-        <TextInput placeholder='Search by name or skills & interests'
-          styleName='search'
-          defaultValue={search}
-          onChange={e => this.search(e.target.value)} />
+        <div styleName='controls'>
+          <TextInput placeholder='Search by name or skills & interests'
+            styleName='search'
+            defaultValue={search}
+            onChange={e => this.search(e.target.value)} />
+          <Dropdown styleName='sort-dropdown'
+            toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
+            alignRight
+            items={Object.keys(sortKeys).map(k => ({
+              label: sortKeys[k],
+              onClick: () => changeSort(k)
+            }))} />
+        </div>
         <div styleName='members'>
           {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
             {pair.map(m => <Member
@@ -115,7 +114,7 @@ Members.propTypes = {
 
 function SortLabel ({ text }) {
   return <div styleName='sort-label'>
-    <span>{text}</span>
+    <span>Sort by <strong>{text}</strong></span>
     <Icon name='ArrowDown' styleName='sort-icon' />
   </div>
 }

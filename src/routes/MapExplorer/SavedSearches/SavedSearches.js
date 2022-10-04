@@ -66,14 +66,17 @@ const SavedSearch = ({ deleteSearch, viewSavedSearch, search }) => {
         </div>
       </div>
       <div styleName='row filters' data-tip={formatParams(search)} data-for='params'>
-        <Icon name='Info' styleName='info' /><span styleName='saved-filters'>
+        <Icon name='Info' styleName='info' />
+        <span styleName='saved-filters'>
           <span>{formatParamPreview(search)}</span>
-          <ReactTooltip place='right'
+          <ReactTooltip
+            place='right'
             id='params'
             effect='solid'
             multiline
             delayShow={200}
-            styleName='params' />
+            styleName='params'
+          />
         </span>
       </div>
     </div>

@@ -4,7 +4,7 @@
   display: flex;
   align-content: stretch;
   height: $space-7x;
-  margin-bottom: $space-3x;
+  margin: 3px 0;
 }
 
 .tabs {
@@ -29,8 +29,9 @@
   @include font-bold;
   color: $color-rhino;
   font-size: 15px;
-  background-color: $color-cape-cod-05;
+  background-color: rgba(0, 118, 223, .1);
   border-radius: 4px;
+  color: rgba(0, 118, 223, 1.0);
 }
 
 .sorter {

@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
-import { RESPONSES } from 'store/models/EventInvitation'
-import { PERSON_PROP_TYPES } from 'store/models/Person'
-import { find, get, sortBy, isFunction, filter } from 'lodash/fp'
+import { find, get, sortBy, isFunction } from 'lodash/fp'
 import './PostFooter.scss'
 import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
@@ -12,14 +10,12 @@ import Tooltip from 'components/Tooltip'
 
 export default class PostFooter extends React.PureComponent {
   static propTypes= {
-    type: PropTypes.string,
     currentUser: PropTypes.shape(CURRENT_USER_PROP_TYPES),
     commenters: PropTypes.array,
     commentersTotal: PropTypes.number,
     constrained: PropTypes.bool,
     votesTotal: PropTypes.number,
     myVote: PropTypes.bool,
-    members: PropTypes.arrayOf(PropTypes.shape(PERSON_PROP_TYPES)),
     voteOnPost: PropTypes.func.isRequired,
     onClick: PropTypes.func
   }
@@ -28,91 +24,35 @@ export default class PostFooter extends React.PureComponent {
     const {
       currentUser,
       commenters,
-      constrained,
-      eventInvitations,
       commentersTotal,
-      votesTotal,
+      constrained,
       myVote,
-      members,
+      onClick,
       postId,
-      type
+      votesTotal
     } = this.props
-    const onClick = isFunction(this.props.onClick) ? this.props.onClick : undefined
     const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
-
-    const eventAttendees = filter(ei => ei.response === RESPONSES.YES, eventInvitations)
-
-    let peopleRowResult
-
-    switch (type) {
-      case 'project':
-        peopleRowResult = peopleSetup(
-          members,
-          members.length,
-          get('id', currentUser),
-          {
-            emptyMessage: 'No project members',
-            phraseSingular: 'is a member',
-            mePhraseSingular: 'are a member',
-            pluralPhrase: 'are members'
-          }
-        )
-        break
-      case 'event':
-        peopleRowResult = peopleSetup(
-          eventAttendees,
-          eventAttendees.length,
-          get('id', currentUser),
-          {
-            emptyMessage: 'No one is attending yet',
-            phraseSingular: 'is attending',
-            mePhraseSingular: 'are attending',
-            pluralPhrase: 'attending'
-          }
-        )
-        break
-      default:
-        peopleRowResult = peopleSetup(
-          commenters,
-          commentersTotal,
-          get('id', currentUser),
-          {
-            emptyMessage: 'Be the first to comment',
-            phraseSingular: 'commented',
-            mePhraseSingular: 'commented',
-            pluralPhrase: 'commented'
-          }
-        )
-    }
-
-    if (type === 'project') {
-
-    } else {
-
-    }
 
     const tooltipId = 'postfooter-tt-' + postId
 
-    const { caption, avatarUrls } = peopleRowResult
-
-    return <div styleName={cx('footer', { constrained })}>
-      <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
-      <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
-        {caption}
-      </span>
-      { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
-        data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
-        <Icon name='ArrowUp' styleName='arrowIcon' />
-        {votesTotal}
-      </a> : '' }
-      <Tooltip
-        delay={550}
-        id={tooltipId} />
-    </div>
+    return (
+      <div styleName={cx('footer', { constrained })}>
+        <PeopleInfo onClick={onClick} people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
+        { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
+          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
+          <Icon name='ArrowUp' styleName='arrowIcon' />
+          {votesTotal}
+        </a> : '' }
+        <Tooltip
+          delay={550}
+          id={tooltipId}
+        />
+      </div>
+    )
   }
 }
 
-export const peopleSetup = (
+export function PeopleInfo ({
   people,
   peopleTotal,
   excludePersonId,
@@ -121,8 +61,9 @@ export const peopleSetup = (
     phraseSingular: 'commented',
     mePhraseSingular: 'commented',
     pluralPhrase: 'commented'
-  }
-) => {
+  },
+  onClick
+}) {
   const currentUserIsMember = find(c => c.id === excludePersonId, people)
   const sortedPeople = currentUserIsMember && people.length === 2
     ? sortBy(c => c.id !== excludePersonId, people) // me first
@@ -137,16 +78,26 @@ export const peopleSetup = (
   let names = ''
   let phrase = pluralPhrase
 
-  if (sortedPeople.length === 0) return { caption: emptyMessage, avatarUrls: [] }
-  if (sortedPeople.length === 1) {
-    phrase = currentUserIsMember ? mePhraseSingular : phraseSingular
-    names = firstName(sortedPeople[0])
-  } else if (sortedPeople.length === 2) {
-    names = `${firstName(sortedPeople[0])} and ${firstName(sortedPeople[1])}`
+  let caption, avatarUrls
+  if (sortedPeople.length === 0) {
+    caption = emptyMessage
+    avatarUrls = []
   } else {
-    names = `${firstName(sortedPeople[0])}, ${firstName(sortedPeople[1])} and ${peopleTotal - 2} other${peopleTotal - 2 > 1 ? 's' : ''}`
+    if (sortedPeople.length === 1) {
+      phrase = currentUserIsMember ? mePhraseSingular : phraseSingular
+      names = firstName(sortedPeople[0])
+    } else if (sortedPeople.length === 2) {
+      names = `${firstName(sortedPeople[0])} and ${firstName(sortedPeople[1])}`
+    } else {
+      names = `${firstName(sortedPeople[0])}, ${firstName(sortedPeople[1])} and ${peopleTotal - 2} other${peopleTotal - 2 > 1 ? 's' : ''}`
+    }
+    caption = `${names} ${phrase}`
+    avatarUrls = people.map(p => p.avatarUrl)
   }
-  const caption = `${names} ${phrase}`
-  const avatarUrls = people.map(p => p.avatarUrl)
-  return { caption, avatarUrls }
+  return <span styleName='commenters'>
+    <RoundImageRow imageUrls={avatarUrls.slice(0, 3)} styleName='people' onClick={onClick} />
+    <span styleName='caption' onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }}>
+      {caption}
+    </span>
+  </span>
 }

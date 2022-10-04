@@ -204,6 +204,11 @@
 .contentCard {
   position: relative;
   margin-bottom: 12px;
+  box-shadow: 0px 4px 8px 0px rgb(35 64 91 / 20%);
+
+  &> div:nth-child(3) > div:nth-child(3) {
+    overflow-y: hidden;
+  }
 }
 
 .contentCard.member {

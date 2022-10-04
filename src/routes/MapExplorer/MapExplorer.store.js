@@ -43,6 +43,7 @@ export function formatBoundingBox (bbox) {
 }
 
 const groupPostsQuery = (postsFragment) => `query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput]
@@ -55,7 +56,8 @@ const groupPostsQuery = (postsFragment) => `query (
   $slug: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   group(slug: $slug, updateLastViewed: true) {
     id
@@ -69,6 +71,7 @@ const groupPostsQuery = (postsFragment) => `query (
 }`
 
 const postsQuery = (postsFragment) => `query (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
@@ -82,7 +85,8 @@ const postsQuery = (postsFragment) => `query (
   $search: String,
   $sortBy: String,
   $topic: ID,
-  $topics: [ID]
+  $topics: [ID],
+  $types: [String]
 ) {
   ${postsFragment}
 }`
@@ -176,11 +180,12 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs }) {
+export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
     query = groupPostsQuery(`posts: viewPosts(
+      activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
@@ -192,7 +197,8 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
       sortBy: $sortBy,
       search: $search,
       topic: $topic,
-      topics: $topics
+      topics: $topics,
+      types: $types
     ) {
       hasMore
       total
@@ -219,6 +225,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
     query = postsQuery(`posts(
+      activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
@@ -232,7 +239,8 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
       sortBy: $sortBy,
       search: $search,
       topic: $topic,
-      topics: $topics
+      topics: $topics,
+      types: $types
     ) {
       hasMore
       total
@@ -266,6 +274,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
     graphql: {
       query,
       variables: {
+        activePostsOnly,
         boundingBox: formatBoundingBox(boundingBox),
         context,
         filter,
@@ -288,7 +297,7 @@ export function fetchPostsForMap ({ context, slug, sortBy, search, filter, topic
   }
 }
 
-export function fetchPostsForDrawer ({ context, currentBoundingBox, featureTypes, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics }) {
+export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
@@ -308,6 +317,7 @@ export function fetchPostsForDrawer ({ context, currentBoundingBox, featureTypes
     graphql: {
       query,
       variables: {
+        activePostsOnly,
         boundingBox: formatBoundingBox(currentBoundingBox),
         context,
         filter,
@@ -320,7 +330,7 @@ export function fetchPostsForDrawer ({ context, currentBoundingBox, featureTypes
         search,
         topic: null,
         topics: !isEmpty(topics) ? topics.map(t => t.id) : null,
-        types: !isEmpty(featureTypes) ? Object.keys(featureTypes).filter(ft => featureTypes[ft]) : null
+        types
       }
     },
     meta: {

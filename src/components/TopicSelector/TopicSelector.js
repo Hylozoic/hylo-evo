@@ -164,7 +164,6 @@ export default class TopicSelector extends Component {
         topicsEdited: true
       })
     }
-
     this.props.onChange && this.props.onChange(topics)
   }
 

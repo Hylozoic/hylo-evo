@@ -6,7 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   align-content: stretch;
-  background-color: rgba(255,255,255, 1);
+  background-color: rgba(225, 229, 233, 0.3);
   align-items: stretch;
   height: 100vh;
   overflow: hidden;
@@ -336,6 +336,7 @@ $drawer-z-index: 51;
 
 .left {
   transition: all .45s ease;
+  overflow: visible;
 }
 
 .left .map-field {
@@ -344,23 +345,21 @@ $drawer-z-index: 51;
 
 .center {
   padding-left: 3px;
-  background: $color-white;
-  // From Bootstrap make-col-ready():
   position: relative;
   min-height: 1px; // Prevent collapsing
   height: calc(100vh - 56px);
-  flex: 0 0 $center-column-width;
-  max-width: $center-column-width;
+  flex: 0 0 50%;
+  max-width: 50%;
   overflow-y: auto;
   overflow-x: hidden;
   transition: all .45s ease;
-  padding-right: $space-2x;
-  padding-bottom: 100px;
+  padding: 0 8px 100px 8px;
+
   &.map-view {
     max-width: $map-center-column-width;
     flex: 0 0 $map-center-column-width;
     height: calc(100vh - 40px);
-    padding-bottom: 0px;
+    padding: 0 0 0 0;
   }
   &.withoutNav {
     padding-bottom: 0
@@ -385,8 +384,8 @@ $drawer-z-index: 51;
 }
 
 .center.map-view.collapsedState {
-  width: calc(100% - 68px);
-  max-width: calc(100% - 68px);
+  width: calc(100% - 88px);
+  max-width: calc(100% - 88px);
   flex: 0 0 100%;
 }
 
@@ -413,7 +412,7 @@ $drawer-z-index: 51;
   transition-duration: 0.3s;
   top: 0;
   right: 0px;
-  padding: 0 16px 0 $layout-spacing;
+  padding: 0 16px 0 30px;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -497,8 +496,12 @@ $drawer-z-index: 51;
     left: 5%;
   }
 
+  .left {
+    overflow: hidden;
+  }
+
   .center.map-view {
-    max-width: 93%;
+    max-width: calc(100% - 80px);
     flex-basis: 93%;
     left: 0;
   }
@@ -587,12 +590,13 @@ $drawer-z-index: 51;
     max-width: 100%;
     flex: 0 0 100%;
     left: 0;
-    padding: 0;
+    padding: 0 0 0 0;
   }
 
   .center.map-view.collapsedState {
     width: 100%;
     max-width: 100%;
+    padding: 0 0 0 0;
   }
   
   .detail {
@@ -619,7 +623,7 @@ $drawer-z-index: 51;
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 500px) {
   .detail {
     width: 100%;
     margin-top: 0;
@@ -638,7 +642,6 @@ $drawer-z-index: 51;
   .center.map-view {
     overflow-y: auto;
   }
-
 
   .tourWrapper .tourPrompt .tourGuide {
     min-width: 40px;

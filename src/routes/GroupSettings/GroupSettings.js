@@ -64,7 +64,7 @@ export default function GroupSettings ({
       {
         name: 'Privacy & Access',
         path: groupUrl(slug, 'settings/privacy'),
-        component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} fetchPending={fetchPending} />
+        component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} parentGroups={parentGroups} fetchPending={fetchPending} />
       },
       {
         name: 'Topics',

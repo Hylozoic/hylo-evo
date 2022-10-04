@@ -4,7 +4,7 @@
 }
 
 .cardPadding {
-  padding: 0px $space-4x;
+  padding: 0px 10px;
 }
 
 .constrained .cardPadding {
@@ -50,7 +50,7 @@
   // Extract typography? This one is exactly half way between
   // BDY-LT-LG and BDY-LT-SM
   @include font-regular;
-  color: $color-rhino-60;
+  color: rgba(44, 64, 89, 0.7);
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 20px;
@@ -66,6 +66,11 @@
 @media screen and (max-width: 425px) {
   .details.cardPadding {
     padding: 0 5px;
+    margin: 0;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
 
   .details {

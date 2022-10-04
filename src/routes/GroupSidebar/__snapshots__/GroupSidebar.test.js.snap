@@ -4,10 +4,6 @@ exports[`GroupSidebar renders correctly 1`] = `
 <div
   data-stylename="group-sidebar"
 >
-  <AboutSection
-    description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
-    name="A Great Cause"
-  />
   <SettingsLink
     group={
       Object {
@@ -18,6 +14,10 @@ exports[`GroupSidebar renders correctly 1`] = `
         "slug": "great-cause",
       }
     }
+  />
+  <AboutSection
+    description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
+    name="A Great Cause"
   />
   <MemberSection
     memberCount={56}
@@ -87,16 +87,6 @@ exports[`MemberSection Doesn't show total if it's < 1 1`] = `
         }
       />
     </div>
-  </Link>
-  <Link
-    data-stylename="invite-link"
-    to="/groups/foo/settings/invite"
-  >
-    <Button
-      color="green-white-green-border"
-    >
-      Invite People
-    </Button>
   </Link>
 </div>
 `;
@@ -179,16 +169,6 @@ exports[`MemberSection Shows invite link if canModerate is true 1`] = `
         +5.6k
       </span>
     </div>
-  </Link>
-  <Link
-    data-stylename="invite-link"
-    to="/groups/foo/settings/invite"
-  >
-    <Button
-      color="green-white-green-border"
-    >
-      Invite People
-    </Button>
   </Link>
 </div>
 `;

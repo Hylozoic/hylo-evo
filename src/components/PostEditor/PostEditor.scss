@@ -309,6 +309,24 @@ $wrapperBorderRadius: 8px;
   align-items: center;
 }
 
+.warning {
+  color: $color-amaranth;
+}
+
+.textInput {
+  margin-bottom: 0;
+  padding: 0;
+  width: 100%;
+  outline: none;
+  border: none;
+  &:disabled {
+    color: $color-rhino-80;
+  }
+  &::placeholder {
+    color: $color-rhino-30;
+  }
+}
+
 
 @media screen and (max-width: 600px) {
 

@@ -9,7 +9,7 @@ const sampleItems = [
 
 it('renders with no items', () => {
   const wrapper = shallow(<Dropdown toggleChildren={<span>click me</span>} />)
-  expect(wrapper.children()).toHaveLength(2)
+  expect(wrapper.children()).toHaveLength(3)
   expect(wrapper.find('span span').text()).toBe('click me')
   expect(wrapper.find('ul')).toBeTruthy()
 })

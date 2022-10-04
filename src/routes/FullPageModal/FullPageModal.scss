@@ -110,6 +110,10 @@ $size-sidebar-width: 13rem;
   display: none;
 }
 
+.left-sidebar.leftSideBarHidden {
+  display: none;
+}
+
 
 @media screen and (max-width: 1000px) {
   .center {

@@ -23,7 +23,7 @@ exports[`matches last snapshot 1`] = `
     }
   }
 >
-  <Connect(PostBody)
+  <PostBody
     className="classy"
     details="the details"
     expanded={true}

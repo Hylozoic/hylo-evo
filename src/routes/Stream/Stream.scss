@@ -1,18 +1,61 @@
 .stream-items {
-  margin: 0 auto;
+  margin: 15px auto;
   overflow: visible;
+}
+
+.stream-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.big-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+
+.big-grid-item {
+  border: 1px solid red;
 }
 
 // :DUPE: @see FeedList.scss
 .card-item {
   margin: 0 $space-4x $space-6x;
+  box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+
+  &> div:nth-child(2) > div:nth-child(1) {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 10px rgba(35, 65, 91, .3);
+  }
 }
 .expanded {
   margin: 0 $space-2x $space-6x;
+  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+  border: 1px solid rgba(0, 118, 223, .50);
+  border-top: 3px solid rgba(0, 118, 223, .50);
+
+  &:hover {
+    box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;
+  }
 }
 
 @media screen and (max-width: 425px) {
   .card-item {
     margin: 0 5px 10px 5px;
+  }
+
+  .stream-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }

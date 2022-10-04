@@ -3,48 +3,33 @@ import './PostCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
 const promptOptions = {
-  request: 'Is this still needed?',
-  offer: 'Is this still available?',
-  resource: 'Is this still available?',
-  project: 'Is this still active?'
+  request: 'Is this request still needed?',
+  offer: 'Is this offer still available?',
+  resource: 'Is this resource still available?',
+  project: 'Is this project still active?'
 }
 
-const otherMessageOptions = [
-  { label: 'Available', value: false },
-  { label: 'Expired', value: 'expired' },
-  { label: 'Unavailable', value: true }
-]
 const messages = {
   request: [
     { label: 'This is still needed', value: false },
-    { label: 'No longer needed', value: 'expired' },
-    { label: 'This request was completed', value: true }
+    { label: 'No longer needed', value: true }
   ],
-  offer: otherMessageOptions,
-  resource: otherMessageOptions,
+  offer: [
+    { label: 'Available', value: false },
+    { label: 'Unavailable', value: true }
+  ],
+  resource: [
+    { label: 'Available', value: false },
+    { label: 'Unavailable', value: true }
+  ],
   project: [
     { label: 'Active', value: false },
-    { label: 'Inactive', value: 'expired' },
     { label: 'Completed', value: true }
   ]
 }
 
 export default function PostCompletion ({ type, startTime, endTime, isFulfilled, fulfillPost, unfulfillPost }) {
-  var label
-
-  switch (isFulfilled) {
-    case false:
-      label = messages[type].find(choice => choice.value === false).label
-      break
-    case true:
-      label = messages[type].find(choice => choice.value === true).label
-      break
-    case 'expired':
-      label = messages[type].find(choice => choice.value === 'expired').label
-      break
-    default:
-      label = 'This is still needed'
-  }
+  const label = messages[type].find(choice => choice.value === !!isFulfilled).label
 
   const prompt = promptOptions[type]
   const choices = messages[type]

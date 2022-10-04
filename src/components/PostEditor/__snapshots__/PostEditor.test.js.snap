@@ -566,6 +566,7 @@ Array [
     Object {
       "acceptContributions": undefined,
       "details": undefined,
+      "donationsLink": null,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
       "fileUrls": undefined,
@@ -590,6 +591,7 @@ Array [
       "location": undefined,
       "locationId": "555",
       "memberIds": undefined,
+      "projectManagementLink": null,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
       "title": "valid title",
@@ -1473,6 +1475,7 @@ Array [
     Object {
       "acceptContributions": undefined,
       "details": undefined,
+      "donationsLink": null,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
       "fileUrls": undefined,
@@ -1494,6 +1497,7 @@ Array [
       "location": undefined,
       "locationId": "666",
       "memberIds": undefined,
+      "projectManagementLink": null,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
       "title": "valid title",
@@ -2162,6 +2166,48 @@ exports[`PostEditor renders contribution button 1`] = `
         </div>
       </div>
     </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Donation Link
+      </div>
+      <div
+        data-stylename="footerSection-groups"
+      >
+        <input
+          data-stylename="textInput"
+          disabled={false}
+          onChange={[Function]}
+          placeholder="Add a donation link (must be valid URL)"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      data-stylename="footerSection"
+    >
+      <div
+        data-stylename="footerSection-label"
+      >
+        Project Management
+      </div>
+      <div
+        data-stylename="footerSection-groups"
+      >
+        <input
+          data-stylename="textInput"
+          disabled={false}
+          onChange={[Function]}
+          placeholder="Add a project management link (must be valid URL)"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
     <ActionsBar
       groupCount={0}
       groups={Array []}
@@ -2338,6 +2384,7 @@ Array [
     Object {
       "acceptContributions": undefined,
       "details": undefined,
+      "donationsLink": null,
       "endTime": "2019-03-06T21:41:23.315Z",
       "eventInviteeIds": undefined,
       "fileUrls": undefined,
@@ -2362,6 +2409,7 @@ Array [
       "location": undefined,
       "locationId": "555",
       "memberIds": undefined,
+      "projectManagementLink": null,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
       "title": "valid title",

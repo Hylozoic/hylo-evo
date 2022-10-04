@@ -1,5 +1,5 @@
 .cardPadding {
-  padding: 0px $space-4x;
+  padding: 0px 10px;
 }
 
 .constrained.cardPadding {
@@ -40,7 +40,7 @@
 
 .headerLocation {
   display: block;
-  margin: -10px 0 10px 15px;
+  margin: -10px 0 10px 10px;
   composes: timestamp from 'css/typography.scss';
   text-overflow: ellipsis;
   overflow: hidden;

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches the snapshot for an orphan user 1`] = `
-<FeedBanner
+<StreamBanner
   all={true}
   currentUser={
     Object {
@@ -21,7 +21,7 @@ exports[`postPromptString renders a post prompt string 1`] = `"Hi anybody, what 
 exports[`postPromptString renders a post prompt string 2`] = `"Hi anybody, what's on your mind?"`;
 
 exports[`renders for all groups 1`] = `
-<FeedBanner
+<StreamBanner
   all={true}
   currentUser={
     Object {
@@ -37,7 +37,7 @@ exports[`renders for all groups 1`] = `
 `;
 
 exports[`renders with a group 1`] = `
-<FeedBanner
+<StreamBanner
   group={
     Object {
       "avatarUrl": "avatar.png",
@@ -46,6 +46,7 @@ exports[`renders with a group 1`] = `
       "name": "Spacebase",
     }
   }
+  isTesting={true}
 >
   <div
     data-stylename="banner"
@@ -106,5 +107,5 @@ exports[`renders with a group 1`] = `
       </div>
     </div>
   </div>
-</FeedBanner>
+</StreamBanner>
 `;
