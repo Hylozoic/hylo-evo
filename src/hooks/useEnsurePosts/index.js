@@ -8,7 +8,7 @@ import presentPost from 'store/presenters/presentPost'
 import {
   fetchPosts,
   getPosts
-} from 'components/FeedList/FeedList.store'
+} from 'routes/Stream/Stream.store'
 
 const selectAndPresentPosts = createSelector(
   (state, fetchPostsParam) => getPosts(state, fetchPostsParam),

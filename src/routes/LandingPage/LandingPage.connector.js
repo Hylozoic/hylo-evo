@@ -8,7 +8,7 @@ import getMyMemberships from 'store/selectors/getMyMemberships'
 import getRouteParam from 'store/selectors/getRouteParam'
 import presentGroup from 'store/presenters/presentGroup'
 import presentPost from 'store/presenters/presentPost'
-import { fetchPosts, getPosts } from 'components/FeedList/FeedList.store'
+import { fetchPosts, getPosts } from 'routes/Stream/Stream.store'
 
 export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
