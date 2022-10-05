@@ -171,15 +171,10 @@ module.exports = {
             }
           },
           sharedConfig.tsLoader,
+          // Plain CSS file loading, primarily used to load from `node_modules` provided stylesheets
+          // e.g. mapbox, slick carousel, tippy, etc
           {
-            test: /slick-carousel.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
-          {
-            test: /mapbox-gl.*\.css$/,
+            test: /\.css$/,
             use: [
               'style-loader',
               'css-loader'
@@ -187,7 +182,7 @@ module.exports = {
           },
           // CSS Modules for all SASS files not in resources or global
           {
-            test: /\.(css|scss|sass)$/,
+            test: /\.(scss|sass)$/,
             use: [
               MiniCssExtractPlugin.loader,
               sharedConfig.cssLoader,

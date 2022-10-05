@@ -19221,11 +19221,6 @@ tippy.js@^6.3.7:
   dependencies:
     "@popperjs/core" "^2.9.0"
 
-tippy@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/tippy/-/tippy-0.0.0.tgz#d6b656ca437caca67518e513e4a1b14beb7fc5d4"
-  integrity sha512-GOrE/mzoeL4t7Q2Bky+7efOZJKH3W95DZIUez+nUns37jHf8R9PEupuEx9F7HolxX+0fzzpKfas2N+LIlYHXAA==
-
 title-case@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/title-case/-/title-case-2.1.1.tgz#3e127216da58d2bc5becf137ab91dae3a7cd8faa"

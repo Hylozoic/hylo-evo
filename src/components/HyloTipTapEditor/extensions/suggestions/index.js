@@ -9,12 +9,14 @@ export default {
 
     const createPopup = clientRect => {
       return tippy('body', {
+        theme: 'suggestions',
         getReferenceClientRect: clientRect,
         appendTo: () => document.body,
         content: component.element,
         showOnCreate: true,
         interactive: true,
         trigger: 'manual',
+        arrow: false,
         offset: -10,
         placement: 'bottom-start'
       })

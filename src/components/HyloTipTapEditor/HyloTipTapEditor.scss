@@ -1,32 +1,34 @@
-:global .ProseMirror:focus {
-  outline: none;
-}
+:global {
+  .ProseMirror:focus {
+    outline: none;
+  }
 
-/* Placeholder (at the top) */
-:global .ProseMirror p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
+  /* Placeholder (at the top) */
+  .ProseMirror p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
 
-:global .ProseMirror a {
-  cursor: pointer;
-}
+  .ProseMirror a {
+    cursor: pointer;
+  }
 
-:global .iframe-wrapper {
-  position: relative;
-  // width: 80%;
-  height: 0;
-  padding-bottom: 56.25%;
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
- } 
+  .iframe-wrapper {
+    position: relative;
+    // width: 80%;
+    height: 0;
+    padding-bottom: 56.25%;
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    } 
+  }
 }
 
 // Mobile 

@@ -1,3 +1,13 @@
+:global {
+  .tippy-box[data-theme='suggestions'] {
+    background-color: transparent;
+  }
+
+  .tippy-content[data-theme='suggestions'] {
+    padding: 0
+  }
+}
+
 .items {
   background: #fff;
   border-radius: 0.5rem;
