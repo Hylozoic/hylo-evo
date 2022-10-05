@@ -12,23 +12,35 @@ export const handleClick = (push, groupSlug) => event => {
   const element = event.target
 
   switch (element?.nodeName.toLowerCase()) {
-    case 'a': {
-      const mentionMatch = element.getAttribute('href').match(/(topics|members)\/(.*)$/)
-
-      if (mentionMatch) {
-        event.preventDefault()
-
-        const pathFunc = mentionMatch[1] === 'topics' ? PathHelpers.topicPath : PathHelpers.mentionPath
-
-        return push(pathFunc(mentionMatch[2], groupSlug))
+    case 'span': {
+      if (element.classList.contains('mention')) {
+        return push(PathHelpers.mentionPath(element.getAttribute('data-id'), groupSlug))
+      }
+      if (element.classList.contains('topic')) {
+        return push(PathHelpers.topicPath(element.getAttribute('data-label'), groupSlug))
       }
 
-      // Any link with `target='_self'` will be handled by React Router
-      if (element.getAttribute('target') === '_self') {
-        event.preventDefault()
-
-        return push(element.getAttribute('href'))
-      }
+      break
     }
+
+    // // TODO: Move to processHTML on backend
+    // case 'a': {
+    //   const mentionMatch = element.getAttribute('href').match(/(topics|members)\/(.*)$/)
+
+    //   if (mentionMatch) {
+    //     event.preventDefault()
+
+    //     const pathFunc = mentionMatch[1] === 'topics' ? PathHelpers.topicPath : PathHelpers.mentionPath
+
+    //     return push(pathFunc(mentionMatch[2], groupSlug))
+    //   }
+
+    //   // Any link with `target='_self'` will be handled by React Router
+    //   if (element.getAttribute('target') === '_self') {
+    //     event.preventDefault()
+
+    //     return push(element.getAttribute('href'))
+    //   }
+    // }
   }
 }

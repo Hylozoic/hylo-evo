@@ -22,6 +22,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   onAddMention,
   onAddTopic,
   onAddLink,
+  currentLinkPreview,
   contentHTML,
   readOnly,
   hideMenu,
@@ -138,9 +139,12 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 
   const shouldShowBubbleMenu = ({ editor }) => {
     if (editor.isActive('link')) {
-      setSelectedLink(editor.getAttributes('link'))
+      const newLinkSelection = editor.getAttributes('link')
 
-      return true
+      if (newLinkSelection?.href !== currentLinkPreview?.href) {
+        setSelectedLink(newLinkSelection)
+        return true
+      }
     }
   }
 
