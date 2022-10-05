@@ -1,14 +1,12 @@
 import mixpanel from 'mixpanel-browser'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route } from 'react-router'
-import { Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router'
 import config, { isProduction, isTest } from 'config'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
 import PublicLayoutRouter from 'routes/PublicLayoutRouter'
 import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
-import HyloAppRouter from 'routes/HyloAppRouter'
 import checkLogin from 'store/actions/checkLogin'
 import { getAuthorized } from 'store/selectors/getAuthState'
 import { POST_DETAIL_MATCH } from 'util/navigation'
@@ -40,10 +38,7 @@ export default function RootRouter () {
 
   if (isAuthorized) {
     return (
-      <Switch>
-        <Route path='/hyloApp' component={HyloAppRouter} />
-        <Route component={AuthLayoutRouter} />
-      </Switch>
+      <Route component={AuthLayoutRouter} />
     )
   }
 
@@ -54,7 +49,6 @@ export default function RootRouter () {
         <Route path='/post/:id' component={PublicLayoutRouter} />
         <Route path='/public/groups' exact component={NonAuthLayoutRouter} />
         <Route path='/public' component={PublicLayoutRouter} />
-        <Route path='/hyloApp' component={HyloAppRouter} />
         <Route path={'(.*)' + POST_DETAIL_MATCH} component={CheckPublicPost} />
         <Route component={NonAuthLayoutRouter} />
       </Switch>

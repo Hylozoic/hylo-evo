@@ -1,7 +1,8 @@
 import React from 'react'
-import { StaticRouter } from 'react-router'
+import { StaticRouter, Switch, Route } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
 import { createBrowserHistory, createMemoryHistory } from 'history'
+import HyloAppRouter from 'routes/HyloAppRouter'
 import RootRouter from 'routes/RootRouter'
 import '../css/global/index.scss'
 
@@ -9,12 +10,16 @@ export const history = typeof window !== 'undefined'
   ? createBrowserHistory()
   : createMemoryHistory()
 
+// Note: `/hyloApp/*` routes will not invoke auth as auth cookie is already passed from webview
 export function clientRouter () {
   require('client/rollbar') // set up handling of uncaught errors
 
   return (
     <ConnectedRouter history={history}>
-      <RootRouter />
+      <Switch>
+        <Route path='/hyloApp' component={HyloAppRouter} />
+        <RootRouter />
+      </Switch>
     </ConnectedRouter>
   )
 }
@@ -23,7 +28,10 @@ export function clientRouter () {
 export function serverRouter (req, context) {
   return (
     <StaticRouter location={req.url} context={context}>
-      <RootRouter />
+      <Switch>
+        <Route path='/hyloApp' component={HyloAppRouter} />
+        <RootRouter />
+      </Switch>
     </StaticRouter>
   )
 }

@@ -23,24 +23,13 @@ export const handleClick = (push, groupSlug) => event => {
       break
     }
 
-    // // TODO: Move to processHTML on backend
-    // case 'a': {
-    //   const mentionMatch = element.getAttribute('href').match(/(topics|members)\/(.*)$/)
+    case 'a': {
+      // Any link with `target='_self'` will be handled by React Router
+      if (element.getAttribute('target') === '_self') {
+        event.preventDefault()
 
-    //   if (mentionMatch) {
-    //     event.preventDefault()
-
-    //     const pathFunc = mentionMatch[1] === 'topics' ? PathHelpers.topicPath : PathHelpers.mentionPath
-
-    //     return push(pathFunc(mentionMatch[2], groupSlug))
-    //   }
-
-    //   // Any link with `target='_self'` will be handled by React Router
-    //   if (element.getAttribute('target') === '_self') {
-    //     event.preventDefault()
-
-    //     return push(element.getAttribute('href'))
-    //   }
-    // }
+        return push(element.getAttribute('href'))
+      }
+    }
   }
 }
