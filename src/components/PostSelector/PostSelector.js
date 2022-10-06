@@ -214,7 +214,7 @@ export function SelectedPost ({ draggable, post, index, movePost, handleDelete }
   })
   const opacity = isDragging ? 0 : 1
   if (draggable) {
-  drag(drop(ref))
+    drag(drop(ref))
   }
 
   return <li key={post.id} ref={ref} style={{ opacity, cursor: draggable ? 'move' : 'default' }}>
