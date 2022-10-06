@@ -7,7 +7,6 @@ import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
 import { VscPreview } from 'react-icons/vsc'
 import Link from '@tiptap/extension-link'
-import Legacy from './extensions/Legacy'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
 import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
@@ -94,12 +93,43 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
+      Placeholder.configure({ placeholder }),
+
       Link.extend({
+        // This expands concatenated links back to full href for editing
+        parseHTML () {
+          return [
+            {
+              tag: 'a',
+              // Special handling for links who's innerHTML has been concatenated by the backend
+              contentElement: element => {
+                if (element.innerHTML.match(/…$/)) {
+                  const href = element.getAttribute('href')
+
+                  try {
+                    const url = new URL(href)
+
+                    element.innerHTML = `${url.hostname}${url.pathname !== '/' ? url.pathname : ''}`
+                    return element
+                  } catch (e) {
+                    element.innerHTML = href
+                    return element
+                  }
+                }
+
+                return element
+              }
+            }
+          ]
+        },
         addOptions () {
           return {
             ...this.parent?.(),
             openOnClick: false,
             autolink: true,
+            HTMLAttributes: {
+              target: null
+            },
             validate: href => {
               onAddLink(href)
               return true
@@ -108,13 +138,9 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      Placeholder.configure({ placeholder }),
-
       PeopleMentions({ maxSuggestions, groupIds, dispatch }),
 
       TopicMentions({ maxSuggestions, groupIds, dispatch }),
-
-      Legacy,
 
       Highlight
     ]

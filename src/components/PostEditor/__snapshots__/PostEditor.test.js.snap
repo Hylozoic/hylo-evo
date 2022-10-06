@@ -145,12 +145,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         value="valid title"
       />
       <ForwardRef(HyloTipTapEditor)
-        currentLinkPreview={
-          Object {
-            "id": "1",
-            "title": "a link",
-          }
-        }
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
@@ -389,12 +383,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         value="valid title"
       />
       <ForwardRef(HyloTipTapEditor)
-        currentLinkPreview={
-          Object {
-            "id": "1",
-            "title": "a link",
-          }
-        }
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
