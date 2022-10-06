@@ -57,7 +57,11 @@ export function mapStateToProps (state, props) {
   const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
   const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
   const search = getQuerystringParam('search', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
+  let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
+  // Only custom views can be sorted by manual order
+  if (!customView && sortBy === 'order') {
+    sortBy = 'updated'
+  }
   const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
 
   const fetchPostsParam = {
