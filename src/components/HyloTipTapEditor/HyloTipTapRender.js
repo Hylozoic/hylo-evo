@@ -5,7 +5,7 @@ import Highlight from '@tiptap/extension-highlight'
 import TopicMentions from './extensions/TopicMentions'
 import PeopleMentions from './extensions/PeopleMentions'
 import Legacy from './extensions/Legacy'
-import HyloLink from './extensions/HyloLink'
+import Link from '@tiptap/extension-link'
 
 export default function HyloTipTapRender ({ className, contentHTML }) {
   const editor = useEditor({
@@ -18,7 +18,7 @@ export default function HyloTipTapRender ({ className, contentHTML }) {
         }
       }),
 
-      HyloLink({ onAddLink: () => {} }),
+      Link,
 
       PeopleMentions({ maxSuggestions: 0, groupIds: [], dispatch: () => {} }),
 

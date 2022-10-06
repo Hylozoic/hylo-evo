@@ -39,7 +39,15 @@ export function fetchLinkPreview (url) {
   }
 }
 
-export async function pollingFetchLinkPreview (dispatch, url) {
+export async function pollingFetchLinkPreview (dispatch, providedURL) {
+  let url = providedURL
+
+  if (providedURL.match(/^\//)) {
+    url = `https://hylo.com${providedURL}`
+  } else if (!providedURL.match(/^http/)) {
+    url = `http://${providedURL}`
+  }
+
   const MAX_RETRIES = 4
   const poll = async (url, retry = 1) => {
     if (retry > MAX_RETRIES) return

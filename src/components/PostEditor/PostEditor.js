@@ -633,7 +633,6 @@ export default class PostEditor extends React.Component {
               onEscape={this.handleCancel}
               onAddTopic={this.handleAddTopic}
               onAddLink={this.handleAddLinkPreview}
-              currentLinkPreview={linkPreview}
               contentHTML={details}
               // groupIds={groupIds}
               readOnly={loading}

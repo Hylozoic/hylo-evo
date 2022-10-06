@@ -6,7 +6,7 @@ import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
 import { VscPreview } from 'react-icons/vsc'
-import HyloLink from './extensions/HyloLink'
+import Link from '@tiptap/extension-link'
 import Legacy from './extensions/Legacy'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
@@ -23,7 +23,6 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   onAddMention,
   onAddTopic,
   onAddLink,
-  currentLinkPreview,
   contentHTML,
   readOnly,
   hideMenu,
@@ -95,7 +94,19 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      HyloLink({ onAddLink }),
+      Link.extend({
+        addOptions () {
+          return {
+            ...this.parent?.(),
+            openOnClick: false,
+            autolink: true,
+            validate: href => {
+              onAddLink(href)
+              return true
+            }
+          }
+        }
+      }),
 
       Placeholder.configure({ placeholder }),
 
@@ -140,12 +151,9 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 
   const shouldShowBubbleMenu = ({ editor }) => {
     if (onAddLink && editor.isActive('link')) {
-      const newLinkSelection = editor.getAttributes('link')
+      setSelectedLink(editor.getAttributes('link'))
 
-      if (newLinkSelection?.href !== currentLinkPreview?.href) {
-        setSelectedLink(newLinkSelection)
-        return true
-      }
+      return true
     }
   }
 
