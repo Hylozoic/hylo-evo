@@ -5,14 +5,26 @@ import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findTopics from 'store/actions/findTopics'
 
-export const TopicMentions = ({ dispatch, maxSuggestions, groupIds }) =>
+export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection }) =>
   Mention
     .extend({
       name: 'topic',
       addStorage () {
         return {
           loading: false,
-          groupIds
+          groupIds,
+          onSelection
+        }
+      },
+      onUpdate ({ transaction }) {
+        if (this.storage.onSelection) {
+          // Look into `doc.descendents` for possible better or more idiomatic way to get this last node
+          const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
+
+          if (firstTransactionStepName && firstTransactionStepName === 'topic') {
+            const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
+            this.storage.onSelection({ name: attrs.id, id: attrs.id })
+          }
         }
       }
     })
@@ -20,8 +32,8 @@ export const TopicMentions = ({ dispatch, maxSuggestions, groupIds }) =>
       HTMLAttributes: {
         class: 'topic'
       },
-      renderLabel: ({ options, node }) => {
-        return `${options.suggestion.char}${node.attrs.label}`
+      renderLabel: ({ node }) => {
+        return node.attrs.label
       },
       suggestion: {
         char: '#',
@@ -41,10 +53,10 @@ export const TopicMentions = ({ dispatch, maxSuggestions, groupIds }) =>
           editor.extensionStorage.topic.loading = false
 
           const results = matchedTopics?.payload.getData().items
-            .map(t => ({ id: t.topic.id, label: t.topic.name }))
+            .map(t => ({ id: t.topic.name, label: `#${t.topic.name}` }))
 
           if (query?.trim().length > 2 && results) {
-            results.unshift({ id: query, label: query })
+            results.unshift({ id: query, label: `#${query}` })
           }
 
           editor.extensionStorage.topic.loading = false

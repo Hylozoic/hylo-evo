@@ -119,15 +119,17 @@ export default class TopicSelector extends Component {
     )
   }
 
-  findTopicSuggestions = async (input) => {
-    // if (this.state.selected.length >= MAX_TOPICS) return []
+  loadOptions = async input => {
+    input = input.charAt(0) === '#' ? input.slice(1) : input
+
+    if (this.state.selected.length >= MAX_TOPICS || isEmpty(input)) return []
 
     const { findTopics, defaultTopics } = this.props
     const response = await findTopics({ autocomplete: input })
     const topicResults = response.payload.getData().items.map(get('topic'))
     const sortedTopicResults = sortBy(
       [t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'],
-      topicResults
+      topicResults.map(t => ({ ...t, value: t.name }))
     )
     const filteredDefaultTopics = defaultTopics.filter(topic => {
       return includes(
@@ -145,16 +147,6 @@ export default class TopicSelector extends Component {
     ]
   }
 
-  loadOptions = async (input) => {
-    if (this.state.selected.length >= MAX_TOPICS || isEmpty(input)) return []
-
-    if (input.charAt(0) === '#') {
-      input = input.slice(1)
-    }
-
-    return this.findTopicSuggestions(input)
-  }
-
   handleTopicsChange = newTopics => {
     const topics = newTopics.filter(t => !Validators.validateTopicName(t.name))
 
@@ -164,6 +156,7 @@ export default class TopicSelector extends Component {
         topicsEdited: true
       })
     }
+
     this.props.onChange && this.props.onChange(topics)
   }
 
@@ -174,8 +167,8 @@ export default class TopicSelector extends Component {
 
     return (
       <AsyncCreatableSelect
-        placeholder={placeholder}
         isMulti
+        placeholder={placeholder}
         name='topics'
         value={selected}
         classNamePrefix='topic-selector'
@@ -183,26 +176,28 @@ export default class TopicSelector extends Component {
         styles={inputStyles}
         loadOptions={this.loadOptions}
         onChange={this.handleTopicsChange}
+        isValidNewOption={input => input && input.replace('#', '').length > 1}
         getNewOptionData={(inputValue, optionLabel) => {
-          const sanitizedValue = inputValue.charAt(0) === '#' ? inputValue.slice(1) : inputValue
+          if (selected.length >= MAX_TOPICS) return null
 
-          return selected.length < MAX_TOPICS
-            ? {
-              name: sanitizedValue,
-              value: sanitizedValue,
-              __isNew__: true
-            } : null
+          const sanitizedValue = inputValue.replace('#', '')
+
+          return {
+            name: sanitizedValue,
+            value: sanitizedValue,
+            __isNew__: true
+          }
         }}
         noOptionsMessage={() => {
-          return selected.length >= MAX_TOPICS ? `You can only select up to ${MAX_TOPICS} topics` : 'Start typing to add a topic'
+          return selected.length >= MAX_TOPICS
+            ? `You can only select up to ${MAX_TOPICS} topics`
+            : 'Start typing to add a topic'
         }}
         formatOptionLabel={(item, { context }) => {
-          if (item.name === '') {
-            return <span>Start typing to add a topic</span>
-          }
           if (context === 'value') {
             return <div styleName='topicLabel'>#{item.name}</div>
           }
+
           if (item.__isNew__) {
             return <div>Create topic &quot;#{item.value}&quot;</div>
           }

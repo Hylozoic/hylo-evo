@@ -26,7 +26,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   readOnly,
   hideMenu,
   maxSuggestions = 7,
-  // People Mention suggestions will use this to filter if provided
+  // If provided, Mention and Topic suggestions will use this to filter
   groupIds
 }, ref) {
   const dispatch = useDispatch()
@@ -37,26 +37,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 
     onBeforeCreate,
 
-    onUpdate: ({ editor, transaction }) => {
-      // Look into `doc.descendents` for possible better or more idiomatic way to get this last node
-      const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
-
-      if (firstTransactionStepName) {
-        const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
-
-        // Maybe move these to onUpdate for each respective plugin?
-        switch (firstTransactionStepName) {
-          case 'topic': {
-            if (onAddTopic) onAddTopic({ id: attrs.id, name: attrs.label })
-            break
-          }
-          case 'mention': {
-            if (onAddMention) onAddMention(attrs)
-            break
-          }
-        }
-      }
-
+    onUpdate: ({ editor }) => {
       if (
         !onChange ||
         (contentHTML === editor.getHTML()) ||
@@ -138,9 +119,9 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      PeopleMentions({ maxSuggestions, groupIds, dispatch }),
+      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, dispatch }),
 
-      TopicMentions({ maxSuggestions, groupIds, dispatch }),
+      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, dispatch }),
 
       Highlight
     ]

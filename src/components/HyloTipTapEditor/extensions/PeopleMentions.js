@@ -4,7 +4,7 @@ import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findMentions from 'store/actions/findMentions'
 
-export const PeopleMentions = ({ dispatch, maxSuggestions, groupIds }) =>
+export const PeopleMentions = ({ dispatch, groupIds, maxSuggestions, onSelection }) =>
   // Mentions (https://github.com/ueberdosis/tiptap/issues/2219#issuecomment-984662243)
   Mention
     .extend({
@@ -12,7 +12,21 @@ export const PeopleMentions = ({ dispatch, maxSuggestions, groupIds }) =>
       addStorage () {
         return {
           loading: false,
-          groupIds
+          groupIds,
+          onSelection
+
+        }
+      },
+      onUpdate ({ transaction }) {
+        if (this.storage.onSelection) {
+          // Look into `doc.descendents` for possible better or more idiomatic way to get this last node
+          const firstTransactionStepName = transaction?.steps[0]?.slice?.content?.content[0]?.type?.name
+
+          if (firstTransactionStepName && firstTransactionStepName === 'mention') {
+            const attrs = transaction?.steps[0]?.slice?.content?.content[0]?.attrs
+
+            this.storage.onSelection(attrs)
+          }
         }
       }
     })

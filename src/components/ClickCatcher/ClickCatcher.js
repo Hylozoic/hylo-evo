@@ -18,8 +18,9 @@ export const handleClick = (push, groupSlug) => event => {
       if (element.classList.contains('mention')) {
         return push(PathHelpers.mentionPath(element.getAttribute('data-id'), groupSlug))
       }
+
       if (element.classList.contains('topic')) {
-        return push(PathHelpers.topicPath(element.getAttribute('data-label'), groupSlug))
+        return push(PathHelpers.topicPath(element.getAttribute('data-id'), groupSlug))
       }
 
       break

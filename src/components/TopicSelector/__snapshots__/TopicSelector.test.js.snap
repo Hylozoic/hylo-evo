@@ -7,6 +7,7 @@ exports[`TopicSelector renders correctly (with min props) 1`] = `
   formatOptionLabel={[Function]}
   getNewOptionData={[Function]}
   isMulti={true}
+  isValidNewOption={[Function]}
   loadOptions={[Function]}
   name="topics"
   noOptionsMessage={[Function]}
