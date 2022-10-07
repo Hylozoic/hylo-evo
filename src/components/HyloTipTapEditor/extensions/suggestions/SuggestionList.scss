@@ -1,11 +1,14 @@
 :global {
   .tippy-box[data-theme='suggestions'] {
     background-color: transparent;
+    .tippy-content {
+      padding: 0
+    }  
+    .tippy-arrow {
+      color: $color-caribbean-green;
+    }  
   }
 
-  .tippy-content[data-theme='suggestions'] {
-    padding: 0
-  }
 }
 
 .items {
@@ -15,7 +18,7 @@
   color: $color-rhino-50;
   font-size: 0.9rem;
   overflow: hidden;
-  padding: 0.2rem;
+  // padding: 0.2rem;
   position: relative;
 }
 
