@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-// import Moment from 'moment'
+// import Moment from 'moment-timezone'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'

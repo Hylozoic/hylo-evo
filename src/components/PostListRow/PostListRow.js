@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import Moment from 'moment'
+import Moment from 'moment-timezone'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
