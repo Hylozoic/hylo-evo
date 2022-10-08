@@ -149,7 +149,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -387,7 +386,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -669,7 +667,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -825,7 +822,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -1009,7 +1005,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -1193,7 +1188,6 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Describe the resource that is available"
         readOnly={false}
       />
@@ -1378,7 +1372,6 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -1576,7 +1569,6 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={true}
       />
@@ -1733,7 +1725,6 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={true}
       />
@@ -1890,7 +1881,6 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -2048,7 +2038,6 @@ exports[`PostEditor renders contribution button 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />
@@ -2287,7 +2276,6 @@ exports[`PostEditor renders with min props 1`] = `
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
-        onEscape={[Function]}
         placeholder="Add a description"
         readOnly={false}
       />

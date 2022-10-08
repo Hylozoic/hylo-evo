@@ -1,4 +1,4 @@
-$comment-left-margin: 69px;
+$comment-left-margin: 35px;
 $comment-row-padding: 25px;
 
 .comment {
@@ -62,14 +62,26 @@ $comment-row-padding: 25px;
   }
 }
 
+.cancelIcon {
+  color: $color-amaranth;
+}
+
 .text {
   composes: bdy-lt-sm from 'css/typography.scss';
-  margin-left: 35px;
+  margin-left: $comment-left-margin;
 
   strong {
     font-family: 'Circular Bold';
     color: rgba(66, 94, 114, 1.0);
   }
+}
+
+.editing {
+  composes: bdy-lt-sm from 'css/typography.scss';
+  margin-left: $comment-left-margin;
+  padding: 10px;
+  border-radius: 0.5rem;
+  border: 1px solid $color-cape-cod-10;
 }
 
 .reply {
@@ -115,14 +127,6 @@ $comment-row-padding: 25px;
     margin-left: 30px;
     margin-top: 15px;
 }
-
-.editor {
-  composes: bdy-lt-sm from 'css/typography.scss';
-  margin-left: $comment-left-margin;
-  padding: 3px 5px 10px 5px;
-  border: 1px solid $color-cape-cod-10;
-}
-
 
 @media screen and (max-width: 500px) {
   .comment {

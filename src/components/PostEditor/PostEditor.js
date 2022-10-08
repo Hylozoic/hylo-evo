@@ -630,7 +630,8 @@ export default class PostEditor extends React.Component {
               styleName='editor'
               placeholder={detailPlaceholder}
               onChange={this.handleDetailsChange}
-              onEscape={this.handleCancel}
+              // Disable edit cancel through escape due to event bubbling issues
+              // onEscape={this.handleCancel}
               onAddTopic={this.handleAddTopic}
               onAddLink={this.handleAddLinkPreview}
               contentHTML={details}

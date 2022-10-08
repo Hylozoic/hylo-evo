@@ -19,6 +19,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   onBeforeCreate = () => {},
   onChange,
   onEnter,
+  onEscape,
   onAddMention,
   onAddTopic,
   onAddLink,
@@ -63,6 +64,10 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
             Enter: ({ editor }) => {
               if (!onEnter) return false
               return onEnter(editor.getHTML())
+            },
+            Escape: () => {
+              if (!onEscape) return false
+              return onEscape()
             }
           }
         }
@@ -112,7 +117,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
               target: null
             },
             validate: href => {
-              onAddLink(href)
+              onAddLink && onAddLink(href)
               return true
             }
           }

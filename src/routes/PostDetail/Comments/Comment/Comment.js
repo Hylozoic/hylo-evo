@@ -34,20 +34,22 @@ export class Comment extends Component {
   editor = React.createRef()
 
   state = {
-    editing: false
+    editing: false,
+    editedText: null
   }
 
-  editComment = () => {
+  handleEditComment = () => {
     this.setState({ editing: true })
   }
 
-  handleOnEscape = () => {
-    this.setState({ editing: false })
+  handleEditCancel = () => {
+    this.setState({ editedText: null, editing: false })
+    this.editor.current.setContent(this.props.comment.text)
 
     return true
   }
 
-  handleOnEnter = contentHTML => {
+  handleEditSave = contentHTML => {
     const { comment } = this.props
 
     if (this.editor?.current && this.editor.current.isEmpty()) {
@@ -55,8 +57,8 @@ export class Comment extends Component {
       return true
     }
 
-    this.setState({ editing: false })
     this.props.updateComment(comment.id, contentHTML)
+    this.setState({ editing: false })
 
     // Tell Editor this keyboard event was handled and to end propagation.
     return true
@@ -70,7 +72,7 @@ export class Comment extends Component {
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
-      { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
+      { icon: 'Edit', label: 'Edit', onClick: isCreator && this.handleEditComment },
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
@@ -88,28 +90,27 @@ export class Comment extends Component {
             <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
             </div>
-            {dropdownItems.length > 0 && (
+            {editing && (
+              <Icon name='Ex' styleName='cancelIcon' onClick={this.handleEditCancel} />
+            )}
+            {!editing && dropdownItems.length > 0 && (
               <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />
             )}
           </div>
         </div>
         <CardImageAttachments attachments={attachments} linked styleName='images' />
         <CardFileAttachments attachments={attachments} styleName='files' />
-        {editing && (
+        <ClickCatcher groupSlug={slug}>
           <HyloTipTapEditor
-            styleName='editor'
+            styleName={editing ? 'editing' : 'text'}
             contentHTML={text || ''}
             hideMenu
-            onEscape={this.handleOnEscape}
-            onEnter={this.handleOnEnter}
+            readOnly={!editing}
+            onEscape={this.handleEditCancel}
+            onEnter={this.handleEditSave}
             ref={this.editor}
           />
-        )}
-        {!editing && (
-          <ClickCatcher groupSlug={slug}>
-            <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: text }} />
-          </ClickCatcher>
-        )}
+        </ClickCatcher>
       </div>
     )
   }
