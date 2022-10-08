@@ -88,11 +88,12 @@ export function textLengthHTML (htmlOrText, options) {
 }
 
 export const markdown = text => {
-  // https://github.com/markedjs/marked/issues/882#issuecomment-781585009
   marked.use({
     tokenizer: {
       url (src) {
-        // having nothing here disables gfm autolinks
+        // NOTE: having nothing here disables gfm autolinks:
+        // https://github.com/markedjs/marked/issues/882#issuecomment-781585009
+        // New option coming in later version: https://github.com/sourcegraph/sourcegraph/pull/42203/files
       }
     }
   })
