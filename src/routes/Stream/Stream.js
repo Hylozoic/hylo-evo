@@ -118,7 +118,8 @@ export default class Stream extends Component {
     return (
       <>
         {topicName
-          ? <TopicFeedHeader
+          ? (
+            <TopicFeedHeader
               isSubscribed={groupTopic && groupTopic.isSubscribed}
               toggleSubscribe={
                 groupTopic
@@ -134,7 +135,8 @@ export default class Stream extends Component {
               bannerUrl={group && group.bannerUrl}
               newPost={newPost}
             />
-          : <StreamBanner
+          ) : (
+            <StreamBanner
               customPostTypes={customPostTypes}
               customActivePostsOnly={customActivePostsOnly}
               customViewTopics={customViewTopics}
@@ -149,7 +151,8 @@ export default class Stream extends Component {
               type={postTypeFilter}
               icon={viewIcon}
               label={viewName}
-            />}
+            />
+          )}
         <ViewControls
           routeParams={routeParams} view={view} customPostTypes={customPostTypes}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
