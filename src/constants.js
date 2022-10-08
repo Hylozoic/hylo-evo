@@ -26,12 +26,8 @@ export const WebViewMessageTypes = {
   }
 }
 
-// These are used when creating posts and comments with mentions and topic tags
-// in them. The reason TOPIC_ENTITY_TYPE is '#mention' as opposed to something
-// more human-understandable has to do with the limitations of the Draft.js plugin used
-// in hylo-evo.
-export const MENTION_ENTITY_TYPE = 'mention'
-export const TOPIC_ENTITY_TYPE = '#mention'
+// https://regex101.com/r/0M6mbp/1
+export const HYLO_URL_REGEX = /^(https?:\/?\/?)?(www\.|staging\.)?(hylo\.com|localhost)(:?\d{0,6})(.*)/gi
 
 // When/if ReduxORM models become shared merge add these back into the Group model
 export const ALL_GROUPS_CONTEXT_SLUG = 'all'
