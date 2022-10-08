@@ -29,12 +29,18 @@ ul li p:last-child {
   margin-bottom: 0;
 }
 
+a {
+  color: #0275d8
+}
+
+a:focus,
+a:hover {
+  color: #014c8c
+}
+
+a.hylo-link,
 .mention,
-.topic,
-.hashtag,
-// NOTE: Extra not `href` and `tabindex` stuff is to grab back from bootstrap
-a:not([href]):not([tabindex])[data-entity-type="#mention"],
-a:not([href]):not([tabindex])[data-entity-type="mention"]
+.topic
 {
   color: $color-caribbean-green;
   cursor: pointer;
@@ -42,15 +48,6 @@ a:not([href]):not([tabindex])[data-entity-type="mention"]
     text-decoration: none;
     color: $color-gossamer;
   }
-}
-
-.linkified {
-  color: #0275d8
-}
-
-.linkified:focus,
-.linkified:hover {
-  color: #014c8c
 }
 
 .hdr-display {

@@ -1,8 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { PathHelpers } from 'hylo-shared'
-
-export const HYLO_URL_REGEX = /^(https?:\/?\/?)?(www\.|staging\.)?(hylo\.com|localhost)(:?\d{0,6})(.*)/gi // https://regex101.com/r/0GZMny/1
+import { PathHelpers, HYLO_URL_REGEX } from 'hylo-shared'
 
 export default function ClickCatcher ({ handleMouseOver, groupSlug, ...props }) {
   const history = useHistory()
@@ -27,25 +25,35 @@ export const handleClick = (push, groupSlug) => event => {
     }
 
     case 'a': {
-      let pathname
-      const hyloLinkMatch = element.getAttribute('href').matchAll(HYLO_URL_REGEX).next()
+      const href = element.getAttribute('href')
 
-      if (hyloLinkMatch?.value && hyloLinkMatch?.value?.length === 6) {
-        console.log(hyloLinkMatch.value[5])
-        pathname = hyloLinkMatch.value[5] === '' ? '/' : hyloLinkMatch.value[5]
+      /*
+        Matches for local links and forwards pathname to react router
+        The matching could instead be skipped, relying upon  the `hylo-link`
+        class which is added by the backend for the same match.
+      */
+      if (href) {
+        let pathname
+        const hyloLinkMatch = href.matchAll(HYLO_URL_REGEX).next()
+
+        if (hyloLinkMatch?.value && hyloLinkMatch?.value?.length === 6) {
+          console.log(hyloLinkMatch.value[5])
+          pathname = hyloLinkMatch.value[5] === '' ? '/' : hyloLinkMatch.value[5]
+        }
+
+        if (href.match(/^\//)) {
+          pathname = href
+        }
+
+        if (pathname) {
+          event.preventDefault()
+
+          return push(pathname)
+        }
+
+        // default to external link
+        element.setAttribute('target', '_blank')
       }
-
-      if (element.getAttribute('href').match(/^\//)) {
-        pathname = element.getAttribute('href')
-      }
-
-      if (pathname) {
-        event.preventDefault()
-
-        return push(pathname)
-      }
-
-      element.setAttribute('target', '_blank')
     }
   }
 }

@@ -10938,10 +10938,10 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-hylo-shared@4.1.0-beta.12:
-  version "4.1.0-beta.12"
-  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-4.1.0-beta.12.tgz#ab92b7c0bb5759e3314eda6b5310901e7d248e7f"
-  integrity sha512-UpUFOooGGdaL/jfiQqOX0Jkg8Kx5fPuUqmQP7I/fBKECk7jCn6rhHuOnmWnqfPOxSwuTt4Wj20Gc3QP7bjjEwg==
+hylo-shared@4.1.0-beta.13:
+  version "4.1.0-beta.13"
+  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-4.1.0-beta.13.tgz#589bad46e0d3290cf2e551bd8ae31e53bc2a716c"
+  integrity sha512-fcjEmh3ts6caOM87Mv2Uo8dIFWUnOAXNA/VPfCAfJMa8m9O9Frb4FJgqZAJolNxyQKcQjTjvtRW8VHMJ2AcTIQ==
   dependencies:
     coordinate-parser "^1.0.7"
     html-to-text "^8.1.0"
