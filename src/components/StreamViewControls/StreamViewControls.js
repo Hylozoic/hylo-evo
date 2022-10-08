@@ -43,12 +43,11 @@ const StreamViewControls = (props) => {
   const [searchState, setSearchState] = useState('')
   const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? postTypeOptions.filter(postType => postType.label === 'All Posts' || customPostTypes.includes(postType.id)) : postTypeOptions
   const handleSearchToggle = () => {
-    changeSearch('')
     setSearchActive(!searchActive)
   }
 
   return (
-    <div styleName={cx('stream-view-container', { 'search-active': searchActive })}>
+    <div styleName={cx('stream-view-container', { 'search-active': searchActive || searchValue, extend: searchActive && searchValue })}>
       <div styleName='stream-view-ctrls'>
         <div styleName={cx('search-toggle', { active: searchActive })} onClick={handleSearchToggle}>
           <Icon name='Search' styleName={cx('search-icon', { active: searchActive })} />
@@ -90,7 +89,7 @@ const StreamViewControls = (props) => {
         {!['projects'].includes(view) && makeDropdown(postTypeFilter, postTypeOptionsForFilter, changeTab)}
         <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>
-      {searchActive && !searchValue &&
+      {searchActive &&
         <div>
           <input
             autoFocus
@@ -100,6 +99,7 @@ const StreamViewControls = (props) => {
             onKeyUp={e => {
               if (e.keyCode === 13) {
                 setSearchState('')
+                setSearchActive(false)
                 changeSearch(e.target.value)
                 e.target.blur()
               }

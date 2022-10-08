@@ -64,49 +64,59 @@ export default class Events extends Component {
     if (!currentUser) return <Loading />
     if (membershipsPending) return <Loading />
 
-    return <div>
-      <StreamBanner
-        group={group}
-        currentUser={currentUser}
-        type='event'
-        context={context}
-        newPost={newPost}
-        routeParams={routeParams}
-        querystringParams={querystringParams}
-        currentUserHasMemberships={currentUserHasMemberships}
-        icon='Events'
-        label='Events' />
-
-      <div styleName='viewStyles.stream-view-ctrls'>
-        <Dropdown className={viewStyles.dropdown}
-          toggleChildren={<span styleName='viewStyles.dropdown-label'>
-            <Icon name='ArrowDown' />
-            {timeframeOptions.find(o => o.id === timeframe).label}
-          </span>}
-          items={timeframeOptions.map(({ id, label }) => ({
-            label,
-            onClick: () => updateTimeframe(id)
-          }))}
+    return (
+      <div>
+        <StreamBanner
+          group={group}
+          currentUser={currentUser}
+          type='event'
+          context={context}
+          newPost={newPost}
+          routeParams={routeParams}
+          querystringParams={querystringParams}
+          currentUserHasMemberships={currentUserHasMemberships}
+          icon='Events'
+          label='Events'
         />
+        <div styleName='viewStyles.stream-view-container'>
+          <div styleName='viewStyles.stream-view-ctrls'>
+            <Dropdown
+              className={viewStyles.dropdown}
+              toggleChildren={
+                <span styleName='viewStyles.dropdown-label'>
+                  <Icon name='ArrowDown' />
+                  {timeframeOptions.find(o => o.id === timeframe).label}
+                </span>
+              }
+              items={timeframeOptions.map(({ id, label }) => ({
+                label,
+                onClick: () => updateTimeframe(id)
+              }))}
+            />
+          </div>
+        </div>
+
+        {pending && <Loading />}
+
+        <div styleName={cx('s.events-stream', { [s.collapsedState]: collapsedState })}>
+          {!pending && posts.length === 0 ? <NoPosts message={`No ${timeframe === 'future' ? 'upcoming' : 'past'} events`} /> : ''}
+
+          {posts.map(post => {
+            const expanded = post.id === routeParams.postId
+            return (
+              <PostCard
+                routeParams={routeParams}
+                post={post}
+                styleName={cx('s.event-card', { 's.expanded': expanded })}
+                expanded={expanded}
+                key={post.id}
+              />
+            )
+          })}
+        </div>
+        <ScrollListener onBottom={this.fetchMoreEvents} elementId={CENTER_COLUMN_ID} />
+
       </div>
-
-      {pending && <Loading />}
-
-      <div styleName={cx('s.events-stream', { [s.collapsedState]: collapsedState })}>
-        {!pending && posts.length === 0 ? <NoPosts message={`No ${timeframe === 'future' ? 'upcoming' : 'past'} events`} /> : ''}
-
-        {posts.map(post => {
-          const expanded = post.id === routeParams.postId
-          return <PostCard
-            routeParams={routeParams}
-            post={post}
-            styleName={cx('s.event-card', { 's.expanded': expanded })}
-            expanded={expanded}
-            key={post.id} />
-        })}
-      </div>
-      <ScrollListener onBottom={this.fetchMoreEvents} elementId={CENTER_COLUMN_ID} />
-
-    </div>
+    )
   }
 }

@@ -36,7 +36,6 @@ import Groups from 'routes/Groups'
 import GroupExplorer from 'routes/GroupExplorer'
 import Drawer from './components/Drawer'
 import Events from 'routes/Events'
-import Feed from 'routes/Feed'
 import Stream from 'routes/Stream'
 import MapExplorer from 'routes/MapExplorer'
 import JoinGroup from 'routes/JoinGroup'
@@ -292,7 +291,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
-              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
+              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Stream} />
               <Route path='/:context(all)/:view(topics)' component={AllTopics} />
               <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(currentGroup)} />
               {/* **** Group Routes **** */}
@@ -321,7 +320,7 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
               <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Stream} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />

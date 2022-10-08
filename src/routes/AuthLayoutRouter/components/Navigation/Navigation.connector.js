@@ -35,7 +35,7 @@ export function mapStateToProps (state, props) {
     createPath: `${props.location.pathname}/create${props.location.search}`,
     eventsPath: viewUrl('events', routeParams),
     explorePath: !isAllOrPublicPath && viewUrl('explore', routeParams),
-    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
+    streamFetchPostsParam: get('Stream.fetchPostsParam', state),
     groupId: get('id', group),
     groupMembership,
     groupsPath: viewUrl('groups', routeParams),
@@ -56,7 +56,7 @@ const dropPostResults = makeDropQueryResults(FETCH_POSTS)
 export function mapDispatchToProps (dispatch, props) {
   return {
     resetNewPostCount: (id, type) => dispatch(resetNewPostCount(id, type)),
-    dropPostResultsMaker: feedListFetchPostsParam => () => dispatch(dropPostResults(feedListFetchPostsParam)),
+    dropPostResultsMaker: streamFetchPostsParam => () => dispatch(dropPostResults(streamFetchPostsParam)),
     toggleGroupMenu: () => dispatch(toggleGroupMenu())
   }
 }
@@ -64,7 +64,7 @@ export function mapDispatchToProps (dispatch, props) {
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const {
     badge,
-    feedListFetchPostsParam,
+    streamFetchPostsParam,
     groupMembership
   } = stateProps
 
@@ -72,7 +72,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    clearFeedList: dispatchProps.dropPostResultsMaker(feedListFetchPostsParam),
+    clearStream: dispatchProps.dropPostResultsMaker(streamFetchPostsParam),
     clearBadge: badge
       ? () => dispatchProps.resetNewPostCount(groupMembership.group.id, 'Membership')
       : () => {}
