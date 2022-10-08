@@ -1,16 +1,22 @@
 $preview-image-dimension: $space-20x;
 
+// Note: The styles below are used also by PostEditor > LinkPreview
+
 .container {
   display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  margin-bottom: $space-2x;
   background-color: $color-athens-gray;
   border: 1px solid $color-athens-gray-dark;
-  border-radius: 4px;
-  padding: $space-2x;
-  margin-bottom: 25px;
-  align-items: top;
   &:hover {
     text-decoration: none;
   }
+}
+
+.link-preview {
+  display: flex;
+  padding: 0.6em;
 }
 
 .image {
@@ -26,6 +32,8 @@ $preview-image-dimension: $space-20x;
 .text {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  word-break: break-word;
 }
 
 .title {
