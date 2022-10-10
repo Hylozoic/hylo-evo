@@ -100,6 +100,16 @@ export const markdown = text => {
   return marked.parse(text || '', { gfm: true, breaks: true })
 }
 
+// HTML Generation Helpers
+
+export const mentionHTML = mentioned => (
+  `<span data-type="mention" class="mention" data-id="${mentioned.id}" data-label="Loren Johnson">${mentioned.name}</span>`
+)
+
+export const topicHTML = topicName => (
+  `<span data-type="topic" class="topic" data-id="${topicName}" data-label="#${topicName}">${topicName}</span>`
+)
+
 // Date string related
 
 export function humanDate (date, short) {

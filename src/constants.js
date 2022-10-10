@@ -16,7 +16,9 @@ export const WebViewMessageTypes = {
   LEFT_GROUP: 'LEFT_GROUP',
   NAVIGATION: 'NAVIGATION',
   EDITOR: {
+    BLUR: 'BLUR',
     CLEAR_CONTENT: 'CLEAR_CONTENT',
+    FOCUS: 'FOCUS',
     LOADED: 'LOADED',
     ON_ADD_LINK: 'ON_ADD_LINK',
     ON_ADD_TOPIC: 'ON_ADD_TOPIC',
