@@ -18,18 +18,18 @@ export default class TopicNavigation extends Component {
     seeAllUrl: string,
     backUrl: string,
     clearBadge: func,
-    clearFeedList: func,
+    clearStream: func,
     collapsed: bool,
     expand: func
   }
 
   onClickTopic = groupTopic => {
-    const { clearBadge, clearFeedList } = this.props
+    const { clearBadge, clearStream } = this.props
     const { current, groupTopicId, newPostCount } = groupTopic
 
     if (groupTopicId) {
       // XXX: not sure exactly what this doing and if we need, we have not been doing this for a while and things seemed to work
-      current && clearFeedList()
+      current && clearStream()
       newPostCount > 0 && clearBadge(groupTopicId)
     }
   }

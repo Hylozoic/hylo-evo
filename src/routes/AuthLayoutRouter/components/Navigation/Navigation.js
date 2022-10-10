@@ -14,7 +14,7 @@ export default function Navigation (props) {
     badge,
     className,
     clearBadge,
-    clearFeedList,
+    clearStream,
     createPath,
     collapsed,
     explorePath,
@@ -37,7 +37,7 @@ export default function Navigation (props) {
 
   const homeOnClick = () => {
     if (window.location.pathname === rootPath) {
-      clearFeedList()
+      clearStream()
       clearBadge()
     }
   }

@@ -16,7 +16,7 @@ import {
   fetchPosts,
   getPosts,
   getHasMorePosts
-} from 'components/FeedList/FeedList.store.js'
+} from 'routes/Stream/Stream.store.js'
 
 import { updateTimeframe } from './Events.store'
 
