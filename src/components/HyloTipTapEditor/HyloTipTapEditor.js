@@ -14,39 +14,28 @@ import 'tippy.js/dist/tippy.css'
 import './HyloTipTapEditor.scss'
 
 export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
+  contentHTML,
   className,
-  placeholder,
+  containerClassName,
+  // If provided, Mention and Topic suggestions will use this to filter
+  groupIds,
+  hideMenu,
+  maxSuggestions = 7,
+  onAddLink,
+  onAddMention,
+  onAddTopic,
   onBeforeCreate = () => {},
   onChange,
   onEnter,
   onEscape,
-  onAddMention,
-  onAddTopic,
-  onAddLink,
-  contentHTML,
-  readOnly,
-  hideMenu,
-  maxSuggestions = 7,
-  // If provided, Mention and Topic suggestions will use this to filter
-  groupIds
+  placeholder,
+  readOnly
 }, ref) {
   const dispatch = useDispatch()
   const editorRef = useRef(null)
   const [selectedLink, setSelectedLink] = useState()
   const editor = useEditor({
     content: contentHTML,
-
-    onBeforeCreate,
-
-    onUpdate: ({ editor }) => {
-      if (
-        !onChange ||
-        (contentHTML === editor.getHTML()) ||
-        (editor.isEmpty && isEmpty(contentHTML))
-      ) return
-
-      onChange(editor.getHTML())
-    },
 
     extensions: [
       // Key events respond are last extension first, these will be last
@@ -129,10 +118,29 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
       TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, dispatch }),
 
       Highlight
-    ]
+    ],
+
+    onBeforeCreate,
+
+    onUpdate: ({ editor }) => {
+      if (
+        !onChange ||
+        // TODO: This condition won't run on last update in mobile. Test on Web with removal.
+        // (contentHTML === editor.getHTML()) ||
+        (editor.isEmpty && isEmpty(contentHTML))
+      ) return
+
+      onChange(editor.getHTML())
+    }
   }, [placeholder, contentHTML])
 
   useImperativeHandle(ref, () => ({
+    blur: () => {
+      editorRef.current.commands.blur()
+    },
+    clearContent: () => {
+      editorRef.current.commands.clearContent()
+    },
     focus: () => {
       editorRef.current.commands.focus()
     },
@@ -144,9 +152,6 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
     },
     isEmpty: () => {
       return editorRef.current.isEmpty
-    },
-    clearContent: () => {
-      editorRef.current.commands.clearContent()
     },
     setContent: content => {
       editorRef.current.commands.setContent(content)
@@ -174,7 +179,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   editorRef.current = editor
 
   return (
-    <>
+    <div className={containerClassName} style={{ flex: 1 }}>
       {!hideMenu && (
         <HyloTipTapEditorMenuBar editor={editor} />
       )}
@@ -201,7 +206,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
           </span>
         </BubbleMenu>
       )}
-    </>
+    </div>
   )
 })
 

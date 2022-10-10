@@ -157,7 +157,7 @@
     "html-webpack-plugin": "^4.5.1",
     "http-proxy-middleware": "0.17.4",
     "husky": "^7.0.4",
-    "hylo-shared": "4.1.0-beta.13",
+    "hylo-shared": "4.1.0-beta.14",
     "identity-obj-proxy": "3.0.0",
     "immutable": "~3.7.4",
     "inflection": "^1.13.4",

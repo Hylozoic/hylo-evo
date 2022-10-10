@@ -3,14 +3,14 @@ import { pickBy } from 'lodash/fp'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
 import HyloTipTapEditor from 'components/HyloTipTapEditor'
-import './HyloTipTapEditor.scss'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 
 // Note: This Mobile editor can be tested in a browser at `hyloApp/editor`.
 //       To control the editor manually post messages via the Web Console, e.g.:
 //
 //       `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
 //
-export default function HyloTipTapEditorMobile () {
+export default function HyloTipTapEditorMobile (props) {
   const editorRef = useRef()
   const [contentHTML, setContentHTML] = useState()
   const [hideMenu, setHideMenu] = useState(false)
@@ -31,8 +31,7 @@ export default function HyloTipTapEditorMobile () {
     if (editorRef.current) {
       sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
 
-      // Editor will continue propagation
-      return false
+      return getQuerystringParam('suppressEnterKeyPropagation', null, props)
     }
   })
 
@@ -54,6 +53,16 @@ export default function HyloTipTapEditorMobile () {
           break
         }
 
+        case WebViewMessageTypes.EDITOR.FOCUS: {
+          editorRef.current && editorRef.current.focus()
+          break
+        }
+
+        case WebViewMessageTypes.EDITOR.BLUR: {
+          editorRef.current && editorRef.current.blur()
+          break
+        }
+
         case WebViewMessageTypes.EDITOR.SET_PROPS: {
           const propsToSet = pickBy(p => p !== undefined, data)
 
@@ -62,6 +71,7 @@ export default function HyloTipTapEditorMobile () {
           if ('hideMenu' in propsToSet) setHideMenu(propsToSet.hideMenu)
           if ('placeholder' in propsToSet) setPlaceholder(propsToSet.placeholder)
           if ('groupIds' in propsToSet) setGroupIds(propsToSet.groupIds)
+
           break
         }
       }
@@ -78,23 +88,23 @@ export default function HyloTipTapEditorMobile () {
     return () => window.removeEventListener('message')
   }, [])
 
-  return (
-    <HyloTipTapEditor
-      styleName='hylo-app-container'
-      maxSuggestions={3}
-      onChange={handleChange}
-      onEnter={handleEnter}
-      onBeforeCreate={handleBeforeCreate}
-      // onAddMention={handleAddMention}
-      // onAddLink={handleAddLink}
-      onAddTopic={handleAddTopic}
-      // Should the default be empty or a paragraph?
-      contentHTML={contentHTML}
-      placeholder={placeholder}
-      readOnly={readOnly}
-      hideMenu={hideMenu}
-      groupIds={groupIds}
-      ref={editorRef}
-    />
-  )
+  return React.createElement(HyloTipTapEditor, {
+    // autofocus: true,
+    containerClassName: 'hyloAppEditorContainer',
+    className: 'hyloAppEditor',
+    maxSuggestions: 3,
+    onChange: handleChange,
+    onEnter: handleEnter,
+    onBeforeCreate: handleBeforeCreate,
+    // onAddMention={handleAddMention}
+    // onAddLink={handleAddLink}
+    onAddTopic: handleAddTopic,
+    // Should the default be empty or a paragraph?
+    contentHTML,
+    placeholder,
+    readOnly,
+    hideMenu,
+    groupIds,
+    ref: editorRef
+  })
 }

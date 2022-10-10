@@ -101,6 +101,7 @@ export class Comment extends Component {
         <CardImageAttachments attachments={attachments} linked styleName='images' />
         <CardFileAttachments attachments={attachments} styleName='files' />
         <ClickCatcher groupSlug={slug}>
+          {/* Renders and provides editor */}
           <HyloTipTapEditor
             styleName={editing ? 'editing' : 'text'}
             contentHTML={text || ''}
@@ -148,7 +149,7 @@ export default class CommentWithReplies extends Component {
       replying: true,
       triggerReplyAction: true,
       prefillEditor: toMember
-        ? `<p><a data-entity-type="mention" data-user-id="${toMember.id}">${toMember.name}</a> </p>`
+        ? `<p>${TextHelpers.mentionHTML(toMember.name)}&nbsp;</p>`
         : ''
     })
   }

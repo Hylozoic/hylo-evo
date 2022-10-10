@@ -37,7 +37,6 @@ export const handleClick = (push, groupSlug) => event => {
         const hyloLinkMatch = href.matchAll(HYLO_URL_REGEX).next()
 
         if (hyloLinkMatch?.value && hyloLinkMatch?.value?.length === 6) {
-          console.log(hyloLinkMatch.value[5])
           pathname = hyloLinkMatch.value[5] === '' ? '/' : hyloLinkMatch.value[5]
         }
 
