@@ -7,6 +7,8 @@ import PeopleMentions from './extensions/PeopleMentions'
 import Legacy from './extensions/Legacy'
 import Link from '@tiptap/extension-link'
 
+// TipTap can be used to render HTML with low overhead, and this is mostly what that would look like.
+// This is experimental and not used. Can be removed if proves not useful or informative.
 export default function HyloTipTapRender ({ className, contentHTML }) {
   const editor = useEditor({
     content: contentHTML,
