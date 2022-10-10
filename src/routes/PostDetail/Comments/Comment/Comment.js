@@ -149,7 +149,7 @@ export default class CommentWithReplies extends Component {
       replying: true,
       triggerReplyAction: true,
       prefillEditor: toMember
-        ? `<p>${TextHelpers.mentionHTML(toMember.name)}&nbsp;</p>`
+        ? `<p>${TextHelpers.mentionHTML(toMember)}&nbsp;</p>`
         : ''
     })
   }
