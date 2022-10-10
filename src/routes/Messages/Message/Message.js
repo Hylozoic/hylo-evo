@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
+import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './Message.scss'
@@ -28,7 +29,7 @@ export default function Message ({ message, isHeader }) {
           <span styleName='date'>{pending ? 'sending...' : TextHelpers.humanDate(message.createdAt)}</span>
         </div>}
         <div styleName='text'>
-          <span dangerouslySetInnerHTML={{ __html: text }} />
+          <HyloHTML element='span' html={text} />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
+import HyloHTML from 'components/HyloHTML'
 import './RichText.scss'
 
 export default function RichTextWidget ({ group, settings }) {
@@ -8,7 +9,7 @@ export default function RichTextWidget ({ group, settings }) {
       <GroupAboutVideoEmbed uri={settings.embeddedVideoURI} />
       <h2>{settings.title || `Welcome to ${group.name}!`}</h2>
       {settings.richText && (
-        <span dangerouslySetInnerHTML={{ __html: settings.richText }} />
+        <HyloHTML element='span' html={settings.richText} />
       )}
       {settings.text && (
         <p>{settings.text}</p>

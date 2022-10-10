@@ -3,6 +3,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { TextHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
+import HyloHTML from 'components/HyloHTML'
 import ClickCatcher from 'components/ClickCatcher'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -35,7 +36,7 @@ export default function CommentCard ({
         <CardFileAttachments attachments={attachments} styleName='comment-files' />
         <ClickCatcher groupSlug={slug}>
           <Highlight {...highlightProps}>
-            <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
+            <HyloHTML styleName='comment-body' html={commentText} />
           </Highlight>
         </ClickCatcher>
         <div styleName='comment-footer' />

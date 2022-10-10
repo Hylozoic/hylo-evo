@@ -3,6 +3,7 @@ import Clamp from 'react-multiline-clamp'
 import cx from 'classnames'
 import EventDate from 'components/PostCard/EventDate'
 import EventRSVP from 'components/PostCard/EventRSVP'
+import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
@@ -71,7 +72,7 @@ export default function PostBigGridItem (props) {
           : ' '
         }
 
-        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} onClick={showDetailsTargeted} />
+        <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
         <div styleName='grid-meta'>
           {post.type === 'event' &&
             <div styleName='date' onClick={showDetailsTargeted}>
@@ -81,7 +82,7 @@ export default function PostBigGridItem (props) {
           <h3 styleName='title' onClick={showDetails}>{title}</h3>
           <div styleName='content-snippet'>
             <Clamp lines={2}>
-              <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} onClick={showDetailsTargeted} />
+              <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
             </Clamp>
             <div styleName='fade' />
           </div>

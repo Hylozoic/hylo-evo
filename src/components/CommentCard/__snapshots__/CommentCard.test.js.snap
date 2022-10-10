@@ -71,13 +71,9 @@ exports[`displays image an image attachments 1`] = `
         highlightClassName="highlight"
         term="foo"
       >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
-            }
-          }
+        <HyloHTML
           data-stylename="comment-body"
+          html="<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>"
         />
       </Highlight>
     </ClickCatcher>
@@ -145,13 +141,9 @@ exports[`matches last snapshot 1`] = `
         highlightClassName="highlight"
         term="foo"
       >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
-            }
-          }
+        <HyloHTML
           data-stylename="comment-body"
+          html="<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>"
         />
       </Highlight>
     </ClickCatcher>
@@ -219,13 +211,9 @@ exports[`matches last snapshot with different config 1`] = `
         highlightClassName="highlight"
         term="foo"
       >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>",
-            }
-          }
+        <HyloHTML
           data-stylename="comment-body"
+          html="<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>"
         />
       </Highlight>
     </ClickCatcher>

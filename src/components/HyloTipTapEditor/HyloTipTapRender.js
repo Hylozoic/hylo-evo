@@ -48,6 +48,6 @@ export default function HyloTipTapRender ({ className, contentHTML }) {
 //   }, [contentHTML])
 //
 //   return (
-//     <div className={className} dangerouslySetInnerHTML={{ __html: output }} />
+//     <HyloHTML className={className} html={output} />
 //   )
 // }

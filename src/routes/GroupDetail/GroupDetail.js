@@ -9,6 +9,7 @@ import { sendMessageToWebView } from 'util/webView'
 import Avatar from 'components/Avatar'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
@@ -209,7 +210,7 @@ export class UnwrappedGroupDetail extends Component {
           ) : (
             <div styleName='g.groupDescription'>
               <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
-              <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+              <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
             </div>
           )}
         {!isAboutCurrentGroup && topics && topics.length && (

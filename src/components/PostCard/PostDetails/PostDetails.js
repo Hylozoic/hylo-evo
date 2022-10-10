@@ -3,6 +3,7 @@ import { pick } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
 import ReactPlayer from 'react-player'
 import Highlight from 'components/Highlight'
+import HyloHTML from 'components/HyloHTML'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
 import Feature from 'components/PostCard/Feature'
@@ -42,7 +43,7 @@ export default function PostDetails ({
         )}
         {details && !hideDetails && (
           <ClickCatcher groupSlug={slug}>
-            <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
+            <HyloHTML styleName='details' html={details} />
           </ClickCatcher>
         )}
         {linkPreview && !linkPreviewFeatured && (

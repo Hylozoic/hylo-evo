@@ -15,13 +15,9 @@ exports[`matches last snapshot 1`] = `
     <ClickCatcher
       groupSlug="foomunity"
     >
-      <div
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "the details",
-          }
-        }
+      <HyloHTML
         data-stylename="details"
+        html="the details"
       />
     </ClickCatcher>
     <LinkPreview
