@@ -24,7 +24,7 @@ describe('CustomViewsTab', () => {
         type: 'externalLink'
       }]
     }
-    const wrapper = shallow(<CustomViewsTab group={group} />)
+    const wrapper = shallow(<CustomViewsTab group={group} fetchCollectionPosts={jest.fn()} />)
     expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('Button[label="Save Changes"]').prop('color')).toEqual('gray')
     wrapper.setState({ changed: true })
