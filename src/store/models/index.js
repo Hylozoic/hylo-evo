@@ -2,6 +2,7 @@ import { ORM } from 'redux-orm'
 import './Model.extension'
 import Activity from './Activity'
 import Attachment from './Attachment'
+import Collection, { CollectionPost } from './Collection'
 import Comment from './Comment'
 import CustomView from './CustomView'
 import EventInvitation from './EventInvitation'
@@ -32,6 +33,8 @@ export const orm = new ORM({ stateSelector: state => state.orm })
 orm.register(
   Activity,
   Attachment,
+  Collection,
+  CollectionPost,
   Comment,
   CustomView,
   EventInvitation,
