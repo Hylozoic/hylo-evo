@@ -12,7 +12,7 @@ export function mapStateToProps (state, props) {
   const topics = getTopicsFromSubscribedGroupTopics(state, props)
 
   return {
-    feedListFetchPostsParam: get('FeedList.fetchPostsParam', state),
+    streamFetchPostsParam: get('Stream.fetchPostsParam', state),
     seeAllUrl: topicsUrl(routeParams, allGroupsUrl()),
     routeParams,
     topics
@@ -44,7 +44,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...dispatchProps,
     ...stateProps,
-    clearFeedList: dispatchProps.dropPostResultsMaker(stateProps.feedListFetchPostsParam)
+    clearStream: dispatchProps.dropPostResultsMaker(stateProps.streamFetchPostsParam)
   }
 }
 

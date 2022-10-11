@@ -1,19 +1,72 @@
+import { FETCH_TOPIC, FETCH_GROUP_TOPIC, FETCH_POSTS } from 'store/constants'
 import { get } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
-import { FETCH_POSTS } from 'store/constants'
 import orm from 'store/models'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
 import getRouteParam from 'store/selectors/getRouteParam'
 
-export const MODULE_NAME = 'FeedList'
+export const MODULE_NAME = 'Stream'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
+export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
+
+export function fetchGroupTopic (topicName, groupSlug) {
+  return {
+    type: FETCH_GROUP_TOPIC,
+    graphql: {
+      query: `query ($groupSlug: String, $topicName: String) {
+        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
+          id
+          postsTotal
+          followersTotal
+          topic {
+            id
+            name
+          }
+          group {
+            id
+          }
+        }
+      }`,
+      variables: {
+        groupSlug,
+        topicName
+      }
+    },
+    meta: {
+      extractModel: 'GroupTopic'
+    }
+  }
+}
+
+export function fetchTopic (name, id) {
+  return {
+    type: FETCH_TOPIC,
+    graphql: {
+      query: `query ($name: String, $id: ID) {
+        topic(name: $name, id: $id) {
+          id
+          name
+          postsTotal
+          followersTotal
+        }
+      }`,
+      variables: {
+        name,
+        id
+      }
+    },
+    meta: {
+      extractModel: 'Topic'
+    }
+  }
+}
 
 // actions
 export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
-  var query, extractModel, getItems
+  let query, extractModel, getItems
 
   if (context === 'groups') {
     query = groupQuery

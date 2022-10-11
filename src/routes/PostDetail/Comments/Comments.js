@@ -78,7 +78,7 @@ export default class Comments extends Component {
           target={inIframe() ? '_blank' : ''}
           styleName='signup-button'
         >
-          Sign up to comment
+          Join Hylo to respond
         </Link>
       }
     </div>

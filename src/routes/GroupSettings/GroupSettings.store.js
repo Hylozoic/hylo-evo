@@ -73,6 +73,7 @@ export function fetchGroupSettings (slug) {
             items {
               id
               activePostsOnly
+              collectionId
               collection {
                 id
                 name
@@ -173,6 +174,7 @@ export function updateGroupSettings (id, changes) {
             items {
               id
               activePostsOnly
+              collectionId
               collection {
                 id
               }
@@ -240,6 +242,7 @@ export function fetchCollectionPosts (groupId) {
           customViews {
             items {
               id
+              collectionId
               collection {
                 id
                 linkedPosts {

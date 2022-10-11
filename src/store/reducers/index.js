@@ -18,7 +18,7 @@ import AttachmentManager from 'components/AttachmentManager/AttachmentManager.st
 import CreateGroup from 'components/CreateGroup/CreateGroup.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 import Events from 'routes/Events/Events.store'
-import FeedList from 'components/FeedList/FeedList.store'
+import Stream from 'routes/Stream/Stream.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
@@ -55,7 +55,6 @@ export const combinedReducers = combineReducers({
   CreateGroup,
   CreateTopic,
   Events,
-  FeedList,
   FullPageModal,
   HyloEditor,
   MembershipRequests,
@@ -72,6 +71,7 @@ export const combinedReducers = combineReducers({
   Search,
   SkillsSection,
   SkillsToLearnSection,
+  Stream,
   TopicsSettings,
   UserGroupsTab
 })

@@ -17,16 +17,16 @@ describe('mapStateToProps', () => {
       }
     }
 
-    const FeedList = { fetchPostsParam: {} }
+    const Stream = { fetchPostsParam: {} }
 
-    const stateProps = mapStateToProps({ orm: s1.state, FeedList }, props)
+    const stateProps = mapStateToProps({ orm: s1.state, Stream }, props)
     expect(stateProps.badge).toEqual(5)
 
     const s2 = orm.session(s1.state)
 
     s2.Group.withId('1').memberships.first().update({ newPostCount: 0 })
 
-    const stateProps2 = mapStateToProps({ orm: s2.state, FeedList }, props)
+    const stateProps2 = mapStateToProps({ orm: s2.state, Stream }, props)
     expect(stateProps2.badge).toEqual(0)
   })
 })

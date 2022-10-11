@@ -89,6 +89,7 @@ Object {
             items {
               id
               activePostsOnly
+              collectionId
               collection {
                 id
                 name
@@ -184,6 +185,7 @@ Object {
             items {
               id
               activePostsOnly
+              collectionId
               collection {
                 id
               }
