@@ -673,7 +673,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={members || []}
-                  onChange={this.handleUpdateProjectMembers.updateProjectMembers}
+                  onChange={this.handleUpdateProjectMembers}
                   forGroups={groups}
                   readOnly={loading}
                 />

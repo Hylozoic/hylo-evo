@@ -2074,6 +2074,7 @@ exports[`PostEditor renders contribution button 1`] = `
         <Connect(MemberSelector)
           forGroups={Array []}
           initialMembers={Array []}
+          onChange={[Function]}
           readOnly={false}
         />
       </div>
