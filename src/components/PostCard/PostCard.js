@@ -31,7 +31,7 @@ export default class PostCard extends React.Component {
   }
 
   shouldShowDetails = element => {
-    if (element === this.refs.postCard) return true
+    if (element === this.props.forwardedRef || this.refs.postCard) return true
     if (element.tagName === 'A' || element.tagName === 'LI') return false
     const parent = element.parentElement
     if (parent) return this.shouldShowDetails(parent)
@@ -53,7 +53,8 @@ export default class PostCard extends React.Component {
       expanded,
       constrained,
       className,
-      respondToEvent
+      respondToEvent,
+      forwardedRef
     } = this.props
 
     const postType = get('type', post)
@@ -64,7 +65,7 @@ export default class PostCard extends React.Component {
     const hasImage = attachmentType === 'image' || false
 
     return (
-      <div ref='postCard'
+      <div ref={forwardedRef || 'postCard'}
         onClick={!isEvent ? this.onClick : null}
         styleName={cx('card', postType, { expanded }, { constrained })}
         className={className}

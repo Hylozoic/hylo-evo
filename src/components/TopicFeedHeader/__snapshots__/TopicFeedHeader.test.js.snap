@@ -49,18 +49,6 @@ exports[`matches the latest snapshot 1`] = `
       />
       Unsubscribe
     </Button>
-    <PostPrompt
-      firstName="anybody"
-      promptStringFunc={[Function]}
-      querystringParams={Object {}}
-      routeParams={
-        Object {
-          "groupSlug": undefined,
-          "topicName": "Petitions",
-        }
-      }
-      type=""
-    />
   </div>
 </div>
 `;

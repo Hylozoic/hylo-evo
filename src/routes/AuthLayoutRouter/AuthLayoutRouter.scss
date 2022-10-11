@@ -353,11 +353,10 @@ $drawer-z-index: 51;
   overflow-y: auto;
   overflow-x: hidden;
   transition: all .45s ease;
-  padding: 0 8px 100px 8px;
 
-  &.map-view {
-    max-width: $map-center-column-width;
-    flex: 0 0 $map-center-column-width;
+  &.full-width {
+    max-width: $center-column-full-width;
+    flex: 0 0 $center-column-full-width;
     height: calc(100vh - 40px);
     padding: 0 0 0 0;
   }
@@ -383,7 +382,7 @@ $drawer-z-index: 51;
   flex: 0 0 43%;
 }
 
-.center.map-view.collapsedState {
+.center.full-width.collapsedState {
   width: calc(100% - 88px);
   max-width: calc(100% - 88px);
   flex: 0 0 100%;
@@ -500,7 +499,7 @@ $drawer-z-index: 51;
     overflow: hidden;
   }
 
-  .center.map-view {
+  .center.full-width {
     max-width: calc(100% - 80px);
     flex-basis: 93%;
     left: 0;
@@ -514,7 +513,7 @@ $drawer-z-index: 51;
     left: 0%;
   }
 
-  .center.map-view {
+  .center.full-width {
     max-width: 90%;
     flex: 0 0 90%;
   }
@@ -586,14 +585,14 @@ $drawer-z-index: 51;
     padding: 0 0 150px 0;
   }
 
-  .center.map-view {
+  .center.full-width {
     max-width: 100%;
     flex: 0 0 100%;
     left: 0;
     padding: 0 0 0 0;
   }
 
-  .center.map-view.collapsedState {
+  .center.full-width.collapsedState {
     width: 100%;
     max-width: 100%;
     padding: 0 0 0 0;
@@ -639,7 +638,7 @@ $drawer-z-index: 51;
   .center {
     overflow-y: scroll;
   }
-  .center.map-view {
+  .center.full-width {
     overflow-y: auto;
   }
 

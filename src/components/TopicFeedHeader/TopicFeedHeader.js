@@ -1,7 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
 import Button from 'components/Button'
-import { PostPrompt } from 'components/StreamBanner/StreamBanner'
 import { inflectedTotal, bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER } from 'store/models/Group'
 
@@ -42,12 +41,6 @@ export default function TopicFeedHeader ({
       {toggleSubscribe && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
         <Icon name='Star' styleName={iconStyle} />{buttonText}
       </Button>}
-      <PostPrompt
-        avatarUrl={currentUser.avatarUrl}
-        firstName={currentUser.firstName()}
-        newPost={newPost}
-        routeParams={{ topicName: topicName, groupSlug: groupSlug }}
-        type={type} />
     </div>
   </div>
 }

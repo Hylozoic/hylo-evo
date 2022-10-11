@@ -27,6 +27,7 @@ import {
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import RedirectRoute from 'router/RedirectRoute'
 import AllTopics from 'routes/AllTopics'
+import ChatRoom from 'routes/ChatRoom'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupSettings from 'routes/GroupSettings'
@@ -82,6 +83,7 @@ export default function AuthLayoutRouter (props) {
   ])
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isMapView = pathMatchParams?.view === 'map'
+  const hideSidebar = isMapView || pathMatchParams?.view === 'topics'
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   const queryParams = Object.fromEntries(new URLSearchParams(location.search))
   const hideDrawer = queryParams?.hideDrawer !== 'true'
@@ -273,7 +275,7 @@ export default function AuthLayoutRouter (props) {
               )
             }}
           />
-          <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
+          <Div100vh styleName={cx('center', { 'full-width': hideSidebar, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             {/* NOTE: It could be more clear to group the following switched routes by component  */}
             <Switch>
               {/* **** Member Routes **** */}
@@ -291,7 +293,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
-              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Stream} />
+              <Route path='/:context(all|public)/:view(topics)/:topicName' component={ChatRoom} />
               <Route path='/:context(all)/:view(topics)' component={AllTopics} />
               <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(currentGroup)} />
               {/* **** Group Routes **** */}
@@ -320,7 +322,7 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
               <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={ChatRoom} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
@@ -336,7 +338,7 @@ export default function AuthLayoutRouter (props) {
             </Switch>
           </Div100vh>
           {(currentGroup && currentGroupMembership) && (
-            <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
+            <div styleName={cx('sidebar', { hidden: (hasDetail || hideSidebar) })}>
               <Route
                 path={[
                   `/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`,
