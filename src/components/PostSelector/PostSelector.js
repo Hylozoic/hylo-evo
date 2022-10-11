@@ -23,7 +23,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   const [offset, setOffset] = useState('')
   const [selectedPosts, setSelectedPosts] = useState(posts || [])
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
-  const searchBox = useRef(false)
+  const searchBoxRef = useRef()
 
   const debouncedAutcomplete = useDebounce(autocomplete, 300)
 
@@ -32,7 +32,15 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   useEffect(() => {
     // TODO: tell people they need to type 2 characters to get results?
     if (!autocomplete?.length || autocomplete.length > 1) {
-      dispatch(fetchPosts({ collectionToFilterOut: collection?.id, context: 'groups', slug: group.slug, search: debouncedAutcomplete, sortBy: 'created', first: PAGE_SIZE, offset: 0 })).then(res => {
+      dispatch(fetchPosts({
+        collectionToFilterOut: collection?.id,
+        context: 'groups',
+        first: PAGE_SIZE,
+        offset: 0,
+        search: debouncedAutcomplete,
+        slug: group.slug,
+        sortBy: 'created'
+      })).then(res => {
         setSuggestions(res.payload?.data?.group?.posts?.items || [])
       })
       setOffset(PAGE_SIZE)
@@ -40,11 +48,18 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   }, [debouncedAutcomplete, collection])
 
   const { observe } = useInView({
-    onEnter: () => {
-      dispatch(fetchPosts({ collectionToFilterOut: collection?.id, context: 'groups', slug: group.slug, search: debouncedAutcomplete, sortBy: 'created', first: PAGE_SIZE, offset: offset })).then(res => {
-        setSuggestions(suggestions.concat(res.payload?.data?.group?.posts?.items || []))
-        setOffset(offset + PAGE_SIZE)
-      })
+    onEnter: async () => {
+      const res = await dispatch(fetchPosts({
+        collectionToFilterOut: collection?.id,
+        context: 'groups',
+        first: PAGE_SIZE,
+        search: debouncedAutcomplete,
+        offset: offset,
+        slug: group.slug,
+        sortBy: 'created'
+      }))
+      setSuggestions(suggestions.concat(res.payload?.data?.group?.posts?.items || []))
+      setOffset(offset + PAGE_SIZE)
     }
   })
 
@@ -84,7 +99,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
       onSelectPost(p)
     }
     setSelectedPosts([...selectedPosts].concat(p))
-    searchBox.current.focus()
+    searchBoxRef.current.focus()
     event.preventDefault()
     event.stopPropagation()
   }
@@ -125,7 +140,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
       <div styleName='search'>
         <div>
           <input
-            ref={searchBox}
+            ref={searchBoxRef}
             type='text'
             placeholder='Search for posts'
             spellCheck={false}

@@ -59,11 +59,13 @@ export default class CustomViewsTab extends Component {
     this.state = this.defaultEditState()
   }
 
+  componentDidMount () {
+    this.props.fetchCollectionPosts(this.props.group.id)
+  }
+
   componentDidUpdate (prevProps, prevState) {
     if (prevProps.fetchPending && !this.props.fetchPending) {
       this.setState(this.defaultEditState())
-
-      this.props.fetchCollectionPosts(this.props.group.id)
     }
 
     if (prevProps.fetchCollectionPostsPending && !this.props.fetchCollectionPostsPending) {
