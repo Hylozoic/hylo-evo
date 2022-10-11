@@ -44,7 +44,6 @@ export const PeopleMentions = ({ dispatch, groupIds, maxSuggestions, onSelection
         items: asyncDebounce(200, async ({ query, editor }) => {
           editor.extensionStorage.topic.loading = true
 
-          // TODO: Integrate `getPeopleBySearchTerm` selector to reduce queries and speed results
           const matchedPeople = await dispatch(findMentions({
             autocomplete: query,
             groupIds: editor.extensionStorage.mention.groupIds,
