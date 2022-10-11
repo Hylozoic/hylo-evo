@@ -8,8 +8,8 @@ Object {
   "leaveProject": [Function],
   "onClose": [Function],
   "processStripeToken": [Function],
-  "respondToEvent": [Function],
   "reactOnPost": [Function],
+  "respondToEvent": [Function],
 }
 `;
 

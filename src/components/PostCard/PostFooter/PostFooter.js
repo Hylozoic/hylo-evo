@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
-import { find, get, sortBy, isFunction } from 'lodash/fp'
+import { find, get, sortBy } from 'lodash/fp'
 import './PostFooter.scss'
-import Icon from 'components/Icon'
 import RoundImageRow from 'components/RoundImageRow'
 import EmojiPicker from 'components/EmojiPicker'
 import EmojiPill from 'components/EmojiPill'
@@ -19,7 +18,7 @@ export default class PostFooter extends React.PureComponent {
     myReactions: PropTypes.array,
     postReactions: PropTypes.array,
     reactOnPost: PropTypes.func.isRequired,
-    onClick: PropTypes.func
+    removeReactOnPost: PropTypes.func.isRequired
   }
 
   render () {
@@ -29,13 +28,11 @@ export default class PostFooter extends React.PureComponent {
       commentersTotal,
       constrained,
       postId,
-      // votesTotal
       postReactions,
       myReactions
     } = this.props
-    // const vote = isFunction(this.props.voteOnPost) ? () => this.props.voteOnPost() : undefined
-    // const react = isFunction(this.props.reactOnPost) ? (emojiFull) => this.props.reactOnPost(emojiFull) : undefined
     const handleReaction = (emojiFull) => this.props.reactOnPost(emojiFull)
+    const handleRemoveReaction = (emojiFull) => this.props.removeReactOnPost(emojiFull)
     const tooltipId = 'postfooter-tt-' + postId
     const myEmojis = myReactions.map((reaction) => reaction.emojiFull)
     const usersReactions = postReactions.reduce((accum, postReaction) => {
@@ -57,13 +54,15 @@ export default class PostFooter extends React.PureComponent {
         {postReactions && <div styleName={cx('footer-reactions', { constrained })}>
           {Object.values(usersReactions).map(reaction => (
             <EmojiPill
-              onClick={handleReaction}
+              onClick={reaction.loggedInUser ? handleRemoveReaction : handleReaction}
               key={reaction.emojiFull}
               emojiFull={reaction.emojiFull}
               count={reaction.userList.length}
+              selected={reaction.loggedInUser}
+              toolTip={reaction.userList.join('<br>')}
             />
           ))}
-          {currentUser ? <EmojiPicker onClick={handleReaction} /> : ''}
+          {currentUser ? <EmojiPicker handleReaction={handleReaction} myEmojis={myEmojis} handleRemoveReaction={handleRemoveReaction} /> : ''}
         </div>}
         <Tooltip
           delay={550}

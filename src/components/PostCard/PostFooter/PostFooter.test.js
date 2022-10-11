@@ -17,22 +17,28 @@ const commenters = [
 describe('PostFooter', () => {
   it('matches the latest snapshot', () => {
     const wrapper = shallow(<PostFooter
+      removeReactOnPost={() => {}}
       reactOnPost={() => {}}
       commenters={commenters}
       commentersTotal={4}
       currentUser={commenters[1]}
       votesTotal={3}
+      myReactions={[]}
+      postReactions={[]}
       myVote />)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('enables tooltip when myvote is false', () => {
     const wrapper = shallow(<PostFooter
+      removeReactOnPost={() => {}}
       reactOnPost={() => {}}
       commenters={commenters}
       commentersTotal={4}
       currentUser={commenters[1]}
       votesTotal={3}
+      myReactions={[]}
+      postReactions={[]}
       myVote={false} />)
     expect(wrapper).toMatchSnapshot()
   })
@@ -45,9 +51,12 @@ describe('PostFooter', () => {
     }]
     const wrapper = shallow(<PostFooter
       reactOnPost={() => {}}
+      removeReactOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
       currentUser={commenters[1]}
+      myReactions={[]}
+      postReactions={[]}
       votesTotal={0}
       type='project'
       members={members} />)
@@ -63,10 +72,13 @@ describe('PostFooter', () => {
     //   }
     // ]
     const wrapper = shallow(<PostFooter
+      removeReactOnPost={() => {}}
       reactOnPost={() => {}}
       commenters={[]}
       commentersTotal={0}
       currentUser={null}
+      myReactions={[]}
+      postReactions={[]}
       votesTotal={0}
       type='event' />)
     expect(wrapper).toMatchSnapshot()

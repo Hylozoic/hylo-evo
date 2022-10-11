@@ -1,13 +1,14 @@
-import { REACT_ON_POST } from 'store/constants'
+import { REMOVE_REACT_ON_POST } from 'store/constants'
 import { AnalyticsEvents } from 'hylo-shared'
 
-export default function reactOnPost (postId, emojiFull) {
+export default function removeReactOnPost (postId, emojiFull) {
   const data = { emojiFull, entityType: 'post' }
+  console.log({ postId, data })
   return {
-    type: REACT_ON_POST,
+    type: REMOVE_REACT_ON_POST,
     graphql: {
       query: `mutation($entityId: ID, $data: ReactionInput) {
-        reaction(entityId: $entityId, data: $data) {
+        deleteReaction(entityId: $entityId, data: $data) {
           myReactions {
             emojiFull
             id

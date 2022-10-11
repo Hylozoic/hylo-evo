@@ -32,19 +32,13 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     }
     peopleTotal={4}
   />
-  <a
-    data-for="postfooter-tt-undefined"
-    data-stylename="vote-button"
-    data-tip="Upvote this post so more people see it."
-    data-tip-disable={false}
-    onClick={[Function]}
+  <div
+    data-stylename="footer-reactions"
   >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
+    <EmojiPicker
+      onClick={[Function]}
     />
-    3
-  </a>
+  </div>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -84,19 +78,13 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     }
     peopleTotal={4}
   />
-  <a
-    data-for="postfooter-tt-undefined"
-    data-stylename="vote-button voted"
-    data-tip="Upvote this post so more people see it."
-    data-tip-disable={true}
-    onClick={[Function]}
+  <div
+    data-stylename="footer-reactions"
   >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
+    <EmojiPicker
+      onClick={[Function]}
     />
-    3
-  </a>
+  </div>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -111,6 +99,9 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
   <PeopleInfo
     people={Array []}
     peopleTotal={0}
+  />
+  <div
+    data-stylename="footer-reactions"
   />
   <Tooltip
     delay={550}
@@ -128,18 +119,13 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     people={Array []}
     peopleTotal={0}
   />
-  <a
-    data-for="postfooter-tt-undefined"
-    data-stylename="vote-button"
-    data-tip="Upvote this post so more people see it."
-    onClick={[Function]}
+  <div
+    data-stylename="footer-reactions"
   >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
+    <EmojiPicker
+      onClick={[Function]}
     />
-    0
-  </a>
+  </div>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"

@@ -7,3 +7,12 @@
   font-size: 1em;
   cursor: pointer;
 }
+
+.selected {
+  color: white;
+  background-color: $color-science-blue;
+}
+
+.pill-tooltip {
+  white-space: pre-line  !important;
+}

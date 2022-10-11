@@ -3,8 +3,9 @@
 exports[`mapDispatchToProps  1`] = `
 Object {
   "editPost": [Function],
+  "reactOnPost": [Function],
+  "removeReactOnPost": [Function],
   "respondToEvent": [Function],
   "showDetails": [Function],
-  "reactOnPost": [Function],
 }
 `;
