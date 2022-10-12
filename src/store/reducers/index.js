@@ -20,7 +20,6 @@ import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 import Events from 'routes/Events/Events.store'
 import Stream from 'routes/Stream/Stream.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
-import HyloEditor from 'components/HyloEditor/HyloEditor.store'
 import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
 import Messages from 'routes/Messages/Messages.store'
 import Members from 'routes/Members/Members.store'
@@ -56,7 +55,6 @@ export const combinedReducers = combineReducers({
   CreateTopic,
   Events,
   FullPageModal,
-  HyloEditor,
   MembershipRequests,
   MapExplorer,
   Members,

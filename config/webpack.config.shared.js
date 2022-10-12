@@ -1,6 +1,11 @@
 const paths = require('./paths')
 
 module.exports = {
+  tsLoader: {
+    test: /\.tsx?$/,
+    exclude: /node_modules/,
+    loader: 'ts-loader'
+  },
   graphqlLoader: {
     test: /\.(graphql|gql)$/,
     exclude: /node_modules/,

@@ -12,16 +12,14 @@ exports[`matches last snapshot 1`] = `
     <div
       data-stylename="fade"
     />
-    <Connect(ClickCatcher)>
-      <div
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "the details",
-          }
-        }
+    <ClickCatcher
+      groupSlug="foomunity"
+    >
+      <HyloHTML
         data-stylename="details"
+        html="the details"
       />
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <LinkPreview
       imageUrl="foo.png"
       title="a walk in the park"

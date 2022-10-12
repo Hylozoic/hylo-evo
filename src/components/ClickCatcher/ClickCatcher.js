@@ -1,41 +1,58 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { HYLO_URL_REGEX } from 'util/navigation'
+import { useHistory } from 'react-router-dom'
+import { PathHelpers, HYLO_URL_REGEX } from 'hylo-shared'
 
-export default function ClickCatcher ({ tag, handleMouseOver, navigate, ...props }) {
-  if (!['div', 'span', 'p'].includes(tag)) {
-    throw new Error(`invalid tag for ClickCatcher: ${tag}`)
-  }
+export default function ClickCatcher ({ handleMouseOver, groupSlug, ...props }) {
+  const history = useHistory()
 
-  const handleClick = event => {
-    var node = event.target
-    if (node.nodeName.toLowerCase() !== 'a') return
-
-    if (node.getAttribute('data-user-id') || node.getAttribute('data-search')) {
-      event.preventDefault()
-      navigate(node.getAttribute('href'))
-      return
-    }
-
-    if (node.getAttribute('target') !== '_blank') {
-      node.setAttribute('target', '_blank')
-    }
-
-    const matches = [...node.getAttribute('href').matchAll(HYLO_URL_REGEX)]
-    if (matches[0] && matches[0].length === 2) {
-      event.preventDefault()
-      node.setAttribute('target', '_self')
-      const urlPath = matches[0][1] === '' ? '/' : matches[0][1]
-      node.setAttribute('href', urlPath)
-      navigate(node.getAttribute('href'))
-    }
-  }
-  return React.createElement(tag, { ...props, onClick: handleClick })
+  return React.createElement('span', { ...props, onClick: handleClick(history.push, groupSlug) })
 }
-ClickCatcher.propTypes = {
-  tag: PropTypes.string.isRequired,
-  navigate: PropTypes.func
-}
-ClickCatcher.defaultProps = {
-  tag: 'span'
+
+export const handleClick = (push, groupSlug) => event => {
+  const element = event.target
+
+  switch (element?.nodeName.toLowerCase()) {
+    case 'span': {
+      if (element.classList.contains('mention')) {
+        return push(PathHelpers.mentionPath(element.getAttribute('data-id'), groupSlug))
+      }
+
+      if (element.classList.contains('topic')) {
+        return push(PathHelpers.topicPath(element.getAttribute('data-id'), groupSlug))
+      }
+
+      break
+    }
+
+    case 'a': {
+      const href = element.getAttribute('href')
+
+      /*
+        Matches for local links and forwards pathname to react router
+        The matching could instead be skipped, relying upon  the `hylo-link`
+        class which is added by the backend for the same match.
+      */
+      if (href) {
+        let pathname
+        const hyloLinkMatch = href.matchAll(HYLO_URL_REGEX).next()
+
+        if (hyloLinkMatch?.value && hyloLinkMatch?.value?.length === 6) {
+          pathname = hyloLinkMatch.value[5] === '' ? '/' : hyloLinkMatch.value[5]
+        }
+
+        if (href.match(/^\//)) {
+          pathname = href
+        }
+
+        if (pathname) {
+          event.preventDefault()
+
+          return push(pathname)
+        }
+
+        // default to external link
+        element.setAttribute('target', '_blank')
+      }
+    }
+  }
 }

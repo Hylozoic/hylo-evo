@@ -9,6 +9,7 @@ Object {
     },
     "id": "1",
   },
+  "fetchCollectionPostsPending": undefined,
   "fetchPending": undefined,
   "group": Object {
     "activeProjects": Array [],
@@ -88,18 +89,25 @@ Object {
             items {
               id
               activePostsOnly
+              collectionId
+              collection {
+                id
+                name
+              }
+              defaultSort
+              defaultViewMode
               externalLink
               groupId
               isActive
               icon
               name
-              postTypes
               order
-              viewMode
+              postTypes
               topics {
                 id
                 name
               }
+              type
             }
           }
           groupToGroupJoinQuestions {
@@ -177,6 +185,12 @@ Object {
             items {
               id
               activePostsOnly
+              collectionId
+              collection {
+                id
+              }
+              defaultSort
+              defaultViewMode
               externalLink
               groupId
               isActive
@@ -184,11 +198,11 @@ Object {
               name
               postTypes
               order
-              viewMode
               topics {
                 id
                 name
               }
+              type
             }
           }
           groupToGroupJoinQuestions {
@@ -233,7 +247,9 @@ Object {
 
 exports[`mergeProps merges the props 3`] = `
 Object {
+  "addPostToCollection": [Function],
   "canModerate": true,
+  "createCollection": [Function],
   "currentUser": SessionBoundModel {
     "_fields": Object {
       "id": "1",
@@ -241,6 +257,8 @@ Object {
     "id": "1",
   },
   "deleteGroup": [Function],
+  "fetchCollectionPosts": [Function],
+  "fetchCollectionPostsPending": undefined,
   "fetchGroupSettings": [Function],
   "fetchGroupSettingsMaker": [Function],
   "fetchLocation": [Function],
@@ -263,6 +281,8 @@ Object {
     "widgets": Array [],
   },
   "parentGroups": Array [],
+  "removePostFromCollection": [Function],
+  "reorderPostInCollection": [Function],
   "slug": "foo",
   "updateGroupSettings": [Function],
   "updateGroupSettingsMaker": [Function],

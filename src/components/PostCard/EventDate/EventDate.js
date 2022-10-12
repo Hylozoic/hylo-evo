@@ -1,5 +1,5 @@
 import React from 'react'
-import Moment from 'moment'
+import Moment from 'moment-timezone'
 import './EventDate.scss'
 
 export default function EventDate ({ startTime }) {

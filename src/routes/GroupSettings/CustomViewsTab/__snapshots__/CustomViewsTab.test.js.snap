@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomViewsTab renders correctly 1`] = `
+<div
+  data-stylename="general.groupSettings"
+>
+  <SettingsSection>
+    <h3>
+      Custom Views
+    </h3>
+    <div
+      data-stylename="styles.help-text"
+    >
+      Add custom links or filtered post views to your group's navigation
+    </div>
+    <CustomViewRow
+      activePostsOnly={false}
+      externalLink="https://google.com"
+      group={
+        Object {
+          "avatarUrl": "avatar.png",
+          "bannerUrl": "avatar.png",
+          "customViews": Array [
+            Object {
+              "activePostsOnly": false,
+              "externalLink": "https://google.com",
+              "icon": "Public",
+              "isActive": true,
+              "name": "custommm baby",
+              "order": 1,
+              "postTypes": Array [],
+              "topics": Array [],
+              "type": "externalLink",
+            },
+          ],
+          "description": "Great group",
+          "id": 1,
+          "locationObject": "Fuji",
+          "name": "Foomunity",
+          "slug": "foo",
+        }
+      }
+      icon="Public"
+      index={0}
+      isActive={true}
+      key="0"
+      name="custommm baby"
+      onChange={[Function]}
+      onDelete={[Function]}
+      order={1}
+      postTypes={Array []}
+      topics={Array []}
+      type="externalLink"
+    />
+    <div
+      data-stylename="styles.add-custom-view"
+      onClick={[Function]}
+    >
+      <h4>
+        Create new custom view
+      </h4>
+      <Icon
+        data-stylename="styles.new-custom-view"
+        name="Circle-Plus"
+      />
+    </div>
+  </SettingsSection>
+  <br />
+  <div
+    data-stylename="general.saveChanges"
+  >
+    <span
+      data-stylename=""
+    >
+      Current settings up to date
+    </span>
+    <Button
+      color="gray"
+      data-stylename="general.save-button"
+      label="Save Changes"
+      onClick={null}
+    />
+  </div>
+</div>
+`;

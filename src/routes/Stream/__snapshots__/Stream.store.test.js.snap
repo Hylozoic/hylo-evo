@@ -60,8 +60,10 @@ Object {
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
@@ -91,8 +93,10 @@ posts: viewPosts(
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
+  collectionToFilterOut: $collectionToFilterOut,
   filter: $filter,
   first: $first,
+  forCollection: $forCollection,
   isFulfilled: $isFulfilled,
   offset: $offset,
   order: $order,
@@ -133,11 +137,13 @@ posts: viewPosts(
   commentersTotal
   
   linkPreview {
+    description
     id
+    imageUrl
     title
     url
-    imageUrl
   }
+  linkPreviewFeatured
   location
   locationObject {
     id
@@ -221,9 +227,11 @@ posts: viewPosts(
       "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
+      "collectionToFilterOut": undefined,
       "context": "groups",
       "filter": "offer",
       "first": 20,
+      "forCollection": undefined,
       "offset": 20,
       "order": undefined,
       "search": "gardening",
@@ -253,9 +261,11 @@ Object {
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $context: String,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $groupSlugs: [String],
   $isFulfilled: Boolean,
   $offset: Int,
@@ -272,8 +282,10 @@ posts(
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
+  collectionToFilterOut: $collectionToFilterOut,
   filter: $filter,
   first: $first,
+  forCollection: $forCollection,
   groupSlugs: $groupSlugs,
   isFulfilled: $isFulfilled,
   offset: $offset,
@@ -316,11 +328,13 @@ posts(
   commentersTotal
   
   linkPreview {
+    description
     id
+    imageUrl
     title
     url
-    imageUrl
   }
+  linkPreviewFeatured
   location
   locationObject {
     id
@@ -403,9 +417,11 @@ posts(
       "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
+      "collectionToFilterOut": undefined,
       "context": "all",
       "filter": "request",
       "first": 20,
+      "forCollection": undefined,
       "offset": 20,
       "order": undefined,
       "search": "graphic design",

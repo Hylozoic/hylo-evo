@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { groupUrl } from 'util/navigation'
 
 const parsegroup = group => `Group: ${group.name}`

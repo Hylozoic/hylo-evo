@@ -1,11 +1,10 @@
 import cx from 'classnames'
-import { throttle, isEmpty } from 'lodash/fp'
+import { throttle } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import AttachmentManager from 'components/AttachmentManager'
-import HyloEditor from 'components/HyloEditor'
+import HyloTipTapEditor from 'components/HyloTipTapEditor'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
@@ -21,7 +20,6 @@ export default class CommentForm extends Component {
     currentUser: PropTypes.object,
     className: PropTypes.string,
     placeholder: PropTypes.string,
-    focusOnRender: PropTypes.bool,
     editorContent: PropTypes.string,
     // provided by connector
     sendIsTyping: PropTypes.func.isRequired,
@@ -32,38 +30,35 @@ export default class CommentForm extends Component {
 
   editor = React.createRef()
 
-  startTyping = throttle(STARTED_TYPING_INTERVAL, (editorState, stateChanged) => {
-    if (editorState.getLastChangeType() === 'insert-characters' && stateChanged) {
-      this.props.sendIsTyping(true)
-    }
+  startTyping = throttle(STARTED_TYPING_INTERVAL, () => {
+    this.props.sendIsTyping(true)
   })
 
-  save = editorState => {
+  handleOnEnter = contentHTML => {
     const {
       createComment,
       sendIsTyping,
       attachments,
       clearAttachments
     } = this.props
-    const contentState = editorState.getCurrentContent()
-    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(attachments)) {
-      // Don't accept empty comments.
-      return
-    }
-    const text = HyloContentState.toHTML(editorState.getCurrentContent())
 
+    if (this.editor?.current && this.editor.current.isEmpty()) {
+      // Do nothing and stop event propagation
+      return true
+    }
+
+    this.editor.current.clearContent()
     this.startTyping.cancel()
     sendIsTyping(false)
-    createComment({
-      text,
-      attachments
-    })
+    createComment({ text: contentHTML, attachments })
     clearAttachments()
+
+    // Tell Editor this keyboard event was handled and to end propagation.
+    return true
   }
 
   render () {
-    const { currentUser, className, addAttachment, focusOnRender, editorContent } = this.props
-
+    const { currentUser, className, addAttachment, editorContent } = this.props
     const placeholder = this.props.placeholder || 'Add a comment...'
 
     return (
@@ -79,16 +74,15 @@ export default class CommentForm extends Component {
             ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
             : <Icon name='Person' styleName='anonymous-image' />
           }
-          <HyloEditor
-            ref={this.editor}
+          <HyloTipTapEditor
+            contentHTML={editorContent}
+            onEnter={this.handleOnEnter}
             styleName='editor'
             readOnly={!currentUser}
+            hideMenu
             onChange={this.startTyping}
-            focusOnRender={focusOnRender}
             placeholder={placeholder}
-            parentComponent='CommentForm'
-            submitOnReturnHandler={this.save}
-            contentHTML={editorContent}
+            ref={this.editor}
           />
 
           {!currentUser

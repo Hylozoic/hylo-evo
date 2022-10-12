@@ -1,9 +1,53 @@
 // Global Typography
 
-/* override draft-js placeholder */
-.public-DraftEditorPlaceholder-root {
-  color: $color-rhino-30 !important;
-  padding-left: 2px;
+blockquote {
+  border-left: solid 2px $color-rhino-30;
+  color: $color-rhino-30;
+  margin-left: 0.25em;
+  padding: 0.5em;
+  padding-bottom: 0.25em;
+}
+
+code {
+  color: $color-white-80;
+  background-color: $color-rhino;
+  border-radius: 0.25em;
+  font-size: 12px;
+  padding: 0.2em;
+}
+
+pre code {
+  border-radius: 0.5em;
+  display: block;
+  overflow: auto;
+  font-size: 12px;
+  padding: 1em 1.25em;
+}
+
+ol li p:last-child,
+ul li p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: #0275d8
+}
+
+a:focus,
+a:hover {
+  color: #014c8c
+}
+
+a.hylo-link,
+.mention,
+.topic
+{
+  color: $color-caribbean-green;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+    color: $color-gossamer;
+  }
 }
 
 .hdr-display {
@@ -14,7 +58,7 @@
   color: $color-rhino;
 }
 
-.hdr-headline {
+.hdr-headline, h1 {
   @include font-medium;
   font-size: 24px;
   letter-spacing: 0;
@@ -23,7 +67,7 @@
   word-wrap: break-word;
 }
 
-.hdr-subheadline {
+.hdr-subheadline, h2 {
   @include font-regular;
   font-size: 18px;
   letter-spacing: 0;
@@ -31,7 +75,7 @@
   color: $color-rhino;
 }
 
-.hdr-minor {
+.hdr-minor, h3 {
   @include font-regular;
   font-size: 14px;
   letter-spacing: 0;

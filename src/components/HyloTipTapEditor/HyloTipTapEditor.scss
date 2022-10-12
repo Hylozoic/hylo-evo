@@ -1,0 +1,78 @@
+:global {
+  .ProseMirror:focus {
+    outline: none;
+  }
+
+  /* Placeholder (at the top) */
+  .ProseMirror p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .ProseMirror a {
+    cursor: pointer;
+  }
+}
+
+// Mobile 
+:global .hyloAppEditor {
+  .ProseMirror {
+    //  'auto' and 'scroll' cause of height issue on Comment Form mobile
+    overflow-y: auto;
+    max-height: 160px;
+  }
+}
+
+.addLinkPreviewButton {
+  display: flex;
+  align-items: center;
+  color: $color-white-80;
+  cursor: pointer;
+  &:hover {
+    color: white;
+  }
+  font-size: 0.7em;
+  svg {
+    margin-right: 0.3em;
+    font-size: 1.5em;
+  }
+}
+
+.topMenuBar,
+.bottomMenuBar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  line-height: 1em;
+  background-color: whitesmoke;
+  border: solid 1px gainsboro;
+  button {
+    background-color: none;
+    margin: 0;
+    background: none;
+    border: 0;
+    color: $color-rhino-60;
+    font-size: 14px;
+    &.is-active {
+      background-color: $color-rhino-80;
+      color: whitesmoke;
+    }
+  }
+  .divider {
+    display: inline-block;
+    background-color: #0000001a;
+    height: 1.25rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    width: 2px;
+  }
+}
+
+.topMenuBar {
+  // position: absolute;
+  // top: 0;
+  // overflow: hidden;
+}

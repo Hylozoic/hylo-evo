@@ -9,7 +9,8 @@ import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-import { HyloApp } from 'hylo-shared'
+import { WebViewMessageTypes } from 'hylo-shared'
+import { sendMessageToWebView } from 'util/webView'
 import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -114,7 +115,7 @@ export class UnwrappedMapExplorer extends React.Component {
         // the keeps saved search retrieval from reseting group context in the app
         if (pathname.match(/\/map$/)) return true
 
-        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
+        sendMessageToWebView(WebViewMessageTypes.NAVIGATION, { pathname, search })
 
         return false
       })

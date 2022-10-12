@@ -7,7 +7,16 @@ import getRouteParam from 'store/selectors/getRouteParam'
 import getCanModerate from 'store/selectors/getCanModerate'
 import getMe from 'store/selectors/getMe'
 import {
-  FETCH_GROUP_SETTINGS, fetchGroupSettings, updateGroupSettings, deleteGroup
+  FETCH_COLLECTION_POSTS,
+  FETCH_GROUP_SETTINGS,
+  addPostToCollection,
+  createCollection,
+  deleteGroup,
+  fetchCollectionPosts,
+  fetchGroupSettings,
+  removePostFromCollection,
+  reorderPostInCollection,
+  updateGroupSettings
 } from './GroupSettings.store'
 import { allGroupsUrl } from 'util/navigation'
 import { fetchLocation } from 'components/LocationInput/LocationInput.store'
@@ -23,20 +32,24 @@ export function mapStateToProps (state, props) {
     canModerate,
     currentUser,
     fetchPending: state.pending[FETCH_GROUP_SETTINGS],
+    fetchCollectionPostsPending: state.pending[FETCH_COLLECTION_POSTS],
     group: group ? presentGroup(group) : null,
     parentGroups,
     slug
   }
 }
 
-// custom view updating just goes into
-
 export function mapDispatchToProps (dispatch, props) {
   return {
+    addPostToCollection: (collectionId, postId) => dispatch(addPostToCollection(collectionId, postId)),
+    createCollection: (data) => dispatch(createCollection(data)),
     deleteGroup: id => dispatch(deleteGroup(id)),
+    fetchCollectionPosts: id => dispatch(fetchCollectionPosts(id)),
     fetchGroupSettingsMaker: slug => () => dispatch(fetchGroupSettings(slug)),
-    updateGroupSettingsMaker: id => changes => dispatch(updateGroupSettings(id, changes)),
-    fetchLocation: (location) => dispatch(fetchLocation(location))
+    fetchLocation: (location) => dispatch(fetchLocation(location)),
+    removePostFromCollection: (collectionId, postId) => dispatch(removePostFromCollection(collectionId, postId)),
+    reorderPostInCollection: (collectionId, postId, newOrderIndex) => dispatch(reorderPostInCollection(collectionId, postId, newOrderIndex)),
+    updateGroupSettingsMaker: id => changes => dispatch(updateGroupSettings(id, changes))
   }
 }
 
@@ -56,7 +69,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
       dispatchProps.deleteGroup(group.id)
         .then(({ error }) => {
           if (!error) {
-            // Reload app instead of just going to the home peage because correctly updating redux-orm after group deletion is hard
+            // Reload app instead of just going to the home page because correctly updating redux-orm after group deletion is hard
             window.location = allGroupsUrl()
           }
         })

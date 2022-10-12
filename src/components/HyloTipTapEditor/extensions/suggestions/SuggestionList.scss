@@ -1,0 +1,44 @@
+:global {
+  .tippy-box[data-theme='suggestions'] {
+    background-color: transparent;
+    .tippy-content {
+      padding: 0
+    }  
+    .tippy-arrow {
+      color: $color-caribbean-green;
+    }  
+  }
+
+}
+
+.items {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0px 10px 20px rgba(0, 0, 0, 0.1);
+  color: $color-rhino-50;
+  font-size: 0.9rem;
+  overflow: hidden;
+  // padding: 0.2rem;
+  position: relative;
+}
+
+.item {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.2rem 0.4rem;
+  width: 100%;
+  color: $color-caribbean-green;
+
+  &.is-selected {
+    background-color: $color-caribbean-green;
+    color: white;
+  }
+}
+
+.avatar {
+  margin-right: 0.45em;
+}

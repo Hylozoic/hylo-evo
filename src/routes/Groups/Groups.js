@@ -5,6 +5,7 @@ import { TextHelpers } from 'hylo-shared'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import GroupNetworkMap from 'components/GroupNetworkMap'
+import HyloHTML from 'components/HyloHTML'
 import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
@@ -111,7 +112,7 @@ export function GroupCard ({ group, routeParams }) {
             </div>
           </div>
           <div styleName='group-description'>
-            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
           </div>
         </div>
       </div>

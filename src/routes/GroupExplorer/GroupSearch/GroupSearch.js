@@ -139,6 +139,7 @@ const makeDropdown = (selected, options, onChange, filterLabel = '', isFilter = 
   const selectedLabel = selected ? options.find(o => o.id === selected).label : 'All'
   return (
     <Dropdown
+      alignRight={!isFilter}
       styleName={cx({ 'dropdown': true, 'filter-dropdown': isFilter })}
       toggleChildren={
         <span styleName={isFilter ? 'filter-dropdown-label' : 'dropdown-label'}>

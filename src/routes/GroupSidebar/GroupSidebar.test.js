@@ -45,9 +45,9 @@ describe('AboutSection', () => {
         name={group.name}
         description={group.description} />)
     expect(wrapper.find('div').at(1).text()).toEqual(`About ${group.name}`)
-    expect(wrapper.find('span').at(1).text()).toEqual('Read More')
+    expect(wrapper.find('span').at(0).text()).toEqual('Read More')
     wrapper.setState({ expanded: true })
-    expect(wrapper.find('span').at(1).text()).toEqual('Show Less')
+    expect(wrapper.find('span').at(0).text()).toEqual('Show Less')
   })
 })
 
