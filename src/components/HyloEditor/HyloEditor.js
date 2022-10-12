@@ -9,11 +9,11 @@ import { VscPreview } from 'react-icons/vsc'
 import Link from '@tiptap/extension-link'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
-import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
+import HyloEditorMenuBar from './HyloEditorMenuBar'
 import 'tippy.js/dist/tippy.css'
-import './HyloTipTapEditor.scss'
+import './HyloEditor.scss'
 
-export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
+export const HyloEditor = React.forwardRef(function HyloEditor ({
   contentHTML,
   className,
   containerClassName = 'hyloEditor',
@@ -181,7 +181,7 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   return (
     <div className={containerClassName} style={{ flex: 1 }}>
       {!hideMenu && (
-        <HyloTipTapEditorMenuBar editor={editor} />
+        <HyloEditorMenuBar editor={editor} />
       )}
       <EditorContent className={className} editor={editor} />
       {editor && (
@@ -210,4 +210,4 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   )
 })
 
-export default HyloTipTapEditor
+export default HyloEditor

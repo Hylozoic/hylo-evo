@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import AttachmentManager from 'components/AttachmentManager'
-import HyloTipTapEditor from 'components/HyloTipTapEditor'
+import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
@@ -74,7 +74,7 @@ export default class CommentForm extends Component {
             ? <RoundImage url={currentUser.avatarUrl} small styleName='image' />
             : <Icon name='Person' styleName='anonymous-image' />
           }
-          <HyloTipTapEditor
+          <HyloEditor
             contentHTML={editorContent}
             onEnter={this.handleOnEnter}
             styleName='editor'

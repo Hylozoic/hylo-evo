@@ -2,16 +2,16 @@ import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { pickBy } from 'lodash/fp'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
-import HyloTipTapEditor from 'components/HyloTipTapEditor'
+import HyloEditor from 'components/HyloEditor'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import './HyloTipTapEditorMobile.scss'
+import './HyloEditorMobile.scss'
 
 // Note: This Mobile editor can be tested in a browser at `hyloApp/editor`.
 //       To control the editor manually post messages via the Web Console, e.g.:
 //
 //       `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
 //
-export default function HyloTipTapEditorMobile (props) {
+export default function HyloEditorMobile (props) {
   const editorRef = useRef()
   const [contentHTML, setContentHTML] = useState()
   const [hideMenu, setHideMenu] = useState(false)
@@ -89,7 +89,7 @@ export default function HyloTipTapEditorMobile (props) {
     return () => window.removeEventListener('message')
   }, [])
 
-  return React.createElement(HyloTipTapEditor, {
+  return React.createElement(HyloEditor, {
     // autofocus: true,
     containerClassName: 'hyloEditorMobileContainer',
     className: 'hyloEditorMobile',
