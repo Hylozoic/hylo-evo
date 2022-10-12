@@ -12,6 +12,10 @@
     pointer-events: none;
   }
 
+  .ProseMirror p:last-child {
+    margin-bottom: 0px;
+  }
+
   .ProseMirror a {
     cursor: pointer;
   }

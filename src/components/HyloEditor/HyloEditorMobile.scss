@@ -10,10 +10,6 @@
       max-height: 160px;
     }
 
-    .ProseMirror p.is-editor-empty {
-      margin-bottom: 0px;
-    }
-
     .ProseMirror p:last-child:not(.is-editor-empty) {
       padding-bottom: 15px;
     }
