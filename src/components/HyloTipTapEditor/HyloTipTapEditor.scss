@@ -12,17 +12,12 @@
     pointer-events: none;
   }
 
+  .ProseMirror p.is-editor-empty {
+    margin-bottom: 0px;
+  }
+
   .ProseMirror a {
     cursor: pointer;
-  }
-}
-
-// Mobile 
-:global .hyloAppEditor {
-  .ProseMirror {
-    //  'auto' and 'scroll' cause of height issue on Comment Form mobile
-    overflow-y: auto;
-    max-height: 160px;
   }
 }
 

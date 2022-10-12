@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'rea
 import Avatar from 'components/Avatar'
 import './SuggestionList.scss'
 
-export default forwardRef(({ items, command }, ref) => {
+export default forwardRef(({ items, command, ...everything }, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const selectItem = index => {
@@ -49,21 +49,22 @@ export default forwardRef(({ items, command }, ref) => {
   }))
 
   return (
-    <div styleName='items'>
+    <div styleName='items' className='suggestion-list-items'>
       {items.length > 0
         ? items.map((item, index) => (
           <button
             styleName={`item ${index === selectedIndex ? 'is-selected' : ''}`}
+            className='suggestion-list-item'
             key={index}
             onClick={() => selectItem(index)}
           >
-            {item.avatarURL && (
+            {item.avatarUrl && (
               <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' />
             )}
-            {item.label}
+            {item.suggestionLabel}
           </button>
         ))
-        : <div styleName='item'>No result</div>}
+        : <div styleName='item' className='suggestion-list-items'>No result</div>}
     </div>
   )
 })

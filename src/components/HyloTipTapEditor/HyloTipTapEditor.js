@@ -16,7 +16,7 @@ import './HyloTipTapEditor.scss'
 export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   contentHTML,
   className,
-  containerClassName,
+  containerClassName = 'hyloEditor',
   // If provided, Mention and Topic suggestions will use this to filter
   groupIds,
   hideMenu,

@@ -53,10 +53,14 @@ export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection 
           editor.extensionStorage.topic.loading = false
 
           const results = matchedTopics?.payload.getData().items
-            .map(t => ({ id: t.topic.name, label: `#${t.topic.name}` }))
+            .map(t => ({
+              id: t.topic.name,
+              label: `#${t.topic.name}`,
+              suggestionLabel: t.topic.name
+            }))
 
           if (query?.trim().length > 2 && results) {
-            results.unshift({ id: query, label: `#${query}` })
+            results.unshift({ id: query, label: `#${query}`, suggestionLabel: query })
           }
 
           editor.extensionStorage.topic.loading = false

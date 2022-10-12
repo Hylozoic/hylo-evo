@@ -1,0 +1,45 @@
+:global .hyloAppEditor {
+  .ProseMirror:has(> p.is-editor-empty) {
+    min-height: 0px;
+  }
+
+  .ProseMirror {
+    overflow-y: auto;
+    min-height: 50px;
+    max-height: 160px;
+  }
+
+  .ProseMirror p:last-child:not(.is-editor-empty) {
+    padding-bottom: 15px;
+  }
+
+  .suggestion-list-items {
+    display: flex;
+    flex-direction: row;
+    // color: $color-rhino-50;
+    // font-size: 0.8rem;
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .suggestion-list-item {
+    background-color: white;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 2px 5px;
+    margin-right: 5px;
+    white-space: nowrap;
+
+    // padding: 0.2rem 0.4rem;
+    width: 100%;
+    color: $color-caribbean-green;
+    border: solid 1px $color-caribbean-green;
+    
+    // &.is-selected {
+    //   background-color: $color-caribbean-green;
+    //   color: white;
+    // }
+  }
+}

@@ -4,6 +4,7 @@ import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
 import HyloTipTapEditor from 'components/HyloTipTapEditor'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import './HyloTipTapEditorMobile.scss'
 
 // Note: This Mobile editor can be tested in a browser at `hyloApp/editor`.
 //       To control the editor manually post messages via the Web Console, e.g.:
@@ -90,8 +91,8 @@ export default function HyloTipTapEditorMobile (props) {
 
   return React.createElement(HyloTipTapEditor, {
     // autofocus: true,
-    containerClassName: 'hyloAppEditorContainer',
-    className: 'hyloAppEditor',
+    containerClassName: 'hyloEditorMobileContainer',
+    className: 'hyloEditorMobile',
     maxSuggestions: 3,
     onChange: handleChange,
     onEnter: handleEnter,

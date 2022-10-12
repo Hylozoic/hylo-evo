@@ -53,7 +53,12 @@ export const PeopleMentions = ({ dispatch, groupIds, maxSuggestions, onSelection
           editor.extensionStorage.topic.loading = false
 
           return matchedPeople?.payload.getData().items
-            .map(person => ({ id: person.id, label: person.name, avatarUrl: person.avatarUrl }))
+            .map(person => ({
+              id: person.id,
+              label: person.name,
+              avatarUrl: person.avatarUrl,
+              suggestionLabel: person.name
+            }))
         })
       }
     })
