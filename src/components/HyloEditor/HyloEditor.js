@@ -14,12 +14,11 @@ import 'tippy.js/dist/tippy.css'
 import './HyloEditor.scss'
 
 export const HyloEditor = React.forwardRef(function HyloEditor ({
-  contentHTML,
   className,
   containerClassName = 'hyloEditor',
-  // If provided, Mention and Topic suggestions will use this to filter
+  contentHTML,
+  // See: https://github.com/Hylozoic/hylo-evo/issues/1318
   groupIds,
-  showMenu = false,
   maxSuggestions = 7,
   onAddLink,
   onAddMention,
@@ -29,7 +28,8 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   onEnter,
   onEscape,
   placeholder,
-  readOnly
+  readOnly,
+  showMenu = false
 }, ref) {
   const dispatch = useDispatch()
   const editorRef = useRef(null)

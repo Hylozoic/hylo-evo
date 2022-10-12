@@ -630,8 +630,6 @@ export default class PostEditor extends React.Component {
               onAddTopic={this.handleAddTopic}
               onAddLink={this.handleAddLinkPreview}
               contentHTML={details}
-              // See: https://github.com/Hylozoic/hylo-evo/issues/1318
-              // groupIds={groups && groups.map(g => g.id)}
               showMenu
               readOnly={loading}
               ref={this.editorRef}
