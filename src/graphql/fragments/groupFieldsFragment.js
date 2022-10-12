@@ -8,18 +8,21 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
     items {
       id
       activePostsOnly
-      groupId
+      collectionId
+      defaultSort
+      defaultViewMode
       externalLink
+      groupId
       isActive
       icon
       name
-      postTypes
-      viewMode
       order
+      postTypes
       topics {
         id
         name
       }
+      type
     }
   }
   description

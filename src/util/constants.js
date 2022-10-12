@@ -1,3 +1,16 @@
+export const STREAM_SORT_OPTIONS = [
+  { id: 'updated', label: 'Latest activity' },
+  { id: 'created', label: 'Post Date' },
+  { id: 'votes', label: 'Popular' }
+]
+
+export const COLLECTION_SORT_OPTIONS = [
+  { id: 'order', label: 'Manual' },
+  { id: 'updated', label: 'Latest activity' },
+  { id: 'created', label: 'Post Date' },
+  { id: 'votes', label: 'Popular' }
+]
+
 export const STARTED_TYPING_INTERVAL = 3000
 export const ALL_VIEW = 'all'
 export const FARM_VIEW = 'farm'

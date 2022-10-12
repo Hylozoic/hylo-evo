@@ -39,12 +39,14 @@ export function mapStateToProps (state, props) {
 
   const routeParams = get('match.params', props)
   const customView = getCustomView(state, props)
-  const customPostTypes = customView?.postTypes
-  const customViewMode = customView?.viewMode
+  const customViewType = customView?.type
+  const customPostTypes = customViewType === 'stream' ? customView?.postTypes : null
+  const customViewMode = customView?.defaultViewMode
   const customViewName = customView?.name
   const customViewIcon = customView?.icon
-  const activePostsOnly = customView?.activePostsOnly
-  const customViewTopics = customView?.topics
+  const activePostsOnly = customViewType === 'stream' ? customView?.activePostsOnly : false
+  const customViewTopics = customViewType === 'stream' ? customView?.topics : null
+  const customViewSort = customView?.defaultSort
   const viewName = customViewName
   const viewIcon = customViewIcon
   const topicName = getRouteParam('topicName', state, props)
@@ -69,16 +71,21 @@ export function mapStateToProps (state, props) {
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
-  const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
+  const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
   const search = getQuerystringParam('search', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = customViewMode || getQuerystringParam('v', state, props) || projectsDefault || defaultViewMode
+  let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
+  // Only custom views can be sorted by manual order
+  if (!customView && sortBy === 'order') {
+    sortBy = 'updated'
+  }
+  const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
 
   const fetchPostsParam = {
     activePostsOnly,
     context,
     topicName,
     filter: postTypeFilter,
+    forCollection: customView?.type === 'collection' ? customView?.collectionId : null,
     slug: groupSlug,
     search,
     sortBy,
@@ -93,6 +100,7 @@ export function mapStateToProps (state, props) {
   return {
     customActivePostsOnly: activePostsOnly,
     customViewId: customView?.id,
+    customViewType,
     context,
     currentUser,
     currentUserHasMemberships,

@@ -14,17 +14,20 @@ export default () => {
         id
         groupId
         activePostsOnly
+        collectionId
+        defaultSort
+        defaultViewMode
         externalLink
         isActive
         icon
         name
-        postTypes
-        viewMode
         order
+        postTypes
         topics {
           id
           name
         }
+        type
       }
     }
     description

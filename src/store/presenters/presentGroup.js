@@ -1,3 +1,4 @@
+import presentCollection from 'store/presenters/presentCollection'
 import presentTopic from 'store/presenters/presentTopic'
 
 export default function presentGroup (group) {
@@ -20,6 +21,7 @@ export default function presentGroup (group) {
     customViews: group.customViews ? group.customViews.toModelArray().map(cv => {
       return {
         ...cv.ref,
+        collection: cv.collection ? presentCollection(cv.collection) : null,
         topics: cv.topics.toModelArray().map(topic => presentTopic(topic, {}))
       }
     }) : [],
