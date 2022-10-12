@@ -6,20 +6,33 @@ import HyloEditor from 'components/HyloEditor'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import './HyloEditorMobile.scss'
 
-// Note: This Mobile editor can be tested in a browser at `hyloApp/editor`.
-//       To control the editor manually post messages via the Web Console, e.g.:
-//
-//       `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
-//
+/*
+
+  This Mobile editor can be tested in a browser at `hyloApp/editor`.
+
+  To control the editor manually post messages via the Web Console, e.g.:
+
+  `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
+
+*/
 export default function HyloEditorMobile (props) {
   const editorRef = useRef()
+  // Should the default be empty or a paragraph?
   const [contentHTML, setContentHTML] = useState()
+  const [groupIds, setGroupIds] = useState()
+  const [placeholder, setPlaceholder] = useState()
   const [showMenu, setShowMenu] = useState(false)
   const [readOnly, setReadOnly] = useState(false)
-  const [placeholder, setPlaceholder] = useState()
-  const [groupIds, setGroupIds] = useState()
 
   // Sending Messages
+  const handleAddLink = useCallback(url => {
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
+  })
+
+  const handleAddTopic = useCallback(topic => (
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
+  ))
+
   const handleBeforeCreate = () => {
     sendMessageToWebView(WebViewMessageTypes.EDITOR.LOADED)
   }
@@ -35,14 +48,6 @@ export default function HyloEditorMobile (props) {
       return getQuerystringParam('suppressEnterKeyPropagation', null, props)
     }
   })
-
-  // const handleAddLink = useCallback(url => {
-  //   sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
-  // })
-
-  const handleAddTopic = useCallback(topic => (
-    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
-  ))
 
   const handleMessage = message => {
     try {
@@ -90,22 +95,21 @@ export default function HyloEditorMobile (props) {
   }, [])
 
   return React.createElement(HyloEditor, {
-    // autofocus: true,
     containerClassName: 'hyloEditorMobileContainer',
+    contentHTML,
     className: 'hyloEditorMobile',
-    maxSuggestions: 3,
     onChange: handleChange,
     onEnter: handleEnter,
     onBeforeCreate: handleBeforeCreate,
-    // onAddMention={handleAddMention}
-    // onAddLink={handleAddLink}
+    // Not implemented: No ADD_MENTION constant
+    // onAddMention: handleAddMention
+    onAddLink: handleAddLink,
     onAddTopic: handleAddTopic,
-    // Should the default be empty or a paragraph?
-    contentHTML,
+    groupIds,
+    maxSuggestions: 3,
     placeholder,
     readOnly,
     showMenu,
-    groupIds,
     ref: editorRef
   })
 }
