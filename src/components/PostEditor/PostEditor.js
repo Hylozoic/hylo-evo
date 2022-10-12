@@ -563,11 +563,6 @@ export default class PostEditor extends React.Component {
       postTypes,
       fetchLinkPreviewPending
     } = this.props
-    // Note: Providing `groupIds` to HyloEditor would cause
-    // mentions to only be posisble to people in the groups being posted
-    // to. This could be combined with logic about the selected groups
-    // visibilities and the public status to "do the right thing"
-    // const groupIds = groups && groups.map(g => g.id)
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'discussion',
@@ -635,7 +630,8 @@ export default class PostEditor extends React.Component {
               onAddTopic={this.handleAddTopic}
               onAddLink={this.handleAddLinkPreview}
               contentHTML={details}
-              // groupIds={groupIds}
+              // See: https://github.com/Hylozoic/hylo-evo/issues/1318
+              // groupIds={groups && groups.map(g => g.id)}
               showMenu
               readOnly={loading}
               ref={this.editorRef}
