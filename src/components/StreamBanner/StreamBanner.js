@@ -18,8 +18,8 @@ export default function StreamBanner ({
   customActivePostsOnly,
   customPostTypes,
   customViewTopics,
+  customViewType,
   label,
-  isCustomView,
   icon,
   group,
   newPost,
@@ -47,7 +47,7 @@ export default function StreamBanner ({
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
-  let numCustomFilters = isCustomView ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
+  let numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
 
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
@@ -67,9 +67,11 @@ export default function StreamBanner ({
               {location}
             </div>}
 
-            {numCustomFilters
+            {customViewType === 'stream'
               ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
-              : ''}
+              : customViewType === 'collection'
+                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>Collection</div>
+                : ''}
 
             {subtitle && <div styleName='header-subtitle'>
               {subtitle}
@@ -95,7 +97,7 @@ export default function StreamBanner ({
       delayShow={0}
       place='bottom'
       getContent={function () {
-        return (isCustomView
+        return (customViewType === 'stream'
           ? <div styleName='custom-filters'>
             <span styleName='displaying'>
               Displaying &nbsp;

@@ -98,11 +98,11 @@ export default function Navigation (props) {
       icon: 'Globe',
       to: mapPath
     },
-    ...customViews.filter(cv => cv.name && (cv.viewMode !== 'externalLink' || cv.externalLink)).map(cv => ({
+    ...customViews.filter(cv => cv.name && (cv.type !== 'externalLink' || cv.externalLink)).map(cv => ({
       label: cv.name,
       icon: cv.icon,
-      to: cv.viewMode !== 'externalLink' ? `${rootPath}/custom/${cv.id}` : false,
-      externalLink: cv.viewMode === 'externalLink' ? cv.externalLink : false
+      to: cv.type !== 'externalLink' ? `${rootPath}/custom/${cv.id}` : false,
+      externalLink: cv.type === 'externalLink' ? cv.externalLink : false
     }))
   ])
 

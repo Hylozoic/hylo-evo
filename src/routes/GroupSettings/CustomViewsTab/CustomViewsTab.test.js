@@ -1,8 +1,8 @@
-import GroupSettingsTab from './GroupSettingsTab'
+import CustomViewsTab from './CustomViewsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-describe('GroupSettingsTab', () => {
+describe('CustomViewsTab', () => {
   it('renders correctly', () => {
     const group = {
       id: 1,
@@ -24,7 +24,7 @@ describe('GroupSettingsTab', () => {
         type: 'externalLink'
       }]
     }
-    const wrapper = shallow(<GroupSettingsTab group={group} />)
+    const wrapper = shallow(<CustomViewsTab group={group} fetchCollectionPosts={jest.fn()} />)
     expect(wrapper).toMatchSnapshot()
     expect(wrapper.find('Button[label="Save Changes"]').prop('color')).toEqual('gray')
     wrapper.setState({ changed: true })

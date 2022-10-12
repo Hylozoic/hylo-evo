@@ -87,6 +87,7 @@ export default class Stream extends Component {
       currentUserHasMemberships,
       customPostTypes,
       customViewTopics,
+      customViewType,
       followersTotal,
       groupTopic,
       group,
@@ -110,7 +111,6 @@ export default class Stream extends Component {
     } = this.props
 
     const ViewComponent = viewComponent[viewMode]
-    const isCustomView = routeParams && routeParams.view === 'custom'
     const { topicName, groupSlug } = routeParams
 
     if (topicLoading) return <Loading />
@@ -140,7 +140,7 @@ export default class Stream extends Component {
               customPostTypes={customPostTypes}
               customActivePostsOnly={customActivePostsOnly}
               customViewTopics={customViewTopics}
-              isCustomView={isCustomView}
+              customViewType={customViewType}
               context={context}
               currentUser={currentUser}
               currentUserHasMemberships={currentUserHasMemberships}
@@ -154,7 +154,7 @@ export default class Stream extends Component {
             />
           )}
         <ViewControls
-          routeParams={routeParams} view={view} customPostTypes={customPostTypes}
+          routeParams={routeParams} view={view} customPostTypes={customPostTypes} customViewType={customViewType}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
         />
