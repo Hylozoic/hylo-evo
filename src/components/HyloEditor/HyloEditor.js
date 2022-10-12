@@ -9,17 +9,16 @@ import { VscPreview } from 'react-icons/vsc'
 import Link from '@tiptap/extension-link'
 import PeopleMentions from './extensions/PeopleMentions'
 import TopicMentions from './extensions/TopicMentions'
-import HyloTipTapEditorMenuBar from './HyloTipTapEditorMenuBar'
+import HyloEditorMenuBar from './HyloEditorMenuBar'
 import 'tippy.js/dist/tippy.css'
-import './HyloTipTapEditor.scss'
+import './HyloEditor.scss'
 
-export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
-  contentHTML,
+export const HyloEditor = React.forwardRef(function HyloEditor ({
   className,
-  containerClassName,
-  // If provided, Mention and Topic suggestions will use this to filter
+  containerClassName = 'hyloEditor',
+  contentHTML,
+  // See: https://github.com/Hylozoic/hylo-evo/issues/1318
   groupIds,
-  hideMenu,
   maxSuggestions = 7,
   onAddLink,
   onAddMention,
@@ -29,7 +28,9 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   onEnter,
   onEscape,
   placeholder,
-  readOnly
+  readOnly,
+  showMenu = false,
+  suggestionsThemeName = 'suggestions'
 }, ref) {
   const dispatch = useDispatch()
   const editorRef = useRef(null)
@@ -113,9 +114,9 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
         }
       }),
 
-      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, dispatch }),
+      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
 
-      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, dispatch }),
+      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
 
       Highlight
     ],
@@ -180,8 +181,8 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
 
   return (
     <div className={containerClassName} style={{ flex: 1 }}>
-      {!hideMenu && (
-        <HyloTipTapEditorMenuBar editor={editor} />
+      {showMenu && (
+        <HyloEditorMenuBar editor={editor} />
       )}
       <EditorContent className={className} editor={editor} />
       {editor && (
@@ -210,4 +211,4 @@ export const HyloTipTapEditor = React.forwardRef(function HyloTipTapEditor ({
   )
 })
 
-export default HyloTipTapEditor
+export default HyloEditor

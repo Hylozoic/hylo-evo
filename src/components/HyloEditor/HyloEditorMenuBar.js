@@ -7,7 +7,7 @@ import {
   RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
 // import { VscPreview } from 'react-icons/vsc'
-import './HyloTipTapEditor.scss'
+import './HyloEditor.scss'
 
 // export function addIframe (editor) {
 //   const url = window.prompt('URL of video or content to embed')
@@ -17,7 +17,7 @@ import './HyloTipTapEditor.scss'
 //   }
 // }
 
-export default function HyloTipTapEditorMenuBar ({ editor }) {
+export default function HyloEditorMenuBar ({ editor }) {
   if (!editor) return null
 
   return (

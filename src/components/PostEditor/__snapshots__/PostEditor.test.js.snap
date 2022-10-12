@@ -144,13 +144,14 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         type="text"
         value="valid title"
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -381,13 +382,14 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         type="text"
         value="valid title"
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -662,13 +664,14 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -817,13 +820,14 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -1000,13 +1004,14 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -1183,13 +1188,14 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         data-stylename="editor"
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onChange={[Function]}
         placeholder="Describe the resource that is available"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -1366,7 +1372,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         contentHTML=""
         data-stylename="editor"
         onAddLink={[Function]}
@@ -1374,6 +1380,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -1563,7 +1570,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         contentHTML=""
         data-stylename="editor"
         onAddLink={[Function]}
@@ -1571,6 +1578,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={true}
+        showMenu={true}
       />
     </div>
   </div>
@@ -1719,7 +1727,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         contentHTML=""
         data-stylename="editor"
         onAddLink={[Function]}
@@ -1727,6 +1735,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={true}
+        showMenu={true}
       />
     </div>
   </div>
@@ -1875,7 +1884,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         contentHTML=""
         data-stylename="editor"
         onAddLink={[Function]}
@@ -1883,6 +1892,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -2032,7 +2042,7 @@ exports[`PostEditor renders contribution button 1`] = `
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         contentHTML=""
         data-stylename="editor"
         onAddLink={[Function]}
@@ -2040,6 +2050,7 @@ exports[`PostEditor renders contribution button 1`] = `
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>
@@ -2271,7 +2282,7 @@ exports[`PostEditor renders with min props 1`] = `
         type="text"
         value=""
       />
-      <ForwardRef(HyloTipTapEditor)
+      <ForwardRef(HyloEditor)
         contentHTML=""
         data-stylename="editor"
         onAddLink={[Function]}
@@ -2279,6 +2290,7 @@ exports[`PostEditor renders with min props 1`] = `
         onChange={[Function]}
         placeholder="Add a description"
         readOnly={false}
+        showMenu={true}
       />
     </div>
   </div>

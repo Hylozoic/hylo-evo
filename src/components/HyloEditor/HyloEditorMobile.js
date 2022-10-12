@@ -2,23 +2,37 @@ import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { pickBy } from 'lodash/fp'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
-import HyloTipTapEditor from 'components/HyloTipTapEditor'
+import HyloEditor from 'components/HyloEditor'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import './HyloEditorMobile.scss'
 
-// Note: This Mobile editor can be tested in a browser at `hyloApp/editor`.
-//       To control the editor manually post messages via the Web Console, e.g.:
-//
-//       `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
-//
-export default function HyloTipTapEditorMobile (props) {
+/*
+
+  This Mobile editor can be tested in a browser at `hyloApp/editor`.
+
+  To control the editor manually post messages via the Web Console, e.g.:
+
+  `postMessage(JSON.stringify({ type: 'SET_PROPS', data: { readOnly: true } }))`
+
+*/
+export default function HyloEditorMobile (props) {
   const editorRef = useRef()
+  // Should the default be empty or a paragraph?
   const [contentHTML, setContentHTML] = useState()
-  const [hideMenu, setHideMenu] = useState(false)
-  const [readOnly, setReadOnly] = useState(false)
-  const [placeholder, setPlaceholder] = useState()
   const [groupIds, setGroupIds] = useState()
+  const [placeholder, setPlaceholder] = useState()
+  const [showMenu, setShowMenu] = useState(false)
+  const [readOnly, setReadOnly] = useState(false)
 
   // Sending Messages
+  const handleAddLink = useCallback(url => {
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
+  })
+
+  const handleAddTopic = useCallback(topic => (
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
+  ))
+
   const handleBeforeCreate = () => {
     sendMessageToWebView(WebViewMessageTypes.EDITOR.LOADED)
   }
@@ -34,14 +48,6 @@ export default function HyloTipTapEditorMobile (props) {
       return getQuerystringParam('suppressEnterKeyPropagation', null, props)
     }
   })
-
-  // const handleAddLink = useCallback(url => {
-  //   sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
-  // })
-
-  const handleAddTopic = useCallback(topic => (
-    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
-  ))
 
   const handleMessage = message => {
     try {
@@ -68,7 +74,7 @@ export default function HyloTipTapEditorMobile (props) {
 
           if ('content' in propsToSet) setContentHTML(propsToSet.content)
           if ('readOnly' in propsToSet) setReadOnly(propsToSet.readOnly)
-          if ('hideMenu' in propsToSet) setHideMenu(propsToSet.hideMenu)
+          if ('showMenu' in propsToSet) setShowMenu(propsToSet.showMenu)
           if ('placeholder' in propsToSet) setPlaceholder(propsToSet.placeholder)
           if ('groupIds' in propsToSet) setGroupIds(propsToSet.groupIds)
 
@@ -88,23 +94,23 @@ export default function HyloTipTapEditorMobile (props) {
     return () => window.removeEventListener('message')
   }, [])
 
-  return React.createElement(HyloTipTapEditor, {
-    // autofocus: true,
-    containerClassName: 'hyloAppEditorContainer',
-    className: 'hyloAppEditor',
-    maxSuggestions: 3,
+  return React.createElement(HyloEditor, {
+    containerClassName: 'hyloEditorMobileContainer',
+    contentHTML,
+    className: 'hyloEditorMobile',
     onChange: handleChange,
     onEnter: handleEnter,
     onBeforeCreate: handleBeforeCreate,
-    // onAddMention={handleAddMention}
-    // onAddLink={handleAddLink}
+    // Not implemented: No ADD_MENTION constant
+    // onAddMention: handleAddMention
+    onAddLink: handleAddLink,
     onAddTopic: handleAddTopic,
-    // Should the default be empty or a paragraph?
-    contentHTML,
+    groupIds,
+    maxSuggestions: 3,
     placeholder,
     readOnly,
-    hideMenu,
-    groupIds,
+    showMenu,
+    suggestionsThemeName: 'suggestions-mobile',
     ref: editorRef
   })
 }

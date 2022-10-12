@@ -2,9 +2,9 @@ import React from 'react'
 import {
   RiArrowGoBackLine, RiArrowGoForwardLine, RiFormatClear
 } from 'react-icons/ri'
-import './HyloTipTapEditor.scss'
+import './HyloEditor.scss'
 
-export default function HyloTipTapEditorBottomMenuBar ({ editor }) {
+export default function HyloEditorBottomMenuBar ({ editor }) {
   if (!editor) return null
 
   return (

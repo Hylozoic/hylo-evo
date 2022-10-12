@@ -62,10 +62,9 @@ exports[`Comment displays image attachments 1`] = `
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="text"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
@@ -144,10 +143,9 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="text"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
@@ -221,10 +219,9 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="text"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
@@ -281,10 +278,9 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="text"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
@@ -363,10 +359,9 @@ exports[`Comment does not display the remove menu when removeComment is not defi
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="text"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
@@ -423,10 +418,9 @@ exports[`Comment renders correctly 1`] = `
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="text"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
@@ -488,10 +482,9 @@ exports[`Comment renders correctly when editing 1`] = `
   <ClickCatcher
     groupSlug="foo"
   >
-    <ForwardRef(HyloTipTapEditor)
+    <ForwardRef(HyloEditor)
       contentHTML="<p>text of the comment</p>"
       data-stylename="editing"
-      hideMenu={true}
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={false}

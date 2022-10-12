@@ -82,6 +82,8 @@ $comment-row-padding: 25px;
   padding: 10px;
   border-radius: 0.5rem;
   border: 1px solid $color-cape-cod-10;
+  overflow-y: auto;
+  max-height: 200px;
 }
 
 .reply {

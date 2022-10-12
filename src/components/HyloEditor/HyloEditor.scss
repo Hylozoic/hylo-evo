@@ -17,15 +17,6 @@
   }
 }
 
-// Mobile 
-:global .hyloAppEditor {
-  .ProseMirror {
-    //  'auto' and 'scroll' cause of height issue on Comment Form mobile
-    overflow-y: auto;
-    max-height: 160px;
-  }
-}
-
 .addLinkPreviewButton {
   display: flex;
   align-items: center;

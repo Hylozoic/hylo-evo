@@ -11,7 +11,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
-import HyloTipTapEditor from 'components/HyloTipTapEditor'
+import HyloEditor from 'components/HyloEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
@@ -102,10 +102,9 @@ export class Comment extends Component {
         <CardFileAttachments attachments={attachments} styleName='files' />
         <ClickCatcher groupSlug={slug}>
           {/* Renders and provides editor */}
-          <HyloTipTapEditor
+          <HyloEditor
             styleName={editing ? 'editing' : 'text'}
             contentHTML={text || ''}
-            hideMenu
             readOnly={!editing}
             onEscape={this.handleEditCancel}
             onEnter={this.handleEditSave}

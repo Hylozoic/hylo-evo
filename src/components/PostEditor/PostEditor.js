@@ -10,7 +10,7 @@ import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
 import LocationInput from 'components/LocationInput'
 import RoundImage from 'components/RoundImage'
-import HyloTipTapEditor from 'components/HyloTipTapEditor'
+import HyloEditor from 'components/HyloEditor'
 import Button from 'components/Button'
 import Switch from 'components/Switch'
 import GroupsSelector from 'components/GroupsSelector'
@@ -563,11 +563,6 @@ export default class PostEditor extends React.Component {
       postTypes,
       fetchLinkPreviewPending
     } = this.props
-    // Note: Providing `groupIds` to HyloTipTapEditor would cause
-    // mentions to only be posisble to people in the groups being posted
-    // to. This could be combined with logic about the selected groups
-    // visibilities and the public status to "do the right thing"
-    // const groupIds = groups && groups.map(g => g.id)
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'discussion',
@@ -626,7 +621,7 @@ export default class PostEditor extends React.Component {
             {titleLengthError && (
               <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>
             )}
-            <HyloTipTapEditor
+            <HyloEditor
               styleName='editor'
               placeholder={detailPlaceholder}
               onChange={this.handleDetailsChange}
@@ -635,7 +630,7 @@ export default class PostEditor extends React.Component {
               onAddTopic={this.handleAddTopic}
               onAddLink={this.handleAddLinkPreview}
               contentHTML={details}
-              // groupIds={groupIds}
+              showMenu
               readOnly={loading}
               ref={this.editorRef}
             />
