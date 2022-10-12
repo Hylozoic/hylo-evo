@@ -99,47 +99,11 @@ a:not([href]):not([tabindex]).voted.vote-button {
   align-items: center;
 }
 
-// .vote-button {
-//   composes: text-button from 'css/typography.scss';
-//   color: rgba(0, 199, 157, 1.0);
-//   background-color: rgba(255, 255, 255, 0);
-//   margin-left: auto;
-//   height: $footer-height;
-//   line-height: $footer-height;
-//   text-align: center;
-//   border-left: 1px dashed $color-cape-cod-10;
-//   border-bottom-right-radius: 4px;
-//   width: 90px;
-//   transition: all .25s ease;
-
-//   &:hover {
-//     &, .arrowIcon {
-//       color: $color-gossamer !important;
-//     }
-//   }
-
-//   &.voted {
-//     background-color: rgba(0, 199, 157, 1.0);
-//     color: rgba(255, 255, 255, 1);
-//     &, .arrowIcon {
-//       color: white !important;
-//     }
-//   }
-// }
-
-// .constrainend.vote-button {
-//   width: 66px;
-// }
-
 @media screen and (max-width: 425px) {
   .footer {
     height: 40px;
     padding-left: 10px;
   }
-
-  // .vote-button {
-  //   width: 70px;
-  // }
 
   .people {
     margin-right: 10px;

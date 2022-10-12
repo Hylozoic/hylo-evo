@@ -32,13 +32,6 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     }
     peopleTotal={4}
   />
-  <div
-    data-stylename="footer-reactions"
-  >
-    <EmojiPicker
-      onClick={[Function]}
-    />
-  </div>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -78,13 +71,6 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     }
     peopleTotal={4}
   />
-  <div
-    data-stylename="footer-reactions"
-  >
-    <EmojiPicker
-      onClick={[Function]}
-    />
-  </div>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -99,9 +85,6 @@ exports[`PostFooter matches the latest snapshot for event 1`] = `
   <PeopleInfo
     people={Array []}
     peopleTotal={0}
-  />
-  <div
-    data-stylename="footer-reactions"
   />
   <Tooltip
     delay={550}
@@ -119,13 +102,6 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     people={Array []}
     peopleTotal={0}
   />
-  <div
-    data-stylename="footer-reactions"
-  >
-    <EmojiPicker
-      onClick={[Function]}
-    />
-  </div>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"

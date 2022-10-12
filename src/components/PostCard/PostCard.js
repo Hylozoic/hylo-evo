@@ -102,6 +102,9 @@ export default class PostCard extends React.Component {
               {...post}
               slug={routeParams.groupSlug}
               constrained={constrained}
+              currentUser={currentUser}
+              reactOnPost={reactOnPost}
+              removeReactOnPost={removeReactOnPost}
             />
           </div>
         )}
@@ -115,8 +118,6 @@ export default class PostCard extends React.Component {
         </div>
         <PostFooter
           {...post}
-          reactOnPost={reactOnPost}
-          removeReactOnPost={removeReactOnPost}
           constrained={constrained}
           currentUser={currentUser}
           postId={post.id}
