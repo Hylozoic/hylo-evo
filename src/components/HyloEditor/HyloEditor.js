@@ -19,7 +19,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   containerClassName = 'hyloEditor',
   // If provided, Mention and Topic suggestions will use this to filter
   groupIds,
-  hideMenu,
+  showMenu = false,
   maxSuggestions = 7,
   onAddLink,
   onAddMention,
@@ -180,7 +180,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
 
   return (
     <div className={containerClassName} style={{ flex: 1 }}>
-      {!hideMenu && (
+      {showMenu && (
         <HyloEditorMenuBar editor={editor} />
       )}
       <EditorContent className={className} editor={editor} />

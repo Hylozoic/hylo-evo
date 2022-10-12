@@ -14,7 +14,7 @@ import './HyloEditorMobile.scss'
 export default function HyloEditorMobile (props) {
   const editorRef = useRef()
   const [contentHTML, setContentHTML] = useState()
-  const [hideMenu, setHideMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
   const [readOnly, setReadOnly] = useState(false)
   const [placeholder, setPlaceholder] = useState()
   const [groupIds, setGroupIds] = useState()
@@ -69,7 +69,7 @@ export default function HyloEditorMobile (props) {
 
           if ('content' in propsToSet) setContentHTML(propsToSet.content)
           if ('readOnly' in propsToSet) setReadOnly(propsToSet.readOnly)
-          if ('hideMenu' in propsToSet) setHideMenu(propsToSet.hideMenu)
+          if ('showMenu' in propsToSet) setShowMenu(propsToSet.showMenu)
           if ('placeholder' in propsToSet) setPlaceholder(propsToSet.placeholder)
           if ('groupIds' in propsToSet) setGroupIds(propsToSet.groupIds)
 
@@ -104,7 +104,7 @@ export default function HyloEditorMobile (props) {
     contentHTML,
     placeholder,
     readOnly,
-    hideMenu,
+    showMenu,
     groupIds,
     ref: editorRef
   })

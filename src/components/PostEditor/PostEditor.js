@@ -636,6 +636,7 @@ export default class PostEditor extends React.Component {
               onAddLink={this.handleAddLinkPreview}
               contentHTML={details}
               // groupIds={groupIds}
+              showMenu
               readOnly={loading}
               ref={this.editorRef}
             />

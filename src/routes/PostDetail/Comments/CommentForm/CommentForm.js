@@ -79,7 +79,6 @@ export default class CommentForm extends Component {
             onEnter={this.handleOnEnter}
             styleName='editor'
             readOnly={!currentUser}
-            hideMenu
             onChange={this.startTyping}
             placeholder={placeholder}
             ref={this.editor}

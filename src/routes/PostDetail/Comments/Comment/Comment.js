@@ -105,7 +105,6 @@ export class Comment extends Component {
           <HyloEditor
             styleName={editing ? 'editing' : 'text'}
             contentHTML={text || ''}
-            hideMenu
             readOnly={!editing}
             onEscape={this.handleEditCancel}
             onEnter={this.handleEditSave}
