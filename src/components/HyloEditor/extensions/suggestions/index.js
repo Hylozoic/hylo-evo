@@ -3,13 +3,13 @@ import tippy from 'tippy.js'
 import SuggestionList from './SuggestionList'
 
 export default {
-  render: () => {
+  render: (suggestionsThemeName = 'suggestions') => {
     let component
     let popup
 
     const createPopup = clientRect => {
       return tippy('body', {
-        theme: 'suggestions',
+        theme: suggestionsThemeName,
         getReferenceClientRect: clientRect,
         appendTo: () => document.body,
         content: component.element,

@@ -49,22 +49,21 @@ export default forwardRef(({ items, command, ...everything }, ref) => {
   }))
 
   return (
-    <div styleName='items' className='suggestion-list-items'>
+    <div className='suggestion-list'>
       {items.length > 0
         ? items.map((item, index) => (
           <button
-            styleName={`item ${index === selectedIndex ? 'is-selected' : ''}`}
-            className='suggestion-list-item'
+            className={`suggestion-list-item ${index === selectedIndex ? 'is-selected' : ''}`}
             key={index}
             onClick={() => selectItem(index)}
           >
             {item.avatarUrl && (
-              <Avatar avatarUrl={item.avatarUrl} small styleName='avatar' />
+              <Avatar avatarUrl={item.avatarUrl} small className='suggestion-list-item-avatar' />
             )}
             {item.suggestionLabel}
           </button>
         ))
-        : <div styleName='item' className='suggestion-list-items'>No result</div>}
+        : <div className='suggestion-list-item'>No result</div>}
     </div>
   )
 })

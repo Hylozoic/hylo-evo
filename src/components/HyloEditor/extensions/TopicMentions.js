@@ -5,7 +5,7 @@ import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findTopics from 'store/actions/findTopics'
 
-export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection }) =>
+export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection, suggestionsThemeName }) =>
   Mention
     .extend({
       name: 'topic',
@@ -38,7 +38,7 @@ export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection 
       suggestion: {
         char: '#',
         pluginKey: new PluginKey('topicSuggestion'),
-        render: suggestions.render,
+        render: () => suggestions.render(suggestionsThemeName),
         items: asyncDebounce(200, async ({ query, editor }) => {
           // Note: Will show "No Result" while loading results.
           //       Can be fixed if it is a bad UX.

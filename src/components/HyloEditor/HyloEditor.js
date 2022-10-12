@@ -29,7 +29,8 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   onEscape,
   placeholder,
   readOnly,
-  showMenu = false
+  showMenu = false,
+  suggestionsThemeName = 'suggestions'
 }, ref) {
   const dispatch = useDispatch()
   const editorRef = useRef(null)
@@ -113,9 +114,9 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
         }
       }),
 
-      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, dispatch }),
+      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
 
-      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, dispatch }),
+      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
 
       Highlight
     ],

@@ -110,6 +110,7 @@ export default function HyloEditorMobile (props) {
     placeholder,
     readOnly,
     showMenu,
+    suggestionsThemeName: 'suggestions-mobile',
     ref: editorRef
   })
 }
