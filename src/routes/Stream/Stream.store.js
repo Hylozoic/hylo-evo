@@ -65,7 +65,7 @@ export function fetchTopic (name, id) {
 }
 
 // actions
-export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic, topics, types }) {
+export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
   let query, extractModel, getItems
 
   if (context === 'groups') {
@@ -88,9 +88,11 @@ export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, context, f
         activePostsOnly,
         afterTime,
         beforeTime,
+        collectionToFilterOut,
         context,
         filter,
-        first: 20,
+        first: first || 20,
+        forCollection,
         offset,
         order,
         search,
@@ -116,8 +118,10 @@ const groupQuery = `query GroupPostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
@@ -150,9 +154,11 @@ const postsQuery = `query PostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $context: String,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $groupSlugs: [String],
   $isFulfilled: Boolean,
   $offset: Int,

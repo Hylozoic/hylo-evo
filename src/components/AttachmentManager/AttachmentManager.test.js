@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import { shallow } from 'enzyme'
+import { render } from 'util/testing/reactTestingLibraryExtended'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
 
 const minDefaultProps = {
@@ -139,7 +140,7 @@ describe('ImageManager', () => {
       removeAttachment: () => {},
       switchAttachments: () => {}
     }
-    const wrapper = shallow(<ImageManager.DecoratedComponent {...props} />)
+    const wrapper = shallow(<ImageManager {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
@@ -153,12 +154,9 @@ describe('ImagePreview', () => {
         { attachmentType: 'image', url: 'https://nowhere/foo.png' }
       ],
       position: 1,
-      connectDragSource: i => i,
-      connectDragPreview: i => i,
-      connectDropTarget: i => i,
       removeImage: () => {}
     }
-    const wrapper = shallow(<ImagePreview.DecoratedComponent {...props} />)
+    const wrapper = render(<ImagePreview {...props} />)
     expect(wrapper).toMatchSnapshot()
   })
 })
