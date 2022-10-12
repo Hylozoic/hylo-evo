@@ -1,7 +1,8 @@
 import request from 'request'
+import { parse } from 'url'
 const { API_HOST } = process.env
 
-const apiHostname = new URL(API_HOST).hostname
+const apiHostname = parse(API_HOST).hostname
 
 export default function apiProxy (req, res, next) {
   if (!req.originalUrl.startsWith('/noo') &&
