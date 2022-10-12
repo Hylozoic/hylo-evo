@@ -86,9 +86,9 @@
   span[style='font-weight: bold;'] {
     font-family: 'Circular Bold';
   }
-  // Would be best on the container above
-  // but will be wrong height due to `position: relative`
-  :global .ProseMirror {
+  // Would be best on the container above but will be wrong height due
+  // to `position: relative`
+  [contenteditable="true"] {
     overflow-y: auto;
     max-height: 200px;
   }
