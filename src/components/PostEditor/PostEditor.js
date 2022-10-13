@@ -624,7 +624,7 @@ export default class PostEditor extends React.Component {
             <HyloEditor
               styleName='editor'
               placeholder={detailPlaceholder}
-              onChange={this.handleDetailsChange}
+              onUpdate={this.handleDetailsChange}
               // Disable edit cancel through escape due to event bubbling issues
               // onEscape={this.handleCancel}
               onAddTopic={this.handleAddTopic}
