@@ -24,10 +24,20 @@ pre code {
   padding: 1em 1.25em;
 }
 
-ol li p:last-child,
-ul li p:last-child {
+ul li p:last-of-type,
+ol li p:last-of-type {
   margin-bottom: 0;
 }
+
+ul, ol {
+  padding-left: 2em;
+}
+
+// This should be applied / controlled here
+// Currently getting `1rem` from Bootstrap
+// p {
+//   margin-bottom: 1em;
+// }
 
 a {
   color: #0275d8
