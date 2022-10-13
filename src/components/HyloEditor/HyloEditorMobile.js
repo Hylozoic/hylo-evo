@@ -63,7 +63,7 @@ export default function HyloEditorMobile (props) {
         }
 
         case WebViewMessageTypes.EDITOR.FOCUS: {
-          editorRef.current && editorRef.current.focus()
+          editorRef.current && editorRef.current.focus(data)
           break
         }
 
