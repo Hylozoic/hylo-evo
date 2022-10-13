@@ -22,7 +22,7 @@ export const WebViewMessageTypes = {
     LOADED: 'LOADED',
     ON_ADD_LINK: 'ON_ADD_LINK',
     ON_ADD_TOPIC: 'ON_ADD_TOPIC',
-    ON_CHANGE: 'ON_CHANGE',
+    ON_UPDATE: 'ON_CHANGE',
     ON_ENTER: 'ON_ENTER',
     SET_PROPS: 'SET_PROPS'
   }
