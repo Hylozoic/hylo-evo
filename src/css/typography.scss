@@ -29,6 +29,13 @@ ol li p:last-of-type {
   margin-bottom: 0;
 }
 
+ul > ul ,
+ul > ol,
+ol > ul,
+ol > ol {
+  margin-bottom: 0
+}
+
 ul, ol {
   padding-left: 2em;
 }
