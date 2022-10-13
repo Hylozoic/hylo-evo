@@ -25,9 +25,11 @@ export default function HyloEditorMobile (props) {
   const [readOnly, setReadOnly] = useState(false)
 
   // Sending Messages
-  const handleAddLink = useCallback(url => {
-    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
-  })
+
+  // https://github.com/Hylozoic/HyloReactNative/issues/568
+  // const handleAddLink = useCallback(url => {
+  //   sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_LINK, url)
+  // })
 
   const handleAddTopic = useCallback(topic => (
     sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ADD_TOPIC, topic)
@@ -37,8 +39,8 @@ export default function HyloEditorMobile (props) {
     sendMessageToWebView(WebViewMessageTypes.EDITOR.LOADED)
   }
 
-  const handleChange = useCallback(contentHTML => (
-    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_CHANGE, contentHTML)
+  const handleUpdate = useCallback(contentHTML => (
+    sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_UPDATE, contentHTML)
   ))
 
   const handleEnter = useCallback(() => {
@@ -55,12 +57,13 @@ export default function HyloEditorMobile (props) {
 
       switch (type) {
         case WebViewMessageTypes.EDITOR.CLEAR_CONTENT: {
+          setContentHTML()
           editorRef.current && editorRef.current.clearContent()
           break
         }
 
         case WebViewMessageTypes.EDITOR.FOCUS: {
-          editorRef.current && editorRef.current.focus()
+          editorRef.current && editorRef.current.focus(data)
           break
         }
 
@@ -98,15 +101,15 @@ export default function HyloEditorMobile (props) {
     containerClassName: 'hyloEditorMobileContainer',
     contentHTML,
     className: 'hyloEditorMobile',
-    onChange: handleChange,
+    onUpdate: handleUpdate,
     onEnter: handleEnter,
     onBeforeCreate: handleBeforeCreate,
     // Not implemented: No ADD_MENTION constant
     // onAddMention: handleAddMention
-    onAddLink: handleAddLink,
+    // onAddLink: handleAddLink,
     onAddTopic: handleAddTopic,
     groupIds,
-    maxSuggestions: 3,
+    maxSuggestions: 7,
     placeholder,
     readOnly,
     showMenu,

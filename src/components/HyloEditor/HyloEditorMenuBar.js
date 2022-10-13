@@ -62,12 +62,6 @@ export default function HyloEditorMenuBar ({ editor }) {
       >
         <RiListOrdered />
       </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        styleName={editor.isActive('blockquote') ? 'is-active' : ''}
-      >
-        <RiIndentIncrease />
-      </button>
 
       {/* <div styleName='divider' /> */}
 
@@ -124,6 +118,13 @@ export default function HyloEditorMenuBar ({ editor }) {
       <div styleName='divider' />
 
       <button
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        styleName={editor.isActive('blockquote') ? 'is-active' : ''}
+      >
+        <RiIndentIncrease />
+      </button>
+
+      <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         styleName={editor.isActive('codeBlock') ? 'is-active' : ''}
       >
@@ -147,13 +148,15 @@ export default function HyloEditorMenuBar ({ editor }) {
       <button onClick={() => editor.chain().focus().undo().run()}>
         <RiArrowGoBackLine />
       </button>
+
       <button onClick={() => editor.chain().focus().redo().run()}>
         <RiArrowGoForwardLine />
       </button>
-      {/* <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear formatting in selection
-      </button> */}
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
+
+      <button onClick={() => {
+        editor.chain().focus().clearNodes().run()
+        editor.chain().focus().unsetAllMarks().run()
+      }}>
         <RiFormatClear />
       </button>
     </div>

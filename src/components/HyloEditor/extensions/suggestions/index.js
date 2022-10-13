@@ -41,7 +41,7 @@ export default {
 
         component.updateProps(props)
 
-        if (popup[0].state.isDestroyed) {
+        if (!popup || popup[0].state.isDestroyed) {
           popup = createPopup(props.clientRect)
         } else {
           popup[0].setProps({

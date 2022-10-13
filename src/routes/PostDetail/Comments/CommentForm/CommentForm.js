@@ -79,7 +79,7 @@ export default class CommentForm extends Component {
             onEnter={this.handleOnEnter}
             styleName='editor'
             readOnly={!currentUser}
-            onChange={this.startTyping}
+            onUpdate={this.startTyping}
             placeholder={placeholder}
             ref={this.editor}
           />

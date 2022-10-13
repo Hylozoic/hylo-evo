@@ -12,6 +12,10 @@
     pointer-events: none;
   }
 
+  .ProseMirror p:last-child {
+    margin-bottom: 0px;
+  }
+
   .ProseMirror a {
     cursor: pointer;
   }
@@ -62,8 +66,58 @@
   }
 }
 
-.topMenuBar {
-  // position: absolute;
-  // top: 0;
-  // overflow: hidden;
+// Mention and Topic suggestions
+// * see HyloEditorMobile.scss for Mobile theme of same
+:global {
+  .tippy-box[data-theme='suggestions'] {
+    background-color: transparent;
+    
+    .tippy-content {
+      padding: 0
+    }  
+    
+    .tippy-arrow {
+      color: $color-caribbean-green;
+    }
+
+    .suggestion-list {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0px 10px 20px rgba(0, 0, 0, 0.1);
+      font-size: 0.9rem;
+      color: $color-rhino-50;
+      padding: 0.2rem;
+      position: relative;
+    }
+    
+    .suggestion-list-item {
+      display: flex;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 0.4rem;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      flex-wrap: nowrap;
+      margin: 0;
+      padding: 0.2rem 0.4rem;
+      color: $color-caribbean-green;
+      &.is-selected {
+        background-color: $color-caribbean-green;
+        color: white;
+      }
+    }
+    
+    .suggestion-list-item-avatar {
+      padding: 0;
+      margin-right: 0.45em;
+      div {
+        width: 1.3rem;
+        height: 1.3rem;
+        border-width: 0;
+      }
+    }    
+  }
 }

@@ -10,11 +10,7 @@
       max-height: 160px;
     }
 
-    .ProseMirror p.is-editor-empty {
-      margin-bottom: 0px;
-    }
-
-    .ProseMirror p:last-child:not(.is-editor-empty) {
+    .ProseMirror > p:last-child:not(.is-editor-empty) {
       padding-bottom: 15px;
     }
   }
@@ -26,62 +22,45 @@
     .tippy-content {
       padding: 0
     }  
-    
-    .tippy-arrow {
-      color: $color-caribbean-green;
-    }
-
-    .suggestion-list-item-avatar {
-      padding: 0;
-      margin-right: 0.45em;
-      div {
-        width: 1.3rem;
-        height: 1.3rem;
-        border-width: 0;
-      }
-    }
 
     .suggestion-list {
       display: flex;
-      // flex-direction: column;
-      background: #fff;
-      // border-radius: 0.5rem;
-      // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0px 10px 20px rgba(0, 0, 0, 0.1);
-      font-size: 1rem;
+      background-color: transparent;
       color: $color-rhino-50;
-      // padding: 0.2rem;
-      position: relative;
-
-      // Mobile specific
       flex-direction: row;
       overflow-x: auto;
     }
 
     .suggestion-list-item {
       display: flex;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 0.4rem;
-      align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
       flex-wrap: nowrap;
-      margin: 0;
-      padding: 0.2rem 0.4rem;
-      color: $color-caribbean-green;
-      // &.is-selected {
-      //   background-color: $color-caribbean-green;
-      //   color: white;
-      // }
-
-      // Mobile specific
-      background-color: white;
-      border-radius: 1rem;
-      margin-right: 5px;
-      padding: 2px 5px;
       overflow: visible;
       white-space: nowrap;
-      // border: solid 1px $color-caribbean-green;
+      border-radius: 0.8rem;
+      border: 1px solid $color-caribbean-green;
+      color: $color-caribbean-green;
+      background-color: white;
+      margin: 0;
+      margin-right: 5px;
+      padding-top: 2px;
+      padding-right: 6px;
+      padding-bottom: 3px;
+      padding-left: 6px;
+    }
+
+    .suggestion-list-item-avatar {
+      padding: 0;
+      margin-right: 0.45em;
+      div {
+        width: 1.2rem;
+        height: 1.2rem;
+        border-width: 0;
+      }
+    }
+
+    .suggestion-list-item-no-result {
+      border-color: transparent;
+      color: $color-rhino-30;
     }
   }
 }

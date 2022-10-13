@@ -1,6 +1,5 @@
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { isEmpty } from 'lodash/fp'
 import { useEditor, EditorContent, Extension, BubbleMenu } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -24,7 +23,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   onAddMention,
   onAddTopic,
   onBeforeCreate = () => {},
-  onChange,
+  onUpdate,
   onEnter,
   onEscape,
   placeholder,
@@ -124,14 +123,9 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
     onBeforeCreate,
 
     onUpdate: ({ editor }) => {
-      if (
-        !onChange ||
-        // TODO: This condition won't run on last update in mobile. Test on Web with removal.
-        // (contentHTML === editor.getHTML()) ||
-        (editor.isEmpty && isEmpty(contentHTML))
-      ) return
+      if (!onUpdate) return
 
-      onChange(editor.getHTML())
+      onUpdate(editor.getHTML())
     }
   }, [placeholder, contentHTML])
 
@@ -140,10 +134,11 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
       editorRef.current.commands.blur()
     },
     clearContent: () => {
-      editorRef.current.commands.clearContent()
+      // `true` here means it will emit an `onUpdate`
+      editorRef.current.commands.clearContent(true)
     },
-    focus: () => {
-      editorRef.current.commands.focus()
+    focus: position => {
+      editorRef.current.commands.focus(position)
     },
     getHTML: () => {
       return editorRef.current.getHTML()
