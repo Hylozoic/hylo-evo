@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import Avatar from 'components/Avatar'
-import './SuggestionList.scss'
 
 export default forwardRef(({ items, command, ...everything }, ref) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -63,7 +62,7 @@ export default forwardRef(({ items, command, ...everything }, ref) => {
             {item.suggestionLabel}
           </button>
         ))
-        : <div className='suggestion-list-item'>No result</div>}
+        : <button className='suggestion-list-item suggestion-list-item-no-result'>No result</button>}
     </div>
   )
 })

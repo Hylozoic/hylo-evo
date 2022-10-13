@@ -68,7 +68,8 @@ a.hylo-link,
   color: $color-rhino;
 }
 
-.hdr-headline, h1 {
+h1,
+.hdr-headline {
   @include font-medium;
   font-size: 24px;
   letter-spacing: 0;
@@ -77,7 +78,8 @@ a.hylo-link,
   word-wrap: break-word;
 }
 
-.hdr-subheadline, h2 {
+h2,
+.hdr-subheadline {
   @include font-regular;
   font-size: 18px;
   letter-spacing: 0;
@@ -85,7 +87,8 @@ a.hylo-link,
   color: $color-rhino;
 }
 
-.hdr-minor, h3 {
+h3,
+.hdr-minor {
   @include font-regular;
   font-size: 14px;
   letter-spacing: 0;
@@ -95,7 +98,8 @@ a.hylo-link,
 
 /* Body */
 
-input, textarea {
+input,
+textarea {
   font-family: 'Circular Book';
 }
 
@@ -249,12 +253,14 @@ input, textarea {
 }
 
 @media screen and (max-width: 600px) {
+  h1,
   .hdr-headline {
     font-size: 20px;
   }
 }
 
 @media screen and (max-width: 500px) {
+  h1,
   .hdr-headline {
     font-size: 16px;
     line-height: 20px;
