@@ -42,9 +42,6 @@ export default function ChatPost ({
   }, [linkPreview?.url])
 
   const details = expanded ? providedDetails : TextHelpers.truncateHTML(providedDetails, MAX_DETAILS_LENGTH)
-  // const fileAttachments = attachments ? attachments.filter(a => a.type === 'file') : []
-  // const imageAttachments = attachments ? attachments.filter(a => a.type === 'image') : []
-  console.log("attach", imageAttachments)
 
   const openPost = event => {
     showDetails(id)

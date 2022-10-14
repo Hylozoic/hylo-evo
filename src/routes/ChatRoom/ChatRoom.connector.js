@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { get, isEmpty } from 'lodash/fp'
 import {
   addAttachment,
+  clearAttachments,
   getAttachments,
   getUploadAttachmentPending
 } from 'components/AttachmentManager/AttachmentManager.store'
@@ -111,6 +112,7 @@ export function mapDispatchToProps (dispatch, props) {
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
+    clearImageAttachments: () => dispatch(clearAttachments('post', 'new', 'image')),
     createPost: (post) => dispatch(createPost(post)),
     // createPost: () => dispatch(push(createPostUrl(routeParams, querystringParams))),
     fetchPosts: param => offset => {

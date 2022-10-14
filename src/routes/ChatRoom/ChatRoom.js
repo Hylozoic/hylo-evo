@@ -93,10 +93,12 @@ export default function ChatRoom (props) {
 
     const details = editorRef.current.getHTML()
     const imageUrls = imageAttachments && imageAttachments.map((attachment) => attachment.url)
+    console.log("image attachmemnts", imageAttachments)
     createPost({ ...newPost, details, imageUrls }).then(() => {
       setNewPost(emptyPost)
       editorRef.current.clearContent()
       editorRef.current.focus()
+      clearImageAttachments()
       scrollToBottom()
     })
     return true
