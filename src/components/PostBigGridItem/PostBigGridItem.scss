@@ -51,6 +51,11 @@
 .post-grid-item-container.detail-extra-short, .post-grid-item-container.detail-short, .post-grid-item-container.detail-mid, .post-grid-item-container.detail-full {
   padding: 10px;
 
+  &.chat {
+    background-color: white;
+    background: radial-gradient(140% 200% at 50% 75%, rgba(255, 255, 255, 1) 0%, rgba(212, 237, 249, 1.0) 100%);
+  }
+
   &.discussion {
     background-color: white;
     background: radial-gradient(140% 200% at 50% 75%, rgba(255, 255, 255, 1) 0%, rgba(212, 237, 249, 1.0) 100%);

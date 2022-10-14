@@ -1,16 +1,15 @@
 import { FETCH_TOPIC, FETCH_GROUP_TOPIC, FETCH_POSTS } from 'store/constants'
-import { get } from 'lodash/fp'
+import { get, includes, isEmpty } from 'lodash/fp'
 import { createSelector as ormCreateSelector } from 'redux-orm'
 import { createSelector } from 'reselect'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import orm from 'store/models'
-import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
-import getRouteParam from 'store/selectors/getRouteParam'
+import presentPost from 'store/presenters/presentPost'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 
 export const MODULE_NAME = 'ChatRoom'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
-export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
 
 export function fetchGroupTopic (topicName, groupSlug) {
   return {
@@ -65,7 +64,7 @@ export function fetchTopic (name, id) {
 }
 
 // actions
-export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, context, filter, offset, order, search, slug, sortBy, topic, topics, types }) {
+export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
   let query, extractModel, getItems
 
   if (context === 'groups') {
@@ -88,9 +87,11 @@ export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, context, f
         activePostsOnly,
         afterTime,
         beforeTime,
+        collectionToFilterOut,
         context,
         filter,
-        first: 20,
+        first: first || 20,
+        forCollection,
         offset,
         order,
         search,
@@ -116,8 +117,10 @@ const groupQuery = `query GroupPostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
@@ -150,9 +153,11 @@ const postsQuery = `query PostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $context: String,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $groupSlugs: [String],
   $isFulfilled: Boolean,
   $offset: Int,
@@ -176,18 +181,20 @@ export function storeFetchPostsParam (props) {
 // selectors
 const getPostResults = makeGetQueryResults(FETCH_POSTS)
 
-export const getPosts = makeQueryResultsModelSelector(
+export const getPosts = ormCreateSelector(
+  orm,
   getPostResults,
-  'Post'
+  (session, results) => {
+    if (isEmpty(results) || isEmpty(results.ids)) return []
+    return session.Post.all()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(p => Number(p.id))
+      .toModelArray()
+      .map(p => presentPost(p))
+  }
 )
 
 export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
-
-export const getCustomView = ormCreateSelector(
-  orm,
-  (session, props) => getRouteParam('customViewId', session, props),
-  (session, id) => session.CustomView.safeGet({ id })
-)
 
 // reducer
 export default function (state = {}, action) {

@@ -275,7 +275,7 @@ export default function AuthLayoutRouter (props) {
               )
             }}
           />
-          <Div100vh styleName={cx('center', { 'full-width': hideSidebar, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
+          <div styleName={cx('center', { 'full-width': hideSidebar, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             {/* NOTE: It could be more clear to group the following switched routes by component  */}
             <Switch>
               {/* **** Member Routes **** */}
@@ -336,7 +336,7 @@ export default function AuthLayoutRouter (props) {
               {/* **** Default Route (404) **** */}
               <Redirect to={lastViewedGroup ? `/groups/${lastViewedGroup.slug}` : '/all'} />
             </Switch>
-          </Div100vh>
+          </div>
           {(currentGroup && currentGroupMembership) && (
             <div styleName={cx('sidebar', { hidden: (hasDetail || hideSidebar) })}>
               <Route

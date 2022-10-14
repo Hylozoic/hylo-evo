@@ -1,6 +1,11 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { get, isEmpty } from 'lodash/fp'
+import {
+  addAttachment,
+  getAttachments,
+  getUploadAttachmentPending
+} from 'components/AttachmentManager/AttachmentManager.store'
 import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
@@ -11,19 +16,18 @@ import {
   fetchTopic,
   getHasMorePosts,
   getPosts
-} from 'routes/Stream/Stream.store'
+} from 'routes/ChatRoom/ChatRoom.store'
+import createPost from 'store/actions/createPost'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
-import presentPost from 'store/presenters/presentPost'
 import respondToEvent from 'store/actions/respondToEvent'
 import isPendingFor from 'store/selectors/isPendingFor'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
-
-import { createPostUrl } from 'util/navigation'
+import { createPostUrl, postUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
   let group, topic, groupTopic
@@ -57,6 +61,9 @@ export function mapStateToProps (state, props) {
   const querystringParams = getQuerystringParam(['search'], null, props)
   const search = getQuerystringParam('search', state, props)
 
+  const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
+  console.log("image attachments", imageAttachments)
+
   const fetchPostsParam = {
     context,
     slug: groupSlug,
@@ -66,7 +73,7 @@ export function mapStateToProps (state, props) {
     topicName
   }
 
-  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
+  const posts = getPosts(state, fetchPostsParam)
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
@@ -76,6 +83,7 @@ export function mapStateToProps (state, props) {
     fetchPostsParam,
     group,
     hasMore,
+    imageAttachments,
     pending: state.pending[FETCH_POSTS],
     posts,
     querystringParams,
@@ -99,11 +107,12 @@ export function mapDispatchToProps (dispatch, props) {
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
 
   return {
-    respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
-    updateUserSettings: updateSettings,
+    addAttachment: (type, id, attachment) => dispatch(addAttachment(type, id, attachment)),
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
+    createPost: (post) => dispatch(createPost(post)),
+    // createPost: () => dispatch(push(createPostUrl(routeParams, querystringParams))),
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
     },
@@ -114,8 +123,10 @@ export function mapDispatchToProps (dispatch, props) {
         return dispatch(fetchTopic(topicName))
       }
     },
+    respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
+    showDetails: (postId) => dispatch(push(postUrl(postId, routeParams, { ...props.locationParams, ...querystringParams }))),
     toggleGroupTopicSubscribe: groupTopic => dispatch(toggleGroupTopicSubscribe(groupTopic)),
-    newPost: () => dispatch(push(createPostUrl(routeParams, querystringParams)))
+    updateUserSettings: updateSettings
   }
 }
 

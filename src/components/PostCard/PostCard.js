@@ -1,15 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { POST_PROP_TYPES } from 'store/models/Post'
-import PostHeader from './PostHeader'
-import PostFooter from './PostFooter'
-import PostGroups from './PostGroups'
-import CardImageAttachments from 'components/CardImageAttachments'
-import PostBody from './PostBody'
-import EventBody from './EventBody'
-import './PostCard.scss'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
+import React from 'react'
+import PropTypes from 'prop-types'
+import CardImageAttachments from 'components/CardImageAttachments'
+import { POST_PROP_TYPES } from 'store/models/Post'
+import ChatCard from './ChatCard'
+import EventBody from './EventBody'
+import PostBody from './PostBody'
+import PostFooter from './PostFooter'
+import PostHeader from './PostHeader'
+import PostGroups from './PostGroups'
+
+import './PostCard.scss'
 
 export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
 
@@ -30,6 +32,7 @@ export default class PostCard extends React.Component {
     routeParams: {}
   }
 
+  // TODO: dupe of clickcatcher?
   shouldShowDetails = element => {
     if (element === this.props.forwardedRef || this.element === this.refs.postCard) return true
     if (
@@ -50,25 +53,35 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
-      currentUser,
-      routeParams,
-      post,
-      editPost,
-      voteOnPost,
-      highlightProps,
-      expanded,
-      constrained,
       className,
+      constrained,
+      currentUser,
+      editPost,
+      expanded,
+      forwardedRef,
+      highlightProps,
+      post,
       respondToEvent,
-      forwardedRef
+      routeParams,
+      showDetails,
+      voteOnPost
     } = this.props
 
     const postType = get('type', post)
-    const isEvent = get('type', post) === 'event'
+    const isEvent = postType === 'event'
 
-    const firstAttachment = post.attachments[0] || 0
-    const attachmentType = firstAttachment.type || 0
-    const hasImage = attachmentType === 'image' || false
+    const hasImage = post.attachments.find(a => a.type === 'image') || false
+
+    if (postType === 'chat') return (
+      <ChatCard
+        expanded={expanded}
+        highlightProps={highlightProps}
+        post={post}
+        routeParams={routeParams}
+        slug={routeParams.groupSlug}
+        showDetails={showDetails}
+      />
+    )
 
     return (
       <div ref={forwardedRef || 'postCard'}

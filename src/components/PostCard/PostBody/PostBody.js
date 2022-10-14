@@ -14,11 +14,11 @@ export default function PostBody ({
 }) {
   return (
     <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
-      <PostTitle
+      {post.type !== 'chat' && <PostTitle
         {...post}
         highlightProp={highlightProps}
         constrained={constrained}
-      />
+      />}
       <PostDetails
         {...post}
         slug={slug}

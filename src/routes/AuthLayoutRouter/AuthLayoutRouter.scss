@@ -10,9 +10,6 @@ body {
   align-items: stretch;
   height: 100vh;
   overflow: hidden;
-  &.map-view {
-    height: 100vh;
-  }
 }
 
 .debug {
@@ -357,7 +354,6 @@ $drawer-z-index: 51;
   &.full-width {
     max-width: $center-column-full-width;
     flex: 0 0 $center-column-full-width;
-    height: calc(100vh - 40px);
     padding: 0 0 0 0;
   }
   &.withoutNav {

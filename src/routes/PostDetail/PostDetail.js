@@ -150,9 +150,7 @@ export default class PostDetail extends Component {
       postPeopleDialogTitle = 'Responses'
     }
 
-    const firstAttachment = post.attachments[0] || 0
-    const attachmentType = firstAttachment.type || 0
-    const detailHasImage = attachmentType === 'image' || false
+    const detailHasImage = post.attachments.find(a => a.type === 'image') || false
     const hasPeople = people && people.length > 0
     const showPeopleDialog = hasPeople && this.state.showPeopleDialog
     const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined

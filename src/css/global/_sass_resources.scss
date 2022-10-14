@@ -38,7 +38,7 @@ $topnav-height: 56px;
 $content-width: 80rem;
 $map-content-width: 90rem;
 $center-column-width: 47%;
-$center-column-full-width: 83%;
+$center-column-full-width: calc(83% - 30px);
 $detail-column-width: 49%;
 $layout-spacing: 70px;
 $messages-header-height: 80px;
@@ -104,6 +104,18 @@ $color-box-shadow: rgba(0, 0, 0, 0.15);
 
 // post types
 
+$color-chats: rgba(95, 210, 255, 1);
+$color-chats-20: rgba(95, 210, 255, .2);
+$color-chats-30: rgba(95, 210, 255, .3);
+$color-chats-40: rgba(95, 210, 255, .4);
+$color-chats-50: rgba(95, 210, 255, .5);
+
+$color-discussions: rgba(0, 163, 227, 1);
+$color-discussions-20: rgba(0, 163, 227, .2);
+$color-discussions-30: rgba(0, 163, 227, .3);
+$color-discussions-40: rgba(0, 163, 227, .4);
+$color-discussions-50: rgba(0, 163, 227, .5);
+
 $color-members: rgba(201, 88, 172, 1);
 $color-members-20: rgba(201, 88, 172, .2);
 $color-members-30: rgba(201, 88, 172, .3);
@@ -115,12 +127,6 @@ $color-requests-20: rgba(102, 75, 165, .2);
 $color-requests-30: rgba(102, 75, 165, .3);
 $color-requests-40: rgba(102, 75, 165, .4);
 $color-requests-50: rgba(102, 75, 165, .5);
-
-$color-discussions: rgba(0, 163, 227, 1);
-$color-discussions-20: rgba(0, 163, 227, .2);
-$color-discussions-30: rgba(0, 163, 227, .3);
-$color-discussions-40: rgba(0, 163, 227, .4);
-$color-discussions-50: rgba(0, 163, 227, .5);
 
 $color-offers: rgba(0, 199, 157, 1);
 $color-offers-20: rgba(0, 199, 157, .2);

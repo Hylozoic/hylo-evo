@@ -27,14 +27,19 @@ div .post-row:nth-child(1) {
     margin-top: 1px;
   }
 
-  .post-type.event {
-    border: 1px solid rgba(237, 86, 83, .25);
-    color: rgba(237, 86, 83, 1);
+  .post-type.chat {
+    border: 1px solid rgba(58, 160, 223, .25);
+    color: rgba(58, 160, 223, 1);
   }
 
   .post-type.discussion {
     border: 1px solid rgba(58, 160, 223, .25);
     color: rgba(58, 160, 223, 1);
+  }
+
+  .post-type.event {
+    border: 1px solid rgba(237, 86, 83, .25);
+    color: rgba(237, 86, 83, 1);
   }
 
   .post-type.offer {

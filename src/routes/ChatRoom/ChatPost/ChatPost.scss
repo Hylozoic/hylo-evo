@@ -1,0 +1,98 @@
+.container {
+  /* empty */
+  overflow-x: hidden;
+  &:hover {
+    background: #efefef;
+    cursor: pointer;
+  }
+}
+
+.cardPadding {
+  padding: 0px 10px;
+}
+
+.avatar {
+  margin-left: 15px;
+  float: left;
+}
+
+.name { margin-left: 5px; }
+.date { margin-left: 20px; }
+
+.body {
+  margin-bottom: 36px;
+}
+
+.smallMargin {
+  margin-bottom: 12px;
+}
+
+.title {
+  composes: cardPadding;
+  margin-bottom: 12px;
+}
+
+.details {
+  composes: cardPadding;
+  // Extract typography? This one is exactly half way between
+  // BDY-LT-LG and BDY-LT-SM
+  @include font-regular;
+  color: rgba(44, 64, 89, 0.7);
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 55px;
+}
+
+.images {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-left: 65px;
+}
+
+.images-inner {
+  display: flex;
+  flex-direction: row;
+  //margin-left: auto;
+}
+
+.image {
+  display: block;
+  > div {
+    width: 80px;
+    height: 80px;
+    border-radius: 3px;
+    margin-right: 20px;
+    background-size: cover;
+    border: 1px solid $color-cape-cod-10;
+    box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.3);
+
+    &:hover {
+      filter: brightness(110%);
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .details.cardPadding {
+    padding: 0 5px;
+    margin: 0;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .details {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .details {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}

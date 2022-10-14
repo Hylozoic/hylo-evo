@@ -10,7 +10,6 @@ import getRouteParam from 'store/selectors/getRouteParam'
 
 export const MODULE_NAME = 'Stream'
 export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
-export const FETCH_NETWORK = `${MODULE_NAME}/FETCH_NETWORK`
 
 export function fetchGroupTopic (topicName, groupSlug) {
   return {
