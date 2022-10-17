@@ -94,7 +94,6 @@ exports[`Comment displays image attachments 1`] = `
           "id": 2,
         }
       }
-      isComment={true}
       text="<p>text of the comment</p>"
     />
   </Connect(ClickCatcher)>
@@ -196,7 +195,6 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
           "id": 1,
         }
       }
-      isComment={true}
       text="<p>text of the comment</p>"
     />
   </Connect(ClickCatcher)>
@@ -293,7 +291,6 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
           "id": 2,
         }
       }
-      isComment={true}
       text="<p>text of the comment</p>"
     />
   </Connect(ClickCatcher)>
@@ -373,7 +370,6 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
           "id": 2,
         }
       }
-      isComment={true}
       text="<p>text of the comment</p>"
     />
   </Connect(ClickCatcher)>
@@ -475,7 +471,6 @@ exports[`Comment does not display the remove menu when removeComment is not defi
           "id": 1,
         }
       }
-      isComment={true}
       text="<p>text of the comment</p>"
     />
   </Connect(ClickCatcher)>
@@ -555,7 +550,6 @@ exports[`Comment renders correctly 1`] = `
           "id": 2,
         }
       }
-      isComment={true}
       text="<p>text of the comment</p>"
     />
   </Connect(ClickCatcher)>

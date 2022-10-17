@@ -43,7 +43,7 @@ export default class Comments extends Component {
       createComment,
       slug,
       postId,
-      width,
+      width
     } = this.props
 
     const style = {
@@ -56,7 +56,7 @@ export default class Comments extends Component {
           commentsLength={comments.length}
           total={total}
           hasMore={hasMore}
-          fetchComments={fetchComments} 
+          fetchComments={fetchComments}
         />
         {comments.map(c => (
           <Comment

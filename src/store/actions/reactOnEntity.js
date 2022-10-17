@@ -3,7 +3,6 @@ import { AnalyticsEvents } from 'hylo-shared'
 
 export default function reactOnEntity ({ commentId, emojiFull, entityType, postId }) {
   const data = { emojiFull, entityType }
-  console.log(commentId, emojiFull, entityType, postId, 'REACTING')
   return {
     type: entityType === 'post' ? REACT_ON_POST : REACT_ON_COMMENT,
     graphql: {

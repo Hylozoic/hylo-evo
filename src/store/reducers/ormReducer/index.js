@@ -551,7 +551,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       comment = session.Comment.withId(meta.commentId)
       const emojiFull = meta.data.emojiFull
       me = Me.first()
-      console.log(comment, 'yaya')
       const commentReactions = comment.commentReactions.filter(reaction => {
         if (reaction.emojiFull === emojiFull && reaction.user.id === me.id) return false
         return true

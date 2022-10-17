@@ -3,7 +3,6 @@ import { AnalyticsEvents } from 'hylo-shared'
 
 export default function removeReactOnEntity ({ commentId, emojiFull, entityType, postId }) {
   const data = { emojiFull, entityType }
-  // console.log(commentId, emojiFull, entityType, postId, 'remove REACTING')
   return {
     type: entityType === 'post' ? REMOVE_REACT_ON_POST : REMOVE_REACT_ON_COMMENT,
     graphql: {

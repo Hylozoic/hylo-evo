@@ -110,7 +110,6 @@ export class Comment extends Component {
                 currentUser={currentUser}
                 postId={comment.post}
                 commentId={comment.id}
-                isComment
               />
             </>
           )}
