@@ -8,9 +8,9 @@ import './EmojiRow.scss'
 export default function EmojiRow (props) {
   const {
     currentUser,
-    postReactions,
-    commentReactions,
-    myReactions,
+    postReactions = [],
+    commentReactions = [],
+    myReactions = [],
     postId,
     commentId
   } = props
