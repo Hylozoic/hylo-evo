@@ -39,31 +39,6 @@ $footer-height: 40px;
   text-decoration: none;
 }
 
-.commenters {
-  display: flex;
-  align-items: center;
-}
-
-.people {
-  margin-right: 4px;
-  white-space: nowrap;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.caption {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
-.footer.constrained .caption {
-  font-size: 10px;
-  line-height: 12px;
-}
-
-.footer.constrained .people {
-  margin-right: 5px;
-}
-
 .share {
   margin-left: auto;
   width: $footer-height;

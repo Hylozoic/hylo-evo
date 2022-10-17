@@ -63,6 +63,7 @@
   composes: bdy-lt-sm from 'css/typography.scss';
 }
 
+.group-name,
 .person-name {
   composes: person-name from 'css/typography.scss';
   font-size: 12px;

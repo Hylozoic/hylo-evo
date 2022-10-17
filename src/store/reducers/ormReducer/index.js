@@ -171,6 +171,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         // with the currentUser at the beginning
         const p = Post.withId(meta.postId)
         p.update({ commentersTotal: p.commentersTotal + 1 })
+        p.update({ commentsTotal: p.commentsTotal + 1 })
       }
       break
     }

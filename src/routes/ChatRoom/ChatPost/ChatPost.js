@@ -1,6 +1,5 @@
-import cx from 'classnames'
 import { TextHelpers } from 'hylo-shared'
-import { isEmpty, pick } from 'lodash/fp'
+import { get, isEmpty, pick } from 'lodash/fp'
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Avatar from 'components/Avatar'
@@ -10,6 +9,8 @@ import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
 import Feature from 'components/PostCard/Feature'
 import LinkPreview from 'components/LinkPreview'
+import PeopleInfo from 'components/PostCard/PeopleInfo'
+import RoundImageRow from 'components/RoundImageRow'
 import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
 
@@ -18,8 +19,12 @@ import styles from './ChatPost.scss'
 const MAX_DETAILS_LENGTH = 144
 
 export default function ChatPost ({
+  className,
+  commenters,
+  commentsTotal,
   createdAt,
   creator,
+  currentUser,
   details: providedDetails,
   expanded,
   fileAttachments,
@@ -47,9 +52,11 @@ export default function ChatPost ({
     showDetails(id)
   }
 
+  const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
+
   return (
     <Highlight {...highlightProps}>
-      <div styleName='container' ref={forwardedRef} onClick={openPost}>
+      <div styleName='container' ref={forwardedRef} onClick={openPost} className={className}>
         {isHeader && (
           <>
             <Avatar url={personUrl(creator.id)} avatarUrl={creator.avatarUrl} className={styles.avatar} />
@@ -57,28 +64,36 @@ export default function ChatPost ({
             <span styleName='date'>{TextHelpers.humanDate(createdAt)}</span>
           </>
         )}
-
-        {linkPreview?.url && linkPreviewFeatured && isVideo && (
-          <Feature url={linkPreview.url} />
-        )}
         {details && (
           <ClickCatcher groupSlug={slug}>
             <HyloHTML styleName='details' html={details} />
           </ClickCatcher>
         )}
-        {linkPreview && !linkPreviewFeatured && (
-          <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} />
+        {linkPreview?.url && linkPreviewFeatured && isVideo && (
+          <Feature url={linkPreview.url} />
         )}
-        <div styleName='images'>
-          <div styleName='images-inner'>
-            {!isEmpty(imageAttachments) && imageAttachments.map(image =>
-              <a href={image.url} styleName='image' target='_blank' rel='noreferrer' key={image.url}>
-                <div style={bgImageStyle(image.url)} />
-              </a>)}
-          </div>
-        </div>
-        {fileAttachments && fileAttachments.length > 0 && (
+        {linkPreview && !linkPreviewFeatured && (
+          <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} className={styles['link-preview']} />
+        )}
+        {!isEmpty(imageAttachments) && (
+          <div styleName='images'>
+            <div styleName='images-inner'>
+              {imageAttachments.map(image =>
+                <a href={image.url} styleName='image' target='_blank' rel='noreferrer' key={image.url}>
+                  <div style={bgImageStyle(image.url)} />
+                </a>)}
+            </div>
+          </div>)}
+        {!isEmpty(fileAttachments) && (
           <CardFileAttachments attachments={fileAttachments} />
+        )}
+        {commentsTotal > 0 && (
+          <span styleName='comments-container'>
+            <RoundImageRow imageUrls={commenterAvatarUrls.slice(0, 3)} styleName='commenters' onClick={openPost} small />
+            <span styleName='comments-caption' onClick={openPost}>
+              {commentsTotal} {commentsTotal === 1 ? 'reply' : 'replies'}
+            </span>
+          </span>
         )}
       </div>
     </Highlight>

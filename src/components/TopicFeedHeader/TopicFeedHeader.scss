@@ -39,21 +39,21 @@
   display: flex;
   position: absolute;
   top: 15px;
-  right: 20px;
+  right: 165px;
 }
 
 .subscribe {
   position: absolute;
   right: 15px;
   padding: 0 15px;
-  top: 20px;
+  top: 5px;
 }
 
 .unsubscribe {
   padding: 0 15px;
   position: absolute;
-  right: 14px;
-  top: 20px;
+  right: 15px;
+  top: 5px;
   background-color: $color-white;
   color: $color-caribbean-green;
   &:hover {

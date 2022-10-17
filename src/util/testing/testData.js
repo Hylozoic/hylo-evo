@@ -23,6 +23,7 @@ export function fakePost () {
     attachments: [{ url: 'animage', attachmentType: 'image' }],
     groups: [{ id: '1', slug: 'great', name: 'Great Cause' }],
     commenters: fakePerson(3),
+    commentsTotal: faker.datatype.number(),
     commentersTotal: faker.datatype.number(),
     creator: fakePerson()
   }

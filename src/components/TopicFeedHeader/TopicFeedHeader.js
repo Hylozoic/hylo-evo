@@ -13,7 +13,6 @@ export default function TopicFeedHeader ({
   groupSlug,
   isSubscribed,
   newPost,
-  postsTotal,
   toggleSubscribe,
   topic,
   topicName,
@@ -25,7 +24,6 @@ export default function TopicFeedHeader ({
     iconStyle = isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
     buttonStyle = isSubscribed ? 'unsubscribe' : 'subscribe'
   }
-  postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
 
   return <div styleName='topic-feed-header'>
@@ -35,8 +33,6 @@ export default function TopicFeedHeader ({
       <div styleName='meta'>
         <Icon name='Star' styleName='star-icon' />
         {inflectedTotal('subscriber', followersTotal)}
-        <Icon name='Post' styleName='post-icon' />
-        {inflectedTotal('post', postsTotal)}
       </div>
       {toggleSubscribe && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
         <Icon name='Star' styleName={iconStyle} />{buttonText}

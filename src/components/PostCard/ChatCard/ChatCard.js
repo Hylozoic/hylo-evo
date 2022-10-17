@@ -18,7 +18,7 @@ export default function ChatCard ({
   slug
 }) {
   const firstTopic = post.topics[0]?.name
-  console.log("first topic", firstTopic)
+  const firstGroup = post.groups[0].name
 
   return (
     <span onClick={() => showDetails(post.id)} styleName='link'>
@@ -29,6 +29,7 @@ export default function ChatCard ({
             <div styleName='post-meta'>
               <span styleName='person-name'>{post.creator.name}</span> chatted in&nbsp;
               <span styleName='post-topic'>#{firstTopic}</span>
+              {!slug && <span>in&nbsp; <span styleName='group-name'>{firstGroup}</span></span>}
             </div>
           </Highlight>
           <span styleName='date'>{TextHelpers.humanDate(post.createdAt)}</span>

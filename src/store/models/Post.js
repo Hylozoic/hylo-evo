@@ -78,6 +78,13 @@ Post.fields = {
 }
 
 export const POST_TYPES = {
+  'chat': {
+    primaryColor: [0, 163, 227, 255], // $color-picton-blue
+    backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
+    map: false,
+    label: 'Chat',
+    description: 'Quick topic-based chats'
+  },
   'discussion': {
     primaryColor: [0, 163, 227, 255], // $color-picton-blue
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water

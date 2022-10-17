@@ -9,7 +9,7 @@ import EventDate from '../EventDate'
 import EventRSVP from '../EventRSVP'
 import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
-import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
+import PeopleInfo from 'components/PostCard/PeopleInfo'
 import { RESPONSES } from 'store/models/EventInvitation'
 import '../PostBody/PostBody.scss'
 

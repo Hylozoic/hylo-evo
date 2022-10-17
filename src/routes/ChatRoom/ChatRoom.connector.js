@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { get, isEmpty } from 'lodash/fp'
 import {
   addAttachment,
@@ -18,6 +19,14 @@ import {
   getHasMorePosts,
   getPosts
 } from 'routes/ChatRoom/ChatRoom.store'
+import {
+  MODULE_NAME,
+  FETCH_LINK_PREVIEW,
+  pollingFetchLinkPreview,
+  removeLinkPreview,
+  clearLinkPreview,
+  getLinkPreview
+} from 'components/PostEditor/PostEditor.store'
 import createPost from 'store/actions/createPost'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
@@ -64,6 +73,9 @@ export function mapStateToProps (state, props) {
 
   const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
   console.log("image attachments", imageAttachments)
+  const linkPreview = getLinkPreview(state, props)
+  const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
+  const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
 
   const fetchPostsParam = {
     context,
@@ -81,10 +93,14 @@ export function mapStateToProps (state, props) {
     context,
     currentUser,
     currentUserHasMemberships,
+    fetchLinkPreviewPending,
     fetchPostsParam,
     group,
+    groupTopic,
     hasMore,
     imageAttachments,
+    linkPreview,
+    linkPreviewStatus,
     pending: state.pending[FETCH_POSTS],
     posts,
     querystringParams,
@@ -108,13 +124,10 @@ export function mapDispatchToProps (dispatch, props) {
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
 
   return {
-    addAttachment: (type, id, attachment) => dispatch(addAttachment(type, id, attachment)),
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
     clearImageAttachments: () => dispatch(clearAttachments('post', 'new', 'image')),
-    createPost: (post) => dispatch(createPost(post)),
-    // createPost: () => dispatch(push(createPostUrl(routeParams, querystringParams))),
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
     },
@@ -125,21 +138,34 @@ export function mapDispatchToProps (dispatch, props) {
         return dispatch(fetchTopic(topicName))
       }
     },
+    pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
     respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
     showDetails: (postId) => dispatch(push(postUrl(postId, routeParams, { ...props.locationParams, ...querystringParams }))),
     toggleGroupTopicSubscribe: groupTopic => dispatch(toggleGroupTopicSubscribe(groupTopic)),
-    updateUserSettings: updateSettings
+    ...bindActionCreators({
+      addAttachment,
+      clearLinkPreview,
+      createPost,
+      removeLinkPreview,
+      updateUserSettings: updateSettings // TODO: do we use this?
+    }, dispatch)
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchPostsParam } = stateProps
+  const { fetchLinkPreviewPending, fetchPostsParam } = stateProps
+  const { pollingFetchLinkPreviewRaw } = dispatchProps
+
+  const pollingFetchLinkPreview = fetchLinkPreviewPending
+    ? () => Promise.resolve()
+    : url => pollingFetchLinkPreviewRaw(url)
 
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam)
+    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam),
+    pollingFetchLinkPreview
   }
 }
 

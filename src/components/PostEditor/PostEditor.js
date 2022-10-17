@@ -149,7 +149,7 @@ export default class PostEditor extends React.Component {
       this.reset(this.props)
       this.editorRef.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
-      this.onUpdate()
+      this.onUpdateLinkPreview()
     }
   }
 
@@ -157,7 +157,7 @@ export default class PostEditor extends React.Component {
     this.props.clearLinkPreview()
   }
 
-  onUpdate () {
+  onUpdateLinkPreview () {
     this.setState({
       post: { ...this.state.post, linkPreview: this.props.linkPreview }
     })

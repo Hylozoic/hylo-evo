@@ -47,6 +47,7 @@ const postFieldsFragment = withComments => `
     avatarUrl
   }
   commentersTotal
+  commentsTotal
   ${withComments ? `comments(first: 10, order: "desc") {
     items {
       ${CommentFieldsFragment}
