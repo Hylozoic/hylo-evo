@@ -368,7 +368,7 @@ export default function AuthLayoutRouter (props) {
             </Switch>
           </div>
         </div>
-        <SocketListener location={location} />
+        <SocketListener location={location} groupSlug={currentGroupSlug} />
         <SocketSubscriber type='group' id={get('slug', currentGroup)} />
       </Div100vh>
     </IntercomProvider>

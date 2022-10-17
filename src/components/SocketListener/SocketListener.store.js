@@ -48,13 +48,17 @@ export function receiveThread (thread) {
   }
 }
 
-export function receivePost (data, groupId) {
+export function receivePost (post, groupId) {
   return {
     type: RECEIVE_POST,
     payload: {
-      topics: data.tags,
-      creatorId: data.creatorId,
+      data: {
+        post
+      },
       groupId
+    },
+    meta: {
+      extractModel: 'Post'
     }
   }
 }
@@ -93,13 +97,14 @@ export function ormSessionReducer (session, { meta, type, payload }) {
 
     case RECEIVE_POST:
       currentUser = Me.first()
-      if (currentUser && payload.creatorId !== currentUser.id) {
+      const { post } = payload.data
+      if (currentUser && post.creatorId !== currentUser.id) {
         const increment = obj =>
           obj && obj.update({
             newPostCount: (obj.newPostCount || 0) + 1
           })
 
-        payload.topics.forEach(topicId => {
+        post.topics.forEach(topicId => {
           increment(GroupTopic.safeGet({
             topic: topicId, group: payload.groupId
           }))

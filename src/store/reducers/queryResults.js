@@ -34,6 +34,7 @@ import {
   REMOVE_POST_PENDING
 } from 'components/PostCard/PostHeader/PostHeader.store'
 import {
+  RECEIVE_POST,
   RECEIVE_THREAD
 } from 'components/SocketListener/SocketListener.store'
 import {
@@ -72,8 +73,9 @@ export default function (state = {}, action) {
   switch (type) {
     case CREATE_PROJECT:
     case CREATE_POST:
+    case RECEIVE_POST:
       root = {
-        ...payload.data[camelCase(type)]
+        ...(payload.data[camelCase(type)] || payload.data.post)
       }
       return matchNewPostIntoQueryResults(state, root)
 
