@@ -8,9 +8,10 @@ export default {
     let popup
 
     const createPopup = clientRect => {
-      return tippy('body', {
+      const tippyOptions = {
         theme: suggestionsThemeName,
         getReferenceClientRect: clientRect,
+        // May not be necessary, but feels better for Mobile at least
         appendTo: () => document.body,
         content: component.element,
         showOnCreate: true,
@@ -19,7 +20,39 @@ export default {
         arrow: false,
         offset: -10,
         placement: 'bottom-start'
-      })
+      }
+
+      if (suggestionsThemeName === 'suggestions-mobile') {
+        // This handles the case of the Mobile Editor being in a container that is not
+        // tall enought to accomodate suggestions. Adds padding while suggesting, removes
+        // it on cancel or when a selection has been made.
+        return tippy('body', {
+          ...tippyOptions,
+          onShown: () => {
+            const suggestionsRoot = document.querySelector('[data-tippy-root]')
+            const suggestionsHeight = parseInt(window.getComputedStyle(suggestionsRoot).height) || 0
+            const proseMirrorElement = document.querySelector('.ProseMirror')
+            const proseMirrorElementHeight = parseInt(window.getComputedStyle(proseMirrorElement).height)
+
+            if (proseMirrorElementHeight < (suggestionsHeight + 50)) {
+              const currentPaddingBottom = parseInt(proseMirrorElement.style.paddingBottom) || 0
+
+              window.hyloEditorPaddingBottomOriginal = currentPaddingBottom
+              proseMirrorElement.style.paddingBottom = currentPaddingBottom + suggestionsHeight + 'px'
+            }
+          },
+          onHide: () => {
+            if (
+              typeof window.hyloEditorPaddingBottomOriginal !== 'undefined' &&
+              window.hyloEditorPaddingBottomOriginal !== null
+            ) {
+              document.querySelector('.ProseMirror').style.paddingBottom = window.hyloEditorPaddingBottomOriginal + 'px'
+            }
+          }
+        })
+      }
+
+      return tippy('body', tippyOptions)
     }
 
     return {
