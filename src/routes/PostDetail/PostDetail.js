@@ -34,7 +34,8 @@ export default class PostDetail extends Component {
     currentUser: PropTypes.object,
     fetchPost: PropTypes.func,
     post: PropTypes.object,
-    routeParams: PropTypes.object
+    routeParams: PropTypes.object,
+
   }
 
   state = {
@@ -102,16 +103,15 @@ export default class PostDetail extends Component {
 
   render () {
     const {
-      routeParams,
-      post,
-      voteOnPost,
-      isProjectMember,
+      currentUser,
       joinProject,
+      isProjectMember,
       leaveProject,
       pending,
+      post,
       processStripeToken,
-      currentUser,
       respondToEvent,
+      routeParams,
       onClose
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
@@ -140,8 +140,8 @@ export default class PostDetail extends Component {
       width: activityWidth + 'px',
       marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     }
-    let people, postPeopleDialogTitle
 
+    let people, postPeopleDialogTitle
     if (isProject) {
       people = post.members
       postPeopleDialogTitle = 'Project Members'
@@ -158,14 +158,13 @@ export default class PostDetail extends Component {
     const postFooter = (
       <PostFooter
         {...post}
-        voteOnPost={voteOnPost}
         currentUser={currentUser}
       />
     )
 
     return (
-      <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>
-        {({ width, height }) => (
+      <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>{
+        ({ width, height }) =>
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader
@@ -277,7 +276,7 @@ export default class PostDetail extends Component {
             )}
             <SocketSubscriber type='post' id={post.id} />
           </div>
-        )}
+        }
       </ReactResizeDetector>
     )
   }

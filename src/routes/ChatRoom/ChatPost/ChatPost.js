@@ -3,6 +3,7 @@ import { get, isEmpty, pick } from 'lodash/fp'
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Avatar from 'components/Avatar'
+import EmojiRow from 'components/EmojiRow'
 import Highlight from 'components/Highlight'
 import HyloHTML from 'components/HyloHTML'
 import ClickCatcher from 'components/ClickCatcher'
@@ -35,6 +36,8 @@ export default function ChatPost ({
   isHeader,
   linkPreview,
   linkPreviewFeatured,
+  myReactions,
+  postReactions,
   showDetails,
   slug
 }) {
@@ -49,7 +52,10 @@ export default function ChatPost ({
   const details = expanded ? providedDetails : TextHelpers.truncateHTML(providedDetails, MAX_DETAILS_LENGTH)
 
   const openPost = event => {
-    showDetails(id)
+    console.log("event", event, event.target, event.target.className)
+    if (!event.target.className.includes("icon-Smiley")) {
+      showDetails(id)
+    }
   }
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
@@ -95,6 +101,13 @@ export default function ChatPost ({
             </span>
           </span>
         )}
+        <EmojiRow
+          className={styles.emojis}
+          postReactions={postReactions}
+          myReactions={myReactions}
+          postId={id}
+          currentUser={currentUser}
+        />
       </div>
     </Highlight>
   )

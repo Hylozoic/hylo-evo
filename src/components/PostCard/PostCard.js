@@ -21,7 +21,6 @@ export default class PostCard extends React.Component {
     post: PropTypes.shape(POST_PROP_TYPES),
     editPost: PropTypes.func,
     showDetails: PropTypes.func,
-    voteOnPost: PropTypes.func,
     highlightProps: PropTypes.object,
     expanded: PropTypes.bool,
     constrained: PropTypes.bool,
@@ -84,12 +83,13 @@ export default class PostCard extends React.Component {
     )
 
     return (
-      <div ref={forwardedRef || 'postCard'}
+      <div
+        ref={forwardedRef || 'postCard'}
         onClick={!isEvent ? this.onClick : null}
         styleName={cx('card', postType, { expanded }, { constrained })}
         className={className}
       >
-        <div onClick={isEvent ? this.onClick : null}>
+        <div onClick={this.onClick}>
           <PostHeader
             {...post}
             routeParams={routeParams}
@@ -99,7 +99,7 @@ export default class PostCard extends React.Component {
             hasImage={hasImage}
           />
         </div>
-        <div onClick={isEvent ? this.onClick : null}>
+        <div onClick={this.onClick}>
           <CardImageAttachments attachments={post.attachments} />
         </div>
         {isEvent && (
@@ -115,23 +115,25 @@ export default class PostCard extends React.Component {
           </div>
         )}
         {!isEvent && (
-          <PostBody
-            {...post}
+          <div onClick={this.onClick}>
+            <PostBody
+              {...post}
+              slug={routeParams.groupSlug}
+              constrained={constrained}
+              currentUser={currentUser}
+            />
+          </div>
+        )}
+        <div onClick={this.onClick}>
+          <PostGroups
+            isPublic={post.isPublic}
+            groups={post.groups}
             slug={routeParams.groupSlug}
             constrained={constrained}
           />
-        )}
-        <PostGroups
-          isPublic={post.isPublic}
-          groups={post.groups}
-          slug={routeParams.groupSlug}
-          constrained={constrained}
-        />
-
+        </div>
         <PostFooter
           {...post}
-          onClick={this.onClick}
-          voteOnPost={voteOnPost}
           constrained={constrained}
           currentUser={currentUser}
           postId={post.id}

@@ -11,7 +11,7 @@ import {
   TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_COMMENT_PENDING,
   UPDATE_POST_PENDING,
-  VOTE_ON_POST_PENDING
+  REACT_ON_POST_PENDING
 } from 'store/constants'
 import {
   DELETE_POST_PENDING,
@@ -103,39 +103,25 @@ it('ignores an action with meta.extractModel that is a promise', () => {
   expect(newState).toEqual(state)
 })
 
-describe('on VOTE_ON_POST_PENDING', () => {
+describe('on REACT_ON_POST_PENDING', () => {
   const session = orm.session(orm.getEmptyState())
 
-  session.Post.create({ id: '1', votesTotal: 7, myVote: false })
-  session.Post.create({ id: '2', votesTotal: 4, myVote: true })
+  session.Post.create({ id: '1', myReactions: [], postReactions: [] })
+  session.Me.create({ id: '1', name: 'Mary' })
 
   const state = session.state
 
   const action = {
-    type: VOTE_ON_POST_PENDING
+    type: REACT_ON_POST_PENDING
   }
 
-  describe('when myVote is false', () => {
-    it('does nothing if isUpvote is false', () => {
-      expect(ormReducer(state, { ...action, meta: { postId: '1', isUpvote: false } }))
-        .toEqual(state)
-    })
-
-    it('increments votesTotal and updates myVote if isUpvote is true', () => {
-      const newState = ormReducer(state, { ...action, meta: { postId: '1', isUpvote: true } })
-      expect(deep(state, newState)).toMatchSnapshot()
-    })
-  })
-
-  describe('when myVote is true', () => {
-    it('does nothing if isUpvote is true', () => {
-      expect(ormReducer(state, { ...action, meta: { postId: '2', isUpvote: true } }))
-        .toEqual(state)
-    })
-
-    it('decrements votesTotal and updates myVote if isUpvote is false', () => {
-      const newState = ormReducer(state, { ...action, meta: { postId: '2', isUpvote: false } })
-      expect(deep(state, newState)).toMatchSnapshot()
+  describe('when someone reacts to a post', () => {
+    it('optimistically updates state', () => {
+      const newState = ormReducer(state, { ...action, meta: { postId: '1', data: { emojiFull: '\uD83D\uDC4D' } } })
+      const newSession = orm.session(newState)
+      expect(newSession.Post.withId('1').myReactions[0].emojiFull).toEqual('\uD83D\uDC4D')
+      expect(newSession.Post.withId('1').postReactions[0].emojiFull).toEqual('\uD83D\uDC4D')
+      expect(newSession.Post.withId('1').postReactions[0].user.name).toEqual('Mary')
     })
   })
 })

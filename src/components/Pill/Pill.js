@@ -22,7 +22,7 @@ export default function Pill ({
       }
     }
   }
-  const providedOnClick = () => onClick(id, label)
+  const providedOnClick = (e) => { e.stopPropagation(); e.preventDefault(); onClick(id, label) }
   const mouseOut = () => setRemoving(false)
   const pillStyles = cx(
     'pill',

@@ -1,0 +1,18 @@
+.tag-pill{
+  font-family: Circular Std;
+  text-transform: none;
+  font-weight: 400;
+  line-height: 18px;
+  margin-bottom: 2px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.selected {
+  color: white;
+  background-color: $color-science-blue;
+}
+
+.pill-tooltip {
+  white-space: pre-line  !important;
+}

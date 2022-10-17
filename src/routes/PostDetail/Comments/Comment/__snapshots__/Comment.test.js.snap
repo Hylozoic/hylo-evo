@@ -36,40 +36,67 @@ exports[`Comment displays image attachments 1`] = `
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "foo.png",
-        },
-      ]
-    }
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "foo.png",
-        },
-      ]
-    }
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="text"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={true}
+  <div>
+    <CardImageAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+    <EmojiRow
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      childComments={Array []}
+      createdAt={2022-10-17T16:53:39.472Z}
+      creator={
+        Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        }
+      }
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
+      text="<p>text of the comment</p>"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -131,26 +158,46 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="text"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={true}
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+    <EmojiRow
+      attachments={Array []}
+      childComments={Array []}
+      createdAt={2022-10-17T16:53:39.472Z}
+      creator={
+        Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        }
+      }
+      currentUser={
+        Object {
+          "id": 1,
+        }
+      }
+      text="<p>text of the comment</p>"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -207,26 +254,46 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="text"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={true}
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+    <EmojiRow
+      attachments={Array []}
+      childComments={Array []}
+      createdAt={2022-10-17T16:53:39.472Z}
+      creator={
+        Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        }
+      }
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
+      text="<p>text of the comment</p>"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -266,26 +333,46 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="text"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={true}
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+    <EmojiRow
+      attachments={Array []}
+      childComments={Array []}
+      createdAt={2022-10-17T16:53:39.472Z}
+      creator={
+        Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        }
+      }
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
+      text="<p>text of the comment</p>"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -347,26 +434,46 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="text"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={true}
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+    <EmojiRow
+      attachments={Array []}
+      childComments={Array []}
+      createdAt={2022-10-17T16:53:39.472Z}
+      creator={
+        Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        }
+      }
+      currentUser={
+        Object {
+          "id": 1,
+        }
+      }
+      text="<p>text of the comment</p>"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -406,26 +513,46 @@ exports[`Comment renders correctly 1`] = `
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="text"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={true}
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text of the comment</p>",
+        }
+      }
+      data-stylename="text"
+      id="text"
+    />
+    <EmojiRow
+      attachments={Array []}
+      childComments={Array []}
+      createdAt={2022-10-17T16:53:39.472Z}
+      creator={
+        Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        }
+      }
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
+      text="<p>text of the comment</p>"
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;
 
@@ -463,32 +590,27 @@ exports[`Comment renders correctly when editing 1`] = `
           name="Replies"
         />
       </div>
-      <Icon
-        data-stylename="cancelIcon"
-        name="Ex"
-        onClick={[Function]}
-      />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
-  <ClickCatcher
-    groupSlug="foo"
-  >
-    <ForwardRef(HyloEditor)
-      contentHTML="<p>text of the comment</p>"
-      data-stylename="editing"
-      onEnter={[Function]}
-      onEscape={[Function]}
-      readOnly={false}
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
     />
-  </ClickCatcher>
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
+  <Connect(ClickCatcher)>
+    <Connect(HyloEditor)
+      contentHTML="<p>text of the comment</p>"
+      data-stylename="editor"
+      onEscape={[Function]}
+      parentComponent="CommentForm"
+      submitOnReturnHandler={[Function]}
+    />
+  </Connect(ClickCatcher)>
 </div>
 `;

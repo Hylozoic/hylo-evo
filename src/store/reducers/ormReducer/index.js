@@ -19,7 +19,11 @@ import {
   LEAVE_GROUP,
   LEAVE_PROJECT_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
+  REACT_ON_POST_PENDING,
+  REACT_ON_COMMENT_PENDING,
   REMOVE_MODERATOR_PENDING,
+  REMOVE_REACT_ON_COMMENT_PENDING,
+  REMOVE_REACT_ON_POST_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
   REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
   RESET_NEW_POST_COUNT_PENDING,
@@ -32,8 +36,7 @@ import {
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
-  USE_INVITATION,
-  VOTE_ON_POST_PENDING
+  USE_INVITATION
 } from 'store/constants'
 import {
   UPDATE_MEMBERSHIP_SETTINGS_PENDING,
@@ -531,13 +534,53 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
-    case VOTE_ON_POST_PENDING: {
+    case REACT_ON_COMMENT_PENDING: {
+      comment = session.Comment.withId(meta.commentId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+
+      console.log(comment, 'THIS IS WHAT YOU ARE WORKING ON NOW')
+
+      const optimisticUpdate = { myReactions: [...comment.myReactions, { emojiFull }], commentReactions: [...comment.commentReactions, { emojiFull, user: { name: me.name, id: me.id } }] }
+
+      comment.update(optimisticUpdate)
+
+      break
+    }
+
+    case REMOVE_REACT_ON_COMMENT_PENDING: {
+      comment = session.Comment.withId(meta.commentId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+      const commentReactions = comment.commentReactions.filter(reaction => {
+        if (reaction.emojiFull === emojiFull && reaction.user.id === me.id) return false
+        return true
+      })
+      comment.update({ myReactions: comment.myReactions.filter(react => react.emojiFull !== emojiFull), commentReactions })
+      break
+    }
+
+    case REACT_ON_POST_PENDING: {
       post = session.Post.withId(meta.postId)
-      if (post.myVote) {
-        !meta.isUpvote && post.update({ myVote: false, votesTotal: (post.votesTotal || 1) - 1 })
-      } else {
-        meta.isUpvote && post.update({ myVote: true, votesTotal: (post.votesTotal || 0) + 1 })
-      }
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+      
+      const optimisticUpdate = { myReactions: [...post.myReactions, { emojiFull }], postReactions: [...post.postReactions, { emojiFull, user: { name: me.name, id: me.id } }] }
+
+      post.update(optimisticUpdate)
+
+      break
+    }
+
+    case REMOVE_REACT_ON_POST_PENDING: {
+      post = session.Post.withId(meta.postId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+      const postReactions = post.postReactions.filter(reaction => {
+        if (reaction.emojiFull === emojiFull && reaction.user.id === me.id) return false
+        return true
+      })
+      post.update({ myReactions: post.myReactions.filter(react => react.emojiFull !== emojiFull), postReactions })
       break
     }
   }

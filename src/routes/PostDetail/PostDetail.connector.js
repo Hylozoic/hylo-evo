@@ -8,7 +8,6 @@ import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import voteOnPost from 'store/actions/voteOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
 import processStripeToken from 'store/actions/processStripeToken'
@@ -49,22 +48,22 @@ export function mapDispatchToProps (dispatch, props) {
     onClose: () => dispatch(push(closeLocation)),
     joinProject: () => dispatch(joinProject(postId)),
     leaveProject: () => dispatch(leaveProject(postId)),
-    voteOnPost: (myVote) => dispatch(voteOnPost(postId, myVote)),
     processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
     respondToEvent: response => dispatch(respondToEvent(postId, response))
   }
 }
 
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { post } = stateProps
+// export function mergeProps (stateProps, dispatchProps, ownProps) {
+//   return {
+//     ...ownProps,
+//     ...stateProps,
+//     ...dispatchProps,
+//     reactOnEntity: ({ commentId, emojiFull, entityType, postId }) =>
+//       dispatchProps.reactOnEntity({ commentId, emojiFull, entityType, postId }),
+//     removeReactOnEntity: ({ commentId, emojiFull, entityType, postId }) =>
+//       dispatchProps.reactOnEntity({ commentId, emojiFull, entityType, postId })
+//   }
+// }
 
-  return {
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    voteOnPost: () =>
-      dispatchProps.voteOnPost(!post.myVote)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+// export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps)
