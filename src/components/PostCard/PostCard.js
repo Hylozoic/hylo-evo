@@ -19,8 +19,6 @@ export default class PostCard extends React.Component {
     post: PropTypes.shape(POST_PROP_TYPES),
     editPost: PropTypes.func,
     showDetails: PropTypes.func,
-    reactOnPost: PropTypes.func,
-    removeReactOnPost: PropTypes.func,
     highlightProps: PropTypes.object,
     expanded: PropTypes.bool,
     constrained: PropTypes.bool,
@@ -49,8 +47,6 @@ export default class PostCard extends React.Component {
       routeParams,
       post,
       editPost,
-      reactOnPost,
-      removeReactOnPost,
       highlightProps,
       expanded,
       constrained,
@@ -103,8 +99,6 @@ export default class PostCard extends React.Component {
               slug={routeParams.groupSlug}
               constrained={constrained}
               currentUser={currentUser}
-              reactOnPost={reactOnPost}
-              removeReactOnPost={removeReactOnPost}
             />
           </div>
         )}

@@ -13,8 +13,6 @@ export default function PostBody (props) {
     constrained,
     currentUser,
     highlightProps,
-    reactOnPost,
-    removeReactOnPost,
     ...post
   } = props
 
@@ -34,9 +32,8 @@ export default function PostBody (props) {
       />
       <EmojiRow
         {...post}
+        postId={post.id}
         currentUser={currentUser}
-        reactOnPost={reactOnPost}
-        removeReactOnPost={removeReactOnPost}
       />
     </div>
   )

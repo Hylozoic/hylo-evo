@@ -43,44 +43,47 @@ export default class Comments extends Component {
       createComment,
       slug,
       postId,
-      width
+      width,
     } = this.props
 
     const style = {
       width: width + 'px'
     }
 
-    return <div styleName='comments'>
-      <ShowMore
-        commentsLength={comments.length}
-        total={total}
-        hasMore={hasMore}
-        fetchComments={fetchComments} />
-      {comments.map(c => (
-        <Comment
-          key={c.id}
-          comment={c}
-          slug={slug}
-          postId={postId}
-          onReplyThread={this.scrollToReplyInput.bind(this)} />
-      ))}
-      {currentUser
-        ? <div styleName='form-wrapper' style={style}>
-          <CommentForm
-            currentUser={currentUser}
-            createComment={createComment}
+    return (
+      <div styleName='comments'>
+        <ShowMore
+          commentsLength={comments.length}
+          total={total}
+          hasMore={hasMore}
+          fetchComments={fetchComments} 
+        />
+        {comments.map(c => (
+          <Comment
+            key={c.id}
+            comment={c}
+            slug={slug}
             postId={postId}
+            onReplyThread={this.scrollToReplyInput.bind(this)}
           />
-          <PeopleTyping styleName='people-typing' />
-        </div>
-        : <Link
-          to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
-          target={inIframe() ? '_blank' : ''}
-          styleName='signup-button'
-        >
-          Join Hylo to respond
-        </Link>
-      }
-    </div>
+        ))}
+        {currentUser
+          ? <div styleName='form-wrapper' style={style}>
+            <CommentForm
+              currentUser={currentUser}
+              createComment={createComment}
+              postId={postId}
+            />
+            <PeopleTyping styleName='people-typing' />
+          </div>
+          : <Link
+              to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
+              target={inIframe() ? '_blank' : ''}
+              styleName='signup-button'
+            >
+            Join Hylo to respond
+          </Link>}
+      </div>
+    )
   }
 }

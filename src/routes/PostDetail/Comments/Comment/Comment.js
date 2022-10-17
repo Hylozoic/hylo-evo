@@ -12,6 +12,7 @@ import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
+import EmojiRow from 'components/EmojiRow'
 import HyloEditor from 'components/HyloEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -29,7 +30,7 @@ export class Comment extends Component {
     onReplyComment: func.isRequired,
     updateComment: func,
     deleteComment: func,
-    removeComment: func
+    removeComment: func,
   }
 
   state = {
@@ -67,7 +68,6 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
-
     return (
       <div>
         <div styleName='header'>
@@ -103,7 +103,16 @@ export class Comment extends Component {
             />
           )}
           {!editing && (
-            <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
+            <>
+              <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
+              <EmojiRow
+                {...comment}
+                currentUser={currentUser}
+                postId={comment.post}
+                commentId={comment.id}
+                isComment
+              />
+            </>
           )}
         </ClickCatcher>
       </div>
@@ -118,7 +127,7 @@ export default class CommentWithReplies extends Component {
     updateComment: func,
     deleteComment: func,
     removeComment: func,
-    onReplyThread: func
+    onReplyThread: func,
   }
 
   static defaultProps = {
@@ -163,39 +172,47 @@ export default class CommentWithReplies extends Component {
       childComments = childComments.slice(-1 * (INITIAL_SUBCOMMENTS_DISPLAYED + newCommentsAdded))
     }
 
-    return <div styleName='comment'>
-      <Comment {...this.props} onReplyComment={this.onReplyComment} />
-      {childComments && childComments && <div styleName='subreply'>
-        <div styleName='more-wrap'>
-          <ShowMore
-            commentsLength={childComments.length}
-            total={childCommentsTotal + newCommentsAdded}
-            hasMore={hasMoreChildComments}
-            fetchComments={() => {
-              this.setState({ showLatestOnly: false })
-              fetchChildComments()
-            }} />
-        </div>
-        {childComments.map(c =>
-          <Comment key={c.id}
-            {...this.props}
-            comment={c}
-            // sets child comments to toggle reply box one level deep, rather than allowing recursion
-            onReplyComment={(e) => this.onReplyComment(e, c.creator)}
-          />)
-        }
-      </div>}
-      {replying && <div styleName='replybox' ref={this.replyBox}>
-        <CommentForm
-          createComment={c => {
-            createComment(c)
-              .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
-          }}
-          placeholder={`Reply to ${comment.creator.name}`}
-          editorContent={this.state.prefillEditor}
-          focusOnRender />
-      </div>}
-      <Tooltip id={`reply-tip-${comment.id}`} />
-    </div>
+    return (
+      <div styleName='comment'>
+        <Comment
+          {...this.props}
+          onReplyComment={this.onReplyComment}
+        />
+        {childComments && childComments && <div styleName='subreply'>
+          <div styleName='more-wrap'>
+            <ShowMore
+              commentsLength={childComments.length}
+              total={childCommentsTotal + newCommentsAdded}
+              hasMore={hasMoreChildComments}
+              fetchComments={() => {
+                this.setState({ showLatestOnly: false })
+                fetchChildComments()
+              }}
+            />
+          </div>
+          {childComments.map(c =>
+            <Comment
+              key={c.id}
+              {...this.props}
+              comment={c}
+              // sets child comments to toggle reply box one level deep, rather than allowing recursion
+              onReplyComment={(e) => this.onReplyComment(e, c.creator)}
+            />)
+          }
+        </div>}
+        {replying && <div styleName='replybox' ref={this.replyBox}>
+          <CommentForm
+            createComment={c => {
+              createComment(c)
+                .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
+            }}
+            placeholder={`Reply to ${comment.creator.name}`}
+            editorContent={this.state.prefillEditor}
+            focusOnRender
+          />
+        </div>}
+        <Tooltip id={`reply-tip-${comment.id}`} />
+      </div>
+    )
   }
 }

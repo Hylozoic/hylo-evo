@@ -20,6 +20,6 @@ it('renders as expected', () => {
     ...fakePost(),
     updatedAt: new Date('2014-01-17').toISOString()
   }
-  const wrapper = shallow(<PostCard post={post} reactOnPost={() => {}} routeParams={{ slug: 'foom' }} />)
+  const wrapper = shallow(<PostCard post={post} routeParams={{ slug: 'foom' }} />)
   expect(wrapper).toMatchSnapshot()
 })

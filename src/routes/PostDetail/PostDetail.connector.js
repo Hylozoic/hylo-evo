@@ -8,7 +8,6 @@ import getPost from 'store/selectors/getPost'
 import presentPost from 'store/presenters/presentPost'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import reactOnPost from 'store/actions/reactOnPost'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
 import processStripeToken from 'store/actions/processStripeToken'
@@ -49,20 +48,22 @@ export function mapDispatchToProps (dispatch, props) {
     onClose: () => dispatch(push(closeLocation)),
     joinProject: () => dispatch(joinProject(postId)),
     leaveProject: () => dispatch(leaveProject(postId)),
-    reactOnPost: emojiFull => dispatch(reactOnPost(postId, emojiFull)),
     processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
     respondToEvent: response => dispatch(respondToEvent(postId, response))
   }
 }
 
-export function mergeProps (stateProps, dispatchProps, ownProps) {
-  return {
-    ...ownProps,
-    ...stateProps,
-    ...dispatchProps,
-    reactOnPost: (postId, emojiFull) =>
-      dispatchProps.reactOnPost(postId, emojiFull)
-  }
-}
+// export function mergeProps (stateProps, dispatchProps, ownProps) {
+//   return {
+//     ...ownProps,
+//     ...stateProps,
+//     ...dispatchProps,
+//     reactOnEntity: ({ commentId, emojiFull, entityType, postId }) =>
+//       dispatchProps.reactOnEntity({ commentId, emojiFull, entityType, postId }),
+//     removeReactOnEntity: ({ commentId, emojiFull, entityType, postId }) =>
+//       dispatchProps.reactOnEntity({ commentId, emojiFull, entityType, postId })
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+// export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
+export default connect(mapStateToProps, mapDispatchToProps)

@@ -18,7 +18,6 @@ const PostListRow = (props) => {
     routeParams,
     post,
     showDetails,
-    reactOnPost,
     expanded
   } = props
   const {
@@ -43,10 +42,10 @@ const PostListRow = (props) => {
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
-      <div styleName='votes'>
+      {/* <div styleName='votes'>
         <a
-          onClick={(e) => { // is this passing in the right thing?
-            reactOnPost(e)
+          onClick={(e) => { // TODO: all of this needs to be tweaked
+            reactOnEntity(e)
             stopEvent(e)
           }}
           styleName={cx('vote-button', { voted: myVote })}
@@ -57,7 +56,7 @@ const PostListRow = (props) => {
           <Icon name='ArrowUp' styleName='vote-icon' />
           {votesTotal}
         </a>
-      </div>
+      </div> */}
       <div styleName='content-summary'>
         <div styleName='type-author'>
           <div styleName={cx('post-type', post.type)}>{post.type}</div>

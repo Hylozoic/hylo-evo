@@ -146,7 +146,6 @@ exports[`renders as expected 1`] = `
         ]
       }
       id="FAKE_29222"
-      reactOnPost={[Function]}
       tags={
         Array [
           "activism",

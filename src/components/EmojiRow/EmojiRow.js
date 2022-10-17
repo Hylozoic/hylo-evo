@@ -1,6 +1,7 @@
 import React from 'react'
 import EmojiPicker from 'components/EmojiPicker'
 import EmojiPill from 'components/EmojiPill'
+import useReactionActions from 'hooks/useReactionActions'
 
 import './EmojiRow.scss'
 
@@ -8,29 +9,33 @@ export default function EmojiRow (props) {
   const {
     currentUser,
     postReactions,
+    commentReactions,
     myReactions,
-    removeReactOnPost,
-    reactOnPost
+    postId,
+    commentId
   } = props
+  const { reactOnEntity, removeReactOnEntity } = useReactionActions()
 
-  const handleReaction = (emojiFull) => reactOnPost(emojiFull)
-  const handleRemoveReaction = (emojiFull) => removeReactOnPost(emojiFull)
+  const entityType = commentId ? 'comment' : 'post'
+  const entityReactions = commentId ? commentReactions : postReactions
+  const handleReaction = (emojiFull) => reactOnEntity({ commentId, emojiFull, entityType, postId })
+  const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ commentId, emojiFull, entityType, postId })
   const myEmojis = myReactions.map((reaction) => reaction.emojiFull)
-  const usersReactions = postReactions.reduce((accum, postReaction) => {
-    if (accum[postReaction.emojiFull]) {
-      const { userList } = accum[postReaction.emojiFull]
-      accum[postReaction.emojiFull] = { emojiFull: postReaction.emojiFull, userList: [...userList, postReaction.user.name] }
+  const usersReactions = entityReactions.reduce((accum, entityReaction) => {
+    if (accum[entityReaction.emojiFull]) {
+      const { userList } = accum[entityReaction.emojiFull]
+      accum[entityReaction.emojiFull] = { emojiFull: entityReaction.emojiFull, userList: [...userList, entityReaction.user.name] }
     } else {
-      accum[postReaction.emojiFull] = { emojiFull: postReaction.emojiFull, userList: [postReaction.user.name] }
+      accum[entityReaction.emojiFull] = { emojiFull: entityReaction.emojiFull, userList: [entityReaction.user.name] }
     }
 
-    if (myEmojis.includes(postReaction.emojiFull)) accum[postReaction.emojiFull] = { ...accum[postReaction.emojiFull], loggedInUser: true }
+    if (myEmojis.includes(entityReaction.emojiFull)) accum[entityReaction.emojiFull] = { ...accum[entityReaction.emojiFull], loggedInUser: true }
 
     return accum
   }, {})
   return (
     <div>
-      {postReactions && <div styleName='footer-reactions'>
+      {entityReactions && <div styleName='footer-reactions'>
         {Object.values(usersReactions).map(reaction => (
           <EmojiPill
             onClick={reaction.loggedInUser ? handleRemoveReaction : handleReaction}

@@ -20,7 +20,9 @@ import {
   LEAVE_PROJECT_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
   REACT_ON_POST_PENDING,
+  REACT_ON_COMMENT_PENDING,
   REMOVE_MODERATOR_PENDING,
+  REMOVE_REACT_ON_COMMENT_PENDING,
   REMOVE_REACT_ON_POST_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
   REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
@@ -531,10 +533,38 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
+    case REACT_ON_COMMENT_PENDING: {
+      comment = session.Comment.withId(meta.commentId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+
+      console.log(comment, 'THIS IS WHAT YOU ARE WORKING ON NOW')
+
+      const optimisticUpdate = { myReactions: [...comment.myReactions, { emojiFull }], commentReactions: [...comment.commentReactions, { emojiFull, user: { name: me.name, id: me.id } }] }
+
+      comment.update(optimisticUpdate)
+
+      break
+    }
+
+    case REMOVE_REACT_ON_COMMENT_PENDING: {
+      comment = session.Comment.withId(meta.commentId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+      console.log(comment, 'yaya')
+      const commentReactions = comment.commentReactions.filter(reaction => {
+        if (reaction.emojiFull === emojiFull && reaction.user.id === me.id) return false
+        return true
+      })
+      comment.update({ myReactions: comment.myReactions.filter(react => react.emojiFull !== emojiFull), commentReactions })
+      break
+    }
+
     case REACT_ON_POST_PENDING: {
       post = session.Post.withId(meta.postId)
       const emojiFull = meta.data.emojiFull
       me = Me.first()
+      
       const optimisticUpdate = { myReactions: [...post.myReactions, { emojiFull }], postReactions: [...post.postReactions, { emojiFull, user: { name: me.name, id: me.id } }] }
 
       post.update(optimisticUpdate)

@@ -34,7 +34,8 @@ export default class PostDetail extends Component {
     currentUser: PropTypes.object,
     fetchPost: PropTypes.func,
     post: PropTypes.object,
-    routeParams: PropTypes.object
+    routeParams: PropTypes.object,
+
   }
 
   state = {
@@ -102,16 +103,15 @@ export default class PostDetail extends Component {
 
   render () {
     const {
-      routeParams,
-      post,
-      reactOnPost,
-      isProjectMember,
+      currentUser,
       joinProject,
+      isProjectMember,
       leaveProject,
       pending,
+      post,
       processStripeToken,
-      currentUser,
       respondToEvent,
+      routeParams,
       onClose
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
@@ -141,7 +141,7 @@ export default class PostDetail extends Component {
       marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     }
 
-    var people, postPeopleDialogTitle
+    let people, postPeopleDialogTitle
     if (isProject) {
       people = post.members
       postPeopleDialogTitle = 'Project Members'
@@ -158,103 +158,112 @@ export default class PostDetail extends Component {
     let { showPeopleDialog } = this.state
     showPeopleDialog = hasPeople && showPeopleDialog
     const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
-    const postFooter = <PostFooter
-      {...post}
-      reactOnPost={reactOnPost}
-      currentUser={currentUser}
-    />
+    const postFooter = (
+      <PostFooter
+        {...post}
+        currentUser={currentUser}
+      />
+    )
 
-    return <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
-      <div styleName={cx('post', { 'noUser': !currentUser, 'headerPad': atHeader })}>
-        <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
-        <PostHeader
-          styleName='header'
-          {...post}
-          routeParams={routeParams}
-          close={onClose}
-          expanded
-          detailHasImage={detailHasImage}
-        />
-        {atHeader && <div styleName={cx('header-sticky', { 'at-activity': atActivity })} style={headerStyle}>
-          <PostHeader styleName='header' {...post} routeParams={routeParams} close={onClose} />
-        </div>}
-        <CardImageAttachments attachments={post.attachments} linked />
-        <PostTags tags={post.tags} />
-        {isEvent && <EventBody
-          currentUser={currentUser}
-          styleName='body'
-          expanded
-          slug={routeParams.groupSlug}
-          event={post}
-          togglePeopleDialog={togglePeopleDialog}
-          respondToEvent={respondToEvent} />}
-        {!isEvent && <PostBody
-          styleName='body'
-          expanded
-          routeParams={routeParams}
-          slug={routeParams.groupSlug}
-          {...post}
-        />}
-        {isProject && currentUser && <div styleName='project-actions-wrapper'>
-          <div styleName='join-project-button-container'>
-            <JoinProjectSection
-              currentUser={currentUser}
-              joinProject={joinProject}
-              leaveProject={leaveProject}
-              leaving={isProjectMember}
-              members={post.members}
-              togglePeopleDialog={togglePeopleDialog}
-            />
-          </div>
-          {post.projectManagementLink && projectManagementTool &&
-            <div styleName='project-management-tool'>
-              <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
-              <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
+    return (
+      <ReactResizeDetector handleWidth handleHeight={false} onResize={this.setComponentPositions}>{({ width, height }) =>
+        <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
+          <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
+          <PostHeader
+            styleName='header'
+            {...post}
+            routeParams={routeParams}
+            close={onClose}
+            expanded
+            detailHasImage={detailHasImage}
+          />
+          {atHeader && <div styleName={cx('header-sticky', { 'at-activity': atActivity })} style={headerStyle}>
+            <PostHeader styleName='header' {...post} routeParams={routeParams} close={onClose} />
+          </div>}
+          <CardImageAttachments attachments={post.attachments} linked />
+          <PostTags tags={post.tags} />
+          {isEvent && <EventBody
+            currentUser={currentUser}
+            styleName='body'
+            expanded
+            slug={routeParams.groupSlug}
+            event={post}
+            togglePeopleDialog={togglePeopleDialog}
+            respondToEvent={respondToEvent} />}
+          {!isEvent &&
+            <PostBody
+              styleName='body'
+              expanded
+              routeParams={routeParams}
+              slug={routeParams.groupSlug}
+              {...post}
+            />}
+          {isProject && currentUser && <div styleName='project-actions-wrapper'>
+            <div styleName='join-project-button-container'>
+              <JoinProjectSection
+                currentUser={currentUser}
+                joinProject={joinProject}
+                leaveProject={leaveProject}
+                leaving={isProjectMember}
+                members={post.members}
+                togglePeopleDialog={togglePeopleDialog}
+              />
             </div>
-          }
-          {post.projectManagementLink && !projectManagementTool &&
-            <div styleName='project-management-tool'>
-              <div>View project management tool</div>
-              <div><a styleName='project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
-            </div>
-          }
-          {post.donationsLink && donationService &&
-            <div styleName='donate'>
-              <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
-              <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-            </div>
-          }
-          {post.donationsLink && !donationService &&
-            <div styleName='donate'>
-              <div>Support this project</div>
-              <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-            </div>
-          }
-        </div>}
-        {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
-          <ProjectContributions
-            postId={post.id}
-            totalContributions={totalContributions}
-            processStripeToken={processStripeToken} />}
-        <PostGroups
-          isPublic={post.isPublic}
-          groups={post.groups}
-          slug={routeParams.groupSlug}
-          showBottomBorder />
-        {postFooter}
-        <div ref={this.activityHeader} />
-        {atActivity && <div styleName='activity-sticky' style={activityStyle}>
+            {post.projectManagementLink && projectManagementTool &&
+              <div styleName='project-management-tool'>
+                <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
+                <div><a styleName='project-button' href={post.projectManagementLink} target='_blank' rel='noreferrer'>View tasks</a></div>
+              </div>
+            }
+            {post.projectManagementLink && !projectManagementTool &&
+              <div styleName='project-management-tool'>
+                <div>View project management tool</div>
+                <div><a styleName='project-button' href={post.projectManagementLink} target='_blank' rel='noreferrer'>View tasks</a></div>
+              </div>
+            }
+            {post.donationsLink && donationService &&
+              <div styleName='donate'>
+                <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                <div><a styleName='project-button' href={post.donationsLink} target='_blank' rel='noreferrer'>Contribute</a></div>
+              </div>
+            }
+            {post.donationsLink && !donationService &&
+              <div styleName='donate'>
+                <div>Support this project</div>
+                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+              </div>
+            }
+          </div>}
+          {isProject && acceptContributions && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) &&
+            <ProjectContributions
+              postId={post.id}
+              totalContributions={totalContributions}
+              processStripeToken={processStripeToken} />}
+          <PostGroups
+            isPublic={post.isPublic}
+            groups={post.groups}
+            slug={routeParams.groupSlug}
+            showBottomBorder />
           {postFooter}
+          <div ref={this.activityHeader} />
+          {atActivity &&
+            <div styleName='activity-sticky' style={activityStyle}>
+              {postFooter}
+            </div>}
+          <Comments
+            postId={post.id}
+            slug={routeParams.groupSlug}
+            scrollToBottom={scrollToBottom}
+          />
+          {showPeopleDialog && <PostPeopleDialog
+            title={postPeopleDialogTitle}
+            members={people}
+            onClose={togglePeopleDialog}
+            slug={routeParams.groupSlug} />}
+          <SocketSubscriber type='post' id={post.id} />
         </div>}
-        <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />
-        {showPeopleDialog && <PostPeopleDialog
-          title={postPeopleDialogTitle}
-          members={people}
-          onClose={togglePeopleDialog}
-          slug={routeParams.groupSlug} />}
-        <SocketSubscriber type='post' id={post.id} />
-      </div>
-    }</ReactResizeDetector>
+      </ReactResizeDetector>
+    )
   }
 }
 
