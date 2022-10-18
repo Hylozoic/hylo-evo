@@ -1,11 +1,17 @@
 :global {
+  .ProseMirror {
+    // Matching Post Details color
+    color: rgba(44, 64, 89, 0.7);
+  }
+
   .ProseMirror:focus {
     outline: none;
   }
 
   /* Placeholder (at the top) */
   .ProseMirror p.is-editor-empty:first-child::before {
-    color: #adb5bd;
+    // Matches placeholder text in `PostEditor`
+    color: $color-rhino-30;
     content: attr(data-placeholder);
     float: left;
     height: 0;
