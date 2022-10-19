@@ -26,7 +26,7 @@ const PostListRow = (props) => {
     creator,
     createdAt,
     commentersTotal,
-    votesTotal,
+    peopleReactedTotal,
     myVote,
     topics
   } = post
@@ -54,7 +54,7 @@ const PostListRow = (props) => {
           data-for={`post-tt-${post.id}`}
         >
           <Icon name='ArrowUp' styleName='vote-icon' />
-          {votesTotal}
+          {peopleReactedTotal}
         </a>
       </div> */}
       <div styleName='content-summary'>

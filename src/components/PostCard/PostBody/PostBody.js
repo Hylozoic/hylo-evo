@@ -13,6 +13,7 @@ export default function PostBody (props) {
     constrained,
     currentUser,
     highlightProps,
+    onClick,
     ...post
   } = props
 
@@ -22,6 +23,7 @@ export default function PostBody (props) {
         {...post}
         highlightProp={highlightProps}
         constrained={constrained}
+        onClick={onClick}
       />
       <PostDetails
         {...post}
@@ -29,6 +31,7 @@ export default function PostBody (props) {
         highlightProp={highlightProps}
         expanded={expanded}
         constrained={constrained}
+        onClick={onClick}
       />
       <EmojiRow
         {...post}

@@ -60,6 +60,7 @@ exports[`renders as expected 1`] = `
       }
       hasImage={false}
       id="FAKE_29222"
+      peopleReactedTotal={11519}
       routeParams={
         Object {
           "slug": "foom",
@@ -74,7 +75,6 @@ exports[`renders as expected 1`] = `
       title="We put this together as a PDF for hand-out at your next event or university class"
       type="offer"
       updatedAt="2014-01-17T00:00:00.000Z"
-      votesTotal={11519}
     />
   </div>
   <div
@@ -91,9 +91,7 @@ exports[`renders as expected 1`] = `
       }
     />
   </div>
-  <div
-    onClick={[Function]}
-  >
+  <div>
     <PostBody
       attachments={
         Array [
@@ -146,6 +144,8 @@ exports[`renders as expected 1`] = `
         ]
       }
       id="FAKE_29222"
+      onClick={[Function]}
+      peopleReactedTotal={11519}
       tags={
         Array [
           "activism",
@@ -155,12 +155,9 @@ exports[`renders as expected 1`] = `
       title="We put this together as a PDF for hand-out at your next event or university class"
       type="offer"
       updatedAt="2014-01-17T00:00:00.000Z"
-      votesTotal={11519}
     />
   </div>
-  <div
-    onClick={[Function]}
-  >
+  <div>
     <Connect(PostGroups)
       groups={
         Array [
@@ -225,6 +222,8 @@ exports[`renders as expected 1`] = `
       ]
     }
     id="FAKE_29222"
+    onClick={[Function]}
+    peopleReactedTotal={11519}
     postId="FAKE_29222"
     tags={
       Array [
@@ -235,7 +234,6 @@ exports[`renders as expected 1`] = `
     title="We put this together as a PDF for hand-out at your next event or university class"
     type="offer"
     updatedAt="2014-01-17T00:00:00.000Z"
-    votesTotal={11519}
   />
 </div>
 `;

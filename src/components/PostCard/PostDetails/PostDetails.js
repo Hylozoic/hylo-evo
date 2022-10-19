@@ -19,6 +19,7 @@ export default function PostDetails ({
   highlightProps,
   fileAttachments,
   hideDetails,
+  onClick,
   ...post
 }) {
   const details = TextHelpers.presentHTML(providedDetails, {
@@ -27,7 +28,7 @@ export default function PostDetails ({
   })
 
   return <Highlight {...highlightProps}>
-    <div styleName={cx('postDetails', { constrained })}>
+    <div onClick={onClick} styleName={cx('postDetails', { constrained })}>
       <div styleName='fade' />
       {details && !hideDetails && (
         <ClickCatcher>

@@ -7,7 +7,7 @@ export default function reactOnEntity ({ commentId, emojiFull, entityType, postI
     type: entityType === 'post' ? REACT_ON_POST : REACT_ON_COMMENT,
     graphql: {
       query: `mutation($entityId: ID, $data: ReactionInput) {
-        reaction(entityId: $entityId, data: $data) {
+        reactOn(entityId: $entityId, data: $data) {
           id
         }
       }`,

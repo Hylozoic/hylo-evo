@@ -20,7 +20,7 @@ describe('PostFooter', () => {
       commenters={commenters}
       commentersTotal={4}
       currentUser={commenters[1]}
-      votesTotal={3}
+      peopleReactedTotal={3}
       myReactions={[]}
       postReactions={[]}
       myVote />)
@@ -32,7 +32,7 @@ describe('PostFooter', () => {
       commenters={commenters}
       commentersTotal={4}
       currentUser={commenters[1]}
-      votesTotal={3}
+      peopleReactedTotal={3}
       myReactions={[]}
       postReactions={[]}
       myVote={false} />)
@@ -51,7 +51,7 @@ describe('PostFooter', () => {
       currentUser={commenters[1]}
       myReactions={[]}
       postReactions={[]}
-      votesTotal={0}
+      peopleReactedTotal={0}
       type='project'
       members={members} />)
     expect(wrapper).toMatchSnapshot()
@@ -71,7 +71,7 @@ describe('PostFooter', () => {
       currentUser={null}
       myReactions={[]}
       postReactions={[]}
-      votesTotal={0}
+      peopleReactedTotal={0}
       type='event' />)
     expect(wrapper).toMatchSnapshot()
   })

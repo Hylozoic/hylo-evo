@@ -93,16 +93,17 @@ export default class PostCard extends React.Component {
           </div>
         )}
         {!isEvent && (
-          <div onClick={this.onClick}>
+          <div>
             <PostBody
               {...post}
+              onClick={this.onClick}
               slug={routeParams.groupSlug}
               constrained={constrained}
               currentUser={currentUser}
             />
           </div>
         )}
-        <div onClick={this.onClick}>
+        <div>
           <PostGroups
             isPublic={post.isPublic}
             groups={post.groups}
@@ -112,6 +113,7 @@ export default class PostCard extends React.Component {
         </div>
         <PostFooter
           {...post}
+          onClick={this.onClick}
           constrained={constrained}
           currentUser={currentUser}
           postId={post.id}
