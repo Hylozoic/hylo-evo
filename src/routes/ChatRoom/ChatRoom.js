@@ -128,7 +128,7 @@ export default function ChatRoom (props) {
     console.log("current = ", editorRef.current)
     if (editorRef.current) {
       console.log("focus")
-      setTimeout(() => editorRef.current.focus(), 1000)
+      //setTimeout(() => editorRef.current.focus(), 1000)
     }
   }, [editorRef?.current, group?.id, topicName, context])
 
