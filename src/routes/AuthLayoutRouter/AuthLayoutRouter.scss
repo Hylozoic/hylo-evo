@@ -1,5 +1,6 @@
 body {
   overflow: hidden;
+  letter-spacing: -.2px;
 }
 
 .container {
@@ -384,18 +385,6 @@ $drawer-z-index: 51;
   flex: 0 0 100%;
 }
 
-.center::-webkit-scrollbar {
-  background-color:transparent;
-  width: 5px;
-  border-radius: 5px;
-}
-
-.center::-webkit-scrollbar-thumb {
-  background-color: rgba(200,200,200,.5   );
-  outline: none;
-  border-radius: 3px;
-}
-
 .sidebar {
   // From Bootstrap make-col-ready():
   position: relative;
@@ -445,17 +434,6 @@ $drawer-z-index: 51;
   max-width: 700px;
 }
 
-.detail::-webkit-scrollbar {
-  background-color:transparent;
-  width: 5px;
-  border-radius: 5px;
-}
-
-.detail::-webkit-scrollbar-thumb {
-  background-color: rgba(200,200,200,.5);
-  outline: none;
-}
-
 :global(.react-joyride__beacon, .react-joyride__beacon:focus, .react-joyride__beacon:active) {
   outline: none;
   border: none;
@@ -470,8 +448,8 @@ $drawer-z-index: 51;
   }
 
   .center {
-    max-width: 70%;
-    flex: 0 0 75%;
+    max-width: calc(83% - 30px);
+    flex: 0 0 83%;
   }
 
   .center.collapsedState {

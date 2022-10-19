@@ -105,9 +105,13 @@ export default function ChatPost ({
 
         {isHeader && (
           <>
-            <Avatar url={personUrl(creator.id)} avatarUrl={creator.avatarUrl} className={styles.avatar} />
-            <span styleName='name'>{creator.name}</span>
-            <span styleName='date'>{TextHelpers.humanDate(createdAt)}</span>
+            <div styleName='header'>
+              <div styleName='author'>
+                <Avatar url={personUrl(creator.id)} avatarUrl={creator.avatarUrl} className={styles.avatar} />
+                <div styleName='name'>{creator.name}</div>
+              </div>
+              <div styleName='date'>{TextHelpers.humanDate(createdAt)}</div>
+            </div>
           </>
         )}
         {details && (

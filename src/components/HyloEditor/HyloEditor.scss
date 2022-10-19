@@ -42,8 +42,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   line-height: 1em;
-  background-color: whitesmoke;
-  border: solid 1px gainsboro;
+  background-color: rgba(255, 255, 255, 1);
+
   button {
     background-color: none;
     margin: 0;
@@ -51,11 +51,24 @@
     border: 0;
     color: $color-rhino-60;
     font-size: 14px;
+    border-radius: 3px;
+    transition: all .25s ease;
+    padding-top: 3px;
+
     &.is-active {
       background-color: $color-rhino-80;
       color: whitesmoke;
+
+      &:hover {
+        background-color: $color-rhino;
+      }
+    }
+    &:hover {
+      background-color: rgba(107, 121, 139, .1);
+      cursor: pointer;
     }
   }
+
   .divider {
     display: inline-block;
     background-color: #0000001a;

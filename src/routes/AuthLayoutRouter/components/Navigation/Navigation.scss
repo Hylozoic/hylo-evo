@@ -37,18 +37,6 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-
-.navigation::-webkit-scrollbar {
-  background-color:transparent;
-  width: 5px;
-  border-radius: 5px;
-}
-
-.navigation::-webkit-scrollbar-thumb {
-  background-color: rgba(200,200,200,.5);
-  outline: none;
-}
-
 .links {
   list-style: none;
   border-bottom: 2px solid $color-ghost-30;
