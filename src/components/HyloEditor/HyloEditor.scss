@@ -18,7 +18,11 @@
     pointer-events: none;
   }
 
-  .ProseMirror p:last-child {
+  // First selector cancels the bottom margin on placeholder `P`
+  // which should already be `height: 0` but was causing an issue on Web Android.
+  // The second is for the last `P` to not cause extra space at the bottom
+  .ProseMirror p:last-child,
+  .ProseMirror p:nth-last-of-type(2) {
     margin-bottom: 0px;
   }
 
