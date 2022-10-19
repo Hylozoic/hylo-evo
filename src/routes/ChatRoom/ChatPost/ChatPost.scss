@@ -1,10 +1,48 @@
 .container {
   /* empty */
-  overflow-x: hidden;
   padding-left: 55px;
+  position: relative;
+
+  .action-bar {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: -15px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(42, 64, 89, 0.3);
+    border-radius: 30px;
+
+    .action-item {
+      color: gray;
+      border: 0;
+      background: white;
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+      padding: 3px 8px;
+
+      span {
+        vertical-align: middle;
+      }
+
+      &:focus {
+        outline: 0;
+      }
+
+      &:hover {
+        background: lightgray;
+      }
+    }
+  }
+
   &:hover {
     background: #efefef;
     cursor: pointer;
+
+    .action-bar {
+      display: block;
+    }
   }
 }
 
@@ -85,8 +123,17 @@
 }
 
 .emojis {
-  margin-left: 20px;
+  margin-left: 18px;
+  margin-top: -8px;
 }
+
+.noEmojis {
+  display: none;
+  // position: absolute;
+  // right: 5px;
+  // top: 6px;
+}
+
 
 .comments-container {
   margin-left: 15px;

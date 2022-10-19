@@ -17,7 +17,7 @@ import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
 
-import './Comment.scss'
+import styles from './Comment.scss'
 
 const { object, func } = PropTypes
 
@@ -116,8 +116,8 @@ export class Comment extends Component {
           />
           {!editing && (
             <>
-              <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
               <EmojiRow
+                className={styles.emojis}
                 {...comment}
                 currentUser={currentUser}
                 postId={comment.post}
