@@ -227,7 +227,6 @@
     "react-select": "^5.4.0",
     "react-slick": "^0.29.0",
     "react-stripe-checkout": "^2.6.3",
-    "react-syntax-highlighter": "^15.5.0",
     "react-textarea-autosize": "^7.1.0",
     "react-tooltip": "^4.2.21",
     "react-transition-group": "^4",
