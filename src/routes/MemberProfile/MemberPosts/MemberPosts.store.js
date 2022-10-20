@@ -6,19 +6,25 @@ import { FETCH_MEMBER_POSTS } from '../MemberProfile.store'
 
 const memberPostsQuery =
 `query MemberPosts (
+  $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $context: String,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $groupSlugs: [String],
   $id: ID,
+  $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
   $search: String,
   $sortBy: String,
   $topic: ID,
+  $topics: [ID],
+  $types: [String]
 ) {
   person (id: $id) {
     id

@@ -1,18 +1,28 @@
 :global {
+  .ProseMirror {
+    // Matching Post Details color
+    color: rgba(44, 64, 89, 0.7);
+  }
+
   .ProseMirror:focus {
     outline: none;
   }
 
   /* Placeholder (at the top) */
   .ProseMirror p.is-editor-empty:first-child::before {
-    color: #adb5bd;
+    // Matches placeholder text in `PostEditor`
+    color: $color-rhino-30;
     content: attr(data-placeholder);
     float: left;
     height: 0;
     pointer-events: none;
   }
 
-  .ProseMirror p:last-child {
+  // First selector cancels the bottom margin on placeholder `P`
+  // which should already be `height: 0` but was causing an issue on Web Android.
+  // The second is for the last `P` to not cause extra space at the bottom
+  .ProseMirror p:last-child,
+  .ProseMirror p:nth-last-of-type(2) {
     margin-bottom: 0px;
   }
 

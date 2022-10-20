@@ -4,6 +4,26 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased - 2022-10-19
+
+### Added
+- "Featured" feature such that link previews which are a video can optionally (by default) be presented atop a Post as a embedded playable video
+- `HyloEditorMobile`, a WebView-targetted version of `HyloEditor` now used in the Post and Comment editors in HyloApp
+- Refactors `TopicSelector` to be less confusing and ready to support filtering across multiple `groupsIds`
+- `react-icons` allowing ad hoc use of common open source icon packs (using some FontAwesome icons for editor, etc)
+- `*.css` files now recognized by WebPack and processed through CSSLoader, but not the SASS or PostCSS loaders
+- Minimal TypeScript support (WIP)
+
+### Changed
+
+- `HyloEditor` moves to being TipTap-based from draft-js and adds full-suite of rich text editing features
+- Improves general Link Preview retrieval and display
+- Link/`a` navigation handling within content is now now more consistent throughout
+- Consolidates and normalizes ad hoc HTML parsing and presentation of `Post#details` and `Comment#details` (etc) and moves to backend
+- Uses `HyloHTML` wrapper component for all cases where `dangerouslySetInnerHTML` was used previously
+- BrowserList config changes to "default" (ref. https://github.com/Hylozoic/hylo-evo/pull/1258/files#r991717480)
+- Patch and minor npm module dependency updates
+
 ## [4.1.2] - 2022-09-15
 
 ### Fixed

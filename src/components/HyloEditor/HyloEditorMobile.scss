@@ -1,20 +1,4 @@
 :global {
-  .hyloEditorMobile {
-    .ProseMirror:has(> p.is-editor-empty) {
-      min-height: 0px;
-    }
-
-    .ProseMirror {
-      overflow-y: auto;
-      min-height: 50px;
-      max-height: 160px;
-    }
-
-    .ProseMirror > p:last-child:not(.is-editor-empty) {
-      padding-bottom: 15px;
-    }
-  }
-
   // Mention and Topic suggestions
   .tippy-box[data-theme='suggestions-mobile'] {
     background-color: transparent;

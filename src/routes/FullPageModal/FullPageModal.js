@@ -30,7 +30,8 @@ export default function FullPageModal ({
     return (
       <div styleName='modal--modal-settings-layout'>
         {multipleTabs && content.map(tab => (
-          <Route path={tab.path}
+          <Route
+            path={tab.path}
             exact
             render={tab.render ? tab.render : () => tab.component}
             key={tab.path} />
