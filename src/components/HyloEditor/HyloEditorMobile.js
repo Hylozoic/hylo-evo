@@ -3,7 +3,6 @@ import { pickBy } from 'lodash/fp'
 import { WebViewMessageTypes } from 'hylo-shared'
 import { sendMessageToWebView } from 'util/webView'
 import HyloEditor from 'components/HyloEditor'
-import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import './HyloEditorMobile.scss'
 
 /*
@@ -47,7 +46,7 @@ export default function HyloEditorMobile (props) {
     if (editorRef.current) {
       sendMessageToWebView(WebViewMessageTypes.EDITOR.ON_ENTER, editorRef.current.getHTML())
 
-      return getQuerystringParam('suppressEnterKeyPropagation', null, props)
+      return false
     }
   })
 
