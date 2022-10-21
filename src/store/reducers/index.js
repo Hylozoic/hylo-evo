@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
-import { history } from 'router'
 
 import orm from './ormReducer'
 import returnToPath from 'store/reducers/returnToPath'
@@ -37,7 +36,7 @@ import SkillsToLearnSection from 'components/SkillsToLearnSection/SkillsToLearnS
 import TopicsSettings from 'routes/GroupSettings/TopicsSettingsTab/TopicsSettingsTab.store'
 import UserGroupsTab from 'routes/UserSettings/UserGroupsTab/UserGroupsTab.store'
 
-export const combinedReducers = combineReducers({
+export const createCombinedReducers = history => combineReducers({
   // Global store
   orm,
   router: connectRouter(history),
@@ -74,8 +73,21 @@ export const combinedReducers = combineReducers({
   UserGroupsTab
 })
 
-export default composeReducers(
-  combinedReducers,
-  resetStore,
-  handleSetState
-)
+export default function createRootReducer (history) {
+  return composeReducers(
+    createCombinedReducers(history),
+    /*
+
+      DANGEROUS: These mutate and/or reset the entire state object
+
+      Not sure why then need to added using our `composeReducers`
+      utility function with appears to do the same things as redux's
+      `combineReducers`. If I remember right correctly this is so these
+      somehow run in a 2nd reducer cycle to eliminate an infinite reducer
+      update condition? Not convinced they can't just go at the bottom above ^
+
+    */
+    resetStore,
+    handleSetState
+  )
+}
