@@ -34,11 +34,10 @@ export default function FullPageModal ({
             path={tab.path}
             exact
             render={tab.render ? tab.render : () => tab.component}
-            key={tab.path} />
+            key={tab.path}
+          />
         ))}
-        {!multipleTabs && <>
-          {content || children}
-        </>}
+        {!multipleTabs && (content || children)}
       </div>
     )
   } else {
@@ -47,25 +46,31 @@ export default function FullPageModal ({
         <div styleName='content'>
           <div styleName={cx('left-sidebar', { leftSideBarHidden })}>
             <div styleName={cx('left-sidebar-fixed', { border: multipleTabs })}>
-              {multipleTabs && content.filter(tab => !!tab.name).map(tab =>
-                <NavLink to={tab.path}
+              {multipleTabs && content.filter(tab => !!tab.name).map(tab => (
+                <NavLink
+                  to={tab.path}
                   exact
                   replace
                   activeClassName={styles.active}
                   styleName='nav-link'
                   key={tab.path}>
                   {tab.name}
-                </NavLink>)}
+                </NavLink>
+              ))}
               <Icon name='ArrowDown' styleName='arrowDown' />
             </div>
           </div>
-          {multipleTabs && <div styleName='center narrow'>
-            {content.map(tab =>
-              <Route path={tab.path}
-                exact
-                render={tab.render ? tab.render : () => tab.component}
-                key={tab.path} />)}
-          </div>}
+          {multipleTabs && (
+            <div styleName='center narrow'>
+              {content.map(tab =>
+                <Route
+                  path={tab.path}
+                  exact
+                  render={tab.render ? tab.render : () => tab.component}
+                  key={tab.path}
+                />)}
+            </div>
+          )}
           {!multipleTabs && <div styleName={cx('center', { narrow })}>{content || children}</div>}
           <div styleName='right-sidebar'>
             <div styleName='right-sidebar-inner'>
@@ -79,7 +84,9 @@ export default function FullPageModal ({
 }
 
 export function CloseButton ({ onClose }) {
-  return <div styleName='close-button' onClick={onClose}>
-    <Icon name='Ex' styleName='icon' />
-  </div>
+  return (
+    <div styleName='close-button' onClick={onClose}>
+      <Icon name='Ex' styleName='icon' />
+    </div>
+  )
 }
