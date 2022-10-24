@@ -46,12 +46,7 @@ export default class AllTopics extends Component {
 
   componentDidMount () {
     this.props.fetchTopics()
-
-    // Caching totalTopics because the total returned in the queryset
-    // changes when there is a search term
-    this.setState({
-      totalTopicsCached: this.props.totalTopics
-    })
+    this.updateTopicsCache()
   }
 
   componentWillUnmount () {
@@ -60,13 +55,21 @@ export default class AllTopics extends Component {
 
   componentDidUpdate (prevProps) {
     if (!this.state.totalTopicsCached && !prevProps.totalTopics && this.props.totalTopics) {
-      this.setState({ totalTopicsCached: this.props.totalTopics })
+      this.updateTopicsCache()
     }
-    if (prevProps.selectedSort !== this.props.selectedSort ||
+    if (
+      prevProps.selectedSort !== this.props.selectedSort ||
       prevProps.search !== this.props.search ||
-      prevProps.routeParams.groupSlug !== this.props.routeParams.groupSlug) {
+      prevProps.routeParams.groupSlug !== this.props.routeParams.groupSlug
+    ) {
       this.props.fetchTopics()
     }
+  }
+
+  // Caching totalTopics because the total returned in the queryset
+  // changes when there is a search term
+  updateTopicsCache = () => {
+    this.setState({ totalTopicsCached: this.props.totalTopics })
   }
 
   deleteGroupTopic (groupTopicId) {
@@ -96,59 +99,68 @@ export default class AllTopics extends Component {
     } = this.props
     const { totalTopicsCached } = this.state
 
-    return <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
-      <div styleName='all-topics'>
-        <div styleName='title'>{group ? group.name : 'All'} Topics</div>
-        <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
-        <div styleName='controls'>
-          <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
-          {/* {group && <CreateTopic
-            buttonText='Add a Topic'
-            groupId={group.id}
-            groupSlug={group.slug}
-            groupTopics={groupTopics} />} */}
+    return (
+      <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
+        <div styleName='all-topics'>
+          <div styleName='title'>{group ? group.name : 'All'} Topics</div>
+          <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
+          <div styleName='controls'>
+            <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
+          </div>
+          <div styleName='topic-list' id={TOPIC_LIST_ID}>
+            {topics.map(topic => (
+              <TopicListItem
+                key={topic.id}
+                singleGroup={group}
+                topic={topic}
+                routeParams={routeParams}
+                canModerate={canModerate}
+                deleteItem={this.deleteGroupTopic}
+                toggleSubscribe={toggleGroupTopicSubscribe}
+              />
+            ))}
+            <ScrollListener
+              onBottom={() => fetchMoreTopics()}
+              elementId={TOPIC_LIST_ID}
+            />
+          </div>
         </div>
-        <div styleName='topic-list' id={TOPIC_LIST_ID}>
-          {topics.map(topic =>
-            <TopicListItem
-              key={topic.id}
-              singleGroup={group}
-              topic={topic}
-              routeParams={routeParams}
-              canModerate={canModerate}
-              deleteItem={this.deleteGroupTopic}
-              toggleSubscribe={toggleGroupTopicSubscribe} />)}
-          <ScrollListener onBottom={() => fetchMoreTopics()}
-            elementId={TOPIC_LIST_ID} />
-        </div>
-      </div>
-    </FullPageModal>
+      </FullPageModal>
+    )
   }
 }
 
 export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending }) {
-  var selected = find(o => o.id === selectedSort, sortOptions)
+  let selected = find(o => o.id === selectedSort, sortOptions)
 
   if (!selected) selected = sortOptions[0]
 
-  return <div styleName='search-bar'>
-    <TextInput styleName='search-input'
-      value={search}
-      placeholder='Search topics'
-      loading={fetchIsPending}
-      noClearButton
-      onChange={event => setSearch(event.target.value)} />
-    <Dropdown styleName='search-order'
-      toggleChildren={<span styleName='search-sorter-label'>
-        {selected.label}
-        <Icon name='ArrowDown' />
-      </span>}
-      items={sortOptions.map(({ id, label }) => ({
-        label,
-        onClick: () => setSort(id)
-      }))}
-      alignRight />
-  </div>
+  return (
+    <div styleName='search-bar'>
+      <TextInput
+        styleName='search-input'
+        value={search}
+        placeholder='Search topics'
+        loading={fetchIsPending}
+        noClearButton
+        onChange={event => setSearch(event.target.value)}
+      />
+      <Dropdown
+        styleName='search-order'
+        toggleChildren={(
+          <span styleName='search-sorter-label'>
+            {selected.label}
+            <Icon name='ArrowDown' />
+          </span>
+        )}
+        items={sortOptions.map(({ id, label }) => ({
+          label,
+          onClick: () => setSort(id)
+        }))}
+        alignRight
+      />
+    </div>
+  )
 }
 
 export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe, deleteItem, canModerate }) {
@@ -162,34 +174,44 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
     // Don't show hidden topics unless user is subscribed to it
     if (!groupTopic || (!groupTopic.isSubscribed && groupTopic.visibility === 0)) return ''
 
-    groupTopicContent = <div styleName='topic-stats'>
-      {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
-      {toggleSubscribe && <span onClick={() => toggleSubscribe(groupTopic)} styleName='topic-subscribe'>
-        {groupTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-      </span>}
-    </div>
+    groupTopicContent = (
+      <div styleName='topic-stats'>
+        {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
+        {toggleSubscribe && (
+          <span onClick={() => toggleSubscribe(groupTopic)} styleName='topic-subscribe'>
+            {groupTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </span>
+        )}
+      </div>
+    )
   } else {
     // Don't show hidden topics unless user is subscribed to it
     const visibleGroupTopics = groupTopics.filter(ct => ct.isSubscribed || ct.visibility !== 0)
     if (visibleGroupTopics.length === 0) return ''
 
-    groupTopicContent = visibleGroupTopics.map((ct, key) => <GroupCell group={ct.group} key={key}>
-      <div styleName='topic-stats'>
-        {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
-        {toggleSubscribe && <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
-          {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-        </span>}
-      </div>
-      <br />
-    </GroupCell>)
+    groupTopicContent = visibleGroupTopics.map((ct, key) => (
+      <GroupCell group={ct.group} key={key}>
+        <div styleName='topic-stats'>
+          {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
+          {toggleSubscribe && (
+            <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
+              {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            </span>
+          )}
+        </div>
+        <br />
+      </GroupCell>
+    ))
   }
 
-  return <div styleName='topic'>
-    <div styleName='groupsList'>
-      <Link styleName='topic-details' to={topicUrl(name, { ...routeParams, view: null })}>
-        <div styleName='topic-name'>#{name}</div>
-      </Link>
-      {groupTopicContent}
+  return (
+    <div styleName='topic'>
+      <div styleName='groupsList'>
+        <Link styleName='topic-details' to={topicUrl(name, { ...routeParams, view: null })}>
+          <div styleName='topic-name'>#{name}</div>
+        </Link>
+        {groupTopicContent}
+      </div>
     </div>
-  </div>
+  )
 }

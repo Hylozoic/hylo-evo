@@ -8,7 +8,7 @@
 .controls {
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: $space-2x;
 }
 
 .title {
@@ -19,8 +19,8 @@
 .subtitle {
   text-align: center;
   composes: caption-lt-lg from 'css/typography.scss';
-  margin-bottom: $space-16x;
   margin-top: $space-1x;
+  margin-bottom: $space-4x;
 }
 
 // SearchBar
