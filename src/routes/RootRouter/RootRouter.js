@@ -1,17 +1,18 @@
 import mixpanel from 'mixpanel-browser'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, Route, Switch } from 'react-router'
 import config, { isProduction, isTest } from 'config'
 import { WebViewMessageTypes } from 'hylo-shared'
 import Loading from 'components/Loading'
-import AuthLayoutRouter from 'routes/AuthLayoutRouter'
-import PublicLayoutRouter from 'routes/PublicLayoutRouter'
-import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
 import checkLogin from 'store/actions/checkLogin'
 import { getAuthorized } from 'store/selectors/getAuthState'
 import { POST_DETAIL_MATCH } from 'util/navigation'
 import isWebView, { sendMessageToWebView } from 'util/webView'
+
+const AuthLayoutRouter = React.lazy(() => import('routes/AuthLayoutRouter'))
+const PublicLayoutRouter = React.lazy(() => import('routes/PublicLayoutRouter'))
+const NonAuthLayoutRouter = React.lazy(() => import('routes/NonAuthLayoutRouter'))
 
 if (!isTest) {
   mixpanel.init(config.mixpanel.token, { debug: !isProduction })
@@ -58,19 +59,22 @@ export default function RootRouter () {
 
   if (isAuthorized) {
     return (
-      <Route component={AuthLayoutRouter} />
+      <Suspense fallback={<Loading type='fullscreen' />}>
+        <Route component={AuthLayoutRouter} />
+      </Suspense>
     )
   }
 
   if (!isAuthorized) {
-    // TODO: Can NonAuthLayoutRouter and PublicLayourRouter merge?
     return (
       <Switch>
-        <Route path='/post/:id' component={PublicLayoutRouter} />
-        <Route path='/public/groups' exact component={NonAuthLayoutRouter} />
-        <Route path='/public' component={PublicLayoutRouter} />
-        <Route path={'(.*)' + POST_DETAIL_MATCH} component={CheckPublicPost} />
-        <Route component={NonAuthLayoutRouter} />
+        <Suspense fallback={<Loading type='fullscreen' />}>
+          <Route path='/post/:id' component={PublicLayoutRouter} />
+          <Route path='/public/groups' exact component={NonAuthLayoutRouter} />
+          <Route path='/public' component={PublicLayoutRouter} />
+          <Route path={'(.*)' + POST_DETAIL_MATCH} component={CheckPublicPost} />
+          <Route component={NonAuthLayoutRouter} />
+        </Suspense>
       </Switch>
     )
   }
