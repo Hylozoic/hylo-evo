@@ -37,8 +37,9 @@ function MapDrawer (props) {
 
   const searchText = filters.search
 
-  const { hyloAppLayout, hideNavLayout } = useLayoutFlags()
-  const withoutNav = hyloAppLayout || hideNavLayout
+  const hyloWebView = window.HyloWebView
+  const { hideNavLayout } = useLayoutFlags()
+  const withoutNav = hyloWebView || hideNavLayout
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [currentTab, setCurrentTab] = useState('Posts')

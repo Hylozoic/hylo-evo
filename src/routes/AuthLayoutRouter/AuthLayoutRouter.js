@@ -62,8 +62,9 @@ export default function AuthLayoutRouter (props) {
   const resizeRef = useRef()
   const { width } = useResizeDetector({ handleHeight: false, targetRef: resizeRef })
 
-  const { hyloAppLayout, hideNavLayout } = useLayoutFlags()
-  const withoutNav = hyloAppLayout || hideNavLayout
+  const hyloWebView = window.HyloWebView
+  const { hideNavLayout } = useLayoutFlags()
+  const withoutNav = hyloWebView || hideNavLayout
 
   // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
   const location = props.location
@@ -191,7 +192,7 @@ export default function AuthLayoutRouter (props) {
         <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
       )}
 
-      {!hyloAppLayout && (
+      {!hyloWebView && (
         <>
           <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
 
