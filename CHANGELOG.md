@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased - 2022-10-19
 
+## [5.0.0] - 2022-10-24
+
 ### Added
 - "Featured" feature such that link previews which are a video can optionally (by default) be presented atop a Post as a embedded playable video
 - `HyloEditorMobile`, a WebView-targetted version of `HyloEditor` now used in the Post and Comment editors in HyloApp
@@ -13,9 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `react-icons` allowing ad hoc use of common open source icon packs (using some FontAwesome icons for editor, etc)
 - `*.css` files now recognized by WebPack and processed through CSSLoader, but not the SASS or PostCSS loaders
 - Minimal TypeScript support (WIP)
+- Post "Collections" to enable CustomViews that are curated sets of posts. Admins can add Collection CustomViews in the new Custom Views section of the Group Settings. Collections can be set to be "manually" sorted and then posts can be reordered by drag and drop.
+- CustomViews of type 'post stream' can now specify a default view mode and sort but these can be changed by the user when looking at the Custom View.
+- Add post stream search/filter feature. Click on the magnifying glass to enter a search term and filter any view of posts by that text.
+- Add 'Abusive' as reason to flag a post
 
 ### Changed
-
 - `HyloEditor` moves to being TipTap-based from draft-js and adds full-suite of rich text editing features
 - Improves general Link Preview retrieval and display
 - Link/`a` navigation handling within content is now now more consistent throughout
@@ -23,6 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Uses `HyloHTML` wrapper component for all cases where `dangerouslySetInnerHTML` was used previously
 - BrowserList config changes to "default" (ref. https://github.com/Hylozoic/hylo-evo/pull/1258/files#r991717480)
 - Patch and minor npm module dependency updates
+- Topics stream and Projects view all use the same Stream component so they now have full Stream controls like sort and view mode
+- Updated react-dnd to latest version and update AttachmentManager to use latest react-dnd.
+
+### Fixed
+- Fix display of group search menu so it isn't half covered
+- Clicking on # people commented in post card opens the post details
+- Fix error message when trying to create an invalid Affiliation
 
 ## [4.1.2] - 2022-09-15
 
