@@ -5,3 +5,7 @@ export function sendMessageToWebView (type, data) {
 
   window?.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({ type, data }))
 }
+
+export default function isWebView () {
+  return typeof window !== 'undefined' && window.HyloWebView
+}

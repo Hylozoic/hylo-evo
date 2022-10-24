@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
@@ -59,8 +60,6 @@ export default class MembershipRequestsTab extends Component {
 }
 
 export function NoRequests ({ group, viewMembers }) {
-  const hyloWebView = window.HyloWebView
-
   return (
     <React.Fragment>
       <div styleName='no-requests'>
@@ -70,7 +69,7 @@ export function NoRequests ({ group, viewMembers }) {
           <h2>No new join requests</h2>
           We'll notify you by email when someone wants to join <strong>{group.name}</strong>
         </div>
-        {!hyloWebView && (
+        {!isWebView() && (
           <Button
             label='View Current Members'
             onClick={viewMembers}
