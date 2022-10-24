@@ -11,7 +11,7 @@ import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
 import checkLogin from 'store/actions/checkLogin'
 import { getAuthorized } from 'store/selectors/getAuthState'
 import { POST_DETAIL_MATCH } from 'util/navigation'
-import { sendMessageToWebView } from 'util/webView'
+import isWebView, { sendMessageToWebView } from 'util/webView'
 
 if (!isTest) {
   mixpanel.init(config.mixpanel.token, { debug: !isProduction })
@@ -37,7 +37,7 @@ export default function RootRouter () {
     // NOTE: Overrides all navigation from a given page when in the the HyloApp WebView context.
     // Navigation events are handled by HyloApp through listening for the WebView event type
     // `WebViewMessageTypes.NAVIGATION`
-    if (window.HyloWebView) {
+    if (isWebView()) {
       history.block(({ pathname, search }) => {
         // Special case for MapExplorer WebView which URL/history changing navigation within the map
         // to keeps saved search retrieval from resetting group context in the app:
@@ -48,7 +48,7 @@ export default function RootRouter () {
         return false
       })
     }
-  }, [loading, window.HyloWebView])
+  }, [loading, isWebView])
 
   if (loading) {
     return (
