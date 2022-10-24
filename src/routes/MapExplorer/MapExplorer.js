@@ -10,6 +10,7 @@ import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
 import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import isWebView from 'util/webView'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -517,9 +518,8 @@ export class UnwrappedMapExplorer extends React.Component {
       viewport
     } = this.state
 
-    const hyloWebView = window.HyloWebView
     const { hideNavLayout } = this.context
-    const withoutNav = hyloWebView || hideNavLayout
+    const withoutNav = isWebView() || hideNavLayout
 
     const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 

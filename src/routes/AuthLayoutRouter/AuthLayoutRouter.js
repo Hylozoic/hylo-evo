@@ -8,6 +8,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
+import isWebView from 'util/webView'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
@@ -63,9 +64,8 @@ export default function AuthLayoutRouter (props) {
   const resizeRef = useRef()
   const { width } = useResizeDetector({ handleHeight: false, targetRef: resizeRef })
 
-  const hyloWebView = window.HyloWebView
   const { hideNavLayout } = useLayoutFlags()
-  const withoutNav = hyloWebView || hideNavLayout
+  const withoutNav = isWebView() || hideNavLayout
 
   // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
   const location = props.location
@@ -193,7 +193,7 @@ export default function AuthLayoutRouter (props) {
         <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
       )}
 
-      {!hyloWebView && (
+      {!isWebView() && (
         <>
           <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
 

@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import isWebView from 'util/webView'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import Dropdown from 'components/Dropdown'
 import { GroupCard } from 'components/Widget/GroupsWidget/GroupsWidget'
@@ -37,9 +38,8 @@ function MapDrawer (props) {
 
   const searchText = filters.search
 
-  const hyloWebView = window.HyloWebView
   const { hideNavLayout } = useLayoutFlags()
-  const withoutNav = hyloWebView || hideNavLayout
+  const withoutNav = isWebView() || hideNavLayout
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [currentTab, setCurrentTab] = useState('Posts')
