@@ -81,7 +81,7 @@ exports[`Comment displays image attachments 1`] = `
         ]
       }
       childComments={Array []}
-      createdAt={2022-10-19T19:25:20.449Z}
+      createdAt={2022-10-24T19:39:20.321Z}
       creator={
         Object {
           "avatarUrl": "foo.jpg",
@@ -182,7 +182,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     <EmojiRow
       attachments={Array []}
       childComments={Array []}
-      createdAt={2022-10-19T19:25:20.449Z}
+      createdAt={2022-10-24T19:39:20.321Z}
       creator={
         Object {
           "avatarUrl": "foo.jpg",
@@ -278,7 +278,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     <EmojiRow
       attachments={Array []}
       childComments={Array []}
-      createdAt={2022-10-19T19:25:20.449Z}
+      createdAt={2022-10-24T19:39:20.321Z}
       creator={
         Object {
           "avatarUrl": "foo.jpg",
@@ -357,7 +357,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
     <EmojiRow
       attachments={Array []}
       childComments={Array []}
-      createdAt={2022-10-19T19:25:20.449Z}
+      createdAt={2022-10-24T19:39:20.321Z}
       creator={
         Object {
           "avatarUrl": "foo.jpg",
@@ -458,7 +458,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
     <EmojiRow
       attachments={Array []}
       childComments={Array []}
-      createdAt={2022-10-19T19:25:20.449Z}
+      createdAt={2022-10-24T19:39:20.321Z}
       creator={
         Object {
           "avatarUrl": "foo.jpg",
@@ -537,7 +537,7 @@ exports[`Comment renders correctly 1`] = `
     <EmojiRow
       attachments={Array []}
       childComments={Array []}
-      createdAt={2022-10-19T19:25:20.449Z}
+      createdAt={2022-10-24T19:39:20.321Z}
       creator={
         Object {
           "avatarUrl": "foo.jpg",
