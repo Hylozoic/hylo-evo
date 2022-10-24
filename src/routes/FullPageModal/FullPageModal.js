@@ -3,14 +3,13 @@ import styles from './FullPageModal.scss'
 import { NavLink, Route } from 'react-router-dom'
 import Icon from 'components/Icon'
 import cx from 'classnames'
-import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 
 export default function FullPageModal ({
   confirmMessage, setConfirmBeforeClose, navigate, goToOnClose,
   content, children, narrow, fullWidth, leftSideBarHidden,
   previousLocation
 }) {
-  const { hyloAppLayout } = useLayoutFlags()
+  const hyloWebView = window.HyloWebView
   const [entryLocation] = useState(previousLocation)
 
   const onClose = () => {
@@ -26,7 +25,7 @@ export default function FullPageModal ({
 
   const multipleTabs = Array.isArray(content)
 
-  if (hyloAppLayout) {
+  if (hyloWebView) {
     return (
       <div styleName='modal--modal-settings-layout'>
         {multipleTabs && content.map(tab => (
