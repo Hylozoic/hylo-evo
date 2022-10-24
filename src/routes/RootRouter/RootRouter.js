@@ -1,12 +1,14 @@
 import mixpanel from 'mixpanel-browser'
 import React, { useState, useEffect, Suspense } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Switch } from 'react-router'
+import { useHistory, Route, Switch } from 'react-router'
 import config, { isProduction, isTest } from 'config'
+import { WebViewMessageTypes } from 'hylo-shared'
 import Loading from 'components/Loading'
 import checkLogin from 'store/actions/checkLogin'
 import { getAuthorized } from 'store/selectors/getAuthState'
 import { POST_DETAIL_MATCH } from 'util/navigation'
+import { sendMessageToWebView } from 'util/webView'
 
 const AuthLayoutRouter = React.lazy(() => import('routes/AuthLayoutRouter'))
 const PublicLayoutRouter = React.lazy(() => import('routes/PublicLayoutRouter'))
@@ -18,6 +20,7 @@ if (!isTest) {
 
 export default function RootRouter () {
   const dispatch = useDispatch()
+  const history = useHistory()
   const isAuthorized = useSelector(getAuthorized)
   const [loading, setLoading] = useState(true)
 
@@ -30,6 +33,23 @@ export default function RootRouter () {
       setLoading(false)
     }())
   }, [dispatch, checkLogin, setLoading])
+
+  useEffect(() => {
+    // NOTE: Overrides all navigation from a given page when in the the HyloApp WebView context.
+    // Navigation events are handled by HyloApp through listening for the WebView event type
+    // `WebViewMessageTypes.NAVIGATION`
+    if (window.HyloWebView) {
+      history.block(({ pathname, search }) => {
+        // Special case for MapExplorer WebView which URL/history changing navigation within the map
+        // to keeps saved search retrieval from resetting group context in the app:
+        if (pathname.match(/\/map$/)) return true
+
+        sendMessageToWebView(WebViewMessageTypes.NAVIGATION, { pathname, search })
+
+        return false
+      })
+    }
+  }, [loading, window.HyloWebView])
 
   if (loading) {
     return (
