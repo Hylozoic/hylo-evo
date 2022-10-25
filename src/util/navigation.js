@@ -51,21 +51,6 @@ export function baseUrl ({
   }
 }
 
-export function contextSwitchingUrl (newParams, routeParams) {
-  const newRouteParams = {
-    ...routeParams,
-    // -------------------------------------------------
-    // These params are cleared from the old route,
-    // and at least one must be specified in newContext
-    groupSlug: undefined,
-    context: undefined,
-    // -------------------------------------------------
-    personId: undefined,
-    ...newParams
-  }
-  return baseUrl(newRouteParams)
-}
-
 export function createUrl (opts = {}, querystringParams = {}) {
   const url = baseUrl(opts) + '/create'
 
