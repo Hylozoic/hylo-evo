@@ -18,6 +18,8 @@ export default function () {
   server.use(redirectToApp)
   handleStaticPages(server)
   server.use(express.static('build'))
+  // Note: Server-side Rendering
+  // ref: https://github.com/Hylozoic/hylo-evo/issues/1069
   server.use(appMiddleware)
 
   const listener = server.listen(port, err => {

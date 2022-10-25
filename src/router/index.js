@@ -24,7 +24,8 @@ export function clientRouter () {
   )
 }
 
-// Current SSR setup is deprecated and to be removed. See https://github.com/Hylozoic/hylo-evo/issues/1069
+// Note: Server-side Rendering
+// ref: https://github.com/Hylozoic/hylo-evo/issues/1069
 export function serverRouter (req, context) {
   return (
     <StaticRouter location={req.url} context={context}>

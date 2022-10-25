@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
 import get from 'lodash/get'
-import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { WebViewMessageTypes } from 'hylo-shared'
-import { sendMessageToWebView } from 'util/webView'
+import isWebView, { sendMessageToWebView } from 'util/webView'
 import {
   CREATE_AFFILIATION,
   DELETE_AFFILIATION,
@@ -27,8 +26,6 @@ export default class UserGroupsTab extends Component {
     createAffiliation: func,
     deleteAffiliation: func
   }
-
-  static contextType = LayoutFlagsContext
 
   state = {
     affiliations: this.props.affiliations,
@@ -102,7 +99,6 @@ export default class UserGroupsTab extends Component {
 
   leaveGroup = (group) => {
     const { leaveGroup } = this.props
-    const { hyloAppLayout } = this.context
     let { memberships } = this.state
 
     leaveGroup(group.id)
@@ -115,7 +111,7 @@ export default class UserGroupsTab extends Component {
           memberships = memberships.filter((m) => m.group.id !== deletedGroupId)
         }
 
-        if (hyloAppLayout) {
+        if (isWebView()) {
           sendMessageToWebView(WebViewMessageTypes.LEFT_GROUP, { groupId: deletedGroupId })
         }
 

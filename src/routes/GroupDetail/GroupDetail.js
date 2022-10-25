@@ -3,9 +3,8 @@ import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
-import { sendMessageToWebView } from 'util/webView'
+import isWebView, { sendMessageToWebView } from 'util/webView'
 import Avatar from 'components/Avatar'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
@@ -47,18 +46,15 @@ export class UnwrappedGroupDetail extends Component {
     fetchGroup: PropTypes.func
   }
 
-  static contextType = LayoutFlagsContext
-
   state = initialState
 
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
-    const { hyloAppLayout } = this.context
 
     // Relinquishes route handling within the Map entirely to Mobile App
     // e.g. react router / history push
-    if (hyloAppLayout) {
+    if (isWebView()) {
       this.props.history.block(({ pathname, search }) => {
         sendMessageToWebView(WebViewMessageTypes.NAVIGATION, { pathname, search })
         return false
@@ -78,13 +74,12 @@ export class UnwrappedGroupDetail extends Component {
     this.setState(initialState)
   }
 
-  joinGroup = async (groupId) => {
-    const { hyloAppLayout } = this.context
+  joinGroup = async () => {
     const { joinGroup, group } = this.props
 
     await joinGroup(group.id)
 
-    if (hyloAppLayout) {
+    if (isWebView()) {
       sendMessageToWebView(WebViewMessageTypes.JOINED_GROUP, { groupSlug: group.slug })
     }
   }

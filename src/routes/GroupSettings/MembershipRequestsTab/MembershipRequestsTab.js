@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
@@ -8,7 +9,6 @@ import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import styles from './MembershipRequestsTab.scss' // eslint-disable-line no-unused-vars
 import { jollyAxolotl } from 'util/assets'
-import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 
 const { array, func, object } = PropTypes
 
@@ -60,8 +60,6 @@ export default class MembershipRequestsTab extends Component {
 }
 
 export function NoRequests ({ group, viewMembers }) {
-  const { hyloAppLayout } = useLayoutFlags()
-
   return (
     <React.Fragment>
       <div styleName='no-requests'>
@@ -71,7 +69,7 @@ export function NoRequests ({ group, viewMembers }) {
           <h2>No new join requests</h2>
           We'll notify you by email when someone wants to join <strong>{group.name}</strong>
         </div>
-        {!hyloAppLayout && (
+        {!isWebView() && (
           <Button
             label='View Current Members'
             onClick={viewMembers}
