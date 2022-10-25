@@ -103,7 +103,7 @@ export const markdown = text => {
 // HTML Generation Helpers
 
 export const mentionHTML = mentioned => (
-  `<span data-type="mention" class="mention" data-id="${mentioned.id}" data-label="Loren Johnson">${mentioned.name}</span>`
+  `<span data-type="mention" class="mention" data-id="${mentioned.id}" data-label="${mentioned.name}">${mentioned.name}</span>`
 )
 
 export const topicHTML = topicName => (
