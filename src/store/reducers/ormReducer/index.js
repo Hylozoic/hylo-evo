@@ -80,11 +80,11 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
   const {
     Comment,
+    EventInvitation,
     Group,
     GroupRelationship,
     GroupRelationshipInvite,
     GroupTopic,
-    EventInvitation,
     Invitation,
     JoinRequest,
     Me,
