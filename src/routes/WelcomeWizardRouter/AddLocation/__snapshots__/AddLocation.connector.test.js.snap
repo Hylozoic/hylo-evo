@@ -3,18 +3,39 @@
 exports[`AddLocation should call updateUserSettings 1`] = `
 Object {
   "graphql": Object {
-    "query": "mutation ($changes: MeInput) {
-        updateMe(changes: $changes) {
-          id
+    "query": "
+        mutation ($changes: MeInput) {
+          updateMe(changes: $changes) {
+            id
+            avatarUrl
+            email
+            emailValidated
+            hasRegistered
+            name
+            settings {
+              alreadySeenTour
+              digestFrequency
+              dmNotifications
+              commentNotifications
+              signupInProgress
+              streamViewMode
+              streamSortBy
+              streamPostType
+            }
+          }
         }
-      }",
+      ",
     "variables": Object {
       "changes": "My Name",
     },
   },
   "meta": Object {
-    "changes": "My Name",
-    "optimistic": true,
+    "extractModel": Array [
+      Object {
+        "getRoot": [Function],
+        "modelName": "Me",
+      },
+    ],
   },
   "type": "UPDATE_USER_SETTINGS",
 }
