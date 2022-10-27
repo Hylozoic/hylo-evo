@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Bold text in a post now actually looks bold
+- We now currectly show the current context in the navigation drawer
 
 ## [5.0.1] - 2022-10-24
 
