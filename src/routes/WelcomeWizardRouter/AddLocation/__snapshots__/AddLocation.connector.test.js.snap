@@ -30,12 +30,14 @@ Object {
     },
   },
   "meta": Object {
+    "changes": "My Name",
     "extractModel": Array [
       Object {
         "getRoot": [Function],
         "modelName": "Me",
       },
     ],
+    "optimistic": true,
   },
   "type": "UPDATE_USER_SETTINGS",
 }

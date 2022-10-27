@@ -32,6 +32,8 @@ export default function updateUserSettings (changes) {
       }
     },
     meta: {
+      optimistic: true,
+      changes,
       extractModel: [
         {
           getRoot: get('updateMe'),
