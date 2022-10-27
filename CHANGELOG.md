@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.0.2] - 2022-10-27
+
+### Changed
+- Navigating from one group to another no longer stays on the same view you were looking at (explore, map, member directory...) it instead always goes to the new group's home page which is the Stream. This is a response to feedback from many folks that it was confusing to change groups and stay on the same view.
+
+### Fixed
+- Bold text in a post now actually looks bold
+
 ## [5.0.1] - 2022-10-24
 
 ### Fixed
