@@ -3,7 +3,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import { get } from 'lodash/fp'
 import { useDispatch, useSelector } from 'react-redux'
 import { bgImageStyle } from 'util/index'
-import { contextSwitchingUrl, createGroupUrl, groupUrl } from 'util/navigation'
+import { baseUrl, createGroupUrl, groupUrl } from 'util/navigation'
 import {
   ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, DEFAULT_AVATAR,
   PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH, GROUP_EXPLORER_ID, GROUP_EXPLORER_AVATAR_PATH, PUBLIC_MAP_ID, PUBLIC_MAP_AVATAR_PATH
@@ -124,10 +124,10 @@ export function ContextRow ({ currentLocation, group, routeParams, explicitPath 
   const { avatarUrl, context, name, newPostCount, slug } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
-  const path = contextSwitchingUrl({ groupSlug: slug, context, explicitPath }, routeParams)
+  const path = explicitPath || baseUrl({ context, groupSlug: slug })
   return (
-    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation === path })}>
-      <Link to={explicitPath || contextSwitchingUrl({ context: context || 'groups', groupSlug: slug }, routeParams)} styleName='s.contextRowLink' title={name}>
+    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation?.pathname === path })}>
+      <Link to={path} styleName='s.contextRowLink' title={name}>
         <div styleName='s.contextRowAvatar' style={imageStyle} />
         <span styleName='s.group-name'>{name}</span>
         {showBadge && <Badge expanded number={newPostCount} />}
