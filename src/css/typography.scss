@@ -40,6 +40,10 @@ ul, ol {
   padding-left: 2em;
 }
 
+strong {
+  @include font-bold;
+}
+
 // This should be applied / controlled here
 // Currently getting `1rem` from Bootstrap
 // p {
