@@ -55,7 +55,7 @@ export default ({ group, items, routeParams }) => {
   return (
     <div styleName='recent-posts'>
       <Slider {...settings} onSwipe={handleSwiped}>
-        {items.map(p => <RecentPostCard key={p.id} post={p} group={group} onClickCapture={handleOnItemClick} />)}
+        {items.map(p => <RecentPostCard key={p.id} post={p} group={group} onClickCapture={handleOnItemClick} routeParams={routeParams} />)}
         <div>
           <Link to={createPostUrl(routeParams)} styleName='post create-new'>
             <div styleName='content'>
@@ -72,7 +72,7 @@ export default ({ group, items, routeParams }) => {
   )
 }
 
-const RecentPostCard = ({ group, onClickCapture, post }) => {
+const RecentPostCard = ({ group, onClickCapture, post, routeParams }) => {
   const { commentersTotal, creator, id, title, type } = post
   const imageAttachments = filter({ type: 'image' }, post.attachments)
   let postBackgroundImage
@@ -83,7 +83,7 @@ const RecentPostCard = ({ group, onClickCapture, post }) => {
   }
   return (
     <div>
-      <Link to={postUrl(id, { view: 'explore', groupSlug: group.slug })} styleName={`post ${type}`} onClickCapture={onClickCapture}>
+      <Link to={postUrl(id, routeParams)} styleName={`post ${type}`} onClickCapture={onClickCapture}>
         <div styleName='content'>
           <div styleName='type'>{type}</div>
           <div styleName='title'>{title}</div>
