@@ -1,11 +1,22 @@
 import { createStore } from 'redux'
 import createMiddleware from './middleware'
-import rootReducer, { combinedReducers } from './reducers'
+import { createBrowserHistory } from 'history'
+import createRootReducer, { createCombinedReducers } from './reducers'
 
-export function getEmptyState () {
+// `window` check here is for SSR case (see `appMiddleware`)
+// where a static memory history is passed
+export const history = typeof window !== 'undefined' && createBrowserHistory()
+
+export function getEmptyState (providedHistory = history) {
+  const combinedReducers = createCombinedReducers(providedHistory)
+
   return combinedReducers({}, { type: '' })
 }
 
-export default function (history, req) {
-  return createStore(rootReducer, getEmptyState(), createMiddleware(history, req))
+export default function configureStore (providedHistory = history, req) {
+  return createStore(
+    createRootReducer(providedHistory),
+    getEmptyState(providedHistory),
+    createMiddleware(providedHistory, req)
+  )
 }

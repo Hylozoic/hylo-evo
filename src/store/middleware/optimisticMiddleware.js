@@ -4,7 +4,8 @@ import { SET_STATE } from 'store/constants'
 
 export default function optimisticMiddleware (store) {
   return next => action => {
-    let { payload, meta } = action
+    const { payload, meta } = action
+
     if (get('optimistic', meta) && isPromise(payload)) {
       const prevState = store.getState()
       action.payload = action.payload.then(
@@ -15,6 +16,7 @@ export default function optimisticMiddleware (store) {
         }
       )
     }
+
     return next(action)
   }
 }

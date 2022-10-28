@@ -5,20 +5,19 @@ import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { render } from '@testing-library/react'
-import { history } from 'router'
-import rootReducer from 'store/reducers'
+import createRootReducer from 'store/reducers'
 import createMiddleware from 'store/middleware'
-import { getEmptyState } from 'store'
+import { history, getEmptyState } from 'store'
 import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
 
 // Note: This is ran by default via `customRender` below, but it's necessary to manually
 // generate the store when pre-populating the ReduxORM in a test. Search across tests to
 // for examples. Merges `provideState` over default app empty state
-export function generateStore (providedState, providedHistory) {
+export function generateStore (providedState, providedHistory = history) {
   return createStore(
-    rootReducer,
+    createRootReducer(providedHistory),
     { ...getEmptyState(), ...providedState },
-    createMiddleware(providedHistory || history)
+    createMiddleware(providedHistory)
   )
 }
 
