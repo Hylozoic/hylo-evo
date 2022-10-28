@@ -309,7 +309,7 @@ export function fetchPostsForDrawer ({ activePostsOnly, context, currentBounding
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(groupViewPostsQueryFragment)
+    query = groupPostsQuery(groupViewPostsQueryFragment(true))
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {

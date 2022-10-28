@@ -1,10 +1,11 @@
 import postFieldsFragment from 'graphql/fragments/postFieldsFragment'
 
-// viewPosts shows all the aggregate posts from current group and any
-// children the current user is a member of. We alias as posts so
+// When includeChildGroupPosts is true we query for viewPosts,
+// which shows all the aggregate posts from current group and any
+// child groups the current user is also a member of. We alias as posts so
 // redux-orm sets up the relationship between group and posts correctly
-const groupViewPostsQueryFragment = `
-posts: viewPosts(
+const groupViewPostsQueryFragment = (includeChildGroupPosts = true) => `
+${includeChildGroupPosts ? 'posts: viewPosts(' : 'posts('}
   activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,

@@ -144,7 +144,7 @@ const groupQuery = `query GroupPostsQuery (
     avatarUrl
     bannerUrl
     postCount
-    ${groupViewPostsQueryFragment}
+    ${groupViewPostsQueryFragment(false)}
   }
 }`
 
