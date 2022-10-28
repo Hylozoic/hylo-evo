@@ -61,28 +61,6 @@ describe('removePostFromUrl', () => {
   })
 })
 
-describe('contextSwitchingUrl', () => {
-  it('should switch group contexts, preserving view', () => {
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old' })).toEqual('/groups/newcomm')
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', postId: 2 })).toEqual('/groups/newcomm')
-
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'map' })).toEqual('/groups/newcomm/map')
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'projects' })).toEqual('/groups/newcomm/projects')
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'events', detail: 'post', postId: 2 })).toEqual('/groups/newcomm/events')
-
-    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old' })).toEqual('/all')
-    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'topics' })).toEqual('/all/topics')
-    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'map' })).toEqual('/all/map')
-
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'topics', topicName: 'stuff' })).toEqual('/groups/newcomm/topics/stuff')
-    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'topics', topicName: 'stuff' })).toEqual('/all/topics/stuff')
-    expect(contextSwitchingUrl({ context: 'public' }, { context: 'groups', groupSlug: 'old', view: 'topics', topicName: 'stuff' })).toEqual('/public/topics/stuff')
-
-    expect(contextSwitchingUrl({ context: 'groups', groupSlug: 'newcomm' }, { context: 'groups', groupSlug: 'old', view: 'members', personId: 2 })).toEqual('/groups/newcomm/members')
-    expect(contextSwitchingUrl({ context: 'all' }, { context: 'groups', groupSlug: 'old', view: 'members', personId: 2 })).toEqual('/all/members')
-  })
-})
-
 describe('gotoExternalUrl', () => {
   it('should keep Post Module in URL', () => {
     const jsDomWindowOpen = window.open

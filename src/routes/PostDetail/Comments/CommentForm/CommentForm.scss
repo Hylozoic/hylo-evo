@@ -82,11 +82,6 @@
   overflow-wrap: break-word;
   cursor: text;
 
-  // Should this be applied as part of global typography styles?
-  // Those should be being applied the same in the editor as in display
-  span[style='font-weight: bold;'] {
-    font-family: 'Circular Bold';
-  }
   // Would be best on the container above but will be wrong height due
   // to `position: relative`
   [contenteditable="true"] {
