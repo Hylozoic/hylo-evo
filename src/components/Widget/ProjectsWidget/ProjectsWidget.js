@@ -7,16 +7,17 @@ import RoundImage from '../../RoundImage'
 
 import './ProjectsWidget.scss'
 
-const { array, object } = PropTypes
+const { array, bool, object } = PropTypes
 
 export default class ProjectsWidget extends Component {
   static propTypes = {
-    group: object,
-    items: array
+    isMember: bool,
+    items: array,
+    routeParams: object
   }
 
   render () {
-    const { group, items, routeParams, isMember } = this.props
+    const { isMember, items, routeParams } = this.props
 
     return (
       <div styleName='projects'>
