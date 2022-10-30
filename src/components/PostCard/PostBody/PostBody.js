@@ -16,7 +16,6 @@ export default function PostBody (props) {
     onClick,
     ...post
   } = props
-
   return (
     <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
       <PostTitle

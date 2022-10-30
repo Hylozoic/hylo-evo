@@ -1,7 +1,6 @@
 import { host } from 'config'
 import { get, isEmpty, isNumber, omitBy } from 'lodash/fp'
 import qs from 'querystring'
-import { matchPath } from 'react-router'
 
 export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HYLO_ID_MATCH
@@ -13,7 +12,6 @@ export const REQUIRED_EDIT_POST_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})
 
 export const GROUP_DETAIL_MATCH = ':detail(group)/:detailGroupSlug'
 export const OPTIONAL_GROUP_MATCH = ':detail(group)?/(:detailGroupSlug)?'
-export const HYLO_URL_REGEX = /http[s]?:\/\/(?:www\.)?hylo\.com(.*)/gi // https://regex101.com/r/0GZMny/1
 
 // Fundamental URL paths
 
@@ -51,21 +49,6 @@ export function baseUrl ({
   } else {
     return defaultUrl
   }
-}
-
-export function contextSwitchingUrl (newParams, routeParams) {
-  const newRouteParams = {
-    ...routeParams,
-    // -------------------------------------------------
-    // These params are cleared from the old route,
-    // and at least one must be specified in newContext
-    groupSlug: undefined,
-    context: undefined,
-    // -------------------------------------------------
-    personId: undefined,
-    ...newParams
-  }
-  return baseUrl(newRouteParams)
 }
 
 export function createUrl (opts = {}, querystringParams = {}) {
@@ -188,13 +171,6 @@ export function removePostFromUrl (url) {
 export function removeGroupFromUrl (url) {
   const matchForReplaceRegex = '/group/([^/]*)'
   return url.replace(new RegExp(matchForReplaceRegex), '')
-}
-
-export function getGroupSlugInPath (pathname) {
-  const match = matchPath(pathname, {
-    path: '/groups/:groupSlug'
-  })
-  return get('params.groupSlug', match)
 }
 
 export function gotoExternalUrl (url) {

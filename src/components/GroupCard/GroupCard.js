@@ -3,6 +3,7 @@ import cx from 'classnames'
 import { TextHelpers } from 'hylo-shared'
 import './GroupCard.scss'
 import GroupHeader from './GroupHeader'
+import HyloHTML from 'components/HyloHTML'
 import { Link } from 'react-router-dom'
 import { groupUrl, groupDetailUrl } from 'util/navigation'
 import Pill from 'components/Pill'
@@ -51,7 +52,7 @@ export default function GroupCard ({
         />
         {group.description
           ? <div styleName='group-description'>
-            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
           </div>
           : ''
         }

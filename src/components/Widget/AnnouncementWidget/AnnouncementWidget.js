@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import React, { useCallback, useState } from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'

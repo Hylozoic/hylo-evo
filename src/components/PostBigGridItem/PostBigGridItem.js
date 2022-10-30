@@ -3,6 +3,7 @@ import Clamp from 'react-multiline-clamp'
 import cx from 'classnames'
 import EventDate from 'components/PostCard/EventDate'
 import EventRSVP from 'components/PostCard/EventRSVP'
+import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
@@ -73,7 +74,7 @@ export default function PostBigGridItem (props) {
           : ' '
         }
 
-        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} onClick={showDetailsTargeted} />
+        <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
         <div styleName='grid-meta'>
           <div styleName='grid-meta-row-1'>
             {post.type === 'event' &&
@@ -88,18 +89,24 @@ export default function PostBigGridItem (props) {
               </Clamp>
               <div styleName='fade' />
             </div>
-            <div styleName='project-actions'>
-              {post.donationsLink && donationService &&
-                <div styleName='donate'>
-                  <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-                </div>}
-              {post.donationsLink && !donationService &&
-                <div styleName='donate'>
-                  <div>Support this project</div>
-                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-                </div>}
-
+          <h3 styleName='title' onClick={showDetails}>{title}</h3>
+          <div styleName='content-snippet'>
+            <Clamp lines={2}>
+              <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
+            </Clamp>
+            <div styleName='fade' />
+          </div>
+          <div styleName='project-actions'>
+            {post.donationsLink && donationService &&
+              <div styleName='donate'>
+                <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+              </div>}
+            {post.donationsLink && !donationService &&
+              <div styleName='donate'>
+                <div>Support this project</div>
+                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+              </div>}
               {attachmentType === 'file'
                 ? <div styleName='file-attachment'>
                   {numAttachments > 1

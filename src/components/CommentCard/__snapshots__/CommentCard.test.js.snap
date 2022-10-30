@@ -36,12 +36,12 @@ exports[`displays image an image attachments 1`] = `
           </span>
         </div>
       </Highlight>
+      <span
+        data-stylename="date"
+      >
+        just now
+      </span>
     </div>
-    <span
-      data-stylename="date"
-    >
-      just now
-    </span>
     <CardImageAttachments
       attachments={
         Array [
@@ -65,22 +65,18 @@ exports[`displays image an image attachments 1`] = `
       }
       data-stylename="comment-files"
     />
-    <Connect(ClickCatcher)>
+    <ClickCatcher>
       <Highlight
         component="span"
         highlightClassName="highlight"
         term="foo"
       >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
-            }
-          }
+        <HyloHTML
           data-stylename="comment-body"
+          html="<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>"
         />
       </Highlight>
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <div
       data-stylename="comment-footer"
     />
@@ -124,12 +120,12 @@ exports[`matches last snapshot 1`] = `
           </span>
         </div>
       </Highlight>
+      <span
+        data-stylename="date"
+      >
+        just now
+      </span>
     </div>
-    <span
-      data-stylename="date"
-    >
-      just now
-    </span>
     <CardImageAttachments
       attachments={Array []}
       data-stylename="comment-images"
@@ -139,22 +135,18 @@ exports[`matches last snapshot 1`] = `
       attachments={Array []}
       data-stylename="comment-files"
     />
-    <Connect(ClickCatcher)>
+    <ClickCatcher>
       <Highlight
         component="span"
         highlightClassName="highlight"
         term="foo"
       >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>",
-            }
-          }
+        <HyloHTML
           data-stylename="comment-body"
+          html="<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the …</p>"
         />
       </Highlight>
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <div
       data-stylename="comment-footer"
     />
@@ -198,12 +190,12 @@ exports[`matches last snapshot with different config 1`] = `
           </span>
         </div>
       </Highlight>
+      <span
+        data-stylename="date"
+      >
+        just now
+      </span>
     </div>
-    <span
-      data-stylename="date"
-    >
-      just now
-    </span>
     <CardImageAttachments
       attachments={Array []}
       data-stylename="comment-images"
@@ -213,22 +205,18 @@ exports[`matches last snapshot with different config 1`] = `
       attachments={Array []}
       data-stylename="comment-files"
     />
-    <Connect(ClickCatcher)>
+    <ClickCatcher>
       <Highlight
         component="span"
         highlightClassName="highlight"
         term="foo"
       >
-        <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>",
-            }
-          }
+        <HyloHTML
           data-stylename="comment-body"
+          html="<p>text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. text of the comment. a long one. Irrelevant Change</p>"
         />
       </Highlight>
-    </Connect(ClickCatcher)>
+    </ClickCatcher>
     <div
       data-stylename="comment-footer"
     />

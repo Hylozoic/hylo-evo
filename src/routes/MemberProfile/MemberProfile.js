@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import Moment from 'moment'
+import Moment from 'moment-timezone'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'

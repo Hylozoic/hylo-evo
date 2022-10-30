@@ -21,19 +21,19 @@ exports[`renders as expected 1`] = `
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
             "id": 98730,
-            "name": "Lorene Hudson",
+            "name": "Darnell Hudson",
             "tagline": "Direct Research Consultant",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
             "id": 66803,
-            "name": "Ms. Jeff Beahan",
+            "name": "Ms. Sylvia Beahan",
             "tagline": "National Accounts Architect",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
             "id": 81915,
-            "name": "Ms. Peggy Krajcik",
+            "name": "Ms. Danny Krajcik",
             "tagline": "Dynamic Response Specialist",
           },
         ]
@@ -44,7 +44,7 @@ exports[`renders as expected 1`] = `
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
           "id": 82690,
-          "name": "Ida Crona",
+          "name": "Herman Crona",
           "tagline": "Legacy Marketing Executive",
         }
       }
@@ -106,19 +106,19 @@ exports[`renders as expected 1`] = `
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
             "id": 98730,
-            "name": "Lorene Hudson",
+            "name": "Darnell Hudson",
             "tagline": "Direct Research Consultant",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
             "id": 66803,
-            "name": "Ms. Jeff Beahan",
+            "name": "Ms. Sylvia Beahan",
             "tagline": "National Accounts Architect",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
             "id": 81915,
-            "name": "Ms. Peggy Krajcik",
+            "name": "Ms. Danny Krajcik",
             "tagline": "Dynamic Response Specialist",
           },
         ]
@@ -129,7 +129,7 @@ exports[`renders as expected 1`] = `
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
           "id": 82690,
-          "name": "Ida Crona",
+          "name": "Herman Crona",
           "tagline": "Legacy Marketing Executive",
         }
       }
@@ -184,19 +184,19 @@ exports[`renders as expected 1`] = `
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
           "id": 98730,
-          "name": "Lorene Hudson",
+          "name": "Darnell Hudson",
           "tagline": "Direct Research Consultant",
         },
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
           "id": 66803,
-          "name": "Ms. Jeff Beahan",
+          "name": "Ms. Sylvia Beahan",
           "tagline": "National Accounts Architect",
         },
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
           "id": 81915,
-          "name": "Ms. Peggy Krajcik",
+          "name": "Ms. Danny Krajcik",
           "tagline": "Dynamic Response Specialist",
         },
       ]
@@ -207,7 +207,7 @@ exports[`renders as expected 1`] = `
       Object {
         "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
         "id": 82690,
-        "name": "Ida Crona",
+        "name": "Herman Crona",
         "tagline": "Legacy Marketing Executive",
       }
     }

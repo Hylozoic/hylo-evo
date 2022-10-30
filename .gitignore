@@ -10,7 +10,6 @@ coverage
 build
 build-hc
 es5
-storybook-static
 
 # local config
 config/ssl

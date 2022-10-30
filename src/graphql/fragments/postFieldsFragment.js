@@ -77,11 +77,13 @@ const postFieldsFragment = withComments => `
     hasMore
   }` : ''}
   linkPreview {
+    description
     id
+    imageUrl
     title
     url
-    imageUrl
   }
+  linkPreviewFeatured
   location
   locationObject {
     id

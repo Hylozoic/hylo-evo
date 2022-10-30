@@ -3,6 +3,7 @@ import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { TextHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
+import HyloHTML from 'components/HyloHTML'
 import ClickCatcher from 'components/ClickCatcher'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -16,31 +17,30 @@ export default function CommentCard ({
 }) {
   const { creator, post, slug, attachments } = comment
   const postTitle = TextHelpers.truncateText(post.title, 25)
-  const commentText = TextHelpers.presentHTML(comment.text, {
-    truncate: expanded ? null : 144,
-    slug
-  })
+  const commentText = expanded ? comment.text : TextHelpers.truncateHTML(comment.text, 144)
 
-  return <span onClick={() => showDetails(comment.post.id)} styleName='link'>
-    <div styleName={cx('comment-card', { expanded })}>
-      <div styleName='comment-header'>
-        <RoundImage url={creator.avatarUrl} styleName='profileImage' />
-        <Highlight {...highlightProps}>
-          <div styleName='comment-meta'>
-            <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
-            <span styleName='post-title'>{postTitle}</span>
-          </div>
-        </Highlight>
+  return (
+    <span onClick={() => showDetails(comment.post.id)} styleName='link'>
+      <div styleName={cx('comment-card', { expanded })}>
+        <div styleName='comment-header'>
+          <RoundImage url={creator.avatarUrl} styleName='profileImage' />
+          <Highlight {...highlightProps}>
+            <div styleName='comment-meta'>
+              <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
+              <span styleName='post-title'>{postTitle}</span>
+            </div>
+          </Highlight>
+          <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
+        </div>
+        <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
+        <CardFileAttachments attachments={attachments} styleName='comment-files' />
+        <ClickCatcher groupSlug={slug}>
+          <Highlight {...highlightProps}>
+            <HyloHTML styleName='comment-body' html={commentText} />
+          </Highlight>
+        </ClickCatcher>
+        <div styleName='comment-footer' />
       </div>
-      <span styleName='date'>{TextHelpers.humanDate(comment.createdAt)}</span>
-      <CardImageAttachments attachments={attachments} linked styleName='comment-images' />
-      <CardFileAttachments attachments={attachments} styleName='comment-files' />
-      <ClickCatcher>
-        <Highlight {...highlightProps}>
-          <div styleName='comment-body' dangerouslySetInnerHTML={{ __html: commentText }} />
-        </Highlight>
-      </ClickCatcher>
-      <div styleName='comment-footer' />
-    </div>
-  </span>
+    </span>
+  )
 }

@@ -2,10 +2,6 @@ import { Comment } from './Comment'
 import { shallow } from 'enzyme'
 import React from 'react'
 
-jest.mock('components/HyloEditor/HyloContentState', () => ({
-  toHTML: () => any => any
-}))
-
 describe('Comment', () => {
   const props = {
     comment: {
@@ -73,17 +69,17 @@ describe('Comment', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  describe('editComment', () => {
+  describe('handleEditComment', () => {
     it('sets state.editing to true', () => {
       const wrapper = shallow(<Comment {...props} />)
       const instance = wrapper.instance()
       expect(instance.state.editing).toEqual(false)
-      instance.editComment()
+      instance.handleEditComment()
       expect(instance.state.editing).toEqual(true)
     })
   })
 
-  describe('saveComment', () => {
+  describe('handleEditSave', () => {
     it('sets state.editing to false and calls props.updateComment', () => {
       const wrapper = shallow(<Comment {...props} />)
       const theText = 'lalala'
@@ -95,7 +91,7 @@ describe('Comment', () => {
       }
       const instance = wrapper.instance()
       instance.setState({ editing: true })
-      instance.saveComment(editorState)
+      instance.handleEditSave(editorState)
       expect(instance.state.editing).toEqual(false)
       expect(props.updateComment).toHaveBeenCalled()
     })

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { TextHelpers } from 'hylo-shared'
+import HyloHTML from 'components/HyloHTML'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { createGroupUrl, groupUrl, groupDetailUrl } from 'util/navigation'
 
@@ -66,7 +67,7 @@ export function GroupCard ({ group, routeParams, className }) {
           <div styleName='group-name'>{group.name}</div>
           <div styleName='member-count'>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</div>
           <div styleName='group-description'>
-            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
             {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}
           </div>
           {group.memberStatus === 'member'

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { pick } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
+import ReactPlayer from 'react-player'
 import Highlight from 'components/Highlight'
+import HyloHTML from 'components/HyloHTML'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
-import LinkPreview from '../LinkPreview'
+import Feature from 'components/PostCard/Feature'
+import LinkPreview from 'components/LinkPreview'
 import cx from 'classnames'
 import './PostDetails.scss'
 
@@ -13,6 +16,7 @@ const MAX_DETAILS_LENGTH = 144
 export default function PostDetails ({
   details: providedDetails,
   linkPreview,
+  linkPreviewFeatured,
   slug,
   constrained,
   expanded,
@@ -22,25 +26,35 @@ export default function PostDetails ({
   onClick,
   ...post
 }) {
-  const details = TextHelpers.presentHTML(providedDetails, {
-    slug,
-    truncate: !expanded && MAX_DETAILS_LENGTH
-  })
+  const [isVideo, setIsVideo] = useState()
 
-  return <Highlight {...highlightProps}>
-    <div onClick={onClick} styleName={cx('postDetails', { constrained })}>
-      <div styleName='fade' />
-      {details && !hideDetails && (
-        <ClickCatcher>
-          <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
-        </ClickCatcher>
-      )}
-      {linkPreview && (
-        <LinkPreview {...pick(['title', 'url', 'imageUrl'], linkPreview)} />
-      )}
-      {fileAttachments && (
-        <CardFileAttachments attachments={fileAttachments} />
-      )}
-    </div>
-  </Highlight>
+  useEffect(() => {
+    if (linkPreview?.url) {
+      setIsVideo(ReactPlayer.canPlay(linkPreview?.url))
+    }
+  }, [linkPreview?.url])
+
+  const details = expanded ? providedDetails : TextHelpers.truncateHTML(providedDetails, MAX_DETAILS_LENGTH)
+
+  return (
+    <Highlight {...highlightProps}>
+      <div onClick={onClick} styleName={cx('postDetails', { constrained })}>
+        <div styleName='fade' />
+        {linkPreview?.url && linkPreviewFeatured && isVideo && (
+          <Feature url={linkPreview.url} />
+        )}
+        {details && !hideDetails && (
+          <ClickCatcher groupSlug={slug}>
+            <HyloHTML styleName='details' html={details} />
+          </ClickCatcher>
+        )}
+        {linkPreview && !linkPreviewFeatured && (
+          <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} />
+        )}
+        {fileAttachments && (
+          <CardFileAttachments attachments={fileAttachments} />
+        )}
+      </div>
+    </Highlight>
+  )
 }

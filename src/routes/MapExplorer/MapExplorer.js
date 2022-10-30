@@ -9,8 +9,8 @@ import booleanWithin from '@turf/boolean-within'
 import center from '@turf/center'
 import combine from '@turf/combine'
 import { featureCollection, point } from '@turf/helpers'
-import { HyloApp } from 'hylo-shared'
 import { FEATURE_TYPES, formatBoundingBox } from './MapExplorer.store'
+import isWebView from 'util/webView'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -102,22 +102,6 @@ export class UnwrappedMapExplorer extends React.Component {
     // Drawer hidden by default on mobile devices
     if (isMobileDevice()) {
       this.setState({ hideDrawer: true })
-    }
-
-    const { hyloAppLayout } = this.context
-
-    // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. react router / history push
-    if (hyloAppLayout) {
-      this.props.history.block(({ pathname, search }) => {
-        // when in embedded view of map allow web navigation within map
-        // the keeps saved search retrieval from reseting group context in the app
-        if (pathname.match(/\/map$/)) return true
-
-        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
-
-        return false
-      })
     }
 
     Object.keys(FEATURE_TYPES).forEach(featureType => {
@@ -534,8 +518,8 @@ export class UnwrappedMapExplorer extends React.Component {
       viewport
     } = this.state
 
-    const { hyloAppLayout, hideNavLayout } = this.context
-    const withoutNav = hyloAppLayout || hideNavLayout
+    const { hideNavLayout } = this.context
+    const withoutNav = isWebView() || hideNavLayout
 
     const locationParams = this.props['location'] !== undefined ? getQuerystringParam(['zoom', 'center', 'lat', 'lng'], null, this.props) : null
 

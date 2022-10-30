@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import React, { useCallback, useState } from 'react'
 import Icon from 'components/Icon'
 import { Link } from 'react-router-dom'

@@ -226,11 +226,13 @@ posts: viewPosts(
   commentersTotal
   
   linkPreview {
+    description
     id
+    imageUrl
     title
     url
-    imageUrl
   }
+  linkPreviewFeatured
   location
   locationObject {
     id

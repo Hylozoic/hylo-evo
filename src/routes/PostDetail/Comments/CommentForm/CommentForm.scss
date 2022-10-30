@@ -77,12 +77,16 @@
   width: 90%;
   position: relative;
   top: 22px;
-  padding: 0 30px 30px 0;
+  padding: 0 0px 30px 0;
+  margin-bottom: 1em;
   overflow-wrap: break-word;
   cursor: text;
 
-  span[style='font-weight: bold;'] {
-    font-family: 'Circular Bold';
+  // Would be best on the container above but will be wrong height due
+  // to `position: relative`
+  [contenteditable="true"] {
+    overflow-y: auto;
+    max-height: 200px;
   }
 }
 

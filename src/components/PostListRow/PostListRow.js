@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import Moment from 'moment'
+import Moment from 'moment-timezone'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import EmojiRow from 'components/EmojiRow'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import './PostListRow.scss'
@@ -69,7 +70,7 @@ const PostListRow = (props) => {
           </div>
         )}
         <h3 styleName='title'>{title}</h3>
-        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
+        <HyloHTML styleName='details' html={details} />
         <EmojiRow
           {...post}
           postId={post.id}

@@ -1,29 +1,31 @@
 import React from 'react'
-import { StaticRouter } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
-import { createBrowserHistory, createMemoryHistory } from 'history'
+import { Switch, Route } from 'react-router'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { Provider } from 'react-redux'
+import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
+import createStore, { history } from '../store'
 import RootRouter from 'routes/RootRouter'
-import '../css/global/index.scss'
+import HyloAppRouter from 'routes/HyloAppRouter'
 
-export const history = typeof window !== 'undefined'
-  ? createBrowserHistory()
-  : createMemoryHistory()
+const store = createStore()
 
-export function clientRouter () {
+export default function App () {
   require('client/rollbar') // set up handling of uncaught errors
 
   return (
-    <ConnectedRouter history={history}>
-      <RootRouter />
-    </ConnectedRouter>
-  )
-}
-
-// Current SSR setup is deprecated and to be removed. See https://github.com/Hylozoic/hylo-evo/issues/1069
-export function serverRouter (req, context) {
-  return (
-    <StaticRouter location={req.url} context={context}>
-      <RootRouter />
-    </StaticRouter>
+    <LayoutFlagsProvider>
+      <DndProvider backend={HTML5Backend}>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route path='/hyloApp' component={HyloAppRouter} />
+              <RootRouter />
+            </Switch>
+          </ConnectedRouter>
+        </Provider>
+      </DndProvider>
+    </LayoutFlagsProvider>
   )
 }

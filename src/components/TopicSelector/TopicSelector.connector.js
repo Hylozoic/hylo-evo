@@ -1,28 +1,17 @@
-import { includes } from 'lodash'
 import { connect } from 'react-redux'
-import {
-  findTopics,
-  clearTopics,
-  getTopicResults,
-  getTopicsSearchTerm
-} from '../HyloEditor/HyloEditor.store'
+import { fetchDefaultTopics } from 'store/actions/fetchTopics'
+import findTopics from 'store/actions/findTopics'
+import getDefaultTopics from 'store/selectors/getDefaultTopics'
 
 export function mapStateToProps (state, props) {
-  // TODO: move this into a store file somewhere... but where?
-  const defaultTopics = props.defaultTopics && getTopicsSearchTerm(state) ? props.defaultTopics.filter(topic => includes(
-    topic.name && topic.name.toLowerCase(),
-    getTopicsSearchTerm(state).toLowerCase()
-  )) : props.defaultTopics
-
   return {
-    defaultTopics,
-    topicResults: getTopicResults(state, props)
+    defaultTopics: getDefaultTopics(state, { groups: props.forGroups })
   }
 }
 
 export const mapDispatchToProps = {
   findTopics,
-  clearTopics
+  fetchDefaultTopics
 }
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })
