@@ -112,6 +112,7 @@ export default class UserGroupsTab extends Component {
         }
 
         if (isWebView()) {
+          // Could be handled better using WebSockets
           sendMessageToWebView(WebViewMessageTypes.LEFT_GROUP, { groupId: deletedGroupId })
         }
 
