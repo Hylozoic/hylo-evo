@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom'
 import { rootDomId } from 'client/util'
 import App from './router'
 import Loading from 'components/Loading'
-
 import './client/websockets'
 import './css/global/index.scss'
 import './i18n'
 
 const App = React.lazy(() => import('./router'))
 const HyloEditorMobile = React.lazy(() => import('components/HyloEditor/HyloEditorMobile'))
+const Feature = React.lazy(() => import('components/PostCard/Feature'))
 
 ReactDOM.render(
   <Suspense fallback={<Loading />}>
