@@ -1,10 +1,11 @@
 import Mention from '@tiptap/extension-mention'
 import { PluginKey } from 'prosemirror-state'
+import { queryHyloAPI } from 'util/graphql'
 import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findMentions from 'store/actions/findMentions'
 
-export const PeopleMentions = ({ dispatch, groupIds, maxSuggestions, onSelection, suggestionsThemeName }) =>
+export const PeopleMentions = ({ groupIds, maxSuggestions, onSelection, suggestionsThemeName }) =>
   // Mentions (https://github.com/ueberdosis/tiptap/issues/2219#issuecomment-984662243)
   Mention
     .extend({
@@ -44,15 +45,16 @@ export const PeopleMentions = ({ dispatch, groupIds, maxSuggestions, onSelection
         items: asyncDebounce(200, async ({ query, editor }) => {
           editor.extensionStorage.topic.loading = true
 
-          const matchedPeople = await dispatch(findMentions({
+          const findMentionsGraphql = findMentions({
             autocomplete: query,
             groupIds: editor.extensionStorage.mention.groupIds,
             maxItems: maxSuggestions
-          }))
+          }).graphql
+          const matchedPeople = await queryHyloAPI(findMentionsGraphql)
 
           editor.extensionStorage.topic.loading = false
 
-          return matchedPeople?.payload.getData().items
+          return matchedPeople?.data.people.items
             .map(person => ({
               id: person.id,
               label: person.name,

@@ -1,5 +1,4 @@
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useEditor, EditorContent, Extension, BubbleMenu } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -31,7 +30,6 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   showMenu = false,
   suggestionsThemeName = 'suggestions'
 }, ref) {
-  const dispatch = useDispatch()
   const editorRef = useRef(null)
   const [selectedLink, setSelectedLink] = useState()
   const editor = useEditor({
@@ -113,9 +111,9 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
         }
       }),
 
-      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
+      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, suggestionsThemeName }),
 
-      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
+      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, suggestionsThemeName }),
 
       Highlight
     ],
