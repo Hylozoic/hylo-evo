@@ -13,6 +13,7 @@ import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 import './EditProfileTab.scss'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
+import isWebView, { sendMessageToWebView } from 'util/webView'
 
 const { object, func, string } = PropTypes
 
@@ -176,10 +177,16 @@ export default class EditProfileTab extends Component {
     })
   }
 
-  updateSetting = (key, setChanged = true) => async event => {
+  setChanged = changed => {
+    if (isWebView()) sendMessageToWebView('USER_SETTINGS.SET_EDIT_PROFILE_UNSAVED', changed)
+
+    this.setState({ changed })
+  }
+
+  updateSetting = (key, forceChanged = true) => async event => {
     const { fetchLocation } = this.props
     const { edits, changed } = this.state
-    setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
+    forceChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
 
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
@@ -188,17 +195,14 @@ export default class EditProfileTab extends Component {
       edits[key] = event.target.value
     }
 
-    this.setState({
-      changed: setChanged ? true : changed,
-      edits
-    })
+    this.setState({ edits }, this.setChanged(forceChanged ? true : changed))
   }
 
   updateSettingDirectly = (key, changed) => value =>
     this.updateSetting(key, changed)({ target: { value } })
 
   save = () => {
-    this.setState({ changed: false })
+    this.setChanged(false)
     this.props.setConfirm(false)
     this.props.updateUserSettings(this.state.edits)
   }
