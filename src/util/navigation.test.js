@@ -1,8 +1,7 @@
 import {
   removePostFromUrl,
   postUrl,
-  gotoExternalUrl,
-  contextSwitchingUrl
+  gotoExternalUrl
 } from './navigation'
 
 describe('postUrl', () => {

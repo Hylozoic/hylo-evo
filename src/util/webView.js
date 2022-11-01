@@ -3,9 +3,9 @@ export function sendMessageToWebView (type, data) {
     throw new Error('Must provide a message `type` when sending a message to the WebView')
   }
 
-  window?.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({ type, data }))
+  isWebView() && window.ReactNativeWebView.postMessage(JSON.stringify({ type, data }))
 }
 
 export default function isWebView () {
-  return typeof window !== 'undefined' && window.HyloWebView
+  return typeof window !== 'undefined' && window.ReactNativeWebView
 }

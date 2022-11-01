@@ -51,15 +51,6 @@ export class UnwrappedGroupDetail extends Component {
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
-
-    // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. react router / history push
-    if (isWebView()) {
-      this.props.history.block(({ pathname, search }) => {
-        sendMessageToWebView(WebViewMessageTypes.NAVIGATION, { pathname, search })
-        return false
-      })
-    }
   }
 
   componentDidUpdate (prevProps) {
@@ -80,6 +71,7 @@ export class UnwrappedGroupDetail extends Component {
     await joinGroup(group.id)
 
     if (isWebView()) {
+      // Could be handled better using WebSockets
       sendMessageToWebView(WebViewMessageTypes.JOINED_GROUP, { groupSlug: group.slug })
     }
   }
