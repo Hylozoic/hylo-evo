@@ -87,16 +87,19 @@ export function textLengthHTML (htmlOrText, options) {
   return presentHTMLToText(htmlOrText, options).length
 }
 
-export const markdown = text => {
-  marked.use({
-    tokenizer: {
-      url (src) {
-        // NOTE: having nothing here disables gfm autolinks:
-        // https://github.com/markedjs/marked/issues/882#issuecomment-781585009
-        // New option coming in later version: https://github.com/sourcegraph/sourcegraph/pull/42203/files
+export const markdown = (text, options = {}) => {
+  if (options.disableAutolinking) {
+    marked.use({
+      tokenizer: {
+        url (src) {
+          // NOTE: having nothing here disables gfm autolinks:
+          // https://github.com/markedjs/marked/issues/882#issuecomment-781585009
+          // New option coming in later version: https://github.com/sourcegraph/sourcegraph/pull/42203/files
+        }
       }
-    }
-  })
+    })
+  }
+
   return marked.parse(text || '', { gfm: true, breaks: true })
 }
 

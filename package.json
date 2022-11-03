@@ -48,7 +48,7 @@
     "coordinate-parser": "^1.0.7",
     "html-to-text": "^8.1.0",
     "lodash": "~4.17.21",
-    "marked": "^4.0.12",
+    "marked": "^4.2.1",
     "pretty-date": "^0.2.0",
     "querystring": "^0.2.1",
     "trunc-html": "^1.1.2",

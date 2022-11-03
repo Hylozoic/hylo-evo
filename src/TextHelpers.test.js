@@ -27,8 +27,11 @@ describe('markdown', () => {
   it('converts to markdown', () => {
     expect(TextHelpers.markdown('*strong* **italic**')).toBe('<p><em>strong</em> <strong>italic</strong></p>\n')
   })
-  it('converts to markdown not autolinking', () => {
-    expect(TextHelpers.markdown('https://www.hylo.com')).toBe('<p>https://www.hylo.com</p>\n')
+  it('converts to markdown with autolinking (default)', () => {
+    expect(TextHelpers.markdown('https://www.hylo.com')).toBe('<p><a href="https://www.hylo.com">https://www.hylo.com</a></p>\n')
+  })
+  it('converts to markdown with disableAutolinking', () => {
+    expect(TextHelpers.markdown('https://www.hylo.com', { disableAutolinking: true })).toBe('<p>https://www.hylo.com</p>\n')
   })
   it('converts to markdown in paragraphs', () => {
     expect(TextHelpers.markdown('asdw\n\n\nasdf')).toBe('<p>asdw</p>\n<p>asdf</p>\n')
