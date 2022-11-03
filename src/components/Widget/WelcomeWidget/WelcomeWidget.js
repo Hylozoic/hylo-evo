@@ -1,6 +1,7 @@
 import { TextHelpers } from 'hylo-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
 import './WelcomeWidget.scss'
 
@@ -17,7 +18,9 @@ export default class WelcomeWidget extends Component {
     return (
       <div styleName='welcome-widget'>
         <h2>{settings.title || `Welcome to ${group.name}!`}</h2>
-        <HyloHTML element='p' html={TextHelpers.markdown(message)} />
+        <ClickCatcher groupSlug='all'>
+          <HyloHTML element='p' html={TextHelpers.markdown(message)} />
+        </ClickCatcher>
       </div>
     )
   }

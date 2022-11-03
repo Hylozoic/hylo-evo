@@ -1,13 +1,14 @@
 import React from 'react'
-import cx from 'classnames'
+import { Link } from 'react-router-dom'
+import { capitalize } from 'lodash'
 import { TextHelpers } from 'hylo-shared'
-import './GroupCard.scss'
+import { groupUrl, groupDetailUrl } from 'util/navigation'
+import ClickCatcher from 'components/ClickCatcher'
 import GroupHeader from './GroupHeader'
 import HyloHTML from 'components/HyloHTML'
-import { Link } from 'react-router-dom'
-import { groupUrl, groupDetailUrl } from 'util/navigation'
 import Pill from 'components/Pill'
-import { capitalize } from 'lodash'
+import cx from 'classnames'
+import './GroupCard.scss'
 
 /*
   Each card needs
@@ -52,7 +53,9 @@ export default function GroupCard ({
         />
         {group.description
           ? <div styleName='group-description'>
-            <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+            <ClickCatcher groupSlug='all'>
+              <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+            </ClickCatcher>
           </div>
           : ''
         }

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
 import Avatar from 'components/Avatar'
+import ClickCatcher from 'components/ClickCatcher'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
 import HyloHTML from 'components/HyloHTML'
@@ -197,7 +198,9 @@ export class UnwrappedGroupDetail extends Component {
           ) : (
             <div styleName='g.groupDescription'>
               <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
-              <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+              <ClickCatcher groupSlug='all'>
+                <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+              </ClickCatcher>
             </div>
           )}
         {!isAboutCurrentGroup && topics && topics.length && (
