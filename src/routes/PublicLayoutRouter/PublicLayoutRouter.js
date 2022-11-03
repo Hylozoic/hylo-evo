@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { some } from 'lodash/fp'
 import React, { useMemo } from 'react'
+import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import HyloCookieConsent from 'components/HyloCookieConsent'
@@ -31,6 +32,10 @@ export default function PublicLayoutRouter (props) {
 
   return (
     <Div100vh styleName={cx('public-container', { 'map-view': isMapView })}>
+      <Helmet>
+        <title>Hylo: Public</title>
+        <meta name='description' content='Hylo: Public content' />
+      </Helmet>
       <div styleName='background'>
         <div styleName='header'>
           <a href='/'>

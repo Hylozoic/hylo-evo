@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IntercomProvider } from 'react-use-intercom'
+import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
 import { get, some } from 'lodash/fp'
 import { useResizeDetector } from 'react-resize-detector'
@@ -184,6 +185,10 @@ export default function AuthLayoutRouter (props) {
 
   return (
     <IntercomProvider appId={isTest ? '' : config.intercom.appId} autoBoot autoBootProps={intercomProps}>
+      <Helmet>
+        <title>Hylo</title>
+        <meta name='description' content='Logged into Hylo' />
+      </Helmet>
       {/* Redirects for switching into global contexts, since these pages don't exist yet */}
       <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
       <RedirectRoute exact path='/:context(all)/(members|settings)' to='/all' />

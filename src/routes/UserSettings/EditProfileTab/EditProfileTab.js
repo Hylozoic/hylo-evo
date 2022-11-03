@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
@@ -222,6 +223,9 @@ export default class EditProfileTab extends Component {
     const locationObject = currentUser.locationObject
 
     return <div>
+      <Helmet>
+        <title>Hylo: Settings</title>
+      </Helmet>
       <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
       <div style={bgImageStyle(bannerUrl)} styleName='banner'>
         <UploadAttachmentButton

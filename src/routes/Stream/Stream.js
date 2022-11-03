@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import StreamBanner from 'components/StreamBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
@@ -117,6 +118,10 @@ export default class Stream extends Component {
 
     return (
       <>
+        <Helmet>
+          <title>Hylo: Stream</title>
+          <meta name='description' content='Posts from the stream' />
+        </Helmet>
         {topicName
           ? (
             <TopicFeedHeader

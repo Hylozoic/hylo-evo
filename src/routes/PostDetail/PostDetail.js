@@ -4,6 +4,8 @@ import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { get, throttle, isEmpty } from 'lodash/fp'
+import { Helmet } from 'react-helmet'
+import { TextHelpers } from 'hylo-shared'
 import { topicUrl } from 'util/navigation'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
@@ -25,10 +27,11 @@ import ProjectContributions from './ProjectContributions'
 import PostPeopleDialog from 'components/PostPeopleDialog'
 import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
 import './PostDetail.scss'
+import { MAX_THREAD_PREVIEW_LENGTH } from 'routes/Messages/ThreadList/ThreadList'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 70
-
+const MAX_DETAILS_LENGTH = 144
 export default class PostDetail extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
@@ -164,11 +167,17 @@ export default class PostDetail extends Component {
         currentUser={currentUser}
       />
     )
-
+    MAX_THREAD_PREVIEW_LENGTH
     return (
       <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>
         {({ width, height }) => (
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
+            <Helmet>
+              <title>
+                {`Hylo: ${post.title || TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)}`}
+              </title>
+              <meta name='description' content={TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)} />
+            </Helmet>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader
               styleName='header'

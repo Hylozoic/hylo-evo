@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Redirect, Link, Switch } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
 import Particles from 'react-tsparticles'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -49,6 +50,10 @@ export default function NonAuthLayoutRouter (props) {
 
   return (
     <Div100vh styleName='nonAuthContainer'>
+      <Helmet>
+        <title>Hylo</title>
+        <meta name='description' content='Login/signup to see more' />
+      </Helmet>
       <div styleName='background'>
         <div styleName='particlesBackgroundWrapper'>
           <Particles options={particlesjsConfig} style={particlesStyle} />

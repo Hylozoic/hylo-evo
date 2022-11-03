@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
@@ -30,6 +31,8 @@ import { inIframe } from 'util/index'
 import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
+
+const MAX_DETAILS_LENGTH = 144
 
 export const initialState = {
   errorMessage: undefined,
@@ -101,6 +104,12 @@ export class UnwrappedGroupDetail extends Component {
 
     return (
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
+        <Helmet>
+          <title>
+            {`Hylo: ${group.name}`}
+          </title>
+          <meta name='description' content={TextHelpers.truncateHTML(group.description, MAX_DETAILS_LENGTH)} />
+        </Helmet>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
           {onClose && (
             <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>
