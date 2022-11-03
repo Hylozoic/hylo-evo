@@ -69,6 +69,9 @@ import {
   INVITE_PEOPLE_TO_EVENT_PENDING
 } from 'components/EventInviteDialog/EventInviteDialog.store'
 import { FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS } from 'routes/GroupSettings/RelatedGroupsTab/RelatedGroupsTab.store'
+import {
+  RECEIVE_POST
+} from 'components/SocketListener/SocketListener.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
@@ -98,7 +101,8 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
     Post,
     PostCommenter,
     ProjectMember,
-    Skill
+    Skill,
+    Topic
   } = session
 
   if (payload && !isPromise(payload) && meta && meta.extractModel) {
@@ -175,6 +179,25 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         const p = Post.withId(meta.postId)
         p.update({ commentersTotal: p.commentersTotal + 1 })
         p.update({ commentsTotal: p.commentsTotal + 1 })
+      }
+      break
+    }
+
+    case RECEIVE_POST: {
+      const post = Post.withId(payload.data?.post?.id)
+      if (post) {
+        post.groups.toModelArray().forEach(g => {
+          const group = Group.withId(g.id)
+          if (!group) return
+          group.update({ postCount: group.postCount + 1 })
+          post.topics.toModelArray().forEach(t => {
+            const topic = Topic.withId(t.id)
+            if (!topic) return
+            const groupTopic = topic.groupTopics.filter({ group: group.id }).first()
+            if (!groupTopic) return
+            groupTopic.update({ postsTotal: groupTopic.postsTotal + 1 })
+          })
+        })
       }
       break
     }
