@@ -18,14 +18,15 @@ export function fetchGroupTopic (topicName, groupSlug) {
       query: `query ($groupSlug: String, $topicName: String) {
         groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
           id
-          postsTotal
           followersTotal
+          lastReadPostId
+          postsTotal
+          group {
+            id
+          }
           topic {
             id
             name
-          }
-          group {
-            id
           }
         }
       }`,
@@ -90,13 +91,13 @@ export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collection
         collectionToFilterOut,
         context,
         filter,
-        first: first || 20,
+        first: first || 30,
         forCollection,
         offset,
         order,
         search,
         slug,
-        sortBy,
+        sortBy: 'created',
         topic,
         topics,
         types

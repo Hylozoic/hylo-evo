@@ -4,23 +4,16 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 15px;
-  // TODO: position absolute top, left, right, bottom 0?
   background-color: white;
+  overflow: hidden;
 }
 
 .stream-items-container {
   margin: 0 auto;
-  overflow: auto;
-  // height: calc(100% - 50px);
+  overflow: hidden;
   width: 100%;
   flex: 1;
   display: flex;
-  padding-bottom: 15px;
-}
-
-.stream-items {
-  margin-top: auto;
-  width: 100%;
 }
 
 .card-item {

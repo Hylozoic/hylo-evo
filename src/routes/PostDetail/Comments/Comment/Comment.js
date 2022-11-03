@@ -29,7 +29,7 @@ export class Comment extends Component {
     onReplyComment: func.isRequired,
     updateComment: func,
     deleteComment: func,
-    removeComment: func,
+    removeComment: func
   }
 
   editor = React.createRef()
@@ -138,7 +138,7 @@ export default class CommentWithReplies extends Component {
     updateComment: func,
     deleteComment: func,
     removeComment: func,
-    onReplyThread: func,
+    onReplyThread: func
   }
 
   static defaultProps = {

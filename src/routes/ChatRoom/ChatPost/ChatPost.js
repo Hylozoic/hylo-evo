@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import { TextHelpers } from 'hylo-shared'
 import { filter, get, isEmpty, isFunction, pick } from 'lodash/fp'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
@@ -38,16 +38,34 @@ export default function ChatPost ({
   highlightProps,
   id,
   imageAttachments,
+  index,
   isHeader,
   linkPreview,
   linkPreviewFeatured,
   myReactions,
+  onVisible,
   postReactions,
   showDetails,
   slug
 }) {
+  const ref = useRef()
   const [isVideo, setIsVideo] = useState()
   const [flaggingVisible, setFlaggingVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        onVisible(id)
+      }
+    }, {
+      root: ref.current.parentNode.parentNode,
+      threshold: 0.7
+    })
+
+    observer.observe(ref.current)
+    //console.log(ref.current.parentNode.parentNode.parentNode)
+    return () => { observer.disconnect() }
+  })
 
   useEffect(() => {
     if (linkPreview?.url) {
@@ -64,27 +82,32 @@ export default function ChatPost ({
     }
   }
 
+  const editPost = event => {
+    console.log("edit event", event, event.target, event.target.className)
+    if (!event.target.className.includes("icon-Smiley")) {
+//      showDetails(id)
+    }
+  }
+
   const { reactOnEntity } = useReactionActions()
   const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', entityId: id })
 
   const actionItems = filter(item => isFunction(item.onClick), [
       //{ icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
-      //{ icon: 'Edit', label: 'Edit', onClick: editPost },
       //{ icon: 'Copy', label: 'Copy Link', onClick: copyLink },
       { icon: 'Smiley', label: 'React', onClick: handleReaction },
       { icon: 'Reply', label: 'Reply', onClick: openPost },
+      { icon: 'Edit', label: 'Edit', onClick: editPost },
       { icon: 'Flag', label: 'Flag', onClick: currentUser.id !== creator.id ? () => { setFlaggingVisible(true) } : null },
       // { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
       // { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
     ])
 
-  console.log("action items", actionItems)
-  console.log("flagging vis", flaggingVisible)
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
   return (
     <Highlight {...highlightProps}>
-      <div styleName='container' ref={forwardedRef} onClick={openPost} className={className}>
+      <div styleName='container' ref={ref} onClick={openPost} className={className}>
         <div styleName='action-bar'>
           {actionItems.map(item => (
             <Button

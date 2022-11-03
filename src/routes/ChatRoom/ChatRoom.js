@@ -1,6 +1,8 @@
 import cx from 'classnames'
 import { debounce, trim } from 'lodash/fp'
+import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Virtuoso } from 'react-virtuoso'
 import { IoSend } from 'react-icons/io5'
 import AttachmentManager from 'components/AttachmentManager'
 import Button from 'components/Button'
@@ -10,7 +12,6 @@ import LinkPreview from 'components/PostEditor/LinkPreview'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostCard from 'components/PostCard'
-import ScrollListener from 'components/ScrollListener'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import ChatPost from './ChatPost'
@@ -56,7 +57,8 @@ export default function ChatRoom (props) {
     showDetails,
     topicLoading,
     topic,
-    toggleGroupTopicSubscribe
+    toggleGroupTopicSubscribe,
+    updateGroupTopicLastReadPost
   } = props
 
   const { topicName, groupSlug } = routeParams
@@ -74,28 +76,20 @@ export default function ChatRoom (props) {
   }), [group, topicName])
 
   const chatsRef = useRef()
-  const currentItemRef = useRef()
   const editorRef = useRef()
-  const topItemRef = useRef()
-  const [ready, setReady] = useState(false)
+  const virtuoso = useRef(null);
+
+  const [atBottom, setAtBottom] = useState(false)
   const [postInProgress, setPostInProgress] = useState(false)
-  const [currentPost, setCurrentPost] = useState(null)
-  const [topPost, setTopPost] = useState(null)
+  const [lastReadPostId, setLastReadPostId] = useState(groupTopic.lastReadPostId)
   const [newPost, setNewPost] = useState(emptyPost)
+  const [firstItemIndex, setFirstItemIndex] = useState(false)
 
   const fetchPosts = useCallback((offset) => {
     const { pending, hasMore } = props
     if (pending || hasMore === false) return
     props.fetchPosts(offset)
   }, [props.fetchPosts])
-
-  const scrollToBottom = useCallback(() => {
-    if (chatsRef.current) {
-      console.log("scroll to botto")
-      chatsRef.current.scrollTop = chatsRef.current.scrollHeight
-    }
-  }, [])
-
 
   useEffect(() => {
     props.fetchPosts(0)
@@ -104,38 +98,49 @@ export default function ChatRoom (props) {
   useEffect(() => {
     props.fetchTopic()
     setNewPost(emptyPost)
-  }, [group?.id, topicName])
+    setLastReadPostId(groupTopic.lastReadPostId)
+  }, [group?.id, groupTopic?.id, topicName])
 
+  // TODO: Loren why do we need this? handleAddLinkPreview not working to update state?
   useEffect(() => {
     setNewPost({ ...newPost, linkPreview })
   }, [linkPreview])
 
   useEffect(() => {
-    console.log("check scroll topitem", topItemRef.current)
-    if (posts.length && !ready) {
-      setTimeout(scrollToBottom, 600)
-      setReady(true)
-    } else if (topItemRef.current) {
-      console.log("scroll to previous post", topItemRef.current.offsetTop, topItemRef.current)
-      setTimeout(() => {
-        chatsRef.current.scrollTop = topItemRef.current.offsetTop - 50
-        //setTopPost(null)
-      }, 500)
+    if (!pending) {
+      console.log("pending changed got posys num", posts.length, postsTotal)
+      if (posts.length) {
+        setFirstItemIndex(postsTotal - posts.length)
+        if (!lastReadPostId) {
+          updateGroupTopicLastReadPost(groupTopic.id, posts[posts.length - 1].id)
+          setLastReadPostId(posts[posts.length - 1].id)
+        }
+      }
     }
   }, [pending])
 
   useEffect(() => {
-    console.log("current = ", editorRef.current)
-    if (editorRef.current) {
-      console.log("focus")
-      //setTimeout(() => editorRef.current.focus(), 1000)
+    console.log("posts total changed", postsTotal, atBottom)
+    if (atBottom) {
+      setTimeout(() => {
+        console.log("do scrollll")
+        virtuoso.current.scrollToIndex(postsTotal - 1)
+      }, 300)
     }
-  }, [editorRef?.current, group?.id, topicName, context])
+  }, [postsTotal])
+
+  // useEffect(() => {
+  //   // console.log("current = ", editorRef.current)
+  //   if (editorRef.current) {
+  //     console.log("focus")
+  //     //setTimeout(() => editorRef.current.focus(), 1000)
+  //   }
+  // }, [editorRef?.current, group?.id, topicName, context])
 
   useEffect(() => {
     // On component unmount clear link preview TODO: and images?
     return () => {
-      console.log("clear link preview")
+      console.log("unmounting")
       clearLinkPreview()
     }
   }, [])
@@ -157,7 +162,8 @@ export default function ChatRoom (props) {
       editorRef.current.focus()
       clearImageAttachments()
       clearLinkPreview()
-      scrollToBottom()
+      console.log("after created post")
+      // scrollToBottom()
     })
     return true
   } // , [newPost, imageAttachments, linkPreview])
@@ -195,60 +201,52 @@ export default function ChatRoom (props) {
     setNewPost({ ...newPost, linkPreview: null, linkPreviewFeatured: false })
   }
 
-  const postsForDisplay = useMemo(() => {
-    let currentHeader, lastPost
-    return posts.reduce((acc, post, i) => {
-      const expanded = selectedPostId === post.id
-      let ref = null
-      if (!currentItemRef.current && i === posts.length - 1) {
-        setCurrentPost(post)
-        ref = currentItemRef
-      } else if (!topItemRef.current && i === 0) {
-        console.log("set top post)", post)
-        setTopPost(post)
-        ref = topItemRef
-      } else if (currentPost?.id === post.id) {
-        ref = currentItemRef
-      } else if (topPost?.id === post.id) {
-        ref = topItemRef
-      }
+  const handlePostVisible = (postId) => {
+    // console.log("is it greater? ", groupTopic.lastReadPostId, postId)
+    if (lastReadPostId && postId > lastReadPostId) {
+      setLastReadPostId(postId)
+      updateGroupTopicLastReadPost(groupTopic.id, postId)
+    }
+  }
 
+  const postsForDisplay = useMemo(() => {
+    let currentHeader, lastPost, firstUnreadPost, currentDay, newDay
+    return posts.reduce((acc, post, i) => {
       let headerDate, messageDate, diff, greaterThanMax
-      let isHeader = false
       if (!currentHeader) {
-        isHeader = true
+        post.header = true
         currentHeader = post
       } else {
         headerDate = new Date(currentHeader.createdAt)
         messageDate = new Date(post.createdAt)
         diff = Math.abs(headerDate - messageDate)
         greaterThanMax = Math.floor(diff / 60000) > MAX_MINS_TO_BATCH
-        isHeader = greaterThanMax || post.creator.id !== currentHeader.creator.id || lastPost.commentersTotal > 0
-        currentHeader = isHeader ? post : currentHeader
+        post.header = greaterThanMax || post.creator.id !== currentHeader.creator.id || lastPost.commentersTotal > 0
+        currentHeader = post.header ? post : currentHeader
       }
 
-      acc.push(post.type === 'chat'
-        ? <ChatPost
-          {...post}
-            currentUser={currentUser}
-          forwardedRef={ref}
-          expanded={expanded}
-          isHeader={isHeader}
-          key={post.id}
-          showDetails={showDetails}
-          slug={group?.slug}
-        />
-        : <PostCard
-          expanded={expanded}
-          forwardedRef={ref}
-          key={post.id}
-          post={post}
-          querystringParams={querystringParams}
-          respondToEvent={respondToEvent}
-          routeParams={routeParams}
-          styleName={cx({ 'card-item': true, expanded })}
-        />
-      )
+      // Is this a new day, then display it as a header
+      newDay = moment(post.createdAt).format('DD MMMM, YYYY')
+      if (!currentDay || currentDay !== newDay) {
+        currentDay = newDay
+        // Ensure the date is displayed with today and yesterday
+        post.displayDay = moment(post.createdAt).calendar(null, {
+          // when the date is closer, specify custom values
+          lastDay: '[Yesterday]',
+          sameDay: '[Today]',
+          lastWeek: 'MMMM DD, YYYY',
+          sameElse: function () {
+            return 'MMMM DD, YYYY'
+          }
+        })
+      }
+
+      if (post.id > lastReadPostId && !firstUnreadPost) {
+        firstUnreadPost = post
+        post.firstUnread = true
+      }
+
+      acc.push(post)
       lastPost = post
       return acc
     }, [])
@@ -256,6 +254,9 @@ export default function ChatRoom (props) {
 
   if (topicLoading) return <Loading />
 
+  console.log("at bottom", atBottom)
+  console.log("postsTotal", postsTotal)
+  console.log("initial index, first item index", postsTotal - 1, firstItemIndex)
   return (
     <div styleName='container'>
       <TopicFeedHeader
@@ -274,16 +275,59 @@ export default function ChatRoom (props) {
         topicName={topicName}
       />
       <div id='chats' styleName='stream-items-container' ref={chatsRef}>
-        <div styleName='stream-items'>
-          {!pending && posts.length === 0 ? <NoPosts /> : ''}
-          {postsForDisplay}
-        </div>
+        {!pending && posts.length === 0
+          ? <NoPosts />
+          : pending && posts.length === 0
+            ? <Loading />
+            : <Virtuoso
+                atBottomStateChange={(bottom) => {
+                  setAtBottom(bottom)
+                }}
+                data={postsForDisplay}
+                firstItemIndex={firstItemIndex}
+                initialTopMostItemIndex={postsTotal - 1}
+                increaseViewportBy={200}
+                // rangeChanged={setNewCurrentPost}
+                ref={virtuoso}
+                startReached={() => fetchPosts(posts.length)}
+                style={{ height: '100%', width: '100%', marginTop: 'auto' }}
+                // followOutput={atBottom ? 'smooth' : false}
+                // followOutput={true}
+                totalCount={postsTotal}
+                itemContent={(index, post) => {
+                  const expanded = selectedPostId === post.id
+                  return (
+                    <>
+                      {post.displayDay ? <div>{post.displayDay}................................................</div> : ''}
+                      {post.firstUnread ? <div>New posts below this line ..........................................</div> : ''}
+                      {post.type === 'chat'
+                        ? <ChatPost
+                            {...post}
+                            currentUser={currentUser}
+                            // forwardedRef={ref}
+                            expanded={expanded}
+                            isHeader={post.header}
+                            key={post.id}
+                            index={index}
+                            onVisible={handlePostVisible}
+                            showDetails={showDetails}
+                            slug={group?.slug}
+                          />
+                        : <PostCard
+                            expanded={expanded}
+                            // forwardedRef={ref}
+                            key={post.id}
+                            post={post}
+                            querystringParams={querystringParams}
+                            respondToEvent={respondToEvent}
+                            routeParams={routeParams}
+                            styleName={cx({ 'card-item': true, expanded })}
+                          />}
+                    </>
+                  )
+                }}
+              />}
       </div>
-      <ScrollListener
-        onTop={() => fetchPosts(posts.length)}
-        elementId='chats'
-      />
-      {pending && <Loading />}
       <div styleName='post-chat-box'>
         <HyloEditor
           contentHTML={newPost.details}

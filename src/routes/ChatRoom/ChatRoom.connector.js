@@ -2,6 +2,7 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { get, isEmpty } from 'lodash/fp'
+import updateGroupTopicLastReadPost from 'store/actions/updateGroupTopicLastReadPost'
 import {
   addAttachment,
   clearAttachments,
@@ -147,6 +148,7 @@ export function mapDispatchToProps (dispatch, props) {
       clearLinkPreview,
       createPost,
       removeLinkPreview,
+      updateGroupTopicLastReadPost,
       updateUserSettings: updateSettings // TODO: do we use this?
     }, dispatch)
   }

@@ -34,7 +34,7 @@ export default class PostDetail extends Component {
     currentUser: PropTypes.object,
     fetchPost: PropTypes.func,
     post: PropTypes.object,
-    routeParams: PropTypes.object,
+    routeParams: PropTypes.object
 
   }
 
