@@ -76,7 +76,7 @@ export class AboutSection extends Component {
       </div>
       <div styleName={cx('description', { expanded })}>
         {!expanded && <div styleName='gradient' />}
-        <ClickCatcher groupSlug='all'>
+        <ClickCatcher>
           <HyloHTML element='span' html={TextHelpers.markdown(description)} />
         </ClickCatcher>
       </div>

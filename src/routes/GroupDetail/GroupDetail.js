@@ -200,7 +200,7 @@ export class UnwrappedGroupDetail extends Component {
             </div>
           ) : (
             <div styleName='g.groupDescription'>
-              <ClickCatcher groupSlug='all'>
+              <ClickCatcher>
                 <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
               </ClickCatcher>
             </div>

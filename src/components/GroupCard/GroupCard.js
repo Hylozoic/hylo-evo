@@ -53,7 +53,7 @@ export default function GroupCard ({
         />
         {group.description
           ? <div styleName='group-description'>
-            <ClickCatcher groupSlug='all'>
+            <ClickCatcher>
               <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
             </ClickCatcher>
           </div>

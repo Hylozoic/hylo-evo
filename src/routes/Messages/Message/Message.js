@@ -30,7 +30,7 @@ export default function Message ({ message, isHeader }) {
           <span styleName='date'>{pending ? 'sending...' : TextHelpers.humanDate(message.createdAt)}</span>
         </div>}
         <div styleName='text'>
-          <ClickCatcher groupSlug='all'>
+          <ClickCatcher>
             <HyloHTML element='span' html={text} />
           </ClickCatcher>
         </div>

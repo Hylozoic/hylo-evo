@@ -10,7 +10,7 @@ export default function RichTextWidget ({ group, settings }) {
       <GroupAboutVideoEmbed uri={settings.embeddedVideoURI} />
       <h2>{settings.title || `Welcome to ${group.name}!`}</h2>
       {settings.richText && (
-        <ClickCatcher groupSlug='all'>
+        <ClickCatcher>
           <HyloHTML element='span' html={settings.richText} />
         </ClickCatcher>
       )}

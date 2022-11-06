@@ -153,7 +153,7 @@ export default class MessageSection extends React.Component {
       {pending && <Loading />}
       {!pending &&
         <div styleName='messages-section-inner'>
-          <ClickCatcher groupSlug='all'>
+          <ClickCatcher>
             {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
           </ClickCatcher>
         </div>

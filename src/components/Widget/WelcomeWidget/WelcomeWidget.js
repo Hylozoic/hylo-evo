@@ -18,7 +18,7 @@ export default class WelcomeWidget extends Component {
     return (
       <div styleName='welcome-widget'>
         <h2>{settings.title || `Welcome to ${group.name}!`}</h2>
-        <ClickCatcher groupSlug='all'>
+        <ClickCatcher>
           <HyloHTML element='p' html={TextHelpers.markdown(message)} />
         </ClickCatcher>
       </div>

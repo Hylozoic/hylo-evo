@@ -68,7 +68,7 @@ export function GroupCard ({ group, routeParams, className }) {
           <div styleName='group-name'>{group.name}</div>
           <div styleName='member-count'>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</div>
           <div styleName='group-description'>
-            <ClickCatcher groupSlug='all'>
+            <ClickCatcher>
               <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
             </ClickCatcher>
             {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}

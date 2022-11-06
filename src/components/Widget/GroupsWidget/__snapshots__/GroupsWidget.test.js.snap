@@ -590,9 +590,7 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                 <div
                                   data-stylename="group-description"
                                 >
-                                  <ClickCatcher
-                                    groupSlug="all"
-                                  >
+                                  <ClickCatcher>
                                     <span
                                       onClick={[Function]}
                                     >
@@ -730,9 +728,7 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                 <div
                                   data-stylename="group-description"
                                 >
-                                  <ClickCatcher
-                                    groupSlug="all"
-                                  >
+                                  <ClickCatcher>
                                     <span
                                       onClick={[Function]}
                                     >

@@ -37,9 +37,7 @@ exports[`matches last snapshot 1`] = `
     <div
       data-stylename="group-description"
     >
-      <ClickCatcher
-        groupSlug="all"
-      >
+      <ClickCatcher>
         <HyloHTML
           element="span"
           html="<p>the description the description the description the description the description </p>
@@ -116,9 +114,7 @@ exports[`matches last snapshot with different config 1`] = `
     <div
       data-stylename="group-description"
     >
-      <ClickCatcher
-        groupSlug="all"
-      >
+      <ClickCatcher>
         <HyloHTML
           element="span"
           html="<p>the description the description the description the description the description </p>

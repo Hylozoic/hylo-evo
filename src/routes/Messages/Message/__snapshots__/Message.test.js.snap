@@ -31,9 +31,7 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
     <div
       data-stylename="text"
     >
-      <ClickCatcher
-        groupSlug="all"
-      >
+      <ClickCatcher>
         <HyloHTML
           element="span"
           html="sending..."
@@ -58,9 +56,7 @@ exports[`to match the latest non-header snapshot 1`] = `
     <div
       data-stylename="text"
     >
-      <ClickCatcher
-        groupSlug="all"
-      >
+      <ClickCatcher>
         <HyloHTML
           element="span"
           html="<p>test</p>
@@ -101,9 +97,7 @@ exports[`to match the latest snapshot 1`] = `
     <div
       data-stylename="text"
     >
-      <ClickCatcher
-        groupSlug="all"
-      >
+      <ClickCatcher>
         <HyloHTML
           element="span"
           html="<p>test</p>
