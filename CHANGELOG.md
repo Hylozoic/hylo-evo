@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `groupDescription` is now "autolinked" making external links added in the markdown clickable, including proper handling of Hylo links, mention, and topic links (via application of `ClickCatcher`)
+
+### Fixed
+- Styling of `groupDescription` to eliminate extra vertical space between paragraphs
+
+### Changed
+- Added default of `all` to `groupSlug` prop of `ClickCatcher`, doesn't change current behavior
+
 ## [5.0.2] - 2022-10-27
 
 ### Changed
