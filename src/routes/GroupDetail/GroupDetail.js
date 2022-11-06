@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
+import getRouteParam from 'store/selectors/getRouteParam'
 import Avatar from 'components/Avatar'
 import ClickCatcher from 'components/ClickCatcher'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
@@ -86,25 +87,24 @@ export class UnwrappedGroupDetail extends Component {
     const {
       currentUser,
       group,
+      history,
       isAboutCurrentGroup,
       isMember,
       location,
       moderators,
-      onClose,
       pending,
       routeParams
     } = this.props
+    const fullPage = !getRouteParam('detailGroupSlug', {}, this.props)
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    const fullPage = !onClose
-
     return (
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
-          {onClose && (
-            <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>
+          {!fullPage && (
+            <a styleName='g.close' onClick={history.goBack}><Icon name='Ex' /></a>
           )}
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
@@ -144,7 +144,7 @@ export class UnwrappedGroupDetail extends Component {
               <div styleName='g.moderators'>
                 {moderators.map(p => (
                   <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
-                    <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
+                    <Avatar avatarUrl={p.avatarUrl} medium />
                     <span>{p.name}</span>
                   </Link>
                 ))}
