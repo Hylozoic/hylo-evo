@@ -7,6 +7,7 @@ import { parse } from 'url'
 
 const cache = LRU(50)
 
+// flag-shared
 const staticPages = [
   '',
   '/help',

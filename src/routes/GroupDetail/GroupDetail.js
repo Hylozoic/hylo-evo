@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
@@ -29,7 +29,7 @@ import {
   visibilityString
 } from 'store/models/Group'
 import { inIframe } from 'util/index'
-import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
+import { baseUrl, groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
@@ -87,7 +87,7 @@ export class UnwrappedGroupDetail extends Component {
     const {
       currentUser,
       group,
-      history,
+      closeDetailModal,
       isAboutCurrentGroup,
       isMember,
       location,
@@ -104,7 +104,7 @@ export class UnwrappedGroupDetail extends Component {
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
           {!fullPage && (
-            <a styleName='g.close' onClick={history.goBack}><Icon name='Ex' /></a>
+            <a styleName='g.close' onClick={closeDetailModal}><Icon name='Ex' /></a>
           )}
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
@@ -392,8 +392,16 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
 
 export default function GroupDetail (props) {
   const history = useHistory()
+  const location = useLocation()
+  const closeDetailModal = () => {
+    // `detailsGroupSlug` is not currently used in any URL generation, `null`'ing
+    // it here in case that changes, and it's otherwise descriptive of the intent.
+    history.push(
+      baseUrl({ ...props.routeParams, detailGroupSlug: null }) + location.search
+    )
+  }
 
   return (
-    <UnwrappedGroupDetail {...props} history={history} />
+    <UnwrappedGroupDetail {...props} closeDetailModal={closeDetailModal} />
   )
 }
