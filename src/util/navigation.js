@@ -168,11 +168,6 @@ export function removePostFromUrl (url) {
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
-export function removeGroupFromUrl (url) {
-  const matchForReplaceRegex = '/group/([^/]*)'
-  return url.replace(new RegExp(matchForReplaceRegex), '')
-}
-
 export function gotoExternalUrl (url) {
   return window.open(url, null, 'noopener,noreferrer')
 }

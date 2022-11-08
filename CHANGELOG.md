@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Styling of `groupDescription` to eliminate extra vertical space between paragraphs
+- Back button behavior in the case of `LandingPage` > "About Us"
 
 ### Changed
 - Added default of `all` to `groupSlug` prop of `ClickCatcher`, doesn't change current behavior
+- Removes now unused `navigation#removeGroupFromUrl`
 
 ## [5.0.2] - 2022-10-27
 
