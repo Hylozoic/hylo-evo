@@ -6,11 +6,11 @@
   margin-bottom: 2px;
   font-size: 1em;
   cursor: pointer;
+  padding: 4px 6px;
 }
 
 .selected {
-  color: white;
-  background-color: $color-science-blue;
+  background-color: #e5f3f9;
 }
 
 .pill-tooltip {

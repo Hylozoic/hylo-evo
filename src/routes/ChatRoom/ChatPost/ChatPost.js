@@ -144,7 +144,7 @@ export default function ChatPost ({
     { icon: 'Trash', label: 'Delete', onClick: isCreator ? deletePostWithConfirm : null, red: true },
     { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && canModerate ? removePostWithConfirm : null, red: true }
   ])
-  const myEmojis = myReactions.map((reaction) => reaction.emojiFull)
+  const myEmojis = myReactions ? myReactions.map((reaction) => reaction.emojiFull) : []
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
