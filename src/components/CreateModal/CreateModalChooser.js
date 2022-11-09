@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Icon from 'components/Icon'
+import isWebView from 'util/webView'
 import { POST_TYPES } from 'store/models/Post'
+import Icon from 'components/Icon'
 import './CreateModal.scss'
 
 const postTypes = Object.keys(POST_TYPES)
@@ -33,16 +34,19 @@ export default function CreateModalChooser ({ location }) {
           </Link>
         )
       })}
-      <Link to={`${location.pathname}/group`}>
-        <div key='group'>
-          <Icon name='Groups' styleName='postIcon' />
-          <b>
-            <span styleName='postTypeName'>Group</span>
-            <span styleName='postTypeDescription'>Create a new movement, network, community or group!</span>
-          </b>
-          <span styleName='indicator' />
-        </div>
-      </Link>
+      {/* Creating a Group by location is not currently supported in HyloApp */}
+      {!isWebView() && (
+        <Link to={`${location.pathname}/group`}>
+          <div key='group'>
+            <Icon name='Groups' styleName='postIcon' />
+            <b>
+              <span styleName='postTypeName'>Group</span>
+              <span styleName='postTypeDescription'>Create a new movement, network, community or group!</span>
+            </b>
+            <span styleName='indicator' />
+          </div>
+        </Link>
+      )}
     </div>
   )
 }

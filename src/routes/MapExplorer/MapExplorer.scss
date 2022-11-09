@@ -219,11 +219,21 @@ button.toggleFeatureFiltersButton {
   box-shadow: $box-shadow-default;
   padding: 8px;
 
-  &.open, &:hover {
+  &.open {
     background-color: $color-caribbean-green;
 
     span {
       color: white;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: $color-caribbean-green;
+
+      span {
+        color: white;
+      }
     }
   }
 }
@@ -357,9 +367,6 @@ button.toggleFeatureFiltersButton {
     cursor: pointer;  
   }
 
-  // Necessary to keep simulated hover event on touch devices
-  // from sticking (Saved Search button was remaining
-  // highlighted after closed)
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       background-color: $color-caribbean-green;
@@ -372,12 +379,13 @@ button.toggleFeatureFiltersButton {
 .addItemToMapButton {
   bottom: 40px;
   padding: 8px;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: $color-caribbean-green;
 
-  &:hover {
-    background-color: $color-caribbean-green;
-
-    span {
-      color: white;
+      span {
+        color: white;
+      }
     }
   }
 

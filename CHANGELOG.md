@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Styling of `groupDescription` to eliminate extra vertical space between paragraphs
 - Back button behavior in the case of `LandingPage` > "About Us"
+- Unexpected underline appearing in some links in mobile
+- Sticking hover state color on MapExplorer buttons in mobile
 
 ### Changed
 - Added default of `all` to `groupSlug` prop of `ClickCatcher`, doesn't change current behavior
