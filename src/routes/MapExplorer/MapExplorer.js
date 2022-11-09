@@ -660,7 +660,7 @@ export class UnwrappedMapExplorer extends React.Component {
           <div styleName={cx('pointer')} />
         </div>
 
-        {currentUser && (
+        {currentUser && !isWebView() && (
           <button
             data-for='helpTip'
             data-tip='Add item to map'
