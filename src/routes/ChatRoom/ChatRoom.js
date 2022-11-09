@@ -144,11 +144,11 @@ export default function ChatRoom (props) {
     }
   }, [postsTotal])
 
-  useEffect(() => {
-    if (editorRef.current) {
-      setTimeout(() => editorRef.current.focus(), 1000)
-    }
-  }, [editorRef?.current, groupTopic?.id])
+  // useEffect(() => {
+  //   if (editorRef.current) {
+  //     setTimeout(() => editorRef.current.focus(), 1000)
+  //   }
+  // }, [editorRef?.current, groupTopic?.id])
 
   useEffect(() => {
     // On component unmount clear link preview TODO: and images?
