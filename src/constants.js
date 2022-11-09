@@ -5,6 +5,7 @@ export const AnalyticsEvents = {
   DIRECT_MESSAGE_SENT: 'Direct Message Sent',
   POST_CREATED: 'Post Created',
   POST_UPDATED: 'Post Updated',
+  POST_SHARED: 'Post Shared',
   TOPIC_CREATED: 'Topic Created',
   VOTED_ON_POST: 'Voted on Post',
   BLOCK_USER: 'User Blocked',
