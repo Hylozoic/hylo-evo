@@ -9,6 +9,7 @@ import Button from 'components/Button'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
 import EmojiRow from 'components/EmojiRow'
+import EmojiPicker from 'components/EmojiPicker'
 import FlagContent from 'components/FlagContent'
 import Highlight from 'components/Highlight'
 import HyloEditor from 'components/HyloEditor'
@@ -97,8 +98,9 @@ export default function ChatPost ({
     return true
   }
 
-  const { reactOnEntity } = useReactionActions()
-  const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', entityId: id })
+  const { reactOnEntity , removeReactOnEntity } = useReactionActions()
+  const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', postId: id })
+  const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ emojiFull, entityType: 'post', postId: id })
 
   const handleEditCancel = () => {
     editorRef.current.setContent(details)
@@ -136,13 +138,13 @@ export default function ChatPost ({
   const actionItems = filter(item => isFunction(item.onClick), [
     // { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
     // { icon: 'Copy', label: 'Copy Link', onClick: copyLink },
-    { icon: 'Smiley', label: 'React', onClick: handleReaction },
     { icon: 'Replies', label: 'Reply', onClick: openPost },
     { icon: 'Edit', label: 'Edit', onClick: isCreator ? editPost : null },
     { icon: 'Flag', label: 'Flag', onClick: !isCreator ? () => { setFlaggingVisible(true) } : null },
     { icon: 'Trash', label: 'Delete', onClick: isCreator ? deletePostWithConfirm : null, red: true },
     { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && canModerate ? removePostWithConfirm : null, red: true }
   ])
+  const myEmojis = myReactions.map((reaction) => reaction.emojiFull)
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
@@ -161,6 +163,12 @@ export default function ChatPost ({
               <Icon name={item.icon} />
             </Button>
           ))}
+          <EmojiPicker
+            className={styles['action-item']}
+            handleReaction={handleReaction}
+            handleRemoveReaction={handleRemoveReaction}
+            myEmojis={myEmojis}
+          />
           {flaggingVisible && <FlagContent
             type='post'
             linkData={{ id, slug: group.slug, type: 'post' }}
