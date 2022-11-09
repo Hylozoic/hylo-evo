@@ -123,16 +123,20 @@ export default function ChatPost ({
 
   const isCreator = currentUser.id === creator.id
 
-  const deletePostWithConfirm = useCallback(() => {
+  const deletePostWithConfirm = useCallback((event) => {
     if (window.confirm('Are you sure you want to delete this post? You cannot undo this.')) {
       dispatch(deletePost(id, group.id))
     }
+    event.stopPropagation()
+    return true
   })
 
-  const removePostWithConfirm = useCallback(() => {
+  const removePostWithConfirm = useCallback((event) => {
     if (window.confirm('Are you sure you want to remove this post? You cannot undo this.')) {
       dispatch(removePost(id, group.slug))
     }
+    event.stopPropagation()
+    return true
   })
 
   const actionItems = filter(item => isFunction(item.onClick), [
