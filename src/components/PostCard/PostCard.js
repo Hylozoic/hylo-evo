@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { get } from 'lodash/fp'
-import React from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import CardImageAttachments from 'components/CardImageAttachments'
 import { POST_PROP_TYPES } from 'store/models/Post'
@@ -15,25 +15,28 @@ import './PostCard.scss'
 
 export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
 
-export default class PostCard extends React.Component {
-  static propTypes = {
-    routeParams: PropTypes.object,
-    post: PropTypes.shape(POST_PROP_TYPES),
-    editPost: PropTypes.func,
-    showDetails: PropTypes.func,
-    highlightProps: PropTypes.object,
-    expanded: PropTypes.bool,
-    constrained: PropTypes.bool,
-    className: PropTypes.string
-  }
+export default function PostCard(props) {
+  const {
+    className,
+    constrained,
+    currentUser,
+    editPost,
+    expanded,
+    forwardedRef,
+    highlightProps,
+    intersectionObserver,
+    post,
+    respondToEvent,
+    routeParams,
+    showDetails,
+    voteOnPost
+  } = props
 
-  static defaultProps = {
-    routeParams: {}
-  }
+  const postCardRef = forwardedRef || useRef()
 
   // TODO: dupe of clickcatcher?
-  shouldShowDetails = element => {
-    if (element === this.props.forwardedRef || this.element === this.refs.postCard) return true
+  const shouldShowDetails = useCallback(element => {
+    if (element === postCardRef) return true
     if (
       element.tagName === 'A' ||
       element.tagName === 'LI' ||
@@ -42,103 +45,108 @@ export default class PostCard extends React.Component {
 
     const parent = element.parentElement
 
-    if (parent) return this.shouldShowDetails(parent)
+    if (parent) return shouldShowDetails(parent)
     return true
+  })
+
+  const onClick = useCallback(event => {
+    if (shouldShowDetails(event.target)) showDetails()
+  })
+
+  if (intersectionObserver) {
+    useEffect(() => {
+      intersectionObserver.observe(postCardRef.current)
+      return () => { intersectionObserver.disconnect() }
+    })
   }
 
-  onClick = event => {
-    if (this.shouldShowDetails(event.target)) this.props.showDetails()
-  }
+  const postType = get('type', post)
+  const isEvent = postType === 'event'
 
-  render () {
-    const {
-      className,
-      constrained,
-      currentUser,
-      editPost,
-      expanded,
-      forwardedRef,
-      highlightProps,
-      post,
-      respondToEvent,
-      routeParams,
-      showDetails,
-      voteOnPost
-    } = this.props
+  const hasImage = post.attachments.find(a => a.type === 'image') || false
 
-    const postType = get('type', post)
-    const isEvent = postType === 'event'
+  if (postType === 'chat') return (
+    <ChatCard
+      expanded={expanded}
+      highlightProps={highlightProps}
+      post={post}
+      routeParams={routeParams}
+      slug={routeParams.groupSlug}
+      showDetails={showDetails}
+    />
+  )
 
-    const hasImage = post.attachments.find(a => a.type === 'image') || false
-
-    if (postType === 'chat') return (
-      <ChatCard
-        expanded={expanded}
-        highlightProps={highlightProps}
-        post={post}
-        routeParams={routeParams}
-        slug={routeParams.groupSlug}
-        showDetails={showDetails}
-      />
-    )
-
-    return (
-      <div
-        ref={forwardedRef || 'postCard'}
-        onClick={!isEvent ? this.onClick : null}
-        styleName={cx('card', postType, { expanded }, { constrained })}
-        className={className}
-      >
-        <div onClick={this.onClick}>
-          <PostHeader
-            {...post}
-            routeParams={routeParams}
-            highlightProps={highlightProps}
-            editPost={editPost}
-            constrained={constrained}
-            hasImage={hasImage}
-          />
-        </div>
-        <div onClick={this.onClick}>
-          <CardImageAttachments attachments={post.attachments} />
-        </div>
-        {isEvent && (
-          <div styleName='bodyWrapper'>
-            <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
-            <EventBody
-              currentUser={currentUser}
-              event={post}
-              slug={routeParams.groupSlug}
-              respondToEvent={respondToEvent}
-              constrained={constrained}
-            />
-          </div>
-        )}
-        {!isEvent && (
-          <div onClick={this.onClick}>
-            <PostBody
-              {...post}
-              slug={routeParams.groupSlug}
-              constrained={constrained}
-              currentUser={currentUser}
-            />
-          </div>
-        )}
-        <div onClick={this.onClick}>
-          <PostGroups
-            isPublic={post.isPublic}
-            groups={post.groups}
-            slug={routeParams.groupSlug}
-            constrained={constrained}
-          />
-        </div>
-        <PostFooter
+  return (
+    <div
+      ref={postCardRef}
+      onClick={!isEvent ? onClick : null}
+      styleName={cx('card', postType, { expanded }, { constrained })}
+      className={className}
+    >
+      <div onClick={onClick}>
+        <PostHeader
           {...post}
+          routeParams={routeParams}
+          highlightProps={highlightProps}
+          editPost={editPost}
           constrained={constrained}
-          currentUser={currentUser}
-          postId={post.id}
+          hasImage={hasImage}
         />
       </div>
-    )
-  }
+      <div onClick={onClick}>
+        <CardImageAttachments attachments={post.attachments} />
+      </div>
+      {isEvent && (
+        <div styleName='bodyWrapper'>
+          <div styleName='trigger' onClick={isEvent ? onClick : null} />
+          <EventBody
+            currentUser={currentUser}
+            event={post}
+            slug={routeParams.groupSlug}
+            respondToEvent={respondToEvent}
+            constrained={constrained}
+          />
+        </div>
+      )}
+      {!isEvent && (
+        <div onClick={onClick}>
+          <PostBody
+            {...post}
+            slug={routeParams.groupSlug}
+            constrained={constrained}
+            currentUser={currentUser}
+          />
+        </div>
+      )}
+      <div onClick={onClick}>
+        <PostGroups
+          isPublic={post.isPublic}
+          groups={post.groups}
+          slug={routeParams.groupSlug}
+          constrained={constrained}
+        />
+      </div>
+      <PostFooter
+        {...post}
+        constrained={constrained}
+        currentUser={currentUser}
+        postId={post.id}
+      />
+    </div>
+  )
+}
+
+PostCard.propTypes = {
+  routeParams: PropTypes.object,
+  post: PropTypes.shape(POST_PROP_TYPES),
+  editPost: PropTypes.func,
+  showDetails: PropTypes.func,
+  highlightProps: PropTypes.object,
+  expanded: PropTypes.bool,
+  constrained: PropTypes.bool,
+  className: PropTypes.string
+}
+
+PostCard.defaultProps = {
+  routeParams: {}
 }

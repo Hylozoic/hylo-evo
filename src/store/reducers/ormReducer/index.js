@@ -11,6 +11,7 @@ import {
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
+  DELETE_POST_PENDING,
   FETCH_GROUP_DETAILS_PENDING,
   FETCH_MESSAGES_PENDING,
   FETCH_POSTS_PENDING,
@@ -24,6 +25,7 @@ import {
   REMOVE_MODERATOR_PENDING,
   REMOVE_REACT_ON_COMMENT_PENDING,
   REMOVE_REACT_ON_POST_PENDING,
+  REMOVE_POST_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
   REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
   RESET_NEW_POST_COUNT_PENDING,
@@ -183,25 +185,6 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
-    case RECEIVE_POST: {
-      const post = Post.withId(payload.data?.post?.id)
-      if (post) {
-        post.groups.toModelArray().forEach(g => {
-          const group = Group.withId(g.id)
-          if (!group) return
-          group.update({ postCount: group.postCount + 1 })
-          post.topics.toModelArray().forEach(t => {
-            const topic = Topic.withId(t.id)
-            if (!topic) return
-            const groupTopic = topic.groupTopics.filter({ group: group.id }).first()
-            if (!groupTopic) return
-            groupTopic.update({ postsTotal: groupTopic.postsTotal + 1 })
-          })
-        })
-      }
-      break
-    }
-
     case CREATE_GROUP: {
       me = Me.withId(Me.first().id)
       me.updateAppending({ memberships: [payload.data.createGroup.memberships.items[0].id] })
@@ -259,6 +242,15 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       groupTopic.delete()
       break
     }
+
+     case DELETE_POST_PENDING:
+      post = Post.withId(meta.id)
+      if (meta.groupId) {
+        const group = Group.withId(meta.groupId)
+        removePostFromGroup(post, group)
+      }
+      post.delete()
+      break
 
     case FETCH_GROUP_DETAILS_PENDING: {
       // Clear out prerequisite groups so they correclty update with latest data
@@ -369,6 +361,25 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
+    case RECEIVE_POST: {
+      const post = Post.withId(payload.data?.post?.id)
+      if (post) {
+        post.groups.toModelArray().forEach(g => {
+          const group = Group.withId(g.id)
+          if (!group) return
+          group.update({ postCount: group.postCount + 1 })
+          post.topics.toModelArray().forEach(t => {
+            const topic = Topic.withId(t.id)
+            if (!topic) return
+            const groupTopic = topic.groupTopics.filter({ group: group.id }).first()
+            if (!groupTopic) return
+            groupTopic.update({ postsTotal: groupTopic.postsTotal + 1 })
+          })
+        })
+      }
+      break
+    }
+
     case REMOVE_MODERATOR_PENDING: {
       group = Group.withId(meta.groupId)
       const moderators = group.moderators.filter(m =>
@@ -386,6 +397,16 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         const membership = Membership.safeGet({ group: meta.id, person: me.id })
         membership && membership.update({ newPostCount: 0 })
       }
+      break
+    }
+
+    case REMOVE_POST_PENDING: {
+      post = Post.withId(meta.postId)
+      const groups = post.groups.filter(c =>
+        c.slug !== meta.slug).toModelArray()
+      post.update({ groups })
+      const group = Group.safeGet({ slug: meta.slug })
+      removePostFromGroup(post, group)
       break
     }
 

@@ -102,7 +102,7 @@ export class Comment extends Component {
           <div>
             <CardImageAttachments attachments={attachments} linked styleName='images' />
             <CardFileAttachments attachments={attachments} styleName='files' />
-           </div>
+          </div>
         }
         <ClickCatcher groupSlug={slug}>
           {/* Renders and provides editor */}

@@ -65,7 +65,7 @@ export function fetchTopic (name, id) {
 }
 
 // actions
-export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
+export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, cursor, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
   let query, extractModel, getItems
 
   if (context === 'groups') {
@@ -90,14 +90,15 @@ export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collection
         beforeTime,
         collectionToFilterOut,
         context,
+        cursor,
         filter,
-        first: first || 30,
+        first: first || 35,
         forCollection,
         offset,
         order,
         search,
         slug,
-        sortBy: 'created',
+        sortBy: 'id',
         topic,
         topics,
         types
@@ -119,6 +120,7 @@ const groupQuery = `query GroupPostsQuery (
   $beforeTime: Date,
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -156,6 +158,7 @@ const postsQuery = `query PostsQuery (
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -186,7 +189,8 @@ export const getPosts = ormCreateSelector(
   orm,
   getPostResults,
   (session, results) => {
-    if (isEmpty(results) || isEmpty(results.ids)) return []
+    if (isEmpty(results)) return null
+    if (isEmpty(results.ids)) return []
     return session.Post.all()
       .filter(x => includes(x.id, results.ids))
       .orderBy(p => Number(p.id))
@@ -196,6 +200,7 @@ export const getPosts = ormCreateSelector(
 )
 
 export const getHasMorePosts = createSelector(getPostResults, get('hasMore'))
+export const getTotalPosts = createSelector(getPostResults, get('total'))
 
 // reducer
 export default function (state = {}, action) {

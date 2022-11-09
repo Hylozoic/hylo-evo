@@ -152,8 +152,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     )
     for (let topic of topics) {
       queriesToMatch.push(
-        { context: 'groups', slug: group.slug, topic: topic.id },
-        { context: 'groups', slug: group.slug, sortBy: 'created', topic: topic.id }
+        { context: 'groups', slug: group.slug, sortBy: 'id', order: 'asc', topic: topic.id }
       )
     }
 

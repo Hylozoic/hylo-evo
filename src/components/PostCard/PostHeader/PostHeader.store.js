@@ -4,60 +4,12 @@ import { createSelector as ormCreateSelector } from 'redux-orm'
 export const MODULE_NAME = 'PostHeader'
 
 // Constants
-export const DELETE_POST = `${MODULE_NAME}/DELETE_POST`
-export const DELETE_POST_PENDING = DELETE_POST + '_PENDING'
-export const REMOVE_POST = `${MODULE_NAME}/REMOVE_POST`
-export const REMOVE_POST_PENDING = REMOVE_POST + '_PENDING'
 export const PIN_POST = `${MODULE_NAME}/PIN_POST`
 export const PIN_POST_PENDING = `${PIN_POST}_PENDING`
 export const FULFILL_POST = `${MODULE_NAME}/FULFILL_POST`
 export const FULFILL_POST_PENDING = `${MODULE_NAME}/FULFILL_POST_PENDING`
 export const UNFULFILL_POST = `${MODULE_NAME}/UNFULFILL_POST`
 export const UNFULFILL_POST_PENDING = `${MODULE_NAME}/UNFULFILL_POST_PENDING`
-
-// Action Creators
-export function deletePost (id, groupId) {
-  return {
-    type: DELETE_POST,
-    graphql: {
-      query: `mutation ($id: ID) {
-        deletePost(id: $id) {
-          success
-        }
-      }`,
-      variables: {
-        id
-      }
-    },
-    meta: {
-      optimistic: true,
-      id,
-      groupId
-    }
-  }
-}
-
-export function removePost (postId, slug) {
-  return {
-    type: REMOVE_POST,
-    graphql: {
-      query: `mutation ($postId: ID, $slug: String) {
-        removePost(postId: $postId, slug: $slug) {
-          success
-        }
-      }`,
-      variables: {
-        postId,
-        slug
-      }
-    },
-    meta: {
-      optimistic: true,
-      postId,
-      slug
-    }
-  }
-}
 
 export function pinPost (postId, groupId) {
   return {
@@ -146,25 +98,6 @@ const removePostFromGroup = (post, group) => {
 export function ormSessionReducer ({ Group, Post }, { type, meta }) {
   let post
   switch (type) {
-    case DELETE_POST_PENDING:
-      post = Post.withId(meta.id)
-      if (meta.groupId) {
-        const group = Group.withId(meta.groupId)
-        removePostFromGroup(post, group)
-      }
-      post.delete()
-      break
-
-    case REMOVE_POST_PENDING: {
-      post = Post.withId(meta.postId)
-      const groups = post.groups.filter(c =>
-        c.slug !== meta.slug).toModelArray()
-      post.update({ groups })
-      const group = Group.safeGet({ slug: meta.slug })
-      removePostFromGroup(post, group)
-      break
-    }
-
     case PIN_POST_PENDING:
       post = Post.withId(meta.postId)
       // this line is to clear the selector memoization

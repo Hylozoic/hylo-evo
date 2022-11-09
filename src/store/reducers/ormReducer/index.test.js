@@ -4,6 +4,7 @@ import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 import {
   CREATE_MESSAGE,
   DELETE_COMMENT_PENDING,
+  DELETE_POST_PENDING,
   FETCH_FOR_GROUP_PENDING,
   FETCH_NOTIFICATIONS,
   MARK_ACTIVITY_READ_PENDING,
@@ -11,11 +12,10 @@ import {
   TOGGLE_GROUP_TOPIC_SUBSCRIBE_PENDING,
   UPDATE_COMMENT_PENDING,
   UPDATE_POST_PENDING,
-  REACT_ON_POST_PENDING
+  REACT_ON_POST_PENDING,
+  REMOVE_POST_PENDING
 } from 'store/constants'
 import {
-  DELETE_POST_PENDING,
-  REMOVE_POST_PENDING,
   PIN_POST_PENDING
 } from 'components/PostCard/PostHeader/PostHeader.store'
 import {

@@ -18,6 +18,7 @@ import {
   fetchPosts,
   fetchTopic,
   getHasMorePosts,
+  getTotalPosts,
   getPosts
 } from 'routes/ChatRoom/ChatRoom.store'
 import {
@@ -29,6 +30,7 @@ import {
   getLinkPreview
 } from 'components/PostEditor/PostEditor.store'
 import createPost from 'store/actions/createPost'
+import updatePost from 'store/actions/updatePost'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -41,69 +43,97 @@ import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 import { createPostUrl, postUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
-  let group, topic, groupTopic
-  let groupId = 0
+  let canModerate, group, topic, groupTopic
+
+  const currentUser = getMe(state, props)
 
   const groupSlug = getRouteParam('groupSlug', state, props)
-
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
-    groupId = group.id
+    groupTopic = getGroupTopicForCurrentRoute(state, props)
+    groupTopic = groupTopic && { ...groupTopic.ref, group: groupTopic.group, topic: groupTopic.topic }
+    canModerate = currentUser && currentUser.canModerate(group)
   }
 
   const routeParams = get('match.params', props)
   const topicName = getRouteParam('topicName', state, props)
   const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
 
-  if (groupSlug) {
-    groupTopic = getGroupTopicForCurrentRoute(state, props)
-    groupTopic = groupTopic && { ...groupTopic.ref, group: groupTopic.group, topic: groupTopic.topic }
-  }
   if (topicName) {
     topic = getTopicForCurrentRoute(state, props)
+  }
+
+  if (!topic) {
+    // TODO: what? redirect somewhere?
   }
 
   const context = getRouteParam('context', state, props)
   const view = getRouteParam('view', state, props)
 
-  const currentUser = getMe(state, props)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
 
   const querystringParams = getQuerystringParam(['search'], null, props)
   const search = getQuerystringParam('search', state, props)
 
   const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
-  console.log("image attachments", imageAttachments)
+  // TODO: not showing up consistently Loren?
+  // console.log("image attachments", imageAttachments)
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
 
-  const fetchPostsParam = {
+  // if lastPostRead is null or = last post in this topic then load most recent X # of posts
+  // If lastPostRead is set and not last one then load next X posts and last X posts - for same total # of posts? but no not if there are lots more posts to come, then load more to come plus a smaller amount Y of past posts
+  // If we know posts are not Chat posts then we load less of them because they take up more space
+
+  const fetchPostsFutureParams = {
     context,
+    cursor: groupTopic?.lastReadPostId,
+    order: 'asc',
     slug: groupSlug,
     search,
-    sortBy: 'created',
-    topic: topic?.id,
-    topicName
+    sortBy: 'id',
+    topic: topic?.id
   }
 
-  const posts = getPosts(state, fetchPostsParam)
-  const hasMore = getHasMorePosts(state, fetchPostsParam)
+  const fetchPostsPastParams = {
+    context,
+    cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
+    order: 'desc',
+    slug: groupSlug,
+    search,
+    sortBy: 'id',
+    topic: topic?.id
+  }
+
+  const postsFuture = getPosts(state, fetchPostsFutureParams)
+  const hasMorePostsFuture = getHasMorePosts(state, fetchPostsFutureParams)
+
+  const postsPast = getPosts(state, fetchPostsPastParams)
+  const hasMorePostsPast = getHasMorePosts(state, fetchPostsPastParams)
+
+  let currentPostIndex = getTotalPosts(state, fetchPostsPastParams)
+  currentPostIndex = currentPostIndex ? currentPostIndex - 1 : null
 
   return {
+    canModerate,
     context,
+    currentPostIndex,
     currentUser,
     currentUserHasMemberships,
     fetchLinkPreviewPending,
-    fetchPostsParam,
+    fetchPostsFutureParams,
+    fetchPostsPastParams,
     group,
     groupTopic,
-    hasMore,
+    hasMorePostsFuture,
+    hasMorePostsPast,
     imageAttachments,
     linkPreview,
     linkPreviewStatus,
     pending: state.pending[FETCH_POSTS],
-    posts,
+    postsFuture,
+    postsPast,
     querystringParams,
     postsTotal: get('postsTotal', groupSlug ? groupTopic : topic),
     followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
@@ -129,8 +159,8 @@ export function mapDispatchToProps (dispatch, props) {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
     clearImageAttachments: () => dispatch(clearAttachments('post', 'new', 'image')),
-    fetchPosts: param => offset => {
-      return dispatch(fetchPosts({ offset, ...param }))
+    fetchPosts: params => offset => {
+      return dispatch(fetchPosts({ offset, ...params }))
     },
     fetchTopic: () => {
       if (groupSlug && topicName) {
@@ -149,13 +179,14 @@ export function mapDispatchToProps (dispatch, props) {
       createPost,
       removeLinkPreview,
       updateGroupTopicLastReadPost,
+      updatePost,
       updateUserSettings: updateSettings // TODO: do we use this?
     }, dispatch)
   }
 }
 
 export function mergeProps (stateProps, dispatchProps, ownProps) {
-  const { fetchLinkPreviewPending, fetchPostsParam } = stateProps
+  const { fetchLinkPreviewPending, fetchPostsFutureParams, fetchPostsPastParams } = stateProps
   const { pollingFetchLinkPreviewRaw } = dispatchProps
 
   const pollingFetchLinkPreview = fetchLinkPreviewPending
@@ -166,7 +197,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPosts: dispatchProps.fetchPosts(fetchPostsParam),
+    fetchPostsFuture: dispatchProps.fetchPosts(fetchPostsFutureParams),
+    fetchPostsPast: dispatchProps.fetchPosts(fetchPostsPastParams),
     pollingFetchLinkPreview
   }
 }

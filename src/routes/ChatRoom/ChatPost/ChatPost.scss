@@ -113,20 +113,16 @@
   float: left;
 }
 
-.body {
-  margin-bottom: 36px;
+.postContentContainer {
+  margin-left: 13px;
+
+  &.editing {
+    // border-radius: 0.5rem;
+    border: 1px solid $color-cape-cod-10;
+  }
 }
 
-.smallMargin {
-  margin-bottom: 12px;
-}
-
-.title {
-  composes: cardPadding;
-  margin-bottom: 12px;
-}
-
-.details {
+.postContent {
   composes: cardPadding;
   // Extract typography? This one is exactly half way between
   // BDY-LT-LG and BDY-LT-SM
@@ -134,7 +130,7 @@
   color: rgba(44, 64, 89, 0.7);
   font-size: 16px;
   line-height: 24px;
-  margin-left: 10px;
+  padding-bottom: 1px;
 
   h1, h2, h3 {
     font-family: 'Circular Bold';
@@ -151,6 +147,14 @@
 
   h3, h4, h5 {
     font-size: 16px;
+  }
+
+  &.editing {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 200px;
+    cursor: text;
+    background: white;
   }
 }
 
@@ -221,7 +225,7 @@
 }
 
 @media screen and (max-width: 425px) {
-  .details.cardPadding {
+  .postContent.cardPadding {
     padding: 0 5px;
     margin: 0;
 
@@ -230,14 +234,14 @@
     }
   }
 
-  .details {
+  .postContent {
     font-size: 14px;
     line-height: 20px;
   }
 }
 
 @media screen and (max-width: 375px) {
-  .details {
+  .postContent {
     font-size: 12px;
     line-height: 16px;
   }

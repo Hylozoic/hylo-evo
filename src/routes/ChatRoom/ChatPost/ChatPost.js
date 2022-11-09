@@ -1,7 +1,8 @@
 import cx from 'classnames'
 import { TextHelpers } from 'hylo-shared'
 import { filter, get, isEmpty, isFunction, pick } from 'lodash/fp'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
@@ -10,6 +11,7 @@ import CardFileAttachments from 'components/CardFileAttachments'
 import EmojiRow from 'components/EmojiRow'
 import FlagContent from 'components/FlagContent'
 import Highlight from 'components/Highlight'
+import HyloEditor from 'components/HyloEditor'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import Feature from 'components/PostCard/Feature'
@@ -17,6 +19,8 @@ import LinkPreview from 'components/LinkPreview'
 import PeopleInfo from 'components/PostCard/PeopleInfo'
 import RoundImageRow from 'components/RoundImageRow'
 import useReactionActions from 'hooks/useReactionActions'
+import deletePost from 'store/actions/deletePost'
+import removePost from 'store/actions/removePost'
 import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
 
@@ -25,47 +29,49 @@ import styles from './ChatPost.scss'
 const MAX_DETAILS_LENGTH = 144
 
 export default function ChatPost ({
+  canModerate,
   className,
-  commenters,
-  commentsTotal,
-  createdAt,
-  creator,
   currentUser,
-  details: providedDetails,
   expanded,
-  fileAttachments,
   forwardedRef,
+  group,
   highlightProps,
-  id,
-  imageAttachments,
   index,
-  isHeader,
-  linkPreview,
-  linkPreviewFeatured,
-  myReactions,
-  onVisible,
-  postReactions,
+  intersectionObserver,
+  post,
   showDetails,
-  slug
+  updatePost
 }) {
+  const dispatch = useDispatch()
   const ref = useRef()
+  const editorRef = useRef()
+
+  const [editing, setEditing] = useState(false)
   const [isVideo, setIsVideo] = useState()
   const [flaggingVisible, setFlaggingVisible] = useState(false)
 
-  useEffect(() => {
-    const observer = new window.IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        onVisible(id)
-      }
-    }, {
-      root: ref.current.parentNode.parentNode,
-      threshold: 0.7
-    })
+  const {
+    commenters,
+    commentsTotal,
+    createdAt,
+    creator,
+    details,
+    fileAttachments,
+    header,
+    id,
+    imageAttachments,
+    linkPreview,
+    linkPreviewFeatured,
+    myReactions,
+    postReactions
+  } = post
 
-    observer.observe(ref.current)
-    //console.log(ref.current.parentNode.parentNode.parentNode)
-    return () => { observer.disconnect() }
-  })
+  if (intersectionObserver) {
+    useEffect(() => {
+      intersectionObserver.observe(ref.current)
+      return () => { intersectionObserver.disconnect() }
+    })
+  }
 
   useEffect(() => {
     if (linkPreview?.url) {
@@ -73,35 +79,70 @@ export default function ChatPost ({
     }
   }, [linkPreview?.url])
 
-  const details = expanded ? providedDetails : TextHelpers.truncateHTML(providedDetails, MAX_DETAILS_LENGTH)
-
   const openPost = event => {
-    console.log("event", event, event.target, event.target.className)
-    if (!event.target.className.includes("icon-Smiley")) {
+    console.log("event", event, event.target, event.target.className, event.target.className.includes('LinkPreview'))
+    // Don't open post details when editing post or clicking on link preview or other actionable things
+    if (!editing && !event.target.className.includes('icon-Smiley') && !event.target.className.includes('LinkPreview')) {
       showDetails(id)
     }
   }
 
   const editPost = event => {
     console.log("edit event", event, event.target, event.target.className)
-    if (!event.target.className.includes("icon-Smiley")) {
-//      showDetails(id)
-    }
+    setEditing(true)
+    setTimeout(() => {
+      editorRef.current.focus('end')
+    }, 200)
+    event.stopPropagation()
+    return true
   }
 
   const { reactOnEntity } = useReactionActions()
   const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', entityId: id })
 
+  const handleEditCancel = () => {
+    editorRef.current.setContent(details)
+    setEditing(false)
+    return true
+  }
+
+  const handleEditSave = contentHTML => {
+    if (editorRef.current.isEmpty()) {
+      // Do nothing and stop propagation
+      return true
+    }
+
+    //updatePost(comment.id, contentHTML)
+    setEditing(false)
+
+    // Tell Editor this keyboard event was handled and to end propagation.
+    return true
+  }
+
+  const isCreator = currentUser.id === creator.id
+
+  const deletePostWithConfirm = useCallback(() => {
+    if (window.confirm('Are you sure you want to delete this post? You cannot undo this.')) {
+      dispatch(deletePost(id, group.id))
+    }
+  })
+
+  const removePostWithConfirm = useCallback(() => {
+    if (window.confirm('Are you sure you want to remove this post? You cannot undo this.')) {
+      dispatch(removePost(id, group.slug))
+    }
+  })
+
   const actionItems = filter(item => isFunction(item.onClick), [
-      //{ icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
-      //{ icon: 'Copy', label: 'Copy Link', onClick: copyLink },
-      { icon: 'Smiley', label: 'React', onClick: handleReaction },
-      { icon: 'Replies', label: 'Reply', onClick: openPost },
-      { icon: 'Edit', label: 'Edit', onClick: editPost },
-      { icon: 'Flag', label: 'Flag', onClick: currentUser.id !== creator.id ? () => { setFlaggingVisible(true) } : null },
-      // { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
-      // { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
-    ])
+    // { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
+    // { icon: 'Copy', label: 'Copy Link', onClick: copyLink },
+    { icon: 'Smiley', label: 'React', onClick: handleReaction },
+    { icon: 'Replies', label: 'Reply', onClick: openPost },
+    { icon: 'Edit', label: 'Edit', onClick: isCreator ? editPost : null },
+    { icon: 'Flag', label: 'Flag', onClick: !isCreator ? () => { setFlaggingVisible(true) } : null },
+    { icon: 'Trash', label: 'Delete', onClick: isCreator ? deletePostWithConfirm : null, red: true },
+    { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && canModerate ? removePostWithConfirm : null, red: true }
+  ])
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
@@ -122,12 +163,12 @@ export default function ChatPost ({
           ))}
           {flaggingVisible && <FlagContent
             type='post'
-            linkData={{ id, slug, type: 'post' }}
+            linkData={{ id, slug: group.slug, type: 'post' }}
             onClose={() => setFlaggingVisible(false)}
           />}
         </div>
 
-        {isHeader && (
+        {post.header && (
           <>
             <div styleName='header'>
               <div styleName='author'>
@@ -139,8 +180,24 @@ export default function ChatPost ({
           </>
         )}
         {details && (
-          <ClickCatcher groupSlug={slug}>
-            <HyloHTML styleName='details' html={details} />
+          <ClickCatcher groupSlug={group.slug}>
+            {editing
+              ? <HyloEditor
+              contentHTML={details}
+              groupIds={post.groups.map(g => g.id)}
+              // onAddTopic={handleAddTopic}
+              onEscape={handleEditCancel}
+              onEnter={handleEditSave}
+              // onUpdate={handleDetailsUpdate}
+              placeholder='Edit Post'
+              readOnly={!editing}
+              ref={editorRef}
+              showMenu={editing}
+              containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: editing })}
+              styleName={cx({ postContent: true, editing })}
+            />
+            : <div styleName='postContentContainer'><HyloHTML styleName='postContent' html={details} /></div>
+          }
           </ClickCatcher>
         )}
         {linkPreview?.url && linkPreviewFeatured && isVideo && (

@@ -37,6 +37,8 @@ export default function ChatRoom (props) {
     clearLinkPreview,
     context,
     createPost,
+    canModerate,
+    currentPostIndex,
     currentUser,
     // currentUserHasMemberships,
     fetchLinkPreviewPending,
@@ -46,8 +48,9 @@ export default function ChatRoom (props) {
     linkPreview,
     imageAttachments,
     routeParams,
-    posts,
     pending,
+    postsFuture,
+    postsPast,
     postsTotal,
     querystringParams,
     removeLinkPreview,
@@ -58,7 +61,8 @@ export default function ChatRoom (props) {
     topicLoading,
     topic,
     toggleGroupTopicSubscribe,
-    updateGroupTopicLastReadPost
+    updateGroupTopicLastReadPost,
+    updatePost
   } = props
 
   const { topicName, groupSlug } = routeParams
@@ -84,58 +88,67 @@ export default function ChatRoom (props) {
   const [lastReadPostId, setLastReadPostId] = useState(groupTopic.lastReadPostId)
   const [newPost, setNewPost] = useState(emptyPost)
   const [firstItemIndex, setFirstItemIndex] = useState(false)
+  const [createdNewPost, setCreatedNewPost] = useState(false)
 
-  const fetchPosts = useCallback((offset) => {
-    const { pending, hasMore } = props
-    if (pending || hasMore === false) return
-    props.fetchPosts(offset)
-  }, [props.fetchPosts])
+  const fetchPostsPast = useCallback((offset) => {
+    const { pending, hasMorePostsPast } = props
+    if (pending || hasMorePostsPast === false) return
+    props.fetchPostsPast(offset)
+  }, [props.fetchPostsPast])
+
+  const fetchPostsFuture = useCallback((offset) => {
+    const { pending, hasMorePostsFuture } = props
+    if (pending || hasMorePostsFuture === false) return
+    props.fetchPostsFuture(offset)
+  }, [props.fetchPostsFuture])
 
   useEffect(() => {
-    props.fetchPosts(0)
-  }, [context, group?.id, props.search, topicName])
-
-  useEffect(() => {
+    // Make sure GroupTopic is loaded
     props.fetchTopic()
+  }, [group?.id, topicName])
+
+  useEffect(() => {
+    // Wait until GroupTopic is loaded
+    if (groupTopic?.id) {
+      props.fetchPostsFuture(0)
+      props.fetchPostsPast(0)
+      setLastReadPostId(groupTopic.lastReadPostId)
+    }
     setNewPost(emptyPost)
-    setLastReadPostId(groupTopic.lastReadPostId)
-  }, [group?.id, groupTopic?.id, topicName])
+  }, [groupTopic?.id])
 
   // TODO: Loren why do we need this? handleAddLinkPreview not working to update state?
   useEffect(() => {
     setNewPost({ ...newPost, linkPreview })
   }, [linkPreview])
 
+  // Do one time, to set ready
   useEffect(() => {
-    if (!pending) {
-      console.log("pending changed got posys num", posts.length, postsTotal)
-      if (posts.length) {
-        setFirstItemIndex(postsTotal - posts.length)
-        if (!lastReadPostId) {
-          updateGroupTopicLastReadPost(groupTopic.id, posts[posts.length - 1].id)
-          setLastReadPostId(posts[posts.length - 1].id)
-        }
+    if (postsPast !== null && postsFuture !== null) {
+      setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
+      if (!lastReadPostId) {
+        const lastPast = postsFuture.length > 0 ? postsFuture[postsFuture.length - 1] : postsPast[postsPast.length - 1]
+        updateGroupTopicLastReadPost(groupTopic.id, lastPost.id)
+        setLastReadPostId(lastPost.id)
       }
     }
-  }, [pending])
+  }, [postsPast, postsFuture])
 
   useEffect(() => {
     console.log("posts total changed", postsTotal, atBottom)
-    if (atBottom) {
+    if (atBottom && virtuoso.current) {
       setTimeout(() => {
-        console.log("do scrollll")
+        console.log("at bottom do scrollll")
         virtuoso.current.scrollToIndex(postsTotal - 1)
       }, 300)
     }
   }, [postsTotal])
 
-  // useEffect(() => {
-  //   // console.log("current = ", editorRef.current)
-  //   if (editorRef.current) {
-  //     console.log("focus")
-  //     //setTimeout(() => editorRef.current.focus(), 1000)
-  //   }
-  // }, [editorRef?.current, group?.id, topicName, context])
+  useEffect(() => {
+    if (editorRef.current) {
+      setTimeout(() => editorRef.current.focus(), 1000)
+    }
+  }, [editorRef?.current, groupTopic?.id])
 
   useEffect(() => {
     // On component unmount clear link preview TODO: and images?
@@ -145,28 +158,27 @@ export default function ChatRoom (props) {
     }
   }, [])
 
-  const postChatMessage = () => {
+  const postChatMessage = useCallback(() => {
     // Only submit if any non-whitespace text has been added
     if (trim(editorRef.current?.getText() || '').length === 0) return
 
-    console.log("creatng with props", props)
 
     const details = editorRef.current.getHTML()
     const imageUrls = imageAttachments && imageAttachments.map((attachment) => attachment.url)
     // XXX: i have no idea why linkPreview is needed here, it should be in newPost but its not and I dont know why
     console.log("create post link preview", props.linkPreview)
-    console.log("create post with", { ...newPost, details, imageUrls, linkPreview: props.linkPreview })
-    createPost({ ...newPost, details, imageUrls, linkPreview: props.linkPreview }).then(() => {
+    console.log("create post with", { ...newPost, details, imageUrls, linkPreview })
+    createPost({ ...newPost, details, imageUrls, linkPreview }).then(() => {
       setNewPost(emptyPost)
+      setCreatedNewPost(true)
       editorRef.current.clearContent()
       editorRef.current.focus()
       clearImageAttachments()
       clearLinkPreview()
-      console.log("after created post")
       // scrollToBottom()
     })
     return true
-  } // , [newPost, imageAttachments, linkPreview])
+  }, [newPost, imageAttachments, linkPreview, editorRef.current])
 
   const handleDetailsUpdate = (d) => {
     const hasText = trim(editorRef.current?.getText() || '').length > 0
@@ -202,7 +214,6 @@ export default function ChatRoom (props) {
   }
 
   const handlePostVisible = (postId) => {
-    // console.log("is it greater? ", groupTopic.lastReadPostId, postId)
     if (lastReadPostId && postId > lastReadPostId) {
       setLastReadPostId(postId)
       updateGroupTopicLastReadPost(groupTopic.id, postId)
@@ -211,7 +222,8 @@ export default function ChatRoom (props) {
 
   const postsForDisplay = useMemo(() => {
     let currentHeader, lastPost, firstUnreadPost, currentDay, newDay
-    return posts.reduce((acc, post, i) => {
+    if (!postsPast || !postsFuture) return []
+    return postsPast.concat(postsFuture).reduce((acc, post, i) => {
       let headerDate, messageDate, diff, greaterThanMax
       if (!currentHeader) {
         post.header = true
@@ -241,7 +253,11 @@ export default function ChatRoom (props) {
         })
       }
 
-      if (post.id > lastReadPostId && !firstUnreadPost) {
+      // Define the line demarcating which posts are "new" (have not been seen yet).
+      // Checking createdNewPost is a hack to turn off this line once someone has created a new post.
+      // This is needed because we add newly created posts to the end postsFuture
+      // which would add the line above them saying they are "new".
+      if (!createdNewPost && postsFuture && post.id === postsFuture[0]?.id) {
         firstUnreadPost = post
         post.firstUnread = true
       }
@@ -250,13 +266,10 @@ export default function ChatRoom (props) {
       lastPost = post
       return acc
     }, [])
-  }, [posts])
+  }, [postsPast, postsFuture])
 
   if (topicLoading) return <Loading />
 
-  console.log("at bottom", atBottom)
-  console.log("postsTotal", postsTotal)
-  console.log("initial index, first item index", postsTotal - 1, firstItemIndex)
   return (
     <div styleName='container'>
       <TopicFeedHeader
@@ -275,49 +288,56 @@ export default function ChatRoom (props) {
         topicName={topicName}
       />
       <div id='chats' styleName='stream-items-container' ref={chatsRef}>
-        {!pending && posts.length === 0
+        {firstItemIndex !== false && postsForDisplay.length === 0
           ? <NoPosts />
-          : pending && posts.length === 0
+          : firstItemIndex === false
             ? <Loading />
             : <Virtuoso
                 atBottomStateChange={(bottom) => {
                   setAtBottom(bottom)
                 }}
+                endReached={() => fetchPostsFuture(postsFuture.length)}
                 data={postsForDisplay}
                 firstItemIndex={firstItemIndex}
-                initialTopMostItemIndex={postsTotal - 1}
+                initialTopMostItemIndex={currentPostIndex}
                 increaseViewportBy={200}
-                // rangeChanged={setNewCurrentPost}
                 ref={virtuoso}
-                startReached={() => fetchPosts(posts.length)}
+                startReached={() => fetchPostsPast(postsPast.length)}
                 style={{ height: '100%', width: '100%', marginTop: 'auto' }}
-                // followOutput={atBottom ? 'smooth' : false}
-                // followOutput={true}
                 totalCount={postsTotal}
                 itemContent={(index, post) => {
                   const expanded = selectedPostId === post.id
+                  const intersectionObserver = new window.IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                      handlePostVisible(post.id)
+                    }
+                  }, {
+                    root: chatsRef.current,
+                    threshold: 0.7
+                  })
                   return (
                     <>
-                      {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='day'>{post.displayDay}</div></div> : ''}
                       {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='newPost'>NEW</div></div> : ''}
                       {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
+                      {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='day'>{post.displayDay}</div></div> : ''}
                       {post.type === 'chat'
                         ? <ChatPost
-                            {...post}
+                            canModerate={canModerate}
                             currentUser={currentUser}
-                            // forwardedRef={ref}
                             expanded={expanded}
+                            group={group}
                             isHeader={post.header}
                             key={post.id}
                             index={index}
-                            onVisible={handlePostVisible}
+                            intersectionObserver={intersectionObserver}
+                            post={post}
                             showDetails={showDetails}
-                            slug={group?.slug}
+                            updatePost={updatePost}
                           />
                         : <PostCard
                             expanded={expanded}
-                            // forwardedRef={ref}
                             key={post.id}
+                            intersectionObserver={intersectionObserver}
                             post={post}
                             querystringParams={querystringParams}
                             respondToEvent={respondToEvent}
