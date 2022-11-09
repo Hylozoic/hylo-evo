@@ -25,9 +25,11 @@
       background-color: rgba(255, 255, 255, 0);
       padding: 0 5px;
       display: flex;
-      align-content: center;
+      justify-content: center;
       align-items: center;
       transition: all .25s ease;
+      width: 36px;
+
 
       span {
         transition: all .25s ease;
@@ -55,7 +57,6 @@
 
     .action-item:last-child {
       border-radius: 0 30px 30px 0 !important;
-      padding: 0 6px 0 5px;
     }
   }
 
@@ -118,6 +119,8 @@
   &.editing {
     // border-radius: 0.5rem;
     border: 1px solid $color-cape-cod-10;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
   }
 }
 
@@ -154,6 +157,13 @@
     max-height: 200px;
     cursor: text;
     background: white;
+    border-radius: 5px;
+
+    &:after {
+      content: " ";
+      padding-bottom: 15px;
+      display: block;
+    }
   }
 }
 

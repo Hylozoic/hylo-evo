@@ -44,7 +44,7 @@ export default function EmojiPicker (props) {
   return (
     <div styleName='emoji-picker-container' className={props.className}>
       <div styleName='emoji-picker-toggle' onClick={toggleModalOpen}>
-        <Icon name='Smiley' blue />
+        <Icon name='Smiley' styleName='picker-icon' />
       </div>
       {modalOpen &&
         <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
@@ -66,6 +66,6 @@ function EmojiPickerContent (props) {
     getData()
   }, [])
   return (
-    <Picker {...props} data={data} />
+    <Picker {...props} theme={'light'} data={data} />
   )
 }
