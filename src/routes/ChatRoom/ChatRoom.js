@@ -251,6 +251,7 @@ export default function ChatRoom (props) {
             return 'MMMM DD, YYYY'
           }
         })
+        post.header = true
       }
 
       // Define the line demarcating which posts are "new" (have not been seen yet).
@@ -260,6 +261,7 @@ export default function ChatRoom (props) {
       if (!createdNewPost && postsFuture && post.id === postsFuture[0]?.id) {
         firstUnreadPost = post
         post.firstUnread = true
+        post.header = true
       }
 
       acc.push(post)
