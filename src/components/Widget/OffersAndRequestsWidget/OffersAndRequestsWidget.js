@@ -19,7 +19,6 @@ export default class OffersAndRequestsWidget extends Component {
   render () {
     const { isMember, items, routeParams } = this.props
 
-    console.log('route', routeParams)
     return (
       <div styleName='offers-and-requests'>
         {items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
