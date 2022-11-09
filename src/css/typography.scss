@@ -61,6 +61,26 @@ a {
   }
 }
 
+/* 
+NOTE: There is an issue of an underline appearing under some
+links in mobile, but I've only see it happen in mobile/non-hover
+devices. We don't apparently globally turn-off the browser default
+`text-decoration: underline` here, and it may be that bootstrap
+doesn't turn that off by default either. Doing a global search
+reveals an unusual amount of `text-decoration: none` for link
+styles, which leads me to believe it is not globally turned-off
+and that maybe we should, and remove some of the extra attributes
+down the line.
+
+Forcing the fix here, and probably save to do this
+outside the media query, but leaving it at this for now.
+*/
+@media (hover: none) {
+  a {
+    text-decoration: none !important; 
+  }
+}
+
 a.hylo-link,
 .mention,
 .topic
