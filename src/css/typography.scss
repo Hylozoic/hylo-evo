@@ -54,9 +54,11 @@ a {
   color: #0275d8
 }
 
-a:focus,
-a:hover {
-  color: #014c8c
+@media (hover: hover) and (pointer: fine) {
+  a:focus,
+  a:hover {
+    color: #014c8c
+  }
 }
 
 a.hylo-link,
@@ -65,9 +67,11 @@ a.hylo-link,
 {
   color: $color-caribbean-green;
   cursor: pointer;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+    }
   }
 }
 
@@ -203,10 +207,12 @@ textarea {
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer;
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+      cursor: pointer;
+    }
   }
 }
 
@@ -216,9 +222,11 @@ textarea {
   font-size: 10px;
   letter-spacing: 0.6;
   line-height: 14px;
-  &:hover {
-    color: $color-gossamer;
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: $color-gossamer;
+      cursor: pointer;
+    }
   }
 }
 
