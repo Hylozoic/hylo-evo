@@ -298,8 +298,9 @@ export default function ChatRoom (props) {
                   const expanded = selectedPostId === post.id
                   return (
                     <>
-                      {post.displayDay ? <div>{post.displayDay}................................................</div> : ''}
-                      {post.firstUnread ? <div>New posts below this line ..........................................</div> : ''}
+                      {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='day'>{post.displayDay}</div></div> : ''}
+                      {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='newPost'>NEW</div></div> : ''}
+                      {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
                       {post.type === 'chat'
                         ? <ChatPost
                             {...post}

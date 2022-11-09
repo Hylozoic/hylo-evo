@@ -113,6 +113,7 @@ export default function ChatPost ({
             <Button
               key={item.label}
               noDefaultStyles
+              borderRadius={'0'}
               onClick={item.onClick}
               className={styles['action-item']}
             >

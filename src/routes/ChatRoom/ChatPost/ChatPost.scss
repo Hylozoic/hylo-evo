@@ -4,26 +4,35 @@
   position: relative;
 
   .action-bar {
-    display: none;
+    display: flex;
     position: absolute;
     right: 5px;
     top: -15px;
-
     background: #FFFFFF;
     box-shadow: 0px 4px 15px rgba(42, 64, 89, 0.3);
     border-radius: 30px;
+    height: 30px;
+    line-height: 30px;
 
     .action-item {
-      color: gray;
+      color: rgba(125, 140, 157, 1.0);
       border: 0;
       background: white;
       display: inline-block;
       cursor: pointer;
       user-select: none;
-      padding: 3px 8px;
+      border-radius: 0;
+      background-color: rgba(255, 255, 255, 0);
+      padding: 0 5px;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      transition: all .25s ease;
 
       span {
-        vertical-align: middle;
+        transition: all .25s ease;
+        font-size: 20px;
+        position: relative;
       }
 
       &:focus {
@@ -31,8 +40,22 @@
       }
 
       &:hover {
-        background: lightgray;
+        background: rgba(125, 140, 157, 1.0);
       }
+
+      &:hover span::before {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+
+    .action-item:first-child {
+      border-radius: 30px 0 0 30px !important;
+      padding: 0 5px 0 6px;
+    }
+
+    .action-item:last-child {
+      border-radius: 0 30px 30px 0 !important;
+      padding: 0 6px 0 5px;
     }
   }
 
@@ -41,7 +64,7 @@
     cursor: pointer;
 
     .action-bar {
-      display: block;
+      display: flex;
     }
   }
 

@@ -16,6 +16,78 @@
   display: flex;
 }
 
+.displayDay, .firstUnread, .unreadAndDay {
+  width: 100%;
+  position: relative;
+  margin: 30px 0 30px 0;
+  text-transform: uppercase;
+}
+
+.displayDay {
+  border-bottom: 1px dashed rgba(125, 140, 157, .3);
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
+.firstUnread {
+  border-bottom: 1px dashed rgba(65, 211, 145, .6);
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
+.unreadAndDay {
+  border-bottom: 1px dashed rgba(65, 211, 145, .6);
+
+  .day {
+    color: rgba(66, 210, 146, 1.0);
+    background-color: rgba(221, 246, 233, 1.0);
+  }
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}
+
+.newPost {
+  border-radius: 30px;
+  text-align: center;
+  font-size: rgba(125, 140, 157, 1.0);
+  display: inline-block;
+  position: absolute;
+  left: 25px;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  bottom: -15px;
+  font-size: 11px;
+  color: rgba(66, 210, 146, 1.0);
+  background-color: #fff;
+  border: 1px solid rgba(66, 210, 146, 1.0);
+}
+
+.day {
+  position: absolute;
+  right: 0;
+  bottom: -15px;
+  font-size: 11px;
+  color: rgba(125, 140, 157, 1.0);
+  background-color: rgba(242, 243, 245, 1.0);
+  border-radius: 15px 0 0 15px;
+  padding: 0 10px 0 15px;
+  height: 30px;
+  line-height: 30px;
+}
+
 .card-item {
   margin: 0 $space-4x $space-6x;
   box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
@@ -69,6 +141,7 @@
   color: $color-caribbean-green;
   cursor: default;
 }
+
 
 .editor {
   padding: 5px;
