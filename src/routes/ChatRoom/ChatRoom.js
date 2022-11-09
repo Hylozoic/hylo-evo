@@ -291,7 +291,7 @@ export default function ChatRoom (props) {
       />
       <div id='chats' styleName='stream-items-container' ref={chatsRef}>
         {firstItemIndex !== false && postsForDisplay.length === 0
-          ? <NoPosts />
+          ? <NoPosts className={styles['no-posts']} />
           : firstItemIndex === false
             ? <Loading />
             : <Virtuoso
