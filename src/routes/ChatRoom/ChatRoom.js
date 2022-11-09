@@ -111,25 +111,25 @@ export default function ChatRoom (props) {
     // Wait until GroupTopic is loaded
     if (groupTopic?.id) {
       props.fetchPostsFuture(0)
-      props.fetchPostsPast(0)
+      if (lastReadPostId) {
+        props.fetchPostsPast(0)
+      }
       setLastReadPostId(groupTopic.lastReadPostId)
     }
     setNewPost(emptyPost)
   }, [groupTopic?.id])
 
-  // TODO: Loren why do we need this? handleAddLinkPreview not working to update state?
-  useEffect(() => {
-    setNewPost({ ...newPost, linkPreview })
-  }, [linkPreview])
-
   // Do one time, to set ready
   useEffect(() => {
     if (postsPast !== null && postsFuture !== null) {
+      console.log("setting first tien index", postsTotal, postsPast.length, postsFuture.length)
       setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
       if (!lastReadPostId) {
-        const lastPast = postsFuture.length > 0 ? postsFuture[postsFuture.length - 1] : postsPast[postsPast.length - 1]
-        updateGroupTopicLastReadPost(groupTopic.id, lastPost.id)
-        setLastReadPostId(lastPost.id)
+        const lastPost = postsFuture.length > 0 ? postsFuture[postsFuture.length - 1] : postsPast[postsPast.length - 1]
+        if (lastPost) {
+          updateGroupTopicLastReadPost(groupTopic.id, lastPost.id)
+          setLastReadPostId(lastPost.id)
+        }
       }
     }
   }, [postsPast, postsFuture])
@@ -158,28 +158,6 @@ export default function ChatRoom (props) {
     }
   }, [])
 
-  const postChatMessage = useCallback(() => {
-    // Only submit if any non-whitespace text has been added
-    if (trim(editorRef.current?.getText() || '').length === 0) return
-
-
-    const details = editorRef.current.getHTML()
-    const imageUrls = imageAttachments && imageAttachments.map((attachment) => attachment.url)
-    // XXX: i have no idea why linkPreview is needed here, it should be in newPost but its not and I dont know why
-    console.log("create post link preview", props.linkPreview)
-    console.log("create post with", { ...newPost, details, imageUrls, linkPreview })
-    createPost({ ...newPost, details, imageUrls, linkPreview }).then(() => {
-      setNewPost(emptyPost)
-      setCreatedNewPost(true)
-      editorRef.current.clearContent()
-      editorRef.current.focus()
-      clearImageAttachments()
-      clearLinkPreview()
-      // scrollToBottom()
-    })
-    return true
-  }, [newPost, imageAttachments, linkPreview, editorRef.current])
-
   const handleDetailsUpdate = (d) => {
     const hasText = trim(editorRef.current?.getText() || '').length > 0
     setPostInProgress(hasText)
@@ -202,6 +180,11 @@ export default function ChatRoom (props) {
     props.pollingFetchLinkPreview(url)
   })
 
+  useEffect(() => {
+    console.log("setting link prevuew  in new post", linkPreview)
+    setNewPost({ ...newPost, linkPreview })
+  }, [linkPreview])
+
   const handleFeatureLinkPreview = featured => {
     console.log("handle link pfeature")
     setNewPost({ ...newPost, linkPreviewFeatured: featured })
@@ -219,6 +202,26 @@ export default function ChatRoom (props) {
       updateGroupTopicLastReadPost(groupTopic.id, postId)
     }
   }
+
+  const postChatMessage = async () => {
+    // Only submit if any non-whitespace text has been added
+    if (trim(editorRef.current?.getText() || '').length === 0) return
+
+    const details = editorRef.current.getHTML()
+    const imageUrls = imageAttachments && imageAttachments.map((attachment) => attachment.url)
+    // XXX: i have no idea why linkPreview is needed here, it should be in newPost but its not and I dont know why
+    console.log("create post link preview", linkPreview)
+    console.log("create post with", { ...newPost, details, imageUrls })
+    await createPost({ ...newPost, details, imageUrls, linkPreview })
+    setNewPost(emptyPost)
+    setCreatedNewPost(true)
+    editorRef.current.clearContent()
+    editorRef.current.focus()
+    clearImageAttachments()
+    clearLinkPreview()
+      // scrollToBottom()
+    return true
+  }//, [newPost, imageAttachments, linkPreview, editorRef.current])
 
   const postsForDisplay = useMemo(() => {
     let currentHeader, lastPost, firstUnreadPost, currentDay, newDay
@@ -272,6 +275,8 @@ export default function ChatRoom (props) {
 
   if (topicLoading) return <Loading />
 
+    console.log("first item index", firstItemIndex)
+  console.log("postsForDisplay", postsForDisplay)
   return (
     <div styleName='container'>
       <TopicFeedHeader
@@ -291,7 +296,7 @@ export default function ChatRoom (props) {
       />
       <div id='chats' styleName='stream-items-container' ref={chatsRef}>
         {firstItemIndex !== false && postsForDisplay.length === 0
-          ? <NoPosts className={styles['no-posts']} />
+          ? <Loading />
           : firstItemIndex === false
             ? <Loading />
             : <Virtuoso

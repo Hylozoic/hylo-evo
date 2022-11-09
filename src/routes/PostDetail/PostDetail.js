@@ -276,7 +276,7 @@ export default class PostDetail extends Component {
             )}
             <SocketSubscriber type='post' id={post.id} />
           </div>
-        }
+      }
       </ReactResizeDetector>
     )
   }
@@ -284,7 +284,7 @@ export default class PostDetail extends Component {
 
 export function PostTags ({ tags, slug }) {
   if (isEmpty(tags)) return null
-
+    console.log("tagsss", tags)
   return (
     <div styleName='tags'>
       {tags.map(tag => (
