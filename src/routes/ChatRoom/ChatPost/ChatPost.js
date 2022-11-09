@@ -96,7 +96,7 @@ export default function ChatPost ({
       //{ icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
       //{ icon: 'Copy', label: 'Copy Link', onClick: copyLink },
       { icon: 'Smiley', label: 'React', onClick: handleReaction },
-      { icon: 'Reply', label: 'Reply', onClick: openPost },
+      { icon: 'Replies', label: 'Reply', onClick: openPost },
       { icon: 'Edit', label: 'Edit', onClick: editPost },
       { icon: 'Flag', label: 'Flag', onClick: currentUser.id !== creator.id ? () => { setFlaggingVisible(true) } : null },
       // { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
