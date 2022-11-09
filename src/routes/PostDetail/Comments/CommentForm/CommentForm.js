@@ -42,6 +42,8 @@ export default class CommentForm extends Component {
       clearAttachments
     } = this.props
 
+    console.log('!!!! linkPreview', this.state.linkPreview)
+
     if (this.editor?.current && this.editor.current.isEmpty()) {
       // Do nothing and stop event propagation
       return true
@@ -55,6 +57,10 @@ export default class CommentForm extends Component {
 
     // Tell Editor this keyboard event was handled and to end propagation.
     return true
+  }
+
+  handleAddLinkPreview = url => {
+    this.setState({ linkPreview: url })
   }
 
   render () {
@@ -77,6 +83,7 @@ export default class CommentForm extends Component {
           <HyloEditor
             contentHTML={editorContent}
             onEnter={this.handleOnEnter}
+            onAddLink={this.handleAddLinkPreview}
             styleName='editor'
             readOnly={!currentUser}
             onUpdate={this.startTyping}
