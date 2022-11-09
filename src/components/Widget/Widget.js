@@ -177,7 +177,7 @@ export default function Widget (props) {
           save={handleUpdateWidget}
         />}
       <div styleName={`content ${isVisible ? '' : 'hidden'}`}>
-        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings, isMember }) : null)
+        {isVisible ? (widgetItems ? React.createElement(WIDGETS[name].component, { items: widgetItems, group, routeParams, settings, isMember: !!isMember }) : null)
           : isModerator ? <HiddenWidget name={name} /> : null
         }
       </div>
