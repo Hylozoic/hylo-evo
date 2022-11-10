@@ -1,10 +1,12 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
-import { personUrl } from 'util/navigation'
+import { personUrl, findCommentId } from 'util/navigation'
+import scrollIntoView from 'scroll-into-view-if-needed'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
 import Avatar from 'components/Avatar'
@@ -31,11 +33,14 @@ export class Comment extends Component {
     removeComment: func
   }
 
+  commentRef = React.createRef()
+
   editor = React.createRef()
 
   state = {
     editing: false,
-    editedText: null
+    editedText: null,
+    scrolledToComment: false
   }
 
   handleEditComment = () => {
@@ -64,10 +69,25 @@ export class Comment extends Component {
     return true
   }
 
+  handleScrollToComment () {
+    if (this.commentRef.current) {
+      const { bottom, top } = this.commentRef.current.getBoundingClientRect()
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+
+      if (bottom < 0 || bottom > viewportHeight || top < 0) { // element is not inside the current viewport
+        scrollIntoView(this.commentRef.current, { block: 'center' })
+      }
+
+      if (bottom > 0 && bottom <= viewportHeight && top >= 0) { // element is contained in the viewport
+        this.setState({ scrolledToComment: true }) // user can now scroll away from comment without it snapping back to comment
+      }
+    }
+  }
+
   render () {
     const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug } = this.props
     const { id, creator, createdAt, text, attachments } = comment
-    const { editing } = this.state
+    const { editing, scrolledToComment } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -76,9 +96,11 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
+    const selectedCommentId = findCommentId(window.location.pathname)
+    if (this.commentRef.current && selectedCommentId === comment.id && !scrolledToComment) this.handleScrollToComment()
 
     return (
-      <div>
+      <div ref={this.commentRef} styleName={cx({ 'selected-comment': selectedCommentId === comment.id })}>
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>

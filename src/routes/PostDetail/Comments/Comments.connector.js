@@ -2,16 +2,22 @@ import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
 import fetchComments from 'store/actions/fetchComments'
+import { findCommentId } from 'util/navigation'
 import {
   getComments,
   getHasMoreComments,
   getTotalComments
 } from 'store/selectors/getComments'
 import createComment from 'store/actions/createComment'
+import { FETCH_COMMENTS } from 'store/constants'
 
 export function mapStateToProps (state, props) {
+  const comments = getComments(state, props)
+  const commentsPending = state.pending[FETCH_COMMENTS]
+
   return {
-    comments: getComments(state, props),
+    commentsPending,
+    comments,
     total: getTotalComments(state, { id: props.postId }),
     hasMore: getHasMoreComments(state, { id: props.postId }),
     currentUser: getMe(state)
@@ -34,7 +40,6 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { fetchCommentsMaker } = dispatchProps
   const cursor = !isEmpty(comments) && comments[0].id
   const fetchComments = fetchCommentsMaker(cursor)
-
   return {
     ...ownProps,
     ...stateProps,

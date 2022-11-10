@@ -109,7 +109,7 @@ export function editPostUrl (id, opts = {}, querystringParams = {}) {
 }
 
 export function commentUrl (postId, commentId, opts = {}, querystringParams = {}) {
-  return `${postUrl(postId, opts, querystringParams)}#comment_${commentId}`
+  return `${postUrl(postId, opts, querystringParams)}/comments/${commentId}`
 }
 
 // Messages URLs
@@ -184,4 +184,10 @@ export const origin = () =>
 
 export function isPublicPath (path) {
   return (path.startsWith('/public'))
+}
+
+export function findCommentId (url) {
+  const paths = url.split('/')
+  const commentIdIndex = paths.findIndex(element => element === 'comments' || element === 'comment') + 1
+  return paths[commentIdIndex]
 }
