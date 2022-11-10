@@ -40,11 +40,11 @@ export default class Comments extends Component {
     const { comments, commentsPending } = this.props
     const selectedCommentId = findCommentId(window.location.pathname)
     const commentIds = []
+    if (comments.length < 1) return
     comments.forEach(comment => {
       commentIds.push(comment.id)
       comment.childComments.forEach(comment => commentIds.push(comment.id))
     })
-    if (comments.length < 1) return
     if (!commentsPending && !commentIds.includes(selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
   }
 

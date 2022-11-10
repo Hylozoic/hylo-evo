@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
 import fetchComments from 'store/actions/fetchComments'
-import { findCommentId } from 'util/navigation'
 import {
   getComments,
   getHasMoreComments,
