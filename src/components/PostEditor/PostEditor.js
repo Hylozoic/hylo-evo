@@ -518,6 +518,17 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  canModerate = () => {
+    const { myModeratedGroups = [] } = this.props
+    const { post } = this.state
+    const { groups = [] } = post
+    const myModeratedGroupsSlugs = myModeratedGroups.map(group => group.slug)
+    for (let index = 0; index < groups.length; index++) {
+      if (!myModeratedGroupsSlugs.includes(groups[index].slug)) return false
+    }
+    return true
+  }
+
   render () {
     const {
       titlePlaceholder,
@@ -553,7 +564,6 @@ export default class PostEditor extends React.Component {
       loading,
       setAnnouncement,
       announcementSelected,
-      canModerate,
       myModeratedGroups,
       isProject,
       isEvent,
@@ -826,7 +836,7 @@ export default class PostEditor extends React.Component {
             save={() => this.save()}
             setAnnouncement={setAnnouncement}
             announcementSelected={announcementSelected}
-            canModerate={canModerate}
+            canModerate={this.canModerate()}
             toggleAnnouncementModal={this.toggleAnnouncementModal}
             showAnnouncementModal={showAnnouncementModal}
             groupCount={get('groups', post).length}
@@ -850,10 +860,10 @@ export function ActionsBar ({
   save,
   setAnnouncement,
   announcementSelected,
-  canModerate,
   toggleAnnouncementModal,
   showAnnouncementModal,
   groupCount,
+  canModerate,
   myModeratedGroups,
   groups
 }) {

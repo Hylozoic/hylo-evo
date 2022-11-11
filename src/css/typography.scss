@@ -54,9 +54,31 @@ a {
   color: #0275d8
 }
 
-a:focus,
-a:hover {
-  color: #014c8c
+@media (hover: hover) and (pointer: fine) {
+  a:focus,
+  a:hover {
+    color: #014c8c
+  }
+}
+
+/* 
+NOTE: There is an issue of an underline appearing under some
+links in mobile, but I've only see it happen in mobile/non-hover
+devices. We don't apparently globally turn-off the browser default
+`text-decoration: underline` here, and it may be that bootstrap
+doesn't turn that off by default either. Doing a global search
+reveals an unusual amount of `text-decoration: none` for link
+styles, which leads me to believe it is not globally turned-off
+and that maybe we should, and remove some of the extra attributes
+down the line.
+
+Forcing the fix here, and probably save to do this
+outside the media query, but leaving it at this for now.
+*/
+@media (hover: none) {
+  a {
+    text-decoration: none !important; 
+  }
 }
 
 a.hylo-link,
@@ -65,9 +87,11 @@ a.hylo-link,
 {
   color: $color-caribbean-green;
   cursor: pointer;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+    }
   }
 }
 
@@ -203,10 +227,12 @@ textarea {
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer;
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+      cursor: pointer;
+    }
   }
 }
 
@@ -216,9 +242,11 @@ textarea {
   font-size: 10px;
   letter-spacing: 0.6;
   line-height: 14px;
-  &:hover {
-    color: $color-gossamer;
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: $color-gossamer;
+      cursor: pointer;
+    }
   }
 }
 

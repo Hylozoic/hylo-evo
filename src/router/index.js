@@ -1,38 +1,36 @@
 import React from 'react'
-import { StaticRouter, Switch, Route } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
-import { createBrowserHistory, createMemoryHistory } from 'history'
-import HyloAppRouter from 'routes/HyloAppRouter'
+import { Switch, Route } from 'react-router'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { Provider } from 'react-redux'
+import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
+import isWebView from 'util/webView'
+import createStore, { history } from '../store'
 import RootRouter from 'routes/RootRouter'
-import '../css/global/index.scss'
+import HyloAppRouter from 'routes/HyloAppRouter'
 
-export const history = typeof window !== 'undefined'
-  ? createBrowserHistory()
-  : createMemoryHistory()
+const store = createStore()
 
-// Note: `/hyloApp/*` routes will not invoke auth as auth cookie is already passed from webview
-export function clientRouter () {
+if (isWebView()) {
+  window.ReactNativeWebView.reactRouterHistory = history
+}
+
+export default function App () {
   require('client/rollbar') // set up handling of uncaught errors
 
   return (
-    <ConnectedRouter history={history}>
-      <Switch>
-        <Route path='/hyloApp' component={HyloAppRouter} />
-        <RootRouter />
-      </Switch>
-    </ConnectedRouter>
-  )
-}
-
-// Note: Server-side Rendering
-// ref: https://github.com/Hylozoic/hylo-evo/issues/1069
-export function serverRouter (req, context) {
-  return (
-    <StaticRouter location={req.url} context={context}>
-      <Switch>
-        <Route path='/hyloApp' component={HyloAppRouter} />
-        <RootRouter />
-      </Switch>
-    </StaticRouter>
+    <LayoutFlagsProvider>
+      <DndProvider backend={HTML5Backend}>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route path='/hyloApp' component={HyloAppRouter} />
+              <RootRouter />
+            </Switch>
+          </ConnectedRouter>
+        </Provider>
+      </DndProvider>
+    </LayoutFlagsProvider>
   )
 }

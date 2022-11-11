@@ -4,6 +4,7 @@ import { throttle, debounce } from 'lodash'
 import { get } from 'lodash/fp'
 import Loading from 'components/Loading'
 import Message from '../Message'
+import ClickCatcher from 'components/ClickCatcher'
 import './MessageSection.scss'
 
 // the maximum amount of time in minutes that can pass between messages to still
@@ -152,7 +153,9 @@ export default class MessageSection extends React.Component {
       {pending && <Loading />}
       {!pending &&
         <div styleName='messages-section-inner'>
-          {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
+          <ClickCatcher>
+            {createMessageList(messages, lastSeenAtTimes[get('id', messageThread)])}
+          </ClickCatcher>
         </div>
       }
     </div>

@@ -31,10 +31,12 @@ exports[`to display sending... when message is still in optimistic state 1`] = `
     <div
       data-stylename="text"
     >
-      <HyloHTML
-        element="span"
-        html="sending..."
-      />
+      <ClickCatcher>
+        <HyloHTML
+          element="span"
+          html="sending..."
+        />
+      </ClickCatcher>
     </div>
   </div>
 </div>
@@ -54,11 +56,13 @@ exports[`to match the latest non-header snapshot 1`] = `
     <div
       data-stylename="text"
     >
-      <HyloHTML
-        element="span"
-        html="<p>test</p>
+      <ClickCatcher>
+        <HyloHTML
+          element="span"
+          html="<p>test</p>
 "
-      />
+        />
+      </ClickCatcher>
     </div>
   </div>
 </div>
@@ -93,11 +97,13 @@ exports[`to match the latest snapshot 1`] = `
     <div
       data-stylename="text"
     >
-      <HyloHTML
-        element="span"
-        html="<p>test</p>
+      <ClickCatcher>
+        <HyloHTML
+          element="span"
+          html="<p>test</p>
 "
-      />
+        />
+      </ClickCatcher>
     </div>
   </div>
 </div>

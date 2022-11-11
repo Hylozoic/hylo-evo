@@ -8,7 +8,7 @@ export const KEYS_PRESERVED_ON_RESET = [
   'mixpanel'
 ]
 
-export default function (state, action) {
+export default function (state = null, action) {
   if (action.type === LOGOUT && !action.error) {
     return getEmptyState()
   }

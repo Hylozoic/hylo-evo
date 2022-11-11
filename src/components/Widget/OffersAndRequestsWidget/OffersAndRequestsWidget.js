@@ -7,20 +7,21 @@ import RoundImage from '../../RoundImage'
 
 import './OffersAndRequestsWidget.scss'
 
-const { array, object } = PropTypes
+const { array, bool, object } = PropTypes
 
 export default class OffersAndRequestsWidget extends Component {
   static propTypes = {
-    group: object,
-    items: array
+    isMember: bool,
+    items: array,
+    routeParams: object
   }
 
   render () {
-    const { group, items, routeParams, isMember } = this.props
+    const { isMember, items, routeParams } = this.props
 
     return (
       <div styleName='offers-and-requests'>
-        {items.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
+        {items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
           <div styleName='item'>
             <div styleName='meta'>
               <span styleName='type'>{p.type}</span> from {p.creator.name}
