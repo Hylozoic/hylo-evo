@@ -75,3 +75,19 @@ export function convertCoordinateToLocation (coordinate) {
     // wikidata: String
   }
 }
+
+export function generalLocationString (locationObject, defaultString = '') {
+  if (locationObject) {
+    if (locationObject.addressNumber) {
+      return `${locationObject.addressNumber} ${locationObject.addressStreet}, ${locationObject.city}, ${locationObject.region}`
+    } else if (locationObject.city) {
+      return `${locationObject.city}, ${locationObject.region}`
+    } else if (locationObject.fullText) {
+      return locationObject.fullText
+    } else if (locationObject.center) {
+      return `${locationObject.center.lat}, ${locationObject.center.lng}`
+    }
+  } else {
+    return defaultString
+  }
+}
