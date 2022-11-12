@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import { debounce, trim } from 'lodash/fp'
 import moment from 'moment-timezone'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import { IoSend } from 'react-icons/io5'
 import AttachmentManager from 'components/AttachmentManager'
@@ -28,6 +28,16 @@ EditorView.prototype.updateState = function updateState (state) {
 // the maximum amount of time in minutes that can pass between messages to still
 // include them under the same avatar and timestamp
 const MAX_MINS_TO_BATCH = 5
+
+// Recommended here:
+// https://github.com/ueberdosis/tiptap/issues/2403#issuecomment-1062712162
+function useEventCallback (fn) {
+  const ref = useRef()
+  useLayoutEffect(() => {
+    ref.current = fn
+  })
+  return useCallback(() => (0, ref.current)(), [])
+}
 
 export default function ChatRoom (props) {
   const {
@@ -203,7 +213,7 @@ export default function ChatRoom (props) {
     }
   }
 
-  const postChatMessage = async () => {
+  const postChatMessage = useEventCallback(async () => {
     // Only submit if any non-whitespace text has been added
     if (trim(editorRef.current?.getText() || '').length === 0) return
 
@@ -221,7 +231,7 @@ export default function ChatRoom (props) {
     clearLinkPreview()
       // scrollToBottom()
     return true
-  }//, [newPost, imageAttachments, linkPreview, editorRef.current])
+  })
 
   const postsForDisplay = useMemo(() => {
     let currentHeader, lastPost, firstUnreadPost, currentDay, newDay

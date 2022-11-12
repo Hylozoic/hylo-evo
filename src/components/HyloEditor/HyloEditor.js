@@ -127,7 +127,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
 
       onUpdate(editor.getHTML())
     }
-  }, [placeholder, contentHTML])
+  }, [placeholder, contentHTML, onEnter])
 
   useImperativeHandle(ref, () => ({
     blur: () => {

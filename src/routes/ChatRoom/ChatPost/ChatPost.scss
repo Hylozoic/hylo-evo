@@ -170,7 +170,7 @@
 .images {
   display: flex;
   overflow-x: auto;
-  padding-bottom: 10px;
+  height: 90px;
   margin-left: 20px;
 }
 
@@ -182,6 +182,7 @@
 
 .image {
   display: block;
+
   > div {
     width: 80px;
     height: 80px;
@@ -198,7 +199,11 @@
 }
 
 .link-preview {
-  padding: 0 1.25rem .2rem 1.25rem;
+  padding: 0 1.25rem .6rem 1.25rem;
+
+  > div {
+    margin-bottom: 0;
+  }
 }
 
 .emojis {
@@ -215,7 +220,7 @@
 
 .comments-container {
   margin-left: 20px;
-  margin-bottom: 8px;
+  padding-bottom: 8px;
   display: flex;
   align-items: center;
   cursor: pointer;

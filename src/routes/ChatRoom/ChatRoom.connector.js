@@ -90,6 +90,7 @@ export function mapStateToProps (state, props) {
   const fetchPostsFutureParams = {
     context,
     cursor: groupTopic?.lastReadPostId,
+    filter: 'chat',
     order: 'asc',
     slug: groupSlug,
     search,
@@ -100,6 +101,7 @@ export function mapStateToProps (state, props) {
   const fetchPostsPastParams = {
     context,
     cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
+    filter: 'chat',
     order: 'desc',
     slug: groupSlug,
     search,

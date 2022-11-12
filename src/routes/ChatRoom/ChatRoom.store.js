@@ -98,7 +98,7 @@ export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collection
         order,
         search,
         slug,
-        sortBy: 'id',
+        sortBy,
         topic,
         topics,
         types

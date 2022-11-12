@@ -65,17 +65,6 @@ export default function PostCard(props) {
 
   const hasImage = post.attachments.find(a => a.type === 'image') || false
 
-  if (postType === 'chat') return (
-    <ChatCard
-      expanded={expanded}
-      highlightProps={highlightProps}
-      post={post}
-      routeParams={routeParams}
-      slug={routeParams.groupSlug}
-      showDetails={showDetails}
-    />
-  )
-
   return (
     <div
       ref={postCardRef}

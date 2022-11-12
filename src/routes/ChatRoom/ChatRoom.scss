@@ -1,11 +1,10 @@
 :global {
   div[data-test-id="virtuoso-item-list"] {
     > div:last-child {
-      padding-bottom: 15px;
+      //padding-bottom: 15px;
     }
   }
 }
-
 
 .container {
   box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
