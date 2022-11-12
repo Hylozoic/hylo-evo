@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
-import { personUrl, findCommentId } from 'util/navigation'
+import { personUrl } from 'util/navigation'
 import scrollIntoView from 'scroll-into-view-if-needed'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
@@ -85,7 +85,7 @@ export class Comment extends Component {
   }
 
   render () {
-    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug } = this.props
+    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId } = this.props
     const { id, creator, createdAt, text, attachments } = comment
     const { editing, scrolledToComment } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
@@ -96,7 +96,6 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
-    const selectedCommentId = findCommentId(window.location.pathname)
     if (this.commentRef.current && selectedCommentId === comment.id && !scrolledToComment) this.handleScrollToComment()
 
     return (

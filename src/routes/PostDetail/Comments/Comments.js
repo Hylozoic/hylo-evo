@@ -2,7 +2,6 @@ import { array, func, object, number, string, bool } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import { findCommentId } from 'util/navigation'
 import ShowMore from './ShowMore'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
@@ -14,6 +13,7 @@ export default class Comments extends Component {
   static propTypes = {
     comments: array,
     commentsPending: bool,
+    selectedCommentId: number,
     commentsTotal: number,
     fetchComments: func,
     height: number,
@@ -37,8 +37,7 @@ export default class Comments extends Component {
   }
 
   ensureSelectedCommentPresent () {
-    const { comments, commentsPending } = this.props
-    const selectedCommentId = findCommentId(window.location.pathname)
+    const { comments, commentsPending, selectedCommentId } = this.props
     const commentIds = []
     if (comments.length < 1) return
     comments.forEach(comment => {
@@ -60,6 +59,7 @@ export default class Comments extends Component {
       fetchComments,
       currentUser,
       createComment,
+      selectedCommentId,
       slug,
       postId,
       width
@@ -80,6 +80,7 @@ export default class Comments extends Component {
             key={c.id}
             comment={c}
             slug={slug}
+            selectedCommentId={selectedCommentId}
             postId={postId}
             onReplyThread={this.scrollToReplyInput.bind(this)} />
         ))}
