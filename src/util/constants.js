@@ -1,3 +1,5 @@
+export const MAX_POST_TOPICS = 3
+
 export const STREAM_SORT_OPTIONS = [
   { id: 'updated', label: 'Latest activity' },
   { id: 'created', label: 'Post Date' },

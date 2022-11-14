@@ -76,11 +76,8 @@ export function mapStateToProps (state, props) {
   const search = getQuerystringParam('search', state, props)
 
   const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
-  // TODO: not showing up consistently Loren?
-  console.log("image attachments", imageAttachments)
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
-  console.log("link preview", linkPreviewStatus, linkPreview)
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)
 
   // if lastPostRead is null or = last post in this topic then load most recent X # of posts
@@ -116,7 +113,7 @@ export function mapStateToProps (state, props) {
   const hasMorePostsPast = getHasMorePosts(state, fetchPostsPastParams)
 
   let currentPostIndex = getTotalPosts(state, fetchPostsPastParams)
-  currentPostIndex = currentPostIndex ? currentPostIndex - 1 : null
+  currentPostIndex = currentPostIndex ? Math.max(currentPostIndex - 2, 0) : 0
 
   return {
     canModerate,

@@ -101,26 +101,32 @@
 }
 
 .card-item {
-  margin: 0 $space-4x $space-6x;
-  box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+  padding: 0 $space-4x $space-6x;
 
-  &> div:nth-child(2) > div:nth-child(1) {
-    margin-bottom: 0;
+  > div {
+    box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+
+    &> div:nth-child(2) > div:nth-child(1) {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(35, 65, 91, .3);
+    }
   }
 
-  &:hover {
-    box-shadow: 0 4px 10px rgba(35, 65, 91, .3);
-  }
-}
+  &.expanded {
+    padding: 0 $space-2x $space-6x;
 
-.expanded {
-  margin: 0 $space-2x $space-6x;
-  box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
-  border: 1px solid rgba(0, 118, 223, .50);
-  border-top: 3px solid rgba(0, 118, 223, .50);
+    > div {
+      box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+      border: 1px solid rgba(0, 118, 223, .50);
+      border-top: 3px solid rgba(0, 118, 223, .50);
 
-  &:hover {
-    box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;
+      &:hover {
+        box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;
+      }
+    }
   }
 }
 
@@ -192,7 +198,7 @@
 
 @media screen and (max-width: 425px) {
   .card-item {
-    margin: 0 5px 10px 5px;
+    padding: 0 5px 10px 5px;
   }
 
   .stream-grid {

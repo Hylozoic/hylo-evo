@@ -186,7 +186,6 @@ export default class PostDetail extends Component {
               </div>
             )}
             <CardImageAttachments attachments={post.attachments} linked />
-            <PostTags tags={post.tags} />
             {isEvent && (
               <EventBody
                 styleName='body'
@@ -280,20 +279,6 @@ export default class PostDetail extends Component {
       </ReactResizeDetector>
     )
   }
-}
-
-export function PostTags ({ tags, slug }) {
-  if (isEmpty(tags)) return null
-    console.log("tagsss", tags)
-  return (
-    <div styleName='tags'>
-      {tags.map(tag => (
-        <Link styleName='tag' to={topicUrl(tag, { groupSlug: slug })} key={tag}>
-          #{tag}
-        </Link>
-      ))}
-    </div>
-  )
 }
 
 export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {

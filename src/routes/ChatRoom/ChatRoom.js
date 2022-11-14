@@ -1,9 +1,11 @@
 import cx from 'classnames'
 import { debounce, trim } from 'lodash/fp'
 import moment from 'moment-timezone'
+import { EditorView } from 'prosemirror-view'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Virtuoso } from 'react-virtuoso'
 import { IoSend } from 'react-icons/io5'
+import ReactResizeDetector from 'react-resize-detector'
+import { Virtuoso } from 'react-virtuoso'
 import AttachmentManager from 'components/AttachmentManager'
 import Button from 'components/Button'
 import HyloEditor from 'components/HyloEditor'
@@ -14,12 +16,12 @@ import NoPosts from 'components/NoPosts'
 import PostCard from 'components/PostCard'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
+import { MAX_POST_TOPICS } from 'util/constants'
 import ChatPost from './ChatPost'
+
 import styles from './ChatRoom.scss'
 
 // Hack to fix focusing on editor after it unmounts/remounts
-import { EditorView } from 'prosemirror-view'
-
 EditorView.prototype.updateState = function updateState (state) {
   if (!this.docView) return // This prevents the matchesNode error on hot reloads
   this.updateStateInner(state, this.state.plugins !== state.plugins)
@@ -45,7 +47,6 @@ export default function ChatRoom (props) {
     addAttachment,
     clearImageAttachments,
     clearLinkPreview,
-    context,
     createPost,
     canModerate,
     currentPostIndex,
@@ -84,8 +85,7 @@ export default function ChatRoom (props) {
     linkPreviewFeatured: false,
     location: '',
     title: null,
-    // topics: topic ? [topic] : [],
-    topicNames: [topicName],
+    topics: topic ? [topic] : [],
     type: 'chat'
   }), [group, topicName])
 
@@ -95,7 +95,7 @@ export default function ChatRoom (props) {
 
   const [atBottom, setAtBottom] = useState(false)
   const [postInProgress, setPostInProgress] = useState(false)
-  const [lastReadPostId, setLastReadPostId] = useState(groupTopic.lastReadPostId)
+  const [lastReadPostId, setLastReadPostId] = useState(groupTopic?.lastReadPostId)
   const [newPost, setNewPost] = useState(emptyPost)
   const [firstItemIndex, setFirstItemIndex] = useState(false)
   const [createdNewPost, setCreatedNewPost] = useState(false)
@@ -124,7 +124,11 @@ export default function ChatRoom (props) {
       if (lastReadPostId) {
         props.fetchPostsPast(0)
       }
+      // Reset everything
       setLastReadPostId(groupTopic.lastReadPostId)
+      setFirstItemIndex(false)
+      clearLinkPreview()
+      clearImageAttachments()
     }
     setNewPost(emptyPost)
   }, [groupTopic?.id])
@@ -132,7 +136,6 @@ export default function ChatRoom (props) {
   // Do one time, to set ready
   useEffect(() => {
     if (postsPast !== null && postsFuture !== null) {
-      console.log("setting first tien index", postsTotal, postsPast.length, postsFuture.length)
       setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
       if (!lastReadPostId) {
         const lastPost = postsFuture.length > 0 ? postsFuture[postsFuture.length - 1] : postsPast[postsPast.length - 1]
@@ -145,26 +148,29 @@ export default function ChatRoom (props) {
   }, [postsPast, postsFuture])
 
   useEffect(() => {
-    console.log("posts total changed", postsTotal, atBottom)
     if (atBottom && virtuoso.current) {
       setTimeout(() => {
-        console.log("at bottom do scrollll")
-        virtuoso.current.scrollToIndex(postsTotal - 1)
+        virtuoso.current.scrollToIndex(postsTotal)
       }, 300)
     }
   }, [postsTotal])
 
-  // useEffect(() => {
-  //   if (editorRef.current) {
-  //     setTimeout(() => editorRef.current.focus(), 1000)
-  //   }
-  // }, [editorRef?.current, groupTopic?.id])
+  useEffect(() => {
+    if (editorRef.current) {
+      setTimeout(() => {
+        // In case we unmounted really quick and its no longer here
+        if (editorRef.current) {
+          editorRef.current.focus()
+        }
+      }, 600)
+    }
+  }, [editorRef?.current, groupTopic?.id])
 
   useEffect(() => {
-    // On component unmount clear link preview TODO: and images?
+    // On component unmount clear link preview and images attachments from redux
     return () => {
-      console.log("unmounting")
       clearLinkPreview()
+      clearImageAttachments()
     }
   }, [])
 
@@ -174,13 +180,8 @@ export default function ChatRoom (props) {
   }
 
   const handleAddTopic = topic => {
-    // const { post, allowAddTopic } = this.state
-
-    // if (!allowAddTopic || post?.topics?.length >= MAX_POST_TOPICS) return
-
-    // this.setState({ post: { ...post, topics: [...post.topics, topic] } })
-    // this.setIsDirty(true)
-    console.log("add topic")
+    if (newPost?.topics?.length >= MAX_POST_TOPICS) return
+    setNewPost({ ...newPost, topics: [...newPost.topics, topic] })
   }
 
   // Checks for linkPreview every 1/2 second
@@ -191,18 +192,15 @@ export default function ChatRoom (props) {
   })
 
   useEffect(() => {
-    console.log("setting link prevuew  in new post", linkPreview)
     setNewPost({ ...newPost, linkPreview })
   }, [linkPreview])
 
   const handleFeatureLinkPreview = featured => {
-    console.log("handle link pfeature")
     setNewPost({ ...newPost, linkPreviewFeatured: featured })
   }
 
   const handleRemoveLinkPreview = () => {
     removeLinkPreview()
-    console.log("remoew link preview")
     setNewPost({ ...newPost, linkPreview: null, linkPreviewFeatured: false })
   }
 
@@ -213,28 +211,33 @@ export default function ChatRoom (props) {
     }
   }
 
+  const scrollToBottom = useCallback(() => {
+    if (virtuoso.current) {
+      console.log("scroll to botto", postsTotal)
+      virtuoso.current.scrollToIndex(postsTotal)
+    }
+  }, [])
+
   const postChatMessage = useEventCallback(async () => {
     // Only submit if any non-whitespace text has been added
     if (trim(editorRef.current?.getText() || '').length === 0) return
 
     const details = editorRef.current.getHTML()
     const imageUrls = imageAttachments && imageAttachments.map((attachment) => attachment.url)
-    // XXX: i have no idea why linkPreview is needed here, it should be in newPost but its not and I dont know why
-    console.log("create post link preview", linkPreview)
-    console.log("create post with", { ...newPost, details, imageUrls })
-    await createPost({ ...newPost, details, imageUrls, linkPreview })
+    const topicNames = newPost.topics?.map((t) => t.name)
+    await createPost({ ...newPost, details, imageUrls, topicNames })
     setNewPost(emptyPost)
     setCreatedNewPost(true)
     editorRef.current.clearContent()
     editorRef.current.focus()
     clearImageAttachments()
     clearLinkPreview()
-      // scrollToBottom()
+    scrollToBottom()
     return true
   })
 
   const postsForDisplay = useMemo(() => {
-    let currentHeader, lastPost, firstUnreadPost, currentDay, newDay
+    let currentHeader, lastPost, currentDay, newDay
     if (!postsPast || !postsFuture) return []
     return postsPast.concat(postsFuture).reduce((acc, post, i) => {
       let headerDate, messageDate, diff, greaterThanMax
@@ -272,7 +275,6 @@ export default function ChatRoom (props) {
       // This is needed because we add newly created posts to the end postsFuture
       // which would add the line above them saying they are "new".
       if (!createdNewPost && postsFuture && post.id === postsFuture[0]?.id) {
-        firstUnreadPost = post
         post.firstUnread = true
         post.header = true
       }
@@ -283,10 +285,15 @@ export default function ChatRoom (props) {
     }, [])
   }, [postsPast, postsFuture])
 
+  const handleResizeChats = () => {
+    // Make sure when post chat box grows we stay at bottom if already there
+    if (atBottom) {
+      scrollToBottom()
+    }
+  }
+
   if (topicLoading) return <Loading />
 
-    console.log("first item index", firstItemIndex)
-  console.log("postsForDisplay", postsForDisplay)
   return (
     <div styleName='container'>
       <TopicFeedHeader
@@ -304,68 +311,72 @@ export default function ChatRoom (props) {
         }
         topicName={topicName}
       />
-      <div id='chats' styleName='stream-items-container' ref={chatsRef}>
-        {firstItemIndex !== false && postsForDisplay.length === 0
-          ? <Loading />
-          : firstItemIndex === false
-            ? <Loading />
-            : <Virtuoso
-                atBottomStateChange={(bottom) => {
-                  setAtBottom(bottom)
-                }}
-                endReached={() => fetchPostsFuture(postsFuture.length)}
-                data={postsForDisplay}
-                firstItemIndex={firstItemIndex}
-                initialTopMostItemIndex={currentPostIndex}
-                increaseViewportBy={200}
-                ref={virtuoso}
-                startReached={() => fetchPostsPast(postsPast.length)}
-                style={{ height: '100%', width: '100%', marginTop: 'auto' }}
-                totalCount={postsTotal}
-                itemContent={(index, post) => {
-                  const expanded = selectedPostId === post.id
-                  const intersectionObserver = new window.IntersectionObserver(([entry]) => {
-                    if (entry.isIntersecting) {
-                      handlePostVisible(post.id)
-                    }
-                  }, {
-                    root: chatsRef.current,
-                    threshold: 0.7
-                  })
-                  return (
-                    <>
-                      {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='newPost'>NEW</div></div> : ''}
-                      {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
-                      {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='day'>{post.displayDay}</div></div> : ''}
-                      {post.type === 'chat'
-                        ? <ChatPost
-                            canModerate={canModerate}
-                            currentUser={currentUser}
-                            expanded={expanded}
-                            group={group}
-                            isHeader={post.header}
-                            key={post.id}
-                            index={index}
-                            intersectionObserver={intersectionObserver}
-                            post={post}
-                            showDetails={showDetails}
-                            updatePost={updatePost}
-                          />
-                        : <PostCard
-                            expanded={expanded}
-                            key={post.id}
-                            intersectionObserver={intersectionObserver}
-                            post={post}
-                            querystringParams={querystringParams}
-                            respondToEvent={respondToEvent}
-                            routeParams={routeParams}
-                            styleName={cx({ 'card-item': true, expanded })}
-                          />}
-                    </>
-                  )
-                }}
-              />}
-      </div>
+      <ReactResizeDetector handleWidth={false} handleHeight onResize={handleResizeChats}>{
+        ({ width, height }) => (
+          <div id='chats' styleName='stream-items-container' ref={chatsRef}>
+            {firstItemIndex !== false && postsForDisplay.length === 0
+              ? <NoPosts className={styles['no-posts']} />
+              : firstItemIndex === false
+                ? <Loading />
+                : <Virtuoso
+                    atBottomStateChange={(bottom) => {
+                      setAtBottom(bottom)
+                    }}
+                    endReached={() => fetchPostsFuture(postsFuture.length)}
+                    data={postsForDisplay}
+                    firstItemIndex={firstItemIndex}
+                    initialTopMostItemIndex={currentPostIndex}
+                    increaseViewportBy={200}
+                    ref={virtuoso}
+                    startReached={() => fetchPostsPast(postsPast.length)}
+                    style={{ height: '100%', width: '100%', marginTop: 'auto' }}
+                    totalCount={postsTotal}
+                    itemContent={(index, post) => {
+                      const expanded = selectedPostId === post.id
+                      const intersectionObserver = new window.IntersectionObserver(([entry]) => {
+                        if (entry.isIntersecting) {
+                          handlePostVisible(post.id)
+                        }
+                      }, {
+                        root: chatsRef.current,
+                        threshold: 0.7
+                      })
+                      return (
+                        <>
+                          {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='newPost'>NEW</div></div> : ''}
+                          {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
+                          {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='day'>{post.displayDay}</div></div> : ''}
+                          {post.type === 'chat'
+                            ? <ChatPost
+                                canModerate={canModerate}
+                                currentUser={currentUser}
+                                expanded={expanded}
+                                group={group}
+                                isHeader={post.header}
+                                key={post.id}
+                                index={index}
+                                intersectionObserver={intersectionObserver}
+                                post={post}
+                                showDetails={showDetails}
+                                updatePost={updatePost}
+                              />
+                            : <div styleName={cx({ 'card-item': true, expanded })}><PostCard
+                                expanded={expanded}
+                                key={post.id}
+                                intersectionObserver={intersectionObserver}
+                                post={post}
+                                querystringParams={querystringParams}
+                                respondToEvent={respondToEvent}
+                                routeParams={routeParams}
+                              /></div>}
+                        </>
+                      )
+                    }}
+                  />}
+          </div>
+        )
+      }
+      </ReactResizeDetector>
       <div styleName='post-chat-box'>
         <HyloEditor
           contentHTML={newPost.details}

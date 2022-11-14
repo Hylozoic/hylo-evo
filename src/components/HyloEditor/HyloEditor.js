@@ -138,7 +138,9 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
       editorRef.current.commands.clearContent(true)
     },
     focus: position => {
-      editorRef.current.commands.focus(position)
+      if (editorRef.current) {
+        editorRef.current.commands.focus(position)
+      }
     },
     getHTML: () => {
       return editorRef.current.getHTML()
