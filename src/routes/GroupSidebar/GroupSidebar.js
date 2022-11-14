@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl, groupUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
+import ClickCatcher from 'components/ClickCatcher'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
@@ -75,7 +76,9 @@ export class AboutSection extends Component {
       </div>
       <div styleName={cx('description', { expanded })}>
         {!expanded && <div styleName='gradient' />}
-        <HyloHTML element='span' html={TextHelpers.markdown(description)} />
+        <ClickCatcher>
+          <HyloHTML element='span' html={TextHelpers.markdown(description)} />
+        </ClickCatcher>
       </div>
       {showExpandButton && <span styleName='expand-button' onClick={onClick}>
         {expanded ? 'Show Less' : 'Read More'}

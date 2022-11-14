@@ -34,8 +34,10 @@
   border: 1px solid $color-caribbean-green;
   background-color: $color-caribbean-green;
   color: $color-white;
-  &:hover, &.hover {
-    background-color: lighten($color-caribbean-green, 2%);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &.hover {
+      background-color: lighten($color-caribbean-green, 2%);
+    }
   }
   &:active, &.active {
     background-color: darken($color-caribbean-green, 2%);
@@ -49,8 +51,10 @@
 .purple {
   background-color: $color-medium-purple;
   color: $color-white;
-  &:hover, &.hover {
-    background-color: lighten($color-medium-purple, 3%);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &.hover {
+      background-color: lighten($color-medium-purple, 3%);
+    }
   }
   &:active, &.active {
     background-color: darken($color-medium-purple, 3%);
@@ -61,9 +65,11 @@
   color: $color-caribbean-green;
   background-color: $color-white;
   border: 1px solid $color-alto;
-  &:hover, &.hover {
-    background-color: $color-polar;
-    border-color: $color-caribbean-green;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &.hover {
+      background-color: $color-polar;
+      border-color: $color-caribbean-green;
+    }
   }
   &:active, &.active {
     background-color: $color-ziggurat;
@@ -85,8 +91,10 @@
   border: 1px solid $color-regent;
   background-color: $color-regent;
   color: $color-white;
-  &:hover, &.hover {
-    background-color: lighten($color-regent, 2%);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &.hover {
+      background-color: lighten($color-regent, 2%);
+    }
   }
   &:active, &.active {
     background-color: darken($color-regent, 2%);
@@ -101,8 +109,10 @@
   border: 1px solid $color-regent;
   background-color: $color-white;
   color: $color-regent;
-  &:hover, &.hover {
-    background-color: lighten($color-white, 2%);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover, &.hover {
+      background-color: lighten($color-white, 2%);
+    }
   }
   &:active, &.active {
     background-color: darken($color-white, 2%);

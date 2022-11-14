@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import cx from 'classnames'
 import Avatar from 'components/Avatar'
+import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -29,7 +30,9 @@ export default function Message ({ message, isHeader }) {
           <span styleName='date'>{pending ? 'sending...' : TextHelpers.humanDate(message.createdAt)}</span>
         </div>}
         <div styleName='text'>
-          <HyloHTML element='span' html={text} />
+          <ClickCatcher>
+            <HyloHTML element='span' html={text} />
+          </ClickCatcher>
         </div>
       </div>
     </div>

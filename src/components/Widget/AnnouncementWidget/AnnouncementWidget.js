@@ -17,7 +17,7 @@ const settings = {
   slidesToScroll: 1
 }
 
-export default ({ items = [], group }) => {
+export default ({ items = [], group, routeParams }) => {
   const [swiped, setSwiped] = useState(false)
 
   const handleSwiped = useCallback(() => {
@@ -39,7 +39,7 @@ export default ({ items = [], group }) => {
     <div styleName='announcements'>
       <Slider {...settings} onSwipe={handleSwiped}>
         {items.map(a => <div styleName={cx('announcement', { narrow: items.length > 1 })} key={a.id}>
-          <Link to={postUrl(a.id, { view: 'explore', groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
+          <Link to={postUrl(a.id, routeParams)} onClickCapture={handleOnItemClick}>
             <div styleName='content'>
               <div>
                 <div styleName='meta'>

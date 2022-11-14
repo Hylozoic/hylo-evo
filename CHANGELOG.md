@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- `groupDescription` is now "autolinked" making external links added in the markdown clickable, including proper handling of Hylo links, mention, and topic links (via application of `ClickCatcher`)
+
+### Fixed
+- Styling of `groupDescription` to eliminate extra vertical space between paragraphs
+- Back button behavior in the case of `LandingPage` > "About Us"
+- Unexpected underline appearing in some links in mobile
+- Sticking hover state color on MapExplorer buttons in mobile
+
+### Changed
+- Added default of `all` to `groupSlug` prop of `ClickCatcher`, doesn't change current behavior
+- Removes now unused `navigation#removeGroupFromUrl`
+
 ## [5.0.2] - 2022-10-27
 
 ### Changed
