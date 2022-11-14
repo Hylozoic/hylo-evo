@@ -9,21 +9,21 @@ export default function EmojiPill ({ emojiFull, onClick = () => {}, count, userL
   return (
     <div data-tip={toolTip} data-for={`${emojiFull}-emoji`}>
       <Pill
+        darkText
+        id={emojiFull}
         key={emojiFull}
+        label={`${emojiFull} ${count}`}
         onClick={() => onClick(emojiFull)}
         styleName={cx('tag-pill', { selected })}
-        darkText
-        label={`${emojiFull} ${count}`}
-        id={emojiFull}
 
       />
       <ReactTooltip
         backgroundColor='rgba(35, 65, 91, 1.0)'
         className='pill-tooltip'
-        effect='solid'
         delayShow={0}
-        multiline
+        effect='solid'
         id={`${emojiFull}-emoji`}
+        multiline
       />
     </div>
 

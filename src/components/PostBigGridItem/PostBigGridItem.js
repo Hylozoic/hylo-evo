@@ -7,6 +7,7 @@ import HyloHTML from 'components/HyloHTML'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
+import EmojiRow from 'components/EmojiRow'
 import Icon from 'components/Icon'
 import './PostBigGridItem.scss'
 
@@ -16,7 +17,8 @@ export default function PostBigGridItem (props) {
     post,
     respondToEvent,
     showDetails,
-    expanded
+    expanded,
+    currentUser
   } = props
   const {
     title,
@@ -74,59 +76,72 @@ export default function PostBigGridItem (props) {
 
         <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
         <div styleName='grid-meta'>
-          {post.type === 'event' &&
-            <div styleName='date' onClick={showDetailsTargeted}>
-              <EventDate {...post} />
-            </div>
-          }
-          <h3 styleName='title' onClick={showDetails}>{title}</h3>
-          <div styleName='content-snippet'>
-            <Clamp lines={2}>
-              <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
-            </Clamp>
-            <div styleName='fade' />
-          </div>
-          <div styleName='project-actions'>
-            {post.donationsLink && donationService &&
-              <div styleName='donate'>
-                <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-              </div>}
-            {post.donationsLink && !donationService &&
-              <div styleName='donate'>
-                <div>Support this project</div>
-                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-              </div>}
-
-            {attachmentType === 'file'
-              ? <div styleName='file-attachment'>
-                {numAttachments > 1
-                  ? <div styleName='attachment-number'>{numAttachments} attachments</div>
-                  : ' '
-                }
-                <div styleName='attachment'>
-                  <Icon name='Document' styleName='file-icon' />
-                  <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
-                </div>
-              </div>
-              : ' '}
-
+          <div styleName='grid-meta-row-1'>
             {post.type === 'event' &&
-              <div styleName='event-response'>
-                <div>Can you go?</div>
-                <EventRSVP {...post} respondToEvent={respondToEvent(post.id)} position='top' />
+              <div styleName='date' onClick={showDetailsTargeted}>
+                <EventDate {...post} />
               </div>
             }
-          </div>
-          <div styleName='author' onClick={showDetails}>
-            <div styleName='type-author'>
-              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
-              {creator.name}
+            <h3 styleName='title' onClick={showDetails}>{title}</h3>
+            <div styleName='content-snippet'>
+              <Clamp lines={2}>
+                <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} onClick={showDetailsTargeted} />
+              </Clamp>
+              <div styleName='fade' />
             </div>
-            <div styleName='timestamp'>
-              {TextHelpers.humanDate(createdAt)}
+            <h3 styleName='title' onClick={showDetails}>{title}</h3>
+            <div styleName='content-snippet'>
+              <Clamp lines={2}>
+                <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
+              </Clamp>
+              <div styleName='fade' />
+            </div>
+            <div styleName='project-actions'>
+              {post.donationsLink && donationService &&
+                <div styleName='donate'>
+                  <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                </div>}
+              {post.donationsLink && !donationService &&
+                <div styleName='donate'>
+                  <div>Support this project</div>
+                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                </div>}
+              {attachmentType === 'file'
+                ? <div styleName='file-attachment'>
+                  {numAttachments > 1
+                    ? <div styleName='attachment-number'>{numAttachments} attachments</div>
+                    : ' '
+                  }
+                  <div styleName='attachment'>
+                    <Icon name='Document' styleName='file-icon' />
+                    <div styleName='attachment-name'>{attachmentUrl.substring(firstAttachment.url.lastIndexOf('/') + 1)}</div>
+                  </div>
+                </div>
+                : ' '}
+
+              {post.type === 'event' &&
+                <div styleName='event-response'>
+                  <div>Can you go?</div>
+                  <EventRSVP {...post} respondToEvent={respondToEvent(post.id)} position='top' />
+                </div>
+              }
+            </div>
+            <div styleName='author' onClick={showDetails}>
+              <div styleName='type-author'>
+                <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+                {creator.name}
+              </div>
+              <div styleName='timestamp'>
+                {TextHelpers.humanDate(createdAt)}
+              </div>
             </div>
           </div>
+          <EmojiRow
+            {...post}
+            postId={post.id}
+            currentUser={currentUser}
+          />
         </div>
       </div>
     </div>

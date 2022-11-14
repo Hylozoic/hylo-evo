@@ -22,13 +22,14 @@ export default class PostFooter extends React.PureComponent {
       commenters,
       commentersTotal,
       constrained,
+      onClick,
       postId
     } = this.props
 
     const tooltipId = 'postfooter-tt-' + postId
 
     return (
-      <div styleName={cx('footer', { constrained })}>
+      <div onClick={onClick} styleName={cx('footer', { constrained })}>
         <PeopleInfo constrained={constrained} people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
         <Tooltip
           delay={550}

@@ -408,8 +408,7 @@
     width: 100%;
   }
 
-
-  .grid-meta {
+  .grid-meta{
     z-index: 3;
     position: absolute;
     bottom:0;
@@ -417,6 +416,10 @@
     width: 100%;
     padding-top: 15px;
     background: linear-gradient(180deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0.9) 49.48%, #FFFFFF 100%);
+  }
+
+
+  .grid-meta-row-1 {
 
     .content-snippet {
       max-height: 68px;

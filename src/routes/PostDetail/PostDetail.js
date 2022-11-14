@@ -2,9 +2,7 @@ import cx from 'classnames'
 import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { get, throttle, isEmpty } from 'lodash/fp'
-import { topicUrl } from 'util/navigation'
+import { get, throttle } from 'lodash/fp'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -142,6 +140,7 @@ export default class PostDetail extends Component {
     }
 
     let people, postPeopleDialogTitle
+
     if (isProject) {
       people = post.members
       postPeopleDialogTitle = 'Project Members'
@@ -163,8 +162,8 @@ export default class PostDetail extends Component {
     )
 
     return (
-      <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>{
-        ({ width, height }) =>
+      <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>
+        {({ width, height }) =>
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader
@@ -274,8 +273,7 @@ export default class PostDetail extends Component {
               />
             )}
             <SocketSubscriber type='post' id={post.id} />
-          </div>
-      }
+          </div>}
       </ReactResizeDetector>
     )
   }

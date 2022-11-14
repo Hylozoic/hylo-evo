@@ -243,7 +243,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
-     case DELETE_POST_PENDING:
+    case DELETE_POST_PENDING:
       post = Post.withId(meta.id)
       if (meta.groupId) {
         const group = Group.withId(meta.groupId)
@@ -649,4 +649,3 @@ const removePostFromGroup = (post, group) => {
     }
   }
 }
-

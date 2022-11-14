@@ -18,7 +18,7 @@ export function fakePost () {
     title: 'We put this together as a PDF for hand-out at your next event or university class',
     context: 'Stop Wombat Walrus',
     details: 'Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!',
-    votesTotal: faker.datatype.number(),
+    peopleReactedTotal: faker.datatype.number(),
     tags: ['activism', 'petition'],
     attachments: [{ url: 'animage', attachmentType: 'image' }],
     groups: [{ id: '1', slug: 'great', name: 'Great Cause' }],

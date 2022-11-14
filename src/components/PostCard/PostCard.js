@@ -66,7 +66,6 @@ export default function PostCard (props) {
   return (
     <div
       ref={postCardRef}
-      onClick={!isEvent ? onClick : null}
       styleName={cx('card', postType, { expanded }, { constrained })}
       className={className}
     >
@@ -99,6 +98,7 @@ export default function PostCard (props) {
         <div onClick={onClick}>
           <PostBody
             {...post}
+            onClick={onClick}
             slug={routeParams.groupSlug}
             constrained={constrained}
             currentUser={currentUser}
@@ -115,6 +115,7 @@ export default function PostCard (props) {
       </div>
       <PostFooter
         {...post}
+        onClick={onClick}
         constrained={constrained}
         currentUser={currentUser}
         postId={post.id}

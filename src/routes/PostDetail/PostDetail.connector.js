@@ -53,17 +53,4 @@ export function mapDispatchToProps (dispatch, props) {
   }
 }
 
-// export function mergeProps (stateProps, dispatchProps, ownProps) {
-//   return {
-//     ...ownProps,
-//     ...stateProps,
-//     ...dispatchProps,
-//     reactOnEntity: ({ commentId, emojiFull, entityType, postId }) =>
-//       dispatchProps.reactOnEntity({ commentId, emojiFull, entityType, postId }),
-//     removeReactOnEntity: ({ commentId, emojiFull, entityType, postId }) =>
-//       dispatchProps.reactOnEntity({ commentId, emojiFull, entityType, postId })
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps, mergeProps)
 export default connect(mapStateToProps, mapDispatchToProps)

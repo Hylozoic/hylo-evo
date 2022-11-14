@@ -73,21 +73,6 @@ div .post-row:nth-child(1) {
   overflow: hidden;
 }
 
-.votes {
-  flex: 0 0 50px;
-  padding-right: 14px;
-  text-align: center;
-  color: $color-caribbean-green;
-  font-weight: bold;
-
-  a {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
 .participants, .details, .timestamp, .topics {
   font-size: 12px;
 }
@@ -132,8 +117,10 @@ div .post-row:nth-child(1) {
 
 .details {
   color: $color-regent;
-  height: 1.5em;
+  height: 2.8em;
   width: 100%;
+  overflow: hidden;
+  margin-bottom: 4px;
 }
 
 .title, .details p {

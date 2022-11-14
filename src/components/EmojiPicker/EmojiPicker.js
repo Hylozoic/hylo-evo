@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import Picker from '@emoji-mart/react'
 import cx from 'classnames'
+import Picker from '@emoji-mart/react'
+import React, { useState, useEffect } from 'react'
 import Icon from 'components/Icon'
 
 import './EmojiPicker.scss'
 
-const emojiPickerDefaultWidth = 373
-const emojiPickerDefaultHeight = 435
-const defaultTopNavHeight = 56
-const emojiPickerMaxY = emojiPickerDefaultHeight + defaultTopNavHeight
+const PICKER_DEFAULT_WIDTH = 373
+const PICKER_DEFAULT_HEIGHT = 435
+const DEFAULT_TOPNAV_HEIGHT = 56
+const emojiPickerMaxY = PICKER_DEFAULT_HEIGHT + DEFAULT_TOPNAV_HEIGHT
 
 export default function EmojiPicker (props) {
   const { handleRemoveReaction, myEmojis, handleReaction } = props
@@ -32,9 +32,9 @@ export default function EmojiPicker (props) {
       setModalOpen(!modalOpen)
     } else {
       // push the modal up, but not so high that it comes off the top of the screen
-      yAdjustment = (emojiPickerMaxY > evt.clientY) ? defaultTopNavHeight : evt.clientY - emojiPickerDefaultHeight
+      yAdjustment = (emojiPickerMaxY > evt.clientY) ? DEFAULT_TOPNAV_HEIGHT : evt.clientY - PICKER_DEFAULT_HEIGHT
       // Have the modal replicate the x position, unless it is too close to the right side of the screen
-      xAdjustment = (window.innerWidth - emojiPickerDefaultWidth < evt.clientX) ? window.innerWidth - emojiPickerDefaultWidth : evt.clientX + 10
+      xAdjustment = (window.innerWidth - PICKER_DEFAULT_WIDTH < evt.clientX) ? window.innerWidth - PICKER_DEFAULT_WIDTH : evt.clientX + 10
       setModalY(yAdjustment)
       setModalX(xAdjustment)
       setModalOpen(!modalOpen)

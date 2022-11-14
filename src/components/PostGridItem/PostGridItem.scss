@@ -144,15 +144,17 @@
   }
 
   .grid-meta {
-    display: flex;
     z-index: 3;
     position: absolute;
     bottom:0;
-    justify-content: space-between;
     width: 100%;
     padding-right: 15px;
     padding-left: 3px;
+  }
 
+  .grid-meta-row-1 {
+    display: flex;
+    justify-content: space-between;
     .type-author {
       display: block;
       height: 36px;

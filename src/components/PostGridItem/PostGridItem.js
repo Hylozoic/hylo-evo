@@ -4,6 +4,7 @@ import cx from 'classnames'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
+import EmojiRow from 'components/EmojiRow'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import './PostGridItem.scss'
@@ -13,7 +14,8 @@ export default function PostGridItem (props) {
     routeParams,
     post,
     showDetails,
-    expanded
+    expanded,
+    currentUser
   } = props
   const {
     title,
@@ -40,20 +42,6 @@ export default function PostGridItem (props) {
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
         <h3 styleName='title'>{title}</h3>
-
-        {/*  Will fix this after I get attachment variables */}
-        {/* {post.type === 'event' */
-        /* ? <div styleName='date'> */
-        /*   <span>{startTimeMoment.format('MMM')}</span> */
-        /*   <span>{startTimeMoment.format('D')}</span> */
-        /* </div> */
-        /* : ' '} */}
-
-        {/* TODO for tom:
-          Retrieve attachments. If there are attachments print attachment[0] type. If attachment[0] is an image, print url
-
-          From Tom: Now the attachment variables can be used to display the different views that you are keen for.
-        */}
         {attachmentType === 'image'
           ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
           : attachmentType === 'file'
@@ -70,13 +58,20 @@ export default function PostGridItem (props) {
 
         <HyloHTML styleName='details' html={details} />
         <div styleName='grid-meta'>
-          <div styleName='type-author'>
-            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
-            {creator.name}
+          <div styleName='grid-meta-row-1'>
+            <div styleName='type-author'>
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+              {creator.name}
+            </div>
+            <div styleName='timestamp'>
+              {TextHelpers.humanDate(createdAt)}
+            </div>
           </div>
-          <div styleName='timestamp'>
-            {TextHelpers.humanDate(createdAt)}
-          </div>
+          <EmojiRow
+            {...post}
+            postId={post.id}
+            currentUser={currentUser}
+          />
         </div>
         <div styleName='grid-fade' />
       </div>

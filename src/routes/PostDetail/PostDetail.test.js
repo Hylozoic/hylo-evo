@@ -7,7 +7,7 @@ describe('PostDetail', () => {
     const imageUrl = 'foo.jpg'
     const tags = ['singing', 'dancing']
     const details = 'the body of the post'
-    const votesTotal = 7
+    const peopleReactedTotal = 7
     const routeParams = {
       slug: 'foo'
     }
@@ -19,7 +19,7 @@ describe('PostDetail', () => {
       imageUrl,
       tags,
       details,
-      votesTotal,
+      peopleReactedTotal,
       myVote,
       members: []
     }

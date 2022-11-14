@@ -105,7 +105,7 @@ const postFieldsFragment = withComments => `
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
   myReactions {
     emojiFull

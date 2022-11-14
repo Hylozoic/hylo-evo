@@ -9,7 +9,8 @@ export default function PostTitle ({
   constrained,
   highlightProps,
   locationObject,
-  location
+  location,
+  onClick
 }) {
   // Formatting location to display in stream view
   let generalLocation = location || ''
@@ -27,7 +28,7 @@ export default function PostTitle ({
 
   return <Highlight {...highlightProps}>
     <React.Fragment>
-      <div styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
+      <div onClick={onClick} styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
       {location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
     </React.Fragment>
   </Highlight>

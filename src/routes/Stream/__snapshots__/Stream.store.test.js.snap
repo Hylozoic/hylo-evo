@@ -164,7 +164,7 @@ posts: viewPosts(
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
   myReactions {
     emojiFull
@@ -367,7 +367,7 @@ posts(
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
   myReactions {
     emojiFull
