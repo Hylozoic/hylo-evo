@@ -1,6 +1,6 @@
 import { REMOVE_POST } from 'store/constants'
 
-export function removePost (postId, slug) {
+export default function removePost (postId, slug) {
   return {
     type: REMOVE_POST,
     graphql: {

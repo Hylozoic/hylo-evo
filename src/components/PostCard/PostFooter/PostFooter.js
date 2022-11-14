@@ -1,10 +1,8 @@
 import cx from 'classnames'
-import { find, get, isFunction } from 'lodash/fp'
+import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React from 'react'
 import PeopleInfo from '../PeopleInfo'
-import Icon from 'components/Icon'
-import RoundImageRow from 'components/RoundImageRow'
 import Tooltip from 'components/Tooltip'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
 
@@ -16,7 +14,6 @@ export default class PostFooter extends React.PureComponent {
     commenters: PropTypes.array,
     commentersTotal: PropTypes.number,
     constrained: PropTypes.bool
-
   }
 
   render () {

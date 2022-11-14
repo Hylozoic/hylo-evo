@@ -41,8 +41,7 @@ export default function ChatCard ({
             <HyloHTML styleName='post-body' html={post.details} />
           </Highlight>
         </ClickCatcher>
-{/*        <div styleName='post-footer' />
-*/}   </div>
+      </div>
     </span>
   )
 }

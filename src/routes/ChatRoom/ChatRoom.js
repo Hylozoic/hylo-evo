@@ -91,7 +91,7 @@ export default function ChatRoom (props) {
 
   const chatsRef = useRef()
   const editorRef = useRef()
-  const virtuoso = useRef(null);
+  const virtuoso = useRef(null)
 
   const [atBottom, setAtBottom] = useState(false)
   const [postInProgress, setPostInProgress] = useState(false)

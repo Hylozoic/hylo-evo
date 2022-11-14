@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import CardImageAttachments from 'components/CardImageAttachments'
 import { POST_PROP_TYPES } from 'store/models/Post'
-import ChatCard from './ChatCard'
 import EventBody from './EventBody'
 import PostBody from './PostBody'
 import PostFooter from './PostFooter'
@@ -15,7 +14,7 @@ import './PostCard.scss'
 
 export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
 
-export default function PostCard(props) {
+export default function PostCard (props) {
   const {
     className,
     constrained,
@@ -28,8 +27,7 @@ export default function PostCard(props) {
     post,
     respondToEvent,
     routeParams,
-    showDetails,
-    voteOnPost
+    showDetails
   } = props
 
   const postCardRef = forwardedRef || useRef()

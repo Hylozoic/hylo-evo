@@ -20,7 +20,8 @@ import {
   FIND_OR_CREATE_THREAD,
   FETCH_THREADS,
   FETCH_CHILD_COMMENTS,
-  FETCH_COMMENTS
+  FETCH_COMMENTS,
+  REMOVE_POST_PENDING
 } from 'store/constants'
 // import {
 //   FETCH_NETWORK_SETTINGS,
@@ -30,9 +31,6 @@ import {
 import {
   CREATE_TOPIC
 } from 'components/CreateTopic/CreateTopic.store'
-import {
-  REMOVE_POST_PENDING
-} from 'components/PostCard/PostHeader/PostHeader.store'
 import {
   RECEIVE_POST,
   RECEIVE_THREAD

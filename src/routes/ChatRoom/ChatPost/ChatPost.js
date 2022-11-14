@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { TextHelpers } from 'hylo-shared'
-import { filter, get, isEmpty, isFunction, pick } from 'lodash/fp'
+import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
@@ -17,7 +17,6 @@ import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import Feature from 'components/PostCard/Feature'
 import LinkPreview from 'components/LinkPreview'
-import PeopleInfo from 'components/PostCard/PeopleInfo'
 import RoundImageRow from 'components/RoundImageRow'
 import useReactionActions from 'hooks/useReactionActions'
 import deletePost from 'store/actions/deletePost'
@@ -26,8 +25,6 @@ import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
 
 import styles from './ChatPost.scss'
-
-const MAX_DETAILS_LENGTH = 144
 
 export default function ChatPost ({
   canModerate,
@@ -58,7 +55,6 @@ export default function ChatPost ({
     creator,
     details,
     fileAttachments,
-    header,
     id,
     imageAttachments,
     linkPreview,
@@ -81,7 +77,6 @@ export default function ChatPost ({
   }, [linkPreview?.url])
 
   const openPost = event => {
-    console.log("event", event, event.target, event.target.className, event.target.className.includes('LinkPreview'))
     // Don't open post details when editing post or clicking on link preview or other actionable things
     if (!editing && !event.target.className.includes('icon-Smiley') && !event.target.className.includes('LinkPreview')) {
       showDetails(id)
@@ -89,7 +84,6 @@ export default function ChatPost ({
   }
 
   const editPost = event => {
-    console.log("edit event", event, event.target, event.target.className)
     setEditing(true)
     setTimeout(() => {
       editorRef.current.focus('end')
@@ -98,7 +92,7 @@ export default function ChatPost ({
     return true
   }
 
-  const { reactOnEntity , removeReactOnEntity } = useReactionActions()
+  const { reactOnEntity, removeReactOnEntity } = useReactionActions()
   const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', postId: id })
   const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ emojiFull, entityType: 'post', postId: id })
 
@@ -114,7 +108,8 @@ export default function ChatPost ({
       return true
     }
 
-    //updatePost(comment.id, contentHTML)
+    post.details = contentHTML
+    updatePost(post)
     setEditing(false)
 
     // Tell Editor this keyboard event was handled and to end propagation.

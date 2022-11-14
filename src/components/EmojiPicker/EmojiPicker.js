@@ -58,7 +58,7 @@ function EmojiPickerContent (props) {
   const [data, setData] = useState()
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(
+      const response = await window.fetch(
         'https://cdn.jsdelivr.net/npm/@emoji-mart/data'
       )
       setData(response.json())
