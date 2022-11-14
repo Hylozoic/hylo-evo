@@ -33,7 +33,6 @@ export default class PostDetail extends Component {
     fetchPost: PropTypes.func,
     post: PropTypes.object,
     routeParams: PropTypes.object
-
   }
 
   state = {
@@ -198,6 +197,7 @@ export default class PostDetail extends Component {
             )}
             {!isEvent && (
               <PostBody
+                currentUser={currentUser}
                 styleName='body'
                 expanded
                 routeParams={routeParams}

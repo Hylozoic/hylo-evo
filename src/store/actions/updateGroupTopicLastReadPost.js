@@ -1,6 +1,6 @@
 import { UPDATE_GROUP_TOPIC_LAST_READ_POST } from 'store/constants'
 
-export default function updateGroupTopicLastReadPost(id, lastReadPostId) {
+export default function updateGroupTopicLastReadPost (id, lastReadPostId) {
   return {
     type: UPDATE_GROUP_TOPIC_LAST_READ_POST,
     graphql: {

@@ -6,8 +6,7 @@ import updateGroupTopicLastReadPost from 'store/actions/updateGroupTopicLastRead
 import {
   addAttachment,
   clearAttachments,
-  getAttachments,
-  getUploadAttachmentPending
+  getAttachments
 } from 'components/AttachmentManager/AttachmentManager.store'
 import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
 import getMe from 'store/selectors/getMe'
@@ -40,7 +39,7 @@ import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import respondToEvent from 'store/actions/respondToEvent'
 import isPendingFor from 'store/selectors/isPendingFor'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
-import { createPostUrl, postUrl } from 'util/navigation'
+import { postUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
   let canModerate, group, topic, groupTopic

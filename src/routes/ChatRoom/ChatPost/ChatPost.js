@@ -190,21 +190,21 @@ export default function ChatPost ({
           <ClickCatcher groupSlug={group.slug}>
             {editing
               ? <HyloEditor
-              contentHTML={details}
-              groupIds={post.groups.map(g => g.id)}
-              // onAddTopic={handleAddTopic}
-              onEscape={handleEditCancel}
-              onEnter={handleEditSave}
-              // onUpdate={handleDetailsUpdate}
-              placeholder='Edit Post'
-              readOnly={!editing}
-              ref={editorRef}
-              showMenu={editing}
-              containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: editing })}
-              styleName={cx({ postContent: true, editing })}
-            />
-            : <div styleName='postContentContainer'><HyloHTML styleName='postContent' html={details} /></div>
-          }
+                contentHTML={details}
+                groupIds={post.groups.map(g => g.id)}
+                // onAddTopic={handleAddTopic}
+                onEscape={handleEditCancel}
+                onEnter={handleEditSave}
+                // onUpdate={handleDetailsUpdate}
+                placeholder='Edit Post'
+                readOnly={!editing}
+                ref={editorRef}
+                showMenu={editing}
+                containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: editing })}
+                styleName={cx({ postContent: true, editing })}
+              />
+              : <div styleName='postContentContainer'><HyloHTML styleName='postContent' html={details} /></div>
+            }
           </ClickCatcher>
         )}
         {linkPreview?.url && linkPreviewFeatured && isVideo && (
