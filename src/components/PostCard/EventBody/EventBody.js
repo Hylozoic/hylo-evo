@@ -2,11 +2,12 @@ import cx from 'classnames'
 import { get, filter } from 'lodash/fp'
 import React, { Component } from 'react'
 import { TextHelpers } from 'hylo-shared'
-import Icon from 'components/Icon'
 import Button from 'components/Button'
+import EmojiRow from 'components/EmojiRow'
 import EventInviteDialog from 'components/EventInviteDialog'
 import EventDate from '../EventDate'
 import EventRSVP from '../EventRSVP'
+import Icon from 'components/Icon'
 import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
 import PeopleInfo from 'components/PostCard/PeopleInfo'
@@ -54,7 +55,13 @@ export default class EventBody extends Component {
           <Icon name='Location' styleName='icon' /> {location}
         </div>}
         <div styleName={cx('eventDetails', { constrained })}>
-          <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} constrained={constrained} />
+          <PostDetails
+            {...event}
+            constrained={constrained}
+            expanded={expanded}
+            hideDetails={!expanded}
+            slug={slug}
+          />
         </div>
       </div>
 
@@ -81,8 +88,12 @@ export default class EventBody extends Component {
           </div>
           <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
-
       </div>
+      <EmojiRow
+        {...event}
+        postId={event.id}
+        currentUser={currentUser}
+      />
       {showInviteDialog && <EventInviteDialog
         eventId={id}
         eventInvitations={eventInvitations}
