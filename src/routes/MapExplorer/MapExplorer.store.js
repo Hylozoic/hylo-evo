@@ -9,6 +9,7 @@ import { POST_TYPES } from 'store/models/Post'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import { STREAM_SORT_OPTIONS } from 'util/constants'
 
 export const MODULE_NAME = 'MapExplorer'
 export const FETCH_GROUPS_MAP = `${MODULE_NAME}/FETCH_GROUPS_MAP`
@@ -17,12 +18,6 @@ export const FETCH_POSTS_MAP = `${MODULE_NAME}/FETCH_POSTS_MAP`
 export const FETCH_POSTS_MAP_DRAWER = `${MODULE_NAME}/FETCH_POSTS_MAP_DRAWER`
 export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
 export const UPDATE_STATE = `${MODULE_NAME}/UPDATE_STATE`
-
-export const SORT_OPTIONS = [
-  { id: 'updated', label: 'Latest Activity' },
-  { id: 'created', label: 'Post Date' },
-  { id: 'votes', label: 'Popular' }
-]
 
 export const FEATURE_TYPES = {
   ...POST_TYPES,
@@ -632,7 +627,7 @@ const DEFAULT_STATE = {
     currentBoundingBox: null,
     featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
-    sortBy: SORT_OPTIONS[0].id,
+    sortBy: STREAM_SORT_OPTIONS[0].id,
     topics: []
   },
   searches: []
