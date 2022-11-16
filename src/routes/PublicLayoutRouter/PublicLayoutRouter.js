@@ -12,8 +12,9 @@ import Loading from 'components/Loading'
 import MapExplorer from 'routes/MapExplorer'
 import PostDetail from 'routes/PostDetail'
 import './PublicLayoutRouter.scss'
+import gql from 'graphql-tag'
 
-export default function PublicRouter (props) {
+export default function PublicLayoutRouter (props) {
   const routeParams = useParams()
   const location = useLocation()
   const isMapView = routeParams?.view === 'map'
@@ -23,6 +24,18 @@ export default function PublicRouter (props) {
       <PublicPageHeader />
       <Switch>
         <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
+        {/*
+
+          TODO: This may just work if you put in the right query in the target component,
+          and add a passthrough route in `RootRouter` for `/${GROUP_DETAIL_MATCH}` as is
+          done with post.
+
+          *** ALSO, the signup while join a group flow is dependent on
+          `/:context(groups)/:groupSlug/join/:accessCode` going to NonAuthRouter for
+          signup and such, so you need to make sure that remains the case.
+
+        */}
+        {/* <Route path={`/${GROUP_DETAIL_MATCH}`} exact component={PublicGroupDetail} /> */}
         <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
         <Route path='/:context(public)/:view(groups)' exact component={GroupExplorerLayoutRouter} />
         {/* Remove this once we show the public stream */}
@@ -34,25 +47,25 @@ export default function PublicRouter (props) {
   )
 }
 
-export function PublicPostDetail (props) {
+export function PublicGroupDetail (props) {
   const dispatch = useDispatch()
   const routeParams = useParams()
   const history = useHistory()
   const [loading, setLoading] = useState(true)
-  const postId = routeParams?.postId
-  const checkPublicQuery =
-    `query Post ($id: ID) {
-      post (id: $id) {
-        isPublic
-      }
-    }`
-
-  const checkPublic = (id) => {
+  const groupDetailSlug = routeParams?.groupDetailSlug
+  const checkIsPublicGroup = groupSlug => {
     return {
-      type: 'IS_POST_PUBLIC',
+      type: 'IS_GROUP_PUBLIC',
       graphql: {
-        query: checkPublicQuery,
-        variables: { id }
+        // TODO: Obviously this needs the right query
+        query: gql`
+          query CheckIsGroupPublic ($id: ID) {
+            group (id: $id) {
+              isPublic
+            }
+          }
+        `,
+        variables: { slug: groupSlug }
       },
       meta: { extractModel: 'Person' }
     }
@@ -62,7 +75,57 @@ export function PublicPostDetail (props) {
     (async () => {
       setLoading(true)
 
-      const result = await dispatch(checkPublic(postId))
+      const result = await dispatch(checkIsPublicGroup(groupDetailSlug))
+      const isPublicGroup = result?.payload?.data?.group?.isPublic
+
+      if (!isPublicGroup) {
+        history.replace('/login')
+      }
+
+      setLoading(false)
+    })()
+  }, [dispatch, groupDetailSlug])
+
+  if (loading) {
+    return <Loading />
+  }
+
+  return (
+    <div styleName='center-column' id={DETAIL_COLUMN_ID}>
+      <GroupDetail {...props} />
+    </div>
+  )
+}
+
+export function PublicPostDetail (props) {
+  const dispatch = useDispatch()
+  const routeParams = useParams()
+  const history = useHistory()
+  const [loading, setLoading] = useState(true)
+  const postId = routeParams?.postId
+
+  const checkIsPostPublic = postId => {
+    return {
+      type: 'IS_POST_PUBLIC',
+      graphql: {
+        query: gql`
+          query CheckIsPostPublic ($id: ID) {
+            post (id: $id) {
+              isPublic
+            }
+          }
+        `,
+        variables: { id: postId }
+      },
+      meta: { extractModel: 'Person' }
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true)
+
+      const result = await dispatch(checkIsPostPublic(postId))
       const isPublicPost = result?.payload?.data?.post?.isPublic
 
       if (!isPublicPost) {
