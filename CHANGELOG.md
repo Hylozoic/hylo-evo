@@ -4,10 +4,11 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [5.0.3] - 2022-11-16
 
 ### Added
 - `groupDescription` is now "autolinked" making external links added in the markdown clickable, including proper handling of Hylo links, mention, and topic links (via application of `ClickCatcher`)
+- Terms and Privacy Policy links added to Signup page
 
 ### Fixed
 - Styling of `groupDescription` to eliminate extra vertical space between paragraphs
