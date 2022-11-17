@@ -9,6 +9,8 @@ import { humanResponse } from 'store/models/EventInvitation'
 import TextInput from 'components/TextInput'
 import useInView from 'react-cool-inview'
 import Loading from 'components/Loading'
+import { useTranslation } from 'react-i18next'
+
 const pageSize = 30
 
 export default function EventInviteDialog ({
@@ -30,6 +32,7 @@ export default function EventInviteDialog ({
     : setInvitedIds(invitedIds.concat([id]))
 
   const onSearchChange = ({ target: { value } }) => setSearchTerm(value)
+  const { t } = useTranslation('EventInviteDialog')
 
   useEffect(() => {
     const fetch = () => {
@@ -94,7 +97,7 @@ export default function EventInviteDialog ({
         </div>
       </div>
 
-      <div styleName='alreadyInvitedLabel'>Already Invited</div>
+      <div styleName='alreadyInvitedLabel'>{t('alreadyInvitedDialog')}</div>
       <div styleName='alreadyInvited'>
         {eventInvitations.map(eventInvitation =>
           <InviteeRow

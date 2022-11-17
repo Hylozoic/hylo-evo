@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
@@ -28,19 +29,20 @@ export default function StreamBanner ({
   isTesting,
   type
 }) {
+  const { t } = useTranslation('StreamBanner')
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (context === 'all') {
-    name = 'All My Groups'
+    name = t('allMyGroupsTitle')
     avatarUrl = whiteMerkaba
     bannerUrl = allGroupsBanner
     subtitle = currentUser && `${currentUser.memberships.count()} Groups`
   } else if (context === 'public') {
-    name = 'Public Groups & Posts'
+    name = t('publicGroupsAndPostTitle')
     avatarUrl = publicGlobe
     bannerUrl = allGroupsBanner
     // TODO list count of public posts and public groups in subtitle
-    subtitle = `All Posts Marked Public`
+    subtitle = t('allPostsMarkedPublicSubtitle')
   } else if (!group) {
     return null
   } else {
@@ -70,7 +72,7 @@ export default function StreamBanner ({
             {customViewType === 'stream'
               ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
               : customViewType === 'collection'
-                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>Collection</div>
+                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{t('Collection')}</div>
                 : ''}
 
             {subtitle && <div styleName='header-subtitle'>

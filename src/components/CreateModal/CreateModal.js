@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
+import { useTranslation } from 'react-i18next'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import CreateModalChooser from './CreateModalChooser'
 import CreateGroup from 'components/CreateGroup'
@@ -15,6 +16,7 @@ export default function CreateModal (props) {
   const previousLocation = useSelector(getPreviousLocation)
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
+  const { t } = useTranslation('CreateModal')
 
   const querystringParams = new URLSearchParams(location.search)
   const mapLocation = (querystringParams.has('lat') && querystringParams.has('lng'))
@@ -29,7 +31,7 @@ export default function CreateModal (props) {
   }
 
   const confirmClose = () => {
-    const confirmed = !isDirty || window.confirm('Changes won\'t be saved. Are you sure you want to cancel?')
+    const confirmed = !isDirty || window.confirm(t('confirmCancel'))
 
     if (confirmed) {
       closeModal()

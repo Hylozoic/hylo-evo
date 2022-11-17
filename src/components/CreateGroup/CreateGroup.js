@@ -1,5 +1,6 @@
-import { trim } from 'lodash/fp'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
+import { trim } from 'lodash/fp'
 import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import GroupsSelector from 'components/GroupsSelector'
@@ -19,7 +20,7 @@ import styles from './CreateGroup.scss'
 
 const slugValidatorRegex = /^[0-9a-z-]{2,40}$/
 
-export default class CreateGroup extends Component {
+class CreateGroup extends Component {
   constructor (props) {
     super(props)
 
@@ -47,7 +48,7 @@ export default class CreateGroup extends Component {
 
   componentDidUpdate (oldProps) {
     if (oldProps.groupSlugExists !== this.props.groupSlugExists) {
-      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? 'This URL already exists. Try another.' : false } })
+      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? this.props.t('groupSlugExists') : false } })
     }
   }
 
@@ -130,7 +131,7 @@ export default class CreateGroup extends Component {
       <div styleName='wrapper'>
         <div styleName='header'>
           <button onClick={goBack}><Icon name='Back' styleName='backIcon' /></button>
-          <span styleName='headerHeadline'>Create Group</span>
+          <span styleName='headerHeadline'>{this.props.t('createGroup')}</span>
         </div>
         <div styleName='nameAndSlug'>
           <TextInput
@@ -140,7 +141,7 @@ export default class CreateGroup extends Component {
             onChange={this.updateField('name')}
             value={name}
             theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-            placeholder="Your group's name"
+            placeholder={this.props.t('groupNameInputPlaceholderText')}
             noClearButton
             maxLength='60'
             onEnter={this.onSubmit}
@@ -285,3 +286,5 @@ export default class CreateGroup extends Component {
     )
   }
 }
+
+export default withTranslation('CreateGroup')(CreateGroup)
