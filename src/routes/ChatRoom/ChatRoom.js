@@ -164,7 +164,7 @@ export default function ChatRoom (props) {
         }
       }, 600)
     }
-  }, [editorRef?.current, groupTopic?.id])
+  }, [groupTopic?.id])
 
   useEffect(() => {
     // On component unmount clear link preview and images attachments from redux
@@ -319,60 +319,60 @@ export default function ChatRoom (props) {
               : firstItemIndex === false
                 ? <Loading />
                 : <Virtuoso
-                    atBottomStateChange={(bottom) => {
-                      setAtBottom(bottom)
-                    }}
-                    endReached={() => fetchPostsFuture(postsFuture.length)}
-                    data={postsForDisplay}
-                    firstItemIndex={firstItemIndex}
-                    initialTopMostItemIndex={currentPostIndex}
-                    increaseViewportBy={200}
-                    ref={virtuoso}
-                    startReached={() => fetchPostsPast(postsPast.length)}
-                    style={{ height: '100%', width: '100%', marginTop: 'auto' }}
-                    totalCount={postsTotal}
-                    itemContent={(index, post) => {
-                      const expanded = selectedPostId === post.id
-                      const intersectionObserver = new window.IntersectionObserver(([entry]) => {
-                        if (entry.isIntersecting) {
-                          handlePostVisible(post.id)
-                        }
-                      }, {
-                        root: chatsRef.current,
-                        threshold: 0.7
-                      })
-                      return (
-                        <>
+                  atBottomStateChange={(bottom) => {
+                    setAtBottom(bottom)
+                  }}
+                  endReached={() => fetchPostsFuture(postsFuture.length)}
+                  data={postsForDisplay}
+                  firstItemIndex={firstItemIndex}
+                  initialTopMostItemIndex={currentPostIndex}
+                  increaseViewportBy={200}
+                  ref={virtuoso}
+                  startReached={() => fetchPostsPast(postsPast.length)}
+                  style={{ height: '100%', width: '100%', marginTop: 'auto' }}
+                  totalCount={postsTotal}
+                  itemContent={(index, post) => {
+                    const expanded = selectedPostId === post.id
+                    const intersectionObserver = new window.IntersectionObserver(([entry]) => {
+                      if (entry.isIntersecting) {
+                        handlePostVisible(post.id)
+                      }
+                    }, {
+                      root: chatsRef.current,
+                      threshold: 0.7
+                    })
+                    return (
+                      <>
                         {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='divider' /><div styleName='newPost'>NEW</div></div> : ''}
                         {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='divider' /><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
                         {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='divider' /><div styleName='day'>{post.displayDay}</div></div> : ''}
-                          {post.type === 'chat'
-                            ? <ChatPost
-                                canModerate={canModerate}
-                                currentUser={currentUser}
-                                expanded={expanded}
-                                group={group}
-                                isHeader={post.header}
-                                key={post.id}
-                                index={index}
-                                intersectionObserver={intersectionObserver}
-                                post={post}
-                                showDetails={showDetails}
-                                updatePost={updatePost}
-                              />
-                            : <div styleName={cx({ 'card-item': true, expanded })}><PostCard
-                                expanded={expanded}
-                                key={post.id}
-                                intersectionObserver={intersectionObserver}
-                                post={post}
-                                querystringParams={querystringParams}
-                                respondToEvent={respondToEvent}
-                                routeParams={routeParams}
-                              /></div>}
-                        </>
-                      )
-                    }}
-                  />}
+                        {post.type === 'chat'
+                          ? <ChatPost
+                            canModerate={canModerate}
+                            currentUser={currentUser}
+                            expanded={expanded}
+                            group={group}
+                            isHeader={post.header}
+                            key={post.id}
+                            index={index}
+                            intersectionObserver={intersectionObserver}
+                            post={post}
+                            showDetails={showDetails}
+                            updatePost={updatePost}
+                          />
+                          : <div styleName={cx({ 'card-item': true, expanded })}><PostCard
+                            expanded={expanded}
+                            key={post.id}
+                            intersectionObserver={intersectionObserver}
+                            post={post}
+                            querystringParams={querystringParams}
+                            respondToEvent={respondToEvent}
+                            routeParams={routeParams}
+                          /></div>}
+                      </>
+                    )
+                  }}
+                />}
           </div>
         )
       }
