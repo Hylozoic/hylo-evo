@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { TextHelpers } from 'hylo-shared'
 import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
+import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
@@ -182,7 +183,7 @@ export default function ChatPost ({
                 <Avatar url={personUrl(creator.id)} avatarUrl={creator.avatarUrl} className={styles.avatar} />
                 <div styleName='name'>{creator.name}</div>
               </div>
-              <div styleName='date'>{TextHelpers.humanDate(createdAt)}</div>
+              <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
             </div>
           </>
         )}

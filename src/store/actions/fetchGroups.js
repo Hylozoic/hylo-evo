@@ -2,8 +2,6 @@ import { get } from 'lodash/fp'
 import { createSelector } from 'reselect'
 import { FETCH_GROUPS } from 'store/constants'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
-export const MODULE_NAME = 'Stream'
-export const STORE_FETCH_POSTS_PARAM = `${MODULE_NAME}/STORE_FETCH_POSTS_PARAM`
 
 export function fetchGroups ({ farmQuery, groupType, nearCoord, offset, order, pageSize = 20, search, slug, sortBy }) {
   const query = groupQuery

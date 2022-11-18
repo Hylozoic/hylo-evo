@@ -1,25 +1,13 @@
 import { push } from 'connected-react-router'
+import { get, includes, isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { get, isEmpty } from 'lodash/fp'
-import updateGroupTopicLastReadPost from 'store/actions/updateGroupTopicLastReadPost'
+import { createSelector as ormCreateSelector } from 'redux-orm'
 import {
   addAttachment,
   clearAttachments,
   getAttachments
 } from 'components/AttachmentManager/AttachmentManager.store'
-import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
-import getMe from 'store/selectors/getMe'
-import getMyMemberships from 'store/selectors/getMyMemberships'
-import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
-import {
-  fetchGroupTopic,
-  fetchPosts,
-  fetchTopic,
-  getHasMorePosts,
-  getTotalPosts,
-  getPosts
-} from 'routes/ChatRoom/ChatRoom.store'
 import {
   MODULE_NAME,
   FETCH_LINK_PREVIEW,
@@ -28,18 +16,44 @@ import {
   clearLinkPreview,
   getLinkPreview
 } from 'components/PostEditor/PostEditor.store'
-import createPost from 'store/actions/createPost'
-import updatePost from 'store/actions/updatePost'
-import getRouteParam from 'store/selectors/getRouteParam'
-import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
-import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import changeQuerystringParam from 'store/actions/changeQuerystringParam'
-import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import createPost from 'store/actions/createPost'
+import fetchGroupTopic from 'store/actions/fetchGroupTopic'
+import fetchPosts from 'store/actions/fetchPosts'
+import fetchTopic from 'store/actions/fetchTopic'
 import respondToEvent from 'store/actions/respondToEvent'
-import isPendingFor from 'store/selectors/isPendingFor'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
+import updateGroupTopicLastReadPost from 'store/actions/updateGroupTopicLastReadPost'
+import updatePost from 'store/actions/updatePost'
+import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
+import orm from 'store/models'
+import presentPost from 'store/presenters/presentPost'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
+import getMe from 'store/selectors/getMe'
+import getMyMemberships from 'store/selectors/getMyMemberships'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
+import { getHasMorePosts, getPostResults, getTotalPosts } from 'store/selectors/getPosts'
+import getRouteParam from 'store/selectors/getRouteParam'
+import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
+import isPendingFor from 'store/selectors/isPendingFor'
 import { postUrl } from 'util/navigation'
+
+// selectors
+export const getPosts = ormCreateSelector(
+  orm,
+  getPostResults,
+  (session, results) => {
+    if (isEmpty(results)) return null
+    if (isEmpty(results.ids)) return []
+    return session.Post.all()
+      .filter(x => includes(x.id, results.ids))
+      .orderBy(p => Number(p.id))
+      .toModelArray()
+      .map(p => presentPost(p))
+  }
+)
 
 export function mapStateToProps (state, props) {
   let canModerate, group, topic, groupTopic
@@ -87,6 +101,7 @@ export function mapStateToProps (state, props) {
     context,
     cursor: groupTopic?.lastReadPostId,
     filter: 'chat',
+    first: 30,
     order: 'asc',
     slug: groupSlug,
     search,
@@ -98,6 +113,7 @@ export function mapStateToProps (state, props) {
     context,
     cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
     filter: 'chat',
+    first: 30,
     order: 'desc',
     slug: groupSlug,
     search,

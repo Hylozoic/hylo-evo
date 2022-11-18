@@ -343,9 +343,9 @@ export default function ChatRoom (props) {
                       })
                       return (
                         <>
-                          {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='newPost'>NEW</div></div> : ''}
-                          {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
-                          {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='day'>{post.displayDay}</div></div> : ''}
+                        {post.firstUnread && !post.displayDay ? <div styleName='firstUnread'><div styleName='divider' /><div styleName='newPost'>NEW</div></div> : ''}
+                        {post.firstUnread && post.displayDay ? <div styleName='unreadAndDay'><div styleName='divider' /><div styleName='newPost'>NEW</div><div styleName='day'>{post.displayDay}</div></div> : ''}
+                        {post.displayDay && !post.firstUnread ? <div styleName='displayDay'><div styleName='divider' /><div styleName='day'>{post.displayDay}</div></div> : ''}
                           {post.type === 'chat'
                             ? <ChatPost
                                 canModerate={canModerate}

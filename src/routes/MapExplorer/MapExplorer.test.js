@@ -16,7 +16,6 @@ describe('MapExplorer', () => {
       postsForDrawer={[]}
       postsForMap={[]}
       routeParams={{}}
-      storeFetchPostsParam={jest.fn()}
       topics={[]}
       zoom={0}
     />)
@@ -25,7 +24,6 @@ describe('MapExplorer', () => {
 
   it('has a TabBar', () => {
     const wrapper = shallow(<MapExplorer
-      storeFetchPostsParam={jest.fn()}
       fetchPosts={jest.fn()}
       fetchSavedSearches={jest.fn()}
       match={{ params: {} }}
