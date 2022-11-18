@@ -79,21 +79,6 @@
   composes: person-name;
 }
 
-// .post-footer {
-//   display: flex;
-//   align-items: center;
-//   color: $color-caribbean-green;
-//   padding-left: $padding-left;
-
-//   a {
-//     color: $color-caribbean-green;
-
-//     &:hover {
-//       text-decoration: none;
-//     }
-//   }
-// }
-
 @media screen and (max-width: 425px) {
   .chat-card {
     padding: 10px;

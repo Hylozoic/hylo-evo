@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import moment from 'moment-timezone'
 import React from 'react'
 import { TextHelpers } from 'hylo-shared'
 import CardFileAttachments from 'components/CardFileAttachments'
@@ -32,7 +33,7 @@ export default function ChatCard ({
               {!slug && <span>in&nbsp; <span styleName='group-name'>{firstGroup}</span></span>}
             </div>
           </Highlight>
-          <span styleName='date'>{TextHelpers.humanDate(post.createdAt)}</span>
+          <span styleName='date'>{moment(post.createdAt).format('YYY HH:MMa')}</span>
         </div>
         <CardImageAttachments attachments={post.attachments} linked styleName='post-images' />
         <CardFileAttachments attachments={post.attachments} styleName='post-files' />
