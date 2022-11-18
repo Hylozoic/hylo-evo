@@ -213,7 +213,6 @@ export default function ChatRoom (props) {
 
   const scrollToBottom = useCallback(() => {
     if (virtuoso.current) {
-      console.log("scroll to botto", postsTotal)
       virtuoso.current.scrollToIndex(postsTotal)
     }
   }, [])
@@ -249,7 +248,12 @@ export default function ChatRoom (props) {
         messageDate = new Date(post.createdAt)
         diff = Math.abs(headerDate - messageDate)
         greaterThanMax = Math.floor(diff / 60000) > MAX_MINS_TO_BATCH
-        post.header = greaterThanMax || post.creator.id !== currentHeader.creator.id || lastPost.commentersTotal > 0
+        /* Display the author header if its been more than 5 minutes since last header,
+         *   or the last post was a different author,
+         *   or if last post had any comments on it,
+         *   or if the last past was a non chat type post
+        */
+        post.header = greaterThanMax || post.creator.id !== currentHeader.creator.id || lastPost.commentersTotal > 0 || lastPost.type !== 'chat'
         currentHeader = post.header ? post : currentHeader
       }
 
