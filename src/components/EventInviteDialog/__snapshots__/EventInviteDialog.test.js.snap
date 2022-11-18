@@ -61,7 +61,7 @@ exports[`EventInviteDialog renders correctly 1`] = `
     <div
       data-stylename="alreadyInvitedLabel"
     >
-      Already Invited
+      alreadyInvitedDialog
     </div>
     <div
       data-stylename="alreadyInvited"

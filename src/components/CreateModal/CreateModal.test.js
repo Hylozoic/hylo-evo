@@ -1,6 +1,6 @@
 import React from 'react'
 import orm from 'store/models'
-import { AllTheProviders, render, screen } from 'util/testing/reactTestingLibraryExtended'
+import { AllTheProviders, render, screen, waitFor } from 'util/testing/reactTestingLibraryExtended'
 import CreateModal from './CreateModal'
 
 function testProviders () {
@@ -17,5 +17,5 @@ it('renders', () => {
     { wrapper: testProviders() }
   )
 
-  expect(screen.getByText('What would you like to create?')).toBeInTheDocument()
+  waitFor(() => expect(screen.getByText('What would you like to create?')).toBeInTheDocument())
 })
