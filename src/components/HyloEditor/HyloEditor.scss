@@ -75,6 +75,9 @@
 // Mention and Topic suggestions
 // * see HyloEditorMobile.scss for Mobile theme of same
 :global {
+  .ProseMirror.suggestion-list-padding {
+    padding-bottom: 1.7rem;
+  }
   .tippy-box[data-theme='suggestions'] {
     background-color: transparent;
     
