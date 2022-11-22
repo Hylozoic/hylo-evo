@@ -48,7 +48,7 @@ class CreateGroup extends Component {
 
   componentDidUpdate (oldProps) {
     if (oldProps.groupSlugExists !== this.props.groupSlugExists) {
-      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? this.props.t('groupSlugExists') : false } })
+      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? this.props.t('CreateGroup.groupSlugExists') : false } })
     }
   }
 
@@ -131,7 +131,7 @@ class CreateGroup extends Component {
       <div styleName='wrapper'>
         <div styleName='header'>
           <button onClick={goBack}><Icon name='Back' styleName='backIcon' /></button>
-          <span styleName='headerHeadline'>{this.props.t('createGroup')}</span>
+          <span styleName='headerHeadline'>{this.props.t('CreateGroup.createGroup')}</span>
         </div>
         <div styleName='nameAndSlug'>
           <TextInput
@@ -141,7 +141,7 @@ class CreateGroup extends Component {
             onChange={this.updateField('name')}
             value={name}
             theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-            placeholder={this.props.t('groupNameInputPlaceholderText')}
+            placeholder={this.props.t('CreateGroup.groupNameInputPlaceholderText')}
             noClearButton
             maxLength='60'
             onEnter={this.onSubmit}
@@ -179,7 +179,7 @@ class CreateGroup extends Component {
                   <div styleName='dropdownItemSelected'>
                     <Icon name={visibilityIcon(visibility)} styleName='selectedIcon' />
                     <div>
-                      <div styleName='dropdownDescription'>WHO CAN SEE THIS GROUP?</div>
+                      <div styleName='dropdownDescription'>{this.props.t('CreateGroup.viewGroup')}</div>
                       <div styleName='selectedString'>
                         <b>{visibilityString(visibility)}</b>
                         <span>{visibilityDescription(visibility)}</span>
@@ -212,7 +212,7 @@ class CreateGroup extends Component {
                   <div styleName='dropdownItemSelected'>
                     <Icon name={accessibilityIcon(accessibility)} styleName='selectedIcon' />
                     <div>
-                      <div styleName='dropdownDescription'>WHO CAN JOIN THIS GROUP?</div>
+                      <div styleName='dropdownDescription'>{this.props.t('CreateGroup.joinGroup')}</div>
                       <div styleName='selectedString'>
                         <b>{accessibilityString(accessibility)}</b>
                         <span>{accessibilityDescription(accessibility)}</span>
@@ -253,10 +253,10 @@ class CreateGroup extends Component {
         {parentGroupOptions && parentGroupOptions.length > 0 && (
           <div styleName='parentGroups'>
             <div styleName='parentSelector'>
-              <span styleName='title'>IS THIS GROUP A MEMBER OF OTHER GROUPS?</span>
+              <span styleName='title'>{this.props.t('CreateGroup.memberOfOtherGroups')}</span>
               <div styleName='parentGroupInfo'>
                 ?
-                <div styleName='parentGroupTooltip'>You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it</div>
+                <div styleName='parentGroupTooltip'>{this.props.t('CreateGroup.addParentGroupsIf')}</div>
               </div>
               {/* TODO: somehow show groups that are restricted and will be a join request differently */}
               <GroupsSelector
@@ -279,7 +279,7 @@ class CreateGroup extends Component {
             onClick={this.onSubmit}
             styleName='submit-button'
           >
-            <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />Create Group
+            <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />{this.props.t('CreateGroup.createGroup')}
           </Button>
         </div>
       </div>
@@ -287,4 +287,4 @@ class CreateGroup extends Component {
   }
 }
 
-export default withTranslation('CreateGroup')(CreateGroup)
+export default withTranslation()(CreateGroup)

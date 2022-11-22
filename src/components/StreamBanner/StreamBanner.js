@@ -29,20 +29,20 @@ export default function StreamBanner ({
   isTesting,
   type
 }) {
-  const { t } = useTranslation('StreamBanner')
+  const { t } = useTranslation()
   let bannerUrl, avatarUrl, name, location, subtitle
 
   if (context === 'all') {
-    name = t('allMyGroupsTitle')
+    name = t('StreamBanner.allMyGroupsTitle')
     avatarUrl = whiteMerkaba
     bannerUrl = allGroupsBanner
-    subtitle = currentUser && `${currentUser.memberships.count()} Groups`
+    subtitle = currentUser && t('StreamBanner.groupsSubtitle', { count: currentUser.memberships.count() })
   } else if (context === 'public') {
-    name = t('publicGroupsAndPostTitle')
+    name = t('StreamBanner.publicGroupsAndPostTitle')
     avatarUrl = publicGlobe
     bannerUrl = allGroupsBanner
     // TODO list count of public posts and public groups in subtitle
-    subtitle = t('allPostsMarkedPublicSubtitle')
+    subtitle = t('StreamBanner.allPostsMarkedPublicSubtitle')
   } else if (!group) {
     return null
   } else {
@@ -50,6 +50,7 @@ export default function StreamBanner ({
   }
 
   let numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
+  const customActivePostsStatus = customActivePostsOnly ? t('StreamBanner.active') : ''
 
   return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
     <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
@@ -70,9 +71,9 @@ export default function StreamBanner ({
             </div>}
 
             {customViewType === 'stream'
-              ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
+              ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{t('StreamBanner.numberOfFilters', { numCustomFilters })}</div>
               : customViewType === 'collection'
-                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{t('Collection')}</div>
+                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{t('StreamBanner.collection')}</div>
                 : ''}
 
             {subtitle && <div styleName='header-subtitle'>
@@ -102,13 +103,12 @@ export default function StreamBanner ({
         return (customViewType === 'stream'
           ? <div styleName='custom-filters'>
             <span styleName='displaying'>
-              Displaying &nbsp;
-              {customActivePostsOnly ? 'active' : ''}
+              t('StreamBanner.displayingActivePostsStatus', { customActivePostsStatus })
             </span>
 
             {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
-            {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
-            {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
+            {customViewTopics.length > 0 && <div styleName='filtered-topics'>t('StreamBanner.filteredByTopics')</div>}
+            {customViewTopics.length > 0 && customViewTopics.map(topic => <span key={topic.id} styleName='filtered-topic'>#{topic.name}</span>)}
           </div>
           : ''
         )
@@ -118,12 +118,14 @@ export default function StreamBanner ({
 }
 
 export function postPromptString (type = '', { firstName }) {
+  const { t } = useTranslation()
+  const greeting = t('StreamBanner.greeting', { firstName })
   const postPrompts = {
-    offer: `Hi ${firstName}, what would you like to share?`,
-    request: `Hi ${firstName}, what are you looking for?`,
-    project: `Hi ${firstName}, what would you like to create?`,
-    event: `Hi ${firstName}, want to create an event?`,
-    default: `Hi ${firstName}, what's on your mind?`
+    offer: `${greeting}, ${t('StreamBanner.offer')}`,
+    request: `${greeting}, ${t('StreamBanner.request')}`,
+    project: `${greeting}, ${t('StreamBanner.project')}`,
+    event: `${greeting}, ${t('StreamBanner.event')}`,
+    default: `${greeting}, ${t('StreamBanner.default')}`
   }
 
   return postPrompts[type] || postPrompts['default']

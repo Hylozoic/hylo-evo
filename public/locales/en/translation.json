@@ -1,0 +1,50 @@
+{
+  "Affiliation": {
+    "delete": "Delete",
+    "deleteAffiliationConfirmation": "Are you sure you want to delete your affiliation as {{affiliation.role}} {{affiliation.preposition}} {{affiliation.orgName}}?"
+  },
+  "AttachmentManager": {
+    "addFile": "Add File",
+    "imagesTitle": "Images",
+    "files": "Files",
+    "loadingFile": "Loading..."
+  },
+  "CreateGroup": {
+    "addParentGroupsIf": "You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it",
+    "createGroup": "Create Group",
+    "groupNameInputPlaceholderText": "Your group's name",
+    "groupSlugExists": "This URL already exists. Try another.",
+    "joinGroup": "WHO CAN JOIN THIS GROUP?",
+    "memberOfOtherGroups": "IS THIS GROUP A MEMBER OF OTHER GROUPS?",
+    "viewGroup": "WHO CAN SEE THIS GROUP?"
+  },
+  "CreateModal": {
+    "confirmCancel": "Changes won't be saved. Are you sure you want to cancel?"
+  },
+  "CreateModalChooser": {
+    "createQuestion": "What would you like to create?",
+    "createSomething": "Create a new movement, network, community or group!",
+    "group": "Group",
+    "newPostAtLocationTitle": "New Post at this location: "
+  },
+  "EventInviteDialog": {
+    "alreadyInvitedDialog": "Already Invited"
+  },
+  "StreamBanner": {
+    "active": "active",
+    "allMyGroupsTitle": "All My Groups",
+    "allPostsMarkedPublicSubtitle": "All Posts Marked Public",
+    "collection": "Collection",
+    "default": "what's on your mind?",
+    "displayingActivePostsStatus": "Displaying {{customActivePostsStatus}}",
+    "event": "want to create an event?",
+    "filteredByTopics": "filtered by topics:",
+    "greeting": "Hi {{firstName}}",
+    "groupsSubtitle": "{{count}} Groups",
+    "numberOfFilters": "{{numCustomFilters}} Filters",
+    "offer": "what would you like to share?",
+    "project": "what would you like to create?",
+    "publicGroupsAndPostTitle": "Public Groups & Posts",
+    "request": "what are you looking for?"
+  }
+}

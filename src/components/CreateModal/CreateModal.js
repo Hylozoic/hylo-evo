@@ -16,7 +16,7 @@ export default function CreateModal (props) {
   const previousLocation = useSelector(getPreviousLocation)
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
-  const { t } = useTranslation('CreateModal')
+  const { t } = useTranslation()
 
   const querystringParams = new URLSearchParams(location.search)
   const mapLocation = (querystringParams.has('lat') && querystringParams.has('lng'))
@@ -31,7 +31,7 @@ export default function CreateModal (props) {
   }
 
   const confirmClose = () => {
-    const confirmed = !isDirty || window.confirm(t('confirmCancel'))
+    const confirmed = !isDirty || window.confirm(t('CreateModal.confirmCancel'))
 
     if (confirmed) {
       closeModal()

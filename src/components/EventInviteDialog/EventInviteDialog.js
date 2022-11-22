@@ -32,7 +32,7 @@ export default function EventInviteDialog ({
     : setInvitedIds(invitedIds.concat([id]))
 
   const onSearchChange = ({ target: { value } }) => setSearchTerm(value)
-  const { t } = useTranslation('EventInviteDialog')
+  const { t } = useTranslation()
 
   useEffect(() => {
     const fetch = () => {
@@ -97,7 +97,7 @@ export default function EventInviteDialog ({
         </div>
       </div>
 
-      <div styleName='alreadyInvitedLabel'>{t('alreadyInvitedDialog')}</div>
+      <div styleName='alreadyInvitedLabel'>{t('EventInviteDialog.alreadyInvitedDialog')}</div>
       <div styleName='alreadyInvited'>
         {eventInvitations.map(eventInvitation =>
           <InviteeRow

@@ -11,11 +11,11 @@ const postTypes = Object.keys(POST_TYPES)
 export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)
   const hasLocation = querystringParams.has('lat') && querystringParams.has('lng')
-  const { t } = useTranslation('CreateModalChooser')
+  const { t } = useTranslation()
 
   return (
     <div styleName='chooser'>
-      <h1>{hasLocation && t('newPostAtLocationTitle')}{t('createQuestion')}</h1>
+      <h1>{hasLocation && t('CreateModalChooser.newPostAtLocationTitle')}{t('CreateModalChooser.createQuestion')}</h1>
       {postTypes.map(postType => {
         querystringParams.set('newPostType', postType)
 
@@ -42,8 +42,8 @@ export default function CreateModalChooser ({ location }) {
           <div key='group'>
             <Icon name='Groups' styleName='postIcon' />
             <b>
-              <span styleName='postTypeName'>{t('group')}</span>
-              <span styleName='postTypeDescription'>{t('createSomething')}</span>
+              <span styleName='postTypeName'>{t('CreateModalChooser.group')}</span>
+              <span styleName='postTypeDescription'>{t('CreateModalChooser.createSomething')}</span>
             </b>
             <span styleName='indicator' />
           </div>

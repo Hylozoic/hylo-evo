@@ -1,4 +1,0 @@
-{
-  "delete": "Delete",
-  "deleteAffiliationConfirmation": "Are you sure you want to delete your affiliation as {{affiliation.role}} {{affiliation.preposition}} {{affiliation.orgName}}?"
-}
