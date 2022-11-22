@@ -5,8 +5,8 @@ import { render } from 'util/testing/reactTestingLibraryExtended'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
 
 jest.mock('react-i18next', () => ({
-  // this mock makes sure any components using the translate hook can use it without a warning being shown
-  useTranslation: () => {
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
     return {
       t: (str) => str,
       i18n: {

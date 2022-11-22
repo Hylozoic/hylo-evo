@@ -15,6 +15,18 @@ jest.mock('mixpanel-browser', () => ({
   }
 }))
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 beforeEach(() => {
   delete window.ResizeObserver
   window.ResizeObserver = jest.fn().mockImplementation(() => ({
