@@ -1,5 +1,5 @@
 import React from 'react'
-import StreamBanner, { postPromptString } from './StreamBanner'
+import StreamBanner from './StreamBanner'
 import { mount } from 'enzyme'
 
 const currentUser = {
@@ -41,13 +41,4 @@ it('matches the snapshot for an orphan user', () => {
     currentUserHasMemberships={false}
   />)
   expect(node).toMatchSnapshot()
-})
-
-describe('postPromptString', () => {
-  it('renders a post prompt string', () => {
-    const firstName = 'anybody'
-
-    expect(postPromptString('project', { firstName })).toMatchSnapshot()
-    expect(postPromptString('', { firstName })).toMatchSnapshot()
-  })
 })

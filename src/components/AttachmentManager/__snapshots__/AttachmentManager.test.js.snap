@@ -369,7 +369,7 @@ exports[`FileManager matches last snapshot 1`] = `
   <div
     data-stylename="section-label"
   >
-    Files
+    AttachmentManager.files
   </div>
   <div
     data-stylename="file-previews"
@@ -397,7 +397,7 @@ exports[`FileManager matches last snapshot 1`] = `
     <div
       data-stylename="loading-file"
     >
-      Loading...
+      AttachmentManager.loadingFile
     </div>
     <Connect(UploadAttachmentButton)
       attachmentType="file"
@@ -414,7 +414,8 @@ exports[`FileManager matches last snapshot 1`] = `
         >
           +
         </span>
-         Add File
+         
+        AttachmentManager.addFile
       </div>
     </Connect(UploadAttachmentButton)>
   </div>
@@ -454,7 +455,7 @@ exports[`ImageManager matches last snapshot 1`] = `
   <div
     data-stylename="section-label"
   >
-    Images
+    AttachmentManager.imagesTitle
   </div>
   <div
     data-stylename="image-previews"

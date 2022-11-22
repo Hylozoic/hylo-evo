@@ -2,15 +2,13 @@ import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
-import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import PostLabel from 'components/PostLabel'
 import './StreamBanner.scss'
 import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
-import { createPostUrl } from 'util/navigation'
 import Icon from 'components/Icon'
-import RoundImage from 'components/RoundImage'
+import PostPrompt from './PostPrompt'
 
 export default function StreamBanner ({
   context,
@@ -115,52 +113,4 @@ export default function StreamBanner ({
       }}
     />}
   </div>
-}
-
-export function postPromptString (type = '', { firstName }) {
-  const { t } = useTranslation()
-  const greeting = t('StreamBanner.greeting', { firstName })
-  const postPrompts = {
-    offer: `${greeting}, ${t('StreamBanner.offer')}`,
-    request: `${greeting}, ${t('StreamBanner.request')}`,
-    project: `${greeting}, ${t('StreamBanner.project')}`,
-    event: `${greeting}, ${t('StreamBanner.event')}`,
-    default: `${greeting}, ${t('StreamBanner.default')}`
-  }
-
-  return postPrompts[type] || postPrompts['default']
-}
-
-export class PostPrompt extends React.Component {
-  static defaultProps = {
-    firstName: '',
-    promptStringFunc: postPromptString,
-    querystringParams: {},
-    routeParams: {},
-    type: ''
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = { hover: false }
-  }
-
-  onMouseEnterHandler = () => this.setState({ hover: true })
-
-  onMouseLeaveHandler = () => this.setState({ hover: false })
-
-  render () {
-    const { avatarUrl, className, firstName, type, promptStringFunc, querystringParams, routeParams } = this.props
-    const { hover } = this.state
-
-    return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-      <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
-        <div styleName='postPrompt' className={className}>
-          <RoundImage url={avatarUrl} small styleName='prompt-image' />
-          {promptStringFunc(type, { firstName })}
-        </div>
-      </Link>
-      <div styleName={cx('shadow', { hover })} />
-    </div>
-  }
 }
