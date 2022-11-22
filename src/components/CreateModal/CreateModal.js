@@ -10,7 +10,7 @@ import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
 import './CreateModal.scss'
 
-export default function CreateModal (props) {
+const CreateModal = (props) => {
   const location = useLocation()
   const history = useHistory()
   const previousLocation = useSelector(getPreviousLocation)
@@ -73,3 +73,5 @@ export default function CreateModal (props) {
     </CSSTransition>
   )
 }
+
+export default CreateModal

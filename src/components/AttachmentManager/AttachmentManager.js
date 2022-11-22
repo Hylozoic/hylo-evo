@@ -1,7 +1,7 @@
 import { isEmpty, filter } from 'lodash/fp'
 import path from 'path'
 import PropTypes from 'prop-types'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDrag, useDrop } from 'react-dnd'
 import Icon from 'components/Icon'
@@ -22,71 +22,60 @@ export const attachmentsFromObjectType = {
   ...attachmentsObjectType
 }
 
-export default class AttachmentManager extends React.Component {
-  static propTypes = {
-    type: PropTypes.string.isRequired,
-    id: PropTypes.string,
-    attachmentType: PropTypes.string,
-    showAddButton: PropTypes.bool,
-    showLabel: PropTypes.bool,
-    showLoading: PropTypes.bool,
-    // provided by connector
-    uploadAttachmentPending: PropTypes.bool,
-    attachments: PropTypes.arrayOf(PropTypes.shape(attachmentsObjectType)),
-    attachmentsFromObject: PropTypes.arrayOf(PropTypes.shape(attachmentsFromObjectType)),
-    loadAttachments: PropTypes.func.isRequired,
-    addAttachment: PropTypes.func.isRequired,
-    removeAttachment: PropTypes.func.isRequired,
-    switchAttachments: PropTypes.func.isRequired,
-    clearAttachments: PropTypes.func.isRequired,
-    // only used by connector
-    setAttachments: PropTypes.func.isRequired
-  }
+const AttachmentManager = (props) => {
+  useEffect(() => {
+    props.loadAttachments()
+    return () => props.clearAttachments()
+  }, [])
+  useEffect(() => {
+    props.loadAttachments()
+  }, [props.attachmentsFromObject])
 
-  static defaultProps = {
-    id: ID_FOR_NEW
-  }
+  const { attachments, attachmentType, uploadAttachmentPending, showLoading } = props
 
-  componentDidMount () {
-    this.props.loadAttachments()
-  }
+  if (isEmpty(attachments) && !uploadAttachmentPending) return null
 
-  componentDidUpdate (prevProps) {
-    if (
-      isEmpty(prevProps.attachmentsFromObject) &&
-      !isEmpty(this.props.attachmentsFromObject)
-    ) {
-      this.props.loadAttachments()
-    }
-  }
-
-  componentWillUnmount () {
-    this.props.clearAttachments()
-  }
-
-  render () {
-    const { attachments, attachmentType, uploadAttachmentPending, showLoading } = this.props
-
-    if (isEmpty(attachments) && !uploadAttachmentPending) return null
-
-    // TODO: put this in a state variable that can change in real time to update the ordering as you drag
-    const imageAttachments = filter({ attachmentType: 'image' }, attachments)
-    const fileAttachments = filter({ attachmentType: 'file' }, attachments)
-    const showImages = (!isEmpty(imageAttachments) || (uploadAttachmentPending && showLoading)) &&
+  // TODO: put this in a state variable that can change in real time to update the ordering as you drag
+  const imageAttachments = filter({ attachmentType: 'image' }, attachments)
+  const fileAttachments = filter({ attachmentType: 'file' }, attachments)
+  const showImages = (!isEmpty(imageAttachments) || (uploadAttachmentPending && showLoading)) &&
       (!attachmentType || attachmentType === 'image')
-    const showFiles = (!isEmpty(fileAttachments) || (uploadAttachmentPending && showLoading)) &&
+  const showFiles = (!isEmpty(fileAttachments) || (uploadAttachmentPending && showLoading)) &&
       (!attachmentType || attachmentType === 'file')
 
-    return <React.Fragment>
-      {showImages &&
-        <ImageManager {...this.props} showLoading={showLoading} attachments={imageAttachments} />}
-      {showFiles &&
-        <FileManager {...this.props} showLoading={showLoading} attachments={fileAttachments} />}
-    </React.Fragment>
-  }
+  return <>
+    {showImages &&
+    <ImageManager {...props} showLoading={showLoading} attachments={imageAttachments} />}
+    {showFiles &&
+    <FileManager {...props} showLoading={showLoading} attachments={fileAttachments} />}
+  </>
 }
 
-export function ImageManager (props) {
+AttachmentManager.propTypes = {
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  attachmentType: PropTypes.string,
+  showAddButton: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  showLoading: PropTypes.bool,
+  // provided by connector
+  uploadAttachmentPending: PropTypes.bool,
+  attachments: PropTypes.arrayOf(PropTypes.shape(attachmentsObjectType)),
+  attachmentsFromObject: PropTypes.arrayOf(PropTypes.shape(attachmentsFromObjectType)),
+  loadAttachments: PropTypes.func.isRequired,
+  addAttachment: PropTypes.func.isRequired,
+  removeAttachment: PropTypes.func.isRequired,
+  switchAttachments: PropTypes.func.isRequired,
+  clearAttachments: PropTypes.func.isRequired,
+  // only used by connector
+  setAttachments: PropTypes.func.isRequired
+}
+
+AttachmentManager.defaultProps = {
+  id: ID_FOR_NEW
+}
+
+export const ImageManager = (props) => {
   const {
     type, id, attachments, addAttachment, removeAttachment,
     uploadAttachmentPending, showLoading, showAddButton, showLabel
@@ -115,7 +104,7 @@ export function ImageManager (props) {
   </div>
 }
 
-export function ImagePreview (props) {
+export const ImagePreview = (props) => {
   const {
     attachment, index, removeImage, switchImages
   } = props
@@ -190,10 +179,10 @@ export function ImagePreview (props) {
   )
 }
 
-export function FileManager ({
+export const FileManager = ({
   type, id, attachments, addAttachment, removeAttachment,
   uploadAttachmentPending, showLoading, showAddButton, showLabel
-}) {
+}) => {
   const { t } = useTranslation()
   return <div styleName='file-manager'>
     {showLabel && <div styleName='section-label'>{t('AttachmentManager.files')}</div>}
@@ -217,7 +206,7 @@ export function FileManager ({
   </div>
 }
 
-export function FilePreview ({ attachment, removeFile, fileSize }) {
+export const FilePreview = ({ attachment, removeFile, fileSize }) => {
   const filename = path.basename(attachment.url)
   return <div styleName='file-preview'>
     <Icon name='Document' styleName='icon-document' />
@@ -226,3 +215,5 @@ export function FilePreview ({ attachment, removeFile, fileSize }) {
     <Icon name='Ex' styleName='remove-file' onClick={removeFile} />
   </div>
 }
+
+export default AttachmentManager

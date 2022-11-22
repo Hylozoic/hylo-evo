@@ -1,19 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateGroup Allows for passing in initial name and slug via query parameters 1`] = `
-<CreateGroup
-  i18n={Object {}}
-  initialName="Epic Name"
-  initialSlug="bananaslug"
-  t={[Function]}
-  tReady={false}
-/>
-`;
+exports[`CreateGroup Allows for passing in initial name and slug via query parameters 1`] = `""`;
 
-exports[`CreateGroup matches snapshot 1`] = `
-<CreateGroup
-  i18n={Object {}}
-  t={[Function]}
-  tReady={false}
-/>
-`;
+exports[`CreateGroup matches snapshot 1`] = `""`;

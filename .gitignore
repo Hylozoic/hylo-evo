@@ -21,8 +21,6 @@ config/ssl
 .env.production
 npm-debug.log
 
-.vscode
-
 .floo
 .flooignore
 

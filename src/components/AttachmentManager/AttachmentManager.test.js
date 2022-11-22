@@ -4,6 +4,18 @@ import { shallow } from 'enzyme'
 import { render } from 'util/testing/reactTestingLibraryExtended'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
 
+jest.mock('react-i18next', () => ({
+  // this mock makes sure any components using the translate hook can use it without a warning being shown
+  useTranslation: () => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 const minDefaultProps = {
   type: 'anything',
   loadAttachments: () => {},
@@ -138,7 +150,8 @@ describe('ImageManager', () => {
       attachments: imageAttachments,
       addAttachment: () => {},
       removeAttachment: () => {},
-      switchAttachments: () => {}
+      switchAttachments: () => {},
+      t: key => key
     }
     const wrapper = shallow(<ImageManager {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -154,7 +167,8 @@ describe('ImagePreview', () => {
         { attachmentType: 'image', url: 'https://nowhere/foo.png' }
       ],
       position: 1,
-      removeImage: () => {}
+      removeImage: () => {},
+      t: key => key
     }
     const wrapper = render(<ImagePreview {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -172,7 +186,8 @@ describe('FileManager', () => {
       uploadAttachmentPending: true,
       attachments: fileAttachments,
       addAttachment: () => {},
-      removeAttachment: () => {}
+      removeAttachment: () => {},
+      t: key => key
     }
     const wrapper = shallow(<FileManager {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -185,7 +200,8 @@ describe('FilePreview', () => {
       attachment: { url: 'https://nowhere/foo.pdf', attachmentType: 'file' },
       position: 1,
       fileSize: '23.3mb',
-      removeFile: () => {}
+      removeFile: () => {},
+      t: key => key
     }
     const wrapper = shallow(<FilePreview {...props} />)
     expect(wrapper).toMatchSnapshot()

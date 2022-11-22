@@ -12,5 +12,8 @@
   "eslint.format.enable": true,
   "eslint.packageManager": "yarn",
   "eslint.lintTask.enable": true,
-  "eslint.codeActionsOnSave.mode": "problems"
+  "eslint.codeActionsOnSave.mode": "problems",
+  "i18n-ally.localesPaths": [
+    "public/locales"
+  ]
 }

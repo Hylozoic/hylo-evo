@@ -49,7 +49,7 @@ exports[`matches the latest snapshot 1`] = `
       />
       Unsubscribe
     </Button>
-    <Component
+    <StreamBanner
       firstName="anybody"
       routeParams={
         Object {
