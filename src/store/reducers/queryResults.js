@@ -135,17 +135,16 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   // Group streams
   return reduce((memo, group) => {
     queriesToMatch.push(
-      //TODO: add all the versions with activePostsOnly as false and true?
       { context: 'groups', slug: group.slug, activePostsOnly: false },
-      { context: 'groups', slug: group.slug, activePostsOnly: true },
+      { context: 'groups', slug: group.slug, activePostsOnly: true }, // For custom views
       { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
       { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false },
       { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false },
-      { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true },
+      { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true }, // For custom views
       { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type, activePostsOnly: false },
       { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: false },
-      { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: true },
+      { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: true }, // For custom views
       { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false },
       // For events stream upcoming events
