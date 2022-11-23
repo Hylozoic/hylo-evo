@@ -56,6 +56,7 @@ import {
 } from 'components/SkillsToLearnSection/SkillsToLearnSection.store'
 
 import {
+  FETCH_COLLECTION_POSTS,
   UPDATE_GROUP_SETTINGS,
   UPDATE_GROUP_SETTINGS_PENDING
 } from 'routes/GroupSettings/GroupSettings.store'
@@ -251,6 +252,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       }
       post.delete()
       break
+
+    case FETCH_COLLECTION_POSTS:
+      clearCacheFor(Group, meta.groupId)
+       break
 
     case FETCH_GROUP_DETAILS_PENDING: {
       // Clear out prerequisite groups so they correclty update with latest data
