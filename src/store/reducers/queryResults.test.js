@@ -12,7 +12,7 @@ import {
   REMOVE_POST_PENDING
 } from 'components/PostCard/PostHeader/PostHeader.store'
 
-const variables = { context: 'groups', slug: 'foo', sortBy: 'name' }
+const variables = { activePostsOnly: false, context: 'groups', slug: 'foo', sortBy: 'name' }
 
 const key = JSON.stringify({
   type: FETCH_MEMBERS,
@@ -225,11 +225,11 @@ describe('buildKey', () => {
 describe('matchNewPostIntoQueryResults', () => {
   it('prepends the post id to matching query result sets', () => {
     const state = {
-      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","slug":"bar"}}': {
         hasMore: true,
         ids: ['18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"request","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -238,11 +238,11 @@ describe('matchNewPostIntoQueryResults', () => {
     const post = { id: '17', type: 'request', groups }
 
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
-      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","slug":"bar"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"request","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
         ids: ['17', '18', '11']
       }
