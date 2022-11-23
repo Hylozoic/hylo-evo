@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Newly created posts appear immediately in stream, as well as projects view and upcoming events view if appropriate
+- Show post details when opening one from a topic stream in the /all context
 
 ## [5.0.4] - 2022-11-23
 
