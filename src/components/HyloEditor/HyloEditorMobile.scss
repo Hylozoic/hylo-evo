@@ -1,0 +1,54 @@
+:global {
+  .ProseMirror.suggestion-list-padding {
+    padding-bottom: 1.7rem;
+  }
+
+  // Mention and Topic suggestions
+  .tippy-box[data-theme='suggestions-mobile'] {
+    background-color: transparent;
+    
+    .tippy-content {
+      padding: 0
+    }  
+
+    .suggestion-list {
+      display: flex;
+      background-color: transparent;
+      color: $color-rhino-50;
+      flex-direction: row;
+      overflow-x: auto;
+    }
+
+    .suggestion-list-item {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: visible;
+      white-space: nowrap;
+      border-radius: 0.8rem;
+      border: 1px solid $color-caribbean-green;
+      color: $color-caribbean-green;
+      background-color: white;
+      margin: 0;
+      margin-right: 5px;
+      padding-top: 2px;
+      padding-right: 6px;
+      padding-bottom: 3px;
+      padding-left: 6px;
+    }
+
+    .suggestion-list-item-avatar {
+      padding: 0;
+      margin-right: 0.45em;
+      div {
+        width: 1.2rem;
+        height: 1.2rem;
+        border-width: 0;
+      }
+    }
+
+    .suggestion-list-item-no-result {
+      border-color: transparent;
+      color: $color-rhino-30;
+    }
+  }
+}

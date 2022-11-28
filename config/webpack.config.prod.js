@@ -160,7 +160,7 @@ module.exports = {
                   { helpers: true }
                 ]
               ],
-              ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ],
+              ignore: ['./node_modules/mapbox-gl/dist/mapbox-gl.js'],
               cacheDirectory: true,
               cacheCompression: true,
               // If an error happens in a package, it's possible to be
@@ -170,22 +170,11 @@ module.exports = {
               sourceMaps: false
             }
           },
+          sharedConfig.tsLoader,
+          // Plain CSS file loading, primarily used to load from `node_modules` provided stylesheets
+          // e.g. mapbox, slick carousel, tippy, etc
           {
-            test: /draft-js.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
-          {
-            test: /slick-carousel.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
-          {
-            test: /mapbox-gl.*\.css$/,
+            test: /\.css$/,
             use: [
               'style-loader',
               'css-loader'
@@ -193,7 +182,7 @@ module.exports = {
           },
           // CSS Modules for all SASS files not in resources or global
           {
-            test: /\.(css|scss|sass)$/,
+            test: /\.(scss|sass)$/,
             use: [
               MiniCssExtractPlugin.loader,
               sharedConfig.cssLoader,

@@ -9,6 +9,7 @@ export default function checkLogin () {
         query CheckLogin {
           me {
             id
+            avatarUrl
             email
             emailValidated
             hasRegistered

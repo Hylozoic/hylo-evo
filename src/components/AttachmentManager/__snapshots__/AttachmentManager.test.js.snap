@@ -6,7 +6,7 @@ exports[`AttachmentManager as used with CommentForm (default case) when loading 
 
 exports[`AttachmentManager as used with CommentForm (default case) when loading, with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -57,7 +57,7 @@ exports[`AttachmentManager as used with CommentForm (default case) when loading,
 
 exports[`AttachmentManager as used with CommentForm (default case) with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -108,7 +108,7 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
 
 exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when loading 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={Array []}
     clearAttachments={[Function]}
@@ -143,7 +143,7 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
 
 exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) when loading, with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -200,7 +200,7 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
 
 exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, showAddButtons) with attachments 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -284,7 +284,7 @@ exports[`AttachmentManager when attachmentType "file" with attachments (of both 
 
 exports[`AttachmentManager when attachmentType "image" with attachments (of both types), when loading 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachmentType="image"
     attachments={
@@ -313,7 +313,7 @@ exports[`AttachmentManager when attachmentType "image" with attachments (of both
 
 exports[`AttachmentManager when attachmentType not provided with attachments (of both types), when loading 1`] = `
 <Fragment>
-  <DragDropContext(ImageManager)
+  <ImageManager
     addAttachment={[Function]}
     attachments={
       Array [
@@ -459,26 +459,26 @@ exports[`ImageManager matches last snapshot 1`] = `
   <div
     data-stylename="image-previews"
   >
-    <DropTarget(DragSource(ImagePreview))
+    <ImagePreview
       attachment={
         Object {
           "attachmentType": "image",
           "url": "https://nowhere/foo.png",
         }
       }
+      index={0}
       key="0"
-      position={0}
       removeImage={[Function]}
     />
-    <DropTarget(DragSource(ImagePreview))
+    <ImagePreview
       attachment={
         Object {
           "attachmentType": "image",
           "url": "https://nowhere/bar.jpg",
         }
       }
+      index={1}
       key="1"
-      position={1}
       removeImage={[Function]}
     />
     <div
@@ -503,25 +503,96 @@ exports[`ImageManager matches last snapshot 1`] = `
 `;
 
 exports[`ImagePreview matches last snapshot 1`] = `
-<div
-  data-stylename="image-preview"
->
-  <div
-    data-stylename="image"
-    style={
-      Object {
-        "backgroundImage": "url(https://nowhere/foo.zng)",
-      }
-    }
+Object {
+  "asFragment": [Function],
+  "baseElement": <div
+    id="root"
   >
-    <Icon
-      data-stylename="remove-image"
-      name="Ex"
-      onClick={[Function]}
-    />
     <div
-      data-stylename="drag-preview"
-    />
-  </div>
-</div>
+      data-stylename="image-preview"
+      draggable="true"
+      style="opacity: 1;"
+    >
+      <div
+        data-stylename="image"
+        style="background-image: url(https://nowhere/foo.zng);"
+      >
+        <span
+          class="icon-Ex"
+          data-stylename="icon"
+        />
+      </div>
+    </div>
+  </div>,
+  "container": <div
+    id="root"
+  >
+    <div
+      data-stylename="image-preview"
+      draggable="true"
+      style="opacity: 1;"
+    >
+      <div
+        data-stylename="image"
+        style="background-image: url(https://nowhere/foo.zng);"
+      >
+        <span
+          class="icon-Ex"
+          data-stylename="icon"
+        />
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

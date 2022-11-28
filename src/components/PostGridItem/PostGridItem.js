@@ -1,9 +1,10 @@
 import React from 'react'
 import cx from 'classnames'
-// import Moment from 'moment'
+// import Moment from 'moment-timezone'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import './PostGridItem.scss'
 
@@ -67,7 +68,7 @@ export default function PostGridItem (props) {
             : ' '
         }
 
-        <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} />
+        <HyloHTML styleName='details' html={details} />
         <div styleName='grid-meta'>
           <div styleName='type-author'>
             <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />

@@ -24,8 +24,7 @@ export function fakePost () {
     groups: [{ id: '1', slug: 'great', name: 'Great Cause' }],
     commenters: fakePerson(3),
     commentersTotal: faker.datatype.number(),
-    creator: fakePerson(),
-    updatedAt: faker.date.recent().toString()
+    creator: fakePerson()
   }
 }
 

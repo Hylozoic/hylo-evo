@@ -8,6 +8,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import cx from 'classnames'
 import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
+import isWebView from 'util/webView'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
@@ -36,7 +37,6 @@ import Groups from 'routes/Groups'
 import GroupExplorer from 'routes/GroupExplorer'
 import Drawer from './components/Drawer'
 import Events from 'routes/Events'
-import Feed from 'routes/Feed'
 import Stream from 'routes/Stream'
 import MapExplorer from 'routes/MapExplorer'
 import JoinGroup from 'routes/JoinGroup'
@@ -63,8 +63,8 @@ export default function AuthLayoutRouter (props) {
   const resizeRef = useRef()
   const { width } = useResizeDetector({ handleHeight: false, targetRef: resizeRef })
 
-  const { hyloAppLayout, hideNavLayout } = useLayoutFlags()
-  const withoutNav = hyloAppLayout || hideNavLayout
+  const { hideNavLayout } = useLayoutFlags()
+  const withoutNav = isWebView() || hideNavLayout
 
   // Setup `pathMatchParams` and `queryParams` (`matchPath` best only used in this section)
   const location = props.location
@@ -192,7 +192,7 @@ export default function AuthLayoutRouter (props) {
         <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
       )}
 
-      {!hyloAppLayout && (
+      {!isWebView() && (
         <>
           <Route path='/:context(groups)/:groupSlug' render={routeProps => <GroupWelcomeModal {...routeProps} />} />
 
@@ -292,7 +292,8 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_POST_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(all|public)/:view(map)/${OPTIONAL_GROUP_MATCH}`} component={MapExplorer} />
               <Route path={`/:context(public)/:view(groups)/${OPTIONAL_GROUP_MATCH}`} component={GroupExplorer} />
-              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Feed} />
+              <Route path={`/:context(public)/:view(groups)/${OPTIONAL_POST_MATCH}`} component={GroupExplorer} />
+              <Route path='/:context(all|public)/:view(topics)/:topicName' component={Stream} />
               <Route path='/:context(all)/:view(topics)' component={AllTopics} />
               <Route path={`/:context(all|public)/${OPTIONAL_POST_MATCH}`} component={returnDefaultRouteForGroup(currentGroup)} />
               {/* **** Group Routes **** */}
@@ -321,7 +322,7 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
               <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Feed} />
+              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Stream} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
@@ -351,7 +352,8 @@ export default function AuthLayoutRouter (props) {
           <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
             {/* NOTE: These routes could potentially be simply: `(.*)/${POST_DETAIL_MATCH}` and`(.*)/${GROUP_DETAIL_MATCH}` */}
             <Switch>
-              <Route path={`/:context(all|public)/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path={`/:context(all|public)/:view(events|explore|groups|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path={`/:context(all|public)/:view(topics)/:topicName/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(public)/:view(groups)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(all)/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />

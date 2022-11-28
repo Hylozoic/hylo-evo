@@ -38,7 +38,7 @@ export default function PublicLayoutRouter (props) {
           </a>
           <div styleName='access-controls'>
             <a href='/login'>Sign in</a>
-            <a styleName='sign-up' href='/signup'>Sign up</a>
+            <a styleName='sign-up' href='/signup'>Join Hylo</a>
           </div>
         </div>
         <div styleName='center-column' id={CENTER_COLUMN_ID}>

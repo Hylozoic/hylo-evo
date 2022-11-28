@@ -32,7 +32,12 @@ export function fetchDefaultTopics (queryVariables = {}) {
     type: FETCH_DEFAULT_TOPICS,
     graphql: {
       query: topicsQuery,
-      variables: { ...queryVariables, sortBy: 'name', isDefault: true, visibility: [1, 2] }
+      variables: {
+        ...queryVariables,
+        sortBy: 'name',
+        isDefault: true,
+        visibility: [1, 2]
+      }
     },
     meta: {
       extractModel: [

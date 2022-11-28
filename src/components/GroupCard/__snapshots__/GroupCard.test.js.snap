@@ -37,14 +37,13 @@ exports[`matches last snapshot 1`] = `
     <div
       data-stylename="group-description"
     >
-      <span
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "<p>the description the description the description the description the description </p>
-",
-          }
-        }
-      />
+      <ClickCatcher>
+        <HyloHTML
+          element="span"
+          html="<p>the description the description the description the description the description </p>
+"
+        />
+      </ClickCatcher>
     </div>
     <div
       data-stylename="group-tags"
@@ -115,14 +114,13 @@ exports[`matches last snapshot with different config 1`] = `
     <div
       data-stylename="group-description"
     >
-      <span
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "<p>the description the description the description the description the description </p>
-",
-          }
-        }
-      />
+      <ClickCatcher>
+        <HyloHTML
+          element="span"
+          html="<p>the description the description the description the description the description </p>
+"
+        />
+      </ClickCatcher>
     </div>
     <div
       data-stylename="group-tags"

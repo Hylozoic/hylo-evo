@@ -2,9 +2,8 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
-import { filter, isEmpty, isFunction } from 'lodash/fp'
+import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
-import * as HyloContentState from 'components/HyloEditor/HyloContentState'
 import { personUrl } from 'util/navigation'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
@@ -32,26 +31,37 @@ export class Comment extends Component {
     removeComment: func
   }
 
+  editor = React.createRef()
+
   state = {
-    editing: false
+    editing: false,
+    editedText: null
   }
 
-  editComment = () => {
+  handleEditComment = () => {
     this.setState({ editing: true })
   }
 
-  handleEscape = () => this.setState({ editing: false })
+  handleEditCancel = () => {
+    this.setState({ editedText: null, editing: false })
+    this.editor.current.setContent(this.props.comment.text)
 
-  saveComment = editorState => {
+    return true
+  }
+
+  handleEditSave = contentHTML => {
     const { comment } = this.props
-    const contentState = editorState.getCurrentContent()
-    if ((!contentState.hasText() || isEmpty(contentState.getPlainText().trim())) && isEmpty(comment.attachments)) {
-      // Don't accept empty comments.
-      return
+
+    if (this.editor?.current && this.editor.current.isEmpty()) {
+      // Do nothing and stop propagation
+      return true
     }
 
+    this.props.updateComment(comment.id, contentHTML)
     this.setState({ editing: false })
-    this.props.updateComment(comment.id, HyloContentState.toHTML(editorState.getCurrentContent()))
+
+    // Tell Editor this keyboard event was handled and to end propagation.
+    return true
   }
 
   render () {
@@ -60,10 +70,9 @@ export class Comment extends Component {
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
-    const presentedText = TextHelpers.presentHTML(text, { slug })
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
-      { icon: 'Edit', label: 'Edit', onClick: isCreator && this.editComment },
+      { icon: 'Edit', label: 'Edit', onClick: isCreator && this.handleEditComment },
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
@@ -81,30 +90,26 @@ export class Comment extends Component {
             <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
               <Icon name='Replies' />
             </div>
-            {dropdownItems.length > 0 && (
+            {editing && (
+              <Icon name='Ex' styleName='cancelIcon' onClick={this.handleEditCancel} />
+            )}
+            {!editing && dropdownItems.length > 0 && (
               <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />
             )}
           </div>
         </div>
-        {attachments &&
-          <div>
-            <CardImageAttachments attachments={attachments} linked styleName='images' />
-            <CardFileAttachments attachments={attachments} styleName='files' />
-          </div>}
-        <ClickCatcher>
-          {editing && (
-            <HyloEditor
-              styleName='editor'
-              onChange={this.startTyping}
-              contentHTML={text || ''}
-              parentComponent={'CommentForm'}
-              onEscape={this.handleEscape}
-              submitOnReturnHandler={this.saveComment}
-            />
-          )}
-          {!editing && (
-            <div id='text' styleName='text' dangerouslySetInnerHTML={{ __html: presentedText }} />
-          )}
+        <CardImageAttachments attachments={attachments} linked styleName='images' />
+        <CardFileAttachments attachments={attachments} styleName='files' />
+        <ClickCatcher groupSlug={slug}>
+          {/* Renders and provides editor */}
+          <HyloEditor
+            styleName={editing ? 'editing' : 'text'}
+            contentHTML={text || ''}
+            readOnly={!editing}
+            onEscape={this.handleEditCancel}
+            onEnter={this.handleEditSave}
+            ref={this.editor}
+          />
         </ClickCatcher>
       </div>
     )
@@ -133,6 +138,7 @@ export default class CommentWithReplies extends Component {
     newCommentsAdded: 0 // tracks number of comments added without a requery, to adjust ShowMore pagination totals
   }
 
+  editor = React.createRef()
   replyBox = React.createRef()
 
   onReplyComment = (e, toMember) => {
@@ -142,7 +148,7 @@ export default class CommentWithReplies extends Component {
       replying: true,
       triggerReplyAction: true,
       prefillEditor: toMember
-        ? `<p><a data-entity-type="mention" data-user-id="${toMember.id}">${toMember.name}</a> </p>`
+        ? `<p>${TextHelpers.mentionHTML(toMember)}&nbsp;</p>`
         : ''
     })
   }
@@ -163,39 +169,47 @@ export default class CommentWithReplies extends Component {
       childComments = childComments.slice(-1 * (INITIAL_SUBCOMMENTS_DISPLAYED + newCommentsAdded))
     }
 
-    return <div styleName='comment'>
-      <Comment {...this.props} onReplyComment={this.onReplyComment} />
-      {childComments && childComments && <div styleName='subreply'>
-        <div styleName='more-wrap'>
-          <ShowMore
-            commentsLength={childComments.length}
-            total={childCommentsTotal + newCommentsAdded}
-            hasMore={hasMoreChildComments}
-            fetchComments={() => {
-              this.setState({ showLatestOnly: false })
-              fetchChildComments()
-            }} />
-        </div>
-        {childComments.map(c =>
-          <Comment key={c.id}
-            {...this.props}
-            comment={c}
-            // sets child comments to toggle reply box one level deep, rather than allowing recursion
-            onReplyComment={(e) => this.onReplyComment(e, c.creator)}
-          />)
-        }
-      </div>}
-      {replying && <div styleName='replybox' ref={this.replyBox}>
-        <CommentForm
-          createComment={c => {
-            createComment(c)
-              .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
-          }}
-          placeholder={`Reply to ${comment.creator.name}`}
-          editorContent={this.state.prefillEditor}
-          focusOnRender />
-      </div>}
-      <Tooltip id={`reply-tip-${comment.id}`} />
-    </div>
+    return (
+      <div styleName='comment'>
+        <Comment {...this.props} onReplyComment={this.onReplyComment} />
+        {childComments && (
+          <div styleName='subreply'>
+            <div styleName='more-wrap'>
+              <ShowMore
+                commentsLength={childComments.length}
+                total={childCommentsTotal + newCommentsAdded}
+                hasMore={hasMoreChildComments}
+                fetchComments={() => {
+                  this.setState({ showLatestOnly: false })
+                  fetchChildComments()
+                }}
+              />
+            </div>
+            {childComments.map(c => (
+              <Comment
+                key={c.id}
+                {...this.props}
+                comment={c}
+                // sets child comments to toggle reply box one level deep, rather than allowing recursion
+                onReplyComment={(e) => this.onReplyComment(e, c.creator)}
+              />
+            ))}
+          </div>
+        )}
+        {replying && (
+          <div styleName='replybox' ref={this.replyBox}>
+            <CommentForm
+              createComment={c => {
+                createComment(c)
+                  .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
+              }}
+              placeholder={`Reply to ${comment.creator.name}`}
+              editorContent={this.state.prefillEditor}
+            />
+          </div>
+        )}
+        <Tooltip id={`reply-tip-${comment.id}`} />
+      </div>
+    )
   }
 }

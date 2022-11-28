@@ -32,8 +32,14 @@ export default class PostCard extends React.Component {
 
   shouldShowDetails = element => {
     if (element === this.refs.postCard) return true
-    if (element.tagName === 'A' || element.tagName === 'LI') return false
+    if (
+      element.tagName === 'A' ||
+      element.tagName === 'LI' ||
+      ['mention', 'topic'].includes(element.getAttribute('data-type'))
+    ) return false
+
     const parent = element.parentElement
+
     if (parent) return this.shouldShowDetails(parent)
     return true
   }

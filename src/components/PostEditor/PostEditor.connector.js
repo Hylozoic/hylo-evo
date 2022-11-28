@@ -19,7 +19,6 @@ import {
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
 import updatePost from 'store/actions/updatePost'
-import { fetchDefaultTopics } from 'store/actions/fetchTopics'
 import {
   addAttachment,
   getAttachments,
@@ -31,7 +30,6 @@ import {
   pollingFetchLinkPreview,
   removeLinkPreview,
   clearLinkPreview,
-  getDefaultTopics,
   getLinkPreview,
   setAnnouncement
 } from './PostEditor.store'
@@ -50,7 +48,7 @@ export function mapStateToProps (state, props) {
   const uploadFileAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'file' })
   const uploadImageAttachmentPending = getUploadAttachmentPending(state, { type: 'post', id: editingPostId, attachmentType: 'image' })
   const postPending = isPendingFor([CREATE_POST, CREATE_PROJECT], state)
-  const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || !!fetchLinkPreviewPending || postPending
+  const loading = isPendingFor(FETCH_POST, state) || !!uploadAttachmentPending || postPending
   let post = null
   let editing = false
   if (getRouteParam('action', null, props) === 'edit') {
@@ -66,8 +64,6 @@ export function mapStateToProps (state, props) {
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
   const announcementSelected = state[MODULE_NAME].announcement
-  const canModerate = currentUser && currentUser.canModerate(currentGroup)
-  const defaultTopics = getDefaultTopics(state, { groupSlug, sortBy: 'name' })
   const location = get('location', props)
   const postType = getQuerystringParam('newPostType', null, props)
   const isProject = postType === 'project' || get('type', post) === 'project'
@@ -75,11 +71,9 @@ export function mapStateToProps (state, props) {
 
   return {
     announcementSelected,
-    canModerate,
     context,
     currentGroup,
     currentUser,
-    defaultTopics,
     editing,
     editingPostId,
     fetchLinkPreviewPending,
@@ -113,7 +107,6 @@ export const mapDispatchToProps = (dispatch) => {
     ...bindActionCreators({
       changeQueryString: replace,
       goToUrl: push,
-      fetchDefaultTopics,
       setAnnouncement,
       removeLinkPreview,
       clearLinkPreview,
@@ -126,7 +119,7 @@ export const mapDispatchToProps = (dispatch) => {
 }
 
 export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { fetchLinkPreviewPending, groupSlug } = stateProps
+  const { fetchLinkPreviewPending } = stateProps
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
 
   const goToPost = createPostAction => {
@@ -145,13 +138,11 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const pollingFetchLinkPreview = fetchLinkPreviewPending
     ? () => Promise.resolve()
     : url => pollingFetchLinkPreviewRaw(url)
-  const fetchDefaultTopics = () => dispatchProps.fetchDefaultTopics({ groupSlug })
 
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    fetchDefaultTopics,
     goToPost,
     pollingFetchLinkPreview
   }

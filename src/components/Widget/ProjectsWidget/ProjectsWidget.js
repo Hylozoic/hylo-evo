@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
@@ -7,20 +7,21 @@ import RoundImage from '../../RoundImage'
 
 import './ProjectsWidget.scss'
 
-const { array, object } = PropTypes
+const { array, bool, object } = PropTypes
 
 export default class ProjectsWidget extends Component {
   static propTypes = {
-    group: object,
-    items: array
+    isMember: bool,
+    items: array,
+    routeParams: object
   }
 
   render () {
-    const { group, items, routeParams, isMember } = this.props
+    const { isMember, items, routeParams } = this.props
 
     return (
       <div styleName='projects'>
-        {items && items.map(p => <Link to={postUrl(p.id, { groupSlug: group.slug })} key={p.id}>
+        {items && items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
           <div styleName='project'>
             <div styleName='meta'>
               <div styleName='title'>{p.title}</div>

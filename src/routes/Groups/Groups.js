@@ -2,9 +2,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import { TextHelpers } from 'hylo-shared'
+import ClickCatcher from 'components/ClickCatcher'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import GroupNetworkMap from 'components/GroupNetworkMap'
+import HyloHTML from 'components/HyloHTML'
 import {
   DEFAULT_BANNER,
   DEFAULT_AVATAR,
@@ -111,7 +113,9 @@ export function GroupCard ({ group, routeParams }) {
             </div>
           </div>
           <div styleName='group-description'>
-            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            <ClickCatcher>
+              <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+            </ClickCatcher>
           </div>
         </div>
       </div>

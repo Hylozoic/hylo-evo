@@ -11,6 +11,7 @@ import PostGridItem from 'components/PostGridItem'
 import PostBigGridItem from 'components/PostBigGridItem'
 import ScrollListener from 'components/ScrollListener'
 import ViewControls from 'components/StreamViewControls'
+import TopicFeedHeader from 'components/TopicFeedHeader'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Stream.scss'
 
@@ -38,11 +39,17 @@ export default class Stream extends Component {
   }
 
   componentDidMount () {
+    const { routeParams, fetchTopic } = this.props
+    const { topicName } = routeParams
+
+    if (topicName) fetchTopic()
     this.fetchPosts(0)
   }
 
   componentDidUpdate (prevProps) {
     if (!prevProps) return
+
+    const { fetchTopic } = this.props
 
     const hasChanged = propHasChanged(this.props, prevProps)
 
@@ -52,9 +59,12 @@ export default class Stream extends Component {
       hasChanged('group.id') ||
       hasChanged('search') ||
       hasChanged('customViewId') ||
+      hasChanged('topic') ||
       hasChanged('view')) {
       this.fetchPosts(0)
     }
+
+    if (hasChanged('topicName')) fetchTopic()
   }
 
   fetchPosts (offset) {
@@ -77,17 +87,23 @@ export default class Stream extends Component {
       currentUserHasMemberships,
       customPostTypes,
       customViewTopics,
+      customViewType,
+      followersTotal,
+      groupTopic,
       group,
       newPost,
       routeParams,
       posts,
       postTypeFilter,
       pending,
+      postsTotal,
       querystringParams,
       respondToEvent,
       search,
       selectedPostId,
       sortBy,
+      topicLoading,
+      toggleGroupTopicSubscribe,
       view,
       viewIcon,
       viewName,
@@ -95,28 +111,50 @@ export default class Stream extends Component {
     } = this.props
 
     const ViewComponent = viewComponent[viewMode]
-    const isCustomView = routeParams && routeParams.view === 'custom'
+    const { topicName, groupSlug } = routeParams
+
+    if (topicLoading) return <Loading />
 
     return (
       <>
-        <StreamBanner
-          customPostTypes={customPostTypes}
-          customActivePostsOnly={customActivePostsOnly}
-          customViewTopics={customViewTopics}
-          isCustomView={isCustomView}
-          context={context}
-          currentUser={currentUser}
-          currentUserHasMemberships={currentUserHasMemberships}
-          group={group}
-          newPost={newPost}
-          querystringParams={querystringParams}
-          routeParams={routeParams}
-          type={postTypeFilter}
-          icon={viewIcon}
-          label={viewName}
-        />
+        {topicName
+          ? (
+            <TopicFeedHeader
+              isSubscribed={groupTopic && groupTopic.isSubscribed}
+              toggleSubscribe={
+                groupTopic
+                  ? () => toggleGroupTopicSubscribe(groupTopic)
+                  : null
+              }
+              groupSlug={groupSlug}
+              topicName={topicName}
+              postsTotal={postsTotal}
+              followersTotal={followersTotal}
+              type={postTypeFilter}
+              currentUser={currentUser}
+              bannerUrl={group && group.bannerUrl}
+              newPost={newPost}
+            />
+          ) : (
+            <StreamBanner
+              customPostTypes={customPostTypes}
+              customActivePostsOnly={customActivePostsOnly}
+              customViewTopics={customViewTopics}
+              customViewType={customViewType}
+              context={context}
+              currentUser={currentUser}
+              currentUserHasMemberships={currentUserHasMemberships}
+              group={group}
+              newPost={newPost}
+              querystringParams={querystringParams}
+              routeParams={routeParams}
+              type={postTypeFilter}
+              icon={viewIcon}
+              label={viewName}
+            />
+          )}
         <ViewControls
-          routeParams={routeParams} view={view} customPostTypes={customPostTypes}
+          routeParams={routeParams} view={view} customPostTypes={customPostTypes} customViewType={customViewType}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
         />

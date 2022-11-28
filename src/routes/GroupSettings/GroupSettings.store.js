@@ -1,9 +1,15 @@
 export const MODULE_NAME = 'GroupSettings'
-export const REGENERATE_ACCESS_CODE = `${MODULE_NAME}/REGENERATE_ACCESS_CODE`
+
+export const ADD_POST_TO_COLLECTION = `${MODULE_NAME}/ADD_POST_TO_COLLECTION`
+export const CREATE_COLLECTION = `${MODULE_NAME}/CREATE_COLLECTION`
+export const DELETE_GROUP = `${MODULE_NAME}/DELETE_GROUP`
+export const FETCH_COLLECTION_POSTS = `${MODULE_NAME}/FETCH_COLLECTION_POSTS`
 export const FETCH_GROUP_SETTINGS = `${MODULE_NAME}/FETCH_GROUP_SETTINGS`
+export const REGENERATE_ACCESS_CODE = `${MODULE_NAME}/REGENERATE_ACCESS_CODE`
+export const REMOVE_POST_FROM_COLLECTION = `${MODULE_NAME}/REMOVE_POST_FROM_COLLECTION`
+export const REORDER_POST_IN_COLLECTION = `${MODULE_NAME}/REORDER_POST_IN_COLLECTION`
 export const UPDATE_GROUP_SETTINGS = `${MODULE_NAME}/UPDATE_GROUP_SETTINGS`
 export const UPDATE_GROUP_SETTINGS_PENDING = UPDATE_GROUP_SETTINGS + '_PENDING'
-export const DELETE_GROUP = `${MODULE_NAME}/DELETE_GROUP`
 
 export function orderFromSort (sortBy) {
   if (sortBy === 'name') return 'asc'
@@ -13,7 +19,7 @@ export function orderFromSort (sortBy) {
 export function fetchGroupSettings (slug) {
   return {
     type: FETCH_GROUP_SETTINGS,
-    graphql: { // TODO: integrate custom views into this call
+    graphql: {
       query: `query ($slug: String) {
         group (slug: $slug) {
           id
@@ -67,18 +73,25 @@ export function fetchGroupSettings (slug) {
             items {
               id
               activePostsOnly
+              collectionId
+              collection {
+                id
+                name
+              }
+              defaultSort
+              defaultViewMode
               externalLink
               groupId
               isActive
               icon
               name
-              postTypes
               order
-              viewMode
+              postTypes
               topics {
                 id
                 name
               }
+              type
             }
           }
           groupToGroupJoinQuestions {
@@ -161,6 +174,12 @@ export function updateGroupSettings (id, changes) {
             items {
               id
               activePostsOnly
+              collectionId
+              collection {
+                id
+              }
+              defaultSort
+              defaultViewMode
               externalLink
               groupId
               isActive
@@ -168,11 +187,11 @@ export function updateGroupSettings (id, changes) {
               name
               postTypes
               order
-              viewMode
               topics {
                 id
                 name
               }
+              type
             }
           }
           groupToGroupJoinQuestions {
@@ -209,6 +228,121 @@ export function updateGroupSettings (id, changes) {
       changes,
       extractModel: 'Group',
       optimistic: true
+    }
+  }
+}
+
+export function fetchCollectionPosts (groupId) {
+  return {
+    type: FETCH_COLLECTION_POSTS,
+    graphql: {
+      query: `query ($id: ID) {
+        group(id: $id) {
+          id
+          customViews {
+            items {
+              id
+              collectionId
+              collection {
+                id
+                linkedPosts {
+                  items {
+                    id
+                    order
+                    post {
+                      id
+                      title
+                      creator {
+                        id
+                        name
+                        avatarUrl
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`,
+      variables: {
+        id: groupId
+      }
+    },
+    meta: {
+      extractModel: 'Group',
+      groupId
+    }
+  }
+}
+
+export function createCollection (collectionData) {
+  return {
+    type: CREATE_COLLECTION,
+    graphql: {
+      query: `mutation ($data: CollectionInput) {
+        createCollection(data: $data) {
+          id
+        }
+      }`,
+      variables: {
+        data: collectionData
+      }
+    },
+    meta: {
+      extractModel: 'Collection'
+    }
+  }
+}
+
+export function addPostToCollection (collectionId, postId) {
+  return {
+    type: ADD_POST_TO_COLLECTION,
+    graphql: {
+      query: `mutation ($collectionId: ID, $postId: ID) {
+        addPostToCollection(collectionId: $collectionId, postId: $postId) {
+          success
+        }
+      }`,
+      variables: {
+        collectionId,
+        postId
+      }
+    }
+  }
+}
+
+export function removePostFromCollection (collectionId, postId) {
+  return {
+    type: REMOVE_POST_FROM_COLLECTION,
+    graphql: {
+      query: `mutation ($collectionId: ID, $postId: ID) {
+        removePostFromCollection(collectionId: $collectionId, postId: $postId) {
+          success
+        }
+      }`,
+      variables: {
+        collectionId,
+        postId
+      }
+    }
+  }
+}
+
+export function reorderPostInCollection (collectionId, postId, newOrderIndex) {
+  return {
+    type: REORDER_POST_IN_COLLECTION,
+    graphql: {
+      query: `mutation ($collectionId: ID, $postId: ID, $newOrderIndex: Int) {
+        reorderPostInCollection(collectionId: $collectionId, postId: $postId, newOrderIndex: $newOrderIndex) {
+          success
+        }
+      }`,
+      variables: {
+        collectionId,
+        postId,
+        newOrderIndex
+      }
     }
   }
 }

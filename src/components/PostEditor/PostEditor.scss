@@ -151,7 +151,7 @@ $wrapperBorderRadius: 8px;
 // Body area
 
 .body {
-  padding: 0 $space-4x;
+  padding: 0 $space-5x 0 $space-4x;
   display: flex;
   flex-direction: row;
   &-column:last-child {
@@ -183,10 +183,11 @@ $wrapperBorderRadius: 8px;
 }
 
 .editor {
+  padding: 5px;
   min-height: 100px;
   max-height: 200px;
-  margin-bottom: $space-6x;
   color: $color-rhino-80;
+  overflow: auto;
 }
 
 // Footer area
@@ -198,7 +199,7 @@ $wrapperBorderRadius: 8px;
 .footerSection {
   min-height: 3rem;
   border-top: solid 1px $color-ghost-30;
-  padding: $space-4x;
+  padding: 0 $space-4x;
   line-height: 1;
   display: flex;
   align-items: center;

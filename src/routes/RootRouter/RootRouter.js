@@ -1,8 +1,7 @@
 import mixpanel from 'mixpanel-browser'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route } from 'react-router'
-import { Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router'
 import config, { isProduction, isTest } from 'config'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
@@ -44,7 +43,7 @@ export default function RootRouter () {
   }
 
   if (!isAuthorized) {
-    // TODO: Can NonAuthLayoutRouter and PublicLayourRouter merge?
+    // TODO: Can NonAuthLayoutRouter and PublicLayoutRouter merge?
     return (
       <Switch>
         <Route path='/post/:id' component={PublicLayoutRouter} />
@@ -57,6 +56,7 @@ export default function RootRouter () {
   }
 }
 
+// Move into `PublicLayoutRouter`
 function CheckPublicPost (props) {
   const postId = props.match.params.postId
   const query =

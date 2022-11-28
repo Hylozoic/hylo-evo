@@ -6,7 +6,6 @@ Object {
   "changeQueryString": [Function],
   "clearLinkPreview": [Function],
   "createPost": [Function],
-  "fetchDefaultTopics": [Function],
   "fetchLocation": [Function],
   "goToUrl": [Function],
   "pollingFetchLinkPreviewRaw": [Function],
@@ -19,7 +18,6 @@ Object {
 exports[`mapStateToProps returns the right keys for a new post 1`] = `
 Object {
   "announcementSelected": undefined,
-  "canModerate": undefined,
   "context": undefined,
   "currentGroup": null,
   "currentUser": SessionBoundModel {
@@ -28,7 +26,6 @@ Object {
     },
     "id": "1",
   },
-  "defaultTopics": Array [],
   "editing": false,
   "editingPostId": undefined,
   "ensureLocationIdIfCoordinate": [Function],
@@ -84,7 +81,6 @@ Object {
 exports[`mapStateToProps returns the right keys for a new post while pending 1`] = `
 Object {
   "announcementSelected": undefined,
-  "canModerate": undefined,
   "context": undefined,
   "currentGroup": null,
   "currentUser": SessionBoundModel {
@@ -93,7 +89,6 @@ Object {
     },
     "id": "1",
   },
-  "defaultTopics": Array [],
   "editing": false,
   "editingPostId": undefined,
   "ensureLocationIdIfCoordinate": [Function],

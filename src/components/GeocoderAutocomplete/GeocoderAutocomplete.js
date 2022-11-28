@@ -214,7 +214,7 @@ class Geocoder extends Component {
       onBlur: this.handleBlur,
       type: 'text',
       // defaultValue: this.state.inputValue
-      value: this.state.inputValue,
+      value: this.state.inputValue || undefined,
       onChange: this.onInput
     })
     return React.createElement(

@@ -49,7 +49,7 @@
 
 .create-modal {
   position: fixed;
-  z-index: 100;
+  z-index: 200;
   top: 0;
   left: 0;
   right: 0;
@@ -74,7 +74,7 @@
 
 .create-modal-wrapper {
   width: 100%;
-  max-width: 590px;
+  max-width: 650px;
   margin-top: auto;
   margin-bottom: auto;
   position: relative;
@@ -165,23 +165,24 @@
         }
       }
     }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        text-decoration: none;
 
-    &:hover {
-      text-decoration: none;
+        div {
+          background-color: rgba(208,240,234,1);
 
-      div {
-        background-color: rgba(208,240,234,1);
+          .indicator {
+            background-color: rgba(0, 196, 159, 1.00);
+          }
 
-        .indicator {
-          background-color: rgba(0, 196, 159, 1.00);
-        }
+          .postTypeDescription {
+            color: rgba(128,140,155,1);
+          }
 
-        .postTypeDescription {
-          color: rgba(128,140,155,1);
-        }
-
-        .postIcon:before {
-          color: rgba(13, 195, 159, 1);
+          .postIcon:before {
+            color: rgba(13, 195, 159, 1);
+          }
         }
       }
     }

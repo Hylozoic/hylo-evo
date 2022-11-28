@@ -1,27 +1,33 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { get, isEmpty } from 'lodash/fp'
-import { FETCH_POSTS } from 'store/constants'
+import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
 import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
+import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
+import {
+  fetchGroupTopic,
+  fetchPosts,
+  fetchTopic,
+  getCustomView,
+  getHasMorePosts,
+  getPosts
+} from 'routes/Stream/Stream.store'
 import getRouteParam from 'store/selectors/getRouteParam'
+import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import changeQuerystringParam from 'store/actions/changeQuerystringParam'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import {
-  fetchPosts,
-  getCustomView,
-  getPosts,
-  getHasMorePosts
-} from 'components/FeedList/FeedList.store'
 import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
 import presentPost from 'store/presenters/presentPost'
 import respondToEvent from 'store/actions/respondToEvent'
+import isPendingFor from 'store/selectors/isPendingFor'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 
 import { createPostUrl } from 'util/navigation'
 
 export function mapStateToProps (state, props) {
-  let group
+  let group, topic, groupTopic
   let groupId = 0
 
   const groupSlug = getRouteParam('groupSlug', state, props)
@@ -33,14 +39,26 @@ export function mapStateToProps (state, props) {
 
   const routeParams = get('match.params', props)
   const customView = getCustomView(state, props)
-  const customPostTypes = customView?.postTypes
-  const customViewMode = customView?.viewMode
+  const customViewType = customView?.type
+  const customPostTypes = customViewType === 'stream' ? customView?.postTypes : null
+  const customViewMode = customView?.defaultViewMode
   const customViewName = customView?.name
   const customViewIcon = customView?.icon
-  const activePostsOnly = customView?.activePostsOnly
-  const customViewTopics = customView?.topics
+  const activePostsOnly = customViewType === 'stream' ? customView?.activePostsOnly : false
+  const customViewTopics = customViewType === 'stream' ? customView?.topics : null
+  const customViewSort = customView?.defaultSort
   const viewName = customViewName
   const viewIcon = customViewIcon
+  const topicName = getRouteParam('topicName', state, props)
+  const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
+
+  if (groupSlug) {
+    groupTopic = getGroupTopicForCurrentRoute(state, props)
+    groupTopic = groupTopic && { ...groupTopic.ref, group: groupTopic.group, topic: groupTopic.topic }
+  }
+  if (topicName) {
+    topic = getTopicForCurrentRoute(state, props)
+  }
 
   const context = getRouteParam('context', state, props)
   const view = getRouteParam('view', state, props)
@@ -53,18 +71,25 @@ export function mapStateToProps (state, props) {
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
 
   const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
-  const postTypeFilter = getQuerystringParam('t', state, props) || defaultPostType
+  const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
   const search = getQuerystringParam('search', state, props)
-  const sortBy = getQuerystringParam('s', state, props) || defaultSortBy
-  const viewMode = customViewMode || getQuerystringParam('v', state, props) || projectsDefault || defaultViewMode
+  let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
+  // Only custom views can be sorted by manual order
+  if (!customView && sortBy === 'order') {
+    sortBy = 'updated'
+  }
+  const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
 
   const fetchPostsParam = {
     activePostsOnly,
     context,
+    topicName,
     filter: postTypeFilter,
+    forCollection: customView?.type === 'collection' ? customView?.collectionId : null,
     slug: groupSlug,
     search,
     sortBy,
+    topic: topic?.id,
     topics: customViewTopics?.toModelArray().map(t => t.id) || [],
     types: customPostTypes
   }
@@ -75,6 +100,7 @@ export function mapStateToProps (state, props) {
   return {
     customActivePostsOnly: activePostsOnly,
     customViewId: customView?.id,
+    customViewType,
     context,
     currentUser,
     currentUserHasMemberships,
@@ -87,10 +113,15 @@ export function mapStateToProps (state, props) {
     postTypeFilter,
     posts,
     querystringParams,
+    postsTotal: get('postsTotal', groupSlug ? groupTopic : topic),
+    followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
     routeParams,
     search,
     selectedPostId: getRouteParam('postId', state, props),
     sortBy,
+    topicLoading,
+    topicName,
+    topic,
     view,
     viewIcon,
     viewName,
@@ -99,6 +130,8 @@ export function mapStateToProps (state, props) {
 }
 
 export function mapDispatchToProps (dispatch, props) {
+  const groupSlug = getRouteParam('groupSlug', null, props)
+  const topicName = getRouteParam('topicName', null, props)
   const updateSettings = (params) => dispatch(updateUserSettings(params))
   const routeParams = get('match.params', props)
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
@@ -124,6 +157,15 @@ export function mapDispatchToProps (dispatch, props) {
     fetchPosts: param => offset => {
       return dispatch(fetchPosts({ offset, ...param }))
     },
+    fetchTopic: () => {
+      if (groupSlug && topicName) {
+        return dispatch(fetchGroupTopic(topicName, groupSlug))
+      } else if (topicName) {
+        return dispatch(fetchTopic(topicName))
+      }
+    },
+    toggleGroupTopicSubscribe: groupTopic =>
+      dispatch(toggleGroupTopicSubscribe(groupTopic)),
     newPost: () => dispatch(push(createPostUrl(routeParams, querystringParams)))
   }
 }

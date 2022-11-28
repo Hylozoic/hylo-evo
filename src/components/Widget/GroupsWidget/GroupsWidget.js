@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import { TextHelpers } from 'hylo-shared'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
 import { createGroupUrl, groupUrl, groupDetailUrl } from 'util/navigation'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
+import ClickCatcher from 'components/ClickCatcher'
+import HyloHTML from 'components/HyloHTML'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -66,7 +68,9 @@ export function GroupCard ({ group, routeParams, className }) {
           <div styleName='group-name'>{group.name}</div>
           <div styleName='member-count'>{group.memberCount} member{group.memberCount !== 1 ? 's' : ''}</div>
           <div styleName='group-description'>
-            <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+            <ClickCatcher>
+              <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+            </ClickCatcher>
             {group.description && group.description.length > 140 && <div styleName='descriptionFade' />}
           </div>
           {group.memberStatus === 'member'

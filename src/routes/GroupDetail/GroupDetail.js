@@ -1,13 +1,16 @@
 import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import LayoutFlagsContext from 'contexts/LayoutFlagsContext'
-import { TextHelpers, HyloApp } from 'hylo-shared'
+import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
+import isWebView, { sendMessageToWebView } from 'util/webView'
+import getRouteParam from 'store/selectors/getRouteParam'
 import Avatar from 'components/Avatar'
+import ClickCatcher from 'components/ClickCatcher'
 import FarmGroupDetailBody from 'components/FarmGroupDetailBody'
 import GroupAboutVideoEmbed from 'components/GroupAboutVideoEmbed'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import SocketSubscriber from 'components/SocketSubscriber'
 import Loading from 'components/Loading'
@@ -26,7 +29,7 @@ import {
   visibilityString
 } from 'store/models/Group'
 import { inIframe } from 'util/index'
-import { groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
+import { baseUrl, groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
@@ -45,23 +48,11 @@ export class UnwrappedGroupDetail extends Component {
     fetchGroup: PropTypes.func
   }
 
-  static contextType = LayoutFlagsContext
-
   state = initialState
 
   componentDidMount () {
     this.onGroupChange()
     this.props.fetchJoinRequests()
-    const { hyloAppLayout } = this.context
-
-    // Relinquishes route handling within the Map entirely to Mobile App
-    // e.g. react router / history push
-    if (hyloAppLayout) {
-      this.props.history.block(({ pathname, search }) => {
-        HyloApp.sendMessageToWebView(HyloApp.NAVIGATION, { pathname, search })
-        return false
-      })
-    }
   }
 
   componentDidUpdate (prevProps) {
@@ -76,14 +67,14 @@ export class UnwrappedGroupDetail extends Component {
     this.setState(initialState)
   }
 
-  joinGroup = async (groupId) => {
-    const { hyloAppLayout } = this.context
+  joinGroup = async () => {
     const { joinGroup, group } = this.props
 
     await joinGroup(group.id)
 
-    if (hyloAppLayout) {
-      HyloApp.sendMessageToWebView(HyloApp.JOINED_GROUP, { groupSlug: group.slug })
+    if (isWebView()) {
+      // Could be handled better using WebSockets
+      sendMessageToWebView(WebViewMessageTypes.JOINED_GROUP, { groupSlug: group.slug })
     }
   }
 
@@ -96,25 +87,24 @@ export class UnwrappedGroupDetail extends Component {
     const {
       currentUser,
       group,
+      closeDetailModal,
       isAboutCurrentGroup,
       isMember,
       location,
       moderators,
-      onClose,
       pending,
       routeParams
     } = this.props
+    const fullPage = !getRouteParam('detailGroupSlug', {}, this.props)
 
     if (!group && !pending) return <NotFound />
     if (pending) return <Loading />
 
-    const fullPage = !onClose
-
     return (
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
-          {onClose && (
-            <a styleName='g.close' onClick={onClose}><Icon name='Ex' /></a>
+          {!fullPage && (
+            <a styleName='g.close' onClick={closeDetailModal}><Icon name='Ex' /></a>
           )}
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
@@ -154,7 +144,7 @@ export class UnwrappedGroupDetail extends Component {
               <div styleName='g.moderators'>
                 {moderators.map(p => (
                   <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
-                    <Avatar url={personUrl(p.id, group.slug)} avatarUrl={p.avatarUrl} medium />
+                    <Avatar avatarUrl={p.avatarUrl} medium />
                     <span>{p.name}</span>
                   </Link>
                 ))}
@@ -196,6 +186,9 @@ export class UnwrappedGroupDetail extends Component {
 
     return (
       <>
+        {isAboutCurrentGroup && group.aboutVideoUri && (
+          <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
+        )}
         {isAboutCurrentGroup && !group.description && canModerate
           ? (
             <div styleName='g.no-description'>
@@ -207,8 +200,9 @@ export class UnwrappedGroupDetail extends Component {
             </div>
           ) : (
             <div styleName='g.groupDescription'>
-              <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
-              <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(group.description) }} />
+              <ClickCatcher>
+                <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+              </ClickCatcher>
             </div>
           )}
         {!isAboutCurrentGroup && topics && topics.length && (
@@ -398,8 +392,16 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
 
 export default function GroupDetail (props) {
   const history = useHistory()
+  const location = useLocation()
+  const closeDetailModal = () => {
+    // `detailsGroupSlug` is not currently used in any URL generation, `null`'ing
+    // it here in case that changes, and it's otherwise descriptive of the intent.
+    history.push(
+      baseUrl({ ...props.routeParams, detailGroupSlug: null }) + location.search
+    )
+  }
 
   return (
-    <UnwrappedGroupDetail {...props} history={history} />
+    <UnwrappedGroupDetail {...props} closeDetailModal={closeDetailModal} />
   )
 }

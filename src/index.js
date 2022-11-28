@@ -1,20 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-
 import { rootDomId } from 'client/util'
+import App from './router'
 import './client/websockets'
-import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
-import { clientRouter, history } from './router'
-import createStore from './store'
-
-const store = createStore(history)
+import './css/global/index.scss'
 
 ReactDOM.render(
-  <LayoutFlagsProvider>
-    <Provider store={store}>
-      {clientRouter()}
-    </Provider>
-  </LayoutFlagsProvider>,
+  <App />,
   document.getElementById(rootDomId)
 )

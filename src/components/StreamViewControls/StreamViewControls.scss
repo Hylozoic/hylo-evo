@@ -19,6 +19,10 @@
   height: 100px
 }
 
+.extend {
+  height: 140px;
+}
+
 .search-box {
   width: calc(100% - 20px);
   border: 0;
@@ -71,6 +75,7 @@
   display: flex;
   align-items: center;
   height: 30px;
+  z-index: 1;
 
   span { // icon positioning
     margin-right: 0.25em;

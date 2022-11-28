@@ -11,20 +11,24 @@ export default function GroupsList ({ groups }) {
 }
 
 export function GroupRow ({ groups }) {
-  return <div styleName='groupRow'>
-    {groups.map(group => <GroupCell key={group.id} group={group} />)}
-  </div>
+  return (
+    <div styleName='groupRow'>
+      {groups.map(group => <GroupCell key={group.id} group={group} />)}
+    </div>
+  )
 }
 
 export function GroupCell ({ group, children }) {
   const { name, avatarUrl } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
 
-  return <React.Fragment>
-    <Link to={groupUrl(group.slug)} styleName='groupCell'>
-      <div styleName='groupCellAvatar' style={imageStyle} />
-      <span styleName='groupCellName'>{name}</span>
-    </Link>
-    {children}
-  </React.Fragment>
+  return (
+    <>
+      <Link to={groupUrl(group.slug)} styleName='groupCell'>
+        <div styleName='groupCellAvatar' style={imageStyle} />
+        <span styleName='groupCellName'>{name}</span>
+      </Link>
+      {children}
+    </>
+  )
 }

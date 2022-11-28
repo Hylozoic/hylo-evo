@@ -13,15 +13,15 @@ describe('GroupSettingsTab', () => {
       avatarUrl: 'avatar.png',
       bannerUrl: 'avatar.png',
       customViews: [{
-        name: 'custommm baby',
-        icon: 'Public',
-        postTypes: [],
         activePostsOnly: false,
         externalLink: 'https://google.com',
-        viewMode: 'externalLink',
+        icon: 'Public',
         isActive: true,
+        name: 'custommm baby',
         order: 1,
-        topics: []
+        postTypes: [],
+        topics: [],
+        type: 'externalLink'
       }]
     }
     const wrapper = shallow(<GroupSettingsTab group={group} />)

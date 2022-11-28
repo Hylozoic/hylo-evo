@@ -590,14 +590,26 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                 <div
                                   data-stylename="group-description"
                                 >
-                                  <span
-                                    dangerouslySetInnerHTML={
-                                      Object {
-                                        "__html": "<p>yo</p>
+                                  <ClickCatcher>
+                                    <span
+                                      onClick={[Function]}
+                                    >
+                                      <HyloHTML
+                                        element="span"
+                                        html="<p>yo</p>
+"
+                                      >
+                                        <span
+                                          dangerouslySetInnerHTML={
+                                            Object {
+                                              "__html": "<p>yo</p>
 ",
-                                      }
-                                    }
-                                  />
+                                            }
+                                          }
+                                        />
+                                      </HyloHTML>
+                                    </span>
+                                  </ClickCatcher>
                                 </div>
                                 <div
                                   data-stylename="isnt-member"
@@ -716,14 +728,26 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                 <div
                                   data-stylename="group-description"
                                 >
-                                  <span
-                                    dangerouslySetInnerHTML={
-                                      Object {
-                                        "__html": "<p>oy</p>
+                                  <ClickCatcher>
+                                    <span
+                                      onClick={[Function]}
+                                    >
+                                      <HyloHTML
+                                        element="span"
+                                        html="<p>oy</p>
+"
+                                      >
+                                        <span
+                                          dangerouslySetInnerHTML={
+                                            Object {
+                                              "__html": "<p>oy</p>
 ",
-                                      }
-                                    }
-                                  />
+                                            }
+                                          }
+                                        />
+                                      </HyloHTML>
+                                    </span>
+                                  </ClickCatcher>
                                 </div>
                                 <div
                                   data-stylename="isnt-member"

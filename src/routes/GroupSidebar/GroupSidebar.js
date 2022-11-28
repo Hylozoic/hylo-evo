@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { isEmpty } from 'lodash/fp'
+import { TextHelpers } from 'hylo-shared'
+import { personUrl, groupUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
+import ClickCatcher from 'components/ClickCatcher'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import cx from 'classnames'
-import { personUrl, groupUrl } from 'util/navigation'
-import { TextHelpers } from 'hylo-shared'
-import { isEmpty } from 'lodash/fp'
 import './GroupSidebar.scss'
 
 const { object, string, array } = PropTypes
@@ -74,7 +76,9 @@ export class AboutSection extends Component {
       </div>
       <div styleName={cx('description', { expanded })}>
         {!expanded && <div styleName='gradient' />}
-        <span dangerouslySetInnerHTML={{ __html: TextHelpers.markdown(description) }} />
+        <ClickCatcher>
+          <HyloHTML element='span' html={TextHelpers.markdown(description)} />
+        </ClickCatcher>
       </div>
       {showExpandButton && <span styleName='expand-button' onClick={onClick}>
         {expanded ? 'Show Less' : 'Read More'}

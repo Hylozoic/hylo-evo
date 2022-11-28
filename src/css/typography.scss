@@ -1,9 +1,98 @@
 // Global Typography
 
-/* override draft-js placeholder */
-.public-DraftEditorPlaceholder-root {
-  color: $color-rhino-30 !important;
-  padding-left: 2px;
+blockquote {
+  border-left: solid 2px $color-rhino-30;
+  color: $color-rhino-30;
+  margin-left: 0.25em;
+  padding: 0.5em;
+  padding-bottom: 0.25em;
+}
+
+code {
+  color: $color-white-80;
+  background-color: $color-rhino;
+  border-radius: 0.25em;
+  font-size: 12px;
+  padding: 0.2em;
+}
+
+pre code {
+  border-radius: 0.5em;
+  display: block;
+  overflow: auto;
+  font-size: 12px;
+  padding: 1em 1.25em;
+}
+
+ul li p:last-of-type,
+ol li p:last-of-type {
+  margin-bottom: 0;
+}
+
+ul > ul ,
+ul > ol,
+ol > ul,
+ol > ol {
+  margin-bottom: 0
+}
+
+ul, ol {
+  padding-left: 2em;
+}
+
+strong {
+  @include font-bold;
+}
+
+// This should be applied / controlled here
+// Currently getting `1rem` from Bootstrap
+// p {
+//   margin-bottom: 1em;
+// }
+
+a {
+  color: #0275d8
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:focus,
+  a:hover {
+    color: #014c8c
+  }
+}
+
+/* 
+NOTE: There is an issue of an underline appearing under some
+links in mobile, but I've only see it happen in mobile/non-hover
+devices. We don't apparently globally turn-off the browser default
+`text-decoration: underline` here, and it may be that bootstrap
+doesn't turn that off by default either. Doing a global search
+reveals an unusual amount of `text-decoration: none` for link
+styles, which leads me to believe it is not globally turned-off
+and that maybe we should, and remove some of the extra attributes
+down the line.
+
+Forcing the fix here, and probably save to do this
+outside the media query, but leaving it at this for now.
+*/
+@media (hover: none) {
+  a {
+    text-decoration: none !important; 
+  }
+}
+
+a.hylo-link,
+.mention,
+.topic
+{
+  color: $color-caribbean-green;
+  cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+    }
+  }
 }
 
 .hdr-display {
@@ -14,6 +103,7 @@
   color: $color-rhino;
 }
 
+h1,
 .hdr-headline {
   @include font-medium;
   font-size: 24px;
@@ -23,6 +113,7 @@
   word-wrap: break-word;
 }
 
+h2,
 .hdr-subheadline {
   @include font-regular;
   font-size: 18px;
@@ -31,6 +122,7 @@
   color: $color-rhino;
 }
 
+h3,
 .hdr-minor {
   @include font-regular;
   font-size: 14px;
@@ -41,7 +133,8 @@
 
 /* Body */
 
-input, textarea {
+input,
+textarea {
   font-family: 'Circular Book';
 }
 
@@ -134,10 +227,12 @@ input, textarea {
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20px;
-  &:hover {
-    text-decoration: none;
-    color: $color-gossamer;
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+      color: $color-gossamer;
+      cursor: pointer;
+    }
   }
 }
 
@@ -147,9 +242,11 @@ input, textarea {
   font-size: 10px;
   letter-spacing: 0.6;
   line-height: 14px;
-  &:hover {
-    color: $color-gossamer;
-    cursor: pointer;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: $color-gossamer;
+      cursor: pointer;
+    }
   }
 }
 
@@ -195,12 +292,14 @@ input, textarea {
 }
 
 @media screen and (max-width: 600px) {
+  h1,
   .hdr-headline {
     font-size: 20px;
   }
 }
 
 @media screen and (max-width: 500px) {
+  h1,
   .hdr-headline {
     font-size: 16px;
     line-height: 20px;

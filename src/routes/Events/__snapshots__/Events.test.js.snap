@@ -16,32 +16,36 @@ exports[`Events renders a post list 1`] = `
     type="event"
   />
   <div
-    data-stylename="viewStyles.stream-view-ctrls"
+    data-stylename="viewStyles.stream-view-container"
   >
-    <Dropdown
-      items={
-        Array [
-          Object {
-            "label": "Upcoming Events",
-            "onClick": [Function],
-          },
-          Object {
-            "label": "Past Events",
-            "onClick": [Function],
-          },
-        ]
-      }
-      toggleChildren={
-        <span
-          data-stylename="viewStyles.dropdown-label"
-        >
-          <Icon
-            name="ArrowDown"
-          />
-          Upcoming Events
-        </span>
-      }
-    />
+    <div
+      data-stylename="viewStyles.stream-view-ctrls"
+    >
+      <Dropdown
+        items={
+          Array [
+            Object {
+              "label": "Upcoming Events",
+              "onClick": [Function],
+            },
+            Object {
+              "label": "Past Events",
+              "onClick": [Function],
+            },
+          ]
+        }
+        toggleChildren={
+          <span
+            data-stylename="viewStyles.dropdown-label"
+          >
+            <Icon
+              name="ArrowDown"
+            />
+            Upcoming Events
+          </span>
+        }
+      />
+    </div>
   </div>
   <div
     data-stylename="s.events-stream"

@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import React, { useCallback, useState } from 'react'
 import Icon from 'components/Icon'
 import { Link } from 'react-router-dom'
@@ -41,7 +41,7 @@ export default ({ items, group, routeParams, isMember }) => {
     <div styleName='events'>
       <Slider {...settings} onSwipe={handleSwiped}>
         {items.map(e => <div styleName={cx('event', { narrow: items.length > 1 })} key={e.id}>
-          <Link to={postUrl(e.id, { groupSlug: group.slug })} onClickCapture={handleOnItemClick}>
+          <Link to={postUrl(e.id, routeParams)} onClickCapture={handleOnItemClick}>
             <div styleName='content'>
               <div styleName='time'>{moment(e.startTime).format('MMM D YYYY')}</div>
               <div styleName='title'>{e.title}</div>

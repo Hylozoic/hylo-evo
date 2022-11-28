@@ -24,7 +24,7 @@ const inputStyles = {
   clearIndicator: styles => ({ ...styles, cursor: 'pointer' }),
   dropdownIndicator: styles => ({ display: 'none' }),
   indicatorSeparator: styles => ({ display: 'none' }),
-  placeholder: styles => ({ color: 'rgb(192, 197, 205)' })
+  placeholder: styles => ({ ...styles, color: 'rgb(192, 197, 205)' })
 }
 
 class SingleTopicSelector extends Component {
@@ -46,7 +46,7 @@ class SingleTopicSelector extends Component {
   handleInputChange = async (value) => {
     this.setState({ value })
     if (!isEmpty(value)) {
-      await this.props.findTopics(value)
+      await this.props.findTopics({ autocomplete: value })
       const { currentGroup, defaultTopics, topicResults } = this.props
       const sortedTopics = sortBy([t => t.name === value ? -1 : 1, 'followersTotal', 'postsTotal'], topicResults)
       return defaultTopics ? [ { label: currentGroup.name + ' topics', options: defaultTopics }, { label: 'All Topics', options: sortedTopics } ] : sortedTopics
@@ -56,7 +56,7 @@ class SingleTopicSelector extends Component {
     }
   }
 
-  handleSelectTopic = (newTopic, action) => {
+  handleSelectTopic = newTopic => {
     const topic = Validators.validateTopicName(newTopic) ? newTopic : ''
 
     if (this.props.onSelectTopic) {

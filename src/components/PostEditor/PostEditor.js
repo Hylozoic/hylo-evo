@@ -2,12 +2,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { get, isEqual, throttle } from 'lodash/fp'
-import cheerio from 'cheerio'
+import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
-import Moment from 'moment'
-import * as HyloContentState from 'components/HyloEditor/HyloContentState'
-import { TOPIC_ENTITY_TYPE } from 'hylo-shared'
+import Moment from 'moment-timezone'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
@@ -29,6 +26,7 @@ import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { sanitizeURL } from 'util/url'
 
 export const MAX_TITLE_LENGTH = 50
+export const MAX_POST_TOPICS = 3
 
 const donationsLinkPlaceholder = 'Add a donation link (must be valid URL)'
 const projectManagementLinkPlaceholder = 'Add a project management link (must be valid URL)'
@@ -40,10 +38,8 @@ export default class PostEditor extends React.Component {
     createPost: PropTypes.func,
     currentUser: PropTypes.object,
     currentGroup: PropTypes.object,
-    defaultTopics: PropTypes.array,
     detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
-    fetchDefaultTopics: PropTypes.func,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
     loading: PropTypes.bool,
@@ -105,7 +101,6 @@ export default class PostEditor extends React.Component {
           ? [currentGroup]
           : PostEditor.defaultProps.post.groups,
         topics: topic ? [topic] : [],
-        detailsTopics: [],
         acceptContributions: false,
         isPublic: context === 'public'
       }
@@ -128,7 +123,8 @@ export default class PostEditor extends React.Component {
       toggleAnnouncementModal: false,
       showPostTypeMenu: false,
       titleLengthError: false,
-      dateError: false
+      dateError: false,
+      allowAddTopic: true
     }
   }
 
@@ -136,30 +132,24 @@ export default class PostEditor extends React.Component {
     super(props)
 
     this.state = this.buildStateFromProps(props)
-    this.titleInput = React.createRef()
-    this.editor = React.createRef()
-    this.groupsSelector = React.createRef()
-    this.topicSelector = React.createRef()
+    this.titleInputRef = React.createRef()
+    this.editorRef = React.createRef()
+    this.groupsSelectorRef = React.createRef()
   }
 
   componentDidMount () {
-    this.props.fetchDefaultTopics()
-
-    setTimeout(() => {
-      this.titleInput.current.focus()
-    }, 100)
+    setTimeout(() => { this.titleInputRef.current && this.titleInputRef.current.focus() }, 100)
   }
 
   componentDidUpdate (prevProps) {
-    const linkPreview = this.props.linkPreview
+    const { linkPreview } = this.props
+
     if (get('post.id', this.props) !== get('post.id', prevProps) ||
         get('post.details', this.props) !== get('post.details', prevProps)) {
       this.reset(this.props)
-      this.editor.current.focus()
+      this.editorRef.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
-      this.setState({
-        post: { ...this.state.post, linkPreview }
-      })
+      this.onUpdate()
     }
   }
 
@@ -167,13 +157,19 @@ export default class PostEditor extends React.Component {
     this.props.clearLinkPreview()
   }
 
+  onUpdate () {
+    this.setState({
+      post: { ...this.state.post, linkPreview: this.props.linkPreview }
+    })
+  }
+
   reset = (props) => {
-    this.editor.current.reset()
-    this.groupsSelector.current.reset()
+    this.editorRef.current.clearContent()
+    this.groupsSelectorRef.current.reset()
     this.setState(this.buildStateFromProps(props))
   }
 
-  focus = () => this.editor.current && this.editor.current.focus()
+  focus = () => this.editorRef.current.focus()
 
   handlePostTypeSelection = (event) => {
     const type = event.target.textContent.toLowerCase()
@@ -198,7 +194,7 @@ export default class PostEditor extends React.Component {
     const { titlePlaceholderForPostType } = this.props
     return (
       titlePlaceholderForPostType[type] ||
-      titlePlaceholderForPostType['default']
+      titlePlaceholderForPostType.default
     )
   }
 
@@ -206,7 +202,7 @@ export default class PostEditor extends React.Component {
     const { detailPlaceholderForPostType } = this.props
     return (
       detailPlaceholderForPostType[type] ||
-      detailPlaceholderForPostType['default']
+      detailPlaceholderForPostType.default
     )
   }
 
@@ -215,21 +211,20 @@ export default class PostEditor extends React.Component {
     const { type } = this.state.post
     const active = type === forPostType
     const className = cx(
-      styles['postType'],
+      styles.postType,
       styles[`postType-${forPostType}`],
       {
-        [styles[`active`]]: active,
-        [styles[`selectable`]]: !loading && !active
+        [styles.active]: active,
+        [styles.selectable]: !loading && !active
       }
     )
-    const label = active ? (
-      <span styleName='initial-prompt'>
-        <span>{forPostType}</span>{' '}
-        <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
-      </span>
-    ) : (
-      forPostType
-    )
+    const label = active
+      ? (
+        <span styleName='initial-prompt'>
+          <span>{forPostType}</span>{' '}
+          <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
+        </span>
+      ) : forPostType
     return {
       borderRadius: '5px',
       label,
@@ -255,16 +250,11 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  handleDetailsChange = (editorState, contentChanged) => {
-    if (contentChanged) {
-      const contentState = editorState.getCurrentContent()
-      this.setLinkPreview(contentState)
-      this.updateTopics(contentState)
-      this.setIsDirty(true)
-    }
+  handleDetailsChange = () => {
+    this.setIsDirty(true)
   }
 
-  toggleContributions = () => {
+  handleToggleContributions = () => {
     const {
       post,
       post: { acceptContributions }
@@ -327,54 +317,54 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  setLinkPreview = (contentState) => {
-    const {
-      pollingFetchLinkPreview,
-      linkPreviewStatus,
-      clearLinkPreview
-    } = this.props
+  // Checks for linkPreview every 1/2 second
+  handleAddLinkPreview = debounce(500, (url, force) => {
+    const { pollingFetchLinkPreview } = this.props
     const { linkPreview } = this.state.post
-    if (!contentState.hasText() && linkPreviewStatus) return clearLinkPreview()
-    if (linkPreviewStatus === 'invalid' || linkPreviewStatus === 'removed') {
-      return
-    }
-    if (linkPreview) return
-    pollingFetchLinkPreview(HyloContentState.toHTML(contentState))
-  }
 
-  updateTopics = throttle(2000, (contentState) => {
-    const html = HyloContentState.toHTML(contentState)
-    const $ = cheerio.load(html, null, false)
-    var topicNames = []
-    $(`a[data-entity-type=${TOPIC_ENTITY_TYPE}]`).map((i, el) =>
-      topicNames.push($(el).text().replace('#', ''))
-    )
-    const hasChanged = !isEqual(this.state.detailsTopics, topicNames)
-    if (hasChanged) {
-      this.setState({
-        detailsTopics: topicNames.map((tn) => ({
-          label: tn,
-          name: tn,
-          id: tn
-        }))
-      })
-      this.setIsDirty(true)
-    }
+    if (linkPreview && !force) return
+
+    pollingFetchLinkPreview(url)
   })
 
-  removeLinkPreview = () => {
-    this.props.removeLinkPreview()
+  handleTopicSelectorOnChange = topics => {
     this.setState({
-      post: { ...this.state.post, linkPreview: null }
+      post: { ...this.state.post, topics },
+      allowAddTopic: false
+    })
+    this.setIsDirty(true)
+  }
+
+  handleAddTopic = topic => {
+    const { post, allowAddTopic } = this.state
+
+    if (!allowAddTopic || post?.topics?.length >= MAX_POST_TOPICS) return
+
+    this.setState({ post: { ...post, topics: [...post.topics, topic] } })
+    this.setIsDirty(true)
+  }
+
+  handleFeatureLinkPreview = featured => {
+    this.setState({
+      post: { ...this.state.post, linkPreviewFeatured: featured }
     })
   }
 
-  setSelectedGroups = (groups) => {
+  handleRemoveLinkPreview = () => {
+    this.props.removeLinkPreview()
+    this.setState({
+      post: { ...this.state.post, linkPreview: null, linkPreviewFeatured: false }
+    })
+  }
+
+  handleSetSelectedGroups = (groups) => {
+    const hasChanged = !isEqual(this.state.post.groups, groups)
+
     this.setState({
       post: { ...this.state.post, groups },
       valid: this.isValid({ groups })
     })
-    const hasChanged = !isEqual(this.state.post.groups, groups)
+
     if (hasChanged) {
       this.setIsDirty(true)
     }
@@ -387,13 +377,13 @@ export default class PostEditor extends React.Component {
     })
   }
 
-  updateProjectMembers = (members) => {
+  handleUpdateProjectMembers = (members) => {
     this.setState({
       post: { ...this.state.post, members }
     })
   }
 
-  updateEventInvitations = (eventInvitations) => {
+  handleUpdateEventInvitations = (eventInvitations) => {
     this.setState({
       post: { ...this.state.post, eventInvitations }
     })
@@ -408,7 +398,7 @@ export default class PostEditor extends React.Component {
     const { isEvent, isProject } = this.props
 
     return !!(
-      this.editor.current &&
+      this.editorRef.current &&
       groups &&
       type.length > 0 &&
       title.length > 0 &&
@@ -423,7 +413,11 @@ export default class PostEditor extends React.Component {
   setIsDirty = isDirty => this.props.setIsDirty && this.props.setIsDirty(isDirty)
 
   handleCancel = () => {
-    this.props.onCancel && this.props.onCancel()
+    if (this.props.onCancel) {
+      this.props.onCancel()
+
+      return true
+    }
   }
 
   save = async () => {
@@ -446,7 +440,9 @@ export default class PostEditor extends React.Component {
       title,
       groups,
       linkPreview,
+      linkPreviewFeatured,
       members,
+      topics,
       acceptContributions,
       donationsLink,
       projectManagementLink,
@@ -456,10 +452,8 @@ export default class PostEditor extends React.Component {
       locationId,
       isPublic
     } = this.state.post
-    const details = this.editor.current.getContentHTML()
-    const topicNames = this.topicSelector.current
-      .getSelected()
-      .map((t) => t.name)
+    const details = this.editorRef.current.getHTML()
+    const topicNames = topics?.map((t) => t.name)
     const memberIds = members && members.map((m) => m.id)
     const eventInviteeIds =
       eventInvitations && eventInvitations.map((m) => m.id)
@@ -480,6 +474,7 @@ export default class PostEditor extends React.Component {
       details,
       groups,
       linkPreview,
+      linkPreviewFeatured,
       imageUrls,
       fileUrls,
       topicNames,
@@ -523,6 +518,17 @@ export default class PostEditor extends React.Component {
     })
   }
 
+  canModerate = () => {
+    const { myModeratedGroups = [] } = this.props
+    const { post } = this.state
+    const { groups = [] } = post
+    const myModeratedGroupsSlugs = myModeratedGroups.map(group => group.slug)
+    for (let index = 0; index < groups.length; index++) {
+      if (!myModeratedGroupsSlugs.includes(groups[index].slug)) return false
+    }
+    return true
+  }
+
   render () {
     const {
       titlePlaceholder,
@@ -531,7 +537,6 @@ export default class PostEditor extends React.Component {
       dateError,
       valid,
       post,
-      detailsTopics = [],
       showAnnouncementModal,
       showPostTypeMenu
     } = this.state
@@ -542,6 +547,7 @@ export default class PostEditor extends React.Component {
       details,
       groups,
       linkPreview,
+      linkPreviewFeatured,
       topics,
       members,
       acceptContributions,
@@ -555,20 +561,18 @@ export default class PostEditor extends React.Component {
       currentGroup,
       currentUser,
       groupOptions,
-      defaultTopics,
       loading,
       setAnnouncement,
       announcementSelected,
-      canModerate,
       myModeratedGroups,
       isProject,
       isEvent,
       showFiles,
       showImages,
       addAttachment,
-      postTypes
+      postTypes,
+      fetchLinkPreviewPending
     } = this.props
-
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
       'discussion',
@@ -598,7 +602,7 @@ export default class PostEditor extends React.Component {
                   {postTypes
                     .filter((postType) => postType !== type)
                     .map((postType) => (
-                      <Button noDefaultStyles {...this.postTypeButtonProps(postType)} />
+                      <Button noDefaultStyles {...this.postTypeButtonProps(postType)} key={postType} />
                     ))}
                 </div>
               )}
@@ -621,7 +625,7 @@ export default class PostEditor extends React.Component {
               value={title || ''}
               onChange={this.handleTitleChange}
               disabled={loading}
-              ref={this.titleInput}
+              ref={this.titleInputRef}
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
@@ -630,19 +634,25 @@ export default class PostEditor extends React.Component {
             <HyloEditor
               styleName='editor'
               placeholder={detailPlaceholder}
-              onChange={this.handleDetailsChange}
-              onEscape={this.handleCancel}
+              onUpdate={this.handleDetailsChange}
+              // Disable edit cancel through escape due to event bubbling issues
+              // onEscape={this.handleCancel}
+              onAddTopic={this.handleAddTopic}
+              onAddLink={this.handleAddLinkPreview}
               contentHTML={details}
+              showMenu
               readOnly={loading}
-              parentComponent={'PostEditor'}
-              ref={this.editor}
+              ref={this.editorRef}
             />
           </div>
         </div>
-        {linkPreview && (
+        {(linkPreview || fetchLinkPreviewPending) && (
           <LinkPreview
+            loading={fetchLinkPreviewPending}
             linkPreview={linkPreview}
-            onClose={this.removeLinkPreview}
+            featured={linkPreviewFeatured}
+            onFeatured={this.handleFeatureLinkPreview}
+            onClose={this.handleRemoveLinkPreview}
           />
         )}
         <AttachmentManager
@@ -668,7 +678,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={members || []}
-                  onChange={this.updateProjectMembers}
+                  onChange={this.handleUpdateProjectMembers}
                   forGroups={groups}
                   readOnly={loading}
                 />
@@ -679,12 +689,9 @@ export default class PostEditor extends React.Component {
             <div styleName='footerSection-label'>Topics</div>
             <div styleName='footerSection-topics'>
               <TopicSelector
-                currentGroup={currentGroup}
+                forGroups={post?.groups || [currentGroup]}
                 selectedTopics={topics}
-                defaultTopics={defaultTopics}
-                detailsTopics={detailsTopics}
-                onChange={() => this.setIsDirty(true)}
-                ref={this.topicSelector}
+                onChange={this.handleTopicSelectorOnChange}
               />
             </div>
           </div>
@@ -694,9 +701,9 @@ export default class PostEditor extends React.Component {
               <GroupsSelector
                 options={groupOptions}
                 selected={groups}
-                onChange={this.setSelectedGroups}
+                onChange={this.handleSetSelectedGroups}
                 readOnly={loading}
-                ref={this.groupsSelector}
+                ref={this.groupsSelectorRef}
               />
             </div>
           </div>
@@ -745,7 +752,7 @@ export default class PostEditor extends React.Component {
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={eventInvitations || []}
-                  onChange={this.updateEventInvitations}
+                  onChange={this.handleUpdateEventInvitations}
                   forGroups={groups}
                   readOnly={loading}
                 />
@@ -761,7 +768,7 @@ export default class PostEditor extends React.Component {
                 >
                   <Switch
                     value={acceptContributions}
-                    onClick={this.toggleContributions}
+                    onClick={this.handleToggleContributions}
                     styleName='accept-contributions-switch'
                   />
                   {!acceptContributions && (
@@ -829,7 +836,7 @@ export default class PostEditor extends React.Component {
             save={() => this.save()}
             setAnnouncement={setAnnouncement}
             announcementSelected={announcementSelected}
-            canModerate={canModerate}
+            canModerate={this.canModerate()}
             toggleAnnouncementModal={this.toggleAnnouncementModal}
             showAnnouncementModal={showAnnouncementModal}
             groupCount={get('groups', post).length}
@@ -853,10 +860,10 @@ export function ActionsBar ({
   save,
   setAnnouncement,
   announcementSelected,
-  canModerate,
   toggleAnnouncementModal,
   showAnnouncementModal,
   groupCount,
+  canModerate,
   myModeratedGroups,
   groups
 }) {

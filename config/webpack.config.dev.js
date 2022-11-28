@@ -103,6 +103,7 @@ module.exports = {
               cacheDirectory: true
             }
           },
+          sharedConfig.tsLoader,
           // Process any JS outside of the app with Babel.
           // Unlike the application JS, we only compile the standard ES features.
           {
@@ -128,23 +129,10 @@ module.exports = {
               sourceMaps: false
             }
           },
-          // Simple CSS loading for node_modules fond CSS (need in particular for draft-js-plugins-editor styles)
+          // Plain CSS file loading, primarily used to load from `node_modules` provided stylesheets
+          // e.g. mapbox, slick carousel, tippy, etc
           {
-            test: /draft-js.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
-          {
-            test: /slick-carousel.*\.css$/,
-            use: [
-              'style-loader',
-              'css-loader'
-            ]
-          },
-          {
-            test: /mapbox-gl.*\.css$/,
+            test: /\.css$/,
             use: [
               'style-loader',
               'css-loader'
@@ -152,7 +140,7 @@ module.exports = {
           },
           // CSS Modules for all SASS files not in resources or global
           {
-            test: /\.(css|scss|sass)$/,
+            test: /\.(scss|sass)$/,
             use: [
               'style-loader',
               sharedConfig.cssLoader,
