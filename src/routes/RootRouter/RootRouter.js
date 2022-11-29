@@ -50,7 +50,7 @@ export default function RootRouter () {
         />
         <Route
           path={[
-            '/:context(public)/:view(map|groups)?', // so I will need to add something here to great public, non-auth group page up? and without stopping the group join mechanism detailed by Loren
+            '/:context(public)/:view(map|groups)?',
             `(.*)/${POST_DETAIL_MATCH}`,
             '/:context(groups)/:groupSlug'
           ]}
