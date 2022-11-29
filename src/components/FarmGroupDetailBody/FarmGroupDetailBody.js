@@ -12,7 +12,7 @@ export default function FarmGroupDetailBody ({
   routeParams
 }) {
   const { group } = useEnsureCurrentGroup()
-  const { posts } = (currentUser && useEnsurePosts({ public: true, sortBy: 'updated', context: 'groups' })) || { posts: [] }
+  const { posts } = useEnsurePosts({ public: true, sortBy: 'updated', context: 'groups', currentUser })
   const bio = getBio(group)
 
   // TODO: hide widgets if they have no data, means loading all the data here?
