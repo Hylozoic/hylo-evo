@@ -20,6 +20,20 @@ $comment-row-padding: 25px;
   }
 }
 
+.commentActions {
+  width: auto;
+  height: 100%;
+  align-content: center;
+  position: absolute;
+  top: -16px;
+  right: 0;
+  height: 32px;
+  background-color: rgba(255,255,255,1);
+  border-radius: 30px;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+  display: none;
+}
+
 .userName {
   composes: userName from 'components/PostCard/PostHeader/PostHeader.scss';
   margin-right: 7px;
@@ -31,15 +45,25 @@ $comment-row-padding: 25px;
 
 .upperRight {
   margin-left: auto;
+  position: relative;
+}
+
+.commentAction:first-child {
+  border-radius: 15px 0 0 15px;
+}
+
+.commentAction:last-child {
+  border-radius: 0 15px 15px 0;
 }
 
 .commentAction {
   display: inline-block;
   cursor: pointer;
-  margin-right: 0.6em;
-  width: 26px;
-  height: 26px;
-  border-radius: 13px;
+  width: 36px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
   padding: 3px 4px;
 
   &:hover {
@@ -55,6 +79,14 @@ $comment-row-padding: 25px;
   margin-right: 10px;
 }
 
+.commentContainer {
+  position: relative;
+}
+
+.commentContainer:hover .commentActions {
+  display: flex;
+}
+
 .dropdown {
   > div {
     left: initial;
@@ -64,6 +96,15 @@ $comment-row-padding: 25px;
 
 .cancelIcon {
   color: $color-amaranth;
+  position: absolute;
+  top: 24px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.cancelIcon:hover {
+  cursor: pointer;
 }
 
 .text {
@@ -97,8 +138,41 @@ $comment-row-padding: 25px;
 }
 
 .emojis {
-  margin-left: 30px;
+  margin-left: 0;
 }
+
+.noEmojis {
+  display: none;
+  // position: absolute;
+  // right: 5px;
+  // top: 6px;
+}
+
+.emojis.hiddenReactions {
+  width: 36px;
+
+  &:hover {
+    background: $color-picton-blue;
+  }
+
+  &:hover > div > div:last-child div span {
+    color: white;
+  }
+}
+
+.hiddenReactions > div > div {
+  display: none;
+}
+
+.hiddenReactions > div {
+  padding-bottom: 0;
+}
+
+.hiddenReactions > div > div:last-child {
+  display: block;
+  width: auto;
+}
+
 
 .more-wrap {
   margin-left: -25px; // offsets internal margin of ShowMore component

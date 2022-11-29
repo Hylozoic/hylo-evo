@@ -24,7 +24,6 @@ import deletePost from 'store/actions/deletePost'
 import removePost from 'store/actions/removePost'
 import { bgImageStyle } from 'util/index'
 import { personUrl } from 'util/navigation'
-
 import styles from './ChatPost.scss'
 
 export default function ChatPost ({
