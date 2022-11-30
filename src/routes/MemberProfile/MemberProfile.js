@@ -108,7 +108,7 @@ export default class MemberProfile extends React.Component {
     <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
       <Helmet>
         <title>{`Hylo: ${person.name}`}</title>
-        <meta name='description' content='Member Profile' />
+        <meta name='description' content={`${person.name}'s Member Profile`} />
       </Helmet>
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>

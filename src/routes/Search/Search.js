@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
 import styles from './Search.scss'
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'

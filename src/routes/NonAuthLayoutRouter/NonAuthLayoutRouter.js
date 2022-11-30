@@ -52,7 +52,7 @@ export default function NonAuthLayoutRouter (props) {
     <Div100vh styleName='nonAuthContainer'>
       <Helmet>
         <title>Hylo</title>
-        <meta name='description' content='Login/signup to see more' />
+        <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
       </Helmet>
       <div styleName='background'>
         <div styleName='particlesBackgroundWrapper'>

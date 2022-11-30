@@ -15,6 +15,7 @@ import ViewControls from 'components/StreamViewControls'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Stream.scss'
+import { description } from 'commander'
 
 const propHasChanged = (thisProps, prevProps) => sel => get(sel, thisProps) !== get(sel, prevProps)
 
@@ -119,8 +120,8 @@ export default class Stream extends Component {
     return (
       <>
         <Helmet>
-          <title>Hylo: Stream</title>
-          <meta name='description' content='Posts from the stream' />
+          <title>{`Hylo: ${group.name} Stream`}</title>
+          <meta name='description' content={`Posts from the stream of ${group.name}. ${group.description}`} />
         </Helmet>
         {topicName
           ? (

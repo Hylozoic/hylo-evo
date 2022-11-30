@@ -187,7 +187,7 @@ export default function AuthLayoutRouter (props) {
     <IntercomProvider appId={isTest ? '' : config.intercom.appId} autoBoot autoBootProps={intercomProps}>
       <Helmet>
         <title>Hylo</title>
-        <meta name='description' content='Logged into Hylo' />
+        <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
       </Helmet>
       {/* Redirects for switching into global contexts, since these pages don't exist yet */}
       <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
