@@ -15,7 +15,8 @@ const selectAndPresentPosts = createSelector(
   (posts) => posts.map(p => presentPost(p, null))
 )
 
-export default function useEnsurePosts ({ context, sortBy }) {
+export default function useEnsurePosts ({ context, sortBy, currentUser }) {
+  if (!currentUser) return { posts: [], pending: false }
   const router = useRouter()
   const groupSlug = router.query.groupSlug || router.query.detailGroupSlug
   const fetchPostsParam = {
