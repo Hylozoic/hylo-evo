@@ -18,28 +18,31 @@ export default function PostBody (props) {
   } = props
 
   return (
-    <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
-      {post.type !== 'chat' && <PostTitle
-        {...post}
-        highlightProp={highlightProps}
-        constrained={constrained}
-        onClick={onClick}
-      />}
+    <div>
+      <div styleName={cx('body', { smallMargin: !expanded }, { constrained })} className={className}>
+        {post.type !== 'chat' && <PostTitle
+          {...post}
+          highlightProp={highlightProps}
+          constrained={constrained}
+          onClick={onClick}
+        />}
 
-      <PostDetails
-        {...post}
-        slug={slug}
-        highlightProp={highlightProps}
-        expanded={expanded}
-        constrained={constrained}
-        onClick={onClick}
-      />
-
-      <EmojiRow
-        {...post}
-        postId={post.id}
-        currentUser={currentUser}
-      />
+        <PostDetails
+          {...post}
+          slug={slug}
+          highlightProp={highlightProps}
+          expanded={expanded}
+          constrained={constrained}
+          onClick={onClick}
+        />
+      </div>
+      <div styleName='reactions'>
+        <EmojiRow
+          {...post}
+          postId={post.id}
+          currentUser={currentUser}
+        />
+      </div>
     </div>
   )
 }

@@ -67,11 +67,6 @@ export default function PostGridItem (props) {
               {TextHelpers.humanDate(createdAt)}
             </div>
           </div>
-          <EmojiRow
-            {...post}
-            postId={post.id}
-            currentUser={currentUser}
-          />
         </div>
         <div styleName='grid-fade' />
       </div>

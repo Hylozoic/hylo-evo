@@ -8,6 +8,7 @@ import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
 import EmojiRow from 'components/EmojiRow'
 import HyloHTML from 'components/HyloHTML'
+import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import './PostListRow.scss'
 
@@ -35,6 +36,9 @@ const PostListRow = (props) => {
     return null
   }
 
+  const typeLowercase = post.type.toLowerCase()
+  const typeName = post.type.charAt(0).toUpperCase() + typeLowercase.slice(1)
+
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const numOtherCommentors = commentersTotal - 1
   const unread = false
@@ -44,7 +48,9 @@ const PostListRow = (props) => {
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
       <div styleName='content-summary'>
         <div styleName='type-author'>
-          <div styleName={cx('post-type', post.type)}>{post.type}</div>
+          <div styleName={cx('post-type', post.type)}>
+            <Icon name={typeName} />
+          </div>
           <div styleName='participants'>
             {post.type === 'event' ? <div styleName='date'>
               <span>{startTimeMoment.format('MMM')}</span>
@@ -70,11 +76,13 @@ const PostListRow = (props) => {
         )}
         <h3 styleName='title'>{title}</h3>
         <HyloHTML styleName='details' html={details} />
-        <EmojiRow
-          {...post}
-          postId={post.id}
-          currentUser={currentUser}
-        />
+        <div styleName='reactions'>
+          <EmojiRow
+            {...post}
+            postId={post.id}
+            currentUser={currentUser}
+          />
+        </div>
       </div>
       <Tooltip
         delay={550}

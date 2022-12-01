@@ -14,17 +14,61 @@ div .post-row:nth-child(1) {
   border-radius: 5px 5px 0 0;
 }
 
+.reactions {
+  padding: 0;
+
+  &> div > div {
+    padding-bottom: 0px;
+
+    &> div:last-child {
+      display: none;
+    }
+  }
+}
+
+
 .type-author {
   display: flex;
   align-items: center;
 
   .post-type {
     border-radius: 3px;
-    padding: 2px 4px;
+    padding: 2px 4px 0px 4px;
     font-size: 8px;
     text-transform: uppercase;
     margin-right: 5px;
-    margin-top: 1px;
+
+    span {
+      font-size: 14px;
+    }
+
+    &.chat span {
+      color: $color-chats;
+    }
+
+    &.discussion span{
+      color: $color-discussions;
+    }
+
+    &.event span {
+      color: $color-events;
+    }
+
+    &.offer span {
+      color: $color-offers;
+    }
+
+    &.resource span {
+      color: $color-resources;
+    }
+
+    &.project span {
+      color: $color-projects;
+    }
+
+    &.request span {
+      color: $color-requests;
+    }
   }
 
   .post-type.chat {
@@ -79,7 +123,7 @@ div .post-row:nth-child(1) {
 
 .topics {
     display: block;
-    margin-bottom: -3px;
+    margin-bottom: 0px;
     font-size: 12px;
     opacity: .5;
 }
@@ -117,8 +161,8 @@ div .post-row:nth-child(1) {
 
 .details {
   color: $color-regent;
-  height: 2.8em;
   width: 100%;
+  max-height: 18px;
   overflow: hidden;
   margin-bottom: 4px;
 }
@@ -127,6 +171,10 @@ div .post-row:nth-child(1) {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.details p:last-child {
+  margin-bottom:0;
 }
 
 .vote-button {
