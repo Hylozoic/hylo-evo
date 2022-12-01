@@ -23,7 +23,7 @@ import { toggleDrawer as toggleDrawerAction } from './AuthLayoutRouter.store'
 import getLastViewedGroup from 'store/selectors/getLastViewedGroup'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, OPTIONAL_NEW_POST_MATCH,
-  POST_DETAIL_MATCH, GROUP_DETAIL_MATCH, REQUIRED_EDIT_POST_MATCH
+  POST_DETAIL_MATCH, GROUP_DETAIL_MATCH, REQUIRED_EDIT_POST_MATCH, postUrl
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import RedirectRoute from 'router/RedirectRoute'
@@ -51,6 +51,7 @@ import PostDetail from 'routes/PostDetail'
 import Search from 'routes/Search'
 import WelcomeWizardRouter from 'routes/WelcomeWizardRouter'
 import SiteTour from 'routes/AuthLayoutRouter/components/SiteTour'
+import checkIsPostPublic from 'store/actions/checkIsPostPublic'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
@@ -81,6 +82,11 @@ export default function AuthLayoutRouter (props) {
     `/(.*)/${POST_DETAIL_MATCH}`,
     `/(.*)/${GROUP_DETAIL_MATCH}`
   ])
+
+  const paramPostId = matchPath(location.pathname, [
+    `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`,
+    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)/${POST_DETAIL_MATCH}`
+  ])?.params?.postId
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isMapView = pathMatchParams?.view === 'map'
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
@@ -178,7 +184,37 @@ export default function AuthLayoutRouter (props) {
     return <Redirect to='/welcome' />
   }
 
-  if (currentGroupSlug && !currentGroup && !currentGroupLoading) {
+  /* 
+    So!
+    - We have a user, and their groupMemberships
+    - We have a path, with a groupSlug and post id
+    - We have a post, and its attached groups
+
+    If the groupSlug in the path isn't in the users groupMemberships, we need action!
+    - then we check all of the post's groups and all of the users groups, looking for a match (any match?)
+    - if there is a match, we redirect? or we replace the groupSlug?
+    - if there is no match, and the post is public, we redirect to `/public`
+  */
+
+    // useEffect(() => {
+    //   (async function () {
+    //     if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
+    //       setPublicPostCheckLoading(true)
+    //       const result = await dispatch(checkIsPostPublic(paramPostId))
+    //       const isPublicPost = result?.payload?.data?.post?.id
+    //       setPublicPostCheckLoading(false)
+    //       return <Redirect push to={postUrl(paramPostId, { ...pathMatchParams, context: isPublicPost ? 'public' : 'all', groupSlug: null })} />
+    //     }
+    //   })()
+    // }, [paramPostId, currentGroupMembership, hasDetail, currentGroupSlug])
+
+  
+  if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
+    // this covers "Post I can see, and groupSlug for a group I cannot access." But it does not necessarily cover "Post I can see because its Public, but that isn't posted to any groups I have membership of"
+    return <Redirect push to={postUrl(paramPostId, { ...pathMatchParams, context: 'all', groupSlug: null })} />
+  }
+
+  if (currentGroupSlug && !currentGroup && !currentGroupLoading) { // this will have to be pushed down the hierarchy in the routers
     return <NotFound />
   }
 
