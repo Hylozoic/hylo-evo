@@ -99,17 +99,21 @@ export default function ChatRoom (props) {
   const [newPost, setNewPost] = useState(emptyPost)
   const [firstItemIndex, setFirstItemIndex] = useState(false)
   const [createdNewPost, setCreatedNewPost] = useState(false)
+  const [loadingPast, setLoadingPast] = useState(false)
+  const [loadingFuture, setLoadingFuture] = useState(false)
 
   const fetchPostsPast = useCallback((offset) => {
     const { pending, hasMorePostsPast } = props
     if (pending || hasMorePostsPast === false) return
-    props.fetchPostsPast(offset)
+    setLoadingPast(true)
+    props.fetchPostsPast(offset).then(() => setLoadingPast(false))
   }, [props.fetchPostsPast])
 
   const fetchPostsFuture = useCallback((offset) => {
     const { pending, hasMorePostsFuture } = props
     if (pending || hasMorePostsFuture === false) return
-    props.fetchPostsFuture(offset)
+    setLoadingFuture(true)
+    props.fetchPostsFuture(offset).then(() => setLoadingFuture(false))
   }, [props.fetchPostsFuture])
 
   useEffect(() => {
@@ -136,7 +140,9 @@ export default function ChatRoom (props) {
   // Do one time, to set ready
   useEffect(() => {
     if (postsPast !== null && postsFuture !== null) {
-      setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
+      if (!firstItemIndex) {
+        setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
+      }
       if (!lastReadPostId) {
         const lastPost = postsFuture.length > 0 ? postsFuture[postsFuture.length - 1] : postsPast[postsPast.length - 1]
         if (lastPost) {
@@ -147,6 +153,14 @@ export default function ChatRoom (props) {
     }
   }, [postsPast, postsFuture])
 
+  // Update first item index as we prepend posts when scrolling up, to stay scrolled to same post
+  useEffect(() => {
+    if (firstItemIndex) {
+      setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
+    }
+  }, [postsPast?.length])
+
+  // If scrolled to bottom and a new post comes in make sure to scroll down to see new post
   useEffect(() => {
     if (atBottom && virtuoso.current) {
       setTimeout(() => {
@@ -318,6 +332,7 @@ export default function ChatRoom (props) {
       <ReactResizeDetector handleWidth={false} handleHeight onResize={handleResizeChats}>{
         ({ width, height }) => (
           <div id='chats' styleName='stream-items-container' ref={chatsRef}>
+            {loadingPast && <div styleName='loading-container'><Loading /></div>}
             {firstItemIndex !== false && postsForDisplay.length === 0
               ? <NoPosts className={styles['no-posts']} />
               : firstItemIndex === false
@@ -377,6 +392,7 @@ export default function ChatRoom (props) {
                     )
                   }}
                 />}
+            {loadingFuture && <div styleName='loading-container'><Loading /></div>}
           </div>
         )
       }

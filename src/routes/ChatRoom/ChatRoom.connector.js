@@ -55,6 +55,8 @@ export const getPosts = ormCreateSelector(
   }
 )
 
+const NUM_POSTS_TO_LOAD = 25
+
 export function mapStateToProps (state, props) {
   let canModerate, group, topic, groupTopic
 
@@ -101,7 +103,7 @@ export function mapStateToProps (state, props) {
     context,
     cursor: groupTopic?.lastReadPostId,
     filter: 'chat',
-    first: 30,
+    first: NUM_POSTS_TO_LOAD,
     order: 'asc',
     slug: groupSlug,
     search,
@@ -113,7 +115,7 @@ export function mapStateToProps (state, props) {
     context,
     cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
     filter: 'chat',
-    first: 30,
+    first: NUM_POSTS_TO_LOAD,
     order: 'desc',
     slug: groupSlug,
     search,
@@ -128,7 +130,7 @@ export function mapStateToProps (state, props) {
   const hasMorePostsPast = getHasMorePosts(state, fetchPostsPastParams)
 
   let currentPostIndex = getTotalPosts(state, fetchPostsPastParams)
-  currentPostIndex = currentPostIndex ? Math.max(currentPostIndex - 2, 0) : 0
+  currentPostIndex = currentPostIndex ? Math.min(Math.max(currentPostIndex - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0
 
   return {
     canModerate,
@@ -150,7 +152,7 @@ export function mapStateToProps (state, props) {
     postsFuture,
     postsPast,
     querystringParams,
-    postsTotal: get('postsTotal', groupSlug ? groupTopic : topic),
+    postsTotal: getTotalPosts(state, fetchPostsPastParams) + getTotalPosts(state, fetchPostsFutureParams), // get('postsTotal', groupSlug ? groupTopic : topic),
     followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
     routeParams,
     search,
