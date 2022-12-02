@@ -140,7 +140,7 @@ export default function ChatRoom (props) {
   // Do one time, to set ready
   useEffect(() => {
     if (postsPast !== null && postsFuture !== null) {
-      if (!firstItemIndex) {
+      if (firstItemIndex === false) {
         setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
       }
       if (!lastReadPostId) {
@@ -155,8 +155,8 @@ export default function ChatRoom (props) {
 
   // Update first item index as we prepend posts when scrolling up, to stay scrolled to same post
   useEffect(() => {
-    if (firstItemIndex) {
-      setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
+    if (firstItemIndex !== false) {
+      setFirstItemIndex(postsTotal - (postsPast?.length || 0) - (postsFuture?.length || 0))
     }
   }, [postsPast?.length])
 
@@ -164,7 +164,7 @@ export default function ChatRoom (props) {
   useEffect(() => {
     if (atBottom && virtuoso.current) {
       setTimeout(() => {
-        virtuoso.current.scrollToIndex(postsTotal)
+        scrollToBottom()
       }, 300)
     }
   }, [postsTotal])
@@ -229,7 +229,7 @@ export default function ChatRoom (props) {
     if (virtuoso.current) {
       virtuoso.current.scrollToIndex(postsTotal)
     }
-  }, [])
+  }, [postsTotal])
 
   const postChatMessage = useEventCallback(async () => {
     // Only submit if any non-whitespace text has been added
@@ -392,7 +392,7 @@ export default function ChatRoom (props) {
                     )
                   }}
                 />}
-            {loadingFuture && <div styleName='loading-container'><Loading /></div>}
+            {loadingFuture && <div styleName='loading-container bottom'><Loading /></div>}
           </div>
         )
       }

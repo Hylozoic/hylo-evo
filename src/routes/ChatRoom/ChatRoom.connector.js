@@ -99,18 +99,6 @@ export function mapStateToProps (state, props) {
   // If lastPostRead is set and not last one then load next X posts and last X posts - for same total # of posts? but no not if there are lots more posts to come, then load more to come plus a smaller amount Y of past posts
   // If we know posts are not Chat posts then we load less of them because they take up more space
 
-  const fetchPostsFutureParams = {
-    context,
-    cursor: groupTopic?.lastReadPostId,
-    filter: 'chat',
-    first: NUM_POSTS_TO_LOAD,
-    order: 'asc',
-    slug: groupSlug,
-    search,
-    sortBy: 'id',
-    topic: topic?.id
-  }
-
   const fetchPostsPastParams = {
     context,
     cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
@@ -123,14 +111,26 @@ export function mapStateToProps (state, props) {
     topic: topic?.id
   }
 
-  const postsFuture = getPosts(state, fetchPostsFutureParams)
-  const hasMorePostsFuture = getHasMorePosts(state, fetchPostsFutureParams)
+  const fetchPostsFutureParams = {
+    context,
+    cursor: groupTopic?.lastReadPostId,
+    filter: 'chat',
+    first: NUM_POSTS_TO_LOAD,
+    order: 'asc',
+    slug: groupSlug,
+    search,
+    sortBy: 'id',
+    topic: topic?.id
+  }
 
   const postsPast = groupTopic?.lastReadPostId ? getPosts(state, fetchPostsPastParams) : []
   const hasMorePostsPast = getHasMorePosts(state, fetchPostsPastParams)
+  const totalPastPosts = getTotalPosts(state, fetchPostsPastParams) || 0
+  const currentPostIndex = totalPastPosts ? Math.min(Math.max(totalPastPosts - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0
 
-  let currentPostIndex = getTotalPosts(state, fetchPostsPastParams)
-  currentPostIndex = currentPostIndex ? Math.min(Math.max(currentPostIndex - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0
+  const postsFuture = getPosts(state, fetchPostsFutureParams)
+  const hasMorePostsFuture = getHasMorePosts(state, fetchPostsFutureParams)
+  const totalFuturePosts = getTotalPosts(state, fetchPostsFutureParams) || 0
 
   return {
     canModerate,
@@ -152,7 +152,7 @@ export function mapStateToProps (state, props) {
     postsFuture,
     postsPast,
     querystringParams,
-    postsTotal: getTotalPosts(state, fetchPostsPastParams) + getTotalPosts(state, fetchPostsFutureParams), // get('postsTotal', groupSlug ? groupTopic : topic),
+    postsTotal: totalPastPosts + totalFuturePosts,
     followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
     routeParams,
     search,

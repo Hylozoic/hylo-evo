@@ -23,6 +23,7 @@
   flex: 1;
   flex-direction: column;
   display: flex;
+  position: relative;
 }
 
 .no-posts {
@@ -33,6 +34,10 @@
   position: absolute;
   margin: 0 auto;
   width: 100%;
+
+  &.bottom {
+    bottom: 0;
+  }
 }
 
 .displayDay, .firstUnread, .unreadAndDay {
