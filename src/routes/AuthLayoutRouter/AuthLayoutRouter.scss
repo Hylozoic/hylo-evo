@@ -358,7 +358,8 @@ $drawer-z-index: 51;
     padding: 0 0 0 0;
   }
   &.withoutNav {
-    padding-bottom: 0
+    padding-bottom: 0;
+    height: 100vh;
   }
 }
 
