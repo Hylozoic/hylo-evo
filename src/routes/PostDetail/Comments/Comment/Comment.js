@@ -101,7 +101,7 @@ export class Comment extends Component {
                 commentId={comment.id}
               />
               {dropdownItems.map(item => (
-                <div styleName='commentAction' onClick={item.onClick}>
+                <div key={item.icon} styleName='commentAction' onClick={item.onClick}>
                   <Icon name={item.icon}/>
                 </div>
               ))}

@@ -22,7 +22,7 @@ export default class EventBody extends Component {
   toggleInviteDialog = () => this.setState({ showInviteDialog: !this.state.showInviteDialog })
 
   render () {
-    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, togglePeopleDialog } = this.props
+    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, onClick, togglePeopleDialog } = this.props
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations, groups } = event
 
@@ -35,7 +35,7 @@ export default class EventBody extends Component {
     return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded, eventImage: attachmentType === 'image' }, { constrained })} className={className}>
 
       <div styleName='eventTop'>
-        <div styleName='calendarDate'>
+        <div styleName='calendarDate' onClick={onClick}>
           <EventDate {...event} />
         </div>
         {currentUser && <div styleName='eventResponseTop'>
@@ -47,16 +47,17 @@ export default class EventBody extends Component {
       </div>
 
       <div styleName={cx('eventBodyColumn', { constrained })}>
-        <PostTitle {...event} constrained={constrained} />
-        <div styleName={cx('eventData', { constrained })}>
+        <PostTitle {...event} constrained={constrained} onClick={onClick} />
+        <div styleName={cx('eventData', { constrained })} onClick={onClick}>
           <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair(startTime, endTime)}
         </div>
-        {!!location && <div styleName='eventData eventLocation'>
+        {!!location && <div styleName='eventData eventLocation' onClick={onClick}>
           <Icon name='Location' styleName='icon' /> {location}
         </div>}
         <div styleName={cx('eventDetails', { constrained })}>
           <PostDetails
             {...event}
+            onClick={onClick}
             constrained={constrained}
             expanded={expanded}
             hideDetails={!expanded}
@@ -66,7 +67,7 @@ export default class EventBody extends Component {
       </div>
 
       <div styleName='eventAttendance'>
-        <div styleName='people'>
+        <div styleName='people' onClick={onClick}>
           <div styleName='fade' />
           <PeopleInfo
             people={eventAttendees}

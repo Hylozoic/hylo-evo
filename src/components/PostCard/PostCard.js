@@ -84,8 +84,8 @@ export default function PostCard (props) {
       </div>
       {isEvent && (
         <div styleName='bodyWrapper'>
-          <div styleName='trigger' onClick={isEvent ? onClick : null} />
           <EventBody
+            onClick={onClick}
             currentUser={currentUser}
             event={post}
             slug={routeParams.groupSlug}
@@ -95,7 +95,7 @@ export default function PostCard (props) {
         </div>
       )}
       {!isEvent && (
-        <div onClick={onClick}>
+        <div>
           <PostBody
             {...post}
             onClick={onClick}
