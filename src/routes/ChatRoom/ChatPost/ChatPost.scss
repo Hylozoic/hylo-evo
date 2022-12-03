@@ -237,10 +237,43 @@
   composes: caption-lt-lg from 'css/typography.scss';
 }
 
-@media screen and (max-width: 425px) {
+
+@media screen and (max-width: 600px) {
   .container {
-    -webkit-user-select: none; /* disable selection/Copy of UIWebView */
-    -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+    padding-left: 33px;
+
+    .header {
+      .author {
+        .name {
+          margin-left: 5px;
+          font-size: 14px;
+          top: 3px;
+        }
+      }
+
+      .date {
+        top: 5px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .postContentContainer {
+    margin-left: 0;
+  }
+
+  .comments-container {
+    margin-left: 0;
+  }
+
+  .postContent {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .avatar div {
+    width: 30px;
+    height: 30px;
   }
 
   .postContent.cardPadding {
@@ -251,11 +284,13 @@
       margin-bottom: 0;
     }
   }
+}
 
-  .postContent {
-    font-size: 14px;
-    line-height: 20px;
-  }
+
+@media screen and (max-width: 425px) {
+  .container {
+    -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+    -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
 }
 
 @media screen and (max-width: 375px) {

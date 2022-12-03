@@ -489,6 +489,7 @@ export default function ChatRoom (props) {
         <div styleName='post-chat-box-footer'>
           <UploadAttachmentButton
             type='post'
+            className={styles['upload-attachment']}
             id='new'
             attachmentType='image'
             onSuccess={(attachment) => addAttachment('post', 'new', attachment)}

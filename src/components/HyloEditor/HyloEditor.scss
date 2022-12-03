@@ -140,3 +140,13 @@
     }    
   }
 }
+
+@media screen and (max-width: 600px) {
+  .topMenuBar {
+    display: none;
+  }
+
+  .post-chat-box {
+    padding-top: 10px;
+  }
+}

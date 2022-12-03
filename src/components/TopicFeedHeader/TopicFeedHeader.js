@@ -27,16 +27,19 @@ export default function TopicFeedHeader ({
   followersTotal = followersTotal || 0
 
   return <div styleName='topic-feed-header'>
-    <div styleName='fade'><div styleName='fade2' /></div>
     <div style={bgImageStyle(bannerUrl)} styleName='image'>
-      <div styleName='topic-name'>#{topicName}</div>
-      <div styleName='meta'>
-        <Icon name='Star' styleName='star-icon' />
-        {inflectedTotal('subscriber', followersTotal)}
+      <div styleName='topic-info'>
+        <div styleName='topic-name'>#{topicName}</div>
+        <div styleName='meta'>
+          <Icon name='Star' styleName='star-icon' />
+          {inflectedTotal('subscriber', followersTotal)}
+        </div>
       </div>
       {toggleSubscribe && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
-        <Icon name='Star' styleName={iconStyle} />{buttonText}
+        <Icon name='Star' styleName={iconStyle} />
+        <div styleName='subscribe-label'>{buttonText}</div>
       </Button>}
+      <div styleName='fade'><div styleName='fade2' /></div>
     </div>
   </div>
 }
