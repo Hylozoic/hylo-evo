@@ -1,5 +1,4 @@
 import cx from 'classnames'
-import { TextHelpers } from 'hylo-shared'
 import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
 import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -23,6 +22,7 @@ import useReactionActions from 'hooks/useReactionActions'
 import deletePost from 'store/actions/deletePost'
 import removePost from 'store/actions/removePost'
 import { bgImageStyle } from 'util/index'
+import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
 import styles from './ChatPost.scss'
 
@@ -197,10 +197,9 @@ export default function ChatPost ({
                 onEnter={handleEditSave}
                 // onUpdate={handleDetailsUpdate}
                 placeholder='Edit Post'
-                readOnly={!editing}
                 ref={editorRef}
-                showMenu={editing}
-                containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: editing })}
+                showMenu={!isWebView()}
+                containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: true })}
                 styleName={cx({ postContent: true, editing })}
               />
               : <div styleName='postContentContainer'><HyloHTML styleName='postContent' html={details} /></div>

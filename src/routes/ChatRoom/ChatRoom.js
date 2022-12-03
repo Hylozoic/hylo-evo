@@ -17,6 +17,7 @@ import PostCard from 'components/PostCard'
 import TopicFeedHeader from 'components/TopicFeedHeader'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { MAX_POST_TOPICS } from 'util/constants'
+import isWebView from 'util/webView'
 import ChatPost from './ChatPost'
 
 import styles from './ChatRoom.scss'
@@ -410,7 +411,7 @@ export default function ChatRoom (props) {
           placeholder={`Send a message to #${topicName}`}
           readOnly={pending}
           ref={editorRef}
-          showMenu
+          showMenu={!isWebView()}
           styleName='editor'
         />
         {(linkPreview || fetchLinkPreviewPending) && (
