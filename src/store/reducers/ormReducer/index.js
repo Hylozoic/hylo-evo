@@ -255,7 +255,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case FETCH_COLLECTION_POSTS:
       clearCacheFor(Group, meta.groupId)
-       break
+      break
 
     case FETCH_GROUP_DETAILS_PENDING: {
       // Clear out prerequisite groups so they correclty update with latest data

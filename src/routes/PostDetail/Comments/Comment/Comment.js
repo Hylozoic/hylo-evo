@@ -94,7 +94,7 @@ export class Comment extends Component {
                 <Icon name='Replies' />
               </div>
               <EmojiRow
-                className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true})}
+                className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
                 {...comment}
                 currentUser={currentUser}
                 postId={comment.post}
@@ -102,7 +102,7 @@ export class Comment extends Component {
               />
               {dropdownItems.map(item => (
                 <div key={item.icon} styleName='commentAction' onClick={item.onClick}>
-                  <Icon name={item.icon}/>
+                  <Icon name={item.icon} />
                 </div>
               ))}
             </div>

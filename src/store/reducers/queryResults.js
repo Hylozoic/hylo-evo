@@ -135,7 +135,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   // Group streams
   return reduce((memo, group) => {
     queriesToMatch.push(
-      //TODO: add all the versions with activePostsOnly as false and true?
+      // TODO: add all the versions with activePostsOnly as false and true?
       { context: 'groups', slug: group.slug, activePostsOnly: false },
       { context: 'groups', slug: group.slug, activePostsOnly: true },
       { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
@@ -149,7 +149,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false },
       // For events stream upcoming events
-      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
+      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' }
     )
     for (let topic of topics) {
       queriesToMatch.push(

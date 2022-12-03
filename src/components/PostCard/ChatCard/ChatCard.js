@@ -1,7 +1,6 @@
 import cx from 'classnames'
 import moment from 'moment-timezone'
 import React from 'react'
-import { TextHelpers } from 'hylo-shared'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CardImageAttachments from 'components/CardImageAttachments'
 import ClickCatcher from 'components/ClickCatcher'
