@@ -735,7 +735,7 @@ exports[`renders human readable dates 2`] = `
     <div
       data-stylename="timeWindow"
     >
-      Starts: Tue, Nov 29, 2022 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+      Started: Tue, Nov 29, 2022 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
     </div>
   </div>
   <ReactTooltip
