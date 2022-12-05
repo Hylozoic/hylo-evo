@@ -92,9 +92,9 @@ export function groupDetailUrl (slug, opts = {}, querystringParams = {}) {
 export function postUrl (id, opts = {}, querystringParams = {}) {
   const action = get('action', opts)
   let result = baseUrl(opts)
-
   result = `${result}/post/${id}`
   if (action) result = `${result}/${action}`
+  console.log(result, 'ayayya', opts)
 
   return addQuerystringToPath(result, querystringParams)
 }

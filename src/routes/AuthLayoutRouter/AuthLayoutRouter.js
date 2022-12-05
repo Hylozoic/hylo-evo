@@ -51,7 +51,6 @@ import PostDetail from 'routes/PostDetail'
 import Search from 'routes/Search'
 import WelcomeWizardRouter from 'routes/WelcomeWizardRouter'
 import SiteTour from 'routes/AuthLayoutRouter/components/SiteTour'
-import checkIsPostPublic from 'store/actions/checkIsPostPublic'
 import SocketListener from 'components/SocketListener'
 import SocketSubscriber from 'components/SocketSubscriber'
 import TopNav from './components/TopNav'
@@ -92,7 +91,6 @@ export default function AuthLayoutRouter (props) {
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   const queryParams = Object.fromEntries(new URLSearchParams(location.search))
   const hideDrawer = queryParams?.hideDrawer !== 'true'
-
   // Store
   const dispatch = useDispatch()
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, { match: { params: pathMatchParams } }))
@@ -184,34 +182,9 @@ export default function AuthLayoutRouter (props) {
     return <Redirect to='/welcome' />
   }
 
-  /* 
-    So!
-    - We have a user, and their groupMemberships
-    - We have a path, with a groupSlug and post id
-    - We have a post, and its attached groups
-
-    If the groupSlug in the path isn't in the users groupMemberships, we need action!
-    - then we check all of the post's groups and all of the users groups, looking for a match (any match?)
-    - if there is a match, we redirect? or we replace the groupSlug?
-    - if there is no match, and the post is public, we redirect to `/public`
-  */
-
-    // useEffect(() => {
-    //   (async function () {
-    //     if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
-    //       setPublicPostCheckLoading(true)
-    //       const result = await dispatch(checkIsPostPublic(paramPostId))
-    //       const isPublicPost = result?.payload?.data?.post?.id
-    //       setPublicPostCheckLoading(false)
-    //       return <Redirect push to={postUrl(paramPostId, { ...pathMatchParams, context: isPublicPost ? 'public' : 'all', groupSlug: null })} />
-    //     }
-    //   })()
-    // }, [paramPostId, currentGroupMembership, hasDetail, currentGroupSlug])
-
-  
   if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
     // this covers "Post I can see, and groupSlug for a group I cannot access." But it does not necessarily cover "Post I can see because its Public, but that isn't posted to any groups I have membership of"
-    return <Redirect push to={postUrl(paramPostId, { ...pathMatchParams, context: 'all', groupSlug: null })} />
+    return <Redirect push to={postUrl(paramPostId, { context: 'all', groupSlug: null })} />
   }
 
   if (currentGroupSlug && !currentGroup && !currentGroupLoading) { // this will have to be pushed down the hierarchy in the routers
