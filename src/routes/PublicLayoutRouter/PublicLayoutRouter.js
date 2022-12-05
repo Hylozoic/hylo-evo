@@ -1,77 +1,195 @@
 import cx from 'classnames'
-import { some } from 'lodash/fp'
-import React, { useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useParams, useLocation, useHistory, Redirect, Route, Switch } from 'react-router-dom'
 import Div100vh from 'react-div-100vh'
-import { matchPath, Redirect, Route, Switch } from 'react-router-dom'
+import { POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
+import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import HyloCookieConsent from 'components/HyloCookieConsent'
-import TopicSupportComingSoon from 'components/TopicSupportComingSoon'
 import GroupDetail from 'routes/GroupDetail'
 import GroupExplorer from 'routes/GroupExplorer'
+import Loading from 'components/Loading'
 import MapExplorer from 'routes/MapExplorer'
 import PostDetail from 'routes/PostDetail'
-import { OPTIONAL_POST_MATCH, POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
-import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import './PublicLayoutRouter.scss'
+import gql from 'graphql-tag'
 
 export default function PublicLayoutRouter (props) {
-  const { location } = props
-
-  const pathMatchParams = useMemo(() => (
-    matchPath(location.pathname, [
-      '/:context(public)/:view(groups|map)?'
-    ])?.params || { context: 'public' }
-  ), [location.pathname])
-
-  const hasDetail = some(
-    ({ path }) => matchPath(location.pathname, { path, exact: true }),
-    detailRoutes
-  )
-
-  const isMapView = pathMatchParams?.view === 'map'
+  const routeParams = useParams()
+  const location = useLocation()
+  const isMapView = routeParams?.view === 'map'
 
   return (
     <Div100vh styleName={cx('public-container', { 'map-view': isMapView })}>
-      <div styleName='background'>
-        <div styleName='header'>
-          <a href='/'>
-            <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />
-          </a>
-          <div styleName='access-controls'>
-            <a href='/login'>Sign in</a>
-            <a styleName='sign-up' href='/signup'>Join Hylo</a>
-          </div>
-        </div>
-        <div styleName='center-column' id={CENTER_COLUMN_ID}>
-          <Switch>
-            <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
-            <Route path='/:context(public)/:view(map)' component={MapExplorer} />
-            <Route path='/:context(public)/groups' exact component={GroupExplorer} />
-            <Route path='/:context(public)/:topicName' exact component={TopicSupportComingSoon} />
-            {/* Remove this once we show the public stream */}
-            <Redirect exact from='/public/post/:id' to='/post/:id' />
-            <Redirect
-              exact
-              from={`/public/${OPTIONAL_POST_MATCH}`}
-              to={{ pathname: '/public/map', state: { from: location } }}
-              key='streamToMap'
-            />
-          </Switch>
-        </div>
-        <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
-          <Switch>
-            {detailRoutes.map(({ path, component }) => (
-              <Route path={path} component={component} key={path} />)
-            )}
-          </Switch>
-        </div>
-      </div>
+      <PublicPageHeader />
+      <Switch>
+        <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
+        <Route path='/:context(groups)/:groupSlug' exact component={PublicGroupDetail} />
+        <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
+        <Route path='/:context(public)/:view(groups)' exact component={GroupExplorerLayoutRouter} />
+        {/* Remove this once we show the public stream */}
+        <Redirect exact from={`/public/${POST_DETAIL_MATCH}`} to='/post/:postId' />
+        <Redirect to={{ pathname: '/public/map', state: { from: location } }} />
+      </Switch>
       <HyloCookieConsent />
     </Div100vh>
   )
 }
 
-const detailRoutes = [
-  { path: `/:context(|public)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(|public)/:view(map)/${POST_DETAIL_MATCH}`, component: PostDetail },
-  { path: `/:context(|public)/:view(map)/${GROUP_DETAIL_MATCH}`, component: GroupDetail }
-]
+export function PublicGroupDetail (props) {
+  const dispatch = useDispatch()
+  const routeParams = useParams()
+  const history = useHistory()
+  const [loading, setLoading] = useState(true)
+  const groupSlug = routeParams?.groupSlug
+  const checkIsPublicGroup = groupSlug => {
+    return {
+      type: 'IS_GROUP_PUBLIC',
+      graphql: {
+        query: gql`
+          query CheckIsGroupPublic ($slug: String) {
+            group (slug: $slug) {
+              visibility
+            }
+          }
+        `,
+        variables: { slug: groupSlug }
+      },
+      meta: { extractModel: 'Group' }
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true)
+
+      const result = await dispatch(checkIsPublicGroup(groupSlug))
+      const isPublicGroup = result?.payload?.data?.group?.visibility === 2
+      if (!isPublicGroup) {
+        history.replace('/login')
+      }
+
+      setLoading(false)
+    })()
+  }, [dispatch, groupSlug])
+
+  if (loading) {
+    return <Loading />
+  }
+
+  return (
+    <div styleName='center-column' id={CENTER_COLUMN_ID}>
+      <GroupDetail {...props} />
+    </div>
+  )
+}
+
+export function PublicPostDetail (props) {
+  const dispatch = useDispatch()
+  const routeParams = useParams()
+  const history = useHistory()
+  const [loading, setLoading] = useState(true)
+  const postId = routeParams?.postId
+
+  const checkIsPostPublic = postId => {
+    return {
+      type: 'IS_POST_PUBLIC',
+      graphql: {
+        query: gql`
+          query CheckIsPostPublic ($id: ID) {
+            post (id: $id) {
+              id
+            }
+          }
+        `,
+        variables: { id: postId }
+      },
+      meta: { extractModel: 'Post' }
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true)
+
+      const result = await dispatch(checkIsPostPublic(postId))
+      const isPublicPost = result?.payload?.data?.post?.id
+
+      if (!isPublicPost) {
+        history.replace('/login')
+      }
+
+      setLoading(false)
+    })()
+  }, [dispatch, postId])
+
+  if (loading) {
+    return <Loading />
+  }
+
+  return (
+    <div styleName='center-column' id={DETAIL_COLUMN_ID}>
+      <PostDetail {...props} />
+    </div>
+  )
+}
+
+export function MapExplorerLayoutRouter (props) {
+  return (
+    <>
+      <div styleName='center-column' id={CENTER_COLUMN_ID}>
+        <MapExplorer {...props} />
+      </div>
+      <Route
+        path={`(.*)/${POST_DETAIL_MATCH}`}
+        render={routeProps => (
+          <div styleName='detail' id={DETAIL_COLUMN_ID}>
+            <PostDetail {...routeProps} />
+          </div>
+        )}
+      />
+      <Route
+        path={`(.*)/${GROUP_DETAIL_MATCH}`}
+        render={routeProps => (
+          <div styleName='detail' id={DETAIL_COLUMN_ID}>
+            <GroupDetail {...routeProps} />
+          </div>
+        )}
+      />
+    </>
+  )
+}
+
+export function GroupExplorerLayoutRouter () {
+  return (
+    <>
+      <div styleName='center-column' id={CENTER_COLUMN_ID}>
+        <GroupExplorer />
+      </div>
+      <Route
+        path={`(.*)/${GROUP_DETAIL_MATCH}`}
+        render={routeProps => (
+          <div styleName='detail' id={DETAIL_COLUMN_ID}>
+            <GroupDetail {...routeProps} />
+          </div>
+        )}
+      />
+    </>
+  )
+}
+
+export function PublicPageHeader () {
+  return (
+    <div styleName='background'>
+      <div styleName='header'>
+        <a href='/'>
+          <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />
+        </a>
+        <div styleName='access-controls'>
+          <a href='/login'>Sign in</a>
+          <a styleName='sign-up' href='/signup'>Join Hylo</a>
+        </div>
+      </div>
+    </div>
+  )
+}

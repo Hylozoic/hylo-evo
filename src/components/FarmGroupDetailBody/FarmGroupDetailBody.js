@@ -12,7 +12,7 @@ export default function FarmGroupDetailBody ({
   routeParams
 }) {
   const { group } = useEnsureCurrentGroup()
-  const { posts } = useEnsurePosts({ public: true, sortBy: 'updated', context: 'groups' })
+  const { posts } = useEnsurePosts({ public: true, sortBy: 'updated', context: 'groups', currentUser })
   const bio = getBio(group)
 
   // TODO: hide widgets if they have no data, means loading all the data here?
@@ -29,9 +29,9 @@ export default function FarmGroupDetailBody ({
     },
     { settings: {}, isVisible: true, name: 'farm_details' },
     { settings: {}, isVisible: true, name: 'opportunities_to_collaborate' },
-    { settings: {}, isVisible: true, name: 'relevant_requests_offers' },
-    { settings: {}, isVisible: true, name: 'relevant_project_activity' },
-    { settings: {}, isVisible: true, name: 'relevant_events' },
+    { settings: {}, isVisible: !!currentUser, name: 'relevant_requests_offers' },
+    { settings: {}, isVisible: !!currentUser, name: 'relevant_project_activity' },
+    { settings: {}, isVisible: !!currentUser, name: 'relevant_events' },
     { settings: {}, isVisible: true, name: 'farm_map' },
     { settings: {}, isVisible: true, name: 'farm_open_to_public' }
   ]

@@ -49,7 +49,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     addSkill: (name) => dispatch(addSkill(name)),
     removeSkill: (skillId) => dispatch(removeSkill(skillId)),
-    fetchGroup: () => dispatch(fetchGroupDetails({ slug, withWidgets: true })),
+    fetchGroup: (currentUser) => dispatch(fetchGroupDetails({ slug, withWidgets: true, withPrerequisites: !!currentUser })),
     fetchJoinRequests: () => dispatch(fetchJoinRequests()),
     joinGroup: (groupId) => dispatch(joinGroup(groupId)),
     createJoinRequest: (groupId, questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
@@ -59,11 +59,11 @@ export function mapDispatchToProps (dispatch, props) {
 export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { currentUser } = stateProps
   const { joinGroup, createJoinRequest } = dispatchProps
-
   return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
+    fetchGroup: () => dispatchProps.fetchGroup(currentUser),
     joinGroup: currentUser ? joinGroup : () => {},
     createJoinRequest: currentUser ? createJoinRequest : () => {}
   }
