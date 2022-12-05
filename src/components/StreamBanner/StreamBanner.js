@@ -104,8 +104,8 @@ export default function StreamBanner ({
               t('StreamBanner.displayingActivePostsStatus', { customActivePostsStatus })
             </span>
 
-            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
-            {customViewTopics.length > 0 && <div styleName='filtered-topics'>t('StreamBanner.filteredByTopics')</div>}
+            {customPostTypes.length === 0 ? t('StreamBanner.none') : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{t('StreamBanner.postTypes', { p })} +</span>)}
+            {customViewTopics.length > 0 && <div styleName='filtered-topics'>{t('StreamBanner.filteredByTopics')}</div>}
             {customViewTopics.length > 0 && customViewTopics.map(topic => <span key={topic.id} styleName='filtered-topic'>#{topic.name}</span>)}
           </div>
           : ''

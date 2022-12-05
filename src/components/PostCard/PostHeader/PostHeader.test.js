@@ -77,12 +77,12 @@ it('renders human readable dates', () => {
     url: '/foo/bar'
   }
   let startTime = '2020-11-29'
-  let endTime = '2029-11-29'
+  let endTime = '2039-11-29'
 
   const wrapper = shallow(<PostHeader type='request' groups={groups} creator={creator} context={context} startTime={startTime} endTime={endTime} />)
   expect(wrapper).toMatchSnapshot()
-  startTime = '2022-11-29'
-  endTime = '2029-11-29'
+  startTime = '2032-11-29'
+  endTime = '2039-11-29'
   wrapper.setProps({ startTime, endTime })
   expect(wrapper).toMatchSnapshot()
   startTime = '2010-11-29'
