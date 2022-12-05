@@ -153,6 +153,7 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     )
     for (let topic of topics) {
       queriesToMatch.push(
+        // Add to the future posts in a topic (future because of order: 'asc')
         { context: 'groups', slug: group.slug, sortBy: 'id', order: 'asc', topic: topic.id, filter: 'chat' }
       )
     }
@@ -212,27 +213,27 @@ export function matchSubCommentsIntoQueryResults (state, { data }) {
 function prependIdForCreate (state, type, params, id) {
   const key = buildKey(type, params)
   if (!state[key]) return state
-  return {
+  return !state[key].ids.includes(id) ? {
     ...state,
     [key]: {
-      ids: !state[key].ids.includes(id) ? [id].concat(state[key].ids) : state[key].ids,
-      total: state[key].total && state[key].total + 1,
+      ids:  [id].concat(state[key].ids),
+      total: (state[key].total || state[key].total === 0) && state[key].total + 1,
       hasMore: state[key].hasMore
     }
-  }
+  }  : state
 }
 
 function appendId (state, type, params, id) {
   const key = buildKey(type, params)
   if (!state[key]) return state
-  return {
+  return !state[key].ids.includes(id) ? {
     ...state,
     [key]: {
-      ids: !state[key].ids.includes(id) ? state[key].ids.concat(id) : state[key].ids,
-      total: state[key].total && state[key].total + 1,
+      ids: state[key].ids.concat(id),
+      total: (state[key].total || state[key].total === 0) && state[key].total + 1,
       hasMore: state[key].hasMore
     }
-  }
+  }  : state
 }
 
 // If replace is false add new ids to the existing list, if true then replace list
