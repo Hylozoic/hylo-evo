@@ -1,21 +1,11 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
-
 import './StreamViewControls.scss'
-
-const POST_TYPE_OPTIONS = [
-  { id: undefined, label: 'All Posts' },
-  { id: 'discussion', label: 'Discussions' },
-  { id: 'event', label: 'Events' },
-  { id: 'offer', label: 'Offers' },
-  { id: 'project', label: 'Projects' },
-  { id: 'request', label: 'Requests' },
-  { id: 'resource', label: 'Resources' }
-]
 
 const makeDropdown = (selected, options, onChange) => (
   <Dropdown
@@ -34,10 +24,20 @@ const makeDropdown = (selected, options, onChange) => (
 )
 
 const StreamViewControls = (props) => {
+  const { t } = useTranslation()
+  const POST_TYPE_OPTIONS = [
+    { id: undefined, label: t('StreamViewControls.allPosts') },
+    { id: 'discussion', label: t('StreamViewControls.discussions') },
+    { id: 'event', label: t('StreamViewControls.events') },
+    { id: 'offer', label: t('StreamViewControls.offers') },
+    { id: 'project', label: t('StreamViewControls.projects') },
+    { id: 'request', label: t('StreamViewControls.requests') },
+    { id: 'resource', label: t('StreamViewControls.resources') }
+  ]
   const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view, customPostTypes } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
-  const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? POST_TYPE_OPTIONS.filter(postType => postType.label === 'All Posts' || customPostTypes.includes(postType.id)) : POST_TYPE_OPTIONS
+  const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? POST_TYPE_OPTIONS.filter(postType => postType.label === t('StreamViewControls.allPosts') || customPostTypes.includes(postType.id)) : POST_TYPE_OPTIONS
   const handleSearchToggle = () => {
     setSearchActive(!searchActive)
   }
@@ -52,7 +52,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'cards' })}
             onClick={() => changeView('cards')}
-            data-tip='Card view' data-for='stream-viewmode-tip'
+            data-tip={t('StreamViewControls.cardView')} data-for='stream-viewmode-tip'
           >
             <Icon name='CardView' />
           </div>
@@ -60,7 +60,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'list' })}
             onClick={() => changeView('list')}
-            data-tip='List view' data-for='stream-viewmode-tip'
+            data-tip={t('StreamViewControls.listView')} data-for='stream-viewmode-tip'
           >
             <Icon name='ListView' />
           </div>
@@ -68,7 +68,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'bigGrid' })}
             onClick={() => changeView('bigGrid')}
-            data-tip='Large Grid' data-for='stream-viewmode-tip'
+            data-tip={t('StreamViewControls.largeGrid')} data-for='stream-viewmode-tip'
           >
             <Icon name='GridView' styleName='grid-view-icon' />
           </div>
@@ -76,7 +76,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
             onClick={() => changeView('grid')}
-            data-tip='Small Grid' data-for='stream-viewmode-tip'
+            data-tip={t('StreamViewControls.smallGrid')} data-for='stream-viewmode-tip'
           >
             <Icon name='SmallGridView' styleName='grid-view-icon' />
           </div>
@@ -100,7 +100,7 @@ const StreamViewControls = (props) => {
                 e.target.blur()
               }
             }}
-            placeholder='Search posts'
+            placeholder={t('StreamViewControls.searchPosts')}
             value={searchState}
           />
         </div>}

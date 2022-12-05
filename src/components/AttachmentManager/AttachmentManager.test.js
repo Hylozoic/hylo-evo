@@ -150,8 +150,7 @@ describe('ImageManager', () => {
       attachments: imageAttachments,
       addAttachment: () => {},
       removeAttachment: () => {},
-      switchAttachments: () => {},
-      t: key => key
+      switchAttachments: () => {}
     }
     const wrapper = shallow(<ImageManager {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -167,8 +166,7 @@ describe('ImagePreview', () => {
         { attachmentType: 'image', url: 'https://nowhere/foo.png' }
       ],
       position: 1,
-      removeImage: () => {},
-      t: key => key
+      removeImage: () => {}
     }
     const wrapper = render(<ImagePreview {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -186,8 +184,7 @@ describe('FileManager', () => {
       uploadAttachmentPending: true,
       attachments: fileAttachments,
       addAttachment: () => {},
-      removeAttachment: () => {},
-      t: key => key
+      removeAttachment: () => {}
     }
     const wrapper = shallow(<FileManager {...props} />)
     expect(wrapper).toMatchSnapshot()
@@ -200,8 +197,7 @@ describe('FilePreview', () => {
       attachment: { url: 'https://nowhere/foo.pdf', attachmentType: 'file' },
       position: 1,
       fileSize: '23.3mb',
-      removeFile: () => {},
-      t: key => key
+      removeFile: () => {}
     }
     const wrapper = shallow(<FilePreview {...props} />)
     expect(wrapper).toMatchSnapshot()

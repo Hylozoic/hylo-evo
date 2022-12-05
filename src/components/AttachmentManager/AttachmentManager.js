@@ -1,9 +1,9 @@
-import { isEmpty, filter } from 'lodash/fp'
-import path from 'path'
-import PropTypes from 'prop-types'
 import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDrag, useDrop } from 'react-dnd'
+import { isEmpty, filter } from 'lodash/fp'
+import path from 'path'
+import PropTypes from 'prop-types'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -25,11 +25,11 @@ export const attachmentsFromObjectType = {
 const AttachmentManager = (props) => {
   useEffect(() => {
     props.loadAttachments()
-    return () => props.clearAttachments()
+    // return () => props.clearAttachments()
   }, [])
-  useEffect(() => {
-    props.loadAttachments()
-  }, [props.attachmentsFromObject])
+  // useEffect(() => {
+  //   props.loadAttachments()
+  // }, [props.attachmentsFromObject])
 
   const { attachments, attachmentType, uploadAttachmentPending, showLoading } = props
 

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 const pageSize = 30
 
-export default function EventInviteDialog ({
+const EventInviteDialog = ({
   fetchPeople,
   forGroups,
   eventInvitations,
@@ -22,7 +22,7 @@ export default function EventInviteDialog ({
   onClose,
   invitePeopleToEvent,
   pending
-}) {
+}) => {
   const [invitedIds, setInvitedIds] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [pageFetched, setPageFetched] = useState(0)
@@ -143,3 +143,5 @@ export function Search ({ onChange }) {
       onChange={onChange} />
   </div>
 }
+
+export default EventInviteDialog

@@ -30,6 +30,32 @@
   "EventInviteDialog": {
     "alreadyInvitedDialog": "Already Invited"
   },
+  "FarmOpenToPublic": {
+    "openHours": "Open {{openingHours}}",
+    "publicOfferings": "Public Offerings"
+  },
+  "JoinWidget": {
+    "joinToSee": "Join to see",
+    "onlyMembersViewPost": "Only members of this group can see posts",
+    "member": "Member",
+    "members": "Members",
+    "recentPosts": "Recent Posts",
+    "signUpOrLogin": "Signup or Login to connect with"
+  },
+  "MapWidget": {
+    "communityMap": "Community map"
+  },
+  "ModeratorsWidget": {
+    "moderatorsGoHere": "The moderators go here"
+  },
+  "PrivacyWidget": {
+    "groupPrivacySettings": "group privacy settings"
+  },
+  "ProjectsWidget": {
+    "lastActivity": "Projects help you and your group accomplish shared goals.",
+    "newProject": "New project",
+    "title": "What are you doing together?"
+  },
   "StreamBanner": {
     "active": "active",
     "allMyGroupsTitle": "All My Groups",
@@ -46,5 +72,27 @@
     "project": "what would you like to create?",
     "publicGroupsAndPostTitle": "Public Groups & Posts",
     "request": "what are you looking for?"
+  },
+  "StreamViewControls": {
+    "allPosts": "All Posts",
+    "cardView": "Card view",
+    "discussions": "Discussions",
+    "events": "Events",
+    "largeGrid": "Large Grid",
+    "listView": "List view",
+    "offers": "Offers",
+    "projects": "Projects",
+    "requests": "Requests",
+    "resources": "Resources",
+    "searchPosts": "Search Posts",
+    "smallGrid": "Small Grid"
+  },
+  "SingleTopicSelector": {
+    "allTopics": "All Topics",
+    "findAddTopic": "Find/add a topic",
+    "topics": "topics"
+  },
+  "TopicsWidget": {
+    "topicsWidget": "Topics"
   }
 }

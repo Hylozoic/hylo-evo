@@ -1,6 +1,8 @@
 import moment from 'moment-timezone'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
+
 import { Link } from 'react-router-dom'
 import { postUrl, createPostUrl } from 'util/navigation'
 import RoundImage from '../../RoundImage'
@@ -9,13 +11,12 @@ import './ProjectsWidget.scss'
 
 const { array, bool, object } = PropTypes
 
-export default class ProjectsWidget extends Component {
+class ProjectsWidget extends Component {
   static propTypes = {
     isMember: bool,
     items: array,
     routeParams: object
   }
-
   render () {
     const { isMember, items, routeParams } = this.props
 
@@ -32,18 +33,21 @@ export default class ProjectsWidget extends Component {
             </div>
           </div>
         </Link>)}
-        {items.length < 3 && isMember ? <Link to={createPostUrl(routeParams, { newPostType: 'project' })} styleName='new-project'>
-          <div styleName='project'>
-            <div styleName='meta'>
-              <div>
-                <div styleName='title'>What are you doing together?</div>
-                <div styleName='last-activity'>Projects help you and your group accomplish shared goals.</div>
+        {items.length < 3 && isMember
+          ? <Link to={createPostUrl(routeParams, { newPostType: 'project' })} styleName='new-project'>
+            <div styleName='project'>
+              <div styleName='meta'>
+                <div>
+                  <div styleName='title'>{this.props.t('ProjectsWidget.title')}</div>
+                  <div styleName='last-activity'>{this.props.t('ProjectsWidget.lastActivity')}</div>
+                </div>
+                <div styleName='create-project-cta'>+ {this.props.t('ProjectsWidget.newProject')}</div>
               </div>
-              <div styleName='create-project-cta'>+ New project</div>
             </div>
-          </div>
-        </Link> : '' }
+          </Link> : '' }
       </div>
     )
   }
 }
+
+export default withTranslation()(ProjectsWidget)
