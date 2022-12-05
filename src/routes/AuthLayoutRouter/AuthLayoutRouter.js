@@ -183,11 +183,13 @@ export default function AuthLayoutRouter (props) {
   }
 
   if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
-    // this covers "Post I can see, and groupSlug for a group I cannot access." But it does not necessarily cover "Post I can see because its Public, but that isn't posted to any groups I have membership of"
+    /* There are times when users will be send to a path where they have access to the POST on that path but not to the GROUP on that path
+      This redirect replaces the non-accessible groupSlug from the path with '/all', for a better UI experience
+    */
     return <Redirect push to={postUrl(paramPostId, { context: 'all', groupSlug: null })} />
   }
 
-  if (currentGroupSlug && !currentGroup && !currentGroupLoading) { // this will have to be pushed down the hierarchy in the routers
+  if (currentGroupSlug && !currentGroup && !currentGroupLoading) {
     return <NotFound />
   }
 
