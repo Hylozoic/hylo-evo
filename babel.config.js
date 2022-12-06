@@ -39,20 +39,7 @@ module.exports = function (api) {
           extensions: ['.graphql']
         }
       ],
-      /*
-        Disabling this by default: when it runs, it generates keys for missing translations
-        It also sometimes overwrites newly added translations, causing a lot of finicky editing.
-        When you add a new translation, uncomment the below config, restart webpack (yarn start) and it should pick up the key for every locale file
-      */
-      // [
-      //   'i18next-extract',
-      //   {
-      //     keySeparator: null,
-      //     locales: ['es', 'en'],
-      //     nsSeparator: null,
-      //     outputPath: 'public/locales/{{locale}}.json'
-      //   }
-      // ],
+      ['i18next-extract', { outputPath: 'public/locales/{{locale}}/{{ns}}.json' }],
       'import-graphql',
       'inline-import',
       'lodash'

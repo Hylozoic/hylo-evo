@@ -7,7 +7,7 @@ export default function Affiliation ({ affiliation, index, archive }) {
   const { t } = useTranslation()
 
   const leave = () => {
-    if (window.confirm(t('Are you sure you want to delete your affiliation as {{affiliation.role}} {{affiliation.preposition}} {{affiliation.orgName}}?', { affiliation }))) {
+    if (window.confirm(t('Are you sure you want to delete your affiliation as {{role}} {{preposition}} {{orgName}}?', { orgName, preposition, role }))) {
       archive(affiliation.id)
     }
   }
@@ -18,7 +18,7 @@ export default function Affiliation ({ affiliation, index, archive }) {
       <div>{preposition}</div>
       <div styleName='orgName'>{url ? (<a href={url} target='new'>{orgName}</a>) : orgName}</div>
 
-      {archive && <span onClick={leave} styleName='leave-button'>{t('Delete')}</span>}
+      { archive && <span onClick={leave} styleName='leave-button'>{t('Delete')}</span> }
     </div>
   )
 }
