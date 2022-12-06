@@ -16,6 +16,7 @@ const stopEvent = (e) => e.stopPropagation()
 
 const PostListRow = (props) => {
   const {
+    childPost,
     routeParams,
     post,
     showDetails,

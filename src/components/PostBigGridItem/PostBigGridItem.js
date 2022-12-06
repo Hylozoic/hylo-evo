@@ -12,6 +12,7 @@ import './PostBigGridItem.scss'
 
 export default function PostBigGridItem (props) {
   const {
+    childPost,
     routeParams,
     post,
     respondToEvent,

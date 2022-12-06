@@ -10,6 +10,7 @@ import './PostGridItem.scss'
 
 export default function PostGridItem (props) {
   const {
+    childPost,
     routeParams,
     post,
     showDetails,

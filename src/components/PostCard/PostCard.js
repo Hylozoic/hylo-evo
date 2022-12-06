@@ -15,6 +15,7 @@ export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
 
 export default class PostCard extends React.Component {
   static propTypes = {
+    childPost: PropTypes.bool,
     routeParams: PropTypes.object,
     post: PropTypes.shape(POST_PROP_TYPES),
     editPost: PropTypes.func,
@@ -50,6 +51,7 @@ export default class PostCard extends React.Component {
 
   render () {
     const {
+      childPost,
       currentUser,
       routeParams,
       post,
