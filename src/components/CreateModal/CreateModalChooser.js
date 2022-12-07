@@ -4,16 +4,18 @@ import isWebView from 'util/webView'
 import { POST_TYPES } from 'store/models/Post'
 import Icon from 'components/Icon'
 import './CreateModal.scss'
+import { useTranslation } from 'react-i18next'
 
 const postTypes = Object.keys(POST_TYPES)
 
 export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)
   const hasLocation = querystringParams.has('lat') && querystringParams.has('lng')
+  const { t } = useTranslation()
 
   return (
     <div styleName='chooser'>
-      <h1>{hasLocation && 'New Post at this location: '}What would you like to create?</h1>
+      <h1>{hasLocation && `${t('New Post at this location')}:`}{t('What would you like to create?')}</h1>
       {postTypes.map(postType => {
         querystringParams.set('newPostType', postType)
 
@@ -40,8 +42,8 @@ export default function CreateModalChooser ({ location }) {
           <div key='group'>
             <Icon name='Groups' styleName='postIcon' />
             <b>
-              <span styleName='postTypeName'>Group</span>
-              <span styleName='postTypeDescription'>Create a new movement, network, community or group!</span>
+              <span styleName='postTypeName'>{t('Group')}</span>
+              <span styleName='postTypeDescription'>{t('Create a new movement, network, community or group!')}</span>
             </b>
             <span styleName='indicator' />
           </div>

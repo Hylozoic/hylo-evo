@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { CSSTransition } from 'react-transition-group'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import CreateModalChooser from './CreateModalChooser'
@@ -9,12 +10,13 @@ import Icon from 'components/Icon'
 import PostEditor from 'components/PostEditor'
 import './CreateModal.scss'
 
-export default function CreateModal (props) {
+const CreateModal = (props) => {
   const location = useLocation()
   const history = useHistory()
   const previousLocation = useSelector(getPreviousLocation)
   const [returnToLocation] = useState(previousLocation)
   const [isDirty, setIsDirty] = useState()
+  const { t } = useTranslation()
 
   const querystringParams = new URLSearchParams(location.search)
   const mapLocation = (querystringParams.has('lat') && querystringParams.has('lng'))
@@ -29,7 +31,7 @@ export default function CreateModal (props) {
   }
 
   const confirmClose = () => {
-    const confirmed = !isDirty || window.confirm('Changes won\'t be saved. Are you sure you want to cancel?')
+    const confirmed = !isDirty || window.confirmt(t('Changes won\'t be saved. Are you sure you want to cancel?'))
 
     if (confirmed) {
       closeModal()
@@ -71,3 +73,5 @@ export default function CreateModal (props) {
     </CSSTransition>
   )
 }
+
+export default CreateModal

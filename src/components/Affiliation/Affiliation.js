@@ -7,7 +7,7 @@ export default function Affiliation ({ affiliation, index, archive }) {
   const { t } = useTranslation()
 
   const leave = () => {
-    if (window.confirm(t('Are you sure you want to delete your affiliation as {{role}} {{preposition}} {{orgName}}?', { orgName, preposition, role }))) {
+    if (window.confirm(t('Are you sure you want to delete your affiliation as {{affiliation.role}} {{affiliation.preposition}} {{affiliation.orgName}}?', { affiliation }))) {
       archive(affiliation.id)
     }
   }

@@ -7,6 +7,18 @@ import AuthLayoutRouter from './AuthLayoutRouter'
 
 const { ResizeObserver } = window
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 jest.mock('mixpanel-browser', () => ({
   track: jest.fn(),
   identify: jest.fn(),
