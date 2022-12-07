@@ -11,6 +11,22 @@
   border: 1px solid rgba(0, 118, 223, 0);
 }
 
+.child-post-label {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: $color-pickled-bluewood;
+  opacity: 0.6;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .constrained.card {
   border-top: 5px solid $color-cape-cod-10;
   padding-top: 10px;

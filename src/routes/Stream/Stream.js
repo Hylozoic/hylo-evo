@@ -160,7 +160,6 @@ export default class Stream extends Component {
         />
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
-          {/* ok, so we probably need to make sure child posts are checked here */}
           {posts.map(post => {
             const expanded = selectedPostId === post.id
             const groupSlugs = post.groups.map(group => group.slug)

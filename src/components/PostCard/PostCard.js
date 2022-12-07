@@ -72,59 +72,67 @@ export default class PostCard extends React.Component {
     const hasImage = attachmentType === 'image' || false
 
     return (
-      <div ref='postCard'
-        onClick={!isEvent ? this.onClick : null}
-        styleName={cx('card', postType, { expanded }, { constrained })}
-        className={className}
-      >
-        <div onClick={isEvent ? this.onClick : null}>
-          <PostHeader
-            {...post}
-            routeParams={routeParams}
-            highlightProps={highlightProps}
-            editPost={editPost}
-            constrained={constrained}
-            hasImage={hasImage}
-          />
-        </div>
-        <div onClick={isEvent ? this.onClick : null}>
-          <CardImageAttachments attachments={post.attachments} />
-        </div>
-        {isEvent && (
-          <div styleName='bodyWrapper'>
-            <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
-            <EventBody
-              currentUser={currentUser}
-              event={post}
-              slug={routeParams.groupSlug}
-              respondToEvent={respondToEvent}
+      <>
+        {childPost &&
+          <div styleName='child-post-label'>
+            <span>Post from <b>Subgroup</b></span>
+            {/* TODO: i18n */}
+          </div>}
+        <div ref='postCard'
+          onClick={!isEvent ? this.onClick : null}
+          styleName={cx('card', postType, { expanded }, { constrained })}
+          className={className}
+        >
+
+          <div onClick={isEvent ? this.onClick : null}>
+            <PostHeader
+              {...post}
+              routeParams={routeParams}
+              highlightProps={highlightProps}
+              editPost={editPost}
               constrained={constrained}
+              hasImage={hasImage}
             />
           </div>
-        )}
-        {!isEvent && (
-          <PostBody
-            {...post}
+          <div onClick={isEvent ? this.onClick : null}>
+            <CardImageAttachments attachments={post.attachments} />
+          </div>
+          {isEvent && (
+            <div styleName='bodyWrapper'>
+              <div styleName='trigger' onClick={isEvent ? this.onClick : null} />
+              <EventBody
+                currentUser={currentUser}
+                event={post}
+                slug={routeParams.groupSlug}
+                respondToEvent={respondToEvent}
+                constrained={constrained}
+              />
+            </div>
+          )}
+          {!isEvent && (
+            <PostBody
+              {...post}
+              slug={routeParams.groupSlug}
+              constrained={constrained}
+            />
+          )}
+          <PostGroups
+            isPublic={post.isPublic}
+            groups={post.groups}
             slug={routeParams.groupSlug}
             constrained={constrained}
           />
-        )}
-        <PostGroups
-          isPublic={post.isPublic}
-          groups={post.groups}
-          slug={routeParams.groupSlug}
-          constrained={constrained}
-        />
 
-        <PostFooter
-          {...post}
-          onClick={this.onClick}
-          voteOnPost={voteOnPost}
-          constrained={constrained}
-          currentUser={currentUser}
-          postId={post.id}
-        />
-      </div>
+          <PostFooter
+            {...post}
+            onClick={this.onClick}
+            voteOnPost={voteOnPost}
+            constrained={constrained}
+            currentUser={currentUser}
+            postId={post.id}
+          />
+        </div>
+      </>
     )
   }
 }
