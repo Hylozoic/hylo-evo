@@ -85,8 +85,6 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
   const view = getRouteParam('view', state, props)
 
-  const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
-
   const querystringParams = getQuerystringParam(['search'], null, props)
   const search = getQuerystringParam('search', state, props)
 
@@ -125,22 +123,22 @@ export function mapStateToProps (state, props) {
 
   const postsPast = groupTopic?.lastReadPostId ? getPosts(state, fetchPostsPastParams) : []
   const hasMorePostsPast = getHasMorePosts(state, fetchPostsPastParams)
-  const totalPastPosts = getTotalPosts(state, fetchPostsPastParams) || 0
-  const currentPostIndex = totalPastPosts ? Math.min(Math.max(totalPastPosts - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0
+  const totalPostsPast = getTotalPosts(state, fetchPostsPastParams) || 0
+  const currentPostIndex = totalPostsPast ? Math.min(Math.max(totalPostsPast - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0
 
   const postsFuture = getPosts(state, fetchPostsFutureParams)
   const hasMorePostsFuture = getHasMorePosts(state, fetchPostsFutureParams)
-  const totalFuturePosts = getTotalPosts(state, fetchPostsFutureParams) || 0
+  const totalPostsFuture = getTotalPosts(state, fetchPostsFutureParams) || 0
 
   return {
     canModerate,
     context,
     currentPostIndex,
     currentUser,
-    currentUserHasMemberships,
     fetchLinkPreviewPending,
     fetchPostsFutureParams,
     fetchPostsPastParams,
+    followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
     group,
     groupTopic,
     hasMorePostsFuture,
@@ -152,8 +150,8 @@ export function mapStateToProps (state, props) {
     postsFuture,
     postsPast,
     querystringParams,
-    postsTotal: totalPastPosts + totalFuturePosts,
-    followersTotal: get('followersTotal', groupSlug ? groupTopic : topic),
+    totalPostsFuture,
+    totalPostsPast,
     routeParams,
     search,
     selectedPostId: getRouteParam('postId', state, props),
@@ -176,8 +174,11 @@ export function mapDispatchToProps (dispatch, props) {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
     },
     clearImageAttachments: () => dispatch(clearAttachments('post', 'new', 'image')),
-    fetchPosts: params => offset => {
+    fetchPostsPast: params => offset => {
       return dispatch(fetchPosts({ offset, ...params }))
+    },
+    fetchPostsFuture: params => offset => {
+      return dispatch(fetchPosts({ ...params, offset }))
     },
     fetchTopic: () => {
       if (groupSlug && topicName) {
@@ -214,8 +215,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    fetchPostsFuture: dispatchProps.fetchPosts(fetchPostsFutureParams),
-    fetchPostsPast: dispatchProps.fetchPosts(fetchPostsPastParams),
+    fetchPostsFuture: dispatchProps.fetchPostsFuture(fetchPostsFutureParams),
+    fetchPostsPast: dispatchProps.fetchPostsPast(fetchPostsPastParams),
     pollingFetchLinkPreview
   }
 }

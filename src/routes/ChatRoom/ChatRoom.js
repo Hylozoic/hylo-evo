@@ -52,7 +52,6 @@ export default function ChatRoom (props) {
     canModerate,
     currentPostIndex,
     currentUser,
-    // currentUserHasMemberships,
     fetchLinkPreviewPending,
     followersTotal,
     groupTopic,
@@ -63,7 +62,8 @@ export default function ChatRoom (props) {
     pending,
     postsFuture,
     postsPast,
-    postsTotal,
+    totalPostsFuture,
+    totalPostsPast,
     querystringParams,
     removeLinkPreview,
     respondToEvent,
@@ -94,23 +94,46 @@ export default function ChatRoom (props) {
   const editorRef = useRef()
   const virtuoso = useRef(null)
 
+  // Whether scroll is at the bottom of the chat (most recent post)
   const [atBottom, setAtBottom] = useState(false)
-  const [postInProgress, setPostInProgress] = useState(false)
-  const [lastReadPostId, setLastReadPostId] = useState(groupTopic?.lastReadPostId)
-  const [newPost, setNewPost] = useState(emptyPost)
-  const [firstItemIndex, setFirstItemIndex] = useState(false)
+
+  // Whether the current user has a created a new post in the room yet
   const [createdNewPost, setCreatedNewPost] = useState(false)
+
+  // Track the index of the top most loaded post in relationship to the total # posts in this chat room, needed to track scroll position
+  const [firstItemIndex, setFirstItemIndex] = useState(false)
+
+  // What was the last post read by the current user. Doesn't update in real time as they scroll only when room is reloaded
+  const [lastReadPostId, setLastReadPostId] = useState(groupTopic?.lastReadPostId)
+
+  // Whether we are currently loading more past posts or future posts
   const [loadingPast, setLoadingPast] = useState(false)
   const [loadingFuture, setLoadingFuture] = useState(false)
 
-  const fetchPostsPast = useCallback((offset) => {
+  // The data for an in progress post draft
+  const [newPost, setNewPost] = useState(emptyPost)
+
+  // Whether there is an in progress new post draft
+  const [postInProgress, setPostInProgress] = useState(false)
+
+  // Need a ref for this one because we need to lookup the current value in many hooks
+  const postsTotal = useRef(false)
+
+  // Cache total number of posts here to handle bug on back-end
+  // https://github.com/Hylozoic/hylo-node/issues/901
+  // const [cachedTotalPostsPast, setCachedTotalPostsPast] = useState(false)
+  // const [cachedTotalPostsFuture, setCachedTotalPostsFuture] = useState(false)
+  const cachedTotalPostsPast = useRef(false)
+  const cachedTotalPostsFuture = useRef(false)
+
+  const fetchPostsPastLocal = useCallback((offset) => {
     const { pending, hasMorePostsPast } = props
     if (pending || hasMorePostsPast === false) return
     setLoadingPast(true)
     props.fetchPostsPast(offset).then(() => setLoadingPast(false))
   }, [props.fetchPostsPast])
 
-  const fetchPostsFuture = useCallback((offset) => {
+  const fetchPostsFutureLocal = useCallback((offset) => {
     const { pending, hasMorePostsFuture } = props
     if (pending || hasMorePostsFuture === false) return
     setLoadingFuture(true)
@@ -118,32 +141,55 @@ export default function ChatRoom (props) {
   }, [props.fetchPostsFuture])
 
   useEffect(() => {
+    // New chat room loaded
+    // Reset everything
+    setFirstItemIndex(false)
+    clearLinkPreview()
+    clearImageAttachments()
+    setNewPost(emptyPost)
+    cachedTotalPostsPast.current = false
+    cachedTotalPostsFuture.current = false
+    postsTotal.current = false
+
     // Make sure GroupTopic is loaded
     props.fetchTopic()
   }, [group?.id, topicName])
 
   useEffect(() => {
-    // Wait until GroupTopic is loaded
-    if (groupTopic?.id) {
-      props.fetchPostsFuture(0)
-      if (lastReadPostId) {
-        props.fetchPostsPast(0)
-      }
-      // Reset everything
-      setLastReadPostId(groupTopic.lastReadPostId)
-      setFirstItemIndex(false)
+    // On component unmount clear link preview and images attachments from redux
+    return () => {
       clearLinkPreview()
       clearImageAttachments()
     }
-    setNewPost(emptyPost)
+  }, [])
+
+  useEffect(() => {
+    // New group topic
+    if (groupTopic?.id) {
+      props.fetchPostsFuture(0)
+      if (groupTopic.lastReadPostId) {
+        props.fetchPostsPast(0)
+      }
+      // Reset last read post
+      setLastReadPostId(groupTopic.lastReadPostId)
+    }
   }, [groupTopic?.id])
 
-  // Do one time, to set ready
+  // Do once after loading posts for the room to get things ready
   useEffect(() => {
     if (postsPast !== null && postsFuture !== null) {
-      if (firstItemIndex === false) {
-        setFirstItemIndex(postsTotal - postsPast.length - postsFuture.length)
+      // Set this once and don't change it because if a bug on the backend
+      // https://github.com/orgs/Hylozoic/projects/2/views/13?filterQuery=
+      if (cachedTotalPostsPast.current === false) {
+        cachedTotalPostsPast.current = totalPostsPast
+        cachedTotalPostsFuture.current = totalPostsFuture
+        postsTotal.current = totalPostsPast + totalPostsFuture
       }
+
+      if (firstItemIndex === false) {
+        setFirstItemIndex(postsTotal.current - postsPast.length - postsFuture.length)
+      }
+
       if (!lastReadPostId) {
         const lastPost = postsFuture.length > 0 ? postsFuture[postsFuture.length - 1] : postsPast[postsPast.length - 1]
         if (lastPost) {
@@ -154,22 +200,24 @@ export default function ChatRoom (props) {
     }
   }, [postsPast, postsFuture])
 
+  useEffect(() => {
+    // If the total number of future posts changes updated it, unless its 0, because of bug on the server
+    // Check if cachedTotalPostsPast is set because we want to make sure we have the correct final total past posts before updating postsTotal
+    // https://github.com/Hylozoic/hylo-node/issues/901
+    if (cachedTotalPostsPast.current !== false && (!cachedTotalPostsFuture.current || totalPostsFuture)) {
+      cachedTotalPostsFuture.current = totalPostsFuture
+      postsTotal.current = totalPostsFuture + cachedTotalPostsPast.current
+    }
+  }, [totalPostsFuture])
+
   // Update first item index as we prepend posts when scrolling up, to stay scrolled to same post
   useEffect(() => {
-    if (firstItemIndex !== false) {
-      setFirstItemIndex(postsTotal - (postsPast?.length || 0) - (postsFuture?.length || 0))
+    if (postsPast?.length && firstItemIndex !== false) {
+      setFirstItemIndex(postsTotal.current - (postsPast?.length || 0) - (postsFuture?.length || 0))
     }
-  }, [postsPast?.length])
+  }, [postsPast?.length, firstItemIndex])
 
-  // If scrolled to bottom and a new post comes in make sure to scroll down to see new post
-  useEffect(() => {
-    if (atBottom && virtuoso.current) {
-      setTimeout(() => {
-        scrollToBottom()
-      }, 300)
-    }
-  }, [postsTotal])
-
+  // Focus on chat box when entering the room
   useEffect(() => {
     if (editorRef.current) {
       setTimeout(() => {
@@ -181,19 +229,13 @@ export default function ChatRoom (props) {
     }
   }, [groupTopic?.id])
 
-  useEffect(() => {
-    // On component unmount clear link preview and images attachments from redux
-    return () => {
-      clearLinkPreview()
-      clearImageAttachments()
-    }
-  }, [])
-
+  // When text is entered in a draft post set postInProgress to true
   const handleDetailsUpdate = (d) => {
     const hasText = trim(editorRef.current?.getText() || '').length > 0
     setPostInProgress(hasText)
   }
 
+  // Add a topic to the new post
   const handleAddTopic = topic => {
     if (newPost?.topics?.length >= MAX_POST_TOPICS) return
     setNewPost({ ...newPost, topics: [...newPost.topics, topic] })
@@ -206,6 +248,7 @@ export default function ChatRoom (props) {
     props.pollingFetchLinkPreview(url)
   })
 
+  // Have to wait for the link preview to load from the server before adding to the new post
   useEffect(() => {
     setNewPost({ ...newPost, linkPreview })
   }, [linkPreview])
@@ -219,6 +262,7 @@ export default function ChatRoom (props) {
     setNewPost({ ...newPost, linkPreview: null, linkPreviewFeatured: false })
   }
 
+  // When scrolling to a new unread post update the last read post id in this topic for this user
   const handlePostVisible = (postId) => {
     if (lastReadPostId && postId > lastReadPostId) {
       setLastReadPostId(postId)
@@ -226,12 +270,29 @@ export default function ChatRoom (props) {
     }
   }
 
+  // If scrolled to bottom and a new post comes in make sure to scroll down to see new post
+  useEffect(() => {
+    if (atBottom && virtuoso.current) {
+      setTimeout(() => {
+        scrollToBottom()
+      }, 300)
+    }
+  }, [totalPostsFuture])
+
   const scrollToBottom = useCallback(() => {
     if (virtuoso.current) {
-      virtuoso.current.scrollToIndex(postsTotal)
+      virtuoso.current.scrollToIndex(postsTotal.current)
     }
-  }, [postsTotal])
+  }, [])
 
+  const handleResizeChats = () => {
+    // Make sure when post chat box grows we stay at bottom if already there
+    if (atBottom) {
+      scrollToBottom()
+    }
+  }
+
+  // Create a new chat post
   const postChatMessage = useEventCallback(async () => {
     // Only submit if any non-whitespace text has been added
     if (trim(editorRef.current?.getText() || '').length === 0) return
@@ -304,13 +365,6 @@ export default function ChatRoom (props) {
     }, [])
   }, [postsPast, postsFuture])
 
-  const handleResizeChats = () => {
-    // Make sure when post chat box grows we stay at bottom if already there
-    if (atBottom) {
-      scrollToBottom()
-    }
-  }
-
   if (topicLoading) return <Loading />
 
   return (
@@ -322,7 +376,7 @@ export default function ChatRoom (props) {
         groupSlug={groupSlug}
         isSubscribed={groupTopic && groupTopic.isSubscribed}
         newPost={newPost}
-        postsTotal={postsTotal}
+        postsTotal={postsTotal.current}
         toggleSubscribe={
           groupTopic
             ? () => toggleGroupTopicSubscribe(groupTopic)
@@ -342,15 +396,15 @@ export default function ChatRoom (props) {
                   atBottomStateChange={(bottom) => {
                     setAtBottom(bottom)
                   }}
-                  endReached={() => fetchPostsFuture(postsFuture.length)}
+                  endReached={() => fetchPostsFutureLocal(postsFuture.length)}
                   data={postsForDisplay}
                   firstItemIndex={firstItemIndex}
                   initialTopMostItemIndex={currentPostIndex}
                   increaseViewportBy={200}
                   ref={virtuoso}
-                  startReached={() => fetchPostsPast(postsPast.length)}
+                  startReached={() => fetchPostsPastLocal(postsPast.length)}
                   style={{ height: '100%', width: '100%', marginTop: 'auto' }}
-                  totalCount={postsTotal}
+                  totalCount={postsTotal.current}
                   itemContent={(index, post) => {
                     const expanded = selectedPostId === post.id
                     const intersectionObserver = new window.IntersectionObserver(([entry]) => {
