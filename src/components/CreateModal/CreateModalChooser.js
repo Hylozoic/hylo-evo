@@ -12,25 +12,10 @@ export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)
   const hasLocation = querystringParams.has('lat') && querystringParams.has('lng')
   const { t } = useTranslation()
-  // These need to be invoked here so that they get picked up by the translation extractor
-  t('What help can you offer?')
-  t('What are you looking for help with?')
-  t('What resource is available?')
-  t('What would you like to call your project?')
-  t('What is your event called?')
-  t('Whats on your mind?')
-  t('Add a description')
-  t('request')
-  t('discussion')
-  t('offer')
-  t('resource')
-  t('project')
-  t('event')
-  t('Talk about whats important with others')
 
   return (
     <div styleName='chooser'>
-      <h1>{hasLocation && t('New Post at this location:') + ' '}{t('What would you like to create?')}</h1>
+      <h1>{hasLocation && `${t('New Post at this location')}:`}{t('What would you like to create?')}</h1>
       {postTypes.map(postType => {
         querystringParams.set('newPostType', postType)
 
