@@ -65,7 +65,7 @@ export function fetchTopic (name, id) {
 }
 
 // actions
-export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
+export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, childPostInclusion, collectionToFilterOut, context, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
   let query, extractModel, getItems
 
   if (context === 'groups') {
@@ -88,6 +88,7 @@ export function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collection
         activePostsOnly,
         afterTime,
         beforeTime,
+        childPostInclusion,
         collectionToFilterOut,
         context,
         filter,
@@ -154,6 +155,7 @@ const postsQuery = `query PostsQuery (
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $childPostInclusion: Boolean,
   $collectionToFilterOut: ID,
   $context: String,
   $filter: String,

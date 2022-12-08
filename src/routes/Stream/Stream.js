@@ -78,10 +78,12 @@ export default class Stream extends Component {
   render () {
     const {
       customActivePostsOnly,
+      changeChildPostInclusion,
       changeSearch,
       changeSort,
       changeTab,
       changeView,
+      childPostInclusion,
       context,
       currentUser,
       currentUserHasMemberships,
@@ -157,6 +159,7 @@ export default class Stream extends Component {
           routeParams={routeParams} view={view} customPostTypes={customPostTypes} customViewType={customViewType}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
           changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
+          changeChildPostInclusion={changeChildPostInclusion} childPostInclusion={childPostInclusion}
         />
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}

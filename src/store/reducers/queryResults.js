@@ -287,6 +287,7 @@ export function buildKey (type, params) {
 export const queryParamWhitelist = [
   'autocomplete',
   'activePostsOnly',
+  'childPostInclusion',
   'id',
   'context',
   'collectionToFilterOut',
