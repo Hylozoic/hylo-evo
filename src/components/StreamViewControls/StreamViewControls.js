@@ -42,15 +42,19 @@ const StreamViewControls = (props) => {
   const handleSearchToggle = () => {
     setSearchActive(!searchActive)
   }
+  const handleChildPostInclusion = () => {
+    const updatedValue = childPostInclusion === 'yes' ? 'no' : 'yes'
+    changeChildPostInclusion(updatedValue)
+  }
 
   return (
     <div styleName={cx('stream-view-container', { 'search-active': searchActive || searchValue, extend: searchActive && searchValue })}>
       <div styleName='stream-view-ctrls'>
-        <div styleName={cx('search-toggle', { active: searchActive })} onClick={handleSearchToggle}>
-          <Icon name='Search' styleName={cx('search-icon', { active: searchActive })} />
+        <div styleName={cx('toggle', { active: searchActive })} onClick={handleSearchToggle}>
+          <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
         </div>
-        <div styleName={cx('search-toggle', { active: childPostInclusion })} onClick={changeChildPostInclusion}>
-          <Icon name='Search' styleName={cx('search-icon', { active: childPostInclusion })} />
+        <div styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })} onClick={handleChildPostInclusion}>
+          <Icon name='Search' styleName={cx('toggle-icon', { active: childPostInclusion === 'yes' })} />
         </div>
         <div styleName='view-mode'>
           <div

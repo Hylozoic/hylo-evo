@@ -15,7 +15,9 @@ import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
-  let {
+  const {
+    changeChildPostInclusion,
+    childPostInclusion,
     context,
     currentUser,
     fetchPostsForDrawer,
@@ -60,6 +62,11 @@ function MapDrawer (props) {
   const tabs = { 'Posts': numTotalPosts, 'Groups': groups.length }
   if (context !== 'public') {
     tabs['Members'] = members.length
+  }
+
+  const handleChildPostInclusion = () => {
+    const updatedValue = childPostInclusion === 'yes' ? 'no' : 'yes'
+    changeChildPostInclusion(updatedValue)
   }
 
   return (
@@ -131,6 +138,7 @@ function MapDrawer (props) {
 
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
+          <span onClick={handleChildPostInclusion}><Icon name='Funnel' className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })} /></span>
           <span>Sort posts by:</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>

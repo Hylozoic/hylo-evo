@@ -143,7 +143,7 @@
   }
 }
 
-.search-toggle {
+.toggle {
   float: right;
   background: $color-white;
   box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
@@ -151,7 +151,7 @@
   height: 31px;
   cursor: pointer;
 
-  .search-icon {
+  .toggle-icon {
     font-size: 26px;
     position: relative;
     top: 3px;
@@ -161,6 +161,10 @@
   .active {
     color: $color-white;
   }
+}
+
+.margin-right {
+  margin-right: 8px;
 }
 
 .active {

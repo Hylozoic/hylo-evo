@@ -55,6 +55,7 @@ export default class Stream extends Component {
 
     if (hasChanged('postTypeFilter') ||
       hasChanged('sortBy') ||
+      hasChanged('childPostInclusion') ||
       hasChanged('context') ||
       hasChanged('group.id') ||
       hasChanged('search') ||

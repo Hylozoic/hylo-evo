@@ -487,6 +487,8 @@ export class UnwrappedMapExplorer extends React.Component {
 
   render () {
     const {
+      changeChildPostInclusion,
+      childPostInclusion,
       context,
       currentUser,
       deleteSearch,
@@ -555,6 +557,8 @@ export class UnwrappedMapExplorer extends React.Component {
         </button>
         {!hideDrawer && (
           <MapDrawer
+            changeChildPostInclusion={changeChildPostInclusion}
+            childPostInclusion={childPostInclusion}
             context={context}
             locationParams={locationParams}
             currentUser={currentUser}

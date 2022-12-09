@@ -184,11 +184,11 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
+export function fetchPostsForMap ({ activePostsOnly, childPostInclusion = 'yes', context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(`posts: viewPosts(
+    query = groupPostsQuery(`${childPostInclusion === 'yes' ? 'posts: viewPosts(' : 'posts('}
       activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
@@ -305,11 +305,11 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
   }
 }
 
-export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
+export function fetchPostsForDrawer ({ activePostsOnly, childPostInclusion = 'yes', context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(groupViewPostsQueryFragment)
+    query = groupPostsQuery(groupViewPostsQueryFragment(childPostInclusion === 'yes'))
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {

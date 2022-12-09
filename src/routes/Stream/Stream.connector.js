@@ -69,7 +69,7 @@ export function mapStateToProps (state, props) {
   const projectsDefault = view === 'projects' ? 'bigGrid' : null
   const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
-  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || true
+  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
   const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search'], null, props)
   const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
@@ -96,8 +96,7 @@ export function mapStateToProps (state, props) {
     topics: customViewTopics?.toModelArray().map(t => t.id) || [],
     types: customPostTypes
   }
-
-  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId)) // need to make it actually change things here ideally
+  const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
@@ -157,7 +156,7 @@ export function mapDispatchToProps (dispatch, props) {
     },
     changeChildPostInclusion: childPostsBool => {
       updateSettings({ settings: { streamChildPosts: childPostsBool } })
-      return dispatch(changeQuerystringParam(props, 'c', childPostsBool, true))
+      return dispatch(changeQuerystringParam(props, 'c', childPostsBool, 'yes'))
     },
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))
