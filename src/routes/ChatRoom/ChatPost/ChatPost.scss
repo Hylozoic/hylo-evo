@@ -238,6 +238,11 @@
 }
 
 @media screen and (max-width: 425px) {
+  .container {
+    -webkit-user-select: none; /* disable selection/Copy of UIWebView */
+    -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
+  }
+
   .postContent.cardPadding {
     padding: 0 5px;
     margin: 0;

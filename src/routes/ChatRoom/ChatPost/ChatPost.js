@@ -4,6 +4,7 @@ import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
+import { useLongPress } from 'use-long-press';
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
 import ClickCatcher from 'components/ClickCatcher'
@@ -47,6 +48,7 @@ export default function ChatPost ({
   const [editing, setEditing] = useState(false)
   const [isVideo, setIsVideo] = useState()
   const [flaggingVisible, setFlaggingVisible] = useState(false)
+  const [isLongPress, setIsLongPress] = useState(false)
 
   const {
     commenters,
@@ -77,10 +79,11 @@ export default function ChatPost ({
   }, [linkPreview?.url])
 
   const openPost = event => {
-    // Don't open post details when editing post or clicking on link preview or other actionable things
-    if (!editing && !event.target.className.includes('icon-Smiley') && !event.target.className.includes('LinkPreview')) {
+    // Don't open post details when long pressing, editing post, or clicking on link preview or other actionable things
+    if (!isLongPress && !editing && !event.target.className.includes('icon-Smiley') && !event.target.className.includes('LinkPreview')) {
       showDetails(id)
     }
+    setIsLongPress(false)
   }
 
   const editPost = event => {
@@ -91,6 +94,12 @@ export default function ChatPost ({
     event.stopPropagation()
     return true
   }
+
+  const bindLongPress = useLongPress(() => {
+    console.log('Long pressed!', id)
+  }, {
+    onFinish: event => setIsLongPress(true)
+  })
 
   const { reactOnEntity, removeReactOnEntity } = useReactionActions()
   const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', postId: id })
@@ -149,7 +158,7 @@ export default function ChatPost ({
 
   return (
     <Highlight {...highlightProps}>
-      <div styleName='container' ref={ref} onClick={openPost} className={className}>
+      <div styleName='container' ref={ref} onClick={openPost} className={className} {...bindLongPress()}>
         <div styleName='action-bar'>
           {actionItems.map(item => (
             <Button
