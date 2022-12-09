@@ -18,7 +18,7 @@ Object {
                 dmNotifications
                 commentNotifications
                 signupInProgress
-                streamChildPosts
+                StreamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType

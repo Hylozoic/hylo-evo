@@ -88,7 +88,7 @@ Object {
     bannerUrl
     postCount
     
-posts: viewPosts(
+posts(
   activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
@@ -227,6 +227,7 @@ posts: viewPosts(
       "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
+      "childPostInclusion": true,
       "collectionToFilterOut": undefined,
       "context": "groups",
       "filter": "offer",
@@ -417,6 +418,7 @@ posts(
       "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
+      "childPostInclusion": true,
       "collectionToFilterOut": undefined,
       "context": "all",
       "filter": "request",

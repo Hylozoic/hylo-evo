@@ -61,8 +61,8 @@ describe('mapStateToProps', () => {
         featureTypes: ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
         fetchGroupParams: { boundingBox: undefined, context: 'groups', parentSlugs: ['foo'] },
         fetchMemberParams: { boundingBox: undefined, context: 'groups', slug: 'foo', sortBy: 'name' },
-        fetchPostsParams: { boundingBox: undefined, context: 'groups', groupSlugs: ['foo'], slug: 'foo' },
-        fetchPostsForDrawerParams: { context: 'groups', currentBoundingBox: undefined, featureTypes: { offer: true, request: true }, groupSlugs: ['foo'], search: '', slug: 'foo', topics: [], types: ['request', 'offer'] },
+        fetchPostsParams: { boundingBox: undefined, childPostInclusion: 'yes', context: 'groups', groupSlugs: ['foo'], slug: 'foo' },
+        fetchPostsForDrawerParams: { context: 'groups', childPostInclusion: 'yes', currentBoundingBox: undefined, featureTypes: { offer: true, request: true }, groupSlugs: ['foo'], search: '', slug: 'foo', topics: [], types: ['request', 'offer'] },
         filters: {
           featureTypes: { offer: true, request: true },
           search: '',

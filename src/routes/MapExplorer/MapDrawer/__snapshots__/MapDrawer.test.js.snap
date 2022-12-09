@@ -43,6 +43,14 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
     <div
       data-stylename="postsHeader"
     >
+      <span
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Funnel"
+        />
+      </span>
       <span>
         Sort posts by:
       </span>
@@ -159,6 +167,14 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
     <div
       data-stylename="postsHeader"
     >
+      <span
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Funnel"
+        />
+      </span>
       <span>
         Sort posts by:
       </span>
@@ -283,6 +299,14 @@ exports[`MapDrawer searching updates map filters 1`] = `
     <div
       data-stylename="postsHeader"
     >
+      <span
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Funnel"
+        />
+      </span>
       <span>
         Sort posts by:
       </span>
