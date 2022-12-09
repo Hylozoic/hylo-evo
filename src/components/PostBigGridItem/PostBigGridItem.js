@@ -61,6 +61,10 @@ export default function PostBigGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
       <div styleName='content-summary'>
+        {childPost &&
+          <div styleName='icon-container'>
+            <Icon name='Subgroup' styleName='icon' />
+          </div>}
         {post.type === 'event' &&
           <div styleName='date' onClick={showDetailsTargeted}>
             <EventDate {...post} />

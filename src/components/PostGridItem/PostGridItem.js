@@ -40,9 +40,14 @@ export default function PostGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
+        {childPost &&
+          <div styleName='icon-container'>
+            <Icon name='Subgroup' styleName='icon' />
+          </div>}
         <h3 styleName='title'>{title}</h3>
 
         {/*  Will fix this after I get attachment variables */}
+        {/* TODO: what was meant to happen here? */}
         {/* {post.type === 'event' */
         /* ? <div styleName='date'> */
         /*   <span>{startTimeMoment.format('MMM')}</span> */
@@ -50,11 +55,6 @@ export default function PostGridItem (props) {
         /* </div> */
         /* : ' '} */}
 
-        {/* TODO for tom:
-          Retrieve attachments. If there are attachments print attachment[0] type. If attachment[0] is an image, print url
-
-          From Tom: Now the attachment variables can be used to display the different views that you are keen for.
-        */}
         {attachmentType === 'image'
           ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
           : attachmentType === 'file'
