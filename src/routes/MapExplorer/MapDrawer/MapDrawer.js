@@ -138,7 +138,7 @@ function MapDrawer (props) {
 
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
-          <span onClick={handleChildPostInclusion}><Icon name='Funnel' className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })} /></span>
+          <span onClick={handleChildPostInclusion}><Icon name='Subgroup' className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })} /></span>
           <span>Sort posts by:</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>

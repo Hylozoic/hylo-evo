@@ -54,7 +54,7 @@ const StreamViewControls = (props) => {
           <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
         </div>
         <div styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })} onClick={handleChildPostInclusion}>
-          <Icon name='Search' styleName={cx('toggle-icon', { active: childPostInclusion === 'yes' })} />
+          <Icon name='Subgroup' styleName={cx('toggle-icon', { active: childPostInclusion === 'yes' })} />
         </div>
         <div styleName='view-mode'>
           <div

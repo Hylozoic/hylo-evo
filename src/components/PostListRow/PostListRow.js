@@ -76,7 +76,10 @@ const PostListRow = (props) => {
               }
             </div> }
           </div>
-          <div styleName='timestamp'>
+          {childPost && <div styleName='icon-container'>
+            <Icon name='Subgroup' styleName='icon' />
+          </div>}
+          <div styleName={cx('timestamp', { 'push-to-right': !childPost })}>
             {TextHelpers.humanDate(createdAt)}
           </div>
         </div>

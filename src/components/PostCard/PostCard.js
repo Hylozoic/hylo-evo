@@ -4,6 +4,7 @@ import { POST_PROP_TYPES } from 'store/models/Post'
 import PostHeader from './PostHeader'
 import PostFooter from './PostFooter'
 import PostGroups from './PostGroups'
+import Icon from 'components/Icon'
 import CardImageAttachments from 'components/CardImageAttachments'
 import PostBody from './PostBody'
 import EventBody from './EventBody'
@@ -75,6 +76,7 @@ export default class PostCard extends React.Component {
       <>
         {childPost &&
           <div styleName='child-post-label'>
+            <Icon name='Subgroup' styleName='icon' />
             <span>Post from <b>Subgroup</b></span>
             {/* TODO: i18n */}
           </div>}
