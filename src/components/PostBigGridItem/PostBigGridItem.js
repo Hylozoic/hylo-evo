@@ -1,6 +1,8 @@
 import React from 'react'
 import Clamp from 'react-multiline-clamp'
 import cx from 'classnames'
+import Tooltip from 'components/Tooltip'
+
 import EventDate from 'components/PostCard/EventDate'
 import EventRSVP from 'components/PostCard/EventRSVP'
 import HyloHTML from 'components/HyloHTML'
@@ -62,8 +64,20 @@ export default function PostBigGridItem (props) {
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
       <div styleName='content-summary'>
         {childPost &&
-          <div styleName='icon-container'>
-            <Icon name='Subgroup' styleName='icon' />
+          <div
+            styleName='icon-container'
+            data-tip='Post from Subgroup'
+            data-for='subgroup-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              styleName='icon'
+            />
+            <Tooltip
+              delay={250}
+              id='subgroup-tt'
+            />
           </div>}
         {post.type === 'event' &&
           <div styleName='date' onClick={showDetailsTargeted}>
@@ -95,12 +109,12 @@ export default function PostBigGridItem (props) {
             {post.donationsLink && donationService &&
               <div styleName='donate'>
                 <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>Contribute</a></div>
               </div>}
             {post.donationsLink && !donationService &&
               <div styleName='donate'>
                 <div>Support this project</div>
-                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>Contribute</a></div>
               </div>}
 
             {attachmentType === 'file'

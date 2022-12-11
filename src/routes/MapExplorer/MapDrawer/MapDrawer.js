@@ -2,6 +2,8 @@ import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import isWebView from 'util/webView'
+import Tooltip from 'components/Tooltip'
+
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import Dropdown from 'components/Dropdown'
 import { GroupCard } from 'components/Widget/GroupsWidget/GroupsWidget'
@@ -138,7 +140,21 @@ function MapDrawer (props) {
 
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
-          <span onClick={handleChildPostInclusion}><Icon name='Subgroup' className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })} /></span>
+          <span onClick={handleChildPostInclusion}
+            data-tip='Show Subgroup Posts?'
+            data-for='subgroup-toggle-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
+            />
+          </span>
+          <Tooltip
+            delay={250}
+            id='subgroup-toggle-tt'
+            position='bottom'
+          />
           <span>Sort posts by:</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>

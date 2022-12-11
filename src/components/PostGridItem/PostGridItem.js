@@ -1,5 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
+import Tooltip from 'components/Tooltip'
+
 // import Moment from 'moment-timezone'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -41,8 +43,20 @@ export default function PostGridItem (props) {
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
         {childPost &&
-          <div styleName='icon-container'>
-            <Icon name='Subgroup' styleName='icon' />
+          <div
+            styleName='icon-container'
+            data-tip='Post from Subgroup'
+            data-for='subgroup-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              styleName='icon'
+            />
+            <Tooltip
+              delay={250}
+              id='subgroup-tt'
+            />
           </div>}
         <h3 styleName='title'>{title}</h3>
 

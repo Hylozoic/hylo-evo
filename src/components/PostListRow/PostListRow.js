@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import Moment from 'moment-timezone'
+
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -76,8 +77,22 @@ const PostListRow = (props) => {
               }
             </div> }
           </div>
-          {childPost && <div styleName='icon-container'>
-            <Icon name='Subgroup' styleName='icon' />
+          {childPost &&
+            <div
+              styleName='icon-container'
+              data-tip='Post from Subgroup'
+              data-for='subgroup-tt'
+            >
+              {/* TODO: i18n on tooltip */}
+              <Icon
+                name='Subgroup'
+                styleName='icon'
+              />
+              <Tooltip
+                delay={250}
+                id='subgroup-tt'
+                position='bottom'
+              />
           </div>}
           <div styleName={cx('timestamp', { 'push-to-right': !childPost })}>
             {TextHelpers.humanDate(createdAt)}

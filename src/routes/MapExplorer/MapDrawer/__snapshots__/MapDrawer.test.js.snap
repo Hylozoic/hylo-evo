@@ -44,13 +44,20 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
       data-stylename="postsHeader"
     >
       <span
+        data-for="subgroup-toggle-tt"
+        data-tip="Show Subgroup Posts?"
         onClick={[Function]}
       >
         <Icon
           className=""
-          name="Funnel"
+          name="Subgroup"
         />
       </span>
+      <Tooltip
+        delay={250}
+        id="subgroup-toggle-tt"
+        position="bottom"
+      />
       <span>
         Sort posts by:
       </span>
@@ -168,13 +175,20 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
       data-stylename="postsHeader"
     >
       <span
+        data-for="subgroup-toggle-tt"
+        data-tip="Show Subgroup Posts?"
         onClick={[Function]}
       >
         <Icon
           className=""
-          name="Funnel"
+          name="Subgroup"
         />
       </span>
+      <Tooltip
+        delay={250}
+        id="subgroup-toggle-tt"
+        position="bottom"
+      />
       <span>
         Sort posts by:
       </span>
@@ -300,13 +314,20 @@ exports[`MapDrawer searching updates map filters 1`] = `
       data-stylename="postsHeader"
     >
       <span
+        data-for="subgroup-toggle-tt"
+        data-tip="Show Subgroup Posts?"
         onClick={[Function]}
       >
         <Icon
           className=""
-          name="Funnel"
+          name="Subgroup"
         />
       </span>
+      <Tooltip
+        delay={250}
+        id="subgroup-toggle-tt"
+        position="bottom"
+      />
       <span>
         Sort posts by:
       </span>
