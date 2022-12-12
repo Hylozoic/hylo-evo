@@ -503,8 +503,6 @@ export class UnwrappedMapExplorer extends React.Component {
       topics
     } = this.props
 
-    // have to add childPosts filter to map view as welllll TODO_CHILD_POST
-
     const {
       baseLayerStyle,
       clusterLayer,

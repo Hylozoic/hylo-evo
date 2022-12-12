@@ -98,7 +98,7 @@ export function register (name, password) {
                 dmNotifications
                 commentNotifications
                 signupInProgress
-                StreamChildPosts
+                streamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType

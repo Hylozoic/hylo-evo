@@ -6,6 +6,7 @@ import {
   FETCH_POSTS, FETCH_FOR_CURRENT_USER
 } from 'store/constants'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
@@ -28,6 +29,8 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const groupSlug = getRouteParam('groupSlug', state, props)
+  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
+  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -36,6 +39,7 @@ export function mapStateToProps (state, props) {
   const timeframe = state.Events.timeframe
 
   const fetchPostsParam = {
+    childPostInclusion,
     afterTime: timeframe === 'future' ? new Date().toISOString() : null,
     beforeTime: timeframe === 'past' ? new Date().toISOString() : null,
     context: routeParams.context,
