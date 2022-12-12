@@ -64,7 +64,6 @@ export function mapStateToProps (state, props) {
   const topic = getTopicForCurrentRoute(state, props)
   const topicName = get('name', topic)
   const announcementSelected = state[MODULE_NAME].announcement
-  const canModerate = currentUser && currentUser.canModerate(currentGroup)
   const location = get('location', props)
   const postType = getQuerystringParam('newPostType', null, props)
   const isProject = postType === 'project' || get('type', post) === 'project'
@@ -72,7 +71,6 @@ export function mapStateToProps (state, props) {
 
   return {
     announcementSelected,
-    canModerate,
     context,
     currentGroup,
     currentUser,

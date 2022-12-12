@@ -1,7 +1,7 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "5.0.2",
+  "version": "5.0.6",
   "private": true,
   "engines": {
     "node": "16.13.2",
@@ -150,7 +150,7 @@
     "html-webpack-plugin": "^4.5.1",
     "http-proxy-middleware": "0.17.4",
     "husky": "^7.0.4",
-    "hylo-shared": "5.0.0",
+    "hylo-shared": "5.1.2",
     "identity-obj-proxy": "3.0.0",
     "immutability-helper": "^3.1.1",
     "immutable": "~3.7.4",

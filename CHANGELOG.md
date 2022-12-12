@@ -4,7 +4,39 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [5.0.6]
+
+### Changed
+- Adds Android AppLinking config file to `public/.well-known/assetlinks.json`
+- Updated favicon
+
+## [5.0.5] - 2022-11-23
+
+### Fixed
+- Newly created posts appear immediately in stream, as well as projects view and upcoming events view if appropriate
+- Show post details when opening one from a topic stream in the /all context
+- Make sure collection posts appear in Custom View settings
+
+## [5.0.4] - 2022-11-23
+
+### Fixed
+- `CommentEditor` in HyloApp not expanding height after selecting Mention or Topic (HyloReactNative #614)
+
+## [5.0.3] - 2022-11-16
+
+### Added
+- `groupDescription` is now "autolinked" making external links added in the markdown clickable, including proper handling of Hylo links, mention, and topic links (via application of `ClickCatcher`)
+- Terms and Privacy Policy links added to Signup page
+
+### Fixed
+- Styling of `groupDescription` to eliminate extra vertical space between paragraphs
+- Back button behavior in the case of `LandingPage` > "About Us"
+- Unexpected underline appearing in some links in mobile
+- Sticking hover state color on MapExplorer buttons in mobile
+
+### Changed
+- Added default of `all` to `groupSlug` prop of `ClickCatcher`, doesn't change current behavior
+- Removes now unused `navigation#removeGroupFromUrl`
 
 ## [5.0.2] - 2022-10-27
 

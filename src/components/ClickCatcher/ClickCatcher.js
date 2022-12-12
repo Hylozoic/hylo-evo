@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { PathHelpers, HYLO_URL_REGEX } from 'hylo-shared'
 
-export default function ClickCatcher ({ handleMouseOver, groupSlug, ...props }) {
+export default function ClickCatcher ({ handleMouseOver, groupSlug = 'all', ...props }) {
   const history = useHistory()
 
   return React.createElement('span', { ...props, onClick: handleClick(history.push, groupSlug) })

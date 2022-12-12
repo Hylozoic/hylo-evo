@@ -1,4 +1,5 @@
 import React from 'react'
+import { LocationHelpers } from 'hylo-shared'
 import Highlight from 'components/Highlight'
 import cx from 'classnames'
 import Icon from 'components/Icon'
@@ -12,18 +13,7 @@ export default function PostTitle ({
   location
 }) {
   // Formatting location to display in stream view
-  let generalLocation = location || ''
-  if (locationObject) {
-    if (locationObject.addressNumber) {
-      generalLocation = `${locationObject.addressNumber} ${locationObject.addressStreet}, ${locationObject.city}, ${locationObject.region}`
-    } else if (locationObject.city) {
-      generalLocation = `${locationObject.city}, ${locationObject.region}`
-    } else if (locationObject.fullText) {
-      generalLocation = locationObject.fullText
-    } else if (locationObject.center) {
-      generalLocation = `${locationObject.center.lat}, ${locationObject.center.lng}`
-    }
-  }
+  const generalLocation = LocationHelpers.generalLocationString(locationObject, location || '')
 
   return <Highlight {...highlightProps}>
     <React.Fragment>

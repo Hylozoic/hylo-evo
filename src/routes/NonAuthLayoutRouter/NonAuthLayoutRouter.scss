@@ -47,19 +47,19 @@
 
 .below-container {
   box-shadow: 0px 5px 15px 0px $color-black-10;
-  margin-top: 20px;
+  margin-top: 15px;
   background-color: white;
   border-radius: 10px;
-  padding: 15px 30px;
+  padding: 10px 30px;
   width: 320px;
   text-align: center;
+  font-size: 14px;
 
   a {
     color: rgba(128, 140, 156, 1.00);
     cursor: pointer;
-    font-size: 14px;
 
-    &:hover {
+    &:hover, &:focus {
       text-decoration: none;
       color: rgba(128, 140, 156, 1.00);
     }
@@ -151,7 +151,7 @@
     }
 
     .below-container {
-      margin: 20px auto;
+      margin: 15px auto;
     }
   }
 

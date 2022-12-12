@@ -18,8 +18,7 @@ describe('PostEditor', () => {
 
   it('renders announcement option with admin in props', () => {
     const props = {
-      ...baseProps,
-      canModerate: true
+      ...baseProps
     }
     const wrapper = shallow(<PostEditor {...props} />)
     expect(wrapper).toMatchSnapshot()
