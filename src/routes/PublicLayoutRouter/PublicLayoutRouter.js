@@ -5,6 +5,8 @@ import { useParams, useLocation, useHistory, Redirect, Route, Switch } from 'rea
 import Div100vh from 'react-div-100vh'
 import { POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
+import checkIsPostPublic from 'store/actions/checkIsPostPublic'
+import checkIsPublicGroup from 'store/actions/checkIsPublicGroup'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import GroupDetail from 'routes/GroupDetail'
 import GroupExplorer from 'routes/GroupExplorer'
@@ -42,23 +44,7 @@ export function PublicGroupDetail (props) {
   const history = useHistory()
   const [loading, setLoading] = useState(true)
   const groupSlug = routeParams?.groupSlug
-  const checkIsPublicGroup = groupSlug => {
-    return {
-      type: 'IS_GROUP_PUBLIC',
-      graphql: {
-        query: gql`
-          query CheckIsGroupPublic ($slug: String) {
-            group (slug: $slug) {
-              visibility
-            }
-          }
-        `,
-        variables: { slug: groupSlug }
-      },
-      meta: { extractModel: 'Group' }
-    }
-  }
-
+  
   useEffect(() => {
     (async () => {
       setLoading(true)
@@ -90,23 +76,6 @@ export function PublicPostDetail (props) {
   const history = useHistory()
   const [loading, setLoading] = useState(true)
   const postId = routeParams?.postId
-
-  const checkIsPostPublic = postId => {
-    return {
-      type: 'IS_POST_PUBLIC',
-      graphql: {
-        query: gql`
-          query CheckIsPostPublic ($id: ID) {
-            post (id: $id) {
-              id
-            }
-          }
-        `,
-        variables: { id: postId }
-      },
-      meta: { extractModel: 'Post' }
-    }
-  }
 
   useEffect(() => {
     (async () => {

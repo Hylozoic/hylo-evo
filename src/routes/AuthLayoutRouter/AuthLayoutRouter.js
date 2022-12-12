@@ -23,7 +23,7 @@ import { toggleDrawer as toggleDrawerAction } from './AuthLayoutRouter.store'
 import getLastViewedGroup from 'store/selectors/getLastViewedGroup'
 import {
   OPTIONAL_POST_MATCH, OPTIONAL_GROUP_MATCH, OPTIONAL_NEW_POST_MATCH,
-  POST_DETAIL_MATCH, GROUP_DETAIL_MATCH, REQUIRED_EDIT_POST_MATCH
+  POST_DETAIL_MATCH, GROUP_DETAIL_MATCH, REQUIRED_EDIT_POST_MATCH, postUrl
 } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import RedirectRoute from 'router/RedirectRoute'
@@ -81,12 +81,16 @@ export default function AuthLayoutRouter (props) {
     `/(.*)/${POST_DETAIL_MATCH}`,
     `/(.*)/${GROUP_DETAIL_MATCH}`
   ])
+
+  const paramPostId = matchPath(location.pathname, [
+    `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`,
+    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)/${POST_DETAIL_MATCH}`
+  ])?.params?.postId
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isMapView = pathMatchParams?.view === 'map'
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   const queryParams = Object.fromEntries(new URLSearchParams(location.search))
   const hideDrawer = queryParams?.hideDrawer !== 'true'
-
   // Store
   const dispatch = useDispatch()
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, { match: { params: pathMatchParams } }))
@@ -176,6 +180,13 @@ export default function AuthLayoutRouter (props) {
 
   if (signupInProgress && !isWelcomeContext) {
     return <Redirect to='/welcome' />
+  }
+
+  if (!currentGroupMembership && hasDetail && paramPostId && currentGroupSlug) {
+    /* There are times when users will be send to a path where they have access to the POST on that path but not to the GROUP on that path
+      This redirect replaces the non-accessible groupSlug from the path with '/all', for a better UI experience
+    */
+    return <Redirect push to={postUrl(paramPostId, { context: 'all', groupSlug: null })} />
   }
 
   if (currentGroupSlug && !currentGroup && !currentGroupLoading) {
