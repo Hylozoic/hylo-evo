@@ -5,6 +5,11 @@ $comment-row-padding: 25px;
   padding: 0px $comment-row-padding;
   margin-bottom: 20px;
  }
+ 
+.selected-comment {
+  border: 1px $color-mango-yellow solid;
+  border-radius: 2px;
+}
 
 .header {
   display: flex;
