@@ -12,7 +12,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       Hylo: Rich Churcher
     </title>
     <meta
-      content="Member Profile"
+      content="Rich Churcher's Member Profile"
       name="description"
     />
   </HelmetWrapper>

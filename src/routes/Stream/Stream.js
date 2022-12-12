@@ -120,8 +120,8 @@ export default class Stream extends Component {
     return (
       <>
         <Helmet>
-          <title>{`Hylo: ${group.name} Stream`}</title>
-          <meta name='description' content={`Posts from the stream of ${group.name}. ${group.description}`} />
+          <title>{group ? `Hylo: ${group.name} Stream` : 'Hylo'}</title>
+          <meta name='description' content={group ? `Posts from the stream of ${group.name}. ${group.description}` : 'Group wNot Found'} />
         </Helmet>
         {topicName
           ? (
