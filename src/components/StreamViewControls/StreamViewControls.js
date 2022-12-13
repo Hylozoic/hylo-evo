@@ -53,9 +53,20 @@ const StreamViewControls = (props) => {
         <div styleName={cx('toggle', { active: searchActive })} onClick={handleSearchToggle}>
           <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
         </div>
-        <div styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })} onClick={handleChildPostInclusion}>
+        {/* TODO: i18n on tooltip */}
+        <div
+          styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })}
+          onClick={handleChildPostInclusion}
+          data-tip={childPostInclusion === 'yes' ? 'Hide posts from subgroups' : 'Show posts from subgroups'}
+          data-for='subgroup-toggle-tt'
+        >
           <Icon name='Subgroup' styleName={cx('toggle-icon', { active: childPostInclusion === 'yes' })} />
         </div>
+        <Tooltip
+          delay={250}
+          id='subgroup-toggle-tt'
+          position='bottom'
+        />
         <div styleName='view-mode'>
           <div
             styleName={cx({ 'mode-active': viewMode === 'cards' })}

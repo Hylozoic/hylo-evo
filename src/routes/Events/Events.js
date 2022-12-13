@@ -110,7 +110,6 @@ export default class Events extends Component {
 
           {posts.map(post => {
             const expanded = post.id === routeParams.postId
-            // ok, so we probably need to make sure child posts are checked here
             const groupSlugs = post.groups.map(group => group.slug)
             return (
               <PostCard
