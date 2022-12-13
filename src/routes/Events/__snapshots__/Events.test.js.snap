@@ -51,33 +51,39 @@ exports[`Events renders a post list 1`] = `
     data-stylename="s.events-stream"
   >
     <Connect(PostCard)
+      childPost={true}
       data-stylename="s.event-card"
       expanded={false}
       key="1"
       post={
         Object {
+          "groups": Array [],
           "id": 1,
         }
       }
       routeParams={Object {}}
     />
     <Connect(PostCard)
+      childPost={true}
       data-stylename="s.event-card"
       expanded={false}
       key="2"
       post={
         Object {
+          "groups": Array [],
           "id": 2,
         }
       }
       routeParams={Object {}}
     />
     <Connect(PostCard)
+      childPost={true}
       data-stylename="s.event-card"
       expanded={false}
       key="3"
       post={
         Object {
+          "groups": Array [],
           "id": 3,
         }
       }

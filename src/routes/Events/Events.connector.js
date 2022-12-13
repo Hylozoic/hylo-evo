@@ -29,8 +29,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const groupSlug = getRouteParam('groupSlug', state, props)
-  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
-  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
+  const childPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
