@@ -44,6 +44,7 @@
 
 .topMenuBar,
 .bottomMenuBar {
+  max-width: 580px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
