@@ -53,16 +53,19 @@ export default class Members extends Component {
 
     return <div>
       <div styleName='header'>
+        <div>
+          <div styleName='title'>Members</div>
+          <div styleName='total-members'>
+            {memberCount} Total Members
+          </div>
+        </div>
         {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
           <Button styleName='invite'
-            label='Invite People'
             color='green-white-green-border'
-            narrow />
+            narrow >
+              <Icon name='Invite' styleName='invite-icon' /> Invite
+          </Button>
         </Link>}
-        <div styleName='title'>Members</div>
-        <div styleName='total-members'>
-          {memberCount} Total Members
-        </div>
       </div>
       <div styleName='content'>
         <div styleName='controls'>
