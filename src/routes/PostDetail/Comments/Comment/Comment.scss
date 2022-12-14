@@ -2,13 +2,19 @@ $comment-left-margin: 35px;
 $comment-row-padding: 25px;
 
 .comment {
-  padding: 0px $comment-row-padding;
+  padding: 0px 10px;
   margin-bottom: 20px;
+
+  > div {
+    padding-bottom: 0;
+  }
  }
 
 .header {
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 10;
 }
 
 .avatar {
@@ -138,7 +144,7 @@ $comment-row-padding: 25px;
 }
 
 .emojis {
-  margin-left: 0;
+  margin-left: 34px;
 }
 
 .noEmojis {
@@ -188,8 +194,13 @@ $comment-row-padding: 25px;
   padding-top: 0px;
   margin-left: $comment-left-margin;
   width: 70%;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   border-radius: 20px;
+
+  > div {
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+  }
 }
 
 .files {
@@ -207,7 +218,7 @@ $comment-row-padding: 25px;
     margin-top: 15px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .comment {
     padding: 0 10px;
   }
@@ -220,3 +231,30 @@ $comment-row-padding: 25px;
     margin-left: 40px;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .comment {
+    padding: 0 8px;
+  }
+
+  .files {
+    padding: 0px;
+  }
+
+  .avatar div {
+    height: 25px;
+    width: 25px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .text {
+    margin-left: 34px;
+  }
+
+  .emojis > div {
+    padding-bottom: 0;
+  }
+}
+
