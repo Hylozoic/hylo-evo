@@ -36,15 +36,11 @@ exports[`RelatedGroupstab renders correctly 1`] = `
 >
   <div
     data-stylename="title"
-  >
-    Parent Groups
-  </div>
+  />
   <div>
     <div
       data-stylename="subtitle"
-    >
-      These are the {{length}} groups that {{group.name}} is a member of
-    </div>
+    />
     <div
       data-stylename="group-list"
     >
@@ -56,7 +52,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
               Array [
                 Object {
                   "icon": "Trash",
-                  "label": "Leave Parent",
+                  "label": "",
                   "onClick": [Function],
                   "red": true,
                 },
@@ -84,7 +80,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
               Array [
                 Object {
                   "icon": "Trash",
-                  "label": "Leave Parent",
+                  "label": "",
                   "onClick": [Function],
                   "red": true,
                 },
@@ -112,7 +108,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
               Array [
                 Object {
                   "icon": "Trash",
-                  "label": "Leave Parent",
+                  "label": "",
                   "onClick": [Function],
                   "red": true,
                 },
@@ -146,26 +142,19 @@ exports[`RelatedGroupstab renders correctly 1`] = `
           data-stylename="connect-icon"
           name="Handshake"
         />
-        Join {{group.name}} to another group
       </div>
       <span
         data-stylename="connect-label"
-      >
-        REQUEST
-      </span>
+      />
     </Button>
   </div>
   <div
     data-stylename="title"
-  >
-    Child Groups
-  </div>
+  />
   <div>
     <div
       data-stylename="subtitle"
-    >
-      These {{childGroups.length}} groups are members of {{group.name}}
-    </div>
+    />
     <div
       data-stylename="group-list"
     >
@@ -177,7 +166,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
               Array [
                 Object {
                   "icon": "Trash",
-                  "label": "Remove Child",
+                  "label": "",
                   "onClick": [Function],
                   "red": true,
                 },
@@ -205,7 +194,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
               Array [
                 Object {
                   "icon": "Trash",
-                  "label": "Remove Child",
+                  "label": "",
                   "onClick": [Function],
                   "red": true,
                 },
@@ -233,7 +222,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
               Array [
                 Object {
                   "icon": "Trash",
-                  "label": "Remove Child",
+                  "label": "",
                   "onClick": [Function],
                   "red": true,
                 },
@@ -267,17 +256,10 @@ exports[`RelatedGroupstab renders correctly 1`] = `
           data-stylename="connect-icon"
           name="Handshake"
         />
-        Invite a group to join
-         
-        <strong>
-          Best Group
-        </strong>
       </div>
       <span
         data-stylename="connect-label"
-      >
-        INVITE
-      </span>
+      />
     </Button>
   </div>
 </div>

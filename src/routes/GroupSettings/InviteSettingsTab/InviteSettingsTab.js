@@ -38,7 +38,7 @@ class InviteSettingsTab extends Component {
 
 I'm inviting you to join {{name}} on Hylo.
 
-{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`, { name: props.group.name })
+{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.1`, { name: props.group.name })
     this.state = {
       copied: false,
       reset: false,
@@ -71,11 +71,11 @@ I'm inviting you to join {{name}} on Hylo.
         const numBad = badEmails.length
         let errorMessage, successMessage
         if (numBad > 0) {
-          errorMessage = `${t('{{numBad}} invalid email address/es found (see above)).', { numBad })}{' '}`
+          errorMessage = `${this.props.t('{{numBad}} invalid email address/es found (see above)).', { numBad })}{' '}`
         }
         const numGood = invitations.length - badEmails.length
         if (numGood > 0) {
-          successMessage = t(`Sent {{numGood}} {{email}}`, { numGood, email: numGood === 1 ? 'email' : 'emails' })
+          successMessage = this.props.t(`Sent {{numGood}} {{email}}`, { numGood, email: numGood === 1 ? 'email' : 'emails' })
           trackAnalyticsEvent('Group Invitations Sent', { numGood })
         }
         this.setState({
@@ -102,7 +102,7 @@ I'm inviting you to join {{name}} on Hylo.
     const { copied, reset, emails, errorMessage, successMessage } = this.state
 
     const onReset = () => {
-      if (window.confirm(t("Are you sure you want to create a new join link? The current link won't work anymore if you do."))) {
+      if (window.confirm(this.props.t("Are you sure you want to create a new join link? The current link won't work anymore if you do."))) {
         regenerateAccessCode()
         this.setTemporatyState('reset', true)
       }
@@ -117,7 +117,7 @@ I'm inviting you to join {{name}} on Hylo.
     const disableSendBtn = (isEmpty(emails) || pendingCreate)
 
     const resendAllOnClick = () => {
-      if (window.confirm(t('Are you sure you want to resend all Pending Invitations'))) {
+      if (window.confirm(this.props.t('Are you sure you want to resend all Pending Invitations'))) {
         reinviteAll()
       }
     }
@@ -133,7 +133,7 @@ I'm inviting you to join {{name}} on Hylo.
     return (
       <div styleName='styles.container'>
         <div styleName='styles.header'>
-          <div styleName='styles.title'>{t('Invite People')}</div>
+          <div styleName='styles.title'>{this.props.t('Invite People')}</div>
         </div>
 
         {pending && <Loading />}
@@ -142,10 +142,10 @@ I'm inviting you to join {{name}} on Hylo.
           <>
             <div styleName='styles.invite-link-section'>
               <div styleName='styles.subtitle'>
-                {t('Share a Join Link')}
+                {this.props.t('Share a Join Link')}
               </div>
               <div styleName='styles.help'>
-                {t('Anyone can join')}<span style={{ fontWeight: 'bold' }}> {group.name}</span> {t('with this link')}.{' '}{inviteLink && t('Click or press on it to copy it')}:
+                Anyone can join <span style={{ fontWeight: 'bold' }}>{group.name}</span> with this link{inviteLink && '. Click or press on it to copy it'}: {/* TODO: Handle this translation */}
               </div>
               <div styleName='styles.invite-link-settings'>
                 {inviteLink && (
@@ -153,7 +153,7 @@ I'm inviting you to join {{name}} on Hylo.
                     {!copied && (
                       <>
                         <CopyToClipboard text={inviteLink} onCopy={onCopy}>
-                          <span data-tip={t('Click to Copy')} data-for='invite-link-tooltip'>
+                          <span data-tip={this.props.t('Click to Copy')} data-for='invite-link-tooltip'>
                             {inviteLink}
                             <Icon name='Copy' styleName='styles.copy-icon' />
                           </span>
@@ -169,11 +169,11 @@ I'm inviting you to join {{name}} on Hylo.
                         )}
                       </>
                     )}
-                    {copied && t('Copied!')}
+                    {copied && this.props.t('Copied!')}
                   </div>
                 )}
                 <Button onClick={onReset} styleName='styles.invite-link-button' color={buttonColor(reset)}>
-                  {inviteLink ? t('Reset Link') : t('Generate a Link')}
+                  {inviteLink ? this.props.t('Reset Link') : this.props.t('Generate a Link')}
                 </Button>
               </div>
             </div>
@@ -182,18 +182,18 @@ I'm inviting you to join {{name}} on Hylo.
 
         <div styleName='styles.email-section'>
           <div styleName='styles.subtitle'>
-            {t('Send Invites via email')}
+            {this.props.t('Send Invites via email')}
           </div>
-          <div styleName='styles.help'>{t('Email addresses of those you\'d like to invite:')}</div>
+          <div styleName='styles.help'>{this.props.t('Email addresses of those you\'d like to invite:')}</div>
           <TextareaAutosize
             minRows={1}
             styleName='styles.invite-msg-input'
-            placeholder={t('Type email addresses (multiples should be separated by either a comma or new line)')}
+            placeholder={this.props.t('Type email addresses (multiples should be separated by either a comma or new line)')}
             value={this.state.emails}
             disabled={pendingCreate}
             onChange={(event) => this.setState({ emails: event.target.value })}
           />
-          <div styleName='styles.help'>{t('Customize the invite email message (optional):')}</div>
+          <div styleName='styles.help'>{this.props.t('Customize the invite email message (optional):')}</div>
           <TextareaAutosize
             minRows={5}
             styleName='styles.invite-msg-input'
@@ -207,7 +207,7 @@ I'm inviting you to join {{name}} on Hylo.
               {successMessage && <span styleName='success'>{successMessage}</span>}
             </div>
             <Button color='green' disabled={disableSendBtn} onClick={this.handleSendInvites} narrow small>
-              {t('Send Invite')}
+              {this.props.t('Send Invite')}
             </Button>
           </div>
         </div>
@@ -215,7 +215,7 @@ I'm inviting you to join {{name}} on Hylo.
         {hasPendingInvites && (
           <div styleName='styles.pending-invites-section'>
             <div styleName='styles.pending-invites-header'>
-              <div styleName='styles.subtitle'>{t('Pending Invites')}</div>
+              <div styleName='styles.subtitle'>{this.props.t('Pending Invites')}</div>
               {hasPendingInvites && (
                 <Button
                   styleName='styles.resend-all-button'
@@ -223,7 +223,7 @@ I'm inviting you to join {{name}} on Hylo.
                   narrow small
                   onClick={resendAllOnClick}
                 >
-                  {t('Resend All')}
+                  {this.props.t('Resend All')}
                 </Button>
               )}
             </div>
@@ -246,8 +246,8 @@ I'm inviting you to join {{name}} on Hylo.
                         <span styleName='styles.invite-date'>{TextHelpers.humanDate(invite.lastSentAt)}</span>
                       </div>
                       <div styleName='styles.invite-actions'>
-                        <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>{t('Expire')}</span>
-                        <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? t('Sent') : t('Resend')}</span>
+                        <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>{this.props.t('Expire')}</span>
+                        <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? this.props('Sent') : this.props('Resend')}</span>
                       </div>
                     </div>
                   </CSSTransition>

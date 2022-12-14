@@ -73,18 +73,18 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     value=""
   />
   <SettingsControl
-    label="Description"
+    label=""
     onChange={[Function]}
     type="textarea"
     value="Great group"
   />
   <SettingsControl
-    label="About Video URL"
+    label=""
     onChange={[Function]}
     value=""
   />
   <SettingsControl
-    label="Location"
+    label=""
     location=""
     locationObject="Fuji"
     onChange={[Function]}
@@ -92,9 +92,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   />
   <label
     data-stylename="styles.label"
-  >
-    Location Privacy:
-  </label>
+  />
   <Dropdown
     data-stylename="styles.location-obfuscation-dropdown"
     items={
@@ -126,30 +124,24 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   />
   <p
     data-stylename="general.detailText"
-  >
-    Note: as a moderator you will always see the exact location displayed
-  </p>
+  />
   <br />
   <SettingsControl
-    label="Word used to describe a group Moderator"
+    label=""
     onChange={[Function]}
-    value="Moderator"
+    value=""
   />
   <SettingsControl
-    label="Plural word used to describe group Moderators"
+    label=""
     onChange={[Function]}
-    value="Moderators"
+    value=""
   />
   <br />
   <SettingsSection>
-    <h3>
-      Relevant skills & interests
-    </h3>
+    <h3 />
     <p
       data-stylename="general.detailText"
-    >
-      What skills and interests are particularly relevant to this group?
-    </p>
+    />
     <div
       data-stylename="styles.skillsSetting "
     >
@@ -164,22 +156,16 @@ exports[`GroupSettingsTab renders correctly 1`] = `
         />
         <span
           data-stylename="general.toggleDescription"
-        >
-          Ask new members whether they have these skills and interests?
-        </span>
+        />
         <div
           data-stylename="general.onOff"
         >
           <div
             data-stylename="general.off"
-          >
-            OFF
-          </div>
+          />
           <div
             data-stylename="general.on"
-          >
-            ON
-          </div>
+          />
         </div>
       </div>
     </div>
@@ -208,15 +194,15 @@ exports[`GroupSettingsTab renders correctly 1`] = `
           "slug": "foo",
         }
       }
-      label="Add a relevant skill or interest"
-      placeholder="What skills and interests are most relevant to your group?"
+      label=""
+      placeholder=""
     />
   </SettingsSection>
   <br />
   <SettingsControl
-    label="What area does your group cover?"
+    label=""
     onChange={[Function]}
-    placeholder="For place based groups, draw the area where your group is active (or paste in GeoJSON here)"
+    placeholder=""
     type="text"
     value=""
   />
@@ -236,14 +222,12 @@ exports[`GroupSettingsTab renders correctly 1`] = `
   >
     <span
       data-stylename=""
-    >
-      Current settings up to date
-    </span>
+    />
     <Button
       className="save-button"
       color="gray"
       data-stylename="general.save-button"
-      label="Save Changes"
+      label=""
       onClick={null}
     />
   </div>

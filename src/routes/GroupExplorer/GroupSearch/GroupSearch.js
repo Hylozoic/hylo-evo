@@ -79,13 +79,13 @@ export default function GroupSearch ({ viewFilter }) {
             {filterToggle && <Icon name='Ex' styleName='remove-button' />}
           </div>
           : <div id='div-left-intentionally-blank' />}
-        {makeDropdown({ selected: sortBy, options: sortOptions(nearCoord), onChange: setSortBy, filterLabel: `${t('Sort by')}: `, t })}
+        {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, t('Sort by: '))}
       </div>
       {filterToggle && viewFilter === FARM_VIEW &&
         <div styleName='filter-list'>
-          {makeDropdown({ selected: farmQuery.farmType, options: convertListValueKeyToId(baseList.concat(FARM_TYPES)), onChange: (value) => setFarmQuery({ ...farmQuery, farmType: value }), filterLabel: t('Farm Type: '), isFilter: true, t })}
-          {makeDropdown({ selected: farmQuery.productCategories, options: convertListValueKeyToId(baseList.concat(PRODUCT_CATEGORIES)), onChange: (value) => setFarmQuery({ ...farmQuery, productCategories: value }), filterLabel: t('Operation: '), isFilter: true, t })}
-          {makeDropdown({ selected: farmQuery.certOrManagementPlan, options: convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), onChange: (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), filterLabel: t('Management Techniques: '), isFilter: true, t })}
+          {makeDropdown(farmQuery.farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), (value) => setFarmQuery({ ...farmQuery, farmType: value }), t('Farm Type: '), true)}
+          {makeDropdown(farmQuery.productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATEGORIES)), (value) => setFarmQuery({ ...farmQuery, productCategories: value }), t('Operation: '), true)}
+          {makeDropdown(farmQuery.certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), t('Management Techniques: '), true)}
         </div>}
       <div styleName='search-input'>
         <div className='spacer' />
@@ -138,7 +138,8 @@ const sortOptions = (nearCoord) => {
   return options
 }
 
-const makeDropdown = ({ selected, options, onChange, filterLabel = '', isFilter = false, t }) => {
+const makeDropdown = (selected, options, onChange, filterLabel = '', isFilter = false) => {
+  const { t } = useTranslation()
   const selectedLabel = selected ? options.find(o => o.id === selected).label : t('All')
   return (
     <Dropdown

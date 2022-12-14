@@ -28,6 +28,6 @@ export default function RemovableListItem ({ item, removeItem, skipConfirm = fal
     {url && <Link to={url} styleName='name'>{title}</Link>}
     {!url && <span>{title}</span>}
 
-    {removeItem && <span onClick={remove} className='remove-button' styleName='remove-button'>{t('Remove')}</span>}
+    {removeItem && <span onClick={remove} className='remove-button' styleName='remove-button'>Remove</span>}
   </div>
 }

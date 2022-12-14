@@ -248,35 +248,25 @@ export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSu
   )
 }
 
-class AddModeratorUntranslated extends Component {
-  static propTypes = {
-    addModerator: func,
-    fetchModeratorSuggestions: func
-  }
+export function AddModerator (props) {
+  const { t } = useTranslation()
+  const { fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions } = props
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      adding: false
-    }
-  }
+  const [adding, setAdding] = useState(false)
+  const [inputValue, setInputValue] = useState('')
 
-  render () {
-    const { fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions, t } = this.props
+  const inputRef = useRef()
+  const listRef = useRef()
 
-    const { adding } = this.state
+  const toggle = () => setAdding(!adding)
 
-    const toggle = () => {
-      this.setState({ adding: !adding })
-    }
+  useEffect(() => {
+    return () => clearModeratorSuggestions()
+  }, [])
 
-    const onInputChange = e => {
-      if (e.target.value.length === 0) return clearModeratorSuggestions()
-      return fetchModeratorSuggestions(e.target.value)
-    }
-
-    const onChoose = choice => {
-      addModerator(choice.id)
+  const inputUpdateHandler = e => {
+    const value = e.target.value
+    if (value === '') {
       clearModeratorSuggestions()
       toggle()
     }
@@ -333,7 +323,60 @@ class AddModeratorUntranslated extends Component {
         </div>
       )
     }
+    setInputValue(e.target.value)
   }
+
+  const onChoose = choice => {
+    addModerator(choice.id)
+    clearModeratorSuggestions()
+    toggle()
+  }
+
+  const chooseCurrentItem = () => {
+    if (!listRef.current) return
+    return listRef.current.handleKeys({
+      keyCode: keyMap.ENTER,
+      preventDefault: () => {}
+    })
+  }
+
+  const handleKeys = e => {
+    if (getKeyCode(e) === keyMap.ESC) {
+      toggle()
+      return clearModeratorSuggestions()
+    }
+    if (!listRef.current) return
+    return listRef.current.handleKeys(e)
+  }
+
+  const listWidth = { width: inputRef.current?.clientWidth + 4 }
+
+  return adding ? (
+    <div styleName='add-moderator adding'>
+      <div styleName='help-text'>{t('Search here for members to grant moderator powers')}</div>
+      <div styleName='input-row'>
+        <input styleName='input'
+          placeholder={t('Type...')}
+          type='text'
+          onChange={e => inputUpdateHandler(e)}
+          value={inputValue}
+          onKeyDown={handleKeys}
+          ref={inputRef} />
+        <span className='cancel-button' styleName='cancel-button' onClick={toggle}>{t('Cancel')}</span>
+        <span className='add-button' styleName='add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
+      </div>
+      {!isEmpty(moderatorSuggestions) &&
+      <div style={listWidth}>
+        <KeyControlledItemList
+          ref={listRef}
+          items={moderatorSuggestions}
+          onChange={onChoose}
+          theme={styles}
+        />
+      </div>
+      }
+    </div>
+  ) : (<div className='add-new' styleName='add-moderator add-new' onClick={toggle}>{t('+ Add New')}</div>)
 }
 
 export const AddModerator = withTranslation()(AddModeratorUntranslated)

@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useTranslation, withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
@@ -119,7 +119,7 @@ class UnwrappedGroupDetail extends Component {
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
             <div>
-              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{t('About')}</span>} {group.name}</div>
+              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>About </span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
               <div styleName='g.groupContextInfo'>
                 <div>
                   <span styleName='g.group-privacy'>
@@ -149,7 +149,7 @@ class UnwrappedGroupDetail extends Component {
           )}
           {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
             ? <div styleName='g.aboutCurrentGroup'>
-              <h3>{group.moderatorDescriptorPlural || t('Moderators')}</h3>
+              <h3>{group.moderatorDescriptorPlural || this.props.t('Moderators')}</h3>
               <div styleName='g.moderators'>
                 {moderators.map(p => (
                   <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
@@ -157,6 +157,15 @@ class UnwrappedGroupDetail extends Component {
                     <span>{p.name}</span>
                   </Link>
                 ))}
+              </div>
+              <h3>{this.props.t('Privacy settings')}</h3>
+              <div styleName='g.privacySetting'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
+                <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
+              </div>
+              <div styleName='g.privacySetting'>
+                <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
+                <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
               </div>
             </div>
             : ''
@@ -174,7 +183,7 @@ class UnwrappedGroupDetail extends Component {
           </div>
           {!isAboutCurrentGroup
             ? !currentUser
-              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{t('Signup or Login to connect with')}{' '}<span styleName='g.requestGroup'>{group.name}</span></Link></div>
+              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{this.props.t('Signup or Login to connect with <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</Link></div>
               : isMember
                 ? <div styleName='g.existingMember'>{t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
                 : this.renderDefaultGroupDetails()
@@ -202,12 +211,14 @@ class UnwrappedGroupDetail extends Component {
         {isAboutCurrentGroup && group.aboutVideoUri && (
           <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
         )}
-        {isAboutCurrentGroup && (!group.purpose && !group.description) && canModerate
-          ? <div styleName='g.no-description'>
-            <div>
-              <h4>{t('Your group doesn\'t have a description')}</h4>
-              <p>{t('Add a description, location, suggested topics and more in your group settings')}</p>
-              <Link to={groupUrl(group.slug, 'settings')}>{t('Add a group description')}</Link>
+        {isAboutCurrentGroup && !group.description && canModerate
+          ? (
+            <div styleName='g.no-description'>
+              <div>
+                <h4>{this.props.t('Your group doesn\'t have a description')}</h4>
+                <p>{this.props.t('Add a description, location, suggested topics and more in your group settings')}</p>
+                <Link to={groupUrl(group.slug, 'settings')}>{this.props.t('Add a group description')}</Link>
+              </div>
             </div>
           </div>
           : <div styleName='g.groupDescription'>
@@ -232,7 +243,7 @@ class UnwrappedGroupDetail extends Component {
         {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
         {!isAboutCurrentGroup && topics && topics.length && (
           <div styleName='g.groupTopics'>
-            <div styleName='g.groupSubtitle'>{t('Topics')}</div>
+            <div styleName='g.groupSubtitle'>{this.props.t('Topics')}</div>
             {topics.slice(0, 10).map(topic => {
               return (
                 <span
@@ -259,21 +270,21 @@ class UnwrappedGroupDetail extends Component {
         {/* XXX: turned off until we re-add settings for showing recent posts and group directory publicly
         <div styleName='g.groupDetails'>
           <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>{t('Recent Posts')}</div>
+            <div styleName='g.groupSubtitle'>{this.props.t('Recent Posts')}</div>
             <div styleName='g.detail'>
               <Icon name='BadgeCheck' />
-              <span styleName='g.detailText'>{t('Only members of this group can see posts')}</span>
+              <span styleName='g.detailText'>{this.props.t('Only members of this group can see posts')}</span>
             </div>
           </div>
           <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? t('Members') : t('Member')}</div>
+            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? this.props.t('Members') : this.props.t('Member')}</div>
             {get(group, 'settings.publicMemberDirectory')
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
               : <div styleName='g.detail'>
                 <Icon name='Unlock' />
-                <span styleName='g.detailText'>{t('Join to see')}</span>
+                <span styleName='g.detailText'>{this.props.t('Join to see')}</span>
               </div>
             }
           </div>
@@ -318,7 +329,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
       }
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
         ? <div styleName='g.prerequisiteGroups'>
-          {group.prerequisiteGroups.length === 1 ? <h4>{group.name}{' '}{t('is only accessible to members of')}{' '}{group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{t('{{group.name}} is only accessible to members of the following groups:', { group })}</h4>}
+          {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{this.props.t('{group.name} is only accessible to members of the following groups:', { group })}</h4>} {/* TODO: Handle translation */}
           {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
             <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
               <div styleName='g.groupTitleContainer'>
@@ -345,38 +356,40 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
               <div styleName='g.headerBackground' />
             </Link>
             <div styleName='g.cta'>
-              {t('To join')}{' '}{group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>{t('visit')} {prereq.name}</Link>{' '}{t('and become a member')}
+              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member {/* // TOD DO: Handle this translation */ }
 
             </div>
           </div>)}
         </div>
-        : group.numPrerequisitesLeft ? t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
+        : group.numPrerequisitesLeft ? this.props.t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
           : group.accessibility === GROUP_ACCESSIBILITY.Open
             ? <div styleName='g.requestOption'>
+              <div styleName='g.requestHint'>{this.props.t('Anyone can join this group!')}</div>
               {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                 <h3>{q.text}</h3>
-                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
+                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={this.props.t('Type your answer here...')} />
               </div>)}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{t('Join')}{' '}<span styleName='g.requestGroup'>{group.name}</span></div>
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{this.props.t('Join <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
               ? hasPendingRequest
-                ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
-                : <div styleName='g.requestOption'>
-                  {group.settings.askJoinQuestions && questionAnswers.length > 0 && <div>{t('Please answer the following to join:')}</div>}
+                ? <div styleName='g.requestPending'>{this.props.t('Request to join pending')}</div>
+                : <div styleName='g.requestOption'> {/* this.props.t('Restricted group, no request pending') */}
                   {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                     <h3>{q.text}</h3>
-                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
+                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={this.props.t('Type your answer here...')} />
                   </div>)}
                   <div styleName='g.center'>
                     <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
-                      {t('Request Membership in')}{' '}<span styleName='g.requestGroup'>{group.name}</span>
+                      {this.props.t('Request Membership in <span styleName="g.requestGroup">{{group.name}}</span>', { group })}
                     </div>
                   </div>
                 </div>
-              : ''
+              : <div styleName='g.requestOption'> {/* Closed group */}
+                {this.props.t('This is group is invitation only')}
+              </div>
       }
     </div>
   )
@@ -429,4 +442,4 @@ export function GroupDetail (props) {
   )
 }
 
-export default withTranslation()(GroupDetail)
+export default withTranslation()(UnwrappedGroupDetail)

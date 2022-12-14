@@ -18,6 +18,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
+      value=""
     />
     <span
       data-stylename="styles.cancel-button"
@@ -93,6 +94,7 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
+      value=""
     />
     <span
       data-stylename="styles.cancel-button"

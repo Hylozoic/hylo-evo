@@ -9,18 +9,14 @@ exports[`renders correctly 1`] = `
   >
     <div
       data-stylename="styles.title"
-    >
-      Invite People
-    </div>
+    />
   </div>
   <div
     data-stylename="styles.invite-link-section"
   >
     <div
       data-stylename="styles.subtitle"
-    >
-      Share a Join Link
-    </div>
+    />
     <div
       data-stylename="styles.help"
     >
@@ -35,12 +31,9 @@ exports[`renders correctly 1`] = `
          
         Hylo
       </span>
-       
-      with this link
-      .
-       
-      Click or press on it to copy it
-      :
+       with this link
+      . Click or press on it to copy it
+      : 
     </div>
     <div
       data-stylename="styles.invite-link-settings"
@@ -54,7 +47,7 @@ exports[`renders correctly 1`] = `
         >
           <span
             data-for="invite-link-tooltip"
-            data-tip="Click to Copy"
+            data-tip=""
           >
             http://www.hylo.com/c/hylo/join/lalala
             <Icon
@@ -79,9 +72,7 @@ exports[`renders correctly 1`] = `
         color="green-white-green-border"
         data-stylename="styles.invite-link-button"
         onClick={[Function]}
-      >
-        Reset Link
-      </Button>
+      />
     </div>
   </div>
   <div
@@ -89,29 +80,23 @@ exports[`renders correctly 1`] = `
   >
     <div
       data-stylename="styles.subtitle"
-    >
-      Send Invites via email
-    </div>
+    />
     <div
       data-stylename="styles.help"
-    >
-      Email addresses of those you'd like to invite:
-    </div>
+    />
     <TextareaAutosize
       data-stylename="styles.invite-msg-input"
       inputRef={[Function]}
       minRows={1}
       onChange={[Function]}
       onHeightChange={[Function]}
-      placeholder="Type email addresses (multiples should be separated by either a comma or new line)"
+      placeholder=""
       useCacheForDOMMeasurements={false}
       value=""
     />
     <div
       data-stylename="styles.help"
-    >
-      Customize the invite email message (optional):
-    </div>
+    />
     <TextareaAutosize
       data-stylename="styles.invite-msg-input"
       inputRef={[Function]}
@@ -119,11 +104,7 @@ exports[`renders correctly 1`] = `
       onChange={[Function]}
       onHeightChange={[Function]}
       useCacheForDOMMeasurements={false}
-      value="Hi!
-
-I'm inviting you to join {{name}} on Hylo.
-
-{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration."
+      value=""
     />
     <div
       data-stylename="styles.send-invite-button"
@@ -137,9 +118,7 @@ I'm inviting you to join {{name}} on Hylo.
         narrow={true}
         onClick={[Function]}
         small={true}
-      >
-        Send Invite
-      </Button>
+      />
     </div>
   </div>
 </div>

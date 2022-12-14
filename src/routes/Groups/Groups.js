@@ -64,8 +64,8 @@ class Groups extends Component {
 
       <div styleName='section'>
         <div styleName='banner'>
-          {parentGroups.length === 1 ? <h3>{t('{{group.name}} is a part of 1 Group', { group })}</h3> : '' }
-          {parentGroups.length > 1 ? <h3>{t('{{group.name}} is a part of {{parentGroups.length}} Groups', { group, parentGroups })}</h3> : '' }
+          {parentGroups.length === 1 ? <h3>{this.props.t('{{group.name}} is a part of 1 Group', { group })}</h3> : '' }
+          {parentGroups.length > 1 ? <h3>{this.props.t('{{group.name}} is a part of {{parentGroups.length}} Groups', { group, parentGroups })}</h3> : '' }
         </div>
         <GroupsList
           groups={parentGroups}
@@ -75,8 +75,8 @@ class Groups extends Component {
 
       <div styleName='section'>
         <div styleName='banner'>
-          {childGroups.length === 1 ? <h3>{t('1 Group is a part of {{group.name}}', { group })}</h3> : ''}
-          {childGroups.length > 1 ? <h3>{t('{{childGroups.length}} groups are a part of {{group.name}}', { childGroups, group })}</h3> : ''}
+          {childGroups.length === 1 ? <h3>{this.props.t('1 Group is a part of {{group.name}}', { group })}</h3> : ''}
+          {childGroups.length > 1 ? <h3>{this.props.t('{{childGroups.length}} groups are a part of {{group.name}}', { childGroups, group })}</h3> : ''}
         </div>
         <GroupsList
           groups={childGroups}
@@ -88,30 +88,26 @@ class Groups extends Component {
 }
 
 export function GroupsList ({ groups, routeParams }) {
-  return (
-    <div styleName='group-list'>
-      {groups.map(c => <GroupCard group={c} key={c.id} routeParams={routeParams} />)}
-    </div>
-  )
+  return <div styleName='group-list'>
+    {groups.map(c => <GroupCard group={c} key={c.id} routeParams={routeParams} />)}
+  </div>
 }
 
 export function GroupCard ({ group, routeParams }) {
   const { t } = useTranslation()
-  return (
-    <Link to={group.memberStatus === 'member' ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
-      <div styleName='group-card'>
-        <div styleName='card-wrapper'>
-          <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
-          <div styleName='group-details'>
-            <span styleName='group-name'>{group.name}</span>
-            <div styleName='group-stats'>
-              {group.memberCount ? <span styleName='member-count'>{group.memberCount} {t('Members')}</span> : ' '}
-              <div styleName='membership-status'>
-                <div styleName='group-privacy'>
-                  <Icon name={visibilityIcon(group.visibility)} styleName='privacy-icon' />
-                  <div styleName='privacy-tooltip'>
-                    <div><strong>{t(visibilityString(group.visibility))}</strong> - {t(visibilityDescription(group.visibility))}</div>
-                  </div>
+  return <Link to={group.memberStatus === 'member' ? groupUrl(group.slug) : groupDetailUrl(group.slug, routeParams)} styleName='group-link'>
+    <div styleName='group-card'>
+      <div styleName='card-wrapper'>
+        <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='50px' square />
+        <div styleName='group-details'>
+          <span styleName='group-name'>{group.name}</span>
+          <div styleName='group-stats'>
+            {group.memberCount ? <span styleName='member-count'>{group.memberCount} {t('Members')}</span> : ' '}
+            <div styleName='membership-status'>
+              <div styleName='group-privacy'>
+                <Icon name={visibilityIcon(group.visibility)} styleName='privacy-icon' />
+                <div styleName='privacy-tooltip'>
+                  <div><strong>{visibilityString(group.visibility)}</strong> - {visibilityDescription(group.visibility)}</div>
                 </div>
                 <div styleName='group-privacy'>
                   <Icon name={accessibilityIcon(group.accessibility)} styleName='privacy-icon' />
@@ -125,11 +121,11 @@ export function GroupCard ({ group, routeParams }) {
                       : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>{t('Join')}</b></div>
                 }
               </div>
-            </div>
-            <div styleName='group-description'>
-              <ClickCatcher>
-                <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
-              </ClickCatcher>
+              {
+                group.memberStatus === 'member' ? <div styleName='status-tag'><Icon name='Complete' styleName='member-complete' /> <b>{t('Member')}</b></div>
+                  : group.memberStatus === 'requested' ? <div styleName='status-tag'><b>{t('Membership Requested')}</b></div>
+                    : <div styleName='status-tag'><Icon name='CirclePlus' styleName='join-group' /> <b>{t('Join')}</b></div>
+              }
             </div>
           </div>
         </div>

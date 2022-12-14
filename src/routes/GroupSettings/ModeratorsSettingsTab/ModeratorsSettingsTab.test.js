@@ -14,7 +14,7 @@ jest.mock('react-i18next', () => ({
     }
   },
   withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' }
     return Component
   }
 }))
@@ -84,7 +84,7 @@ describe('AddModerator', () => {
   it('renders correctly, and transitions from not adding to adding', () => {
     const wrapper = shallow(<AddModerator />)
     expect(wrapper).toMatchSnapshot()
-    wrapper.find('#add-new').simulate('click')
+    wrapper.find('.add-new').simulate('click')
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -95,7 +95,7 @@ describe('AddModerator', () => {
       { id: 1, name: 'Hermes' }
     ]
     const wrapper = shallow(<AddModerator moderatorSuggestions={suggestions} />)
-    wrapper.find('#add-new').simulate('click')
+    wrapper.find('.add-new').simulate('click')
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -106,7 +106,7 @@ describe('AddModerator', () => {
     const wrapper = shallow(<AddModerator
       fetchModeratorSuggestions={fetchModeratorSuggestions}
       clearModeratorSuggestions={clearModeratorSuggestions} />)
-    wrapper.find('#add-new').simulate('click')
+    wrapper.find('.add-new').simulate('click')
 
     const input = wrapper.find('input')
 

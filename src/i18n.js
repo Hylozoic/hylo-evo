@@ -16,10 +16,9 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    lng: 'en',
     nsSeparator: false,
     keySeparator: false,
-    fallbackLng: false,
+    fallbackLng: 'en',
     debug: true,
 
     interpolation: {

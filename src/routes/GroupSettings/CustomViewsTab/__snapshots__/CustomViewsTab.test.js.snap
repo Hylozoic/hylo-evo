@@ -5,14 +5,10 @@ exports[`CustomViewsTab renders correctly 1`] = `
   data-stylename="general.groupSettings"
 >
   <SettingsSection>
-    <h3>
-      Custom Views
-    </h3>
+    <h3 />
     <div
       data-stylename="styles.help-text"
-    >
-      Add custom links or filtered post views to your group's navigation
-    </div>
+    />
     <CustomViewRow
       activePostsOnly={false}
       externalLink="https://google.com"
@@ -56,9 +52,7 @@ exports[`CustomViewsTab renders correctly 1`] = `
       data-stylename="styles.add-custom-view"
       onClick={[Function]}
     >
-      <h4>
-        Create new custom view
-      </h4>
+      <h4 />
       <Icon
         data-stylename="styles.new-custom-view"
         name="Circle-Plus"
@@ -71,14 +65,12 @@ exports[`CustomViewsTab renders correctly 1`] = `
   >
     <span
       data-stylename=""
-    >
-      Current settings up to date
-    </span>
+    />
     <Button
       className="save-button"
       color="gray"
       data-stylename="general.save-button"
-      label="Save Changes"
+      label=""
       onClick={null}
     />
   </div>

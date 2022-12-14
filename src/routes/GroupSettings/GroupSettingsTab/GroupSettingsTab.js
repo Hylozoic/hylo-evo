@@ -64,8 +64,8 @@ class GroupSettingsTab extends Component {
         geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
-        moderatorDescriptor: group.moderatorDescriptor || t('Moderator'),
-        moderatorDescriptorPlural: group.moderatorDescriptorPlural || t('Moderators'),
+        moderatorDescriptor: group.moderatorDescriptor || this.props.t('Moderator'),
+        moderatorDescriptorPlural: group.moderatorDescriptorPlural || this.props.t('Moderators'),
         name: name || '',
         purpose: group.purpose || '',
         settings: typeof settings !== 'undefined' ? settings : { }
@@ -147,45 +147,33 @@ class GroupSettingsTab extends Component {
 
     return (
       <div styleName='general.groupSettings'>
-        <span styleName='styles.nameBox'>
-          <label styleName='styles.label'>{t('Group Name')}</label>
-          <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
-        </span>
-        <label styleName='styles.label'>{t('Banner and Avatar Images')}</label>
-        <UploadAttachmentButton
-          type='groupBanner'
-          id={group.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-          styleName='styles.change-banner'
-        >
-          <div style={bgImageStyle(bannerUrl)} styleName='styles.banner-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
-        </UploadAttachmentButton>
-        <UploadAttachmentButton
-          type='groupAvatar'
-          id={group.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-          styleName='styles.change-avatar'
-        >
-          <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
-        </UploadAttachmentButton>
+        <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
+        <div style={bgImageStyle(bannerUrl)} styleName='styles.banner'>
+          <UploadAttachmentButton
+            type='groupBanner'
+            id={group.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
+            styleName='styles.change-banner-button'
+          />
+        </div>
+        <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar'>
+          <UploadAttachmentButton
+            type='groupAvatar'
+            id={group.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+            styleName='styles.change-avatar-button'
+          />
+        </div>
+        <SettingsControl label={this.props.t('Description')} onChange={this.updateSetting('description')} value={description} type='textarea' />
+        <SettingsControl label={this.props.t('About Video URL')} onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
         <SettingsControl
-          helpText={t('purposeHelpText')}
-          label={t('Purpose Statement')}
-          maxLength='500'
-          onChange={this.updateSetting('purpose')}
-          type='textarea'
-          value={purpose}
-        />
-        <SettingsControl label={t('Description')} onChange={this.updateSetting('description')} value={description} type='textarea' />
-        <SettingsControl label={t('About Video URL')} onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
-        <SettingsControl
-          label={t('Location')}
+          label={this.props.t('Location')}
           onChange={this.updateSettingDirectly('location', true)}
           location={location}
           locationObject={group.locationObject}
           type='location'
         />
-        <label styleName='styles.label'>{t('Location Privacy:')}</label>
+        <label styleName='styles.label'>{this.props.t('Location Privacy:')}</label>
         <Dropdown
           styleName='styles.location-obfuscation-dropdown'
           toggleChildren={<span styleName='styles.location-obfuscation-dropdown-label'>
@@ -198,18 +186,18 @@ class GroupSettingsTab extends Component {
             onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
           }))}
         />
-        <p styleName='general.detailText'>{t('Note: as a moderator you will always see the exact location displayed')}</p>
+        <p styleName='general.detailText'>{this.props.t('Note: as a moderator you will always see the exact location displayed')}</p>
 
         <br />
 
         <SettingsControl
-          label={t('Word used to describe a group Moderator')}
+          label={this.props.t('Word used to describe a group Moderator')}
           onChange={this.updateSetting('moderatorDescriptor')}
           value={moderatorDescriptor}
         />
 
         <SettingsControl
-          label={t('Plural word used to describe group Moderators')}
+          label={this.props.t('Plural word used to describe group Moderators')}
           onChange={this.updateSetting('moderatorDescriptorPlural')}
           value={moderatorDescriptorPlural}
         />
@@ -217,33 +205,33 @@ class GroupSettingsTab extends Component {
         <br />
 
         <SettingsSection>
-          <h3>{t('Relevant skills & interests')}</h3>
-          <p styleName='general.detailText'>{t('What skills and interests are particularly relevant to this group?')}</p>
+          <h3>{this.props.t('Relevant skills & interests')}</h3>
+          <p styleName='general.detailText'>{this.props.t('What skills and interests are particularly relevant to this group?')}</p>
           <div styleName={'styles.skillsSetting' + ' ' + cx({ 'general.on': showSuggestedSkills })}>
             <div styleName='general.switchContainer'>
               <SwitchStyled
                 checked={showSuggestedSkills}
                 onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
                 backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-              <span styleName='general.toggleDescription'>{t('Ask new members whether they have these skills and interests?')}</span>
+              <span styleName='general.toggleDescription'>{this.props.t('Ask new members whether they have these skills and interests?')}</span>
               <div styleName='general.onOff'>
-                <div styleName='general.off'>{t('OFF')}</div>
-                <div styleName='general.on'>{t('ON')}</div>
+                <div styleName='general.off'>{this.props.t('OFF')}</div>
+                <div styleName='general.on'>{this.props.t('ON')}</div>
               </div>
             </div>
           </div>
           <SkillsSection
             group={group}
-            label={t('Add a relevant skill or interest')}
-            placeholder={t('What skills and interests are most relevant to your group?')} />
+            label={this.props.t('Add a relevant skill or interest')}
+            placeholder={this.props.t('What skills and interests are most relevant to your group?')} />
         </SettingsSection>
 
         <br />
 
         <SettingsControl
-          label={t('What area does your group cover?')}
+          label={this.props.t('What area does your group cover?')}
           onChange={this.updateSetting('geoShape')}
-          placeholder={t('For place based groups, draw the area where your group is active (or paste in GeoJSON here)')}
+          placeholder={this.props.t('For place based groups, draw the area where your group is active (or paste in GeoJSON here)')}
           type='text'
           value={geoShape || ''}
         />
@@ -268,7 +256,7 @@ class GroupSettingsTab extends Component {
 
         <div styleName='general.saveChanges'>
           <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label={t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
+          <Button label={this.props.t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
         </div>
       </div>
     )
