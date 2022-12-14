@@ -216,11 +216,11 @@ function prependIdForCreate (state, type, params, id) {
   return !state[key].ids.includes(id) ? {
     ...state,
     [key]: {
-      ids:  [id].concat(state[key].ids),
+      ids: [id].concat(state[key].ids),
       total: (state[key].total || state[key].total === 0) && state[key].total + 1,
       hasMore: state[key].hasMore
     }
-  }  : state
+  } : state
 }
 
 function appendId (state, type, params, id) {
@@ -233,7 +233,7 @@ function appendId (state, type, params, id) {
       total: (state[key].total || state[key].total === 0) && state[key].total + 1,
       hasMore: state[key].hasMore
     }
-  }  : state
+  } : state
 }
 
 // If replace is false add new ids to the existing list, if true then replace list

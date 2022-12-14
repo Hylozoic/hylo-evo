@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
-import { useLongPress } from 'use-long-press';
+import { useLongPress } from 'use-long-press'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
 import ClickCatcher from 'components/ClickCatcher'

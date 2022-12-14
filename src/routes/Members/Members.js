@@ -63,7 +63,7 @@ export default class Members extends Component {
           <Button styleName='invite'
             color='green-white-green-border'
             narrow >
-              <Icon name='Invite' styleName='invite-icon' /> Invite
+            <Icon name='Invite' styleName='invite-icon' /> Invite
           </Button>
         </Link>}
       </div>
