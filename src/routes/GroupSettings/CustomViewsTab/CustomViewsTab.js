@@ -1,5 +1,6 @@
 import { omit } from 'lodash/fp'
 import React, { Component, useState } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Button from 'components/Button'
@@ -34,22 +35,9 @@ const emptyCustomView = {
   type: 'externalLink'
 }
 
-const VIEW_TYPES = {
-  externalLink: 'External Link',
-  stream: 'Post Stream',
-  collection: 'Post Collection'
-}
-
-const VIEW_MODES = {
-  cards: 'Cards',
-  list: 'List',
-  bigGrid: 'Big Grid',
-  grid: 'Small Grid'
-}
-
 const { object } = PropTypes
 
-export default class CustomViewsTab extends Component {
+class CustomViewsTab extends Component {
   static propTypes = {
     group: object
   }
@@ -108,15 +96,15 @@ export default class CustomViewsTab extends Component {
       const { externalLink, name, icon } = cv
       if (externalLink.length > 0) {
         if (!sanitizeURL(externalLink)) {
-          errorString += 'External link has to be a valid URL. \n'
+          errorString += this.props.t('External link has to be a valid URL.') + ' \n'
         }
       }
 
       if (name.length < 2) {
-        errorString += 'View name needs to be at least two characters long. \n'
+        errorString += this.props.t('View name needs to be at least two characters long.') + ' \n'
       }
       if (icon.length < 1) {
-        errorString += 'An icon needs to be selected for the view. '
+        errorString += this.props.t('An icon needs to be selected for the view.') + ' '
       }
     })
     this.setState({ error: errorString })
@@ -139,7 +127,7 @@ export default class CustomViewsTab extends Component {
   }
 
   deleteCustomView = (i) => () => {
-    if (window.confirm('Are you sure you want to delete this custom view?')) {
+    if (window.confirm(this.props.t('Are you sure you want to delete this custom view?'))) {
       const newViews = [...this.state.customViews]
       newViews.splice(i, 1)
       this.setState({
@@ -185,11 +173,11 @@ export default class CustomViewsTab extends Component {
 
   saveButtonContent () {
     const { changed, error } = this.state
-    if (!changed) return { color: 'gray', style: '', text: 'Current settings up to date' }
+    if (!changed) return { color: 'gray', style: '', text: this.props.t('Current settings up to date') }
     if (error) {
       return { color: 'purple', style: 'general.settingIncorrect', text: error }
     }
-    return { color: 'green', style: 'general.settingChanged', text: 'Changes not saved' }
+    return { color: 'green', style: 'general.settingChanged', text: this.props.t('Changes not saved') }
   }
 
   render () {
@@ -201,8 +189,8 @@ export default class CustomViewsTab extends Component {
     return (
       <div styleName='general.groupSettings'>
         <SettingsSection>
-          <h3>Custom Views</h3>
-          <div styleName='styles.help-text'>Add custom links or filtered post views to your group's navigation</div>
+          <h3>{this.props.t('Custom Views')}</h3>
+          <div styleName='styles.help-text'>{this.props.t('Add custom links or filtered post views to your group\'s navigation')}</div>
           {customViews.map((cv, i) => (
             <CustomViewRow
               addPostToCollection={addPostToCollection}
@@ -217,7 +205,7 @@ export default class CustomViewsTab extends Component {
             />
           ))}
           <div styleName='styles.add-custom-view' onClick={this.addCustomView}>
-            <h4>Create new custom view</h4>
+            <h4>{this.props.t('Create new custom view')}</h4>
             <Icon name='Circle-Plus' styleName='styles.new-custom-view' />
           </div>
         </SettingsSection>
@@ -226,7 +214,7 @@ export default class CustomViewsTab extends Component {
 
         <div styleName='general.saveChanges'>
           <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label='Save Changes' color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} styleName='general.save-button' />
+          <Button label={this.props.t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
         </div>
       </div>
     )
@@ -254,6 +242,19 @@ function CustomViewRow ({
   type
 }) {
   const [postTypesModalOpen, setPostTypesModalOpen] = useState(false)
+  const { t } = useTranslation()
+  const VIEW_TYPES = {
+    externalLink: t('External Link'),
+    stream: t('Post Stream'),
+    collection: t('Post Collection')
+  }
+
+  const VIEW_MODES = {
+    cards: t('Cards'),
+    list: t('List'),
+    bigGrid: t('Big Grid'),
+    grid: t('Small Grid')
+  }
 
   const togglePostType = (type, checked) => {
     let newPostTypes = [ ...postTypes ]
@@ -286,7 +287,7 @@ function CustomViewRow ({
   return (
     <div styleName='styles.custom-view-container'>
       <h4>
-        <div><strong>Custom View #{parseInt(index) + 1}</strong>{name}</div>
+        <div>{t('<strong>Custom View #{{count}}</strong>{{name}}', { count: parseInt(index) + 1, name })}</div>
         <Icon name='Trash' onClick={onDelete} />
       </h4>
       <div styleName='styles.custom-view-row'>
@@ -311,8 +312,8 @@ function CustomViewRow ({
       </div>
       {type === 'externalLink' ? (
         <div>
-          <SettingsControl label='External link' onChange={onChange('externalLink')} value={externalLink || ''} placeholder='Will open this URL in a new tab' />
-          {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>Must be a valid URL!</div>}
+          <SettingsControl label={t('External link')} onChange={onChange('externalLink')} value={externalLink || ''} placeholder={t('Will open this URL in a new tab')} />
+          {externalLink && !sanitizeURL(externalLink) && <div styleName='styles.warning'>{t('Must be a valid URL!')}</div>}
         </div>)
         : (
           <div styleName={cx('styles.custom-posts-view')}>
@@ -351,10 +352,10 @@ function CustomViewRow ({
             {type === 'stream' ? (
               <>
                 <div styleName='styles.post-types styles.custom-view-row'>
-                  <label styleName='styles.label'>What post types to display?</label>
+                  <label styleName='styles.label'>{t('What post types to display?')}</label>
                   <div styleName='styles.post-types-chosen'>
                     <span onClick={() => setPostTypesModalOpen(!postTypesModalOpen)}>
-                      {postTypes.length === 0 ? 'None' : postTypes.map((p, i) => <PostLabel key={p} type={p} styleName='styles.post-type' />)}
+                      {postTypes.length === 0 ? t('None') : postTypes.map((p, i) => <PostLabel key={p} type={p} styleName='styles.post-type' />)}
                     </span>
                     <div styleName={cx('styles.post-types-selector', { 'styles.open': postTypesModalOpen })}>
                       <Icon name='Ex' styleName='styles.close-button' onClick={() => setPostTypesModalOpen(!postTypesModalOpen)} />
@@ -371,7 +372,7 @@ function CustomViewRow ({
                               checked={postTypes.includes(postType)}
                               onChange={(checked, name) => togglePostType(postType, !checked)}
                             />
-                            <span>{postType.charAt(0).toUpperCase() + postType.slice(1)}s</span>
+                            <span>{postType.charAt(0).toUpperCase() + postType.slice(1)}s</span> {/* TODO: Handle this translation */}
                           </div>
                         )
                       })}
@@ -380,7 +381,7 @@ function CustomViewRow ({
                 </div>
 
                 <div styleName='styles.custom-view-row'>
-                  <label styleName='styles.label'>Include only active posts?</label>
+                  <label styleName='styles.label'>{t('Include only active posts?')}</label>
                   <SwitchStyled
                     checked={activePostsOnly}
                     onChange={() => onChange('activePostsOnly')(!activePostsOnly)}
@@ -388,13 +389,13 @@ function CustomViewRow ({
                   />
                 </div>
                 <div styleName='styles.custom-view-last-row'>
-                  <label styleName='styles.label'>Include only posts that match any of these topics:</label>
+                  <label styleName='styles.label'>{t('Include only posts that match any of these topics:')}</label>
                   <TopicSelector currentGroup={group} selectedTopics={topics} onChange={onChange('topics')} />
                 </div>
               </>) : (
               <>
                 <div styleName='styles.post-types'>
-                  <label styleName='styles.label'>Included Posts <span>{collection?.posts?.length || 0}</span></label>
+                  <label styleName='styles.label'>{t('Included Posts <span>{{length}}</span>', { length: collection?.posts?.length || 0 })}</label>
                   <PostSelector
                     collection={collection}
                     group={group}
@@ -413,3 +414,5 @@ function CustomViewRow ({
     </div>
   )
 }
+
+export default withTranslation()(CustomViewsTab)

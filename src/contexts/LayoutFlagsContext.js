@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
 import { remove, reduce } from 'lodash/fp'
 
 // Sets and persist (until page reload) layout flags set in the layoutFlags
@@ -35,9 +36,10 @@ export function LayoutFlagsProvider ({ children }) {
 
 export function useLayoutFlags () {
   const context = React.useContext(LayoutFlagsContext)
+  const { t } = useTranslation()
 
   if (context === undefined) {
-    throw new Error('useLayoutFlags must be used within a LayoutFlagsProvider')
+    throw new Error(t('useLayoutFlags must be used within a LayoutFlagsProvider'))
   }
 
   return context

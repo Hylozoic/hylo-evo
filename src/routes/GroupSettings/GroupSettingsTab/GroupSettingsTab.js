@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { set, trim } from 'lodash'
 import cx from 'classnames'
@@ -26,7 +27,7 @@ import EditableMapModal from 'components/Map/EditableMap/EditableMapModal'
 
 const { object, func } = PropTypes
 
-export default class GroupSettingsTab extends Component {
+class GroupSettingsTab extends Component {
   static propTypes = {
     currentUser: object,
     group: object,
@@ -63,8 +64,8 @@ export default class GroupSettingsTab extends Component {
         geoShape: geoShape && typeof geoShape !== 'string' ? JSON.stringify(geoShape) || '' : geoShape || '',
         location: location || '',
         locationId: locationObject ? locationObject.id : '',
-        moderatorDescriptor: group.moderatorDescriptor || 'Moderator',
-        moderatorDescriptorPlural: group.moderatorDescriptorPlural || 'Moderators',
+        moderatorDescriptor: group.moderatorDescriptor || this.props.t('Moderator'),
+        moderatorDescriptorPlural: group.moderatorDescriptorPlural || this.props.t('Moderators'),
         name: name || '',
         settings: typeof settings !== 'undefined' ? settings : { }
       },
@@ -120,11 +121,11 @@ export default class GroupSettingsTab extends Component {
 
   saveButtonContent () {
     const { changed, error } = this.state
-    if (!changed) return { color: 'gray', style: '', text: 'Current settings up to date' }
+    if (!changed) return { color: 'gray', style: '', text: this.props.t('Current settings up to date') }
     if (error) {
       return { color: 'purple', style: 'general.settingIncorrect', text: error }
     }
-    return { color: 'green', style: 'general.settingChanged', text: 'Changes not saved' }
+    return { color: 'green', style: 'general.settingChanged', text: this.props.t('Changes not saved') }
   }
 
   render () {
@@ -158,16 +159,16 @@ export default class GroupSettingsTab extends Component {
             styleName='styles.change-avatar-button'
           />
         </div>
-        <SettingsControl label='Description' onChange={this.updateSetting('description')} value={description} type='textarea' />
-        <SettingsControl label='About Video URL' onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
+        <SettingsControl label={this.props.t('Description')} onChange={this.updateSetting('description')} value={description} type='textarea' />
+        <SettingsControl label={this.props.t('About Video URL')} onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
         <SettingsControl
-          label='Location'
+          label={this.props.t('Location')}
           onChange={this.updateSettingDirectly('location', true)}
           location={location}
           locationObject={group.locationObject}
           type='location'
         />
-        <label styleName='styles.label'>Location Privacy:</label>
+        <label styleName='styles.label'>{this.props.t('Location Privacy:')}</label>
         <Dropdown
           styleName='styles.location-obfuscation-dropdown'
           toggleChildren={<span styleName='styles.location-obfuscation-dropdown-label'>
@@ -180,18 +181,18 @@ export default class GroupSettingsTab extends Component {
             onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
           }))}
         />
-        <p styleName='general.detailText'>Note: as a moderator you will always see the exact location displayed</p>
+        <p styleName='general.detailText'>{this.props.t('Note: as a moderator you will always see the exact location displayed')}</p>
 
         <br />
 
         <SettingsControl
-          label='Word used to describe a group Moderator'
+          label={this.props.t('Word used to describe a group Moderator')}
           onChange={this.updateSetting('moderatorDescriptor')}
           value={moderatorDescriptor}
         />
 
         <SettingsControl
-          label='Plural word used to describe group Moderators'
+          label={this.props.t('Plural word used to describe group Moderators')}
           onChange={this.updateSetting('moderatorDescriptorPlural')}
           value={moderatorDescriptorPlural}
         />
@@ -199,33 +200,33 @@ export default class GroupSettingsTab extends Component {
         <br />
 
         <SettingsSection>
-          <h3>Relevant skills &amp; interests</h3>
-          <p styleName='general.detailText'>What skills and interests are particularly relevant to this group?</p>
+          <h3>{this.props.t('Relevant skills & interests')}</h3>
+          <p styleName='general.detailText'>{this.props.t('What skills and interests are particularly relevant to this group?')}</p>
           <div styleName={'styles.skillsSetting' + ' ' + cx({ 'general.on': showSuggestedSkills })}>
             <div styleName='general.switchContainer'>
               <SwitchStyled
                 checked={showSuggestedSkills}
                 onChange={() => this.updateSettingDirectly('settings.showSuggestedSkills')(!showSuggestedSkills)}
                 backgroundColor={showSuggestedSkills ? '#0DC39F' : '#8B96A4'} />
-              <span styleName='general.toggleDescription'>Ask new members whether they have these skills and interests?</span>
+              <span styleName='general.toggleDescription'>{this.props.t('Ask new members whether they have these skills and interests?')}</span>
               <div styleName='general.onOff'>
-                <div styleName='general.off'>OFF</div>
-                <div styleName='general.on'>ON</div>
+                <div styleName='general.off'>{this.props.t('OFF')}</div>
+                <div styleName='general.on'>{this.props.t('ON')}</div>
               </div>
             </div>
           </div>
           <SkillsSection
             group={group}
-            label='Add a relevant skill or interest'
-            placeholder='What skills and interests are most relevant to your group?' />
+            label={this.props.t('Add a relevant skill or interest')}
+            placeholder={this.props.t('What skills and interests are most relevant to your group?')} />
         </SettingsSection>
 
         <br />
 
         <SettingsControl
-          label='What area does your group cover?'
+          label={this.props.t('What area does your group cover?')}
           onChange={this.updateSetting('geoShape')}
-          placeholder='For place based groups, draw the area where your group is active (or paste in GeoJSON here)'
+          placeholder={this.props.t('For place based groups, draw the area where your group is active (or paste in GeoJSON here)')}
           type='text'
           value={geoShape || ''}
         />
@@ -250,9 +251,10 @@ export default class GroupSettingsTab extends Component {
 
         <div styleName='general.saveChanges'>
           <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label='Save Changes' color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} styleName='general.save-button' />
+          <Button label={this.props.t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
         </div>
       </div>
     )
   }
 }
+export default withTranslation()(GroupSettingsTab)

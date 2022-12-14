@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -23,7 +24,7 @@ const parseEmailList = emails =>
     return match ? match[1] : trimmed
   })
 
-export default class InviteSettingsTab extends Component {
+class InviteSettingsTab extends Component {
   static propTypes = {
     group: object,
     regenerateAccessCode: func,
@@ -33,11 +34,11 @@ export default class InviteSettingsTab extends Component {
   constructor (props) {
     super(props)
 
-    const defaultMessage = `Hi!
+    const defaultMessage = this.props.t(`Hi!
 
-I'm inviting you to join ${props.group.name} on Hylo.
+I'm inviting you to join {{name}} on Hylo.
 
-${props.group.name} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`
+{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.1`, { name: props.group.name })
     this.state = {
       copied: false,
       reset: false,
@@ -70,11 +71,11 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
         const numBad = badEmails.length
         let errorMessage, successMessage
         if (numBad > 0) {
-          errorMessage = `${numBad} invalid email address/es found (see above). `
+          errorMessage = `${this.props.t('{{numBad}} invalid email address/es found (see above)).', { numBad })}{' '}`
         }
         const numGood = invitations.length - badEmails.length
         if (numGood > 0) {
-          successMessage = `Sent ${numGood} ${numGood === 1 ? 'email.' : 'emails.'}`
+          successMessage = this.props.t(`Sent {{numGood}} {{email}}`, { numGood, email: numGood === 1 ? 'email' : 'emails' })
           trackAnalyticsEvent('Group Invitations Sent', { numGood })
         }
         this.setState({
@@ -100,7 +101,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
     const { copied, reset, emails, errorMessage, successMessage } = this.state
 
     const onReset = () => {
-      if (window.confirm("Are you sure you want to create a new join link? The current link won't work anymore if you do.")) {
+      if (window.confirm(this.props.t("Are you sure you want to create a new join link? The current link won't work anymore if you do."))) {
         regenerateAccessCode()
         this.setTemporatyState('reset', true)
       }
@@ -115,7 +116,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
     const disableSendBtn = (isEmpty(emails) || pendingCreate)
 
     const resendAllOnClick = () => {
-      if (window.confirm('Are you sure you want to resend all Pending Invitations')) {
+      if (window.confirm(this.props.t('Are you sure you want to resend all Pending Invitations'))) {
         reinviteAll()
       }
     }
@@ -131,7 +132,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
     return (
       <div styleName='styles.container'>
         <div styleName='styles.header'>
-          <div styleName='styles.title'>Invite People</div>
+          <div styleName='styles.title'>{this.props.t('Invite People')}</div>
         </div>
 
         {pending && <Loading />}
@@ -140,10 +141,10 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
           <>
             <div styleName='styles.invite-link-section'>
               <div styleName='styles.subtitle'>
-                Share a Join Link
+                {this.props.t('Share a Join Link')}
               </div>
               <div styleName='styles.help'>
-                Anyone can join <span style={{ fontWeight: 'bold' }}>{group.name}</span> with this link{inviteLink && '. Click or press on it to copy it'}:
+                Anyone can join <span style={{ fontWeight: 'bold' }}>{group.name}</span> with this link{inviteLink && '. Click or press on it to copy it'}: {/* TODO: Handle this translation */}
               </div>
               <div styleName='styles.invite-link-settings'>
                 {inviteLink && (
@@ -151,7 +152,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
                     {!copied && (
                       <>
                         <CopyToClipboard text={inviteLink} onCopy={onCopy}>
-                          <span data-tip='Click to Copy' data-for='invite-link-tooltip'>
+                          <span data-tip={this.props.t('Click to Copy')} data-for='invite-link-tooltip'>
                             {inviteLink}
                             <Icon name='Copy' styleName='styles.copy-icon' />
                           </span>
@@ -167,11 +168,11 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
                         )}
                       </>
                     )}
-                    {copied && 'Copied!'}
+                    {copied && this.props.t('Copied!')}
                   </div>
                 )}
                 <Button onClick={onReset} styleName='styles.invite-link-button' color={buttonColor(reset)}>
-                  {inviteLink ? 'Reset Link' : 'Generate a Link'}
+                  {inviteLink ? this.props.t('Reset Link') : this.props.t('Generate a Link')}
                 </Button>
               </div>
             </div>
@@ -180,18 +181,18 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
 
         <div styleName='styles.email-section'>
           <div styleName='styles.subtitle'>
-            Send Invites via email
+            {this.props.t('Send Invites via email')}
           </div>
-          <div styleName='styles.help'>Email addresses of those you'd like to invite:</div>
+          <div styleName='styles.help'>{this.props.t('Email addresses of those you\'d like to invite:')}</div>
           <TextareaAutosize
             minRows={1}
             styleName='styles.invite-msg-input'
-            placeholder='Type email addresses (multiples should be separated by either a comma or new line)'
+            placeholder={this.props.t('Type email addresses (multiples should be separated by either a comma or new line)')}
             value={this.state.emails}
             disabled={pendingCreate}
             onChange={(event) => this.setState({ emails: event.target.value })}
           />
-          <div styleName='styles.help'>Customize the invite email message (optional):</div>
+          <div styleName='styles.help'>{this.props.t('Customize the invite email message (optional):')}</div>
           <TextareaAutosize
             minRows={5}
             styleName='styles.invite-msg-input'
@@ -205,7 +206,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
               {successMessage && <span styleName='success'>{successMessage}</span>}
             </div>
             <Button color='green' disabled={disableSendBtn} onClick={this.handleSendInvites} narrow small>
-              Send Invite
+              {this.props.t('Send Invite')}
             </Button>
           </div>
         </div>
@@ -213,7 +214,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
         {hasPendingInvites && (
           <div styleName='styles.pending-invites-section'>
             <div styleName='styles.pending-invites-header'>
-              <div styleName='styles.subtitle'>Pending Invites</div>
+              <div styleName='styles.subtitle'>{this.props.t('Pending Invites')}</div>
               {hasPendingInvites && (
                 <Button
                   styleName='styles.resend-all-button'
@@ -221,7 +222,7 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
                   narrow small
                   onClick={resendAllOnClick}
                 >
-                  Resend All
+                  {this.props.t('Resend All')}
                 </Button>
               )}
             </div>
@@ -244,8 +245,8 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
                         <span styleName='styles.invite-date'>{TextHelpers.humanDate(invite.lastSentAt)}</span>
                       </div>
                       <div styleName='styles.invite-actions'>
-                        <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>Expire</span>
-                        <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? 'Sent' : 'Resend'}</span>
+                        <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>{this.props.t('Expire')}</span>
+                        <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? this.props('Sent') : this.props('Resend')}</span>
                       </div>
                     </div>
                   </CSSTransition>
@@ -258,3 +259,4 @@ ${props.group.name} is using Hylo for our online community: this is our dedicate
     )
   }
 }
+export default withTranslation()(InviteSettingsTab)

@@ -2,6 +2,22 @@ import RelatedGroupsTab, { GroupCard } from './RelatedGroupsTab'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  },
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' }
+    return Component
+  }
+}))
+
 describe('RelatedGroupstab', () => {
   it('renders correctly', () => {
     const parentGroups = [

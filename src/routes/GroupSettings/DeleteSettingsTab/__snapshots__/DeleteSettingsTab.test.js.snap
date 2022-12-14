@@ -6,19 +6,15 @@ exports[`renders correctly 1`] = `
 >
   <div
     data-stylename="title"
-  >
-    Delete 
-    Hylo
-  </div>
+  />
   <div
     data-stylename="help"
-  >
-    If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.
-  </div>
+  />
   <Button
     data-stylename="delete-button"
     label="Delete Group"
     onClick={[Function]}
   />
+   
 </div>
 `;

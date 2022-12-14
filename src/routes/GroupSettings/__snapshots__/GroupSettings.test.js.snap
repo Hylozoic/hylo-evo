@@ -11,7 +11,7 @@ exports[`renders correctly with a group 1`] = `
   content={
     Array [
       Object {
-        "component": <GroupSettingsTab
+        "component": <withI18nextTranslation(GroupSettingsTab)
           group={
             Object {
               "id": 1,
@@ -24,7 +24,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings",
       },
       Object {
-        "component": <Memo(Connect(ModeratorsSettingsTab))
+        "component": <Memo(Connect(withI18nextTranslation(ModeratorsSettingsTab)))
           groupId={1}
           slug="foo"
         />,
@@ -32,7 +32,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/moderators",
       },
       Object {
-        "component": <PrivacySettingsTab
+        "component": <withI18nextTranslation(PrivacySettingsTab)
           group={
             Object {
               "id": 1,
@@ -46,7 +46,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/privacy",
       },
       Object {
-        "component": <CustomViewsTab
+        "component": <withI18nextTranslation(CustomViewsTab)
           group={
             Object {
               "id": 1,
@@ -72,7 +72,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/topics",
       },
       Object {
-        "component": <Memo(Connect(InviteSettingsTab))
+        "component": <Memo(Connect(withI18nextTranslation(InviteSettingsTab)))
           group={
             Object {
               "id": 1,
@@ -98,7 +98,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/requests",
       },
       Object {
-        "component": <Memo(Connect(RelatedGroupsTab))
+        "component": <Memo(Connect(withI18nextTranslation(RelatedGroupsTab)))
           group={
             Object {
               "id": 1,
@@ -111,7 +111,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/relationships",
       },
       Object {
-        "component": <ImportExportSettingsTab
+        "component": <withI18nextTranslation(ImportExportSettingsTab)
           group={
             Object {
               "id": 1,
@@ -137,7 +137,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/export",
       },
       Object {
-        "component": <DeleteSettingsTab
+        "component": <withI18nextTranslation(DeleteSettingsTab)
           group={
             Object {
               "id": 1,

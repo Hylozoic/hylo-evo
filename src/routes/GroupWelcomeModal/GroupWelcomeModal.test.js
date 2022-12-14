@@ -7,6 +7,18 @@ import orm from 'store/models'
 import extractModelsForTest from 'util/testing/extractModelsForTest'
 import GroupWelcomeModal from './GroupWelcomeModal'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 it('selects group, displays suggested skills, and renders nothing when showJoinForm is false', async () => {
   const testGroup = {
     id: '1',

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { useSelector } from 'react-redux'
 import Dropdown from 'components/Dropdown'
@@ -50,6 +51,7 @@ export default function GroupSearch ({ viewFilter }) {
     sortBy,
     visibility: [3]
   })
+  const { t } = useTranslation()
 
   useEffect(() => {
     setOffset(0)
@@ -73,17 +75,17 @@ export default function GroupSearch ({ viewFilter }) {
         {viewFilter === FARM_VIEW
           ? <div styleName='filter-container' onClick={() => setFilterToggle(!filterToggle)}>
             <Icon name='Filter' green={filterToggle} styleName={cx({ 'filter-icon': true, 'filter-open': filterToggle })} />
-            <b styleName={cx({ 'filter-open': filterToggle })}>Filters</b>
+            <b styleName={cx({ 'filter-open': filterToggle })}>{t('Filters')}</b>
             {filterToggle && <Icon name='Ex' styleName='remove-button' />}
           </div>
           : <div id='div-left-intentionally-blank' />}
-        {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, 'Sort by: ')}
+        {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, t('Sort by: '))}
       </div>
       {filterToggle && viewFilter === FARM_VIEW &&
         <div styleName='filter-list'>
-          {makeDropdown(farmQuery.farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), (value) => setFarmQuery({ ...farmQuery, farmType: value }), 'Farm Type: ', true)}
-          {makeDropdown(farmQuery.productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATEGORIES)), (value) => setFarmQuery({ ...farmQuery, productCategories: value }), 'Operation: ', true)}
-          {makeDropdown(farmQuery.certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), 'Management Techniques: ', true)}
+          {makeDropdown(farmQuery.farmType, convertListValueKeyToId(baseList.concat(FARM_TYPES)), (value) => setFarmQuery({ ...farmQuery, farmType: value }), t('Farm Type: '), true)}
+          {makeDropdown(farmQuery.productCategories, convertListValueKeyToId(baseList.concat(PRODUCT_CATEGORIES)), (value) => setFarmQuery({ ...farmQuery, productCategories: value }), t('Operation: '), true)}
+          {makeDropdown(farmQuery.certOrManagementPlan, convertListValueKeyToId(baseList.concat(MANAGEMENT_PLANS, FARM_CERTIFICATIONS)), (value) => setFarmQuery({ ...farmQuery, certOrManagementPlan: value }), t('Management Techniques: '), true)}
         </div>}
       <div styleName='search-input'>
         <div className='spacer' />
@@ -91,13 +93,13 @@ export default function GroupSearch ({ viewFilter }) {
           styleName='searchBox'
           type='text'
           onChange={e => setSearch(e.target.value)}
-          placeholder='Search groups by keyword'
+          placeholder={t('Search groups by keyword')}
           value={search}
         />
         <div className='spacer' />
       </div>
       <div styleName='group-search-items'>
-        {!pending && groups.length === 0 ? <NoPosts message='No results for this search' /> : ''}
+        {!pending && groups.length === 0 ? <NoPosts message={t('No results for this search')} /> : ''}
         {groups.map(group => {
           const expanded = selectedGroupSlug === group.slug
           return (
@@ -117,26 +119,28 @@ export default function GroupSearch ({ viewFilter }) {
         elementId={CENTER_COLUMN_ID}
       />
       {pending && <Loading />}
-      {(!hasMore && !!offset) && <div styleName='no-more-results'>No more results</div>}
+      {(!hasMore && !!offset) && <div styleName='no-more-results'>{t('No more results')}</div>}
     </>
   )
 }
 
 const sortOptions = (nearCoord) => {
+  const { t } = useTranslation()
   const options = [
-    { id: SORT_NAME, label: 'Group Name' },
-    { id: SORT_SIZE, label: 'Member Count' }
+    { id: SORT_NAME, label: t('Group Name') },
+    { id: SORT_SIZE, label: t('Member Count') }
   ]
 
   if (nearCoord) {
-    options.push({ id: SORT_NEAREST, label: 'Nearest' })
+    options.push({ id: SORT_NEAREST, label: t('Nearest') })
   }
 
   return options
 }
 
 const makeDropdown = (selected, options, onChange, filterLabel = '', isFilter = false) => {
-  const selectedLabel = selected ? options.find(o => o.id === selected).label : 'All'
+  const { t } = useTranslation()
+  const selectedLabel = selected ? options.find(o => o.id === selected).label : t('All')
   return (
     <Dropdown
       alignRight={!isFilter}

@@ -141,7 +141,7 @@ class CreateGroup extends Component {
             onChange={this.updateField('name')}
             value={name}
             theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-            placeholder={this.props.t("Your group's name")}
+            placeholder={this.props.t('Your group\'s name')}
             noClearButton
             maxLength='60'
             onEnter={this.onSubmit}

@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { set, startCase, trim } from 'lodash'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import GroupsSelector from 'components/GroupsSelector'
@@ -24,7 +25,7 @@ import styles from './PrivacySettingsTab.scss' // eslint-disable-line no-unused-
 
 const { object } = PropTypes
 
-export default class PrivacySettingsTab extends Component {
+class PrivacySettingsTab extends Component {
   static propTypes = {
     group: object,
     fetchPending: object
@@ -105,8 +106,8 @@ export default class PrivacySettingsTab extends Component {
     return (
       <div styleName='general.groupSettings'>
         <SettingsSection>
-          <h3>Visibility</h3>
-          <p styleName='general.detailText'>Who is able to see <strong>{name}</strong>?</p>
+          <h3>{this.props.t('Visibility')}</h3>
+          <p styleName='general.detailText'>{this.props.t('Who is able to see <strong>{{name}}</strong>?', { name })}</p>
           {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
             <VisibilitySettingRow
               key={visibilitySetting}
@@ -118,8 +119,8 @@ export default class PrivacySettingsTab extends Component {
         </SettingsSection>
 
         <SettingsSection>
-          <h3>Access</h3>
-          <p styleName='general.detailText'>How can people become members of <strong>{name}</strong>?</p>
+          <h3>{this.props.t('Access')}</h3>
+          <p styleName='general.detailText'>{this.props.t('How can people become members of <strong>{{name}}</strong>?', { name })}</p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
             <AccessibilitySettingRow
               key={accessSetting}
@@ -136,9 +137,9 @@ export default class PrivacySettingsTab extends Component {
         </SettingsSection>
 
         <SettingsSection>
-          <h3>Prerequisite Groups</h3>
-          <p styleName='general.detailText'>When you select a prerequisite group, people must join the selected groups before joining <strong>{name}</strong>. Only parent groups can be added as prerequisite groups.</p>
-          <p styleName='styles.prerequisiteWarning'>
+          <h3>{this.props.t('Prerequisite Groups')}</h3>
+          <p styleName='general.detailText'>{this.props.t('When you select a prerequisite group, people must join the selected groups before joining <strong>{{name}}</strong>. Only parent groups can be added as prerequisite groups.', { name })}</p>
+          <p styleName='styles.prerequisiteWarning'> {/* TODO: handle this translation */}
             <strong styleName='styles.warning'>Warning:</strong> If you select a prerequisite group that has a visibility setting of
             <strong><Icon name='Hidden' styleName='styles.prerequisiteIcon' /> Hidden</strong> or
             <strong><Icon name='Shield' styleName='styles.prerequisiteIcon' /> Protected</strong>,
@@ -153,8 +154,8 @@ export default class PrivacySettingsTab extends Component {
         </SettingsSection>
 
         <SettingsSection>
-          <h3>Group Access Questions</h3>
-          <p styleName='general.detailText'>What questions are asked when a group requests to join this group?</p>
+          <h3>{this.props.t('Group Access Questions')}</h3>
+          <p styleName='general.detailText'>{this.props.t('What questions are asked when a group requests to join this group?')}</p>
 
           <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': askGroupToGroupJoinQuestions })}>
             <div styleName={cx({ 'general.switchContainer': true, 'general.on': askGroupToGroupJoinQuestions })} >
@@ -162,10 +163,10 @@ export default class PrivacySettingsTab extends Component {
                 checked={askGroupToGroupJoinQuestions}
                 onChange={() => this.updateSettingDirectly('settings.askGroupToGroupJoinQuestions')(!askGroupToGroupJoinQuestions)}
                 backgroundColor={askGroupToGroupJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-              <span styleName='general.toggleDescription'>Require groups to answer questions when requesting to join this group</span>
+              <span styleName='general.toggleDescription'>{this.props.t('Require groups to answer questions when requesting to join this group')}</span>
               <div styleName='general.onOff'>
-                <div styleName='general.off'>OFF</div>
-                <div styleName='general.on'>ON</div>
+                <div styleName='general.off'>{this.props.t('OFF')}</div>
+                <div styleName='general.on'>{this.props.t('ON')}</div>
               </div>
             </div>
             <QuestionsForm questions={groupToGroupJoinQuestions} save={this.updateSettingDirectly('groupToGroupJoinQuestions')} disabled={!askGroupToGroupJoinQuestions} />
@@ -173,18 +174,18 @@ export default class PrivacySettingsTab extends Component {
         </SettingsSection>
 
         { type ? <SettingsSection>
-          <h3>Hide {startCase(type)} Data</h3>
-          <p styleName='styles.dataDetail'>If you don't want to display the detailed {type} specific data on your group's profile</p>
+          <h3>{this.props.t('Hide {{type}} Data', { type: startCase(type) })}</h3>
+          <p styleName='styles.dataDetail'>{this.props.t('If you don\'t want to display the detailed {{type}} specific data on your group\'s profile', { type })}</p>
           <div styleName={cx({ 'general.switchContainer': true, 'general.on': hideExtensionData })}>
             <SwitchStyled
               checked={hideExtensionData}
               onChange={() => this.updateSettingDirectly('settings.hideExtensionData')(hideExtensionData === undefined || hideExtensionData === null || !hideExtensionData)}
               backgroundColor={hideExtensionData ? '#0DC39F' : '#8B96A4'}
             />
-            <span styleName='general.toggleDescription'>Hide {type} data for this group</span>
+            <span styleName='general.toggleDescription'>{this.props.t('Hide {{type}} data for this group)', { type })}</span>
             <div styleName='general.onOff'>
-              <div styleName='general.off'>OFF</div>
-              <div styleName='general.on'>ON</div>
+              <div styleName='general.off'>{this.props.t('OFF')}</div>
+              <div styleName='general.on'>{this.props.t('ON')}</div>
             </div>
           </div>
         </SettingsSection>
@@ -192,8 +193,8 @@ export default class PrivacySettingsTab extends Component {
         }
 
         <div styleName='general.saveChanges'>
-          <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
-          <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='general.save-button' />
+          <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? this.props.t('Changes not saved') : this.props.t('Current settings up to date')}</span>
+          <Button label={this.props.t('Save Changes')} color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='general.save-button' />
         </div>
       </div>
     )
@@ -214,6 +215,7 @@ function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting }) {
 }
 
 function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting, forSetting, joinQuestions, updateJoinQuestion, updateSetting, updateSettingDirectly }) {
+  const { t } = useTranslation()
   return <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
     <label>
       <input type='radio' name='accessibility' value={forSetting} onChange={updateSetting('accessibility')} checked={currentSetting === forSetting} />
@@ -230,10 +232,10 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
             checked={askJoinQuestions}
             onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
             backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-          <span styleName='general.toggleDescription'>Require people to answer questions when requesting to join this group</span>
+          <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
           <div styleName='general.onOff'>
-            <div styleName='general.off'>OFF</div>
-            <div styleName='general.on'>ON</div>
+            <div styleName='general.off'>{t('OFF')}</div>
+            <div styleName='general.on'>{t('ON')}</div>
           </div>
         </div>
         <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
@@ -243,6 +245,7 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
 }
 
 function QuestionsForm ({ disabled, questions, save }) {
+  const { t } = useTranslation()
   const updateJoinQuestion = (index) => event => {
     const value = event.target.value
     const newQuestions = questions
@@ -265,7 +268,8 @@ function QuestionsForm ({ disabled, questions, save }) {
   return <div styleName='styles.questionList'>
     {questions.map((q, i) => <div key={i} styleName='styles.question'>
       {q.text ? <div styleName='styles.deleteInput'><Icon name='CircleEx' styleName='styles.close' onClick={clearField(i)} /></div> : <span styleName='styles.createInput'>+</span>}
-      <input name='questions[]' disabled={disabled} value={q.text} placeholder='Add a new question' onChange={updateJoinQuestion(i)} />
+      <input name='questions[]' disabled={disabled} value={q.text} placeholder={t('Add a new question')} onChange={updateJoinQuestion(i)} />
     </div>)}
   </div>
 }
+export default withTranslation()(PrivacySettingsTab)

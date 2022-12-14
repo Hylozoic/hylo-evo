@@ -18,14 +18,17 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
+      value=""
     />
     <span
+      className="cancel-button"
       data-stylename="cancel-button"
       onClick={[Function]}
     >
       Cancel
     </span>
     <span
+      className="add-button"
       data-stylename="add-button"
       onClick={[Function]}
     >
@@ -65,6 +68,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
 <div
+  className="add-new"
   data-stylename="add-moderator add-new"
   onClick={[Function]}
 >
@@ -90,14 +94,17 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
+      value=""
     />
     <span
+      className="cancel-button"
       data-stylename="cancel-button"
       onClick={[Function]}
     >
       Cancel
     </span>
     <span
+      className="add-button"
       data-stylename="add-button"
       onClick={[Function]}
     >
@@ -176,6 +183,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
       ]
     }
     removeItem={[Function]}
+    t={[Function]}
   />
 </Fragment>
 `;
