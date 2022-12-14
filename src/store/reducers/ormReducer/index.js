@@ -590,7 +590,10 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
       console.log(comment, 'THIS IS WHAT YOU ARE WORKING ON NOW')
 
-      const optimisticUpdate = { myReactions: [...comment.myReactions, { emojiFull }], commentReactions: [...comment.commentReactions, { emojiFull, user: { name: me.name, id: me.id } }] }
+      const optimisticUpdate = {
+        myReactions: [...(comment.myReactions || []), { emojiFull }],
+        commentReactions: [...(comment.commentReactions || []), { emojiFull, user: { name: me.name, id: me.id } }]
+      }
 
       comment.update(optimisticUpdate)
 
