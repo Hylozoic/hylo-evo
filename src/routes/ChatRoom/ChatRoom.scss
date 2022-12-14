@@ -129,6 +129,10 @@
   margin: 0 auto;
   box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
   padding: 5px;
+  border-top: 1px solid rgba(222, 224, 228, 0.6);
+  border-bottom: 2px solid rgba(38, 68, 93, .45);
+  border-right: 1px solid rgba(38, 68, 93, .15);
+  border-left: 4px solid rgba(0, 199, 157, 1.0);
   border-radius: 5px;
 }
 
@@ -195,7 +199,12 @@
 @media screen and (max-width: 600px) {
   .post-chat-box {
     width: 100%;
-    margin-bottom: 36px;
+    margin-bottom: 35px;
+    border-top: 1px solid rgba(216, 220, 226, 1.0);
+    border-bottom: 1px solid rgba(216, 220, 226, 1.0);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
   }
 
   .editor {

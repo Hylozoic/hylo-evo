@@ -9,7 +9,6 @@ body {
   align-content: stretch;
   background-color: rgba(225, 229, 233, 0.3);
   align-items: stretch;
-  height: 100vh;
   overflow: hidden;
 }
 
@@ -37,15 +36,25 @@ body {
 }
 
 .main {
-  padding-top: 56px;
   position: relative;
-  flex-grow: 1;
   display: flex;
-  flex-wrap: nowrap;
+  height: 100%;
   width: 100%;
   max-width: 1500px;
-  margin-left: auto;
-  margin-right: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .main-pad {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: nowrap;
+    padding-top: 56px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+  }
+
   &.map-view {
     width: 100%;
     max-width: 100%;
@@ -345,7 +354,7 @@ $drawer-z-index: 51;
   padding-left: 3px;
   position: relative;
   min-height: 1px; // Prevent collapsing
-  height: calc(100vh - 56px);
+  height: 100%;
   flex: 0 0 50%;
   max-width: 50%;
   overflow-y: auto;

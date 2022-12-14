@@ -35,8 +35,15 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 600px) {
   .form-wrapper {
     padding: 0 10px;
+  }
+}
+
+
+@media screen and (max-width: 320px) {
+  .form-wrapper {
+    padding: 0 5px;
   }
 }
