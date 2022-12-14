@@ -31,7 +31,7 @@ const CreateModal = (props) => {
   }
 
   const confirmClose = () => {
-    const confirmed = !isDirty || window.confirmt(t('Changes won\'t be saved. Are you sure you want to cancel?'))
+    const confirmed = !isDirty || window.confirm(t('Changes won\'t be saved. Are you sure you want to cancel?'))
 
     if (confirmed) {
       closeModal()

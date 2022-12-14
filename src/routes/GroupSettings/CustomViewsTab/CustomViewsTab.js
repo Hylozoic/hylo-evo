@@ -283,11 +283,11 @@ function CustomViewRow ({
 
   const sortOptions = type === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS
   const defaultSortVal = defaultSort || (type === 'collection' ? 'order' : 'created')
-
+  const viewCount = parseInt(index) + 1
   return (
     <div styleName='styles.custom-view-container'>
       <h4>
-        <div>{t('<strong>Custom View #{{count}}</strong>{{name}}', { count: parseInt(index) + 1, name })}</div>
+        <div>{t('<strong>Custom View #{{count}}</strong>{{name}}', { count: viewCount, name })}</div>
         <Icon name='Trash' onClick={onDelete} />
       </h4>
       <div styleName='styles.custom-view-row'>

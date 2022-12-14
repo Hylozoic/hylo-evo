@@ -15,7 +15,7 @@ export default function CreateModalChooser ({ location }) {
 
   return (
     <div styleName='chooser'>
-      <h1>{hasLocation && `${t('New Post at this location')}:`}{t('What would you like to create?')}</h1>
+      <h1>{hasLocation && t('New Post at this location:') + ' '}{t('What would you like to create?')}</h1>
       {postTypes.map(postType => {
         querystringParams.set('newPostType', postType)
 
