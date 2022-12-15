@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { find } from 'lodash/fp'
 import { arrayOf, func, number, shape, string, object, bool } from 'prop-types'
 import React, { Component } from 'react'
-import { withTranslation, useTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import CreateTopic from 'components/CreateTopic'
 // import { GroupCell } from 'components/GroupsList/GroupsList'
 import Dropdown from 'components/Dropdown'
@@ -103,67 +103,65 @@ class TopicsSettingsTab extends Component {
     } = this.props
     const { totalTopicsCached } = this.state
 
-    return (
-      <div styleName='wrapper'>
-        <div styleName='default-topics'>
-          <div styleName='title'>{t('Group Suggested Topics')}</div>
-          <p>
-            {t(`Set default topics for your group which will be suggested first when
-            members are creating a new post.
-            Every new member will also be subscribed to these topics when they join.`)}
-          </p>
-          <div styleName='default-topic-list'>
-            {defaultTopics.map(topic =>
-              <TopicListItem
-                key={topic.id}
-                singleGroup={group}
-                topic={topic}
-                setGroupTopicVisibility={this.setGroupTopicVisibility}
-                removeSuggestedTopic={this.removeSuggestedTopic}
-                isSuggested
-              />
-            )}
-            <div styleName='default-topic-selector'>
-              <SingleTopicSelector
-                currentGroup={group}
-                placeholder={t('Add a suggested topic')}
-                onSelectTopic={(topic) => {
-                  topic && this.props.createTopic(topic.name, group.id, true, false)
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        <div styleName='all-topics'>
-          <div styleName='title'>{t('Topic List Editor')}</div>
-          <p>
-            {t(`Below is a list of every topic that any member of your group has used to date. You can choose to hide
-            topics that you would prefer members of your group don't use, or pin topics to the top of the list
-            to make sure people pay attention to posts in those topics.`)}
-          </p>
-          <div styleName='controls'>
-            <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending, totalTopicsCached }} />
-            <CreateTopic
-              buttonText={t('Add a Topic')}
-              groupId={group.id}
-              groupSlug={group.slug}
-              topics={topics} />
-          </div>
-          <div styleName='topic-list' id={TOPIC_LIST_ID}>
-            {topics.map(topic =>
-              <TopicListItem
-                key={topic.id}
-                singleGroup={group}
-                topic={topic}
-                canModerate
-                setGroupTopicVisibility={this.setGroupTopicVisibility}
-              />
-            )}
-            <ScrollListener onBottom={() => fetchMoreTopics()} elementId={TOPIC_LIST_ID} />
+    return (<div styleName='wrapper'>
+      <div styleName='default-topics'>
+        <div styleName='title'>{this.props.t('Group Suggested Topics')}</div>
+        <p>
+          {this.props.t(`Set default topics for your group which will be suggested first when
+          members are creating a new post.
+          Every new member will also be subscribed to these topics when they join.`)}
+        </p>
+        <div styleName='default-topic-list'>
+          {defaultTopics.map(topic =>
+            <TopicListItem
+              key={topic.id}
+              singleGroup={group}
+              topic={topic}
+              setGroupTopicVisibility={this.setGroupTopicVisibility}
+              removeSuggestedTopic={this.removeSuggestedTopic}
+              isSuggested
+            />
+          )}
+          <div styleName='default-topic-selector'>
+            <SingleTopicSelector
+              currentGroup={group}
+              placeholder='Add a suggested topic'
+              onSelectTopic={(topic) => {
+                topic && this.props.createTopic(topic.name, group.id, true, false)
+              }}
+            />
           </div>
         </div>
       </div>
-    )
+      <div styleName='all-topics'>
+        <div styleName='title'>{this.props.t('Topic List Editor')}</div>
+        <p>
+          {this.props.t(`Below is a list of every topic that any member of your group has used to date. You can choose to hide
+          topics that you would prefer members of your group don't use, or pin topics to the top of the list
+          to make sure people pay attention to posts in those topics.`)}
+        </p>
+        <div styleName='controls'>
+          <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending, totalTopicsCached }} />
+          <CreateTopic
+            buttonText={this.props.t('Add a Topic')}
+            groupId={group.id}
+            groupSlug={group.slug}
+            topics={topics} />
+        </div>
+        <div styleName='topic-list' id={TOPIC_LIST_ID}>
+          {topics.map(topic =>
+            <TopicListItem
+              key={topic.id}
+              singleGroup={group}
+              topic={topic}
+              canModerate
+              setGroupTopicVisibility={this.setGroupTopicVisibility}
+            />
+          )}
+          <ScrollListener onBottom={() => fetchMoreTopics()} elementId={TOPIC_LIST_ID} />
+        </div>
+      </div>
+    </div>)
   }
 }
 
@@ -173,28 +171,24 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 
   if (!selected) selected = sortOptions[0]
 
-  return (
-    <div styleName='search-bar'>
-      <TextInput
-        styleName='search-input'
-        value={search}
-        placeholder={t('Search {{count}} topics', { count: totalTopicsCached || '' })}
-        loading={fetchIsPending}
-        noClearButton
-        onChange={event => setSearch(event.target.value)} />
-      <Dropdown
-        styleName='search-order'
-        toggleChildren={<span styleName='search-sorter-label'>
-          {t(selected.label)}
-          <Icon name='ArrowDown' />
-        </span>}
-        items={sortOptions.map(({ id, label }) => ({
-          label: t(label),
-          onClick: () => setSort(id)
-        }))}
-        alignRight />
-    </div>
-  )
+  return <div styleName='search-bar'>
+    <TextInput styleName='search-input'
+      value={search}
+      placeholder={this.props.t(`Search {{count}} topics`, { count: totalTopicsCached || '' })}
+      loading={fetchIsPending}
+      noClearButton
+      onChange={event => setSearch(event.target.value)} />
+    <Dropdown styleName='search-order'
+      toggleChildren={<span styleName='search-sorter-label'>
+        {selected.label}
+        <Icon name='ArrowDown' />
+      </span>}
+      items={sortOptions.map(({ id, label }) => ({
+        label,
+        onClick: () => setSort(id)
+      }))}
+      alignRight />
+  </div>
 }
 
 export function TopicListItem ({ topic, singleGroup, setGroupTopicVisibility, removeSuggestedTopic, isSuggested }) {
