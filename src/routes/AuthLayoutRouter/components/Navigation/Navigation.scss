@@ -13,10 +13,10 @@
   transition: 0.5s;
   // // overriding bootstrap default. Seems broken
   // padding: 0 0 !important;
-  margin: 0 0 15px 30px;
+  margin: 0 0 0 30px;
   overflow: hidden;
   white-space: nowrap;
-  height: calc(100vh - 56px);
+  height: 100%;
 }
 
 .collapser-collapsed {

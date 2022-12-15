@@ -7,6 +7,7 @@ import { IoSend } from 'react-icons/io5'
 import ReactResizeDetector from 'react-resize-detector'
 import { Virtuoso } from 'react-virtuoso'
 import AttachmentManager from 'components/AttachmentManager'
+import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import Button from 'components/Button'
 import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
@@ -93,6 +94,9 @@ export default function ChatRoom (props) {
   const chatsRef = useRef()
   const editorRef = useRef()
   const virtuoso = useRef(null)
+
+  const { hideNavLayout } = useLayoutFlags()
+  const withoutNav = isWebView() || hideNavLayout
 
   // Whether scroll is at the bottom of the chat (most recent post)
   const [atBottom, setAtBottom] = useState(false)
@@ -368,7 +372,7 @@ export default function ChatRoom (props) {
   if (topicLoading) return <Loading />
 
   return (
-    <div styleName='container'>
+    <div styleName={cx('container', { 'without-nav': withoutNav })}>
       <TopicFeedHeader
         bannerUrl={group && group.bannerUrl}
         currentUser={currentUser}

@@ -197,14 +197,23 @@
   }
 }
 @media screen and (max-width: 600px) {
+
   .post-chat-box {
     width: 100%;
+    //margin-bottom: 0px;
     margin-bottom: 35px;
     border-top: 1px solid rgba(216, 220, 226, 1.0);
     border-bottom: 1px solid rgba(216, 220, 226, 1.0);
     border-left: none;
     border-right: none;
     border-radius: 0;
+  }
+  .without-nav.container {
+     padding-bottom: 0;
+
+    .post-chat-box {
+      margin-bottom: 0px;
+    }
   }
 
   .editor {
