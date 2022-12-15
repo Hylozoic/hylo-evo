@@ -42,18 +42,6 @@ body {
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-
-  .main-pad {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    flex-wrap: nowrap;
-    padding-top: 56px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-  }
-
   &.map-view {
     width: 100%;
     max-width: 100%;
@@ -63,6 +51,14 @@ body {
   }
 }
 
+.main-pad {
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: nowrap;
+  padding-top: 56px;
+  flex-grow: 1;
+  flex-direction: row;
+}
 
 $drawer-width: 367px;
 $drawer-height: 100vh;
