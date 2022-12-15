@@ -59,7 +59,7 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings/views",
       },
       Object {
-        "component": <Memo(Connect(TopicsSettingsTab))
+        "component": <Memo(Connect(withI18nextTranslation(TopicsSettingsTab)))
           group={
             Object {
               "id": 1,

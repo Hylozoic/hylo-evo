@@ -39,7 +39,7 @@ module.exports = function (api) {
           extensions: ['.graphql']
         }
       ],
-      ['i18next-extract', { keySeparator: null, locales: ['es'], nsSeparator: null, outputPath: 'public/locales/{{locale}}/{{ns}}.json' }],
+      ['i18next-extract', { discardOldKeys: true, keySeparator: null, locales: ['es'], nsSeparator: null, outputPath: 'public/locales/{{locale}}/{{ns}}.json' }],
       'import-graphql',
       'inline-import',
       'lodash'

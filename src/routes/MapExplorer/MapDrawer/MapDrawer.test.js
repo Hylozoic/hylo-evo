@@ -4,6 +4,18 @@ import * as LayoutFlagsContext from 'contexts/LayoutFlagsContext'
 
 import MapDrawer, { TabBar } from './MapDrawer'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 const defaultMinProps = {
   context: 'groups',
   currentUser: { id: 1 },

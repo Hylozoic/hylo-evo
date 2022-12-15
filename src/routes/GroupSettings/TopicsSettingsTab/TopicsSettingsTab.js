@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { find } from 'lodash/fp'
 import { arrayOf, func, number, shape, string, object, bool } from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import CreateTopic from 'components/CreateTopic'
 // import { GroupCell } from 'components/GroupsList/GroupsList'
 import Dropdown from 'components/Dropdown'
@@ -30,7 +31,7 @@ const topicType = shape({
   isSubscribed: bool
 })
 
-export default class TopicsSettingsTab extends Component {
+class TopicsSettingsTab extends Component {
   state = {
     createTopicModalVisible: false
   }
@@ -103,11 +104,11 @@ export default class TopicsSettingsTab extends Component {
 
     return (<div styleName='wrapper'>
       <div styleName='default-topics'>
-        <div styleName='title'>Group Suggested Topics</div>
+        <div styleName='title'>{this.props.t('Group Suggested Topics')}</div>
         <p>
-          Set default topics for your group which will be suggested first when
+          {this.props.t(`Set default topics for your group which will be suggested first when
           members are creating a new post.
-          Every new member will also be subscribed to these topics when they join.
+          Every new member will also be subscribed to these topics when they join.`)}
         </p>
         <div styleName='default-topic-list'>
           {defaultTopics.map(topic =>
@@ -132,16 +133,16 @@ export default class TopicsSettingsTab extends Component {
         </div>
       </div>
       <div styleName='all-topics'>
-        <div styleName='title'>Topic List Editor</div>
+        <div styleName='title'>{this.props.t('Topic List Editor')}</div>
         <p>
-          Below is a list of every topic that any member of your group has used to date. You can choose to hide
+          {this.props.t(`Below is a list of every topic that any member of your group has used to date. You can choose to hide
           topics that you would prefer members of your group don't use, or pin topics to the top of the list
-          to make sure people pay attention to posts in those topics.
+          to make sure people pay attention to posts in those topics.`)}
         </p>
         <div styleName='controls'>
           <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending, totalTopicsCached }} />
           <CreateTopic
-            buttonText='Add a Topic'
+            buttonText={this.props.t('Add a Topic')}
             groupId={group.id}
             groupSlug={group.slug}
             topics={topics} />
@@ -171,7 +172,7 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
   return <div styleName='search-bar'>
     <TextInput styleName='search-input'
       value={search}
-      placeholder={`Search ${totalTopicsCached || ''} topics`}
+      placeholder={this.props.t(`Search {{count}} topics`, { count: totalTopicsCached || '' })}
       loading={fetchIsPending}
       noClearButton
       onChange={event => setSearch(event.target.value)} />
@@ -220,3 +221,5 @@ export function TopicListItem ({ topic, singleGroup, setGroupTopicVisibility, re
     )}
   </div>
 }
+
+export default withTranslation()(TopicsSettingsTab)

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, Redirect } from 'react-router-dom'
 import { every, isEmpty } from 'lodash/fp'
@@ -18,6 +19,7 @@ export default function JoinGroup (props) {
   const dispatch = useDispatch()
   const signupComplete = useSelector(getSignupComplete)
   const [redirectTo, setRedirectTo] = useState()
+  const { t } = useTranslation()
 
   // This is used in iFrames where we want people to join a group and go directly to a specific page (for OpenTEAM coffee shop for example)
   const redirectToView = getQuerystringParam('redirectToView', null, props)
@@ -30,7 +32,7 @@ export default function JoinGroup (props) {
           accessCode: getRouteParam('accessCode', null, props)
         }
         if (every(isEmpty, invitationTokenAndCode)) {
-          throw new Error('Please provide either a `token` query string parameter or `accessCode` route param')
+          throw new Error(t('Please provide either a `token` query string parameter or `accessCode` route param'))
         }
 
         if (signupComplete) {
@@ -41,7 +43,7 @@ export default function JoinGroup (props) {
           if (groupSlug) {
             setRedirectTo(groupUrl(groupSlug, redirectToView || 'explore'))
           } else {
-            throw new Error('Join group was unsuccessful')
+            throw new Error(t('Join group was unsuccessful'))
           }
         } else {
           const result = await dispatch(checkInvitation(invitationTokenAndCode))
@@ -55,7 +57,7 @@ export default function JoinGroup (props) {
           }
         }
       } catch (error) {
-        window.alert('Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group moderator for another one.')
+        window.alert(t('Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group moderator for another one.'))
         history.push(baseUrl({}))
       }
     })()

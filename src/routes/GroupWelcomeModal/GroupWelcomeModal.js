@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 import { bgImageStyle } from 'util/index'
@@ -23,6 +24,7 @@ export default function GroupWelcomeModal (props) {
   const currentMembership = useSelector(state => getMyGroupMembership(state, props))
   const group = presentGroup(currentGroup)
   const showJoinForm = currentMembership?.settings?.showJoinForm
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (showJoinForm && group?.id) dispatch(fetchGroupWelcomeData(group.id))
@@ -52,7 +54,7 @@ export default function GroupWelcomeModal (props) {
           <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='banner'>
             <div styleName='banner-content'>
               <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} size='50px' square />
-              <h3>Welcome to {group.name}!</h3>
+              <h3>{t('Welcome to {{group.name}}!', { group })}</h3>
             </div>
             <div styleName='fade' />
           </div>
@@ -60,7 +62,7 @@ export default function GroupWelcomeModal (props) {
             {group.settings.showSuggestedSkills && group.suggestedSkills && group.suggestedSkills.length > 0 &&
               <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
             <div styleName='call-to-action'>
-              <Button label='Jump in!' data-testid='jump-in' onClick={closeModal} />
+              <Button label={t('Jump in!')} data-testid='jump-in' onClick={closeModal} />
             </div>
           </div>
         </div>

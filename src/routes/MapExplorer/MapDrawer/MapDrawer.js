@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import isWebView from 'util/webView'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
@@ -35,14 +36,16 @@ function MapDrawer (props) {
   const {
     sortBy
   } = filters
+  const { t } = useTranslation()
 
+  const localizedTabNames = { posts: t('Posts'), groups: t('Groups'), members: t('Members') }
   const searchText = filters.search
 
   const { hideNavLayout } = useLayoutFlags()
   const withoutNav = isWebView() || hideNavLayout
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [currentTab, setCurrentTab] = useState('Posts')
+  const [currentTab, setCurrentTab] = useState(localizedTabNames.posts)
 
   const filterByTopic = (topic) => {
     const newFilterTopics = filters.topics.concat(topic)
@@ -56,10 +59,9 @@ function MapDrawer (props) {
 
   // Don't show topics we are already filtering by in searches
   const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
-
-  const tabs = { 'Posts': numTotalPosts, 'Groups': groups.length }
+  const tabs = { [localizedTabNames.posts]: numTotalPosts, [localizedTabNames.groups]: groups.length }
   if (context !== 'public') {
-    tabs['Members'] = members.length
+    tabs[localizedTabNames.members] = members.length
   }
 
   return (
@@ -79,7 +81,7 @@ function MapDrawer (props) {
               e.target.blur()
             }
           }}
-          placeholder='Filter by topics and keywords'
+          placeholder={t('Filter by topics and keywords')}
           value={search}
         />
         <Icon name='Funnel' className={styles.filterIcon} />
@@ -129,9 +131,9 @@ function MapDrawer (props) {
         <TabBar currentTab={currentTab} tabs={tabs} selectTab={setCurrentTab} pendingPostsDrawer={pendingPostsDrawer} />
       </div>
 
-      {currentTab === 'Posts' ? <div styleName='contentWrapper'>
+      {currentTab === localizedTabNames.posts ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
-          <span>Sort posts by:</span>
+          <span>{t('Sort posts by:')}</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>
               {SORT_OPTIONS.find(o => o.id === sortBy).label}
@@ -159,7 +161,7 @@ function MapDrawer (props) {
 
         <ScrollListener onBottom={() => fetchPostsForDrawer(numFetchedPosts, false)} elementId='mapDrawerWrapper' />
       </div>
-        : currentTab === 'Members' ? <div styleName='contentWrapper'>
+        : currentTab === localizedTabNames.members ? <div styleName='contentWrapper'>
           <div styleName='contentListContainer' id='contentList'>
             {members.map(m => <Member
               canModerate={false}
@@ -171,7 +173,7 @@ function MapDrawer (props) {
             />)}
           </div>
         </div>
-          : currentTab === 'Groups' ? <div styleName='contentWrapper'>
+          : currentTab === localizedTabNames.groups ? <div styleName='contentWrapper'>
             <div styleName='contentListContainer' id='contentList'>
               {groups.map(group => <GroupCard
                 key={group.id}
@@ -200,20 +202,22 @@ MapDrawer.defaultProps = {
   members: [],
   posts: [],
   routeParams: {},
-  onUpdateFilters: (opts) => { console.log('Updating filters with: ' + opts) }
+  onUpdateFilters: (opts) => { console.log(this.props.t('Updating filters with:') + ' ' + opts) }
 }
 
 export default MapDrawer
 
 export function TabBar ({ currentTab, tabs, selectTab, pendingPostsDrawer }) {
+  const { t } = useTranslation()
+  const posts = t('Posts')
   return <ul styleName='tab-bar'>
     {Object.keys(tabs).map(name =>
       <li key={name}
         styleName={name === currentTab ? 'tab-active' : 'tab'}
         onClick={() => selectTab(name)}>
         {name}&nbsp;
-        {(name !== 'Posts' || !pendingPostsDrawer) && <span styleName='tabCount'>{tabs[name]}</span>}
-        {name === 'Posts' && pendingPostsDrawer && <Loading className={styles.loading} size={20} />}
+        {(name !== posts || !pendingPostsDrawer) && <span styleName='tabCount'>{tabs[name]}</span>}
+        {name === posts && pendingPostsDrawer && <Loading className={styles.loading} size={20} />}
       </li>)}
   </ul>
 }

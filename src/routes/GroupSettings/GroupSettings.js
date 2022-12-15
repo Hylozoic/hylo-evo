@@ -1,5 +1,6 @@
 import { get } from 'lodash/fp'
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import CustomViewsTab from './CustomViewsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
 import GroupSettingsTab from './GroupSettingsTab'
@@ -41,6 +42,7 @@ export default function GroupSettings ({
   upload
 }) {
   const slug = get('slug', group)
+  const { t } = useTranslation()
 
   useEffect(() => {
     group && fetchGroupSettings()
@@ -52,7 +54,7 @@ export default function GroupSettings ({
   return <FullPageModal goToOnClose={groupUrl(slug)}
     content={[
       {
-        name: 'Settings',
+        name: t('Settings'),
         path: groupUrl(slug, 'settings'),
         component: <GroupSettingsTab
           fetchLocation={fetchLocation}
@@ -65,17 +67,17 @@ export default function GroupSettings ({
         />
       },
       {
-        name: group.moderatorDescriptorPlural || 'Moderators',
+        name: group.moderatorDescriptorPlural || t('Moderators'),
         path: groupUrl(slug, 'settings/moderators'),
         component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
       },
       {
-        name: 'Privacy & Access',
+        name: t('Privacy & Access'),
         path: groupUrl(slug, 'settings/privacy'),
         component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} parentGroups={parentGroups} fetchPending={fetchPending} />
       },
       {
-        name: 'Custom Views',
+        name: t('Custom Views'),
         path: groupUrl(slug, 'settings/views'),
         component: <CustomViewsTab
           group={group}
@@ -90,17 +92,17 @@ export default function GroupSettings ({
         />
       },
       {
-        name: 'Topics',
+        name: t('Topics'),
         path: groupUrl(slug, 'settings/topics'),
         component: <TopicsSettingsTab group={group} />
       },
       {
-        name: 'Invite',
+        name: t('Invite'),
         path: groupUrl(slug, 'settings/invite'),
         component: <InviteSettingsTab group={group} />
       },
       {
-        name: 'Join Requests',
+        name: t('Join Requests'),
         path: groupUrl(slug, 'settings/requests'),
         component: <MembershipRequestsTab
           group={group}
@@ -108,7 +110,7 @@ export default function GroupSettings ({
         />
       },
       {
-        name: 'Related Groups',
+        name: t('Related Groups'),
         path: groupUrl(slug, 'settings/relationships'),
         component: <RelatedGroupsTab
           group={group}
@@ -124,14 +126,14 @@ export default function GroupSettings ({
         />
       },
       {
-        name: 'Export Data',
+        name: t('Export Data'),
         path: groupUrl(slug, 'settings/export'),
         component: <ExportDataTab
           group={group}
         />
       },
       {
-        name: 'Delete',
+        name: t('Delete'),
         path: groupUrl(slug, 'settings/delete'),
         component: <DeleteSettingsTab group={group} deleteGroup={deleteGroup} />
       }
