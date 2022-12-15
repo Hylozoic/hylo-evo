@@ -201,10 +201,8 @@ export default function ChatPost ({
               ? <HyloEditor
                 contentHTML={details}
                 groupIds={post.groups.map(g => g.id)}
-                // onAddTopic={handleAddTopic}
                 onEscape={handleEditCancel}
                 onEnter={handleEditSave}
-                // onUpdate={handleDetailsUpdate}
                 placeholder='Edit Post'
                 ref={editorRef}
                 showMenu={!isWebView()}

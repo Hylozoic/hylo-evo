@@ -1,4 +1,4 @@
-import ChatRoom from './ChatRoom'
+import component from './ChatRoom'
 import connector from './ChatRoom.connector'
 
-export default connector(ChatRoom)
+export default connector(component)

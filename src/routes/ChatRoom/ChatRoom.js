@@ -45,7 +45,6 @@ function useEventCallback (fn) {
 
 export default function ChatRoom (props) {
   const {
-    // changeSearch,
     addAttachment,
     clearImageAttachments,
     clearLinkPreview,
@@ -68,7 +67,6 @@ export default function ChatRoom (props) {
     querystringParams,
     removeLinkPreview,
     respondToEvent,
-    // search,
     selectedPostId,
     showDetails,
     topicLoading,
@@ -125,8 +123,6 @@ export default function ChatRoom (props) {
 
   // Cache total number of posts here to handle bug on back-end
   // https://github.com/Hylozoic/hylo-node/issues/901
-  // const [cachedTotalPostsPast, setCachedTotalPostsPast] = useState(false)
-  // const [cachedTotalPostsFuture, setCachedTotalPostsFuture] = useState(false)
   const cachedTotalPostsPast = useRef(false)
   const cachedTotalPostsFuture = useRef(false)
 
