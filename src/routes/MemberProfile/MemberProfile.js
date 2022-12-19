@@ -197,19 +197,17 @@ export function ActionTooltip ({ content, hideCopyTip, onClick }) {
   const [copied, setCopied] = useState(false)
   const { t } = useTranslation()
 
-  return (
-    <div styleName='action-icon-tooltip'>
-      <span styleName='action-icon-tooltip-content' onClick={onClick}>
-        {content}
-      </span>
-      {!hideCopyTip && <CopyToClipboard text={content} onCopy={() => setCopied(true)}>
-        <Button styleName={cx('action-icon-tooltip-button', { copied })}>
-          <Icon name='Copy' />
-          {copied ? t('Copied!') : t('Copy')}
-        </Button>
-      </CopyToClipboard>}
-    </div>
-  )
+  return <div styleName='action-icon-tooltip'>
+    <span styleName='action-icon-tooltip-content' onClick={onClick}>
+      {content}
+    </span>
+    {!hideCopyTip && <CopyToClipboard text={content} onCopy={() => setCopied(true)}>
+      <Button styleName={cx('action-icon-tooltip-button', { copied })}>
+        <Icon name='Copy' />
+        {copied ? t('Copied!') : t('Copy')}
+      </Button>
+    </CopyToClipboard>}
+  </div>
 }
 
 export function ActionButtons ({ items }) {
