@@ -2,6 +2,13 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import denormalized from './MemberProfile.test.json'
 import MemberProfile from './MemberProfile'
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' }
+    return Component
+  }
+}))
 
 describe('MemberProfile', () => {
   const defaultTestProps = {

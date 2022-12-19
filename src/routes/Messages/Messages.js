@@ -1,4 +1,5 @@
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link, Route } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types'
@@ -19,7 +20,7 @@ import './Messages.scss'
 
 export const NEW_THREAD_ID = 'new'
 
-export default class Messages extends React.Component {
+class Messages extends React.Component {
   static defaultProps = {
     participants: [],
     threads: [],
@@ -171,8 +172,8 @@ export default class Messages extends React.Component {
           <div styleName='messages-title'>
             <Icon name='Messages' />
             { !forNewThread
-              ? <h3>Messages</h3>
-              : <h3>New Message</h3>
+              ? <h3>{this.props.t('Messages')}</h3>
+              : <h3>{this.props.t('New Message')}</h3>
             }
           </div>
         </div>
@@ -209,7 +210,7 @@ export default class Messages extends React.Component {
                             </Link>
                             <div styleName='messages-title'>
                               <Icon name='Messages' />
-                              <h3>New Message</h3>
+                              <h3>{this.props.t('New Message')}</h3>
                             </div>
                           </div>
                           <PeopleSelector
@@ -303,3 +304,5 @@ Messages.propTypes = {
   updateMessageText: PropTypes.func,
   updateThreadReadTime: PropTypes.func
 }
+
+export default withTranslation()(Messages)

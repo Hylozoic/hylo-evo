@@ -109,27 +109,21 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     >
       <div
         data-stylename="profile-subhead"
-      >
-        Skills & Interests
-      </div>
+      />
       <Connect(SkillsSection)
         editable={false}
         personId="1"
       />
       <div
         data-stylename="profile-subhead"
-      >
-        What I'm Learning
-      </div>
+      />
       <Connect(_default)
         editable={false}
         personId="1"
       />
       <div
         data-stylename="profile-subhead"
-      >
-        Hylo Groups
-      </div>
+      />
       <Membership
         index={0}
         key="3"
@@ -148,9 +142,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       />
       <div
         data-stylename="profile-subhead"
-      >
-        Upcoming Events
-      </div>
+      />
       <Event
         event={
           Object {
@@ -223,9 +215,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       />
       <div
         data-stylename="profile-subhead"
-      >
-        Projects
-      </div>
+      />
       <Project
         key="0"
         memberCap={3}

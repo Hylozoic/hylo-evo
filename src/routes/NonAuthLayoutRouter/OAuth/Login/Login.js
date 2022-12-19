@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { formatError } from '../../util'
@@ -18,6 +19,7 @@ export default function Login (props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
+  const { t } = useTranslation()
 
   const submit = async () => {
     try {
@@ -51,7 +53,7 @@ export default function Login (props) {
 
   return <div className={className}>
     <div styleName='formWrapper'>
-      <h1 styleName='title'>Sign in to Hylo</h1>
+      <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
       {error && formatError(error, 'Login')}
 
       <TextInput
@@ -74,7 +76,7 @@ export default function Login (props) {
         value={password}
       />
       <Link to='/reset-password' styleName='forgot-password'>
-        <span styleName='forgot-password'>Forgot password?</span>
+        <span styleName='forgot-password'>{t('Forgot password?')}</span>
       </Link>
 
       <Button styleName='submit' label='Sign in' onClick={submit} />

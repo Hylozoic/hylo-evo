@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { formatError } from '../util'
@@ -19,6 +20,7 @@ export default function Login (props) {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [error, setError] = useState(getQuerystringParam('error', null, props))
+  const { t } = useTranslation()
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -60,7 +62,7 @@ export default function Login (props) {
   return (
     <div className={props.className}>
       <div styleName='formWrapper'>
-        <h1 styleName='title'>Sign in to Hylo</h1>
+        <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
 
         {error && formatError(error, 'Login')}
 
@@ -85,7 +87,7 @@ export default function Login (props) {
         />
 
         <Link to='/reset-password' styleName='forgot-password'>
-          <span styleName='forgot-password'>Forgot password?</span>
+          <span styleName='forgot-password'>{t('Forgot password?')}</span>
         </Link>
 
         <Button styleName='submit' label='Sign in' onClick={handleLogin} />

@@ -1,5 +1,6 @@
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { bool, func, string, arrayOf, shape } from 'prop-types'
 import Button from 'components/Button'
@@ -14,7 +15,7 @@ import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 import './Members.scss'
 
-export default class Members extends Component {
+class Members extends Component {
   componentDidMount () {
     this.fetchOrShowCached()
   }
@@ -55,18 +56,18 @@ export default class Members extends Component {
       <div styleName='header'>
         {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
           <Button styleName='invite'
-            label='Invite People'
+            label={this.props.t('Invite People')}
             color='green-white-green-border'
             narrow />
         </Link>}
-        <div styleName='title'>Members</div>
+        <div styleName='title'>{this.props.t('Members')}</div>
         <div styleName='total-members'>
-          {memberCount} Total Members
+          {this.props.t('{{memberCount}} Total Members', { memberCount })}
         </div>
       </div>
       <div styleName='content'>
         <div styleName='controls'>
-          <TextInput placeholder='Search by name or skills & interests'
+          <TextInput placeholder={this.props.t('Search by name or skills & interests')}
             styleName='search'
             defaultValue={search}
             onChange={e => this.search(e.target.value)} />
@@ -113,8 +114,9 @@ Members.propTypes = {
 }
 
 function SortLabel ({ text }) {
+  const { t } = useTranslation()
   return <div styleName='sort-label'>
-    <span>Sort by <strong>{text}</strong></span>
+    <span>{t('Sort by')} <strong>{text}</strong></span>
     <Icon name='ArrowDown' styleName='sort-icon' />
   </div>
 }
@@ -131,3 +133,4 @@ function sortKeysFactory (context) {
 export function twoByTwo (list) {
   return times(i => list.slice(i * 2, i * 2 + 2), (list.length + 1) / 2)
 }
+export default withTranslation()(Members)

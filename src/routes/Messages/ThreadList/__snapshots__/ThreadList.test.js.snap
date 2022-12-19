@@ -20,16 +20,14 @@ exports[`ThreadList matches the last snapshot 1`] = `
       <TextInput
         noClearButton={true}
         onChange={[Function]}
-        placeholder="Search for people..."
+        placeholder=""
       />
     </div>
     <Link
       data-stylename="new-message"
       to="/messages/new"
     >
-      <span>
-        New
-      </span>
+      <span />
       <Icon
         data-stylename="messages-icon"
         name="Messages"
@@ -42,9 +40,7 @@ exports[`ThreadList matches the last snapshot 1`] = `
   >
     <div
       data-stylename="no-conversations"
-    >
-      You have no active messages
-    </div>
+    />
   </ul>
   <ScrollListener
     elementId="thread-list-list"

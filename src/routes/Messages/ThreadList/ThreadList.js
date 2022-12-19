@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { get, isEmpty, orderBy } from 'lodash/fp'
@@ -14,7 +15,7 @@ import { participantAttributes } from 'store/models/MessageThread'
 import Loading from 'components/Loading'
 import './ThreadList.scss'
 
-export default class ThreadList extends Component {
+class ThreadList extends Component {
   static defaultProps = {
     threads: []
   }
@@ -39,7 +40,7 @@ export default class ThreadList extends Component {
             <Icon name='Search' />
           </div>
           <TextInput
-            placeholder='Search for people...'
+            placeholder={this.props.t('Search for people...')}
             value={threadSearch}
             onChange={this.onSearchChange}
             onFocus={this.props.onFocus}
@@ -47,7 +48,7 @@ export default class ThreadList extends Component {
           />
         </div>
         <Link styleName='new-message' to='/messages/new'>
-          <span>New</span>
+          <span>{this.props.t('New')}</span>
           <Icon name='Messages' styleName='messages-icon' />
         </Link>
       </div>
@@ -70,9 +71,9 @@ export default class ThreadList extends Component {
         {threadsPending &&
           <Loading type='bottom' />}
         {!threadsPending && isEmpty(threads) && !threadSearch &&
-          <div styleName='no-conversations'>You have no active messages</div>}
+          <div styleName='no-conversations'>{this.props.t('You have no active messages')}</div>}
         {!threadsPending && isEmpty(threads) && threadSearch &&
-          <div styleName='no-conversations'>No messages found</div>}
+          <div styleName='no-conversations'>{this.props.t('No messages found')}</div>}
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}
@@ -148,3 +149,5 @@ function ThreadNames ({ names }) {
     {names}
   </div>
 }
+
+export default withTranslation()(ThreadList)
