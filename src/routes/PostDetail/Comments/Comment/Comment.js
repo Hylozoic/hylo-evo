@@ -95,7 +95,8 @@ export class Comment extends Component {
               </div>
               <EmojiRow
                 className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
-                {...comment}
+                commentReactions={comment.commentReactions}
+                myReactions={comment.myReactions}
                 currentUser={currentUser}
                 postId={comment.post}
                 commentId={comment.id}
@@ -129,7 +130,8 @@ export class Comment extends Component {
             <>
               <EmojiRow
                 className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
-                {...comment}
+                commentReactions={comment.commentReactions}
+                myReactions={comment.myReactions}
                 currentUser={currentUser}
                 postId={comment.post}
                 commentId={comment.id}

@@ -1,57 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fetchGroupTopic should match latest snapshot 1`] = `
-Object {
-  "graphql": Object {
-    "query": "query ($groupSlug: String, $topicName: String) {
-        groupTopic(groupSlug: $groupSlug, topicName: $topicName) {
-          id
-          postsTotal
-          followersTotal
-          topic {
-            id
-            name
-          }
-          group {
-            id
-          }
-        }
-      }",
-    "variables": Object {
-      "groupSlug": "goteam",
-      "topicName": "petitions",
-    },
-  },
-  "meta": Object {
-    "extractModel": "GroupTopic",
-  },
-  "type": "FETCH_GROUP_TOPIC",
-}
-`;
-
-exports[`fetchTopic should match latest snapshot 1`] = `
-Object {
-  "graphql": Object {
-    "query": "query ($name: String, $id: ID) {
-        topic(name: $name, id: $id) {
-          id
-          name
-          postsTotal
-          followersTotal
-        }
-      }",
-    "variables": Object {
-      "id": undefined,
-      "name": "petitions",
-    },
-  },
-  "meta": Object {
-    "extractModel": "Topic",
-  },
-  "type": "FETCH_TOPIC",
-}
-`;
-
 exports[`works for a group 1`] = `
 Object {
   "graphql": Object {
@@ -60,8 +8,11 @@ Object {
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $isFulfilled: Boolean,
   $offset: Int,
   $order: String,
@@ -86,13 +37,16 @@ Object {
     bannerUrl
     postCount
     
-posts: viewPosts(
+posts(
   activePostsOnly: $activePostsOnly,
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
+  collectionToFilterOut: $collectionToFilterOut,
+  cursor: $cursor,
   filter: $filter,
   first: $first,
+  forCollection: $forCollection,
   isFulfilled: $isFulfilled,
   offset: $offset,
   order: $order,
@@ -131,13 +85,16 @@ posts: viewPosts(
     avatarUrl
   }
   commentersTotal
+  commentsTotal
   
   linkPreview {
+    description
     id
+    imageUrl
     title
     url
-    imageUrl
   }
+  linkPreviewFeatured
   location
   locationObject {
     id
@@ -158,8 +115,20 @@ posts: viewPosts(
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
+  myReactions {
+    emojiFull
+    id
+  }
+  postReactions {
+    emojiFull
+    id
+    user {
+      id
+      name
+    }
+  }
   groups {
     id
     name
@@ -221,9 +190,12 @@ posts: viewPosts(
       "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
+      "collectionToFilterOut": undefined,
       "context": "groups",
+      "cursor": undefined,
       "filter": "offer",
       "first": 20,
+      "forCollection": undefined,
       "offset": 20,
       "order": undefined,
       "search": "gardening",
@@ -253,9 +225,12 @@ Object {
   $afterTime: Date,
   $beforeTime: Date,
   $boundingBox: [PointInput],
+  $collectionToFilterOut: ID,
   $context: String,
+  $cursor: ID,
   $filter: String,
   $first: Int,
+  $forCollection: ID,
   $groupSlugs: [String],
   $isFulfilled: Boolean,
   $offset: Int,
@@ -272,8 +247,11 @@ posts(
   afterTime: $afterTime,
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
+  collectionToFilterOut: $collectionToFilterOut,
+  cursor: $cursor,
   filter: $filter,
   first: $first,
+  forCollection: $forCollection,
   groupSlugs: $groupSlugs,
   isFulfilled: $isFulfilled,
   offset: $offset,
@@ -314,13 +292,16 @@ posts(
     avatarUrl
   }
   commentersTotal
+  commentsTotal
   
   linkPreview {
+    description
     id
+    imageUrl
     title
     url
-    imageUrl
   }
+  linkPreviewFeatured
   location
   locationObject {
     id
@@ -341,8 +322,20 @@ posts(
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
+  myReactions {
+    emojiFull
+    id
+  }
+  postReactions {
+    emojiFull
+    id
+    user {
+      id
+      name
+    }
+  }
   groups {
     id
     name
@@ -403,9 +396,12 @@ posts(
       "activePostsOnly": undefined,
       "afterTime": undefined,
       "beforeTime": undefined,
+      "collectionToFilterOut": undefined,
       "context": "all",
+      "cursor": undefined,
       "filter": "request",
       "first": 20,
+      "forCollection": undefined,
       "offset": 20,
       "order": undefined,
       "search": "graphic design",

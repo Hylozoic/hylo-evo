@@ -1,5 +1,7 @@
-import React from 'react'
 import { shallow } from 'enzyme'
+import React from 'react'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import ChatPost from './index'
 
 it('matches last snapshot', () => {
@@ -26,6 +28,7 @@ it('matches last snapshot', () => {
       }
     ]
   }
-  const wrapper = shallow(<ChatPost {...props} />)
+  const wrapper = shallow(<Provider store={createStore(() => {})}><ChatPost {...props} /></Provider>)
   expect(wrapper).toMatchSnapshot()
 })
+

@@ -136,9 +136,11 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   return reduce((memo, group) => {
     queriesToMatch.push(
       // TODO: add all the versions with activePostsOnly as false and true?
+      { context: 'groups', slug: group.slug },
       { context: 'groups', slug: group.slug, activePostsOnly: false },
       { context: 'groups', slug: group.slug, activePostsOnly: true },
       { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
+      { context: 'groups', slug: group.slug, filter: type },
       { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false },
       { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false },
       { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true },

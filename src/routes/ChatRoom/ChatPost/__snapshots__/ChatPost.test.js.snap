@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches last snapshot 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "@@observable": [Function],
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Object {
+        "addNestedSub": [Function],
+        "getListeners": [Function],
+        "handleChangeWrapper": [Function],
+        "isSubscribed": [Function],
+        "notifyNestedSubs": [Function],
+        "trySubscribe": [Function],
+        "tryUnsubscribe": [Function],
+      },
+    }
+  }
+>
+  <ChatPost
+    className="classy"
+    details="the details"
+    expanded={true}
+    fileAttachments={
+      Array [
+        Object {
+          "id": 1,
+          "url": "https://www.hylo.com/awitp.pdf",
+        },
+        Object {
+          "id": 1,
+          "url": "http://www.google.com/lalala.zip",
+        },
+      ]
+    }
+    highlightProps={
+      Object {
+        "term": "foo",
+      }
+    }
+    id={1}
+    linkPreview={
+      Object {
+        "imageUrl": "foo.png",
+        "title": "a walk in the park",
+        "url": "www.hylo.com/awitp",
+      }
+    }
+    slug="foomunity"
+  />
+</ContextProvider>
+`;

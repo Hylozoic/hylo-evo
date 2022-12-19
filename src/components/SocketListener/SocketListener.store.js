@@ -106,12 +106,12 @@ export function ormSessionReducer (session, { meta, type, payload }) {
 
         post.topics.forEach(topicId => {
           increment(GroupTopic.safeGet({
-            topic: topicId, group: payload.groupId
+            topic: topicId, group: post.groupId
           }))
         })
 
         increment(Membership.filter(m =>
-          !m.person && m.group === payload.groupId).first())
+          !m.person && m.group === post.groupId).first())
       }
       break
 

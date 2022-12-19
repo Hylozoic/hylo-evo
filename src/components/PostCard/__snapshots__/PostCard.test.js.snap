@@ -21,31 +21,32 @@ exports[`renders as expected 1`] = `
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
             "id": 98730,
-            "name": "Lorene Hudson",
+            "name": "Darnell Hudson",
             "tagline": "Direct Research Consultant",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
             "id": 66803,
-            "name": "Ms. Jeff Beahan",
+            "name": "Ms. Sylvia Beahan",
             "tagline": "National Accounts Architect",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
             "id": 81915,
-            "name": "Ms. Peggy Krajcik",
+            "name": "Ms. Danny Krajcik",
             "tagline": "Dynamic Response Specialist",
           },
         ]
       }
-      commentersTotal={76572}
+      commentersTotal={82690}
+      commentsTotal={76572}
       context="Stop Wombat Walrus"
       creator={
         Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
-          "id": 82690,
-          "name": "Ida Crona",
-          "tagline": "Legacy Marketing Executive",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1031.jpg?76035",
+          "id": 94047,
+          "name": "Rachel Breitenberg",
+          "tagline": "Corporate Research Developer",
         }
       }
       details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
@@ -60,6 +61,7 @@ exports[`renders as expected 1`] = `
       }
       hasImage={false}
       id="FAKE_29222"
+      peopleReactedTotal={11519}
       routeParams={
         Object {
           "slug": "foom",
@@ -74,7 +76,6 @@ exports[`renders as expected 1`] = `
       title="We put this together as a PDF for hand-out at your next event or university class"
       type="offer"
       updatedAt="2014-01-17T00:00:00.000Z"
-      votesTotal={11519}
     />
   </div>
   <div
@@ -91,9 +92,7 @@ exports[`renders as expected 1`] = `
       }
     />
   </div>
-  <div
-    onClick={[Function]}
-  >
+  <div>
     <PostBody
       attachments={
         Array [
@@ -108,31 +107,32 @@ exports[`renders as expected 1`] = `
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
             "id": 98730,
-            "name": "Lorene Hudson",
+            "name": "Darnell Hudson",
             "tagline": "Direct Research Consultant",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
             "id": 66803,
-            "name": "Ms. Jeff Beahan",
+            "name": "Ms. Sylvia Beahan",
             "tagline": "National Accounts Architect",
           },
           Object {
             "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
             "id": 81915,
-            "name": "Ms. Peggy Krajcik",
+            "name": "Ms. Danny Krajcik",
             "tagline": "Dynamic Response Specialist",
           },
         ]
       }
-      commentersTotal={76572}
+      commentersTotal={82690}
+      commentsTotal={76572}
       context="Stop Wombat Walrus"
       creator={
         Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
-          "id": 82690,
-          "name": "Ida Crona",
-          "tagline": "Legacy Marketing Executive",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1031.jpg?76035",
+          "id": 94047,
+          "name": "Rachel Breitenberg",
+          "tagline": "Corporate Research Developer",
         }
       }
       details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
@@ -146,6 +146,8 @@ exports[`renders as expected 1`] = `
         ]
       }
       id="FAKE_29222"
+      onClick={[Function]}
+      peopleReactedTotal={11519}
       tags={
         Array [
           "activism",
@@ -155,7 +157,6 @@ exports[`renders as expected 1`] = `
       title="We put this together as a PDF for hand-out at your next event or university class"
       type="offer"
       updatedAt="2014-01-17T00:00:00.000Z"
-      votesTotal={11519}
     />
   </div>
   <div
@@ -187,31 +188,32 @@ exports[`renders as expected 1`] = `
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
           "id": 98730,
-          "name": "Lorene Hudson",
+          "name": "Darnell Hudson",
           "tagline": "Direct Research Consultant",
         },
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
           "id": 66803,
-          "name": "Ms. Jeff Beahan",
+          "name": "Ms. Sylvia Beahan",
           "tagline": "National Accounts Architect",
         },
         Object {
           "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
           "id": 81915,
-          "name": "Ms. Peggy Krajcik",
+          "name": "Ms. Danny Krajcik",
           "tagline": "Dynamic Response Specialist",
         },
       ]
     }
-    commentersTotal={76572}
+    commentersTotal={82690}
+    commentsTotal={76572}
     context="Stop Wombat Walrus"
     creator={
       Object {
-        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
-        "id": 82690,
-        "name": "Ida Crona",
-        "tagline": "Legacy Marketing Executive",
+        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1031.jpg?76035",
+        "id": 94047,
+        "name": "Rachel Breitenberg",
+        "tagline": "Corporate Research Developer",
       }
     }
     details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
@@ -225,6 +227,8 @@ exports[`renders as expected 1`] = `
       ]
     }
     id="FAKE_29222"
+    onClick={[Function]}
+    peopleReactedTotal={11519}
     postId="FAKE_29222"
     tags={
       Array [
@@ -235,7 +239,6 @@ exports[`renders as expected 1`] = `
     title="We put this together as a PDF for hand-out at your next event or university class"
     type="offer"
     updatedAt="2014-01-17T00:00:00.000Z"
-    votesTotal={11519}
   />
 </div>
 `;
