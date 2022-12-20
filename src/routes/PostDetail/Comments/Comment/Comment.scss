@@ -154,13 +154,10 @@ $comment-row-padding: 25px;
 
 .noEmojis {
   display: none;
-  // position: absolute;
-  // right: 5px;
-  // top: 6px;
 }
 
 .emojis.hiddenReactions {
-  width: 36px;
+  margin-left: 0;
 
   &:hover {
     background: $color-picton-blue;
