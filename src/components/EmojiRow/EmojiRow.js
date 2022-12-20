@@ -12,6 +12,7 @@ export default function EmojiRow (props) {
     postReactions = [],
     commentReactions = [],
     myReactions = [],
+    onClick,
     postId,
     commentId
   } = props
@@ -35,7 +36,7 @@ export default function EmojiRow (props) {
     return accum
   }, {})
   return (
-    <div className={className}>
+    <div className={className} onClick={onClick}>
       {entityReactions && <div styleName='footer-reactions'>
         {Object.values(usersReactions).map(reaction => (
           <EmojiPill
