@@ -38,6 +38,12 @@ $comment-row-padding: 25px;
   border-radius: 30px;
   box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
   display: none;
+  :first-child {
+    border-radius: 15px 0 0 15px;
+  }
+  :last-child {
+    border-radius: 0 15px 15px 0px !important;
+  }
 }
 
 .userName {
@@ -141,10 +147,6 @@ $comment-row-padding: 25px;
       color: $color-gossamer;
     }
   }
-}
-
-.emojis {
-  margin-left: 34px;
 }
 
 .noEmojis {
