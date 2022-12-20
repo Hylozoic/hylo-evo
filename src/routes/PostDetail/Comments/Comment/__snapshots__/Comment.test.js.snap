@@ -136,14 +136,6 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
             name="Replies"
           />
         </div>
-        <EmojiRow
-          className="undefined"
-          currentUser={
-            Object {
-              "id": 1,
-            }
-          }
-        />
         <div
           data-stylename="commentAction"
           key="Edit"
@@ -162,6 +154,14 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
             name="Trash"
           />
         </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
+        />
       </div>
     </div>
   </div>
@@ -237,14 +237,6 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
             name="Replies"
           />
         </div>
-        <EmojiRow
-          className="undefined"
-          currentUser={
-            Object {
-              "id": 2,
-            }
-          }
-        />
         <div
           data-stylename="commentAction"
           key="Trash"
@@ -254,6 +246,14 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
             name="Trash"
           />
         </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
       </div>
     </div>
   </div>
@@ -412,14 +412,6 @@ exports[`Comment does not display the remove menu when removeComment is not defi
             name="Replies"
           />
         </div>
-        <EmojiRow
-          className="undefined"
-          currentUser={
-            Object {
-              "id": 1,
-            }
-          }
-        />
         <div
           data-stylename="commentAction"
           key="Edit"
@@ -438,6 +430,14 @@ exports[`Comment does not display the remove menu when removeComment is not defi
             name="Trash"
           />
         </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
+        />
       </div>
     </div>
   </div>

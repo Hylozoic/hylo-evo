@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
 import moment from 'moment-timezone'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
 import { useLongPress } from 'use-long-press'
@@ -31,19 +32,18 @@ export default function ChatPost ({
   canModerate,
   className,
   currentUser,
-  expanded,
-  forwardedRef,
   group,
   highlightProps,
-  index,
   intersectionObserver,
   post,
   showDetails,
   updatePost
 }) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const ref = useRef()
   const editorRef = useRef()
+  const isPressDevice = !window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
   const [editing, setEditing] = useState(false)
   const [isVideo, setIsVideo] = useState()
@@ -78,12 +78,37 @@ export default function ChatPost ({
     }
   }, [linkPreview?.url])
 
-  const openPost = event => {
-    // Don't open post details when long pressing, editing post, or clicking on link preview or other actionable things
-    if (!isLongPress && !editing && !event.target.className.includes('icon-Smiley') && !event.target.className.includes('LinkPreview')) {
-      showDetails(id)
+  const handleClick = event => {
+    // Cancel long press if currently active
+    if (isLongPress) {
+      setIsLongPress(false)
+    // Don't open post details in these cases
+    } else if (
+      !editing &&
+      !(event.target.getAttribute('target') === '_blank') &&
+      !event.target.className.includes(styles['image-inner']) &&
+      !event.target.className.includes('icon-Smiley')
+    ) {
+      showPost()
     }
+  }
+
+  const bindLongPress = useLongPress(() => {
     setIsLongPress(false)
+  }, {
+    onFinish: () => {
+      if (isPressDevice) setIsLongPress(true)
+    }
+  })
+
+  const showPost = () => {
+    showDetails(id)
+    setIsLongPress(false)
+  }
+
+  const showCreator = event => {
+    event.stopPropagation()
+    history.push(personUrl(creator.id))
   }
 
   const editPost = event => {
@@ -95,14 +120,11 @@ export default function ChatPost ({
     return true
   }
 
-  const bindLongPress = useLongPress(() => {
-    console.log('Long pressed!', id)
-  }, {
-    onFinish: event => setIsLongPress(true)
-  })
-
   const { reactOnEntity, removeReactOnEntity } = useReactionActions()
-  const handleReaction = (emojiFull) => reactOnEntity({ emojiFull, entityType: 'post', postId: id })
+  const handleReaction = (emojiFull) => {
+    reactOnEntity({ emojiFull, entityType: 'post', postId: id })
+    setIsLongPress(false)
+  }
   const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ emojiFull, entityType: 'post', postId: id })
 
   const handleEditCancel = () => {
@@ -146,8 +168,9 @@ export default function ChatPost ({
   const actionItems = filter(item => isFunction(item.onClick), [
     // { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
     // { icon: 'Copy', label: 'Copy Link', onClick: copyLink },
-    { icon: 'Replies', label: 'Reply', onClick: openPost },
-    { icon: 'Edit', label: 'Edit', onClick: isCreator ? editPost : null },
+    { icon: 'Replies', label: 'Reply', onClick: showPost },
+    // TODO: Edit disabled in mobile environments due to issue with keyboard management and autofocus of field
+    { icon: 'Edit', label: 'Edit', onClick: (isCreator && !isLongPress) ? editPost : null },
     { icon: 'Flag', label: 'Flag', onClick: !isCreator ? () => { setFlaggingVisible(true) } : null },
     { icon: 'Trash', label: 'Delete', onClick: isCreator ? deletePostWithConfirm : null, red: true },
     { icon: 'Trash', label: 'Remove From Group', onClick: !isCreator && canModerate ? removePostWithConfirm : null, red: true }
@@ -158,13 +181,18 @@ export default function ChatPost ({
 
   return (
     <Highlight {...highlightProps}>
-      <div styleName='container' ref={ref} onClick={openPost} className={className} {...bindLongPress()}>
+      <div
+        className={className}
+        ref={ref}
+        styleName={cx('container', { 'long-pressed': isLongPress })}
+        {...bindLongPress()}
+      >
         <div styleName='action-bar'>
           {actionItems.map(item => (
             <Button
               key={item.label}
               noDefaultStyles
-              borderRadius={'0'}
+              borderRadius='0'
               onClick={item.onClick}
               className={styles['action-item']}
             >
@@ -177,54 +205,56 @@ export default function ChatPost ({
             handleRemoveReaction={handleRemoveReaction}
             myEmojis={myEmojis}
           />
-          {flaggingVisible && <FlagContent
-            type='post'
-            linkData={{ id, slug: group.slug, type: 'post' }}
-            onClose={() => setFlaggingVisible(false)}
-          />}
+          {flaggingVisible && (
+            <FlagContent
+              type='post'
+              linkData={{ id, slug: group.slug, type: 'post' }}
+              onClose={() => setFlaggingVisible(false)}
+            />
+          )}
         </div>
 
         {post.header && (
-          <>
-            <div styleName='header'>
-              <div styleName='author'>
-                <Avatar url={personUrl(creator.id)} avatarUrl={creator.avatarUrl} className={styles.avatar} />
-                <div styleName='name'>{creator.name}</div>
-              </div>
-              <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
+          <div styleName='header' onClick={handleClick}>
+            <div onClick={showCreator} styleName='author'>
+              <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
+              <div styleName='name'>{creator.name}</div>
             </div>
-          </>
+            <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
+          </div>
         )}
-        {details && (
-          <ClickCatcher groupSlug={group.slug}>
-            {editing
-              ? <HyloEditor
-                contentHTML={details}
-                groupIds={post.groups.map(g => g.id)}
-                onEscape={handleEditCancel}
-                onEnter={handleEditSave}
-                placeholder='Edit Post'
-                ref={editorRef}
-                showMenu={!isWebView()}
-                containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: true })}
-                styleName={cx({ postContent: true, editing })}
-              />
-              : <div styleName='postContentContainer'><HyloHTML styleName='postContent' html={details} /></div>
-            }
+        {details && editing && (
+          <HyloEditor
+            contentHTML={details}
+            groupIds={post.groups.map(g => g.id)}
+            onEscape={handleEditCancel}
+            onEnter={handleEditSave}
+            placeholder='Edit Post'
+            ref={editorRef}
+            showMenu={!isWebView()}
+            containerClassName={cx({ [styles.postContentContainer]: true, [styles.editing]: true })}
+            styleName={cx({ postContent: true, editing })}
+          />
+        )}
+        {details && !editing && (
+          <ClickCatcher groupSlug={group.slug} onClick={handleClick}>
+            <div styleName='postContentContainer'>
+              <HyloHTML styleName='postContent' html={details} />
+            </div>
           </ClickCatcher>
         )}
         {linkPreview?.url && linkPreviewFeatured && isVideo && (
           <Feature url={linkPreview.url} />
         )}
         {linkPreview && !linkPreviewFeatured && (
-          <LinkPreview {...pick(['title', 'description', 'url', 'imageUrl'], linkPreview)} className={styles['link-preview']} />
+          <LinkPreview {...pick(['title', 'description', 'imageUrl', 'url'], linkPreview)} className={styles['link-preview']} />
         )}
         {!isEmpty(imageAttachments) && (
-          <div styleName='images'>
+          <div styleName='images' onClick={handleClick}>
             <div styleName='images-inner'>
               {imageAttachments.map(image =>
                 <a href={image.url} styleName='image' target='_blank' rel='noreferrer' key={image.url}>
-                  <div style={bgImageStyle(image.url)} />
+                  <div styleName='image-inner' style={bgImageStyle(image.url)} />
                 </a>)}
             </div>
           </div>)}
@@ -240,8 +270,8 @@ export default function ChatPost ({
         />
         {commentsTotal > 0 && (
           <span styleName='comments-container'>
-            <RoundImageRow imageUrls={commenterAvatarUrls.slice(0, 3)} styleName='commenters' onClick={openPost} small />
-            <span styleName='comments-caption' onClick={openPost}>
+            <RoundImageRow imageUrls={commenterAvatarUrls.slice(0, 3)} styleName='commenters' onClick={handleClick} small />
+            <span styleName='comments-caption' onClick={handleClick}>
               {commentsTotal} {commentsTotal === 1 ? 'reply' : 'replies'}
             </span>
           </span>

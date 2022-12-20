@@ -21,7 +21,6 @@
       display: inline-block;
       cursor: pointer;
       user-select: none;
-      border-radius: 0;
       background-color: rgba(255, 255, 255, 0);
       padding: 0 5px;
       display: flex;
@@ -30,6 +29,13 @@
       transition: all .25s ease;
       width: 36px;
 
+      &:first-child {
+        border-radius: 15px 0 0 15px !important;
+      }
+
+      &:last-child {
+        border-radius: 0 15px 15px 0px;
+      }
 
       span {
         transition: all .25s ease;
@@ -41,31 +47,42 @@
         outline: 0;
       }
 
-      &:hover {
+      // The selectors should maintain the same properties:
+      .long-pressed {
         background: rgba(125, 140, 157, 1.0);
-      }
-
-      &:hover span::before {
+      }    
+      .long-pressed span::before {
         color: rgba(255, 255, 255, 1);
       }
-    }
-
-    .action-item:first-child {
-      border-radius: 30px 0 0 30px !important;
-      padding: 0 5px 0 6px;
-    }
-
-    .action-item:last-child {
-      border-radius: 0 30px 30px 0 !important;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          background: rgba(125, 140, 157, 1.0);
+        }
+  
+        &:hover span::before {
+          color: rgba(255, 255, 255, 1);
+        }
+      }
     }
   }
 
-  &:hover {
+  // The selectors should maintain the same properties:
+  &.long-pressed {
     background: #efefef;
     cursor: pointer;
 
     .action-bar {
       display: flex;
+    }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: #efefef;
+      cursor: pointer;
+
+      .action-bar {
+        display: flex;
+      }
     }
   }
 
@@ -196,6 +213,10 @@
       filter: brightness(110%);
     }
   }
+}
+
+.image-inner {
+  /* empty */
 }
 
 .link-preview {

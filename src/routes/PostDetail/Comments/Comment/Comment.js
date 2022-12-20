@@ -115,6 +115,11 @@ export class Comment extends Component {
               <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
                 <Icon name='Replies' />
               </div>
+              {dropdownItems.map(item => (
+                <div key={item.icon} styleName='commentAction' onClick={item.onClick}>
+                  <Icon name={item.icon} />
+                </div>
+              ))}
               <EmojiRow
                 className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
                 commentReactions={comment.commentReactions}
@@ -123,11 +128,6 @@ export class Comment extends Component {
                 postId={comment.post}
                 commentId={comment.id}
               />
-              {dropdownItems.map(item => (
-                <div key={item.icon} styleName='commentAction' onClick={item.onClick}>
-                  <Icon name={item.icon} />
-                </div>
-              ))}
             </div>
           </div>
         </div>
