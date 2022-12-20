@@ -27,7 +27,7 @@ export default function updatePost (post, query = updatePostMutation) {
     isPublic
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
-  const groupIds = groups.map(c => c.id)
+  const groupIds = groups.map(g => g.id)
 
   return {
     type: UPDATE_POST,

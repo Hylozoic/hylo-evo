@@ -270,7 +270,8 @@ export function fetchCollectionPosts (groupId) {
       }
     },
     meta: {
-      extractModel: 'Group'
+      extractModel: 'Group',
+      groupId
     }
   }
 }

@@ -9,6 +9,7 @@ import { POST_TYPES } from 'store/models/Post'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import { STREAM_SORT_OPTIONS } from 'util/constants'
 
 export const MODULE_NAME = 'MapExplorer'
 export const FETCH_GROUPS_MAP = `${MODULE_NAME}/FETCH_GROUPS_MAP`
@@ -17,12 +18,6 @@ export const FETCH_POSTS_MAP = `${MODULE_NAME}/FETCH_POSTS_MAP`
 export const FETCH_POSTS_MAP_DRAWER = `${MODULE_NAME}/FETCH_POSTS_MAP_DRAWER`
 export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
 export const UPDATE_STATE = `${MODULE_NAME}/UPDATE_STATE`
-
-export const SORT_OPTIONS = [
-  { id: 'updated', label: 'Latest Activity' },
-  { id: 'created', label: 'Post Date' },
-  { id: 'votes', label: 'Popular' }
-]
 
 export const FEATURE_TYPES = {
   ...POST_TYPES,
@@ -48,6 +43,7 @@ const groupPostsQuery = (postsFragment) => `query (
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -79,6 +75,7 @@ const postsQuery = (postsFragment) => `query (
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -194,6 +191,7 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
@@ -237,6 +235,7 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
       context: $context,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
@@ -309,7 +308,7 @@ export function fetchPostsForDrawer ({ activePostsOnly, context, currentBounding
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(groupViewPostsQueryFragment)
+    query = groupPostsQuery(groupViewPostsQueryFragment(true))
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
@@ -628,7 +627,7 @@ const DEFAULT_STATE = {
     currentBoundingBox: null,
     featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
-    sortBy: SORT_OPTIONS[0].id,
+    sortBy: STREAM_SORT_OPTIONS[0].id,
     topics: []
   },
   searches: []

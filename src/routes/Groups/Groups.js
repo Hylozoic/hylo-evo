@@ -42,6 +42,9 @@ export default class Groups extends Component {
     return <div styleName='container'>
       {groupRelationshipCount > 1 &&
         <div styleName='network-map'>
+          <div styleName='add-group'>
+            <a href='#'>+ Create Group</a>
+          </div>
           <GroupNetworkMap networkData={networkData} />
         </div>
       }

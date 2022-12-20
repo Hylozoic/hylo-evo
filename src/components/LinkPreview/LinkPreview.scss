@@ -5,18 +5,19 @@ $preview-image-dimension: $space-20x;
 .container {
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
-  margin-bottom: $space-2x;
-  background-color: $color-athens-gray;
-  border: 1px solid $color-athens-gray-dark;
+
   &:hover {
     text-decoration: none;
   }
 }
 
 .link-preview {
-  display: flex;
   padding: 0.6em;
+  display: flex;
+  border-radius: 4px;
+  margin-bottom: $space-2x;
+  background-color: $color-athens-gray;
+  border: 1px solid $color-athens-gray-dark;
 }
 
 .image {

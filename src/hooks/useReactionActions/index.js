@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
-import { default as reactAction } from 'store/actions/reactOnEntity'
-import { default as removeAction } from 'store/actions/removeReactOnEntity'
+import reactAction from 'store/actions/reactOnEntity'
+import removeAction from 'store/actions/removeReactOnEntity'
 
 export default function useReactOnEntity () {
   const dispatch = useDispatch()

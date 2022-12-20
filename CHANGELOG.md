@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.0.3] - 2022-11-16
 
+### Changed
+- Show custom create post prompt when filtering stream by Resource
+
+## [5.0.3] - 2022-11-16
+
 ### Added
 - `groupDescription` is now "autolinked" making external links added in the markdown clickable, including proper handling of Hylo links, mention, and topic links (via application of `ClickCatcher`)
 - Terms and Privacy Policy links added to Signup page

@@ -5,13 +5,6 @@ exports[`matches the latest snapshot 1`] = `
   data-stylename="topic-feed-header"
 >
   <div
-    data-stylename="fade"
-  >
-    <div
-      data-stylename="fade2"
-    />
-  </div>
-  <div
     data-stylename="image"
     style={
       Object {
@@ -20,24 +13,23 @@ exports[`matches the latest snapshot 1`] = `
     }
   >
     <div
-      data-stylename="topic-name"
+      data-stylename="topic-info"
     >
-      #
-      Petitions
-    </div>
-    <div
-      data-stylename="meta"
-    >
-      <Icon
-        data-stylename="star-icon"
-        name="Star"
-      />
-      3 subscribers
-      <Icon
-        data-stylename="post-icon"
-        name="Post"
-      />
-      11 posts
+      <div
+        data-stylename="topic-name"
+      >
+        #
+        Petitions
+      </div>
+      <div
+        data-stylename="meta"
+      >
+        <Icon
+          data-stylename="star-icon"
+          name="Star"
+        />
+        3 subscribers
+      </div>
     </div>
     <Button
       data-stylename="unsubscribe"
@@ -47,20 +39,19 @@ exports[`matches the latest snapshot 1`] = `
         data-stylename="subscribe-star-icon-green"
         name="Star"
       />
-      Unsubscribe
+      <div
+        data-stylename="subscribe-label"
+      >
+        Unsubscribe
+      </div>
     </Button>
-    <PostPrompt
-      firstName="anybody"
-      promptStringFunc={[Function]}
-      querystringParams={Object {}}
-      routeParams={
-        Object {
-          "groupSlug": undefined,
-          "topicName": "Petitions",
-        }
-      }
-      type=""
-    />
+    <div
+      data-stylename="fade"
+    >
+      <div
+        data-stylename="fade2"
+      />
+    </div>
   </div>
 </div>
 `;

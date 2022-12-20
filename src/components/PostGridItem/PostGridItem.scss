@@ -241,6 +241,19 @@
   white-space: nowrap;
 }
 
+.reactions {
+  padding: 0 6px;
+
+  &> div > div {
+    padding-bottom: 6px;
+
+    &> div:last-child {
+      display: none;
+    }
+  }
+}
+
+
 // unread state overrides
 .unread {
 

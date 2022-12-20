@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
@@ -8,7 +9,6 @@ import { personUrl } from 'util/navigation'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
 import Avatar from 'components/Avatar'
-import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
 import EmojiRow from 'components/EmojiRow'
@@ -16,8 +16,7 @@ import HyloEditor from 'components/HyloEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
-
-import './Comment.scss'
+import styles from './Comment.scss'
 
 const { object, func } = PropTypes
 
@@ -29,7 +28,7 @@ export class Comment extends Component {
     onReplyComment: func.isRequired,
     updateComment: func,
     deleteComment: func,
-    removeComment: func,
+    removeComment: func
   }
 
   editor = React.createRef()
@@ -78,7 +77,7 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
     return (
-      <div>
+      <div styleName='commentContainer'>
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
@@ -87,19 +86,35 @@ export class Comment extends Component {
             {!editing && TextHelpers.humanDate(createdAt)}
           </span>
           <div styleName='upperRight'>
-            <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
-              <Icon name='Replies' />
-            </div>
             {editing && (
               <Icon name='Ex' styleName='cancelIcon' onClick={this.handleEditCancel} />
             )}
-            {!editing && dropdownItems.length > 0 && (
-              <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />
-            )}
+            <div styleName='commentActions'>
+              <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+                <Icon name='Replies' />
+              </div>
+              <EmojiRow
+                className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
+                commentReactions={comment.commentReactions}
+                myReactions={comment.myReactions}
+                currentUser={currentUser}
+                postId={comment.post}
+                commentId={comment.id}
+              />
+              {dropdownItems.map(item => (
+                <div key={item.icon} styleName='commentAction' onClick={item.onClick}>
+                  <Icon name={item.icon} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <CardImageAttachments attachments={attachments} linked styleName='images' />
-        <CardFileAttachments attachments={attachments} styleName='files' />
+        {attachments &&
+          <div>
+            <CardImageAttachments attachments={attachments} linked styleName='images' />
+            <CardFileAttachments attachments={attachments} styleName='files' />
+          </div>
+        }
         <ClickCatcher groupSlug={slug}>
           {/* Renders and provides editor */}
           <HyloEditor
@@ -110,12 +125,20 @@ export class Comment extends Component {
             onEnter={this.handleEditSave}
             ref={this.editor}
           />
-          <EmojiRow
-            {...comment}
-            currentUser={currentUser}
-            postId={comment.post}
-            commentId={comment.id}
-          />
+
+          {!editing && (
+            <>
+              <EmojiRow
+                className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
+                commentReactions={comment.commentReactions}
+                myReactions={comment.myReactions}
+                currentUser={currentUser}
+                postId={comment.post}
+                commentId={comment.id}
+              />
+            </>
+          )}
+
         </ClickCatcher>
       </div>
     )
@@ -129,7 +152,7 @@ export default class CommentWithReplies extends Component {
     updateComment: func,
     deleteComment: func,
     removeComment: func,
-    onReplyThread: func,
+    onReplyThread: func
   }
 
   static defaultProps = {
@@ -211,6 +234,7 @@ export default class CommentWithReplies extends Component {
               }}
               placeholder={`Reply to ${comment.creator.name}`}
               editorContent={this.state.prefillEditor}
+              focusOnRender
             />
           </div>
         )}

@@ -23,6 +23,7 @@ export default function EmojiPicker (props) {
       handleReaction(selectedEmoji)
     }
     setModalOpen(!modalOpen)
+    return true
   }
   const toggleModalOpen = (evt) => {
     let yAdjustment = 0
@@ -41,9 +42,9 @@ export default function EmojiPicker (props) {
   }
 
   return (
-    <div styleName='emoji-picker-container'>
+    <div styleName='emoji-picker-container' className={props.className}>
       <div styleName='emoji-picker-toggle' onClick={toggleModalOpen}>
-        <Icon name='Smiley' blue />
+        <Icon name='Smiley' styleName='picker-icon' />
       </div>
       {modalOpen &&
         <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
@@ -57,7 +58,7 @@ function EmojiPickerContent (props) {
   const [data, setData] = useState()
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(
+      const response = await window.fetch(
         'https://cdn.jsdelivr.net/npm/@emoji-mart/data'
       )
       setData(response.json())
@@ -65,6 +66,6 @@ function EmojiPickerContent (props) {
     getData()
   }, [])
   return (
-    <Picker {...props} data={data} />
+    <Picker {...props} theme={'light'} data={data} />
   )
 }

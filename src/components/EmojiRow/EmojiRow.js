@@ -7,6 +7,7 @@ import './EmojiRow.scss'
 
 export default function EmojiRow (props) {
   const {
+    className,
     currentUser,
     postReactions = [],
     commentReactions = [],
@@ -34,7 +35,7 @@ export default function EmojiRow (props) {
     return accum
   }, {})
   return (
-    <div>
+    <div className={className}>
       {entityReactions && <div styleName='footer-reactions'>
         {Object.values(usersReactions).map(reaction => (
           <EmojiPill

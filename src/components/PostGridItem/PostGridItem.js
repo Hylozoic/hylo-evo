@@ -4,7 +4,6 @@ import cx from 'classnames'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
-import EmojiRow from 'components/EmojiRow'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import './PostGridItem.scss'
@@ -14,8 +13,7 @@ export default function PostGridItem (props) {
     routeParams,
     post,
     showDetails,
-    expanded,
-    currentUser
+    expanded
   } = props
   const {
     title,
@@ -67,11 +65,6 @@ export default function PostGridItem (props) {
               {TextHelpers.humanDate(createdAt)}
             </div>
           </div>
-          <EmojiRow
-            {...post}
-            postId={post.id}
-            currentUser={currentUser}
-          />
         </div>
         <div styleName='grid-fade' />
       </div>

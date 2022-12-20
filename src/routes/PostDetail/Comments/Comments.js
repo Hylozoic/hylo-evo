@@ -68,21 +68,24 @@ export default class Comments extends Component {
           />
         ))}
         {currentUser
-          ? <div styleName='form-wrapper' style={style}>
-            <CommentForm
-              currentUser={currentUser}
-              createComment={createComment}
-              postId={postId}
-            />
-            <PeopleTyping styleName='people-typing' />
-          </div>
-          : <Link
+          ? (
+            <div styleName='form-wrapper' style={style}>
+              <CommentForm
+                currentUser={currentUser}
+                createComment={createComment}
+                postId={postId}
+              />
+              <PeopleTyping styleName='people-typing' />
+            </div>
+          ) : (
+            <Link
               to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
               target={inIframe() ? '_blank' : ''}
               styleName='signup-button'
             >
-            Join Hylo to respond
-          </Link>}
+              Join Hylo to respond
+            </Link>
+          )}
       </div>
     )
   }

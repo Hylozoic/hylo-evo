@@ -89,24 +89,24 @@ export default function PostBigGridItem (props) {
               </Clamp>
               <div styleName='fade' />
             </div>
-          <h3 styleName='title' onClick={showDetails}>{title}</h3>
-          <div styleName='content-snippet'>
-            <Clamp lines={2}>
-              <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
-            </Clamp>
-            <div styleName='fade' />
-          </div>
-          <div styleName='project-actions'>
-            {post.donationsLink && donationService &&
-              <div styleName='donate'>
-                <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-              </div>}
-            {post.donationsLink && !donationService &&
-              <div styleName='donate'>
-                <div>Support this project</div>
-                <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
-              </div>}
+            <h3 styleName='title' onClick={showDetails}>{title}</h3>
+            <div styleName='content-snippet'>
+              <Clamp lines={2}>
+                <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
+              </Clamp>
+              <div styleName='fade' />
+            </div>
+            <div styleName='project-actions'>
+              {post.donationsLink && donationService &&
+                <div styleName='donate'>
+                  <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                </div>}
+              {post.donationsLink && !donationService &&
+                <div styleName='donate'>
+                  <div>Support this project</div>
+                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                </div>}
               {attachmentType === 'file'
                 ? <div styleName='file-attachment'>
                   {numAttachments > 1
@@ -137,11 +137,13 @@ export default function PostBigGridItem (props) {
               </div>
             </div>
           </div>
-          <EmojiRow
-            {...post}
-            postId={post.id}
-            currentUser={currentUser}
-          />
+          <div styleName='reactions'>
+            <EmojiRow
+              {...post}
+              postId={post.id}
+              currentUser={currentUser}
+            />
+          </div>
         </div>
       </div>
     </div>

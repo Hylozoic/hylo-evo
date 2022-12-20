@@ -1,7 +1,7 @@
 .topic-feed-header {
-  padding-bottom: $space-8x;
   position: relative;
   z-index: 2;
+  box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
 }
 
 .back {
@@ -27,32 +27,48 @@
   font-size: 24px;
   letter-spacing: -0.47px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.50);
-  top: 64px;
-  margin-left: 18px;
-  position: absolute;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.topic-info {
+  display: flex;
+  position: relative;
+  z-index: 10;
+  align-content: center;
 }
 
 .meta {
   composes: caption-lt-lg from 'css/typography.scss';
   color: $color-white-80;
-  margin-left: 18px;
+  margin-left: 10px;
   display: flex;
-  position: absolute;
-  top: 98px;
+  align-items: center;
+  position: relative;
+  top: 3px;
 }
 
 .subscribe {
-  position: absolute;
-  right: 15px;
-  padding: 0 15px;
-  top: 20px;
+  border: 1px solid white;
+  background-color: rgba(255, 255, 255, 0);
+  position: relative;
+  z-index: 10;
+  padding: 0 10px 0 5px;
+  font-size: 14px;
+  height: 30px;
+  line-height: 27px;
+  margin-right: 10px;
 }
 
 .unsubscribe {
-  padding: 0 15px;
-  position: absolute;
-  right: 14px;
-  top: 20px;
+  font-size: 14px;
+  height: 29px;
+  line-height: 30px;
+  margin-right: 10px;
+  padding: 0 10px 0 5px;
+  position: relative;
+  z-index: 10;
   background-color: $color-white;
   color: $color-caribbean-green;
   &:hover {
@@ -71,8 +87,7 @@
 
 .imageShape {
   width: 100%;
-  height: 160px;
-  border-radius: 0 0 5px 5px;
+  height: 50px;
 }
 
 .image {
@@ -81,6 +96,9 @@
   background-size: cover;
   z-index: 2000 !important;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .star-icon {
@@ -112,6 +130,9 @@
   composes: imageShape;
   position: absolute;
   background-image: linear-gradient(180deg, $color-cod-gray-0, $color-cod-gray-0 30%, $color-cod-gray-dark);
+  z-index: 0;
+  top: 0;
+  left: 0;
 }
 
 .fade2 {
@@ -119,7 +140,15 @@
   background-color: $color-rhino-30;
 }
 
+.subscribe-label {
+  display: inline-block;
+}
+
 @media screen and (max-width: 600px) {
+  .subscribe-label {
+    display: none;
+  }
+
   .imageShape {
     border-radius: 0;
   }
@@ -127,14 +156,28 @@
   .topic-feed-header {
     padding-top: 0;
   }
-}
 
-@media screen and (max-width: 425px) {
-  .subscribe,
+  .topic-info {
+    flex-direction: column;
+  }
+
+  .topic-name {
+    font-size: 18px;
+    margin-bottom: -6px;
+  }
+
+  .subscribe, .unsubscribe {
+    padding: 0 5px 0 5px;
+    line-height: 29px;
+  }
+
   .unsubscribe {
-    padding: 0 10px;
-    font-size: 12px;
-    height: 30px;
     line-height: 30px;
+  }
+
+  .meta {
+    top: 0;
+    font-size: 11px;
+    margin-left: 7px;
   }
 }

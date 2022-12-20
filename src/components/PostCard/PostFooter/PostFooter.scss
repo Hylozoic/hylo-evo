@@ -16,6 +16,12 @@ $footer-height: 40px;
     width: 30px;
     height: 30px;
   }
+
+  // change avatar sizes
+  > span > div > div {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .footer.constrained {
@@ -37,31 +43,6 @@ $footer-height: 40px;
   margin: 5px;
   text-align: center;
   text-decoration: none;
-}
-
-.commenters {
-  display: flex;
-  align-items: center;
-}
-
-.people {
-  margin-right: 4px;
-  white-space: nowrap;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.caption {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
-.footer.constrained .caption {
-  font-size: 10px;
-  line-height: 12px;
-}
-
-.footer.constrained .people {
-  margin-right: 5px;
 }
 
 .share {
@@ -89,13 +70,13 @@ a:not([href]):not([tabindex]).voted.vote-button {
   color: rgba(255, 255, 255, 1);
 }
 
-.footer-reactions{
+.footer-reactions {
   margin-left: auto;
   transition: all .25s ease;
   display: flex;
   width: 50%;
   position: relative;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 
