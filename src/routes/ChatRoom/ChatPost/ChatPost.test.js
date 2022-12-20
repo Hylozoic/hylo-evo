@@ -31,4 +31,3 @@ it('matches last snapshot', () => {
   const wrapper = shallow(<Provider store={createStore(() => {})}><ChatPost {...props} /></Provider>)
   expect(wrapper).toMatchSnapshot()
 })
-
