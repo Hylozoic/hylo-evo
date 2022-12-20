@@ -79,9 +79,11 @@ export default function ChatPost ({
   }, [linkPreview?.url])
 
   const handleClick = event => {
-    // Don't open post details when long pressing, editing post, or clicking on link preview or other actionable things
-    if (
-      !isLongPress &&
+    // Cancel long press if currently active
+    if (isLongPress) {
+      setIsLongPress(false)
+    // Don't open post details in these cases
+    } else if (
       !editing &&
       !(event.target.getAttribute('target') === '_blank') &&
       !event.target.className.includes(styles['image-inner']) &&
@@ -181,7 +183,6 @@ export default function ChatPost ({
     <Highlight {...highlightProps}>
       <div
         className={className}
-        onClick={() => setIsLongPress(false)}
         ref={ref}
         styleName={cx('container', { 'long-pressed': isLongPress })}
         {...bindLongPress()}
