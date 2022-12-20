@@ -44,7 +44,7 @@ export default class Comments extends Component {
       commentIds.push(comment.id)
       comment.childComments.forEach(comment => commentIds.push(comment.id))
     })
-    if (!commentsPending && !commentIds.includes(selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
+    if (!commentsPending && !commentIds.includes(selectedCommentId && selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
   }
 
   scrollToReplyInput (elem) {
