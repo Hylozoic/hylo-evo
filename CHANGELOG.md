@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Show custom create post prompt when filtering stream by Resource
 
+## [5.0.6]
+
+### Changed
+- Adds Android AppLinking config file to `public/.well-known/assetlinks.json`
+- Updated favicon
+
+## [5.0.5] - 2022-11-23
+
+### Fixed
+- Newly created posts appear immediately in stream, as well as projects view and upcoming events view if appropriate
+- Show post details when opening one from a topic stream in the /all context
+- Make sure collection posts appear in Custom View settings
+
+## [5.0.4] - 2022-11-23
+
+### Fixed
+- `CommentEditor` in HyloApp not expanding height after selecting Mention or Topic (HyloReactNative #614)
+
 ## [5.0.3] - 2022-11-16
 
 ### Added

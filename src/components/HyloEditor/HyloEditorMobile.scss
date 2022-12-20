@@ -1,4 +1,8 @@
 :global {
+  .ProseMirror.suggestion-list-padding {
+    padding-bottom: 1.7rem;
+  }
+
   // Mention and Topic suggestions
   .tippy-box[data-theme='suggestions-mobile'] {
     background-color: transparent;

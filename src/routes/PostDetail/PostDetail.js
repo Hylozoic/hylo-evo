@@ -263,7 +263,12 @@ export default class PostDetail extends Component {
                 {postFooter}
               </div>
             )}
-            <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />
+            <Comments
+              postId={post.id}
+              slug={routeParams.groupSlug}
+              selectedCommentId={routeParams.commentId}
+              scrollToBottom={scrollToBottom}
+            />
             {showPeopleDialog && (
               <PostPeopleDialog
                 title={postPeopleDialogTitle}
