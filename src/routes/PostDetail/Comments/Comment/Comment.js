@@ -104,6 +104,7 @@ export class Comment extends Component {
                 myReactions={comment.myReactions}
                 currentUser={currentUser}
                 postId={comment.post}
+                commentId={comment.id}
               />
             </div>
           </div>

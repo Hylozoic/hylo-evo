@@ -237,7 +237,6 @@ describe('matchNewPostIntoQueryResults', () => {
     const groups = [{ slug: 'foo' }, { slug: 'bar' }]
     const post = { id: '17', type: 'request', groups }
 
-    console.log("state", state)
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
       '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar"}}': {
         hasMore: true,
