@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.hylo.hyloandroid",
+      "sha256_cert_fingerprints": [
+        "E1:05:1E:C8:5F:35:3B:CF:50:96:AB:AB:3E:1E:FA:50:84:EE:6F:5F:62:75:AA:0D:B6:3C:0D:F4:DB:7C:90:91"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.hylo.hyloandroid",
+      "sha256_cert_fingerprints": [
+        "10:42:57:EC:9D:7B:5B:8F:F3:43:06:99:D3:7E:4A:CA:2C:32:EF:1B:B0:E3:59:22:C5:31:37:68:B1:3C:10:BB"
+      ]
+    }
+  }
+]

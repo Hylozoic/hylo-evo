@@ -2,7 +2,7 @@
 
 exports[`Comment displays image attachments 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"
@@ -99,7 +99,7 @@ exports[`Comment displays image attachments 1`] = `
 
 exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"
@@ -200,7 +200,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
 
 exports[`Comment displays the remove menu when removeComment is defined 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"
@@ -292,7 +292,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
 
 exports[`Comment does not display the delete menu when deleteComment is not defined 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"
@@ -375,7 +375,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
 
 exports[`Comment does not display the remove menu when removeComment is not defined 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"
@@ -476,7 +476,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
 
 exports[`Comment renders correctly 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"
@@ -559,7 +559,7 @@ exports[`Comment renders correctly 1`] = `
 
 exports[`Comment renders correctly when editing 1`] = `
 <div
-  data-stylename="commentContainer"
+  data-stylename="commentContainer selected-comment"
 >
   <div
     data-stylename="header"

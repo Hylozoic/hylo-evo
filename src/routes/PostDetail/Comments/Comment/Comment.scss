@@ -9,6 +9,11 @@ $comment-row-padding: 25px;
     padding-bottom: 0;
   }
  }
+ 
+.selected-comment {
+  border: 1px $color-mango-yellow solid;
+  border-radius: 2px;
+}
 
 .header {
   display: flex;
