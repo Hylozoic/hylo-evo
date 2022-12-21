@@ -43,29 +43,25 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
 <div>
   <div
     data-stylename="title"
-  >
-    Notifications
-  </div>
+  />
   <div
     data-stylename="prompt"
-  >
-    How often would you like to receive email digests for new posts in your groups and saved searches?
-  </div>
+  />
   <Select
     onChange={[Function]}
     options={
       Array [
         Object {
           "id": "daily",
-          "label": "Daily",
+          "label": "",
         },
         Object {
           "id": "weekly",
-          "label": "Weekly",
+          "label": "",
         },
         Object {
           "id": "never",
-          "label": "Never",
+          "label": "",
         },
       ]
     }
@@ -73,9 +69,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   />
   <div
     data-stylename="prompt"
-  >
-    How would you like to receive notifications about new comments on posts you're following?
-  </div>
+  />
   <Select
     onChange={[Function]}
     options={
@@ -131,23 +125,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   >
     <p
       data-stylename="help-paragraph"
-    >
-      Download our 
-      <a
-        href="https://itunes.apple.com/app/appName/id1002185140"
-        target="_blank"
-      >
-        iOS
-      </a>
-        or 
-      <a
-        href="https://play.google.com/store/apps/details?id=com.hylo.hyloandroid"
-        target="_blank"
-      >
-        Android
-      </a>
-       app to receive push notifications.
-    </p>
+    />
   </div>
 </div>
 `;

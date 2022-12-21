@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './Search.scss'
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'
@@ -111,10 +112,10 @@ const tabs = [
 ]
 
 export function TabBar ({ filter, setSearchFilter }) {
+  const { t } = useTranslation()
   return <div styleName='tabs'>
-    <h1>Search</h1>
-    {tabs.map(({ id, label }) => <span
-      key={id}
+    <h1>{t('Search')}</h1>
+    {tabs.map(({ id, label }) => <span key={id}
       styleName={id === filter ? 'tab-active' : 'tab'}
       onClick={() => setSearchFilter(id)}>
       {label}

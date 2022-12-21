@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import LocationInput from 'components/LocationInput'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import WelcomeWizardModalFooter from '../WelcomeWizardModalFooter'
@@ -7,7 +8,7 @@ import Icon from 'components/Icon'
 
 import styles from '../WelcomeWizard.scss'
 
-export default class AddLocation extends Component {
+class AddLocation extends Component {
   constructor () {
     super()
     this.state = {
@@ -66,7 +67,7 @@ export default class AddLocation extends Component {
     return (
       <div styleName='flex-wrapper'>
         <div styleName='panel'>
-          <span styleName='step-count'>STEP 2/3</span>
+          <span styleName='step-count'>{this.props.t('STEP 2/3')}</span>
           <br />
           <div styleName='center'>
             <Icon name='Globe' styleName='globe-icon' />
@@ -79,7 +80,7 @@ export default class AddLocation extends Component {
               location={this.state.location}
               locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}
               onChange={this.handleLocationChange}
-              placeholder='Where do you call home?'
+              placeholder={this.props.t('Where do you call home?')}
               onKeyPress={event => {
                 if (event.key === 'Enter') {
                   this.submit()
@@ -89,13 +90,14 @@ export default class AddLocation extends Component {
             />
           </div>
           <div styleName='instructions'>
-            <p>Add your location to see more relevant content, and find people and projects around you.</p>
+            <p>{this.props.t('Add your location to see more relevant content, and find people and projects around you')}.</p>
           </div>
           <div>
-            <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText='Next: Welcome to Hylo!' />
+            <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText={this.props.t('Next: Welcome to Hylo!')} />
           </div>
         </div>
       </div>
     )
   }
 }
+export default withTranslation()(AddLocation)

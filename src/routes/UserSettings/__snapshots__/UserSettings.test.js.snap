@@ -25,14 +25,14 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings",
       },
       Object {
-        "component": <Memo(Connect(UserGroupsTab))
+        "component": <Memo(Connect(withI18nextTranslation(UserGroupsTab)))
           personId={1}
         />,
         "name": "Groups & Affiliations",
         "path": "/settings/groups",
       },
       Object {
-        "component": <Memo(Connect(ManageInvitesTab))
+        "component": <Memo(Connect(withI18nextTranslation(ManageInvitesTab)))
           currentUser={
             Object {
               "blockedUsers": Object {
@@ -47,7 +47,7 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/invitations",
       },
       Object {
-        "component": <NotificationSettingsTab
+        "component": <withI18nextTranslation(NotificationSettingsTab)
           currentUser={
             Object {
               "blockedUsers": Object {
@@ -74,7 +74,7 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/notifications",
       },
       Object {
-        "component": <AccountSettingsTab
+        "component": <withI18nextTranslation(AccountSettingsTab)
           currentUser={
             Object {
               "blockedUsers": Object {
@@ -96,14 +96,14 @@ exports[`UserSettings renders correctly 1`] = `
         "path": "/settings/saved-searches",
       },
       Object {
-        "component": <BlockedUsersTab
+        "component": <withI18nextTranslation(BlockedUsersTab)
           loading={true}
         />,
         "name": "Blocked Users",
         "path": "/settings/blocked-users",
       },
       Object {
-        "component": <PaymentSettingsTab
+        "component": <withI18nextTranslation(PaymentSettingsTab)
           currentUser={
             Object {
               "blockedUsers": Object {

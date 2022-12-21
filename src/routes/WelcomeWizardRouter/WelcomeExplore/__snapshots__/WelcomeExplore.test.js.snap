@@ -10,9 +10,7 @@ exports[`WelcomeExplore renders correctly 1`] = `
     <div
       data-stylename="instructions"
     >
-      <h3>
-        Welcome to Hylo!
-      </h3>
+      <h3 />
       <p>
         We're glad you're here, 
         Tibet
@@ -34,12 +32,8 @@ exports[`WelcomeExplore renders correctly 1`] = `
           }
         />
         <div>
-          <h4>
-            View the public map
-          </h4>
-          <p>
-            Find out what's happening around you, and groups you can join
-          </p>
+          <h4 />
+          <p />
         </div>
       </div>
     </Link>
@@ -58,12 +52,8 @@ exports[`WelcomeExplore renders correctly 1`] = `
           }
         />
         <div>
-          <h4>
-            Public stream
-          </h4>
-          <p>
-            View and participate in public discussions, projects, events & more
-          </p>
+          <h4 />
+          <p />
         </div>
       </div>
     </Link>
@@ -82,12 +72,8 @@ exports[`WelcomeExplore renders correctly 1`] = `
           }
         />
         <div>
-          <h4>
-            Create a group
-          </h4>
-          <p>
-            Gather your collaborators & people who share your interests
-          </p>
+          <h4 />
+          <p />
         </div>
       </div>
     </Link>
@@ -106,12 +92,8 @@ exports[`WelcomeExplore renders correctly 1`] = `
           />
         </div>
         <div>
-          <h4>
-            Complete your profile
-          </h4>
-          <p>
-            Share about who you are, your skills & interests
-          </p>
+          <h4 />
+          <p />
         </div>
       </div>
     </Link>

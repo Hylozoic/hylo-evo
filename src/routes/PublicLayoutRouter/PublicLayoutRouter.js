@@ -135,10 +135,12 @@ export function PublicPostDetail (props) {
 }
 
 export function MapExplorerLayoutRouter (props) {
+  const history = useHistory()
+
   return (
     <>
       <div styleName='center-column' id={CENTER_COLUMN_ID}>
-        <MapExplorer {...props} />
+        <MapExplorer {...props} history={history} />
       </div>
       <Route
         path={`(.*)/${POST_DETAIL_MATCH}`}

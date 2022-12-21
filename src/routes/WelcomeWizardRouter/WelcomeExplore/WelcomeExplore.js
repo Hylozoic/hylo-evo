@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { get } from 'lodash/fp'
 import '../WelcomeWizard.scss'
 
-export default class WelcomeExplore extends Component {
+class WelcomeExplore extends Component {
   getValue = (field) => {
     return get(field, this.props.currentUser)
   }
@@ -17,15 +18,15 @@ export default class WelcomeExplore extends Component {
       <div styleName='flex-wrapper final-wrapper'>
         <div styleName='panel final-panel'>
           <div styleName='instructions'>
-            <h3>Welcome to Hylo!</h3>
+            <h3>{this.props.t('Welcome to Hylo!')}</h3>
             <p>We're glad you're here, {currentUser.name.split(' ')[0]}. To get started, explore public groups and posts, or create your own group!</p>
           </div>
           <Link to='/public/map?hideDrawer=true'>
             <div styleName='final-step'>
               <div styleName='step-image map' style={bgImageStyle('/signup-globe.png')} />
               <div>
-                <h4>View the public map</h4>
-                <p>Find out what's happening around you, and groups you can join</p>
+                <h4>{this.props.t('View the public map')}</h4>
+                <p>{this.props.t('Find out what\'s happening around you, and groups you can join')}</p>
               </div>
             </div>
           </Link>
@@ -33,8 +34,8 @@ export default class WelcomeExplore extends Component {
             <div styleName='final-step'>
               <div styleName='step-image stream' style={bgImageStyle('/signup-stream.png')} />
               <div>
-                <h4>Public stream</h4>
-                <p>View and participate in public discussions, projects, events & more</p>
+                <h4>{this.props.t('Public stream')}</h4>
+                <p>{this.props.t('View and participate in public discussions, projects, events & more')}</p>
               </div>
             </div>
           </Link>
@@ -42,8 +43,8 @@ export default class WelcomeExplore extends Component {
             <div styleName='final-step'>
               <div styleName='step-image group' style={bgImageStyle('/signup-group.png')} />
               <div>
-                <h4>Create a group</h4>
-                <p>Gather your collaborators & people who share your interests</p>
+                <h4>{this.props.t('Create a group')}</h4>
+                <p>{this.props.t('Gather your collaborators & people who share your interests')}</p>
               </div>
             </div>
           </Link>
@@ -51,8 +52,8 @@ export default class WelcomeExplore extends Component {
             <div styleName='final-step'>
               <div styleName='step-image profile' style={bgImageStyle(currentAvatarUrl)}><div styleName='profile-cover' /></div>
               <div>
-                <h4>Complete your profile</h4>
-                <p>Share about who you are, your skills & interests</p>
+                <h4>{this.props.t('Complete your profile')}</h4>
+                <p>{this.props.t('Share about who you are, your skills & interests')}</p>
               </div>
             </div>
           </Link>
@@ -61,3 +62,4 @@ export default class WelcomeExplore extends Component {
     )
   }
 }
+export default withTranslation()(WelcomeExplore)

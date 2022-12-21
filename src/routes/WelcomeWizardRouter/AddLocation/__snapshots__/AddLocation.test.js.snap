@@ -9,9 +9,7 @@ exports[`AddLocation renders correctly 1`] = `
   >
     <span
       data-stylename="step-count"
-    >
-      STEP 2/3
-    </span>
+    />
     <br />
     <div
       data-stylename="center"
@@ -35,7 +33,7 @@ exports[`AddLocation renders correctly 1`] = `
         locationObject={null}
         onChange={[Function]}
         onKeyPress={[Function]}
-        placeholder="Where do you call home?"
+        placeholder=""
         saveLocationToDB={true}
       />
     </div>
@@ -43,12 +41,12 @@ exports[`AddLocation renders correctly 1`] = `
       data-stylename="instructions"
     >
       <p>
-        Add your location to see more relevant content, and find people and projects around you.
+        .
       </p>
     </div>
     <div>
       <WelcomeWizardModalFooter
-        continueText="Next: Welcome to Hylo!"
+        continueText=""
         previous={[Function]}
         submit={[Function]}
       />

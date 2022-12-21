@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactCodeInput from 'react-code-input'
@@ -18,6 +19,7 @@ export default function VerifyEmail (props) {
   const [code, setCode] = useState('')
   const [redirectTo, setRedirectTo] = useState()
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
 
   const sendEmailVerification = async email => {
     const { payload } = await dispatch(sendEmailVerificationAction(email))
@@ -64,16 +66,16 @@ export default function VerifyEmail (props) {
 
   return (
     <div styleName='form'>
-      <Link to='/signup' styleName='back-button'>&#8592; back</Link>
+      <Link to='/signup' styleName='back-button'>&#8592; {t('back')}</Link>
       <div styleName='formWrapper'>
-        <h1 styleName='title'>Check your email</h1>
-        <p styleName='sub-header'>We've sent a 6 digit code to {email}. The code will expire shortly, so please enter it here soon.</p>
+        <h1 styleName='title'>{t('Check your email')}</h1>
+        <p styleName='sub-header'>{t("We've sent a 6 digit code to {{email}}. The code will expire shortly, so please enter it here soon.", { email })}</p>
         {error && formatError(error, 'Signup')}
         <div styleName='codeWrapper'>
           <ReactCodeInput type='text' fields={6} onChange={handleChange} />
         </div>
       </div>
-      <div onClick={() => sendEmailVerification(email)} styleName='resend'>Resend code</div>
+      <div onClick={() => sendEmailVerification(email)} styleName='resend'>{t('Resend code')}</div>
     </div>
   )
 }
