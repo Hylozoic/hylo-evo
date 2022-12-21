@@ -1,7 +1,7 @@
 import moment from 'moment-timezone'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { useTranslation, withTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import GroupButton from 'components/GroupButton'
 import Loading from 'components/Loading'
@@ -44,14 +44,14 @@ class ManageInvitesTab extends Component {
 
     return (
       <div styleName='container'>
-        <h1 styleName='title'>{t('Group Invitations & Join Requests')}</h1>
+        <h1 styleName='title'>{this.props.t('Group Invitations &amp; Join Requests')}</h1>
 
         <div styleName='description'>
-          {t('This list contains all open requests and invitations to join groups.')}
-          {t('To view all groups you are a part of go to your')}{' '}<Link to={currentUserSettingsUrl('groups')}>{t('Affiliations')}</Link>.
+          {this.props.t('This list contains all open requests and invitations to join groups.')}
+          {this.props.t('To view all groups you are a part of go to your')}<Link to={currentUserSettingsUrl('groups')}>{this.props.t('Affiliations')}</Link>.
         </div>
 
-        <h2 styleName='subhead'>{t('Invitations to Join New Groups')}</h2>
+        <h2 styleName='subhead'>{this.props.t('Invitations to Join New Groups')}</h2>
         <div styleName='requestList'>
           {pendingGroupInvites.map(invite =>
             <GroupInvite
@@ -63,7 +63,7 @@ class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>{t('Your Open Requests to Join Groups')}</h2>
+        <h2 styleName='subhead'>{this.props.t('Your Open Requests to Join Groups')}</h2>
         <div styleName='requestList'>
           {pendingJoinRequests.map((jr) =>
             <JoinRequest
@@ -74,7 +74,7 @@ class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>{t('Declined Invitations & Requests')}</h2>
+        <h2 styleName='subhead'>{this.props.t('Declined Invitations &amp; Requests')}</h2>
         <div styleName='requestList'>
           {rejectedJoinRequests.map((jr) =>
             <JoinRequest
@@ -111,16 +111,16 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
         <div styleName='invitationSource'>
           <div>
             <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
-            <span>{t('invited you to join')}</span>
+            <span>{this.props.t('invited you to join')}</span>
           </div>
           <div styleName='requestGroup'>
             <GroupButton group={group} />
           </div>
         </div>
         <div styleName='invitationResponse'>
-          <span styleName='createdDate'>{t('Sent')} {moment(createdAt).format('MM-DD-YYYY')}</span>
-          <span onClick={decline} styleName='cancelButton'>{t('Decline')}</span>
-          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{t('Join')}</span>
+          <span styleName='createdDate'>Sent {moment(createdAt).format('MM-DD-YYYY')}</span>
+          <span onClick={decline} styleName='cancelButton'>{this.props.t('Decline')}</span>
+          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{this.props.t('Join')}</span>
         </div>
       </div>
     </div>
@@ -143,15 +143,15 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
         <GroupButton group={group} />
       </div>
       <div styleName='requestDetail'>
-        <span styleName='createdDate joinRequestDate'>{t('Requested')} {moment(createdAt).format('YYYY-MM-DD')}</span>
+        <span styleName='createdDate joinRequestDate'>{this.props.t('Requested')} {moment(createdAt).format('YYYY-MM-DD')}</span>
         {joinRequest.status === JOIN_REQUEST_STATUS.Pending && (
-          <span onClick={cancel} styleName='cancelButton'>{t('Cancel')}</span>
+          <span onClick={cancel} styleName='cancelButton'>{this.props.t('Cancel')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Rejected && (
-          <span styleName='declinedCanceled'>{t('Declined')}</span>
+          <span styleName='declinedCanceled'>{this.props.t('Declined')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Canceled && (
-          <span styleName='declinedCanceled'>{t('Canceled')}</span>
+          <span styleName='declinedCanceled'>{this.props.t('Canceled')}</span>
         )}
       </div>
     </div>

@@ -57,11 +57,11 @@ class NotificationSettingsTab extends Component {
 
     const key = ('sendEmail' in changes) ? 'sendEmail' : 'sendPushNotifications'
 
-    const type = key === 'sendEmail' ? t('Email') : t('Push Notifications')
-    const onOrOff = changes[key] ? t('ON') : t('OFF')
+    const type = key === 'sendEmail' ? this.props.t('Email') : this.props.t('Push Notifications')
+    const onOrOff = changes[key] ? this.props.t('ON') : this.props.t('OFF')
     const numGroups = this.props.memberships.length
 
-    if (window.confirm(t('You wish to turn {{onOrOff}} {{type}} for all groups? This will affect {{numGroups}} {{groups}}.', { onOrOff, type, numGroups, groups: numGroups === 1 ? t('group') : t('groups') }))) {
+    if (window.confirm(this.props.t(`You wish to turn {{onOrOff}} {{type}} for all groups? This will affect {{numGroups}} {groups}.`, { onOrOff, type, numGroups, groups: numGroups === 1 ? this.props.t('group') : this.props.t('groups') }))) {
       this.updateAllGroups(changes)
     }
   }
@@ -162,26 +162,21 @@ class NotificationSettingsTab extends Component {
 
 export function MessageSettingsRow ({ settings, updateMessageSettings }) {
   const { t } = useTranslation()
-  return (
-    <SettingsRow
-      iconName='Messages'
-      name={t('Messages')}
-      settings={settings}
-      update={updateMessageSettings}
-    />
-  )
+  return <SettingsRow
+    iconName='Messages'
+    name='Direct Messages'
+    settings={settings}
+    update={updateMessageSettings}
+  />
 }
 
 export function AllGroupsSettingsRow ({ settings, updateAllGroups }) {
   const { t } = useTranslation()
-  return (
-    <SettingsRow
-      imageUrl={allGroupsLogo}
-      name={t('All Groups')}
-      settings={settings}
-      update={updateAllGroups}
-    />
-  )
+  return <SettingsRow
+    imageUrl={allGroupsLogo}
+    name={t('All Groups')}
+    settings={settings}
+    update={updateAllGroups} />
 }
 
 export function MembershipSettingsRow ({ membership, updateMembershipSettings }) {

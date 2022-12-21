@@ -4,7 +4,7 @@ import UploadPhoto from './UploadPhoto'
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
   withTranslation: () => Component => {
-    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    Component.defaultProps = { ...Component.defaultProps, t: () => '' }
     return Component
   }
 }))

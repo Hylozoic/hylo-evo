@@ -4,16 +4,12 @@ exports[`PaymentSettingsTab renders correctly 1`] = `
 <div>
   <div
     data-stylename="title"
-  >
-    Connect Stripe Account
-  </div>
+  />
   <div
     data-stylename="prompt"
-  >
-    Click the button below to create a free Stripe account (or connect an existing account). Once you've done that you will be able to accept contributions to Projects.
-  </div>
+  />
   <Button
-    label="Link Stripe Account"
+    label=""
     onClick={[Function]}
   />
 </div>

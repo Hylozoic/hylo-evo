@@ -4,37 +4,33 @@ exports[`AccountSettingsTab renders correctly 1`] = `
 <div>
   <div
     data-stylename="title"
-  >
-    Update Account
-  </div>
+  />
   <SettingsControl
-    label="Email"
+    label=""
     onChange={[Function]}
     value=""
   />
   <SettingsControl
-    label="New Password"
+    label=""
     onChange={[Function]}
     type="password"
     value=""
   />
   <SettingsControl
-    label="New Password (Confirm)"
+    label=""
     onChange={[Function]}
     type="password"
     value=""
   />
   <div
     data-stylename="help"
-  >
-    Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.
-  </div>
+  />
   <div
     data-stylename="button-row"
   >
     <Button
       color="purple"
-      label="Deactivate Account"
+      label=""
       onClick={[Function]}
     />
   </div>
@@ -43,7 +39,7 @@ exports[`AccountSettingsTab renders correctly 1`] = `
   >
     <Button
       color="purple"
-      label="Delete Account"
+      label=""
       onClick={[Function]}
     />
   </div>
@@ -58,7 +54,7 @@ exports[`AccountSettingsTab renders correctly 1`] = `
     <Button
       color="gray"
       data-stylename="save-button"
-      label="Save Changes"
+      label=""
       onClick={null}
     />
   </div>

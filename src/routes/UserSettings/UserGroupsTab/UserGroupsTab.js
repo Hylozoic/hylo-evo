@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
-import { withTranslation, useTranslation } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 import get from 'lodash/get'
 import { WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
@@ -44,11 +44,11 @@ class UserGroupsTab extends Component {
 
     return (
       <div styleName='container'>
-        <h1 styleName='title'>{t('Your affiliations with organizations')}</h1>
+        <h1 styleName='title'>{this.props.t('Your affiliations with organizations')}</h1>
 
-        <div styleName='description'>{t('This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.')}</div>
+        <div styleName='description'>{this.props.t('This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.')}</div>
 
-        <h2 styleName='subhead'>{t('Hylo Groups')}</h2>
+        <h2 styleName='subhead'>{this.props.t('Hylo Groups')}</h2>
         {action === LEAVE_GROUP && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {memberships.map((m, index) =>
           <Membership
@@ -58,7 +58,7 @@ class UserGroupsTab extends Component {
             index={index}
           />)}
 
-        <h2 styleName='subhead'>{t('Other Affiliations')}</h2>
+        <h2 styleName='subhead'>{this.props.t('Other Affiliations')}</h2>
         {action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
           <Affiliation
@@ -74,7 +74,7 @@ class UserGroupsTab extends Component {
         {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
           <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
             <div styleName='plus'>+</div>
-            <div>{t('Add new affiliation')}</div>
+            <div>{this.props.t('Add new affiliation')}</div>
           </div>
         )}
       </div>
@@ -162,7 +162,7 @@ export function AddAffiliation ({ close, save }) {
   return (
     <div styleName='affiliation-form'>
       <div styleName='header'>
-        <h3>{t('Add new affiliation')}</h3>
+        <h3>{this.props.t('Add new affiliation')}</h3>
         <div styleName='close' onClick={close}>x</div>
       </div>
 
@@ -172,7 +172,7 @@ export function AddAffiliation ({ close, save }) {
           <input
             type='text'
             onChange={e => setRole(e.target.value.substring(0, CHAR_LIMIT))}
-            placeholder={t('Name of role')}
+            placeholder={this.props.t('Name of role')}
             value={role}
           />
           <div styleName='chars'>{role.length}/{CHAR_LIMIT}</div>
@@ -196,7 +196,7 @@ export function AddAffiliation ({ close, save }) {
           <input
             type='text'
             onChange={e => setOrgName(e.target.value.substring(0, CHAR_LIMIT))}
-            placeholder={t('Name of organization')}
+            placeholder={this.props.t('Name of organization')}
             value={orgName}
           />
           <div styleName='chars'>{orgName.length}/{CHAR_LIMIT}</div>
@@ -206,13 +206,13 @@ export function AddAffiliation ({ close, save }) {
           <input
             type='text'
             onChange={e => setUrl(e.target.value.substring(URL_PROTOCOL.length))}
-            placeholder={t('URL of organization')}
+            placeholder={this.props.t('URL of organization')}
             value={formatUrl(url)}
           />
         </div>
 
         <div styleName={`save ${canSave ? '' : 'disabled'}`}>
-          <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>{t('Add Affiliation')}</span>
+          <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>{this.props.t('Add Affiliation')}</span>
         </div>
 
       </div>

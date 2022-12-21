@@ -172,28 +172,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   >
     <p
       data-stylename="help-paragraph"
-    >
-      Download our
-       
-      <a
-        href="https://itunes.apple.com/app/appName/id1002185140"
-        rel="noreferrer"
-        target="_blank"
-      >
-        iOS
-      </a>
-       
-      or
-       
-      <a
-        href="https://play.google.com/store/apps/details?id=com.hylo.hyloandroid"
-        rel="noreferrer"
-        target="_blank"
-      >
-        Android
-      </a>
-       app to receive push notifications.
-    </p>
+    />
   </div>
   <Tooltip
     delay={250}
