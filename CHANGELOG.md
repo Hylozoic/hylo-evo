@@ -6,7 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.1.0]
+
+### Added
+- Topic streams are now Slack like chat rooms! You can do quick posts without a title, and scrolling happens from the bottom up, and it tracks the last post you read and takes you to that location when you come back.
+- Emoji reactions on comments
+- Clicking on a comment notification takes you to that comment in the post and highlights it
+- Public group pages can now be viewed by non-logged-in users
+
 ### Changed
+- Emoji reactions replace votes on posts
 - Show custom create post prompt when filtering stream by Resource
 
 ## [5.0.6]
