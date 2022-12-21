@@ -41,15 +41,8 @@ $new-group-spacing: 16px;
   scrollbar-color: white rgba(200,200,200,.5);
 }
 
-.groupDrawer::-webkit-scrollbar {
-  background-color: rgba(48, 76, 115, 1.0);
-  width: 5px;
-  border-radius: 5px;
-}
-
 .groupDrawer::-webkit-scrollbar-thumb {
   background-color: rgba(35, 64, 91, 1);
-  outline: none;
 }
 
 .drawerHeader {

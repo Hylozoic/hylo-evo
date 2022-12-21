@@ -17,6 +17,8 @@ export default function presentPost (post, groupId) {
     groups: post.groups.toModelArray(),
     attachments: post.attachments
       .orderBy('position').toModelArray(),
+    imageAttachments: post.attachments
+      .orderBy('position').filter(a => a.type === 'image').toRefArray(),
     fileAttachments: post.attachments
       .orderBy('position').filter(a => a.type === 'file').toModelArray(),
     pinned,

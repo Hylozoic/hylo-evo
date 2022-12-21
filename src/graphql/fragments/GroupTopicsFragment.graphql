@@ -6,6 +6,7 @@ fragment GroupTopicsFragment on GroupTopicQuerySet {
     postsTotal
     followersTotal
     isSubscribed
+    lastReadPostId
     newPostCount
     topic {
       id

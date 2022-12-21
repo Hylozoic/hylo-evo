@@ -17,7 +17,6 @@ import AttachmentManager from 'components/AttachmentManager/AttachmentManager.st
 import CreateGroup from 'components/CreateGroup/CreateGroup.store'
 import CreateTopic from 'components/CreateTopic/CreateTopic.store'
 import Events from 'routes/Events/Events.store'
-import Stream from 'routes/Stream/Stream.store'
 import FullPageModal from 'routes/FullPageModal/FullPageModal.store'
 import MapExplorer from 'routes/MapExplorer/MapExplorer.store'
 import Messages from 'routes/Messages/Messages.store'
@@ -68,7 +67,6 @@ export const createCombinedReducers = history => combineReducers({
   Search,
   SkillsSection,
   SkillsToLearnSection,
-  Stream,
   TopicsSettings,
   UserGroupsTab
 })

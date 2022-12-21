@@ -28,6 +28,7 @@ import {
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import RedirectRoute from 'router/RedirectRoute'
 import AllTopics from 'routes/AllTopics'
+import ChatRoom from 'routes/ChatRoom'
 import CreateModal from 'components/CreateModal'
 import GroupDetail from 'routes/GroupDetail'
 import GroupSettings from 'routes/GroupSettings'
@@ -88,6 +89,7 @@ export default function AuthLayoutRouter (props) {
   ])?.params?.postId
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isMapView = pathMatchParams?.view === 'map'
+  const hideSidebar = isMapView || pathMatchParams?.view === 'topics'
   const isWelcomeContext = pathMatchParams?.context === 'welcome'
   const queryParams = Object.fromEntries(new URLSearchParams(location.search))
   const hideDrawer = queryParams?.hideDrawer !== 'true'
@@ -264,7 +266,7 @@ export default function AuthLayoutRouter (props) {
       />
 
       <Div100vh styleName={cx('container', { 'map-view': isMapView, singleColumn: isSingleColumn, detailOpen: hasDetail })}>
-        <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav })} onClick={handleCloseDrawer}>
+        <div ref={resizeRef} styleName={cx('main', { 'map-view': isMapView, withoutNav, 'main-pad': !withoutNav })} onClick={handleCloseDrawer}>
           {/* View navigation menu */}
           <Route
             path={[
@@ -285,7 +287,7 @@ export default function AuthLayoutRouter (props) {
               )
             }}
           />
-          <Div100vh styleName={cx('center', { 'map-view': isMapView, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
+          <div styleName={cx('center', { 'full-width': hideSidebar, collapsedState, withoutNav })} id={CENTER_COLUMN_ID}>
             {/* NOTE: It could be more clear to group the following switched routes by component  */}
             <Switch>
               {/* **** Member Routes **** */}
@@ -333,7 +335,7 @@ export default function AuthLayoutRouter (props) {
               <Route path='/:context(groups)/:groupSlug/:view(members)/create' component={Members} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${OPTIONAL_POST_MATCH}`} component={MemberProfile} />
               <Route path='/:context(groups)/:groupSlug/:view(members)' component={Members} />
-              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={Stream} />
+              <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${OPTIONAL_POST_MATCH}`} component={ChatRoom} />
               <Route path='/:context(groups)/:groupSlug/:view(topics)' component={AllTopics} />
               <Route path='/:context(groups)/:groupSlug/:view(settings)' component={GroupSettings} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
@@ -347,9 +349,9 @@ export default function AuthLayoutRouter (props) {
               {/* **** Default Route (404) **** */}
               <Redirect to={lastViewedGroup ? `/groups/${lastViewedGroup.slug}` : '/all'} />
             </Switch>
-          </Div100vh>
+          </div>
           {(currentGroup && currentGroupMembership) && (
-            <div styleName={cx('sidebar', { hidden: (hasDetail || isMapView) })}>
+            <div styleName={cx('sidebar', { hidden: (hasDetail || hideSidebar) })}>
               <Route
                 path={[
                   `/:context(groups)/:groupSlug/:view(events|explore|map|groups|projects|stream)/${OPTIONAL_NEW_POST_MATCH}`,
@@ -379,9 +381,9 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
             </Switch>
           </div>
+          <SocketListener location={location} groupSlug={currentGroupSlug} />
+          <SocketSubscriber type='group' id={get('slug', currentGroup)} />
         </div>
-        <SocketListener location={location} />
-        <SocketSubscriber type='group' id={get('slug', currentGroup)} />
       </Div100vh>
     </IntercomProvider>
   )

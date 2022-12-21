@@ -30,17 +30,18 @@ export default `query (
       groupTopics(isDefault: $isDefault, visibility: $visibility) {
         items {
           id
+          followersTotal
+          isDefault
+          isSubscribed
+          lastReadPostId
+          newPostCount
+          postsTotal
+          visibility
           group {
             id
             name
             avatarUrl
           }
-          postsTotal
-          followersTotal
-          isSubscribed
-          newPostCount
-          isDefault
-          visibility
         }
       }
     }

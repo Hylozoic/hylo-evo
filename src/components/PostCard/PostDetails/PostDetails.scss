@@ -54,6 +54,23 @@
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 20px;
+
+  h1, h2, h3 {
+    font-family: 'Circular Bold';
+    color: rgba(35, 65, 91, 1.0);
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  h3, h4, h5 {
+    font-size: 16px;
+  }
 }
 
 .constrained .details {

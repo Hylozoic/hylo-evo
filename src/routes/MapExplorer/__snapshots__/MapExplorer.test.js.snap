@@ -29,7 +29,6 @@ exports[`MapExplorer Matches Snapshot 1`] = `
   postsForDrawer={Array []}
   postsForMap={Array []}
   routeParams={Object {}}
-  storeFetchPostsParam={[MockFunction]}
   topics={Array []}
   zoom={0}
 />

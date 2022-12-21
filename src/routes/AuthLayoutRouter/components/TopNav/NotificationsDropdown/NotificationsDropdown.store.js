@@ -35,6 +35,7 @@ export function fetchNotifications () {
               post {
                 id
                 title
+                details
                 groups {
                   id
                   slug

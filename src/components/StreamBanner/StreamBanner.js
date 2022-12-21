@@ -117,10 +117,11 @@ export default function StreamBanner ({
 
 export function postPromptString (type = '', { firstName }) {
   const postPrompts = {
+    event: `Hi ${firstName}, want to create an event?`,
     offer: `Hi ${firstName}, what would you like to share?`,
     request: `Hi ${firstName}, what are you looking for?`,
     project: `Hi ${firstName}, what would you like to create?`,
-    event: `Hi ${firstName}, want to create an event?`,
+    resource: `Hi ${firstName}, what resource is available?`,
     default: `Hi ${firstName}, what's on your mind?`
   }
 
