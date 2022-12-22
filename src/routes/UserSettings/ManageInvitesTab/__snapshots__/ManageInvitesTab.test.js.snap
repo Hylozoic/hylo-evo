@@ -7,7 +7,7 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
   <h1
     data-stylename="title"
   >
-    Group Invitations &amp; Join Requests
+    Group Invitations & Join Requests
   </h1>
   <div
     data-stylename="description"
@@ -87,7 +87,7 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
   <h2
     data-stylename="subhead"
   >
-    Declined Invitations &amp; Requests
+    Declined Invitations & Requests
   </h2>
   <div
     data-stylename="requestList"
