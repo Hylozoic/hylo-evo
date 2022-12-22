@@ -23,10 +23,10 @@ import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
+import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 
 export const MAX_TITLE_LENGTH = 50
-export const MAX_POST_TOPICS = 3
 
 const donationsLinkPlaceholder = 'Add a donation link (must be valid URL)'
 const projectManagementLinkPlaceholder = 'Add a project management link (must be valid URL)'
@@ -149,7 +149,7 @@ export default class PostEditor extends React.Component {
       this.reset(this.props)
       this.editorRef.current.focus()
     } else if (linkPreview !== prevProps.linkPreview) {
-      this.onUpdate()
+      this.onUpdateLinkPreview()
     }
   }
 
@@ -157,7 +157,7 @@ export default class PostEditor extends React.Component {
     this.props.clearLinkPreview()
   }
 
-  onUpdate () {
+  onUpdateLinkPreview () {
     this.setState({
       post: { ...this.state.post, linkPreview: this.props.linkPreview }
     })

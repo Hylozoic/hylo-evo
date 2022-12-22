@@ -6,6 +6,18 @@ fragment CommentFields on Comment {
     name
     avatarUrl
   }
+  myReactions {
+    emojiFull
+    id
+  }
+  commentReactions {
+    emojiFull
+    id
+    user {
+      id
+      name
+    }
+  }
   attachments {
     id
     position

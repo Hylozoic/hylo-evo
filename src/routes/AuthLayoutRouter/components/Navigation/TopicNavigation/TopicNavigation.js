@@ -57,10 +57,10 @@ export function TopicsList ({ topics, onClick, onClose }) {
             onClick={() => onClick(topic)}
             activeClassName='active-topic-nav-link'
           >
-            {topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' />}
             <span styleName='s.name'>#{topic.name}</span>
             {topic.newPostCount > 0 && !topic.current &&
               <Badge number={topic.newPostCount} styleName='s.badge' />}
+            {topic.visibility === 2 && <Icon name='Pin' styleName='s.pinIcon' />}
             {topic.current &&
               <Icon name='Ex' styleName='s.closeIcon' onClick={onClose} />}
           </NavLink>

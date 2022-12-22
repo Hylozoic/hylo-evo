@@ -32,6 +32,20 @@
   border-radius: 3px;
 }
 
+body {
+  ::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+    border-radius: 8px 0 0 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(200,200,200,.5   );
+    outline: none;
+    border-radius: 8px;
+  }
+}
+
 
 @media screen and (max-width: 600px) {
   .modal-content {

@@ -174,6 +174,7 @@ export default class Stream extends Component {
                 routeParams={routeParams}
                 post={post}
                 key={post.id}
+                currentUser={currentUser}
                 respondToEvent={respondToEvent}
                 querystringParams={querystringParams}
               />

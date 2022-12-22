@@ -10,7 +10,7 @@ import queryResults, {
 import { FETCH_MEMBERS } from 'routes/Members/Members.store'
 import {
   REMOVE_POST_PENDING
-} from 'components/PostCard/PostHeader/PostHeader.store'
+} from 'store/constants'
 
 const variables = { activePostsOnly: false, context: 'groups', slug: 'foo', sortBy: 'name' }
 
@@ -240,18 +240,20 @@ describe('matchNewPostIntoQueryResults', () => {
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
       '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","slug":"bar"}}': {
         hasMore: true,
-        ids: ['17', '18', '11']
+        ids: ['17', '18', '11'],
+        total: false
       },
       '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
-        ids: ['17', '18', '11']
+        ids: ['17', '18', '11'],
+        total: false
       }
     })
   })
 
   it('prepends the post id to matching query result sets with a topic', () => {
     const state = {
-      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","topic":"123"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"chat","order":"asc","slug":"bar","sortBy":"id","topic":"123"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -259,9 +261,10 @@ describe('matchNewPostIntoQueryResults', () => {
     const groups = [{ slug: 'foo' }, { slug: 'bar' }]
     const post = { id: '17', type: 'request', groups, topics: [{ name: 'a', id: '123' }] }
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
-      '{"type":"FETCH_POSTS","params":{"context":"groups","slug":"bar","topic":"123"}}': {
+      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"chat","order":"asc","slug":"bar","sortBy":"id","topic":"123"}}': {
         hasMore: true,
-        ids: ['17', '18', '11']
+        ids: ['17', '18', '11'],
+        total: false
       }
     })
   })
@@ -281,7 +284,8 @@ describe('matchNewThreadIntoQueryResults', () => {
     expect(matchNewThreadIntoQueryResults(state, thread)).toEqual({
       '{"type":"FETCH_THREADS","params":{}}': {
         hasMore: true,
-        ids: ['27', '20', '21']
+        ids: ['27', '20', '21'],
+        total: false
       }
     })
   })

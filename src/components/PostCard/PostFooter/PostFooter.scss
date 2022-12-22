@@ -16,6 +16,12 @@ $footer-height: 40px;
     width: 30px;
     height: 30px;
   }
+
+  // change avatar sizes
+  > span > div > div {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .footer.constrained {
@@ -37,31 +43,6 @@ $footer-height: 40px;
   margin: 5px;
   text-align: center;
   text-decoration: none;
-}
-
-.commenters {
-  display: flex;
-  align-items: center;
-}
-
-.people {
-  margin-right: 4px;
-  white-space: nowrap;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.caption {
-  composes: caption-lt-lg from 'css/typography.scss';
-}
-
-.footer.constrained .caption {
-  font-size: 10px;
-  line-height: 12px;
-}
-
-.footer.constrained .people {
-  margin-right: 5px;
 }
 
 .share {
@@ -89,46 +70,20 @@ a:not([href]):not([tabindex]).voted.vote-button {
   color: rgba(255, 255, 255, 1);
 }
 
-.vote-button {
-  composes: text-button from 'css/typography.scss';
-  color: rgba(0, 199, 157, 1.0);
-  background-color: rgba(255, 255, 255, 0);
+.footer-reactions {
   margin-left: auto;
-  height: $footer-height;
-  line-height: $footer-height;
-  text-align: center;
-  border-left: 1px dashed $color-cape-cod-10;
-  border-bottom-right-radius: 4px;
-  width: 90px;
   transition: all .25s ease;
-
-  &:hover {
-    &, .arrowIcon {
-      color: $color-gossamer !important;
-    }
-  }
-
-  &.voted {
-    background-color: rgba(0, 199, 157, 1.0);
-    color: rgba(255, 255, 255, 1);
-    &, .arrowIcon {
-      color: white !important;
-    }
-  }
-}
-
-.constrainend.vote-button {
-  width: 66px;
+  display: flex;
+  width: 50%;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 @media screen and (max-width: 425px) {
   .footer {
     height: 40px;
     padding-left: 10px;
-  }
-
-  .vote-button {
-    width: 70px;
   }
 
   .people {

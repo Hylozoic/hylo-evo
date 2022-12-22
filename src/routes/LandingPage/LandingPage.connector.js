@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
+import fetchPosts from 'store/actions/fetchPosts'
 import { JOIN_REQUEST_STATUS } from 'store/models/JoinRequest'
+import presentGroup from 'store/presenters/presentGroup'
+import presentPost from 'store/presenters/presentPost'
 import getCanModerate from 'store/selectors/getCanModerate'
 import { getChildGroups } from 'store/selectors/getGroupRelationships'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
 import getMyMemberships from 'store/selectors/getMyMemberships'
+import { getPosts } from 'store/selectors/getPosts'
 import getRouteParam from 'store/selectors/getRouteParam'
-import presentGroup from 'store/presenters/presentGroup'
-import presentPost from 'store/presenters/presentPost'
-import { fetchPosts, getPosts } from 'routes/Stream/Stream.store'
 
 export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)

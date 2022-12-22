@@ -48,9 +48,13 @@ describe('SocketListener.store.ormSessionReducer', () => {
       action = {
         type: RECEIVE_POST,
         payload: {
-          topics: ['2', '7'],
-          groupId: '1',
-          creatorId: '4'
+          data: {
+            post: {
+              topics: ['2', '7'],
+              groupId: '1',
+              creatorId: '4'
+            }
+          }
         }
       }
     })
@@ -64,7 +68,7 @@ describe('SocketListener.store.ormSessionReducer', () => {
     })
 
     it('ignores posts created by the current user', () => {
-      action.payload.creatorId = '2'
+      action.payload.data.post.creatorId = '2'
       ormSessionReducer(session, action)
       expect(session.Membership.withId('1').newPostCount).toBeFalsy()
     })

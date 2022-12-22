@@ -11,6 +11,7 @@ import {
   CREATE_MESSAGE_PENDING,
   DELETE_COMMENT_PENDING,
   DELETE_GROUP_RELATIONSHIP,
+  DELETE_POST_PENDING,
   FETCH_GROUP_DETAILS_PENDING,
   FETCH_MESSAGES_PENDING,
   FETCH_POSTS_PENDING,
@@ -19,8 +20,13 @@ import {
   LEAVE_GROUP,
   LEAVE_PROJECT_PENDING,
   PROCESS_STRIPE_TOKEN_PENDING,
+  REACT_ON_POST_PENDING,
+  REACT_ON_COMMENT_PENDING,
   REJECT_GROUP_RELATIONSHIP_INVITE,
   REMOVE_MODERATOR_PENDING,
+  REMOVE_REACT_ON_COMMENT_PENDING,
+  REMOVE_REACT_ON_POST_PENDING,
+  REMOVE_POST_PENDING,
   REQUEST_FOR_CHILD_TO_JOIN_PARENT_GROUP,
   RESET_NEW_POST_COUNT_PENDING,
   RESPOND_TO_EVENT_PENDING,
@@ -32,8 +38,7 @@ import {
   UPDATE_THREAD_READ_TIME,
   UPDATE_USER_SETTINGS_PENDING as UPDATE_USER_SETTINGS_GLOBAL_PENDING,
   UPDATE_WIDGET,
-  USE_INVITATION,
-  VOTE_ON_POST_PENDING
+  USE_INVITATION
 } from 'store/constants'
 import {
   UPDATE_ALL_MEMBERSHIP_SETTINGS_PENDING,
@@ -67,6 +72,9 @@ import {
   INVITE_PEOPLE_TO_EVENT_PENDING
 } from 'components/EventInviteDialog/EventInviteDialog.store'
 import { FETCH_GROUP_TO_GROUP_JOIN_QUESTIONS } from 'routes/GroupSettings/RelatedGroupsTab/RelatedGroupsTab.store'
+import {
+  RECEIVE_POST
+} from 'components/SocketListener/SocketListener.store'
 
 import orm from 'store/models'
 import clearCacheFor from './clearCacheFor'
@@ -96,7 +104,8 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
     Post,
     PostCommenter,
     ProjectMember,
-    Skill
+    Skill,
+    Topic
   } = session
 
   if (payload && !isPromise(payload) && meta && meta.extractModel) {
@@ -162,6 +171,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         // with the currentUser at the beginning
         const p = Post.withId(meta.postId)
         p.update({ commentersTotal: p.commentersTotal + 1 })
+        p.update({ commentsTotal: p.commentsTotal + 1 })
       }
       break
     }
@@ -233,6 +243,15 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       groupTopic.delete()
       break
     }
+
+    case DELETE_POST_PENDING:
+      post = Post.withId(meta.id)
+      if (meta.groupId) {
+        const group = Group.withId(meta.groupId)
+        removePostFromGroup(post, group)
+      }
+      post.delete()
+      break
 
     case FETCH_COLLECTION_POSTS:
       clearCacheFor(Group, meta.groupId)
@@ -347,6 +366,25 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
+    case RECEIVE_POST: {
+      const post = Post.withId(payload.data?.post?.id)
+      if (post) {
+        post.groups.toModelArray().forEach(g => {
+          const group = Group.withId(g.id)
+          if (!group) return
+          group.update({ postCount: group.postCount + 1 })
+          post.topics.toModelArray().forEach(t => {
+            const topic = Topic.withId(t.id)
+            if (!topic) return
+            const groupTopic = topic.groupTopics.filter({ group: group.id }).first()
+            if (!groupTopic) return
+            groupTopic.update({ postsTotal: groupTopic.postsTotal + 1 })
+          })
+        })
+      }
+      break
+    }
+
     case REMOVE_MODERATOR_PENDING: {
       group = Group.withId(meta.groupId)
       const moderators = group.moderators.filter(m =>
@@ -360,6 +398,16 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       group = Group.withId(meta.groupId)
       group.suggestedSkills.remove(meta.skillId)
       clearCacheFor(Group, meta.groupId)
+      break
+    }
+
+    case REMOVE_POST_PENDING: {
+      post = Post.withId(meta.postId)
+      const groups = post.groups.filter(c =>
+        c.slug !== meta.slug).toModelArray()
+      post.update({ groups })
+      const group = Group.safeGet({ slug: meta.slug })
+      removePostFromGroup(post, group)
       break
     }
 
@@ -535,13 +583,54 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       break
     }
 
-    case VOTE_ON_POST_PENDING: {
-      post = session.Post.withId(meta.postId)
-      if (post.myVote) {
-        !meta.isUpvote && post.update({ myVote: false, votesTotal: (post.votesTotal || 1) - 1 })
-      } else {
-        meta.isUpvote && post.update({ myVote: true, votesTotal: (post.votesTotal || 0) + 1 })
+    case REACT_ON_COMMENT_PENDING: {
+      comment = session.Comment.withId(meta.commentId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+
+      const optimisticUpdate = {
+        myReactions: [...(comment.myReactions || []), { emojiFull }],
+        commentReactions: [...(comment.commentReactions || []), { emojiFull, user: { name: me.name, id: me.id } }]
       }
+
+      comment.update(optimisticUpdate)
+
+      break
+    }
+
+    case REMOVE_REACT_ON_COMMENT_PENDING: {
+      comment = session.Comment.withId(meta.commentId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+      const commentReactions = comment.commentReactions.filter(reaction => {
+        if (reaction.emojiFull === emojiFull && reaction.user.id === me.id) return false
+        return true
+      })
+      comment.update({ myReactions: comment.myReactions.filter(react => react.emojiFull !== emojiFull), commentReactions })
+      break
+    }
+
+    case REACT_ON_POST_PENDING: {
+      post = session.Post.withId(meta.postId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+
+      const optimisticUpdate = { myReactions: [...post.myReactions, { emojiFull }], postReactions: [...post.postReactions, { emojiFull, user: { name: me.name, id: me.id } }] }
+
+      post.update(optimisticUpdate)
+
+      break
+    }
+
+    case REMOVE_REACT_ON_POST_PENDING: {
+      post = session.Post.withId(meta.postId)
+      const emojiFull = meta.data.emojiFull
+      me = Me.first()
+      const postReactions = post.postReactions.filter(reaction => {
+        if (reaction.emojiFull === emojiFull && reaction.user.id === me.id) return false
+        return true
+      })
+      post.update({ myReactions: post.myReactions.filter(react => react.emojiFull !== emojiFull), postReactions })
       break
     }
   }
@@ -549,4 +638,20 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
   values(sessionReducers).forEach(fn => fn(session, action))
 
   return session.state
+}
+
+// XXX: this is ugly, would be better to load these posts through redux-orm "queries" so they update automatically
+const removePostFromGroup = (post, group) => {
+  if (post && group) {
+    if (post.announcement) {
+      group.update({ announcements: group.announcements.filter(p => p.id !== post.id).toModelArray() })
+    }
+    if (post.type === 'request' || post.type === 'offer') {
+      group.update({ openOffersAndRequests: group.openOffersAndRequests.filter(p => p.id !== post.id).toModelArray() })
+    } else if (post.type === 'event') {
+      group.update({ upcomingEvents: group.upcomingEvents.filter(p => p.id !== post.id).toModelArray() })
+    } else if (post.type === 'project') {
+      group.update({ activeProjects: group.activeProjects.filter(p => p.id !== post.id).toModelArray() })
+    }
+  }
 }
