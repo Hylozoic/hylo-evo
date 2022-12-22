@@ -107,6 +107,13 @@ export function SearchBar ({
 
 export function TabBar ({ filter, setSearchFilter }) {
   const { t } = useTranslation()
+  const tabs = [
+    { id: 'all', label: t('All') },
+    { id: 'post', label: t('Discussions') },
+    { id: 'person', label: t('People') },
+    { id: 'comment', label: t('Comments') }
+  ]
+
   return <div styleName='tabs'>
     <h1>{t('Search')}</h1>
     {tabs.map(({ id, label }) => <span key={id}

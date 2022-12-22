@@ -10,14 +10,6 @@ jest.mock('react-use-intercom', () => ({
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
-  useTranslation: (domain) => {
-    return {
-      t: (str) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {})
-      }
-    }
-  },
   withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
     return Component

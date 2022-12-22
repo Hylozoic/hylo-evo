@@ -29,7 +29,9 @@ exports[`renders entire component when not loading 1`] = `
         <Icon
           name="Messages"
         />
-        <h3 />
+        <h3>
+          Messages
+        </h3>
       </div>
     </div>
     <withRouter(ThreadList)
@@ -76,7 +78,9 @@ exports[`renders loading when in loading state 1`] = `
         <Icon
           name="Messages"
         />
-        <h3 />
+        <h3>
+          Messages
+        </h3>
       </div>
     </div>
     <div

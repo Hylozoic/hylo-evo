@@ -73,7 +73,7 @@ export function Separator ({ currentIndex, displayCount, othersCount, t }) {
   const hasOthers = othersCount > 0
 
   if (isLastEntry) return null
-  if (!hasOthers && isNextToLastEntry) return <span key='and'> {t('and')} </span>
+  if (!hasOthers && isNextToLastEntry) return <span key='and'> {this.props.t('and')} </span>
 
   return <span>, </span>
 }

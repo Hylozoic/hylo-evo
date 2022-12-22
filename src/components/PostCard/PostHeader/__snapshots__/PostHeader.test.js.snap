@@ -669,7 +669,7 @@ exports[`renders human readable dates 1`] = `
     <div
       data-stylename="timeWindow"
     >
-      Started: {{from}} / Ends: {{endTime}}
+      Started: {{from}} / Ends: {{to}}
     </div>
   </div>
   <ReactTooltip
@@ -759,7 +759,7 @@ exports[`renders human readable dates 2`] = `
     <div
       data-stylename="timeWindow"
     >
-      Started: {{from}} / Ends: {{endTime}}
+      Started: {{from}} / Ends: {{to}}
     </div>
   </div>
   <ReactTooltip
@@ -849,7 +849,7 @@ exports[`renders human readable dates 3`] = `
     <div
       data-stylename="timeWindow"
     >
-      Ended: {{endTime}}
+      Ended: {{to}}
     </div>
   </div>
   <ReactTooltip

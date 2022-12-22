@@ -4,7 +4,7 @@ exports[`shows basic pills 1`] = `
 <div
   data-stylename="pill-container expanded"
 >
-  <Pillbox
+  <withI18nextTranslation(Pillbox)
     addLabel="Add a Skill or Interest"
     handleAddition={[Function]}
     handleClick={[Function]}
@@ -34,7 +34,7 @@ exports[`shows editable fields when isMe = true 1`] = `
 <div
   data-stylename="pill-container expanded"
 >
-  <Pillbox
+  <withI18nextTranslation(Pillbox)
     addLabel="Add a Skill or Interest"
     editable={true}
     handleAddition={[Function]}

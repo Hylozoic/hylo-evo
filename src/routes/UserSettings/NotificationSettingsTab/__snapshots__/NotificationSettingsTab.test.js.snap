@@ -172,7 +172,11 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   >
     <p
       data-stylename="help-paragraph"
-    />
+    >
+      Download our &lt;a href={{iOSAppURL}} target='_blank'&gt;iOS&lt;/a&gt;&nbsp;
+          or &lt;a href={{androidAppURL}} target='_blank'&gt;Android&lt;/a&gt; app to
+          receive push notifications.
+    </p>
   </div>
   <Tooltip
     delay={250}

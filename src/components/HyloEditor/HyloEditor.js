@@ -1,5 +1,6 @@
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 import { useEditor, EditorContent, Extension, BubbleMenu } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -32,6 +33,7 @@ const HyloEditor = React.forwardRef(function HyloEditor ({
   suggestionsThemeName = 'suggestions'
 }, ref) {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const editorRef = useRef(null)
   const [selectedLink, setSelectedLink] = useState()
   const editor = useEditor({

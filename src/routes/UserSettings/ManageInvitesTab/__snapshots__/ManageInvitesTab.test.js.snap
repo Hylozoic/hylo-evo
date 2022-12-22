@@ -6,18 +6,26 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
 >
   <h1
     data-stylename="title"
-  />
+  >
+    Group Invitations &amp; Join Requests
+  </h1>
   <div
     data-stylename="description"
   >
+    This list contains all open requests and invitations to join groups.
+    To view all groups you are a part of go to your
     <Link
       to="/settings/groups"
-    />
+    >
+      Affiliations
+    </Link>
     .
   </div>
   <h2
     data-stylename="subhead"
-  />
+  >
+    Invitations to Join New Groups
+  </h2>
   <div
     data-stylename="requestList"
   >
@@ -41,7 +49,9 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
   </div>
   <h2
     data-stylename="subhead"
-  />
+  >
+    Your Open Requests to Join Groups
+  </h2>
   <div
     data-stylename="requestList"
   >
@@ -76,7 +86,9 @@ exports[`ManageInvitesTab renders a list of pending join requests 1`] = `
   </div>
   <h2
     data-stylename="subhead"
-  />
+  >
+    Declined Invitations &amp; Requests
+  </h2>
   <div
     data-stylename="requestList"
   />

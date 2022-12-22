@@ -39,42 +39,38 @@ class PostPeopleDialog extends React.PureComponent {
     const { onClose, currentGroup, title = this.props.t('People') } = this.props
     const loading = false
 
-    return (
-      <ModalDialog
-        key='members-dialog'
-        closeModal={onClose}
-        modalTitle={`${title} (${this.props.members.length})`}
-        showCancelButton={false}
-        showSubmitButton={false}
-        style={{ width: '100%', maxWidth: '620px' }}>
-        <div styleName='container'>
-          {/*
-            Note: Can make memberDetails optional by adding a `withDetails` flag
-            sending in `goToMember` and switchin the onClick on a `MemberRow` to
-            go there instead of showing detail and making adding a conditional
-            style to make width of members-list be 100% in that case.
-          */}
-          <div styleName='members-list'>
-            {this.props.members.length > 7 && <TextInput
-              styleName='members-search-input'
-              aria-label='members-search'
-              autoFocus
-              label='members-search'
-              name='members-search'
-              onChange={this.search}
-              loading={loading}
-              value={searchString}
-              placeholder={this.props.t('Find a member')}
-            />}
-            <section>
-              {members.map(member => <MemberRow
-                member={member}
-                selected={member.id === get('id', selectedMember)}
-                onClick={this.selectMember(member)}
-                key={member.id} />)}
-            </section>
-          </div>
-          {selectedMember && <MemberDetail member={selectedMember} currentGroup={currentGroup} />}
+    return <ModalDialog key='members-dialog'
+      closeModal={onClose}
+      modalTitle={`${title} (${this.props.members.length})`}
+      showCancelButton={false}
+      showSubmitButton={false}
+      style={{ width: '100%', maxWidth: '620px' }}>
+      <div styleName='container'>
+        {/*
+          Note: Can make memberDetails optional by adding a `withDetails` flag
+          sending in `goToMember` and switchin the onClick on a `MemberRow` to
+          go there instead of showing detail and making adding a conditional
+          style to make width of members-list be 100% in that case.
+        */}
+        <div styleName='members-list'>
+          {this.props.members.length > 7 && <TextInput
+            styleName='members-search-input'
+            aria-label='members-search'
+            autoFocus
+            label='members-search'
+            name='members-search'
+            onChange={this.search}
+            loading={loading}
+            value={searchString}
+            placeholder={this.props.t('Find a member')}
+          />}
+          <section>
+            {members.map(member => <MemberRow
+              member={member}
+              selected={member.id === get('id', selectedMember)}
+              onClick={this.selectMember(member)}
+              key={member.id} />)}
+          </section>
         </div>
       </ModalDialog>
     )

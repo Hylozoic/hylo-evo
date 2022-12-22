@@ -94,13 +94,13 @@ class AllTopics extends Component {
       t
     } = this.props
     const { totalTopicsCached } = this.state
-    const all = t('All')
+    const all = this.props.t('All')
 
     return (
       <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
         <div styleName='all-topics'>
-          <div styleName='title'>{t('{{groupName}} Topics', { groupName: group ? group.name : all })}</div>
-          <div styleName='subtitle'>{t('{{totalTopicsCached}} Total Topics', { totalTopicsCached })}</div>
+          <div styleName='title'>{this.props.t('{{groupName}} Topics', { groupName: group ? group.name : all })}</div>
+          <div styleName='subtitle'>{this.props.t('{{totalTopicsCached}} Total Topics', { totalTopicsCached })}</div>
           <div styleName='controls'>
             <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
           </div>

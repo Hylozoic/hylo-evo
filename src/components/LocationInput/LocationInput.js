@@ -23,6 +23,7 @@ class LocationInput extends Component {
     locationObject: null,
     location: '',
     onChange: null,
+    placeholder: 'Search for a location...', /* TODO: Handle this translation */
     saveLocationToDB: true
   }
 

@@ -1,7 +1,7 @@
 import moment from 'moment-timezone'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { withTranslation } from 'react-i18next'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import GroupButton from 'components/GroupButton'
 import Loading from 'components/Loading'
@@ -111,7 +111,7 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
         <div styleName='invitationSource'>
           <div>
             <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
-            <span>{this.props.t('invited you to join')}</span>
+            <span>{t('invited you to join')}</span>
           </div>
           <div styleName='requestGroup'>
             <GroupButton group={group} />
@@ -119,8 +119,8 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
         </div>
         <div styleName='invitationResponse'>
           <span styleName='createdDate'>Sent {moment(createdAt).format('MM-DD-YYYY')}</span>
-          <span onClick={decline} styleName='cancelButton'>{this.props.t('Decline')}</span>
-          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{this.props.t('Join')}</span>
+          <span onClick={decline} styleName='cancelButton'>{t('Decline')}</span>
+          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{t('Join')}</span>
         </div>
       </div>
     </div>
@@ -143,15 +143,15 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
         <GroupButton group={group} />
       </div>
       <div styleName='requestDetail'>
-        <span styleName='createdDate joinRequestDate'>{this.props.t('Requested')} {moment(createdAt).format('YYYY-MM-DD')}</span>
+        <span styleName='createdDate joinRequestDate'>{t('Requested')} {moment(createdAt).format('YYYY-MM-DD')}</span>
         {joinRequest.status === JOIN_REQUEST_STATUS.Pending && (
-          <span onClick={cancel} styleName='cancelButton'>{this.props.t('Cancel')}</span>
+          <span onClick={cancel} styleName='cancelButton'>{t('Cancel')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Rejected && (
-          <span styleName='declinedCanceled'>{this.props.t('Declined')}</span>
+          <span styleName='declinedCanceled'>{t('Declined')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Canceled && (
-          <span styleName='declinedCanceled'>{this.props.t('Canceled')}</span>
+          <span styleName='declinedCanceled'>{t('Canceled')}</span>
         )}
       </div>
     </div>
