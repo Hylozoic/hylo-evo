@@ -1,4 +1,5 @@
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
 import { find, get, sortBy, isFunction } from 'lodash/fp'
@@ -8,7 +9,7 @@ import RoundImageRow from 'components/RoundImageRow'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
 
-export default class PostFooter extends React.PureComponent {
+class PostFooter extends React.PureComponent {
   static propTypes= {
     currentUser: PropTypes.shape(CURRENT_USER_PROP_TYPES),
     commenters: PropTypes.array,
@@ -39,7 +40,7 @@ export default class PostFooter extends React.PureComponent {
       <div styleName={cx('footer', { constrained })}>
         <PeopleInfo onClick={onClick} people={commenters} peopleTotal={commentersTotal} excludePersonId={get('id', currentUser)} />
         { currentUser ? <a onClick={vote} styleName={cx('vote-button', { voted: myVote })}
-          data-tip-disable={myVote} data-tip='Upvote this post so more people see it.' data-for={tooltipId}>
+          data-tip-disable={myVote} data-tip={this.props.t('Upvote this post so more people see it.')} data-for={tooltipId}>
           <Icon name='ArrowUp' styleName='arrowIcon' />
           {votesTotal}
         </a> : '' }
@@ -57,10 +58,10 @@ export function PeopleInfo ({
   peopleTotal,
   excludePersonId,
   phrases = {
-    emptyMessage: 'Be the first to comment',
-    phraseSingular: 'commented',
-    mePhraseSingular: 'commented',
-    pluralPhrase: 'commented'
+    emptyMessage: this.props.t('Be the first to comment'),
+    phraseSingular: this.props.t('commented'),
+    mePhraseSingular: this.props.t('commented'),
+    pluralPhrase: this.props.t('commented')
   },
   onClick
 }) {
@@ -68,7 +69,7 @@ export function PeopleInfo ({
   const sortedPeople = currentUserIsMember && people.length === 2
     ? sortBy(c => c.id !== excludePersonId, people) // me first
     : sortBy(c => c.id === excludePersonId, people) // me last
-  const firstName = person => person.id === excludePersonId ? 'You' : person.name.split(' ')[0]
+  const firstName = person => person.id === excludePersonId ? this.props.t('You') : person.name.split(' ')[0]
   const {
     emptyMessage,
     phraseSingular,
@@ -90,7 +91,7 @@ export function PeopleInfo ({
       names = `${firstName(sortedPeople[0])} and ${firstName(sortedPeople[1])}`
     } else {
       names = `${firstName(sortedPeople[0])}, ${firstName(sortedPeople[1])} and ${peopleTotal - 2} other${peopleTotal - 2 > 1 ? 's' : ''}`
-    }
+    } // TODO: Handle translations
     caption = `${names} ${phrase}`
     avatarUrls = people.map(p => p.avatarUrl)
   }
@@ -101,3 +102,5 @@ export function PeopleInfo ({
     </span>
   </span>
 }
+
+export default withTranslation()(PostFooter)

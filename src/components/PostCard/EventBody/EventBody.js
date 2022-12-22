@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { get, filter } from 'lodash/fp'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
 import Icon from 'components/Icon'
 import Button from 'components/Button'
@@ -13,7 +14,7 @@ import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
 import { RESPONSES } from 'store/models/EventInvitation'
 import '../PostBody/PostBody.scss'
 
-export default class EventBody extends Component {
+class EventBody extends Component {
   state = {
     showInviteDialog: false
   }
@@ -41,7 +42,7 @@ export default class EventBody extends Component {
           <div styleName='rsvp'>
             <EventRSVP {...event} respondToEvent={respondToEvent} />
           </div>
-          <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+          <Button label={this.props.t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
       </div>
 
@@ -67,10 +68,10 @@ export default class EventBody extends Component {
             excludePersonId={get('id', currentUser)}
             onClick={togglePeopleDialog}
             phrases={{
-              emptyMessage: 'No one is attending yet',
-              phraseSingular: 'is attending',
-              mePhraseSingular: 'are attending',
-              pluralPhrase: 'attending'
+              emptyMessage: this.props.t('No one is attending yet'),
+              phraseSingular: this.props.t('is attending'),
+              mePhraseSingular: this.props.t('are attending'),
+              pluralPhrase: this.props.t('attending')
             }}
           />
         </div>
@@ -79,7 +80,7 @@ export default class EventBody extends Component {
           <div styleName='rsvp'>
             <EventRSVP {...event} respondToEvent={respondToEvent} />
           </div>
-          <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+          <Button label={this.props.t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
 
       </div>
@@ -91,3 +92,4 @@ export default class EventBody extends Component {
     </div>
   }
 }
+export default withTranslation()(EventBody)

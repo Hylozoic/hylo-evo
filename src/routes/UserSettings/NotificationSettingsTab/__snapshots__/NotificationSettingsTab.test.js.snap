@@ -43,25 +43,30 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
 <div>
   <div
     data-stylename="title"
-  />
+  >
+    Notifications
+  </div>
   <div
     data-stylename="prompt"
-  />
+  >
+    How often would you like to receive email digests
+        for new posts in your groups and saved searches?
+  </div>
   <Select
     onChange={[Function]}
     options={
       Array [
         Object {
           "id": "daily",
-          "label": "",
+          "label": "Daily",
         },
         Object {
           "id": "weekly",
-          "label": "",
+          "label": "Weekly",
         },
         Object {
           "id": "never",
-          "label": "",
+          "label": "Never",
         },
       ]
     }
@@ -69,7 +74,10 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   />
   <div
     data-stylename="prompt"
-  />
+  >
+    How would you like to receive notifications about
+    new comments on posts you're following?
+  </div>
   <Select
     onChange={[Function]}
     options={
@@ -125,7 +133,11 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
   >
     <p
       data-stylename="help-paragraph"
-    />
+    >
+      Download our &lt;a href={{iOSAppURL}} target='_blank'&gt;iOS&lt;/a&gt;&nbsp;
+          or &lt;a href={{androidAppURL}} target='_blank'&gt;Android&lt;/a&gt; app to
+          receive push notifications.
+    </p>
   </div>
 </div>
 `;

@@ -1,4 +1,5 @@
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import { filter, get } from 'lodash/fp'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
@@ -8,7 +9,7 @@ import Member from 'components/Member'
 import './PostPeopleDialog.scss'
 import { humanResponse } from 'store/models/EventInvitation'
 
-export default class PostPeopleDialog extends React.PureComponent {
+class PostPeopleDialog extends React.PureComponent {
   constructor (props) {
     super(props)
 
@@ -35,7 +36,7 @@ export default class PostPeopleDialog extends React.PureComponent {
 
   render () {
     const { members, searchString, selectedMember } = this.state
-    const { onClose, slug, title = 'People' } = this.props
+    const { onClose, slug, title = this.props.t('People') } = this.props
     const loading = false
 
     return <ModalDialog key='members-dialog'
@@ -61,7 +62,7 @@ export default class PostPeopleDialog extends React.PureComponent {
             onChange={this.search}
             loading={loading}
             value={searchString}
-            placeholder='Find a member'
+            placeholder={this.props.t('Find a member')}
           />}
           <section>
             {members.map(member => <MemberRow
@@ -98,3 +99,5 @@ function MemberDetail ({ member, slug }) {
     <Member member={member} styleName='member' slug={slug} />
   </div>
 }
+
+export default withTranslation()(PostPeopleDialog)

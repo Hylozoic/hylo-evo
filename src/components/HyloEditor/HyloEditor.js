@@ -1,4 +1,5 @@
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useEditor, EditorContent, Extension, BubbleMenu } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
@@ -12,7 +13,7 @@ import HyloEditorMenuBar from './HyloEditorMenuBar'
 import 'tippy.js/dist/tippy.css'
 import './HyloEditor.scss'
 
-export const HyloEditor = React.forwardRef(function HyloEditor ({
+const HyloEditor = React.forwardRef(function HyloEditor ({
   className,
   containerClassName = 'hyloEditor',
   contentHTML,
@@ -31,6 +32,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   showMenu = false,
   suggestionsThemeName = 'suggestions'
 }, ref) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const editorRef = useRef(null)
   const [selectedLink, setSelectedLink] = useState()
@@ -198,7 +200,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
             }}
             styleName='addLinkPreviewButton'
           >
-            <VscPreview /> Add Preview
+            <VscPreview /> {t('Add Preview')}
           </span>
         </BubbleMenu>
       )}

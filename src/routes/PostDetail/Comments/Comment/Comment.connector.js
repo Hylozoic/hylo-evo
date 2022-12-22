@@ -45,10 +45,10 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { fetchCommentsMaker } = dispatchProps
   const { comment } = ownProps
 
-  const deleteCommentWithConfirm = (commentId) => window.confirm('Are you sure you want to delete this comment?') &&
+  const deleteCommentWithConfirm = (commentId) => window.confirm('Are you sure you want to delete this comment?') && // TODO: Handle this translation
       dispatchProps.deleteComment(commentId)
 
-  const removeCommentWithConfirm = (commentId) => window.confirm('Are you sure you want to remove this comment?') &&
+  const removeCommentWithConfirm = (commentId) => window.confirm('Are you sure you want to remove this comment?') && // TODO: Handle this translation
       dispatchProps.deleteComment(commentId)
 
   const updateComment = (commentId, text) => dispatchProps.updateComment(commentId, text)

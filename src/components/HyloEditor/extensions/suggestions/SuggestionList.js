@@ -1,7 +1,9 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Avatar from 'components/Avatar'
 
 export default forwardRef(({ items, command, ...everything }, ref) => {
+  const { t } = useTranslation()
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const selectItem = index => {
@@ -62,7 +64,7 @@ export default forwardRef(({ items, command, ...everything }, ref) => {
             {item.suggestionLabel}
           </button>
         ))
-        : <button className='suggestion-list-item suggestion-list-item-no-result'>No result</button>}
+        : <button className='suggestion-list-item suggestion-list-item-no-result'>{t('No result')}</button>}
     </div>
   )
 })

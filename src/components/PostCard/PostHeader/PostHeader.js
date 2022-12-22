@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment-timezone'
@@ -15,7 +16,7 @@ import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
 
-export default class PostHeader extends PureComponent {
+class PostHeader extends PureComponent {
   static defaultProps = {
     routeParams: {}
   }
@@ -73,12 +74,12 @@ export default class PostHeader extends PureComponent {
       type: 'post'
     }
     const dropdownItems = filter([
-      { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
-      { icon: 'Edit', label: 'Edit', onClick: editPost },
-      { icon: 'Copy', label: 'Copy Link', onClick: copyLink },
-      { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
-      { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
-      { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
+      { icon: 'Pin', label: pinned ? this.props.t('Unpin') : this.props.t('Pin'), onClick: pinPost },
+      { icon: 'Edit', label: this.props.t('Edit'), onClick: editPost },
+      { icon: 'Copy', label: this.props.t('Copy Link'), onClick: copyLink },
+      { icon: 'Flag', label: this.props.t('Flag'), onClick: this.flagPostFunc() },
+      { icon: 'Trash', label: this.props.t('Delete'), onClick: deletePost, red: true },
+      { icon: 'Trash', label: this.props.t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
@@ -92,15 +93,15 @@ export default class PostHeader extends PureComponent {
 
     const { from, to } = TextHelpers.formatDatePair(startTime, actualEndTime, true)
     const startString = fulfilledAt ? false
-      : TextHelpers.isDateInTheFuture(startTime) ? `Starts: ${from}`
-        : TextHelpers.isDateInTheFuture(endTime) ? `Started: ${from}`
+      : TextHelpers.isDateInTheFuture(startTime) ? this.props.t('Starts: {{from}}', { from })
+        : TextHelpers.isDateInTheFuture(endTime) ? this.props.t('Started: {{from}}', { from })
           : false
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
-      endString = `Completed: ${to}`
+      endString = this.props.t('Completed: {{to}}', { to })
     } else {
-      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? this.props.t('Ends: {{to}}', { to }) : actualEndTime ? this.props.t('Ended: {{to}}', { to }) : false
     }
 
     let timeWindow = ''
@@ -182,3 +183,5 @@ export function TopicsLine ({ topics, slug, newLine }) {
       <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
   </div>
 }
+
+export default withTranslation()(PostHeader)

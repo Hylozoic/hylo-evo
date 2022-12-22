@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { bool, func, node, string } from 'prop-types'
 
 import { bgImageStyle } from 'util/index'
@@ -7,7 +8,7 @@ import Icon from 'components/Icon'
 
 import './ModalDialog.scss'
 
-export default class ModalDialog extends Component {
+class ModalDialog extends Component {
   static propTypes = {
     // Any image in assets (filename or path relative to /assets).
     // Will be shown at bottom left of dialog.
@@ -57,7 +58,7 @@ export default class ModalDialog extends Component {
     showCancelButton: true,
     showSubmitButton: true,
     submitButtonIsDisabled: () => false,
-    submitButtonText: 'Ok',
+    submitButtonText: 'Ok', /* TODO: Handle this translation */
     useNotificationFormat: false
   }
 
@@ -130,7 +131,7 @@ export default class ModalDialog extends Component {
           {showCancelButton && <Button
             color='green-white-green-border'
             styleName='cancel-btn'
-            onClick={this.cancel}>Cancel</Button>}
+            onClick={this.cancel}>{this.props.t('Cancel')}</Button>}
           {showSubmitButton && <Button
             styleName='submit-btn'
             onClick={this.submit}
@@ -140,3 +141,4 @@ export default class ModalDialog extends Component {
     </div>
   }
 }
+export default withTranslation()(ModalDialog)

@@ -80,7 +80,7 @@ exports[`CreateTopic snapshots (various states) matches the last snapshot for no
     <div
       data-stylename="dialog-content"
     >
-      you're subscribed to #
+      you're subscribed to #{{topicName}}
     </div>
   </ModalDialogPortal>
 </Fragment>

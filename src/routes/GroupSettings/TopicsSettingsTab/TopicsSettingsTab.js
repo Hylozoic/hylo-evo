@@ -124,7 +124,7 @@ class TopicsSettingsTab extends Component {
           <div styleName='default-topic-selector'>
             <SingleTopicSelector
               currentGroup={group}
-              placeholder='Add a suggested topic'
+              placeholder={this.props.t('Add a suggested topic')}
               onSelectTopic={(topic) => {
                 topic && this.props.createTopic(topic.name, group.id, true, false)
               }}

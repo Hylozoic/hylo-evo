@@ -5,10 +5,14 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
   data-stylename="general.groupSettings"
 >
   <SettingsSection>
-    <h3 />
+    <h3>
+      Visibility
+    </h3>
     <p
       data-stylename="general.detailText"
-    />
+    >
+      Who is able to see &lt;strong&gt;{{name}}&lt;/strong&gt;?
+    </p>
     <VisibilitySettingRow
       currentSetting={1}
       forSetting={0}
@@ -29,10 +33,14 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     />
   </SettingsSection>
   <SettingsSection>
-    <h3 />
+    <h3>
+      Access
+    </h3>
     <p
       data-stylename="general.detailText"
-    />
+    >
+      How can people become members of &lt;strong&gt;{{name}}&lt;/strong&gt;?
+    </p>
     <AccessibilitySettingRow
       currentSetting={1}
       forSetting={0}
@@ -77,10 +85,14 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     />
   </SettingsSection>
   <SettingsSection>
-    <h3 />
+    <h3>
+      Prerequisite Groups
+    </h3>
     <p
       data-stylename="general.detailText"
-    />
+    >
+      When you select a prerequisite group, people must join the selected groups before joining &lt;strong&gt;{{name}}&lt;/strong&gt;. Only parent groups can be added as prerequisite groups.
+    </p>
     <p
       data-stylename="styles.prerequisiteWarning"
     >
@@ -117,10 +129,14 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     />
   </SettingsSection>
   <SettingsSection>
-    <h3 />
+    <h3>
+      Group Access Questions
+    </h3>
     <p
       data-stylename="general.detailText"
-    />
+    >
+      What questions are asked when a group requests to join this group?
+    </p>
     <div
       data-stylename="styles.groupQuestions"
     >
@@ -135,16 +151,22 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
         />
         <span
           data-stylename="general.toggleDescription"
-        />
+        >
+          Require groups to answer questions when requesting to join this group
+        </span>
         <div
           data-stylename="general.onOff"
         >
           <div
             data-stylename="general.off"
-          />
+          >
+            OFF
+          </div>
           <div
             data-stylename="general.on"
-          />
+          >
+            ON
+          </div>
         </div>
       </div>
       <QuestionsForm
@@ -165,11 +187,13 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
   >
     <span
       data-stylename=""
-    />
+    >
+      Current settings up to date
+    </span>
     <Button
       color="gray"
       data-stylename="general.save-button"
-      label=""
+      label="Save Changes"
       onClick={null}
     />
   </div>

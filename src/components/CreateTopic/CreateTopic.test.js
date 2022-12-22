@@ -2,6 +2,14 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import CreateTopic from './CreateTopic'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('CreateTopic', () => {
   let instance, props, wrapper
 

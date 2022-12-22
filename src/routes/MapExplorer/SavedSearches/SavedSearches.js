@@ -38,7 +38,7 @@ export default function SavedSearches (props) {
             <input
               type='text'
               onChange={e => setName(e.target.value)}
-              placeholder='Name this view'
+              placeholder={t('Name this view')}
               value={name}
             />
             <span styleName={`save ${canSave ? '' : 'disabled'}`} onClick={canSave ? () => saveSearch(name) : undefined}>{t('Save')}</span>

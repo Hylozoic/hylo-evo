@@ -245,7 +245,7 @@ class CreateGroup extends Component {
             <TextInput
               type='text'
               name='memberInvites'
-              placeholder='Enter names & email addresses'
+              placeholder={this.props.t('Enter names & email addresses')}
             />
           </div>
         </div> */}

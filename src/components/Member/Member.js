@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import { bgImageStyle } from 'util/index'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
@@ -8,11 +9,11 @@ import './Member.scss'
 
 const { string, shape } = PropTypes
 
-export default class Member extends React.Component {
+class Member extends React.Component {
   removeOnClick (e, id, name, removeMember) {
     e.preventDefault()
 
-    if (window.confirm(`are you sure you want to remove ${name}?`)) {
+    if (window.confirm(this.props.t('are you sure you want to remove {{name}}?', { name }))) {
       removeMember(id)
     }
   }
@@ -29,7 +30,7 @@ export default class Member extends React.Component {
 
     return <div styleName='member' className={className}>
       {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-        { icon: 'Trash', label: 'Remove', onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
+        { icon: 'Trash', label: this.props.t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
       ]} />}
       <div onClick={goToPerson(id, slug)}>
         <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
@@ -57,3 +58,5 @@ Member.propTypes = {
     avatarUrl: string
   }).isRequired
 }
+
+export default withTranslation()(Member)

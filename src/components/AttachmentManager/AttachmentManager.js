@@ -2,6 +2,7 @@ import { isEmpty, filter } from 'lodash/fp'
 import path from 'path'
 import PropTypes from 'prop-types'
 import React, { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDrag, useDrop } from 'react-dnd'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -86,13 +87,14 @@ export default class AttachmentManager extends React.Component {
 }
 
 export function ImageManager (props) {
+  const { t } = useTranslation()
   const {
     type, id, attachments, addAttachment, removeAttachment,
     uploadAttachmentPending, showLoading, showAddButton, showLabel
   } = props
 
   return <div styleName='image-manager'>
-    {showLabel && <div styleName='section-label'>Images</div>}
+    {showLabel && <div styleName='section-label'>{t('Images')}</div>}
     <div styleName='image-previews'>
       {attachments.map((attachment, i) =>
         <ImagePreview
@@ -192,15 +194,17 @@ export function FileManager ({
   type, id, attachments, addAttachment, removeAttachment,
   uploadAttachmentPending, showLoading, showAddButton, showLabel
 }) {
+  const { t } = useTranslation()
+
   return <div styleName='file-manager'>
-    {showLabel && <div styleName='section-label'>Files</div>}
+    {showLabel && <div styleName='section-label'>{t('Files')}</div>}
     <div styleName='file-previews'>
       {attachments.map((attachment, i) =>
         <FilePreview
           attachment={attachment}
           removeFile={() => removeAttachment(type, id, attachment)}
           key={i} />)}
-      {showLoading && uploadAttachmentPending && <div styleName='loading-file'>Loading...</div>}
+      {showLoading && uploadAttachmentPending && <div styleName='loading-file'>{t('Loading...')}</div>}
       {showAddButton && <UploadAttachmentButton
         id={id}
         type={type}
@@ -208,7 +212,7 @@ export function FileManager ({
         onSuccess={attachment => addAttachment(type, id, attachment)}
         styleName='add-file-row'>
         <div styleName='add-file'>
-          <span styleName='add-file-plus'>+</span> Add File</div>
+          <span styleName='add-file-plus'>+</span> {t('Add File')}</div>
       </UploadAttachmentButton>}
     </div>
   </div>

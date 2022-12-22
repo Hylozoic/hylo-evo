@@ -2,6 +2,14 @@ import PostHeader, { TopicsLine } from './PostHeader'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 it('matches snapshot', () => {
   const creator = {
     name: 'JJ',

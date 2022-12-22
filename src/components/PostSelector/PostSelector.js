@@ -1,5 +1,6 @@
 import { isEmpty } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import useInView from 'react-cool-inview'
 import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,6 +25,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   const [selectedPosts, setSelectedPosts] = useState(posts || [])
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
   const searchBoxRef = useRef()
+  const { t } = useTranslation()
 
   const debouncedAutcomplete = useDebounce(autocomplete, 300)
 
@@ -82,7 +84,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   }
 
   const handleDelete = (post, index) => () => {
-    if (window.confirm('Remove post?')) {
+    if (window.confirm(t('Remove post?'))) {
       setSelectedPosts((prevPosts) => {
         onRemovePost(post)
         return update(prevPosts, {
@@ -142,7 +144,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
           <input
             ref={searchBoxRef}
             type='text'
-            placeholder='Search for posts'
+            placeholder={t('Search for posts')}
             spellCheck={false}
             onChange={event => handleInputChange(event.target.value)}
             onFocus={() => setSuggestionsOpen(true)}
@@ -171,6 +173,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
 
 export function SelectedPost ({ draggable, post, index, movePost, handleDelete }) {
   const ref = useRef(null)
+  const { t } = useTranslation()
 
   const [{ handlerId }, drop] = useDrop({ // eslint-disable-line no-unused-vars
     accept: 'post',
@@ -235,7 +238,7 @@ export function SelectedPost ({ draggable, post, index, movePost, handleDelete }
   return <li key={post.id} ref={ref} style={{ opacity, cursor: draggable ? 'move' : 'default' }}>
     <RoundImage url={post.creator.avatarUrl} styleName='selectedPostAvatar' small />
     <span styleName='postTitle'>{post.title}</span>
-    <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost selectedPostIcon' dataTip='Remove Post' />
+    <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost selectedPostIcon' dataTip={t('Remove Post')} />
     {draggable && <Icon name='Draggable' styleName='selectedPostIcon dragHandle' />}
   </li>
 }

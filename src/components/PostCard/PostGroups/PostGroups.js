@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { get, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
@@ -7,7 +8,7 @@ import GroupsList from 'components/GroupsList'
 import Icon from 'components/Icon'
 import './PostGroups.scss'
 
-export default class PostGroups extends Component {
+class PostGroups extends Component {
   static defaultState = {
     expanded: false
   }
@@ -32,7 +33,7 @@ export default class PostGroups extends Component {
 
     return <div styleName={cx('groups', { constrained, expanded, bottomBorder: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
       <div styleName='row'>
-        <span styleName='label'>Posted In:&nbsp;</span>
+        <span styleName='label'>{`${this.props.t('Posted In:')} `}</span>
         {!expanded &&
           <LinkedGroupNameList groups={groups} maxShown={2} expandFunc={this.toggleExpanded} />}
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='expandIcon' /></a>
@@ -72,18 +73,21 @@ export function Separator ({ currentIndex, displayCount, othersCount }) {
   const hasOthers = othersCount > 0
 
   if (isLastEntry) return null
-  if (!hasOthers && isNextToLastEntry) return <span key='and'> and </span>
+  if (!hasOthers && isNextToLastEntry) return <span key='and'> {this.props.t('and')} </span>
 
   return <span>, </span>
 }
 
 export function Others ({ othersCount, expandFunc }) {
+  const { t } = useTranslation()
   if (othersCount < 0) return null
 
-  const phrase = othersCount === 1 ? '1 other' : othersCount + ' others'
+  const phrase = othersCount === 1 ? t('1 other') : t('{{othersCount}} others', { othersCount })
 
   return <React.Fragment>
-    <span key='and'> and </span>
+    <span key='and'> {t('and')} </span>
     <a key='others' styleName='groupLink' onClick={expandFunc}>{phrase}</a>
   </React.Fragment>
 }
+
+export default withTranslation()(PostGroups)

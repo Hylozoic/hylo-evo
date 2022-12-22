@@ -6,13 +6,19 @@ exports[`UserGroupsTab renders a list of Memberships 1`] = `
 >
   <h1
     data-stylename="title"
-  />
+  >
+    Your affiliations with organizations
+  </h1>
   <div
     data-stylename="description"
-  />
+  >
+    This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.
+  </div>
   <h2
     data-stylename="subhead"
-  />
+  >
+    Hylo Groups
+  </h2>
   <Membership
     archive={[Function]}
     index={0}
@@ -48,7 +54,9 @@ exports[`UserGroupsTab renders a list of Memberships 1`] = `
   />
   <h2
     data-stylename="subhead"
-  />
+  >
+    Other Affiliations
+  </h2>
   <Affiliation
     affiliation={
       Object {
@@ -88,7 +96,9 @@ exports[`UserGroupsTab renders a list of Memberships 1`] = `
     >
       +
     </div>
-    <div />
+    <div>
+      Add new affiliation
+    </div>
   </div>
 </div>
 `;

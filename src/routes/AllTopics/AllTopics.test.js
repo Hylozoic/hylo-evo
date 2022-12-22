@@ -2,6 +2,22 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import AllTopics, { SearchBar, TopicListItem } from './AllTopics'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  },
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('AllTopics', () => {
   it('matches the latest snapshot', () => {
     const topic = [

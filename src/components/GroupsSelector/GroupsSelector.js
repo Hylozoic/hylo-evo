@@ -13,7 +13,7 @@ export default class GroupsSelector extends Component {
   }
 
   static defaultProps = {
-    placeholder: 'Type group name...',
+    placeholder: 'Type group name...', /* TODO: Handle this translation */
     selected: [],
     options: []
   }
