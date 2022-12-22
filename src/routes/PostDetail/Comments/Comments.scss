@@ -9,12 +9,13 @@
   bottom: 0;
   background-color: rgba(255,255,255,.9);
   padding: 0 20px;
-  z-index: 1;
+  z-index: 10;
 }
 
 .people-typing {
   position: fixed;
-  bottom: -3px;
+  bottom: -17px;
+  font-size: 12px;
 }
 
 .signup-button, .signup-button:visited {
