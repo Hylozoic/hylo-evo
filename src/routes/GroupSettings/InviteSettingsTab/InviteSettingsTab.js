@@ -38,7 +38,7 @@ class InviteSettingsTab extends Component {
 
 I'm inviting you to join {{name}} on Hylo.
 
-{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.1`, { name: props.group.name })
+{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.`, { name: props.group.name })
     this.state = {
       copied: false,
       reset: false,

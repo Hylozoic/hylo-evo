@@ -119,7 +119,7 @@ exports[`renders correctly 1`] = `
 
 I'm inviting you to join {{name}} on Hylo.
 
-{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.1"
+{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration."
     />
     <div
       data-stylename="styles.send-invite-button"
