@@ -6,7 +6,7 @@ exports[`EditProfileTab renders correctly 1`] = `
     data-stylename="name"
     onChange={[Function]}
     type="text"
-    value=""
+    value="Yay"
   />
   <div
     data-stylename="banner"
@@ -127,6 +127,11 @@ exports[`EditProfileTab renders correctly 1`] = `
 
 exports[`EditProfileTab renders correctly without location object 1`] = `
 <div>
+  <div
+    data-stylename="name-validation"
+  >
+    Name must not be blank
+  </div>
   <input
     data-stylename="name"
     onChange={[Function]}
