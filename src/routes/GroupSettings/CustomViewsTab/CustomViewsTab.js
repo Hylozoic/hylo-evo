@@ -359,6 +359,9 @@ function CustomViewRow ({
                     <div styleName={cx('styles.post-types-selector', { 'styles.open': postTypesModalOpen })}>
                       <Icon name='Ex' styleName='styles.close-button' onClick={() => setPostTypesModalOpen(!postTypesModalOpen)} />
                       {Object.keys(POST_TYPES).map(postType => {
+                        if (postType === 'chat') {
+                          return null
+                        }
                         const color = POST_TYPES[postType].primaryColor
                         return (
                           <div
