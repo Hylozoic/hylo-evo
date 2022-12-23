@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.1.1]
+
+### Changed
+- Clicking on a "new post in #topic" notification takes you to the topic room
+- Don't allow for showing chat posts in custom views
+
+### Fixed
+- Minor fixes to comment interface
+- Don't show Chat as a post type option in create post modal
+- Don't add new chat posts to the Stream
+
 ## [5.1.0]
 
 ### Added
