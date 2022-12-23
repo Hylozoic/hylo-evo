@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.1.1]
 
+### Added
+- First pass at more descriptive meta tags for various Hylo pages. New page titles will appear in browser tabs, search engines and link previews in other platforms.
+
 ### Changed
 - Clicking on a "new post in #topic" notification takes you to the topic room
 - Don't allow for showing chat posts in custom views
