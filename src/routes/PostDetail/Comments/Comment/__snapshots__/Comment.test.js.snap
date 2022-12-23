@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Comment displays image attachments 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -25,40 +27,54 @@ exports[`Comment displays image attachments 1`] = `
       data-stylename="upperRight"
     >
       <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
+        data-stylename="commentActions"
       >
-        <Icon
-          name="Replies"
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
         />
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "foo.png",
-        },
-      ]
-    }
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "foo.png",
-        },
-      ]
-    }
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={
+        Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ]
+      }
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >
@@ -68,13 +84,23 @@ exports[`Comment displays image attachments 1`] = `
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
+    />
+    <EmojiRow
+      className="undefined"
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
     />
   </ClickCatcher>
 </div>
 `;
 
 exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -98,48 +124,58 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       data-stylename="upperRight"
     >
       <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
+        data-stylename="commentActions"
       >
-        <Icon
-          name="Replies"
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Edit"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Edit"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Trash"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Trash"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
         />
       </div>
-      <Dropdown
-        data-stylename="dropdown"
-        items={
-          Array [
-            Object {
-              "icon": "Edit",
-              "label": "Edit",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >
@@ -149,13 +185,23 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
+    />
+    <EmojiRow
+      className="undefined"
+      currentUser={
+        Object {
+          "id": 1,
+        }
+      }
     />
   </ClickCatcher>
 </div>
 `;
 
 exports[`Comment displays the remove menu when removeComment is defined 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -179,43 +225,49 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       data-stylename="upperRight"
     >
       <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
+        data-stylename="commentActions"
       >
-        <Icon
-          name="Replies"
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Trash"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Trash"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
         />
       </div>
-      <Dropdown
-        data-stylename="dropdown"
-        items={
-          Array [
-            Object {
-              "icon": "Trash",
-              "label": "Remove",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >
@@ -225,13 +277,23 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
+    />
+    <EmojiRow
+      className="undefined"
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
     />
   </ClickCatcher>
 </div>
 `;
 
 exports[`Comment does not display the delete menu when deleteComment is not defined 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -255,26 +317,40 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       data-stylename="upperRight"
     >
       <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
+        data-stylename="commentActions"
       >
-        <Icon
-          name="Replies"
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
         />
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >
@@ -284,13 +360,23 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
+    />
+    <EmojiRow
+      className="undefined"
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
     />
   </ClickCatcher>
 </div>
 `;
 
 exports[`Comment does not display the remove menu when removeComment is not defined 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -314,48 +400,58 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       data-stylename="upperRight"
     >
       <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
+        data-stylename="commentActions"
       >
-        <Icon
-          name="Replies"
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Edit"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Edit"
+          />
+        </div>
+        <div
+          data-stylename="commentAction"
+          key="Trash"
+          onClick={[Function]}
+        >
+          <Icon
+            name="Trash"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 1,
+            }
+          }
         />
       </div>
-      <Dropdown
-        data-stylename="dropdown"
-        items={
-          Array [
-            Object {
-              "icon": "Edit",
-              "label": "Edit",
-              "onClick": [Function],
-            },
-            Object {
-              "icon": "Trash",
-              "label": "Delete",
-              "onClick": [Function],
-            },
-          ]
-        }
-        toggleChildren={
-          <Icon
-            name="More"
-          />
-        }
-      />
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >
@@ -365,13 +461,23 @@ exports[`Comment does not display the remove menu when removeComment is not defi
       onEnter={[Function]}
       onEscape={[Function]}
       readOnly={true}
+    />
+    <EmojiRow
+      className="undefined"
+      currentUser={
+        Object {
+          "id": 1,
+        }
+      }
     />
   </ClickCatcher>
 </div>
 `;
 
 exports[`Comment renders correctly 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -395,26 +501,40 @@ exports[`Comment renders correctly 1`] = `
       data-stylename="upperRight"
     >
       <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
+        data-stylename="commentActions"
       >
-        <Icon
-          name="Replies"
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
         />
       </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >
@@ -425,12 +545,22 @@ exports[`Comment renders correctly 1`] = `
       onEscape={[Function]}
       readOnly={true}
     />
+    <EmojiRow
+      className="undefined"
+      currentUser={
+        Object {
+          "id": 2,
+        }
+      }
+    />
   </ClickCatcher>
 </div>
 `;
 
 exports[`Comment renders correctly when editing 1`] = `
-<div>
+<div
+  data-stylename="commentContainer selected-comment"
+>
   <div
     data-stylename="header"
   >
@@ -453,32 +583,46 @@ exports[`Comment renders correctly when editing 1`] = `
     <div
       data-stylename="upperRight"
     >
-      <div
-        data-for="reply-tip-undefined"
-        data-stylename="commentAction"
-        data-tip="Reply"
-        onClick={[MockFunction]}
-      >
-        <Icon
-          name="Replies"
-        />
-      </div>
       <Icon
         data-stylename="cancelIcon"
         name="Ex"
         onClick={[Function]}
       />
+      <div
+        data-stylename="commentActions"
+      >
+        <div
+          data-for="reply-tip-undefined"
+          data-stylename="commentAction"
+          data-tip="Reply"
+          onClick={[MockFunction]}
+        >
+          <Icon
+            name="Replies"
+          />
+        </div>
+        <EmojiRow
+          className="undefined"
+          currentUser={
+            Object {
+              "id": 2,
+            }
+          }
+        />
+      </div>
     </div>
   </div>
-  <CardImageAttachments
-    attachments={Array []}
-    data-stylename="images"
-    linked={true}
-  />
-  <CardFileAttachments
-    attachments={Array []}
-    data-stylename="files"
-  />
+  <div>
+    <CardImageAttachments
+      attachments={Array []}
+      data-stylename="images"
+      linked={true}
+    />
+    <CardFileAttachments
+      attachments={Array []}
+      data-stylename="files"
+    />
+  </div>
   <ClickCatcher
     groupSlug="foo"
   >

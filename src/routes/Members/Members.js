@@ -1,5 +1,6 @@
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { bool, func, string, arrayOf, shape } from 'prop-types'
 import Button from 'components/Button'
@@ -46,23 +47,30 @@ export default class Members extends Component {
 
   render () {
     const {
-      memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
+      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
 
     return <div>
+      <Helmet>
+        <title>Hylo{group ? `: ${group.name} Members` : ''}</title>
+      </Helmet>
+
       <div styleName='header'>
+        <div>
+          <div styleName='title'>Members</div>
+          <div styleName='total-members'>
+            {memberCount} Total Members
+          </div>
+        </div>
         {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
           <Button styleName='invite'
-            label='Invite People'
             color='green-white-green-border'
-            narrow />
+            narrow >
+            <Icon name='Invite' styleName='invite-icon' /> Invite
+          </Button>
         </Link>}
-        <div styleName='title'>Members</div>
-        <div styleName='total-members'>
-          {memberCount} Total Members
-        </div>
       </div>
       <div styleName='content'>
         <div styleName='controls'>

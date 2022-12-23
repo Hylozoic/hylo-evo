@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import { array, func, object, number, string, bool } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -9,12 +9,11 @@ import PeopleTyping from 'components/PeopleTyping'
 import { inIframe } from 'util/index'
 
 import './Comments.scss'
-
-const { array, func, object, number, string } = PropTypes
-
 export default class Comments extends Component {
   static propTypes = {
     comments: array,
+    commentsPending: bool,
+    selectedCommentId: number,
     commentsTotal: number,
     fetchComments: func,
     height: number,
@@ -29,6 +28,25 @@ export default class Comments extends Component {
     comments: []
   }
 
+  componentDidMount () {
+    this.ensureSelectedCommentPresent()
+  }
+
+  componentDidUpdate (prevProps) {
+    this.ensureSelectedCommentPresent()
+  }
+
+  ensureSelectedCommentPresent () {
+    const { comments, commentsPending, selectedCommentId } = this.props
+    const commentIds = []
+    if (comments.length < 1) return
+    comments.forEach(comment => {
+      commentIds.push(comment.id)
+      comment.childComments.forEach(comment => commentIds.push(comment.id))
+    })
+    if (!commentsPending && !commentIds.includes(selectedCommentId && selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
+  }
+
   scrollToReplyInput (elem) {
     scrollIntoView(elem, { behavior: 'smooth', scrollMode: 'if-needed' })
   }
@@ -41,6 +59,7 @@ export default class Comments extends Component {
       fetchComments,
       currentUser,
       createComment,
+      selectedCommentId,
       slug,
       postId,
       width
@@ -50,37 +69,46 @@ export default class Comments extends Component {
       width: width + 'px'
     }
 
-    return <div styleName='comments'>
-      <ShowMore
-        commentsLength={comments.length}
-        total={total}
-        hasMore={hasMore}
-        fetchComments={fetchComments} />
-      {comments.map(c => (
-        <Comment
-          key={c.id}
-          comment={c}
-          slug={slug}
-          postId={postId}
-          onReplyThread={this.scrollToReplyInput.bind(this)} />
-      ))}
-      {currentUser
-        ? <div styleName='form-wrapper' style={style}>
-          <CommentForm
-            currentUser={currentUser}
-            createComment={createComment}
+    return (
+      <div styleName='comments'>
+        <ShowMore
+          commentsLength={comments.length}
+          total={total}
+          hasMore={hasMore}
+          fetchComments={fetchComments}
+        />
+
+        {comments.map(c => (
+          <Comment
+            key={c.id}
+            comment={c}
+            slug={slug}
+            selectedCommentId={selectedCommentId}
             postId={postId}
+            onReplyThread={this.scrollToReplyInput.bind(this)}
           />
-          <PeopleTyping styleName='people-typing' />
-        </div>
-        : <Link
-          to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
-          target={inIframe() ? '_blank' : ''}
-          styleName='signup-button'
-        >
-          Join Hylo to respond
-        </Link>
-      }
-    </div>
+        ))}
+        {currentUser
+          ? (
+            <div styleName='form-wrapper' style={style}>
+              <CommentForm
+                currentUser={currentUser}
+                createComment={createComment}
+                postId={postId}
+              />
+              <PeopleTyping styleName='people-typing' />
+            </div>
+          ) : (
+            <Link
+              to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
+              target={inIframe() ? '_blank' : ''}
+              styleName='signup-button'
+            >
+              Join Hylo to respond
+            </Link>
+          )
+        }
+      </div>
+    )
   }
 }

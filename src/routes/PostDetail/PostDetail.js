@@ -2,9 +2,9 @@ import cx from 'classnames'
 import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { get, throttle, isEmpty } from 'lodash/fp'
-import { topicUrl } from 'util/navigation'
+import { get, throttle } from 'lodash/fp'
+import { Helmet } from 'react-helmet'
+import { TextHelpers } from 'hylo-shared'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -21,14 +21,14 @@ import SocketSubscriber from 'components/SocketSubscriber'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
+import PeopleInfo from 'components/PostCard/PeopleInfo'
 import ProjectContributions from './ProjectContributions'
 import PostPeopleDialog from 'components/PostPeopleDialog'
-import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
 import './PostDetail.scss'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 70
-
+const MAX_DETAILS_LENGTH = 144
 export default class PostDetail extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
@@ -102,16 +102,15 @@ export default class PostDetail extends Component {
 
   render () {
     const {
-      routeParams,
-      post,
-      voteOnPost,
-      isProjectMember,
+      currentUser,
       joinProject,
+      isProjectMember,
       leaveProject,
       pending,
+      post,
       processStripeToken,
-      currentUser,
       respondToEvent,
+      routeParams,
       onClose
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
@@ -140,6 +139,7 @@ export default class PostDetail extends Component {
       width: activityWidth + 'px',
       marginTop: STICKY_HEADER_SCROLL_OFFSET + 'px'
     }
+
     let people, postPeopleDialogTitle
 
     if (isProject) {
@@ -150,9 +150,7 @@ export default class PostDetail extends Component {
       postPeopleDialogTitle = 'Responses'
     }
 
-    const firstAttachment = post.attachments[0] || 0
-    const attachmentType = firstAttachment.type || 0
-    const detailHasImage = attachmentType === 'image' || false
+    const detailHasImage = post.attachments.find(a => a.type === 'image') || false
     const hasPeople = people && people.length > 0
     const showPeopleDialog = hasPeople && this.state.showPeopleDialog
     const togglePeopleDialog = hasPeople && this.togglePeopleDialog ? this.togglePeopleDialog : undefined
@@ -160,15 +158,20 @@ export default class PostDetail extends Component {
     const postFooter = (
       <PostFooter
         {...post}
-        voteOnPost={voteOnPost}
         currentUser={currentUser}
       />
     )
 
     return (
       <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>
-        {({ width, height }) => (
+        {({ width, height }) =>
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
+            <Helmet>
+              <title>
+                {`Hylo: ${post.title || TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)}`}
+              </title>
+              <meta name='description' content={TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)} />
+            </Helmet>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader
               styleName='header'
@@ -189,7 +192,6 @@ export default class PostDetail extends Component {
               </div>
             )}
             <CardImageAttachments attachments={post.attachments} linked />
-            <PostTags tags={post.tags} />
             {isEvent && (
               <EventBody
                 styleName='body'
@@ -203,6 +205,7 @@ export default class PostDetail extends Component {
             )}
             {!isEvent && (
               <PostBody
+                currentUser={currentUser}
                 styleName='body'
                 expanded
                 routeParams={routeParams}
@@ -268,7 +271,12 @@ export default class PostDetail extends Component {
                 {postFooter}
               </div>
             )}
-            <Comments postId={post.id} slug={routeParams.groupSlug} scrollToBottom={scrollToBottom} />
+            <Comments
+              postId={post.id}
+              slug={routeParams.groupSlug}
+              selectedCommentId={routeParams.commentId}
+              scrollToBottom={scrollToBottom}
+            />
             {showPeopleDialog && (
               <PostPeopleDialog
                 title={postPeopleDialogTitle}
@@ -278,25 +286,10 @@ export default class PostDetail extends Component {
               />
             )}
             <SocketSubscriber type='post' id={post.id} />
-          </div>
-        )}
+          </div>}
       </ReactResizeDetector>
     )
   }
-}
-
-export function PostTags ({ tags, slug }) {
-  if (isEmpty(tags)) return null
-
-  return (
-    <div styleName='tags'>
-      {tags.map(tag => (
-        <Link styleName='tag' to={topicUrl(tag, { groupSlug: slug })} key={tag}>
-          #{tag}
-        </Link>
-      ))}
-    </div>
-  )
 }
 
 export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {

@@ -7,6 +7,7 @@ posts(
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   collectionToFilterOut: $collectionToFilterOut,
+  cursor: $cursor,
   filter: $filter,
   first: $first,
   forCollection: $forCollection,

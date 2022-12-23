@@ -18,15 +18,10 @@
 
 .bodyWrapper {
   position: relative;
+}
 
-  .trigger {
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    left: 0;
-    height: calc(100% - 85px);
-    width: 100%;
-  }
+.chat {
+  z-index: 0;
 }
 
 .expanded,
@@ -34,6 +29,15 @@
   box-shadow: 0px 4px 6px 0px $color-black-10;
   border: 1px solid rgba(0, 118, 223, 0.5);
   border-top: 3px solid rgba(0, 118, 223, 0.5);
+}
+
+.constrained.chat {
+  color: $color-picton-blue;
+  border-top: 5px solid $color-chats-30;
+
+  &:hover {
+    border-top: 5px solid $color-chats;
+  }
 }
 
 .constrained.discussion {

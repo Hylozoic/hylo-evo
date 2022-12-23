@@ -20,7 +20,8 @@ import {
   FIND_OR_CREATE_THREAD,
   FETCH_THREADS,
   FETCH_CHILD_COMMENTS,
-  FETCH_COMMENTS
+  FETCH_COMMENTS,
+  REMOVE_POST_PENDING
 } from 'store/constants'
 // import {
 //   FETCH_NETWORK_SETTINGS,
@@ -31,9 +32,7 @@ import {
   CREATE_TOPIC
 } from 'components/CreateTopic/CreateTopic.store'
 import {
-  REMOVE_POST_PENDING
-} from 'components/PostCard/PostHeader/PostHeader.store'
-import {
+  RECEIVE_POST,
   RECEIVE_THREAD
 } from 'components/SocketListener/SocketListener.store'
 import {
@@ -72,8 +71,9 @@ export default function (state = {}, action) {
   switch (type) {
     case CREATE_PROJECT:
     case CREATE_POST:
+    case RECEIVE_POST:
       root = {
-        ...payload.data[camelCase(type)]
+        ...(payload.data[camelCase(type)] || payload.data.post)
       }
       return matchNewPostIntoQueryResults(state, root)
 
@@ -135,9 +135,11 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
   // Group streams
   return reduce((memo, group) => {
     queriesToMatch.push(
+      { context: 'groups', slug: group.slug },
       { context: 'groups', slug: group.slug, activePostsOnly: false },
       { context: 'groups', slug: group.slug, activePostsOnly: true }, // For custom views
       { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
+      { context: 'groups', slug: group.slug, filter: type },
       { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false },
       { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false },
       { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true }, // For custom views
@@ -148,11 +150,12 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
       { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
       { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false },
       // For events stream upcoming events
-      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' },
+      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' }
     )
     for (let topic of topics) {
       queriesToMatch.push(
-        { context: 'groups', slug: group.slug, topic: topic.id }
+        // Add to the future posts in a topic (future because of order: 'asc')
+        { context: 'groups', slug: group.slug, sortBy: 'id', order: 'asc', topic: topic.id, filter: 'chat' }
       )
     }
 
@@ -211,27 +214,27 @@ export function matchSubCommentsIntoQueryResults (state, { data }) {
 function prependIdForCreate (state, type, params, id) {
   const key = buildKey(type, params)
   if (!state[key]) return state
-  return {
+  return !state[key].ids.includes(id) ? {
     ...state,
     [key]: {
-      ids: !state[key].ids.includes(id) ? [id].concat(state[key].ids) : state[key].ids,
-      total: state[key].total && state[key].total + 1,
+      ids: [id].concat(state[key].ids),
+      total: (state[key].total || state[key].total === 0) && state[key].total + 1,
       hasMore: state[key].hasMore
     }
-  }
+  } : state
 }
 
 function appendId (state, type, params, id) {
   const key = buildKey(type, params)
   if (!state[key]) return state
-  return {
+  return !state[key].ids.includes(id) ? {
     ...state,
     [key]: {
-      ids: !state[key].ids.includes(id) ? state[key].ids.concat(id) : state[key].ids,
-      total: state[key].total && state[key].total + 1,
+      ids: state[key].ids.concat(id),
+      total: (state[key].total || state[key].total === 0) && state[key].total + 1,
       hasMore: state[key].hasMore
     }
-  }
+  } : state
 }
 
 // If replace is false add new ids to the existing list, if true then replace list

@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
@@ -5,18 +6,18 @@ import { Link } from 'react-router-dom'
 import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl } from 'util/navigation'
+import scrollIntoView from 'scroll-into-view-if-needed'
 import ShowMore from '../ShowMore'
 import Tooltip from 'components/Tooltip'
 import Avatar from 'components/Avatar'
-import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
+import EmojiRow from 'components/EmojiRow'
 import HyloEditor from 'components/HyloEditor'
 import CardImageAttachments from 'components/CardImageAttachments'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CommentForm from '../CommentForm'
-
-import './Comment.scss'
+import styles from './Comment.scss'
 
 const { object, func } = PropTypes
 
@@ -31,11 +32,14 @@ export class Comment extends Component {
     removeComment: func
   }
 
+  commentRef = React.createRef()
+
   editor = React.createRef()
 
   state = {
     editing: false,
-    editedText: null
+    editedText: null,
+    scrolledToComment: false
   }
 
   handleEditComment = () => {
@@ -64,10 +68,25 @@ export class Comment extends Component {
     return true
   }
 
+  handleScrollToComment () {
+    if (this.commentRef.current) {
+      const { bottom, top } = this.commentRef.current.getBoundingClientRect()
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+
+      if (bottom < 0 || bottom > viewportHeight || top < 0) { // element is not inside the current viewport
+        scrollIntoView(this.commentRef.current, { block: 'center' })
+      }
+
+      if (bottom > 0 && bottom <= viewportHeight && top >= 0) { // element is contained in the viewport
+        this.setState({ scrolledToComment: true }) // user can now scroll away from comment without it snapping back to comment
+      }
+    }
+  }
+
   render () {
-    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug } = this.props
+    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId } = this.props
     const { id, creator, createdAt, text, attachments } = comment
-    const { editing } = this.state
+    const { editing, scrolledToComment } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -77,8 +96,10 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
 
+    if (this.commentRef.current && selectedCommentId === comment.id && !scrolledToComment) this.handleScrollToComment()
+
     return (
-      <div>
+      <div ref={this.commentRef} styleName={cx({ 'commentContainer': true, 'selected-comment': selectedCommentId === comment.id })}>
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
@@ -87,19 +108,35 @@ export class Comment extends Component {
             {!editing && TextHelpers.humanDate(createdAt)}
           </span>
           <div styleName='upperRight'>
-            <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
-              <Icon name='Replies' />
-            </div>
             {editing && (
               <Icon name='Ex' styleName='cancelIcon' onClick={this.handleEditCancel} />
             )}
-            {!editing && dropdownItems.length > 0 && (
-              <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={dropdownItems} />
-            )}
+            <div styleName='commentActions'>
+              <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
+                <Icon name='Replies' />
+              </div>
+              {dropdownItems.map(item => (
+                <div key={item.icon} styleName='commentAction' onClick={item.onClick}>
+                  <Icon name={item.icon} />
+                </div>
+              ))}
+              <EmojiRow
+                className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
+                commentReactions={comment.commentReactions}
+                myReactions={comment.myReactions}
+                currentUser={currentUser}
+                postId={comment.post}
+                commentId={comment.id}
+              />
+            </div>
           </div>
         </div>
-        <CardImageAttachments attachments={attachments} linked styleName='images' />
-        <CardFileAttachments attachments={attachments} styleName='files' />
+        {attachments &&
+          <div>
+            <CardImageAttachments attachments={attachments} linked styleName='images' />
+            <CardFileAttachments attachments={attachments} styleName='files' />
+          </div>
+        }
         <ClickCatcher groupSlug={slug}>
           {/* Renders and provides editor */}
           <HyloEditor
@@ -110,6 +147,20 @@ export class Comment extends Component {
             onEnter={this.handleEditSave}
             ref={this.editor}
           />
+
+          {!editing && (
+            <>
+              <EmojiRow
+                className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
+                commentReactions={comment.commentReactions}
+                myReactions={comment.myReactions}
+                currentUser={currentUser}
+                postId={comment.post}
+                commentId={comment.id}
+              />
+            </>
+          )}
+
         </ClickCatcher>
       </div>
     )
@@ -205,6 +256,7 @@ export default class CommentWithReplies extends Component {
               }}
               placeholder={`Reply to ${comment.creator.name}`}
               editorContent={this.state.prefillEditor}
+              focusOnRender
             />
           </div>
         )}

@@ -1,0 +1,30 @@
+.tag-pill {
+  font-family: Circular Std;
+  text-transform: none;
+  font-weight: 400;
+  line-height: 18px;
+  font-size: 12px;
+  // margin-bottom: 2px;
+  margin-bottom: 0px;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 4px 6px;
+  border: none;
+  background-color: rgba(237, 239, 241, 1.0);
+  border-radius: 5px;
+
+  span {
+    font-size: 14px;
+  }
+}
+
+.selected {
+  background-color: rgba(0, 118, 223, 1.0);
+  color: rgba(255, 255, 255, 1);
+
+
+}
+
+.pill-tooltip {
+  white-space: pre-line  !important;
+}

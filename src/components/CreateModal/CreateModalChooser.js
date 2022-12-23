@@ -5,7 +5,7 @@ import { POST_TYPES } from 'store/models/Post'
 import Icon from 'components/Icon'
 import './CreateModal.scss'
 
-const postTypes = Object.keys(POST_TYPES)
+const postTypes = Object.keys(POST_TYPES).filter(t => t !== 'chat')
 
 export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)

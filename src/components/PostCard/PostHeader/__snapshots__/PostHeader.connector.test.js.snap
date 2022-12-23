@@ -20,7 +20,7 @@ Array [
         "postId": 1,
         "slug": undefined,
       },
-      "type": "PostHeader/REMOVE_POST",
+      "type": "REMOVE_POST",
     },
   ],
   Array [
@@ -41,7 +41,7 @@ Array [
         "postId": 1,
         "slug": undefined,
       },
-      "type": "PostHeader/REMOVE_POST",
+      "type": "REMOVE_POST",
     },
   ],
 ]
@@ -78,7 +78,7 @@ Array [
         "postId": 10,
         "slug": "mygroup",
       },
-      "type": "PostHeader/REMOVE_POST",
+      "type": "REMOVE_POST",
     },
   ],
   Array [

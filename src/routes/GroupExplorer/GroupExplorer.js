@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Helmet } from 'react-helmet'
 import ExplorerBanner from './ExplorerBanner'
 import GroupViewFilter from './GroupViewFilter'
 import GroupSearch from './GroupSearch'
@@ -15,6 +16,10 @@ export default function GroupExplorer ({
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>Hylo: Explorer</title>
+        <meta name='description' content='Find the others on Hylo' />
+      </Helmet>
       <ExplorerBanner />
       <GroupViewFilter viewFilter={viewFilter} changeView={handleChangeViewFilter} />
       <GroupSearch viewFilter={viewFilter} />

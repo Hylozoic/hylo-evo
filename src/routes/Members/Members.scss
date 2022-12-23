@@ -3,11 +3,13 @@ $member-spacing: 16px;
 $search-width: 460px;
 
 .header {
+  display: flex;
+  justify-content: space-between;
   border-radius: 4px;
-  background-color: $color-athens-gray;
-  padding: $space-7x $space-6x;
-  margin-bottom: $space-8x;
-  margin-top: $space-6x;
+  align-items: center;
+  padding: 0 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .title {
@@ -19,7 +21,7 @@ $search-width: 460px;
 }
 
 .invite {
-  float: right;
+  display: none;
 }
 
 .content {
@@ -97,6 +99,34 @@ $search-width: 460px;
 
   > *:first-child {
     margin-right: $member-spacing;
+  }
+}
+
+
+@media screen and (max-width: 1050px) {
+  .invite {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 30px;
+    color: rgb(12, 195, 159);
+    border: none;
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 15px;
+    box-shadow: 0 4px 15px rgb(35 65 91 / 30%);
+    background-color: rgb(255, 255, 255);
+    transition: all 0.25s ease;
+    margin-right: 8px;
+    font-family: 'Circular Bold';
+
+    .invite-icon {
+      color: rgba(12, 195, 159, 1.0);
+      font-size: 18px;
+      position: relative;
+      transition: all .25s ease;
+      top: 2px;
+    }
   }
 }
 

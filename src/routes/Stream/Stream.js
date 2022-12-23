@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import StreamBanner from 'components/StreamBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
@@ -117,6 +118,10 @@ export default class Stream extends Component {
 
     return (
       <>
+        <Helmet>
+          <title>{group ? `Hylo: ${group.name}` : 'Hylo'}</title>
+          <meta name='description' content={group ? `Posts from ${group.name}. ${group.description}` : 'Group Not Found'} />
+        </Helmet>
         {topicName
           ? (
             <TopicFeedHeader
@@ -169,6 +174,7 @@ export default class Stream extends Component {
                 routeParams={routeParams}
                 post={post}
                 key={post.id}
+                currentUser={currentUser}
                 respondToEvent={respondToEvent}
                 querystringParams={querystringParams}
               />

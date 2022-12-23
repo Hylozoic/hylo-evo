@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { TextHelpers } from 'hylo-shared'
 import ClickCatcher from 'components/ClickCatcher'
 import Icon from 'components/Icon'
@@ -40,8 +41,15 @@ export default class Groups extends Component {
     } = this.props
 
     return <div styleName='container'>
+      <Helmet>
+        <title>Hylo{group ? `: ${group.name} Groups` : ''}</title>
+      </Helmet>
+
       {groupRelationshipCount > 1 &&
         <div styleName='network-map'>
+          <div styleName='add-group'>
+            <a href='#'>+ Create Group</a>
+          </div>
           <GroupNetworkMap networkData={networkData} />
         </div>
       }

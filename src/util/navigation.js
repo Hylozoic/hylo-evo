@@ -6,7 +6,7 @@ export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HYLO_ID_MATCH
 export const OPTIONAL_POST_MATCH = `:detail(post)?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
 export const OPTIONAL_NEW_POST_MATCH = ':detail(post)?/:action(new)?' // TODO: need this?
-export const POST_DETAIL_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit)?`
+export const POST_DETAIL_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit|comments)?/:commentId?`
 
 export const REQUIRED_EDIT_POST_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit)`
 
@@ -92,7 +92,6 @@ export function groupDetailUrl (slug, opts = {}, querystringParams = {}) {
 export function postUrl (id, opts = {}, querystringParams = {}) {
   const action = get('action', opts)
   let result = baseUrl(opts)
-
   result = `${result}/post/${id}`
   if (action) result = `${result}/${action}`
 
@@ -108,8 +107,8 @@ export function editPostUrl (id, opts = {}, querystringParams = {}) {
   return postUrl(id, { ...opts, action: 'edit' }, querystringParams)
 }
 
-export function commentUrl (postId, commentId, opts = {}, querystringParams = {}) {
-  return `${postUrl(postId, opts, querystringParams)}#comment_${commentId}`
+export function postCommentUrl ({ postId, commentId, ...opts }, querystringParams = {}) {
+  return `${postUrl(postId, opts, querystringParams)}/comments/${commentId}`
 }
 
 // Messages URLs
