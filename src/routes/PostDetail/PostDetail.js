@@ -25,7 +25,6 @@ import PeopleInfo from 'components/PostCard/PeopleInfo'
 import ProjectContributions from './ProjectContributions'
 import PostPeopleDialog from 'components/PostPeopleDialog'
 import './PostDetail.scss'
-import { MAX_THREAD_PREVIEW_LENGTH } from 'routes/Messages/ThreadList/ThreadList'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 70
@@ -162,7 +161,7 @@ export default class PostDetail extends Component {
         currentUser={currentUser}
       />
     )
-    MAX_THREAD_PREVIEW_LENGTH
+
     return (
       <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>
         {({ width, height }) =>

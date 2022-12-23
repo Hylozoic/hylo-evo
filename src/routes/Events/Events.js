@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import Dropdown from 'components/Dropdown'
 import StreamBanner from 'components/StreamBanner'
 import Icon from 'components/Icon'
@@ -66,6 +67,10 @@ export default class Events extends Component {
 
     return (
       <div>
+        <Helmet>
+          <title>Hylo{group ? `: ${group.name} Events` : ''}</title>
+        </Helmet>
+
         <StreamBanner
           group={group}
           currentUser={currentUser}

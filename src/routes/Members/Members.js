@@ -1,5 +1,6 @@
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { bool, func, string, arrayOf, shape } from 'prop-types'
 import Button from 'components/Button'
@@ -46,12 +47,16 @@ export default class Members extends Component {
 
   render () {
     const {
-      memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
+      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
 
     return <div>
+      <Helmet>
+        <title>Hylo{group ? `: ${group.name} Members` : ''}</title>
+      </Helmet>
+
       <div styleName='header'>
         <div>
           <div styleName='title'>Members</div>
