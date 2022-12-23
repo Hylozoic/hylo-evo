@@ -5,7 +5,7 @@
   // later on to override this initial width.
   width: 100%;
   min-height: 1px; // Prevent collapsing
-  flex: 0 0 15%;
+  flex: 0 0 17%;
   // Add a `max-width` to ensure content within each column does not blow out
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
@@ -13,14 +13,10 @@
   transition: 0.5s;
   // // overriding bootstrap default. Seems broken
   // padding: 0 0 !important;
-  margin: 0 30px 15px;
+  margin: 0 0 0 30px;
   overflow: hidden;
   white-space: nowrap;
-  height: calc(100vh - 56px);
-}
-
-.mapView.collapser {
-  margin: 0 13px 0 15px;
+  height: 100%;
 }
 
 .collapser-collapsed {
@@ -41,18 +37,6 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-
-.navigation::-webkit-scrollbar {
-  background-color:transparent;
-  width: 5px;
-  border-radius: 5px;
-}
-
-.navigation::-webkit-scrollbar-thumb {
-  background-color: rgba(200,200,200,.5);
-  outline: none;
-}
-
 .links {
   list-style: none;
   border-bottom: 2px solid $color-ghost-30;
@@ -72,6 +56,7 @@
   }
   .navigation {
     overflow: hidden;
+    overflow-y: auto;
   }
 }
 

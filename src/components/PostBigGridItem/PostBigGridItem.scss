@@ -69,6 +69,11 @@
 .post-grid-item-container.detail-extra-short, .post-grid-item-container.detail-short, .post-grid-item-container.detail-mid, .post-grid-item-container.detail-full {
   padding: 10px;
 
+  &.chat {
+    background-color: white;
+    background: radial-gradient(140% 200% at 50% 75%, rgba(255, 255, 255, 1) 0%, rgba(212, 237, 249, 1.0) 100%);
+  }
+
   &.discussion {
     background-color: white;
     background: radial-gradient(140% 200% at 50% 75%, rgba(255, 255, 255, 1) 0%, rgba(212, 237, 249, 1.0) 100%);
@@ -265,6 +270,10 @@
         }
       }
 
+      .reactions {
+        padding: 0;
+      }
+
       .date {
         display: block;
 
@@ -421,8 +430,7 @@
     width: 100%;
   }
 
-
-  .grid-meta {
+  .grid-meta{
     z-index: 3;
     position: absolute;
     bottom:0;
@@ -430,6 +438,10 @@
     width: 100%;
     padding-top: 15px;
     background: linear-gradient(180deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0.9) 49.48%, #FFFFFF 100%);
+  }
+
+
+  .grid-meta-row-1 {
 
     .content-snippet {
       max-height: 68px;
@@ -566,6 +578,18 @@
   display: flex;
   align-items: center;
   white-space: nowrap;
+}
+
+.reactions {
+  padding: 0 6px;
+
+  &> div > div {
+    padding-bottom: 6px;
+
+    &> div:last-child {
+      display: none;
+    }
+  }
 }
 
 // unread state overrides

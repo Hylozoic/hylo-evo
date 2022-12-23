@@ -2,13 +2,11 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import useRouter from 'hooks/useRouter'
 import { createSelector } from 'reselect'
-import isPendingFor from 'store/selectors/isPendingFor'
+import fetchPosts from 'store/actions/fetchPosts'
 import { FETCH_POSTS_FOR_WIDGETS } from 'store/constants'
 import presentPost from 'store/presenters/presentPost'
-import {
-  fetchPosts,
-  getPosts
-} from 'routes/Stream/Stream.store'
+import { getPosts } from 'store/selectors/getPosts'
+import isPendingFor from 'store/selectors/isPendingFor'
 
 const selectAndPresentPosts = createSelector(
   (state, fetchPostsParam) => getPosts(state, fetchPostsParam),

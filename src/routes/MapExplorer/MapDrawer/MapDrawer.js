@@ -12,8 +12,8 @@ import Loading from 'components/Loading'
 import Member from 'components/Member'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
+import { STREAM_SORT_OPTIONS } from 'util/constants'
 
-import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
@@ -158,10 +158,10 @@ function MapDrawer (props) {
           <span>Sort posts by:</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>
-              {SORT_OPTIONS.find(o => o.id === sortBy).label}
+              {STREAM_SORT_OPTIONS.find(o => o.id === sortBy).label}
               <Icon name='ArrowDown' className={styles.sorterIcon} />
             </span>}
-            items={SORT_OPTIONS.map(({ id, label }) => ({
+            items={STREAM_SORT_OPTIONS.map(({ id, label }) => ({
               label,
               onClick: () => onUpdateFilters({ sortBy: id })
             }))}

@@ -22,7 +22,9 @@ export default function PostDetails ({
   expanded,
   highlightProps,
   fileAttachments,
-  hideDetails
+  hideDetails,
+  onClick,
+  ...post
 }) {
   const [isVideo, setIsVideo] = useState()
 
@@ -36,7 +38,7 @@ export default function PostDetails ({
 
   return (
     <Highlight {...highlightProps}>
-      <div styleName={cx('postDetails', { constrained })}>
+      <div onClick={onClick} styleName={cx('postDetails', { constrained })}>
         <div styleName='fade' />
         {linkPreview?.url && linkPreviewFeatured && isVideo && (
           <Feature url={linkPreview.url} />

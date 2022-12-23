@@ -44,7 +44,7 @@ export default class Comments extends Component {
       commentIds.push(comment.id)
       comment.childComments.forEach(comment => commentIds.push(comment.id))
     })
-    if (!commentsPending && !commentIds.includes(selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
+    if (!commentsPending && !commentIds.includes(selectedCommentId && selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
   }
 
   scrollToReplyInput (elem) {
@@ -68,13 +68,16 @@ export default class Comments extends Component {
     const style = {
       width: width + 'px'
     }
+
     return (
       <div styleName='comments'>
         <ShowMore
           commentsLength={comments.length}
           total={total}
           hasMore={hasMore}
-          fetchComments={fetchComments} />
+          fetchComments={fetchComments}
+        />
+
         {comments.map(c => (
           <Comment
             key={c.id}
@@ -82,24 +85,28 @@ export default class Comments extends Component {
             slug={slug}
             selectedCommentId={selectedCommentId}
             postId={postId}
-            onReplyThread={this.scrollToReplyInput.bind(this)} />
+            onReplyThread={this.scrollToReplyInput.bind(this)}
+          />
         ))}
         {currentUser
-          ? <div styleName='form-wrapper' style={style}>
-            <CommentForm
-              currentUser={currentUser}
-              createComment={createComment}
-              postId={postId}
-            />
-            <PeopleTyping styleName='people-typing' />
-          </div>
-          : <Link
-            to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
-            target={inIframe() ? '_blank' : ''}
-            styleName='signup-button'
-          >
-            Join Hylo to respond
-          </Link>
+          ? (
+            <div styleName='form-wrapper' style={style}>
+              <CommentForm
+                currentUser={currentUser}
+                createComment={createComment}
+                postId={postId}
+              />
+              <PeopleTyping styleName='people-typing' />
+            </div>
+          ) : (
+            <Link
+              to={`/login?returnToUrl=${encodeURIComponent(window.location.pathname)}`}
+              target={inIframe() ? '_blank' : ''}
+              styleName='signup-button'
+            >
+              Join Hylo to respond
+            </Link>
+          )
         }
       </div>
     )

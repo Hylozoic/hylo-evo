@@ -59,16 +59,6 @@ export default function PostGridItem (props) {
             />
           </div>}
         <h3 styleName='title'>{title}</h3>
-
-        {/*  Will fix this after I get attachment variables */}
-        {/* TODO: what was meant to happen here? */}
-        {/* {post.type === 'event' */
-        /* ? <div styleName='date'> */
-        /*   <span>{startTimeMoment.format('MMM')}</span> */
-        /*   <span>{startTimeMoment.format('D')}</span> */
-        /* </div> */
-        /* : ' '} */}
-
         {attachmentType === 'image'
           ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
           : attachmentType === 'file'
@@ -85,12 +75,14 @@ export default function PostGridItem (props) {
 
         <HyloHTML styleName='details' html={details} />
         <div styleName='grid-meta'>
-          <div styleName='type-author'>
-            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
-            {creator.name}
-          </div>
-          <div styleName='timestamp'>
-            {TextHelpers.humanDate(createdAt)}
+          <div styleName='grid-meta-row-1'>
+            <div styleName='type-author'>
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+              {creator.name}
+            </div>
+            <div styleName='timestamp'>
+              {TextHelpers.humanDate(createdAt)}
+            </div>
           </div>
         </div>
         <div styleName='grid-fade' />

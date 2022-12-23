@@ -1,23 +1,18 @@
-import { connect } from 'react-redux'
+import { get, isEmpty } from 'lodash/fp'
 import { push } from 'connected-react-router'
-import { get } from 'lodash/fp'
-import { isEmpty } from 'lodash'
+import { connect } from 'react-redux'
+import fetchPosts from 'store/actions/fetchPosts'
 import {
   FETCH_POSTS, FETCH_FOR_CURRENT_USER
 } from 'store/constants'
+import presentPost from 'store/presenters/presentPost'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
-import presentPost from 'store/presenters/presentPost'
+import { getHasMorePosts, getPosts } from 'store/selectors/getPosts'
 import { createPostUrl } from 'util/navigation'
-
-import {
-  fetchPosts,
-  getPosts,
-  getHasMorePosts
-} from 'routes/Stream/Stream.store.js'
 
 import { updateTimeframe } from './Events.store'
 

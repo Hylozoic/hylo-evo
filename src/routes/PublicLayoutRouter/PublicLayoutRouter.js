@@ -14,7 +14,6 @@ import Loading from 'components/Loading'
 import MapExplorer from 'routes/MapExplorer'
 import PostDetail from 'routes/PostDetail'
 import './PublicLayoutRouter.scss'
-import gql from 'graphql-tag'
 
 export default function PublicLayoutRouter (props) {
   const routeParams = useParams()
@@ -44,7 +43,7 @@ export function PublicGroupDetail (props) {
   const history = useHistory()
   const [loading, setLoading] = useState(true)
   const groupSlug = routeParams?.groupSlug
-  
+
   useEffect(() => {
     (async () => {
       setLoading(true)

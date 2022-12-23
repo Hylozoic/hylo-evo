@@ -156,6 +156,7 @@ Object {
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -183,6 +184,7 @@ posts: viewPosts(
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   collectionToFilterOut: $collectionToFilterOut,
+  cursor: $cursor,
   filter: $filter,
   first: $first,
   forCollection: $forCollection,
@@ -224,6 +226,7 @@ posts: viewPosts(
     avatarUrl
   }
   commentersTotal
+  commentsTotal
   
   linkPreview {
     description
@@ -253,8 +256,20 @@ posts: viewPosts(
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
+  myReactions {
+    emojiFull
+    id
+  }
+  postReactions {
+    emojiFull
+    id
+    user {
+      id
+      name
+    }
+  }
   groups {
     id
     name
@@ -360,6 +375,7 @@ Object {
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -386,6 +402,7 @@ Object {
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
@@ -467,6 +484,7 @@ Object {
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -487,6 +505,7 @@ Object {
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
       context: $context,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,

@@ -32,19 +32,6 @@ exports[`PostFooter enables tooltip when myvote is false 1`] = `
     }
     peopleTotal={4}
   />
-  <a
-    data-for="postfooter-tt-undefined"
-    data-stylename="vote-button"
-    data-tip="Upvote this post so more people see it."
-    data-tip-disable={false}
-    onClick={[Function]}
-  >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
-    />
-    3
-  </a>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -84,19 +71,6 @@ exports[`PostFooter matches the latest snapshot 1`] = `
     }
     peopleTotal={4}
   />
-  <a
-    data-for="postfooter-tt-undefined"
-    data-stylename="vote-button voted"
-    data-tip="Upvote this post so more people see it."
-    data-tip-disable={true}
-    onClick={[Function]}
-  >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
-    />
-    3
-  </a>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"
@@ -128,18 +102,6 @@ exports[`PostFooter matches the latest snapshot for project 1`] = `
     people={Array []}
     peopleTotal={0}
   />
-  <a
-    data-for="postfooter-tt-undefined"
-    data-stylename="vote-button"
-    data-tip="Upvote this post so more people see it."
-    onClick={[Function]}
-  >
-    <Icon
-      data-stylename="arrowIcon"
-      name="ArrowUp"
-    />
-    0
-  </a>
   <Tooltip
     delay={550}
     id="postfooter-tt-undefined"

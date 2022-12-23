@@ -67,7 +67,7 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
         items={
           Array [
             Object {
-              "label": "Latest Activity",
+              "label": "Latest activity",
               "onClick": [Function],
             },
             Object {
@@ -84,7 +84,7 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
           <span
             data-stylename="sorter-label"
           >
-            Latest Activity
+            Latest activity
             <Icon
               name="ArrowDown"
             />
@@ -198,7 +198,7 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
         items={
           Array [
             Object {
-              "label": "Latest Activity",
+              "label": "Latest activity",
               "onClick": [Function],
             },
             Object {
@@ -337,7 +337,7 @@ exports[`MapDrawer searching updates map filters 1`] = `
         items={
           Array [
             Object {
-              "label": "Latest Activity",
+              "label": "Latest activity",
               "onClick": [Function],
             },
             Object {
@@ -354,7 +354,7 @@ exports[`MapDrawer searching updates map filters 1`] = `
           <span
             data-stylename="sorter-label"
           >
-            Latest Activity
+            Latest activity
             <Icon
               name="ArrowDown"
             />

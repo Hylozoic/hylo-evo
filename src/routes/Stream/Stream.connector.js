@@ -1,30 +1,33 @@
 import { push } from 'connected-react-router'
-import { connect } from 'react-redux'
 import { get, isEmpty } from 'lodash/fp'
+import { connect } from 'react-redux'
+import { createSelector as ormCreateSelector } from 'redux-orm'
+import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
+import changeQuerystringParam from 'store/actions/changeQuerystringParam'
+import fetchGroupTopic from 'store/actions/fetchGroupTopic'
+import fetchTopic from 'store/actions/fetchTopic'
+import fetchPosts from 'store/actions/fetchPosts'
+import respondToEvent from 'store/actions/respondToEvent'
+import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
 import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
+import orm from 'store/models'
+import presentPost from 'store/presenters/presentPost'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getMe from 'store/selectors/getMe'
 import getMyMemberships from 'store/selectors/getMyMemberships'
-import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
-import {
-  fetchGroupTopic,
-  fetchPosts,
-  fetchTopic,
-  getCustomView,
-  getHasMorePosts,
-  getPosts
-} from 'routes/Stream/Stream.store'
-import getRouteParam from 'store/selectors/getRouteParam'
-import getGroupTopicForCurrentRoute from 'store/selectors/getGroupTopicForCurrentRoute'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
-import changeQuerystringParam from 'store/actions/changeQuerystringParam'
-import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
-import { updateUserSettings } from 'routes/UserSettings/UserSettings.store'
-import presentPost from 'store/presenters/presentPost'
-import respondToEvent from 'store/actions/respondToEvent'
+import getRouteParam from 'store/selectors/getRouteParam'
+import { getHasMorePosts, getPosts } from 'store/selectors/getPosts'
+import getTopicForCurrentRoute from 'store/selectors/getTopicForCurrentRoute'
 import isPendingFor from 'store/selectors/isPendingFor'
-import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
-
 import { createPostUrl } from 'util/navigation'
+
+export const getCustomView = ormCreateSelector(
+  orm,
+  (session, props) => getRouteParam('customViewId', session, props),
+  (session, id) => session.CustomView.safeGet({ id })
+)
 
 export function mapStateToProps (state, props) {
   let group, topic, groupTopic
