@@ -3,6 +3,7 @@ import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import Moment from 'moment-timezone'
 import ReactTooltip from 'react-tooltip'
+import { Helmet } from 'react-helmet'
 import cx from 'classnames'
 import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
@@ -103,7 +104,12 @@ export default class MemberProfile extends React.Component {
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
 
-    return <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
+    return (
+    <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
+      <Helmet>
+        <title>{`Hylo: ${person.name}`}</title>
+        <meta name='description' content={`${person.name}'s Member Profile`} />
+      </Helmet>
       <div styleName='header'>
         {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
           <Icon name='Edit' /> Edit Profile
@@ -162,6 +168,7 @@ export default class MemberProfile extends React.Component {
         <CurrentContentComponent routeParams={routeParams} loading={contentLoading} />
       </div>
     </div>
+    )
   }
 }
 

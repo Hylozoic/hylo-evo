@@ -2,6 +2,14 @@
 
 exports[`EditProfileTab renders correctly 1`] = `
 <div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Hylo: Settings
+    </title>
+  </HelmetWrapper>
   <input
     data-stylename="name"
     onChange={[Function]}
@@ -127,6 +135,14 @@ exports[`EditProfileTab renders correctly 1`] = `
 
 exports[`EditProfileTab renders correctly without location object 1`] = `
 <div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Hylo: Settings
+    </title>
+  </HelmetWrapper>
   <input
     data-stylename="name"
     onChange={[Function]}
