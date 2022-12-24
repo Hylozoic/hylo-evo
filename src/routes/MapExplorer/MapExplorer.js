@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { debounce, get, groupBy, isEqual, isEmpty } from 'lodash'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { FlyToInterpolator } from 'react-map-gl'
 import { useHistory } from 'react-router-dom'
 import bbox from '@turf/bbox'
@@ -493,6 +494,7 @@ export class UnwrappedMapExplorer extends React.Component {
       featureTypes,
       fetchPostsForDrawer,
       filters,
+      group,
       pendingPostsMap,
       pendingPostsDrawer,
       postsForDrawer,
@@ -525,6 +527,10 @@ export class UnwrappedMapExplorer extends React.Component {
 
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
+        <Helmet>
+          <title>Hylo{group ? `: ${group.name} Map` : ': Map'}</title>
+        </Helmet>
+
         <div styleName='mapContainer'>
           <Map
             afterViewportUpdate={this.afterViewportUpdate}

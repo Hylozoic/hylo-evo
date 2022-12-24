@@ -3,6 +3,7 @@ import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import Moment from 'moment-timezone'
 import ReactTooltip from 'react-tooltip'
+import { Helmet } from 'react-helmet'
 import cx from 'classnames'
 import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
@@ -103,65 +104,71 @@ export default class MemberProfile extends React.Component {
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
 
-    return <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
-      <div styleName='header'>
-        {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
-          <Icon name='Edit' /> Edit Profile
-        </Button>}
-        <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
-          <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
-          <h1 styleName='header-member-name'>{person.name}</h1>
-          {person.location && <div styleName='header-member-location'>
-            <Icon name='Location' styleName='header-member-location-icon' />
-            {locationWithoutUsa}
-          </div>}
-          {/* TODO: Do we still want to show the "Group manager" role? */}
-          {/* {role && <div styleName='location'>
-            <Icon styleName='star' name='StarCircle' />
-            {role}
-          </div>} */}
-        </div>
-        <div styleName='action-icons'>
-          <ActionButtons items={actionButtonsItems} />
-          <ActionDropdown items={actionDropdownItems} />
-        </div>
-        {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
-        {person.bio && <div styleName='bio'>{person.bio}</div>}
-        <div styleName='member-details'>
-          <div styleName='profile-subhead'>
-            Skills &amp; Interests
+    return (
+      <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
+        <Helmet>
+          <title>{`Hylo: ${person.name}`}</title>
+          <meta name='description' content={`${person.name}'s Member Profile`} />
+        </Helmet>
+        <div styleName='header'>
+          {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
+            <Icon name='Edit' /> Edit Profile
+          </Button>}
+          <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
+            <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
+            <h1 styleName='header-member-name'>{person.name}</h1>
+            {person.location && <div styleName='header-member-location'>
+              <Icon name='Location' styleName='header-member-location-icon' />
+              {locationWithoutUsa}
+            </div>}
+            {/* TODO: Do we still want to show the "Group manager" role? */}
+            {/* {role && <div styleName='location'>
+              <Icon styleName='star' name='StarCircle' />
+              {role}
+            </div>} */}
           </div>
-          <SkillsSection personId={personId} editable={false} />
-          <div styleName='profile-subhead'>
-            What I&apos;m Learning
+          <div styleName='action-icons'>
+            <ActionButtons items={actionButtonsItems} />
+            <ActionDropdown items={actionDropdownItems} />
           </div>
-          <SkillsToLearnSection personId={personId} editable={false} />
+          {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
+          {person.bio && <div styleName='bio'>{person.bio}</div>}
+          <div styleName='member-details'>
+            <div styleName='profile-subhead'>
+              Skills &amp; Interests
+            </div>
+            <SkillsSection personId={personId} editable={false} />
+            <div styleName='profile-subhead'>
+              What I&apos;m Learning
+            </div>
+            <SkillsToLearnSection personId={personId} editable={false} />
 
-          { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Groups</div> }
-          { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />) }
+            { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Groups</div> }
+            { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />) }
 
-          { affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>Other Affiliations</div> }
-          { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />) }
+            { affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>Other Affiliations</div> }
+            { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />) }
 
-          {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
-          {events && events.length > 0 && events.map((e, index) => <Event key={index} memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
+            {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
+            {events && events.length > 0 && events.map((e, index) => <Event key={index} memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
 
-          {projects && projects.length > 0 && <div styleName='profile-subhead'>Projects</div>}
-          {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
+            {projects && projects.length > 0 && <div styleName='profile-subhead'>Projects</div>}
+            {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
+          </div>
+        </div>
+        <div styleName='content'>
+          <div styleName='content-controls'>
+            <h2 styleName='content-header'>{currentContentTitle}</h2>
+            <Dropdown
+              styleName='content-dropdown'
+              items={contentDropDownItems}
+              toggleChildren={
+                <span>{currentTab} <Icon styleName='content-dropdown-icon' name='ArrowDown' /></span>} />
+          </div>
+          <CurrentContentComponent routeParams={routeParams} loading={contentLoading} />
         </div>
       </div>
-      <div styleName='content'>
-        <div styleName='content-controls'>
-          <h2 styleName='content-header'>{currentContentTitle}</h2>
-          <Dropdown
-            styleName='content-dropdown'
-            items={contentDropDownItems}
-            toggleChildren={
-              <span>{currentTab} <Icon styleName='content-dropdown-icon' name='ArrowDown' /></span>} />
-        </div>
-        <CurrentContentComponent routeParams={routeParams} loading={contentLoading} />
-      </div>
-    </div>
+    )
   }
 }
 

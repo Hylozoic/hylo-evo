@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import { Helmet } from 'react-helmet'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams, useLocation, useHistory, Redirect, Route, Switch } from 'react-router-dom'
@@ -149,6 +150,10 @@ export function GroupExplorerLayoutRouter () {
 export function PublicPageHeader () {
   return (
     <div styleName='background'>
+      <Helmet>
+        <title>Hylo: Public</title>
+        <meta name='description' content='Hylo: Public content' />
+      </Helmet>
       <div styleName='header'>
         <a href='/'>
           <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />

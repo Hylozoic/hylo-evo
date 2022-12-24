@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
@@ -225,6 +226,9 @@ export default class EditProfileTab extends Component {
 
     return (
       <div>
+        <Helmet>
+          <title>Hylo: Settings</title>
+        </Helmet>
         {!validateName(name) && <div styleName='name-validation'>Name must not be blank</div>}
         {/* TODO: i18n */}
         <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -233,7 +237,8 @@ export default class EditProfileTab extends Component {
             type='userBanner'
             id={currentUser.id}
             onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-            styleName='change-banner-button' />
+            styleName='change-banner-button' 
+          />
         </div>
         <UploadAttachmentButton
           type='userAvatar'

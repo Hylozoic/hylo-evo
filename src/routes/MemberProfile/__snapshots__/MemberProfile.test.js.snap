@@ -4,6 +4,18 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
 <div
   className=""
 >
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Hylo: Rich Churcher
+    </title>
+    <meta
+      content="Rich Churcher's Member Profile"
+      name="description"
+    />
+  </HelmetWrapper>
   <div
     data-stylename="header"
   >

@@ -134,24 +134,28 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
 
   // Group streams
   return reduce((memo, group) => {
-    queriesToMatch.push(
-      { context: 'groups', slug: group.slug },
-      { context: 'groups', slug: group.slug, activePostsOnly: false },
-      { context: 'groups', slug: group.slug, activePostsOnly: true }, // For custom views
-      { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
-      { context: 'groups', slug: group.slug, filter: type },
-      { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false },
-      { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false },
-      { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true }, // For custom views
-      { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
-      { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type, activePostsOnly: false },
-      { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: false },
-      { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: true }, // For custom views
-      { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
-      { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false },
-      // For events stream upcoming events
-      { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' }
-    )
+    // Chat posts only appear in the chat rooms, nowhere else
+    if (type !== 'chat') {
+      queriesToMatch.push(
+        { context: 'groups', slug: group.slug },
+        { context: 'groups', slug: group.slug, activePostsOnly: false },
+        { context: 'groups', slug: group.slug, activePostsOnly: true }, // For custom views
+        { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
+        { context: 'groups', slug: group.slug, filter: type },
+        { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false },
+        { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false },
+        { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true }, // For custom views
+        { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
+        { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type, activePostsOnly: false },
+        { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: false },
+        { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: true }, // For custom views
+        { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
+        { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false },
+        // For events stream upcoming events
+        { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' }
+      )
+    }
+
     for (let topic of topics) {
       queriesToMatch.push(
         // Add to the future posts in a topic (future because of order: 'asc')

@@ -78,7 +78,7 @@ export default class PostEditor extends React.Component {
       groups: [],
       location: ''
     },
-    postTypes: Object.keys(POST_TYPES),
+    postTypes: Object.keys(POST_TYPES).filter(t => t !== 'chat'),
     editing: false,
     loading: false
   }
