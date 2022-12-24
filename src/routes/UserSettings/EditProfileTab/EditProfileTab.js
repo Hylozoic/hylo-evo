@@ -183,8 +183,6 @@ export default class EditProfileTab extends Component {
     const { edits, changed } = this.state
     setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
 
-    console.log(edits, changed, 'weee')
-
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
       edits['locationId'] = await ensureLocationIdIfCoordinate({ fetchLocation, location: edits.location, locationId: event.target.value.id })
