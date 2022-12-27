@@ -12,7 +12,7 @@ exports[`PostPrompt renders a post prompt 1`] = `
         "entries": Array [
           Object {
             "hash": "",
-            "key": "g5hcwl",
+            "key": "k2ndek",
             "pathname": "/",
             "search": "",
             "state": undefined,
@@ -26,7 +26,7 @@ exports[`PostPrompt renders a post prompt 1`] = `
         "listen": [Function],
         "location": Object {
           "hash": "",
-          "key": "g5hcwl",
+          "key": "k2ndek",
           "pathname": "/",
           "search": "",
           "state": undefined,
