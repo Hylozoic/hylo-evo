@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { debounce, includes, isEmpty } from 'lodash'
 import { uniqBy } from 'lodash/fp'
 import cx from 'classnames'
@@ -15,7 +16,7 @@ const { object, array, bool, string, func } = PropTypes
 // keys that can be pressed to create a new tag
 const creationKeyCodes = [keyMap.ENTER, keyMap.SPACE, keyMap.COMMA]
 
-export default class TagInput extends Component {
+class TagInput extends Component {
   static propTypes = {
     tags: array,
     type: string,
@@ -117,7 +118,7 @@ export default class TagInput extends Component {
 
     const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion, tagType } = this.props
     if (!tags) tags = []
-    if (!placeholder) placeholder = 'Type...'
+    if (!placeholder) placeholder = this.props.t('Type...')
 
     const optionalHashtag = addLeadingHashtag ? '#' : ''
 
@@ -151,9 +152,9 @@ export default class TagInput extends Component {
     const suggestionsOrError = maxReached
       ? isEmpty(this.input.current.value)
         ? []
-        : [{ name: `no more than ${maxTags} allowed`, isError: true }]
+        : [{ name: this.props.t('no more than {{maxTags}} allowed', { maxTags }), isError: true }]
       : suggestions
-
+      // TO DO: Handle this translation
     return <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} onClick={this.focus}>
       <ul className={theme.selected}>
         {selectedItems}
@@ -194,3 +195,5 @@ export default class TagInput extends Component {
     </div>
   }
 }
+
+export default withTranslation()(TagInput)

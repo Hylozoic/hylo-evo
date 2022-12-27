@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import cx from 'classnames'
 import SwitchStyled from 'components/SwitchStyled'
 import Icon from 'components/Icon'
 import './PublicToggle.scss'
 const { func, bool } = PropTypes
 
-export default class PublicToggle extends Component {
+class PublicToggle extends Component {
   static propTypes = {
     isPublic: bool,
     togglePublic: func
@@ -22,11 +23,12 @@ export default class PublicToggle extends Component {
     return (
       <div styleName={cx('publicToggleContainer', { postIsPublic: isPublic })}>
         <div styleName='publicToggle'>
-          <Icon name='Public' styleName='publicToggleIcon' /> Make Public:
+          <Icon name='Public' styleName='publicToggleIcon' /> {this.props.t('Make Public:')}
           <SwitchStyled checked={isPublic} onChange={togglePublic} backgroundColor={isPublic ? '#0DC39F' : '#8B96A4'} />
-          <span styleName='publicGuidance'>{isPublic ? 'Anyone on Hylo can see this post' : 'Currently, only groups you specify above will see this post'}</span>
+          <span styleName='publicGuidance'>{isPublic ? this.props.t('Anyone on Hylo can see this post') : this.props.t('Currently, only groups you specify above will see this post')}</span>
         </div>
       </div>
     )
   }
 }
+export default withTranslation()(PublicToggle)

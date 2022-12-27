@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import Moment from 'moment-timezone'
 import { isEmpty } from 'lodash/fp'
@@ -41,6 +42,7 @@ const PostListRow = (props) => {
   const numOtherCommentors = commentersTotal - 1
   const unread = false
   const startTimeMoment = Moment(post.startTime)
+  const { t } = useTranslation()
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
@@ -52,7 +54,7 @@ const PostListRow = (props) => {
           }}
           styleName={cx('vote-button', { voted: myVote })}
           data-tip-disable={myVote}
-          data-tip='Upvote this post so more people see it.'
+          data-tip={t('Upvote this post so more people see it.')}
           data-for={`post-tt-${post.id}`}
         >
           <Icon name='ArrowUp' styleName='vote-icon' />
@@ -70,7 +72,7 @@ const PostListRow = (props) => {
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name} {
                 numOtherCommentors > 1
-                  ? (<span> and <strong>{numOtherCommentors} others</strong></span>)
+                  ? (<span> and <strong>{numOtherCommentors} others</strong></span>) // TODO: Handle this translation
                   : null
               }
             </div> }

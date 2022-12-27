@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MemberSelector renders correctly (with min props) 1`] = `
-<TagInput
+<withI18nextTranslation(TagInput)
   handleAddition={[Function]}
   handleDelete={[Function]}
   handleInputChange={[Function]}

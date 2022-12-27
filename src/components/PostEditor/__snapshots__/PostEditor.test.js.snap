@@ -252,6 +252,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -292,7 +293,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -491,6 +492,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -531,7 +533,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -733,6 +735,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -745,7 +748,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -890,6 +893,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -930,7 +934,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your offer located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1075,6 +1079,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1115,7 +1120,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1260,6 +1265,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1300,7 +1306,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your resource located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1446,6 +1452,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1458,7 +1465,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1645,6 +1652,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1657,7 +1665,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1803,6 +1811,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1815,7 +1824,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1961,6 +1970,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1973,7 +1983,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -2138,6 +2148,7 @@ exports[`PostEditor renders contribution button 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -2150,7 +2161,7 @@ exports[`PostEditor renders contribution button 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -2172,7 +2183,9 @@ exports[`PostEditor renders contribution button 1`] = `
         <div
           data-stylename="accept-contributions-help"
         >
-          If you turn 'Accept Contributions' on, people will be able to send money to your Stripe connected account to support this project.
+          If you turn 'Accept Contributions' on, people will be able
+                      to send money to your Stripe connected account to support
+                      this project.
         </div>
       </div>
     </div>
@@ -2360,6 +2373,7 @@ exports[`PostEditor renders with min props 1`] = `
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -2372,7 +2386,7 @@ exports[`PostEditor renders with min props 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
