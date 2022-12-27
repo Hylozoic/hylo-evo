@@ -51,7 +51,24 @@ class PostEditor extends React.Component {
     ensureLocationIdIfCoordinate: PropTypes.func
   }
 
-  static defaultProps = {
+  static defaultProps = { // TODO: Handle translations
+    titlePlaceholderForPostType: {
+      offer: 'What help can you offer?',
+      request: 'What are you looking for help with?',
+      resource: 'What resource is available?',
+      project: 'What would you like to call your project?',
+      event: 'What is your event called?',
+      default: 'What’s on your mind?'
+    },
+    // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content
+    detailPlaceholderForPostType: {
+      offer: 'Add a description',
+      request: 'Add a description',
+      resource: 'Add a description',
+      project: 'Add a description',
+      event: 'Add a description',
+      default: 'Add a description'
+    },
     post: {
       type: 'discussion',
       title: '',
@@ -508,10 +525,10 @@ class PostEditor extends React.Component {
   }
 
   buttonLabel = () => {
-    const { postPending, editing, t } = this.props
-    if (postPending) return t('Posting...')
-    if (editing) return t('Save')
-    return t('Post')
+    const { postPending, editing } = this.props
+    if (postPending) return this.props.t('Posting...')
+    if (editing) return this.props.t('Save')
+    return this.props.t('Post')
   }
 
   toggleAnnouncementModal = () => {
@@ -604,8 +621,8 @@ class PostEditor extends React.Component {
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
 
-    const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
-    const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
+    const donationsLinkPlaceholder = this.props.t('Add a donation link (must be valid URL)')
+    const projectManagementLinkPlaceholder = this.props.t('Add a project management link (must be valid URL)')
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
@@ -645,7 +662,7 @@ class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
+              <span styleName='title-error'>{this.props.t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
@@ -690,7 +707,7 @@ class PostEditor extends React.Component {
         <div styleName='footer'>
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Project Members')}</div>
+              <div styleName='footerSection-label'>{this.props.t('Project Members')}</div>
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={members || []}
@@ -702,7 +719,7 @@ class PostEditor extends React.Component {
             </div>
           )}
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>{t('Topics')}</div>
+            <div styleName='footerSection-label'>{this.props.t('Topics')}</div>
             <div styleName='footerSection-topics'>
               <TopicSelector
                 forGroups={post?.groups || [currentGroup]}
@@ -712,7 +729,7 @@ class PostEditor extends React.Component {
             </div>
           </div>
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>{t('Post in')}</div>
+            <div styleName='footerSection-label'>{this.props.t('Post in')}</div>
             <div styleName='footerSection-groups'>
               <GroupsSelector
                 options={groupOptions}
@@ -729,22 +746,22 @@ class PostEditor extends React.Component {
           />
           {canHaveTimes && dateError && (
             <span styleName='title-error'>
-              {t('End Time must be after Start Time')}
+              {this.props.t('End Time must be after Start Time')}
             </span>
           )}
           {canHaveTimes && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Timeframe')}</div>
+              <div styleName='footerSection-label'>{this.props.t('Timeframe')}</div>
               <div styleName='datePickerModule'>
                 <DatePicker
                   value={startTime}
-                  placeholder={t('Select Start')}
+                  placeholder={this.props.t('Select Start')}
                   onChange={this.handleStartTimeChange}
                 />
-                <div styleName='footerSection-helper'>{t('To')}</div>
+                <div styleName='footerSection-helper'>{this.props.t('To')}</div>
                 <DatePicker
                   value={endTime}
-                  placeholder={t('Select End')}
+                  placeholder={this.props.t('Select End')}
                   onChange={this.handleEndTimeChange}
                 />
               </div>
@@ -752,19 +769,19 @@ class PostEditor extends React.Component {
           )}
           {hasLocation && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label alignedLabel'>{t('Location')}</div>
+              <div styleName='footerSection-label alignedLabel'>{this.props.t('Location')}</div>
               <LocationInput
                 saveLocationToDB
                 locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
-                placeholder={t('Where is your {{type}} located?', { type })}
+                placeholder={this.props.t('Where is your {{type}} located?', { type })}
               />
             </div>
           )}
           {isEvent && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Invite People')}</div>
+              <div styleName='footerSection-label'>{this.props.t('Invite People')}</div>
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={eventInvitations || []}
@@ -777,7 +794,7 @@ class PostEditor extends React.Component {
           )}
           {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{t('Accept Contributions')}</div>
+              <div styleName='footerSection-label'>{this.props.t('Accept Contributions')}</div>
               {hasStripeAccount && (
                 <div
                   styleName={cx('footerSection-groups', 'accept-contributions')}
@@ -789,7 +806,7 @@ class PostEditor extends React.Component {
                   />
                   {!acceptContributions && (
                     <div styleName='accept-contributions-help'>
-                      {t(`If you turn 'Accept Contributions' on, people will be able
+                      {this.props.t(`If you turn 'Accept Contributions' on, people will be able
                       to send money to your Stripe connected account to support
                       this project.`)}
                     </div>
@@ -803,17 +820,17 @@ class PostEditor extends React.Component {
                     'accept-contributions-help'
                   )}
                 >
-                  {t(`To accept financial contributions for this project, you have
-                  to connect a Stripe account. Go to`)}
-                  <a href='/settings/payment'>{t('Settings')}</a>{' '}{t('to set it up.')}
-                  {t('(Remember to save your changes before leaving this form)')}
+                  {this.props.t(`To accept financial contributions for this project, you have
+                  to connect a Stripe account. Go to 
+                  <a href='/settings/payment'>Settings</a> to set it up.
+                  (Remember to save your changes before leaving this form)`)}
                 </div>
               )}
             </div>
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>{t('Donation Link')}</div>
+              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>{this.props.t('Donation Link')}</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'
@@ -828,7 +845,7 @@ class PostEditor extends React.Component {
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>{t('Project Management')}</div>
+              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>{this.props.t('Project Management')}</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'

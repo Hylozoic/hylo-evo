@@ -1,6 +1,6 @@
 import React from 'react'
 import StreamBanner, { PostPrompt } from './StreamBanner'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { mount } from 'enzyme'
 
 jest.mock('react-i18next', () => ({
@@ -62,7 +62,7 @@ it('matches the snapshot for an orphan user', () => {
 describe('PostPrompt', () => {
   it('renders a post prompt', () => {
     const firstName = 'Arturo'
-    const wrapper = mount(<BrowserRouter><PostPrompt firstName={firstName} type='project' /></BrowserRouter>)
+    const wrapper = mount(<MemoryRouter><PostPrompt firstName={firstName} type='project' /></MemoryRouter>)
 
     expect(wrapper).toMatchSnapshot()
   })

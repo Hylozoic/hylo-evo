@@ -70,10 +70,10 @@ class SingleTopicSelector extends Component {
   }
 
   render () {
-    const { currentGroup, defaultTopics, placeholder = this.props.t('Find/add a topic'), t } = this.props
+    const { currentGroup, defaultTopics, placeholder = this.props.t('Find/add a topic') } = this.props
     const { value } = this.state
 
-    const defaultsToShow = defaultTopics ? [{ label: t('{{currentGroup.name}} topics', { currentGroup }), options: defaultTopics }] : []
+    const defaultsToShow = defaultTopics ? [ { label: ('{{currentGroup.name}} topics', { currentGroup }), options: defaultTopics } ] : []
 
     return (
       <AsyncCreatableSelect
@@ -88,7 +88,7 @@ class SingleTopicSelector extends Component {
         onChange={this.handleSelectTopic}
         getNewOptionData={(inputValue, optionLabel) => ({ name: inputValue, label: inputValue, value: inputValue, __isNew__: true })}
         noOptionsMessage={() => {
-          return t('Start typing to find/create a topic to add')
+          return this.props.t('Start typing to find/create a topic to add')
         }}
         isOptionDisabled={option => option.__isNew__ && option.value.length < 3}
         formatOptionLabel={(item, { context, inputValue, selectValue }) => {
@@ -96,7 +96,7 @@ class SingleTopicSelector extends Component {
             return <div styleName='topicLabel'>#{item.label}</div>
           }
           if (item.__isNew__) {
-            return <div>{item.value.length < 3 ? t('Topics must be longer than 2 characters') : t('Create topic "{{item.value}}"', { item })}</div>
+            return <div>{item.value.length < 3 ? this.props.t('Topics must be longer than 2 characters') : this.props.t('Create topic "{{item.value}}"', { item })}</div>
           }
           const { name, postsTotal, followersTotal } = item
           const formatCount = count => isNaN(count)
@@ -108,8 +108,8 @@ class SingleTopicSelector extends Component {
           return <div className={styles.item}>
             <div styleName='menuTopicLabel'>#{name}</div>
             <div styleName='suggestionMeta'>
-              <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {t('subscribers')}</span>
-              <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {t('posts')}</span>
+              <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {this.props.t('subscribers')}</span>
+              <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {this.props.t('posts')}</span>
             </div>
           </div>
         }}

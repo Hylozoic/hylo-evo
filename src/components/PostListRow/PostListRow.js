@@ -63,7 +63,7 @@ const PostListRow = (props) => {
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name} {
                 numOtherCommentors > 1
-                  ? (<span> {t('and')} <strong>{numOtherCommentors} {t('others')}</strong></span>)
+                  ? (<span> and <strong>{numOtherCommentors} others</strong></span>) // TODO: Handle this translation
                   : null
               }
             </div> }

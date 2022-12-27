@@ -23,9 +23,9 @@ class PublicToggle extends Component {
     return (
       <div styleName={cx('publicToggleContainer', { postIsPublic: isPublic })}>
         <div styleName='publicToggle'>
-          <Icon name='Public' styleName='publicToggleIcon' /> {t('Make Public:')}
+          <Icon name='Public' styleName='publicToggleIcon' /> {this.props.t('Make Public:')}
           <SwitchStyled checked={isPublic} onChange={togglePublic} backgroundColor={isPublic ? '#0DC39F' : '#8B96A4'} />
-          <span styleName='publicGuidance'>{isPublic ? t('Anyone on Hylo can see this post') : t('Currently, only groups you specify above will see this post')}</span>
+          <span styleName='publicGuidance'>{isPublic ? this.props.t('Anyone on Hylo can see this post') : this.props.t('Currently, only groups you specify above will see this post')}</span>
         </div>
       </div>
     )
