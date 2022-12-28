@@ -62,14 +62,6 @@ export default function Drawer (props) {
     avatarUrl: ALL_GROUPS_AVATAR_PATH
   }
 
-  const myHome = {
-    id: MY_HOME_ID,
-    name: t('My Home'),
-    groups: [],
-    explicitPath: myPath,
-    avatarUrl: MY_HOME_AVATAR_PATH
-  }
-
   const toggleDrawer = () => dispatch(toggleDrawerAction())
 
   const goToCreateGroup = () => {

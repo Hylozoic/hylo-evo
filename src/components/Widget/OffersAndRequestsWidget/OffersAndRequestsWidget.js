@@ -25,7 +25,7 @@ class OffersAndRequestsWidget extends Component {
         {items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
           <div styleName='item'>
             <div styleName='meta'>
-              <span styleName='type'>{t(p.type)}</span>{' '}{t('from')}{' '}{p.creator.name}
+              {this.props.t(`<span styleName='type'>{{p.type}}</span> from {{p.creator.name}}`, { p })}
               <span styleName={cx('num-comments', p.type)}>{p.commentsTotal} <div styleName='tail' /></span>
             </div>
             <div styleName='title'>{p.title}</div>
@@ -34,12 +34,12 @@ class OffersAndRequestsWidget extends Component {
         </Link>)}
         {items.length < 3 && isMember ? <div styleName='item create-offer-request'>
           <div styleName='meta'>
-            <span styleName='type'>{t('Create a request or offer!')}</span>
+            <span styleName='type'>{this.props.t('Create a request or offer!')}</span>
           </div>
-          <div styleName='title'> {t('What do you need? What are you offering?')}</div>
+          <div styleName='title'> {this.props.t('What do you need? What are you offering?')}</div>
           <div styleName='ask-offer-cta'>
-            <Link to={createPostUrl(routeParams, { newPostType: 'offer' })} styleName='offer-link'>{t('+ New')} <span styleName='offer'>{t('Offer')}</span></Link>
-            <Link to={createPostUrl(routeParams, { newPostType: 'request' })} styleName='request-link'>{t('+ New')} <span styleName='request'>{t('Request')}</span></Link>
+            <Link to={createPostUrl(routeParams, { newPostType: 'offer' })} styleName='offer-link'>{this.props.t('+ New')} <span styleName='offer'>{this.props.t('Offer')}</span></Link>
+            <Link to={createPostUrl(routeParams, { newPostType: 'request' })} styleName='request-link'>{this.props.t('+ New')} <span styleName='request'>{this.props.t('Request')}</span></Link>
           </div>
           <RoundImage url='/gift.png' styleName='author-image' />
         </div> : ' '}

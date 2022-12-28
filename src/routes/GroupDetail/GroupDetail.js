@@ -119,7 +119,7 @@ class UnwrappedGroupDetail extends Component {
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
             <div>
-              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>About </span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
+              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{this.props.t('About')}</span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
               <div styleName='g.groupContextInfo'>
                 <div>
                   <span styleName='g.group-privacy'>
@@ -185,7 +185,7 @@ class UnwrappedGroupDetail extends Component {
             ? !currentUser
               ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{this.props.t('Signup or Login to connect with <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</Link></div>
               : isMember
-                ? <div styleName='g.existingMember'>{t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+                ? <div styleName='g.existingMember'>{this.props.t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
                 : this.renderDefaultGroupDetails()
             : ''
           } {/* TODO: Handle above translation */}
@@ -356,7 +356,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
               <div styleName='g.headerBackground' />
             </Link>
             <div styleName='g.cta'>
-              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member {/* // TOD DO: Handle this translation */ }
+              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member {/* TODO: Handle this translation */ }
 
             </div>
           </div>)}
