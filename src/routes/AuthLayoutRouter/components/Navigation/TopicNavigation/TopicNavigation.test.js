@@ -2,6 +2,18 @@ import React from 'react'
 import TopicNavigation from './TopicNavigation'
 import { shallow } from 'enzyme'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 const topics = [
   { name: 't1', url: '/t1', newPostCount: 3 },
   { name: 't2', url: '/t2', newPostCount: 0 },

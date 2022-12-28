@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import moment from 'moment-timezone'
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Icon from 'components/Icon'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
@@ -36,6 +37,7 @@ export default ({ items, group, routeParams, isMember }) => {
     },
     [swiped]
   )
+  const { t } = useTranslation()
 
   return (
     <div styleName='events'>
@@ -55,9 +57,9 @@ export default ({ items, group, routeParams, isMember }) => {
             <div styleName='events-cta'>
               <Link to={createPostUrl(routeParams, { newPostType: 'event' })}>
                 <Icon name='Calendar' styleName='event-icon' />
-                <h4>Bring your group together</h4>
-                <p>What you will do at your next event?</p>
-                <div styleName='button'>+ Create an event</div>
+                <h4>{t('Bring your group together')}</h4>
+                <p>{t('What you will do at your next event?')}</p>
+                <div styleName='button'>{t('+ Create an event')}</div>
               </Link>
             </div>
           </div>}

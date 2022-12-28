@@ -1,5 +1,6 @@
 import isMobile from 'ismobilejs'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { get, isEmpty, some, find, orderBy } from 'lodash/fp'
 import { Link } from 'react-router-dom'
@@ -15,7 +16,7 @@ import NoItems from 'routes/AuthLayoutRouter/components/TopNav/NoItems'
 import LoadingItems from 'routes/AuthLayoutRouter/components/TopNav/LoadingItems'
 import './MessagesDropdown.scss'
 
-export default class MessagesDropdown extends Component {
+class MessagesDropdown extends Component {
   constructor (props) {
     super(props)
     this.dropdown = React.createRef()
@@ -69,7 +70,7 @@ export default class MessagesDropdown extends Component {
     if (pending) {
       body = <LoadingItems />
     } else if (isEmpty(threads)) {
-      body = <NoItems message="You don't have any messages yet" />
+      body = <NoItems message={this.props.t("You don't have any messages yet")} />
     } else {
       body = <div styleName='threads'>
         {threads.map(thread =>
@@ -95,9 +96,9 @@ export default class MessagesDropdown extends Component {
       header={
         <div styleName='header-content'>
           <Link to={firstThreadUrl} styleName='open' onClick={this.close}>
-            <Icon styleName='open-icon' name='ArrowForward' /> Open Messages
+            <Icon styleName='open-icon' name='ArrowForward' /> {this.props.t('Open Messages')}
           </Link>
-          <Link to={newMessageUrl()} styleName='new' onClick={this.close}><Icon name='SmallEdit' styleName='new-icon' /> New</Link>
+          <Link to={newMessageUrl()} styleName='new' onClick={this.close}><Icon name='SmallEdit' styleName='new-icon' /> {this.props.t('New')}</Link>
         </div>}
       body={body}
     />
@@ -151,9 +152,12 @@ MessagesDropdownItem.propTypes = {
 }
 
 export function lastMessageCreator (message, currentUser, participants) {
+  const { t } = useTranslation()
   const creatorPersonId = get('creator.id', message) || get('creator', message)
 
-  if (creatorPersonId === currentUser.id) return 'You: '
+  if (creatorPersonId === currentUser.id) return t('You') + ': '
   if (participants.length <= 2) return ''
   return find(p => p.id === creatorPersonId, participants).name + ': '
 }
+
+export default withTranslation()(MessagesDropdown)

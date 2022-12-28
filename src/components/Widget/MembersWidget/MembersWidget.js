@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
 import Icon from 'components/Icon'
@@ -33,6 +34,7 @@ export default ({ items, group }) => {
     },
     [swiped]
   )
+  const { t } = useTranslation()
 
   return (
     <div styleName='active-users'>
@@ -50,7 +52,7 @@ export default ({ items, group }) => {
         </div>)}
         <div styleName='members-link'>
           <div>
-            <Link to={groupUrl(group.slug, 'members')}>All</Link>
+            <Link to={groupUrl(group.slug, 'members')}>{t('All')}</Link>
           </div>
         </div>
       </Slider>

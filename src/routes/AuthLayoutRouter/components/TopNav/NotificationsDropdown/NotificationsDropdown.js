@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import './NotificationsDropdown.scss'
 import { TextHelpers } from 'hylo-shared'
 import cx from 'classnames'
@@ -28,7 +29,7 @@ import LoadingItems from 'routes/AuthLayoutRouter/components/TopNav/LoadingItems
 
 const NOTIFICATION_TEXT_MAX = 76
 
-export default class NotificationsDropdown extends Component {
+class NotificationsDropdown extends Component {
   static propTypes = {
     fetchNotifications: PropTypes.func,
     markActivityRead: PropTypes.func,
@@ -86,7 +87,7 @@ export default class NotificationsDropdown extends Component {
       notifications = notifications.filter(n => n.activity.unread)
     }
 
-    const message = `No ${showingUnread ? 'unread ' : ''}notifications`
+    const message = `No ${showingUnread ? 'unread ' : ''}notifications` // TODO: Handle this translation
 
     const onClick = notification => {
       if (notification.activity.unread) markActivityRead(notification.activity.id)
@@ -115,12 +116,12 @@ export default class NotificationsDropdown extends Component {
       header={
         <div styleName='header-content'>
           <span onClick={showRecent} styleName={cx('tab', { active: !showingUnread })}>
-            Recent
+            {this.props.t('Recent')}
           </span>
           <span onClick={showUnread} styleName={cx('tab', { active: showingUnread })}>
-            Unread
+            {this.props.t('Unread')}
           </span>
-          <span onClick={markAllActivitiesRead} styleName='mark-read'>Mark all as read</span>
+          <span onClick={markAllActivitiesRead} styleName='mark-read'>{this.props.t('Mark all as read')}</span>
         </div>}
       body={body}
     />
@@ -144,72 +145,73 @@ export function Notification ({ notification, onClick }) {
 }
 
 export function NotificationHeader ({ notification }) {
+  const { t } = useTranslation()
   const { activity: { action, actor, post, meta: { reasons } } } = notification
   switch (action) {
     case ACTION_NEW_COMMENT:
       return <div styleName='header'>
-        New Comment on <span styleName='bold'>{post.title}</span>
+        {t(`New Comment on <span styleName='bold'>{{post.title}}</span>`, { post })}
       </div>
     case ACTION_TAG:
       const tagReason = find(r => r.startsWith('tag: '), reasons)
       const tag = tagReason.split(': ')[1]
       return <div styleName='header'>
-        New Post in <span styleName='bold'>#{tag}</span>
+        {t(`New Post in <span styleName='bold'>#{{tag}}</span>`, { tag })}
       </div>
     case ACTION_JOIN_REQUEST:
       return <div styleName='header'>
-        New Join Request
+        {t('New Join Request')}
       </div>
     case ACTION_APPROVED_JOIN_REQUEST:
       return <div styleName='header'>
-        Join Request Approved
+        {t('Join Request Approved')}
       </div>
     case ACTION_MENTION:
       return <div styleName='header'>
         <span styleName='bold'>{actor.name} </span>
-        mentioned you
+        {t('mentioned you')}
       </div>
     case ACTION_COMMENT_MENTION:
       return <div styleName='header'>
         <span styleName='bold'>{actor.name} </span>
-        mentioned you in a comment on
+        {t('mentioned you in a comment on')}
         <span styleName='bold'> {post.title}</span>
       </div>
     case ACTION_ANNOUNCEMENT:
       return <div styleName='header'>
         <span styleName='bold'>{actor.name} </span>
-        sent an announcement
+        {t('sent an announcement')}
       </div>
     case ACTION_DONATION_TO:
       return <div styleName='header'>
-        <span styleName='bold'>You </span>
-        contributed to a project
+        <span styleName='bold'>{t('You')} </span>
+        {t('contributed to a project')}
       </div>
     case ACTION_DONATION_FROM:
       return <div styleName='header'>
         <span styleName='bold'>{actor.name} </span>
-        contributed to your project
+        {t('contributed to your project')}
       </div>
     case ACTION_EVENT_INVITATION:
       return <div styleName='header'>
         <span styleName='bold'>{actor.name} </span>
-        invited you to an event
+        {t('invited you to an event')}
       </div>
     case ACTION_GROUP_CHILD_GROUP_INVITE:
       return <div styleName='header'>
-        Your group has been invited
+        {t('Your group has been invited')}
       </div>
     case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
       return <div styleName='header'>
-        New Group Joined
+        {t('New Group Joined')}
       </div>
     case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
       return <div styleName='header'>
-        Group Requesting to Join
+        {t('Group Requesting to Join')}
       </div>
     case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
       return <div styleName='header'>
-        New Group Joined
+        {t('New Group Joined')}
       </div>
   }
 
@@ -222,69 +224,72 @@ export const truncateText = text => TextHelpers.truncateText(text, NOTIFICATION_
 
 export function NotificationBody ({ notification }) {
   const { activity: { action, actor, post, comment, group, otherGroup, contributionAmount } } = notification
+  const { t } = useTranslation()
 
   switch (action) {
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
       var text = truncateHTML(comment.text)
       return <div styleName='body'>
-        <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
+        {t(`<span styleName='bold'>{{name}}</span> wrote: "{{text}}"`, { name: firstName(actor), text })}
       </div>
     case ACTION_TAG:
     case ACTION_MENTION:
       text = truncateText(post.title)
       return <div styleName='body'>
-        <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
+        {t(`<span styleName='bold'>{{name}}</span> wrote: "{{text}}"`, { name: firstName(actor), text })}
       </div>
     case ACTION_JOIN_REQUEST:
       return <div styleName='body'>
         <span styleName='bold'>{actor.name} </span>
-        asked to join
+        {t('asked to join')}
         <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_APPROVED_JOIN_REQUEST:
       return <div styleName='body'>
         <span styleName='bold'>{actor.name} </span>
-        approved your request to join
+        {t('approved your request to join')}
         <span styleName='bold'> {group.name}</span>
       </div>
     case ACTION_ANNOUNCEMENT:
       text = truncateText(post.title)
       return <div styleName='body'>
-        <span styleName='bold'>{firstName(actor)}</span> wrote: "{text}"
+        {t(`<span styleName='bold'>{{name}}</span> wrote: "{{text}}"`, { name: firstName(actor), text })}
       </div>
     case ACTION_DONATION_TO:
       text = truncateText(post.title)
       return <div styleName='body'>
-        <span styleName='bold'>You</span> contributed ${contributionAmount / 100} to "{text}"
+        {t(`<span styleName='bold'>You</span> contributed {{amount}} to "{{text}}"`, { amount: contributionAmount / 100, text })}
       </div>
     case ACTION_DONATION_FROM:
       text = truncateText(post.title)
       return <div styleName='body'>
-        <span styleName='bold'>{actor.name}</span> contributed ${contributionAmount / 100} to "{text}"
+        {t(`<span styleName='bold'>{{actor.name}}</span> contributed {{amount}} to "{{text}}"`, { actor, amount: contributionAmount / 100, text })}
       </div>
     case ACTION_EVENT_INVITATION:
       text = truncateText(post.title)
       return <div styleName='body'>
-        <span styleName='bold'>{firstName(actor)}</span> invited you to: "{text}"
+        {t(`<span styleName='bold'>{{actor.name}}</span> invited you to: "{{text}}"`, { actor, text })}
       </div>
     case ACTION_GROUP_CHILD_GROUP_INVITE:
       return <div styleName='body'>
-        <span styleName='bold'>{group.name}</span> has invited <span styleName='bold'>{otherGroup.name}</span> to join it
+        {t(`<span styleName='bold'>{{group.name}}</span> has invited <span styleName='bold'>{{otherGroup.name}}</span> to join it`, { group, otherGroup })}
       </div>
     case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
       return <div styleName='body'>
-        <span styleName='bold'>{otherGroup.name}</span> has joined <span styleName='bold'>{group.name}</span>!
+        {t(`<span styleName='bold'>{{group.name}}</span> has joined <span styleName='bold'>{{otherGroup.name}}</span>!`, { group, otherGroup })}
       </div>
     case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
       return <div styleName='body'>
-        <span styleName='bold'>{group.name}</span> has requested to join <span styleName='bold'>{otherGroup.name}</span>
+        {t(`<span styleName='bold'>{{group.name}}</span> has requested to join <span styleName='bold'>{{otherGroup.name}}</span>`, { group, otherGroup })}
       </div>
     case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
       return <div styleName='body'>
-        <span styleName='bold'>{group.name}</span> has joined <span styleName='bold'>{otherGroup.name}</span>!
+        {t(`<span styleName='bold'>{{group.name}}</span> has joined <span styleName='bold'>{{otherGroup.name}}</span>!`, { group, otherGroup })}
       </div>
   }
 
   return null
 }
+
+export default withTranslation()(NotificationsDropdown)

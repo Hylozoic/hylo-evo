@@ -57,7 +57,8 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
           data-stylename="open-icon"
           name="ArrowForward"
         />
-         Open Messages
+         
+        Open Messages
       </Link>
       <Link
         data-stylename="new"
@@ -68,7 +69,8 @@ exports[`MessagesDropdown renders correctly with a list of threads 1`] = `
           data-stylename="new-icon"
           name="SmallEdit"
         />
-         New
+         
+        New
       </Link>
     </div>
   }
@@ -101,7 +103,8 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
           data-stylename="open-icon"
           name="ArrowForward"
         />
-         Open Messages
+         
+        Open Messages
       </Link>
       <Link
         data-stylename="new"
@@ -112,7 +115,8 @@ exports[`MessagesDropdown renders correctly with an empty list 1`] = `
           data-stylename="new-icon"
           name="SmallEdit"
         />
-         New
+         
+        New
       </Link>
     </div>
   }

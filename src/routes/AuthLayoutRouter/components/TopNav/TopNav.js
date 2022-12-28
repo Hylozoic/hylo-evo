@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { get, pick } from 'lodash/fp'
 import React, { Suspense, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useIntercom } from 'react-use-intercom'
 import { Link } from 'react-router-dom'
 import { isMobileDevice, downloadApp } from 'util/mobile'
@@ -36,6 +37,7 @@ export default function TopNav (props) {
   const profileUrl = personUrl(get('id', currentUser))
 
   const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
+  const { t } = useTranslation()
 
   return (
     <div styleName='topNavWrapper' className={className} onClick={onClick}>
@@ -72,14 +74,14 @@ export default function TopNav (props) {
           >
             <li>
               <Link styleName='hover-highlight' to={profileUrl}>
-                Profile
+                {t('Profile')}
               </Link>
             </li>
-            <li><Link styleName='hover-highlight' to='/settings'>Settings</Link></li>
-            <li><span styleName='hover-highlight' onClick={showIntercom}>Feedback &amp; Support</span></li>
-            <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>Terms & Privacy</a></li>
-            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>Download App</span></li>
-            <li><a onClick={logout}>Log out</a></li>
+            <li><Link styleName='hover-highlight' to='/settings'>{t('Settings')}</Link></li>
+            <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
+            <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
+            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
+            <li><a onClick={logout}>{t('Log out')}</a></li>
           </Dropdown>
         </div>
       </div>

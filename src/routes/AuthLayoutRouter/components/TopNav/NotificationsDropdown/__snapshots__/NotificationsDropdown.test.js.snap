@@ -556,14 +556,7 @@ exports[`NotificationBody renders correctly with a comment mention notification 
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    Marie
-  </span>
-   wrote: "
-  I live right next to there and can come help out. I've never done …
-  "
+  &lt;span styleName='bold'&gt;{{name}}&lt;/span&gt; wrote: "{{text}}"
 </div>
 `;
 
@@ -571,14 +564,7 @@ exports[`NotificationBody renders correctly with a comment notification 1`] = `
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    Marie
-  </span>
-   wrote: "
-  I live right next to there and can come help out. I've never done …
-  "
+  &lt;span styleName='bold'&gt;{{name}}&lt;/span&gt; wrote: "{{text}}"
 </div>
 `;
 
@@ -586,16 +572,7 @@ exports[`NotificationBody renders correctly with a donation from notification 1`
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    Marie Curie
-  </span>
-   contributed $
-  123
-   to "
-  Our Oceans
-  "
+  &lt;span styleName='bold'&gt;{{actor.name}}&lt;/span&gt; contributed {{amount}} to "{{text}}"
 </div>
 `;
 
@@ -603,16 +580,7 @@ exports[`NotificationBody renders correctly with a donation to notification 1`] 
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    You
-  </span>
-   contributed $
-  123
-   to "
-  Our Oceans
-  "
+  &lt;span styleName='bold'&gt;You&lt;/span&gt; contributed {{amount}} to "{{text}}"
 </div>
 `;
 
@@ -640,14 +608,7 @@ exports[`NotificationBody renders correctly with a mention notification 1`] = `
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    Marie
-  </span>
-   wrote: "
-  Heads up
-  "
+  &lt;span styleName='bold'&gt;{{name}}&lt;/span&gt; wrote: "{{text}}"
 </div>
 `;
 
@@ -655,14 +616,7 @@ exports[`NotificationBody renders correctly with a tag notification 1`] = `
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    Arthur
-  </span>
-   wrote: "
-  I have so many things I need!
-  "
+  &lt;span styleName='bold'&gt;{{name}}&lt;/span&gt; wrote: "{{text}}"
 </div>
 `;
 
@@ -670,14 +624,7 @@ exports[`NotificationBody renders correctly with an announcement notification 1`
 <div
   data-stylename="body"
 >
-  <span
-    data-stylename="bold"
-  >
-    Marie
-  </span>
-   wrote: "
-  Announcement
-  "
+  &lt;span styleName='bold'&gt;{{name}}&lt;/span&gt; wrote: "{{text}}"
 </div>
 `;
 
@@ -725,12 +672,7 @@ exports[`NotificationHeader renders correctly with a comment notification 1`] = 
 <div
   data-stylename="header"
 >
-  New Comment on 
-  <span
-    data-stylename="bold"
-  >
-    Our Oceans
-  </span>
+  New Comment on &lt;span styleName='bold'&gt;{{post.title}}&lt;/span&gt;
 </div>
 `;
 
@@ -755,7 +697,8 @@ exports[`NotificationHeader renders correctly with a donation to notification 1`
   <span
     data-stylename="bold"
   >
-    You 
+    You
+     
   </span>
   contributed to a project
 </div>
@@ -787,13 +730,7 @@ exports[`NotificationHeader renders correctly with a tag notification 1`] = `
 <div
   data-stylename="header"
 >
-  New Post in 
-  <span
-    data-stylename="bold"
-  >
-    #
-    request
-  </span>
+  New Post in &lt;span styleName='bold'&gt;#{{tag}}&lt;/span&gt;
 </div>
 `;
 
