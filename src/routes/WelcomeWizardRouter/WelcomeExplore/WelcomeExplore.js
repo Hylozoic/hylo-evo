@@ -19,7 +19,7 @@ class WelcomeExplore extends Component {
         <div styleName='panel final-panel'>
           <div styleName='instructions'>
             <h3>{this.props.t('Welcome to Hylo!')}</h3>
-            <p>We're glad you're here, {currentUser.name.split(' ')[0]}. To get started, explore public groups and posts, or create your own group!</p>
+            <p>{this.props.t(`We're glad you're here, {{firstName}}. To get started, explore public groups and posts, or create your own group!`, { firstName: currentUser.name.split(' ')[0] })}</p>
           </div>
           <Link to='/public/map?hideDrawer=true'>
             <div styleName='final-step'>
@@ -62,4 +62,5 @@ class WelcomeExplore extends Component {
     )
   }
 }
+
 export default withTranslation()(WelcomeExplore)

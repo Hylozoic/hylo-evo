@@ -2,6 +2,14 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import ProjectContributions from './ProjectContributions'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('ProjectContributions', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<ProjectContributions

@@ -73,7 +73,7 @@ export function NoRequests ({ group, viewMembers }) {
         </div>
         {!isWebView() && (
           <Button
-            label='View Current Members'
+            label={t('View Current Members')}
             onClick={viewMembers}
             styleName='view-members'
           />

@@ -60,6 +60,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
         ]
       }
       onChange={[Function]}
+      t={[Function]}
       theme={Object {}}
     />
   </div>
@@ -72,7 +73,8 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
   data-stylename="add-moderator add-new"
   onClick={[Function]}
 >
-  + Add New
+  + 
+  Add New
 </div>
 `;
 

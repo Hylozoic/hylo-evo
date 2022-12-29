@@ -291,9 +291,9 @@ function CustomViewRow ({
         <Icon name='Trash' onClick={onDelete} />
       </h4>
       <div styleName='styles.custom-view-row'>
-        <SettingsControl label='Icon' controlClass={styles['icon-button']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
-        <SettingsControl label='Label' controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
-        <SettingsControl label='Type' controlClass={styles['settings-control']} renderControl={(props) => {
+        <SettingsControl label={t('Icon')} controlClass={styles['icon-button']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
+        <SettingsControl label={t('Label')} controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
+        <SettingsControl label={t('Type')} controlClass={styles['settings-control']} renderControl={(props) => {
           return <Dropdown
             styleName='styles.dropdown'
             toggleChildren={
@@ -318,7 +318,7 @@ function CustomViewRow ({
         : (
           <div styleName={cx('styles.custom-posts-view')}>
             <div styleName='styles.custom-view-row'>
-              <SettingsControl label='Default Style' controlClass={styles['settings-control']} renderControl={(props) => {
+              <SettingsControl label={t('Default Style')} controlClass={styles['settings-control']} renderControl={(props) => {
                 return <Dropdown
                   styleName='styles.dropdown'
                   toggleChildren={
@@ -333,7 +333,7 @@ function CustomViewRow ({
                   }))}
                 />
               }} />
-              <SettingsControl label='Default Sort' controlClass={styles['settings-control']} renderControl={(props) => {
+              <SettingsControl label={t('Default Sort')} controlClass={styles['settings-control']} renderControl={(props) => {
                 return <Dropdown
                   styleName='styles.dropdown'
                   toggleChildren={

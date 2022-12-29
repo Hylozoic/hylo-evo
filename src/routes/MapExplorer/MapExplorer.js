@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { debounce, get, groupBy, isEqual, isEmpty } from 'lodash'
 import React from 'react'
 import { FlyToInterpolator } from 'react-map-gl'
-import { useHistory } from 'react-router-dom'
+import { withTranslation } from 'react-i18next'
 import bbox from '@turf/bbox'
 import bboxPolygon from '@turf/bbox-polygon'
 import booleanWithin from '@turf/boolean-within'
@@ -40,7 +40,7 @@ const MAP_BASE_LAYERS = [
   { id: 'satellite-streets-v11', label: 'Satellite + Streets' }
 ]
 
-export class UnwrappedMapExplorer extends React.Component {
+class MapExplorer extends React.Component {
   static defaultProps = {
     centerLocation: { lat: 35.442845, lng: 7.916598 },
     filters: {},
@@ -544,7 +544,7 @@ export class UnwrappedMapExplorer extends React.Component {
         </div>
         <button
           data-for='helpTip'
-          data-tip={hideDrawer ? 'Open Drawer' : 'Close Drawer'}
+          data-tip={hideDrawer ? this.props.t('Open Drawer') : this.props.t('Close Drawer')}
           styleName={cx('toggleDrawerButton drawerAdjacentButton', { drawerOpen: !hideDrawer })}
           onClick={this.toggleDrawer}
         >
@@ -573,7 +573,7 @@ export class UnwrappedMapExplorer extends React.Component {
           <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
         </div>
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
-        Features: <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
+          {this.props.t('Features:')} <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
 
         {currentUser && <>
@@ -595,7 +595,7 @@ export class UnwrappedMapExplorer extends React.Component {
         </>}
 
         <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
-          <h3>What do you want to see on the map?</h3>
+          <h3>{this.props.t('What do you want to see on the map?')}</h3>
           {featureTypes.map(featureType => {
             const color = FEATURE_TYPES[featureType].primaryColor
             return (
@@ -619,14 +619,14 @@ export class UnwrappedMapExplorer extends React.Component {
 
         <button
           data-for='helpTip'
-          data-tip={showLayersSelector ? null : 'Change Map Layers'}
+          data-tip={showLayersSelector ? null : this.props.t('Change Map Layers')}
           onClick={this.toggleLayersSelector}
           styleName={cx('toggleLayersSelectorButton drawerAdjacentButton', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}
         >
           <Icon name='Stack' />
         </button>
         <div styleName={cx('layersSelectorContainer', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}>
-          <h3>Base Layer:
+          <h3>{this.props.t('Base Layer:')}
             <Dropdown
               className={styles.layersDropdown}
               menuAbove
@@ -641,16 +641,16 @@ export class UnwrappedMapExplorer extends React.Component {
             />
           </h3>
 
-          <h3 styleName='layersHeader'>Other Layers</h3>
+          <h3 styleName='layersHeader'>{this.props.t('Other Layers')}</h3>
           <div styleName='layersList'>
             <SwitchStyled
               backgroundColor='rgb(0, 163, 227)'
-              name='Native Territotires'
+              name={this.props.t('Native Territories')}
               checked={!!otherLayers['native_territories']}
               onChange={(checked, name) => this.toggleMapLayer('native_territories')}
             />
             <span styleName='layerLabel'>
-              Native Territories
+              {this.props.t('Native Territories')}
               <a href='https://native-land.ca' target='__blank'>
                 <Icon name='Info' dataTip='Credit to native-land.ca' dataTipFor='helpTipTwo' />
               </a>
@@ -686,10 +686,4 @@ export class UnwrappedMapExplorer extends React.Component {
   }
 }
 
-export default function MapExplorer (props) {
-  const history = useHistory()
-
-  return (
-    <UnwrappedMapExplorer {...props} history={history} />
-  )
-}
+export default withTranslation()(MapExplorer)

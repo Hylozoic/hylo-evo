@@ -5,7 +5,7 @@ exports[`UserSettings renders correctly 1`] = `
   content={
     Array [
       Object {
-        "component": <EditProfileTab
+        "component": <withI18nextTranslation(EditProfileTab)
           currentUser={
             Object {
               "blockedUsers": Object {

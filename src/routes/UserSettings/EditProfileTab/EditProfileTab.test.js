@@ -1,10 +1,32 @@
 /* eslint no-unused-expressions: 'off' */
-import EditProfileTab, { SocialControl, linkedinPrompt, facebookPrompt } from './EditProfileTab'
-import { shallow } from 'enzyme'
 import React from 'react'
+import { shallow } from 'enzyme'
+import EditProfileTab from './EditProfileTab'
+import SocialControl from './SocialControl'
 
-describe('linkedinPrompt', () => {
-  var oldPrompt
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+// const props = {
+//   updateSettingDirectly: jest.fn(),
+//   handleUnlinkAccount: jest.fn(),
+//   onLink: jest.fn(),
+//   fetchLocation: jest.fn()
+// }
+
+const facebookUrlPattern = /^(http(s)?:\/\/)?([\w]+\.)?facebook\.com/
+const linkedinUrlPattern = /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/
+const linkedinUrl = 'https://www.linkedin.com/in/username/'
+const facebookUrl = 'https://www.facebook.com/username/'
+const linkedin = 'LinkedIn'
+const facebook = 'Facebook'
+
+describe('prompt', () => {
+  let oldPrompt
 
   beforeAll(() => {
     oldPrompt = window.prompt
@@ -15,57 +37,57 @@ describe('linkedinPrompt', () => {
   })
 
   it('returns a correct linkedIn Url', () => {
-    const url = 'https://www.linkedin.com/in/username/'
-    window.prompt = jest.fn(() => url)
-    expect(linkedinPrompt()).toEqual(url)
+    window.prompt = jest.fn(() => linkedinUrl)
+    const wrapper = shallow(<SocialControl />)
+    const instance = wrapper.instance()
+    instance.windowPrompt(linkedin, linkedinUrlPattern)
+    expect(window.prompt).toReturnWith(linkedinUrl)
   })
 
   it('rejects an incorrect linkedIn Url, calling itself again', () => {
-    var count = 0
+    let count = 0
+    const wrapper = shallow(<SocialControl />)
+    const instance = wrapper.instance()
+
     window.prompt = jest.fn(() => {
       if (count === 0) {
         count += 1
         return 'a bad url'
       } else {
         count += 1
-        return 'https://www.linkedin.com/in/username/'
+        return linkedinUrl
       }
     })
-    expect(linkedinPrompt()).toEqual('https://www.linkedin.com/in/username/')
+    instance.windowPrompt(linkedin, linkedinUrlPattern)
+    expect(window.prompt).toReturnWith(linkedinUrl)
     expect(count).toEqual(2)
     expect(window.prompt.mock.calls).toMatchSnapshot()
   })
-})
-
-describe('facebookPrompt', () => {
-  var oldPrompt
-
-  beforeAll(() => {
-    oldPrompt = window.prompt
-  })
-
-  afterAll(() => {
-    window.prompt = oldPrompt
-  })
 
   it('returns a correct facebook Url', () => {
-    const url = 'https://www.facebook.com/username/'
-    window.prompt = jest.fn(() => url)
-    expect(facebookPrompt()).toEqual(url)
+    const wrapper = shallow(<SocialControl />)
+    const instance = wrapper.instance()
+    window.prompt = jest.fn(() => facebookUrl)
+    instance.windowPrompt(facebook, facebookUrlPattern)
+    expect(window.prompt).toReturnWith(facebookUrl)
   })
 
   it('rejects an incorrect facebook Url, calling itself again', () => {
-    var count = 0
+    let count = 0
+    const wrapper = shallow(<SocialControl />)
+    const instance = wrapper.instance()
+
     window.prompt = jest.fn(() => {
       if (count === 0) {
         count += 1
         return 'a bad url'
       } else {
         count += 1
-        return 'https://www.facebook.com/username/'
+        return facebookUrl
       }
     })
-    expect(facebookPrompt()).toEqual('https://www.facebook.com/username/')
+    instance.windowPrompt(facebook, facebookUrlPattern)
+    expect(window.prompt).toReturnWith(facebookUrl)
     expect(count).toEqual(2)
     expect(window.prompt.mock.calls).toMatchSnapshot()
   })
@@ -177,7 +199,7 @@ describe('SocialControl', () => {
         )
 
         wrapper.instance().handleLinkClick()
-        expect(window.prompt).toBeCalledWith('Please enter the full url for your LinkedIn page.')
+        expect(window.prompt).toBeCalledWith('Please enter the full url for your {{network}} page.')
         expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('linkedin.com/test')
       })
@@ -201,7 +223,7 @@ describe('SocialControl', () => {
         )
 
         wrapper.instance().handleLinkClick()
-        expect(window.prompt).toBeCalledWith('Please enter the full url for your Facebook page.')
+        expect(window.prompt).toBeCalledWith('Please enter the full url for your {{network}} page.')
         expect(updateSettingDirectly).toHaveBeenCalled
         expect(updateSettingDirectlyCallback).toHaveBeenCalledWith('facebook.com/test')
       })

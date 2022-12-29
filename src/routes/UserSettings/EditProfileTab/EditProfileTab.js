@@ -1,6 +1,7 @@
+import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
@@ -9,123 +10,14 @@ import Icon from 'components/Icon'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import Loading from 'components/Loading'
 import { bgImageStyle } from 'util/index'
-import cx from 'classnames'
 import { DEFAULT_BANNER } from 'store/models/Me'
 import './EditProfileTab.scss'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
+import SocialControl from './SocialControl'
 
-const { object, func, string } = PropTypes
+const { object, func } = PropTypes
 
-/** LinkedIn Url */
-const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
-
-export const linkedinPrompt = () => {
-  let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
-
-  if (linkedinUrl) {
-    while (!validateLinkedinUrl(linkedinUrl)) {
-      linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')
-    }
-  }
-
-  return linkedinUrl
-}
-
-/** Facebook Url */
-const validateFacebookUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?facebook\.com/)
-
-export const facebookPrompt = () => {
-  let facebookUrl = window.prompt('Please enter the full url for your Facebook page.')
-
-  if (facebookUrl) {
-    while (!validateFacebookUrl(facebookUrl)) {
-      facebookUrl = window.prompt('Invalid url. Please enter the full url for your Facebook page.')
-    }
-  }
-
-  return facebookUrl
-}
-
-export class SocialControl extends Component {
-  static propTypes = {
-    label: string,
-    provider: string,
-    value: string,
-    updateSettingDirectly: func,
-    handleUnlinkAccount: func,
-    onLink: func,
-    fetchLocation: func
-  }
-
-  handleLinkClick () {
-    const { provider, updateSettingDirectly } = this.props
-
-    switch (provider) {
-      case 'twitter': {
-        const twitterHandle = window.prompt('Please enter your twitter name.')
-        if (twitterHandle) {
-          updateSettingDirectly()(twitterHandle)
-        }
-        break
-      }
-      case 'linkedin': {
-        const linkedinUrl = linkedinPrompt()
-        if (linkedinUrl) {
-          updateSettingDirectly()(linkedinUrl)
-        }
-        break
-      }
-      case 'facebook': {
-        const facebookUrl = facebookPrompt()
-        if (facebookUrl) {
-          updateSettingDirectly()(facebookUrl)
-        }
-        break
-      }
-    }
-  }
-
-  handleUnlinkClick () {
-    const { handleUnlinkAccount, updateSettingDirectly } = this.props
-
-    handleUnlinkAccount()
-    updateSettingDirectly()(null)
-  }
-
-  render () {
-    const { label, value = '', provider, onLink } = this.props
-    const linked = !!value
-
-    const linkButton =
-      <span
-        styleName='link-button'
-        onClick={linked ? () => this.handleUnlinkClick() : () => this.handleLinkClick()}>
-        {linked ? 'Unlink' : 'Link'}
-
-      </span>
-
-    const connectFacebookButton =
-      <span
-        styleName='link-button'
-        onClick={linked ? () => this.handleUnlinkClick() : () => onLink()}
-        className='ml-auto'
-      >
-        {linked ? 'Disconnect' : 'Connect'}
-      </span>
-
-    return (
-      <div styleName='control'>
-        <div styleName={cx('social-control-label')}>
-          {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
-          {label}
-          {provider === 'facebook' && connectFacebookButton}
-          {linkButton}
-        </div>
-      </div>
-    )
-  }
-}
-export default class EditProfileTab extends Component {
+class EditProfileTab extends Component {
   static propTypes = {
     currentUser: object,
     updateUserSettings: func,
@@ -179,7 +71,7 @@ export default class EditProfileTab extends Component {
   updateSetting = (key, setChanged = true) => async event => {
     const { fetchLocation } = this.props
     const { edits, changed } = this.state
-    setChanged && this.props.setConfirm('You have unsaved changes, are you sure you want to leave?')
+    setChanged && this.props.setConfirm(this.props.t('You have unsaved changes, are you sure you want to leave?'))
 
     if (key === 'location') {
       edits['location'] = event.target.value.fullText
@@ -238,23 +130,23 @@ export default class EditProfileTab extends Component {
       >
         <div style={bgImageStyle(avatarUrl)} styleName='avatar'><Icon name='AddImage' styleName='uploadIcon' /></div>
       </UploadAttachmentButton>
-      <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
-      <SettingsControl label='About Me' onChange={this.updateSetting('bio')} value={bio} type='textarea' />
+      <SettingsControl label={this.props.t('Tagline')} onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
+      <SettingsControl label={this.props.t('About Me')} onChange={this.updateSetting('bio')} value={bio} type='textarea' />
       <SettingsControl
-        label='Location'
+        label={this.props.t('Location')}
         onChange={this.updateSettingDirectly('location', true)}
         location={location}
         locationObject={locationObject}
         type='location'
       />
-      <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
-      <SettingsControl label='My Skills &amp; Interests' renderControl={() =>
+      <SettingsControl label={this.props.t('Website')} onChange={this.updateSetting('url')} value={url} />
+      <SettingsControl label={this.props.t('My Skills & Interests')} renderControl={() =>
         <SkillsSection personId={currentUser.id} />} />
-      <SettingsControl label='What I&apos;m learning' renderControl={() =>
+      <SettingsControl label={this.props.t('What I\'m learning')} renderControl={() =>
         <SkillsToLearnSection personId={currentUser.id} />} />
-      <SettingsControl label='Contact Email' onChange={this.updateSetting('contactEmail')} value={contactEmail} />
-      <SettingsControl label='Contact Phone' onChange={this.updateSetting('contactPhone')} value={contactPhone} />
-      <label styleName='social-label'>Social Accounts</label>
+      <SettingsControl label={this.props.t('Contact Email')} onChange={this.updateSetting('contactEmail')} value={contactEmail} />
+      <SettingsControl label={this.props.t('Contact Phone')} onChange={this.updateSetting('contactPhone')} value={contactPhone} />
+      <label styleName='social-label'>{this.props.t('Social Accounts')}</label>
       <SocialControl
         label='Facebook'
         provider='facebook'
@@ -278,9 +170,11 @@ export default class EditProfileTab extends Component {
         handleUnlinkAccount={() => unlinkAccount('linkedin')}
       />
       <div styleName='saveChanges'>
-        <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
+        <span styleName={changed ? 'settingChanged' : ''}>{changed ? this.props.t('Changes not saved') : this.props.t('Current settings up to date')}</span>
+        <Button label={this.props.t('Save Changes')} color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
       </div>
     </div>
   }
 }
+
+export default withTranslation()(EditProfileTab)

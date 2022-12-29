@@ -59,7 +59,7 @@ export default function Login (props) {
       <TextInput
         aria-label='email' label='email' name='email' id='email'
         autoFocus
-        internalLabel='Email'
+        internalLabel={t('Email')}
         onChange={handleSetEmail}
         styleName='field'
         type='text'
@@ -68,7 +68,7 @@ export default function Login (props) {
 
       <TextInput
         aria-label='password' label='password' name='password' id='password'
-        internalLabel='Password'
+        internalLabel={t('Password')}
         onChange={handleSetPassword}
         onEnter={submit}
         styleName='field'
@@ -79,7 +79,7 @@ export default function Login (props) {
         <span styleName='forgot-password'>{t('Forgot password?')}</span>
       </Link>
 
-      <Button styleName='submit' label='Sign in' onClick={submit} />
+      <Button styleName='submit' label={t('Sign in')} onClick={submit} />
     </div>
 
     {/* <div styleName='auth-buttons'>

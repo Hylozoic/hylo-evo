@@ -1,8 +1,9 @@
-import cx from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams, useLocation, useHistory, Redirect, Route, Switch } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Div100vh from 'react-div-100vh'
+import cx from 'classnames'
 import { POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
 import HyloCookieConsent from 'components/HyloCookieConsent'
@@ -181,15 +182,16 @@ export function GroupExplorerLayoutRouter () {
 }
 
 export function PublicPageHeader () {
+  const { t } = useTranslation()
   return (
     <div styleName='background'>
       <div styleName='header'>
         <a href='/'>
-          <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />
+          <img styleName='logo' src='/assets/navy-merkaba.svg' alt={t('Hylo logo')} />
         </a>
         <div styleName='access-controls'>
-          <a href='/login'>Sign in</a>
-          <a styleName='sign-up' href='/signup'>Join Hylo</a>
+          <a href='/login'>{t('Sign in')}</a>
+          <a styleName='sign-up' href='/signup'>{t('Join Hylo')}</a>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import React, { Component, useEffect, useRef, useState } from 'react'
 import { useTranslation, withTranslation } from 'react-i18next'
 import styles from './ModeratorsSettingsTab.scss'
 import Loading from 'components/Loading'
-import { KeyControlledItemList } from 'components/KeyControlledList'
+import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import RemovableListItem from 'components/RemovableListItem'
 import { isEmpty } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
@@ -172,6 +172,6 @@ export function AddModerator (props) {
       </div>
       }
     </div>
-  ) : (<div className='add-new' styleName='add-moderator add-new' onClick={toggle}>{t('+ Add New')}</div>)
+  ) : (<div className='add-new' styleName='add-moderator add-new' onClick={toggle}>+ {t('Add New')}</div>)
 }
 export default withTranslation()(ModeratorsSettingsTab)

@@ -124,8 +124,8 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       groupSettings={true}
       onChange={[Function]}
       options={Array []}
-      placeholder="Type group name..."
       selected={Array []}
+      t={[Function]}
     />
   </SettingsSection>
   <SettingsSection>

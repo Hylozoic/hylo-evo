@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import getMe from 'store/selectors/getMe'
 import { register } from '../Signup.store'
 import logout from 'store/actions/logout'
@@ -10,6 +11,7 @@ import { formatError } from '../../util'
 import '../Signup.scss'
 
 export default function FinishRegistration () {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const [error, setError] = useState()
@@ -24,7 +26,7 @@ export default function FinishRegistration () {
     formValues.passwordConfirmation.length > 8
 
   const handleCancel = () => {
-    if (window.confirm("We're almost done, are you sure you want to cancel?")) {
+    if (window.confirm(t("We're almost done, are you sure you want to cancel?"))) {
       dispatch(logout())
     }
   }
@@ -32,7 +34,7 @@ export default function FinishRegistration () {
   const handleSubmit = async () => {
     try {
       if (formValues.password !== formValues.passwordConfirmation) {
-        setError("Passwords don't match")
+        setError(t("Passwords don't match"))
       } else {
         const result = await dispatch(register(formValues.name, formValues.password))
         const error = result?.payload?.getData()?.error
@@ -56,14 +58,14 @@ export default function FinishRegistration () {
     <div styleName='form'>
       <Icon name='Ex' styleName='closeIcon' onClick={handleCancel} />
       <div styleName='formWrapper'>
-        <h1 styleName='title'>One more step!</h1>
-        <p styleName='blurb'>Hi {email} we just need to know your name and password and you're in.</p>
-        {error && formatError(error, 'Signup')}
+        <h1 styleName='title'>{t('One more step!')}</h1>
+        <p styleName='blurb'>{t(`Hi {{email}} we just need to know your name and password and you're in.`, { email })}</p>
+        {error && formatError(error, t('Signup'))}
         <TextInput
           aria-label='name'
           autoFocus
           id='name'
-          internalLabel='Name'
+          internalLabel={t('Name')}
           label='name'
           name='name'
           onChange={handleChange}
@@ -75,7 +77,7 @@ export default function FinishRegistration () {
           aria-label='password'
           autoComplete='off'
           id='password'
-          internalLabel='Password (at least 9 characters)'
+          internalLabel={t('Password (at least 9 characters)')}
           label='password'
           name='password'
           onChange={handleChange}
@@ -87,7 +89,7 @@ export default function FinishRegistration () {
           aria-label='passwordConfirmation'
           autoComplete='off'
           id='passwordConfirmation'
-          internalLabel='Confirm Password'
+          internalLabel={t('Confirm Password')}
           label='passwordConfirmation'
           name='passwordConfirmation'
           onChange={handleChange}
@@ -98,7 +100,7 @@ export default function FinishRegistration () {
         />
         <Button
           styleName='submit'
-          label='Jump in to Hylo!'
+          label={t('Jump in to Hylo!')}
           color={canSubmit ? 'green' : 'gray'}
           onClick={canSubmit ? () => handleSubmit() : null}
         />

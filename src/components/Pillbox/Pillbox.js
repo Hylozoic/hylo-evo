@@ -6,7 +6,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { debounce, includes, isEmpty, delay } from 'lodash'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
-import { KeyControlledItemList } from 'components/KeyControlledList'
+import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import Pill from 'components/Pill'
 import styles from './Pillbox.scss'
 

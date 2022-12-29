@@ -1,12 +1,14 @@
 /* eslint-disable quote-props */
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
 import './NonAuthLayoutRouter.scss'
 
 export function formatError (error, action) {
+  const { t } = useTranslation()
   if (!error) return
 
-  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/)
+  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/) // TODO: Handle this translation
 
   if (noPasswordMatch) {
     const options = uniq(noPasswordMatch[1].split(',')
@@ -21,9 +23,9 @@ export function formatError (error, action) {
 
     return (
       <div styleName='error'>
-        Your account has no password set. <a href='/reset-password'>Set your password here.</a>
+        {t('Your account has no password set.')} <a href='/reset-password'>{t('Set your password here.')}</a>
         {options[0] && (
-          <span><br />Or log in with {options.join(' or ')}.</span>
+          <span><br />{t('Or log in with ')}{options.join(t(' or '))}.</span>
         )}
       </div>
     )
@@ -41,6 +43,7 @@ export function formatError (error, action) {
   }
 
   function errorMessages (type) {
+    const { t } = useTranslation()
     let err
 
     if (testJSON(type)) {
@@ -51,18 +54,18 @@ export function formatError (error, action) {
     }
 
     const errors = {
-      'no user': `${action} was canceled or no user data was found.`,
-      'no email': 'Please enter a valid email address',
-      'no email provided': 'Please enter a valid email address',
-      'invalid-email': 'Please enter a valid email address',
-      'duplicate-email': 'Account already exists',
-      'no password provided': 'Please enter your password',
-      'email not found': 'Email address not found',
-      'invalid-code': 'Invalid code, please try again',
-      'invalid-link': 'Link expired, please start over',
-      'invite-expired': 'Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group moderator for another one.',
+      'no user': t('{{action}} was canceled or no user data was found.', { action }),
+      'no email': t('Please enter a valid email address'),
+      'no email provided': t('Please enter a valid email address'),
+      'invalid-email': t('Please enter a valid email address'),
+      'duplicate-email': t('Account already exists'),
+      'no password provided': t('Please enter your password'),
+      'email not found': t('Email address not found'),
+      'invalid-code': t('Invalid code, please try again'),
+      'invalid-link': t('Link expired, please start over'),
+      'invite-expired': t('Sorry, your invitation to this group is expired, has already been used, or is invalid. Please contact a group moderator for another one.'),
       // From oidc-provider
-      'invalid_request': 'Request expired, please start over',
+      'invalid_request': t('Request expired, please start over'),
       default: err
     }
 
