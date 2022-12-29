@@ -31,7 +31,7 @@ export default function HyloCookieConsent () {
         <div styleName='content'>
           <div styleName='pad'>
             <h3>{t('How do we use cookies?')}</h3>
-            <h4>{t('Hylo login &; session')}</h4>
+            <h4>{t('Hylo login & session')}</h4>
             <p>{t('We use cookies to help understand whether you are logged in and to understand your preferences and where you are in Hylo.')}</p>
             <h4>{t('Mixpanel')}</h4>
             <p>{t('We use a service called Mixpanel to understand how people like you use Hylo. Your identity is anonymized but your behavior is recorded so that we can make improvements to Hylo based on how people are using it.')}</p>
