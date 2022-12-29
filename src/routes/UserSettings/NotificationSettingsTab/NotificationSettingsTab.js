@@ -61,7 +61,7 @@ class NotificationSettingsTab extends Component {
     const onOrOff = changes[key] ? this.props.t('ON') : this.props.t('OFF')
     const numGroups = this.props.memberships.length
 
-    if (window.confirm(this.props.t(`You wish to turn {{onOrOff}} {{type}} for all groups? This will affect {{numGroups}} {groups}.`, { onOrOff, type, numGroups, groups: numGroups === 1 ? this.props.t('group') : this.props.t('groups') }))) {
+    if (window.confirm(this.props.t(`You wish to turn {{onOrOff}} {{type}} for all groups? This will affect {{numGroups}} {{groups}}.`, { onOrOff, type, numGroups, groups: numGroups === 1 ? this.props.t('group') : this.props.t('groups') }))) {
       this.updateAllGroups(changes)
     }
   }
@@ -80,11 +80,11 @@ class NotificationSettingsTab extends Component {
       updateUserSettings({ settings: { [setting]: value } })
     }
 
-    const notificationOptions = compact([
-      { id: 'none', label: t('None') },
-      { id: 'email', label: t('Email') },
-      hasDevice && { id: 'push', label: t('Mobile App') },
-      hasDevice && { id: 'both', label: t('Both') }
+    var notificationOptions = compact([
+      { id: 'none', label: this.props.t('None') },
+      { id: 'email', label: this.props.t('Email') },
+      hasDevice && { id: 'push', label: this.props.t('Mobile App') },
+      hasDevice && { id: 'both', label: this.props.t('Both') }
     ])
 
     const getSetting = setting => {

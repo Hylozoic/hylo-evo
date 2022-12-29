@@ -1,9 +1,11 @@
 /* eslint-disable quote-props */
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
 import './NonAuthLayoutRouter.scss'
 
-export function formatError (error, action, t) {
+export function formatError (error, action) {
+  const { t } = useTranslation()
   if (!error) return
 
   const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/) // TODO: Handle this translation
@@ -23,7 +25,7 @@ export function formatError (error, action, t) {
       <div styleName='error'>
         {t('Your account has no password set.')} <a href='/reset-password'>{t('Set your password here.')}</a>
         {options[0] && (
-          <span><br />{`${t('Or log in with')} `}{options.join(` ${t('or')} `)}.</span>
+          <span><br />{t('Or log in with ')}{options.join(t(' or '))}.</span>
         )}
       </div>
     )
@@ -40,7 +42,8 @@ export function formatError (error, action, t) {
     }
   }
 
-  function errorMessages (type, t) {
+  function errorMessages (type) {
+    const { t } = useTranslation()
     let err
 
     if (testJSON(type)) {

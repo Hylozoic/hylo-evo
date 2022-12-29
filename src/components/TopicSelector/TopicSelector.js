@@ -162,7 +162,7 @@ class TopicSelector extends Component {
   }
 
   render () {
-    const { placeholder = this.props.t('Enter up to three topics...'), defaultTopics: providedDefaultTopics, t } = this.props
+    const { placeholder = this.props.t('Enter up to three topics...'), defaultTopics: providedDefaultTopics } = this.props
     const { selected } = this.state
     const defaultTopics = this.formatGroupTopicSuggestions(providedDefaultTopics) || []
 
@@ -191,8 +191,8 @@ class TopicSelector extends Component {
         }}
         noOptionsMessage={() => {
           return selected.length >= MAX_TOPICS
-            ? t(`You can only select up to {{MAX_TOPICS}} topics`, { MAX_TOPICS })
-            : t('Start typing to add a topic')
+            ? this.props.t(`You can only select up to {{MAX_TOPICS}} topics`, { MAX_TOPICS })
+            : this.props.t('Start typing to add a topic')
         }}
         formatOptionLabel={(item, { context }) => {
           if (context === 'value') {
@@ -200,7 +200,7 @@ class TopicSelector extends Component {
           }
 
           if (item.__isNew__) {
-            return <div>{t('Create topic "#{{item.value}}"', { item })}</div>
+            return <div>{this.props.t('Create topic "#{{item.value}}"', { item })}</div>
           }
 
           const { name, postsTotal, followersTotal } = item
@@ -214,8 +214,8 @@ class TopicSelector extends Component {
             <div className={styles.item}>
               <div styleName='menuTopicLabel'>#{name}</div>
               <div styleName='suggestionMeta'>
-                <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {t('subscribers')}</span>
-                <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {t('posts')}</span>
+                <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {this.props.t('subscribers')}</span>
+                <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {this.props.t('posts')}</span>
               </div>
             </div>
           )

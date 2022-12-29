@@ -73,7 +73,7 @@ class SingleTopicSelector extends Component {
     const { currentGroup, defaultTopics, placeholder = this.props.t('Find/add a topic') } = this.props
     const { value } = this.state
 
-    const defaultsToShow = defaultTopics ? [ { label: ('{{currentGroup.name}} topics', { currentGroup }), options: defaultTopics } ] : []
+    const defaultsToShow = defaultTopics ? [ { label: this.props.t('{{currentGroup.name}} topics', { currentGroup }), options: defaultTopics } ] : []
 
     return (
       <AsyncCreatableSelect

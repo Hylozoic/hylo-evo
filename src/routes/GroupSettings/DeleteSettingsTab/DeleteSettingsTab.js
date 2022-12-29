@@ -22,7 +22,7 @@ class DeleteSettingsTab extends Component {
         {this.props.t('If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.')}
       </div>
       <Button
-        label='Delete Group'
+        label={this.props.t('Delete Group')}
         onClick={this.deleteGroup}
         styleName='delete-button'
       /> {/* TODO: Handle this translation */}

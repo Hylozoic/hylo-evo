@@ -60,7 +60,7 @@ export default function FinishRegistration () {
       <div styleName='formWrapper'>
         <h1 styleName='title'>{t('One more step!')}</h1>
         <p styleName='blurb'>{t(`Hi {{email}} we just need to know your name and password and you're in.`, { email })}</p>
-        {error && formatError(error, 'Signup', t)}
+        {error && formatError(error, t('Signup'))}
         <TextInput
           aria-label='name'
           autoFocus

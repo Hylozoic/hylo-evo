@@ -18,6 +18,9 @@ import SocialControl from './SocialControl'
 
 const { object, func } = PropTypes
 
+/** LinkedIn Url */
+const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
+
 export const validateName = name => name && name.match(/\S/gm)
 
 class EditProfileTab extends Component {
@@ -74,7 +77,7 @@ class EditProfileTab extends Component {
   updateSetting = (key, setChanged = true) => async event => {
     const { fetchLocation, t } = this.props
     const { edits, changed } = this.state
-    setChanged && this.props.setConfirm(t('You have unsaved changes, are you sure you want to leave?'))
+    setChanged && this.props.setConfirm(this.props.t('You have unsaved changes, are you sure you want to leave?'))
 
     if (key === 'location') {
       edits['location'] = event.target.value.fullText

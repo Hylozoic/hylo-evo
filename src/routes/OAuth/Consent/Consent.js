@@ -30,11 +30,10 @@ export default function Consent (props) {
 
   const { appName, className, missingOIDCClaims, missingOIDCScopes, missingResourceScopes, offlineAccessRequested, previousAuthsOnly } = props
 
-  return (
-    <div className={className}>
-      <div styleName='formWrapper'>
-        <h1 styleName='title'>{t('{{appName}} wants access to your Hylo account', { appName })}</h1>
-        {error && formatError(error, 'Login')}
+  return <div className={className}>
+    <div styleName='formWrapper'>
+      <h1 styleName='title'>{t('{{appName}} wants access to your Hylo account', { appName })}</h1>
+      {error && formatError(error, 'Login')}
 
         <div>
           {previousAuthsOnly
@@ -42,34 +41,34 @@ export default function Consent (props) {
             : ''
           }
 
-          {!isEmpty(missingOIDCScopes)
-            ? <div><h3>{t('This will allow {{appName}} to:', { appName })}</h3>
-              <ul>
-                {missingOIDCScopes.map((scope) =>
-                  <li key={scope}>
-                    {scope === 'profile' ? t('Access your profile, including your name and image.')
-                      : scope === 'address' ? t('Access to your physical address.')
-                        : scope === 'email' ? t('Access to your email address.')
-                          : scope === 'phone' ? t('Access to your phone number.')
-                            : ''}
-                  </li>
-                )}
-              </ul>
-            </div>
-            : ''
-          }
+        {!isEmpty(missingOIDCScopes)
+          ? <div><h3>{t('This will allow {{appName}} to:', { appName })}</h3>
+            <ul>
+              {missingOIDCScopes.map((scope) =>
+                <li key={scope}>
+                  {scope === 'profile' ? t('Access your profile, including your name and image. ')
+                    : scope === 'address' ? t('Access to your physical address.')
+                      : scope === 'email' ? t('Access to your email address.')
+                        : scope === 'phone' ? t('Access to your phone number.')
+                          : ''}
+                </li>
+              )}
+            </ul>
+          </div>
+          : ''
+        }
 
-          {!isEmpty(missingOIDCClaims)
-            ? <div>
-              <h3>{t('Claims:')}</h3>
-              <ul>
-                {missingOIDCClaims.map((claim) => {
-                  return <li key={claim}>{claim}</li>
-                })}
-              </ul>
-            </div>
-            : ''
-          }
+        {!isEmpty(missingOIDCClaims)
+          ? <div>
+            <h3>{t('Claims:')}</h3>
+            <ul>
+              {missingOIDCClaims.map((claim) => {
+                return <li key={claim}>{claim}</li>
+              })}
+            </ul>
+          </div>
+          : ''
+        }
 
           {!isEmpty(missingResourceScopes)
             ? Object.keys(missingResourceScopes).map(indicator => <div key={indicator}>
@@ -98,6 +97,10 @@ export default function Consent (props) {
 
         <Button styleName='submit' label={t('Allow')} onClick={submit} />
       </div>
+
+      <Button label={t('Cancel')} color='dark-gray' narrow onClick={cancel} />
+
+      <Button styleName='submit' label={t('Allow')} onClick={submit} />
     </div>
   )
 }

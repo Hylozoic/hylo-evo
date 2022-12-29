@@ -20,7 +20,24 @@ exports[`UserSettings renders correctly 1`] = `
   memberships={
     Array [
       Object {
-        "id": 2,
+        "component": <withI18nextTranslation(EditProfileTab)
+          currentUser={
+            Object {
+              "blockedUsers": Object {
+                "toRefArray": [Function],
+              },
+              "hasFeature": [Function],
+              "id": 1,
+            }
+          }
+          fetchPending={true}
+          loginWithService={[Function]}
+          setConfirm={[Function]}
+          unlinkAccount={[Function]}
+          updateUserSettings={[Function]}
+        />,
+        "name": "Edit Profile",
+        "path": "/settings",
       },
       Object {
         "component": <Memo(Connect(withI18nextTranslation(UserGroupsTab)))

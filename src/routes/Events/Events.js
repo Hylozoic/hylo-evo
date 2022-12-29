@@ -64,11 +64,11 @@ class Events extends Component {
       timeframe, updateTimeframe, t
     } = this.props
     const timeframeOptions = [
-      { id: 'future', label: t('Upcoming Events') },
-      { id: 'past', label: t('Past Events') }
+      { id: 'future', label: this.props.t('Upcoming Events') },
+      { id: 'past', label: this.props.t('Past Events') }
     ]
-    const upcomingText = t('upcoming')
-    const pastText = t('past')
+    const upcomingText = this.props.t('upcoming')
+    const pastText = this.props.t('past')
     const { context } = routeParams
 
     if (!currentUser) return <Loading />
@@ -90,7 +90,7 @@ class Events extends Component {
           querystringParams={querystringParams}
           currentUserHasMemberships={currentUserHasMemberships}
           icon='Events'
-          label={t('Events')}
+          label={this.props.t('Events')}
         />
         <div styleName='viewStyles.stream-view-container'>
           <div styleName='viewStyles.stream-view-ctrls'>
@@ -113,7 +113,7 @@ class Events extends Component {
         {pending && <Loading />}
 
         <div styleName={cx('s.events-stream', { [s.collapsedState]: collapsedState })}>
-          {!pending && posts.length === 0 ? <NoPosts message={t('No {{timeFrame}} events', { timeFrame: timeframe === 'future' ? upcomingText : pastText })} /> : ''}
+          {!pending && posts.length === 0 ? <NoPosts message={this.props.t(`No {{timeFrame}} events`, { timeFrame: timeframe === 'future' ? upcomingText : pastText })} /> : ''}
 
           {posts.map(post => {
             const expanded = post.id === routeParams.postId

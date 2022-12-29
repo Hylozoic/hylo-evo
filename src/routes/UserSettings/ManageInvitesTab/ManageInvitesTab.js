@@ -118,7 +118,7 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
           </div>
         </div>
         <div styleName='invitationResponse'>
-          <span styleName='createdDate'>Sent {moment(createdAt).format('MM-DD-YYYY')}</span>
+          <span styleName='createdDate'>{t('Sent')} {moment(createdAt).format('MM-DD-YYYY')}</span>
           <span onClick={decline} styleName='cancelButton'>{t('Decline')}</span>
           <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{t('Join')}</span>
         </div>

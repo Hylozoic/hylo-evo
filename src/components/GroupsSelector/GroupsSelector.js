@@ -14,7 +14,6 @@ class GroupsSelector extends Component {
   }
 
   static defaultProps = {
-    placeholder: 'Type group name...', /* TODO: Handle this translation */
     selected: [],
     options: []
   }
@@ -88,4 +87,4 @@ class GroupsSelector extends Component {
   }
 }
 
-export default withTranslation('translation', { withRef: true })(GroupsSelector)
+export default withTranslation()(GroupsSelector)

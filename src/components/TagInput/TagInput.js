@@ -114,12 +114,7 @@ class TagInput extends Component {
   }, 200)
 
   render () {
-    let { tags, placeholder } = this.props
-
-    const { suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion, tagType } = this.props
-    if (!tags) tags = []
-    if (!placeholder) placeholder = this.props.t('Type...')
-
+    const { tags = [], placeholder = this.props.t('Type...'), suggestions, className, theme, readOnly, maxTags, addLeadingHashtag, renderSuggestion, tagType } = this.props
     const optionalHashtag = addLeadingHashtag ? '#' : ''
 
     const selectedItems = uniqBy('id', tags).map(t =>

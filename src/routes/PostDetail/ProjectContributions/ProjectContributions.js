@@ -54,17 +54,17 @@ class ProjectContributions extends Component {
       contributionAmount > 0
 
     return <div styleName='project-contributions'>
-      {received && <div styleName='success-notification'>{t('Thanks for your contribution!')}</div>}
-      {error && <div styleName='error-notification'>{t('There was a problem processing your payment. Please check your card details and try again.')}</div>}
+      {received && <div styleName='success-notification'>{this.props.t('Thanks for your contribution!')}</div>}
+      {error && <div styleName='error-notification'>{this.props.t('There was a problem processing your payment. Please check your card details and try again.')}</div>}
       {!expanded && !received && <Button
         color='green'
         onClick={this.toggleExpanded}
-        label={t('Contribute')}
+        label={this.props.t('Contribute')}
         small
         narrow />}
       {expanded && <div>
         <div styleName='amount-row'>
-          <span styleName='amount-label'>{t('Amount')}</span>
+          <span styleName='amount-label'>{this.props.t('Amount')}</span>
           <TextInput
             onChange={this.setAmount}
             inputRef={input => { this.amountInput = input }}
@@ -73,7 +73,7 @@ class ProjectContributions extends Component {
         </div>
         <StripeCheckout
           disabled={!valid}
-          name={t('Contributing Via Stripe')}
+          name={this.props.t('Contributing Via Stripe')}
           token={onToken}
           stripeKey={stripeKey}
           amount={Number(contributionAmount)} />
@@ -81,11 +81,11 @@ class ProjectContributions extends Component {
           styleName='cancel-button'
           color='gray'
           onClick={this.toggleExpanded}
-          label={t('Cancel')}
+          label={this.props.t('Cancel')}
           small
           narrow />
       </div>}
-      <div styleName='project-contributions-total'>{t(`Contributions so far: {{totalContributions}}`, { totalContributions })}</div>
+      <div styleName='project-contributions-total'>{this.props.t(`Contributions so far: {{totalContributions}}`, { totalContributions })}</div>
     </div>
   }
 }

@@ -29,7 +29,7 @@ export default function SavedSearches (props) {
         <div styleName='title'>
           <span>
             <h2>{t('Save this view')}</h2>
-            {('Get updates about this map view')}</span>
+            {t('Get updates about this map view')}</span>
           <Icon name='Ex' styleName='close' onClick={toggle} />
         </div>
 

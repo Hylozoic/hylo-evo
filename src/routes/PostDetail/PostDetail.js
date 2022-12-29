@@ -158,10 +158,10 @@ class PostDetail extends Component {
 
     if (isProject) {
       people = post.members
-      postPeopleDialogTitle = t('Project Members')
+      postPeopleDialogTitle = this.props.t('Project Members')
     } else if (isEvent) {
       people = post.eventInvitations
-      postPeopleDialogTitle = t('Responses')
+      postPeopleDialogTitle = this.props.t('Responses')
     }
 
     const detailHasImage = post.attachments.find(a => a.type === 'image') || false
@@ -242,26 +242,26 @@ class PostDetail extends Component {
                 </div>
                 {post.projectManagementLink && projectManagementTool && (
                   <div styleName='project-management-tool'>
-                    <div>{t('This project is being managed on')} <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
-                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>{t('View tasks')}</a></div>
+                    <div>{this.props.t('This project is being managed on')} <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
+                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>{this.props.t('View tasks')}</a></div>
                   </div>
                 )}
                 {post.projectManagementLink && !projectManagementTool && (
                   <div styleName='project-management-tool'>
-                    <div>{t('View project management tool')}</div>
-                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>{t('View tasks')}</a></div>
+                    <div>{this.props.t('View project management tool')}</div>
+                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>{this.props.t('View tasks')}</a></div>
                   </div>
                 )}
                 {post.donationsLink && donationService && (
                   <div styleName='donate'>
-                    <div>{t('Support this project on')} <img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
+                    <div>{this.props.t('Support this project on')} <img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>{this.props.t('Contribute')}</a></div>
                   </div>
                 )}
                 {post.donationsLink && !donationService && (
                   <div styleName='donate'>
-                    <div>{t('Support this project')}</div>
-                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
+                    <div>{this.props.t('Support this project')}</div>
+                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>{this.props.t('Contribute')}</a></div>
                   </div>
                 )}
               </div>
@@ -309,8 +309,7 @@ class PostDetail extends Component {
 }
 
 export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {
-  const { t } = useTranslation()
-  const buttonText = leaving ? t('Leave Project') : t('Join Project')
+  const buttonText = leaving ? this.props.t('Leave Project') : this.props.t('Join Project')
   const onClick = () => leaving ? leaveProject() : joinProject()
 
   return (
@@ -321,10 +320,10 @@ export function JoinProjectSection ({ currentUser, members, leaving, joinProject
         excludePersonId={get('id', currentUser)}
         onClick={togglePeopleDialog}
         phrases={{
-          emptyMessage: t('No project members'),
-          phraseSingular: t('is a member'),
-          mePhraseSingular: t('are a member'),
-          pluralPhrase: t('are members')
+          emptyMessage: this.props.t('No project members'),
+          phraseSingular: this.props.t('is a member'),
+          mePhraseSingular: this.props.t('are a member'),
+          pluralPhrase: this.props.t('are members')
         }}
       />
       <Button

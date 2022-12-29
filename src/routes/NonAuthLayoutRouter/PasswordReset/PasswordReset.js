@@ -61,7 +61,7 @@ class PasswordReset extends Component {
           />
 
           <Button
-            styleName='submit' label={t('Reset')} color={canSubmit ? 'green' : 'gray'}
+            styleName='submit' label={this.props.t('Reset')} color={canSubmit ? 'green' : 'gray'}
             onClick={canSubmit ? () => this.submit() : null}
           />
         </div>

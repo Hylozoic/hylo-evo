@@ -376,7 +376,7 @@ export function AddModerator (props) {
       </div>
       }
     </div>
-  ) : (<div className='add-new' styleName='add-moderator add-new' onClick={toggle}>{t('+ Add New')}</div>)
+  ) : (<div className='add-new' styleName='add-moderator add-new' onClick={toggle}>+ {t('Add New')}</div>)
 }
 
 export const AddModerator = withTranslation()(AddModeratorUntranslated)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import MapExplorer from './MapExplorer'
 
@@ -13,41 +13,32 @@ jest.mock('react-i18next', () => ({
 
 describe('MapExplorer', () => {
   it('Matches Snapshot', () => {
-    const wrapper = shallow(
-      <BrowserRouter>
-        <MapExplorer
-          centerLocation={{ lat: 35.442845, lng: 7.916598 }}
-          fetchPosts={jest.fn()}
-          fetchSavedSearches={jest.fn()}
-          filters={{ featureTypes: { request: true, offer: true } }}
-          groups={[]}
-          hideDrawer={false}
-          match={{ params: {} }}
-          members={[]}
-          postsForDrawer={[]}
-          postsForMap={[]}
-          routeParams={{}}
-          storeFetchPostsParam={jest.fn()}
-          topics={[]}
-          zoom={0}
-        />
-      </BrowserRouter>
-    )
+    const wrapper = shallow(<MemoryRouter><MapExplorer
+      centerLocation={{ lat: 35.442845, lng: 7.916598 }}
+      fetchPosts={jest.fn()}
+      fetchSavedSearches={jest.fn()}
+      filters={{ featureTypes: { request: true, offer: true } }}
+      groups={[]}
+      hideDrawer={false}
+      match={{ params: {} }}
+      members={[]}
+      postsForDrawer={[]}
+      postsForMap={[]}
+      routeParams={{}}
+      topics={[]}
+      zoom={0}
+    /></MemoryRouter>)
     expect(wrapper).toMatchSnapshot()
   })
 
   it('has a TabBar', () => {
-    const wrapper = shallow(
-      <BrowserRouter>
-        <MapExplorer
-          fetchPosts={jest.fn()}
-          fetchSavedSearches={jest.fn()}
-          filters={{ featureTypes: { request: true, offer: true } }}
-          match={{ params: {} }}
-          storeFetchPostsParam={jest.fn()}
-        />
-      </BrowserRouter>
-    )
+    const wrapper = shallow(<MapExplorer
+      fetchPosts={jest.fn()}
+      fetchSavedSearches={jest.fn()}
+      filters={{ featureTypes: { request: true, offer: true } }}
+      match={{ params: {} }}
+      storeFetchPostsParam={jest.fn()}
+    /></MemoryRouter>)
     expect(wrapper.find('TabBar')).toBeTruthy()
   })
 })

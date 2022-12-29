@@ -62,7 +62,7 @@ export default function SiteTour ({ currentSiteWidth }) {
         <div styleName='tourPrompt'>
           <div styleName='tourGuide'><img src='/axolotl-tourguide.png' /></div>
           <div styleName='tourExplanation'>
-            <p>{(`<strong>Welcome to Hylo {{currentUser.name}}!</strong> I’d love to show you how things work, would you like a quick tour?`, { currentUser })}</p>
+            <p>{t(`<strong>Welcome to Hylo {{currentUser.name}}!</strong> I’d love to show you how things work, would you like a quick tour?`, { currentUser })}</p>
             <p>{t('To follow the tour look for the pulsing beacons!')} <span styleName='beaconExample'><span styleName='beaconA' /><span styleName='beaconB' /></span></p>
             <div>
               <button styleName='skipTour' onClick={handleCloseTour}>{t('No thanks')}</button>
