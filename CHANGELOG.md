@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.1.2] - 2022-12-29
+
+### Changed
+- Prevent changing user name to blank in the user settings
+
+### Fixed
+- Infinite attempts to load more comments when viewing a post
+- Inability to scroll down in navigation drawer when a post is open
+
 ## [5.1.1]
 
 ### Added
