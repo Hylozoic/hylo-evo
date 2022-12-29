@@ -237,7 +237,7 @@ export default class EditProfileTab extends Component {
             type='userBanner'
             id={currentUser.id}
             onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-            styleName='change-banner-button' 
+            styleName='change-banner-button'
           />
         </div>
         <UploadAttachmentButton
