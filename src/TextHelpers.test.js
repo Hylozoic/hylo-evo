@@ -53,3 +53,9 @@ describe('formatDatePair', () => {
     expect(TextHelpers.formatDatePair(d1, d5)).toMatchSnapshot()
   })
 })
+
+describe('sanitizeURL', () => {
+  it('adds "https" when no protocol specified', () => {
+    expect(TextHelpers.sanitizeURL('www.hylo.com')).toBe('https://www.hylo.com')
+  })
+})

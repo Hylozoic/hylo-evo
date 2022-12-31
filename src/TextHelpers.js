@@ -1,10 +1,11 @@
-import merge from 'lodash/fp/merge'
+import { convert as convertHtmlToText } from 'html-to-text'
+import { isURL } from 'validator'
 import { marked } from 'marked'
+import merge from 'lodash/fp/merge'
+import moment from 'moment-timezone'
+import prettyDate from 'pretty-date'
 import truncHTML from 'trunc-html'
 import truncText from 'trunc-text'
-import prettyDate from 'pretty-date'
-import moment from 'moment-timezone'
-import { convert as convertHtmlToText } from 'html-to-text'
 
 // Sanitization options
 export function insaneOptions (providedInsaneOptions) {
@@ -19,13 +20,13 @@ export function insaneOptions (providedInsaneOptions) {
       ],
       allowedAttributes: providedInsaneOptions?.allowedAttributes || {
         a: [
-          'class', 'target', 'href', 
+          'class', 'target', 'href',
           'data-type', 'data-id','data-label',
           'data-user-id', 'data-entity-type', 'data-search'
         ],
         span: [
-          'class', 'target', 'href', 
-          'data-type', 'data-id','data-label',
+          'class', 'target', 'href',
+          'data-type', 'data-id', 'data-label',
           'data-user-id', 'data-entity-type', 'data-search'
         ],
         code: [
@@ -112,6 +113,15 @@ export const mentionHTML = mentioned => (
 export const topicHTML = topicName => (
   `<span data-type="topic" class="topic" data-id="${topicName}" data-label="#${topicName}">${topicName}</span>`
 )
+
+// URL helpers
+
+export const sanitizeURL = url => {
+  if (!url) return null
+  if (isURL(url, { require_protocol: true })) return url
+  if (isURL(`https://${url}`)) return `https://${url}`
+  return null
+}
 
 // Date string related
 
