@@ -60,7 +60,7 @@ const StreamViewControls = (props) => {
           data-tip={childPostInclusion === 'yes' ? 'Hide posts from subgroups' : 'Show posts from subgroups'}
           data-for='subgroup-toggle-tt'
         >
-          <Icon name='Subgroup' styleName={cx('toggle-icon', { active: childPostInclusion === 'yes' })} />
+          <Icon name='Subgroup' styleName={cx('toggle-icon', 'subgroup-icon', { active: childPostInclusion === 'yes' })} />
         </div>
         <Tooltip
           delay={250}

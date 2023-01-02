@@ -103,13 +103,6 @@ export default function PostBigGridItem (props) {
             <h3 styleName='title' onClick={showDetails}>{title}</h3>
             <div styleName='content-snippet'>
               <Clamp lines={2}>
-                <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} onClick={showDetailsTargeted} />
-              </Clamp>
-              <div styleName='fade' />
-            </div>
-            <h3 styleName='title' onClick={showDetails}>{title}</h3>
-            <div styleName='content-snippet'>
-              <Clamp lines={2}>
                 <HyloHTML styleName='details' html={details} onClick={showDetailsTargeted} />
               </Clamp>
               <div styleName='fade' />
