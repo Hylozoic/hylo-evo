@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
@@ -18,6 +19,8 @@ const { object, func, string } = PropTypes
 
 /** LinkedIn Url */
 const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
+
+export const validateName = name => name && name.match(/\S/gm)
 
 export const linkedinPrompt = () => {
   let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.')
@@ -221,66 +224,74 @@ export default class EditProfileTab extends Component {
 
     const locationObject = currentUser.locationObject
 
-    return <div>
-      <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
-      <div style={bgImageStyle(bannerUrl)} styleName='banner'>
+    return (
+      <div>
+        <Helmet>
+          <title>Hylo: Settings</title>
+        </Helmet>
+        {!validateName(name) && <div styleName='name-validation'>Name must not be blank</div>}
+        {/* TODO: i18n */}
+        <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
+        <div style={bgImageStyle(bannerUrl)} styleName='banner'>
+          <UploadAttachmentButton
+            type='userBanner'
+            id={currentUser.id}
+            onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
+            styleName='change-banner-button'
+          />
+        </div>
         <UploadAttachmentButton
-          type='userBanner'
+          type='userAvatar'
           id={currentUser.id}
-          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-          styleName='change-banner-button' />
+          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+          styleName='change-avatar-button'
+        >
+          <div style={bgImageStyle(avatarUrl)} styleName='avatar'><Icon name='AddImage' styleName='uploadIcon' /></div>
+        </UploadAttachmentButton>
+        <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
+        <SettingsControl label='About Me' onChange={this.updateSetting('bio')} value={bio} type='textarea' />
+        <SettingsControl
+          label='Location'
+          onChange={this.updateSettingDirectly('location', true)}
+          location={location}
+          locationObject={locationObject}
+          type='location'
+        />
+        <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
+        <SettingsControl label='My Skills &amp; Interests' renderControl={() =>
+          <SkillsSection personId={currentUser.id} />} />
+        <SettingsControl label='What I&apos;m learning' renderControl={() =>
+          <SkillsToLearnSection personId={currentUser.id} />} />
+        <SettingsControl label='Contact Email' onChange={this.updateSetting('contactEmail')} value={contactEmail} />
+        <SettingsControl label='Contact Phone' onChange={this.updateSetting('contactPhone')} value={contactPhone} />
+        <label styleName='social-label'>Social Accounts</label>
+        <SocialControl
+          label='Facebook'
+          provider='facebook'
+          value={facebookUrl}
+          onLink={() => loginWithService('facebook')}
+          updateSettingDirectly={() => this.updateSettingDirectly('facebookUrl')}
+          handleUnlinkAccount={() => unlinkAccount('facebook')}
+        />
+        <SocialControl
+          label='Twitter'
+          provider='twitter'
+          value={twitterName}
+          updateSettingDirectly={() => this.updateSettingDirectly('twitterName')}
+          handleUnlinkAccount={() => unlinkAccount('twitter')}
+        />
+        <SocialControl
+          label='LinkedIn'
+          provider='linkedin'
+          value={linkedinUrl}
+          updateSettingDirectly={() => this.updateSettingDirectly('linkedinUrl')}
+          handleUnlinkAccount={() => unlinkAccount('linkedin')}
+        />
+        <div styleName='saveChanges'>
+          <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
+          <Button label='Save Changes' color={changed && validateName(name) ? 'green' : 'gray'} onClick={changed && validateName(name) ? this.save : null} styleName='save-button' />
+        </div>
       </div>
-      <UploadAttachmentButton
-        type='userAvatar'
-        id={currentUser.id}
-        onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-        styleName='change-avatar-button'
-      >
-        <div style={bgImageStyle(avatarUrl)} styleName='avatar'><Icon name='AddImage' styleName='uploadIcon' /></div>
-      </UploadAttachmentButton>
-      <SettingsControl label='Tagline' onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
-      <SettingsControl label='About Me' onChange={this.updateSetting('bio')} value={bio} type='textarea' />
-      <SettingsControl
-        label='Location'
-        onChange={this.updateSettingDirectly('location', true)}
-        location={location}
-        locationObject={locationObject}
-        type='location'
-      />
-      <SettingsControl label='Website' onChange={this.updateSetting('url')} value={url} />
-      <SettingsControl label='My Skills &amp; Interests' renderControl={() =>
-        <SkillsSection personId={currentUser.id} />} />
-      <SettingsControl label='What I&apos;m learning' renderControl={() =>
-        <SkillsToLearnSection personId={currentUser.id} />} />
-      <SettingsControl label='Contact Email' onChange={this.updateSetting('contactEmail')} value={contactEmail} />
-      <SettingsControl label='Contact Phone' onChange={this.updateSetting('contactPhone')} value={contactPhone} />
-      <label styleName='social-label'>Social Accounts</label>
-      <SocialControl
-        label='Facebook'
-        provider='facebook'
-        value={facebookUrl}
-        onLink={() => loginWithService('facebook')}
-        updateSettingDirectly={() => this.updateSettingDirectly('facebookUrl')}
-        handleUnlinkAccount={() => unlinkAccount('facebook')}
-      />
-      <SocialControl
-        label='Twitter'
-        provider='twitter'
-        value={twitterName}
-        updateSettingDirectly={() => this.updateSettingDirectly('twitterName')}
-        handleUnlinkAccount={() => unlinkAccount('twitter')}
-      />
-      <SocialControl
-        label='LinkedIn'
-        provider='linkedin'
-        value={linkedinUrl}
-        updateSettingDirectly={() => this.updateSettingDirectly('linkedinUrl')}
-        handleUnlinkAccount={() => unlinkAccount('linkedin')}
-      />
-      <div styleName='saveChanges'>
-        <span styleName={changed ? 'settingChanged' : ''}>{changed ? 'Changes not saved' : 'Current settings up to date'}</span>
-        <Button label='Save Changes' color={changed ? 'green' : 'gray'} onClick={changed ? this.save : null} styleName='save-button' />
-      </div>
-    </div>
+    )
   }
 }

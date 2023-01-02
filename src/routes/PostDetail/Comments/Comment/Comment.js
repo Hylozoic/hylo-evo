@@ -42,6 +42,13 @@ export class Comment extends Component {
     scrolledToComment: false
   }
 
+  componentDidMount () {
+    // If this is the selected comment (e.g. from a notification) scroll to it
+    if (this.props.selectedCommentId === this.props.comment.id) {
+      setTimeout(this.handleScrollToComment.bind(this), 500)
+    }
+  }
+
   handleEditComment = () => {
     this.setState({ editing: true })
   }
@@ -78,7 +85,7 @@ export class Comment extends Component {
       }
 
       if (bottom > 0 && bottom <= viewportHeight && top >= 0) { // element is contained in the viewport
-        this.setState({ scrolledToComment: true }) // user can now scroll away from comment without it snapping back to comment
+        this.setState({ scrolledToComment: true })
       }
     }
   }
@@ -86,7 +93,7 @@ export class Comment extends Component {
   render () {
     const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId } = this.props
     const { id, creator, createdAt, text, attachments } = comment
-    const { editing, scrolledToComment } = this.state
+    const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -95,8 +102,6 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
-
-    if (this.commentRef.current && selectedCommentId === comment.id && !scrolledToComment) this.handleScrollToComment()
 
     return (
       <div ref={this.commentRef} styleName={cx({ 'commentContainer': true, 'selected-comment': selectedCommentId === comment.id })}>

@@ -1,7 +1,7 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "5.1.0",
+  "version": "5.1.2",
   "private": true,
   "engines": {
     "node": "16.13.2",
@@ -209,6 +209,7 @@
     "react-dnd-html5-backend": "^15.1.2",
     "react-dom": "^16.8.6",
     "react-flip-move": "^3.0.4",
+    "react-helmet": "^6.1.0",
     "react-icons": "^4.4.0",
     "react-joyride": "^2.3.2",
     "react-map-gl": "^6",

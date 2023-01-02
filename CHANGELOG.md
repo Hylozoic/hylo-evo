@@ -6,6 +6,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.1.2] - 2022-12-29
+
+### Changed
+- Prevent changing user name to blank in the user settings
+
+### Fixed
+- Infinite attempts to load more comments when viewing a post
+- Inability to scroll down in navigation drawer when a post is open
+
+## [5.1.1]
+
+### Added
+- First pass at more descriptive meta tags for various Hylo pages. New page titles will appear in browser tabs, search engines and link previews in other platforms.
+
+### Changed
+- Clicking on a "new post in #topic" notification takes you to the topic room
+- Don't allow for showing chat posts in custom views
+
+### Fixed
+- Minor fixes to comment interface
+- Don't show Chat as a post type option in create post modal
+- Don't add new chat posts to the Stream
+
 ## [5.1.0]
 
 ### Added

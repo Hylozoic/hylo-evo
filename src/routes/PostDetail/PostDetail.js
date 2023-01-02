@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { get, throttle } from 'lodash/fp'
+import { Helmet } from 'react-helmet'
+import { TextHelpers } from 'hylo-shared'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -26,7 +28,7 @@ import './PostDetail.scss'
 
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 70
-
+const MAX_DETAILS_LENGTH = 144
 export default class PostDetail extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
@@ -164,6 +166,12 @@ export default class PostDetail extends Component {
       <ReactResizeDetector handleWidth handleHeight={false} onResize={this.handleSetComponentPositions}>
         {({ width, height }) =>
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
+            <Helmet>
+              <title>
+                {`Hylo: ${post.title || TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)}`}
+              </title>
+              <meta name='description' content={TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)} />
+            </Helmet>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader
               styleName='header'

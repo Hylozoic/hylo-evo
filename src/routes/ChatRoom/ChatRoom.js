@@ -3,6 +3,7 @@ import { debounce, trim } from 'lodash/fp'
 import moment from 'moment-timezone'
 import { EditorView } from 'prosemirror-view'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { IoSend } from 'react-icons/io5'
 import ReactResizeDetector from 'react-resize-detector'
 import { Virtuoso } from 'react-virtuoso'
@@ -369,6 +370,10 @@ export default function ChatRoom (props) {
 
   return (
     <div styleName={cx('container', { 'without-nav': withoutNav })}>
+      <Helmet>
+        <title>Hylo{group ? `: ${group.name} #${topicName}` : ''}</title>
+      </Helmet>
+
       <TopicFeedHeader
         bannerUrl={group && group.bannerUrl}
         currentUser={currentUser}
