@@ -88,25 +88,33 @@ export default class NotificationSettingsTab extends Component {
     }
 
     return <div>
-      <div styleName='title'>Notifications</div>
-      <div styleName='prompt'>How often would you like to receive email digests
-        for new posts in your groups and saved searches?</div>
-      <Select
-        onChange={updateSetting('digestFrequency')}
-        selected={settings['digestFrequency']}
-        options={[
-          { id: 'daily', label: 'Daily' },
-          { id: 'weekly', label: 'Weekly' },
-          { id: 'never', label: 'Never' }
-        ]} />
-
-      <div styleName='prompt'>How would you like to receive notifications about
-      new comments on posts you're following?</div>
-      <Select
-        onChange={updateSetting('commentNotifications')}
-        selected={getSetting('commentNotifications')}
-        options={notificationOptions} />
-
+      <div styleName='title'><Icon name='Notifications' />Notifications</div>
+      <div styleName='global-setting'>
+        <div styleName='prompt'>How often would you like to receive email digests
+          for new posts in your groups and saved searches?</div>
+        <div styleName='setting-select'>
+          <div styleName='select-explanation'>Send me a digest</div>
+          <Select
+            onChange={updateSetting('digestFrequency')}
+            selected={settings['digestFrequency']}
+            options={[
+              { id: 'daily', label: 'Daily' },
+              { id: 'weekly', label: 'Weekly' },
+              { id: 'never', label: 'Never' }
+            ]} />
+        </div>
+      </div>
+      <div styleName='global-setting'>
+        <div styleName='prompt'>How would you like to receive notifications about
+        new comments on posts you're following?</div>
+        <div styleName='setting-select'>
+          <div styleName='select-explanation'>Notify me via</div>
+          <Select
+            onChange={updateSetting('commentNotifications')}
+            selected={getSetting('commentNotifications')}
+            options={notificationOptions} />
+        </div>
+      </div>
       <div>
         <MessageSettingsRow
           settings={messageSettings}
@@ -134,7 +142,7 @@ export default class NotificationSettingsTab extends Component {
 export function MessageSettingsRow ({ settings, updateMessageSettings }) {
   return <SettingsRow
     iconName='Messages'
-    name='Messages'
+    name='Direct Messages'
     settings={settings}
     update={updateMessageSettings} />
 }
@@ -156,39 +164,32 @@ export function MembershipSettingsRow ({ membership, updateMembershipSettings })
 }
 
 export class SettingsRow extends React.Component {
-  state = {
-    expanded: false
-  }
-
-  toggleExpand = () => {
-    this.setState({
-      expanded: !this.state.expanded
-    })
-  }
-
   render () {
     const { iconName, imageUrl, name, settings, update } = this.props
-    const { expanded } = this.state
 
     const imageStyle = bgImageStyle(imageUrl)
 
-    return <div styleName={cx('settingsRow', { expanded })}>
+    return <div styleName={cx('settingsRow')}>
       <div styleName='nameRow'>
         {iconName && <Icon name={iconName} styleName='avatarIcon' />}
         {!iconName && <div styleName='groupAvatar' style={imageStyle} />}
         <span styleName='name'>{name}</span>
-        <Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='arrowIcon' onClick={this.toggleExpand} />
       </div>
-      {expanded && <div styleName='iconRow'>
+      <div styleName='iconRow'>
         <SettingsIcon settingKey='sendPushNotifications' name='PushNotification' settings={settings} update={update} />
         <SettingsIcon settingKey='sendEmail' name='EmailNotification' settings={settings} update={update} />
-      </div>}
+      </div>
     </div>
   }
 }
 
 export function SettingsIcon ({ settingKey, name, update, settings }) {
-  return <Icon name={name}
-    styleName={cx('icon', { highlightIcon: settings[settingKey] })}
-    onClick={() => update({ [settingKey]: !settings[settingKey] })} />
+  const settingStatus = settings[settingKey] ? 'On' : 'Off'
+
+  return <div styleName={cx('setting-controls', { highlightIcon: settings[settingKey] })}
+    onClick={() => update({ [settingKey]: !settings[settingKey] })} >
+    <Icon name={name}
+      styleName={cx('icon', { highlightIcon: settings[settingKey] })} />
+    <span styleName='setting-status'>{settingStatus}</span>
+  </div>
 }
