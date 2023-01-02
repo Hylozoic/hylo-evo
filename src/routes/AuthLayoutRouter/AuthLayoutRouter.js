@@ -76,7 +76,8 @@ export default function AuthLayoutRouter (props) {
       '/groups/:joinGroupSlug/join/:accessCode',
       '/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)?',
       '/:context(all|public)/:view(events|groups|map|members|projects|settings|stream|topics)?',
-      '/:context(all|welcome)'
+      '/:context(all|welcome)',
+      '/:context(my)?'
     ])?.params || { context: 'all' }
   ), [location.pathname])
   const hasDetail = !!matchPath(location.pathname, [
@@ -86,7 +87,8 @@ export default function AuthLayoutRouter (props) {
 
   const paramPostId = matchPath(location.pathname, [
     `/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`,
-    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)/${POST_DETAIL_MATCH}`
+    `/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)/${POST_DETAIL_MATCH}`,
+    `/:context(my)/:view(mentions|interactions|posts|announcements)/${POST_DETAIL_MATCH}`
   ])?.params?.postId
   const currentGroupSlug = pathMatchParams?.groupSlug
   const isMapView = pathMatchParams?.view === 'map'
@@ -240,6 +242,7 @@ export default function AuthLayoutRouter (props) {
                 `/:context(groups)/:groupSlug/:view(events|explore|groups|map|members|projects|settings|stream|topics)/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/:view(custom)/:customViewId/${OPTIONAL_POST_MATCH}`,
                 `/:context(groups)/:groupSlug/${OPTIONAL_POST_MATCH}`,
+                `/:context(my)/:view(mentions|interactions|posts|announcements)/${OPTIONAL_POST_MATCH}`,
                 `/:view(members)/:personId/${OPTIONAL_POST_MATCH}`,
                 `/${POST_DETAIL_MATCH}`,
                 '/messages',
@@ -276,7 +279,7 @@ export default function AuthLayoutRouter (props) {
           <Route
             path={[
               '/:context(groups)/:groupSlug/:view?',
-              '/:context(all|public)/:view?'
+              '/:context(all|public|my)/:view?'
             ]}
             component={routeProps => {
               if (routeProps.match.params.context === 'groups' && (!currentGroup || !currentGroupMembership)) return null
@@ -346,6 +349,9 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} exact component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path='/:context(groups)/:groupSlug' component={returnDefaultRouteForGroup(currentGroup)} />
               <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              {/* **** My Routes **** */}
+              <Route path='/:context(my)/:view(mentions|interactions|posts|announcements)' component={Stream} />
+              <RedirectRoute exact path='/my' to='/my/mentions' />
               {/* **** Other Routes **** */}
               <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />
@@ -370,7 +376,7 @@ export default function AuthLayoutRouter (props) {
           <div styleName={cx('detail', { hidden: !hasDetail })} id={DETAIL_COLUMN_ID}>
             {/* NOTE: These routes could potentially be simply: `(.*)/${POST_DETAIL_MATCH}` and`(.*)/${GROUP_DETAIL_MATCH}` */}
             <Switch>
-              <Route path={`/:context(all|public)/:view(events|explore|groups|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path={`/:context(all|public|my)/:view(events|explore|groups|map|projects|stream|mentions|interactions|posts|announcements)/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(all|public)/:view(topics)/:topicName/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(all|public)/:view(map)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(public)/:view(groups)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />

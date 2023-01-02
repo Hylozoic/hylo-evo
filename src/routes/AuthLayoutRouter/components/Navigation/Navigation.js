@@ -46,10 +46,34 @@ export default function Navigation (props) {
   // store/models/Group/PUBLIC_CONTEXT_ID (public-context)
   // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
+  const isMyContext = routeParams.context === 'my'
 
   const customViews = (group && group.customViews && group.customViews.toRefArray()) || []
 
-  const links = compact([
+  const myLinks = [
+    {
+      label: 'Mentions',
+      icon: 'Email',
+      to: '/my/mentions'
+    },
+    {
+      label: 'Interactions',
+      icon: 'Support',
+      to: '/my/interactions'
+    },
+    {
+      label: 'My Posts',
+      icon: 'AddImage',
+      to: '/my/posts'
+    },
+    {
+      label: 'Announcements',
+      icon: 'Announcement',
+      to: '/my/announcements'
+    }
+  ]
+
+  const regularLinks = compact([
     createPath && {
       label: 'Create',
       icon: 'Create',
@@ -108,6 +132,7 @@ export default function Navigation (props) {
 
   const collapserState = collapsed ? 'collapser-collapsed' : 'collapser'
   const canView = !group || group.memberCount !== 0
+  const links = isMyContext ? myLinks : regularLinks
 
   return (
     <div styleName={cx({ mapView }, collapserState, { showGroupMenu: isGroupMenuOpen })} className={className}>
@@ -130,7 +155,7 @@ export default function Navigation (props) {
             </li>
           </ul>
         )}
-        {!hideTopics && canView && (
+        {!hideTopics && canView && !isMyContext && (
           <TopicNavigation
             collapsed={collapsed}
             backUrl={rootPath}

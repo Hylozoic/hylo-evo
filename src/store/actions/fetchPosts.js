@@ -14,6 +14,11 @@ export default function fetchPosts ({ activePostsOnly, afterTime, beforeTime, co
     query = postsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
+  } else if (context === 'my') {
+    // TODO this will be edited to add My Home queries
+    query = postsQuery
+    extractModel = 'Post'
+    getItems = get('payload.data.posts')
   } else {
     throw new Error(`FETCH_POSTS with context=${context} is not implemented`)
   }
