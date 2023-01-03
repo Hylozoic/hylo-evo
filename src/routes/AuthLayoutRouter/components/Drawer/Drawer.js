@@ -142,7 +142,7 @@ export function ContextRow ({
   const showBadge = newPostCount > 0
   const path = explicitPath || baseUrl({ context, groupSlug: slug })
   return (
-    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation?.pathname === path || (path.includes(myPath) && currentLocation?.pathname.includes(myPath) )})}>
+    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation?.pathname === path || (path.includes(myPath) && currentLocation?.pathname.includes(myPath)) })}>
       <Link to={path} styleName='s.contextRowLink' title={name}>
         <div styleName='s.contextRowAvatar' style={imageStyle} />
         <span styleName='s.group-name'>{name}</span>

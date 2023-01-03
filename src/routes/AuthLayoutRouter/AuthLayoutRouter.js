@@ -265,7 +265,7 @@ export default function AuthLayoutRouter (props) {
           '/:context(groups)/:groupSlug/create',
           '/:context(groups)/:groupSlug/(.*)/create',
           '/:context(public|all)/:view(topics)/:topicName/create',
-          '/:context(public|all)/:view(map|events|projects)/create',
+          '/:context(public|all|my)/:view(map|events|projects||mentions|interactions|posts|announcements)/create',
           '/:context(public|all)/create',
           '/:context(public|all)/(.*)/create',
           `(.*)/${REQUIRED_EDIT_POST_MATCH}`

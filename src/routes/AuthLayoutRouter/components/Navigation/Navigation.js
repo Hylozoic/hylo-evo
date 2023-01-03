@@ -8,6 +8,7 @@ import NavLink from './NavLink'
 import TopicNavigation from './TopicNavigation'
 import { GROUP_TYPES } from 'store/models/Group'
 import './Navigation.scss'
+import { CONTEXT_MY } from 'store/constants'
 
 export default function Navigation (props) {
   const {
@@ -46,11 +47,16 @@ export default function Navigation (props) {
   // store/models/Group/PUBLIC_CONTEXT_ID (public-context)
   // and here and in Drawer, etc (public)
   const isPublic = routeParams.context === 'public'
-  const isMyContext = routeParams.context === 'my'
+  const isMyContext = routeParams.context === CONTEXT_MY
 
   const customViews = (group && group.customViews && group.customViews.toRefArray()) || []
 
   const myLinks = [
+    createPath && {
+      label: 'Create',
+      icon: 'Create',
+      to: createPath
+    },
     {
       label: 'Mentions',
       icon: 'Email',
