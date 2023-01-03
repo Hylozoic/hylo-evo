@@ -116,9 +116,13 @@ export default class NotificationSettingsTab extends Component {
         </div>
       </div>
       <div>
+        <div styleName='individual-groups'>NOTIFICATIONS</div>
         <MessageSettingsRow
           settings={messageSettings}
           updateMessageSettings={this.updateMessageSettings} />
+
+        <div styleName='individual-groups'>GROUP NOTIFICATIONS</div>
+
         <AllGroupsSettingsRow
           settings={allGroupsSettings}
           updateAllGroups={this.updateAllGroupsAlert} />

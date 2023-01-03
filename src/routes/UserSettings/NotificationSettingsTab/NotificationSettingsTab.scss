@@ -103,6 +103,13 @@
   margin: -70px auto $space-8x auto;
 }
 
+.individual-groups {
+  color: rgba(129, 140, 155, 1.0);
+  font-size: 12px;
+  margin-top: 25px;
+  margin-bottom: 0;
+}
+
 .setting-controls {
   display: flex;
   align-items: center;
@@ -157,8 +164,6 @@
 .save-button {
   margin: 0 auto;
 }
-
-// go through above to remove dead code
 
 // SettingsRow
 .settingsRow {
