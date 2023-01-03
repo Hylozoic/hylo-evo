@@ -1,4 +1,4 @@
-import { array, func, object, number, string, bool } from 'prop-types'
+import { array, func, object, number, string } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -9,11 +9,12 @@ import PeopleTyping from 'components/PeopleTyping'
 import { inIframe } from 'util/index'
 
 import './Comments.scss'
+
 export default class Comments extends Component {
   static propTypes = {
     comments: array,
-    commentsPending: bool,
-    selectedCommentId: number,
+    commentsPending: object,
+    selectedCommentId: string,
     commentsTotal: number,
     fetchComments: func,
     height: number,
@@ -33,18 +34,23 @@ export default class Comments extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    this.ensureSelectedCommentPresent()
+    if (this.props.selectedCommentId !== prevProps.selectedCommentId) {
+      this.ensureSelectedCommentPresent()
+    }
   }
 
   ensureSelectedCommentPresent () {
     const { comments, commentsPending, selectedCommentId } = this.props
-    const commentIds = []
-    if (comments.length < 1) return
-    comments.forEach(comment => {
-      commentIds.push(comment.id)
-      comment.childComments.forEach(comment => commentIds.push(comment.id))
-    })
-    if (!commentsPending && !commentIds.includes(selectedCommentId && selectedCommentId.toString())) this.props.fetchComments().then(() => this.forceUpdate())
+    if (selectedCommentId && comments.length > 0) {
+      const commentIds = []
+      comments.forEach(comment => {
+        commentIds.push(comment.id)
+        comment.childComments.forEach(comment => commentIds.push(comment.id))
+      })
+      if (!commentsPending && !commentIds.includes(selectedCommentId.toString())) {
+        this.props.fetchComments().then(() => this.forceUpdate())
+      }
+    }
   }
 
   scrollToReplyInput (elem) {
