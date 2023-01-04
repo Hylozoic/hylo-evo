@@ -1,4 +1,4 @@
-import { isEmpty, get } from 'lodash/fp'
+import { isEmpty } from 'lodash/fp'
 import { connect } from 'react-redux'
 import getRouteParam from 'store/selectors/getRouteParam'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
