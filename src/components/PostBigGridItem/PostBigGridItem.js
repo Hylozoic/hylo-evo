@@ -68,8 +68,8 @@ export default function PostBigGridItem (props) {
         {childPost &&
           <div
             styleName='icon-container'
-            data-tip='Post from Subgroup'
-            data-for='subgroup-tt'
+            data-tip='Post from child group'
+            data-for='childgroup-tt'
           >
             {/* TODO: i18n on tooltip */}
             <Icon
@@ -78,7 +78,7 @@ export default function PostBigGridItem (props) {
             />
             <Tooltip
               delay={250}
-              id='subgroup-tt'
+              id='childgroup-tt'
             />
           </div>}
         {post.type === 'event' &&

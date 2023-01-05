@@ -70,7 +70,7 @@ export default function PostCard (props) {
       {childPost &&
         <div styleName='child-post-label'>
           <Icon name='Subgroup' styleName='icon' />
-          <span>Post from <b>Subgroup</b></span>
+          <span>Post from <b>child group</b></span>
           {/* TODO: i18n */}
         </div>}
       <div

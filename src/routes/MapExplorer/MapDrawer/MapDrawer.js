@@ -141,8 +141,8 @@ function MapDrawer (props) {
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
           <span onClick={handleChildPostInclusion}
-            data-tip='Show Subgroup Posts?'
-            data-for='subgroup-toggle-tt'
+            data-tip='Show child group posts?'
+            data-for='childgroup-toggle-tt'
           >
             {/* TODO: i18n on tooltip */}
             <Icon
@@ -152,7 +152,7 @@ function MapDrawer (props) {
           </span>
           <Tooltip
             delay={250}
-            id='subgroup-toggle-tt'
+            id='childgroup-toggle-tt'
             position='bottom'
           />
           <span>Sort posts by:</span>

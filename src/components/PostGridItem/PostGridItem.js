@@ -45,8 +45,8 @@ export default function PostGridItem (props) {
         {childPost &&
           <div
             styleName='icon-container'
-            data-tip='Post from Subgroup'
-            data-for='subgroup-tt'
+            data-tip='Post from child group'
+            data-for='childgroup-tt'
           >
             {/* TODO: i18n on tooltip */}
             <Icon
@@ -55,7 +55,7 @@ export default function PostGridItem (props) {
             />
             <Tooltip
               delay={250}
-              id='subgroup-tt'
+              id='childgroup-tt'
             />
           </div>}
         <h3 styleName='title'>{title}</h3>
