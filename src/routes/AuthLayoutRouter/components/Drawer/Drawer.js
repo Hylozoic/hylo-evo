@@ -6,7 +6,7 @@ import { bgImageStyle } from 'util/index'
 import { baseUrl, createGroupUrl, groupUrl } from 'util/navigation'
 import {
   ALL_GROUPS_ID, ALL_GROUPS_AVATAR_PATH, DEFAULT_AVATAR,
-  PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH, GROUP_EXPLORER_ID, GROUP_EXPLORER_AVATAR_PATH, PUBLIC_MAP_ID, PUBLIC_MAP_AVATAR_PATH
+  PUBLIC_CONTEXT_ID, PUBLIC_CONTEXT_AVATAR_PATH, GROUP_EXPLORER_ID, GROUP_EXPLORER_AVATAR_PATH, PUBLIC_MAP_ID, PUBLIC_MAP_AVATAR_PATH, MY_HOME_AVATAR_PATH, MY_HOME_ID
 } from 'store/models/Group'
 import { toggleDrawer as toggleDrawerAction } from 'routes/AuthLayoutRouter/AuthLayoutRouter.store'
 import getMyGroups from 'store/selectors/getMyGroups'
@@ -16,6 +16,8 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import cx from 'classnames'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
+
+const myPath = '/my'
 
 export const defaultContexts = [
   {
@@ -44,6 +46,14 @@ export const defaultContexts = [
   }
 ]
 
+export const myHome = {
+  id: MY_HOME_ID,
+  name: 'My Home',
+  groups: [],
+  explicitPath: myPath,
+  avatarUrl: MY_HOME_AVATAR_PATH
+}
+
 export const allMyGroups = {
   id: ALL_GROUPS_ID,
   name: 'All My Groups',
@@ -58,7 +68,6 @@ export default function Drawer (props) {
   const dispatch = useDispatch()
   const groups = useSelector(getMyGroups)
   const canModerate = useSelector(state => props.group && getCanModerate(state, props))
-  const routeParams = props.match.params
   const { group, className } = props
 
   const toggleDrawer = () => dispatch(toggleDrawerAction())
@@ -95,16 +104,19 @@ export default function Drawer (props) {
       </div>
       <div>
         <ul styleName='s.groupsList'>
+          <ContextRow currentLocation={currentLocation} group={myHome} explicitPath={myHome.explicitPath} />
+        </ul>
+        <ul styleName='s.groupsList'>
           <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Public</li>
           {defaultContexts && defaultContexts.map(context =>
-            <ContextRow currentLocation={currentLocation} group={context} routeParams={routeParams} key={context.id} explicitPath={context.explicitPath} />
+            <ContextRow currentLocation={currentLocation} group={context} key={context.id} explicitPath={context.explicitPath} />
           )}
         </ul>
         <ul styleName='s.groupsList'>
           <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Groups</li>
-          <ContextRow currentLocation={currentLocation} group={allMyGroups} routeParams={routeParams} />
+          <ContextRow currentLocation={currentLocation} group={allMyGroups} />
           {groups.map(group =>
-            <ContextRow currentLocation={currentLocation} group={group} routeParams={routeParams} key={group.id} />
+            <ContextRow currentLocation={currentLocation} group={group} key={group.id} />
           )}
         </ul>
         <div styleName='s.newGroup'>
@@ -120,13 +132,17 @@ export default function Drawer (props) {
   )
 }
 
-export function ContextRow ({ currentLocation, group, routeParams, explicitPath }) {
+export function ContextRow ({
+  currentLocation,
+  group,
+  explicitPath
+}) {
   const { avatarUrl, context, name, newPostCount, slug } = group
   const imageStyle = bgImageStyle(avatarUrl || DEFAULT_AVATAR)
   const showBadge = newPostCount > 0
   const path = explicitPath || baseUrl({ context, groupSlug: slug })
   return (
-    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation?.pathname === path })}>
+    <li styleName={cx('s.contextRow', { 's.currentContext': currentLocation?.pathname === path || (path.includes(myPath) && currentLocation?.pathname.includes(myPath)) })}>
       <Link to={path} styleName='s.contextRowLink' title={name}>
         <div styleName='s.contextRowAvatar' style={imageStyle} />
         <span styleName='s.group-name'>{name}</span>
