@@ -46,7 +46,7 @@ export default function Consent (props) {
             <ul>
               {missingOIDCScopes.map((scope) =>
                 <li key={scope}>
-                  {scope === 'profile' ? t('Access your profile, including your name and image. ')
+                  {scope === 'profile' ? t('Access your profile, including your name and image.')
                     : scope === 'address' ? t('Access to your physical address.')
                       : scope === 'email' ? t('Access to your email address.')
                         : scope === 'phone' ? t('Access to your phone number.')

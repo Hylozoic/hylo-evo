@@ -79,7 +79,7 @@ export default function GroupSearch ({ viewFilter }) {
             {filterToggle && <Icon name='Ex' styleName='remove-button' />}
           </div>
           : <div id='div-left-intentionally-blank' />}
-        {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, t('Sort by: '))}
+        {makeDropdown(sortBy, sortOptions(nearCoord), setSortBy, `${t('Sort by')}: `)}
       </div>
       {filterToggle && viewFilter === FARM_VIEW &&
         <div styleName='filter-list'>
