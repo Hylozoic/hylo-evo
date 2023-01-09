@@ -35,7 +35,7 @@ export default function Consent (props) {
 
       <div>
         {previousAuthsOnly
-          ? <p>{appName} is asking you to confirm previously given authorization</p>
+          ? <p styleName='previousAuth'>{appName} is asking you to confirm previously given authorization</p>
           : ''
         }
 

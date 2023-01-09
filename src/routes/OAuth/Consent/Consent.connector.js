@@ -25,7 +25,7 @@ export function mapStateToProps (state, props) {
   }
 
   const missingResourceScopes = getQuerystringParam('missingResourceScopes', state, props) || []
-  const previousAuthsOnly = !isEmpty(missingOIDCScopes) && !isEmpty(missingOIDCClaims) && !isEmpty(missingResourceScopes)
+  const previousAuthsOnly = isEmpty(missingOIDCScopes) && isEmpty(missingOIDCClaims) && isEmpty(missingResourceScopes)
 
   return {
     missingOIDCClaims,
