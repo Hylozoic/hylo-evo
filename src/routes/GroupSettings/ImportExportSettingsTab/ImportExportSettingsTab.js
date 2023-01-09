@@ -18,7 +18,7 @@ class ImportExportSettingsTab extends Component {
         <div styleName='title'>{this.props.t('Import Posts by CSV')}</div>
       </div>
       <div styleName='help'>
-        <b>{this.props.t('WARNING: This is a beta feature that at this time will not inform you of imprt errors, use at your own risk.')}</b>
+        <b>{this.props.t('WARNING: This is a beta feature that at this time will not inform you of import errors, use at your own risk.')}</b>
         <br /><br />
         {this.props.t('You can select a CSV file to import posts into {{name}}. Posts will be created by you. The file must have columns with the following headers:', { name })}
         <ul>

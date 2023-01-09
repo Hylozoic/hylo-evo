@@ -25,7 +25,7 @@ export function formatError (error, action) {
       <div styleName='error'>
         {t('Your account has no password set.')} <a href='/reset-password'>{t('Set your password here.')}</a>
         {options[0] && (
-          <span><br />{t('Or log in with ')}{options.join(t(' or '))}.</span>
+          <span><br />{`${t('Or log in with')} `}{options.join(` ${t('or')} `)}.</span>
         )}
       </div>
     )

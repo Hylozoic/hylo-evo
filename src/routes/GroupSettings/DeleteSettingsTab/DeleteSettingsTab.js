@@ -17,7 +17,7 @@ class DeleteSettingsTab extends Component {
     const { name } = group
 
     return <div styleName='container'>
-      <div styleName='title'>{this.props.t('Delete {{name}}', { name })}</div>
+      <div styleName='title'>{this.props.t('Delete {{groupName}}', { groupName: name })}</div>
       <div styleName='help'>
         {this.props.t('If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.')}
       </div>

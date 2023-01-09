@@ -102,9 +102,9 @@ class PostHeader extends PureComponent {
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
-      endString = this.props.t('Completed: {{to}}', { to })
+      endString = this.props.t('Completed: {{endTime}}', { endTime: to })
     } else {
-      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? this.props.t('Ends: {{to}}', { to }) : actualEndTime ? this.props.t('Ended: {{to}}', { to }) : false
+      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? this.props.t('Ends: {{endTime}}', { endTime: to }) : actualEndTime ? this.props.t('Ended: {{endTime}}', { endTime: to }) : false
     }
 
     let timeWindow = ''

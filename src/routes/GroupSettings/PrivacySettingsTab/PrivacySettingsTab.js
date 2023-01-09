@@ -175,15 +175,15 @@ class PrivacySettingsTab extends Component {
         </SettingsSection>
 
         { type ? <SettingsSection>
-          <h3>{this.props.t('Hide {{type}} Data', { type: startCase(type) })}</h3>
-          <p styleName='styles.dataDetail'>{this.props.t('If you don\'t want to display the detailed {{type}} specific data on your group\'s profile', { type })}</p>
+          <h3>{this.props.t('Hide {{postType}} Data', { postType: startCase(type) })}</h3>
+          <p styleName='styles.dataDetail'>{this.props.t('If you don\'t want to display the detailed {{postType}} specific data on your group\'s profile', { postType: type })}</p>
           <div styleName={cx({ 'general.switchContainer': true, 'general.on': hideExtensionData })}>
             <SwitchStyled
               checked={hideExtensionData}
               onChange={() => this.updateSettingDirectly('settings.hideExtensionData')(hideExtensionData === undefined || hideExtensionData === null || !hideExtensionData)}
               backgroundColor={hideExtensionData ? '#0DC39F' : '#8B96A4'}
             />
-            <span styleName='general.toggleDescription'>{this.props.t('Hide {{type}} data for this group)', { type })}</span>
+            <span styleName='general.toggleDescription'>{this.props.t('Hide {{postType}} data for this group', { postType: type })}</span>
             <div styleName='general.onOff'>
               <div styleName='general.off'>{this.props.t('OFF')}</div>
               <div styleName='general.on'>{this.props.t('ON')}</div>

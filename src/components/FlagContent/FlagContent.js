@@ -68,7 +68,7 @@ class FlagContent extends PureComponent {
     const { highlightRequired } = this.state
 
     const required = !this.isExplanationOptional(selectedCategory) && highlightRequired
-      ? this.props.t(' (explanation required)')
+      ? ` ${this.props.t('(explanation required)')}`
       : ''
     const subtitle = this.props.t(`Why was this {{type}} '{{selectedCategory}}'{{required}}?`, { type,
       selectedCategory,

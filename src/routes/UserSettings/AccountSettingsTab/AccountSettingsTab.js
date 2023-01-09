@@ -79,7 +79,7 @@ class AccountSettingsTab extends Component {
       })
     }
 
-    setConfirm(this.props.t('You have unsaved changes. Are you sure you want to leave?'))
+    setConfirm(this.props.t('You have unsaved changes, are you sure you want to leave?'))
     this.setState({
       changed: {
         ...changed,

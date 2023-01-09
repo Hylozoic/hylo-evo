@@ -76,7 +76,7 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
 export function GroupLeaderSection ({ descriptor, leaders, slug }) {
   const { t } = useTranslation()
   return <div styleName='leader-section'>
-    <div styleName='header leader-header'>{t('Group {{descriptor}}', { descriptor })}</div>
+    <div styleName='header leader-header'>{t('Group {{locationDescriptor}}', { locationDescriptor: descriptor })}</div>
     {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} />)}
   </div>
 }
