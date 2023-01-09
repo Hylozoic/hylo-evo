@@ -2,6 +2,8 @@ import cx from 'classnames'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import isWebView from 'util/webView'
+import Tooltip from 'components/Tooltip'
+
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import Dropdown from 'components/Dropdown'
 import { GroupCard } from 'components/Widget/GroupsWidget/GroupsWidget'
@@ -15,7 +17,9 @@ import { STREAM_SORT_OPTIONS } from 'util/constants'
 import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
-  let {
+  const {
+    changeChildPostInclusion,
+    childPostInclusion,
     context,
     currentUser,
     fetchPostsForDrawer,
@@ -60,6 +64,11 @@ function MapDrawer (props) {
   const tabs = { 'Posts': numTotalPosts, 'Groups': groups.length }
   if (context !== 'public') {
     tabs['Members'] = members.length
+  }
+
+  const handleChildPostInclusion = () => {
+    const updatedValue = childPostInclusion === 'yes' ? 'no' : 'yes'
+    changeChildPostInclusion(updatedValue)
   }
 
   return (
@@ -131,6 +140,21 @@ function MapDrawer (props) {
 
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
+          <span onClick={handleChildPostInclusion}
+            data-tip='Show child group posts?'
+            data-for='childgroup-toggle-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
+            />
+          </span>
+          <Tooltip
+            delay={250}
+            id='childgroup-toggle-tt'
+            position='bottom'
+          />
           <span>Sort posts by:</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>

@@ -55,9 +55,16 @@ export default class Events extends Component {
   render () {
     const {
       collapsedState,
-      routeParams, querystringParams, group, currentUser,
-      newPost, currentUserHasMemberships,
-      membershipsPending, pending, posts,
+      currentUser,
+      currentUserHasMemberships,
+      group,
+      groupSlug,
+      membershipsPending,
+      newPost,
+      pending,
+      posts,
+      querystringParams,
+      routeParams,
       timeframe, updateTimeframe
     } = this.props
     const { context } = routeParams
@@ -108,8 +115,10 @@ export default class Events extends Component {
 
           {posts.map(post => {
             const expanded = post.id === routeParams.postId
+            const groupSlugs = post.groups.map(group => group.slug)
             return (
               <PostCard
+                childPost={!groupSlugs.includes(groupSlug)}
                 routeParams={routeParams}
                 post={post}
                 styleName={cx('s.event-card', { 's.expanded': expanded })}

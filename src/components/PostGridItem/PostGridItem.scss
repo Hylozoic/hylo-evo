@@ -11,6 +11,23 @@
   transition: all .25s ease;
 }
 
+.icon-container {
+  background: $color-white;
+  box-shadow: 0px 4px 4px rgba(47, 63, 87, 0.2);
+  border-radius: 5px;
+  padding: 2px;
+  height: 24px;
+  position: absolute;
+  right: 3px;
+  top: 1px;
+}
+
+.icon {
+  font-size: 12px;
+  position: relative;
+  padding: 2px;
+}
+
 .post-grid-item-container.image {
 
   .content-summary {

@@ -52,6 +52,7 @@ export function verifyEmail (email, code, token) {
                 dmNotifications
                 commentNotifications
                 signupInProgress
+                streamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType
@@ -97,6 +98,7 @@ export function register (name, password) {
                 dmNotifications
                 commentNotifications
                 signupInProgress
+                streamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType

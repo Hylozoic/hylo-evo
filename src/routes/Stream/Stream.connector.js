@@ -72,8 +72,9 @@ export function mapStateToProps (state, props) {
   const projectsDefault = view === 'projects' ? 'bigGrid' : null
   const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
+  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
-  const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search'], null, props)
   const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
   const search = getQuerystringParam('search', state, props)
   let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
@@ -82,9 +83,11 @@ export function mapStateToProps (state, props) {
     sortBy = 'updated'
   }
   const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
+  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
 
   const fetchPostsParam = {
     activePostsOnly,
+    childPostInclusion,
     context,
     topicName,
     filter: postTypeFilter,
@@ -106,6 +109,7 @@ export function mapStateToProps (state, props) {
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
+    childPostInclusion,
     customActivePostsOnly: activePostsOnly,
     customViewId: customView?.id,
     customViewType,
@@ -158,6 +162,10 @@ export function mapDispatchToProps (dispatch, props) {
     changeView: view => {
       updateSettings({ settings: { streamViewMode: view } })
       return dispatch(changeQuerystringParam(props, 'v', view, 'all'))
+    },
+    changeChildPostInclusion: childPostsBool => {
+      updateSettings({ settings: { streamChildPosts: childPostsBool } })
+      return dispatch(changeQuerystringParam(props, 'c', childPostsBool, 'yes'))
     },
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))

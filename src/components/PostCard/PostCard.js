@@ -3,6 +3,7 @@ import { get } from 'lodash/fp'
 import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import CardImageAttachments from 'components/CardImageAttachments'
+import Icon from 'components/Icon'
 import { POST_PROP_TYPES } from 'store/models/Post'
 import EventBody from './EventBody'
 import PostBody from './PostBody'
@@ -16,6 +17,7 @@ export { PostHeader, PostFooter, PostBody, PostGroups, EventBody }
 
 export default function PostCard (props) {
   const {
+    childPost,
     className,
     constrained,
     currentUser,
@@ -64,67 +66,76 @@ export default function PostCard (props) {
   const hasImage = post.attachments.find(a => a.type === 'image') || false
 
   return (
-    <div
-      ref={postCardRef}
-      styleName={cx('card', postType, { expanded }, { constrained })}
-      className={className}
-    >
-      <div onClick={onClick}>
-        <PostHeader
-          {...post}
-          routeParams={routeParams}
-          highlightProps={highlightProps}
-          editPost={editPost}
-          constrained={constrained}
-          hasImage={hasImage}
-        />
-      </div>
-      <div onClick={onClick}>
-        <CardImageAttachments attachments={post.attachments} />
-      </div>
-      {isEvent && (
-        <div styleName='bodyWrapper'>
-          <EventBody
-            onClick={onClick}
-            currentUser={currentUser}
-            event={post}
-            slug={routeParams.groupSlug}
-            respondToEvent={respondToEvent}
-            constrained={constrained}
-          />
-        </div>
-      )}
-      {!isEvent && (
-        <div>
-          <PostBody
+    <>
+      {childPost &&
+        <div styleName='child-post-label'>
+          <Icon name='Subgroup' styleName='icon' />
+          <span>Post from <b>child group</b></span>
+          {/* TODO: i18n */}
+        </div>}
+      <div
+        ref={postCardRef}
+        styleName={cx('card', postType, { expanded }, { constrained })}
+        className={className}
+      >
+        <div onClick={onClick}>
+          <PostHeader
             {...post}
-            onClick={onClick}
-            slug={routeParams.groupSlug}
+            routeParams={routeParams}
+            highlightProps={highlightProps}
+            editPost={editPost}
             constrained={constrained}
-            currentUser={currentUser}
+            hasImage={hasImage}
           />
         </div>
-      )}
-      <div onClick={onClick}>
-        <PostGroups
-          isPublic={post.isPublic}
-          groups={post.groups}
-          slug={routeParams.groupSlug}
+        <div onClick={onClick}>
+          <CardImageAttachments attachments={post.attachments} />
+        </div>
+        {isEvent && (
+          <div styleName='bodyWrapper'>
+            <EventBody
+              onClick={onClick}
+              currentUser={currentUser}
+              event={post}
+              slug={routeParams.groupSlug}
+              respondToEvent={respondToEvent}
+              constrained={constrained}
+            />
+          </div>
+        )}
+        {!isEvent && (
+          <div>
+            <PostBody
+              {...post}
+              onClick={onClick}
+              slug={routeParams.groupSlug}
+              constrained={constrained}
+              currentUser={currentUser}
+            />
+          </div>
+        )}
+        <div onClick={onClick}>
+          <PostGroups
+            isPublic={post.isPublic}
+            groups={post.groups}
+            slug={routeParams.groupSlug}
+            constrained={constrained}
+          />
+        </div>
+        <PostFooter
+          {...post}
+          onClick={onClick}
           constrained={constrained}
+          currentUser={currentUser}
+          postId={post.id}
         />
       </div>
-      <PostFooter
-        {...post}
-        onClick={onClick}
-        constrained={constrained}
-        currentUser={currentUser}
-        postId={post.id}
-      />
-    </div>
+    </>
   )
 }
 
 PostCard.propTypes = {
+  childPost: PropTypes.bool,
   routeParams: PropTypes.object,
   post: PropTypes.shape(POST_PROP_TYPES),
   editPost: PropTypes.func,

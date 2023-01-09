@@ -34,20 +34,39 @@ const makeDropdown = (selected, options, onChange) => (
 )
 
 const StreamViewControls = (props) => {
-  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view, customPostTypes } = props
+  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
+
   const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? POST_TYPE_OPTIONS.filter(postType => postType.label === 'All Posts' || customPostTypes.includes(postType.id)) : POST_TYPE_OPTIONS
   const handleSearchToggle = () => {
     setSearchActive(!searchActive)
+  }
+  const handleChildPostInclusion = () => {
+    const updatedValue = childPostInclusion === 'yes' ? 'no' : 'yes'
+    changeChildPostInclusion(updatedValue)
   }
 
   return (
     <div styleName={cx('stream-view-container', { 'search-active': searchActive || searchValue, extend: searchActive && searchValue })}>
       <div styleName='stream-view-ctrls'>
-        <div styleName={cx('search-toggle', { active: searchActive })} onClick={handleSearchToggle}>
-          <Icon name='Search' styleName={cx('search-icon', { active: searchActive })} />
+        <div styleName={cx('toggle', { active: searchActive })} onClick={handleSearchToggle}>
+          <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
         </div>
+        {/* TODO: i18n on tooltip */}
+        <div
+          styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })}
+          onClick={handleChildPostInclusion}
+          data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
+          data-for='childgroup-toggle-tt'
+        >
+          <Icon name='Subgroup' styleName={cx('toggle-icon', 'subgroup-icon', { active: childPostInclusion === 'yes' })} />
+        </div>
+        <Tooltip
+          delay={250}
+          id='childgroup-toggle-tt'
+          position='bottom'
+        />
         <div styleName='view-mode'>
           <div
             styleName={cx({ 'mode-active': viewMode === 'cards' })}
