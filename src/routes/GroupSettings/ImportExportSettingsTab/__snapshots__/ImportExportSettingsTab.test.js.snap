@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
     data-stylename="help"
   >
     <b>
-      WARNING: This is a beta feature that at this time will not inform you of imprt errors, use at your own risk.
+      WARNING: This is a beta feature that at this time will not inform you of import errors, use at your own risk.
     </b>
     <br />
     <br />
