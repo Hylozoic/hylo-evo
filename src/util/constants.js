@@ -442,6 +442,10 @@ export const PRODUCT_CATEGORIES = [
   {
     value: 'live_animal_sales_export',
     label: 'Live Animal Sales, Export'
+  },
+  {
+    value: 'other',
+    label: 'Other'
   }
 ]
 
