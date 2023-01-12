@@ -13,6 +13,7 @@ import PostBigGridItem from 'components/PostBigGridItem'
 import ScrollListener from 'components/ScrollListener'
 import ViewControls from 'components/StreamViewControls'
 import TopicFeedHeader from 'components/TopicFeedHeader'
+import { CONTEXT_MY } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Stream.scss'
 
@@ -164,7 +165,7 @@ export default class Stream extends Component {
         <ViewControls
           routeParams={routeParams} view={view} customPostTypes={customPostTypes} customViewType={customViewType}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
-          changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
+          changeTab={changeTab} context={context} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
           changeChildPostInclusion={changeChildPostInclusion} childPostInclusion={childPostInclusion}
         />
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
@@ -182,7 +183,7 @@ export default class Stream extends Component {
                 currentUser={currentUser}
                 respondToEvent={respondToEvent}
                 querystringParams={querystringParams}
-                childPost={!groupSlugs.includes(groupSlug)}
+                childPost={![CONTEXT_MY, 'all', 'public'].includes(context) && !groupSlugs.includes(groupSlug)}
               />
             )
           })}
