@@ -3,6 +3,7 @@ import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
+import { CONTEXT_MY } from 'store/constants'
 import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
 
 import './StreamViewControls.scss'
@@ -34,7 +35,7 @@ const makeDropdown = (selected, options, onChange) => (
 )
 
 const StreamViewControls = (props) => {
-  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion } = props
+  const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, context, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
 
@@ -54,14 +55,16 @@ const StreamViewControls = (props) => {
           <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
         </div>
         {/* TODO: i18n on tooltip */}
-        <div
-          styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })}
-          onClick={handleChildPostInclusion}
-          data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
-          data-for='childgroup-toggle-tt'
-        >
-          <Icon name='Subgroup' styleName={cx('toggle-icon', 'subgroup-icon', { active: childPostInclusion === 'yes' })} />
-        </div>
+        {![CONTEXT_MY, 'all', 'public'].includes(context) &&
+          <div
+            styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })}
+            onClick={handleChildPostInclusion}
+            data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
+            data-for='childgroup-toggle-tt'
+          >
+            <Icon name='Subgroup' styleName={cx('toggle-icon', 'subgroup-icon', { active: childPostInclusion === 'yes' })} />
+          </div>
+        }
         <Tooltip
           delay={250}
           id='childgroup-toggle-tt'
