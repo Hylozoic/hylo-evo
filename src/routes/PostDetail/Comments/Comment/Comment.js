@@ -7,16 +7,17 @@ import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl } from 'util/navigation'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import ShowMore from '../ShowMore'
-import Tooltip from 'components/Tooltip'
 import Avatar from 'components/Avatar'
-import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
+import CardFileAttachments from 'components/CardFileAttachments'
+import CardImageAttachments from 'components/CardImageAttachments'
+import CommentForm from '../CommentForm'
 import EmojiRow from 'components/EmojiRow'
 import HyloEditor from 'components/HyloEditor'
-import CardImageAttachments from 'components/CardImageAttachments'
-import CardFileAttachments from 'components/CardFileAttachments'
-import CommentForm from '../CommentForm'
+import HyloHTML from 'components/HyloHTML/HyloHTML'
+import Icon from 'components/Icon'
+import ShowMore from '../ShowMore'
+import Tooltip from 'components/Tooltip'
 import styles from './Comment.scss'
 
 const { object, func } = PropTypes
@@ -142,31 +143,30 @@ export class Comment extends Component {
             <CardFileAttachments attachments={attachments} styleName='files' />
           </div>
         }
-        <ClickCatcher groupSlug={slug}>
-          {/* Renders and provides editor */}
+        {editing && (
           <HyloEditor
-            styleName={editing ? 'editing' : 'text'}
-            contentHTML={text || ''}
-            readOnly={!editing}
+            styleName='editing'
+            contentHTML={text}
             onEscape={this.handleEditCancel}
             onEnter={this.handleEditSave}
             ref={this.editor}
           />
-
-          {!editing && (
-            <>
-              <EmojiRow
-                className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
-                commentReactions={comment.commentReactions}
-                myReactions={comment.myReactions}
-                currentUser={currentUser}
-                postId={comment.post}
-                commentId={comment.id}
-              />
-            </>
-          )}
-
-        </ClickCatcher>
+        )}
+        {!editing && (
+          <>
+            <ClickCatcher groupSlug={slug}>
+              <HyloHTML styleName='text' html={text} />
+            </ClickCatcher>
+            <EmojiRow
+              className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
+              commentReactions={comment.commentReactions}
+              myReactions={comment.myReactions}
+              currentUser={currentUser}
+              postId={comment.post}
+              commentId={comment.id}
+            />
+          </>
+        )}
       </div>
     )
   }
