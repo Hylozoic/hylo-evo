@@ -53,6 +53,17 @@ So to recap, if you want to interact with the backend and ensure some data is av
 - has an appropriate `meta.modelExtractor`
 - optionally includes a `meta.optimistic === true` property if you want to optimisitically update the local store
 
+### Non-logged in Routing
+For users that are not logged in can see public posts and groups via routes like
+
+`/groups/:groupSlug` => Group Detail view 
+`/public/groups` => Group Explorer
+`/post/:postId` => Post Detail
+`/public/map` => Map Explorer (public)
+
+`/groups/:groupSlug/:view/post/:postId` => `/post/:postId`
+`/public/post/:postId` => `/post/:postId`
+
 ### Sockets
 
 Chat, in-app notifications and comments use sockets to update users in real-time. In the future, new posts will also use sockets to show up in real-time.
