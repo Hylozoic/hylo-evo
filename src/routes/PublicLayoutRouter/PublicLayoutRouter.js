@@ -28,10 +28,8 @@ export default function PublicLayoutRouter (props) {
         <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
         <Route path='/:context(groups)/:groupSlug' exact component={PublicGroupDetail} />
         <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
-        <Route path='/:context(public)/:view(groups)(.*)' exact component={GroupExplorerLayoutRouter} />
-        {/* Remove this once we show the public stream */}
-        <Redirect exact from={`/public/${POST_DETAIL_MATCH}`} to='/post/:postId' />
-        <Redirect exact from={`/:context(groups)/:groupSlug/:view(events|groups|map|members|projects|settings|stream|topics|custom)/${POST_DETAIL_MATCH}`} to='/post/:postId' />
+        <Route path='/:context(public)/:view(groups)' component={GroupExplorerLayoutRouter} />
+        <Redirect from={`(.*)/${POST_DETAIL_MATCH}`} to='/post/:postId' />
         <Redirect to={{ pathname: '/public/map', state: { from: location } }} />
       </Switch>
       <HyloCookieConsent />
