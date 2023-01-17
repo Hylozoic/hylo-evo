@@ -210,3 +210,6 @@ export const PUBLIC_MAP_AVATAR_PATH = '/assets/earth.svg'
 
 export const PUBLIC_CONTEXT_ID = 'public-context'
 export const PUBLIC_CONTEXT_AVATAR_PATH = '/public.svg'
+
+export const MY_HOME_ID = 'my-home'
+export const MY_HOME_AVATAR_PATH = '/my-home.svg'

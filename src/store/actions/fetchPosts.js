@@ -1,16 +1,39 @@
 import { get } from 'lodash/fp'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
-import { FETCH_POSTS } from 'store/constants'
+import { CONTEXT_MY, FETCH_POSTS } from 'store/constants'
 
-export default function fetchPosts ({ activePostsOnly, afterTime, beforeTime, collectionToFilterOut, context, cursor, filter, first, forCollection, offset, order, search, slug, sortBy, topic, topics, types }) {
+export default function fetchPosts ({
+  activePostsOnly,
+  afterTime,
+  announcementsOnly,
+  beforeTime,
+  childPostInclusion = 'yes',
+  collectionToFilterOut,
+  context,
+  cursor,
+  createdBy,
+  filter,
+  first,
+  forCollection,
+  interactedWithBy,
+  mentionsOf,
+  offset,
+  order,
+  search,
+  slug,
+  sortBy,
+  topic,
+  topics,
+  types
+}) {
   let query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupQuery
+    query = groupQuery(childPostInclusion === 'yes')
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
-  } else if (context === 'all' || context === 'public') {
+  } else if (context === 'all' || context === 'public' || context === CONTEXT_MY) {
     query = postsQuery
     extractModel = 'Post'
     getItems = get('payload.data.posts')
@@ -25,13 +48,18 @@ export default function fetchPosts ({ activePostsOnly, afterTime, beforeTime, co
       variables: {
         activePostsOnly,
         afterTime,
+        announcementsOnly,
         beforeTime,
+        childPostInclusion,
         collectionToFilterOut,
         context,
         cursor,
+        createdBy,
         filter,
         first: first || 20,
         forCollection,
+        interactedWithBy,
+        mentionsOf,
         offset,
         order,
         search,
@@ -52,7 +80,7 @@ export default function fetchPosts ({ activePostsOnly, afterTime, beforeTime, co
   }
 }
 
-const groupQuery = `query GroupPostsQuery (
+const groupQuery = childPostInclusion => `query GroupPostsQuery (
   $activePostsOnly: Boolean,
   $afterTime: Date,
   $beforeTime: Date,
@@ -85,23 +113,27 @@ const groupQuery = `query GroupPostsQuery (
     avatarUrl
     bannerUrl
     postCount
-    ${groupViewPostsQueryFragment(false)}
+    ${groupViewPostsQueryFragment(childPostInclusion)}
   }
 }`
 
 const postsQuery = `query PostsQuery (
   $activePostsOnly: Boolean,
   $afterTime: Date,
+  $announcementsOnly: Boolean,
   $beforeTime: Date,
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $createdBy: [ID],
   $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
   $groupSlugs: [String],
+  $interactedWithBy: [ID],
   $isFulfilled: Boolean,
+  $mentionsOf: [ID],
   $offset: Int,
   $order: String,
   $search: String,

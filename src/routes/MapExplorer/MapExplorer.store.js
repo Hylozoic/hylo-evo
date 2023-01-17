@@ -71,16 +71,20 @@ const groupPostsQuery = (postsFragment) => `query (
 const postsQuery = (postsFragment) => `query (
   $activePostsOnly: Boolean,
   $afterTime: Date,
+  $announcementsOnly: Boolean,
   $beforeTime: Date,
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $createdBy: [ID],
   $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
   $groupSlugs: [String]
   $isFulfilled: Boolean,
+  $interactedWithBy: [ID],
+  $mentionsOf: [ID]
   $offset: Int,
   $order: String,
   $search: String,
@@ -181,11 +185,11 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
+export function fetchPostsForMap ({ activePostsOnly, childPostInclusion = 'yes', context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(`posts: viewPosts(
+    query = groupPostsQuery(`${childPostInclusion === 'yes' ? 'posts: viewPosts(' : 'posts('}
       activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
@@ -231,16 +235,20 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
     query = postsQuery(`posts(
       activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
+      announcementsOnly: $announcementsOnly,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
       context: $context,
+      createdBy: $createdBy,
       cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
       groupSlugs: $groupSlugs,
       isFulfilled: $isFulfilled,
+      interactedWithBy: $interactedWithBy,
+      mentionsOf: $mentionsOf
       offset: $offset,
       order: $order,
       sortBy: $sortBy,
@@ -304,11 +312,11 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
   }
 }
 
-export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
+export function fetchPostsForDrawer ({ activePostsOnly, childPostInclusion = 'yes', context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(groupViewPostsQueryFragment(true))
+    query = groupPostsQuery(groupViewPostsQueryFragment(childPostInclusion === 'yes'))
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {

@@ -23,6 +23,10 @@ export function publicGroupsUrl () {
   return '/public'
 }
 
+export function myHomeUrl () {
+  return '/my'
+}
+
 export function baseUrl ({
   context,
   customViewId,
@@ -46,6 +50,8 @@ export function baseUrl ({
     return allGroupsUrl()
   } else if (context === 'public') {
     return publicGroupsUrl()
+  } else if (context === 'my') {
+    return myHomeUrl()
   } else {
     return defaultUrl
   }

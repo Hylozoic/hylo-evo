@@ -95,6 +95,10 @@ a.hylo-link,
   }
 }
 
+.mention.mention-current-user {
+  color: $color-yellow-orange;
+}
+
 .hdr-display {
   @include font-bold;
   font-size: 32px;

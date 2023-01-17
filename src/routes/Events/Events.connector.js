@@ -23,6 +23,7 @@ export function mapStateToProps (state, props) {
   const currentUser = getMe(state)
   const currentUserHasMemberships = !isEmpty(getMyMemberships(state))
   const groupSlug = getRouteParam('groupSlug', state, props)
+  const childPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
   if (groupSlug) {
     group = getGroupForCurrentRoute(state, props)
@@ -31,6 +32,7 @@ export function mapStateToProps (state, props) {
   const timeframe = state.Events.timeframe
 
   const fetchPostsParam = {
+    childPostInclusion,
     afterTime: timeframe === 'future' ? new Date().toISOString() : null,
     beforeTime: timeframe === 'past' ? new Date().toISOString() : null,
     context: routeParams.context,

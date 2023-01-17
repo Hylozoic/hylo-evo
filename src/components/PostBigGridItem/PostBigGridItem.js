@@ -1,6 +1,8 @@
 import React from 'react'
 import Clamp from 'react-multiline-clamp'
 import cx from 'classnames'
+import Tooltip from 'components/Tooltip'
+
 import EventDate from 'components/PostCard/EventDate'
 import EventRSVP from 'components/PostCard/EventRSVP'
 import HyloHTML from 'components/HyloHTML'
@@ -13,6 +15,7 @@ import './PostBigGridItem.scss'
 
 export default function PostBigGridItem (props) {
   const {
+    childPost,
     routeParams,
     post,
     respondToEvent,
@@ -62,6 +65,22 @@ export default function PostBigGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType, detailClass, post.type)} onClick={attachmentType !== 'image' && post.type !== 'event' ? showDetails : null}>
       <div styleName='content-summary'>
+        {childPost &&
+          <div
+            styleName='icon-container'
+            data-tip='Post from child group'
+            data-for='childgroup-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              styleName='icon'
+            />
+            <Tooltip
+              delay={250}
+              id='childgroup-tt'
+            />
+          </div>}
         {post.type === 'event' &&
           <div styleName='date' onClick={showDetailsTargeted}>
             <EventDate {...post} />
@@ -80,15 +99,7 @@ export default function PostBigGridItem (props) {
             {post.type === 'event' &&
               <div styleName='date' onClick={showDetailsTargeted}>
                 <EventDate {...post} />
-              </div>
-            }
-            <h3 styleName='title' onClick={showDetails}>{title}</h3>
-            <div styleName='content-snippet'>
-              <Clamp lines={2}>
-                <div styleName='details' dangerouslySetInnerHTML={{ __html: details }} onClick={showDetailsTargeted} />
-              </Clamp>
-              <div styleName='fade' />
-            </div>
+              </div>}
             <h3 styleName='title' onClick={showDetails}>{title}</h3>
             <div styleName='content-snippet'>
               <Clamp lines={2}>
@@ -100,12 +111,12 @@ export default function PostBigGridItem (props) {
               {post.donationsLink && donationService &&
                 <div styleName='donate'>
                   <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>Contribute</a></div>
                 </div>}
               {post.donationsLink && !donationService &&
                 <div styleName='donate'>
                   <div>Support this project</div>
-                  <div><a styleName='project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>Contribute</a></div>
                 </div>}
               {attachmentType === 'file'
                 ? <div styleName='file-attachment'>
@@ -119,7 +130,6 @@ export default function PostBigGridItem (props) {
                   </div>
                 </div>
                 : ' '}
-
               {post.type === 'event' &&
                 <div styleName='event-response'>
                   <div>Can you go?</div>

@@ -67,7 +67,7 @@ export default function RootRouter () {
           path={[
             '/:context(public)/:view(map|groups)?',
             `(.*)/${POST_DETAIL_MATCH}`,
-            '/:context(groups)/:groupSlug'
+            '/:context(groups)/:groupSlug?'
           ]}
           component={PublicLayoutRouter}
         />

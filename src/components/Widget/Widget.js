@@ -63,7 +63,7 @@ const WIDGETS = {
     component: ProjectsWidget
   },
   group_affiliations: {
-    title: 'Subgroups',
+    title: 'Child Groups',
     component: GroupsWidget
   },
   relevant_project_activity: {

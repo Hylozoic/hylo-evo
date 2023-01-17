@@ -1,5 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
+import Tooltip from 'components/Tooltip'
+
 // import Moment from 'moment-timezone'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -10,6 +12,7 @@ import './PostGridItem.scss'
 
 export default function PostGridItem (props) {
   const {
+    childPost,
     routeParams,
     post,
     showDetails,
@@ -39,6 +42,22 @@ export default function PostGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
+        {childPost &&
+          <div
+            styleName='icon-container'
+            data-tip='Post from child group'
+            data-for='childgroup-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              styleName='icon'
+            />
+            <Tooltip
+              delay={250}
+              id='childgroup-tt'
+            />
+          </div>}
         <h3 styleName='title'>{title}</h3>
         {attachmentType === 'image'
           ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />

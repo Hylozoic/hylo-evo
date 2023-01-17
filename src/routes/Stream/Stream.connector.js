@@ -9,7 +9,7 @@ import fetchTopic from 'store/actions/fetchTopic'
 import fetchPosts from 'store/actions/fetchPosts'
 import respondToEvent from 'store/actions/respondToEvent'
 import toggleGroupTopicSubscribe from 'store/actions/toggleGroupTopicSubscribe'
-import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC } from 'store/constants'
+import { FETCH_POSTS, FETCH_TOPIC, FETCH_GROUP_TOPIC, CONTEXT_MY, VIEW_MENTIONS, VIEW_ANNOUNCEMENTS, VIEW_INTERACTIONS, VIEW_POSTS } from 'store/constants'
 import orm from 'store/models'
 import presentPost from 'store/presenters/presentPost'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -72,8 +72,9 @@ export function mapStateToProps (state, props) {
   const projectsDefault = view === 'projects' ? 'bigGrid' : null
   const defaultViewMode = get('settings.streamViewMode', currentUser) || 'cards'
   const defaultPostType = get('settings.streamPostType', currentUser) || undefined
+  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
 
-  const querystringParams = getQuerystringParam(['s', 't', 'v', 'search'], null, props)
+  const querystringParams = getQuerystringParam(['s', 't', 'v', 'c', 'search'], null, props)
   const postTypeFilter = view === 'projects' ? 'project' : getQuerystringParam('t', state, props) || defaultPostType
   const search = getQuerystringParam('search', state, props)
   let sortBy = getQuerystringParam('s', state, props) || customViewSort || defaultSortBy
@@ -82,9 +83,11 @@ export function mapStateToProps (state, props) {
     sortBy = 'updated'
   }
   const viewMode = getQuerystringParam('v', state, props) || customViewMode || projectsDefault || defaultViewMode
+  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
 
   const fetchPostsParam = {
     activePostsOnly,
+    childPostInclusion,
     context,
     topicName,
     filter: postTypeFilter,
@@ -97,10 +100,16 @@ export function mapStateToProps (state, props) {
     types: customPostTypes
   }
 
+  if (context === CONTEXT_MY && view === VIEW_MENTIONS) fetchPostsParam.mentionsOf = [currentUser.id]
+  if (context === CONTEXT_MY && view === VIEW_ANNOUNCEMENTS) fetchPostsParam.announcementsOnly = true
+  if (context === CONTEXT_MY && view === VIEW_INTERACTIONS) fetchPostsParam.interactedWithBy = [currentUser.id]
+  if (context === CONTEXT_MY && view === VIEW_POSTS) fetchPostsParam.createdBy = [currentUser.id]
+
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, groupId))
   const hasMore = getHasMorePosts(state, fetchPostsParam)
 
   return {
+    childPostInclusion,
     customActivePostsOnly: activePostsOnly,
     customViewId: customView?.id,
     customViewType,
@@ -153,6 +162,10 @@ export function mapDispatchToProps (dispatch, props) {
     changeView: view => {
       updateSettings({ settings: { streamViewMode: view } })
       return dispatch(changeQuerystringParam(props, 'v', view, 'all'))
+    },
+    changeChildPostInclusion: childPostsBool => {
+      updateSettings({ settings: { streamChildPosts: childPostsBool } })
+      return dispatch(changeQuerystringParam(props, 'c', childPostsBool, 'yes'))
     },
     changeSearch: search => {
       return dispatch(changeQuerystringParam(props, 'search', search, 'all'))

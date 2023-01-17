@@ -4,7 +4,7 @@ import Events from './Events'
 
 describe('Events', () => {
   it('renders a post list', () => {
-    const posts = [{ id: 1 }, { id: 2 }, { id: 3 }]
+    const posts = [{ id: 1, groups: [] }, { id: 2, groups: [] }, { id: 3, groups: [] }]
     const wrapper = shallow(<Events
       currentUser={{ id: 1 }}
       posts={posts}

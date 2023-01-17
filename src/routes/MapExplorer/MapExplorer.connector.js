@@ -59,12 +59,17 @@ export function mapStateToProps (state, props) {
     groupId = group.id
   }
 
+  const currentUser = getMe(state, props)
+  const defaultChildPostInclusion = get('settings.streamChildPosts', currentUser) || 'yes'
+  const childPostInclusion = getQuerystringParam('c', state, props) || defaultChildPostInclusion
+
   const hideDrawer = getQuerystringParam('hideDrawer', state, props) === 'true'
 
   // Map view parameters come from the URL query params first, and if not there then from the Redux state
   const boundingBox = get('totalBoundingBoxLoaded', state.MapExplorer)
 
   const fetchPostsParams = {
+    childPostInclusion,
     boundingBox,
     context,
     slug,
@@ -87,6 +92,7 @@ export function mapStateToProps (state, props) {
   }
 
   const fetchPostsForDrawerParams = {
+    childPostInclusion,
     context,
     slug,
     groupSlugs,
@@ -114,7 +120,6 @@ export function mapStateToProps (state, props) {
   const postsForMap = getFilteredPostsForMap(state, fetchPostsParams).map(p => presentPost(p, groupId))
   const groups = getGroupsFilteredByTopics(state, fetchGroupParams).map(g => presentGroup(g))
 
-  const me = getMe(state)
   const centerParam = getQuerystringParam('center', state, props)
   let centerLocation, defaultZoom
   if (centerParam) {
@@ -123,7 +128,7 @@ export function mapStateToProps (state, props) {
   } else {
     centerLocation = state.MapExplorer.centerLocation ||
       group?.locationObject?.center ||
-        me?.locationObject?.center ||
+        currentUser?.locationObject?.center ||
           null
   }
   if (centerLocation) {
@@ -140,13 +145,14 @@ export function mapStateToProps (state, props) {
 
   // First look for base layer style in query param, then saved local state, then user settings
   const baseStyleParam = getQuerystringParam('style', state, props)
-  const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || me?.settings?.mapBaseLayer
+  const baseLayerStyle = baseStyleParam || state.MapExplorer.baseLayerStyle || currentUser?.settings?.mapBaseLayer
 
   return {
     baseLayerStyle,
+    childPostInclusion,
     centerLocation,
     context,
-    currentUser: me,
+    currentUser,
     featureTypes: context === 'public' ? ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'group'] : ['discussion', 'request', 'offer', 'resource', 'project', 'event', 'member', 'group'],
     fetchGroupParams,
     fetchMemberParams,
@@ -197,6 +203,10 @@ export function mapDispatchToProps (dispatch, props) {
   }
 
   return {
+    changeChildPostInclusion: childPostsBool => {
+      dispatch(updateUserSettings({ settings: { streamChildPosts: childPostsBool } }))
+      return dispatch(changeQuerystringParam(props, 'c', childPostsBool, 'yes'))
+    },
     fetchMembers: (params) => () => dispatch(fetchMembers({ ...params })),
     fetchPostsForDrawer: (params) => (offset = 0, replace = true) => dispatch(fetchPostsForDrawer({ ...params, offset, replace })),
     fetchPostsForMap: (params) => () => dispatch(fetchPostsForMap({ ...params })),

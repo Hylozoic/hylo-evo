@@ -20,6 +20,7 @@ export default function checkLogin () {
               dmNotifications
               commentNotifications
               signupInProgress
+              streamChildPosts
               streamViewMode
               streamSortBy
               streamPostType

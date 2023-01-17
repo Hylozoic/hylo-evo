@@ -20,6 +20,7 @@ export default function login (email, password) {
                 dmNotifications
                 commentNotifications
                 signupInProgress
+                streamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType

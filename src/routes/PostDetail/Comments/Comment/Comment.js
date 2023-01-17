@@ -7,16 +7,17 @@ import { filter, isFunction } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl } from 'util/navigation'
 import scrollIntoView from 'scroll-into-view-if-needed'
-import ShowMore from '../ShowMore'
-import Tooltip from 'components/Tooltip'
 import Avatar from 'components/Avatar'
-import Icon from 'components/Icon'
 import ClickCatcher from 'components/ClickCatcher'
+import CardFileAttachments from 'components/CardFileAttachments'
+import CardImageAttachments from 'components/CardImageAttachments'
+import CommentForm from '../CommentForm'
 import EmojiRow from 'components/EmojiRow'
 import HyloEditor from 'components/HyloEditor'
-import CardImageAttachments from 'components/CardImageAttachments'
-import CardFileAttachments from 'components/CardFileAttachments'
-import CommentForm from '../CommentForm'
+import HyloHTML from 'components/HyloHTML/HyloHTML'
+import Icon from 'components/Icon'
+import ShowMore from '../ShowMore'
+import Tooltip from 'components/Tooltip'
 import styles from './Comment.scss'
 
 const { object, func } = PropTypes
@@ -40,6 +41,13 @@ export class Comment extends Component {
     editing: false,
     editedText: null,
     scrolledToComment: false
+  }
+
+  componentDidMount () {
+    // If this is the selected comment (e.g. from a notification) scroll to it
+    if (this.props.selectedCommentId === this.props.comment.id) {
+      setTimeout(this.handleScrollToComment.bind(this), 500)
+    }
   }
 
   handleEditComment = () => {
@@ -78,7 +86,7 @@ export class Comment extends Component {
       }
 
       if (bottom > 0 && bottom <= viewportHeight && top >= 0) { // element is contained in the viewport
-        this.setState({ scrolledToComment: true }) // user can now scroll away from comment without it snapping back to comment
+        this.setState({ scrolledToComment: true })
       }
     }
   }
@@ -86,7 +94,7 @@ export class Comment extends Component {
   render () {
     const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId } = this.props
     const { id, creator, createdAt, text, attachments } = comment
-    const { editing, scrolledToComment } = this.state
+    const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
     const profileUrl = personUrl(creator.id, slug)
     const dropdownItems = filter(item => isFunction(item.onClick), [
@@ -95,8 +103,6 @@ export class Comment extends Component {
       { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
       { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
     ])
-
-    if (this.commentRef.current && selectedCommentId === comment.id && !scrolledToComment) this.handleScrollToComment()
 
     return (
       <div ref={this.commentRef} styleName={cx({ 'commentContainer': true, 'selected-comment': selectedCommentId === comment.id })}>
@@ -137,31 +143,30 @@ export class Comment extends Component {
             <CardFileAttachments attachments={attachments} styleName='files' />
           </div>
         }
-        <ClickCatcher groupSlug={slug}>
-          {/* Renders and provides editor */}
+        {editing && (
           <HyloEditor
-            styleName={editing ? 'editing' : 'text'}
-            contentHTML={text || ''}
-            readOnly={!editing}
+            styleName='editing'
+            contentHTML={text}
             onEscape={this.handleEditCancel}
             onEnter={this.handleEditSave}
             ref={this.editor}
           />
-
-          {!editing && (
-            <>
-              <EmojiRow
-                className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
-                commentReactions={comment.commentReactions}
-                myReactions={comment.myReactions}
-                currentUser={currentUser}
-                postId={comment.post}
-                commentId={comment.id}
-              />
-            </>
-          )}
-
-        </ClickCatcher>
+        )}
+        {!editing && (
+          <>
+            <ClickCatcher groupSlug={slug}>
+              <HyloHTML styleName='text' html={text} />
+            </ClickCatcher>
+            <EmojiRow
+              className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
+              commentReactions={comment.commentReactions}
+              myReactions={comment.myReactions}
+              currentUser={currentUser}
+              postId={comment.post}
+              commentId={comment.id}
+            />
+          </>
+        )}
       </div>
     )
   }
