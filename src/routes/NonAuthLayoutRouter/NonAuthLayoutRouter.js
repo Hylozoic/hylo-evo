@@ -43,6 +43,8 @@ export default function NonAuthLayoutRouter (props) {
       dispatch(setReturnToPath(returnToPath))
     }
 
+    // XXX: skipAuthCheck is kind of a hack for when we are doing the oAuth login flow
+    //      and we want to still show the oAuth login/consent pages even when someone is logged into Hylo
     if (!props.skipAuthCheck && isAuthenticated) {
       props.history.replace('/signup')
     }
