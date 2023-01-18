@@ -141,7 +141,7 @@ function MapDrawer (props) {
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
           <span onClick={handleChildPostInclusion}
-            data-tip='Show child group posts?'
+            data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
             data-for='childgroup-toggle-tt'
           >
             {/* TODO: i18n on tooltip */}
