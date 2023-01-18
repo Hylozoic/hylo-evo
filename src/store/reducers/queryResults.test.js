@@ -225,11 +225,11 @@ describe('buildKey', () => {
 describe('matchNewPostIntoQueryResults', () => {
   it('prepends the post id to matching query result sets', () => {
     const state = {
-      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"childPostInclusion":"yes","context":"groups","slug":"bar"}}': {
         hasMore: true,
         ids: ['18', '11']
       },
-      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","filter":"request","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"childPostInclusion":"yes","context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -238,12 +238,12 @@ describe('matchNewPostIntoQueryResults', () => {
     const post = { id: '17', type: 'request', groups }
 
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
-      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"childPostInclusion":"yes","context":"groups","slug":"bar"}}': {
         hasMore: true,
         ids: ['17', '18', '11'],
         total: false
       },
-      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"context":"groups","filter":"request","slug":"bar"}}': {
+      '{"type":"FETCH_POSTS","params":{"activePostsOnly":false,"childPostInclusion":"yes","context":"groups","filter":"request","slug":"bar"}}': {
         hasMore: true,
         ids: ['17', '18', '11'],
         total: false
@@ -253,7 +253,7 @@ describe('matchNewPostIntoQueryResults', () => {
 
   it('prepends the post id to matching query result sets with a topic', () => {
     const state = {
-      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"chat","order":"asc","slug":"bar","sortBy":"id","topic":"123"}}': {
+      '{"type":"FETCH_POSTS","params":{"childPostInclusion":"no","context":"groups","filter":"chat","order":"asc","slug":"bar","sortBy":"id","topic":"123"}}': {
         hasMore: true,
         ids: ['18', '11']
       }
@@ -261,7 +261,7 @@ describe('matchNewPostIntoQueryResults', () => {
     const groups = [{ slug: 'foo' }, { slug: 'bar' }]
     const post = { id: '17', type: 'request', groups, topics: [{ name: 'a', id: '123' }] }
     expect(matchNewPostIntoQueryResults(state, post)).toEqual({
-      '{"type":"FETCH_POSTS","params":{"context":"groups","filter":"chat","order":"asc","slug":"bar","sortBy":"id","topic":"123"}}': {
+      '{"type":"FETCH_POSTS","params":{"childPostInclusion":"no","context":"groups","filter":"chat","order":"asc","slug":"bar","sortBy":"id","topic":"123"}}': {
         hasMore: true,
         ids: ['17', '18', '11'],
         total: false
