@@ -138,28 +138,39 @@ export function matchNewPostIntoQueryResults (state, { id, isPublic, type, group
     if (type !== 'chat') {
       queriesToMatch.push(
         { context: 'groups', slug: group.slug },
-        { context: 'groups', slug: group.slug, activePostsOnly: false },
-        { context: 'groups', slug: group.slug, activePostsOnly: true }, // For custom views
-        { context: 'groups', slug: group.slug, groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP
+        { context: 'groups', slug: group.slug, activePostsOnly: false, childPostInclusion: 'no' },
+        { context: 'groups', slug: group.slug, activePostsOnly: false, childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, activePostsOnly: true, childPostInclusion: 'no' }, // For custom views
+        { context: 'groups', slug: group.slug, activePostsOnly: true, childPostInclusion: 'yes' }, // For custom views
+        { context: 'groups', slug: group.slug, groupSlugs: [group.slug], childPostInclusion: 'yes' }, // For FETCH_POSTS_MAP
+        { context: 'groups', slug: group.slug, groupSlugs: [group.slug], childPostInclusion: 'no' }, // For FETCH_POSTS_MAP
         { context: 'groups', slug: group.slug, filter: type },
-        { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false },
-        { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false },
+        { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false, childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, filter: type, activePostsOnly: false, childPostInclusion: 'no' },
+        { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false, childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: false, childPostInclusion: 'no' },
         { context: 'groups', slug: group.slug, sortBy: 'updated', activePostsOnly: true }, // For custom views
-        { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
-        { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type, activePostsOnly: false },
-        { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: false },
+        { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug], childPostInclusion: 'yes' }, // For FETCH_POSTS_MAP_DRAWER
+        { context: 'groups', slug: group.slug, sortBy: 'updated', search: '', groupSlugs: [group.slug], childPostInclusion: 'no' }, // For FETCH_POSTS_MAP_DRAWER
+        { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type, activePostsOnly: false, childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, sortBy: 'updated', filter: type, activePostsOnly: false, childPostInclusion: 'no' },
+        { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: false, childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: false, childPostInclusion: 'no' },
         { context: 'groups', slug: group.slug, sortBy: 'created', activePostsOnly: true }, // For custom views
-        { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug] }, // For FETCH_POSTS_MAP_DRAWER
-        { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false },
+        { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug], childPostInclusion: 'yes' }, // For FETCH_POSTS_MAP_DRAWER
+        { context: 'groups', slug: group.slug, sortBy: 'created', search: '', groupSlugs: [group.slug], childPostInclusion: 'no' }, // For FETCH_POSTS_MAP_DRAWER
+        { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false, childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, sortBy: 'created', filter: type, activePostsOnly: false, childPostInclusion: 'no' },
         // For events stream upcoming events
-        { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc' }
+        { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc', childPostInclusion: 'yes' },
+        { context: 'groups', slug: group.slug, sortBy: 'start_time', filter: type, order: 'asc', childPostInclusion: 'no' }
       )
     }
 
     for (let topic of topics) {
       queriesToMatch.push(
         // Add to the future posts in a topic (future because of order: 'asc')
-        { context: 'groups', slug: group.slug, sortBy: 'id', order: 'asc', topic: topic.id, filter: 'chat' }
+        { context: 'groups', slug: group.slug, sortBy: 'id', order: 'asc', topic: topic.id, filter: 'chat', childPostInclusion: 'no' }
       )
     }
 

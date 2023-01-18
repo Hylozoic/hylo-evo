@@ -291,6 +291,7 @@ export function fetchPostsForMap ({ activePostsOnly, childPostInclusion = 'yes',
       variables: {
         activePostsOnly,
         boundingBox: formatBoundingBox(boundingBox),
+        childPostInclusion,
         context,
         filter,
         first: 500,
@@ -334,6 +335,7 @@ export function fetchPostsForDrawer ({ activePostsOnly, childPostInclusion = 'ye
       variables: {
         activePostsOnly,
         boundingBox: formatBoundingBox(currentBoundingBox),
+        childPostInclusion,
         context,
         filter,
         first: 10,

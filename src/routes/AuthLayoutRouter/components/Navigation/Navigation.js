@@ -58,9 +58,9 @@ export default function Navigation (props) {
       to: createPath
     },
     {
-      label: 'Mentions',
-      icon: 'Email',
-      to: '/my/mentions'
+      label: 'My Posts',
+      icon: 'Posticon',
+      to: '/my/posts'
     },
     {
       label: 'Interactions',
@@ -68,9 +68,9 @@ export default function Navigation (props) {
       to: '/my/interactions'
     },
     {
-      label: 'My Posts',
-      icon: 'Posticon',
-      to: '/my/posts'
+      label: 'Mentions',
+      icon: 'Email',
+      to: '/my/mentions'
     },
     {
       label: 'Announcements',
