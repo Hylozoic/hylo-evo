@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
+import { capitalize } from 'lodash'
 import { Link } from 'react-router-dom'
 import { bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
@@ -10,6 +11,7 @@ import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
 import { createPostUrl } from 'util/navigation'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
+import { CONTEXT_MY } from 'store/constants'
 
 export default function StreamBanner ({
   context,
@@ -29,7 +31,7 @@ export default function StreamBanner ({
   type
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
-
+  const view = routeParams.view
   if (context === 'all') {
     name = 'All My Groups'
     avatarUrl = whiteMerkaba
@@ -40,79 +42,85 @@ export default function StreamBanner ({
     avatarUrl = publicGlobe
     bannerUrl = allGroupsBanner
     // TODO list count of public posts and public groups in subtitle
-    subtitle = `All Posts Marked Public`
+    subtitle = 'All Posts Marked Public'
+  } else if (context === 'my') {
+    name = `My Home: ${capitalize(view)}`
+    avatarUrl = currentUser.avatarUrl || publicGlobe
+    bannerUrl = currentUser.bannerUrl || allGroupsBanner
   } else if (!group) {
     return null
   } else {
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
-  let numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
+  const numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
 
-  return <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
-    <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
-      <div styleName='fade'><div styleName='fade2' /></div>
-      <div styleName='header'>
-        {icon
-          ? <div styleName='custom-icon'>
-            <Icon name={icon} />
-          </div>
-          : <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} /> }
-        <div styleName='header-text'>
-          <div styleName='header-contents'>
-            <span styleName='header-name'>{label || name}</span>
+  return (
+    <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
+      <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
+        <div styleName='fade'><div styleName='fade2' /></div>
+        <div styleName='header'>
+          {icon
+            ? <div styleName='custom-icon'>
+              <Icon name={icon} />
+            </div>
+            : <div styleName={cx('logo', { 'all-logo': context === 'all' })} style={bgImageStyle(avatarUrl || DEFAULT_AVATAR)} /> }
+          <div styleName='header-text'>
+            <div styleName='header-contents'>
+              <span styleName='header-name'>{label || name}</span>
 
-            {location && !icon && <div styleName='header-subtitle'>
-              <Icon name='Location' styleName='header-icon' />
-              {location}
-            </div>}
+              {location && !icon && <div styleName='header-subtitle'>
+                <Icon name='Location' styleName='header-icon' />
+                {location}
+              </div>}
 
-            {customViewType === 'stream'
-              ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
-              : customViewType === 'collection'
-                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>Collection</div>
-                : ''}
+              {customViewType === 'stream'
+                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
+                : customViewType === 'collection'
+                  ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>Collection</div>
+                  : ''}
 
-            {subtitle && <div styleName='header-subtitle'>
-              {subtitle}
-            </div>}
+              {subtitle && <div styleName='header-subtitle'>
+                {subtitle}
+              </div>}
+            </div>
           </div>
         </div>
       </div>
+      {currentUserHasMemberships && context !== CONTEXT_MY && (<PostPrompt
+        avatarUrl={currentUser.avatarUrl}
+        firstName={currentUser.firstName()}
+        newPost={newPost}
+        querystringParams={querystringParams}
+        routeParams={routeParams}
+        type={type}
+      />)}
+
+      {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
+      {!isTesting && (<ReactTooltip
+        id='feed-banner-tip'
+        backgroundColor='rgba(35, 65, 91, 1.0)'
+        effect='solid'
+        delayShow={0}
+        place='bottom'
+        getContent={function () {
+          return (customViewType === 'stream'
+            ? <div styleName='custom-filters'>
+              <span styleName='displaying'>
+                Displaying &nbsp;
+                {customActivePostsOnly ? 'active' : ''}
+              </span>
+
+              {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
+              {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
+              {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
+            </div>
+            : ''
+          )
+        }}
+      />)}
     </div>
-    {currentUserHasMemberships && <PostPrompt
-      avatarUrl={currentUser.avatarUrl}
-      firstName={currentUser.firstName()}
-      newPost={newPost}
-      querystringParams={querystringParams}
-      routeParams={routeParams}
-      type={type}
-    />}
-
-    {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
-    {!isTesting && <ReactTooltip
-      id='feed-banner-tip'
-      backgroundColor='rgba(35, 65, 91, 1.0)'
-      effect='solid'
-      delayShow={0}
-      place='bottom'
-      getContent={function () {
-        return (customViewType === 'stream'
-          ? <div styleName='custom-filters'>
-            <span styleName='displaying'>
-              Displaying &nbsp;
-              {customActivePostsOnly ? 'active' : ''}
-            </span>
-
-            {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
-            {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
-            {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
-          </div>
-          : ''
-        )
-      }}
-    />}
-  </div>
+  )
 }
 
 export function postPromptString (type = '', { firstName }) {
@@ -150,14 +158,16 @@ export class PostPrompt extends React.Component {
     const { avatarUrl, className, firstName, type, promptStringFunc, querystringParams, routeParams } = this.props
     const { hover } = this.state
 
-    return <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-      <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
-        <div styleName='postPrompt' className={className}>
-          <RoundImage url={avatarUrl} small styleName='prompt-image' />
-          {promptStringFunc(type, { firstName })}
-        </div>
-      </Link>
-      <div styleName={cx('shadow', { hover })} />
-    </div>
+    return (
+      <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
+        <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
+          <div styleName='postPrompt' className={className}>
+            <RoundImage url={avatarUrl} small styleName='prompt-image' />
+            {promptStringFunc(type, { firstName })}
+          </div>
+        </Link>
+        <div styleName={cx('shadow', { hover })} />
+      </div>
+    )
   }
 }
