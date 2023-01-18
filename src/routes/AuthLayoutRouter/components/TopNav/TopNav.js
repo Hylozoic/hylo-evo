@@ -13,6 +13,7 @@ import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
 import { baseUrl, personUrl } from 'util/navigation'
 import './TopNav.scss'
+import { CONTEXT_MY } from 'store/constants'
 
 const MessagesDropdown = React.lazy(() => import('./MessagesDropdown'))
 const NotificationsDropdown = React.lazy(() => import('./NotificationsDropdown'))
@@ -23,7 +24,6 @@ export default function TopNav (props) {
     currentUser,
     group,
     isGroupMenuOpen,
-    isPublic,
     logout,
     onClick,
     routeParams,
@@ -34,6 +34,8 @@ export default function TopNav (props) {
   const topNav = useRef()
   const { show: showIntercom } = useIntercom()
   const profileUrl = personUrl(get('id', currentUser))
+  const isPublic = routeParams.context === 'public'
+  const isMyHome = routeParams.context === CONTEXT_MY
 
   const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
 
@@ -51,7 +53,7 @@ export default function TopNav (props) {
           id='currentContext'
         >
           <Logo {...{ group, isPublic }} />
-          <Title group={group} isPublic={isPublic} />
+          <Title group={group} isPublic={isPublic} isMyHome={isMyHome} />
         </Link>
         <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
@@ -105,13 +107,15 @@ function Logo ({ group, isPublic }) {
   )
 }
 
-function Title ({ group, isPublic, onClick }) {
+function Title ({ group, isPublic, onClick, isMyHome }) {
   let [label, name] = ['GLOBAL', 'All My Groups']
 
   if (group) {
     [label, name] = [group.typeDescriptor, group.name]
   } else if (isPublic) {
     [label, name] = ['GLOBAL', 'Public Groups & Posts']
+  } else if (isMyHome) {
+    [label, name] = ['Personal', 'My Home']
   }
 
   return (
