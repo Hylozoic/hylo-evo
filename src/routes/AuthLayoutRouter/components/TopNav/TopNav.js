@@ -108,14 +108,14 @@ function Logo ({ group, isPublic }) {
 }
 
 function Title ({ group, isPublic, onClick, isMyHome }) {
-  let [label, name] = ['GLOBAL', 'All My Groups']
+  let [label, name] = ['PERSONAL', 'All My Groups']
 
   if (group) {
     [label, name] = [group.typeDescriptor, group.name]
   } else if (isPublic) {
     [label, name] = ['GLOBAL', 'Public Groups & Posts']
   } else if (isMyHome) {
-    [label, name] = ['Personal', 'My Home']
+    [label, name] = ['PERSONAL', 'My Home'] // TODO: i18n changes
   }
 
   return (
