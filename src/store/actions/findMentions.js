@@ -6,7 +6,7 @@ export default function findMentions ({ autocomplete, groupIds, maxItems = 5 }) 
     type: FIND_MENTIONS,
     graphql: {
       query: gql`
-        query FindPeopleForMentions ($autocomplete: String, $groupIds: [String], $maxItems: Int) {
+        query FindPeopleForMentions ($autocomplete: String, $groupIds: [ID], $maxItems: Int) {
           people(autocomplete: $autocomplete, first: $maxItems, groupIds: $groupIds) {
             items {
               id
