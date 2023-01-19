@@ -13,6 +13,11 @@ exports[`matches the snapshot for an orphan user 1`] = `
     }
   }
   currentUserHasMemberships={false}
+  routeParams={
+    Object {
+      "view": "stream",
+    }
+  }
 />
 `;
 
@@ -33,6 +38,11 @@ exports[`renders for all groups 1`] = `
     }
   }
   currentUserHasMemberships={true}
+  routeParams={
+    Object {
+      "view": "stream",
+    }
+  }
 />
 `;
 
@@ -47,6 +57,11 @@ exports[`renders with a group 1`] = `
     }
   }
   isTesting={true}
+  routeParams={
+    Object {
+      "view": "stream",
+    }
+  }
 >
   <div
     data-stylename="banner"

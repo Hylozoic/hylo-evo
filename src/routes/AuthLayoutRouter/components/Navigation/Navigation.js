@@ -59,7 +59,7 @@ export default function Navigation (props) {
     },
     {
       label: 'My Posts',
-      icon: 'AddImage',
+      icon: 'Posticon',
       to: '/my/posts'
     },
     {

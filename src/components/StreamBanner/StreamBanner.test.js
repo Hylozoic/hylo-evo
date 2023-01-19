@@ -20,6 +20,7 @@ const group = {
 it('renders with a group', () => {
   const node = mount(<StreamBanner
     group={group}
+    routeParams={{ view: 'stream' }}
     isTesting
   />)
   expect(node).toMatchSnapshot()
@@ -28,6 +29,7 @@ it('renders with a group', () => {
 it('renders for all groups', () => {
   const node = mount(<StreamBanner
     all
+    routeParams={{ view: 'stream' }}
     currentUser={currentUser}
     currentUserHasMemberships
   />)
@@ -37,6 +39,7 @@ it('renders for all groups', () => {
 it('matches the snapshot for an orphan user', () => {
   const node = mount(<StreamBanner
     all
+    routeParams={{ view: 'stream' }}
     currentUser={currentUser}
     currentUserHasMemberships={false}
   />)
