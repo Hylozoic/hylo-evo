@@ -68,10 +68,12 @@ export default function PostCard (props) {
   return (
     <>
       {childPost &&
-        <div styleName='child-post-label'>
-          <Icon name='Subgroup' styleName='icon' />
-          <span>Post from <b>child group</b></span>
-          {/* TODO: i18n */}
+        <div styleName='child-post-label-wrapper'>
+          <div styleName='child-post-label'>
+            <Icon name='Subgroup' styleName='icon' />
+            <span>Post from <b>child group</b></span>
+            {/* TODO: i18n */}
+          </div>
         </div>}
       <div
         ref={postCardRef}
