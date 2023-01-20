@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.2.0] - 2022-01-20
+
+### Added
+- My Home context with 4 new views: __My Posts__ to see all posts you created, __Interactions__ to see all posts you have commented on or reacted to, __Mentions__ to see all posts you have been mentioned in, and __Announcements__ to see all announcements made in all groups you are a member of.
+- A toggle to turn on or off the aggregated display of posts from child groups, that you are a member of, in the stream of the parent group
+- Visual display to indicate which posts appearing in the stream are being aggregated from child groups (that you are a member of)
+- Link to our Open Collective called Contribute to Hylo added to top nav menu
+
+### Changed
+- Mentions of the current logged in user now display as a different (yellow/orange) color than other mentions
+- Update farm product categories ontology list to include "Other"
+- Improved styling and user experience for notifications settings page
+
+### Fixed
+- Display of public map for non logged in users
+- As a non-logged in person, navigating to a link for a public post that includes the group context now correctly displays the post
+
 ## [5.1.2] - 2022-12-29
 
 ### Changed
