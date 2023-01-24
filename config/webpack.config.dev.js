@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const getClientEnvironment = require('./env')
 const paths = require('./paths')
 const sharedConfig = require('./webpack.config.shared')
@@ -179,8 +178,6 @@ module.exports = {
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-    // To strip all locales except “en”
-    new MomentLocalesPlugin(),
     // Required for hylo-shared package, but ideally would be handled by
     // the package build itself
     new webpack.IgnorePlugin(/jsdom$/)

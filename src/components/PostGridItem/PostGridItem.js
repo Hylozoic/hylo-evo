@@ -1,8 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
-
-// import Moment from 'moment-timezone'
+// import { DateTime } from 'luxon'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
@@ -37,7 +36,7 @@ export default function PostGridItem (props) {
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const unread = false
   // will reintegrate once I have attachment vars
-  /* const startTimeMoment = Moment(post.startTime) */
+  /* const startTime = DateTime.fromISO(post.startTime) */
 
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import Moment from 'moment-timezone'
-
+import { DateTime } from 'luxon'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -44,7 +43,7 @@ const PostListRow = (props) => {
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const numOtherCommentors = commentersTotal - 1
   const unread = false
-  const startTimeMoment = Moment(post.startTime)
+  const startTime = DateTime.fromISO(post.startTime)
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
@@ -55,8 +54,8 @@ const PostListRow = (props) => {
           </div>
           <div styleName='participants'>
             {post.type === 'event' ? <div styleName='date'>
-              <span>{startTimeMoment.format('MMM')}</span>
-              <span>{startTimeMoment.format('D')}</span>
+              <span>{startTime.toLocaleString({ month: 'short' })}</span>
+              <span>{startTime.toLocaleString({ day: 'numeric' })}</span>
             </div> : <div>
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name} {

@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { debounce, trim } from 'lodash/fp'
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import { EditorView } from 'prosemirror-view'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet'
@@ -335,17 +335,17 @@ export default function ChatRoom (props) {
       }
 
       // Is this a new day, then display it as a header
-      newDay = moment(post.createdAt).format('DD MMMM, YYYY')
+      newDay = DateTime.fromISO(post.createdAt).toLocaleString(DateTime.DATE_FULL)
       if (!currentDay || currentDay !== newDay) {
         currentDay = newDay
         // Ensure the date is displayed with today and yesterday
-        post.displayDay = moment(post.createdAt).calendar(null, {
+        post.displayDay = DateTime.fromISO(post.createdAt).toRelativeCalendar(null, {
           // when the date is closer, specify custom values
           lastDay: '[Yesterday]',
           sameDay: '[Today]',
-          lastWeek: 'MMMM DD, YYYY',
+          lastWeek: DateTime.DATE_FULL,
           sameElse: function () {
-            return 'MMMM DD, YYYY'
+            return DateTime.DATE_FULL
           }
         })
         post.header = true

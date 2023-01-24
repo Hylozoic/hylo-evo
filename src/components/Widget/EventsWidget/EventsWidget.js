@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import React, { useCallback, useState } from 'react'
 import Icon from 'components/Icon'
 import { Link } from 'react-router-dom'
@@ -43,7 +43,7 @@ export default ({ items, group, routeParams, isMember }) => {
         {items.map(e => <div styleName={cx('event', { narrow: items.length > 1 })} key={e.id}>
           <Link to={postUrl(e.id, routeParams)} onClickCapture={handleOnItemClick}>
             <div styleName='content'>
-              <div styleName='time'>{moment(e.startTime).format('MMM D YYYY')}</div>
+              <div styleName='time'>{DateTime.fromISO(e.startTime).toLocaleString(DateTime.DATE_MED)}</div>
               <div styleName='title'>{e.title}</div>
               <div styleName='location'>{e.location}</div>
             </div>

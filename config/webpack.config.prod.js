@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const safePostCssParser = require('postcss-safe-parser')
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -307,8 +306,6 @@ module.exports = {
     new WebpackManifestPlugin({
       fileName: 'asset-manifest.json'
     }),
-    // To strip all locales except “en”
-    new MomentLocalesPlugin(),
     // Required for hylo-shared package, but ideally would be handled by
     // the package build itself
     new webpack.IgnorePlugin(/jsdom$/),

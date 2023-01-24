@@ -3,7 +3,7 @@ import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
@@ -100,7 +100,7 @@ export default class PostHeader extends PureComponent {
     if (fulfilledAt && fulfilledAt <= endTime) {
       endString = `Completed: ${to}`
     } else {
-      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+      endString = endTime !== DateTime.now() && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
     }
 
     let timeWindow = ''

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import Moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import ReactTooltip from 'react-tooltip'
 import { Helmet } from 'react-helmet'
 import cx from 'classnames'
@@ -259,7 +259,7 @@ export function Project ({ memberCap, project, routeParams, showDetails }) {
     <div styleName='project' onClick={() => showDetails(id, { ...routeParams })}>
       <div>
         <div styleName='title'>{title} </div>
-        <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
+        <div styleName='meta'>{creator.name} - {DateTime.fromISO(createdAt).toRelative()} </div>
       </div>
       <RoundImageRow styleName={`members${members.items.length > memberCap ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={memberCap} />
     </div>
@@ -271,8 +271,8 @@ export function Event ({ memberCap, event, routeParams, showDetails }) {
   return (
     <div styleName='event' onClick={() => showDetails(id, { ...routeParams })}>
       <div styleName='date'>
-        <div styleName='month'>{Moment(startTime).format('MMM')}</div>
-        <div styleName='day'>{Moment(startTime).format('DD')}</div>
+        <div styleName='month'>{DateTime.fromISO(startTime).toLocaleString({ month: 'short' })}</div>
+        <div styleName='day'>{DateTime.fromISO(startTime).toLocaleString({ day: 'numeric' })}</div>
       </div>
       <div styleName='details'>
         <div styleName='title'>{title}</div>

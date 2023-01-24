@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
@@ -25,7 +25,7 @@ export default class ProjectsWidget extends Component {
           <div styleName='project'>
             <div styleName='meta'>
               <div styleName='title'>{p.title}</div>
-              <div styleName='last-activity'>{moment(p.updatedAt).fromNow()}</div>
+              <div styleName='last-activity'>{DateTime.fromISO(p.updatedAt).toRelative()}</div>
             </div>
             <div styleName='created-by'>
               <RoundImage url={p.creator.avatarUrl} />

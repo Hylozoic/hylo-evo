@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import { filter, isEmpty, isFunction, pick } from 'lodash/fp'
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -220,7 +220,7 @@ export default function ChatPost ({
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
               <div styleName='name'>{creator.name}</div>
             </div>
-            <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
+            <div styleName='date'>{DateTime.fromISO(createdAt).toLocaleString(DateTime.TIME_SIMPLE)}</div>
           </div>
         )}
         {details && editing && (

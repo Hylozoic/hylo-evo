@@ -2,9 +2,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
+import DatePicker from 'react-datepicker'
 import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
-import Moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
@@ -17,11 +18,11 @@ import GroupsSelector from 'components/GroupsSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
-import DatePicker from 'components/DatePicker'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
+import rdpStyles from 'react-datepicker/dist/react-datepicker.css'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
@@ -109,8 +110,8 @@ export default class PostEditor extends React.Component {
       ? {
         ...post,
         locationId: post.locationObject ? post.locationObject.id : null,
-        startTime: Moment(post.startTime),
-        endTime: Moment(post.endTime)
+        startTime: DateTime.fromISO(post.startTime),
+        endTime: DateTime.fromISO(post.endTime)
       }
       : defaultPostWithGroupsAndTopic
 
@@ -299,8 +300,11 @@ export default class PostEditor extends React.Component {
   }
 
   validateTimeChange = (startTime, endTime) => {
-    if (endTime) {
-      startTime < endTime
+    const formattedStartTime = !startTime ? null : typeof startTime === 'string' ? DateTime.fromISO(startTime) : startTime
+    const formattedEndTime = !endTime ? null : typeof endTime === 'string' ? DateTime.fromISO(endTime) : endTime
+
+    if (formattedEndTime) {
+      formattedStartTime < formattedEndTime
         ? this.setState({ dateError: false })
         : this.setState({ dateError: true })
     }
@@ -400,10 +404,10 @@ export default class PostEditor extends React.Component {
     return !!(
       this.editorRef.current &&
       groups &&
-      type.length > 0 &&
-      title.length > 0 &&
-      groups.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH &&
+      type?.length > 0 &&
+      title?.length > 0 &&
+      groups?.length > 0 &&
+      title?.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && startTime < endTime)) &&
       (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
       (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink)
@@ -720,17 +724,27 @@ export default class PostEditor extends React.Component {
             <div styleName='footerSection'>
               <div styleName='footerSection-label'>Timeframe</div>
               <div styleName='datePickerModule'>
-                <DatePicker
-                  value={startTime}
-                  placeholder={'Select Start'}
-                  onChange={this.handleStartTimeChange}
-                />
+                <div className={cx([styles.datePicker])}>
+                  <DatePicker
+                    className={cx(rdpStyles.datePicker)}
+                    dateFormat='MM/dd/yyyy h:mm a'
+                    onChange={(date) => this.handleStartTimeChange(new Date(date).toISOString())}
+                    placeholderText={'Select Start'}
+                    selected={startTime ? DateTime.fromISO(startTime).ts : null}
+                    showTimeSelect
+                  />
+                </div>
                 <div styleName='footerSection-helper'>To</div>
-                <DatePicker
-                  value={endTime}
-                  placeholder={'Select End'}
-                  onChange={this.handleEndTimeChange}
-                />
+                <div className={cx([styles.datePicker])}>
+                  <DatePicker
+                    className={cx(rdpStyles.datePicker)}
+                    dateFormat='MM/dd/yyyy h:mm a'
+                    onChange={(date) => this.handleEndTimeChange(new Date(date).toISOString())}
+                    placeholderText={'Select End'}
+                    selected={endTime ? DateTime.fromISO(endTime).ts : null}
+                    showTimeSelect
+                  />
+                </div>
               </div>
             </div>
           )}

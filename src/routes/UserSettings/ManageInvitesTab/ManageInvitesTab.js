@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
@@ -115,7 +115,7 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
           </div>
         </div>
         <div styleName='invitationResponse'>
-          <span styleName='createdDate'>Sent {moment(createdAt).format('MM-DD-YYYY')}</span>
+          <span styleName='createdDate'>Sent {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATE_SHORT)}</span>
           <span onClick={decline} styleName='cancelButton'>Decline</span>
           <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>Join</span>
         </div>
@@ -139,7 +139,7 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
         <GroupButton group={group} />
       </div>
       <div styleName='requestDetail'>
-        <span styleName='createdDate joinRequestDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
+        <span styleName='createdDate joinRequestDate'>Requested {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATE_SHORT)}</span>
         {joinRequest.status === JOIN_REQUEST_STATUS.Pending && (
           <span onClick={cancel} styleName='cancelButton'>Cancel</span>
         )}
