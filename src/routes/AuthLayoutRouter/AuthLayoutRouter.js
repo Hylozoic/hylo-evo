@@ -350,7 +350,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
               {/* **** My Routes **** */}
               <Route path='/:context(my)/:view(mentions|interactions|posts|announcements)' component={Stream} />
-              <RedirectRoute exact path='/my' to='/my/mentions' />
+              <RedirectRoute exact path='/my' to='/my/posts' />
               {/* **** Other Routes **** */}
               <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />

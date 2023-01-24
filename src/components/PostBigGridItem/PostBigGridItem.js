@@ -33,7 +33,8 @@ export default function PostBigGridItem (props) {
 
   const numAttachments = attachments.length || 0
   const firstAttachment = attachments[0] || 0
-  const attachmentType = firstAttachment.type || 0
+  // XXX: we should figure out what to actually do with 'video' type attachments, which are almost never used
+  let attachmentType = (firstAttachment.type === 'video' ? 'file' : firstAttachment.type) || 0
   const attachmentUrl = firstAttachment.url || 0
 
   const detailLength = details.length

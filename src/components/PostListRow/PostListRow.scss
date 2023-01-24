@@ -74,7 +74,7 @@ div .post-row:nth-child(1) {
     }
 
     &.resource span {
-      color: $color-resources;
+      color: rgba(224, 184, 25, 1);;
     }
 
     &.project span {
@@ -108,7 +108,7 @@ div .post-row:nth-child(1) {
 
   .post-type.resource {
     border: 1px solid rgba(254, 214, 55, .25);
-    color: rgba(254, 214, 55, 1);
+    color: rgba(224, 184, 25, 1);
   }
 
   .post-type.project {

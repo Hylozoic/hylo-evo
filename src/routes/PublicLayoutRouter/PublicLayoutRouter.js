@@ -63,7 +63,7 @@ export function PublicGroupDetail (props) {
   }
 
   return (
-    <div styleName='center-column' id={CENTER_COLUMN_ID}>
+    <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
       <GroupDetail {...props} />
     </div>
   )
@@ -96,7 +96,7 @@ export function PublicPostDetail (props) {
   }
 
   return (
-    <div styleName='center-column' id={DETAIL_COLUMN_ID}>
+    <div styleName='center-column non-map-view' id={DETAIL_COLUMN_ID}>
       <div />
       <PostDetail {...props} />
       <div />
@@ -107,7 +107,8 @@ export function PublicPostDetail (props) {
 export function MapExplorerLayoutRouter (props) {
   return (
     <>
-      <div styleName='center-column' id={CENTER_COLUMN_ID}>
+      <div />
+      <div styleName='center-column map-view' id={CENTER_COLUMN_ID}>
         <MapExplorer {...props} />
       </div>
       <Route
@@ -133,7 +134,7 @@ export function MapExplorerLayoutRouter (props) {
 export function GroupExplorerLayoutRouter () {
   return (
     <>
-      <div styleName='center-column' id={CENTER_COLUMN_ID}>
+      <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
         <div>
           <GroupExplorer />
         </div>

@@ -1,12 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import './NotificationSettingsTab.scss'
-import Loading from 'components/Loading'
-import Icon from 'components/Icon'
+import cx from 'classnames'
 import { compact } from 'lodash/fp'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+
+import Tooltip from 'components/Tooltip'
+import Icon from 'components/Icon'
+import Loading from 'components/Loading'
 import Select from 'components/Select'
 import { bgImageStyle } from 'util/index'
-import cx from 'classnames'
+
+import './NotificationSettingsTab.scss'
 
 const allGroupsLogo = '/hylo-merkaba.png'
 
@@ -27,7 +30,7 @@ export default class NotificationSettingsTab extends Component {
       ...messageSettings,
       ...changes
     }
-    var dmNotifications
+    let dmNotifications
     if (newMessageSettings['sendEmail'] && newMessageSettings['sendPushNotifications']) {
       dmNotifications = 'both'
     } else if (newMessageSettings['sendEmail']) {
@@ -87,56 +90,77 @@ export default class NotificationSettingsTab extends Component {
       return settings[setting]
     }
 
-    return <div>
-      <div styleName='title'>Notifications</div>
-      <div styleName='prompt'>How often would you like to receive email digests
-        for new posts in your groups and saved searches?</div>
-      <Select
-        onChange={updateSetting('digestFrequency')}
-        selected={settings['digestFrequency']}
-        options={[
-          { id: 'daily', label: 'Daily' },
-          { id: 'weekly', label: 'Weekly' },
-          { id: 'never', label: 'Never' }
-        ]} />
-
-      <div styleName='prompt'>How would you like to receive notifications about
-      new comments on posts you're following?</div>
-      <Select
-        onChange={updateSetting('commentNotifications')}
-        selected={getSetting('commentNotifications')}
-        options={notificationOptions} />
-
+    return (
       <div>
-        <MessageSettingsRow
-          settings={messageSettings}
-          updateMessageSettings={this.updateMessageSettings} />
-        <AllGroupsSettingsRow
-          settings={allGroupsSettings}
-          updateAllGroups={this.updateAllGroupsAlert} />
-        {memberships.map(membership => <MembershipSettingsRow
-          key={membership.id}
-          membership={membership}
-          updateMembershipSettings={changes => updateMembershipSettings(membership.group.id, changes)} />)}
-      </div>
+        <div styleName='title'><Icon name='Notifications' />Notifications</div>
+        <div styleName='global-setting'>
+          <div styleName='prompt'>How often would you like to receive email digests
+            for new posts in your groups and saved searches?</div>
+          <div styleName='setting-select'>
+            <div styleName='select-explanation'>Send me a digest</div>
+            <Select
+              onChange={updateSetting('digestFrequency')}
+              selected={settings['digestFrequency']}
+              options={[
+                { id: 'daily', label: 'Daily' },
+                { id: 'weekly', label: 'Weekly' },
+                { id: 'never', label: 'Never' }
+              ]} />
+          </div>
+        </div>
+        <div styleName='global-setting'>
+          <div styleName='prompt'>How would you like to receive notifications about
+            new comments on posts you're following?</div>
+          <div styleName='setting-select'>
+            <div styleName='select-explanation'>Notify me via</div>
+            <Select
+              onChange={updateSetting('commentNotifications')}
+              selected={getSetting('commentNotifications')}
+              options={notificationOptions} />
+          </div>
+        </div>
+        <div>
+          <div styleName='individual-groups'>NOTIFICATIONS</div>
+          <MessageSettingsRow
+            settings={messageSettings}
+            updateMessageSettings={this.updateMessageSettings} />
 
-      <div styleName='help'>
-        <p styleName='help-paragraph'>
-          Download our <a href={iOSAppURL} target='_blank'>iOS</a>&nbsp;
-          or <a href={androidAppURL} target='_blank'>Android</a> app to
-          receive push notifications.
-        </p>
+          <div styleName='individual-groups'>GROUP NOTIFICATIONS</div>
+
+          <AllGroupsSettingsRow
+            settings={allGroupsSettings}
+            updateAllGroups={this.updateAllGroupsAlert} />
+          {memberships.map(membership => <MembershipSettingsRow
+            key={membership.id}
+            membership={membership}
+            updateMembershipSettings={changes => updateMembershipSettings(membership.group.id, changes)} />)}
+        </div>
+
+        <div styleName='help'>
+          <p styleName='help-paragraph'>
+            Download our <a href={iOSAppURL} target='_blank'>iOS</a>&nbsp;
+            or <a href={androidAppURL} target='_blank'>Android</a> app to
+            receive push notifications.
+          </p>
+        </div>
+
+        <Tooltip
+          delay={250}
+          id='helpTip'
+          position='top'
+        />
       </div>
-    </div>
+    )
   }
 }
 
 export function MessageSettingsRow ({ settings, updateMessageSettings }) {
   return <SettingsRow
     iconName='Messages'
-    name='Messages'
+    name='Direct Messages'
     settings={settings}
-    update={updateMessageSettings} />
+    update={updateMessageSettings}
+  />
 }
 
 export function AllGroupsSettingsRow ({ settings, updateAllGroups }) {
@@ -156,39 +180,37 @@ export function MembershipSettingsRow ({ membership, updateMembershipSettings })
 }
 
 export class SettingsRow extends React.Component {
-  state = {
-    expanded: false
-  }
-
-  toggleExpand = () => {
-    this.setState({
-      expanded: !this.state.expanded
-    })
-  }
-
   render () {
     const { iconName, imageUrl, name, settings, update } = this.props
-    const { expanded } = this.state
 
     const imageStyle = bgImageStyle(imageUrl)
 
-    return <div styleName={cx('settingsRow', { expanded })}>
+    return <div styleName={cx('settingsRow')}>
       <div styleName='nameRow'>
         {iconName && <Icon name={iconName} styleName='avatarIcon' />}
         {!iconName && <div styleName='groupAvatar' style={imageStyle} />}
         <span styleName='name'>{name}</span>
-        <Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='arrowIcon' onClick={this.toggleExpand} />
       </div>
-      {expanded && <div styleName='iconRow'>
+      <div styleName='iconRow'>
         <SettingsIcon settingKey='sendPushNotifications' name='PushNotification' settings={settings} update={update} />
         <SettingsIcon settingKey='sendEmail' name='EmailNotification' settings={settings} update={update} />
-      </div>}
+      </div>
     </div>
   }
 }
 
 export function SettingsIcon ({ settingKey, name, update, settings }) {
-  return <Icon name={name}
-    styleName={cx('icon', { highlightIcon: settings[settingKey] })}
-    onClick={() => update({ [settingKey]: !settings[settingKey] })} />
+  const settingStatus = settings[settingKey] ? 'On' : 'Off'
+
+  return (
+    <div
+      styleName={cx('setting-controls', { highlightIcon: settings[settingKey] })}
+      onClick={() => update({ [settingKey]: !settings[settingKey] })}
+      data-tip={`Turn ${name === 'EmailNotification' ? 'Email' : 'Mobile Push'} Notifications ${settings[settingKey] ? 'Off' : 'On'}`}
+      data-for='helpTip'
+    >
+      <Icon name={name} styleName={cx('icon', { highlightIcon: settings[settingKey] })} />
+      <span styleName='setting-status'>{settingStatus}</span>
+    </div>
+  )
 }

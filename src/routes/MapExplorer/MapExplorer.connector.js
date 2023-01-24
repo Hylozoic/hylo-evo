@@ -185,7 +185,7 @@ export function mapDispatchToProps (dispatch, props) {
   const updateUrlFromStore = (params, replace) => {
     const querystringParams = getQuerystringParam(['sortBy', 'search', 'hide', 'topics'], null, props)
 
-    // See if we need to udpate the URL to match the new filters in the redux store
+    // See if we need to update the URL to match the new filters in the redux store
     let newQueryParams = { ...pick([ 'search', 'sortBy' ], params) }
     if (params.featureTypes) {
       newQueryParams['hide'] = Object.keys(params.featureTypes).filter(type => !params.featureTypes[type])
