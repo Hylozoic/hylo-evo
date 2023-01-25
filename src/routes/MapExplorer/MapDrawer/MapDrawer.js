@@ -141,8 +141,7 @@ function MapDrawer (props) {
 
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
-          {/* TODO, conditional here */}
-          {![CONTEXT_MY, 'all', 'public'].includes(context) && 
+          {![CONTEXT_MY, 'all', 'public'].includes(context) &&
             <>
               <span onClick={handleChildPostInclusion}
                 data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
