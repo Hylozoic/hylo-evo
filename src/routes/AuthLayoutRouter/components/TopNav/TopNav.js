@@ -81,6 +81,7 @@ export default function TopNav (props) {
             <li><span styleName='hover-highlight' onClick={showIntercom}>Feedback &amp; Support</span></li>
             <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>Terms & Privacy</a></li>
             <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>Download App</span></li>
+            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>Contribute to Hylo</a></li>
             <li><a onClick={logout}>Log out</a></li>
           </Dropdown>
         </div>

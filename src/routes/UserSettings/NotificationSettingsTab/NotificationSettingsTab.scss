@@ -5,9 +5,15 @@
   border-radius: 4px;
   margin-bottom: 25px;
   composes: hdr-display from 'css/typography.scss';
-  background-color: $color-catskill-white;
   border: none;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-size: 34px;
+  }
 }
 
 .prompt {
@@ -28,7 +34,49 @@
   margin-bottom: 20px;
 }
 
-///// probably trash
+.global-setting {
+  border: 1px dashed rgba(235, 235, 235, 1.0);
+  padding: 20px 20px;
+  margin-bottom: 20px;
+  background-color: rgba(249, 250, 252, 1.0);
+
+  label, label select {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    margin-top: 0;
+    color: rgba(35, 65, 91, 1.0);
+    display: flex;
+    align-items: center;
+
+    &:after {
+      padding: 0 0 0 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      right: 8px;
+    }
+  }
+
+  .setting-select {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+
+    select {
+      font-family: 'Circular Book';
+      padding: 0 10px;
+      padding-right: 26px;
+    }
+
+    .select-explanation {
+      font-size: 16px;
+      margin-right: 10px;
+      color: rgba(35, 65, 91, 1.0);
+    }
+  }
+}
 
 .banner {
   width: 100%;
@@ -53,6 +101,41 @@
   background-position: center;
   background-size: cover;
   margin: -70px auto $space-8x auto;
+}
+
+.individual-groups {
+  color: rgba(129, 140, 155, 1.0);
+  font-size: 12px;
+  margin-top: 25px;
+  margin-bottom: 0;
+}
+
+.setting-controls {
+  display: flex;
+  align-items: center;
+  border: 1px dashed rgba(204, 209, 215, 1.0);
+  border-radius: 5px;
+  margin-right: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.highlightIcon {
+    border: 1px solid rgba(252, 127, 0, 1.0);
+
+    span {
+      color: rgba(252, 127, 0, 1.0);
+    }
+  }
+
+  span {
+    color: rgba(44, 64, 89, .6)
+  }
+
+  .setting-status {
+    padding-right: 8px;
+  }
 }
 
 .change-avatar-button {
@@ -82,8 +165,6 @@
   margin: 0 auto;
 }
 
-// go through above to remove dead code
-
 // SettingsRow
 .settingsRow {
   display: flex;
@@ -103,6 +184,7 @@
 .nameRow {
   display: flex;
   width: 100%;
+  align-items: center;
 }
 
 .avatarIcon {
@@ -119,7 +201,7 @@
 }
 
 .iconRow {
-  padding-left: 36px;
+  display: flex;
 }
 
 .groupAvatar {
@@ -129,8 +211,8 @@
 
 // SettingsIcon
 .icon {
-  font-size: 44px;
-  margin-right: 21px;
+  font-size: 34px;
+  padding: 5px;
   color: $color-cape-cod-20;
 }
 
@@ -138,3 +220,22 @@
   color: $color-tree-poppy
 }
 
+@media screen and (max-width: 425px) {
+  .icon {
+    font-size: 24px;
+  }
+
+  .setting-status, .name {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .icon {
+    font-size: 20px;
+  }
+
+  .setting-status, .name {
+    font-size: 12px;
+  }
+}
