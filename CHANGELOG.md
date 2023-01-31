@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.3.0] - 2022-01-30
+
+### Added
+- Support for oAuth Authorization Code flow!
+ - Skip login screen for already logged in users, but still get new auth code from the server.
+ - If prompt = consent always show the Consent screen even when already have given consent previously.
+ - Display previous auth message if person has previously authed with Hylo
+ - Display when an app is asking for offline_access
+
 ## [5.2.0] - 2022-01-20
 
 ### Added
