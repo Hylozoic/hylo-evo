@@ -7,7 +7,7 @@ export default
   $details: String,
   $linkPreviewId: String,
   $linkPreviewFeatured: Boolean,
-  $groupIds: [ID],
+  $groupIds: [String],
   $imageUrls: [String],
   $fileUrls: [String],
   $announcement: Boolean,

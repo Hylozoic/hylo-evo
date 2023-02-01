@@ -29,7 +29,7 @@ export default function createProject (postParams) {
         $title: String
         $details: String
         $linkPreviewId: String
-        $groupIds: [ID]
+        $groupIds: [String]
         $imageUrls: [String]
         $fileUrls: [String]
         $announcement: Boolean
