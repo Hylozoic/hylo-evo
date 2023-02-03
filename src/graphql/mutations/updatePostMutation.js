@@ -8,7 +8,7 @@ export default
   $details: String,
   $linkPreviewId: String,
   $linkPreviewFeatured: Boolean,
-  $groupIds: [String],
+  $groupIds: [ID],
   $imageUrls: [String],
   $fileUrls: [String],
   $topicNames: [String],
