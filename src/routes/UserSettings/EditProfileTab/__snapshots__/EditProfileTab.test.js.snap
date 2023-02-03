@@ -7,7 +7,7 @@ exports[`EditProfileTab renders correctly 1`] = `
     encodeSpecialCharacters={true}
   >
     <title>
-      Hylo: Settings
+      Your Settings | Hylo
     </title>
   </HelmetWrapper>
   <input
@@ -140,7 +140,7 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
     encodeSpecialCharacters={true}
   >
     <title>
-      Hylo: Settings
+      Your Settings | Hylo
     </title>
   </HelmetWrapper>
   <div

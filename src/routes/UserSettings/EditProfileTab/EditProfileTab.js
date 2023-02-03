@@ -227,7 +227,7 @@ export default class EditProfileTab extends Component {
     return (
       <div>
         <Helmet>
-          <title>Hylo: Settings</title>
+          <title>Your Settings | Hylo</title>
         </Helmet>
         {!validateName(name) && <div styleName='name-validation'>Name must not be blank</div>}
         {/* TODO: i18n */}

@@ -530,7 +530,7 @@ export class UnwrappedMapExplorer extends React.Component {
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
         <Helmet>
-          <title>Hylo{group ? `: ${group.name} Map` : ': Map'}</title>
+          <title>Map | {group ? `${group.name} | ` : ': Map'}Hylo</title>
         </Helmet>
 
         <div styleName='mapContainer'>

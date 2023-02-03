@@ -42,7 +42,7 @@ export default class Groups extends Component {
 
     return <div styleName='container'>
       <Helmet>
-        <title>Hylo{group ? `: ${group.name} Groups` : ''}</title>
+        <title>Groups | {group ? `${group.name} | ` : ''}Hylo</title>
       </Helmet>
 
       {groupRelationshipCount > 1 &&
