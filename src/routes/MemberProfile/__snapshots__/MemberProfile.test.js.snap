@@ -9,7 +9,8 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     encodeSpecialCharacters={true}
   >
     <title>
-      Hylo: Rich Churcher
+      Rich Churcher
+       | Hylo
     </title>
     <meta
       content="Rich Churcher's Member Profile"

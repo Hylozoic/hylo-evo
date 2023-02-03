@@ -168,9 +168,9 @@ export default class PostDetail extends Component {
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
             <Helmet>
               <title>
-                {`Hylo: ${post.title || TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)}`}
+                {`${post.title || TextHelpers.presentHTMLToText(post.details, { truncate: 20 })} | Hylo`}
               </title>
-              <meta name='description' content={TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)} />
+              <meta name='description' content={TextHelpers.presentHTMLToText(post.details, { truncate: MAX_DETAILS_LENGTH })} />
             </Helmet>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader

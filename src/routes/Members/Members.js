@@ -54,7 +54,7 @@ export default class Members extends Component {
 
     return <div>
       <Helmet>
-        <title>Hylo{group ? `: ${group.name} Members` : ''}</title>
+        <title>Members | {group ? `${group.name} | ` : ''}Hylo</title>
       </Helmet>
 
       <div styleName='header'>

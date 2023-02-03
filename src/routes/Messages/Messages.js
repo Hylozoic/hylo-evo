@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { Link, Route } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import PropTypes from 'prop-types'
@@ -163,6 +164,9 @@ export default class Messages extends React.Component {
     const { forNewThread } = this.state
 
     return <div styleName={cx('modal', { messagesOpen: messageThreadId })}>
+      <Helmet>
+        <title>Messages | Hylo</title>
+      </Helmet>
       <div styleName='content'>
         <div styleName='messages-header'>
           <div styleName='close-messages'>

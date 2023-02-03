@@ -371,7 +371,7 @@ export default function ChatRoom (props) {
   return (
     <div styleName={cx('container', { 'without-nav': withoutNav })}>
       <Helmet>
-        <title>Hylo{group ? `: ${group.name} #${topicName}` : ''}</title>
+        <title>#{topicName} | {group ? `${group.name} | ` : ''}Hylo</title>
       </Helmet>
 
       <TopicFeedHeader

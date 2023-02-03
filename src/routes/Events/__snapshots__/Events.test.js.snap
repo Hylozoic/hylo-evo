@@ -7,6 +7,7 @@ exports[`Events renders a post list 1`] = `
     encodeSpecialCharacters={true}
   >
     <title>
+      Events | 
       Hylo
     </title>
   </HelmetWrapper>

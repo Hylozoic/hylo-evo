@@ -200,7 +200,7 @@ export default function AuthLayoutRouter (props) {
   return (
     <IntercomProvider appId={isTest ? '' : config.intercom.appId} autoBoot autoBootProps={intercomProps}>
       <Helmet>
-        <title>Hylo{currentGroup ? `: ${currentGroup.name}` : ''}</title>
+        <title>{currentGroup ? `${currentGroup.name} | ` : ''}Hylo</title>
         <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
       </Helmet>
       {/* Redirects for switching into global contexts, since these pages don't exist yet */}

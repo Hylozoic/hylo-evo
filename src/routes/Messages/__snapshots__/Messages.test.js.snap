@@ -4,6 +4,14 @@ exports[`renders entire component when not loading 1`] = `
 <div
   data-stylename="modal"
 >
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Messages | Hylo
+    </title>
+  </HelmetWrapper>
   <div
     data-stylename="content"
   >
@@ -45,6 +53,14 @@ exports[`renders loading when in loading state 1`] = `
 <div
   data-stylename="modal"
 >
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Messages | Hylo
+    </title>
+  </HelmetWrapper>
   <div
     data-stylename="content"
   >

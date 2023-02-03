@@ -75,7 +75,7 @@ export default class Events extends Component {
     return (
       <div>
         <Helmet>
-          <title>Hylo{group ? `: ${group.name} Events` : ''}</title>
+          <title>Events | {group ? `${group.name} |` : ''}Hylo</title>
         </Helmet>
 
         <StreamBanner

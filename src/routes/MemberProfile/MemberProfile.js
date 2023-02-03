@@ -107,7 +107,7 @@ export default class MemberProfile extends React.Component {
     return (
       <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
         <Helmet>
-          <title>{`Hylo: ${person.name}`}</title>
+          <title>{person.name} | Hylo</title>
           <meta name='description' content={`${person.name}'s Member Profile`} />
         </Helmet>
         <div styleName='header'>

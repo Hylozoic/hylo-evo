@@ -106,9 +106,7 @@ export class UnwrappedGroupDetail extends Component {
     return (
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
         <Helmet>
-          <title>
-            {`Hylo: ${group.name}`}
-          </title>
+          <title>{group.name} | Hylo</title>
           <meta name='description' content={TextHelpers.truncateHTML(group.description, MAX_DETAILS_LENGTH)} />
         </Helmet>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>

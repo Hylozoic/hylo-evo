@@ -155,7 +155,7 @@ export function PublicPageHeader () {
   return (
     <div styleName='background'>
       <Helmet>
-        <title>Hylo: Public</title>
+        <title>Public | Hylo</title>
         <meta name='description' content='Hylo: Public content' />
       </Helmet>
       <div styleName='header'>
