@@ -95,6 +95,7 @@
 
 .card-item {
   padding: $space-2x $space-4x $space-2x;
+  max-width: 600px;
 
   > div {
     box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
