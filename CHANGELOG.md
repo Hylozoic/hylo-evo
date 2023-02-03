@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.3.1] - 2022-02-03
+
+### Changed
+- More improvements to <title> tags for various pages in Hylo
+- Post cards appear with a max width in chat rooms so they dont take up the whole screen
+
 ## [5.3.0] - 2022-01-30
 
 ### Added
