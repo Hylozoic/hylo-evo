@@ -6,13 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [5.3.1] - 2022-02-03
+## [5.3.1] - 2023-02-03
 
 ### Changed
 - More improvements to <title> tags for various pages in Hylo
 - Post cards appear with a max width in chat rooms so they dont take up the whole screen
 
-## [5.3.0] - 2022-01-30
+## [5.3.0] - 2023-01-30
 
 ### Added
 - Support for oAuth Authorization Code flow!
@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Display previous auth message if person has previously authed with Hylo
  - Display when an app is asking for offline_access
 
-## [5.2.0] - 2022-01-20
+## [5.2.0] - 2023-01-20
 
 ### Added
 - My Home context with 4 new views: __My Posts__ to see all posts you created, __Interactions__ to see all posts you have commented on or reacted to, __Mentions__ to see all posts you have been mentioned in, and __Announcements__ to see all announcements made in all groups you are a member of.
