@@ -1,5 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
+import { DateTime, Settings } from 'luxon'
 import { shallow } from 'enzyme'
 import PostEditor, { ActionsBar } from './PostEditor'
 
@@ -7,6 +8,9 @@ jest.mock('lodash/debounce', () => fn => {
   fn.cancel = jest.fn()
   return fn
 })
+
+const expectedNow = DateTime.local(2022, 6, 1, 23, 0, 0, { locale: 'en', zone: 'utc' }).toMillis()
+Settings.now = () => expectedNow
 
 describe('PostEditor', () => {
   const baseProps = {}

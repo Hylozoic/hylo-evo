@@ -23,6 +23,92 @@ exports[`TopicsLine matches last snapshot 1`] = `
 </div>
 `;
 
+exports[`displays fulfilledAt time if it is before endTime 1`] = `
+<div
+  data-stylename="header"
+>
+  <div
+    data-stylename="headerMainRow"
+  >
+    <div
+      data-stylename="headerTopRow"
+    >
+      <Avatar
+        avatarUrl="foo.png"
+        data-stylename="avatar"
+        url="/all/members/123"
+      />
+      <div
+        data-stylename="headerText"
+      >
+        <Highlight
+          component="span"
+          highlightClassName="highlight"
+        >
+          <Link
+            data-for="announcement-tt"
+            data-stylename="userName"
+            to="/all/members/123"
+          >
+            JJ
+          </Link>
+        </Highlight>
+        <div
+          data-stylename="timestampRow"
+        >
+          <span
+            data-stylename="timestamp"
+          />
+        </div>
+      </div>
+      <div
+        data-stylename="upperRight"
+      >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
+        <Dropdown
+          alignRight={true}
+          items={
+            Array [
+              Object {
+                "icon": "Copy",
+                "label": "Copy Link",
+                "onClick": [Function],
+              },
+            ]
+          }
+          toggleChildren={
+            <Icon
+              name="More"
+            />
+          }
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-stylename="subheader"
+  />
+  <ReactTooltip
+    backgroundColor="rgba(35, 65, 91, 1.0)"
+    clickable={false}
+    delayShow={0}
+    effect="solid"
+    id="announcement-tt"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+</div>
+`;
+
 exports[`matches announcement snapshot 1`] = `
 <div
   data-stylename="header"
@@ -82,6 +168,15 @@ exports[`matches announcement snapshot 1`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <Dropdown
           alignRight={true}
           items={
@@ -177,6 +272,15 @@ exports[`matches announcement snapshot 2`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <PostLabel
           data-stylename="label"
           type="request"
@@ -203,7 +307,13 @@ exports[`matches announcement snapshot 2`] = `
   </div>
   <div
     data-stylename="subheader"
-  />
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Ends: Invalid DateTime
+    </div>
+  </div>
   <ReactTooltip
     backgroundColor="rgba(35, 65, 91, 1.0)"
     clickable={false}
@@ -276,6 +386,15 @@ exports[`matches announcement snapshot 3`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <PostLabel
           data-stylename="label"
           type="request"
@@ -313,7 +432,13 @@ exports[`matches announcement snapshot 3`] = `
   </div>
   <div
     data-stylename="subheader"
-  />
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Ends: Invalid DateTime
+    </div>
+  </div>
   <ReactTooltip
     backgroundColor="rgba(35, 65, 91, 1.0)"
     clickable={false}
@@ -368,6 +493,15 @@ exports[`matches snapshot 1`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <Dropdown
           alignRight={true}
           items={
@@ -445,6 +579,15 @@ exports[`matches snapshot 2`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <PostLabel
           data-stylename="label"
           type="request"
@@ -471,7 +614,13 @@ exports[`matches snapshot 2`] = `
   </div>
   <div
     data-stylename="subheader"
-  />
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Ends: Invalid DateTime
+    </div>
+  </div>
   <ReactTooltip
     backgroundColor="rgba(35, 65, 91, 1.0)"
     clickable={false}
@@ -526,6 +675,15 @@ exports[`matches snapshot 3`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <PostLabel
           data-stylename="label"
           type="request"
@@ -563,7 +721,13 @@ exports[`matches snapshot 3`] = `
   </div>
   <div
     data-stylename="subheader"
-  />
+  >
+    <div
+      data-stylename="timeWindow"
+    >
+      Ends: Invalid DateTime
+    </div>
+  </div>
   <ReactTooltip
     backgroundColor="rgba(35, 65, 91, 1.0)"
     clickable={false}
@@ -618,6 +782,15 @@ exports[`renders human readable dates 1`] = `
       <div
         data-stylename="upperRight"
       >
+        <div
+          data-for="announcement-tt"
+          data-tip="Completed"
+        >
+          <PostLabel
+            data-stylename="label"
+            type="completed"
+          />
+        </div>
         <PostLabel
           data-stylename="label"
           type="request"
@@ -648,7 +821,7 @@ exports[`renders human readable dates 1`] = `
     <div
       data-stylename="timeWindow"
     >
-      Started: Sun, Nov 29, 2020 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+      Completed: Invalid DateTime
     </div>
   </div>
   <ReactTooltip

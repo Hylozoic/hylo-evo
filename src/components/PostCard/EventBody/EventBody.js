@@ -49,7 +49,7 @@ export default class EventBody extends Component {
       <div styleName={cx('eventBodyColumn', { constrained })}>
         <PostTitle {...event} constrained={constrained} onClick={onClick} />
         <div styleName={cx('eventData', { constrained })} onClick={onClick}>
-          <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair(startTime, endTime)}
+          <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair('en', startTime, endTime)} {/* TODO: Update 'en' with locale, once locale becomes available */}
         </div>
         {!!location && <div styleName='eventData eventLocation' onClick={onClick}>
           <Icon name='Location' styleName='icon' /> {location}

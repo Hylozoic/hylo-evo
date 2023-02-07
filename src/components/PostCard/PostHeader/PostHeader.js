@@ -3,7 +3,6 @@ import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { DateTime } from 'luxon'
 import Avatar from 'components/Avatar'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
@@ -86,21 +85,26 @@ export default class PostHeader extends PureComponent {
 
     const typesWithCompletion = ['offer', 'request', 'resource', 'project']
     const canBeCompleted = typesWithCompletion.includes(type)
+    const locale = 'en' /* TODO: Update with locale, once locale becomes available */
 
     // If it was completed/fulfilled before it ended, then use that as the end datetime
     let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
 
-    const { from, to } = TextHelpers.formatDatePair(startTime, actualEndTime, true)
+    const { from, to } = TextHelpers.formatDatePair(locale, startTime, actualEndTime, true)
     const startString = fulfilledAt ? false
       : TextHelpers.isDateInTheFuture(startTime) ? `Starts: ${from}`
         : TextHelpers.isDateInTheFuture(endTime) ? `Started: ${from}`
           : false
+    const endTimeDate = new Date(endTime)
+    const endTimeTimestamp = endTimeDate.getTime()
+    const now = new Date()
+    const nowTimestamp = now.getTime()
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
       endString = `Completed: ${to}`
     } else {
-      endString = endTime !== DateTime.now() && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+      endString = endTimeTimestamp !== nowTimestamp && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
     }
 
     let timeWindow = ''
