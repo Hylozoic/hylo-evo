@@ -6,12 +6,13 @@ import Icon from 'components/Icon'
 import './PostTitle.scss'
 
 export default function PostTitle ({
-  title,
   constrained,
   highlightProps,
   locationObject,
   location,
-  onClick
+  onClick,
+  title,
+  type
 }) {
   // Formatting location to display in stream view
   const generalLocation = LocationHelpers.generalLocationString(locationObject, location || '')
@@ -19,7 +20,7 @@ export default function PostTitle ({
   return <Highlight {...highlightProps}>
     <React.Fragment>
       <div onClick={onClick} styleName={cx('title', { constrained })} className='hdr-headline'>{title}</div>
-      {location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
+      {type !== 'event' && location && <div styleName={cx('headerLocation', { constrained })}><Icon name='Location' styleName='locationIcon' />{generalLocation}</div>}
     </React.Fragment>
   </Highlight>
 }
