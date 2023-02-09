@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.3.2] - 2023-02-08
+
+### Changed
+- Allow for Skills & Interests with spaces and up to 30 characters
+
+### Fixed
+- Bug viewing direct messages when there's one from a deleted user
+- Don't show location twice on event cards
+
 ## [5.3.1] - 2023-02-03
 
 ### Changed
