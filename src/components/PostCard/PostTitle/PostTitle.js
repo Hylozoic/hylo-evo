@@ -11,8 +11,12 @@ export default function PostTitle ({
   locationObject,
   location,
   onClick,
+<<<<<<< HEAD
   title,
   type
+=======
+  ...post
+>>>>>>> b8c5019de ( dedupe location location)
 }) {
   // Formatting location to display in stream view
   const generalLocation = LocationHelpers.generalLocationString(locationObject, location || '')
