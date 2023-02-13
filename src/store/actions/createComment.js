@@ -1,13 +1,14 @@
 import { CREATE_COMMENT } from 'store/constants'
 import { uniqueId } from 'lodash/fp'
-import { AnalyticsEvents } from 'hylo-shared'
+import { AnalyticsEvents, TextHelpers } from 'hylo-shared'
 import CreateCommentMutation from 'graphql/mutations/CreateCommentMutation.graphql'
 
 export default function createComment ({
-  postId,
+  attachments,
+  groupIds,
   parentCommentId,
-  text,
-  attachments
+  postId,
+  text
 }) {
   return {
     type: CREATE_COMMENT,
@@ -27,7 +28,14 @@ export default function createComment ({
       postId,
       text,
       attachments,
-      analytics: AnalyticsEvents.COMMENT_CREATED
+      analytics: {
+        eventName: AnalyticsEvents.COMMENT_CREATED,
+        commentLength: TextHelpers.textLengthHTML(text),
+        groupId: groupIds,
+        hasAttachments: attachments && attachments.length > 0,
+        parentCommentId,
+        postId
+      }
     }
   }
 }

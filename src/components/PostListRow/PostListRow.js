@@ -97,8 +97,7 @@ const PostListRow = (props) => {
         <HyloHTML styleName='details' html={details} />
         <div styleName='reactions'>
           <EmojiRow
-            {...post}
-            postId={post.id}
+            post={post}
             currentUser={currentUser}
           />
         </div>

@@ -5,8 +5,8 @@ import removeAction from 'store/actions/removeReactOnEntity'
 export default function useReactOnEntity () {
   const dispatch = useDispatch()
 
-  const reactOnEntity = ({ commentId, emojiFull, entityType, postId }) => {
-    dispatch(reactAction({ commentId, emojiFull, entityType, postId }))
+  const reactOnEntity = ({ commentId, emojiFull, entityType, postId, groupIds }) => {
+    dispatch(reactAction({ commentId, emojiFull, entityType, postId, groupIds }))
   }
 
   const removeReactOnEntity = ({ commentId, emojiFull, entityType, postId }) => {

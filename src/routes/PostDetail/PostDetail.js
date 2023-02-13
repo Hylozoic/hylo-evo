@@ -272,7 +272,7 @@ export default class PostDetail extends Component {
               </div>
             )}
             <Comments
-              postId={post.id}
+              post={post}
               slug={routeParams.groupSlug}
               selectedCommentId={routeParams.commentId}
               scrollToBottom={scrollToBottom}

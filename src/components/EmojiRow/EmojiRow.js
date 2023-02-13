@@ -8,20 +8,19 @@ import './EmojiRow.scss'
 export default function EmojiRow (props) {
   const {
     className,
+    comment,
     currentUser,
-    postReactions = [],
-    commentReactions = [],
-    myReactions = [],
     onClick,
-    postId,
-    commentId
+    post
   } = props
   const { reactOnEntity, removeReactOnEntity } = useReactionActions()
 
-  const entityType = commentId ? 'comment' : 'post'
-  const entityReactions = commentId ? commentReactions : postReactions
-  const handleReaction = (emojiFull) => reactOnEntity({ commentId, emojiFull, entityType, postId })
-  const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ commentId, emojiFull, entityType, postId })
+  const entityType = comment ? 'comment' : 'post'
+  const myReactions = (comment ? comment.myReactions : post.myReactions) || []
+  const entityReactions = (comment ? comment.commentReactions : post.postReactions) || []
+  const groupIds = post.groups.map(g => g.id)
+  const handleReaction = (emojiFull) => reactOnEntity({ commentId: comment?.id, emojiFull, entityType, groupIds, postId: post.id })
+  const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ commentId: comment?.id, emojiFull, entityType, postId: post.id })
   const myEmojis = myReactions.map((reaction) => reaction.emojiFull)
   const usersReactions = entityReactions.reduce((accum, entityReaction) => {
     if (accum[entityReaction.emojiFull]) {

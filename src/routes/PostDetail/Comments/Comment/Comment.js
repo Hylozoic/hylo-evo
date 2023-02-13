@@ -92,7 +92,7 @@ export class Comment extends Component {
   }
 
   render () {
-    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId } = this.props
+    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post } = this.props
     const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
@@ -105,7 +105,7 @@ export class Comment extends Component {
     ])
 
     return (
-      <div ref={this.commentRef} styleName={cx({ 'commentContainer': true, 'selected-comment': selectedCommentId === comment.id })}>
+      <div ref={this.commentRef} styleName={cx({ commentContainer: true, 'selected-comment': selectedCommentId === comment.id })}>
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
@@ -128,11 +128,9 @@ export class Comment extends Component {
               ))}
               <EmojiRow
                 className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
-                commentReactions={comment.commentReactions}
-                myReactions={comment.myReactions}
+                comment={comment}
                 currentUser={currentUser}
-                postId={comment.post}
-                commentId={comment.id}
+                post={post}
               />
             </div>
           </div>
@@ -141,8 +139,7 @@ export class Comment extends Component {
           <div>
             <CardImageAttachments attachments={attachments} linked styleName='images' />
             <CardFileAttachments attachments={attachments} styleName='files' />
-          </div>
-        }
+          </div>}
         {editing && (
           <HyloEditor
             styleName='editing'
@@ -159,11 +156,9 @@ export class Comment extends Component {
             </ClickCatcher>
             <EmojiRow
               className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
-              commentReactions={comment.commentReactions}
-              myReactions={comment.myReactions}
+              comment={comment}
               currentUser={currentUser}
-              postId={comment.post}
-              commentId={comment.id}
+              post={post}
             />
           </>
         )}

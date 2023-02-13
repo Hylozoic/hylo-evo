@@ -1,6 +1,6 @@
 import { RESPOND_TO_EVENT } from 'store/constants'
 
-export default function respondToEvent (id, response) {
+export default function respondToEvent (id, response, groupIds) {
   return {
     type: RESPOND_TO_EVENT,
     graphql: {
@@ -14,7 +14,12 @@ export default function respondToEvent (id, response) {
     meta: {
       id,
       response,
-      optimistic: true
+      optimistic: true,
+      analytics: {
+        eventName: AnalyticsEvents.EVENT_RSVP,
+        groupId: groupIds,
+        response
+      }
     }
   }
 }

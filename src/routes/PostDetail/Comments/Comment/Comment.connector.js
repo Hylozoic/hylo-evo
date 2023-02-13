@@ -10,23 +10,27 @@ import { getHasMoreChildComments, getTotalChildComments } from 'store/selectors/
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
-  const { comment } = props
+  const { comment, post } = props
   const currentUser = getMe(state, props)
   const group = getGroupForCurrentRoute(state, props)
   const isCreator = currentUser && (comment.creator.id === currentUser.id)
   const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
-    childCommentsTotal: getTotalChildComments(state, { id: comment.id }),
-    hasMoreChildComments: getHasMoreChildComments(state, { id: comment.id }),
     canModerate,
+    childCommentsTotal: getTotalChildComments(state, { id: comment.id }),
     currentUser,
-    isCreator
+    hasMoreChildComments: getHasMoreChildComments(state, { id: comment.id }),
+    isCreator,
+    post
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const { postId, comment } = props
+  const { post, comment } = props
+
+  const groupIds = post.groups.map(g => g.id)
+
   return {
     ...bindActionCreators({
       deleteComment,
@@ -34,7 +38,8 @@ export const mapDispatchToProps = (dispatch, props) => {
     }, dispatch),
     fetchCommentsMaker: cursor => () => dispatch(fetchChildComments(comment.id, { cursor })),
     createComment: commentParams => dispatch(createComment({
-      postId,
+      groupIds,
+      postId: post.id,
       parentCommentId: comment.id,
       ...commentParams
     }))

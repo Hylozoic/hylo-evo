@@ -38,8 +38,7 @@ export default function PostBody (props) {
       </div>
       <div styleName='reactions'>
         <EmojiRow
-          {...post}
-          postId={post.id}
+          post={post}
           currentUser={currentUser}
         />
       </div>

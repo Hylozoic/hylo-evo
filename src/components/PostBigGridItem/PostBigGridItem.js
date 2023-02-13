@@ -150,9 +150,10 @@ export default function PostBigGridItem (props) {
           </div>
           <div styleName='reactions'>
             <EmojiRow
-              {...post}
-              postId={post.id}
               currentUser={currentUser}
+              myReactions={post.myReactions}
+              postReactions={post.postReactions}
+              post={post}
             />
           </div>
         </div>

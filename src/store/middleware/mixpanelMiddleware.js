@@ -14,7 +14,7 @@ export default function mixpanelMiddleware (store) {
       // a required key).
       const state = store.getState()
 
-      if (isDev || !mixpanel) return next(action)
+      if (!mixpanel) return next(action)
 
       const isLoggedIn = getAuthenticated(state)
       const { analytics } = meta
