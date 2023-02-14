@@ -134,7 +134,7 @@ export default function PostBigGridItem (props) {
               {post.type === 'event' &&
                 <div styleName='event-response'>
                   <div>Can you go?</div>
-                  <EventRSVP {...post} respondToEvent={respondToEvent(post.id)} position='top' />
+                  <EventRSVP {...post} respondToEvent={respondToEvent(post)} position='top' />
                 </div>
               }
             </div>

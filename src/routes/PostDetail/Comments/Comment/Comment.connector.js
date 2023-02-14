@@ -29,8 +29,6 @@ export function mapStateToProps (state, props) {
 export const mapDispatchToProps = (dispatch, props) => {
   const { post, comment } = props
 
-  const groupIds = post.groups.map(g => g.id)
-
   return {
     ...bindActionCreators({
       deleteComment,
@@ -38,8 +36,7 @@ export const mapDispatchToProps = (dispatch, props) => {
     }, dispatch),
     fetchCommentsMaker: cursor => () => dispatch(fetchChildComments(comment.id, { cursor })),
     createComment: commentParams => dispatch(createComment({
-      groupIds,
-      postId: post.id,
+      post: post,
       parentCommentId: comment.id,
       ...commentParams
     }))

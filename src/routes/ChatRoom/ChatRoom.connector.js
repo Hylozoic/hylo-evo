@@ -189,7 +189,7 @@ export function mapDispatchToProps (dispatch, props) {
       }
     },
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
-    respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
+    respondToEvent: (post) => response => dispatch(respondToEvent(post, response)),
     showDetails: (postId) => dispatch(push(postUrl(postId, routeParams, { ...props.locationParams, ...querystringParams }))),
     toggleGroupTopicSubscribe: groupTopic => dispatch(toggleGroupTopicSubscribe(groupTopic)),
     ...bindActionCreators({

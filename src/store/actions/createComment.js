@@ -7,9 +7,10 @@ export default function createComment ({
   attachments,
   groupIds,
   parentCommentId,
-  postId,
+  post,
   text
 }) {
+  const postId = post.id
   return {
     type: CREATE_COMMENT,
     graphql: {
@@ -31,7 +32,7 @@ export default function createComment ({
       analytics: {
         eventName: AnalyticsEvents.COMMENT_CREATED,
         commentLength: TextHelpers.textLengthHTML(text),
-        groupId: groupIds,
+        groupId: post.groups.map(g => g.id),
         hasAttachments: attachments && attachments.length > 0,
         parentCommentId,
         postId

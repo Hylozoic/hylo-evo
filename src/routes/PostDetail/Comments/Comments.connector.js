@@ -26,12 +26,11 @@ export function mapStateToProps (state, props) {
 
 export const mapDispatchToProps = (dispatch, props) => {
   const { post, scrollToBottom } = props
-  const groupIds = post.groups.map(g => g.id)
 
   return {
     fetchCommentsMaker: cursor => () => dispatch(fetchComments(post.id, { cursor })),
     createComment: async commentParams => {
-      await dispatch(createComment({ groupIds, postId: post.id, ...commentParams }))
+      await dispatch(createComment({ post, ...commentParams }))
       scrollToBottom()
     }
   }
