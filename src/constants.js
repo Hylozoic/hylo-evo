@@ -11,10 +11,10 @@ export const AnalyticsEvents = {
   POST_REACTION: 'Reacted to Post',
   POST_SHARED: 'Post Shared',
   POST_UPDATED: 'Post Updated',
-  SIGNUP_EMAIL_VERIFICATION_SENT: 'Signup Email Verification Sent',
-  SIGNUP_EMAIL_VERIFIED: 'Signup Email Verified',
+  SIGNUP_EMAIL_VERIFICATION_SENT: 'Email Verification Sent',
+  SIGNUP_EMAIL_VERIFIED: 'Email Verified',
+  SIGNUP_REGISTERED: 'Registered',
   SIGNUP_COMPLETE: 'Signup Complete',
-  SIGNUP_PROFILE_FINISHED: 'Signup Profile Finished',
   TOPIC_CREATED: 'Topic Created',
   VOTED_ON_POST: 'Voted on Post', // Remove once mobile has switched to POST_REACTION
   UNBLOCK_USER: 'User Un-Blocked'
