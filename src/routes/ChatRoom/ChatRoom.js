@@ -301,14 +301,19 @@ export default function ChatRoom (props) {
     const details = editorRef.current.getHTML()
     const imageUrls = imageAttachments && imageAttachments.map((attachment) => attachment.url)
     const topicNames = newPost.topics?.map((t) => t.name)
-    await createPost({ ...newPost, details, imageUrls, topicNames })
+    const postToSave = { ...newPost, details, imageUrls, topicNames }
+
+    // Clear create form instantly to make it feel faster and prevent double submit
+    editorRef.current.clearContent()
+    clearLinkPreview()
+    clearImageAttachments()
+
+    await createPost(postToSave)
     setNewPost(emptyPost)
     setCreatedNewPost(true)
-    editorRef.current.clearContent()
     editorRef.current.focus()
-    clearImageAttachments()
-    clearLinkPreview()
     scrollToBottom()
+
     return true
   })
 
