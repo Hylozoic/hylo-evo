@@ -1,14 +1,22 @@
 export const AnalyticsEvents = {
+  BLOCK_USER: 'User Blocked',
   COMMENT_CREATED: 'Comment Created',
+  COMMENT_REACTION: 'Reacted to Comment',
+  DIRECT_MESSAGE_SENT: 'Direct Message Sent',
+  EVENT_RSVP: 'Event RSVP',
   GROUP_CREATED: 'Group Created',
   GROUP_INVITATION_ACCEPTED: 'Group Invitation Accepted',
-  DIRECT_MESSAGE_SENT: 'Direct Message Sent',
   POST_CREATED: 'Post Created',
-  POST_UPDATED: 'Post Updated',
+  POST_OPENED: 'Post Opened',
+  POST_REACTION: 'Reacted to Post',
   POST_SHARED: 'Post Shared',
+  POST_UPDATED: 'Post Updated',
+  SIGNUP_EMAIL_VERIFICATION_SENT: 'Signup Email Verification Sent',
+  SIGNUP_EMAIL_VERIFIED: 'Signup Email Verified',
+  SIGNUP_COMPLETE: 'Signup Complete',
+  SIGNUP_PROFILE_FINISHED: 'Signup Profile Finished',
   TOPIC_CREATED: 'Topic Created',
-  VOTED_ON_POST: 'Voted on Post',
-  BLOCK_USER: 'User Blocked',
+  VOTED_ON_POST: 'Voted on Post', // Remove once mobile has switched to POST_REACTION
   UNBLOCK_USER: 'User Un-Blocked'
 }
 
