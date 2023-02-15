@@ -21,13 +21,16 @@ describe('PostDetail', () => {
       details,
       peopleReactedTotal,
       myVote,
-      members: []
+      members: [],
+      groups: [ { id: '109 '}]
     }
 
     const wrapper = shallow(<PostDetail
       post={post}
       routeParams={routeParams}
-      fetchPost={jest.fn()} />)
+      fetchPost={jest.fn()}
+      trackAnalyticsEvent={jest.fn()}
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 })

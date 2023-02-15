@@ -9,6 +9,7 @@ Object {
   "onClose": [Function],
   "processStripeToken": [Function],
   "respondToEvent": [Function],
+  "trackAnalyticsEvent": [Function],
 }
 `;
 
