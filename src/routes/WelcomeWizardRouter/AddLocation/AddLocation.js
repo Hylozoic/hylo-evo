@@ -47,7 +47,7 @@ export default class AddLocation extends Component {
 
     this.props.updateUserSettings(changes)
       .then(() => {
-        this.props.trackAnalyticsEvent(AnalyticsEvents.SIGNUP_COMPLETE)
+        this.props.trackAnalyticsEvent(AnalyticsEvents.SIGNUP_PROFILE_FINISHED)
         this.props.goToNextStep()
       })
   }
