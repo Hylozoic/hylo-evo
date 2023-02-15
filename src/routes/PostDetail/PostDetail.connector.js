@@ -50,9 +50,20 @@ export function mapDispatchToProps (dispatch, props) {
     joinProject: () => dispatch(joinProject(postId)),
     leaveProject: () => dispatch(leaveProject(postId)),
     processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
-    respondToEvent: response => dispatch(respondToEvent(post, response)),
+    respondToEvent: (post, response) => dispatch(respondToEvent(post, response)),
     trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { post } = stateProps
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    respondToEvent: (response) => dispatchProps.respondToEvent(post, response)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

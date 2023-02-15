@@ -9,7 +9,6 @@ import {
   getTotalComments
 } from 'store/selectors/getComments'
 import getMe from 'store/selectors/getMe'
-import getPost from 'store/selectors/getPost'
 
 export function mapStateToProps (state, props) {
   const comments = getComments(state, props)
