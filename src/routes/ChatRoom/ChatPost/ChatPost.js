@@ -143,6 +143,7 @@ export default function ChatPost ({
     }
 
     post.details = contentHTML
+    post.topicNames = post.topics?.map((t) => t.name) // Make sure topic stays on the post
     updatePost(post)
     setEditing(false)
 

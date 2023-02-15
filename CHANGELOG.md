@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.3.3] - 2023-02-14
+
+### Fixed
+- Double chat creation when enter is hit twice quickly
+- Editing a chat post would cause it to disappear
+
 ## [5.3.2] - 2023-02-08
 
 ### Changed
