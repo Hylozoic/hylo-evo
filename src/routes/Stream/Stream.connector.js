@@ -149,7 +149,7 @@ export function mapDispatchToProps (dispatch, props) {
   const querystringParams = getQuerystringParam(['s', 't'], null, props)
 
   return {
-    respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
+    respondToEvent: (post) => response => dispatch(respondToEvent(post, response)),
     updateUserSettings: updateSettings,
     changeTab: tab => {
       updateSettings({ settings: { streamPostType: tab || '' } })

@@ -134,7 +134,7 @@ export default function PostBigGridItem (props) {
               {post.type === 'event' &&
                 <div styleName='event-response'>
                   <div>Can you go?</div>
-                  <EventRSVP {...post} respondToEvent={respondToEvent(post.id)} position='top' />
+                  <EventRSVP {...post} respondToEvent={respondToEvent(post)} position='top' />
                 </div>
               }
             </div>
@@ -150,9 +150,10 @@ export default function PostBigGridItem (props) {
           </div>
           <div styleName='reactions'>
             <EmojiRow
-              {...post}
-              postId={post.id}
               currentUser={currentUser}
+              myReactions={post.myReactions}
+              postReactions={post.postReactions}
+              post={post}
             />
           </div>
         </div>

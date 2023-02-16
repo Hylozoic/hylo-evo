@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.3.4] - 2023-02-15
+
+### Added
+- New Mixpanel events to track full Signup funnel, Event RSVPs and Post opens
+- Track the group(s) associated with every user and every event in Mixpanel. This paves the way for group admins to have access to group analytics through Mixpanel
+
 ## [5.3.3] - 2023-02-14
 
 ### Fixed

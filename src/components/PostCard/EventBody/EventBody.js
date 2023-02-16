@@ -91,8 +91,7 @@ export default class EventBody extends Component {
         </div>}
       </div>
       <EmojiRow
-        {...event}
-        postId={event.id}
+        post={event}
         currentUser={currentUser}
       />
       {showInviteDialog && <EventInviteDialog

@@ -66,7 +66,11 @@ export default function updatePost (post, query = updatePostMutation) {
       optimistic: true,
       analytics: {
         eventName: AnalyticsEvents.POST_UPDATED,
-        detailsLength: TextHelpers.textLengthHTML(details)
+        detailsLength: TextHelpers.textLengthHTML(details),
+        groupId: groupIds,
+        isPublic,
+        topics: topicNames,
+        type
       }
     }
   }

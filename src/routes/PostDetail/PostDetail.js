@@ -4,7 +4,7 @@ import ReactResizeDetector from 'react-resize-detector'
 import PropTypes from 'prop-types'
 import { get, throttle } from 'lodash/fp'
 import { Helmet } from 'react-helmet'
-import { TextHelpers } from 'hylo-shared'
+import { AnalyticsEvents, TextHelpers } from 'hylo-shared'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -75,6 +75,17 @@ export default class PostDetail extends Component {
 
   onPostIdChange = () => {
     this.props.fetchPost()
+
+    const post = this.props.post
+    if (post) {
+      this.props.trackAnalyticsEvent(AnalyticsEvents.POST_OPENED, {
+        postId: post.id,
+        groupId: post.groups.map(g => g.id),
+        isPublic: post.isPublic,
+        topics: post.topics?.map(t => t.name),
+        type: post.type
+      })
+    }
   }
 
   handleScroll = throttle(100, event => {
@@ -272,7 +283,7 @@ export default class PostDetail extends Component {
               </div>
             )}
             <Comments
-              postId={post.id}
+              post={post}
               slug={routeParams.groupSlug}
               selectedCommentId={routeParams.commentId}
               scrollToBottom={scrollToBottom}

@@ -18,7 +18,7 @@ export function mapDispatchToProps (dispatch, props) {
   return {
     showDetails: () => dispatch(push(postUrl(post.id, routeParams, { ...locationParams, ...querystringParams }))),
     editPost: () => dispatch(push(editPostUrl(post.id, routeParams, querystringParams))),
-    respondToEvent: response => dispatch(respondToEvent(post.id, response))
+    respondToEvent: response => dispatch(respondToEvent(post, response))
   }
 }
 

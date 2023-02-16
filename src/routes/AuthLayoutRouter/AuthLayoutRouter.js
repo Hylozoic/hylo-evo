@@ -129,6 +129,20 @@ export default function AuthLayoutRouter (props) {
   }, [currentUser?.id])
 
   useEffect(() => {
+    // Add all current group membershps to mixpanel user
+    mixpanel.set_group('groupId', memberships.map(m => m.group.id))
+
+    if (currentGroup?.id) {
+      // Setup group profile info
+      mixpanel.get_group('groupId', currentGroup.id).set({
+        $location: currentGroup.location,
+        $name: currentGroup.name,
+        type: currentGroup.type
+      })
+    }
+  }, [currentGroup?.id])
+
+  useEffect(() => {
     (async function () {
       if (currentGroupSlug) {
         setCurrentGroupLoading(true)

@@ -20,7 +20,7 @@ export default class Comments extends Component {
     height: number,
     createComment: func,
     currentUser: object,
-    postId: string,
+    post: object,
     slug: string,
     width: number
   }
@@ -67,7 +67,7 @@ export default class Comments extends Component {
       createComment,
       selectedCommentId,
       slug,
-      postId,
+      post,
       width
     } = this.props
 
@@ -90,7 +90,7 @@ export default class Comments extends Component {
             comment={c}
             slug={slug}
             selectedCommentId={selectedCommentId}
-            postId={postId}
+            post={post}
             onReplyThread={this.scrollToReplyInput.bind(this)}
           />
         ))}
@@ -100,7 +100,7 @@ export default class Comments extends Component {
               <CommentForm
                 currentUser={currentUser}
                 createComment={createComment}
-                postId={postId}
+                postId={post.id}
               />
               <PeopleTyping styleName='people-typing' />
             </div>

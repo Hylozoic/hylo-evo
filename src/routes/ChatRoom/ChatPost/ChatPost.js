@@ -57,6 +57,7 @@ export default function ChatPost ({
     creator,
     details,
     fileAttachments,
+    groups,
     id,
     imageAttachments,
     linkPreview,
@@ -64,6 +65,8 @@ export default function ChatPost ({
     myReactions,
     postReactions
   } = post
+
+  const groupIds = groups.map(g => g.id)
 
   if (intersectionObserver) {
     useEffect(() => {
@@ -122,7 +125,7 @@ export default function ChatPost ({
 
   const { reactOnEntity, removeReactOnEntity } = useReactionActions()
   const handleReaction = (emojiFull) => {
-    reactOnEntity({ emojiFull, entityType: 'post', postId: id })
+    reactOnEntity({ emojiFull, entityType: 'post', postId: id, groupIds })
     setIsLongPress(false)
   }
   const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ emojiFull, entityType: 'post', postId: id })
@@ -227,7 +230,7 @@ export default function ChatPost ({
         {details && editing && (
           <HyloEditor
             contentHTML={details}
-            groupIds={post.groups.map(g => g.id)}
+            groupIds={groupIds}
             onEscape={handleEditCancel}
             onEnter={handleEditSave}
             placeholder='Edit Post'
@@ -264,9 +267,7 @@ export default function ChatPost ({
         )}
         <EmojiRow
           className={cx({ [styles.emojis]: true, [styles.noEmojis]: !postReactions || postReactions.length === 0 })}
-          postReactions={postReactions}
-          myReactions={myReactions}
-          postId={id}
+          post={post}
           currentUser={currentUser}
         />
         {commentsTotal > 0 && (

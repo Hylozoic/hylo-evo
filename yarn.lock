@@ -9568,10 +9568,10 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-hylo-shared@5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-5.1.2.tgz#b68c48ca7ef8bbe8a0208443a4bc732712438de1"
-  integrity sha512-kWfhzWHg9Yu6v5ZtnejkMxAFglnPxTXLT2Ejb2y8Bbij1u8TQoOF3qTSNbJW+iEtZpGahCfMxG/RRK3BWrteHQ==
+hylo-shared@5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/hylo-shared/-/hylo-shared-5.2.2.tgz#f92e4ce2fd26ac5b9b35220cdfbd57be23871a2a"
+  integrity sha512-7t38+pVZmZyXgH5vGYBzF4NXAqHHlWrO+1O9IWKOyvwFIWmWcznCk4DZx/6Put98EdCDyGfPPlOJYACp9uOd6g==
   dependencies:
     coordinate-parser "^1.0.7"
     html-to-text "^8.1.0"
@@ -12177,7 +12177,7 @@ mixin-object@^2.0.1:
     for-in "^0.1.3"
     is-extendable "^0.1.1"
 
-mixpanel-browser@^2.22.4:
+mixpanel-browser@^2.45.0:
   version "2.45.0"
   resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.45.0.tgz#a2973be5b66e6d2799ef95a1e55b8ad8eede57e8"
   integrity sha512-PQ1DaTk68yyYtLA0iejmzPA9iNDhT4uIZpqZjRTw7HWpYfl123fydHb2laKanaKjm8YDmrGGz3+xZ4Q6joogyg==
