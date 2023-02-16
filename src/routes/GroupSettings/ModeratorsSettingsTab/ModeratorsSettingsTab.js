@@ -129,7 +129,7 @@ export default class ModeratorsSettingsTab extends Component {
         this.setState({ roles })
       })
     } else {
-      window.alert('A role must have a valid emoji and name to be saved')  // TODO: i18n
+      window.alert('A role must have a valid emoji and name to be saved') // TODO: i18n
     }
   }
 
@@ -149,7 +149,7 @@ export default class ModeratorsSettingsTab extends Component {
         this.setState({ roles })
       })
     } else {
-      window.alert('A role must have a valid emoji and name to be updated')  // TODO: i18n
+      window.alert('A role must have a valid emoji and name to be updated') // TODO: i18n
     }
   }
 
