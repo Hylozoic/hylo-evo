@@ -129,7 +129,7 @@ export function register (name, password) {
         }
       ],
       analytics: {
-        eventName: AnalyticsEvents.SIGNUP_COMPLETE
+        eventName: AnalyticsEvents.SIGNUP_REGISTERED
       }
     }
   }

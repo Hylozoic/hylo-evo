@@ -1,7 +1,7 @@
 {
   "name": "hylo-evo",
   "description": "Hylo Frontend",
-  "version": "5.3.3",
+  "version": "5.3.4",
   "private": true,
   "engines": {
     "node": "16.13.2",
@@ -150,7 +150,7 @@
     "html-webpack-plugin": "^4.5.1",
     "http-proxy-middleware": "0.17.4",
     "husky": "^7.0.4",
-    "hylo-shared": "5.2.1",
+    "hylo-shared": "5.2.2",
     "identity-obj-proxy": "3.0.0",
     "immutability-helper": "^3.1.1",
     "immutable": "~3.7.4",
@@ -170,7 +170,7 @@
     "mapbox-gl": "^2.7.1",
     "mime": "^2.0.3",
     "mini-css-extract-plugin": "0.5.0",
-    "mixpanel-browser": "^2.22.4",
+    "mixpanel-browser": "^2.45.0",
     "mock-fs": "^4.2.0",
     "moment-locales-webpack-plugin": "^1.2.0",
     "moment-timezone": "^0.5.37",
