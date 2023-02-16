@@ -499,7 +499,7 @@ export function GroupRoleList ({ slug, removeItem, fetchModeratorSuggestions, ad
       })
   }, [])
 
-  const memberRoleIds = membersForRole.map(mr => mr.userId)
+  const memberRoleIds = membersForRole.map(mr => mr.id)
 
   const memberSuggestions = rawSuggestions.filter(person => !includes(person.id, memberRoleIds))
 
