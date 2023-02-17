@@ -63,10 +63,11 @@ export default class PostEditor extends React.Component {
       event: 'What is your event called?',
       default: 'What’s on your mind?'
     },
+    // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content
     detailPlaceholderForPostType: {
       offer: 'Add a description',
       request: 'Add a description',
-      resource: 'Describe the resource that is available',
+      resource: 'Add a description',
       project: 'Add a description',
       event: 'Add a description',
       default: 'Add a description'
