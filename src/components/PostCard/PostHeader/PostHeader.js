@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import moment from 'moment-timezone'
 import Avatar from 'components/Avatar'
+import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
@@ -34,8 +35,10 @@ export default class PostHeader extends PureComponent {
       context,
       creator,
       createdAt,
+      currentUser,
       detailHasImage,
       expanded,
+      groups,
       type,
       id,
       startTime,
@@ -114,6 +117,10 @@ export default class PostHeader extends PureComponent {
     }
 
     const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
+    const currentGroup = groups.find(group => group.slug === routeParams.groupSlug)
+    const currentGroupId = currentGroup && currentGroup.id
+    const badges = (currentGroupId && creator.groupRoles.filter(role => role.groupId === currentGroupId)) || []
+    const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === currentGroupId)
 
     return (
       <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
@@ -124,6 +131,16 @@ export default class PostHeader extends PureComponent {
               <Highlight {...highlightProps}>
                 <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
               </Highlight>
+              {badges.length > 0 && (
+                <div styleName='badgeRow'>
+                  {creatorIsModerator && (
+                    <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
+                  )}
+                  {badges.map(badge => (
+                    <BadgeEmoji key={badge.name} expanded {...badge} />
+                  ))}
+                </div>
+              )}
               <div styleName='timestampRow'>
                 <span styleName='timestamp'>
                   {TextHelpers.humanDate(createdAt)}

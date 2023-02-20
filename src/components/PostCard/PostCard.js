@@ -85,6 +85,7 @@ export default function PostCard (props) {
             {...post}
             routeParams={routeParams}
             highlightProps={highlightProps}
+            currentUser={currentUser}
             editPost={editPost}
             constrained={constrained}
             hasImage={hasImage}

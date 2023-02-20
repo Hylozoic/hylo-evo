@@ -209,6 +209,10 @@ $color-member: #2A4059;
 
 // Shadows
 $box-shadow-default: 0px 4px 15px $color-box-shadow;
+$box-shadow-tooltip: 0px 3px 6px rgba(90, 90, 90, 0.05);
+
+// badges
+$color-yellow-orange-20: rgba($color-yellow-orange, 0.2);
 
 // Fonts
 @mixin font-regular {
