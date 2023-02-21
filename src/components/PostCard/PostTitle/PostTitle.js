@@ -12,7 +12,8 @@ export default function PostTitle ({
   location,
   onClick,
   title,
-  type
+  type,
+  ...post
 }) {
   // Formatting location to display in stream view
   const generalLocation = LocationHelpers.generalLocationString(locationObject, location || '')

@@ -1,9 +1,14 @@
 .image {
   background-position: center;
   background-size: cover;
-  @include fluid-height(62%);
   width: 100%;
   margin: 0 auto 0 auto;
+
+  img {
+    width: 100%;
+    position: relative;
+    z-index: 0;
+  }
 }
 
 .link {
