@@ -388,6 +388,14 @@ export const PRODUCT_CATEGORIES = [
     label: 'Grains and other row crops'
   },
   {
+    value: 'grains',
+    label: 'Grains'
+  },
+  {
+    value: 'other_row_crops',
+    label: 'Other row crops'
+  },
+  {
     value: 'vegetables',
     label: 'Vegetables'
   },
