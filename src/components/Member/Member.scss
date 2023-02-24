@@ -19,6 +19,12 @@ $skill-vertical-margin: 8px;
   }
 }
 
+.badgeRow {
+  display: flex;
+  grid-gap: 6px;
+  justify-content: center;
+}
+
 .avatar {
   @include image($avatar-size);
   border-radius: calc($avatar-size / 2);

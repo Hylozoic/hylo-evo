@@ -109,7 +109,7 @@ export default class ModeratorsSettingsTab extends Component {
     }
   }
 
-  updatelocalRole = (i) => (key) => (v) => {
+  updateLocalRole = (i) => (key) => (v) => {
     const value = typeof (v.target) !== 'undefined' ? v.target.value : v
     const role = { ...this.state.roles[i] }
     if (role.changed !== true) role.originalState = { ...role }
@@ -199,7 +199,7 @@ export default class ModeratorsSettingsTab extends Component {
               key={i}
               index={i}
               {...role}
-              onChange={this.updatelocalRole(i)}
+              onChange={this.updateLocalRole(i)}
               onSave={this.saveRole(i)}
               onUpdate={this.updateRole(i)}
               onToggleActivation={this.toggleRoleActivation(i)}
