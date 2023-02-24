@@ -8,6 +8,7 @@ import ReactPlayer from 'react-player'
 import { useLongPress } from 'use-long-press'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
+import BadgeEmoji from 'components/BadgeEmoji'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
 import EmojiRow from 'components/EmojiRow'
@@ -179,6 +180,9 @@ export default function ChatPost ({
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
+  const badges = (group.id && creator.groupRoles.filter(role => role.groupId === group.id)) || []
+  const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
+
   return (
     <Highlight {...highlightProps}>
       <div
@@ -219,6 +223,16 @@ export default function ChatPost ({
             <div onClick={showCreator} styleName='author'>
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
               <div styleName='name'>{creator.name}</div>
+              {badges.length > 0 && (
+                <div styleName='badgeRow'>
+                  {creatorIsModerator && (
+                    <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
+                  )}
+                  {badges.map(badge => (
+                    <BadgeEmoji key={badge.name} expanded {...badge} />
+                  ))}
+                </div>
+              )}
             </div>
             <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
           </div>
