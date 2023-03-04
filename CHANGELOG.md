@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.3.5] - 2023-03-04
+
+### Added
+- New product categories for farms: grains, other_row_crops
+
+### Changed
+- Small styling tweaks to notifications, selected comments, and post details
+
 ## [5.3.4] - 2023-02-15
 
 ### Added
