@@ -3,12 +3,10 @@
 exports[`renders a single image 1`] = `
 <div
   data-stylename="image"
-  style={
-    Object {
-      "backgroundImage": "url(foo)",
-    }
-  }
 >
+  <img
+    src="foo"
+  />
   <div>
     <div
       data-stylename="others"
@@ -24,12 +22,10 @@ exports[`renders a single image 1`] = `
 exports[`renders multiple images 1`] = `
 <div
   data-stylename="image"
-  style={
-    Object {
-      "backgroundImage": "url(bar)",
-    }
-  }
 >
+  <img
+    src="bar"
+  />
   <div>
     <div
       data-stylename="others"
