@@ -12,6 +12,7 @@ import Loading from 'components/Loading'
 import Member from 'components/Member'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
+import { CONTEXT_MY } from 'store/constants'
 import { STREAM_SORT_OPTIONS } from 'util/constants'
 
 import styles from './MapDrawer.scss'
@@ -140,21 +141,24 @@ function MapDrawer (props) {
 
       {currentTab === 'Posts' ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
-          <span onClick={handleChildPostInclusion}
-            data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
-            data-for='childgroup-toggle-tt'
-          >
-            {/* TODO: i18n on tooltip */}
-            <Icon
-              name='Subgroup'
-              className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
-            />
-          </span>
-          <Tooltip
-            delay={250}
-            id='childgroup-toggle-tt'
-            position='bottom'
-          />
+          {![CONTEXT_MY, 'all', 'public'].includes(context) &&
+            <>
+              <span onClick={handleChildPostInclusion}
+                data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
+                data-for='childgroup-toggle-tt'
+              >
+                {/* TODO: i18n on tooltip */}
+                <Icon
+                  name='Subgroup'
+                  className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
+                />
+              </span>
+              <Tooltip
+                delay={250}
+                id='childgroup-toggle-tt'
+                position='bottom'
+              />
+            </>}
           <span>Sort posts by:</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>
