@@ -91,6 +91,13 @@
     padding-bottom: 5px;
   }
 
+  .badgeRow {
+    display: flex;
+    margin-left: 4px;
+    grid-gap: 2px;
+    align-items: center;
+  }
+
   .header {
     width: 100%;
     display: flex;
@@ -99,6 +106,7 @@
 
     .author {
       position: relative;
+      display: flex;
 
       .name {
         white-space: nowrap;

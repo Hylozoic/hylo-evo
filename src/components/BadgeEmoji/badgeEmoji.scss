@@ -1,0 +1,86 @@
+// we use mixins here to get around the class selector limitation of 'composes'
+
+.badgeWrapper {
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+@mixin badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: $color-caribbean-green-20;
+  border-radius: 50%;
+  color: $color-white;
+  font-weight: 600;
+  vertical-align: middle;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  transition: 0.15s;
+}
+
+.badge {
+  @include badge();
+}
+
+.badge-collapsed {
+  composes: badge;
+  width: 7px;
+  height: 7px;
+}
+
+@mixin badgeSymbol {
+  display: inline;
+  font-size: 12px;
+  transition: 0.15s;
+  color: $color-white;
+  position: relative;
+  text-decoration: none;
+  &:hover, &:visited {
+    text-decoration: none;
+  }
+}
+
+.badgeSymbol {
+  @include badgeSymbol();
+}
+
+.badgeSymbol-collapsed {
+  composes: badgeSymbol;
+  font-size: 0px;
+  color: transparent;
+}
+
+.isModerator {
+  background-color: $color-yellow-orange-20;
+}
+
+.border {
+  width: 11px;
+  height: 11px;
+  border: 2px solid $color-white;
+}
+
+// parent is imported by parent composes to add as a className so that the badge can
+// react to the parent being hovered.
+.parent {
+  /* empty */
+}
+
+.parent:hover .badge-collapsed {
+  @include badge();
+}
+
+.parent:hover .badgeSymbol-collapsed {
+  @include badgeSymbol();
+  right: -0.5px;
+}

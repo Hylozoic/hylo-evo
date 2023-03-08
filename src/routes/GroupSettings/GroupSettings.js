@@ -65,9 +65,9 @@ export default function GroupSettings ({
         />
       },
       {
-        name: group.moderatorDescriptorPlural || 'Moderators',
-        path: groupUrl(slug, 'settings/moderators'),
-        component: <ModeratorsSettingsTab groupId={group.id} slug={group.slug} />
+        name: 'Roles & Badges',
+        path: groupUrl(slug, 'settings/roles'),
+        component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} />
       },
       {
         name: 'Privacy & Access',

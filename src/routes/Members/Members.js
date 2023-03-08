@@ -52,56 +52,59 @@ export default class Members extends Component {
 
     const sortKeys = sortKeysFactory(context)
 
-    return <div>
-      <Helmet>
-        <title>Members | {group ? `${group.name} | ` : ''}Hylo</title>
-      </Helmet>
+    return (
+      <div>
+        <Helmet>
+          <title>Members | {group ? `${group.name} | ` : ''}Hylo</title>
+        </Helmet>
 
-      <div styleName='header'>
-        <div>
-          <div styleName='title'>Members</div>
-          <div styleName='total-members'>
-            {memberCount} Total Members
+        <div styleName='header'>
+          <div>
+            <div styleName='title'>Members</div>
+            <div styleName='total-members'>
+              {memberCount} Total Members
+            </div>
+          </div>
+          {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
+            <Button styleName='invite'
+              color='green-white-green-border'
+              narrow >
+              <Icon name='Invite' styleName='invite-icon' /> Invite
+            </Button>
+          </Link>}
+        </div>
+        <div styleName='content'>
+          <div styleName='controls'>
+            <TextInput placeholder='Search by name or skills & interests'
+              styleName='search'
+              defaultValue={search}
+              onChange={e => this.search(e.target.value)} />
+            <Dropdown styleName='sort-dropdown'
+              toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
+              alignRight
+              items={Object.keys(sortKeys).map(k => ({
+                label: sortKeys[k],
+                onClick: () => changeSort(k)
+              }))} />
+          </div>
+          <div styleName='members'>
+            {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
+              {pair.map(m => <Member
+                groupId={group.id}
+                canModerate={canModerate}
+                removeMember={removeMember}
+                member={m} key={m.id}
+                slug={slug}
+                context={context}
+              />)}
+              {pair.length === 1 && <div />}
+            </div>)}
           </div>
         </div>
-        {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
-          <Button styleName='invite'
-            color='green-white-green-border'
-            narrow >
-            <Icon name='Invite' styleName='invite-icon' /> Invite
-          </Button>
-        </Link>}
+        <ScrollListener onBottom={this.fetchMore}
+          elementId={CENTER_COLUMN_ID} />
       </div>
-      <div styleName='content'>
-        <div styleName='controls'>
-          <TextInput placeholder='Search by name or skills & interests'
-            styleName='search'
-            defaultValue={search}
-            onChange={e => this.search(e.target.value)} />
-          <Dropdown styleName='sort-dropdown'
-            toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
-            alignRight
-            items={Object.keys(sortKeys).map(k => ({
-              label: sortKeys[k],
-              onClick: () => changeSort(k)
-            }))} />
-        </div>
-        <div styleName='members'>
-          {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member
-              canModerate={canModerate}
-              removeMember={removeMember}
-              member={m} key={m.id}
-              slug={slug}
-              context={context}
-            />)}
-            {pair.length === 1 && <div />}
-          </div>)}
-        </div>
-      </div>
-      <ScrollListener onBottom={this.fetchMore}
-        elementId={CENTER_COLUMN_ID} />
-    </div>
+    )
   }
 }
 Members.propTypes = {
