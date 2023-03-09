@@ -1,15 +1,13 @@
 // AddModerator
-.add-moderator {
-  margin-top: 15px;
-}
 
 .adding {
   width: 100%;
+  margin-top: 15px;
 }
 
 .help-text {
   composes: caption-lt-lg from 'css/typography.scss';
-  margin-bottom: 10px;
+  margin: 5px 0 10px;
 }
 
 .input-row {
@@ -45,7 +43,8 @@
   line-height: 30px;
   text-align: center;
   border: 1px dashed $color-ghost;
-  composes: text-button from 'css/typography.scss'
+  composes: text-button from 'css/typography.scss';
+  margin-top: 15px;
 }
 
 // KeyControlledListTheme
@@ -81,7 +80,6 @@
 }
 
 .add-role {
-  margin-bottom: 30px;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 1);
   padding: 10px;
@@ -224,7 +222,7 @@
   font-family: "Circular Bold", sans-serif;
 }
 
-.emoji-picker{
+.emoji-picker {
   font-weight: 450;
   font-size: 36px;
   line-height: 22px;

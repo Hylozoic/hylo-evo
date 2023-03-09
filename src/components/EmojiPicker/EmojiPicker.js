@@ -61,7 +61,7 @@ export default function EmojiPicker (props) {
       </div>
     )
     : (
-      <div onClick={toggleModalOpen}>
+      <div onClick={toggleModalOpen} styleName='emoji-picker-container' className={props.className}>
         {emoji || '?'}
         {modalOpen &&
           <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>

@@ -162,8 +162,7 @@ export default class ModeratorsSettingsTab extends Component {
     const {
       modalVisible,
       isRemoveFromGroup,
-      roles,
-      error
+      roles
     } = this.state
 
     const unsavedRolePresent = roles.length > 0 ? roles[roles.length - 1]?.active === '' : false
@@ -190,8 +189,8 @@ export default class ModeratorsSettingsTab extends Component {
           </ModalDialog>}
         </SettingsSection>
         <SettingsSection>
-          <h3>Roles & Badges</h3>
-          <div styleName='styles.help-text'>Create roles/badges for the group</div>
+          <h3>Other Roles &amp; Badges</h3>
+          <div styleName='styles.help-text'>Create additional roles or badges for the group</div>
           {roles.map((role, i) => (
             <RoleRow
               {...this.props}
@@ -297,7 +296,7 @@ export class AddModerator extends Component {
 
     if (adding) {
       return (
-        <div styleName='styles.add-moderator styles.adding'>
+        <div styleName='styles.adding'>
           <div styleName='styles.help-text'>Search here for members to grant moderator powers</div>
           <div styleName='styles.input-row'>
             <input
@@ -323,7 +322,7 @@ export class AddModerator extends Component {
       )
     } else {
       return (
-        <div styleName='styles.add-moderator styles.add-new' onClick={toggle}>
+        <div styleName='styles.add-new' onClick={toggle}>
           + Add New
         </div>
       )
@@ -340,6 +339,7 @@ function RoleRow ({
   emoji,
   fetchModeratorSuggestions,
   fetchMembersForGroupRole,
+  group,
   id,
   name,
   onChange,
@@ -364,31 +364,30 @@ function RoleRow ({
         {/* TODO: i18n */}
       </div>
       <div styleName='styles.role-row'>
-        <div styleName='styles.emoji-picker'>
-          <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} />
-        </div>
+        <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} className={styles['emoji-picker']} />
         <div styleName='styles.role-stack'>
           <SettingsControl label='Name' controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
           <SettingsControl label='Description' controlClass={styles['settings-control']} onChange={onChange('description')} value={description} />
         </div>
       </div>
       {
-      isDraftRole
-        ? (
-          <div styleName='styles.role-row styles.reverse-flex'>
-            <div styleName='styles.create-button' onClick={onSave}>Create Role</div>
-          </div>
+        isDraftRole
+          ? (
+            <div styleName='styles.role-row styles.reverse-flex'>
+              <div styleName='styles.create-button' onClick={onSave}>Create Role</div>
+            </div>
+            )
+          : active && (
+            <SettingsSection>
+              <GroupRoleList
+                {...{ addRoleToMember, rawSuggestions, clearModeratorSuggestions, fetchMembersForGroupRole, fetchModeratorSuggestions, removeRoleFromMember }}
+                key='grList'
+                groupRoleId={id}
+                slug={group.slug}
+              />
+            </SettingsSection>
           )
-        : active && (
-          <SettingsSection>
-            <GroupRoleList
-              {...{ addRoleToMember, rawSuggestions, clearModeratorSuggestions, fetchMembersForGroupRole, fetchModeratorSuggestions, removeRoleFromMember }}
-              key='grList'
-              groupRoleId={id}
-            />
-          </SettingsSection>
-        )
-          }
+        }
     </div>
   )
 }
@@ -453,7 +452,7 @@ export class AddMemberToRole extends Component {
 
     if (adding) {
       return (
-        <div styleName='styles.add-moderator styles.adding'>
+        <div styleName='styles.adding'>
           <div styleName='styles.help-text'>Search here for members to grant this role too</div>
           {/* TODO: i18n */}
           <div styleName='styles.input-row'>
@@ -481,7 +480,7 @@ export class AddMemberToRole extends Component {
     } else {
       // TODO: i18n
       return (
-        <div styleName='styles.add-moderator styles.add-new' onClick={toggle}>
+        <div styleName='styles.add-new' onClick={toggle}>
           + Add Member to Role
         </div>
       )
