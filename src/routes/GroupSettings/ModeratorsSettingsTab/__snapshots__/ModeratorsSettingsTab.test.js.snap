@@ -2,7 +2,7 @@
 
 exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 <div
-  data-stylename="styles.add-moderator styles.adding"
+  data-stylename="styles.adding"
 >
   <div
     data-stylename="styles.help-text"
@@ -65,7 +65,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
 <div
-  data-stylename="styles.add-moderator styles.add-new"
+  data-stylename="styles.add-new"
   onClick={[Function]}
 >
   + Add New
@@ -74,7 +74,7 @@ exports[`AddModerator renders correctly, and transitions from not adding to addi
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 2`] = `
 <div
-  data-stylename="styles.add-moderator styles.adding"
+  data-stylename="styles.adding"
 >
   <div
     data-stylename="styles.help-text"
@@ -189,12 +189,12 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
   </SettingsSection>
   <SettingsSection>
     <h3>
-      Roles & Badges
+      Other Roles & Badges
     </h3>
     <div
       data-stylename="styles.help-text"
     >
-      Create roles/badges for the group
+      Create additional roles or badges for the group
     </div>
     <div
       data-stylename="styles.add-role"

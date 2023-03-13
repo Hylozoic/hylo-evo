@@ -15,6 +15,7 @@ import {
 } from 'util/navigation'
 import Affiliation from 'components/Affiliation'
 import Button from 'components/Button'
+import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import NotFound from 'components/NotFound'
@@ -65,6 +66,7 @@ export default class MemberProfile extends React.Component {
       person,
       currentUser,
       isSingleColumn,
+      group,
       routeParams,
       showDetails,
       push
@@ -103,6 +105,9 @@ export default class MemberProfile extends React.Component {
       title: currentContentTitle,
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
+    const groupId = group && group.id
+    const badges = (groupId && person.groupRoles && person.groupRoles.filter(role => role.groupId === groupId)) || []
+    const creatorIsModerator = (person && person.memberships && person.memberships.find(membership => membership.groupId === groupId || membership.hasModeratorRole)) || false
 
     return (
       <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
@@ -111,12 +116,23 @@ export default class MemberProfile extends React.Component {
           <meta name='description' content={`${person.name}'s Member Profile`} />
         </Helmet>
         <div styleName='header'>
-          {isCurrentUser && <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
-            <Icon name='Edit' /> Edit Profile
-          </Button>}
+          {isCurrentUser &&
+            <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
+              <Icon name='Edit' /> Edit Profile
+            </Button>}
           <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
             <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
             <h1 styleName='header-member-name'>{person.name}</h1>
+            {badges.length > 0 && (
+              <div styleName='badgeRow'>
+                {creatorIsModerator && (
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
+                )}
+                {badges.map(badge => (
+                  <BadgeEmoji key={badge.name} expanded {...badge} />
+                ))}
+              </div>
+            )}
             {person.location && <div styleName='header-member-location'>
               <Icon name='Location' styleName='header-member-location-icon' />
               {locationWithoutUsa}
