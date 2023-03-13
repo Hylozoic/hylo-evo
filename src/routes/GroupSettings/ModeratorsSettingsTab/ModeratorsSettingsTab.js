@@ -376,7 +376,7 @@ function RoleRow ({
             <div styleName='styles.role-row styles.reverse-flex'>
               <div styleName='styles.create-button' onClick={onSave}>Create Role</div>
             </div>
-            )
+          )
           : active && (
             <SettingsSection>
               <GroupRoleList
@@ -387,7 +387,7 @@ function RoleRow ({
               />
             </SettingsSection>
           )
-        }
+      }
     </div>
   )
 }
