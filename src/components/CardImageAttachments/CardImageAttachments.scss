@@ -3,6 +3,7 @@
   background-size: cover;
   width: 100%;
   margin: 0 auto 0 auto;
+  position: relative;
 
   img {
     width: 100%;
@@ -27,6 +28,7 @@
   overflow-x: auto;
   padding: 10px 0;
   padding-left: $space-2x;
+  bottom: -30px;
 }
 
 .others-inner {
@@ -38,13 +40,13 @@
 .other {
   display: block;
   > div {
-    width: 80px;
-    height: 80px;
+    border: 1px solid #fff;
+    width: 60px;
+    height: 60px;
     border-radius: 3px;
     margin-right: 20px;
     background-size: cover;
-    border: 1px solid $color-cape-cod-10;
-    box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.3);
+    box-shadow: 0px 4px 10px rgba(42, 64, 89, 0.4);
 
     &:hover {
       filter: brightness(110%);
