@@ -26,11 +26,11 @@ export default function PublicLayoutRouter (props) {
       <PublicPageHeader />
       <Switch>
         <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
-        <Route path='/:context(groups)/:groupSlug' exact component={PublicGroupDetail} />
+        <Route path='/:context(groups)/:groupSlug' component={PublicGroupDetail} />
         <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
         <Route path='/:context(public)/:view(groups)' component={GroupExplorerLayoutRouter} />
         <Redirect from={`(.*)/${POST_DETAIL_MATCH}`} to='/post/:postId' />
-        <Redirect to={{ pathname: '/public/map', state: { from: location } }} />
+        <Redirect to={{ pathname: '/login', state: { from: location } }} />
       </Switch>
       <HyloCookieConsent />
     </Div100vh>
@@ -41,6 +41,7 @@ export function PublicGroupDetail (props) {
   const dispatch = useDispatch()
   const routeParams = useParams()
   const history = useHistory()
+  const location = useLocation()
   const [loading, setLoading] = useState(true)
   const groupSlug = routeParams?.groupSlug
 
@@ -51,7 +52,7 @@ export function PublicGroupDetail (props) {
       const result = await dispatch(checkIsPublicGroup(groupSlug))
       const isPublicGroup = result?.payload?.data?.group?.visibility === 2
       if (!isPublicGroup) {
-        history.replace('/login')
+        history.replace('/login?returnToUrl=' + location.pathname + location.search)
       }
 
       setLoading(false)
@@ -73,6 +74,7 @@ export function PublicPostDetail (props) {
   const dispatch = useDispatch()
   const routeParams = useParams()
   const history = useHistory()
+  const location = useLocation()
   const [loading, setLoading] = useState(true)
   const postId = routeParams?.postId
 
@@ -84,7 +86,7 @@ export function PublicPostDetail (props) {
       const isPublicPost = result?.payload?.data?.post?.id
 
       if (!isPublicPost) {
-        history.replace('/login')
+        history.replace('/login?returnToUrl=' + location.pathname + location.search)
       }
 
       setLoading(false)
