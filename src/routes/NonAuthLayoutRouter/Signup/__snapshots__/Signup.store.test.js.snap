@@ -34,7 +34,7 @@ Object {
   },
   "meta": Object {
     "analytics": Object {
-      "eventName": undefined,
+      "eventName": "Registered",
     },
     "extractModel": Array [
       Object {
