@@ -1,12 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { capitalize } from 'lodash'
 import { TextHelpers } from 'hylo-shared'
 import { groupUrl, groupDetailUrl } from 'util/navigation'
 import ClickCatcher from 'components/ClickCatcher'
 import GroupHeader from './GroupHeader'
 import HyloHTML from 'components/HyloHTML'
-import Pill from 'components/Pill'
 import cx from 'classnames'
 import './GroupCard.scss'
 
@@ -19,8 +17,6 @@ import './GroupCard.scss'
   - group geography descriptor (indigenous territory, location)
 
   TODO: Then is contents changed based on group type... perhaps passed in as a Content component
-  Default for normie groups is Topics, and if no topics, pass in description
-
 */
 
 export default function GroupCard ({
@@ -33,7 +29,9 @@ export default function GroupCard ({
   constrained = false,
   onClick = () => {}
 }) {
-  const topics = group.groupTopics && group.groupTopics.toModelArray()
+  // XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
+  // const topics = group.groupTopics && group.groupTopics.toModelArray()
+
   const linkTo = memberships.includes(group.id)
     ? groupUrl(group.slug)
     : groupDetailUrl(group.slug, routeParams)
@@ -59,20 +57,22 @@ export default function GroupCard ({
           </div>
           : ''
         }
-        {topics.length > 0
-          ? <div styleName='group-tags'>
-            {topics.map((topic, index) => (
-              <Pill
-                styleName='tag-pill'
-                darkText
-                label={capitalize(topic.topic.name.toLowerCase())}
-                id={topic.id}
-                key={index}
-              />
-            ))}
-          </div>
-          : ''
-        }
+
+        {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
+         {topics.length > 0
+           ? <div styleName='group-tags'>
+             {topics.map((topic, index) => (
+               <Pill
+                 styleName='tag-pill'
+                 darkText
+                 label={capitalize(topic.topic.name.toLowerCase())}
+                 id={topic.id}
+                 key={index}
+               />
+             ))}
+           </div>
+           : ''
+         } */}
       </div>
     </Link>
   )
