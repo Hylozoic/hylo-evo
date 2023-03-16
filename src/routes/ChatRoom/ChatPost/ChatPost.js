@@ -229,10 +229,10 @@ export default function ChatPost ({
               <div styleName='name'>{creator.name}</div>
               <div styleName='badgeRow'>
                 {creatorIsModerator && (
-                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} />
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
                 )}
                 {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} />
+                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
                 ))}
               </div>
             </div>

@@ -132,10 +132,10 @@ export default class PostHeader extends PureComponent {
               </Highlight>
               <div styleName='badgeRow'>
                 {creatorIsModerator && (
-                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} />
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} id={id} />
                 )}
                 {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} />
+                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
                 ))}
               </div>
               <div styleName='timestampRow'>
