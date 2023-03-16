@@ -7,14 +7,16 @@ import './RoundImageRow.scss'
 const { array, string, bool } = PropTypes
 
 export default function RoundImageRow ({
+  ascending,
+  blue,
+  cap,
+  className,
+  count,
   imageUrls = [],
   inline = false,
-  className,
+  small,
+  tiny,
   vertical,
-  cap,
-  ascending,
-  count,
-  blue,
   ...rest
 }) {
   var capped
@@ -37,6 +39,8 @@ export default function RoundImageRow ({
       url={url}
       key={i}
       medium
+      small={small}
+      tiny={tiny}
       overlaps={!vertical}
       overlapsVertical={vertical}
       styleName='image'

@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import Dropdown from 'components/Dropdown'
 import StreamBanner from 'components/StreamBanner'
 import Icon from 'components/Icon'
@@ -54,9 +55,16 @@ export default class Events extends Component {
   render () {
     const {
       collapsedState,
-      routeParams, querystringParams, group, currentUser,
-      newPost, currentUserHasMemberships,
-      membershipsPending, pending, posts,
+      currentUser,
+      currentUserHasMemberships,
+      group,
+      groupSlug,
+      membershipsPending,
+      newPost,
+      pending,
+      posts,
+      querystringParams,
+      routeParams,
       timeframe, updateTimeframe
     } = this.props
     const { context } = routeParams
@@ -66,6 +74,10 @@ export default class Events extends Component {
 
     return (
       <div>
+        <Helmet>
+          <title>Events | {group ? `${group.name} |` : ''}Hylo</title>
+        </Helmet>
+
         <StreamBanner
           group={group}
           currentUser={currentUser}
@@ -103,8 +115,10 @@ export default class Events extends Component {
 
           {posts.map(post => {
             const expanded = post.id === routeParams.postId
+            const groupSlugs = post.groups.map(group => group.slug)
             return (
               <PostCard
+                childPost={!groupSlugs.includes(groupSlug)}
                 routeParams={routeParams}
                 post={post}
                 styleName={cx('s.event-card', { 's.expanded': expanded })}

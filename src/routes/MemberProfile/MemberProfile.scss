@@ -80,6 +80,14 @@
   background-size: cover;
 }
 
+.badgeRow {
+  display: flex;
+  grid-gap: 6px;
+  justify-content: center;
+  padding-bottom: 8px;
+  margin-top: -4px;
+}
+
 .header-member-avatar {
   border: unset;
   box-shadow: 0 0 3px $color-rhino-80;

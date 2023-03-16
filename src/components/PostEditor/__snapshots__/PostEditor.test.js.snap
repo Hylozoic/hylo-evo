@@ -1198,7 +1198,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         onAddLink={[Function]}
         onAddTopic={[Function]}
         onUpdate={[Function]}
-        placeholder="Describe the resource that is available"
+        placeholder="Add a description"
         readOnly={false}
         showMenu={true}
       />

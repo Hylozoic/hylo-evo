@@ -35,6 +35,14 @@
   margin-bottom: 12px;
 }
 
+.reactions {
+  padding: 8px;
+
+  &> div > div {
+    padding-bottom: 0px;
+  }
+}
+
 .details {
   composes: cardPadding;
   // Extract typography? This one is exactly half way between

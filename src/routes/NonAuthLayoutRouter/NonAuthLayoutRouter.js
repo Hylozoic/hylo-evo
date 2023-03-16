@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Redirect, Link, Switch } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
 import Particles from 'react-tsparticles'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -11,8 +12,8 @@ import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayoutRouter/Login'
-import OAuthConsent from './OAuth/Consent'
-import OAuthLogin from './OAuth/Login'
+import OAuthConsent from 'routes/OAuth/Consent'
+import OAuthLogin from 'routes/OAuth/Login'
 import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
 import './NonAuthLayoutRouter.scss'
@@ -42,13 +43,19 @@ export default function NonAuthLayoutRouter (props) {
       dispatch(setReturnToPath(returnToPath))
     }
 
-    if (isAuthenticated) {
+    // XXX: skipAuthCheck is kind of a hack for when we are doing the oAuth login flow
+    //      and we want to still show the oAuth login/consent pages even when someone is logged into Hylo
+    if (!props.skipAuthCheck && isAuthenticated) {
       props.history.replace('/signup')
     }
   }, [dispatch, setReturnToPath, returnToPath])
 
   return (
     <Div100vh styleName='nonAuthContainer'>
+      <Helmet>
+        <title>Hylo</title>
+        <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
+      </Helmet>
       <div styleName='background'>
         <div styleName='particlesBackgroundWrapper'>
           <Particles options={particlesjsConfig} style={particlesStyle} />
@@ -161,6 +168,10 @@ export default function NonAuthLayoutRouter (props) {
             )}
           />
         </Switch>
+        <div styleName='below-container'>
+          <a href='https://hylo.com/terms/' target='_blank' rel='noreferrer'>Terms of Service</a> +&nbsp;
+          <a href='https://hylo.com/terms/privacy' target='_blank' rel='noreferrer'>Privacy Policy</a>
+        </div>
       </div>
       <HyloCookieConsent />
     </Div100vh>

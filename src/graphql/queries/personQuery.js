@@ -75,6 +75,12 @@ export default
         id
       }
     }
+    groupRoles {
+      name
+      emoji
+      active
+      groupId
+    }
     projects {
       items {
         id

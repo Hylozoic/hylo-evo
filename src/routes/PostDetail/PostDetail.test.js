@@ -7,7 +7,7 @@ describe('PostDetail', () => {
     const imageUrl = 'foo.jpg'
     const tags = ['singing', 'dancing']
     const details = 'the body of the post'
-    const votesTotal = 7
+    const peopleReactedTotal = 7
     const routeParams = {
       slug: 'foo'
     }
@@ -19,16 +19,18 @@ describe('PostDetail', () => {
       imageUrl,
       tags,
       details,
-      votesTotal,
+      peopleReactedTotal,
       myVote,
-      members: []
+      members: [],
+      groups: [ { id: '109 '}]
     }
 
     const wrapper = shallow(<PostDetail
       post={post}
       routeParams={routeParams}
       fetchPost={jest.fn()}
-      voteOnPost={jest.fn()} />)
+      trackAnalyticsEvent={jest.fn()}
+    />)
     expect(wrapper).toMatchSnapshot()
   })
 })

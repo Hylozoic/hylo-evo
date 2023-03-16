@@ -43,6 +43,21 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
     <div
       data-stylename="postsHeader"
     >
+      <span
+        data-for="childgroup-toggle-tt"
+        data-tip="Show posts from child groups"
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Subgroup"
+        />
+      </span>
+      <Tooltip
+        delay={250}
+        id="childgroup-toggle-tt"
+        position="bottom"
+      />
       <span>
         Sort posts by:
       </span>
@@ -52,7 +67,7 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
         items={
           Array [
             Object {
-              "label": "Latest Activity",
+              "label": "Latest activity",
               "onClick": [Function],
             },
             Object {
@@ -69,7 +84,7 @@ exports[`MapDrawer renders correctly (with min props) 1`] = `
           <span
             data-stylename="sorter-label"
           >
-            Latest Activity
+            Latest activity
             <Icon
               name="ArrowDown"
             />
@@ -159,6 +174,21 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
     <div
       data-stylename="postsHeader"
     >
+      <span
+        data-for="childgroup-toggle-tt"
+        data-tip="Show posts from child groups"
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Subgroup"
+        />
+      </span>
+      <Tooltip
+        delay={250}
+        id="childgroup-toggle-tt"
+        position="bottom"
+      />
       <span>
         Sort posts by:
       </span>
@@ -168,7 +198,7 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
         items={
           Array [
             Object {
-              "label": "Latest Activity",
+              "label": "Latest activity",
               "onClick": [Function],
             },
             Object {
@@ -283,6 +313,21 @@ exports[`MapDrawer searching updates map filters 1`] = `
     <div
       data-stylename="postsHeader"
     >
+      <span
+        data-for="childgroup-toggle-tt"
+        data-tip="Show posts from child groups"
+        onClick={[Function]}
+      >
+        <Icon
+          className=""
+          name="Subgroup"
+        />
+      </span>
+      <Tooltip
+        delay={250}
+        id="childgroup-toggle-tt"
+        position="bottom"
+      />
       <span>
         Sort posts by:
       </span>
@@ -292,7 +337,7 @@ exports[`MapDrawer searching updates map filters 1`] = `
         items={
           Array [
             Object {
-              "label": "Latest Activity",
+              "label": "Latest activity",
               "onClick": [Function],
             },
             Object {
@@ -309,7 +354,7 @@ exports[`MapDrawer searching updates map filters 1`] = `
           <span
             data-stylename="sorter-label"
           >
-            Latest Activity
+            Latest activity
             <Icon
               name="ArrowDown"
             />

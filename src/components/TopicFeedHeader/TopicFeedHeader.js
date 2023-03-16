@@ -1,7 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
 import Button from 'components/Button'
-import PostPrompt from 'components/StreamBanner'
 import { inflectedTotal, bgImageStyle } from 'util/index'
 import { DEFAULT_BANNER } from 'store/models/Group'
 
@@ -14,7 +13,6 @@ export default function TopicFeedHeader ({
   groupSlug,
   isSubscribed,
   newPost,
-  postsTotal,
   toggleSubscribe,
   topic,
   topicName,
@@ -26,28 +24,24 @@ export default function TopicFeedHeader ({
     iconStyle = isSubscribed ? 'subscribe-star-icon-green' : 'subscribe-star-icon'
     buttonStyle = isSubscribed ? 'unsubscribe' : 'subscribe'
   }
-  postsTotal = postsTotal || 0
   followersTotal = followersTotal || 0
 
-  return <div styleName='topic-feed-header'>
-    <div styleName='fade'><div styleName='fade2' /></div>
-    <div style={bgImageStyle(bannerUrl)} styleName='image'>
-      <div styleName='topic-name'>#{topicName}</div>
-      <div styleName='meta'>
-        <Icon name='Star' styleName='star-icon' />
-        {inflectedTotal('subscriber', followersTotal)}
-        <Icon name='Post' styleName='post-icon' />
-        {inflectedTotal('post', postsTotal)}
+  return (
+    <div styleName='topic-feed-header'>
+      <div style={bgImageStyle(bannerUrl)} styleName='image'>
+        <div styleName='topic-info'>
+          <div styleName='topic-name'>#{topicName}</div>
+          <div styleName='meta'>
+            <Icon name='Star' styleName='star-icon' />
+            {inflectedTotal('subscriber', followersTotal)}
+          </div>
+        </div>
+        {toggleSubscribe && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
+          <Icon name='Star' styleName={iconStyle} />
+          <div styleName='subscribe-label'>{buttonText}</div>
+        </Button>}
+        <div styleName='fade'><div styleName='fade2' /></div>
       </div>
-      {toggleSubscribe && <Button styleName={buttonStyle} onClick={toggleSubscribe}>
-        <Icon name='Star' styleName={iconStyle} />{buttonText}
-      </Button>}
-      <PostPrompt
-        avatarUrl={currentUser.avatarUrl}
-        firstName={currentUser.firstName()}
-        newPost={newPost}
-        routeParams={{ topicName: topicName, groupSlug: groupSlug }}
-        type={type} />
     </div>
-  </div>
+  )
 }

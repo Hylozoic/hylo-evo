@@ -1,15 +1,13 @@
 // AddModerator
-.add-moderator {
-  margin-top: 15px;
-}
 
 .adding {
   width: 100%;
+  margin-top: 15px;
 }
 
 .help-text {
   composes: caption-lt-lg from 'css/typography.scss';
-  margin-bottom: 10px;
+  margin: 5px 0 10px;
 }
 
 .input-row {
@@ -45,7 +43,8 @@
   line-height: 30px;
   text-align: center;
   border: 1px dashed $color-ghost;
-  composes: text-button from 'css/typography.scss'
+  composes: text-button from 'css/typography.scss';
+  margin-top: 15px;
 }
 
 // KeyControlledListTheme
@@ -71,6 +70,147 @@
   background-color: $color-athens-gray-dark;
 }
 
+.new-role {
+  font-size: 36px;
+  color: rgba(191, 197, 206, 1.0);
+}
+
+.warning {
+  color: $color-amaranth;
+}
+
+.add-role {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  box-shadow: 0px 5px 8px rgba(35, 65, 91, .2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h4 {
+    font-size: 16px;
+    color: rgba(35, 65, 91, 1.0);
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.role-container {
+  position: relative;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  box-shadow: 0px 5px 8px rgba(35, 65, 91, .2);
+
+  /* For delete icon */
+  h4 {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(35, 65, 91, 1.0);
+    font-family: 'Circular Bold', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+
+    span {
+      vertical-align: bottom;
+      cursor: pointer;
+    }
+
+    strong {
+      font-size: 12px;
+      font-family: 'Circular Book', sans-serif;
+      opacity: .5;
+      display: block;
+    }
+
+  }
+}
+
+.role-row {
+  border-bottom: 1px dashed rgba(225, 229, 233, 1.0);
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  gap: 12px;
+
+  .label {
+    margin-bottom:0;
+  }
+}
+
+.role-stack {
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  align-items: center;
+  min-height: 60px;
+
+  .label {
+    margin-bottom:0;
+  }
+}
+
+.role-last-row {
+  padding: 10px 0;
+
+  &> div {
+    border: 1px solid rgba(224, 229, 233, 1.0);
+    border-radius: 5px;
+  }
+}
+
+.settings-control {
+  border-bottom: none;
+  padding-right: 10px;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+
+  label {
+    color: rgba(44, 64, 89, 0.6);
+  }
+}
+
+.action-container {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+}
+
+.action {
+  background: #FFFFFF;
+  box-shadow: 0px 8px 15px rgba(128, 140, 155, 0.28);
+  font-family: 'Circular Std';
+  font-style: normal;
+  font-weight: 700;
+  border-radius: 5px;
+  margin: 6px;
+  display: flex;
+  height: 32px;
+  gap: 4px;
+  padding: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.settings-control input {
+  border: 1px solid rgba(224, 229, 233, 1.0);
+  padding: 5px 8px;
+  font-size: 16px;
+  line-height: 16px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+}
+
 // Modal
 .content {
   text-align: left;
@@ -80,4 +220,49 @@
   padding-bottom: 25px;
   font-size: 18px;
   font-family: "Circular Bold", sans-serif;
+}
+
+.emoji-picker {
+  font-weight: 450;
+  font-size: 36px;
+  line-height: 22px;
+  width: 70px;
+  height: 70px;
+  background: #FFFFFF;
+  box-shadow: 0px 8px 15px rgba(128, 140, 155, 0.28);
+  border-radius: 5px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    background-color: lighten($color-caribbean-green, 50%);
+  }
+}
+
+.create-button {
+  width: 104px;
+  height: 39.43px;
+  cursor: pointer;
+  background: #FFFFFF;
+  box-shadow: 0px 8px 15px rgba(128, 140, 155, 0.28);
+  border-radius: 5px;
+  font-family: 'Circular Std';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reverse-flex {
+  display: flex;
+  flex-flow: row-reverse;
+}
+
+.inactive {
+  background-color: $color-ghost-30;
 }

@@ -3,5 +3,10 @@
 exports[`renders with a post prompt 1`] = `
 <StreamBanner
   firstName="Arturo"
+  routeParams={
+    Object {
+      "view": "stream",
+    }
+  }
 />
 `;

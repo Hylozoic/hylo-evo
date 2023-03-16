@@ -35,7 +35,7 @@ export default class PostPeopleDialog extends React.PureComponent {
 
   render () {
     const { members, searchString, selectedMember } = this.state
-    const { onClose, slug, title = 'People' } = this.props
+    const { currentGroup, onClose, title = 'People' } = this.props
     const loading = false
 
     return <ModalDialog key='members-dialog'
@@ -71,7 +71,7 @@ export default class PostPeopleDialog extends React.PureComponent {
               key={member.id} />)}
           </section>
         </div>
-        {selectedMember && <MemberDetail member={selectedMember} slug={slug} />}
+        {selectedMember && <MemberDetail member={selectedMember} currentGroup={currentGroup} />}
       </div>
     </ModalDialog>
   }
@@ -93,8 +93,8 @@ function MemberRow ({ member, selected, onClick }) {
   </div>
 }
 
-function MemberDetail ({ member, slug }) {
+function MemberDetail ({ member, currentGroup }) {
   return <div styleName='member-detail'>
-    <Member member={member} styleName='member' slug={slug} />
+    <Member member={member} styleName='member' group={currentGroup} />
   </div>
 }

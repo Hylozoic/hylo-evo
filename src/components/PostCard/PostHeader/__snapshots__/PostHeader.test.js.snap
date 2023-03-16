@@ -54,6 +54,9 @@ exports[`matches announcement snapshot 1`] = `
           </Link>
         </Highlight>
         <div
+          data-stylename="badgeRow"
+        />
+        <div
           data-stylename="timestampRow"
         >
           <span
@@ -148,6 +151,9 @@ exports[`matches announcement snapshot 2`] = `
             JJ
           </Link>
         </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
         <div
           data-stylename="timestampRow"
         >
@@ -247,6 +253,9 @@ exports[`matches announcement snapshot 3`] = `
             JJ
           </Link>
         </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
         <div
           data-stylename="timestampRow"
         >
@@ -358,6 +367,9 @@ exports[`matches snapshot 1`] = `
           </Link>
         </Highlight>
         <div
+          data-stylename="badgeRow"
+        />
+        <div
           data-stylename="timestampRow"
         >
           <span
@@ -434,6 +446,9 @@ exports[`matches snapshot 2`] = `
             JJ
           </Link>
         </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
         <div
           data-stylename="timestampRow"
         >
@@ -515,6 +530,9 @@ exports[`matches snapshot 3`] = `
             JJ
           </Link>
         </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
         <div
           data-stylename="timestampRow"
         >
@@ -608,6 +626,9 @@ exports[`renders human readable dates 1`] = `
           </Link>
         </Highlight>
         <div
+          data-stylename="badgeRow"
+        />
+        <div
           data-stylename="timestampRow"
         >
           <span
@@ -695,6 +716,9 @@ exports[`renders human readable dates 2`] = `
           </Link>
         </Highlight>
         <div
+          data-stylename="badgeRow"
+        />
+        <div
           data-stylename="timestampRow"
         >
           <span
@@ -781,6 +805,9 @@ exports[`renders human readable dates 3`] = `
             JJ
           </Link>
         </Highlight>
+        <div
+          data-stylename="badgeRow"
+        />
         <div
           data-stylename="timestampRow"
         >

@@ -11,6 +11,24 @@
   transition: all .25s ease;
 }
 
+.icon-container {
+  background: $color-white;
+  box-shadow: 0px 4px 4px rgba(47, 63, 87, 0.2);
+  border-radius: 5px;
+  padding: 2px;
+  height: 24px;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  z-index: 10;
+}
+
+.icon {
+  font-size: 12px;
+  position: relative;
+  padding: 2px;
+}
+
 .post-grid-item-container.image {
 
   .content-summary {
@@ -144,15 +162,17 @@
   }
 
   .grid-meta {
-    display: flex;
     z-index: 3;
     position: absolute;
     bottom:0;
-    justify-content: space-between;
     width: 100%;
     padding-right: 15px;
     padding-left: 3px;
+  }
 
+  .grid-meta-row-1 {
+    display: flex;
+    justify-content: space-between;
     .type-author {
       display: block;
       height: 36px;
@@ -238,6 +258,19 @@
   align-items: center;
   white-space: nowrap;
 }
+
+.reactions {
+  padding: 0 6px;
+
+  &> div > div {
+    padding-bottom: 6px;
+
+    &> div:last-child {
+      display: none;
+    }
+  }
+}
+
 
 // unread state overrides
 .unread {

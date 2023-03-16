@@ -22,18 +22,20 @@ const PostPrompt = ({ avatarUrl, className, firstName = '', querystringParams = 
       default: `${greeting}, ${t('StreamBanner.default')}`
     }
 
-    return postPrompts[type] || postPrompts['default']
+    return postPrompts[type] || postPrompts.default
   }
 
-  return (<div onMouseEnter={setHover(true)} onMouseLeave={setHover(false)}>
-    <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
-      <div styleName='postPrompt' className={className}>
-        <RoundImage url={avatarUrl} small styleName='prompt-image' />
-        {postPromptString(type, firstName)}
-      </div>
-    </Link>
-    <div styleName={cx('shadow', { hover })} />
-  </div>)
+  return (
+    <div onMouseEnter={setHover(true)} onMouseLeave={setHover(false)}>
+      <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
+        <div styleName='postPrompt' className={className}>
+          <RoundImage url={avatarUrl} small styleName='prompt-image' />
+          {postPromptString(type, firstName)}
+        </div>
+      </Link>
+      <div styleName={cx('shadow', { hover })} />
+    </div>
+  )
 }
 
 export default PostPrompt

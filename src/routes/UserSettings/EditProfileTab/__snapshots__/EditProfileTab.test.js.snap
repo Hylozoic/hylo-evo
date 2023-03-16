@@ -2,11 +2,19 @@
 
 exports[`EditProfileTab renders correctly 1`] = `
 <div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Your Settings | Hylo
+    </title>
+  </HelmetWrapper>
   <input
     data-stylename="name"
     onChange={[Function]}
     type="text"
-    value=""
+    value="Yay"
   />
   <div
     data-stylename="banner"
@@ -127,6 +135,19 @@ exports[`EditProfileTab renders correctly 1`] = `
 
 exports[`EditProfileTab renders correctly without location object 1`] = `
 <div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Your Settings | Hylo
+    </title>
+  </HelmetWrapper>
+  <div
+    data-stylename="name-validation"
+  >
+    Name must not be blank
+  </div>
   <input
     data-stylename="name"
     onChange={[Function]}

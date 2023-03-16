@@ -18,7 +18,6 @@
 
 .background {
   width: 100%;
-  height: 100%;
 }
 
 .header {
@@ -68,14 +67,17 @@
 }
 
 .center-column {
-  padding-bottom: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.center-column > div {
+.non-map-view {
+  padding-bottom: 100px;
   margin-top: 40px;
+}
+
+.center-column > div {
   box-shadow: 0px 4px 15px rgba(42, 64, 89, 0.29);
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 1);
@@ -85,10 +87,22 @@
   &> div:last-child {
     padding-bottom: 50px;
   }
+
+  .map-view > div {
+    margin-top: 0px;
+  }
 }
 
 .map-view .center-column {
   width: 100%;
+}
+
+.map-view {
+  position: relative;
+  margin-top: 0px;
+  height: 100%;
+  top: 0;
+  bottom: 0;
 }
 
 .detail {

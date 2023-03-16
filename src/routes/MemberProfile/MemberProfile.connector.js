@@ -5,6 +5,8 @@ import blockUser from 'store/actions/blockUser'
 import isPendingFor from 'store/selectors/isPendingFor'
 import getPreviousLocation from 'store/selectors/getPreviousLocation'
 import getMe from 'store/selectors/getMe'
+import getRouteParam from 'store/selectors/getRouteParam'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import fetchPerson from 'store/actions/fetchPerson'
 import {
   FETCH_RECENT_ACTIVITY,
@@ -29,12 +31,19 @@ export function mapStateToProps (state, props) {
     FETCH_MEMBER_VOTES
   ], state)
   const personLoading = isPendingFor(fetchPerson, state)
+  const groupSlug = getRouteParam('groupSlug', state, props)
+  let group
+
+  if (groupSlug) {
+    group = getGroupForCurrentRoute(state, props)
+  }
 
   return {
     routeParams,
     error,
     personLoading,
     contentLoading,
+    group,
     person,
     currentUser: getMe(state),
     previousLocation: getPreviousLocation(state)

@@ -17,6 +17,7 @@ jest.mock('react-i18next', () => ({
 it('renders with a post prompt', () => {
   const node = mount(<PostPrompt
     firstName='Arturo'
+    routeParams={{ view: 'stream' }}
   />)
   expect(node).toMatchSnapshot()
 })

@@ -1,0 +1,233 @@
+:global {
+  div[data-test-id="virtuoso-item-list"] {
+    > div:last-child {
+      padding-bottom: 15px;
+    }
+  }
+}
+
+.container {
+  box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.stream-items-container {
+  margin: 0 auto;
+  overflow: hidden;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  position: relative;
+}
+
+.no-posts {
+  margin: 50px auto 0 auto;
+}
+
+.loading-container {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+
+  &.bottom {
+    bottom: 0;
+  }
+}
+
+.displayDay, .firstUnread, .unreadAndDay {
+  width: 100%;
+  position: relative;
+  padding: 30px 0 30px 0;
+  text-transform: uppercase;
+}
+
+.displayDay .divider {
+  border-bottom: 1px dashed rgba(125, 140, 157, .3);
+}
+
+.firstUnread .divider, .unreadAndDay .divider {
+  border-bottom: 1px dashed rgba(65, 211, 145, .6);
+
+}
+
+.unreadAndDay {
+  .day {
+    color: rgba(66, 210, 146, 1.0);
+    background-color: rgba(221, 246, 233, 1.0);
+  }
+}
+
+.newPost {
+  border-radius: 30px;
+  text-align: center;
+  font-size: rgba(125, 140, 157, 1.0);
+  display: inline-block;
+  position: absolute;
+  left: 25px;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  bottom: 15px;
+  font-size: 11px;
+  color: rgba(66, 210, 146, 1.0);
+  background-color: #fff;
+  border: 1px solid rgba(66, 210, 146, 1.0);
+}
+
+.day {
+  position: absolute;
+  right: 0;
+  bottom: 15px;
+  font-size: 11px;
+  color: rgba(125, 140, 157, 1.0);
+  background-color: rgba(242, 243, 245, 1.0);
+  border-radius: 15px 0 0 15px;
+  padding: 0 10px 0 15px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.card-item {
+  padding: $space-2x $space-4x $space-2x;
+  max-width: 600px;
+
+  > div {
+    box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+
+    &> div:nth-child(2) > div:nth-child(1) {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(35, 65, 91, .3);
+    }
+  }
+
+  &.expanded {
+    padding: 0 $space-2x $space-6x;
+
+    > div {
+      box-shadow: 0 4px 15px rgba(35, 65, 91, .3);
+      border: 1px solid rgba(0, 118, 223, .50);
+      border-top: 3px solid rgba(0, 118, 223, .50);
+
+      &:hover {
+        box-shadow: 0 4px 15px rgba(35, 65, 91, .3);;
+      }
+    }
+  }
+}
+
+.post-chat-box {
+  position: relative;
+  width: 97%;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(35, 65, 91, .2);
+  padding: 5px;
+  border-top: 1px solid rgba(222, 224, 228, 0.6);
+  border-bottom: 2px solid rgba(38, 68, 93, .45);
+  border-right: 1px solid rgba(38, 68, 93, .15);
+  border-left: 4px solid rgba(0, 199, 157, 1.0);
+  border-radius: 5px;
+}
+
+.post-chat-box-footer {
+  width: 100%;
+
+  > div:nth-child(1) {
+    width: 50px;
+  }
+}
+
+.action-icon {
+  font-size: 32px;
+  cursor: pointer;
+  &:hover {
+    color: $color-caribbean-green;
+  }
+}
+
+.highlight-icon {
+  color: $color-caribbean-green;
+  cursor: default;
+}
+
+
+.editor {
+  padding: 5px;
+  min-height: 1rem;
+  max-height: 6rem;
+  color: $color-rhino-80;
+  overflow: auto;
+
+  strong {
+    font-family: 'Circular Bold'
+  }
+}
+
+.link-preview {
+  margin-left: 1.25rem;
+}
+
+.upload-attachment {
+  height: 26px;
+}
+
+.send-message-button {
+  position: absolute;
+  bottom: 5px;
+  padding: 0;
+  line-height: 26px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 6px;
+
+  &.disabled {
+    svg {
+      color: gray !important;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+
+  .post-chat-box {
+    width: 100%;
+    //margin-bottom: 0px;
+    margin-bottom: 35px;
+    border-top: 1px solid rgba(216, 220, 226, 1.0);
+    border-bottom: 1px solid rgba(216, 220, 226, 1.0);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+  .without-nav.container {
+     padding-bottom: 0;
+
+    .post-chat-box {
+      margin-bottom: 0px;
+    }
+  }
+
+  .editor {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card-item {
+    padding: 0 5px 10px 5px;
+  }
+
+  .stream-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

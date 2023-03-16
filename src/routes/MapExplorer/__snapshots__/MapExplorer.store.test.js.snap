@@ -99,11 +99,21 @@ Object {
       name
       avatarUrl
       tagline
+      groupRoles {
+        id
+        name
+        emoji
+        active
+        groupId
+      }
       locationObject {
         center {
           lat
           lng
         }
+      }
+      moderatedGroupMemberships {
+        groupId
       }
       skills {
         hasMore
@@ -156,6 +166,7 @@ Object {
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -183,6 +194,7 @@ posts: viewPosts(
   beforeTime: $beforeTime,
   boundingBox: $boundingBox,
   collectionToFilterOut: $collectionToFilterOut,
+  cursor: $cursor,
   filter: $filter,
   first: $first,
   forCollection: $forCollection,
@@ -208,6 +220,15 @@ posts: viewPosts(
     id
     name
     avatarUrl
+    groupRoles {
+      name
+      emoji
+      active
+      groupId
+    }
+    moderatedGroupMemberships {
+      groupId
+    }
   }
   createdAt
   updatedAt
@@ -224,6 +245,7 @@ posts: viewPosts(
     avatarUrl
   }
   commentersTotal
+  commentsTotal
   
   linkPreview {
     description
@@ -253,8 +275,20 @@ posts: viewPosts(
     neighborhood
     region
   }
-  votesTotal
+  peopleReactedTotal
   myVote
+  myReactions {
+    emojiFull
+    id
+  }
+  postReactions {
+    emojiFull
+    id
+    user {
+      id
+      name
+    }
+  }
   groups {
     id
     name
@@ -324,6 +358,7 @@ posts: viewPosts(
           "lng": -121.93892409934989,
         },
       ],
+      "childPostInclusion": "yes",
       "context": "groups",
       "filter": undefined,
       "first": 10,
@@ -360,6 +395,7 @@ Object {
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -386,6 +422,7 @@ Object {
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
@@ -433,6 +470,7 @@ Object {
           "lng": -121.93892409934989,
         },
       ],
+      "childPostInclusion": "yes",
       "context": "groups",
       "filter": undefined,
       "first": 500,
@@ -463,15 +501,20 @@ Object {
     "query": "query (
   $activePostsOnly: Boolean,
   $afterTime: Date,
+  $announcementsOnly: Boolean,
   $beforeTime: Date,
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $createdBy: [ID],
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
   $groupSlugs: [String]
   $isFulfilled: Boolean,
+  $interactedWithBy: [ID],
+  $mentionsOf: [ID]
   $offset: Int,
   $order: String,
   $search: String,
@@ -483,15 +526,20 @@ Object {
   posts(
       activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
+      announcementsOnly: $announcementsOnly,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
       context: $context,
+      createdBy: $createdBy,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
       groupSlugs: $groupSlugs,
       isFulfilled: $isFulfilled,
+      interactedWithBy: $interactedWithBy,
+      mentionsOf: $mentionsOf
       offset: $offset,
       order: $order,
       sortBy: $sortBy,
@@ -534,6 +582,7 @@ Object {
           "lng": -121.93892409934989,
         },
       ],
+      "childPostInclusion": "yes",
       "context": "all",
       "filter": "request",
       "first": 500,

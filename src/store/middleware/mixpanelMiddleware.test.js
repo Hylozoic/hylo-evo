@@ -4,7 +4,9 @@ import mixpanel from 'mixpanel-browser'
 
 jest.mock('mixpanel-browser', () => ({
   track: jest.fn(),
-  identify: jest.fn()
+  identify: jest.fn(),
+  set_group: jest.fn(),
+  get_group: jest.fn()
 }))
 
 describe('mixpanelMiddleware', () => {
