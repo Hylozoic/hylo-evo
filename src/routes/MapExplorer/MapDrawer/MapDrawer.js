@@ -25,6 +25,7 @@ function MapDrawer (props) {
     currentUser,
     fetchPostsForDrawer,
     filters,
+    group,
     groups,
     locationParams,
     members,
@@ -194,7 +195,7 @@ function MapDrawer (props) {
               className={cx({ [styles.contentCard]: true, [styles.member]: true })}
               member={m}
               key={m.id}
-              groupSlug={routeParams.groupSlug}
+              group={group}
               context={context}
             />)}
           </div>

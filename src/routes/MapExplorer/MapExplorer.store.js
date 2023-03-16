@@ -103,11 +103,21 @@ const membersFragment = `
       name
       avatarUrl
       tagline
+      groupRoles {
+        id
+        name
+        emoji
+        active
+        groupId
+      }
       locationObject {
         center {
           lat
           lng
         }
+      }
+      moderatedGroupMemberships {
+        groupId
       }
       skills {
         hasMore

@@ -123,16 +123,14 @@ export default class MemberProfile extends React.Component {
           <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
             <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
             <h1 styleName='header-member-name'>{person.name}</h1>
-            {badges.length > 0 && (
-              <div styleName='badgeRow'>
-                {creatorIsModerator && (
-                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
-                )}
-                {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} />
-                ))}
-              </div>
-            )}
+            <div styleName='badgeRow'>
+              {creatorIsModerator && (
+                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} />
+              )}
+              {badges.map(badge => (
+                <BadgeEmoji key={badge.name} expanded {...badge} />
+              ))}
+            </div>
             {person.location && <div styleName='header-member-location'>
               <Icon name='Location' styleName='header-member-location-icon' />
               {locationWithoutUsa}

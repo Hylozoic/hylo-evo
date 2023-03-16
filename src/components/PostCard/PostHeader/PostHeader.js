@@ -130,16 +130,14 @@ export default class PostHeader extends PureComponent {
               <Highlight {...highlightProps}>
                 <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
               </Highlight>
-              {badges.length > 0 && (
-                <div styleName='badgeRow'>
-                  {creatorIsModerator && (
-                    <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
-                  )}
-                  {badges.map(badge => (
-                    <BadgeEmoji key={badge.name} expanded {...badge} />
-                  ))}
-                </div>
-              )}
+              <div styleName='badgeRow'>
+                {creatorIsModerator && (
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} />
+                )}
+                {badges.map(badge => (
+                  <BadgeEmoji key={badge.name} expanded {...badge} />
+                ))}
+              </div>
               <div styleName='timestampRow'>
                 <span styleName='timestamp'>
                   {TextHelpers.humanDate(createdAt)}

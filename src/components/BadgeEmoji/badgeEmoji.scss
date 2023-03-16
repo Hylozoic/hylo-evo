@@ -1,31 +1,30 @@
 // we use mixins here to get around the class selector limitation of 'composes'
 
 .badgeWrapper {
-  // border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
 }
 
 @mixin badge {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  background-color: $color-caribbean-green-50;
+  text-align: center;
+  vertical-align: middle;
+  width: 28px;
+  height: 28px;
+  background-color: $color-badge;
   border-radius: 50%;
+  border: 1px solid $color-badge-border;
   color: $color-white;
   font-weight: 600;
-  vertical-align: middle;
-  line-height: normal;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   position: relative;
   transition: 0.15s;
+  padding-bottom: 0.06em;
+  margin-right: 1px;
 }
 
 .badge {
@@ -39,8 +38,9 @@
 }
 
 @mixin badgeSymbol {
-  display: inline;
-  font-size: 12px;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 13px;
   transition: 0.15s;
   color: $color-white;
   position: relative;
@@ -61,7 +61,8 @@
 }
 
 .isModerator {
-  background-color: $color-yellow-orange-50;
+  background-color: $color-badge-special;
+  border: 1px solid $color-badge-special-border;
 }
 
 .border {

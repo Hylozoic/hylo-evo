@@ -227,16 +227,14 @@ export default function ChatPost ({
             <div onClick={showCreator} styleName='author'>
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
               <div styleName='name'>{creator.name}</div>
-              {badges.length > 0 && (
-                <div styleName='badgeRow'>
-                  {creatorIsModerator && (
-                    <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
-                  )}
-                  {badges.map(badge => (
-                    <BadgeEmoji key={badge.name} expanded {...badge} />
-                  ))}
-                </div>
-              )}
+              <div styleName='badgeRow'>
+                {creatorIsModerator && (
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} />
+                )}
+                {badges.map(badge => (
+                  <BadgeEmoji key={badge.name} expanded {...badge} />
+                ))}
+              </div>
             </div>
             <div styleName='date'>{moment(createdAt).format('h:mm a')}</div>
           </div>

@@ -7,7 +7,7 @@ import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
 import './Member.scss'
 
-const { string, shape } = PropTypes
+const { object, string, shape } = PropTypes
 
 export default class Member extends React.Component {
   removeOnClick (e, id, name, removeMember) {
@@ -21,36 +21,33 @@ export default class Member extends React.Component {
   render () {
     const {
       className,
-      groupId,
-      slug,
+      group,
       member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles },
       goToPerson,
       canModerate,
       removeMember
     } = this.props
 
-    const badges = (groupId && groupRoles.filter(role => role.groupId === groupId)) || []
-    const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === groupId)
+    const badges = (group.id && groupRoles.filter(role => role.groupId === group.id)) || []
+    const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
     return (
       <div styleName='member' className={className}>
         {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
           { icon: 'Trash', label: 'Remove', onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
         ]} />}
-        <div onClick={goToPerson(id, slug)}>
+        <div onClick={goToPerson(id, group.slug)}>
           <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
-          {badges.length > 0 && (
-            <div styleName='badgeRow'>
-              {creatorIsModerator && (
-                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name='Moderator' />
-              )}
-              {badges.map(badge => (
-                <BadgeEmoji key={badge.name} expanded {...badge} />
-              ))}
-            </div>
-          )}
+          <div styleName='badgeRow'>
+            {creatorIsModerator && (
+              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} />
+            )}
+            {badges.map(badge => (
+              <BadgeEmoji key={badge.name} expanded {...badge} />
+            ))}
+          </div>
           {skills && <div styleName='skills'>
             {skills.map((skill, index) =>
               <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
@@ -65,7 +62,7 @@ export default class Member extends React.Component {
 
 Member.propTypes = {
   className: string,
-  slug: string,
+  group: object,
   member: shape({
     id: string,
     name: string,

@@ -39,6 +39,17 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         Rich Churcher
       </h1>
       <div
+        data-stylename="badgeRow"
+      >
+        <Badge
+          emoji="🛡️"
+          expanded={true}
+          isModerator={true}
+          key="mod"
+          name="Moderator"
+        />
+      </div>
+      <div
         data-stylename="header-member-location"
       >
         <Icon

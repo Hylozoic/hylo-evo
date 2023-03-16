@@ -4,6 +4,7 @@ import { merge } from 'lodash'
 import React from 'react'
 
 const minProps = {
+  group: { id: 1 },
   member: {},
   goToPerson: () => {}
 }
@@ -15,7 +16,7 @@ const renderComponent = (providedProps) => {
 
 describe('Member Component', () => {
   it('shows moderate button when a moderator', () => {
-    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [] }, canModerate: true })
+    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [{ name: 'role', emoji: '🏄'}] }, canModerate: true })
     expect(wrapper.find('Dropdown')).toHaveLength(1)
   })
 

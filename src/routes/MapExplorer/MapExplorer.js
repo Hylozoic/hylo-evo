@@ -568,6 +568,7 @@ export class UnwrappedMapExplorer extends React.Component {
             currentUser={currentUser}
             fetchPostsForDrawer={fetchPostsForDrawer}
             filters={filters}
+            group={group}
             groups={groupsForDrawer}
             members={membersForDrawer}
             numFetchedPosts={postsForDrawer.length}

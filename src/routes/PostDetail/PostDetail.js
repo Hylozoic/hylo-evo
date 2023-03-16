@@ -113,6 +113,7 @@ export default class PostDetail extends Component {
 
   render () {
     const {
+      currentGroup,
       currentUser,
       joinProject,
       isProjectMember,
@@ -290,6 +291,7 @@ export default class PostDetail extends Component {
             />
             {showPeopleDialog && (
               <PostPeopleDialog
+                currentGroup={currentGroup}
                 title={postPeopleDialogTitle}
                 members={people}
                 onClose={togglePeopleDialog}

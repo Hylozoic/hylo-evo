@@ -15,6 +15,7 @@ Object {
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
+  "currentGroup": null,
   "currentUser": undefined,
   "id": undefined,
   "isProjectMember": undefined,

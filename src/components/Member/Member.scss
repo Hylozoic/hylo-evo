@@ -23,6 +23,10 @@ $skill-vertical-margin: 8px;
   display: flex;
   grid-gap: 6px;
   justify-content: center;
+
+  > span {
+    margin-top: 5px;
+  }
 }
 
 .avatar {

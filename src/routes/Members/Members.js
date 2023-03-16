@@ -90,11 +90,10 @@ export default class Members extends Component {
           <div styleName='members'>
             {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
               {pair.map(m => <Member
-                groupId={group.id}
+                group={group}
                 canModerate={canModerate}
                 removeMember={removeMember}
                 member={m} key={m.id}
-                slug={slug}
                 context={context}
               />)}
               {pair.length === 1 && <div />}

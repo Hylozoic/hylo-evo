@@ -29,6 +29,7 @@ export function mapStateToProps (state, props) {
     id,
     routeParams,
     post,
+    currentGroup,
     currentUser,
     isProjectMember,
     pending: state.pending[FETCH_POST]
