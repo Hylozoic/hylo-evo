@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.4.0] - 2023-03-15
+
+### Added
+- New group Roles and Badges! Admins can add roles/badges which are an emoji and a name, and then attach them to group members. These appear next to the member's name everywhere in the group.
+
+### Changed
+- Stop showing group topic pills in group explorer for now
+- Hide childPost toggle when appropriate, in mapExplorer
+
+### Fixed
+- Posts with images have link to the first image covering the whole post, so you can't click on links in the post
+- When not logged in and viewing a /groups/* page either show the public groups page for public groups, or redirect to login, instead of redirecting to the public map
+- When redirecting to /login for non public group or post make sure to include correct returnToUrl
+
 ## [5.3.5] - 2023-03-04
 
 ### Added

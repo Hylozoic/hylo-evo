@@ -42,10 +42,10 @@ export default class Member extends React.Component {
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
             {creatorIsModerator && (
-              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={member.id} />
+              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
             )}
             {badges.map(badge => (
-              <BadgeEmoji key={badge.name} expanded {...badge} id={member.id} />
+              <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>
