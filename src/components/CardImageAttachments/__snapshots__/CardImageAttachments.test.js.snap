@@ -7,14 +7,12 @@ exports[`renders a single image 1`] = `
   <img
     src="foo"
   />
-  <div>
+  <div
+    data-stylename="others"
+  >
     <div
-      data-stylename="others"
-    >
-      <div
-        data-stylename="others-inner"
-      />
-    </div>
+      data-stylename="others-inner"
+    />
   </div>
 </div>
 `;
@@ -26,44 +24,42 @@ exports[`renders multiple images 1`] = `
   <img
     src="bar"
   />
-  <div>
+  <div
+    data-stylename="others"
+  >
     <div
-      data-stylename="others"
+      data-stylename="others-inner"
     >
-      <div
-        data-stylename="others-inner"
+      <a
+        data-stylename="other"
+        href="baz"
+        key="baz"
+        rel="noreferrer"
+        target="_blank"
       >
-        <a
-          data-stylename="other"
-          href="baz"
-          key="baz"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <div
-            style={
-              Object {
-                "backgroundImage": "url(baz)",
-              }
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(baz)",
             }
-          />
-        </a>
-        <a
-          data-stylename="other"
-          href="bonk"
-          key="bonk"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <div
-            style={
-              Object {
-                "backgroundImage": "url(bonk)",
-              }
+          }
+        />
+      </a>
+      <a
+        data-stylename="other"
+        href="bonk"
+        key="bonk"
+        rel="noreferrer"
+        target="_blank"
+      >
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(bonk)",
             }
-          />
-        </a>
-      </div>
+          }
+        />
+      </a>
     </div>
   </div>
 </div>

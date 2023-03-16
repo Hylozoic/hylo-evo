@@ -28,7 +28,6 @@
   overflow-x: auto;
   padding: 10px 0;
   padding-left: $space-2x;
-  bottom: -30px;
 }
 
 .others-inner {
@@ -41,8 +40,8 @@
   display: block;
   > div {
     border: 1px solid #fff;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 3px;
     margin-right: 20px;
     background-size: cover;
