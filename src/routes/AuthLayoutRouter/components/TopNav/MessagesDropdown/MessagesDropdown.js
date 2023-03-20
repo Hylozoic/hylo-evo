@@ -63,14 +63,15 @@ class MessagesDropdown extends Component {
       threads,
       className,
       currentUser,
-      pending
+      pending,
+      t
     } = this.props
 
     let body
     if (pending) {
       body = <LoadingItems />
     } else if (isEmpty(threads)) {
-      body = <NoItems message={this.props.t("You don't have any messages yet")} />
+      body = <NoItems message={t("You don't have any messages yet")} />
     } else {
       body = <div styleName='threads'>
         {threads.map(thread =>
@@ -96,9 +97,9 @@ class MessagesDropdown extends Component {
       header={
         <div styleName='header-content'>
           <Link to={firstThreadUrl} styleName='open' onClick={this.close}>
-            <Icon styleName='open-icon' name='ArrowForward' /> {this.props.t('Open Messages')}
+            <Icon styleName='open-icon' name='ArrowForward' /> {t('Open Messages')}
           </Link>
-          <Link to={newMessageUrl()} styleName='new' onClick={this.close}><Icon name='SmallEdit' styleName='new-icon' /> {this.props.t('New')}</Link>
+          <Link to={newMessageUrl()} styleName='new' onClick={this.close}><Icon name='SmallEdit' styleName='new-icon' /> {t('New')}</Link>
         </div>}
       body={body}
     />

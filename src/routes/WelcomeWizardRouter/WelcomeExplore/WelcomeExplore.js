@@ -11,22 +11,22 @@ class WelcomeExplore extends Component {
   }
 
   render () {
-    const { currentUser } = this.props
+    const { currentUser, t } = this.props
     const currentAvatarUrl = this.getValue('avatarUrl')
 
     return (
       <div styleName='flex-wrapper final-wrapper'>
         <div styleName='panel final-panel'>
           <div styleName='instructions'>
-            <h3>{this.props.t('Welcome to Hylo!')}</h3>
-            <p>{this.props.t(`We're glad you're here, {{firstName}}. To get started, explore public groups and posts, or create your own group!`, { firstName: currentUser.name.split(' ')[0] })}</p>
+            <h3>{t('Welcome to Hylo!')}</h3>
+            <p>{t(`We're glad you're here, {{firstName}}. To get started, explore public groups and posts, or create your own group!`, { firstName: currentUser.name.split(' ')[0] })}</p>
           </div>
           <Link to='/public/map?hideDrawer=true'>
             <div styleName='final-step'>
               <div styleName='step-image map' style={bgImageStyle('/signup-globe.png')} />
               <div>
-                <h4>{this.props.t('View the public map')}</h4>
-                <p>{this.props.t('Find out what\'s happening around you, and groups you can join')}</p>
+                <h4>{t('View the public map')}</h4>
+                <p>{t('Find out what\'s happening around you, and groups you can join')}</p>
               </div>
             </div>
           </Link>
@@ -34,8 +34,8 @@ class WelcomeExplore extends Component {
             <div styleName='final-step'>
               <div styleName='step-image stream' style={bgImageStyle('/signup-stream.png')} />
               <div>
-                <h4>{this.props.t('Public stream')}</h4>
-                <p>{this.props.t('View and participate in public discussions, projects, events & more')}</p>
+                <h4>{t('Public stream')}</h4>
+                <p>{t('View and participate in public discussions, projects, events & more')}</p>
               </div>
             </div>
           </Link>
@@ -43,8 +43,8 @@ class WelcomeExplore extends Component {
             <div styleName='final-step'>
               <div styleName='step-image group' style={bgImageStyle('/signup-group.png')} />
               <div>
-                <h4>{this.props.t('Create a group')}</h4>
-                <p>{this.props.t('Gather your collaborators & people who share your interests')}</p>
+                <h4>{t('Create a group')}</h4>
+                <p>{t('Gather your collaborators & people who share your interests')}</p>
               </div>
             </div>
           </Link>
@@ -52,8 +52,8 @@ class WelcomeExplore extends Component {
             <div styleName='final-step'>
               <div styleName='step-image profile' style={bgImageStyle(currentAvatarUrl)}><div styleName='profile-cover' /></div>
               <div>
-                <h4>{this.props.t('Complete your profile')}</h4>
-                <p>{this.props.t('Share about who you are, your skills & interests')}</p>
+                <h4>{t('Complete your profile')}</h4>
+                <p>{t('Share about who you are, your skills & interests')}</p>
               </div>
             </div>
           </Link>

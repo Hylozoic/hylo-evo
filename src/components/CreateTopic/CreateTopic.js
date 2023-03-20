@@ -156,7 +156,8 @@ class CreateTopic extends Component {
       showSubmitButton,
       submitButtonText,
       topicName,
-      useNotificationFormat
+      useNotificationFormat,
+      t
     } = this.state
     const { subscribeAfterCreate } = this.props
 
@@ -180,7 +181,7 @@ class CreateTopic extends Component {
         submitButtonText={submitButtonText}
         useNotificationFormat={useNotificationFormat}>
         {useNotificationFormat
-          ? (subscribeAfterCreate ? <div styleName='dialog-content'>{this.props.t('you\'re subscribed to #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div> : <div styleName='dialog-content'>{this.props.t('Created topic #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div>)
+          ? (subscribeAfterCreate ? <div styleName='dialog-content'>{t('you\'re subscribed to #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div> : <div styleName='dialog-content'>{t('Created topic #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div>)
           : <div>
             <TextInput
               aria-label='topic-name'
@@ -189,7 +190,7 @@ class CreateTopic extends Component {
               name='topic-name'
               onChange={this.updateTopicName}
               loading={loading}
-              placeholder={this.props.t('Enter a topic name:')}
+              placeholder={t('Enter a topic name:')}
               value={this.state.topicName} />
             {nameError && <div styleName='topic-error'>{nameError}</div>}
           </div>}

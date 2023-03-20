@@ -58,7 +58,8 @@ class PostHeader extends PureComponent {
       announcement,
       fulfillPost,
       unfulfillPost,
-      postUrl
+      postUrl,
+      t
     } = this.props
 
     if (!creator) return null
@@ -76,12 +77,12 @@ class PostHeader extends PureComponent {
       type: 'post'
     }
     const dropdownItems = filter([
-      { icon: 'Pin', label: pinned ? this.props.t('Unpin') : this.props.t('Pin'), onClick: pinPost },
-      { icon: 'Edit', label: this.props.t('Edit'), onClick: editPost },
-      { icon: 'Copy', label: this.props.t('Copy Link'), onClick: copyLink },
-      { icon: 'Flag', label: this.props.t('Flag'), onClick: this.flagPostFunc() },
-      { icon: 'Trash', label: this.props.t('Delete'), onClick: deletePost, red: true },
-      { icon: 'Trash', label: this.props.t('Remove From Group'), onClick: removePost, red: true }
+      { icon: 'Pin', label: pinned ? t('Unpin') : t('Pin'), onClick: pinPost },
+      { icon: 'Edit', label: t('Edit'), onClick: editPost },
+      { icon: 'Copy', label: t('Copy Link'), onClick: copyLink },
+      { icon: 'Flag', label: t('Flag'), onClick: this.flagPostFunc() },
+      { icon: 'Trash', label: t('Delete'), onClick: deletePost, red: true },
+      { icon: 'Trash', label: t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
@@ -95,15 +96,15 @@ class PostHeader extends PureComponent {
 
     const { from, to } = TextHelpers.formatDatePair(startTime, actualEndTime, true)
     const startString = fulfilledAt ? false
-      : TextHelpers.isDateInTheFuture(startTime) ? this.props.t('Starts: {{from}}', { from })
-        : TextHelpers.isDateInTheFuture(endTime) ? this.props.t('Started: {{from}}', { from })
+      : TextHelpers.isDateInTheFuture(startTime) ? t('Starts: {{from}}', { from })
+        : TextHelpers.isDateInTheFuture(endTime) ? t('Started: {{from}}', { from })
           : false
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
-      endString = this.props.t('Completed: {{endTime}}', { endTime: to })
+      endString = t('Completed: {{endTime}}', { endTime: to })
     } else {
-      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? this.props.t('Ends: {{endTime}}', { endTime: to }) : actualEndTime ? this.props.t('Ended: {{endTime}}', { endTime: to }) : false
+      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? t('Ends: {{endTime}}', { endTime: to }) : actualEndTime ? t('Ended: {{endTime}}', { endTime: to }) : false
     }
 
     let timeWindow = ''
@@ -153,7 +154,7 @@ class PostHeader extends PureComponent {
             </div>
             <div styleName='upperRight'>
               {pinned && <Icon name='Pin' styleName='pinIcon' />}
-              {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type={'completed'} styleName='label' /></div>}
+              {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type='completed' styleName='label' /></div>}
               {type && <PostLabel type={type} styleName='label' />}
               {dropdownItems.length > 0 &&
                 <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}

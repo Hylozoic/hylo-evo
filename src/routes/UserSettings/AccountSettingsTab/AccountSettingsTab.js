@@ -95,6 +95,7 @@ class AccountSettingsTab extends Component {
   hasChanges = () => find(c => c, this.state.changed)
 
   formErrors = () => {
+    const { t } = this.props
     const { edits } = this.state
     const { email, password, confirm } = edits
     const hasChanges = this.hasChanges()
@@ -104,9 +105,9 @@ class AccountSettingsTab extends Component {
 
     const passwordConfirmed = password === confirm
 
-    if (!validateEmail(email)) errors.push(this.props.t('Email address is not in a valid format'))
-    if (password.length > 0 && password.length < 9) errors.push(this.props.t('Passwords must be at least 9 characters long'))
-    if (!passwordConfirmed) errors.push(this.props.t('Passwords don\'t match'))
+    if (!validateEmail(email)) errors.push(t('Email address is not in a valid format'))
+    if (password.length > 0 && password.length < 9) errors.push(t('Passwords must be at least 9 characters long'))
+    if (!passwordConfirmed) errors.push(t('Passwords don\'t match'))
 
     return errors
   }
@@ -126,26 +127,27 @@ class AccountSettingsTab extends Component {
     if (!this.props.currentUser) return <Loading />
 
     const { edits, showDeactivateModal, showDeleteModal } = this.state
+    const { t } = this.props
     const { email, password, confirm } = edits
     const formErrors = this.formErrors()
     const canSave = this.canSave()
 
     return <div>
-      <div styleName='title'>{this.props.t('Update Account')}</div>
+      <div styleName='title'>{t('Update Account')}</div>
       {formErrors.map((formErrorText, i) =>
         <div styleName='error' key={i}>{formErrorText}</div>)}
-      <SettingsControl label={this.props.t('Email')} onChange={this.updateSetting('email')} value={email} />
-      <SettingsControl label={this.props.t('New Password')} onChange={this.updateSetting('password')} value={password} type='password' />
-      <SettingsControl label={this.props.t('New Password (Confirm)')} onChange={this.updateSetting('confirm')} value={confirm} type='password' />
+      <SettingsControl label={t('Email')} onChange={this.updateSetting('email')} value={email} />
+      <SettingsControl label={t('New Password')} onChange={this.updateSetting('password')} value={password} type='password' />
+      <SettingsControl label={t('New Password (Confirm)')} onChange={this.updateSetting('confirm')} value={confirm} type='password' />
       <div styleName='help'>
-        {this.props.t('Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.')}
+        {t('Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.')}
       </div>
-      <div styleName='button-row'><Button onClick={() => this.setState({ showDeactivateModal: true })} label={this.props.t('Deactivate Account')} color={'purple'} /></div>
-      <div styleName='button-row'><Button onClick={() => this.setState({ showDeleteModal: true })} label={this.props.t('Delete Account')} color={'purple'} /></div>
+      <div styleName='button-row'><Button onClick={() => this.setState({ showDeactivateModal: true })} label={t('Deactivate Account')} color={'purple'} /></div>
+      <div styleName='button-row'><Button onClick={() => this.setState({ showDeleteModal: true })} label={t('Delete Account')} color={'purple'} /></div>
 
       <div styleName='saveChanges'>
         <span styleName={canSave ? 'settingChanged' : ''}>{canSave ? 'Changes not saved' : 'Current settings up to date'}</span>
-        <Button label={this.props.t('Save Changes')} color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />
+        <Button label={t('Save Changes')} color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />
       </div>
       {showDeactivateModal &&
         <ModalDialog key='deactviate-user-dialog'
@@ -154,20 +156,20 @@ class AccountSettingsTab extends Component {
           submitButtonAction={() => this.deactivateMe()}
           submitButtonText='Confirm' >
           <h2>
-            {this.props.t('Deactivate')}
+            {t('Deactivate')}
           </h2>
           <p>
-            {this.props.t('This action is reversible, just log back in')}
+            {t('This action is reversible, just log back in')}
           </p>
           <div styleName='modal-container'>
             <h4>
-              {this.props.t('If you deactivate your account:')}
+              {t('If you deactivate your account:')}
             </h4>
             <ul>
-              <li>{this.props.t('You won\'t be able to use Hylo unless you log back in')}</li>
-              <li>{this.props.t('You won\'t receive platform notifications')}</li>
-              <li>{this.props.t('Your profile won\'t show up in any member searches or group memberships')}</li>
-              <li>{this.props.t('Your comments and posts will REMAIN as they are')}</li>
+              <li>{t('You won\'t be able to use Hylo unless you log back in')}</li>
+              <li>{t('You won\'t receive platform notifications')}</li>
+              <li>{t('Your profile won\'t show up in any member searches or group memberships')}</li>
+              <li>{t('Your comments and posts will REMAIN as they are')}</li>
             </ul>
           </div>
         </ModalDialog>
@@ -179,19 +181,19 @@ class AccountSettingsTab extends Component {
           submitButtonAction={() => this.deleteMe()}
           submitButtonText='Confirm' >
           <h2 style={{ color: 'red' }}>
-            {this.props.t('DELETE: CAUTION')}
+            {t('DELETE: CAUTION')}
           </h2>
           <p>
             This action is <strong style={{ color: 'red' }}>NOT</strong> reversible {/* TODO: Handle this translation */}
           </p>
           <div styleName='modal-container'>
             <h4>
-              {this.props.t('If you delete your account:')}
+              {t('If you delete your account:')}
             </h4>
             <ul>
-              <li>{this.props.t('Your account and its details will be deleted')}</li>
-              <li>{this.props.t('The content of your posts and comments will be removed')}</li>
-              <li>{this.props.t('You won\'t be able to use Hylo unless you create a brand new account')}</li>
+              <li>{t('Your account and its details will be deleted')}</li>
+              <li>{t('The content of your posts and comments will be removed')}</li>
+              <li>{t('You won\'t be able to use Hylo unless you create a brand new account')}</li>
             </ul>
           </div>
         </ModalDialog>

@@ -97,7 +97,8 @@ class UnwrappedGroupDetail extends Component {
       location,
       moderators,
       pending,
-      routeParams
+      routeParams,
+      t
     } = this.props
     const fullPage = !getRouteParam('detailGroupSlug', {}, this.props)
 
@@ -117,7 +118,7 @@ class UnwrappedGroupDetail extends Component {
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
             <div>
-              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{this.props.t('About')}</span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
+              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{t('About')}</span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
               <div styleName='g.groupContextInfo'>
                 {!isAboutCurrentGroup && (
                   <div>
@@ -148,7 +149,7 @@ class UnwrappedGroupDetail extends Component {
           )}
           {isAboutCurrentGroup || group.type === GROUP_TYPES.farm
             ? <div styleName='g.aboutCurrentGroup'>
-              <h3>{group.moderatorDescriptorPlural || this.props.t('Moderators')}</h3>
+              <h3>{group.moderatorDescriptorPlural || t('Moderators')}</h3>
               <div styleName='g.moderators'>
                 {moderators.map(p => (
                   <Link to={personUrl(p.id, group.slug)} key={p.id} styleName='g.moderator'>
@@ -157,7 +158,7 @@ class UnwrappedGroupDetail extends Component {
                   </Link>
                 ))}
               </div>
-              <h3>{this.props.t('Privacy settings')}</h3>
+              <h3>{t('Privacy settings')}</h3>
               <div styleName='g.privacySetting'>
                 <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
                 <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
@@ -171,9 +172,9 @@ class UnwrappedGroupDetail extends Component {
           }
           {!isAboutCurrentGroup
             ? !currentUser
-              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{this.props.t('Signup or Login to connect with <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</Link></div>
+              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{t('Signup or Login to connect with <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</Link></div>
               : isMember
-                ? <div styleName='g.existingMember'>{this.props.t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+                ? <div styleName='g.existingMember'>{t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
                 : this.renderDefaultGroupDetails()
             : ''
           } {/* TODO: Handle above translation */}
@@ -187,7 +188,8 @@ class UnwrappedGroupDetail extends Component {
     const {
       canModerate,
       group,
-      isAboutCurrentGroup
+      isAboutCurrentGroup,
+      t
     } = this.props
 
     const topics = group && group.groupTopics
@@ -201,9 +203,9 @@ class UnwrappedGroupDetail extends Component {
           ? (
             <div styleName='g.no-description'>
               <div>
-                <h4>{this.props.t('Your group doesn\'t have a description')}</h4>
-                <p>{this.props.t('Add a description, location, suggested topics and more in your group settings')}</p>
-                <Link to={groupUrl(group.slug, 'settings')}>{this.props.t('Add a group description')}</Link>
+                <h4>{t('Your group doesn\'t have a description')}</h4>
+                <p>{t('Add a description, location, suggested topics and more in your group settings')}</p>
+                <Link to={groupUrl(group.slug, 'settings')}>{t('Add a group description')}</Link>
               </div>
             </div>
           ) : (
@@ -215,7 +217,7 @@ class UnwrappedGroupDetail extends Component {
           )}
         {!isAboutCurrentGroup && topics && topics.length && (
           <div styleName='g.groupTopics'>
-            <div styleName='g.groupSubtitle'>{this.props.t('Topics')}</div>
+            <div styleName='g.groupSubtitle'>{t('Topics')}</div>
             {topics.slice(0, 10).map(topic => {
               return (
                 <span
@@ -233,7 +235,7 @@ class UnwrappedGroupDetail extends Component {
   }
 
   renderDefaultGroupDetails () {
-    const { addSkill, currentUser, group, joinRequests, onClose, removeSkill, routeParams } = this.props
+    const { addSkill, currentUser, group, joinRequests, onClose, removeSkill, routeParams, t } = this.props
     const groupsWithPendingRequests = keyBy(joinRequests, 'group.id')
 
     // half of this could be shifted to farm specific widgets
@@ -241,21 +243,21 @@ class UnwrappedGroupDetail extends Component {
       <div>
         <div styleName='g.groupDetails'>
           <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>{this.props.t('Recent Posts')}</div>
+            <div styleName='g.groupSubtitle'>{t('Recent Posts')}</div>
             <div styleName='g.detail'>
               <Icon name='BadgeCheck' />
-              <span styleName='g.detailText'>{this.props.t('Only members of this group can see posts')}</span>
+              <span styleName='g.detailText'>{t('Only members of this group can see posts')}</span>
             </div>
           </div>
           <div styleName='g.detailContainer'>
-            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? this.props.t('Members') : this.props.t('Member')}</div>
+            <div styleName='g.groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? t('Members') : t('Member')}</div>
             {get(group, 'settings.publicMemberDirectory')
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='g.avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='g.avatar' /><span>{member.name}</span></div>
               })}</div>
               : <div styleName='g.detail'>
                 <Icon name='Unlock' />
-                <span styleName='g.detailText'>{this.props.t('Join to see')}</span>
+                <span styleName='g.detailText'>{t('Join to see')}</span>
               </div>
             }
           </div>
@@ -276,7 +278,7 @@ class UnwrappedGroupDetail extends Component {
   }
 }
 
-export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams }) {
+export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams, t }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
 
@@ -299,7 +301,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
       }
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
         ? <div styleName='g.prerequisiteGroups'>
-          {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{this.props.t('{group.name} is only accessible to members of the following groups:', { group })}</h4>} {/* TODO: Handle translation */}
+          {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{t('{group.name} is only accessible to members of the following groups:', { group })}</h4>} {/* TODO: i18n */}
           {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
             <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
               <div styleName='g.groupTitleContainer'>
@@ -326,39 +328,39 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
               <div styleName='g.headerBackground' />
             </Link>
             <div styleName='g.cta'>
-              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member {/* TODO: Handle this translation */ }
+              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member {/* TODO: i18n */ }
 
             </div>
           </div>)}
         </div>
-        : group.numPrerequisitesLeft ? this.props.t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
+        : group.numPrerequisitesLeft ? t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
           : group.accessibility === GROUP_ACCESSIBILITY.Open
             ? <div styleName='g.requestOption'>
-              <div styleName='g.requestHint'>{this.props.t('Anyone can join this group!')}</div>
+              <div styleName='g.requestHint'>{t('Anyone can join this group!')}</div>
               {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                 <h3>{q.text}</h3>
-                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={this.props.t('Type your answer here...')} />
+                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
               </div>)}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{this.props.t('Join <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</div>
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{t('Join <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
               ? hasPendingRequest
-                ? <div styleName='g.requestPending'>{this.props.t('Request to join pending')}</div>
-                : <div styleName='g.requestOption'> {/* this.props.t('Restricted group, no request pending') */}
+                ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
+                : <div styleName='g.requestOption'> {/* t('Restricted group, no request pending') */}
                   {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                     <h3>{q.text}</h3>
-                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={this.props.t('Type your answer here...')} />
+                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
                   </div>)}
                   <div styleName='g.center'>
                     <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
-                      {this.props.t('Request Membership in <span styleName="g.requestGroup">{{group.name}}</span>', { group })}
+                      {t('Request Membership in <span styleName="g.requestGroup">{{group.name}}</span>', { group })}
                     </div>
                   </div>
                 </div>
               : <div styleName='g.requestOption'> {/* Closed group */}
-                {this.props.t('This is group is invitation only')}
+                {t('This is group is invitation only')}
               </div>
       }
     </div>

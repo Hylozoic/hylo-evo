@@ -53,7 +53,7 @@ class PostEditor extends React.Component {
     ensureLocationIdIfCoordinate: PropTypes.func
   }
 
-  static defaultProps = { // TODO: Handle translations
+  static defaultProps = { // TODO: i18n
     titlePlaceholderForPostType: {
       offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
@@ -496,10 +496,10 @@ class PostEditor extends React.Component {
   }
 
   buttonLabel = () => {
-    const { postPending, editing } = this.props
-    if (postPending) return this.props.t('Posting...')
-    if (editing) return this.props.t('Save')
-    return this.props.t('Post')
+    const { postPending, editing, t } = this.props
+    if (postPending) return t('Posting...')
+    if (editing) return t('Save')
+    return t('Post')
   }
 
   toggleAnnouncementModal = () => {
@@ -538,7 +538,8 @@ class PostEditor extends React.Component {
       valid,
       post,
       showAnnouncementModal,
-      showPostTypeMenu
+      showPostTypeMenu,
+      t
     } = this.state
     const {
       id,
@@ -591,8 +592,8 @@ class PostEditor extends React.Component {
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
 
-    const donationsLinkPlaceholder = this.props.t('Add a donation link (must be valid URL)')
-    const projectManagementLinkPlaceholder = this.props.t('Add a project management link (must be valid URL)')
+    const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
+    const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
@@ -632,7 +633,7 @@ class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{this.props.t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
+              <span styleName='title-error'>{t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
@@ -677,7 +678,7 @@ class PostEditor extends React.Component {
         <div styleName='footer'>
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{this.props.t('Project Members')}</div>
+              <div styleName='footerSection-label'>{t('Project Members')}</div>
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={members || []}
@@ -689,7 +690,7 @@ class PostEditor extends React.Component {
             </div>
           )}
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>{this.props.t('Topics')}</div>
+            <div styleName='footerSection-label'>{t('Topics')}</div>
             <div styleName='footerSection-topics'>
               <TopicSelector
                 forGroups={post?.groups || [currentGroup]}
@@ -699,7 +700,7 @@ class PostEditor extends React.Component {
             </div>
           </div>
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>{this.props.t('Post in')}</div>
+            <div styleName='footerSection-label'>{t('Post in')}</div>
             <div styleName='footerSection-groups'>
               <GroupsSelector
                 options={groupOptions}
@@ -716,22 +717,22 @@ class PostEditor extends React.Component {
           />
           {canHaveTimes && dateError && (
             <span styleName='title-error'>
-              {this.props.t('End Time must be after Start Time')}
+              {t('End Time must be after Start Time')}
             </span>
           )}
           {canHaveTimes && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{this.props.t('Timeframe')}</div>
+              <div styleName='footerSection-label'>{t('Timeframe')}</div>
               <div styleName='datePickerModule'>
                 <DatePicker
                   value={startTime}
-                  placeholder={this.props.t('Select Start')}
+                  placeholder={t('Select Start')}
                   onChange={this.handleStartTimeChange}
                 />
-                <div styleName='footerSection-helper'>{this.props.t('To')}</div>
+                <div styleName='footerSection-helper'>{t('To')}</div>
                 <DatePicker
                   value={endTime}
-                  placeholder={this.props.t('Select End')}
+                  placeholder={t('Select End')}
                   onChange={this.handleEndTimeChange}
                 />
               </div>
@@ -739,19 +740,19 @@ class PostEditor extends React.Component {
           )}
           {hasLocation && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label alignedLabel'>{this.props.t('Location')}</div>
+              <div styleName='footerSection-label alignedLabel'>{t('Location')}</div>
               <LocationInput
                 saveLocationToDB
                 locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
-                placeholder={this.props.t('Where is your {{type}} located?', { type })}
+                placeholder={t('Where is your {{type}} located?', { type })}
               />
             </div>
           )}
           {isEvent && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{this.props.t('Invite People')}</div>
+              <div styleName='footerSection-label'>{t('Invite People')}</div>
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={eventInvitations || []}
@@ -764,7 +765,7 @@ class PostEditor extends React.Component {
           )}
           {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>{this.props.t('Accept Contributions')}</div>
+              <div styleName='footerSection-label'>{t('Accept Contributions')}</div>
               {hasStripeAccount && (
                 <div
                   styleName={cx('footerSection-groups', 'accept-contributions')}
@@ -776,7 +777,7 @@ class PostEditor extends React.Component {
                   />
                   {!acceptContributions && (
                     <div styleName='accept-contributions-help'>
-                      {this.props.t(`If you turn 'Accept Contributions' on, people will be able
+                      {t(`If you turn 'Accept Contributions' on, people will be able
                       to send money to your Stripe connected account to support
                       this project.`)}
                     </div>
@@ -790,7 +791,7 @@ class PostEditor extends React.Component {
                     'accept-contributions-help'
                   )}
                 >
-                  {this.props.t(`To accept financial contributions for this project, you have
+                  {t(`To accept financial contributions for this project, you have
                   to connect a Stripe account. Go to 
                   <a href='/settings/payment'>Settings</a> to set it up.
                   (Remember to save your changes before leaving this form)`)}
@@ -800,7 +801,7 @@ class PostEditor extends React.Component {
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>{this.props.t('Donation Link')}</div>
+              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>{t('Donation Link')}</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'
@@ -815,7 +816,7 @@ class PostEditor extends React.Component {
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>{this.props.t('Project Management')}</div>
+              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>{t('Project Management')}</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'

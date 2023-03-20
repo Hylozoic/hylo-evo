@@ -72,14 +72,14 @@ class SocialControl extends Component {
   }
 
   render () {
-    const { label, value = '', provider, onLink } = this.props
+    const { label, value = '', provider, onLink, t } = this.props
     const linked = !!value
 
     const linkButton =
       <span
         styleName='link-button'
         onClick={linked ? () => this.handleUnlinkClick() : () => this.handleLinkClick()}>
-        {linked ? this.props.t('Unlink') : this.props.t('Link')}
+        {linked ? t('Unlink') : t('Link')}
 
       </span>
 
@@ -89,7 +89,7 @@ class SocialControl extends Component {
         onClick={linked ? () => this.handleUnlinkClick() : () => onLink()}
         className='ml-auto'
       >
-        {linked ? this.props.t('Disconnect') : this.props.t('Connect')}
+        {linked ? t('Disconnect') : t('Connect')}
       </span>
 
     return (

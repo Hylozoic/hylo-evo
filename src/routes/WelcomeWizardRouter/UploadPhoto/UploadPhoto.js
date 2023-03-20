@@ -38,7 +38,7 @@ class UploadPhoto extends Component {
   }
 
   render () {
-    const { currentUser, uploadImagePending } = this.props
+    const { currentUser, uploadImagePending, t } = this.props
 
     if (!currentUser) return <Loading />
 
@@ -46,7 +46,7 @@ class UploadPhoto extends Component {
 
     return <div styleName='flex-wrapper'>
       <div styleName='panel'>
-        <span styleName='step-count'>{this.props.t('STEP 1/3')}</span>
+        <span styleName='step-count'>{t('STEP 1/3')}</span>
         <br />
         <div styleName='center'>
           <div styleName='uploadWrapper'>
@@ -61,11 +61,11 @@ class UploadPhoto extends Component {
           </div>
         </div>
         <div styleName='instructions'>
-          <h3>{this.props.t('Upload a profile image')}</h3>
-          <p>{this.props.t('Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.')}</p>
+          <h3>{t('Upload a profile image')}</h3>
+          <p>{t('Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.')}</p>
         </div>
         <div>
-          <WelcomeWizardModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={this.props.t('Next: Where are you from?')} />
+          <WelcomeWizardModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={t('Next: Where are you from?')} />
         </div>
       </div>
     </div>

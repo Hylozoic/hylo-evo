@@ -77,23 +77,24 @@ class FlagContent extends PureComponent {
   }
 
   render () {
+    const { t } = this.props
     const options = [
-      { label: this.props.t('Inappropriate Content'), id: 'inappropriate' },
-      { label: this.props.t('Spam'), id: 'spam' },
-      { label: this.props.t('Offensive'), id: 'offensive' },
-      { label: this.props.t('Abusive'), id: 'abusive' },
-      { label: this.props.t('Illegal'), id: 'illegal' },
-      { label: this.props.t('Other'), id: 'other' }
+      { label: t('Inappropriate Content'), id: 'inappropriate' },
+      { label: t('Spam'), id: 'spam' },
+      { label: t('Offensive'), id: 'offensive' },
+      { label: t('Abusive'), id: 'abusive' },
+      { label: t('Illegal'), id: 'illegal' },
+      { label: t('Other'), id: 'other' }
     ]
 
     const {
-      subtitle = this.props.t('What was wrong?'),
+      subtitle = t('What was wrong?'),
       reasonRequired,
       selectedCategory = '', explanation } = this.state
 
     return <div styleName='popup'>
       <div styleName='popup-inner'>
-        <h1>{this.props.t('Explanation for Flagging')}</h1>
+        <h1>{t('Explanation for Flagging')}</h1>
         <span onClick={this.closeModal} styleName='close-btn'>
           <Icon name='Ex' styleName='icon' />
         </span>
@@ -103,9 +104,9 @@ class FlagContent extends PureComponent {
             <Select
               onChange={this.updateSelected}
               fullWidth
-              styleName={reasonRequired ? this.props.t('reason-required') : ''}
+              styleName={reasonRequired ? t('reason-required') : ''}
               selected={selectedCategory}
-              placeholder={this.props.t('Select a reason')}
+              placeholder={t('Select a reason')}
               options={options} />
           </div>
           <TextareaAutosize
@@ -114,7 +115,7 @@ class FlagContent extends PureComponent {
             value={explanation}
             onChange={(e) => { this.setState({ explanation: e.target.value }) }}
             placeholder={subtitle} />
-          <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>{this.props.t('Submit')}</Button>
+          <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>{t('Submit')}</Button>
         </div>
       </div>
     </div>
