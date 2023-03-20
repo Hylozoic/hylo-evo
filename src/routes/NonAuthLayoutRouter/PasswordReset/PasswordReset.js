@@ -40,14 +40,14 @@ class PasswordReset extends Component {
     return (
       <div className={className}>
         <div styleName='formWrapper'>
-          <h1 styleName='title'>{this.props.t('Reset Your Password')}</h1>
+          <h1 styleName='title'>{t('Reset Your Password')}</h1>
           <div styleName='subtitle'>
-            {this.props.t("Enter your email address and we'll send you an email that lets you reset your password.")}
+            {t("Enter your email address and we'll send you an email that lets you reset your password.")}
           </div>
-          {success && <div styleName='success'>{this.props.t('If your email address matched an account in our system, we sent you an email. Please check your inbox.')}</div>}
-          {error && <div styleName='error'>{this.props.t('There was a problem with your request. Please check your email and try again.')}</div>}
+          {success && <div styleName='success'>{t('If your email address matched an account in our system, we sent you an email. Please check your inbox.')}</div>}
+          {error && <div styleName='error'>{t('There was a problem with your request. Please check your email and try again.')}</div>}
 
-          <label>{this.props.t('Your email address')}</label>
+          <label>{t('Your email address')}</label>
           <TextInput
             autoFocus
             inputRef={input => { this.email = input }}
@@ -61,7 +61,7 @@ class PasswordReset extends Component {
           />
 
           <Button
-            styleName='submit' label={this.props.t('Reset')} color={canSubmit ? 'green' : 'gray'}
+            styleName='submit' label={t('Reset')} color={canSubmit ? 'green' : 'gray'}
             onClick={canSubmit ? () => this.submit() : null}
           />
         </div>

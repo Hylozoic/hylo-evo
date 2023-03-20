@@ -64,8 +64,8 @@ class Groups extends Component {
 
       <div styleName='section'>
         <div styleName='banner'>
-          {parentGroups.length === 1 ? <h3>{this.props.t('{{group.name}} is a part of 1 Group', { group })}</h3> : '' }
-          {parentGroups.length > 1 ? <h3>{this.props.t('{{group.name}} is a part of {{parentGroups.length}} Groups', { group, parentGroups })}</h3> : '' }
+          {parentGroups.length === 1 ? <h3>{t('{{group.name}} is a part of 1 Group', { group })}</h3> : '' }
+          {parentGroups.length > 1 ? <h3>{t('{{group.name}} is a part of {{parentGroups.length}} Groups', { group, parentGroups })}</h3> : '' }
         </div>
         <GroupsList
           groups={parentGroups}
@@ -75,8 +75,8 @@ class Groups extends Component {
 
       <div styleName='section'>
         <div styleName='banner'>
-          {childGroups.length === 1 ? <h3>{this.props.t('1 Group is a part of {{group.name}}', { group })}</h3> : ''}
-          {childGroups.length > 1 ? <h3>{this.props.t('{{childGroups.length}} groups are a part of {{group.name}}', { childGroups, group })}</h3> : ''}
+          {childGroups.length === 1 ? <h3>{t('1 Group is a part of {{group.name}}', { group })}</h3> : ''}
+          {childGroups.length > 1 ? <h3>{t('{{childGroups.length}} groups are a part of {{group.name}}', { childGroups, group })}</h3> : ''}
         </div>
         <GroupsList
           groups={childGroups}

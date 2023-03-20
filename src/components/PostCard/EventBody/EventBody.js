@@ -40,7 +40,7 @@ class EventBody extends Component {
           <div styleName='calendarDate' onClick={onClick}>
             <EventDate {...event} />
           </div>
-          <Button label={this.props.t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+          <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
       </div>
 
@@ -73,10 +73,10 @@ class EventBody extends Component {
             excludePersonId={get('id', currentUser)}
             onClick={togglePeopleDialog}
             phrases={{
-              emptyMessage: this.props.t('No one is attending yet'),
-              phraseSingular: this.props.t('is attending'),
-              mePhraseSingular: this.props.t('are attending'),
-              pluralPhrase: this.props.t('attending')
+              emptyMessage: t('No one is attending yet'),
+              phraseSingular: t('is attending'),
+              mePhraseSingular: t('are attending'),
+              pluralPhrase: t('attending')
             }}
           />
         </div>
@@ -86,7 +86,7 @@ class EventBody extends Component {
           <div styleName={cx('eventData', { constrained })} onClick={onClick}>
             <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair(startTime, endTime)}
           </div>
-          <Button label={this.props.t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+          <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
       </div>
     )

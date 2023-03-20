@@ -225,7 +225,7 @@ class ModeratorsSettingsTab extends Component {
   }
 }
 
-export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions }) {
+export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions, t }) {
   return (
     <div>
       <div>
@@ -239,6 +239,7 @@ export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSu
           />)}
       </div>
       <AddModerator
+        t={t}
         fetchModeratorSuggestions={fetchModeratorSuggestions}
         addModerator={addModerator}
         moderatorSuggestions={moderatorSuggestions}

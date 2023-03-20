@@ -41,7 +41,7 @@ class ThreadList extends Component {
             <Icon name='Search' />
           </div>
           <TextInput
-            placeholder={this.props.t('Search for people...')}
+            placeholder={t('Search for people...')}
             value={threadSearch}
             onChange={this.onSearchChange}
             onFocus={this.props.onFocus}
@@ -49,7 +49,7 @@ class ThreadList extends Component {
           />
         </div>
         <Link styleName='new-message' to='/messages/new'>
-          <span>{this.props.t('New')}</span>
+          <span>{t('New')}</span>
           <Icon name='Messages' styleName='messages-icon' />
         </Link>
       </div>
@@ -72,9 +72,9 @@ class ThreadList extends Component {
         {threadsPending &&
           <Loading type='bottom' />}
         {!threadsPending && isEmpty(threads) && !threadSearch &&
-          <div styleName='no-conversations'>{this.props.t('You have no active messages')}</div>}
+          <div styleName='no-conversations'>{t('You have no active messages')}</div>}
         {!threadsPending && isEmpty(threads) && threadSearch &&
-          <div styleName='no-conversations'>{this.props.t('No messages found')}</div>}
+          <div styleName='no-conversations'>{t('No messages found')}</div>}
       </ul>
       <ScrollListener
         elementId={'thread-list-list'}

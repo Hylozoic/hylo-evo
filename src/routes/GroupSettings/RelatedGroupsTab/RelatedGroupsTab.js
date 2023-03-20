@@ -113,9 +113,9 @@ class RelatedGroupsTab extends Component {
           setSearch={setSearch}
           /> */}
 
-      <div styleName='title'>{this.props.t('Parent Groups')}</div>
+      <div styleName='title'>{t('Parent Groups')}</div>
       {parentGroups.length > 0 ? <div>
-        <div styleName='subtitle'>{parentGroups.length === 1 ? this.props.t('This is the one group') : this.props.t('These are the {{length}} groups that {{group.name}} is a member of', { group, length: parentGroups.length })}</div>
+        <div styleName='subtitle'>{parentGroups.length === 1 ? t('This is the one group') : t('These are the {{length}} groups that {{group.name}} is a member of', { group, length: parentGroups.length })}</div>
         <div styleName='group-list' >
           {parentGroups.map(p => <GroupCard
             group={p}
@@ -124,11 +124,11 @@ class RelatedGroupsTab extends Component {
           />)}
         </div>
       </div>
-        : <div styleName='subtitle'>{this.props.t('{{group.name}} is not a member of any groups yet', { group })}</div>
+        : <div styleName='subtitle'>{t('{{group.name}} is not a member of any groups yet', { group })}</div>
       }
 
       {groupInvitesToJoinThem.length > 0 && <div>
-        <div styleName='subtitle'>{this.props.t('Open Invitations to Join Other Groups')}</div>
+        <div styleName='subtitle'>{t('Open Invitations to Join Other Groups')}</div>
         <div styleName='group-list'>
           {groupInvitesToJoinThem.map(invite => {
             return <GroupCard
@@ -136,7 +136,7 @@ class RelatedGroupsTab extends Component {
               key={invite.id}
               actionMenu={<div>
                 <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon' /></span>
-                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon' /> <span>{this.props.t('Join')}</span></span>
+                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon' /> <span>{t('Join')}</span></span>
               </div>}
             />
           })}
@@ -144,14 +144,14 @@ class RelatedGroupsTab extends Component {
       </div> }
 
       {groupRequestsToJoinThem.length > 0 && <div>
-        <div styleName='subtitle'>{this.props.t('Pending requests to join other groups')}</div>
+        <div styleName='subtitle'>{t('Pending requests to join other groups')}</div>
         <div styleName='group-list'>
           {groupRequestsToJoinThem.map(invite => {
             return <GroupCard
               group={invite.toGroup}
               key={invite.id}
               actionMenu={<div>
-                <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>{this.props.t('Cancel Request')}</span>
+                <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>{t('Cancel Request')}</span>
               </div>}
             />
           })}
@@ -162,15 +162,15 @@ class RelatedGroupsTab extends Component {
         <Button styleName='connect-button' onClick={this.toggleRequestToJoinPicker}>
           <div>
             <Icon name='Handshake' styleName='connect-icon' />
-            {this.props.t('Join {{group.name}} to another group', { group })}
+            {t('Join {{group.name}} to another group', { group })}
           </div>
-          <span styleName='connect-label'>{this.props.t('REQUEST')}</span>
+          <span styleName='connect-label'>{t('REQUEST')}</span>
         </Button>
         {showRequestoJoinPicker && <div styleName='group-picker'>
           <div styleName='group-picker-list'>
             {possibleParents.map(membership => <div key={membership.id}>
               <span styleName='invite-button' onClick={this.handleRequestToAddGroupToParent(membership.group, group)}>
-                <b>{membership.hasModeratorRole ? this.props.t('Join') : this.props.t('Request')}</b>
+                <b>{membership.hasModeratorRole ? t('Join') : t('Request')}</b>
                 {membership.group.name}
               </span>
             </div>)}
@@ -178,9 +178,9 @@ class RelatedGroupsTab extends Component {
         </div>}
       </div>
 
-      <div styleName='title'>{this.props.t('Child Groups')}</div>
+      <div styleName='title'>{t('Child Groups')}</div>
       {childGroups.length > 0 ? <div>
-        <div styleName='subtitle'>{childGroups.length === 1 ? this.props.t('This group is a member') : this.props.t('These {{childGroups.length}} groups are members of {{group.name}}', { childGroups, group })}</div>
+        <div styleName='subtitle'>{childGroups.length === 1 ? t('This group is a member') : t('These {{childGroups.length}} groups are members of {{group.name}}', { childGroups, group })}</div>
         <div styleName='group-list'>
           {childGroups.map(c =>
             <GroupCard
@@ -190,11 +190,11 @@ class RelatedGroupsTab extends Component {
             />)}
         </div>
       </div>
-        : <div styleName='subtitle'>{this.props.t('No groups are members of {{group.name}} yet', { group })}</div>
+        : <div styleName='subtitle'>{t('No groups are members of {{group.name}} yet', { group })}</div>
       }
 
       {groupRequestsToJoinUs.length > 0 && <div>
-        <div styleName='subtitle'>{this.props.t('Requests to join {{group.name}}', { group })}</div>
+        <div styleName='subtitle'>{t('Requests to join {{group.name}}', { group })}</div>
         <div styleName='group-list'>
           {groupRequestsToJoinUs.map(invite => {
             return <GroupCard
@@ -204,7 +204,7 @@ class RelatedGroupsTab extends Component {
               key={invite.id}
               actionMenu={<div>
                 <span styleName='reject-button' onClick={rejectGroupRelationshipInvite(invite.id)}><Icon name='Ex' styleName='reject-icon' /></span>
-                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon' /> <span>{this.props.t('Approve')}</span></span>
+                <span styleName='accept-button' onClick={acceptGroupRelationshipInvite(invite.id)}><Icon name='Heart' styleName='accept-icon' /> <span>{t('Approve')}</span></span>
               </div>}
               type={GROUP_RELATIONSHIP_TYPE.ChildToParent}
             />
@@ -213,14 +213,14 @@ class RelatedGroupsTab extends Component {
       </div> }
 
       {groupInvitesToJoinUs.length > 0 && <div>
-        <div styleName='subtitle'>{this.props.t('Pending invites to join {{group.name}}', { group })}</div>
+        <div styleName='subtitle'>{t('Pending invites to join {{group.name}}', { group })}</div>
         <div styleName='group-list'>
           {groupInvitesToJoinUs.map(invite => {
             return <GroupCard
               group={invite.toGroup}
               key={invite.id}
               actionMenu={<div>
-                <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>{this.props.t('Cancel Invite')}</span>
+                <span styleName='cancel-button' onClick={cancelGroupRelationshipInvite(invite.id)}>{t('Cancel Invite')}</span>
               </div>}
             />
           })}
@@ -231,15 +231,15 @@ class RelatedGroupsTab extends Component {
         <Button styleName='connect-button' onClick={this.toggleInviteAsChildPicker}>
           <div>
             <Icon name='Handshake' styleName='connect-icon' />
-            {this.props.t('Invite a group to join <strong>{{group.name}}</strong>', { group })}
+            {t('Invite a group to join <strong>{{group.name}}</strong>', { group })}
           </div>
-          <span styleName='connect-label'>{this.props.t('INVITE')}</span>
+          <span styleName='connect-label'>{t('INVITE')}</span>
         </Button>
         {showInviteAsChildPicker && <div styleName='group-picker'>
           <div styleName='group-picker-list'>
             {possibleChildren.map(membership => <div key={membership.id}>
               <span styleName='invite-button' onClick={this.handleInviteGroupToJoinParent(group.id, membership.group.id)}>
-                <b>{membership.hasModeratorRole ? this.props.t('Add') : this.props.t('Invite')}</b>
+                <b>{membership.hasModeratorRole ? t('Add') : t('Invite')}</b>
                 {membership.group.name}
               </span>
             </div>)}

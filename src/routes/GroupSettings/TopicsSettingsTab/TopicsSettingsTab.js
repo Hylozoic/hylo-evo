@@ -105,9 +105,9 @@ class TopicsSettingsTab extends Component {
 
     return (<div styleName='wrapper'>
       <div styleName='default-topics'>
-        <div styleName='title'>{this.props.t('Group Suggested Topics')}</div>
+        <div styleName='title'>{t('Group Suggested Topics')}</div>
         <p>
-          {this.props.t(`Set default topics for your group which will be suggested first when
+          {t(`Set default topics for your group which will be suggested first when
           members are creating a new post.
           Every new member will also be subscribed to these topics when they join.`)}
         </p>
@@ -125,7 +125,7 @@ class TopicsSettingsTab extends Component {
           <div styleName='default-topic-selector'>
             <SingleTopicSelector
               currentGroup={group}
-              placeholder={this.props.t('Add a suggested topic')}
+              placeholder={t('Add a suggested topic')}
               onSelectTopic={(topic) => {
                 topic && this.props.createTopic(topic.name, group.id, true, false)
               }}
@@ -134,16 +134,16 @@ class TopicsSettingsTab extends Component {
         </div>
       </div>
       <div styleName='all-topics'>
-        <div styleName='title'>{this.props.t('Topic List Editor')}</div>
+        <div styleName='title'>{t('Topic List Editor')}</div>
         <p>
-          {this.props.t(`Below is a list of every topic that any member of your group has used to date. You can choose to hide
+          {t(`Below is a list of every topic that any member of your group has used to date. You can choose to hide
           topics that you would prefer members of your group don't use, or pin topics to the top of the list
           to make sure people pay attention to posts in those topics.`)}
         </p>
         <div styleName='controls'>
           <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending, totalTopicsCached }} />
           <CreateTopic
-            buttonText={this.props.t('Add a Topic')}
+            buttonText={t('Add a Topic')}
             groupId={group.id}
             groupSlug={group.slug}
             topics={topics} />

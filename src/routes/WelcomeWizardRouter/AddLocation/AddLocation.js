@@ -69,7 +69,7 @@ class AddLocation extends Component {
     return (
       <div styleName='flex-wrapper'>
         <div styleName='panel'>
-          <span styleName='step-count'>{this.props.t('STEP 2/3')}</span>
+          <span styleName='step-count'>{t('STEP 2/3')}</span>
           <br />
           <div styleName='center'>
             <Icon name='Globe' styleName='globe-icon' />
@@ -82,7 +82,7 @@ class AddLocation extends Component {
               location={this.state.location}
               locationObject={this.props.currentUser ? this.props.currentUser.locationObject : null}
               onChange={this.handleLocationChange}
-              placeholder={this.props.t('Where do you call home?')}
+              placeholder={t('Where do you call home?')}
               onKeyPress={event => {
                 if (event.key === 'Enter') {
                   this.submit()
@@ -92,10 +92,10 @@ class AddLocation extends Component {
             />
           </div>
           <div styleName='instructions'>
-            <p>{this.props.t('Add your location to see more relevant content, and find people and projects around you')}.</p>
+            <p>{t('Add your location to see more relevant content, and find people and projects around you')}.</p>
           </div>
           <div>
-            <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText={this.props.t('Next: Welcome to Hylo!')} />
+            <WelcomeWizardModalFooter submit={this.submit} previous={this.previous} continueText={t('Next: Welcome to Hylo!')} />
           </div>
         </div>
       </div>

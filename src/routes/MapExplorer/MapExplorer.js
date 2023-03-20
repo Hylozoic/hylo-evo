@@ -521,7 +521,8 @@ class MapExplorer extends React.Component {
       showLayersSelector,
       showSavedSearches,
       totalPostsInView,
-      viewport
+      viewport,
+      t
     } = this.state
 
     const { hideNavLayout } = this.context
@@ -554,7 +555,7 @@ class MapExplorer extends React.Component {
         </div>
         <button
           data-for='helpTip'
-          data-tip={hideDrawer ? this.props.t('Open Drawer') : this.props.t('Close Drawer')}
+          data-tip={hideDrawer ? t('Open Drawer') : t('Close Drawer')}
           styleName={cx('toggleDrawerButton drawerAdjacentButton', { drawerOpen: !hideDrawer })}
           onClick={this.toggleDrawer}
         >
@@ -587,7 +588,7 @@ class MapExplorer extends React.Component {
           <LocationInput saveLocationToDB={false} onChange={(value) => this.handleLocationInputSelection(value)} />
         </div>
         <button styleName={cx('toggleFeatureFiltersButton', { open: showFeatureFilters, withoutNav })} onClick={this.toggleFeatureFilters}>
-          {this.props.t('Features:')} <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
+          {t('Features:')} <strong>{featureTypes.filter(t => filters.featureTypes[t]).length}/{featureTypes.length}</strong>
         </button>
 
         {currentUser && <>
@@ -609,7 +610,7 @@ class MapExplorer extends React.Component {
         </>}
 
         <div styleName={cx('featureTypeFilters', { open: showFeatureFilters, withoutNav })}>
-          <h3>{this.props.t('What do you want to see on the map?')}</h3>
+          <h3>{t('What do you want to see on the map?')}</h3>
           {featureTypes.map(featureType => {
             const color = FEATURE_TYPES[featureType].primaryColor
             return (
@@ -633,14 +634,14 @@ class MapExplorer extends React.Component {
 
         <button
           data-for='helpTip'
-          data-tip={showLayersSelector ? null : this.props.t('Change Map Layers')}
+          data-tip={showLayersSelector ? null : t('Change Map Layers')}
           onClick={this.toggleLayersSelector}
           styleName={cx('toggleLayersSelectorButton drawerAdjacentButton', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}
         >
           <Icon name='Stack' />
         </button>
         <div styleName={cx('layersSelectorContainer', { open: showLayersSelector, withoutNav, drawerOpen: !hideDrawer })}>
-          <h3>{this.props.t('Base Layer:')}
+          <h3>{t('Base Layer:')}
             <Dropdown
               className={styles.layersDropdown}
               menuAbove
@@ -655,16 +656,16 @@ class MapExplorer extends React.Component {
             />
           </h3>
 
-          <h3 styleName='layersHeader'>{this.props.t('Other Layers')}</h3>
+          <h3 styleName='layersHeader'>{t('Other Layers')}</h3>
           <div styleName='layersList'>
             <SwitchStyled
               backgroundColor='rgb(0, 163, 227)'
-              name={this.props.t('Native Territories')}
+              name={t('Native Territories')}
               checked={!!otherLayers['native_territories']}
               onChange={(checked, name) => this.toggleMapLayer('native_territories')}
             />
             <span styleName='layerLabel'>
-              {this.props.t('Native Territories')}
+              {t('Native Territories')}
               <a href='https://native-land.ca' target='__blank'>
                 <Icon name='Info' dataTip='Credit to native-land.ca' dataTipFor='helpTipTwo' />
               </a>

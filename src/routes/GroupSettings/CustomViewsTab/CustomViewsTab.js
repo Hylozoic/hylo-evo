@@ -97,15 +97,15 @@ class CustomViewsTab extends Component {
       const { externalLink, name, icon } = cv
       if (externalLink.length > 0) {
         if (!sanitizeURL(externalLink)) {
-          errorString += this.props.t('External link has to be a valid URL.') + ' \n'
+          errorString += t('External link has to be a valid URL.') + ' \n'
         }
       }
 
       if (name.length < 2) {
-        errorString += this.props.t('View name needs to be at least two characters long.') + ' \n'
+        errorString += t('View name needs to be at least two characters long.') + ' \n'
       }
       if (icon.length < 1) {
-        errorString += this.props.t('An icon needs to be selected for the view.') + ' '
+        errorString += t('An icon needs to be selected for the view.') + ' '
       }
     })
     this.setState({ error: errorString })
@@ -190,8 +190,8 @@ class CustomViewsTab extends Component {
     return (
       <div styleName='general.groupSettings'>
         <SettingsSection>
-          <h3>{this.props.t('Custom Views')}</h3>
-          <div styleName='styles.help-text'>{this.props.t('Add custom links or filtered post views to your group\'s navigation')}</div>
+          <h3>{t('Custom Views')}</h3>
+          <div styleName='styles.help-text'>{t('Add custom links or filtered post views to your group\'s navigation')}</div>
           {customViews.map((cv, i) => (
             <CustomViewRow
               addPostToCollection={addPostToCollection}
@@ -206,7 +206,7 @@ class CustomViewsTab extends Component {
             />
           ))}
           <div styleName='styles.add-custom-view' onClick={this.addCustomView}>
-            <h4>{this.props.t('Create new custom view')}</h4>
+            <h4>{t('Create new custom view')}</h4>
             <Icon name='Circle-Plus' styleName='styles.new-custom-view' />
           </div>
         </SettingsSection>
@@ -215,7 +215,7 @@ class CustomViewsTab extends Component {
 
         <div styleName='general.saveChanges'>
           <span styleName={this.saveButtonContent().style}>{this.saveButtonContent().text}</span>
-          <Button label={this.props.t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
+          <Button label={t('Save Changes')} color={this.saveButtonContent().color} onClick={changed && !error ? this.save : null} className='save-button' styleName='general.save-button' />
         </div>
       </div>
     )

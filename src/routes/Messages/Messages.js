@@ -177,8 +177,8 @@ class Messages extends React.Component {
           <div styleName='messages-title'>
             <Icon name='Messages' />
             { !forNewThread
-              ? <h3>{this.props.t('Messages')}</h3>
-              : <h3>{this.props.t('New Message')}</h3>
+              ? <h3>{t('Messages')}</h3>
+              : <h3>{t('New Message')}</h3>
             }
           </div>
         </div>
@@ -215,7 +215,7 @@ class Messages extends React.Component {
                             </Link>
                             <div styleName='messages-title'>
                               <Icon name='Messages' />
-                              <h3>{this.props.t('New Message')}</h3>
+                              <h3>{t('New Message')}</h3>
                             </div>
                           </div>
                           <PeopleSelector

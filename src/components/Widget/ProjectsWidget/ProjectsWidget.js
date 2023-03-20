@@ -37,10 +37,10 @@ class ProjectsWidget extends Component {
           <div styleName='project'>
             <div styleName='meta'>
               <div>
-                <div styleName='title'>{this.props.t('What are you doing together?')}</div>
-                <div styleName='last-activity'>{this.props.t('Projects help you and your group accomplish shared goals.')}</div>
+                <div styleName='title'>{t('What are you doing together?')}</div>
+                <div styleName='last-activity'>{t('Projects help you and your group accomplish shared goals.')}</div>
               </div>
-              <div styleName='create-project-cta'>{this.props.t('+ New project')}</div>
+              <div styleName='create-project-cta'>{t('+ New project')}</div>
             </div>
           </div>
         </Link> : '' }

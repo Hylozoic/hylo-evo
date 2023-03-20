@@ -49,7 +49,7 @@ class CreateGroup extends Component {
 
   componentDidUpdate (oldProps) {
     if (oldProps.groupSlugExists !== this.props.groupSlugExists) {
-      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? this.props.t('This URL already exists. Try another.') : false } })
+      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? t('This URL already exists. Try another.') : false } })
     }
   }
 
@@ -64,9 +64,9 @@ class CreateGroup extends Component {
 
   validateSlug (val) {
     if (val === '') {
-      return this.props.t('Please enter a URL slug')
+      return t('Please enter a URL slug')
     } else if (!slugValidatorRegex.test(val)) {
-      return this.props.t('URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.')
+      return t('URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.')
     } else {
       this.props.fetchGroupExists(val)
       return false
@@ -83,7 +83,7 @@ class CreateGroup extends Component {
     }
 
     if (field === 'name') {
-      updates.errors.name = newValue === '' ? this.props.t('Please enter a group name') : false
+      updates.errors.name = newValue === '' ? t('Please enter a group name') : false
       updates.characterCount = newValue.length
     }
 
@@ -114,7 +114,7 @@ class CreateGroup extends Component {
           if (error) {
             // `state.error` doesn't appear to be displayed anywhere
             this.setState({
-              error: this.props.t('There was an error, please try again.')
+              error: t('There was an error, please try again.')
             })
           } else {
             this.props.goToGroup(slug)
@@ -125,7 +125,7 @@ class CreateGroup extends Component {
 
   render () {
     const { goBack, match, parentGroupOptions, t } = this.props
-    const { accessibility, nameCharacterCount, edited, errors, name, parentGroups, purposeCharacterCount, slug, visibility } = this.state
+    const { accessibility, characterCount, edited, errors, name, parentGroups, slug, visibility } = this.state
 
     if (!match) return null
 
@@ -133,7 +133,7 @@ class CreateGroup extends Component {
       <div styleName='wrapper'>
         <div styleName='header'>
           <button onClick={goBack}><Icon name='Back' styleName='backIcon' /></button>
-          <span styleName='headerHeadline'>{this.props.t('Create Group')}</span>
+          <span styleName='headerHeadline'>{t('Create Group')}</span>
         </div>
         <div styleName='nameAndSlug'>
           <TextInput
@@ -143,7 +143,7 @@ class CreateGroup extends Component {
             onChange={this.updateField('name')}
             value={name}
             theme={{ inputStyle: 'modal-input', wrapperStyle: 'center' }}
-            placeholder={this.props.t('Your group\'s name')}
+            placeholder={t('Your group\'s name')}
             noClearButton
             maxLength='60'
             onEnter={this.onSubmit}
@@ -181,7 +181,7 @@ class CreateGroup extends Component {
                   <div styleName='dropdownItemSelected'>
                     <Icon name={visibilityIcon(visibility)} styleName='selectedIcon' />
                     <div>
-                      <div styleName='dropdownDescription'>{this.props.t('WHO CAN SEE THIS GROUP?')}</div>
+                      <div styleName='dropdownDescription'>{t('WHO CAN SEE THIS GROUP?')}</div>
                       <div styleName='selectedString'>
                         <b>{t(visibilityString(visibility))}</b>
                         <span>{t(visibilityDescription(visibility))}</span>
@@ -214,7 +214,7 @@ class CreateGroup extends Component {
                   <div styleName='dropdownItemSelected'>
                     <Icon name={accessibilityIcon(accessibility)} styleName='selectedIcon' />
                     <div>
-                      <div styleName='dropdownDescription'>{this.props.t('WHO CAN JOIN THIS GROUP?')}</div>
+                      <div styleName='dropdownDescription'>{t('WHO CAN JOIN THIS GROUP?')}</div>
                       <div styleName='selectedString'>
                         <b>{t(accessibilityString(accessibility))}</b>
                         <span>{t(accessibilityDescription(accessibility))}</span>
@@ -247,7 +247,7 @@ class CreateGroup extends Component {
             <TextInput
               type='text'
               name='memberInvites'
-              placeholder={this.props.t('Enter names & email addresses')}
+              placeholder={t('Enter names & email addresses')}
             />
           </div>
         </div> */}
@@ -271,10 +271,10 @@ class CreateGroup extends Component {
         {parentGroupOptions && parentGroupOptions.length > 0 && (
           <div styleName='parentGroups'>
             <div styleName='parentSelector'>
-              <span styleName='title'>{this.props.t('IS THIS GROUP A MEMBER OF OTHER GROUPS?')}</span>
+              <span styleName='title'>{t('IS THIS GROUP A MEMBER OF OTHER GROUPS?')}</span>
               <div styleName='parentGroupInfo'>
                 ?
-                <div styleName='parentGroupTooltip'>{this.props.t('You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it')}</div>
+                <div styleName='parentGroupTooltip'>{t('You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it')}</div>
               </div>
               {/* TODO: somehow show groups that are restricted and will be a join request differently */}
               <GroupsSelector
@@ -297,7 +297,7 @@ class CreateGroup extends Component {
             onClick={this.onSubmit}
             styleName='submit-button'
           >
-            <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />{this.props.t('Create Group')}
+            <Icon name='Plus' green={edited && this.isValid()} styleName='create-group-icon' />{t('Create Group')}
           </Button>
         </div>
       </div>

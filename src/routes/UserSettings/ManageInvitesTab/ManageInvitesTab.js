@@ -44,14 +44,14 @@ class ManageInvitesTab extends Component {
 
     return (
       <div styleName='container'>
-        <h1 styleName='title'>{this.props.t('Group Invitations &amp; Join Requests')}</h1>
+        <h1 styleName='title'>{t('Group Invitations & Join Requests')}</h1>
 
         <div styleName='description'>
-          {this.props.t('This list contains all open requests and invitations to join groups.')}
-          {this.props.t('To view all groups you are a part of go to your')}<Link to={currentUserSettingsUrl('groups')}>{this.props.t('Affiliations')}</Link>.
+          {t('This list contains all open requests and invitations to join groups.')}
+          {t('To view all groups you are a part of go to your')}<Link to={currentUserSettingsUrl('groups')}>{t('Affiliations')}</Link>.
         </div>
 
-        <h2 styleName='subhead'>{this.props.t('Invitations to Join New Groups')}</h2>
+        <h2 styleName='subhead'>{t('Invitations to Join New Groups')}</h2>
         <div styleName='requestList'>
           {pendingGroupInvites.map(invite =>
             <GroupInvite
@@ -63,7 +63,7 @@ class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>{this.props.t('Your Open Requests to Join Groups')}</h2>
+        <h2 styleName='subhead'>{t('Your Open Requests to Join Groups')}</h2>
         <div styleName='requestList'>
           {pendingJoinRequests.map((jr) =>
             <JoinRequest
@@ -74,7 +74,7 @@ class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>{this.props.t('Declined Invitations &amp; Requests')}</h2>
+        <h2 styleName='subhead'>{t('Declined Invitations & Requests')}</h2>
         <div styleName='requestList'>
           {rejectedJoinRequests.map((jr) =>
             <JoinRequest
