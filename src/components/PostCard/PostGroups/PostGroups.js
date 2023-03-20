@@ -25,7 +25,7 @@ class PostGroups extends Component {
   }
 
   render () {
-    const { groups, constrained, slug, showBottomBorder } = this.props
+    const { groups, constrained, slug, showBottomBorder, t } = this.props
     const { expanded } = this.state
 
     // don't show if there are no groups or this isn't cross posted
@@ -35,7 +35,7 @@ class PostGroups extends Component {
       <div styleName='row'>
         <span styleName='label'>{`${this.props.t('Posted In:')} `}</span>
         {!expanded &&
-          <LinkedGroupNameList groups={groups} maxShown={2} expandFunc={this.toggleExpanded} />}
+          <LinkedGroupNameList t={t} groups={groups} maxShown={2} expandFunc={this.toggleExpanded} />}
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='expandIcon' /></a>
       </div>
 
@@ -44,7 +44,7 @@ class PostGroups extends Component {
   }
 }
 
-export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc }) {
+export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc, t }) {
   const groupsToDisplay = (maxShown && maxShown <= groups.length)
     ? groups.slice(0, maxShown)
     : groups
@@ -53,7 +53,7 @@ export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc }) {
   return <span styleName='groupList'>
     {groupsToDisplay.map((group, i) =>
       <LinkedGroupName group={group} key={i}>
-        <Separator currentIndex={i} displayCount={groupsToDisplay.length} othersCount={othersCount} />
+        <Separator currentIndex={i} displayCount={groupsToDisplay.length} t={t} othersCount={othersCount} />
       </LinkedGroupName>)}
     {othersCount > 0 &&
       <Others othersCount={othersCount} expandFunc={expandFunc} />}
@@ -67,13 +67,13 @@ export function LinkedGroupName ({ group, children }) {
   </span>
 }
 
-export function Separator ({ currentIndex, displayCount, othersCount }) {
+export function Separator ({ currentIndex, displayCount, othersCount, t }) {
   const isLastEntry = currentIndex === displayCount - 1
   const isNextToLastEntry = currentIndex === Math.max(0, displayCount - 2)
   const hasOthers = othersCount > 0
 
   if (isLastEntry) return null
-  if (!hasOthers && isNextToLastEntry) return <span key='and'> {this.props.t('and')} </span>
+  if (!hasOthers && isNextToLastEntry) return <span key='and'> {t('and')} </span>
 
   return <span>, </span>
 }

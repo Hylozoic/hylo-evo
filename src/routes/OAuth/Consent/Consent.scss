@@ -19,6 +19,10 @@
   padding: 30px;
 }
 
+.previousAuth {
+  text-align: center;
+}
+
 .title {
   composes: hdr-headline from 'css/typography.scss';
   color: $color-caribbean-green;
@@ -76,7 +80,6 @@
 @keyframes onAutoFillCancel {
     from {/**/}  to {/**/}
 }
-
 
 .submit {
   margin-left: 20px;

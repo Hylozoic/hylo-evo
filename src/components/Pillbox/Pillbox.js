@@ -122,7 +122,7 @@ class Pillbox extends Component {
             ref={this.input}
             type='text'
             styleName='styles.search'
-            maxLength='21'
+            maxLength='30'
             placeholder={placeholder}
             spellCheck={false}
             onChange={event => this.handleChange(event.target.value)}
@@ -131,6 +131,7 @@ class Pillbox extends Component {
         </div>
         {!isEmpty(suggestions) &&
         <KeyControlledItemList
+          spaceChooses={false}
           items={suggestions}
           theme={{
             items: styles.suggestions,

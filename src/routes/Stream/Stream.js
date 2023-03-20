@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import StreamBanner from 'components/StreamBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
@@ -12,6 +13,7 @@ import PostBigGridItem from 'components/PostBigGridItem'
 import ScrollListener from 'components/ScrollListener'
 import ViewControls from 'components/StreamViewControls'
 import TopicFeedHeader from 'components/TopicFeedHeader'
+import { CONTEXT_MY } from 'store/constants'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 import './Stream.scss'
 
@@ -55,6 +57,7 @@ export default class Stream extends Component {
 
     if (hasChanged('postTypeFilter') ||
       hasChanged('sortBy') ||
+      hasChanged('childPostInclusion') ||
       hasChanged('context') ||
       hasChanged('group.id') ||
       hasChanged('search') ||
@@ -78,10 +81,12 @@ export default class Stream extends Component {
   render () {
     const {
       customActivePostsOnly,
+      changeChildPostInclusion,
       changeSearch,
       changeSort,
       changeTab,
       changeView,
+      childPostInclusion,
       context,
       currentUser,
       currentUserHasMemberships,
@@ -117,6 +122,10 @@ export default class Stream extends Component {
 
     return (
       <>
+        <Helmet>
+          <title>{group ? `${group.name} | ` : ''}Hylo</title>
+          <meta name='description' content={group ? `Posts from ${group.name}. ${group.description}` : 'Group Not Found'} />
+        </Helmet>
         {topicName
           ? (
             <TopicFeedHeader
@@ -156,12 +165,14 @@ export default class Stream extends Component {
         <ViewControls
           routeParams={routeParams} view={view} customPostTypes={customPostTypes} customViewType={customViewType}
           postTypeFilter={postTypeFilter} sortBy={sortBy} viewMode={viewMode} searchValue={search}
-          changeTab={changeTab} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
+          changeTab={changeTab} context={context} changeSort={changeSort} changeView={changeView} changeSearch={changeSearch}
+          changeChildPostInclusion={changeChildPostInclusion} childPostInclusion={childPostInclusion}
         />
         <div styleName={cx('stream-items', { 'stream-grid': viewMode === 'grid', 'big-grid': viewMode === 'bigGrid' })}>
           {!pending && posts.length === 0 ? <NoPosts /> : ''}
           {posts.map(post => {
             const expanded = selectedPostId === post.id
+            const groupSlugs = post.groups.map(group => group.slug)
             return (
               <ViewComponent
                 styleName={cx({ 'card-item': viewMode === 'cards', expanded })}
@@ -169,8 +180,10 @@ export default class Stream extends Component {
                 routeParams={routeParams}
                 post={post}
                 key={post.id}
+                currentUser={currentUser}
                 respondToEvent={respondToEvent}
                 querystringParams={querystringParams}
+                childPost={![CONTEXT_MY, 'all', 'public'].includes(context) && !groupSlugs.includes(groupSlug)}
               />
             )
           })}

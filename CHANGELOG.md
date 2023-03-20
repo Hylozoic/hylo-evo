@@ -4,6 +4,118 @@ All notable changes to Hylo Evo (the Hylo front-end) will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+## [5.4.0] - 2023-03-15
+
+### Added
+- New group Roles and Badges! Admins can add roles/badges which are an emoji and a name, and then attach them to group members. These appear next to the member's name everywhere in the group.
+
+### Changed
+- Stop showing group topic pills in group explorer for now
+- Hide childPost toggle when appropriate, in mapExplorer
+
+### Fixed
+- Posts with images have link to the first image covering the whole post, so you can't click on links in the post
+- When not logged in and viewing a /groups/* page either show the public groups page for public groups, or redirect to login, instead of redirecting to the public map
+- When redirecting to /login for non public group or post make sure to include correct returnToUrl
+
+## [5.3.5] - 2023-03-04
+
+### Added
+- New product categories for farms: grains, other_row_crops
+
+### Changed
+- Small styling tweaks to notifications, selected comments, and post details
+
+## [5.3.4] - 2023-02-15
+
+### Added
+- New Mixpanel events to track full Signup funnel, Event RSVPs and Post opens
+- Track the group(s) associated with every user and every event in Mixpanel. This paves the way for group admins to have access to group analytics through Mixpanel
+
+## [5.3.3] - 2023-02-14
+
+### Fixed
+- Double chat creation when enter is hit twice quickly
+- Editing a chat post would cause it to disappear
+
+## [5.3.2] - 2023-02-08
+
+### Changed
+- Allow for Skills & Interests with spaces and up to 30 characters
+
+### Fixed
+- Bug viewing direct messages when there's one from a deleted user
+- Don't show location twice on event cards
+
+## [5.3.1] - 2023-02-03
+
+### Changed
+- More improvements to <title> tags for various pages in Hylo
+- Post cards appear with a max width in chat rooms so they dont take up the whole screen
+
+## [5.3.0] - 2023-01-30
+
+### Added
+- Support for oAuth Authorization Code flow!
+ - Skip login screen for already logged in users, but still get new auth code from the server.
+ - If prompt = consent always show the Consent screen even when already have given consent previously.
+ - Display previous auth message if person has previously authed with Hylo
+ - Display when an app is asking for offline_access
+
+## [5.2.0] - 2023-01-20
+
+### Added
+- My Home context with 4 new views: __My Posts__ to see all posts you created, __Interactions__ to see all posts you have commented on or reacted to, __Mentions__ to see all posts you have been mentioned in, and __Announcements__ to see all announcements made in all groups you are a member of.
+- A toggle to turn on or off the aggregated display of posts from child groups, that you are a member of, in the stream of the parent group
+- Visual display to indicate which posts appearing in the stream are being aggregated from child groups (that you are a member of)
+- Link to our Open Collective called Contribute to Hylo added to top nav menu
+
+### Changed
+- Mentions of the current logged in user now display as a different (yellow/orange) color than other mentions
+- Update farm product categories ontology list to include "Other"
+- Improved styling and user experience for notifications settings page
+
+### Fixed
+- Display of public map for non logged in users
+- As a non-logged in person, navigating to a link for a public post that includes the group context now correctly displays the post
+
+## [5.1.2] - 2022-12-29
+
+### Changed
+- Prevent changing user name to blank in the user settings
+
+### Fixed
+- Infinite attempts to load more comments when viewing a post
+- Inability to scroll down in navigation drawer when a post is open
+
+## [5.1.1]
+
+### Added
+- First pass at more descriptive meta tags for various Hylo pages. New page titles will appear in browser tabs, search engines and link previews in other platforms.
+
+### Changed
+- Clicking on a "new post in #topic" notification takes you to the topic room
+- Don't allow for showing chat posts in custom views
+
+### Fixed
+- Minor fixes to comment interface
+- Don't show Chat as a post type option in create post modal
+- Don't add new chat posts to the Stream
+
+## [5.1.0]
+
+### Added
+- Topic streams are now Slack like chat rooms! You can do quick posts without a title, and scrolling happens from the bottom up, and it tracks the last post you read and takes you to that location when you come back.
+- Emoji reactions on comments
+- Clicking on a comment notification takes you to that comment in the post and highlights it
+- Public group pages can now be viewed by non-logged-in users
+
+### Changed
+- Emoji reactions replace votes on posts
+- Show custom create post prompt when filtering stream by Resource
+
 ## [5.0.6]
 
 ### Changed

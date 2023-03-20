@@ -18,7 +18,10 @@ describe('Comments', () => {
       comments: [{ id: 1, parentComment: null }, { id: 2, parentComment: null }, { id: 3, parentComment: null }],
       total: 9,
       hasMore: true,
-      postId: '91',
+      post: {
+        id: '91',
+        groups: [{ id: '100' }]
+      },
       slug: 'foo'
     }
     const wrapper = shallow(<Comments {...props} />, { disableLifecycleMethods: true })

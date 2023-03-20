@@ -672,7 +672,7 @@ exports[`NotificationHeader renders correctly with a comment notification 1`] = 
 <div
   data-stylename="header"
 >
-  New Comment on &lt;span styleName='bold'&gt;{{post.title}}&lt;/span&gt;
+  New Comment on &lt;span styleName='bold'&gt;{{postSummary}}&lt;/span&gt;
 </div>
 `;
 

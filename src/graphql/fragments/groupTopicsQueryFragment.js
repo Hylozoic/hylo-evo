@@ -14,6 +14,7 @@ export default
     followersTotal
     isDefault
     isSubscribed
+    lastReadPostId
     newPostCount
     postsTotal
     visibility

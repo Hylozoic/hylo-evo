@@ -1,7 +1,7 @@
 import { attr, fk, Model } from 'redux-orm'
-import { get } from 'lodash/fp'
+import { find, get } from 'lodash/fp'
 import {
-  commentUrl,
+  postCommentUrl,
   postUrl,
   groupUrl
 } from 'util/navigation'
@@ -21,7 +21,7 @@ export const ACTION_MENTION = 'mention'
 export const ACTION_NEW_COMMENT = 'newComment'
 export const ACTION_TAG = 'tag'
 
-export function urlForNotification ({ activity: { action, post, comment, group, otherGroup } }) {
+export function urlForNotification ({ activity: { action, post, comment, group, meta: { reasons }, otherGroup } }) {
   const groupSlug = get('slug', group) ||
     // 2020-06-03 - LEJ
     // Some notifications (i.e. new comment and comment mention)
@@ -39,7 +39,7 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
     case ACTION_APPROVED_JOIN_REQUEST:
       return groupUrl(groupSlug)
     case ACTION_COMMENT_MENTION:
-      return commentUrl(post.id, comment.id, { groupSlug })
+      return postCommentUrl({ postId: post.id, commentId: comment.id, groupSlug })
     case ACTION_EVENT_INVITATION:
       return postUrl(post.id, { groupSlug })
     case ACTION_GROUP_CHILD_GROUP_INVITE:
@@ -55,9 +55,11 @@ export function urlForNotification ({ activity: { action, post, comment, group, 
     case ACTION_MENTION:
       return postUrl(post.id, { groupSlug })
     case ACTION_NEW_COMMENT:
-      return commentUrl(post.id, comment.id, { groupSlug })
+      return postCommentUrl({ postId: post.id, commentId: comment.id, groupSlug })
     case ACTION_TAG:
-      return postUrl(post.id, { groupSlug })
+      const tagReason = find(r => r.startsWith('tag: '), reasons)
+      const topicName = tagReason.split(': ')[1]
+      return postUrl(post.id, { groupSlug, topicName })
   }
 }
 

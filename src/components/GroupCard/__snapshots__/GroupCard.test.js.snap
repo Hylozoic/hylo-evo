@@ -45,34 +45,6 @@ exports[`matches last snapshot 1`] = `
         />
       </ClickCatcher>
     </div>
-    <div
-      data-stylename="group-tags"
-    >
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="0"
-        label="Life"
-      />
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="1"
-        label="Love"
-      />
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="2"
-        label="Light"
-      />
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="3"
-        label="Lols"
-      />
-    </div>
   </div>
 </Link>
 `;
@@ -121,34 +93,6 @@ exports[`matches last snapshot with different config 1`] = `
 "
         />
       </ClickCatcher>
-    </div>
-    <div
-      data-stylename="group-tags"
-    >
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="0"
-        label="Life"
-      />
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="1"
-        label="Love"
-      />
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="2"
-        label="Light"
-      />
-      <Pill
-        darkText={true}
-        data-stylename="tag-pill"
-        key="3"
-        label="Lols"
-      />
     </div>
   </div>
 </Link>

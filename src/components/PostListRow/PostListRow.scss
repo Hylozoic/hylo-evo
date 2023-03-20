@@ -14,27 +14,91 @@ div .post-row:nth-child(1) {
   border-radius: 5px 5px 0 0;
 }
 
+.icon-container {
+  background: $color-white;
+  box-shadow: 0px 4px 4px rgba(47, 63, 87, 0.2);
+  border-radius: 5px;
+  padding: 2px;
+  height: 24px;
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+.icon {
+  font-size: 12px;
+  position: relative;
+  padding: 2px;
+}
+
+.reactions {
+  padding: 0;
+
+  &> div > div {
+    padding-bottom: 0px;
+
+    &> div:last-child {
+      display: none;
+    }
+  }
+}
+
 .type-author {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 
   .post-type {
     border-radius: 3px;
-    padding: 2px 4px;
+    padding: 2px 4px 0px 4px;
     font-size: 8px;
     text-transform: uppercase;
     margin-right: 5px;
-    margin-top: 1px;
+
+    span {
+      font-size: 14px;
+    }
+
+    &.chat span {
+      color: $color-chats;
+    }
+
+    &.discussion span{
+      color: $color-discussions;
+    }
+
+    &.event span {
+      color: $color-events;
+    }
+
+    &.offer span {
+      color: $color-offers;
+    }
+
+    &.resource span {
+      color: rgba(224, 184, 25, 1);;
+    }
+
+    &.project span {
+      color: $color-projects;
+    }
+
+    &.request span {
+      color: $color-requests;
+    }
   }
 
-  .post-type.event {
-    border: 1px solid rgba(237, 86, 83, .25);
-    color: rgba(237, 86, 83, 1);
+  .post-type.chat {
+    border: 1px solid rgba(58, 160, 223, .25);
+    color: rgba(58, 160, 223, 1);
   }
 
   .post-type.discussion {
     border: 1px solid rgba(58, 160, 223, .25);
     color: rgba(58, 160, 223, 1);
+  }
+
+  .post-type.event {
+    border: 1px solid rgba(237, 86, 83, .25);
+    color: rgba(237, 86, 83, 1);
   }
 
   .post-type.offer {
@@ -44,7 +108,7 @@ div .post-row:nth-child(1) {
 
   .post-type.resource {
     border: 1px solid rgba(254, 214, 55, .25);
-    color: rgba(254, 214, 55, 1);
+    color: rgba(224, 184, 25, 1);
   }
 
   .post-type.project {
@@ -68,28 +132,13 @@ div .post-row:nth-child(1) {
   overflow: hidden;
 }
 
-.votes {
-  flex: 0 0 50px;
-  padding-right: 14px;
-  text-align: center;
-  color: $color-caribbean-green;
-  font-weight: bold;
-
-  a {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
 .participants, .details, .timestamp, .topics {
   font-size: 12px;
 }
 
 .topics {
     display: block;
-    margin-bottom: -3px;
+    margin-bottom: 0px;
     font-size: 12px;
     opacity: .5;
 }
@@ -127,14 +176,20 @@ div .post-row:nth-child(1) {
 
 .details {
   color: $color-regent;
-  height: 1.5em;
   width: 100%;
+  max-height: 18px;
+  overflow: hidden;
+  margin-bottom: 4px;
 }
 
 .title, .details p {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.details p:last-child {
+  margin-bottom:0;
 }
 
 .vote-button {
@@ -171,6 +226,9 @@ div .post-row:nth-child(1) {
 
 .timestamp {
   color: $color-grey-keyline;
+}
+
+.push-to-right {
   margin-left: auto;
 }
 

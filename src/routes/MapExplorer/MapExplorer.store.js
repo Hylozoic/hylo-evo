@@ -9,6 +9,7 @@ import { POST_TYPES } from 'store/models/Post'
 import groupViewPostsQueryFragment from 'graphql/fragments/groupViewPostsQueryFragment'
 import postsQueryFragment from 'graphql/fragments/postsQueryFragment'
 import { makeGetQueryResults, makeQueryResultsModelSelector } from 'store/reducers/queryResults'
+import { STREAM_SORT_OPTIONS } from 'util/constants'
 
 export const MODULE_NAME = 'MapExplorer'
 export const FETCH_GROUPS_MAP = `${MODULE_NAME}/FETCH_GROUPS_MAP`
@@ -17,12 +18,6 @@ export const FETCH_POSTS_MAP = `${MODULE_NAME}/FETCH_POSTS_MAP`
 export const FETCH_POSTS_MAP_DRAWER = `${MODULE_NAME}/FETCH_POSTS_MAP_DRAWER`
 export const STORE_CLIENT_FILTER_PARAMS = `${MODULE_NAME}/STORE_CLIENT_FILTER_PARAMS`
 export const UPDATE_STATE = `${MODULE_NAME}/UPDATE_STATE`
-
-export const SORT_OPTIONS = [
-  { id: 'updated', label: 'Latest Activity' },
-  { id: 'created', label: 'Post Date' },
-  { id: 'votes', label: 'Popular' }
-]
 
 export const FEATURE_TYPES = {
   ...POST_TYPES,
@@ -48,6 +43,7 @@ const groupPostsQuery = (postsFragment) => `query (
   $beforeTime: Date,
   $boundingBox: [PointInput]
   $collectionToFilterOut: ID,
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
@@ -75,15 +71,20 @@ const groupPostsQuery = (postsFragment) => `query (
 const postsQuery = (postsFragment) => `query (
   $activePostsOnly: Boolean,
   $afterTime: Date,
+  $announcementsOnly: Boolean,
   $beforeTime: Date,
   $boundingBox: [PointInput],
   $collectionToFilterOut: ID,
   $context: String,
+  $createdBy: [ID],
+  $cursor: ID,
   $filter: String,
   $first: Int,
   $forCollection: ID,
   $groupSlugs: [String]
   $isFulfilled: Boolean,
+  $interactedWithBy: [ID],
+  $mentionsOf: [ID]
   $offset: Int,
   $order: String,
   $search: String,
@@ -102,11 +103,21 @@ const membersFragment = `
       name
       avatarUrl
       tagline
+      groupRoles {
+        id
+        name
+        emoji
+        active
+        groupId
+      }
       locationObject {
         center {
           lat
           lng
         }
+      }
+      moderatedGroupMemberships {
+        groupId
       }
       skills {
         hasMore
@@ -184,16 +195,17 @@ const groupsQuery = `query (
 }`
 
 // actions
-export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
+export function fetchPostsForMap ({ activePostsOnly, childPostInclusion = 'yes', context, slug, sortBy, search, filter, topics, boundingBox, groupSlugs, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(`posts: viewPosts(
+    query = groupPostsQuery(`${childPostInclusion === 'yes' ? 'posts: viewPosts(' : 'posts('}
       activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
@@ -233,15 +245,20 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
     query = postsQuery(`posts(
       activePostsOnly: $activePostsOnly,
       afterTime: $afterTime,
+      announcementsOnly: $announcementsOnly,
       beforeTime: $beforeTime,
       boundingBox: $boundingBox,
       collectionToFilterOut: $collectionToFilterOut,
       context: $context,
+      createdBy: $createdBy,
+      cursor: $cursor,
       filter: $filter,
       first: $first,
       forCollection: $forCollection,
       groupSlugs: $groupSlugs,
       isFulfilled: $isFulfilled,
+      interactedWithBy: $interactedWithBy,
+      mentionsOf: $mentionsOf
       offset: $offset,
       order: $order,
       sortBy: $sortBy,
@@ -284,6 +301,7 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
       variables: {
         activePostsOnly,
         boundingBox: formatBoundingBox(boundingBox),
+        childPostInclusion,
         context,
         filter,
         first: 500,
@@ -305,11 +323,11 @@ export function fetchPostsForMap ({ activePostsOnly, context, slug, sortBy, sear
   }
 }
 
-export function fetchPostsForDrawer ({ activePostsOnly, context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
+export function fetchPostsForDrawer ({ activePostsOnly, childPostInclusion = 'yes', context, currentBoundingBox, filter, groupSlugs, offset = 0, replace, slug, sortBy, search, topics, types }) {
   var query, extractModel, getItems
 
   if (context === 'groups') {
-    query = groupPostsQuery(groupViewPostsQueryFragment)
+    query = groupPostsQuery(groupViewPostsQueryFragment(childPostInclusion === 'yes'))
     extractModel = 'Group'
     getItems = get('payload.data.group.posts')
   } else if (context === 'all' || context === 'public') {
@@ -327,6 +345,7 @@ export function fetchPostsForDrawer ({ activePostsOnly, context, currentBounding
       variables: {
         activePostsOnly,
         boundingBox: formatBoundingBox(currentBoundingBox),
+        childPostInclusion,
         context,
         filter,
         first: 10,
@@ -518,7 +537,7 @@ export const getSortedFilteredPostsForDrawer = createSelector(
   getFilteredPostsForDrawer,
   sortBySelector,
   (posts, sortBy) => {
-    return posts.sort((a, b) => sortBy === 'votes' ? b.votesTotal - a.votesTotal
+    return posts.sort((a, b) => sortBy === 'votes' ? b.peopleReactedTotal - a.peopleReactedTotal
       : sortBy === 'updated' ? new Date(b.updatedAt) - new Date(a.updatedAt)
         : new Date(b.createdAt) - new Date(a.createdAt))
   }
@@ -628,7 +647,7 @@ const DEFAULT_STATE = {
     currentBoundingBox: null,
     featureTypes: Object.keys(FEATURE_TYPES).filter(t => FEATURE_TYPES[t].map).reduce((types, type) => { types[type] = true; return types }, {}),
     search: '',
-    sortBy: SORT_OPTIONS[0].id,
+    sortBy: STREAM_SORT_OPTIONS[0].id,
     topics: []
   },
   searches: []

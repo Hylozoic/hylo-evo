@@ -60,6 +60,22 @@
   padding: 10px;
 }
 
+.activeToggle {
+  background: $color-picton-blue;
+  color: $color-white;
+}
+
+.toggleIcon {
+  float: right;
+  position: relative;
+  top: -34px;
+  right: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 3px;
+
+}
+
 .topicButton {
   border: 1px solid #B6EDE2;
   color: $color-caribbean-green;

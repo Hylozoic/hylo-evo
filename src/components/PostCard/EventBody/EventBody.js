@@ -3,14 +3,15 @@ import { get, filter } from 'lodash/fp'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
-import Icon from 'components/Icon'
 import Button from 'components/Button'
+import EmojiRow from 'components/EmojiRow'
 import EventInviteDialog from 'components/EventInviteDialog'
 import EventDate from '../EventDate'
 import EventRSVP from '../EventRSVP'
+import Icon from 'components/Icon'
 import PostTitle from '../PostTitle'
 import PostDetails from '../PostDetails'
-import { PeopleInfo } from 'components/PostCard/PostFooter/PostFooter'
+import PeopleInfo from 'components/PostCard/PeopleInfo'
 import { RESPONSES } from 'store/models/EventInvitation'
 import '../PostBody/PostBody.scss'
 
@@ -22,7 +23,7 @@ class EventBody extends Component {
   toggleInviteDialog = () => this.setState({ showInviteDialog: !this.state.showInviteDialog })
 
   render () {
-    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, togglePeopleDialog } = this.props
+    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, onClick, togglePeopleDialog } = this.props
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations, groups } = event
 
@@ -35,7 +36,7 @@ class EventBody extends Component {
     return <div styleName={cx('body', 'eventBody', { smallMargin: !expanded, eventImage: attachmentType === 'image' }, { constrained })} className={className}>
 
       <div styleName='eventTop'>
-        <div styleName='calendarDate'>
+        <div styleName='calendarDate' onClick={onClick}>
           <EventDate {...event} />
         </div>
         {currentUser && <div styleName='eventResponseTop'>
@@ -47,20 +48,27 @@ class EventBody extends Component {
       </div>
 
       <div styleName={cx('eventBodyColumn', { constrained })}>
-        <PostTitle {...event} constrained={constrained} />
-        <div styleName={cx('eventData', { constrained })}>
+        <PostTitle {...event} constrained={constrained} onClick={onClick} />
+        <div styleName={cx('eventData', { constrained })} onClick={onClick}>
           <Icon name='Clock' styleName='icon' /> {TextHelpers.formatDatePair(startTime, endTime)}
         </div>
-        {!!location && <div styleName='eventData eventLocation'>
+        {!!location && <div styleName='eventData eventLocation' onClick={onClick}>
           <Icon name='Location' styleName='icon' /> {location}
         </div>}
         <div styleName={cx('eventDetails', { constrained })}>
-          <PostDetails {...event} slug={slug} hideDetails={!expanded} expanded={expanded} constrained={constrained} />
+          <PostDetails
+            {...event}
+            onClick={onClick}
+            constrained={constrained}
+            expanded={expanded}
+            hideDetails={!expanded}
+            slug={slug}
+          />
         </div>
       </div>
 
       <div styleName='eventAttendance'>
-        <div styleName='people'>
+        <div styleName='people' onClick={onClick}>
           <div styleName='fade' />
           <PeopleInfo
             people={eventAttendees}
@@ -82,8 +90,11 @@ class EventBody extends Component {
           </div>
           <Button label={this.props.t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
-
       </div>
+      <EmojiRow
+        post={event}
+        currentUser={currentUser}
+      />
       {showInviteDialog && <EventInviteDialog
         eventId={id}
         eventInvitations={eventInvitations}

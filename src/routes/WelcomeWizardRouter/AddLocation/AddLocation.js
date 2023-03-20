@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import { AnalyticsEvents } from 'hylo-shared'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import LocationInput from 'components/LocationInput'
@@ -47,7 +48,7 @@ class AddLocation extends Component {
 
     this.props.updateUserSettings(changes)
       .then(() => {
-        this.props.trackAnalyticsEvent('Signup Complete')
+        this.props.trackAnalyticsEvent(AnalyticsEvents.SIGNUP_COMPLETE)
         this.props.goToNextStep()
       })
   }

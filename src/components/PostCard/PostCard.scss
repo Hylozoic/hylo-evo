@@ -11,6 +11,40 @@
   border: 1px solid rgba(0, 118, 223, 0);
 }
 
+.child-post-label-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.child-post-label {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: $color-pickled-bluewood;
+  opacity: 0.6;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 8px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px 5px 0 0;
+  padding: 5px 8px;
+  border: 1px solid white;
+  position: relative;
+  z-index: 10;
+  bottom: -7px;
+  box-shadow: 0px -1px 5px 0px $color-black-30;
+}
+
+.icon {
+  line-height: 8px;
+  font-size: 14px;
+  margin-right: 6px;
+  font-weight: 500;
+}
+
 .constrained.card {
   border-top: 5px solid $color-cape-cod-10;
   padding-top: 10px;
@@ -18,15 +52,10 @@
 
 .bodyWrapper {
   position: relative;
+}
 
-  .trigger {
-    position: absolute;
-    z-index: 5;
-    top: 0;
-    left: 0;
-    height: calc(100% - 85px);
-    width: 100%;
-  }
+.chat {
+  z-index: 0;
 }
 
 .expanded,
@@ -34,6 +63,15 @@
   box-shadow: 0px 4px 6px 0px $color-black-10;
   border: 1px solid rgba(0, 118, 223, 0.5);
   border-top: 3px solid rgba(0, 118, 223, 0.5);
+}
+
+.constrained.chat {
+  color: $color-picton-blue;
+  border-top: 5px solid $color-chats-30;
+
+  &:hover {
+    border-top: 5px solid $color-chats;
+  }
 }
 
 .constrained.discussion {

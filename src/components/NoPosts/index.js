@@ -4,14 +4,14 @@ import './NoPosts.scss'
 
 import { jollyAxolotl } from 'util/assets'
 
-const NoPosts = () => {
+const NoPosts = ({ message = 'Nothing to see here', className }) => {
   const { t } = useTranslation()
-  const message = t('Nothing to see here')
+  const tMessage = t(message)
   return (
-    <div styleName='no-posts'>
+    <div styleName='no-posts' className={className}>
       <img src={jollyAxolotl} />
       <br />
-      <div><h2>{message}</h2></div>
+      <div><h2>{tMessage}</h2></div>
     </div>
   )
 }

@@ -6,7 +6,7 @@ import Icon from 'components/Icon'
 import './CreateModal.scss'
 import { useTranslation } from 'react-i18next'
 
-const postTypes = Object.keys(POST_TYPES)
+const postTypes = Object.keys(POST_TYPES).filter(t => t !== 'chat')
 
 export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)

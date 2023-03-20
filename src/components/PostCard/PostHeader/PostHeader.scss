@@ -42,7 +42,7 @@
 }
 
 .avatar {
-  margin-right: 10px;
+  margin-right: 8px;
 
   div {
     width: 30px;
@@ -285,4 +285,10 @@
   .label {
     margin-right: 5px;
   }
+}
+
+.badgeRow {
+  display: flex;
+  margin-left: 4px;
+  grid-gap: 2px;
 }

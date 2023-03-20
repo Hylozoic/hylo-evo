@@ -60,6 +60,7 @@ export default gql`
       commentNotifications
       mapBaseLayer
       signupInProgress
+      streamChildPosts
       streamViewMode
       streamSortBy
       streamPostType

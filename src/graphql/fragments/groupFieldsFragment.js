@@ -108,6 +108,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   groupTopics(first: 8) {
     items {
       id
+      lastReadPostId
       topic {
         id
         name

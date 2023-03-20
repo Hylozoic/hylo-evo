@@ -14,6 +14,7 @@ import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
 import { baseUrl, personUrl } from 'util/navigation'
 import './TopNav.scss'
+import { CONTEXT_MY } from 'store/constants'
 
 const MessagesDropdown = React.lazy(() => import('./MessagesDropdown'))
 const NotificationsDropdown = React.lazy(() => import('./NotificationsDropdown'))
@@ -24,7 +25,6 @@ export default function TopNav (props) {
     currentUser,
     group,
     isGroupMenuOpen,
-    isPublic,
     logout,
     onClick,
     routeParams,
@@ -35,6 +35,8 @@ export default function TopNav (props) {
   const topNav = useRef()
   const { show: showIntercom } = useIntercom()
   const profileUrl = personUrl(get('id', currentUser))
+  const isPublic = routeParams.context === 'public'
+  const isMyHome = routeParams.context === CONTEXT_MY
 
   const appStoreLinkClass = isMobileDevice() ? 'isMobileDevice' : 'isntMobileDevice'
   const { t } = useTranslation()
@@ -53,7 +55,7 @@ export default function TopNav (props) {
           id='currentContext'
         >
           <Logo {...{ group, isPublic }} />
-          <Title group={group} isPublic={isPublic} />
+          <Title group={group} isPublic={isPublic} isMyHome={isMyHome} />
         </Link>
         <div styleName='navIcons' id='personalSettings'>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
@@ -81,6 +83,8 @@ export default function TopNav (props) {
             <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
             <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
             <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
+            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>Contribute to Hylo</a></li>
+            {/* TODO: i18n */}
             <li><a onClick={logout}>{t('Log out')}</a></li>
           </Dropdown>
         </div>
@@ -107,13 +111,15 @@ function Logo ({ group, isPublic }) {
   )
 }
 
-function Title ({ group, isPublic, onClick }) {
-  let [label, name] = ['GLOBAL', 'All My Groups']
+function Title ({ group, isPublic, onClick, isMyHome }) {
+  let [label, name] = ['PERSONAL', 'All My Groups']
 
   if (group) {
     [label, name] = [group.typeDescriptor, group.name]
   } else if (isPublic) {
     [label, name] = ['GLOBAL', 'Public Groups & Posts']
+  } else if (isMyHome) {
+    [label, name] = ['PERSONAL', 'My Home'] // TODO: i18n changes
   }
 
   return (

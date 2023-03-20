@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import isWebView from 'util/webView'
+import Tooltip from 'components/Tooltip'
+
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import Dropdown from 'components/Dropdown'
 import { GroupCard } from 'components/Widget/GroupsWidget/GroupsWidget'
@@ -11,16 +13,20 @@ import Loading from 'components/Loading'
 import Member from 'components/Member'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
+import { CONTEXT_MY } from 'store/constants'
+import { STREAM_SORT_OPTIONS } from 'util/constants'
 
-import { SORT_OPTIONS } from '../MapExplorer.store'
 import styles from './MapDrawer.scss'
 
 function MapDrawer (props) {
-  let {
+  const {
+    changeChildPostInclusion,
+    childPostInclusion,
     context,
     currentUser,
     fetchPostsForDrawer,
     filters,
+    group,
     groups,
     locationParams,
     members,
@@ -62,6 +68,11 @@ function MapDrawer (props) {
   const tabs = { [localizedTabNames.posts]: numTotalPosts, [localizedTabNames.groups]: groups.length }
   if (context !== 'public') {
     tabs[localizedTabNames.members] = members.length
+  }
+
+  const handleChildPostInclusion = () => {
+    const updatedValue = childPostInclusion === 'yes' ? 'no' : 'yes'
+    changeChildPostInclusion(updatedValue)
   }
 
   return (
@@ -133,13 +144,32 @@ function MapDrawer (props) {
 
       {currentTab === localizedTabNames.posts ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
+
+          {![CONTEXT_MY, 'all', 'public'].includes(context) &&
+            <>
+              <span onClick={handleChildPostInclusion}
+                data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
+                data-for='childgroup-toggle-tt'
+              >
+                {/* TODO: i18n on tooltip */}
+                <Icon
+                  name='Subgroup'
+                  className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
+                />
+              </span>
+              <Tooltip
+                delay={250}
+                id='childgroup-toggle-tt'
+                position='bottom'
+              />
+            </>}
           <span>{t('Sort posts by:')}</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>
-              {SORT_OPTIONS.find(o => o.id === sortBy).label}
+              {STREAM_SORT_OPTIONS.find(o => o.id === sortBy).label}
               <Icon name='ArrowDown' className={styles.sorterIcon} />
             </span>}
-            items={SORT_OPTIONS.map(({ id, label }) => ({
+            items={STREAM_SORT_OPTIONS.map(({ id, label }) => ({
               label,
               onClick: () => onUpdateFilters({ sortBy: id })
             }))}
@@ -168,7 +198,7 @@ function MapDrawer (props) {
               className={cx({ [styles.contentCard]: true, [styles.member]: true })}
               member={m}
               key={m.id}
-              groupSlug={routeParams.groupSlug}
+              group={group}
               context={context}
             />)}
           </div>

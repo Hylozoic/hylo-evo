@@ -1,14 +1,181 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders as expected 1`] = `
-<div
-  data-stylename="card offer"
-  onClick={[Function]}
->
+<Fragment>
   <div
-    onClick={null}
+    data-stylename="card offer"
   >
-    <Connect(withI18nextTranslation(PostHeader))
+    <div
+      onClick={[Function]}
+    >
+      <Connect(withI18nextTranslation(PostHeader))
+        attachments={
+          Array [
+            Object {
+              "attachmentType": "image",
+              "url": "animage",
+            },
+          ]
+        }
+        commenters={
+          Array [
+            Object {
+              "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
+              "id": 98730,
+              "name": "Darnell Hudson",
+              "tagline": "Direct Research Consultant",
+            },
+            Object {
+              "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
+              "id": 66803,
+              "name": "Ms. Sylvia Beahan",
+              "tagline": "National Accounts Architect",
+            },
+            Object {
+              "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
+              "id": 81915,
+              "name": "Ms. Danny Krajcik",
+              "tagline": "Dynamic Response Specialist",
+            },
+          ]
+        }
+        commentersTotal={82690}
+        commentsTotal={76572}
+        context="Stop Wombat Walrus"
+        creator={
+          Object {
+            "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1031.jpg?76035",
+            "id": 94047,
+            "name": "Rachel Breitenberg",
+            "tagline": "Corporate Research Developer",
+          }
+        }
+        details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
+        groups={
+          Array [
+            Object {
+              "id": "1",
+              "name": "Great Cause",
+              "slug": "great",
+            },
+          ]
+        }
+        hasImage={false}
+        id="FAKE_29222"
+        peopleReactedTotal={11519}
+        routeParams={
+          Object {
+            "slug": "foom",
+          }
+        }
+        tags={
+          Array [
+            "activism",
+            "petition",
+          ]
+        }
+        title="We put this together as a PDF for hand-out at your next event or university class"
+        type="offer"
+        updatedAt="2014-01-17T00:00:00.000Z"
+      />
+    </div>
+    <div
+      onClick={[Function]}
+    >
+      <CardImageAttachments
+        attachments={
+          Array [
+            Object {
+              "attachmentType": "image",
+              "url": "animage",
+            },
+          ]
+        }
+      />
+    </div>
+    <div>
+      <PostBody
+        attachments={
+          Array [
+            Object {
+              "attachmentType": "image",
+              "url": "animage",
+            },
+          ]
+        }
+        commenters={
+          Array [
+            Object {
+              "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
+              "id": 98730,
+              "name": "Darnell Hudson",
+              "tagline": "Direct Research Consultant",
+            },
+            Object {
+              "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
+              "id": 66803,
+              "name": "Ms. Sylvia Beahan",
+              "tagline": "National Accounts Architect",
+            },
+            Object {
+              "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
+              "id": 81915,
+              "name": "Ms. Danny Krajcik",
+              "tagline": "Dynamic Response Specialist",
+            },
+          ]
+        }
+        commentersTotal={82690}
+        commentsTotal={76572}
+        context="Stop Wombat Walrus"
+        creator={
+          Object {
+            "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1031.jpg?76035",
+            "id": 94047,
+            "name": "Rachel Breitenberg",
+            "tagline": "Corporate Research Developer",
+          }
+        }
+        details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
+        groups={
+          Array [
+            Object {
+              "id": "1",
+              "name": "Great Cause",
+              "slug": "great",
+            },
+          ]
+        }
+        id="FAKE_29222"
+        onClick={[Function]}
+        peopleReactedTotal={11519}
+        tags={
+          Array [
+            "activism",
+            "petition",
+          ]
+        }
+        title="We put this together as a PDF for hand-out at your next event or university class"
+        type="offer"
+        updatedAt="2014-01-17T00:00:00.000Z"
+      />
+    </div>
+    <div
+      onClick={[Function]}
+    >
+      <Connect(withI18nextTranslation(PostGroups))
+        groups={
+          Array [
+            Object {
+              "id": "1",
+              "name": "Great Cause",
+              "slug": "great",
+            },
+          ]
+        }
+      />
+    </div>
+    <withI18nextTranslation(PostFooter)
       attachments={
         Array [
           Object {
@@ -39,14 +206,15 @@ exports[`renders as expected 1`] = `
           },
         ]
       }
-      commentersTotal={76572}
+      commentersTotal={82690}
+      commentsTotal={76572}
       context="Stop Wombat Walrus"
       creator={
         Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
-          "id": 82690,
-          "name": "Herman Crona",
-          "tagline": "Legacy Marketing Executive",
+          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1031.jpg?76035",
+          "id": 94047,
+          "name": "Rachel Breitenberg",
+          "tagline": "Corporate Research Developer",
         }
       }
       details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
@@ -59,13 +227,10 @@ exports[`renders as expected 1`] = `
           },
         ]
       }
-      hasImage={false}
       id="FAKE_29222"
-      routeParams={
-        Object {
-          "slug": "foom",
-        }
-      }
+      onClick={[Function]}
+      peopleReactedTotal={11519}
+      postId="FAKE_29222"
       tags={
         Array [
           "activism",
@@ -75,162 +240,7 @@ exports[`renders as expected 1`] = `
       title="We put this together as a PDF for hand-out at your next event or university class"
       type="offer"
       updatedAt="2014-01-17T00:00:00.000Z"
-      votesTotal={11519}
     />
   </div>
-  <div
-    onClick={null}
-  >
-    <CardImageAttachments
-      attachments={
-        Array [
-          Object {
-            "attachmentType": "image",
-            "url": "animage",
-          },
-        ]
-      }
-    />
-  </div>
-  <PostBody
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "animage",
-        },
-      ]
-    }
-    commenters={
-      Array [
-        Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
-          "id": 98730,
-          "name": "Darnell Hudson",
-          "tagline": "Direct Research Consultant",
-        },
-        Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
-          "id": 66803,
-          "name": "Ms. Sylvia Beahan",
-          "tagline": "National Accounts Architect",
-        },
-        Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
-          "id": 81915,
-          "name": "Ms. Danny Krajcik",
-          "tagline": "Dynamic Response Specialist",
-        },
-      ]
-    }
-    commentersTotal={76572}
-    context="Stop Wombat Walrus"
-    creator={
-      Object {
-        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
-        "id": 82690,
-        "name": "Herman Crona",
-        "tagline": "Legacy Marketing Executive",
-      }
-    }
-    details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
-    groups={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
-    id="FAKE_29222"
-    tags={
-      Array [
-        "activism",
-        "petition",
-      ]
-    }
-    title="We put this together as a PDF for hand-out at your next event or university class"
-    type="offer"
-    updatedAt="2014-01-17T00:00:00.000Z"
-    votesTotal={11519}
-  />
-  <Connect(withI18nextTranslation(PostGroups))
-    groups={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
-  />
-  <withI18nextTranslation(PostFooter)
-    attachments={
-      Array [
-        Object {
-          "attachmentType": "image",
-          "url": "animage",
-        },
-      ]
-    }
-    commenters={
-      Array [
-        Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1080.jpg?1184",
-          "id": 98730,
-          "name": "Darnell Hudson",
-          "tagline": "Direct Research Consultant",
-        },
-        Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/983.jpg?75497",
-          "id": 66803,
-          "name": "Ms. Sylvia Beahan",
-          "tagline": "National Accounts Architect",
-        },
-        Object {
-          "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg?72463",
-          "id": 81915,
-          "name": "Ms. Danny Krajcik",
-          "tagline": "Dynamic Response Specialist",
-        },
-      ]
-    }
-    commentersTotal={76572}
-    context="Stop Wombat Walrus"
-    creator={
-      Object {
-        "avatarUrl": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/134.jpg?82483",
-        "id": 82690,
-        "name": "Herman Crona",
-        "tagline": "Legacy Marketing Executive",
-      }
-    }
-    details="Feel free to print and distribute if you would like to suggest anything we have missed or better clarity, let us know!"
-    groups={
-      Array [
-        Object {
-          "id": "1",
-          "name": "Great Cause",
-          "slug": "great",
-        },
-      ]
-    }
-    id="FAKE_29222"
-    onClick={[Function]}
-    postId="FAKE_29222"
-    tags={
-      Array [
-        "activism",
-        "petition",
-      ]
-    }
-    title="We put this together as a PDF for hand-out at your next event or university class"
-    type="offer"
-    updatedAt="2014-01-17T00:00:00.000Z"
-    voteOnPost={[Function]}
-    votesTotal={11519}
-  />
-</div>
+</Fragment>
 `;

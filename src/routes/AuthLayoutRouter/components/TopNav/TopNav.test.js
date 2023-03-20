@@ -107,7 +107,7 @@ it('renders as expected with no group', async () => {
   )
 
   render(
-    <TopNav />,
+    <TopNav routeParams={{ context: 'all', view: 'stream' }} />,
     { wrapper: TestWrapper }
   )
 

@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import Moment from 'moment-timezone'
+
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
+import EmojiRow from 'components/EmojiRow'
 import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
@@ -17,11 +19,12 @@ const stopEvent = (e) => e.stopPropagation()
 
 const PostListRow = (props) => {
   const {
+    childPost,
     routeParams,
     post,
     showDetails,
-    voteOnPost,
-    expanded
+    expanded,
+    currentUser
   } = props
   const {
     title,
@@ -29,14 +32,15 @@ const PostListRow = (props) => {
     creator,
     createdAt,
     commentersTotal,
-    votesTotal,
-    myVote,
     topics
   } = post
 
   if (!creator) { // PostCard guards against this, so it must be important? ;P
     return null
   }
+
+  const typeLowercase = post.type.toLowerCase()
+  const typeName = post.type.charAt(0).toUpperCase() + typeLowercase.slice(1)
 
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const numOtherCommentors = commentersTotal - 1
@@ -46,24 +50,11 @@ const PostListRow = (props) => {
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
-      <div styleName='votes'>
-        <a
-          onClick={(e) => {
-            voteOnPost(e)
-            stopEvent(e)
-          }}
-          styleName={cx('vote-button', { voted: myVote })}
-          data-tip-disable={myVote}
-          data-tip={t('Upvote this post so more people see it.')}
-          data-for={`post-tt-${post.id}`}
-        >
-          <Icon name='ArrowUp' styleName='vote-icon' />
-          {votesTotal}
-        </a>
-      </div>
       <div styleName='content-summary'>
         <div styleName='type-author'>
-          <div styleName={cx('post-type', post.type)}>{post.type}</div>
+          <div styleName={cx('post-type', post.type)}>
+            <Icon name={typeName} />
+          </div>
           <div styleName='participants'>
             {post.type === 'event' ? <div styleName='date'>
               <span>{startTimeMoment.format('MMM')}</span>
@@ -77,7 +68,24 @@ const PostListRow = (props) => {
               }
             </div> }
           </div>
-          <div styleName='timestamp'>
+          {childPost &&
+            <div
+              styleName='icon-container'
+              data-tip='Post from child group'
+              data-for='childgroup-tt'
+            >
+              {/* TODO: i18n on tooltip */}
+              <Icon
+                name='Subgroup'
+                styleName='icon'
+              />
+              <Tooltip
+                delay={250}
+                id='childgroup-tt'
+                position='bottom'
+              />
+            </div>}
+          <div styleName={cx('timestamp', { 'push-to-right': !childPost })}>
             {TextHelpers.humanDate(createdAt)}
           </div>
         </div>
@@ -89,10 +97,17 @@ const PostListRow = (props) => {
         )}
         <h3 styleName='title'>{title}</h3>
         <HyloHTML styleName='details' html={details} />
+        <div styleName='reactions'>
+          <EmojiRow
+            post={post}
+            currentUser={currentUser}
+          />
+        </div>
       </div>
       <Tooltip
         delay={550}
-        id={`post-tt-${post.id}`} />
+        id={`post-tt-${post.id}`}
+      />
     </div>
   )
 }

@@ -157,7 +157,9 @@ export function lastMessageCreator (message, currentUser, participants) {
 
   if (creatorPersonId === currentUser.id) return t('You') + ': '
   if (participants.length <= 2) return ''
-  return find(p => p.id === creatorPersonId, participants).name + ': '
+
+  const creator = find(p => p.id === creatorPersonId, participants)
+  return (creator?.name || 'Unknown User') + ': '
 }
 
 export default withTranslation()(MessagesDropdown)

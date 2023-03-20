@@ -1,14 +1,16 @@
+export const MAX_POST_TOPICS = 3
+
 export const STREAM_SORT_OPTIONS = [
   { id: 'updated', label: 'Latest activity' },
   { id: 'created', label: 'Post Date' },
-  { id: 'votes', label: 'Popular' }
+  { id: 'reactions', label: 'Popular' }
 ]
 
 export const COLLECTION_SORT_OPTIONS = [
   { id: 'order', label: 'Manual' },
   { id: 'updated', label: 'Latest activity' },
   { id: 'created', label: 'Post Date' },
-  { id: 'votes', label: 'Popular' }
+  { id: 'reactions', label: 'Popular' }
 ]
 
 export const STARTED_TYPING_INTERVAL = 3000
@@ -386,6 +388,14 @@ export const PRODUCT_CATEGORIES = [
     label: 'Grains and other row crops'
   },
   {
+    value: 'grains',
+    label: 'Grains'
+  },
+  {
+    value: 'other_row_crops',
+    label: 'Other row crops'
+  },
+  {
     value: 'vegetables',
     label: 'Vegetables'
   },
@@ -440,6 +450,10 @@ export const PRODUCT_CATEGORIES = [
   {
     value: 'live_animal_sales_export',
     label: 'Live Animal Sales, Export'
+  },
+  {
+    value: 'other',
+    label: 'Other'
   }
 ]
 

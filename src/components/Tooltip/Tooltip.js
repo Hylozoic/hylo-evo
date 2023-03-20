@@ -18,7 +18,8 @@ const Tooltip = (props) => {
       delayShow={delay || 500}
       className={className}
       styleName='tooltip'
-      place={position} />
+      place={position}
+    />
   )
 }
 

@@ -14,7 +14,8 @@ it('matches snapshot', () => {
   const creator = {
     name: 'JJ',
     avatarUrl: 'foo.png',
-    id: 123
+    id: 123,
+    moderatedGroupMemberships: []
   }
   const context = {
     label: 'some context',
@@ -42,7 +43,8 @@ it('matches announcement snapshot', () => {
   const creator = {
     name: 'JJ',
     avatarUrl: 'foo.png',
-    id: 123
+    id: 123,
+    moderatedGroupMemberships: []
   }
   const context = {
     label: 'some context',
@@ -70,7 +72,8 @@ it('renders human readable dates', () => {
   const creator = {
     name: 'JJ',
     avatarUrl: 'foo.png',
-    id: 123
+    id: 123,
+    moderatedGroupMemberships: []
   }
   const groups = [
     {

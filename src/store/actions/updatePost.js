@@ -27,7 +27,7 @@ export default function updatePost (post, query = updatePostMutation) {
     isPublic
   } = post
   const linkPreviewId = linkPreview && linkPreview.id
-  const groupIds = groups.map(c => c.id)
+  const groupIds = groups.map(g => g.id)
 
   return {
     type: UPDATE_POST,
@@ -66,7 +66,11 @@ export default function updatePost (post, query = updatePostMutation) {
       optimistic: true,
       analytics: {
         eventName: AnalyticsEvents.POST_UPDATED,
-        detailsLength: TextHelpers.textLengthHTML(details)
+        detailsLength: TextHelpers.textLengthHTML(details),
+        groupId: groupIds,
+        isPublic,
+        topics: topicNames,
+        type
       }
     }
   }

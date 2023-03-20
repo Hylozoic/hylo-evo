@@ -5,29 +5,26 @@
   top: 0;
   z-index: 12;
   padding: 17px 20px;
-  height: 70px;
+  height: auto;
   transition: height 0.1s linear;
 }
 
 .stream-view-ctrls {
   position: sticky;
   top: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .search-active {
-  height: 100px
 }
 
 .extend {
-  height: 140px;
 }
 
 .search-box {
-  width: calc(100% - 20px);
+  width: 100%;
   border: 0;
   outline: 0;
-  margin: 10px 10px 0px 10px;
+  margin: 10px 0 0 0;
   padding: 2px 10px;
   font-size: 14px;
   height: 40px;
@@ -40,6 +37,7 @@
   cursor: pointer;
   width: fit-content;
   border: 1px solid rgba(224, 229, 233, 1.000);
+  border-radius: 5px;
   background: white;
   border-radius: 3px;
   padding: 0 10px;
@@ -47,15 +45,15 @@
   display:inline-block;
   height: 30px;
   line-height: 30px;
-  margin: 10px 10px 0px 10px;
+  margin: 10px 0 0 0;
   font-size: 14px;
-  border-radius: 2px;
 }
 
 .text-ex {
-  color: rgba(224, 229, 233, 1.000);
+  color: rgba(191, 197, 206, 1.0);
   font-size: 18px;
   position: relative;
+  margin-left: 5px;
   top: 3px;
 }
 
@@ -64,7 +62,7 @@
   padding: 0 12px;
   font-size: 12px;
   border-radius: 5px;
-  margin-right: 1em;
+  margin-right: 8px;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
 }
@@ -90,7 +88,7 @@
   background: $color-white;
   box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
   border-radius: 5px;
-  margin-right: 12px;
+  margin-right: 8px;
 
   .grid-view-icon {
     font-size: 19px;
@@ -143,24 +141,33 @@
   }
 }
 
-.search-toggle {
+.toggle {
   float: right;
   background: $color-white;
   box-shadow: 0 4px 15px rgba(35, 65, 91, .30);
   border-radius: 5px;
+  padding: 2px;
   height: 31px;
   cursor: pointer;
 
-  .search-icon {
+  .toggle-icon {
     font-size: 26px;
     position: relative;
-    top: 3px;
-    padding: 1px;
+    padding: 2px;
+
+    &.subgroup-icon {
+      font-size: 18px;
+      line-height: 24px;
+    }
   }
 
   .active {
     color: $color-white;
   }
+}
+
+.margin-right {
+  margin-right: 8px;
 }
 
 .active {

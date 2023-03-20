@@ -129,7 +129,7 @@ const HyloEditor = React.forwardRef(function HyloEditor ({
 
       onUpdate(editor.getHTML())
     }
-  }, [placeholder, contentHTML])
+  }, [placeholder, contentHTML, onEnter]) // TODO: changing the placeholder resets the content of the editor which is probably not what we want
 
   useImperativeHandle(ref, () => ({
     blur: () => {
@@ -140,7 +140,9 @@ const HyloEditor = React.forwardRef(function HyloEditor ({
       editorRef.current.commands.clearContent(true)
     },
     focus: position => {
-      editorRef.current.commands.focus(position)
+      if (editorRef.current) {
+        editorRef.current.commands.focus(position)
+      }
     },
     getHTML: () => {
       return editorRef.current.getHTML()

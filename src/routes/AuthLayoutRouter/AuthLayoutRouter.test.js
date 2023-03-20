@@ -26,6 +26,10 @@ jest.mock('react-i18next', () => ({
 jest.mock('mixpanel-browser', () => ({
   track: jest.fn(),
   identify: jest.fn(),
+  get_group: jest.fn().mockImplementation(() => ({
+    set: jest.fn()
+  })),
+  set_group: jest.fn(),
   people: {
     set: jest.fn()
   }

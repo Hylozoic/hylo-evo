@@ -18,11 +18,15 @@ jest.mock('react-i18next', () => ({
 }))
 
 it('does something', () => {
-  const wrapper = shallow(<Members members={[
-    { id: '1', name: 'You' },
-    { id: '2', name: 'Me' },
-    { id: '3', name: 'Everyone' }
-  ]} />)
+  const wrapper = shallow(
+    <Members
+      group={{ id: 1 }}
+      members={[
+        { id: '1', groupRoles: [], moderatedGroupMemberships: [], name: 'You' },
+        { id: '2', groupRoles: [], moderatedGroupMemberships: [], name: 'Me' },
+        { id: '3', groupRoles: [], moderatedGroupMemberships: [], name: 'Everyone' }
+      ]}
+    />)
   expect(wrapper.find('Connect(Member)')).toHaveLength(3)
 })
 

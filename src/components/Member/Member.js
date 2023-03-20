@@ -2,12 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { withTranslation } from 'react-i18next'
 import { bgImageStyle } from 'util/index'
+import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import SkillLabel from 'components/SkillLabel'
 import './Member.scss'
 
-const { string, shape } = PropTypes
+const { object, string, shape } = PropTypes
 
 class Member extends React.Component {
   removeOnClick (e, id, name, removeMember) {
@@ -21,35 +22,49 @@ class Member extends React.Component {
   render () {
     const {
       className,
-      slug,
-      member: { id, name, location, tagline, avatarUrl, skills },
+      group,
+      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles },
       goToPerson,
       canModerate,
       removeMember
     } = this.props
 
-    return <div styleName='member' className={className}>
-      {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-        { icon: 'Trash', label: this.props.t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
-      ]} />}
-      <div onClick={goToPerson(id, slug)}>
-        <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
-        <div styleName='name'>{name}</div>
-        <div styleName='location'>{location}</div>
-        {skills && <div styleName='skills'>
-          {skills.map((skill, index) =>
-            <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
-          )}
-        </div>}
-        <div styleName='tagline'>{tagline}</div>
+    const badges = (group.id && groupRoles.filter(role => role.groupId === group.id)) || []
+    const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
+
+    return (
+      <div styleName='member' className={className}>
+        {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
+          { icon: 'Trash', label: this.props.t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
+        ]} />}
+        <div onClick={goToPerson(id, group.slug)}>
+          <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
+          <div styleName='name'>{name}</div>
+          <div styleName='location'>{location}</div>
+          <div styleName='badgeRow'>
+            {creatorIsModerator && (
+              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
+              // TODO: i18n
+            )}
+            {badges.map(badge => (
+              <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+            ))}
+          </div>
+          {skills && <div styleName='skills'>
+            {skills.map((skill, index) =>
+              <SkillLabel key={index} styleName='skill'>{skill.name}</SkillLabel>
+            )}
+          </div>}
+          <div styleName='tagline'>{tagline}</div>
+        </div>
       </div>
-    </div>
+    )
   }
 }
 
 Member.propTypes = {
   className: string,
-  slug: string,
+  group: object,
   member: shape({
     id: string,
     name: string,

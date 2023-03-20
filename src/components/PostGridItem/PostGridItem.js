@@ -1,5 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
+import Tooltip from 'components/Tooltip'
+
 // import Moment from 'moment-timezone'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -10,6 +12,7 @@ import './PostGridItem.scss'
 
 export default function PostGridItem (props) {
   const {
+    childPost,
     routeParams,
     post,
     showDetails,
@@ -39,21 +42,23 @@ export default function PostGridItem (props) {
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
       <div styleName='content-summary'>
+        {childPost &&
+          <div
+            styleName='icon-container'
+            data-tip='Post from child group'
+            data-for='childgroup-tt'
+          >
+            {/* TODO: i18n on tooltip */}
+            <Icon
+              name='Subgroup'
+              styleName='icon'
+            />
+            <Tooltip
+              delay={250}
+              id='childgroup-tt'
+            />
+          </div>}
         <h3 styleName='title'>{title}</h3>
-
-        {/*  Will fix this after I get attachment variables */}
-        {/* {post.type === 'event' */
-        /* ? <div styleName='date'> */
-        /*   <span>{startTimeMoment.format('MMM')}</span> */
-        /*   <span>{startTimeMoment.format('D')}</span> */
-        /* </div> */
-        /* : ' '} */}
-
-        {/* TODO for tom:
-          Retrieve attachments. If there are attachments print attachment[0] type. If attachment[0] is an image, print url
-
-          From Tom: Now the attachment variables can be used to display the different views that you are keen for.
-        */}
         {attachmentType === 'image'
           ? <div style={{ backgroundImage: `url(${attachmentUrl})` }} styleName='first-image' />
           : attachmentType === 'file'
@@ -70,12 +75,14 @@ export default function PostGridItem (props) {
 
         <HyloHTML styleName='details' html={details} />
         <div styleName='grid-meta'>
-          <div styleName='type-author'>
-            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
-            {creator.name}
-          </div>
-          <div styleName='timestamp'>
-            {TextHelpers.humanDate(createdAt)}
+          <div styleName='grid-meta-row-1'>
+            <div styleName='type-author'>
+              <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
+              {creator.name}
+            </div>
+            <div styleName='timestamp'>
+              {TextHelpers.humanDate(createdAt)}
+            </div>
           </div>
         </div>
         <div styleName='grid-fade' />

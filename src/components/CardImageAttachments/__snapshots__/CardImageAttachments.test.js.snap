@@ -3,20 +3,16 @@
 exports[`renders a single image 1`] = `
 <div
   data-stylename="image"
-  style={
-    Object {
-      "backgroundImage": "url(foo)",
-    }
-  }
 >
-  <div>
+  <img
+    src="foo"
+  />
+  <div
+    data-stylename="others"
+  >
     <div
-      data-stylename="others"
-    >
-      <div
-        data-stylename="others-inner"
-      />
-    </div>
+      data-stylename="others-inner"
+    />
   </div>
 </div>
 `;
@@ -24,50 +20,46 @@ exports[`renders a single image 1`] = `
 exports[`renders multiple images 1`] = `
 <div
   data-stylename="image"
-  style={
-    Object {
-      "backgroundImage": "url(bar)",
-    }
-  }
 >
-  <div>
+  <img
+    src="bar"
+  />
+  <div
+    data-stylename="others"
+  >
     <div
-      data-stylename="others"
+      data-stylename="others-inner"
     >
-      <div
-        data-stylename="others-inner"
+      <a
+        data-stylename="other"
+        href="baz"
+        key="baz"
+        rel="noreferrer"
+        target="_blank"
       >
-        <a
-          data-stylename="other"
-          href="baz"
-          key="baz"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <div
-            style={
-              Object {
-                "backgroundImage": "url(baz)",
-              }
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(baz)",
             }
-          />
-        </a>
-        <a
-          data-stylename="other"
-          href="bonk"
-          key="bonk"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <div
-            style={
-              Object {
-                "backgroundImage": "url(bonk)",
-              }
+          }
+        />
+      </a>
+      <a
+        data-stylename="other"
+        href="bonk"
+        key="bonk"
+        rel="noreferrer"
+        target="_blank"
+      >
+        <div
+          style={
+            Object {
+              "backgroundImage": "url(bonk)",
             }
-          />
-        </a>
-      </div>
+          }
+        />
+      </a>
     </div>
   </div>
 </div>

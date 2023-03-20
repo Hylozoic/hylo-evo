@@ -1,6 +1,7 @@
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import React, { Component } from 'react'
 import { useTranslation, withTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { bool, func, string, arrayOf, shape } from 'prop-types'
 import Button from 'components/Button'
@@ -47,54 +48,63 @@ class Members extends Component {
 
   render () {
     const {
-      memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
+      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember, t
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
 
-    return <div>
-      <div styleName='header'>
-        {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
-          <Button styleName='invite'
-            label={this.props.t('Invite People')}
-            color='green-white-green-border'
-            narrow />
-        </Link>}
-        <div styleName='title'>{this.props.t('Members')}</div>
-        <div styleName='total-members'>
-          {this.props.t('{{memberCount}} Total Members', { memberCount })}
+    return (
+      <div>
+        <Helmet>
+          <title>{t('Members')} | {group ? `${group.name} | ` : ''}Hylo</title>
+        </Helmet>
+
+        <div styleName='header'>
+          <div>
+            <div styleName='title'>{t('Members')}</div>
+            <div styleName='total-members'>
+              {t('{{memberCount}} Total Members', { memberCount })}
+            </div>
+          </div>
+          {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
+            <Button styleName='invite'
+              color='green-white-green-border'
+              narrow >
+              <Icon name='Invite' styleName='invite-icon' /> {t('Invite People')}
+            </Button>
+          </Link>}
         </div>
+        <div styleName='content'>
+          <div styleName='controls'>
+            <TextInput placeholder={t('Search by name or skills & interests')}
+              styleName='search'
+              defaultValue={search}
+              onChange={e => this.search(e.target.value)} />
+            <Dropdown styleName='sort-dropdown'
+              toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
+              alignRight
+              items={Object.keys(sortKeys).map(k => ({
+                label: sortKeys[k],
+                onClick: () => changeSort(k)
+              }))} />
+          </div>
+          <div styleName='members'>
+            {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
+              {pair.map(m => <Member
+                group={group}
+                canModerate={canModerate}
+                removeMember={removeMember}
+                member={m} key={m.id}
+                context={context}
+              />)}
+              {pair.length === 1 && <div />}
+            </div>)}
+          </div>
+        </div>
+        <ScrollListener onBottom={this.fetchMore}
+          elementId={CENTER_COLUMN_ID} />
       </div>
-      <div styleName='content'>
-        <div styleName='controls'>
-          <TextInput placeholder={this.props.t('Search by name or skills & interests')}
-            styleName='search'
-            defaultValue={search}
-            onChange={e => this.search(e.target.value)} />
-          <Dropdown styleName='sort-dropdown'
-            toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
-            alignRight
-            items={Object.keys(sortKeys).map(k => ({
-              label: sortKeys[k],
-              onClick: () => changeSort(k)
-            }))} />
-        </div>
-        <div styleName='members'>
-          {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
-            {pair.map(m => <Member
-              canModerate={canModerate}
-              removeMember={removeMember}
-              member={m} key={m.id}
-              slug={slug}
-              context={context}
-            />)}
-            {pair.length === 1 && <div />}
-          </div>)}
-        </div>
-      </div>
-      <ScrollListener onBottom={this.fetchMore}
-        elementId={CENTER_COLUMN_ID} />
-    </div>
+    )
   }
 }
 Members.propTypes = {

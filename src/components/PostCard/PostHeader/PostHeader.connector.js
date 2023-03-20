@@ -2,11 +2,11 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { removePostFromUrl, editPostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
+import deletePost from 'store/actions/deletePost'
+import removePost from 'store/actions/removePost'
 import {
-  deletePost,
   unfulfillPost,
   fulfillPost,
-  removePost,
   pinPost,
   getGroup
 } from './PostHeader.store'

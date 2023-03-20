@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useTranslation, withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
@@ -33,6 +34,8 @@ import { inIframe } from 'util/index'
 import { baseUrl, groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
+
+const MAX_DETAILS_LENGTH = 144
 
 export const initialState = {
   errorMessage: undefined,
@@ -103,6 +106,10 @@ class UnwrappedGroupDetail extends Component {
 
     return (
       <div className={cx({ [g.group]: true, [g.fullPage]: fullPage, [g.isAboutCurrentGroup]: isAboutCurrentGroup })}>
+        <Helmet>
+          <title>{group.name} | Hylo</title>
+          <meta name='description' content={TextHelpers.truncateHTML(group.description, MAX_DETAILS_LENGTH)} />
+        </Helmet>
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
           {!fullPage && (
             <a styleName='g.close' onClick={closeDetailModal}><Icon name='Ex' /></a>

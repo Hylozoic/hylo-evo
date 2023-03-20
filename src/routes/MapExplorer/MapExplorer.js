@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { debounce, get, groupBy, isEqual, isEmpty } from 'lodash'
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { FlyToInterpolator } from 'react-map-gl'
 import { withTranslation } from 'react-i18next'
 import bbox from '@turf/bbox'
@@ -487,12 +488,15 @@ class MapExplorer extends React.Component {
 
   render () {
     const {
+      changeChildPostInclusion,
+      childPostInclusion,
       context,
       currentUser,
       deleteSearch,
       featureTypes,
       fetchPostsForDrawer,
       filters,
+      group,
       pendingPostsMap,
       pendingPostsDrawer,
       postsForDrawer,
@@ -525,6 +529,10 @@ class MapExplorer extends React.Component {
 
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
+        <Helmet>
+          <title>Map | {group ? `${group.name} | ` : ': Map'}Hylo</title>
+        </Helmet>
+
         <div styleName='mapContainer'>
           <Map
             afterViewportUpdate={this.afterViewportUpdate}
@@ -553,11 +561,14 @@ class MapExplorer extends React.Component {
         </button>
         {!hideDrawer && (
           <MapDrawer
+            changeChildPostInclusion={changeChildPostInclusion}
+            childPostInclusion={childPostInclusion}
             context={context}
             locationParams={locationParams}
             currentUser={currentUser}
             fetchPostsForDrawer={fetchPostsForDrawer}
             filters={filters}
+            group={group}
             groups={groupsForDrawer}
             members={membersForDrawer}
             numFetchedPosts={postsForDrawer.length}

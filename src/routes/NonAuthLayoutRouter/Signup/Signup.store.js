@@ -1,4 +1,5 @@
 import { get } from 'lodash/fp'
+import { AnalyticsEvents } from 'hylo-shared'
 
 export const MODULE_NAME = 'Signup'
 export const REGISTER = `${MODULE_NAME}/REGISTER`
@@ -28,7 +29,11 @@ export function sendEmailVerification (email) {
           getRoot: get('sendEmailVerification.me'),
           modelName: 'Me'
         }
-      ]
+      ],
+      analytics: {
+        eventName: AnalyticsEvents.SIGNUP_EMAIL_VERIFICATION_SENT,
+        email
+      }
     }
   }
 }
@@ -52,6 +57,7 @@ export function verifyEmail (email, code, token) {
                 dmNotifications
                 commentNotifications
                 signupInProgress
+                streamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType
@@ -73,7 +79,11 @@ export function verifyEmail (email, code, token) {
           getRoot: get('verifyEmail.me'),
           modelName: 'Me'
         }
-      ]
+      ],
+      analytics: {
+        eventName: AnalyticsEvents.SIGNUP_EMAIL_VERIFIED,
+        email
+      }
     }
   }
 }
@@ -97,6 +107,7 @@ export function register (name, password) {
                 dmNotifications
                 commentNotifications
                 signupInProgress
+                streamChildPosts
                 streamViewMode
                 streamSortBy
                 streamPostType
@@ -116,7 +127,10 @@ export function register (name, password) {
           getRoot: get('register.me'),
           modelName: 'Me'
         }
-      ]
+      ],
+      analytics: {
+        eventName: AnalyticsEvents.SIGNUP_REGISTERED
+      }
     }
   }
 }

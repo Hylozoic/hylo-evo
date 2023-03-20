@@ -20,6 +20,7 @@ export default function updateUserSettings (changes) {
               dmNotifications
               commentNotifications
               signupInProgress
+              streamChildPosts
               streamViewMode
               streamSortBy
               streamPostType

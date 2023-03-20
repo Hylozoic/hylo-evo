@@ -56,7 +56,7 @@
 
 .header-sticky {
   position: fixed;
-  top: 49px;
+  top: 56px;
   z-index: 15;
   padding-right: 5px;
   opacity: 1;
@@ -93,7 +93,7 @@
 .activity-sticky {
   z-index: 50;
   position: fixed;
-  top: 24px;
+  top: 30px;
   background: $color-white;
   border-bottom: 1px solid rgba(235, 235, 235, 1.0);
   animation: append-animate .3s ease;

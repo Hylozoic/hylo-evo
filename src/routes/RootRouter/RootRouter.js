@@ -6,8 +6,9 @@ import { POST_DETAIL_MATCH } from 'util/navigation'
 import config, { isProduction, isTest } from 'config'
 import Loading from 'components/Loading'
 import AuthLayoutRouter from 'routes/AuthLayoutRouter'
-import PublicLayoutRouter from 'routes/PublicLayoutRouter'
 import NonAuthLayoutRouter from 'routes/NonAuthLayoutRouter'
+import OAuthLogin from 'routes/OAuth/Login'
+import PublicLayoutRouter from 'routes/PublicLayoutRouter'
 import checkLogin from 'store/actions/checkLogin'
 import { getAuthorized } from 'store/selectors/getAuthState'
 
@@ -38,7 +39,21 @@ export default function RootRouter () {
 
   if (isAuthorized) {
     return (
-      <Route component={AuthLayoutRouter} />
+      <Switch>
+        {/* If authenticated and trying to do an oAuth login we need to still get an auth code from the server and redirect to redirect_url */}
+        <Route path='/oauth/login/:uid'>
+          <OAuthLogin authenticated />
+        </Route>
+        {/* If authenticated and need to ask for oAuth consent again do so */}
+        <Route
+          path='/oauth/consent/:uid'
+          component={routeProps => (
+            <NonAuthLayoutRouter {...routeProps} skipAuthCheck />
+          )}
+        />
+
+        <Route component={AuthLayoutRouter} />
+      </Switch>
     )
   }
   if (!isAuthorized) {
@@ -52,7 +67,7 @@ export default function RootRouter () {
           path={[
             '/:context(public)/:view(map|groups)?',
             `(.*)/${POST_DETAIL_MATCH}`,
-            '/:context(groups)/:groupSlug'
+            '/:context(groups)/:groupSlug?'
           ]}
           component={PublicLayoutRouter}
         />
