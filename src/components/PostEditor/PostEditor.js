@@ -538,8 +538,7 @@ class PostEditor extends React.Component {
       valid,
       post,
       showAnnouncementModal,
-      showPostTypeMenu,
-      t
+      showPostTypeMenu
     } = this.state
     const {
       id,
@@ -572,7 +571,8 @@ class PostEditor extends React.Component {
       showImages,
       addAttachment,
       postTypes,
-      fetchLinkPreviewPending
+      fetchLinkPreviewPending,
+      t
     } = this.props
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [

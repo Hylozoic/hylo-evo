@@ -34,6 +34,7 @@ exports[`PostGroups matches last snapshot 1`] = `
         ]
       }
       maxShown={2}
+      t={[Function]}
     />
     <a
       data-stylename="expandLink"

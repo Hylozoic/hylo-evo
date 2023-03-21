@@ -88,7 +88,7 @@ class PrivacySettingsTab extends Component {
   }
 
   render () {
-    const { group, parentGroups } = this.props
+    const { group, parentGroups, t } = this.props
     if (!group) return <Loading />
 
     const { edits, changed } = this.state
@@ -98,8 +98,7 @@ class PrivacySettingsTab extends Component {
       joinQuestions,
       prerequisiteGroups,
       settings,
-      visibility,
-      t
+      visibility
     } = edits
     const { askGroupToGroupJoinQuestions, hideExtensionData } = settings
     const { name, type } = group
@@ -108,7 +107,7 @@ class PrivacySettingsTab extends Component {
       <div styleName='general.groupSettings'>
         <SettingsSection>
           <h3>{t('Visibility')}</h3>
-          <p styleName='general.detailText'>{t('Who is able to see <strong>{{name}}</strong>?', { name })}</p>
+          <p styleName='general.detailText'>{t('Who is able to see')}{' '}<strong>{name}</strong>?</p>
           {Object.values(GROUP_VISIBILITY).map(visibilitySetting =>
             <VisibilitySettingRow
               key={visibilitySetting}

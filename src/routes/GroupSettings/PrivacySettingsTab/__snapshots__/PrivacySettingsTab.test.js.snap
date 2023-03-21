@@ -11,7 +11,12 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      Who is able to see &lt;strong&gt;{{name}}&lt;/strong&gt;?
+      Who is able to see
+       
+      <strong>
+        Foomunity
+      </strong>
+      ?
     </p>
     <VisibilitySettingRow
       currentSetting={1}

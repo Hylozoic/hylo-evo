@@ -156,10 +156,9 @@ class CreateTopic extends Component {
       showSubmitButton,
       submitButtonText,
       topicName,
-      useNotificationFormat,
-      t
+      useNotificationFormat
     } = this.state
-    const { subscribeAfterCreate } = this.props
+    const { subscribeAfterCreate, t } = this.props
 
     if (redirectTopic && subscribeAfterCreate) {
       const url = topicUrl(encodeURI(redirectTopic), { groupSlug: this.props.groupSlug })

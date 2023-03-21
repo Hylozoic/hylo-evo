@@ -154,7 +154,9 @@ exports[`ModeratorsList renders correctly 1`] = `
       url="/groups/foogroup/members/4"
     />
   </div>
-  <AddModerator />
+  <AddModeratorUntranslated
+    t={[Function]}
+  />
 </div>
 `;
 
