@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
-import { withTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { withTranslation, useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
-import { get, throttle, isEmpty } from 'lodash/fp'
-import { topicUrl } from 'util/navigation'
+import { get, throttle } from 'lodash/fp'
 import { Helmet } from 'react-helmet'
 import { AnalyticsEvents, TextHelpers } from 'hylo-shared'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
@@ -310,7 +308,7 @@ class PostDetail extends Component {
 }
 
 export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {
-  const { t } = this.props
+  const { t } = useTranslation()
   const buttonText = leaving ? t('Leave Project') : t('Join Project')
   const onClick = () => leaving ? leaveProject() : joinProject()
 

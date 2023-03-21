@@ -77,7 +77,7 @@ class NotificationsDropdown extends Component {
       markAllActivitiesRead,
       pending
     } = this.props
-    var { notifications } = this.props
+    const { notifications } = this.props
     const { showingUnread } = this.state
 
     const showRecent = () => this.setState({ showingUnread: false })
@@ -152,7 +152,7 @@ export function NotificationHeader ({ notification }) {
       const postSummary = post.title && post.title.length > 0 ? post.title : truncateHTML(post.details)
       return (
         <div styleName='header'>
-          {t(`New Comment on <span styleName='bold'>{{postSummary}}</span>`, { postSummary })}
+          {t('New Comment on ')} <span styleName='bold'>{postSummary}</span>
         </div>
       )
     }
@@ -161,7 +161,7 @@ export function NotificationHeader ({ notification }) {
       const tag = tagReason.split(': ')[1]
       return (
         <div styleName='header'>
-          {t(`New Post in <span styleName='bold'>#{{tag}}</span>`, { tag })}
+          {t('New Post in ')} <span styleName='bold'>{tag}</span>
         </div>
       )
     case ACTION_JOIN_REQUEST:
@@ -265,63 +265,80 @@ export function NotificationBody ({ notification }) {
     case ACTION_NEW_COMMENT:
     case ACTION_COMMENT_MENTION:
       text = truncateHTML(comment.text)
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{name}}</span> wrote: "{{text}}"`, { name: firstName(actor), text })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{firstName(actor)}</span>{' ' + t('wrote:') + ' '}"{text}"
+        </div>
+      )
     case ACTION_TAG:
     case ACTION_MENTION:
-      text = truncateText(post.title)
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{name}}</span> wrote: "{{text}}"`, { name: firstName(actor), text })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{firstName(actor)}</span>{' '}{t('wrote:')}{' '}"{postSummary}"
+        </div>
+      )
     case ACTION_JOIN_REQUEST:
-      return <div styleName='body'>
-        <span styleName='bold'>{actor.name} </span>
-        {t('asked to join')}
-        <span styleName='bold'> {group.name}</span>
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{actor.name} </span>
+          {t('asked to join')}
+          <span styleName='bold'> {group.name}</span>
+        </div>
+      )
     case ACTION_APPROVED_JOIN_REQUEST:
-      return <div styleName='body'>
-        <span styleName='bold'>{actor.name} </span>
-        {t('approved your request to join')}
-        <span styleName='bold'> {group.name}</span>
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{actor.name} </span>
+          {t('approved your request to join')}
+          <span styleName='bold'> {group.name}</span>
+        </div>
+      )
     case ACTION_ANNOUNCEMENT:
-      text = truncateText(post.title)
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{name}}</span> wrote: "{{text}}"`, { name: firstName(actor), text })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{actor.name}</span>{' '}{t('wrote: ')}{' '}{postSummary}
+        </div>
+      )
     case ACTION_DONATION_TO:
       text = truncateText(post.title)
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>You</span> contributed {{amount}} to "{{text}}"`, { amount: contributionAmount / 100, text })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{t('You')}</span>{' '}{t('contributed {{amount}} to "{{postSummary}}"', { amount: contributionAmount / 100, postSummary })}
+        </div>
+      )
     case ACTION_DONATION_FROM:
       text = truncateText(post.title)
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{actor.name}}</span> contributed {{amount}} to "{{text}}"`, { actor, amount: contributionAmount / 100, text })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{actor.name}</span>{' '}{t('contributed {{amount}} to "{{postSummary}}"', { amount: contributionAmount / 100, postSummary })}
+        </div>
+      )
     case ACTION_EVENT_INVITATION:
       text = truncateText(post.title)
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{actor.name}}</span> invited you to: "{{text}}"`, { actor, text })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{actor.name}</span>{' '}{t('invited you to: "{{postSummary}}"', { postSummary })}
+        </div>
+      )
     case ACTION_GROUP_CHILD_GROUP_INVITE:
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{group.name}}</span> has invited <span styleName='bold'>{{otherGroup.name}}</span> to join it`, { group, otherGroup })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{group.name}</span>{' '}{t('has invited')}{' '}<span styleName='bold'>{otherGroup.name}</span>{' '}{t('to join it')}
+        </div>
+      )
     case ACTION_GROUP_CHILD_GROUP_INVITE_ACCEPTED:
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{group.name}}</span> has joined <span styleName='bold'>{{otherGroup.name}}</span>!`, { group, otherGroup })}
-      </div>
-    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{group.name}}</span> has requested to join <span styleName='bold'>{{otherGroup.name}}</span>`, { group, otherGroup })}
-      </div>
     case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST_ACCEPTED:
-      return <div styleName='body'>
-        {t(`<span styleName='bold'>{{group.name}}</span> has joined <span styleName='bold'>{{otherGroup.name}}</span>!`, { group, otherGroup })}
-      </div>
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{group.name}</span>{' '}{t('has joined')}{' '}<span styleName='bold'>{otherGroup.name}</span>
+        </div>
+      )
+    case ACTION_GROUP_PARENT_GROUP_JOIN_REQUEST:
+      return (
+        <div styleName='body'>
+          <span styleName='bold'>{group.name}</span>{' '}{t('has requested to join')}{' '}<span styleName='bold'>{otherGroup.name}</span>
+        </div>
+      )
   }
 
   return null

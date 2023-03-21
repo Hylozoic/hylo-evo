@@ -502,7 +502,8 @@ class MapExplorer extends React.Component {
       postsForDrawer,
       routeParams,
       searches,
-      topics
+      topics,
+      t
     } = this.props
 
     const {
@@ -519,8 +520,7 @@ class MapExplorer extends React.Component {
       showLayersSelector,
       showSavedSearches,
       totalPostsInView,
-      viewport,
-      t
+      viewport
     } = this.state
 
     const { hideNavLayout } = this.context

@@ -146,9 +146,10 @@ class NotificationSettingsTab extends Component {
 
         <div styleName='help'>
           <p styleName='help-paragraph'>
-            {t(`Download our <a href={{iOSAppURL}} target='_blank'>iOS</a>&nbsp;
-             or <a href={{androidAppURL}} target='_blank'>Android</a> app to
-             receive push notifications.`, { iOSAppURL, androidAppURL })}
+            {t('Download our')}{' '}<a href={iOSAppURL} rel='noreferrer' target='_blank'>iOS</a>
+            {' '}{t('or')}{' '}
+            <a href={androidAppURL} rel='noreferrer' target='_blank'>Android</a>
+            {t(' app to receive push notifications.')}
           </p>
         </div>
 
