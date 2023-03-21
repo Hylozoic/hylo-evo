@@ -309,7 +309,7 @@ class PostDetail extends Component {
 }
 
 export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {
-  const { t } = this.props
+  const { t } = useTranslation()
   const buttonText = leaving ? t('Leave Project') : t('Join Project')
   const onClick = () => leaving ? leaveProject() : joinProject()
 

@@ -521,8 +521,7 @@ class MapExplorer extends React.Component {
       showLayersSelector,
       showSavedSearches,
       totalPostsInView,
-      viewport,
-      t
+      viewport
     } = this.state
 
     const { hideNavLayout } = this.context

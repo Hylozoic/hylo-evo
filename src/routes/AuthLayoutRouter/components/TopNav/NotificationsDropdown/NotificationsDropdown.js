@@ -78,6 +78,7 @@ class NotificationsDropdown extends Component {
       pending,
       t
     } = this.props
+    const { notifications } = this.props
     const { showingUnread } = this.state
 
     const showRecent = () => this.setState({ showingUnread: false })
