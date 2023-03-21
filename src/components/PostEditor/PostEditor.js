@@ -567,8 +567,7 @@ class PostEditor extends React.Component {
       valid,
       post,
       showAnnouncementModal,
-      showPostTypeMenu,
-      t
+      showPostTypeMenu
     } = this.state
     const {
       id,

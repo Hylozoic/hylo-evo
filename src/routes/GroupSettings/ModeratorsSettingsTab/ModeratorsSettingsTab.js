@@ -225,7 +225,7 @@ class ModeratorsSettingsTab extends Component {
   }
 }
 
-export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions, t }) {
+export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions }) {
   return (
     <div>
       <div>
@@ -239,7 +239,6 @@ export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSu
           />)}
       </div>
       <AddModerator
-        t={t}
         fetchModeratorSuggestions={fetchModeratorSuggestions}
         addModerator={addModerator}
         moderatorSuggestions={moderatorSuggestions}
@@ -382,7 +381,7 @@ export function AddModerator (props) {
 
 export const AddModerator = withTranslation()(AddModeratorUntranslated)
 
-function RoleRowUntranslated ({
+function RoleRow ({
   active,
   addRoleToMember,
   changed,

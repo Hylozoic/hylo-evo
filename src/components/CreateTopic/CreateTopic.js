@@ -156,8 +156,7 @@ class CreateTopic extends Component {
       showSubmitButton,
       submitButtonText,
       topicName,
-      useNotificationFormat,
-      t
+      useNotificationFormat
     } = this.state
     const { subscribeAfterCreate, t } = this.props
 
