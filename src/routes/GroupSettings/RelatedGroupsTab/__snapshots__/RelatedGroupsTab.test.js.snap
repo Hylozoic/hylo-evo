@@ -267,7 +267,11 @@ exports[`RelatedGroupstab renders correctly 1`] = `
           data-stylename="connect-icon"
           name="Handshake"
         />
-        Invite a group to join &lt;strong&gt;{{group.name}}&lt;/strong&gt;
+        Invite a group to join
+         
+        <strong>
+          Best Group
+        </strong>
       </div>
       <span
         data-stylename="connect-label"

@@ -63,13 +63,13 @@ export default class MembershipRequestsTab extends Component {
 export function NoRequests ({ group, viewMembers }) {
   const { t } = useTranslation()
   return (
-    <React.Fragment>
+    <>
       <div styleName='no-requests'>
         <img src={jollyAxolotl} />
         <br />
         <div>
           <h2>{t('No new join requests')}</h2>
-          {t('We\'ll notify you by email when someone wants to join <strong>{{group.name}}</strong>', { group })}
+          {t('We\'ll notify you by email when someone wants to join')}{' '}<strong>{group.name}</strong>
         </div>
         {!isWebView() && (
           <Button
@@ -79,7 +79,7 @@ export function NoRequests ({ group, viewMembers }) {
           />
         )}
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -44,7 +44,10 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      How can people become members of &lt;strong&gt;{{name}}&lt;/strong&gt;?
+      How can people become members of
+      <strong>
+        Foomunity
+      </strong>
     </p>
     <AccessibilitySettingRow
       currentSetting={1}
@@ -96,34 +99,45 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      When you select a prerequisite group, people must join the selected groups before joining &lt;strong&gt;{{name}}&lt;/strong&gt;. Only parent groups can be added as prerequisite groups.
+      When you select a prerequisite group, people must join the selected groups before joining
+       
+      <strong>
+        Foomunity
+      </strong>
+      .
+       
+      Only parent groups can be added as prerequisite groups.
     </p>
     <p
       data-stylename="styles.prerequisiteWarning"
     >
-       
       <strong
         data-stylename="styles.warning"
       >
         Warning:
       </strong>
-       If you select a prerequisite group that has a visibility setting of
+       
+      If you select a prerequisite group that has a visibility setting of
       <strong>
         <Icon
           data-stylename="styles.prerequisiteIcon"
           name="Hidden"
         />
-         Hidden
+         
+        Hidden
       </strong>
-       or
+       
+      or
       <strong>
         <Icon
           data-stylename="styles.prerequisiteIcon"
           name="Shield"
         />
-         Protected
+         
+        Protected
       </strong>
-      , only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
+      ,
+      only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
     </p>
     <GroupsSelector
       groupSettings={true}

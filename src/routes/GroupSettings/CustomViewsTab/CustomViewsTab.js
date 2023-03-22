@@ -288,7 +288,7 @@ function CustomViewRow ({
   return (
     <div styleName='styles.custom-view-container'>
       <h4>
-        <div>{t('<strong>Custom View #{{count}}</strong>{{name}}', { count: viewCount, name })}</div>
+        <div><strong>{t('Custom View')}{' '}#{viewCount}</strong>{' '}{name}</div>
         <Icon name='Trash' onClick={onDelete} />
       </h4>
       <div styleName='styles.custom-view-row'>
@@ -399,7 +399,7 @@ function CustomViewRow ({
               </>) : (
               <>
                 <div styleName='styles.post-types'>
-                  <label styleName='styles.label'>{t('Included Posts <span>{{length}}</span>', { length: collection?.posts?.length || 0 })}</label>
+                  <label styleName='styles.label'>{t('Included Posts')}{' '}<span>{collection?.posts?.length || 0}</span> </label>
                   <PostSelector
                     collection={collection}
                     group={group}

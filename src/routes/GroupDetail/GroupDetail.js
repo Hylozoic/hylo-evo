@@ -172,7 +172,7 @@ class UnwrappedGroupDetail extends Component {
           }
           {!isAboutCurrentGroup
             ? !currentUser
-              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{t('Signup or Login to connect with <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</Link></div>
+              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{t('Signup or Login to connect with')}{' '}<span styleName='g.requestGroup'>{group.name}</span></Link></div>
               : isMember
                 ? <div styleName='g.existingMember'>{t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
                 : this.renderDefaultGroupDetails()
@@ -342,8 +342,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                 <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
               </div>)}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{t('Join <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</div>
-                {/* TODO: stylings in i18n */}
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{t('Join')}{' '}<span styleName='g.requestGroup'>{group.name}</span></div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
@@ -356,7 +355,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                   </div>)}
                   <div styleName='g.center'>
                     <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
-                      {t('Request Membership in <span styleName="g.requestGroup">{{group.name}}</span>', { group })}
+                      {t('Request Membership in')}{' '}<span styleName='g.requestGroup'>{group.name}</span>
                     </div>
                   </div>
                 </div>

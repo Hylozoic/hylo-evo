@@ -120,7 +120,7 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Access')}</h3>
-          <p styleName='general.detailText'>{t('How can people become members of <strong>{{name}}</strong>?', { name })}</p>
+          <p styleName='general.detailText'>{t('How can people become members of')}{''}<strong>{name}</strong></p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
             <AccessibilitySettingRow
               key={accessSetting}
@@ -138,12 +138,12 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Prerequisite Groups')}</h3>
-          <p styleName='general.detailText'>{t('When you select a prerequisite group, people must join the selected groups before joining <strong>{{name}}</strong>. Only parent groups can be added as prerequisite groups.', { name })}</p>
-          <p styleName='styles.prerequisiteWarning'> {/* TODO: handle this translation */}
-            <strong styleName='styles.warning'>Warning:</strong> If you select a prerequisite group that has a visibility setting of
-            <strong><Icon name='Hidden' styleName='styles.prerequisiteIcon' /> Hidden</strong> or
-            <strong><Icon name='Shield' styleName='styles.prerequisiteIcon' /> Protected</strong>,
-            only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
+          <p styleName='general.detailText'>{t('When you select a prerequisite group, people must join the selected groups before joining')}{' '}<strong>{name}</strong>.{' '}{t('Only parent groups can be added as prerequisite groups.')}</p>
+          <p styleName='styles.prerequisiteWarning'>
+            <strong styleName='styles.warning'>{t('Warning:')}</strong>{' '}{t('If you select a prerequisite group that has a visibility setting of')}
+            <strong><Icon name='Hidden' styleName='styles.prerequisiteIcon' />{' '}{t('Hidden')}</strong>{' '}{t('or')}
+            <strong><Icon name='Shield' styleName='styles.prerequisiteIcon' />{' '}{t('Protected')}</strong>,
+            {t('only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.')}
           </p>
           <GroupsSelector
             options={parentGroups}

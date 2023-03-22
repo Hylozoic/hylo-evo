@@ -64,6 +64,11 @@ For users that are not logged in can see public posts and groups via routes like
 `/groups/:groupSlug/:view/post/:postId` => `/post/:postId`
 `/public/post/:postId` => `/post/:postId`
 
+### Translations
+We use i18next to handle translations of platform strings (no translations of user content at this time). 
+
+The `i18next-extract` config details in the `babel.config.js` file determines how all language keys are extracted and what languages are supported. Whenever babel runs, it will comb the entire repo for js/jsx files, and anytime it finds a t('example-key') function, it will pull every key into 
+
 ### Sockets
 
 Chat, in-app notifications and comments use sockets to update users in real-time. In the future, new posts will also use sockets to show up in real-time.
