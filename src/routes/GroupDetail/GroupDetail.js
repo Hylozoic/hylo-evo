@@ -329,7 +329,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
       }
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
         ? <div styleName='g.prerequisiteGroups'>
-          {group.prerequisiteGroups.length === 1 ? <h4>{group.name} is only accessible to members of {group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{t('{group.name} is only accessible to members of the following groups:', { group })}</h4>} {/* TODO: i18n */}
+          {group.prerequisiteGroups.length === 1 ? <h4>{group.name}{' '}{t('is only accessible to members of')}{' '}{group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{t('{group.name} is only accessible to members of the following groups:', { group })}</h4>}
           {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
             <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
               <div styleName='g.groupTitleContainer'>
@@ -356,7 +356,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
               <div styleName='g.headerBackground' />
             </Link>
             <div styleName='g.cta'>
-              To join {group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>visit {prereq.name}</Link> and become a member {/* TODO: i18n */ }
+              {t('To join')}{' '}{group.name} <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.prereqVisitLink'>{t('visit')} {prereq.name}</Link>{' '}{t('and become a member')}
 
             </div>
           </div>)}
@@ -371,12 +371,13 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
               </div>)}
               <div styleName='g.center'>
                 <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{t('Join <span styleName="g.requestGroup">{{group.name}}</span>', { group })}</div>
+                {/* TODO: stylings in i18n */}
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
               ? hasPendingRequest
                 ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
-                : <div styleName='g.requestOption'> {/* t('Restricted group, no request pending') */}
+                : <div styleName='g.requestOption'> {t('Restricted group, no request pending')}
                   {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                     <h3>{q.text}</h3>
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />

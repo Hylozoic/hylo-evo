@@ -25,7 +25,7 @@ const { object, func } = PropTypes
 
 export const INITIAL_SUBCOMMENTS_DISPLAYED = 4
 
-export class Comment extends Component { /* TODO: i18n */
+export class Comment extends Component {
   static propTypes = {
     comment: object.isRequired,
     onReplyComment: func.isRequired,

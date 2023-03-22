@@ -18,9 +18,6 @@ import SocialControl from './SocialControl'
 
 const { object, func } = PropTypes
 
-/** LinkedIn Url */
-const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
-
 export const validateName = name => name && name.match(/\S/gm)
 
 class EditProfileTab extends Component {
@@ -125,7 +122,6 @@ class EditProfileTab extends Component {
         <Helmet>
           <title>{t('Your Settings')} | Hylo</title>
         </Helmet>
-        <label styleName='label'>{t('Your Name')}</label>
         {!validateName(name) && <div styleName='name-validation'>{t('Name must not be blank')}</div>}
         <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
         <label styleName='label'>{t('Banner and Avatar Images')}</label>

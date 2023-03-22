@@ -381,7 +381,7 @@ export function AddModerator (props) {
 
 export const AddModerator = withTranslation()(AddModeratorUntranslated)
 
-function RoleRow ({
+function RoleRowUntranslated ({
   active,
   addRoleToMember,
   changed,
@@ -425,7 +425,7 @@ function RoleRow ({
         isDraftRole
           ? (
             <div styleName='styles.role-row styles.reverse-flex'>
-              <div styleName='styles.create-button' onClick={onSave}>{t('Create Role')}</div>
+              <div styleName='styles.create-button' onClick={onSave}>[t('Create Role')]</div>
             </div>
           )
           : active && (

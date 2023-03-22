@@ -152,8 +152,6 @@ export function AddAffiliation ({ close, save }) {
   const [orgName, setOrgName] = useState('')
   const [url, setUrl] = useState('')
 
-  // TODO: i18n needs to be switched to hook
-
   const canSave = role.length && orgName.length
 
   const URL_PROTOCOL = 'https://'
