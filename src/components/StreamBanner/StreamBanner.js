@@ -34,7 +34,7 @@ export default function StreamBanner ({
   let bannerUrl, avatarUrl, name, location, subtitle
   const { t } = useTranslation()
   const view = routeParams.view
-
+  
   if (context === 'all') {
     name = t('All My Groups')
     avatarUrl = whiteMerkaba
@@ -47,7 +47,7 @@ export default function StreamBanner ({
     // TODO list count of public posts and public groups in subtitle
     subtitle = t('All Posts Marked Public')
   } else if (context === 'my') {
-    name = `My Home: ${capitalize(view)}` // TODO: i18n
+    name = `${t('My Home')}: ${capitalize(t(view))}` // TODO: i18n each possible view might need to be added to the translations
     avatarUrl = currentUser.avatarUrl || publicGlobe
     bannerUrl = currentUser.bannerUrl || allGroupsBanner
   } else if (!group) {

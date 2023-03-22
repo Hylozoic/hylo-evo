@@ -53,7 +53,7 @@ class PostEditor extends React.Component {
     ensureLocationIdIfCoordinate: PropTypes.func
   }
 
-  static defaultProps = { // TODO: i18n
+  static defaultProps = { // TODO: i18n these translations might need to be manually added?
     titlePlaceholderForPostType: {
       offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
@@ -90,7 +90,8 @@ class PostEditor extends React.Component {
     post,
     topic,
     announcementSelected,
-    postType
+    postType,
+    t
   }) => {
     const defaultPostWithGroupsAndTopic = Object.assign(
       {},
@@ -107,17 +108,17 @@ class PostEditor extends React.Component {
     )
     const currentPost = post
       ? {
-        ...post,
-        locationId: post.locationObject ? post.locationObject.id : null,
-        startTime: Moment(post.startTime),
-        endTime: Moment(post.endTime)
-      }
+          ...post,
+          locationId: post.locationObject ? post.locationObject.id : null,
+          startTime: Moment(post.startTime),
+          endTime: Moment(post.endTime)
+        }
       : defaultPostWithGroupsAndTopic
 
     return {
       post: currentPost,
-      titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
-      detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
+      titlePlaceholder: t(this.titlePlaceholderForPostType(currentPost.type)),
+      detailPlaceholder: t(this.detailPlaceholderForPostType(currentPost.type)),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,

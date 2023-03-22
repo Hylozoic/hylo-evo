@@ -2,6 +2,7 @@ import { push } from 'connected-react-router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { formatError } from 'routes/NonAuthLayoutRouter/util'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
@@ -10,7 +11,7 @@ import './Login.scss'
 
 export default function Login (props) {
   const dispatch = useDispatch()
-
+  const { t } = useTranslation()
   const params = useParams()
 
   const oauthUID = params.uid
@@ -55,13 +56,11 @@ export default function Login (props) {
   }
 
   const { authenticated, className } = props
-  // TODO: i18N
-  return authenticated ? <div>Already logged in, redirecting...</div>
+  return authenticated ? <div>{t('Already logged in, redirecting...')}</div>
     : (
       <div className={className}>
         <div styleName='formWrapper'>
-          <h1 styleName='title'>Sign in to Hylo</h1>
-          {/* TODO: i18n */}
+          <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
           {error && formatError(error, 'Login')}
 
           <TextInput
@@ -84,8 +83,7 @@ export default function Login (props) {
             value={password}
           />
           <Link to='/reset-password' styleName='forgot-password'>
-            {/* TODO: i18n */}
-            <span styleName='forgot-password'>Forgot password?</span>
+            <span styleName='forgot-password'>{t('Forgot password?')}</span>
           </Link>
 
           <Button styleName='submit' label='Sign in' onClick={submit} />

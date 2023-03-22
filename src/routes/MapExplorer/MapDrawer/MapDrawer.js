@@ -148,10 +148,9 @@ function MapDrawer (props) {
           {![CONTEXT_MY, 'all', 'public'].includes(context) &&
             <>
               <span onClick={handleChildPostInclusion}
-                data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups' : 'Show posts from child groups'}
+                data-tip={childPostInclusion === 'yes' ? t('Hide posts from child groups') : t('Show posts from child groups')}
                 data-for='childgroup-toggle-tt'
               >
-                {/* TODO: i18n on tooltip */}
                 <Icon
                   name='Subgroup'
                   className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}

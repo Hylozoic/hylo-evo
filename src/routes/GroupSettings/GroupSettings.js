@@ -69,8 +69,7 @@ export default function GroupSettings ({
           />
         },
         {
-          name: 'Roles & Badges',
-          // TODO: i18n
+          name: t('Roles & Badges'),
           path: groupUrl(slug, 'settings/roles'),
           component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} />
         },

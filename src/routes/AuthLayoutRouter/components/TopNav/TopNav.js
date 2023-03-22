@@ -83,8 +83,7 @@ export default function TopNav (props) {
             <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
             <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
             <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
-            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>Contribute to Hylo</a></li>
-            {/* TODO: i18n */}
+            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Contribute to Hylo')}</a></li>
             <li><a onClick={logout}>{t('Log out')}</a></li>
           </Dropdown>
         </div>
@@ -112,14 +111,14 @@ function Logo ({ group, isPublic }) {
 }
 
 function Title ({ group, isPublic, onClick, isMyHome }) {
-  let [label, name] = ['PERSONAL', 'All My Groups']
-
+  const { t } = useTranslation()
+  let [label, name] = [t('PERSONAL'), t('All My Groups')]
   if (group) {
     [label, name] = [group.typeDescriptor, group.name]
   } else if (isPublic) {
-    [label, name] = ['GLOBAL', 'Public Groups & Posts']
+    [label, name] = [t('GLOBAL'), t('Public Groups & Posts')]
   } else if (isMyHome) {
-    [label, name] = ['PERSONAL', 'My Home'] // TODO: i18n changes
+    [label, name] = [t('PERSONAL'), t('My Home')]
   }
 
   return (

@@ -64,7 +64,7 @@ export default function Drawer (props) {
 
   const myHome = {
     id: MY_HOME_ID,
-    name: 'My Home', // TODO: i18n
+    name: t('My Home'),
     groups: [],
     explicitPath: myPath,
     avatarUrl: MY_HOME_AVATAR_PATH

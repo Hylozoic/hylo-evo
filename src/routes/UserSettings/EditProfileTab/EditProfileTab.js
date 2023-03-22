@@ -18,25 +18,7 @@ import SocialControl from './SocialControl'
 
 const { object, func } = PropTypes
 
-/** LinkedIn Url */
-const validateLinkedinUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com/)
-
 export const validateName = name => name && name.match(/\S/gm)
-
-export const linkedinPrompt = () => {
-  let linkedinUrl = window.prompt('Please enter the full url for your LinkedIn page.') // TODO: i18n
-
-  if (linkedinUrl) {
-    while (!validateLinkedinUrl(linkedinUrl)) {
-      linkedinUrl = window.prompt('Invalid url. Please enter the full url for your LinkedIn page.')  // TODO: i18n
-    }
-  }
-
-  return linkedinUrl
-}
-
-/** Facebook Url */
-const validateFacebookUrl = url => url.match(/^(http(s)?:\/\/)?([\w]+\.)?facebook\.com/)
 
 class EditProfileTab extends Component {
   static propTypes = {
@@ -90,7 +72,7 @@ class EditProfileTab extends Component {
   }
 
   updateSetting = (key, setChanged = true) => async event => {
-    const { fetchLocation } = this.props
+    const { fetchLocation, t } = this.props
     const { edits, changed } = this.state
     setChanged && this.props.setConfirm(t('You have unsaved changes, are you sure you want to leave?'))
 
@@ -138,10 +120,9 @@ class EditProfileTab extends Component {
     return (
       <div>
         <Helmet>
-          <title>Your Settings | Hylo</title>
+          <title>{t('Your Settings')} | Hylo</title>
         </Helmet>
-        {!validateName(name) && <div styleName='name-validation'>Name must not be blank</div>}
-        {/* TODO: i18n */}
+        {!validateName(name) && <div styleName='name-validation'>{t('Name must not be blank')}</div>}
         <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
         <div style={bgImageStyle(bannerUrl)} styleName='banner'>
           <UploadAttachmentButton

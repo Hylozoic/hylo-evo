@@ -71,10 +71,9 @@ export default function PostBigGridItem (props) {
         {childPost &&
           <div
             styleName='icon-container'
-            data-tip='Post from child group'
+            data-tip={t('Post from child group')}
             data-for='childgroup-tt'
           >
-            {/* TODO: i18n on tooltip */}
             <Icon
               name='Subgroup'
               styleName='icon'

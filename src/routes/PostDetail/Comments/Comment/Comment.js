@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import { filter, isFunction } from 'lodash/fp'
+import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl } from 'util/navigation'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -24,7 +25,7 @@ const { object, func } = PropTypes
 
 export const INITIAL_SUBCOMMENTS_DISPLAYED = 4
 
-export class Comment extends Component { /* TODO: i18n */
+export class Comment extends Component {
   static propTypes = {
     comment: object.isRequired,
     onReplyComment: func.isRequired,
@@ -167,7 +168,7 @@ export class Comment extends Component { /* TODO: i18n */
   }
 }
 
-export default class CommentWithReplies extends Component {
+export class CommentWithReplies extends Component {
   static propTypes = {
     comment: object.isRequired,
     createComment: func.isRequired, // bound by Comments.connector & Comment.connector
@@ -254,7 +255,7 @@ export default class CommentWithReplies extends Component {
                 createComment(c)
                   .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
               }}
-              placeholder={`Reply to ${comment.creator.name}`}
+              placeholder={`${t('Reply to')} ${comment.creator.name}`}
               editorContent={this.state.prefillEditor}
               focusOnRender
             />
@@ -265,3 +266,5 @@ export default class CommentWithReplies extends Component {
     )
   }
 }
+
+export default withTranslation()(CommentWithReplies)

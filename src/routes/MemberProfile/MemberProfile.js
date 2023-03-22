@@ -89,15 +89,15 @@ class MemberProfile extends React.Component {
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const contentDropDownItems = [
-      { label: 'Overview', title: `${person.name}'s recent activity`, component: RecentActivity },
-      { label: 'Posts', title: `${person.name}'s posts`, component: MemberPosts },
-      { label: 'Comments', title: `${person.name}'s comments`, component: MemberComments },
-      { label: 'Upvotes', title: `${person.name}'s upvotes`, component: MemberVotes }
+      { label: 'Overview', title: t(`${person.name}'s recent activity`, { person }), component: RecentActivity },
+      { label: 'Posts', title: t(`${person.name}'s posts`, { person }), component: MemberPosts },
+      { label: 'Comments', title: t(`${person.name}'s comments`, { person }), component: MemberComments },
+      { label: 'Upvotes', title: t(`${person.name}'s upvotes`, { person }), component: MemberVotes }
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const actionButtonsItems = [
-      { iconName: 'Messages', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideCopyTip: true },
+      { iconName: 'Messages', value: t('Message Member'), onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideCopyTip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
       { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },
@@ -106,8 +106,8 @@ class MemberProfile extends React.Component {
       { iconName: 'Public', value: person.url, onClick: () => gotoExternalUrl(person.url) }
     ]
     const actionDropdownItems = [
-      { icon: 'Edit', label: 'Edit Profile', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
-      { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
+      { icon: 'Edit', label: t('Edit Profile'), onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
+      { icon: 'Ex', label: t('Block this Member'), onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
     ]
     const {
       title: currentContentTitle,
@@ -121,8 +121,7 @@ class MemberProfile extends React.Component {
       <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
         <Helmet>
           <title>{person.name} | Hylo</title>
-          <meta name='description' content={`${person.name}'s Member Profile`} />
-          {/* TODO: i18n */}
+          <meta name='description' content={`${person.name}: ${t('Member Profile')}`} />
         </Helmet>
         <div styleName='header'>
           {isCurrentUser &&
@@ -134,7 +133,7 @@ class MemberProfile extends React.Component {
             <h1 styleName='header-member-name'>{person.name}</h1>
             <div styleName='badgeRow'>
               {creatorIsModerator && (
-                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} />
+                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} />
               )}
               {badges.map(badge => (
                 <BadgeEmoji key={badge.name} expanded {...badge} />

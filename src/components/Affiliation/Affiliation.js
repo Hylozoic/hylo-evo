@@ -16,9 +16,9 @@ export default function Affiliation ({ affiliation, index, archive }) {
     <div styleName={`affiliation ${index % 2 === 0 ? 'even' : 'odd'}`}>
       <div styleName='role'>{role}</div>
       <div>{preposition}</div>
-      <div styleName='orgName'>{url ? (<a href={url} target='new'>{orgName}</a>) : orgName }</div>
+      <div styleName='orgName'>{url ? (<a href={url} target='new'>{orgName}</a>) : orgName}</div>
 
-      { archive && <span onClick={leave} styleName='leave-button'>{t('Delete')}</span> }
+      {archive && <span onClick={leave} styleName='leave-button'>{t('Delete')}</span>}
     </div>
   )
 }

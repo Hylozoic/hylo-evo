@@ -26,7 +26,8 @@ class Member extends React.Component {
       member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles },
       goToPerson,
       canModerate,
-      removeMember
+      removeMember,
+      t
     } = this.props
 
     const badges = (group.id && groupRoles.filter(role => role.groupId === group.id)) || []
@@ -34,17 +35,19 @@ class Member extends React.Component {
 
     return (
       <div styleName='member' className={className}>
-        {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-          { icon: 'Trash', label: this.props.t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
-        ]} />}
+        {canModerate &&
+          <Dropdown
+            styleName='dropdown'
+            toggleChildren={<Icon name='More' />}
+            items={[{ icon: 'Trash', label: t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }]}
+          />}
         <div onClick={goToPerson(id, group.slug)}>
           <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
             {creatorIsModerator && (
-              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
-              // TODO: i18n
+              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
             )}
             {badges.map(badge => (
               <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
