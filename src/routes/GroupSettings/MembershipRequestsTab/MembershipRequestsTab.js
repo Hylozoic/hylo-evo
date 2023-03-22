@@ -69,7 +69,7 @@ export function NoRequests ({ group, viewMembers }) {
         <br />
         <div>
           <h2>{t('No new join requests')}</h2>
-          {t('We\'ll notify you by email when someone wants to join <strong>{{group.name}}</strong>', { group })}
+          {t('We\'ll notify you by email when someone wants to join')}{' '}<strong>{group.name}</strong>
         </div>
         {!isWebView() && (
           <Button

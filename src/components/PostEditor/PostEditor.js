@@ -821,9 +821,9 @@ class PostEditor extends React.Component {
                   )}
                 >
                   {t(`To accept financial contributions for this project, you have
-                  to connect a Stripe account. Go to 
-                  <a href='/settings/payment'>Settings</a> to set it up.
-                  (Remember to save your changes before leaving this form)`)}
+                  to connect a Stripe account. Go to`)}
+                  <a href='/settings/payment'>{t('Settings')}</a>{' '}{t('to set it up.')}
+                  {t('(Remember to save your changes before leaving this form)')}
                 </div>
               )}
             </div>

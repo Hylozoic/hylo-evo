@@ -47,7 +47,10 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      How can people become members of &lt;strong&gt;{{name}}&lt;/strong&gt;?
+      How can people become members of
+      <strong>
+        Foomunity
+      </strong>
     </p>
     <AccessibilitySettingRow
       currentSetting={1}
@@ -99,12 +102,18 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      When you select a prerequisite group, people must join the selected groups before joining &lt;strong&gt;{{name}}&lt;/strong&gt;. Only parent groups can be added as prerequisite groups.
+      When you select a prerequisite group, people must join the selected groups before joining
+       
+      <strong>
+        Foomunity
+      </strong>
+      .
+       
+      Only parent groups can be added as prerequisite groups.
     </p>
     <p
       data-stylename="styles.prerequisiteWarning"
     >
-       
       <strong
         data-stylename="styles.warning"
       >
