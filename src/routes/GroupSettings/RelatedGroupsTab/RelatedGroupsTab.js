@@ -336,7 +336,7 @@ export function RequestToJoinModal ({ group, hideRequestToJoinModal, parentGroup
         <div styleName='request-modal'>
           <div styleName='request-top'>
             <span styleName='modal-close-button' onClick={hideRequestToJoinModal}><Icon name='Ex' /></span>
-            <span styleName='request-message'>{t('You are requesting that <strong>{{group.name}}</strong> become a member of <strong>{{parentGroup.name}}</strong>', { group, parentGroup })}</span>
+            <span styleName='request-message'>{t('You are requesting that')}{' '}<strong>{group.name}</strong>{' '}{t('become a member of')}{' '}<strong>{parentGroup.name}</strong></span>
             <div styleName='join-example'>
               <div styleName='requesting-group' style={bgImageStyle(group.bannerUrl)}>
                 <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} styleName='group-image' size='30px' square />

@@ -51,7 +51,7 @@ class PostEditor extends React.Component {
     ensureLocationIdIfCoordinate: PropTypes.func
   }
 
-  static defaultProps = { // TODO: i18n these translations might need to be manually added?
+  static defaultProps = {
     titlePlaceholderForPostType: {
       offer: 'What help can you offer?',
       request: 'What are you looking for help with?',
@@ -623,6 +623,15 @@ class PostEditor extends React.Component {
 
     const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
     const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
+
+    // These need to be invoked here so that they get picked up by the translation extractor
+    t('What help can you offer?')
+    t('What are you looking for help with?')
+    t('What resource is available?')
+    t('What would you like to call your project?')
+    t('What is your event called?')
+    t('What’s on your mind?')
+    t('Add a description')
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>

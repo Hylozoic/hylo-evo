@@ -43,9 +43,9 @@ module.exports = function (api) {
         'i18next-extract',
         {
           keySeparator: null,
-          locales: ['es'],
+          locales: ['es', 'en'],
           nsSeparator: null,
-          outputPath: 'public/locales/{{locale}}/{{ns}}.json'
+          outputPath: 'public/locales/{{locale}}.json'
         }
       ],
       'import-graphql',
