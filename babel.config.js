@@ -43,7 +43,7 @@ module.exports = function (api) {
         'i18next-extract',
         {
           keySeparator: null,
-          locales: ['es'],
+          locales: ['es', 'en', 'fr', 'de'],
           nsSeparator: null,
           outputPath: 'public/locales/{{locale}}/{{ns}}.json'
         }

@@ -12,5 +12,24 @@
   "eslint.format.enable": true,
   "eslint.packageManager": "yarn",
   "eslint.lintTask.enable": true,
-  "eslint.codeActionsOnSave.mode": "problems"
+  "eslint.codeActionsOnSave.mode": "problems",
+  "i18n-ally.localesPaths": [
+    "public/locales"
+  ],
+  "i18n-ally.enabledFrameworks": [
+    "react",
+    "i18next",
+    "general"
+  ],
+  "i18n-ally.namespace": true,
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.disablePathParsing": true,
+  "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally.extract.ignored": [
+    "A role must have a valid emoji and name to be updated"
+  ],
+  "i18n-ally.defaultNamespace": "translation",
+  "i18n-ally.keystyle": "flat"
 }

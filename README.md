@@ -67,7 +67,11 @@ For users that are not logged in can see public posts and groups via routes like
 ### Translations
 We use i18next to handle translations of platform strings (no translations of user content at this time). 
 
-The `i18next-extract` config details in the `babel.config.js` file determines how all language keys are extracted and what languages are supported. Whenever babel runs, it will comb the entire repo for js/jsx files, and anytime it finds a t('example-key') function, it will pull every key into 
+The `i18next-extract` config details in the `babel.config.js` file determines how all language keys are extracted and what languages are supported. Whenever babel runs, it will comb the entire repo for js/jsx files, and anytime it finds a t('example-key') function, it will pull every key into each of the translation files.
+
+If using vscode, there is a really fantastic extension for working with i18n; [i18n-ally](https://github.com/lokalise/i18n-ally)
+They have a 8 minute setup and feature [demo video](https://www.youtube.com/watch?v=kowM-MoGVns). 
+
 
 ### Sockets
 
