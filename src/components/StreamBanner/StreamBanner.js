@@ -47,9 +47,14 @@ export default function StreamBanner ({
     // TODO list count of public posts and public groups in subtitle
     subtitle = t('All Posts Marked Public')
   } else if (context === 'my') {
-    name = `${t('My Home')}: ${capitalize(t(view))}` // TODO: i18n each possible view might need to be added to the translations
+    name = `${t('My Home')}: ${capitalize(t(view))}`
     avatarUrl = currentUser.avatarUrl || publicGlobe
     bannerUrl = currentUser.bannerUrl || allGroupsBanner
+    // These need to be invoked here so that they get picked up by the translation extractor
+    t('Posts')
+    t('Interactions')
+    t('Mentions')
+    t('Announcements')
   } else if (!group) {
     return null
   } else {

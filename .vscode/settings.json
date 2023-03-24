@@ -26,10 +26,12 @@
   "i18n-ally.displayLanguage": "en",
   "i18n-ally.sortKeys": true,
   "i18n-ally.disablePathParsing": true,
-  "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally.pathMatcher": "{locale}.json",
+  // "i18n-ally.keysInUse": [
+  //   "description.part2_whatever"
+  // ],
   "i18n-ally.extract.ignored": [
     "A role must have a valid emoji and name to be updated"
   ],
-  "i18n-ally.defaultNamespace": "translation",
   "i18n-ally.keystyle": "flat"
 }

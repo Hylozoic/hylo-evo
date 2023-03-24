@@ -20,7 +20,7 @@ i18n
     fallbackLng: 'en',
     keySeparator: false,
     nsSeparator: false,
-    supportedLngs: ['en', 'es', 'fr', 'de'],
+    supportedLngs: ['en', 'es'],
     nonExplicitSupportedLngs: true,
     interpolation: {
       escapeValue: false // not needed for react as it escapes by default

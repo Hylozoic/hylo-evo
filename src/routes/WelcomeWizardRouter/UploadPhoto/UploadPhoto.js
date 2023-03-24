@@ -44,31 +44,33 @@ class UploadPhoto extends Component {
 
     const currentAvatarUrl = this.getValue('avatarUrl')
 
-    return <div styleName='flex-wrapper'>
-      <div styleName='panel'>
-        <span styleName='step-count'>{t('STEP 1/3')}</span>
-        <br />
-        <div styleName='center'>
-          <div styleName='uploadWrapper'>
-            <UploadAttachmentButton
-              type='userAvatar'
-              id={currentUser.id}
-              onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
-              <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
-                <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
-              </div>
-            </UploadAttachmentButton>
+    return (
+      <div styleName='flex-wrapper'>
+        <div styleName='panel'>
+          <span styleName='step-count'>{t('STEP 1/3')}</span>
+          <br />
+          <div styleName='center'>
+            <div styleName='uploadWrapper'>
+              <UploadAttachmentButton
+                type='userAvatar'
+                id={currentUser.id}
+                onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}>
+                <div styleName='avatar' style={bgImageStyle(currentAvatarUrl)}>
+                  <Icon styleName='upload-icon' name={uploadImagePending ? 'Clock' : 'AddImage'} />
+                </div>
+              </UploadAttachmentButton>
+            </div>
+          </div>
+          <div styleName='instructions'>
+            <h3>{t('Upload a profile image')}</h3>
+            <p>{t('Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.')}</p>
+          </div>
+          <div>
+            <WelcomeWizardModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={t('Next: Where are you from?')} />
           </div>
         </div>
-        <div styleName='instructions'>
-          <h3>{t('Upload a profile image')}</h3>
-          <p>{t('Almost done setting up your profile! Click the above profile icon to upload a custom profile image. Your profile image will be visible when you post or comment in groups.')}</p>
-        </div>
-        <div>
-          <WelcomeWizardModalFooter previous={this.previous} submit={this.submit} showPrevious={false} continueText={t('Next: Where are you from?')} />
-        </div>
       </div>
-    </div>
+    )
   }
 }
 export default withTranslation()(UploadPhoto)

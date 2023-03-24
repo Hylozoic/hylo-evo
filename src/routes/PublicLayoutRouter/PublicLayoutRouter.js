@@ -160,7 +160,7 @@ export function PublicPageHeader () {
   return (
     <div styleName='background'>
       <Helmet>
-        <title>Public | Hylo</title>
+        <title>{t('Public')} | Hylo</title>
         <meta name='description' content='Hylo: Public content' />
       </Helmet>
       <div styleName='header'>
