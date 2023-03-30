@@ -71,3 +71,13 @@ export function formatError (error, action) {
 
   return <div styleName='error'>{errorMessages(error)}</div>
 }
+
+// Used by Safari to make sure we have storage access when in an iFrame
+export function checkForStorageAccess (successCallback, errorCallback) {
+  if (typeof document.hasStorageAccess === 'function' && typeof document.requestStorageAccess === 'function') {
+    const requestStorageAccessPromise = document.requestStorageAccess()
+    return requestStorageAccessPromise.then(successCallback, errorCallback)
+  } else {
+    return successCallback()
+  }
+}
