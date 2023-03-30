@@ -81,7 +81,7 @@ export function OpportunityToCollaborate ({ group, opportunity }) {
   }
   const currentUser = useSelector(state => getMe(state))
   const { push } = useRouter()
-  const prompt = t(`Hi there {group.name}, I'd like to talk about {promptLookup[opportunity]}.`, { group, opportunity, promptLookup })
+  const prompt = t(`Hi there {{groupName}}, I'd like to talk about {{prompt}}.`, { groupName: group.name, prompt: promptLookup[opportunity] })
   const goToGroupModeratorsMessage = useCallback(() => {
     push(
       `${newMessageUrl()}?participants=${group.moderators.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
