@@ -254,7 +254,7 @@
   "Groups": "Grupos",
   "Hazard risk mitigation": "Mitigación del riesgo de peligro",
   "Here you can switch between types of content and create new content for people in your group or everyone on Hylo!": "¡Aquí puede cambiar entre los tipos de contenido y crear contenido nuevo para las personas de su grupo o para todos en Hylo!",
-  "Hi there {{groupName}}, I'd like to talk about {{prompt}}.": "Hola {group.name}, me gustaría hablar sobre {promptLookup[opportunity]}.",
+  "Hi there {{groupName}}, I'd like to talk about {{prompt}}.": "Hola {{groupName}}, me gustaría hablar sobre {{prompt}}.",
   "Hi {{email}} we just need to know your name and password and you're in": "Hola, {{email}}, solo necesitamos saber tu nombre y contraseña y estás dentro",
   "Hi {{email}} we just need to know your name and password and you're in.": "Hola, {{email}}, solo necesitamos saber tu nombre y contraseña y estás dentro.",
   "Hi {{firstName}}, want to create an event?": "Hola, {{firstName}}, ¿quieres crear un evento?",
