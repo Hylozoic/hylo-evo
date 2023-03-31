@@ -1,11 +1,12 @@
 import Mention from '@tiptap/extension-mention'
 import { PluginKey } from 'prosemirror-state'
 import { uniqBy } from 'lodash/fp'
+import { queryHyloAPI } from 'util/graphql'
 import asyncDebounce from 'util/asyncDebounce'
 import suggestions from './suggestions'
 import findTopics from 'store/actions/findTopics'
 
-export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection, suggestionsThemeName }) =>
+export const TopicMentions = ({ groupIds, maxSuggestions, onSelection, suggestionsThemeName }) =>
   Mention
     .extend({
       name: 'topic',
@@ -44,15 +45,16 @@ export const TopicMentions = ({ dispatch, groupIds, maxSuggestions, onSelection,
           //       Can be fixed if it is a bad UX.
           editor.extensionStorage.topic.loading = true
 
-          // TODO: Integrate `getTopicsBySearchTerm` selector to reduce queries and speed results
-          const matchedTopics = await dispatch(findTopics({
+          const findTopicsGraphql = findTopics({
             autocomplete: query,
+            groupIds: editor.extensionStorage.topic.groupIds,
             maxItems: maxSuggestions
-          }))
+          }).graphql
+          const matchedTopics = await queryHyloAPI(findTopicsGraphql)
 
           editor.extensionStorage.topic.loading = false
 
-          const results = matchedTopics?.payload.getData().items
+          const results = matchedTopics?.data.groupTopics.items
             .map(t => ({
               id: t.topic.name,
               label: `#${t.topic.name}`,
