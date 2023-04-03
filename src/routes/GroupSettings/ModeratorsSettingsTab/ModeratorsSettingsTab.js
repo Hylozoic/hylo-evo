@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import React, { Component, useEffect, useRef, useState } from 'react'
-import { useTranslation, withTranslation } from 'react-i18next'
+import React, { Component, useEffect, useState } from 'react'
+import { withTranslation } from 'react-i18next'
 import Loading from 'components/Loading'
 import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import RemovableListItem from 'components/RemovableListItem'

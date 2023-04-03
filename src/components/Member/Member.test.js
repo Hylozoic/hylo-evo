@@ -24,7 +24,7 @@ const renderComponent = (providedProps) => {
 
 describe('Member Component', () => {
   it('shows moderate button when a moderator', () => {
-    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [{ name: 'role', emoji: '🏄'}] }, canModerate: true })
+    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [{ name: 'role', emoji: '🏄' }] }, canModerate: true })
     expect(wrapper.find('Dropdown')).toHaveLength(1)
   })
 

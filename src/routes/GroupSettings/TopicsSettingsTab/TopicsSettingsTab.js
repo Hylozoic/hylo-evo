@@ -169,7 +169,7 @@ class TopicsSettingsTab extends Component {
 
 export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending, totalTopicsCached }) {
   const { t } = useTranslation()
-  const selected = find(o => o.id === selectedSort, sortOptions)
+  let selected = find(o => o.id === selectedSort, sortOptions)
 
   if (!selected) selected = sortOptions[0]
 

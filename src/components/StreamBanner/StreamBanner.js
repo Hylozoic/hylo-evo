@@ -34,7 +34,7 @@ export default function StreamBanner ({
   let bannerUrl, avatarUrl, name, location, subtitle
   const { t } = useTranslation()
   const view = routeParams.view
-  
+
   if (context === 'all') {
     name = t('All My Groups')
     avatarUrl = whiteMerkaba

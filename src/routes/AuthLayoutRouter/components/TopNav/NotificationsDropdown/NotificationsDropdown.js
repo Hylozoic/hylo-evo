@@ -77,15 +77,14 @@ class NotificationsDropdown extends Component {
       markAllActivitiesRead,
       pending
     } = this.props
-    const { notifications } = this.props
     const { showingUnread } = this.state
 
     const showRecent = () => this.setState({ showingUnread: false })
     const showUnread = () => this.setState({ showingUnread: true })
 
-    if (showingUnread) {
-      notifications = notifications.filter(n => n.activity.unread)
-    }
+    const notifications = showingUnread
+      ? this.props.notifications.filter(n => n.activity.unread)
+      : this.props.notifications
 
     const message = `No ${showingUnread ? 'unread ' : ''}notifications` // TODO: Handle this translation
 
