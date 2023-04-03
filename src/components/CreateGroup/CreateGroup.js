@@ -49,7 +49,7 @@ class CreateGroup extends Component {
 
   componentDidUpdate (oldProps) {
     if (oldProps.groupSlugExists !== this.props.groupSlugExists) {
-      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? t('This URL already exists. Try another.') : false } })
+      this.setState({ errors: { ...this.state.errors, slug: this.props.groupSlugExists ? this.props.t('This URL already exists. Try another.') : false } })
     }
   }
 
@@ -64,9 +64,9 @@ class CreateGroup extends Component {
 
   validateSlug (val) {
     if (val === '') {
-      return t('Please enter a URL slug')
+      return this.props.t('Please enter a URL slug')
     } else if (!slugValidatorRegex.test(val)) {
-      return t('URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.')
+      return this.props.t('URLs must have between 2 and 40 characters, and can only have lower case letters, numbers, and dashes.')
     } else {
       this.props.fetchGroupExists(val)
       return false
@@ -83,7 +83,7 @@ class CreateGroup extends Component {
     }
 
     if (field === 'name') {
-      updates.errors.name = newValue === '' ? t('Please enter a group name') : false
+      updates.errors.name = newValue === '' ? this.props.t('Please enter a group name') : false
       updates.characterCount = newValue.length
     }
 
@@ -114,7 +114,7 @@ class CreateGroup extends Component {
           if (error) {
             // `state.error` doesn't appear to be displayed anywhere
             this.setState({
-              error: t('There was an error, please try again.')
+              error: this.props.t('There was an error, please try again.')
             })
           } else {
             this.props.goToGroup(slug)
@@ -304,4 +304,5 @@ class CreateGroup extends Component {
     )
   }
 }
+
 export default withTranslation()(CreateGroup)
