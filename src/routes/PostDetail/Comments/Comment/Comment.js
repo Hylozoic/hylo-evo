@@ -213,7 +213,7 @@ export class CommentWithReplies extends Component {
   }
 
   render () {
-    const { comment, createComment, fetchChildComments, childCommentsTotal, hasMoreChildComments } = this.props
+    const { comment, createComment, fetchChildComments, childCommentsTotal, hasMoreChildComments, t } = this.props
     let { childComments } = comment
     const { replying, showLatestOnly, newCommentsAdded } = this.state
 

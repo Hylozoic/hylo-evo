@@ -27,7 +27,7 @@ export default function PeopleInfo ({
     pluralPhrase: t('commented')
   }
 
-  const mergedPhrases = {...defaultPhrases, ...phrases}
+  const mergedPhrases = { ...defaultPhrases, ...phrases }
 
   const currentUserIsMember = find(c => c.id === excludePersonId, people)
   const sortedPeople = currentUserIsMember && people.length === 2

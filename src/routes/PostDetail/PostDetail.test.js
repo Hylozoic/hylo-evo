@@ -30,7 +30,7 @@ describe('PostDetail', () => {
       peopleReactedTotal,
       myVote,
       members: [],
-      groups: [ { id: '109 '}]
+      groups: [{ id: '109 ' }]
     }
 
     const wrapper = shallow(<PostDetail
