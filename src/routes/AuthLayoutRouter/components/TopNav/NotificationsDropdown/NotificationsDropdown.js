@@ -84,7 +84,7 @@ class NotificationsDropdown extends Component {
 
     const notifications = showingUnread
       ? this.props.notifications.filter(n => n.activity.unread)
-      : this.notifications
+      : this.props.notifications
 
     const message = `No ${showingUnread ? 'unread ' : ''}notifications` // TODO: Handle this translation
 
