@@ -154,6 +154,7 @@
     "husky": "^7.0.4",
     "hylo-shared": "5.2.2",
     "i18next": "^22.0.5",
+    "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.0.1",
     "identity-obj-proxy": "3.0.0",
     "immutability-helper": "^3.1.1",
