@@ -37,7 +37,6 @@ class PostEditor extends React.Component {
     createPost: PropTypes.func,
     currentUser: PropTypes.object,
     currentGroup: PropTypes.object,
-    detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
@@ -47,30 +46,12 @@ class PostEditor extends React.Component {
     post: PropTypes.shape(POST_PROP_TYPES),
     removeLinkPreview: PropTypes.func,
     setIsDirty: PropTypes.func,
-    titlePlaceholderForPostType: PropTypes.object,
     updatePost: PropTypes.func,
     fetchLocation: PropTypes.func,
     ensureLocationIdIfCoordinate: PropTypes.func
   }
 
   static defaultProps = {
-    titlePlaceholderForPostType: {
-      offer: t('What help can you offer?'),
-      request: t('What are you looking for help with?'),
-      resource: t('What resource is available?'),
-      project: t('What would you like to call your project?'),
-      event: t('What is your event called?'),
-      default: t('What’s on your mind?')
-    },
-    // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content
-    detailPlaceholderForPostType: {
-      offer: t('Add a description'),
-      request: t('Add a description'),
-      resource: t('Add a description'),
-      project: t('Add a description'),
-      event: t('Add a description'),
-      default: t('Add a description')
-    },
     post: {
       type: 'discussion',
       title: '',
@@ -192,18 +173,37 @@ class PostEditor extends React.Component {
   }
 
   titlePlaceholderForPostType (type) {
-    const { titlePlaceholderForPostType } = this.props
+    const { t } = this.props
+
+    const titlePlaceHolders = {
+      offer: t('What help can you offer?'),
+      request: t('What are you looking for help with?'),
+      resource: t('What resource is available?'),
+      project: t('What would you like to call your project?'),
+      event: t('What is your event called?'),
+      default: t('What’s on your mind?')
+    }
+
     return (
-      titlePlaceholderForPostType[type] ||
-      titlePlaceholderForPostType.default
+      titlePlaceHolders[type] ||
+      titlePlaceHolders.default
     )
   }
 
   detailPlaceholderForPostType (type) {
-    const { detailPlaceholderForPostType } = this.props
+    const { t } = this.props
+    // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content and lose content
+    const detailPlaceHolders = {
+      offer: t('Add a description'),
+      request: t('Add a description'),
+      resource: t('Add a description'),
+      project: t('Add a description'),
+      event: t('Add a description'),
+      default: t('Add a description')
+    }
     return (
-      detailPlaceholderForPostType[type] ||
-      detailPlaceholderForPostType.default
+      detailPlaceHolders[type] ||
+      detailPlaceHolders.default
     )
   }
 

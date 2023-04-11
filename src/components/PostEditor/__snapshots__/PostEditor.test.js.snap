@@ -664,7 +664,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="discussion placeholder"
+        placeholder="What’s on your mind?"
         type="text"
         value=""
       />
@@ -822,7 +822,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="offer placeholder"
+        placeholder="What help can you offer?"
         type="text"
         value=""
       />
@@ -1008,7 +1008,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="request placeholder"
+        placeholder="What are you looking for help with?"
         type="text"
         value=""
       />
@@ -1194,7 +1194,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="resource placeholder"
+        placeholder="What resource is available?"
         type="text"
         value=""
       />
@@ -1380,7 +1380,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="a test title placeholder"
+        placeholder="What’s on your mind?"
         type="text"
         value=""
       />

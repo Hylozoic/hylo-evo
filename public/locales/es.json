@@ -418,6 +418,7 @@
   "Not a member of Hylo?": "¿No eres miembro de Hylo?",
   "Not answered": "No contestado",
   "Note: as a moderator you will always see the exact location displayed": "Nota: como moderador, siempre verá la ubicación exacta que se muestra",
+  "Nothing to see here": "",
   "Notifications": "Notificaciones",
   "Nutrient density": "Densidad de nutrientes",
   "OFF": "APAGADO",
@@ -906,6 +907,10 @@
   "{{numBad}} invalid email address/es found (see above)).": "Se encontraron {{numBad}} direcciones de correo electrónico no válidas (ver arriba)).",
   "{{othersCount}} others": "{{othersCount}} otros",
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requiere que los grupos respondan las siguientes preguntas antes de unirse",
+  "{{person.name}}'s comments": "",
+  "{{person.name}}'s posts": "",
+  "{{person.name}}'s reactions": "",
+  "{{person.name}}'s recent activity": "",
   "{{personOne}} and {{personTwo}}": "{{personaUno}} y {{personaDos}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas"
 }
