@@ -25,7 +25,7 @@ class OffersAndRequestsWidget extends Component {
         {items.map(p => <Link to={postUrl(p.id, routeParams)} key={p.id}>
           <div styleName='item'>
             <div styleName='meta'>
-              <span styleName='type'>{t(p.type)}</span>{' '}{t('from')}{' '}{p.creator.name}
+              <span styleName='type'>{t([p.type])}</span>{' '}{t('from')}{' '}{p.creator.name}
               <span styleName={cx('num-comments', p.type)}>{p.commentsTotal} <div styleName='tail' /></span>
             </div>
             <div styleName='title'>{p.title}</div>
