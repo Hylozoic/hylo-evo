@@ -53,21 +53,21 @@ class PostEditor extends React.Component {
 
   static defaultProps = {
     titlePlaceholderForPostType: {
-      offer: 'What help can you offer?',
-      request: 'What are you looking for help with?',
-      resource: 'What resource is available?',
-      project: 'What would you like to call your project?',
-      event: 'What is your event called?',
-      default: 'What’s on your mind?'
+      offer: t('What help can you offer?'),
+      request: t('What are you looking for help with?'),
+      resource: t('What resource is available?'),
+      project: t('What would you like to call your project?'),
+      event: t('What is your event called?'),
+      default: t('What’s on your mind?')
     },
     // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content
     detailPlaceholderForPostType: {
-      offer: 'Add a description',
-      request: 'Add a description',
-      resource: 'Add a description',
-      project: 'Add a description',
-      event: 'Add a description',
-      default: 'Add a description'
+      offer: t('Add a description'),
+      request: t('Add a description'),
+      resource: t('Add a description'),
+      project: t('Add a description'),
+      event: t('Add a description'),
+      default: t('Add a description')
     },
     post: {
       type: 'discussion',
@@ -116,8 +116,8 @@ class PostEditor extends React.Component {
 
     return {
       post: currentPost,
-      titlePlaceholder: t(this.titlePlaceholderForPostType(currentPost.type)),
-      detailPlaceholder: t(this.detailPlaceholderForPostType(currentPost.type)),
+      titlePlaceholder: this.titlePlaceholderForPostType(currentPost.type),
+      detailPlaceholder: this.detailPlaceholderForPostType(currentPost.type),
       valid: editing === true, // if we're editing, than it's already valid upon entry.
       announcementSelected: announcementSelected,
       toggleAnnouncementModal: false,
