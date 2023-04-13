@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.4.1] - 2023-04-13
+
 ### Fixed
 - Duplicate topics appearing in topic selector.
-- Order of topics in topic selector noq correctly showing more popular ones at the top
+- Order of topics in topic selector now correctly showing more popular ones at the top
+- Get Hylo working in iframes in Safari (requires using Storage Access API)
 
 ## [5.4.0] - 2023-03-15
 
