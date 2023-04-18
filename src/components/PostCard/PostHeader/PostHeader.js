@@ -156,7 +156,7 @@ export default class PostHeader extends PureComponent {
               {type && <PostLabel type={type} styleName='label' />}
               {dropdownItems.length > 0 &&
                 <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
-              {close && context &&
+              {close &&
                 <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
             </div>
           </div>
