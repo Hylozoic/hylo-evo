@@ -899,13 +899,13 @@
   "{{group.name}} wants to reduce hazard risk (fire, flood, drought, etc.)": "{{group.name}} wants to reduce hazard risk (fire, flood, drought, etc.)",
   "{{groupName}} Topics": "{{groupName}} Topics",
   "{{memberCount}} Total Members": "{{memberCount}} Total Members",
+  "{{name}}s comments": "{{name}}s comments",
+  "{{name}}s posts": "{{name}}s posts",
+  "{{name}}s reactions": "{{name}}s reaction",
+  "{{name}}s recent activity": "{{name}}s recent activity",
   "{{numBad}} invalid email address/es found (see above)).": "{{numBad}} invalid email address/es found (see above)).",
   "{{othersCount}} others": "{{othersCount}} others",
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requires groups to answer the following questions before joining",
-  "{{person.name}}'s comments": "{{person.name}}'s comments",
-  "{{person.name}}'s posts": "{{person.name}}'s posts",
-  "{{person.name}}'s reactions": "{{person.name}}'s reaction",
-  "{{person.name}}'s recent activity": "{{person.name}}'s recent activity",
   "{{personOne}} and {{personTwo}}": "{{personOne}} and {{personTwo}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total Topics"
 }

@@ -331,7 +331,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <h2
         data-stylename="content-header"
       >
-        Rich Churcher's recent activity
+        {{name}}s recent activity
       </h2>
       <Dropdown
         data-stylename="content-dropdown"
@@ -347,7 +347,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Overview",
               "onClick": [Function],
-              "title": "Rich Churcher's recent activity",
+              "title": "{{name}}s recent activity",
             },
             Object {
               "component": Object {
@@ -359,7 +359,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Posts",
               "onClick": [Function],
-              "title": "Rich Churcher's posts",
+              "title": "{{name}}s posts",
             },
             Object {
               "component": Object {
@@ -371,7 +371,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Comments",
               "onClick": [Function],
-              "title": "Rich Churcher's comments",
+              "title": "{{name}}s comments",
             },
             Object {
               "component": Object {
@@ -383,7 +383,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
               },
               "label": "Upvotes",
               "onClick": [Function],
-              "title": "Rich Churcher's upvotes",
+              "title": "{{name}}s reactions",
             },
           ]
         }

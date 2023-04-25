@@ -911,13 +911,13 @@
   "{{group.name}} wants to reduce hazard risk (fire, flood, drought, etc.)": "{{group.name}} quiere reducir el riesgo de peligros (incendios, inundaciones, sequías, etc.)",
   "{{groupName}} Topics": "{{groupName}} Temas",
   "{{memberCount}} Total Members": "{{memberCount}} Total de miembros",
+  "{{name}}s comments": "Comentarios de {{name}}",
+  "{{name}}s posts": "Publicaciones de {{name}}",
+  "{{name}}s reactions": "Reacciones de {{name}}",
+  "{{name}}s recent activity": "Actividad reciente de {{name}}",
   "{{numBad}} invalid email address/es found (see above)).": "Se encontraron {{numBad}} direcciones de correo electrónico no válidas (ver arriba)).",
   "{{othersCount}} others": "{{othersCount}} otros",
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requiere que los grupos respondan las siguientes preguntas antes de unirse",
-  "{{person.name}}'s comments": "Comentarios de {{person.name}}",
-  "{{person.name}}'s posts": "Publicaciones de {{person.name}}",
-  "{{person.name}}'s reactions": "Reacciones de {{person.name}}",
-  "{{person.name}}'s recent activity": "Actividad reciente de {{person.name}}",
   "{{personOne}} and {{personTwo}}": "{{personaUno}} y {{personaDos}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas"
 }
