@@ -112,6 +112,15 @@ class PostEditor extends React.Component {
 
   constructor (props) {
     super(props)
+    const { t } = this.props
+    // Dynamic strings that need to be invoked somewhere
+    t('Quick topic-based chats')
+    t('Talk about whats important with others')
+    t('What can people help you with?')
+    t('What do you have for others?')
+    t('Let people know about available resources')
+    t('Create a project that people can help with')
+    t('Invite people to your event')
 
     this.state = this.buildStateFromProps(props)
     this.titleInputRef = React.createRef()
@@ -596,14 +605,6 @@ class PostEditor extends React.Component {
     const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
     const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
 
-    // These need to be invoked here so that they get picked up by the translation extractor
-    t('What help can you offer?')
-    t('What are you looking for help with?')
-    t('What resource is available?')
-    t('What would you like to call your project?')
-    t('What is your event called?')
-    t('What’s on your mind?')
-    t('Add a description')
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>

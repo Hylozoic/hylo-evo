@@ -12,6 +12,21 @@ export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)
   const hasLocation = querystringParams.has('lat') && querystringParams.has('lng')
   const { t } = useTranslation()
+  // These need to be invoked here so that they get picked up by the translation extractor
+  t('What help can you offer?')
+  t('What are you looking for help with?')
+  t('What resource is available?')
+  t('What would you like to call your project?')
+  t('What is your event called?')
+  t('Whats on your mind?')
+  t('Add a description')
+  t('request')
+  t('discusion')
+  t('offer')
+  t('resource')
+  t('project')
+  t('event')
+  t('Talk about whats important with others')
 
   return (
     <div styleName='chooser'>
@@ -28,8 +43,8 @@ export default function CreateModalChooser ({ location }) {
             <div>
               <Icon name={iconName} styleName='postIcon' />
               <b>
-                <span styleName='postTypeName'>{postType}</span>
-                <span styleName='postTypeDescription'>{POST_TYPES[postType].description}</span>
+                <span styleName='postTypeName'>{t(postType)}</span>
+                <span styleName='postTypeDescription'>{t(POST_TYPES[postType].description)}</span>
               </b>
               <span styleName='indicator' />
             </div>
