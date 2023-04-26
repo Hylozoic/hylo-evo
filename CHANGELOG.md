@@ -4,51 +4,67 @@ All notable changes to Hylo Utils (shared utils for all Hylo products) will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.3]
+
+### Added
+- New AnalyticsEvents.GROUP_NEW_MEMBER
+
+## [5.2.2]
+
+### Added
+- New AnalyticsEvents: COMMENT_REACTION, EVENT_RSVP, POST_OPENED, POST_REACTION, SIGNUP_EMAIL_VERIFICATION_SENT, SIGNUP_EMAIL_VERIFIED, SIGNUP_REGISTERED
+
 ## [5.1.3]
+
 ### Added
 - `TextHelpers.sanitizeURL` adds "https" to URLs without a specified protocol
 
 ## [5.1.2]
 
-## Added
+### Added
 - `LocationHelpers.generalLocationString` used for presenting a location object
 
 ## [5.1.1]
 
-## Added
+### Added
 - AnalyticsEvents.POST_SHARED
 
 ## [5.1.0]
 
-## BREAKING CHANGE
+### BREAKING CHANGE
 - Turns autolinking on for `TextHelpers.markdown` by default, but allows it to be turned off with `disableAutolinking` option
 
 ...
 
 ## [1.7.0]
 
-## Added
+### Added
 - `HyloApp` for handling native `WebView` messaging between Web and App
 - `LocationHelpers.parseCoordinate` and `convertCoordinateToLocation` relocated from `hylo-evo`
 
 ## [1.6.9]
-## Added
+
+### Added
 - `LocationHelpers.parseCoordinate` and `convertCoordinateToLocation` relocated from `hylo-evo`
 
 ## [1.6.8]
-## Added
+
+### Added
 - `LocationHelpers.convertMapboxToLocation` function to concvert the response from mapbpx geocoding into the format we use for locations
 
 ## [1.6.5]
-## Changed
+
+### Changed
 - Changed markdown library is configured to work in transpiled distribution
 
 ## [1.6.4]
-## Changed
+
+### Changed
 - Disable GFM autolinking in markdown: all autolinking should be handled by linkify at point of display
 
 ## [1.6.3]
-## Changed
+
+### Changed
 - BREAKING CHANGES: text, validators have been changed to TextHelpers, PathHelpers, Validators
 - Input sanitization removed on TextHelpers#markdown
 

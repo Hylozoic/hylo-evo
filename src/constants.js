@@ -6,6 +6,7 @@ export const AnalyticsEvents = {
   EVENT_RSVP: 'Event RSVP',
   GROUP_CREATED: 'Group Created',
   GROUP_INVITATION_ACCEPTED: 'Group Invitation Accepted',
+  GROUP_NEW_MEMBER: 'Group New Member Joined',
   POST_CREATED: 'Post Created',
   POST_OPENED: 'Post Opened',
   POST_REACTION: 'Reacted to Post',
