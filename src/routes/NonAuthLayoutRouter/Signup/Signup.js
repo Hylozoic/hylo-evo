@@ -71,7 +71,7 @@ export default function Signup (props) {
         <p styleName='blurb'>{t('Stay connected, organized, and engaged with your group.')}</p>
         <p styleName='or'>{t('Enter your email to get started:')}</p>
 
-        {error && formatError(error, 'Signup')}
+        {error && formatError(error, 'Signup', t)}
 
         <TextInput
           aria-label='email' label='email' name='email' id='email'

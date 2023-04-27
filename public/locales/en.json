@@ -258,6 +258,7 @@
   "Hazard risk mitigation": "Hazard risk mitigation",
   "Here you can switch between types of content and create new content for people in your group or everyone on Hylo!": "Here you can switch between types of content and create new content for people in your group or everyone on Hylo!",
   "Hi there {{groupName}}, I'd like to talk about {{prompt}}.": "Hi there {{groupName}}, I'd like to talk about {{prompt}}.",
+  "Hi {{email}} we just need to know your name and password and you": "Hi {{email}} we just need to know your name and password and you're in.",
   "Hi {{email}} we just need to know your name and password and you're in.": "Hi {{email}} we just need to know your name and password and you're in.",
   "Hi {{firstName}}, want to create an event?": "Hi {{firstName}}, want to create an event?",
   "Hi {{firstName}}, what are you looking for?": "Hi {{firstName}}, what are you looking for?",

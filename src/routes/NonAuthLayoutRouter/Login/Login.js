@@ -63,7 +63,7 @@ export default function Login (props) {
       <div styleName='formWrapper'>
         <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
 
-        {error && formatError(error, 'Login')}
+        {error && formatError(error, 'Login', t)}
 
         <TextInput
           aria-label='email' label='email' name='email' id='email'

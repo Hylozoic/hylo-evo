@@ -70,7 +70,7 @@ export default function VerifyEmail (props) {
       <div styleName='formWrapper'>
         <h1 styleName='title'>{t('Check your email')}</h1>
         <p styleName='sub-header'>{t("We've sent a 6 digit code to {{email}}. The code will expire shortly, so please enter it here soon.", { email })}</p>
-        {error && formatError(error, 'Signup')}
+        {error && formatError(error, 'Signup', t)}
         <div styleName='codeWrapper'>
           <ReactCodeInput type='text' fields={6} onChange={handleChange} />
         </div>
