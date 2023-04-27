@@ -8,7 +8,7 @@ export function formatError (error, action) {
   const { t } = useTranslation()
   if (!error) return
 
-  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/) // TODO: Handle this translation
+  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/) // TODO: Handle this translation i18n
 
   if (noPasswordMatch) {
     const options = uniq(noPasswordMatch[1].split(',')

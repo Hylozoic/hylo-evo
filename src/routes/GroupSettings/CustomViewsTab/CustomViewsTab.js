@@ -320,34 +320,21 @@ function CustomViewRow ({
           <div styleName={cx('styles.custom-posts-view')}>
             <div styleName='styles.custom-view-row'>
               <SettingsControl label={t('Default Style')} controlClass={styles['settings-control']} renderControl={(props) => {
-                return <Dropdown
-                  styleName='styles.dropdown'
-                  toggleChildren={
-                    <span styleName='styles.dropdown-label'>
-                      {VIEW_MODES[defaultViewModeVal || 'cards']}
-                      <Icon name='ArrowDown' />
-                    </span>
-                  }
-                  items={Object.keys(VIEW_MODES).map(value => ({
-                    label: VIEW_MODES[value],
-                    onClick: () => onChange('defaultViewMode')(value)
-                  }))}
-                />
-              }} />
-              <SettingsControl label={t('Default Sort')} controlClass={styles['settings-control']} renderControl={(props) => {
-                return <Dropdown
-                  styleName='styles.dropdown'
-                  toggleChildren={
-                    <span styleName='styles.dropdown-label'>
-                      {sortOptions.find(o => o.id === defaultSortVal).label}
-                      <Icon name='ArrowDown' />
-                    </span>
-                  }
-                  items={sortOptions.map(({ id, label }) => ({
-                    label: label,
-                    onClick: () => onChange('defaultSort')(id)
-                  }))}
-                />
+                return (
+                  <Dropdown
+                    styleName='styles.dropdown'
+                    toggleChildren={
+                      <span styleName='styles.dropdown-label'>
+                        {VIEW_MODES[defaultViewModeVal || 'cards']}
+                        <Icon name='ArrowDown' />
+                      </span>
+                    }
+                    items={Object.keys(VIEW_MODES).map(value => ({
+                      label: VIEW_MODES[value],
+                      onClick: () => onChange('defaultViewMode')(value)
+                    }))}
+                  />
+                )
               }} />
               <SettingsControl
                 label={t('Default Sort')}
@@ -358,12 +345,12 @@ function CustomViewRow ({
                       styleName='styles.dropdown'
                       toggleChildren={
                         <span styleName='styles.dropdown-label'>
-                          {t(sortOptions.find(o => o.id === defaultSortVal).label)}
+                          {sortOptions.find(o => o.id === defaultSortVal).label}
                           <Icon name='ArrowDown' />
                         </span>
                       }
                       items={sortOptions.map(({ id, label }) => ({
-                        label: t(label),
+                        label: label,
                         onClick: () => onChange('defaultSort')(id)
                       }))}
                     />
@@ -397,7 +384,7 @@ function CustomViewRow ({
                               checked={postTypes.includes(postType)}
                               onChange={(checked, name) => togglePostType(postType, !checked)}
                             />
-                            <span>{postType.charAt(0).toUpperCase() + postType.slice(1)}s</span> {/* TODO: Handle this translation */}
+                            <span>{t(postType)}s</span>
                           </div>
                         )
                       })}

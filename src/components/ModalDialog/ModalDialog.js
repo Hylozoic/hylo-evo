@@ -58,7 +58,6 @@ class ModalDialog extends Component {
     showCancelButton: true,
     showSubmitButton: true,
     submitButtonIsDisabled: () => false,
-    submitButtonText: 'Ok', /* TODO: Handle this translation */
     useNotificationFormat: false
   }
 
@@ -148,21 +147,6 @@ class ModalDialog extends Component {
                 </Button>}
             </div>}
         </div>
-
-        <div styleName='content'>
-          {children}
-        </div>
-
-        {showControls && <div styleName='controls'>
-          {showCancelButton && <Button
-            color='green-white-green-border'
-            styleName='cancel-btn'
-            onClick={this.cancel}>{this.props.t('Cancel')}</Button>}
-          {showSubmitButton && <Button
-            styleName='submit-btn'
-            onClick={this.submit}
-            disabled={submitButtonIsDisabled()}>{submitButtonText}</Button>}
-        </div>}
       </div>
     )
   }

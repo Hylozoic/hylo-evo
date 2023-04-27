@@ -73,18 +73,23 @@ class RelatedGroupsTab extends Component {
     this.toggleInviteAsChildPicker()
   }
 
-  relationshipDropdownItems = (fromGroup, toGroup, type) => [
-    {
-      icon: 'Trash',
-      label: type === GROUP_RELATIONSHIP_TYPE.ParentToChild ? this.props.t('Remove Child') : this.props.t('Leave Parent'),
-      onClick: () => {
-        if (window.confirm(`Are you sure you want to ${GROUP_RELATIONSHIP_TYPE.ParentToChild ? 'remove' : 'leave'} ${this.props.group.name}?`)) { // TODO: Handle this translation
-          this.props.deleteGroupRelationship(fromGroup.id, toGroup.id)
-        }
-      },
-      red: true
-    }
-  ]
+  relationshipDropdownItems = (fromGroup, toGroup, type) => {
+    const { t } = this.props
+    return [
+      {
+        icon: 'Trash',
+        label: type === GROUP_RELATIONSHIP_TYPE.ParentToChild ? t('Remove Child') : t('Leave Parent'),
+        onClick: () => {
+          if (window.confirm(GROUP_RELATIONSHIP_TYPE.ParentToChild
+            ? t('Are you sure you want to remove {{groupName}}', { groupName: this.props.group.name })
+            : t('Are you sure you want to leave {{groupName}}', { groupName: this.props.group.name }))) {
+            this.props.deleteGroupRelationship(fromGroup.id, toGroup.id)
+          }
+        },
+        red: true
+      }
+    ]
+  }
 
   render () {
     const {

@@ -35,9 +35,12 @@ exports[`renders correctly 1`] = `
          
         Hylo
       </span>
-       with this link
-      . Click or press on it to copy it
-      : 
+       
+      with this link
+      .
+       
+      Click or press on it to copy it
+      :
     </div>
     <div
       data-stylename="styles.invite-link-settings"
