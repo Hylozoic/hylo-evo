@@ -16,17 +16,19 @@ class DeleteSettingsTab extends Component {
     const { group } = this.props
     const { name } = group
 
-    return <div styleName='container'>
-      <div styleName='title'>{this.props.t('Delete {{groupName}}', { groupName: name })}</div>
-      <div styleName='help'>
-        {this.props.t('If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.')}
+    return (
+      <div styleName='container'>
+        <div styleName='title'>{this.props.t('Delete {{groupName}}', { groupName: name })}</div>
+        <div styleName='help'>
+          {this.props.t('If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.')}
+        </div>
+        <Button
+          label={this.props.t('Delete Group')}
+          onClick={this.deleteGroup}
+          styleName='delete-button'
+        />
       </div>
-      <Button
-        label={this.props.t('Delete Group')}
-        onClick={this.deleteGroup}
-        styleName='delete-button'
-      /> {/* TODO: Handle this translation */}
-    </div>
+    )
   }
 }
 

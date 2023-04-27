@@ -132,73 +132,74 @@ class AccountSettingsTab extends Component {
     const formErrors = this.formErrors()
     const canSave = this.canSave()
 
-    return <div>
-      <div styleName='title'>{t('Update Account')}</div>
-      {formErrors.map((formErrorText, i) =>
-        <div styleName='error' key={i}>{formErrorText}</div>)}
-      <SettingsControl label={t('Email')} onChange={this.updateSetting('email')} value={email} />
-      <SettingsControl label={t('New Password')} onChange={this.updateSetting('password')} value={password} type='password' />
-      <SettingsControl label={t('New Password (Confirm)')} onChange={this.updateSetting('confirm')} value={confirm} type='password' />
-      <div styleName='help'>
-        {t('Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.')}
-      </div>
-      <div styleName='button-row'><Button onClick={() => this.setState({ showDeactivateModal: true })} label={t('Deactivate Account')} color={'purple'} /></div>
-      <div styleName='button-row'><Button onClick={() => this.setState({ showDeleteModal: true })} label={t('Delete Account')} color={'purple'} /></div>
+    return (
+      <div>
+        <div styleName='title'>{t('Update Account')}</div>
+        {formErrors.map((formErrorText, i) =>
+          <div styleName='error' key={i}>{formErrorText}</div>)}
+        <SettingsControl label={t('Email')} onChange={this.updateSetting('email')} value={email} />
+        <SettingsControl label={t('New Password')} onChange={this.updateSetting('password')} value={password} type='password' />
+        <SettingsControl label={t('New Password (Confirm)')} onChange={this.updateSetting('confirm')} value={confirm} type='password' />
+        <div styleName='help'>
+          {t('Passwords must be at least 9 characters long, and should be a mix of lower and upper case letters, numbers and symbols.')}
+        </div>
+        <div styleName='button-row'><Button onClick={() => this.setState({ showDeactivateModal: true })} label={t('Deactivate Account')} color={'purple'} /></div>
+        <div styleName='button-row'><Button onClick={() => this.setState({ showDeleteModal: true })} label={t('Delete Account')} color={'purple'} /></div>
 
-      <div styleName='saveChanges'>
-        <span styleName={canSave ? 'settingChanged' : ''}>{canSave ? 'Changes not saved' : 'Current settings up to date'}</span>
-        <Button label={t('Save Changes')} color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />
+        <div styleName='saveChanges'>
+          <span styleName={canSave ? 'settingChanged' : ''}>{canSave ? 'Changes not saved' : 'Current settings up to date'}</span>
+          <Button label={t('Save Changes')} color={canSave ? 'green' : 'gray'} onClick={canSave ? this.save : null} styleName='save-button' />
+        </div>
+        {showDeactivateModal &&
+          <ModalDialog key='deactviate-user-dialog'
+            closeModal={() => this.setState({ showDeactivateModal: false })}
+            showModalTitle={false}
+            submitButtonAction={() => this.deactivateMe()}
+            submitButtonText='Confirm' >
+            <h2>
+              {t('Deactivate')}
+            </h2>
+            <p>
+              {t('This action is reversible, just log back in')}
+            </p>
+            <div styleName='modal-container'>
+              <h4>
+                {t('If you deactivate your account:')}
+              </h4>
+              <ul>
+                <li>{t('You won\'t be able to use Hylo unless you log back in')}</li>
+                <li>{t('You won\'t receive platform notifications')}</li>
+                <li>{t('Your profile won\'t show up in any member searches or group memberships')}</li>
+                <li>{t('Your comments and posts will REMAIN as they are')}</li>
+              </ul>
+            </div>
+          </ModalDialog>
+        }
+        {showDeleteModal &&
+          <ModalDialog key='delete-user-dialog'
+            closeModal={() => this.setState({ showDeleteModal: false })}
+            showModalTitle={false}
+            submitButtonAction={() => this.deleteMe()}
+            submitButtonText='Confirm' >
+            <h2 style={{ color: 'red' }}>
+              {t('DELETE: CAUTION')}
+            </h2>
+            <p>
+              {t('This action is')}{' '}<strong style={{ color: 'red' }}>{t('NOT')}</strong>{' '}{t('reversible')}
+            </p>
+            <div styleName='modal-container'>
+              <h4>
+                {t('If you delete your account:')}
+              </h4>
+              <ul>
+                <li>{t('Your account and its details will be deleted')}</li>
+                <li>{t('The content of your posts and comments will be removed')}</li>
+                <li>{t('You won\'t be able to use Hylo unless you create a brand new account')}</li>
+              </ul>
+            </div>
+          </ModalDialog>}
       </div>
-      {showDeactivateModal &&
-        <ModalDialog key='deactviate-user-dialog'
-          closeModal={() => this.setState({ showDeactivateModal: false })}
-          showModalTitle={false}
-          submitButtonAction={() => this.deactivateMe()}
-          submitButtonText='Confirm' >
-          <h2>
-            {t('Deactivate')}
-          </h2>
-          <p>
-            {t('This action is reversible, just log back in')}
-          </p>
-          <div styleName='modal-container'>
-            <h4>
-              {t('If you deactivate your account:')}
-            </h4>
-            <ul>
-              <li>{t('You won\'t be able to use Hylo unless you log back in')}</li>
-              <li>{t('You won\'t receive platform notifications')}</li>
-              <li>{t('Your profile won\'t show up in any member searches or group memberships')}</li>
-              <li>{t('Your comments and posts will REMAIN as they are')}</li>
-            </ul>
-          </div>
-        </ModalDialog>
-      }
-      {showDeleteModal &&
-        <ModalDialog key='delete-user-dialog'
-          closeModal={() => this.setState({ showDeleteModal: false })}
-          showModalTitle={false}
-          submitButtonAction={() => this.deleteMe()}
-          submitButtonText='Confirm' >
-          <h2 style={{ color: 'red' }}>
-            {t('DELETE: CAUTION')}
-          </h2>
-          <p>
-            This action is <strong style={{ color: 'red' }}>NOT</strong> reversible {/* TODO: Handle this translation */}
-          </p>
-          <div styleName='modal-container'>
-            <h4>
-              {t('If you delete your account:')}
-            </h4>
-            <ul>
-              <li>{t('Your account and its details will be deleted')}</li>
-              <li>{t('The content of your posts and comments will be removed')}</li>
-              <li>{t('You won\'t be able to use Hylo unless you create a brand new account')}</li>
-            </ul>
-          </div>
-        </ModalDialog>
-      }
-    </div>
+    )
   }
 }
 export default withTranslation()(AccountSettingsTab)

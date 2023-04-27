@@ -93,7 +93,7 @@ export class Comment extends Component {
   }
 
   render () {
-    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post } = this.props
+    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post, t } = this.props
     const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
@@ -101,8 +101,8 @@ export class Comment extends Component {
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.handleEditComment },
-      { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
-      { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
+      { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id, t('Are you sure you want to delete this comment')) : null },
+      { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id, t('Are you sure you want to remove this comment?')) : null }
     ])
 
     return (

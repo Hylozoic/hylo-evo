@@ -27,8 +27,8 @@ export function mapStateToProps (state, props) {
 export function mapDispatchToProps (dispatch, props) {
   const { groupSlug } = props.routeParams
   const closeUrl = removePostFromUrl(window.location.pathname)
-  const deletePostWithConfirm = (postId, groupId) => {
-    if (window.confirm(('Are you sure you want to delete this post?'))) { // TODO: Handle this translation
+  const deletePostWithConfirm = (postId, groupId, text) => {
+    if (window.confirm((text))) {
       dispatch(deletePost(postId, groupId))
       dispatch(push(closeUrl))
     }
@@ -38,9 +38,9 @@ export function mapDispatchToProps (dispatch, props) {
     editPost: postId => props.editPost
       ? props.editPost(postId)
       : dispatch(push(editPostUrl(postId, props.routeParams))),
-    deletePost: (postId, groupId) => props.deletePost
+    deletePost: (postId, groupId, text) => props.deletePost
       ? props.deletePost(postId)
-      : deletePostWithConfirm(postId, groupId),
+      : deletePostWithConfirm(postId, groupId, text),
     fulfillPost: postId => props.fulfillPost
       ? props.fulfillPost(postId)
       : dispatch(fulfillPost(postId)),
@@ -68,7 +68,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    deletePost: isCreator ? () => deletePost(id, group ? group.id : null) : undefined,
+    deletePost: isCreator ? (text) => deletePost(id, group ? group.id : null, text) : undefined,
     editPost: canEdit ? () => editPost(id) : undefined,
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,

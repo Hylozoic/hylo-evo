@@ -149,45 +149,46 @@ class TagInput extends Component {
         ? []
         : [{ name: this.props.t('no more than {{maxTags}} allowed', { maxTags }), isError: true }]
       : suggestions
-      // TO DO: Handle this translation
-    return <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} onClick={this.focus}>
-      <ul className={theme.selected}>
-        {selectedItems}
-      </ul>
-      <div className={theme.search}>
-        <div className={theme.searchInput}>
-          <input
-            className={cx(theme.searchInput, { 'error': maxReached })}
-            ref={this.input}
-            type='text'
-            placeholder={placeholder}
-            spellCheck={false}
-            onFocus={() => { this.handleChange('') }}
-            onBlur={() => {
-              this.input.current.value = ''
-              this.handleChange(null)
-            }}
-            onChange={event => this.handleChange(event.target.value)}
-            onKeyDown={this.handleKeys}
-            disabled={readOnly} />
-        </div>
-        {!isEmpty(suggestionsOrError) &&
-          <div className={theme.suggestions}>
-            <KeyControlledItemList
-              items={suggestionsOrError}
-              tagType={tagType}
-              renderListItem={renderSuggestion}
-              onChange={maxReached ? this.resetInput : this.select}
-              theme={{
-                items: theme.suggestions,
-                item: cx(theme.suggestion, { [styles.error]: maxReached }),
-                'item-active': theme['suggestion-active']
+    return (
+      <div className={cx(theme.root, { [theme.readOnly]: readOnly }, className)} onClick={this.focus}>
+        <ul className={theme.selected}>
+          {selectedItems}
+        </ul>
+        <div className={theme.search}>
+          <div className={theme.searchInput}>
+            <input
+              className={cx(theme.searchInput, { 'error': maxReached })}
+              ref={this.input}
+              type='text'
+              placeholder={placeholder}
+              spellCheck={false}
+              onFocus={() => { this.handleChange('') }}
+              onBlur={() => {
+                this.input.current.value = ''
+                this.handleChange(null)
               }}
-              ref={this.list} />
+              onChange={event => this.handleChange(event.target.value)}
+              onKeyDown={this.handleKeys}
+              disabled={readOnly} />
           </div>
-        }
+          {!isEmpty(suggestionsOrError) &&
+            <div className={theme.suggestions}>
+              <KeyControlledItemList
+                items={suggestionsOrError}
+                tagType={tagType}
+                renderListItem={renderSuggestion}
+                onChange={maxReached ? this.resetInput : this.select}
+                theme={{
+                  items: theme.suggestions,
+                  item: cx(theme.suggestion, { [styles.error]: maxReached }),
+                  'item-active': theme['suggestion-active']
+                }}
+                ref={this.list} />
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    )
   }
 }
 

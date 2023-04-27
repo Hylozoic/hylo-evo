@@ -19,6 +19,5 @@ exports[`renders correctly 1`] = `
     label="Delete Group"
     onClick={[Function]}
   />
-   
 </div>
 `;
