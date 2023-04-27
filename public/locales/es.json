@@ -947,6 +947,6 @@
   "{{numBad}} invalid email address/es found (see above)).": "Se encontraron {{numBad}} direcciones de correo electrónico no válidas (ver arriba)).",
   "{{othersCount}} others": "{{othersCount}} otros",
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requiere que los grupos respondan las siguientes preguntas antes de unirse",
-  "{{personOne}} and {{personTwo}}": "{{personaUno}} y {{personaDos}}",
+  "{{personOne}} and {{personTwo}}": "{{personOne}} y {{personTwo}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas"
 }
