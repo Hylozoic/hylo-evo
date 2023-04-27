@@ -4,11 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
 import './NonAuthLayoutRouter.scss'
 
-export function formatError (error, action) {
-  const { t } = useTranslation()
+export function formatError (error, action, t) {
   if (!error) return
 
-  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/) // TODO: Handle this translation i18n
+  const noPasswordMatch = error.match(/password account not found. available: \[(.*)\]/) // TODO: Handle this translation
 
   if (noPasswordMatch) {
     const options = uniq(noPasswordMatch[1].split(',')
@@ -42,8 +41,7 @@ export function formatError (error, action) {
     }
   }
 
-  function errorMessages (type) {
-    const { t } = useTranslation()
+  function errorMessages (type, t) {
     let err
 
     if (testJSON(type)) {
