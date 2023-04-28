@@ -217,7 +217,7 @@ class PostEditor extends React.Component {
   }
 
   postTypeButtonProps = (forPostType) => {
-    const { loading } = this.props
+    const { loading, t } = this.props
     const { type } = this.state.post
     const active = type === forPostType
     const className = cx(
@@ -231,10 +231,10 @@ class PostEditor extends React.Component {
     const label = active
       ? (
         <span styleName='initial-prompt'>
-          <span>{forPostType}</span>{' '}
+          <span>{t(forPostType)}</span>{' '}
           <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
         </span>
-      ) : forPostType
+      ) : t(forPostType)
     return {
       borderRadius: '5px',
       label,

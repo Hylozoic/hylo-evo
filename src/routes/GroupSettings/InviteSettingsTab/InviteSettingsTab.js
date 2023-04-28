@@ -247,7 +247,7 @@ I'm inviting you to join {{name}} on Hylo.
                       </div>
                       <div styleName='styles.invite-actions'>
                         <span styleName='styles.action-btn styles.expire-btn' onClick={() => expireOnClick(invite.id)}>{t('Expire')}</span>
-                        <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? this.props('Sent') : this.props('Resend')}</span>
+                        <span styleName='styles.action-btn styles.resend-btn' onClick={() => !invite.resent && resendOnClick(invite.id)}>{invite.resent ? t('Sent') : t('Resend')}</span>
                       </div>
                     </div>
                   </CSSTransition>
