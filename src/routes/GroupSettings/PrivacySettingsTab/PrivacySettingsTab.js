@@ -114,6 +114,7 @@ class PrivacySettingsTab extends Component {
               forSetting={visibilitySetting}
               currentSetting={visibility}
               updateSetting={this.updateSetting}
+              t={t}
             />
           )}
         </SettingsSection>
@@ -201,47 +202,51 @@ class PrivacySettingsTab extends Component {
   }
 }
 
-function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting }) {
-  return <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
-    <label>
-      <input type='radio' name='Visibility' value={forSetting} onChange={updateSetting('visibility')} checked={currentSetting === forSetting} />
-      <Icon name={visibilityIcon(forSetting)} styleName='styles.settingIcon' />
-      <div styleName='styles.settingDescription'>
-        <h4>{visibilityString(forSetting)}</h4>
-        <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{visibilityDescription(forSetting)}</span>
-      </div>
-    </label>
-  </div>
+function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting, t }) {
+  return (
+    <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
+      <label>
+        <input type='radio' name='Visibility' value={forSetting} onChange={updateSetting('visibility')} checked={currentSetting === forSetting} />
+        <Icon name={visibilityIcon(forSetting)} styleName='styles.settingIcon' />
+        <div styleName='styles.settingDescription'>
+          <h4>{t(visibilityString(forSetting))}</h4>
+          <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{t(visibilityDescription(forSetting))}</span>
+        </div>
+      </label>
+    </div>
+  )
 }
 
 function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting, forSetting, joinQuestions, updateJoinQuestion, updateSetting, updateSettingDirectly }) {
   const { t } = useTranslation()
-  return <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
-    <label>
-      <input type='radio' name='accessibility' value={forSetting} onChange={updateSetting('accessibility')} checked={currentSetting === forSetting} />
-      <Icon name={accessibilityIcon(forSetting)} styleName='styles.settingIcon' />
-      <div styleName='styles.settingDescription'>
-        <h4>{accessibilityString(forSetting)}</h4>
-        <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{accessibilityDescription(forSetting)}</span>
-      </div>
-    </label>
-    {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted &&
-      <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': askJoinQuestions })}>
-        <div styleName={cx({ 'general.switchContainer': true, 'general.on': askJoinQuestions })}>
-          <SwitchStyled
-            checked={askJoinQuestions}
-            onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
-            backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
-          <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
-          <div styleName='general.onOff'>
-            <div styleName='general.off'>{t('OFF')}</div>
-            <div styleName='general.on'>{t('ON')}</div>
-          </div>
+  return (
+    <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
+      <label>
+        <input type='radio' name='accessibility' value={forSetting} onChange={updateSetting('accessibility')} checked={currentSetting === forSetting} />
+        <Icon name={accessibilityIcon(forSetting)} styleName='styles.settingIcon' />
+        <div styleName='styles.settingDescription'>
+          <h4>{accessibilityString(forSetting)}</h4>
+          <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{accessibilityDescription(forSetting)}</span>
         </div>
-        <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
-      </div>
-    }
-  </div>
+      </label>
+      {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted &&
+        <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': askJoinQuestions })}>
+          <div styleName={cx({ 'general.switchContainer': true, 'general.on': askJoinQuestions })}>
+            <SwitchStyled
+              checked={askJoinQuestions}
+              onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
+              backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+            <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
+            <div styleName='general.onOff'>
+              <div styleName='general.off'>{t('OFF')}</div>
+              <div styleName='general.on'>{t('ON')}</div>
+            </div>
+          </div>
+          <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
+        </div>
+      }
+    </div>
+  )
 }
 
 function QuestionsForm ({ disabled, questions, save }) {

@@ -126,13 +126,13 @@ class TagInput extends Component {
             <span styleName='privacyIcon'>
               <Icon name={accessibilityIcon(t.accessibility)} styleName='tagInputPrivacyIcon' />
               <div styleName='privacy-tooltip'>
-                <div><strong>{accessibilityString(t.accessibility)}</strong> - {accessibilityDescription(t.accessibility)}</div>
+                <div><strong>{this.props.t(accessibilityString(t.accessibility))}</strong> - {this.props.t(accessibilityDescription(t.accessibility))}</div>
               </div>
             </span>
             <span styleName='privacyIcon'>
               <Icon name={visibilityIcon(t.visibility)} styleName='tagInputPrivacyIcon' />
               <div styleName='privacy-tooltip'>
-                <div><strong>{visibilityString(t.visibility)}</strong> - {visibilityDescription(t.visibility)}</div>
+                <div><strong>{this.props.t(visibilityString(t.visibility))}</strong> - {this.props.t(visibilityDescription(t.visibility))}</div>
               </div>
             </span>
           </span>}

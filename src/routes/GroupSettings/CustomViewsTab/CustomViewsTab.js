@@ -295,19 +295,21 @@ function CustomViewRow ({
         <SettingsControl label={t('Icon')} controlClass={styles['icon-button']} onChange={onChange('icon')} value={icon} type='icon-selector' selectedIconClass={styles.selectedIcon} />
         <SettingsControl label={t('Label')} controlClass={styles['settings-control']} onChange={onChange('name')} value={name} />
         <SettingsControl label={t('Type')} controlClass={styles['settings-control']} renderControl={(props) => {
-          return <Dropdown
-            styleName='styles.dropdown'
-            toggleChildren={
-              <span styleName='styles.dropdown-label'>
-                {VIEW_TYPES[type || 'externalLink']}
-                <Icon name='ArrowDown' />
-              </span>
-            }
-            items={Object.keys(VIEW_TYPES).map(value => ({
-              label: VIEW_TYPES[value],
-              onClick: () => onChange('type')(value)
-            }))}
-          />
+          return (
+            <Dropdown
+              styleName='styles.dropdown'
+              toggleChildren={
+                <span styleName='styles.dropdown-label'>
+                  {VIEW_TYPES[type || 'externalLink']}
+                  <Icon name='ArrowDown' />
+                </span>
+              }
+              items={Object.keys(VIEW_TYPES).map(value => ({
+                label: t(VIEW_TYPES[value]),
+                onClick: () => onChange('type')(value)
+              }))}
+            />
+          )
         }}
         />
       </div>
@@ -345,12 +347,12 @@ function CustomViewRow ({
                       styleName='styles.dropdown'
                       toggleChildren={
                         <span styleName='styles.dropdown-label'>
-                          {sortOptions.find(o => o.id === defaultSortVal).label}
+                          {t(sortOptions.find(o => o.id === defaultSortVal).label)}
                           <Icon name='ArrowDown' />
                         </span>
                       }
                       items={sortOptions.map(({ id, label }) => ({
-                        label: label,
+                        label: t(label),
                         onClick: () => onChange('defaultSort')(id)
                       }))}
                     />

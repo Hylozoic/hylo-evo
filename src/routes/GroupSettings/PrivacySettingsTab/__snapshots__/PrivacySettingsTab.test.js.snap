@@ -22,18 +22,21 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       currentSetting={1}
       forSetting={0}
       key="0"
+      t={[Function]}
       updateSetting={[Function]}
     />
     <VisibilitySettingRow
       currentSetting={1}
       forSetting={1}
       key="1"
+      t={[Function]}
       updateSetting={[Function]}
     />
     <VisibilitySettingRow
       currentSetting={1}
       forSetting={2}
       key="2"
+      t={[Function]}
       updateSetting={[Function]}
     />
   </SettingsSection>

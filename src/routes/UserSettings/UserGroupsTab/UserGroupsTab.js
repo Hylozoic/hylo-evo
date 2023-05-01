@@ -181,12 +181,12 @@ export function AddAffiliation ({ close, save }) {
         <Dropdown
           toggleChildren={
             <span>
-              {PREPOSITIONS.find(p => p === preposition)}
+              {t(PREPOSITIONS.find(p => p === preposition))}
               <Icon name='ArrowDown' />
             </span>
           }
           items={PREPOSITIONS.map(p => ({
-            label: p,
+            label: t(p),
             onClick: () => setPreposition(p)
           }))}
           alignLeft

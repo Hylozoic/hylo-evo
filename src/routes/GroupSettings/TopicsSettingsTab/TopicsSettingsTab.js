@@ -185,11 +185,11 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
       <Dropdown
         styleName='search-order'
         toggleChildren={<span styleName='search-sorter-label'>
-          {selected.label}
+          {t(selected.label)}
           <Icon name='ArrowDown' />
         </span>}
         items={sortOptions.map(({ id, label }) => ({
-          label,
+          label: t(label),
           onClick: () => setSort(id)
         }))}
         alignRight />

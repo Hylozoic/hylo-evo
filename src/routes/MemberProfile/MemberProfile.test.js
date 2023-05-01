@@ -47,7 +47,7 @@ describe('MemberProfile', () => {
   it('does not display bio on other tabs', () => {
     const props = {
       ...defaultTestProps,
-      currentTab: 'Upvotes',
+      currentTab: 'Reactions',
       bio: 'WOMBATS',
       votes: []
     }
@@ -85,7 +85,7 @@ describe('MemberProfile', () => {
   it('renders MemberVotes on reactions', () => {
     const props = {
       ...defaultTestProps,
-      currentTab: 'Upvotes'
+      currentTab: 'Reactions'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
     expect(wrapper.text().includes('{{name}}s reactions')).toBe(true)

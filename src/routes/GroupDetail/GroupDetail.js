@@ -125,13 +125,13 @@ class UnwrappedGroupDetail extends Component {
                     <span styleName='g.group-privacy'>
                       <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
                       <div styleName='g.privacy-tooltip'>
-                        <div>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</div>
+                        <div>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</div>
                       </div>
                     </span>
                     <span styleName='g.group-privacy'>
                       <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
                       <div styleName='g.privacy-tooltip'>
-                        <div>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</div>
+                        <div>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</div>
                       </div>
                     </span>
                   </div>

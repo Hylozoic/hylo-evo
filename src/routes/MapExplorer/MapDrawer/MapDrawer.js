@@ -165,11 +165,11 @@ function MapDrawer (props) {
           <span>{t('Sort posts by:')}</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>
-              {STREAM_SORT_OPTIONS.find(o => o.id === sortBy).label}
+              {t(STREAM_SORT_OPTIONS.find(o => o.id === sortBy).label)}
               <Icon name='ArrowDown' className={styles.sorterIcon} />
             </span>}
             items={STREAM_SORT_OPTIONS.map(({ id, label }) => ({
-              label,
+              label: t(label),
               onClick: () => onUpdateFilters({ sortBy: id })
             }))}
             alignRight

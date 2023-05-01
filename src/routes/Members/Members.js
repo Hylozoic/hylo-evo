@@ -84,7 +84,7 @@ class Members extends Component {
               toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
               alignRight
               items={Object.keys(sortKeys).map(k => ({
-                label: sortKeys[k],
+                label: t(sortKeys[k]),
                 onClick: () => changeSort(k)
               }))} />
           </div>

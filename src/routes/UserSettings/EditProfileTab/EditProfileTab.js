@@ -143,7 +143,7 @@ class EditProfileTab extends Component {
         <SettingsControl label={t('Tagline')} onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
         <SettingsControl label={t('About Me')} onChange={this.updateSetting('bio')} value={bio} type='textarea' />
         <SettingsControl
-          label='Location'
+          label={t('Location')}
           onChange={this.updateSettingDirectly('location', true)}
           location={location}
           locationObject={locationObject}

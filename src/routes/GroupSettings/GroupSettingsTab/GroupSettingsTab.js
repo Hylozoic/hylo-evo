@@ -140,6 +140,10 @@ class GroupSettingsTab extends Component {
     const { locationDisplayPrecision, showSuggestedSkills } = settings
     const editableMapLocation = group?.locationObject || currentUser.locationObject
 
+    t('Display exact location')
+    t('Display only nearest city and show nearby location on the map')
+    t('Display only nearest city and dont show on the map')
+
     return (
       <div styleName='general.groupSettings'>
         <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
@@ -177,7 +181,7 @@ class GroupSettingsTab extends Component {
           </span>}
 
           items={Object.keys(LOCATION_PRECISION).map(value => ({
-            label: LOCATION_PRECISION[value],
+            label: t(LOCATION_PRECISION[value]),
             onClick: () => this.updateSettingDirectly('settings.locationDisplayPrecision')(value)
           }))}
         />

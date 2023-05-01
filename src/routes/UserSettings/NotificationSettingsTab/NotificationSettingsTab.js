@@ -98,8 +98,7 @@ class NotificationSettingsTab extends Component {
           <div styleName='prompt'>{t('How often would you like to receive email digests for new posts in your groups and saved searches?')}
           </div>
           <div styleName='setting-select'>
-            <div styleName='select-explanation'>Send me a digest</div>
-            {/* TOOD: i18n */}
+            <div styleName='select-explanation'>{t('Send me a digest')}</div>
             <Select
               onChange={updateSetting('digestFrequency')}
               selected={settings.digestFrequency}
@@ -115,8 +114,7 @@ class NotificationSettingsTab extends Component {
             {t('new comments on posts you\'re following?')}
           </div>
           <div styleName='setting-select'>
-            <div styleName='select-explanation'>Notify me via</div>
-            {/* TOOD: i18n */}
+            <div styleName='select-explanation'>{t('Notify me via')}</div>
 
             <Select
               onChange={updateSetting('commentNotifications')}
@@ -125,15 +123,13 @@ class NotificationSettingsTab extends Component {
           </div>
         </div>
         <div>
-          <div styleName='individual-groups'>NOTIFICATIONS</div>
-          {/* TOOD: i18n */}
+          <div styleName='individual-groups'>{t('NOTIFICATIONS')}</div>
 
           <MessageSettingsRow
             settings={messageSettings}
             updateMessageSettings={this.updateMessageSettings} />
 
-          <div styleName='individual-groups'>GROUP NOTIFICATIONS</div>
-          {/* TOOD: i18n */}
+          <div styleName='individual-groups'>{t('GROUP NOTIFICATIONS')}</div>
 
           <AllGroupsSettingsRow
             settings={allGroupsSettings}

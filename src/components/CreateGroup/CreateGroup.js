@@ -181,8 +181,8 @@ class CreateGroup extends Component {
                     <div>
                       <div styleName='dropdownDescription'>{t('WHO CAN SEE THIS GROUP?')}</div>
                       <div styleName='selectedString'>
-                        <b>{visibilityString(visibility)}</b>
-                        <span>{visibilityDescription(visibility)}</span>
+                        <b>{t(visibilityString(visibility))}</b>
+                        <span>{t(visibilityDescription(visibility))}</span>
                       </div>
                     </div>
                   </div>
@@ -195,8 +195,8 @@ class CreateGroup extends Component {
                   <div styleName='dropdownItem'>
                     <Icon name={visibilityIcon(GROUP_VISIBILITY[label])} />
                     <div styleName='selectedString'>
-                      <b>{label}</b>
-                      <span> {visibilityDescription(GROUP_VISIBILITY[label])}</span>
+                      <b>{t(label)}</b>
+                      <span> {t(visibilityDescription(GROUP_VISIBILITY[label]))}</span>
                     </div>
                   </div>
                 ),
@@ -214,8 +214,8 @@ class CreateGroup extends Component {
                     <div>
                       <div styleName='dropdownDescription'>{t('WHO CAN JOIN THIS GROUP?')}</div>
                       <div styleName='selectedString'>
-                        <b>{accessibilityString(accessibility)}</b>
-                        <span>{accessibilityDescription(accessibility)}</span>
+                        <b>{t(accessibilityString(accessibility))}</b>
+                        <span>{t(accessibilityDescription(accessibility))}</span>
                       </div>
                     </div>
                   </div>
@@ -228,8 +228,8 @@ class CreateGroup extends Component {
                   <div styleName='dropdownItem' key={label}>
                     <Icon name={accessibilityIcon(GROUP_ACCESSIBILITY[label])} />
                     <div styleName='selectedString'>
-                      <b>{label}</b>
-                      <span> {accessibilityDescription(GROUP_ACCESSIBILITY[label])}</span>
+                      <b>{t(label)}</b>
+                      <span> {t(accessibilityDescription(GROUP_ACCESSIBILITY[label]))}</span>
                     </div>
                   </div>
                 ),
