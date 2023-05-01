@@ -8,21 +8,24 @@ import { CONTEXT_MY } from 'store/constants'
 import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
 import './StreamViewControls.scss'
 
-const makeDropdown = (selected, options, onChange) => (
-  <Dropdown
-    styleName='dropdown'
-    toggleChildren={
-      <span styleName='dropdown-label'>
-        <Icon name='ArrowDown' />
-        {options.find(o => o.id === selected).label}
-      </span>
-    }
-    items={options.map(({ id, label }) => ({
-      label,
-      onClick: () => onChange(id)
-    }))}
-  />
-)
+const makeDropdown = (selected, options, onChange) => {
+  const { t } = useTranslation()
+  return (
+    <Dropdown
+      styleName='dropdown'
+      toggleChildren={
+        <span styleName='dropdown-label'>
+          <Icon name='ArrowDown' />
+          {options.find(o => o.id === selected).label}
+        </span>
+      }
+      items={options.map(({ id, label }) => ({
+        label: t(label),
+        onClick: () => onChange(id)
+      }))}
+    />
+  )
+}
 
 const StreamViewControls = (props) => {
   const { t } = useTranslation()

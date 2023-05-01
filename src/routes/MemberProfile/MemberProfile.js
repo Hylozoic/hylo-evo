@@ -89,10 +89,10 @@ class MemberProfile extends React.Component {
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const contentDropDownItems = [
-      { label: 'Overview', title: t(`{{person.name}}'s recent activity`, { person }), component: RecentActivity },
-      { label: 'Posts', title: t(`{{person.name}}'s posts`, { person }), component: MemberPosts },
-      { label: 'Comments', title: t(`{{person.name}}'s comments`, { person }), component: MemberComments },
-      { label: 'Upvotes', title: t(`{{person.name}}'s reactions`, { person }), component: MemberVotes }
+      { id: 'Overview', label: t('Overview'), title: t("{{name}}s recent activity", { name: person.name }), component: RecentActivity },
+      { id: 'Posts', label: t('Posts'), title: t("{{name}}s posts", { person }), component: MemberPosts },
+      { id: 'Comments', label: t('Comments'), title: t("{{name}}s comments", { person }), component: MemberComments },
+      { id: 'Reactions', label: t('Reactions'), title: t("{{name}}s reactions", { person }), component: MemberVotes }
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))

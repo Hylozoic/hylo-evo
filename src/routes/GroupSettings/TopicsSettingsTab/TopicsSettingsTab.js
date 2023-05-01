@@ -171,24 +171,28 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 
   if (!selected) selected = sortOptions[0]
 
-  return <div styleName='search-bar'>
-    <TextInput styleName='search-input'
-      value={search}
-      placeholder={this.props.t(`Search {{count}} topics`, { count: totalTopicsCached || '' })}
-      loading={fetchIsPending}
-      noClearButton
-      onChange={event => setSearch(event.target.value)} />
-    <Dropdown styleName='search-order'
-      toggleChildren={<span styleName='search-sorter-label'>
-        {selected.label}
-        <Icon name='ArrowDown' />
-      </span>}
-      items={sortOptions.map(({ id, label }) => ({
-        label,
-        onClick: () => setSort(id)
-      }))}
-      alignRight />
-  </div>
+  return (
+    <div styleName='search-bar'>
+      <TextInput
+        styleName='search-input'
+        value={search}
+        placeholder={t('Search {{count}} topics', { count: totalTopicsCached || '' })}
+        loading={fetchIsPending}
+        noClearButton
+        onChange={event => setSearch(event.target.value)} />
+      <Dropdown
+        styleName='search-order'
+        toggleChildren={<span styleName='search-sorter-label'>
+          {t(selected.label)}
+          <Icon name='ArrowDown' />
+        </span>}
+        items={sortOptions.map(({ id, label }) => ({
+          label: t(label),
+          onClick: () => setSort(id)
+        }))}
+        alignRight />
+    </div>
+  )
 }
 
 export function TopicListItem ({ topic, singleGroup, setGroupTopicVisibility, removeSuggestedTopic, isSuggested }) {

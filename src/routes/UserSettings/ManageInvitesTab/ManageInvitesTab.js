@@ -48,7 +48,7 @@ class ManageInvitesTab extends Component {
 
         <div styleName='description'>
           {t('This list contains all open requests and invitations to join groups.')}
-          {t('To view all groups you are a part of go to your')}<Link to={currentUserSettingsUrl('groups')}>{t('Affiliations')}</Link>.
+          {t('To view all groups you are a part of go to your')}{' '}<Link to={currentUserSettingsUrl('groups')}>{t('Affiliations')}</Link>.
         </div>
 
         <h2 styleName='subhead'>{t('Invitations to Join New Groups')}</h2>

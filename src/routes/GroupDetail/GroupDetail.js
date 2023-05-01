@@ -121,21 +121,22 @@ class UnwrappedGroupDetail extends Component {
             <div>
               <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{t('About')}</span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
               <div styleName='g.groupContextInfo'>
-                <div>
-                  <span styleName='g.group-privacy'>
-                    <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
-                    <div styleName='g.privacy-tooltip'>
-                      <div>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</div>
-                    </div>
-                  </span>
-                  <span styleName='g.group-privacy'>
-                    <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
-                    <div styleName='g.privacy-tooltip'>
-                      <div>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</div>
-                    </div>
-                  </span>
-                  <span styleName='g.memberCount'>{group.memberCount} {group.memberCount > 1 ? t('Members') : t('Member')}</span>
-                </div>
+                {!isAboutCurrentGroup && (
+                  <div>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</div>
+                      </div>
+                    </span>
+                    <span styleName='g.group-privacy'>
+                      <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
+                      <div styleName='g.privacy-tooltip'>
+                        <div>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</div>
+                      </div>
+                    </span>
+                  </div>
+                )}
                 <span styleName='g.group-location'>{group.location}</span>
               </div>
             </div>

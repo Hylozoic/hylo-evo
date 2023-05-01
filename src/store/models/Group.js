@@ -70,9 +70,9 @@ export const visibilityString = (visibility) => {
 }
 
 export const LOCATION_PRECISION = {
-  precise: 'Display exact location',
-  near: 'Display only nearest city and show nearby location on the map',
-  region: 'Display only nearest city and dont show on the map'
+  'precise': 'Display exact location',
+  'near': 'Display only nearest city and show nearby location on the map',
+  'region': 'Display only nearest city and dont show on the map'
 }
 
 export class GroupModerator extends Model { }
