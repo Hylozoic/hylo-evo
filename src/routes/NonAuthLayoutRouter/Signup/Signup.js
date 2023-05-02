@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { validateEmail } from 'util/index'
-import { formatError } from '../util'
+import { checkForStorageAccess, formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
 import checkLogin from 'store/actions/checkLogin'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
@@ -31,19 +31,28 @@ export default function Signup (props) {
   }
 
   const handleSignupWithService = async service => {
-    try {
-      const result = await dispatch(loginWithService(service))
+    // XXX: needed by Safari to allow for login in an iframe
+    checkForStorageAccess(
+      async () => {
+        try {
+          const result = await dispatch(loginWithService(service))
 
-      if (result?.error) {
-        return setError(result.error)
+          if (result?.error) {
+            return setError(result.error)
+          }
+
+          // Required for Me data to be available to cause switch to auth'd
+          // layout (i.e. AuthLayoutRouter)
+          dispatch(checkLogin())
+        } catch (error) {
+          setError(error.message)
+        }
+      },
+      () => {
+        // Storage access was denied.
+        setError('Denied access to browser storage')
       }
-
-      // Required for Me data to be available to cause switch to auth'd
-      // layout (i.e. AuthLayoutRouter)
-      dispatch(checkLogin())
-    } catch (error) {
-      setError(error.message)
-    }
+    )
   }
 
   const handleEmailChange = (e) => {
@@ -55,8 +64,17 @@ export default function Signup (props) {
     if (!validateEmail(email)) {
       setError(t('Invalid email address'))
     } else {
-      setError()
-      sendEmailVerification(email)
+      // XXX: needed by Safari to allow for login in an iframe
+      checkForStorageAccess(
+        () => {
+          setError()
+          sendEmailVerification(email)
+        },
+        () => {
+          // Storage access was denied.
+          console.error('Denied access to browser storage')
+        }
+      )
     }
   }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import AsyncCreatableSelect from 'react-select/async-creatable'
 import styles from './TopicSelector.scss'
-import { isEmpty, isEqual, uniqBy, sortBy, get, includes } from 'lodash/fp'
+import { isEmpty, isEqual, uniqBy, orderBy, get, includes } from 'lodash/fp'
 import { Validators } from 'hylo-shared'
 import Icon from 'components/Icon'
 
@@ -127,9 +127,10 @@ class TopicSelector extends Component {
     const { findTopics, defaultTopics } = this.props
     const response = await findTopics({ autocomplete: input })
     const topicResults = response.payload.getData().items.map(get('topic'))
-    const sortedTopicResults = sortBy(
+    const sortedTopicResults = orderBy(
       [t => t.name === input ? -1 : 1, 'followersTotal', 'postsTotal'],
-      topicResults.map(t => ({ ...t, value: t.name }))
+      ['asc', 'desc', 'desc'],
+      uniqBy(t => t.name, topicResults.map(t => ({ ...t, value: t.name })))
     )
     const filteredDefaultTopics = defaultTopics.filter(topic => {
       return includes(
