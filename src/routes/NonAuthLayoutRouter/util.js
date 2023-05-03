@@ -1,6 +1,5 @@
 /* eslint-disable quote-props */
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
 import './NonAuthLayoutRouter.scss'
 

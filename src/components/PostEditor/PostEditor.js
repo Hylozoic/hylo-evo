@@ -605,7 +605,6 @@ class PostEditor extends React.Component {
     const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
     const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
 
-
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
         <div styleName='header'>
