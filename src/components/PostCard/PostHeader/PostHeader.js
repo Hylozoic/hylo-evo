@@ -32,7 +32,6 @@ export default class PostHeader extends PureComponent {
     const {
       routeParams,
       canEdit,
-      context,
       creator,
       createdAt,
       detailHasImage,
