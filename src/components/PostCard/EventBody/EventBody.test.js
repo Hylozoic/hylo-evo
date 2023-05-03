@@ -1,13 +1,21 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import EventBody from './EventBody'
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
 
 describe('EventBody', () => {
   it.skip('matches last snapshot', () => {
     const event = {
-      startTime: moment(1551908483315),
-      endTime: moment(1551919283315),
+      startTime: DateTime.fromISO('2023-01-24T03:14:59.949Z'),
+      endTime: DateTime.fromISO('2083-01-24T03:14:59.949Z'),
       location: 'Oakland'
     }
 

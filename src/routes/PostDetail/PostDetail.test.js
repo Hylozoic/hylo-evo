@@ -2,6 +2,14 @@ import PostDetail from './PostDetail'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('PostDetail', () => {
   it('renders correctly', () => {
     const imageUrl = 'foo.jpg'
@@ -22,7 +30,7 @@ describe('PostDetail', () => {
       peopleReactedTotal,
       myVote,
       members: [],
-      groups: [ { id: '109 '}]
+      groups: [{ id: '109 ' }]
     }
 
     const wrapper = shallow(<PostDetail

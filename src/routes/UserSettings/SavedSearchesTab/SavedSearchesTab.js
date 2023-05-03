@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
@@ -26,6 +27,7 @@ export default function SavedSearchesTab () {
   })
 
   const deleteSearch = useCallback(searchId => dispatch(deleteSearchAction(searchId)))
+  const { t } = useTranslation()
 
   useEffect(() => { dispatch(fetchSavedSearches(currentUser.id)) }, [])
 
@@ -33,7 +35,7 @@ export default function SavedSearchesTab () {
 
   return (
     <div>
-      <div styleName='title'>Saved Searches</div>
+      <div styleName='title'>{t('Saved Searches')}</div>
       {searches.map(s =>
         <SearchControl
           key={s.id}
@@ -47,6 +49,7 @@ export default function SavedSearchesTab () {
 }
 
 export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
+  const { t } = useTranslation()
   return (
     <div styleName='search-control'>
       <div styleName='row'>
@@ -61,7 +64,7 @@ export function SearchControl ({ search, deleteSearch, viewSavedSearch }) {
             delayShow={200}
             className='params' />
         )}
-        <span onClick={() => deleteSearch(search.id)} styleName='delete-button'>Delete</span>
+        <span onClick={() => deleteSearch(search.id)} styleName='delete-button'>{t('Delete')}</span>
       </div>
     </div>
   )

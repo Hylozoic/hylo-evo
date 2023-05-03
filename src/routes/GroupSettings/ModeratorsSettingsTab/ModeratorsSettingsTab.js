@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
-import React, { Component, useState, useEffect } from 'react'
+import React, { Component, useEffect, useState } from 'react'
+import { withTranslation } from 'react-i18next'
 import Loading from 'components/Loading'
-import Icon from 'components/Icon'
-import { KeyControlledItemList } from 'components/KeyControlledList'
+import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import RemovableListItem from 'components/RemovableListItem'
+import Icon from 'components/Icon'
 import { isEmpty, get, includes } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 import { personUrl } from 'util/navigation'
@@ -31,7 +32,7 @@ const validateRole = ({ name, emoji }) => {
   return true
 }
 
-export default class ModeratorsSettingsTab extends Component {
+class ModeratorsSettingsTab extends Component {
   static propTypes = {
     addModerator: func,
     addGroupRole: func,
@@ -89,7 +90,8 @@ export default class ModeratorsSettingsTab extends Component {
   }
 
   deleteUnsavedRole = (i) => () => {
-    if (window.confirm('Are you sure you want to delete this unsaved role/badge?')) { // TODO: i18n
+    const { t } = this.props
+    if (window.confirm(t('Are you sure you want to delete this unsaved role/badge?'))) {
       const newRoles = [...this.state.roles]
       newRoles.splice(i, 1)
       this.setState({
@@ -99,9 +101,10 @@ export default class ModeratorsSettingsTab extends Component {
   }
 
   toggleRoleActivation = (i) => () => {
+    const { t } = this.props
     const roles = [...this.state.roles]
     const role = roles[i]
-    if (window.confirm(`Are you sure you want to ${role.active ? 'deactivate' : 'reactivate'} this role/badge?`)) { // TODO: i18n
+    if (window.confirm(`${t('Are you sure you want to ')}${role.active ? t('deactivate') : t('reactivate')} ${t('this role/badge?')}`)) {
       this.props.updateGroupRole({ active: !role.active, groupId: this.props?.group?.id, groupRoleId: role.id }).then((response) => {
         roles[i] = { ...response.payload.data.updateGroupRole }
         this.setState({ roles })
@@ -121,6 +124,7 @@ export default class ModeratorsSettingsTab extends Component {
   }
 
   saveRole = (i) => () => {
+    const { t } = this.props
     const role = { ...this.state.roles[i] }
     if (validateRole(role)) {
       this.props.addGroupRole({ ...role, groupId: this.props?.group?.id }).then((response) => {
@@ -129,7 +133,7 @@ export default class ModeratorsSettingsTab extends Component {
         this.setState({ roles })
       })
     } else {
-      window.alert('A role must have a valid emoji and name to be saved') // TODO: i18n
+      window.alert(t('A role must have a valid emoji and name to be saved'))
     }
   }
 
@@ -141,6 +145,7 @@ export default class ModeratorsSettingsTab extends Component {
   }
 
   updateRole = (i) => () => {
+    const { t } = this.props
     const role = { ...this.state.roles[i] }
     if (validateRole(role)) {
       this.props.updateGroupRole({ ...role, groupId: this.props?.group?.id, groupRoleId: role.id }).then((response) => {
@@ -149,14 +154,15 @@ export default class ModeratorsSettingsTab extends Component {
         this.setState({ roles })
       })
     } else {
-      window.alert('A role must have a valid emoji and name to be updated') // TODO: i18n
+      window.alert(t('A role must have a valid emoji and name to be updated'))
     }
   }
 
   render () {
     const {
       moderators,
-      group = {}
+      group = {},
+      t
     } = this.props
 
     const {
@@ -167,13 +173,13 @@ export default class ModeratorsSettingsTab extends Component {
 
     const unsavedRolePresent = roles.length > 0 ? roles[roles.length - 1]?.active === '' : false
     if (!moderators) return <Loading />
+
     return (
       <>
         <SettingsSection>
           <h3>
-            {group?.moderatorDescriptorPlural || 'Moderators'}
-            <div styleName='styles.help-text'>Who has access to group settings and moderation powers</div>
-            {/* TODO i18n */}
+            {group?.moderatorDescriptorPlural || t('Moderators')}
+            <div styleName='styles.help-text'>{t('Who has access to group settings and moderation powers')}</div>
           </h3>
           <ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({ modalVisible: true, moderatorToRemove: id })} />
           {modalVisible && <ModalDialog
@@ -181,16 +187,16 @@ export default class ModeratorsSettingsTab extends Component {
             closeModal={() => this.setState({ modalVisible: false })}
             showModalTitle={false}
             submitButtonAction={this.submitRemoveModerator}
-            submitButtonText='Remove'>
+            submitButtonText={this.props.t('Remove')}>
             <div styleName='styles.content'>
-              <div styleName='styles.modal-text'>Are you sure you wish to remove this moderator?</div>
-              <CheckBox checked={isRemoveFromGroup} label='Remove from group as well' onChange={value => this.setState({ isRemoveFromGroup: value })} />
+              <div styleName='styles.modal-text'>{this.props.t('Are you sure you wish to remove this moderator?')}</div>
+              <CheckBox checked={isRemoveFromGroup} label={this.props.t('Remove from group as well')} onChange={value => this.setState({ isRemoveFromGroup: value })} />
             </div>
           </ModalDialog>}
         </SettingsSection>
         <SettingsSection>
-          <h3>Other Roles &amp; Badges</h3>
-          <div styleName='styles.help-text'>Create additional roles or badges for the group</div>
+          <h3>{t('Other Roles & Badges')}</h3>
+          <div styleName='styles.help-text'>{t('Create additional roles or badges for the group')}</div>
           {roles.map((role, i) => (
             <RoleRow
               {...this.props}
@@ -208,7 +214,7 @@ export default class ModeratorsSettingsTab extends Component {
           ))}
           {!unsavedRolePresent && (
             <div styleName='styles.add-role' onClick={this.handleAddRole}>
-              <h4>Create new role/badge</h4>
+              <h4>{t('Create new role/badge')}</h4>
               <Icon name='Circle-Plus' styleName='styles.new-role' />
             </div>
           )}
@@ -242,7 +248,7 @@ export function ModeratorsList ({ moderators, slug, removeItem, fetchModeratorSu
   )
 }
 
-export class AddModerator extends Component {
+class AddModeratorUntranslated extends Component {
   static propTypes = {
     addModerator: func,
     fetchModeratorSuggestions: func
@@ -256,7 +262,7 @@ export class AddModerator extends Component {
   }
 
   render () {
-    const { fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions } = this.props
+    const { fetchModeratorSuggestions, addModerator, moderatorSuggestions, clearModeratorSuggestions, t } = this.props
 
     const { adding } = this.state
 
@@ -297,18 +303,18 @@ export class AddModerator extends Component {
     if (adding) {
       return (
         <div styleName='styles.adding'>
-          <div styleName='styles.help-text'>Search here for members to grant moderator powers</div>
+          <div styleName='styles.help-text'>{t('Search here for members to grant moderator powers')}</div>
           <div styleName='styles.input-row'>
             <input
               styleName='styles.input'
-              placeholder='Type...'
+              placeholder={t('Type...')}
               type='text'
               onChange={onInputChange}
               onKeyDown={handleKeys}
               ref='input'
             />
-            <span styleName='styles.cancel-button' onClick={toggle}>Cancel</span>
-            <span styleName='styles.add-button' onClick={chooseCurrentItem}>Add</span>
+            <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
+            <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
           </div>
           {!isEmpty(moderatorSuggestions) && <div style={listWidth}>
             <KeyControlledItemList
@@ -322,15 +328,17 @@ export class AddModerator extends Component {
       )
     } else {
       return (
-        <div styleName='styles.add-new' onClick={toggle}>
-          + Add New
+        <div styleName='styles.add-new' id='add-new' onClick={toggle}>
+          + {t('Add New')}
         </div>
       )
     }
   }
 }
 
-function RoleRow ({
+export const AddModerator = withTranslation()(AddModeratorUntranslated)
+
+function RoleRowUntranslated ({
   active,
   addRoleToMember,
   changed,
@@ -350,18 +358,18 @@ function RoleRow ({
   onUpdate,
   index,
   rawSuggestions = [],
-  removeRoleFromMember
+  removeRoleFromMember,
+  t
 }) {
   const isDraftRole = active === ''
   const inactiveStyle = (!active && !isDraftRole) ? 'styles.inactive' : ''
   return (
     <div styleName={`styles.role-container ${inactiveStyle}`}>
       <div styleName='styles.action-container'>
-        {isDraftRole && (<span onClick={onDelete} styleName='styles.action'><Icon name='Trash' /> Delete</span>)}
-        {!isDraftRole && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> Save</span>)}
-        {!isDraftRole && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> Revert</span>)}
-        {!isDraftRole && !changed && (<span styleName='styles.action' onClick={onToggleActivation}><Icon name={active ? 'CircleEx' : 'CircleArrow'} /> {active ? 'Deactivate' : 'Reactivate'}</span>)}
-        {/* TODO: i18n */}
+        {isDraftRole && (<span onClick={onDelete} styleName='styles.action'><Icon name='Trash' /> {t('Delete')}</span>)}
+        {!isDraftRole && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
+        {!isDraftRole && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
+        {!isDraftRole && !changed && (<span styleName='styles.action' onClick={onToggleActivation}><Icon name={active ? 'CircleEx' : 'CircleArrow'} /> {active ? t('Deactivate') : t('Reactivate')}</span>)}
       </div>
       <div styleName='styles.role-row'>
         <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} className={styles['emoji-picker']} />
@@ -374,7 +382,7 @@ function RoleRow ({
         isDraftRole
           ? (
             <div styleName='styles.role-row styles.reverse-flex'>
-              <div styleName='styles.create-button' onClick={onSave}>Create Role</div>
+              <div styleName='styles.create-button' onClick={onSave}>[t('Create Role')]</div>
             </div>
           )
           : active && (
@@ -392,7 +400,9 @@ function RoleRow ({
   )
 }
 
-export class AddMemberToRole extends Component {
+const RoleRow = withTranslation()(RoleRowUntranslated)
+
+class AddMemberToRoleUntranslated extends Component {
   static propTypes = {
     addRoleToMember: func,
     clearSuggestions: func,
@@ -410,7 +420,7 @@ export class AddMemberToRole extends Component {
   }
 
   render () {
-    const { fetchSuggestions, addRoleToMember, memberSuggestions, clearSuggestions, groupRoleId, updateLocalMembersForRole } = this.props
+    const { fetchSuggestions, addRoleToMember, memberSuggestions, clearSuggestions, groupRoleId, updateLocalMembersForRole, t } = this.props
 
     const { adding } = this.state
 
@@ -453,8 +463,7 @@ export class AddMemberToRole extends Component {
     if (adding) {
       return (
         <div styleName='styles.adding'>
-          <div styleName='styles.help-text'>Search here for members to grant this role too</div>
-          {/* TODO: i18n */}
+          <div styleName='styles.help-text'>{t('Search here for members to grant this role too')}</div>
           <div styleName='styles.input-row'>
             <input
               styleName='styles.input'
@@ -464,8 +473,8 @@ export class AddMemberToRole extends Component {
               onKeyDown={handleKeys}
               ref='input'
             />
-            <span styleName='styles.cancel-button' onClick={toggle}>Cancel</span>
-            <span styleName='styles.add-button' onClick={chooseCurrentItem}>Add</span>
+            <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
+            <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
           </div>
           {!isEmpty(memberSuggestions) && <div style={listWidth}>
             <KeyControlledItemList
@@ -478,15 +487,16 @@ export class AddMemberToRole extends Component {
         </div>
       )
     } else {
-      // TODO: i18n
       return (
         <div styleName='styles.add-new' onClick={toggle}>
-          + Add Member to Role
+          + {t('Add Member to Role')}
         </div>
       )
     }
   }
 }
+
+const AddMemberToRole = withTranslation()(AddMemberToRoleUntranslated)
 
 export function GroupRoleList ({ slug, removeItem, fetchModeratorSuggestions, addRoleToMember, rawSuggestions, clearModeratorSuggestions, groupRoleId, fetchMembersForGroupRole, removeRoleFromMember }) {
   const [membersForRole, setMembersForRole] = useState([])
@@ -536,3 +546,5 @@ export function GroupRoleList ({ slug, removeItem, fetchModeratorSuggestions, ad
     </div>
   )
 }
+
+export default withTranslation()(ModeratorsSettingsTab)

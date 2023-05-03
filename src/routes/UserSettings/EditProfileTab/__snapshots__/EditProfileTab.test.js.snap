@@ -7,7 +7,8 @@ exports[`EditProfileTab renders correctly 1`] = `
     encodeSpecialCharacters={true}
   >
     <title>
-      Your Settings | Hylo
+      Your Settings
+       | Hylo
     </title>
   </HelmetWrapper>
   <input
@@ -101,18 +102,21 @@ exports[`EditProfileTab renders correctly 1`] = `
     label="Facebook"
     onLink={[Function]}
     provider="facebook"
+    t={[Function]}
     updateSettingDirectly={[Function]}
   />
   <SocialControl
     handleUnlinkAccount={[Function]}
     label="Twitter"
     provider="twitter"
+    t={[Function]}
     updateSettingDirectly={[Function]}
   />
   <SocialControl
     handleUnlinkAccount={[Function]}
     label="LinkedIn"
     provider="linkedin"
+    t={[Function]}
     updateSettingDirectly={[Function]}
   />
   <div
@@ -140,7 +144,8 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
     encodeSpecialCharacters={true}
   >
     <title>
-      Your Settings | Hylo
+      Your Settings
+       | Hylo
     </title>
   </HelmetWrapper>
   <div
@@ -234,18 +239,21 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
     label="Facebook"
     onLink={[Function]}
     provider="facebook"
+    t={[Function]}
     updateSettingDirectly={[Function]}
   />
   <SocialControl
     handleUnlinkAccount={[Function]}
     label="Twitter"
     provider="twitter"
+    t={[Function]}
     updateSettingDirectly={[Function]}
   />
   <SocialControl
     handleUnlinkAccount={[Function]}
     label="LinkedIn"
     provider="linkedin"
+    t={[Function]}
     updateSettingDirectly={[Function]}
   />
   <div
@@ -266,24 +274,24 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
 </div>
 `;
 
-exports[`facebookPrompt rejects an incorrect facebook Url, calling itself again 1`] = `
+exports[`prompt rejects an incorrect facebook Url, calling itself again 1`] = `
 Array [
   Array [
-    "Please enter the full url for your Facebook page.",
+    "Please enter the full url for your {{network}} page.",
   ],
   Array [
-    "Invalid url. Please enter the full url for your Facebook page.",
+    "Invalid url. Please enter the full url for your {{network}} page.",
   ],
 ]
 `;
 
-exports[`linkedinPrompt rejects an incorrect linkedIn Url, calling itself again 1`] = `
+exports[`prompt rejects an incorrect linkedIn Url, calling itself again 1`] = `
 Array [
   Array [
-    "Please enter the full url for your LinkedIn page.",
+    "Please enter the full url for your {{network}} page.",
   ],
   Array [
-    "Invalid url. Please enter the full url for your LinkedIn page.",
+    "Invalid url. Please enter the full url for your {{network}} page.",
   ],
 ]
 `;

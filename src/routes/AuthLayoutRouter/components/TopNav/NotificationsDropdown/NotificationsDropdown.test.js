@@ -14,6 +14,22 @@ import {
   // ACTION_EVENT_INVITATION
 } from 'store/models/Notification'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  },
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 const u1 = { id: 1, name: 'Charles Darwin', avatarUrl: 'foo.png' }
 const u2 = { id: 2, name: 'Marie Curie', avatarUrl: 'bar.png' }
 const u3 = { id: 3, name: 'Arthur Fonzarelli', avatarUrl: 'baz.png' }

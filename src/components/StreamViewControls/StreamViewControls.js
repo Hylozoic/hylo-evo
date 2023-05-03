@@ -1,40 +1,44 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
 import Tooltip from 'components/Tooltip'
 import { CONTEXT_MY } from 'store/constants'
 import { COLLECTION_SORT_OPTIONS, STREAM_SORT_OPTIONS } from 'util/constants'
-
 import './StreamViewControls.scss'
 
-const POST_TYPE_OPTIONS = [
-  { id: undefined, label: 'All Posts' },
-  { id: 'discussion', label: 'Discussions' },
-  { id: 'event', label: 'Events' },
-  { id: 'offer', label: 'Offers' },
-  { id: 'project', label: 'Projects' },
-  { id: 'request', label: 'Requests' },
-  { id: 'resource', label: 'Resources' }
-]
-
-const makeDropdown = (selected, options, onChange) => (
-  <Dropdown
-    styleName='dropdown'
-    toggleChildren={
-      <span styleName='dropdown-label'>
-        <Icon name='ArrowDown' />
-        {options.find(o => o.id === selected).label}
-      </span>
-    }
-    items={options.map(({ id, label }) => ({
-      label,
-      onClick: () => onChange(id)
-    }))}
-  />
-)
+const makeDropdown = (selected, options, onChange) => {
+  const { t } = useTranslation()
+  return (
+    <Dropdown
+      styleName='dropdown'
+      toggleChildren={
+        <span styleName='dropdown-label'>
+          <Icon name='ArrowDown' />
+          {options.find(o => o.id === selected).label}
+        </span>
+      }
+      items={options.map(({ id, label }) => ({
+        label: t(label),
+        onClick: () => onChange(id)
+      }))}
+    />
+  )
+}
 
 const StreamViewControls = (props) => {
+  const { t } = useTranslation()
+  const POST_TYPE_OPTIONS = [
+    { id: undefined, label: t('All Posts') },
+    { id: 'discussion', label: t('Discussions') },
+    { id: 'event', label: t('Events') },
+    { id: 'offer', label: t('Offers') },
+    { id: 'project', label: t('Projects') },
+    { id: 'request', label: t('Requests') },
+    { id: 'resource', label: t('Resources') }
+  ]
+
   const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, context, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion } = props
   const [searchActive, setSearchActive] = useState(!!searchValue)
   const [searchState, setSearchState] = useState('')
@@ -54,12 +58,11 @@ const StreamViewControls = (props) => {
         <div styleName={cx('toggle', { active: searchActive })} onClick={handleSearchToggle}>
           <Icon name='Search' styleName={cx('toggle-icon', { active: searchActive })} />
         </div>
-        {/* TODO: i18n on tooltip */}
         {![CONTEXT_MY, 'all', 'public'].includes(context) &&
           <div
             styleName={cx('toggle', 'margin-right', { active: childPostInclusion === 'yes' })}
             onClick={handleChildPostInclusion}
-            data-tip={childPostInclusion === 'yes' ? 'Hide posts from child groups you are a member of' : 'Show posts from child groups you are a member of'}
+            data-tip={childPostInclusion === 'yes' ? t('Hide posts from child groups you are a member of') : t('Show posts from child groups you are a member of')}
             data-for='childgroup-toggle-tt'
           >
             <Icon name='Subgroup' styleName={cx('toggle-icon', 'subgroup-icon', { active: childPostInclusion === 'yes' })} />
@@ -74,7 +77,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'cards' })}
             onClick={() => changeView('cards')}
-            data-tip='Card view' data-for='stream-viewmode-tip'
+            data-tip={t('Card view')} data-for='stream-viewmode-tip'
           >
             <Icon name='CardView' />
           </div>
@@ -82,7 +85,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'list' })}
             onClick={() => changeView('list')}
-            data-tip='List view' data-for='stream-viewmode-tip'
+            data-tip={t('List view')} data-for='stream-viewmode-tip'
           >
             <Icon name='ListView' />
           </div>
@@ -90,7 +93,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'bigGrid' })}
             onClick={() => changeView('bigGrid')}
-            data-tip='Large Grid' data-for='stream-viewmode-tip'
+            data-tip={t('Large Grid')} data-for='stream-viewmode-tip'
           >
             <Icon name='GridView' styleName='grid-view-icon' />
           </div>
@@ -98,7 +101,7 @@ const StreamViewControls = (props) => {
           <div
             styleName={cx({ 'mode-active': viewMode === 'grid' }, 'small-grid')}
             onClick={() => changeView('grid')}
-            data-tip='Small Grid' data-for='stream-viewmode-tip'
+            data-tip={t('Small Grid')} data-for='stream-viewmode-tip'
           >
             <Icon name='SmallGridView' styleName='grid-view-icon' />
           </div>
@@ -122,7 +125,7 @@ const StreamViewControls = (props) => {
                 e.target.blur()
               }
             }}
-            placeholder='Search posts'
+            placeholder={t('Search posts')}
             value={searchState}
           />
         </div>}

@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import React from 'react'
 import CardFileAttachments from 'components/CardFileAttachments'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -32,7 +32,7 @@ export default function ChatCard ({
               {!slug && <span>in&nbsp; <span styleName='group-name'>{firstGroup}</span></span>}
             </div>
           </Highlight>
-          <span styleName='date'>{moment(post.createdAt).format('YYY HH:MMa')}</span>
+          <span styleName='date'>{DateTime.fromISO(post.createdAt).toLocaleString({ year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
         </div>
         <CardImageAttachments attachments={post.attachments} linked styleName='post-images' />
         <CardFileAttachments attachments={post.attachments} styleName='post-files' />

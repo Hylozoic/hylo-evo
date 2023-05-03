@@ -3,12 +3,9 @@ import TagInput from 'components/TagInput'
 import RoundImage from 'components/RoundImage'
 import styles from './MemberSelector.scss'
 import { isEmpty, isEqual } from 'lodash/fp'
+import { withTranslation } from 'react-i18next'
 
-export default class MemberSelector extends Component {
-  static defaultProps = {
-    placeholder: 'Type persons name...'
-  }
-
+class MemberSelector extends Component {
   componentDidMount () {
     this.props.setMembers()
   }
@@ -43,7 +40,7 @@ export default class MemberSelector extends Component {
   }
 
   render () {
-    const { placeholder, readOnly, memberMatches, autocomplete, members = [] } = this.props
+    const { placeholder = this.props.t('Type persons name...'), readOnly, memberMatches, autocomplete, members = [] } = this.props
 
     return (
       <TagInput
@@ -70,3 +67,5 @@ export function Suggestion ({ item, handleChoice }) {
     </a>
   </li>
 }
+
+export default withTranslation()(MemberSelector)

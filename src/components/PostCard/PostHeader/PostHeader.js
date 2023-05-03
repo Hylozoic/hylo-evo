@@ -1,9 +1,9 @@
 import cx from 'classnames'
 import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import moment from 'moment-timezone'
 import Avatar from 'components/Avatar'
 import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
@@ -16,7 +16,7 @@ import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
 
-export default class PostHeader extends PureComponent {
+class PostHeader extends PureComponent {
   static defaultProps = {
     routeParams: {}
   }
@@ -57,7 +57,8 @@ export default class PostHeader extends PureComponent {
       announcement,
       fulfillPost,
       unfulfillPost,
-      postUrl
+      postUrl,
+      t
     } = this.props
 
     if (!creator) return null
@@ -75,12 +76,12 @@ export default class PostHeader extends PureComponent {
       type: 'post'
     }
     const dropdownItems = filter([
-      { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
-      { icon: 'Edit', label: 'Edit', onClick: editPost },
-      { icon: 'Copy', label: 'Copy Link', onClick: copyLink },
-      { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
-      { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
-      { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
+      { icon: 'Pin', label: pinned ? t('Unpin') : t('Pin'), onClick: pinPost },
+      { icon: 'Edit', label: t('Edit'), onClick: editPost },
+      { icon: 'Copy', label: t('Copy Link'), onClick: copyLink },
+      { icon: 'Flag', label: t('Flag'), onClick: this.flagPostFunc() },
+      { icon: 'Trash', label: t('Delete'), onClick: () => deletePost(t('Are you sure you want to delete this post?')), red: true },
+      { icon: 'Trash', label: t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
@@ -88,21 +89,26 @@ export default class PostHeader extends PureComponent {
 
     const typesWithCompletion = ['offer', 'request', 'resource', 'project']
     const canBeCompleted = typesWithCompletion.includes(type)
+    const locale = 'en' /* TODO: Update with locale, once locale becomes available */
 
     // If it was completed/fulfilled before it ended, then use that as the end datetime
     const actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
 
-    const { from, to } = TextHelpers.formatDatePair(startTime, actualEndTime, true)
+    const { from, to } = TextHelpers.formatDatePair(locale, startTime, actualEndTime, true)
     const startString = fulfilledAt ? false
-      : TextHelpers.isDateInTheFuture(startTime) ? `Starts: ${from}`
-        : TextHelpers.isDateInTheFuture(endTime) ? `Started: ${from}`
+      : TextHelpers.isDateInTheFuture(startTime) ? t('Starts: {{from}}', { from })
+        : TextHelpers.isDateInTheFuture(endTime) ? t('Started: {{from}}', { from })
           : false
+    const endTimeDate = new Date(endTime)
+    const endTimeTimestamp = endTimeDate.getTime()
+    const now = new Date()
+    const nowTimestamp = now.getTime()
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
-      endString = `Completed: ${to}`
+      endString = t('Completed: {{endTime}}', { endTime: to })
     } else {
-      endString = endTime !== moment() && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+      endString = endTimeTimestamp !== nowTimestamp && TextHelpers.isDateInTheFuture(endTime) ? t('Ends: {{endTime}}', { endTime: to }) : actualEndTime ? t('Ended: {{endTime}}', { endTime: to }) : false
     }
 
     let timeWindow = ''
@@ -152,7 +158,7 @@ export default class PostHeader extends PureComponent {
             </div>
             <div styleName='upperRight'>
               {pinned && <Icon name='Pin' styleName='pinIcon' />}
-              {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type={'completed'} styleName='label' /></div>}
+              {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type='completed' styleName='label' /></div>}
               {type && <PostLabel type={type} styleName='label' />}
               {dropdownItems.length > 0 &&
                 <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
@@ -204,3 +210,5 @@ export function TopicsLine ({ topics, slug, newLine }) {
     </div>
   )
 }
+
+export default withTranslation()(PostHeader)

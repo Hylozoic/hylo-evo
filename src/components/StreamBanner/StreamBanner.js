@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { capitalize } from 'lodash'
@@ -31,22 +32,29 @@ export default function StreamBanner ({
   type
 }) {
   let bannerUrl, avatarUrl, name, location, subtitle
+  const { t } = useTranslation()
   const view = routeParams.view
+
   if (context === 'all') {
-    name = 'All My Groups'
+    name = t('All My Groups')
     avatarUrl = whiteMerkaba
     bannerUrl = allGroupsBanner
-    subtitle = currentUser && `${currentUser.memberships.count()} Groups`
+    subtitle = currentUser && t('{{count}} Groups', { count: currentUser.memberships.count() })
   } else if (context === 'public') {
-    name = 'Public Groups & Posts'
+    name = t('Public Groups & Posts')
     avatarUrl = publicGlobe
     bannerUrl = allGroupsBanner
     // TODO list count of public posts and public groups in subtitle
-    subtitle = 'All Posts Marked Public'
+    subtitle = t('All Posts Marked Public')
   } else if (context === 'my') {
-    name = `My Home: ${capitalize(view)}`
+    name = `${t('My Home')}: ${capitalize(t(view))}`
     avatarUrl = currentUser.avatarUrl || publicGlobe
     bannerUrl = currentUser.bannerUrl || allGroupsBanner
+    // These need to be invoked here so that they get picked up by the translation extractor
+    t('Posts')
+    t('Interactions')
+    t('Mentions')
+    t('Announcements')
   } else if (!group) {
     return null
   } else {
@@ -75,9 +83,9 @@ export default function StreamBanner ({
               </div>}
 
               {customViewType === 'stream'
-                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} Filters</div>
+                ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{numCustomFilters} {t('Filters')}</div>
                 : customViewType === 'collection'
-                  ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>Collection</div>
+                  ? <div styleName='num-filters' data-tip='' data-for='feed-banner-tip'>{t('Collection')}</div>
                   : ''}
 
               {subtitle && <div styleName='header-subtitle'>
@@ -86,18 +94,50 @@ export default function StreamBanner ({
             </div>
           </div>
         </div>
+        {currentUserHasMemberships && context !== CONTEXT_MY && (<PostPrompt
+          avatarUrl={currentUser.avatarUrl}
+          firstName={currentUser.firstName()}
+          newPost={newPost}
+          querystringParams={querystringParams}
+          routeParams={routeParams}
+          type={type}
+        />)}
+
+        {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
+        {!isTesting && (<ReactTooltip
+          id='feed-banner-tip'
+          backgroundColor='rgba(35, 65, 91, 1.0)'
+          effect='solid'
+          delayShow={0}
+          place='bottom'
+          getContent={function () {
+            return (customViewType === 'stream'
+              ? <div styleName='custom-filters'>
+                <span styleName='displaying'>
+                  Displaying &nbsp;
+                  {customActivePostsOnly ? 'active' : ''}
+                </span>
+
+                {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
+                {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
+                {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
+              </div>
+              : ''
+            )
+          }}
+        />)}
       </div>
-      {currentUserHasMemberships && context !== CONTEXT_MY && (<PostPrompt
+      {currentUserHasMemberships && <PostPrompt
         avatarUrl={currentUser.avatarUrl}
         firstName={currentUser.firstName()}
         newPost={newPost}
         querystringParams={querystringParams}
         routeParams={routeParams}
         type={type}
-      />)}
+      />}
 
       {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
-      {!isTesting && (<ReactTooltip
+      {!isTesting && <ReactTooltip
         id='feed-banner-tip'
         backgroundColor='rgba(35, 65, 91, 1.0)'
         effect='solid'
@@ -107,67 +147,47 @@ export default function StreamBanner ({
           return (customViewType === 'stream'
             ? <div styleName='custom-filters'>
               <span styleName='displaying'>
-                Displaying &nbsp;
+                {t('Displaying') + ' '};
                 {customActivePostsOnly ? 'active' : ''}
               </span>
 
-              {customPostTypes.length === 0 ? 'None' : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
-              {customViewTopics.length > 0 && <div styleName='filtered-topics'>filtered by topics:</div>}
+              {customPostTypes.length === 0 ? t('None') : customPostTypes.map((p, i) => <span key={i} styleName='post-typelabel'><PostLabel key={p} type={p} styleName='post-type' />{p}s +</span>)}
+              {customViewTopics.length > 0 && <div styleName='filtered-topics'>{t('filtered by topics:')}</div>}
               {customViewTopics.length > 0 && customViewTopics.map(t => <span key={t.id} styleName='filtered-topic'>#{t.name}</span>)}
             </div>
             : ''
           )
         }}
-      />)}
+      />}
     </div>
   )
 }
 
-export function postPromptString (type = '', { firstName }) {
-  const postPrompts = {
-    event: `Hi ${firstName}, want to create an event?`,
-    offer: `Hi ${firstName}, what would you like to share?`,
-    request: `Hi ${firstName}, what are you looking for?`,
-    project: `Hi ${firstName}, what would you like to create?`,
-    resource: `Hi ${firstName}, what resource is available?`,
-    default: `Hi ${firstName}, what's on your mind?`
+export const PostPrompt = (props) => {
+  const { avatarUrl, className = 'post-prompt', firstName = '', type = '', querystringParams = {}, routeParams = {} } = props
+  const [hover, setHover] = useState(false)
+  const { t } = useTranslation()
+
+  const postPromptString = (type, firstName) => {
+    const postPrompts = {
+      offer: t('Hi {{firstName}}, what would you like to share?', { firstName }),
+      request: t('Hi {{firstName}}, what are you looking for?', { firstName }),
+      project: t('Hi {{firstName}}, what would you like to create?', { firstName }),
+      event: t('Hi {{firstName}}, want to create an event?', { firstName }),
+      default: t('Hi {{firstName}}, what\'s on your mind?', { firstName })
+    }
+    return postPrompts[type] || postPrompts.default
   }
 
-  return postPrompts[type] || postPrompts['default']
-}
-
-export class PostPrompt extends React.Component {
-  static defaultProps = {
-    firstName: '',
-    promptStringFunc: postPromptString,
-    querystringParams: {},
-    routeParams: {},
-    type: ''
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = { hover: false }
-  }
-
-  onMouseEnterHandler = () => this.setState({ hover: true })
-
-  onMouseLeaveHandler = () => this.setState({ hover: false })
-
-  render () {
-    const { avatarUrl, className, firstName, type, promptStringFunc, querystringParams, routeParams } = this.props
-    const { hover } = this.state
-
-    return (
-      <div onMouseEnter={this.onMouseEnterHandler} onMouseLeave={this.onMouseLeaveHandler}>
-        <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
-          <div styleName='postPrompt' className={className}>
-            <RoundImage url={avatarUrl} small styleName='prompt-image' />
-            {promptStringFunc(type, { firstName })}
-          </div>
-        </Link>
-        <div styleName={cx('shadow', { hover })} />
-      </div>
-    )
-  }
+  return (
+    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <Link to={createPostUrl(routeParams, { ...querystringParams, newPostType: type })}>
+        <div styleName='postPrompt' className={className}>
+          <RoundImage url={avatarUrl} small styleName='prompt-image' />
+          {postPromptString(type, firstName)}
+        </div>
+      </Link>
+      <div styleName={cx('shadow', { hover })} />
+    </div>
+  )
 }

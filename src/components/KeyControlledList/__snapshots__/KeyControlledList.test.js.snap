@@ -17,6 +17,7 @@ exports[`KeyControlledItemList renders correctly (with items and renderListItem 
   onChange={[Function]}
   renderListItem={[Function]}
   selectedIndex={-1}
+  t={[Function]}
   tabChooses={true}
   theme={
     Object {
@@ -51,6 +52,7 @@ exports[`KeyControlledItemList renders correctly (with items) 1`] = `
   }
   onChange={[Function]}
   selectedIndex={-1}
+  t={[Function]}
   tabChooses={true}
   theme={
     Object {
@@ -96,6 +98,7 @@ exports[`KeyControlledItemList renders correctly (with min props) 1`] = `
   items={Array []}
   onChange={[Function]}
   selectedIndex={-1}
+  t={[Function]}
   tabChooses={true}
   theme={
     Object {

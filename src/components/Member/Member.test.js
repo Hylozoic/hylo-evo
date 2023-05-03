@@ -3,6 +3,14 @@ import { shallow } from 'enzyme'
 import { merge } from 'lodash'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 const minProps = {
   group: { id: 1 },
   member: {},
@@ -16,7 +24,7 @@ const renderComponent = (providedProps) => {
 
 describe('Member Component', () => {
   it('shows moderate button when a moderator', () => {
-    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [{ name: 'role', emoji: '🏄'}] }, canModerate: true })
+    const wrapper = renderComponent({ member: { moderatedGroupMemberships: [], groupRoles: [{ name: 'role', emoji: '🏄' }] }, canModerate: true })
     expect(wrapper.find('Dropdown')).toHaveLength(1)
   })
 

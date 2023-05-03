@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
-import Moment from 'moment-timezone'
-
+import { DateTime } from 'luxon'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
@@ -44,7 +44,8 @@ const PostListRow = (props) => {
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const numOtherCommentors = commentersTotal - 1
   const unread = false
-  const startTimeMoment = Moment(post.startTime)
+  const startTime = DateTime.fromISO(post.startTime)
+  const { t } = useTranslation()
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
@@ -55,13 +56,13 @@ const PostListRow = (props) => {
           </div>
           <div styleName='participants'>
             {post.type === 'event' ? <div styleName='date'>
-              <span>{startTimeMoment.format('MMM')}</span>
-              <span>{startTimeMoment.format('D')}</span>
+              <span>{startTime.toLocaleString({ month: 'short' })}</span>
+              <span>{startTime.toLocaleString({ day: 'numeric' })}</span>
             </div> : <div>
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name} {
                 numOtherCommentors > 1
-                  ? (<span> and <strong>{numOtherCommentors} others</strong></span>)
+                  ? (<span> {t('and')} <strong>{numOtherCommentors} {t('others')}</strong></span>)
                   : null
               }
             </div> }
@@ -69,10 +70,9 @@ const PostListRow = (props) => {
           {childPost &&
             <div
               styleName='icon-container'
-              data-tip='Post from child group'
+              data-tip={t('Post from child group')}
               data-for='childgroup-tt'
             >
-              {/* TODO: i18n on tooltip */}
               <Icon
                 name='Subgroup'
                 styleName='icon'

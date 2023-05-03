@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { validateEmail } from 'util/index'
 import { checkForStorageAccess, formatError } from '../util'
 import getQuerystringParam from 'store/selectors/getQuerystringParam'
@@ -18,6 +19,7 @@ export default function Signup (props) {
   const [email, setEmail] = useState()
   const [error, setError] = useState(getQuerystringParam('error', null, props))
   const [redirectTo, setRedirectTo] = useState()
+  const { t } = useTranslation()
 
   const sendEmailVerification = async email => {
     const { payload } = await dispatch(sendEmailVerificationAction(email))
@@ -60,7 +62,7 @@ export default function Signup (props) {
 
   const submit = () => {
     if (!validateEmail(email)) {
-      setError('Invalid email address')
+      setError(t('Invalid email address'))
     } else {
       // XXX: needed by Safari to allow for login in an iframe
       checkForStorageAccess(
@@ -83,17 +85,17 @@ export default function Signup (props) {
   return (
     <div styleName='form'>
       <div styleName='formWrapper'>
-        <h1 styleName='title'>Welcome to Hylo</h1>
-        <p styleName='blurb'>Stay connected, organized, and engaged with your group.</p>
-        <p styleName='or'>Enter your email to get started:</p>
+        <h1 styleName='title'>{t('Welcome to Hylo')}</h1>
+        <p styleName='blurb'>{t('Stay connected, organized, and engaged with your group.')}</p>
+        <p styleName='or'>{t('Enter your email to get started:')}</p>
 
-        {error && formatError(error, 'Signup')}
+        {error && formatError(error, 'Signup', t)}
 
         <TextInput
           aria-label='email' label='email' name='email' id='email'
           autoComplete='off'
           autoFocus
-          internalLabel='Email'
+          internalLabel={t('Email')}
           onChange={handleEmailChange}
           onEnter={submit}
           styleName='field'
@@ -102,12 +104,12 @@ export default function Signup (props) {
         />
 
         <Button
-          styleName='submit' label='Continue' color={canSubmit ? 'green' : 'gray'}
+          styleName='submit' label={t('Continue')} color={canSubmit ? 'green' : 'gray'}
           onClick={canSubmit ? () => submit() : null}
         />
       </div>
 
-      <p styleName='or'>Or sign in with an existing account: </p>
+      <p styleName='or'>{t('Or sign in with an existing account')}: </p>
 
       <div styleName='auth-buttons'>
         <FacebookButton onClick={() => handleSignupWithService('facebook')} />

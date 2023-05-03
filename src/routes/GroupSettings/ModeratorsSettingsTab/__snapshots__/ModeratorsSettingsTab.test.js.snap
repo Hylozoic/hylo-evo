@@ -57,6 +57,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
         ]
       }
       onChange={[Function]}
+      t={[Function]}
       theme={Object {}}
     />
   </div>
@@ -66,9 +67,11 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
 <div
   data-stylename="styles.add-new"
+  id="add-new"
   onClick={[Function]}
 >
-  + Add New
+  + 
+  Add New
 </div>
 `;
 
@@ -151,7 +154,9 @@ exports[`ModeratorsList renders correctly 1`] = `
       url="/groups/foogroup/members/4"
     />
   </div>
-  <AddModerator />
+  <AddModeratorUntranslated
+    t={[Function]}
+  />
 </div>
 `;
 
@@ -185,6 +190,7 @@ exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModer
         ]
       }
       removeItem={[Function]}
+      t={[Function]}
     />
   </SettingsSection>
   <SettingsSection>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import { get } from 'lodash/fp'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,56 +20,55 @@ import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 
 const myPath = '/my'
 
-export const defaultContexts = [
-  {
-    id: PUBLIC_CONTEXT_ID,
-    name: 'Public Stream',
-    groups: [],
-    context: 'public',
-    explicitPath: '/public/',
-    avatarUrl: PUBLIC_CONTEXT_AVATAR_PATH
-  },
-  {
-    id: GROUP_EXPLORER_ID,
-    name: 'Public Groups',
-    groups: [],
-    context: 'public',
-    explicitPath: '/public/groups/',
-    avatarUrl: GROUP_EXPLORER_AVATAR_PATH
-  },
-  {
-    id: PUBLIC_MAP_ID,
-    name: 'Public Map',
-    groups: [],
-    context: 'public',
-    explicitPath: '/public/map/',
-    avatarUrl: PUBLIC_MAP_AVATAR_PATH
-  }
-]
-
-export const myHome = {
-  id: MY_HOME_ID,
-  name: 'My Home',
-  groups: [],
-  explicitPath: myPath,
-  avatarUrl: MY_HOME_AVATAR_PATH
-}
-
-export const allMyGroups = {
-  id: ALL_GROUPS_ID,
-  name: 'All My Groups',
-  groups: [],
-  context: 'all',
-  avatarUrl: ALL_GROUPS_AVATAR_PATH
-}
-
 export default function Drawer (props) {
   const history = useHistory()
+  const { t } = useTranslation()
   const currentLocation = useLocation()
   const dispatch = useDispatch()
   const groups = useSelector(getMyGroups)
   const canModerate = useSelector(state => props.group && getCanModerate(state, props))
   const { group, className } = props
+  const defaultContexts = [
+    {
+      id: PUBLIC_CONTEXT_ID,
+      name: t('Public Stream'),
+      groups: [],
+      context: 'public',
+      explicitPath: '/public/',
+      avatarUrl: PUBLIC_CONTEXT_AVATAR_PATH
+    },
+    {
+      id: GROUP_EXPLORER_ID,
+      name: t('Public Groups'),
+      groups: [],
+      context: 'public',
+      explicitPath: '/public/groups/',
+      avatarUrl: GROUP_EXPLORER_AVATAR_PATH
+    },
+    {
+      id: PUBLIC_MAP_ID,
+      name: t('Public Map'),
+      groups: [],
+      context: 'public',
+      explicitPath: '/public/map/',
+      avatarUrl: PUBLIC_MAP_AVATAR_PATH
+    }
+  ]
+  const allMyGroups = {
+    id: ALL_GROUPS_ID,
+    name: t('All My Groups'),
+    groups: [],
+    context: 'all',
+    avatarUrl: ALL_GROUPS_AVATAR_PATH
+  }
+
+  const myHome = {
+    id: MY_HOME_ID,
+    name: t('My Home'),
+    groups: [],
+    explicitPath: myPath,
+    avatarUrl: MY_HOME_AVATAR_PATH
+  }
 
   const toggleDrawer = () => dispatch(toggleDrawerAction())
 
@@ -96,7 +96,7 @@ export default function Drawer (props) {
           <Logo group={group} />
           {canModerate && (
             <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
-              <Icon name='Settings' styleName='s.settingsIcon' /> Group Settings
+              <Icon name='Settings' styleName='s.settingsIcon' /> {t('Group Settings')}
             </Link>
           )}
         </div>
@@ -107,13 +107,13 @@ export default function Drawer (props) {
           <ContextRow currentLocation={currentLocation} group={myHome} explicitPath={myHome.explicitPath} />
         </ul>
         <ul styleName='s.groupsList'>
-          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>Public</li>
+          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>{t('Public')}</li>
           {defaultContexts && defaultContexts.map(context =>
             <ContextRow currentLocation={currentLocation} group={context} key={context.id} explicitPath={context.explicitPath} />
           )}
         </ul>
         <ul styleName='s.groupsList'>
-          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>My Groups</li>
+          <li styleName={cx('s.sectionTitle', 's.sectionTitleSeparator')}>{t('My Groups')}</li>
           <ContextRow currentLocation={currentLocation} group={allMyGroups} />
           {groups.map(group =>
             <ContextRow currentLocation={currentLocation} group={group} key={group.id} />
@@ -123,7 +123,7 @@ export default function Drawer (props) {
           <Button
             color='white'
             styleName='s.newGroupBtn'
-            label='Start a Group'
+            label={t('Start a Group')}
             onClick={goToCreateGroup}
           />
         </div>

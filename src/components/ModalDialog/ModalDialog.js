@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { bool, func, node, string } from 'prop-types'
 
 import { bgImageStyle } from 'util/index'
@@ -7,7 +8,7 @@ import Icon from 'components/Icon'
 
 import './ModalDialog.scss'
 
-export default class ModalDialog extends Component {
+class ModalDialog extends Component {
   static propTypes = {
     // Any image in assets (filename or path relative to /assets).
     // Will be shown at bottom left of dialog.
@@ -57,7 +58,6 @@ export default class ModalDialog extends Component {
     showCancelButton: true,
     showSubmitButton: true,
     submitButtonIsDisabled: () => false,
-    submitButtonText: 'Ok',
     useNotificationFormat: false
   }
 
@@ -91,7 +91,7 @@ export default class ModalDialog extends Component {
       showCancelButton,
       showSubmitButton,
       submitButtonIsDisabled,
-      submitButtonText,
+      submitButtonText = this.props.t('Ok'),
       showModalTitle,
       useNotificationFormat,
       style
@@ -108,35 +108,47 @@ export default class ModalDialog extends Component {
     const innerStyle = { ...backgroundStyle, ...style }
     const showControls = showCancelButton || showSubmitButton
 
-    return <div styleName='popup'>
-      <div styleName='popup-inner' style={innerStyle}>
-        <span onClick={this.cancel} styleName='close-btn'>
-          <Icon name='Ex' styleName='icon' />
-        </span>
+    return (
+      <div styleName='popup'>
+        <div styleName='popup-inner' style={innerStyle}>
+          <span onClick={this.cancel} styleName='close-btn'>
+            <Icon name='Ex' styleName='icon' />
+          </span>
 
-        <div styleName='title-block'>
-          {useNotificationFormat &&
-            <Icon green name={notificationIconName} styleName='notification-icon' />}
-          {showModalTitle && <h1 styleName={useNotificationFormat ? 'notification-title' : ''}>
-            {modalTitle}
-          </h1>}
+          <div styleName='title-block'>
+            {useNotificationFormat &&
+              <Icon green name={notificationIconName} styleName='notification-icon' />}
+            {showModalTitle && <h1 styleName={useNotificationFormat ? 'notification-title' : ''}>
+              {modalTitle}
+            </h1>}
+          </div>
+
+          <div styleName='content'>
+            {children}
+          </div>
+
+          {showControls &&
+            <div styleName='controls'>
+              {showCancelButton &&
+                <Button
+                  color='green-white-green-border'
+                  styleName='cancel-btn'
+                  onClick={this.cancel}
+                >
+                  {this.props.t('Cancel')}
+                </Button>}
+              {showSubmitButton &&
+                <Button
+                  styleName='submit-btn'
+                  onClick={this.submit}
+                  disabled={submitButtonIsDisabled()}
+                >
+                  {submitButtonText}
+                </Button>}
+            </div>}
         </div>
-
-        <div styleName='content'>
-          {children}
-        </div>
-
-        {showControls && <div styleName='controls'>
-          {showCancelButton && <Button
-            color='green-white-green-border'
-            styleName='cancel-btn'
-            onClick={this.cancel}>Cancel</Button>}
-          {showSubmitButton && <Button
-            styleName='submit-btn'
-            onClick={this.submit}
-            disabled={submitButtonIsDisabled()}>{submitButtonText}</Button>}
-        </div>}
       </div>
-    </div>
+    )
   }
 }
+export default withTranslation()(ModalDialog)

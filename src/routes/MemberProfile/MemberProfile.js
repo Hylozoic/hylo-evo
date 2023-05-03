@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { filter, isFunction } from 'lodash'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import Moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import ReactTooltip from 'react-tooltip'
 import { Helmet } from 'react-helmet'
 import cx from 'classnames'
@@ -31,9 +32,15 @@ import SkillsSection from 'components/SkillsSection'
 import SkillsToLearnSection from 'components/SkillsToLearnSection'
 import styles from './MemberProfile.scss'
 
-export default class MemberProfile extends React.Component {
+class MemberProfile extends React.Component {
   static defaultProps = {
-    currentTab: 'Overview'
+    currentTab: 'Overview',
+    blockConfirmMessage: `Are you sure you want to block this member?
+    You will no longer see this member's activity
+    and they won't see yours.
+    
+    You can unblock this member at any time.
+    Go to Settings > Blocked Users.`
   }
 
   constructor (props) {
@@ -51,7 +58,7 @@ export default class MemberProfile extends React.Component {
   selectTab = currentTab => this.setState({ currentTab })
 
   blockUser = personId => {
-    if (window.confirm(BLOCK_CONFIRM_MESSAGE)) {
+    if (window.confirm(this.props.blockConfirmMessage)) {
       this.props.blockUser(personId).then(this.props.goToPreviousLocation)
     }
   }
@@ -69,7 +76,8 @@ export default class MemberProfile extends React.Component {
       group,
       routeParams,
       showDetails,
-      push
+      push,
+      t
     } = this.props
     const affiliations = person.affiliations && person.affiliations.items
     const events = person.eventsAttending && person.eventsAttending.items
@@ -81,15 +89,15 @@ export default class MemberProfile extends React.Component {
     const isCurrentUser = currentUser && currentUser.id === personId
     const isAxolotl = AXOLOTL_ID === personId
     const contentDropDownItems = [
-      { label: 'Overview', title: `${person.name}'s recent activity`, component: RecentActivity },
-      { label: 'Posts', title: `${person.name}'s posts`, component: MemberPosts },
-      { label: 'Comments', title: `${person.name}'s comments`, component: MemberComments },
-      { label: 'Upvotes', title: `${person.name}'s upvotes`, component: MemberVotes }
+      { id: 'Overview', label: t('Overview'), title: t("{{name}}s recent activity", { name: person.name }), component: RecentActivity },
+      { id: 'Posts', label: t('Posts'), title: t("{{name}}s posts", { person }), component: MemberPosts },
+      { id: 'Comments', label: t('Comments'), title: t("{{name}}s comments", { person }), component: MemberComments },
+      { id: 'Reactions', label: t('Reactions'), title: t("{{name}}s reactions", { person }), component: MemberVotes }
     ].map(contentDropDownitem => ({
       ...contentDropDownitem, onClick: () => this.selectTab(contentDropDownitem.label)
     }))
     const actionButtonsItems = [
-      { iconName: 'Messages', value: 'Message Member', onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideCopyTip: true },
+      { iconName: 'Messages', value: t('Message Member'), onClick: () => push(isCurrentUser ? messagesUrl() : messagePersonUrl(person)), hideCopyTip: true },
       { iconName: 'Phone', value: person.contactPhone, onClick: () => handleContactPhone(person.contactPhone) },
       { iconName: 'Email', value: person.contactEmail, onClick: () => handleContactEmail(person.contactEmail) },
       { iconName: 'Facebook', value: person.facebookUrl, onClick: () => gotoExternalUrl(person.facebookUrl) },
@@ -98,13 +106,13 @@ export default class MemberProfile extends React.Component {
       { iconName: 'Public', value: person.url, onClick: () => gotoExternalUrl(person.url) }
     ]
     const actionDropdownItems = [
-      { icon: 'Edit', label: 'Edit Profile', onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
-      { icon: 'Ex', label: 'Block this Member', onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
+      { icon: 'Edit', label: t('Edit Profile'), onClick: () => push(currentUserSettingsUrl()), hide: !isCurrentUser },
+      { icon: 'Ex', label: t('Block this Member'), onClick: () => this.blockUser(personId), hide: isCurrentUser || isAxolotl }
     ]
     const {
       title: currentContentTitle,
       component: CurrentContentComponent
-    } = contentDropDownItems.find(contentItem => contentItem.label === currentTab)
+    } = contentDropDownItems.find(contentItem => contentItem.id === currentTab)
     const groupId = group && group.id
     const badges = (groupId && person.groupRoles && person.groupRoles.filter(role => role.groupId === groupId)) || []
     const creatorIsModerator = (person && person.memberships && person.memberships.find(membership => membership.groupId === groupId || membership.hasModeratorRole)) || false
@@ -113,19 +121,19 @@ export default class MemberProfile extends React.Component {
       <div className={cx({ [styles.memberProfile]: true, [styles.isSingleColumn]: isSingleColumn })}>
         <Helmet>
           <title>{person.name} | Hylo</title>
-          <meta name='description' content={`${person.name}'s Member Profile`} />
+          <meta name='description' content={`${person.name}: ${t('Member Profile')}`} />
         </Helmet>
         <div styleName='header'>
           {isCurrentUser &&
             <Button styleName='edit-profile-button' onClick={() => push(currentUserSettingsUrl())}>
-              <Icon name='Edit' /> Edit Profile
+              <Icon name='Edit' /> {t('Edit Profile')}
             </Button>}
           <div styleName='header-banner' style={bgImageStyle(person.bannerUrl)}>
             <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
             <h1 styleName='header-member-name'>{person.name}</h1>
             <div styleName='badgeRow'>
               {creatorIsModerator && (
-                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} />
+                <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} />
               )}
               {badges.map(badge => (
                 <BadgeEmoji key={badge.name} expanded {...badge} />
@@ -149,24 +157,23 @@ export default class MemberProfile extends React.Component {
           {person.bio && <div styleName='bio'>{person.bio}</div>}
           <div styleName='member-details'>
             <div styleName='profile-subhead'>
-              Skills &amp; Interests
+              {t('Skills & Interests')}
             </div>
             <SkillsSection personId={personId} editable={false} />
             <div styleName='profile-subhead'>
-              What I&apos;m Learning
+              {t('What I\'m Learning')}
             </div>
             <SkillsToLearnSection personId={personId} editable={false} />
+            {memberships && memberships.length > 0 && <div styleName='profile-subhead'>{t('Hylo Groups')}</div>}
+            {memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />)}
 
-            { memberships && memberships.length > 0 && <div styleName='profile-subhead'>Hylo Groups</div> }
-            { memberships && memberships.length > 0 && memberships.map((m, index) => <Membership key={m.id} index={index} membership={m} />) }
+            {affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>{t('Other Affiliations')}</div>}
+            {affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />)}
 
-            { affiliations && affiliations.length > 0 && <div styleName='profile-subhead'>Other Affiliations</div> }
-            { affiliations && affiliations.length > 0 && affiliations.map((a, index) => <Affiliation key={a.id} index={index} affiliation={a} />) }
-
-            {events && events.length > 0 && <div styleName='profile-subhead'>Upcoming Events</div>}
+            {events && events.length > 0 && <div styleName='profile-subhead'>{t('Upcoming Events')}</div>}
             {events && events.length > 0 && events.map((e, index) => <Event key={index} memberCap={3} event={e} routeParams={routeParams} showDetails={showDetails} />)}
 
-            {projects && projects.length > 0 && <div styleName='profile-subhead'>Projects</div>}
+            {projects && projects.length > 0 && <div styleName='profile-subhead'>{t('Projects')}</div>}
             {projects && projects.length > 0 && projects.map((p, index) => <Project key={index} memberCap={3} project={p} routeParams={routeParams} showDetails={showDetails} />)}
           </div>
         </div>
@@ -188,18 +195,21 @@ export default class MemberProfile extends React.Component {
 
 export function ActionTooltip ({ content, hideCopyTip, onClick }) {
   const [copied, setCopied] = useState(false)
+  const { t } = useTranslation()
 
-  return <div styleName='action-icon-tooltip'>
-    <span styleName='action-icon-tooltip-content' onClick={onClick}>
-      {content}
-    </span>
-    {!hideCopyTip && <CopyToClipboard text={content} onCopy={() => setCopied(true)}>
-      <Button styleName={cx('action-icon-tooltip-button', { copied })}>
-        <Icon name='Copy' />
-        {copied ? 'Copied!' : 'Copy'}
-      </Button>
-    </CopyToClipboard>}
-  </div>
+  return (
+    <div styleName='action-icon-tooltip'>
+      <span styleName='action-icon-tooltip-content' onClick={onClick}>
+        {content}
+      </span>
+      {!hideCopyTip && <CopyToClipboard text={content} onCopy={() => setCopied(true)}>
+        <Button styleName={cx('action-icon-tooltip-button', { copied })}>
+          <Icon name='Copy' />
+          {copied ? t('Copied!') : t('Copy')}
+        </Button>
+      </CopyToClipboard>}
+    </div>
+  )
 }
 
 export function ActionButtons ({ items }) {
@@ -214,42 +224,44 @@ export function ActionButtons ({ items }) {
       dataTipFor: tooltipId
     }
 
-    return <React.Fragment key={index}>
-      <Icon
-        key={index}
-        styleName='action-icon-button'
-        name={iconName}
-        onClick={onClick}
-        {...tooltipProps} />
-      <ReactTooltip
-        id={tooltipId}
-        place='bottom'
-        type='light'
-        effect='solid'
-        clickable
-        delayHide={500}
-        delayShow={500}
-        styleName='tooltip'
-        afterShow={e => {
-          const hoverClassName = styles['action-icon-button-hover']
-          const elements = document.getElementsByClassName(hoverClassName)
-          while (elements.length > 0) {
-            elements[0].classList.remove(hoverClassName)
-          }
-          e.target.classList.add(hoverClassName)
-        }}
-        afterHide={e => {
-          const hoverClassName = styles['action-icon-button-hover']
-          const elements = document.getElementsByClassName(hoverClassName)
-          while (elements.length > 0) {
-            elements[0].classList.remove(hoverClassName)
-          }
-          e.target.classList.remove(hoverClassName)
-        }}
-        getContent={() =>
-          <ActionTooltip content={value} onClick={onClick} key={index} hideCopyTip={hideCopyTip} />}
-      />
-    </React.Fragment>
+    return (
+      <React.Fragment key={index}>
+        <Icon
+          key={index}
+          styleName='action-icon-button'
+          name={iconName}
+          onClick={onClick}
+          {...tooltipProps} />
+        <ReactTooltip
+          id={tooltipId}
+          place='bottom'
+          type='light'
+          effect='solid'
+          clickable
+          delayHide={500}
+          delayShow={500}
+          styleName='tooltip'
+          afterShow={e => {
+            const hoverClassName = styles['action-icon-button-hover']
+            const elements = document.getElementsByClassName(hoverClassName)
+            while (elements.length > 0) {
+              elements[0].classList.remove(hoverClassName)
+            }
+            e.target.classList.add(hoverClassName)
+          }}
+          afterHide={e => {
+            const hoverClassName = styles['action-icon-button-hover']
+            const elements = document.getElementsByClassName(hoverClassName)
+            while (elements.length > 0) {
+              elements[0].classList.remove(hoverClassName)
+            }
+            e.target.classList.remove(hoverClassName)
+          }}
+          getContent={() =>
+            <ActionTooltip content={value} onClick={onClick} key={index} hideCopyTip={hideCopyTip} />}
+        />
+      </React.Fragment>
+    )
   })
 }
 
@@ -273,7 +285,7 @@ export function Project ({ memberCap, project, routeParams, showDetails }) {
     <div styleName='project' onClick={() => showDetails(id, { ...routeParams })}>
       <div>
         <div styleName='title'>{title} </div>
-        <div styleName='meta'>{creator.name} - {Moment(createdAt).fromNow()} </div>
+        <div styleName='meta'>{creator.name} - {DateTime.fromISO(createdAt).toRelative()} </div>
       </div>
       <RoundImageRow styleName={`members${members.items.length > memberCap ? '-plus' : ''}`} inline imageUrls={members.items.map(m => m.avatarUrl)} cap={memberCap} />
     </div>
@@ -285,8 +297,8 @@ export function Event ({ memberCap, event, routeParams, showDetails }) {
   return (
     <div styleName='event' onClick={() => showDetails(id, { ...routeParams })}>
       <div styleName='date'>
-        <div styleName='month'>{Moment(startTime).format('MMM')}</div>
-        <div styleName='day'>{Moment(startTime).format('DD')}</div>
+        <div styleName='month'>{DateTime.fromISO(startTime).toLocaleString({ month: 'short' })}</div>
+        <div styleName='day'>{DateTime.fromISO(startTime).toLocaleString({ day: 'numeric' })}</div>
       </div>
       <div styleName='details'>
         <div styleName='title'>{title}</div>
@@ -298,9 +310,11 @@ export function Event ({ memberCap, event, routeParams, showDetails }) {
 }
 
 export function Error ({ children }) {
-  return <div styleName='memberProfile'>
-    <span styleName='error'>{children}</span>
-  </div>
+  return (
+    <div styleName='memberProfile'>
+      <span styleName='error'>{children}</span>
+    </div>
+  )
 }
 
 export function handleContactPhone (contactPhone) {
@@ -311,9 +325,4 @@ export function handleContactEmail (contactEmail) {
   return window.location.assign(`mailto:${contactEmail}`)
 }
 
-const BLOCK_CONFIRM_MESSAGE = `Are you sure you want to block this member?
-You will no longer see this member's activity
-and they won't see yours.
-
-You can unblock this member at any time.
-Go to Settings > Blocked Users.`
+export default withTranslation()(MemberProfile)

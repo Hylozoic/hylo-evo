@@ -2,9 +2,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
+import DatePicker from 'react-datepicker'
+import { withTranslation } from 'react-i18next'
 import { debounce, get, isEqual } from 'lodash/fp'
 import cx from 'classnames'
-import Moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import { POST_PROP_TYPES, POST_TYPES } from 'store/models/Post'
 import AttachmentManager from 'components/AttachmentManager'
 import Icon from 'components/Icon'
@@ -17,20 +19,18 @@ import GroupsSelector from 'components/GroupsSelector'
 import TopicSelector from 'components/TopicSelector'
 import MemberSelector from 'components/MemberSelector'
 import LinkPreview from './LinkPreview'
-import DatePicker from 'components/DatePicker'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import SendAnnouncementModal from 'components/SendAnnouncementModal'
 import PublicToggle from 'components/PublicToggle'
 import styles from './PostEditor.scss'
+import rdpStyles from 'react-datepicker/dist/react-datepicker.css'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
 
 export const MAX_TITLE_LENGTH = 50
 
-const donationsLinkPlaceholder = 'Add a donation link (must be valid URL)'
-const projectManagementLinkPlaceholder = 'Add a project management link (must be valid URL)'
-export default class PostEditor extends React.Component {
+class PostEditor extends React.Component {
   static propTypes = {
     context: PropTypes.string,
     clearLinkPreview: PropTypes.func,
@@ -38,7 +38,6 @@ export default class PostEditor extends React.Component {
     createPost: PropTypes.func,
     currentUser: PropTypes.object,
     currentGroup: PropTypes.object,
-    detailsPlaceholder: PropTypes.string,
     editing: PropTypes.bool,
     goToPost: PropTypes.func,
     linkPreviewStatus: PropTypes.string,
@@ -48,30 +47,12 @@ export default class PostEditor extends React.Component {
     post: PropTypes.shape(POST_PROP_TYPES),
     removeLinkPreview: PropTypes.func,
     setIsDirty: PropTypes.func,
-    titlePlaceholderForPostType: PropTypes.object,
     updatePost: PropTypes.func,
     fetchLocation: PropTypes.func,
     ensureLocationIdIfCoordinate: PropTypes.func
   }
 
   static defaultProps = {
-    titlePlaceholderForPostType: {
-      offer: 'What help can you offer?',
-      request: 'What are you looking for help with?',
-      resource: 'What resource is available?',
-      project: 'What would you like to call your project?',
-      event: 'What is your event called?',
-      default: 'What’s on your mind?'
-    },
-    // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content
-    detailPlaceholderForPostType: {
-      offer: 'Add a description',
-      request: 'Add a description',
-      resource: 'Add a description',
-      project: 'Add a description',
-      event: 'Add a description',
-      default: 'Add a description'
-    },
     post: {
       type: 'discussion',
       title: '',
@@ -91,7 +72,8 @@ export default class PostEditor extends React.Component {
     post,
     topic,
     announcementSelected,
-    postType
+    postType,
+    t
   }) => {
     const defaultPostWithGroupsAndTopic = Object.assign(
       {},
@@ -110,8 +92,8 @@ export default class PostEditor extends React.Component {
       ? {
         ...post,
         locationId: post.locationObject ? post.locationObject.id : null,
-        startTime: Moment(post.startTime),
-        endTime: Moment(post.endTime)
+        startTime: DateTime.fromISO(post.startTime),
+        endTime: DateTime.fromISO(post.endTime)
       }
       : defaultPostWithGroupsAndTopic
 
@@ -131,6 +113,15 @@ export default class PostEditor extends React.Component {
 
   constructor (props) {
     super(props)
+    const { t } = this.props
+    // Dynamic strings that need to be invoked somewhere
+    t('Quick topic-based chats')
+    t('Talk about whats important with others')
+    t('What can people help you with?')
+    t('What do you have for others?')
+    t('Let people know about available resources')
+    t('Create a project that people can help with')
+    t('Invite people to your event')
 
     this.state = this.buildStateFromProps(props)
     this.titleInputRef = React.createRef()
@@ -192,23 +183,42 @@ export default class PostEditor extends React.Component {
   }
 
   titlePlaceholderForPostType (type) {
-    const { titlePlaceholderForPostType } = this.props
+    const { t } = this.props
+
+    const titlePlaceHolders = {
+      offer: t('What help can you offer?'),
+      request: t('What are you looking for help with?'),
+      resource: t('What resource is available?'),
+      project: t('What would you like to call your project?'),
+      event: t('What is your event called?'),
+      default: t('What’s on your mind?')
+    }
+
     return (
-      titlePlaceholderForPostType[type] ||
-      titlePlaceholderForPostType.default
+      titlePlaceHolders[type] ||
+      titlePlaceHolders.default
     )
   }
 
   detailPlaceholderForPostType (type) {
-    const { detailPlaceholderForPostType } = this.props
+    const { t } = this.props
+    // XXX: right now we can't change these for post types otherwise changing post type will reset the HyloEditor content and lose content
+    const detailPlaceHolders = {
+      offer: t('Add a description'),
+      request: t('Add a description'),
+      resource: t('Add a description'),
+      project: t('Add a description'),
+      event: t('Add a description'),
+      default: t('Add a description')
+    }
     return (
-      detailPlaceholderForPostType[type] ||
-      detailPlaceholderForPostType.default
+      detailPlaceHolders[type] ||
+      detailPlaceHolders.default
     )
   }
 
   postTypeButtonProps = (forPostType) => {
-    const { loading } = this.props
+    const { loading, t } = this.props
     const { type } = this.state.post
     const active = type === forPostType
     const className = cx(
@@ -222,10 +232,10 @@ export default class PostEditor extends React.Component {
     const label = active
       ? (
         <span styleName='initial-prompt'>
-          <span>{forPostType}</span>{' '}
+          <span>{t(forPostType)}</span>{' '}
           <Icon styleName={`icon icon-${forPostType}`} name='ArrowDown' />
         </span>
-      ) : forPostType
+      ) : t(forPostType)
     return {
       borderRadius: '5px',
       label,
@@ -300,8 +310,11 @@ export default class PostEditor extends React.Component {
   }
 
   validateTimeChange = (startTime, endTime) => {
-    if (endTime) {
-      startTime < endTime
+    const formattedStartTime = !startTime ? null : typeof startTime === 'string' ? DateTime.fromISO(startTime) : startTime
+    const formattedEndTime = !endTime ? null : typeof endTime === 'string' ? DateTime.fromISO(endTime) : endTime
+
+    if (formattedEndTime) {
+      formattedStartTime < formattedEndTime
         ? this.setState({ dateError: false })
         : this.setState({ dateError: true })
     }
@@ -401,10 +414,10 @@ export default class PostEditor extends React.Component {
     return !!(
       this.editorRef.current &&
       groups &&
-      type.length > 0 &&
-      title.length > 0 &&
-      groups.length > 0 &&
-      title.length <= MAX_TITLE_LENGTH &&
+      type?.length > 0 &&
+      title?.length > 0 &&
+      groups?.length > 0 &&
+      title?.length <= MAX_TITLE_LENGTH &&
       (!isEvent || (endTime && startTime < endTime)) &&
       (!isProject || sanitizeURL(donationsLink) || !donationsLink) &&
       (!isProject || sanitizeURL(projectManagementLink) || !projectManagementLink)
@@ -497,10 +510,10 @@ export default class PostEditor extends React.Component {
   }
 
   buttonLabel = () => {
-    const { postPending, editing } = this.props
-    if (postPending) return 'Posting...'
-    if (editing) return 'Save'
-    return 'Post'
+    const { postPending, editing, t } = this.props
+    if (postPending) return t('Posting...')
+    if (editing) return t('Save')
+    return t('Post')
   }
 
   toggleAnnouncementModal = () => {
@@ -572,7 +585,8 @@ export default class PostEditor extends React.Component {
       showImages,
       addAttachment,
       postTypes,
-      fetchLinkPreviewPending
+      fetchLinkPreviewPending,
+      t
     } = this.props
     const hasStripeAccount = get('hasStripeAccount', currentUser)
     const hasLocation = [
@@ -591,6 +605,10 @@ export default class PostEditor extends React.Component {
       post.locationObject ||
       get('0.locationObject', groups) ||
       get('locationObject', currentUser)
+
+    const donationsLinkPlaceholder = t('Add a donation link (must be valid URL)')
+    const projectManagementLinkPlaceholder = t('Add a project management link (must be valid URL)')
+
 
     return (
       <div styleName={showAnnouncementModal ? 'hide' : 'wrapper'}>
@@ -630,7 +648,7 @@ export default class PostEditor extends React.Component {
               maxLength={MAX_TITLE_LENGTH}
             />
             {titleLengthError && (
-              <span styleName='title-error'>{`Title can't have more than ${MAX_TITLE_LENGTH} characters`}</span>
+              <span styleName='title-error'>{t('Title can\'t have more than {{maxTitleLength}} characters', { maxTitleLength: MAX_TITLE_LENGTH })}</span>
             )}
             <HyloEditor
               styleName='editor'
@@ -675,7 +693,7 @@ export default class PostEditor extends React.Component {
         <div styleName='footer'>
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>Project Members</div>
+              <div styleName='footerSection-label'>{t('Project Members')}</div>
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={members || []}
@@ -687,7 +705,7 @@ export default class PostEditor extends React.Component {
             </div>
           )}
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>Topics</div>
+            <div styleName='footerSection-label'>{t('Topics')}</div>
             <div styleName='footerSection-topics'>
               <TopicSelector
                 forGroups={post?.groups || [currentGroup]}
@@ -697,7 +715,7 @@ export default class PostEditor extends React.Component {
             </div>
           </div>
           <div styleName='footerSection'>
-            <div styleName='footerSection-label'>Post in</div>
+            <div styleName='footerSection-label'>{t('Post in')}</div>
             <div styleName='footerSection-groups'>
               <GroupsSelector
                 options={groupOptions}
@@ -714,42 +732,52 @@ export default class PostEditor extends React.Component {
           />
           {canHaveTimes && dateError && (
             <span styleName='title-error'>
-              {'End Time must be after Start Time'}
+              {t('End Time must be after Start Time')}
             </span>
           )}
           {canHaveTimes && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>Timeframe</div>
+              <div styleName='footerSection-label'>{t('Timeframe')}</div>
               <div styleName='datePickerModule'>
-                <DatePicker
-                  value={startTime}
-                  placeholder={'Select Start'}
-                  onChange={this.handleStartTimeChange}
-                />
-                <div styleName='footerSection-helper'>To</div>
-                <DatePicker
-                  value={endTime}
-                  placeholder={'Select End'}
-                  onChange={this.handleEndTimeChange}
-                />
+                <div className={cx([styles.datePicker])}>
+                  <DatePicker
+                    className={cx(rdpStyles.datePicker)}
+                    dateFormat='MM/dd/yyyy h:mm a'
+                    onChange={(date) => this.handleStartTimeChange(new Date(date).toISOString())}
+                    placeholderText={t('Select Start')}
+                    selected={startTime ? DateTime.fromISO(startTime).ts : null}
+                    showTimeSelect
+                  />
+                </div>
+                <div styleName='footerSection-helper'>{t('To')}</div>
+                <div className={cx([styles.datePicker])}>
+                  <DatePicker
+                    className={cx(rdpStyles.datePicker)}
+                    dateFormat='MM/dd/yyyy h:mm a'
+                    onChange={(date) => this.handleEndTimeChange(new Date(date).toISOString())}
+                    placeholderText={t('Select End')}
+                    selected={endTime ? DateTime.fromISO(endTime).ts : null}
+                    showTimeSelect
+                  />
+                </div>
               </div>
             </div>
           )}
           {hasLocation && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label alignedLabel'>Location</div>
+              <div styleName='footerSection-label alignedLabel'>{t('Location')}</div>
               <LocationInput
                 saveLocationToDB
                 locationObject={locationObject}
                 location={location}
                 onChange={this.handleLocationChange}
-                placeholder={`Where is your ${type} located?`}
+                placeholder={t('Where is your {{type}} located?', { type })}
               />
             </div>
           )}
           {isEvent && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>Invite People</div>
+              <div styleName='footerSection-label'>{t('Invite People')}</div>
               <div styleName='footerSection-groups'>
                 <MemberSelector
                   initialMembers={eventInvitations || []}
@@ -762,7 +790,7 @@ export default class PostEditor extends React.Component {
           )}
           {isProject && currentUser.hasFeature(PROJECT_CONTRIBUTIONS) && (
             <div styleName='footerSection'>
-              <div styleName='footerSection-label'>Accept Contributions</div>
+              <div styleName='footerSection-label'>{t('Accept Contributions')}</div>
               {hasStripeAccount && (
                 <div
                   styleName={cx('footerSection-groups', 'accept-contributions')}
@@ -774,9 +802,9 @@ export default class PostEditor extends React.Component {
                   />
                   {!acceptContributions && (
                     <div styleName='accept-contributions-help'>
-                      If you turn 'Accept Contributions' on, people will be able
+                      {t(`If you turn 'Accept Contributions' on, people will be able
                       to send money to your Stripe connected account to support
-                      this project.
+                      this project.`)}
                     </div>
                   )}
                 </div>
@@ -788,17 +816,17 @@ export default class PostEditor extends React.Component {
                     'accept-contributions-help'
                   )}
                 >
-                  To accept financial contributions for this project, you have
-                  to connect a Stripe account. Go to{' '}
-                  <a href='/settings/payment'>Settings</a> to set it up.
-                  (Remember to save your changes before leaving this form)
+                  {t(`To accept financial contributions for this project, you have
+                  to connect a Stripe account. Go to`)}
+                  <a href='/settings/payment'>{t('Settings')}</a>{' '}{t('to set it up.')}
+                  {t('(Remember to save your changes before leaving this form)')}
                 </div>
               )}
             </div>
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>Donation Link</div>
+              <div styleName={cx('footerSection-label', { warning: !!donationsLink && !sanitizeURL(donationsLink) })}>{t('Donation Link')}</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'
@@ -813,7 +841,7 @@ export default class PostEditor extends React.Component {
           )}
           {isProject && (
             <div styleName='footerSection'>
-              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>Project Management</div>
+              <div styleName={cx('footerSection-label', { warning: !!projectManagementLink && !sanitizeURL(projectManagementLink) })}>{t('Project Management')}</div>
               <div styleName='footerSection-groups'>
                 <input
                   type='text'
@@ -933,3 +961,5 @@ export function ActionsBar ({
     </div>
   )
 }
+
+export default withTranslation()(PostEditor)

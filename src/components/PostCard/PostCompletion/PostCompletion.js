@@ -1,34 +1,36 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import './PostCompletion.scss'
 import DropdownButton from 'components/DropdownButton'
 
-const promptOptions = {
-  request: 'Is this request still needed?',
-  offer: 'Is this offer still available?',
-  resource: 'Is this resource still available?',
-  project: 'Is this project still active?'
-}
-
-const messages = {
-  request: [
-    { label: 'This is still needed', value: false },
-    { label: 'No longer needed', value: true }
-  ],
-  offer: [
-    { label: 'Available', value: false },
-    { label: 'Unavailable', value: true }
-  ],
-  resource: [
-    { label: 'Available', value: false },
-    { label: 'Unavailable', value: true }
-  ],
-  project: [
-    { label: 'Active', value: false },
-    { label: 'Completed', value: true }
-  ]
-}
-
 export default function PostCompletion ({ type, startTime, endTime, isFulfilled, fulfillPost, unfulfillPost }) {
+  const { t } = useTranslation()
+
+  const promptOptions = {
+    request: t('Is this request still needed?'),
+    offer: t('Is this offer still available?'),
+    resource: t('Is this resource still available?'),
+    project: t('Is this project still active?')
+  }
+
+  const messages = {
+    request: [
+      { label: t('This is still needed'), value: false },
+      { label: t('No longer needed'), value: true }
+    ],
+    offer: [
+      { label: t('Available'), value: false },
+      { label: t('Unavailable'), value: true }
+    ],
+    resource: [
+      { label: t('Available'), value: false },
+      { label: t('Unavailable'), value: true }
+    ],
+    project: [
+      { label: t('Active'), value: false },
+      { label: t('Completed'), value: true }
+    ]
+  }
   const label = messages[type].find(choice => choice.value === !!isFulfilled).label
 
   const prompt = promptOptions[type]

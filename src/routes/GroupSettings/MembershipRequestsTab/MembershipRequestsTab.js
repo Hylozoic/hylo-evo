@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { useTranslation } from 'react-i18next'
 import isWebView from 'util/webView'
 import { personUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
@@ -60,33 +61,35 @@ export default class MembershipRequestsTab extends Component {
 }
 
 export function NoRequests ({ group, viewMembers }) {
+  const { t } = useTranslation()
   return (
-    <React.Fragment>
+    <>
       <div styleName='no-requests'>
         <img src={jollyAxolotl} />
         <br />
         <div>
-          <h2>No new join requests</h2>
-          We'll notify you by email when someone wants to join <strong>{group.name}</strong>
+          <h2>{t('No new join requests')}</h2>
+          {t('We\'ll notify you by email when someone wants to join')}{' '}<strong>{group.name}</strong>
         </div>
         {!isWebView() && (
           <Button
-            label='View Current Members'
+            label={t('View Current Members')}
             onClick={viewMembers}
             styleName='view-members'
           />
         )}
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
 export function NewRequests ({ accept, decline, group, joinRequests }) {
+  const { t } = useTranslation()
   return (
     <React.Fragment>
       <div>
         <div styleName='header'>
-          <h2>People want to join your group!</h2>
+          <h2>{t('People want to join your group!')}</h2>
           {/* TODO: For later implementation
           <span styleName='response-time'>Your average response time: 1 day</span> */}
         </div>
@@ -105,6 +108,7 @@ export function NewRequests ({ accept, decline, group, joinRequests }) {
 
 export function JoinRequest ({ accept, decline, group, request }) {
   const { questionAnswers, user } = request
+  const { t } = useTranslation()
 
   // Answers to questions no longer being asked by the group
   const otherAnswers = questionAnswers.filter(qa => !group.joinQuestions.find(jq => jq.questionId === qa.question.id))
@@ -121,7 +125,7 @@ export function JoinRequest ({ accept, decline, group, request }) {
       {group.joinQuestions.map(q =>
         <div styleName='answer' key={q.id}>
           <h3>{q.text}</h3>
-          <p>{get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>Not answered</i>}</p>
+          <p>{get('answer', questionAnswers.find(qa => qa.question.id === q.questionId)) || <i>{t('Not answered')}</i>}</p>
         </div>
       )}
       {otherAnswers.map(qa =>
@@ -131,8 +135,8 @@ export function JoinRequest ({ accept, decline, group, request }) {
         </div>
       )}
       <div styleName='action-buttons'>
-        <div styleName='accept' onClick={() => accept(request.id)}><Icon name='Checkmark' styleName='icon-green' />Welcome</div>
-        <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />Decline</div>
+        <div styleName='accept' onClick={() => accept(request.id)}><Icon name='Checkmark' styleName='icon-green' />{t('Welcome')}</div>
+        <div onClick={() => decline(request.id)}><Icon name='Ex' styleName='icon-red' />{t('Decline')}</div>
       </div>
     </div>
   )

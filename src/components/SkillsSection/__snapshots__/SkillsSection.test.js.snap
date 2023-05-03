@@ -25,6 +25,7 @@ exports[`shows basic pills 1`] = `
       ]
     }
     placeholder="What skills and interests do you have?"
+    t={[Function]}
   />
 </div>
 `;
@@ -55,6 +56,7 @@ exports[`shows editable fields when isMe = true 1`] = `
       ]
     }
     placeholder="What skills and interests do you have?"
+    t={[Function]}
   />
 </div>
 `;

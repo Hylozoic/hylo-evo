@@ -1,7 +1,23 @@
-import ModeratorsSettingsTab, { AddModerator, ModeratorsList } from './ModeratorsSettingsTab'
-import { shallow } from 'enzyme'
 import React from 'react'
+import { shallow } from 'enzyme'
+import ModeratorsSettingsTab, { AddModerator, ModeratorsList } from './ModeratorsSettingsTab'
 import { keyMap } from 'util/textInput'
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  },
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
 
 describe('ModeratorsSettingsTab', () => {
   it('renders loading if no moderators', () => {
@@ -68,7 +84,7 @@ describe('AddModerator', () => {
   it('renders correctly, and transitions from not adding to adding', () => {
     const wrapper = shallow(<AddModerator />)
     expect(wrapper).toMatchSnapshot()
-    wrapper.simulate('click')
+    wrapper.find('#add-new').simulate('click')
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -79,7 +95,7 @@ describe('AddModerator', () => {
       { id: 1, name: 'Hermes' }
     ]
     const wrapper = shallow(<AddModerator moderatorSuggestions={suggestions} />)
-    wrapper.setState({ adding: true })
+    wrapper.find('#add-new').simulate('click')
     expect(wrapper).toMatchSnapshot()
   })
 
@@ -90,7 +106,7 @@ describe('AddModerator', () => {
     const wrapper = shallow(<AddModerator
       fetchModeratorSuggestions={fetchModeratorSuggestions}
       clearModeratorSuggestions={clearModeratorSuggestions} />)
-    wrapper.setState({ adding: true })
+    wrapper.find('#add-new').simulate('click')
 
     const input = wrapper.find('input')
 

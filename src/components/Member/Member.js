@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import { bgImageStyle } from 'util/index'
 import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
@@ -9,11 +10,11 @@ import './Member.scss'
 
 const { object, string, shape } = PropTypes
 
-export default class Member extends React.Component {
+class Member extends React.Component {
   removeOnClick (e, id, name, removeMember) {
     e.preventDefault()
 
-    if (window.confirm(`are you sure you want to remove ${name}?`)) {
+    if (window.confirm(this.props.t('are you sure you want to remove {{name}}?', { name }))) {
       removeMember(id)
     }
   }
@@ -25,7 +26,8 @@ export default class Member extends React.Component {
       member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles },
       goToPerson,
       canModerate,
-      removeMember
+      removeMember,
+      t
     } = this.props
 
     const badges = (group.id && groupRoles.filter(role => role.groupId === group.id)) || []
@@ -33,16 +35,19 @@ export default class Member extends React.Component {
 
     return (
       <div styleName='member' className={className}>
-        {canModerate && <Dropdown styleName='dropdown' toggleChildren={<Icon name='More' />} items={[
-          { icon: 'Trash', label: 'Remove', onClick: (e) => this.removeOnClick(e, id, name, removeMember) }
-        ]} />}
+        {canModerate &&
+          <Dropdown
+            styleName='dropdown'
+            toggleChildren={<Icon name='More' />}
+            items={[{ icon: 'Trash', label: t('Remove'), onClick: (e) => this.removeOnClick(e, id, name, removeMember) }]}
+          />}
         <div onClick={goToPerson(id, group.slug)}>
           <div styleName='avatar' style={bgImageStyle(avatarUrl)} />
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
             {creatorIsModerator && (
-              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
+              <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
             )}
             {badges.map(badge => (
               <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
@@ -71,3 +76,5 @@ Member.propTypes = {
     avatarUrl: string
   }).isRequired
 }
+
+export default withTranslation()(Member)

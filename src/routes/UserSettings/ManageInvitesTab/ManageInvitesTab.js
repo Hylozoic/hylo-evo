@@ -1,6 +1,7 @@
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import GroupButton from 'components/GroupButton'
 import Loading from 'components/Loading'
@@ -11,7 +12,7 @@ import './ManageInvitesTab.scss'
 
 const { array, bool, func } = PropTypes
 
-export default class ManageInvitesTab extends Component {
+class ManageInvitesTab extends Component {
   static propTypes = {
     acceptInvite: func,
     canceledJoinRequests: array,
@@ -35,21 +36,22 @@ export default class ManageInvitesTab extends Component {
       loading,
       pendingGroupInvites,
       pendingJoinRequests,
-      rejectedJoinRequests
+      rejectedJoinRequests,
+      t
     } = this.props
 
     if (loading) return <Loading />
 
     return (
       <div styleName='container'>
-        <h1 styleName='title'>Group Invitations &amp; Join Requests</h1>
+        <h1 styleName='title'>{t('Group Invitations & Join Requests')}</h1>
 
         <div styleName='description'>
-          This list contains all open requests and invitations to join groups.
-          To view all groups you are a part of go to your <Link to={currentUserSettingsUrl('groups')}>Affiliations</Link>.
+          {t('This list contains all open requests and invitations to join groups.')}
+          {t('To view all groups you are a part of go to your')}{' '}<Link to={currentUserSettingsUrl('groups')}>{t('Affiliations')}</Link>.
         </div>
 
-        <h2 styleName='subhead'>Invitations to Join New Groups</h2>
+        <h2 styleName='subhead'>{t('Invitations to Join New Groups')}</h2>
         <div styleName='requestList'>
           {pendingGroupInvites.map(invite =>
             <GroupInvite
@@ -61,7 +63,7 @@ export default class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>Your Open Requests to Join Groups</h2>
+        <h2 styleName='subhead'>{t('Your Open Requests to Join Groups')}</h2>
         <div styleName='requestList'>
           {pendingJoinRequests.map((jr) =>
             <JoinRequest
@@ -72,7 +74,7 @@ export default class ManageInvitesTab extends Component {
           )}
         </div>
 
-        <h2 styleName='subhead'>Declined Invitations &amp; Requests</h2>
+        <h2 styleName='subhead'>{t('Declined Invitations & Requests')}</h2>
         <div styleName='requestList'>
           {rejectedJoinRequests.map((jr) =>
             <JoinRequest
@@ -95,9 +97,10 @@ export default class ManageInvitesTab extends Component {
 
 function GroupInvite ({ acceptInvite, declineInvite, invite }) {
   const { creator, createdAt, group, id, token } = invite
+  const { t } = useTranslation()
 
   const decline = () => {
-    if (window.confirm(`Are you sure you want to decline the invitation to join ${group.name}?`)) {
+    if (window.confirm(t('Are you sure you want to decline the invitation to join {{groupName}}?', { groupName: group.name }))) {
       declineInvite(id)
     }
   }
@@ -108,16 +111,16 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
         <div styleName='invitationSource'>
           <div>
             <Link to={personUrl(creator.id)} styleName='creator'>{creator.name}</Link>
-            <span>invited you to join</span>
+            <span>{t('invited you to join')}</span>
           </div>
           <div styleName='requestGroup'>
             <GroupButton group={group} />
           </div>
         </div>
         <div styleName='invitationResponse'>
-          <span styleName='createdDate'>Sent {moment(createdAt).format('MM-DD-YYYY')}</span>
-          <span onClick={decline} styleName='cancelButton'>Decline</span>
-          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>Join</span>
+          <span styleName='createdDate'>{t('Sent')} {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATE_SHORT)}</span>
+          <span onClick={decline} styleName='cancelButton'>{t('Decline')}</span>
+          <span onClick={() => acceptInvite(token, group.slug)} styleName='joinButton'>{t('Join')}</span>
         </div>
       </div>
     </div>
@@ -126,9 +129,10 @@ function GroupInvite ({ acceptInvite, declineInvite, invite }) {
 
 function JoinRequest ({ joinRequest, cancelJoinRequest }) {
   const { createdAt, group, id } = joinRequest
+  const { t } = useTranslation()
 
   const cancel = () => {
-    if (window.confirm(`Are you sure you want to cancel your request to join ${group.name}?`)) {
+    if (window.confirm(t('Are you sure you want to cancel your request to join {{groupName}}?', { groupName: group.name }))) {
       cancelJoinRequest(id)
     }
   }
@@ -139,17 +143,18 @@ function JoinRequest ({ joinRequest, cancelJoinRequest }) {
         <GroupButton group={group} />
       </div>
       <div styleName='requestDetail'>
-        <span styleName='createdDate joinRequestDate'>Requested {moment(createdAt).format('YYYY-MM-DD')}</span>
+        <span styleName='createdDate joinRequestDate'>{t('Requested')} {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATE_SHORT)}</span>
         {joinRequest.status === JOIN_REQUEST_STATUS.Pending && (
-          <span onClick={cancel} styleName='cancelButton'>Cancel</span>
+          <span onClick={cancel} styleName='cancelButton'>{t('Cancel')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Rejected && (
-          <span styleName='declinedCanceled'>Declined</span>
+          <span styleName='declinedCanceled'>{t('Declined')}</span>
         )}
         {joinRequest.status === JOIN_REQUEST_STATUS.Canceled && (
-          <span styleName='declinedCanceled'>Canceled</span>
+          <span styleName='declinedCanceled'>{t('Canceled')}</span>
         )}
       </div>
     </div>
   )
 }
+export default withTranslation()(ManageInvitesTab)

@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import React, { useCallback, useState } from 'react'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
@@ -44,7 +44,7 @@ export default ({ items = [], group, routeParams }) => {
               <div>
                 <div styleName='meta'>
                   <span styleName='author'>{a.author}</span>
-                  <span styleName='created'>{moment(a.createdAt).fromNow()}</span>
+                  <span styleName='created'>{DateTime.fromISO(a.createdAt).toRelative()}</span>
                 </div>
                 <div styleName='title'>{a.title}</div>
               </div>

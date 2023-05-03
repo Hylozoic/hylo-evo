@@ -21,7 +21,7 @@ exports[`Comment displays image attachments 1`] = `
     <span
       data-stylename="timestamp"
     >
-      2 mos ago
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -151,7 +151,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     <span
       data-stylename="timestamp"
     >
-      2 mos ago
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -275,7 +275,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     <span
       data-stylename="timestamp"
     >
-      2 mos ago
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -390,7 +390,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
     <span
       data-stylename="timestamp"
     >
-      2 mos ago
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -496,7 +496,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
     <span
       data-stylename="timestamp"
     >
-      2 mos ago
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -620,7 +620,7 @@ exports[`Comment renders correctly 1`] = `
     <span
       data-stylename="timestamp"
     >
-      2 mos ago
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"

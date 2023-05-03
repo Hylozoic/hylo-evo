@@ -1,12 +1,14 @@
 import React from 'react'
-import Moment from 'moment-timezone'
+import { DateTime } from 'luxon'
 import './EventDate.scss'
 
 export default function EventDate ({ startTime }) {
   if (!startTime) return null
-  const startTimeMoment = Moment(startTime)
+
+  startTime = DateTime.fromISO(startTime)
+
   return <div styleName='eventDate'>
-    <span styleName='month'>{startTimeMoment.format('MMM')}</span>
-    <span styleName='day'>{startTimeMoment.format('D')}</span>
+    <span styleName='month'>{startTime.toLocaleString({ month: 'short' })}</span>
+    <span styleName='day'>{startTime.toLocaleString({ day: 'numeric' })}</span>
   </div>
 }

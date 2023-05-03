@@ -7,8 +7,7 @@ exports[`renders correctly 1`] = `
   <div
     data-stylename="title"
   >
-    Delete 
-    Hylo
+    Delete {{groupName}}
   </div>
   <div
     data-stylename="help"

@@ -5,6 +5,18 @@ import { keyMap } from 'util/textInput'
 import PeopleSelector from './PeopleSelector'
 import PeopleListItem from './PeopleListItem'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 const defaultProps = {
   setPeopleSearch: () => {},
   fetchPeople: () => {},

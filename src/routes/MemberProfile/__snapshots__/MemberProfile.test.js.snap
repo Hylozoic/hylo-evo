@@ -13,7 +13,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
        | Hylo
     </title>
     <meta
-      content="Rich Churcher's Member Profile"
+      content="Rich Churcher: Member Profile"
       name="description"
     />
   </HelmetWrapper>
@@ -145,7 +145,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       >
         What I'm Learning
       </div>
-      <Connect(_default)
+      <Connect(SkillsToLearnSection)
         editable={false}
         personId="1"
       />
@@ -331,7 +331,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
       <h2
         data-stylename="content-header"
       >
-        Rich Churcher's recent activity
+        {{name}}s recent activity
       </h2>
       <Dropdown
         data-stylename="content-dropdown"
@@ -345,9 +345,10 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
                 "displayName": "Connect(RecentActivity)",
                 "type": [Function],
               },
+              "id": "Overview",
               "label": "Overview",
               "onClick": [Function],
-              "title": "Rich Churcher's recent activity",
+              "title": "{{name}}s recent activity",
             },
             Object {
               "component": Object {
@@ -357,9 +358,10 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
                 "displayName": "Connect(MemberPosts)",
                 "type": [Function],
               },
+              "id": "Posts",
               "label": "Posts",
               "onClick": [Function],
-              "title": "Rich Churcher's posts",
+              "title": "{{name}}s posts",
             },
             Object {
               "component": Object {
@@ -369,9 +371,10 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
                 "displayName": "Connect(MemberComments)",
                 "type": [Function],
               },
+              "id": "Comments",
               "label": "Comments",
               "onClick": [Function],
-              "title": "Rich Churcher's comments",
+              "title": "{{name}}s comments",
             },
             Object {
               "component": Object {
@@ -381,9 +384,10 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
                 "displayName": "Connect(MemberVotes)",
                 "type": [Function],
               },
-              "label": "Upvotes",
+              "id": "Reactions",
+              "label": "Reactions",
               "onClick": [Function],
-              "title": "Rich Churcher's upvotes",
+              "title": "{{name}}s reactions",
             },
           ]
         }
