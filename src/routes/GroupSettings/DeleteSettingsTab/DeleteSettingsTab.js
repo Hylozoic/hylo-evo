@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import Button from 'components/Button'
 import './DeleteSettingsTab.scss'
 
-export default class DeleteSettingsTab extends Component {
+class DeleteSettingsTab extends Component {
   deleteGroup = () => {
     const { group: { name }, deleteGroup } = this.props
-    if (window.confirm(`Are you sure you want to delete the group ${name}?`)) {
+    if (window.confirm(this.props.t('Are you sure you want to delete the group {{name}}?', { name }))) {
       deleteGroup()
     }
   }
@@ -15,16 +16,19 @@ export default class DeleteSettingsTab extends Component {
     const { group } = this.props
     const { name } = group
 
-    return <div styleName='container'>
-      <div styleName='title'>Delete {name}</div>
-      <div styleName='help'>
-        If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.
+    return (
+      <div styleName='container'>
+        <div styleName='title'>{this.props.t('Delete {{groupName}}', { groupName: name })}</div>
+        <div styleName='help'>
+          {this.props.t('If you delete this group, it will no longer be visible to you or any of the members. All posts will also be deleted.')}
+        </div>
+        <Button
+          label={this.props.t('Delete Group')}
+          onClick={this.deleteGroup}
+          styleName='delete-button'
+        />
       </div>
-      <Button
-        label='Delete Group'
-        onClick={this.deleteGroup}
-        styleName='delete-button' />
-    </div>
+    )
   }
 }
 
@@ -32,3 +36,4 @@ DeleteSettingsTab.propTypes = {
   group: PropTypes.object,
   deleteGroup: PropTypes.func
 }
+export default withTranslation()(DeleteSettingsTab)

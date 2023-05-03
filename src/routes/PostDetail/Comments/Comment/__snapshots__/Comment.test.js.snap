@@ -21,7 +21,7 @@ exports[`Comment displays image attachments 1`] = `
     <span
       data-stylename="timestamp"
     >
-      just now
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -41,6 +41,24 @@ exports[`Comment displays image attachments 1`] = `
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [
+                Object {
+                  "attachmentType": "image",
+                  "url": "foo.png",
+                },
+              ],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 2,
@@ -85,6 +103,24 @@ exports[`Comment displays image attachments 1`] = `
   </ClickCatcher>
   <EmojiRow
     className="undefined"
+    comment={
+      Object {
+        "attachments": Array [
+          Object {
+            "attachmentType": "image",
+            "url": "foo.png",
+          },
+        ],
+        "childComments": Array [],
+        "createdAt": 2023-02-01T00:00:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
     currentUser={
       Object {
         "id": 2,
@@ -115,7 +151,7 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
     <span
       data-stylename="timestamp"
     >
-      just now
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -153,6 +189,19 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 1,
@@ -183,6 +232,19 @@ exports[`Comment displays the delete menu when deleteComment is defined 1`] = `
   </ClickCatcher>
   <EmojiRow
     className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-02-01T00:00:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
     currentUser={
       Object {
         "id": 1,
@@ -213,7 +275,7 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
     <span
       data-stylename="timestamp"
     >
-      just now
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -242,6 +304,19 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 2,
@@ -272,6 +347,19 @@ exports[`Comment displays the remove menu when removeComment is defined 1`] = `
   </ClickCatcher>
   <EmojiRow
     className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-02-01T00:00:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
     currentUser={
       Object {
         "id": 2,
@@ -302,7 +390,7 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
     <span
       data-stylename="timestamp"
     >
-      just now
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -322,6 +410,19 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 2,
@@ -352,6 +453,19 @@ exports[`Comment does not display the delete menu when deleteComment is not defi
   </ClickCatcher>
   <EmojiRow
     className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-02-01T00:00:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
     currentUser={
       Object {
         "id": 2,
@@ -382,7 +496,7 @@ exports[`Comment does not display the remove menu when removeComment is not defi
     <span
       data-stylename="timestamp"
     >
-      just now
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -420,6 +534,19 @@ exports[`Comment does not display the remove menu when removeComment is not defi
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 1,
@@ -450,6 +577,19 @@ exports[`Comment does not display the remove menu when removeComment is not defi
   </ClickCatcher>
   <EmojiRow
     className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-02-01T00:00:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
     currentUser={
       Object {
         "id": 1,
@@ -480,7 +620,7 @@ exports[`Comment renders correctly 1`] = `
     <span
       data-stylename="timestamp"
     >
-      just now
+      3 mos ago
     </span>
     <div
       data-stylename="upperRight"
@@ -500,6 +640,19 @@ exports[`Comment renders correctly 1`] = `
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 2,
@@ -530,6 +683,19 @@ exports[`Comment renders correctly 1`] = `
   </ClickCatcher>
   <EmojiRow
     className="undefined"
+    comment={
+      Object {
+        "attachments": Array [],
+        "childComments": Array [],
+        "createdAt": 2023-02-01T00:00:00.000Z,
+        "creator": Object {
+          "avatarUrl": "foo.jpg",
+          "id": 1,
+          "name": "Joe Smith",
+        },
+        "text": "<p>text of the comment</p>",
+      }
+    }
     currentUser={
       Object {
         "id": 2,
@@ -585,6 +751,19 @@ exports[`Comment renders correctly when editing 1`] = `
         </div>
         <EmojiRow
           className="undefined"
+          comment={
+            Object {
+              "attachments": Array [],
+              "childComments": Array [],
+              "createdAt": 2023-02-01T00:00:00.000Z,
+              "creator": Object {
+                "avatarUrl": "foo.jpg",
+                "id": 1,
+                "name": "Joe Smith",
+              },
+              "text": "<p>text of the comment</p>",
+            }
+          }
           currentUser={
             Object {
               "id": 2,

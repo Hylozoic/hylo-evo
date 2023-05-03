@@ -123,8 +123,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { pollingFetchLinkPreviewRaw, goToUrl } = dispatchProps
 
   const goToPost = createPostAction => {
-    const id = get('payload.data.createPost.id', createPostAction) ||
-      get('payload.data.createProject.id', createPostAction)
+    const id = get('payload.data.createPost.id', createPostAction)
     // * The single letter params are used in the Stream and elsewhere
     // and translate as follow: `s`(ort), `t`(ab), `q`(uery/search)
     // The remaining whitelisted params are for the map view.

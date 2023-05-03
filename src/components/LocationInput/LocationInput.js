@@ -4,8 +4,9 @@ import { LocationHelpers } from 'hylo-shared'
 import Geocoder from 'components/GeocoderAutocomplete'
 import { mapbox } from 'config'
 import styles from './LocationInput.scss'
+import { withTranslation } from 'react-i18next'
 
-export default class LocationInput extends Component {
+class LocationInput extends Component {
   static propTypes = {
     inputClass: PropTypes.string,
     locationObject: PropTypes.object,
@@ -22,7 +23,6 @@ export default class LocationInput extends Component {
     locationObject: null,
     location: '',
     onChange: null,
-    placeholder: 'Search for a location...',
     saveLocationToDB: true
   }
 
@@ -54,7 +54,7 @@ export default class LocationInput extends Component {
   handleSuggest = e => { }
 
   render () {
-    const { inputClass, locationObject, location, placeholder, mapboxToken } = this.props
+    const { inputClass, locationObject, location, placeholder = this.props.t('Search for a location...'), mapboxToken } = this.props
     const centerAt = (locationObject && locationObject.center) || this.state.browserLocation
 
     return (
@@ -82,3 +82,5 @@ export default class LocationInput extends Component {
     )
   }
 }
+
+export default withTranslation()(LocationInput)

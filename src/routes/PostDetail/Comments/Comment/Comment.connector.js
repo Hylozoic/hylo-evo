@@ -10,23 +10,25 @@ import { getHasMoreChildComments, getTotalChildComments } from 'store/selectors/
 import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
-  const { comment } = props
+  const { comment, post } = props
   const currentUser = getMe(state, props)
   const group = getGroupForCurrentRoute(state, props)
   const isCreator = currentUser && (comment.creator.id === currentUser.id)
   const canModerate = currentUser && currentUser.canModerate(group)
 
   return {
-    childCommentsTotal: getTotalChildComments(state, { id: comment.id }),
-    hasMoreChildComments: getHasMoreChildComments(state, { id: comment.id }),
     canModerate,
+    childCommentsTotal: getTotalChildComments(state, { id: comment.id }),
     currentUser,
-    isCreator
+    hasMoreChildComments: getHasMoreChildComments(state, { id: comment.id }),
+    isCreator,
+    post
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const { postId, comment } = props
+  const { post, comment } = props
+
   return {
     ...bindActionCreators({
       deleteComment,
@@ -34,7 +36,7 @@ export const mapDispatchToProps = (dispatch, props) => {
     }, dispatch),
     fetchCommentsMaker: cursor => () => dispatch(fetchChildComments(comment.id, { cursor })),
     createComment: commentParams => dispatch(createComment({
-      postId,
+      post: post,
       parentCommentId: comment.id,
       ...commentParams
     }))
@@ -45,10 +47,10 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { fetchCommentsMaker } = dispatchProps
   const { comment } = ownProps
 
-  const deleteCommentWithConfirm = (commentId) => window.confirm('Are you sure you want to delete this comment?') &&
+  const deleteCommentWithConfirm = (commentId, text) => window.confirm(text) &&
       dispatchProps.deleteComment(commentId)
 
-  const removeCommentWithConfirm = (commentId) => window.confirm('Are you sure you want to remove this comment?') &&
+  const removeCommentWithConfirm = (commentId, text) => window.confirm(text) &&
       dispatchProps.deleteComment(commentId)
 
   const updateComment = (commentId, text) => dispatchProps.updateComment(commentId, text)

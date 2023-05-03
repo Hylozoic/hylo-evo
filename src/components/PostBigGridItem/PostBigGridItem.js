@@ -1,5 +1,6 @@
 import React from 'react'
 import Clamp from 'react-multiline-clamp'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
 
@@ -30,10 +31,12 @@ export default function PostBigGridItem (props) {
     createdAt,
     attachments
   } = post
+  const { t } = useTranslation()
 
   const numAttachments = attachments.length || 0
   const firstAttachment = attachments[0] || 0
-  const attachmentType = firstAttachment.type || 0
+  // XXX: we should figure out what to actually do with 'video' type attachments, which are almost never used
+  let attachmentType = (firstAttachment.type === 'video' ? 'file' : firstAttachment.type) || 0
   const attachmentUrl = firstAttachment.url || 0
 
   const detailLength = details.length
@@ -68,10 +71,9 @@ export default function PostBigGridItem (props) {
         {childPost &&
           <div
             styleName='icon-container'
-            data-tip='Post from child group'
+            data-tip={t('Post from child group')}
             data-for='childgroup-tt'
           >
-            {/* TODO: i18n on tooltip */}
             <Icon
               name='Subgroup'
               styleName='icon'
@@ -111,17 +113,17 @@ export default function PostBigGridItem (props) {
               {post.donationsLink && donationService &&
                 <div styleName='donate'>
                   <div><img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
                 </div>}
               {post.donationsLink && !donationService &&
                 <div styleName='donate'>
-                  <div>Support this project</div>
-                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                  <div>{t('Support this project')}</div>
+                  <div><a styleName='project-button' rel='noreferrer' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
                 </div>}
               {attachmentType === 'file'
                 ? <div styleName='file-attachment'>
                   {numAttachments > 1
-                    ? <div styleName='attachment-number'>{numAttachments} attachments</div>
+                    ? <div styleName='attachment-number'>{numAttachments} {t('attachments')}</div>
                     : ' '
                   }
                   <div styleName='attachment'>
@@ -132,8 +134,8 @@ export default function PostBigGridItem (props) {
                 : ' '}
               {post.type === 'event' &&
                 <div styleName='event-response'>
-                  <div>Can you go?</div>
-                  <EventRSVP {...post} respondToEvent={respondToEvent(post.id)} position='top' />
+                  <div>{t('Can you go?')}</div>
+                  <EventRSVP {...post} respondToEvent={respondToEvent(post)} position='top' />
                 </div>
               }
             </div>
@@ -149,9 +151,10 @@ export default function PostBigGridItem (props) {
           </div>
           <div styleName='reactions'>
             <EmojiRow
-              {...post}
-              postId={post.id}
               currentUser={currentUser}
+              myReactions={post.myReactions}
+              postReactions={post.postReactions}
+              post={post}
             />
           </div>
         </div>

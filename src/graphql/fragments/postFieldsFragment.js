@@ -8,6 +8,15 @@ const CommentFieldsFragment = `
     id
     name
     avatarUrl
+    groupRoles {
+      name
+      emoji
+      active
+      groupId
+    }
+    moderatedGroupMemberships {
+      groupId
+    }
   }
   attachments {
     id
@@ -43,6 +52,15 @@ const postFieldsFragment = withComments => `
     id
     name
     avatarUrl
+    groupRoles {
+      name
+      emoji
+      active
+      groupId
+    }
+    moderatedGroupMemberships {
+      groupId
+    }
   }
   createdAt
   updatedAt

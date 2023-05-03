@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import { filter, isFunction } from 'lodash/fp'
+import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl } from 'util/navigation'
 import scrollIntoView from 'scroll-into-view-if-needed'
@@ -92,7 +93,7 @@ export class Comment extends Component {
   }
 
   render () {
-    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId } = this.props
+    const { canModerate, comment, currentUser, deleteComment, onReplyComment, removeComment, slug, selectedCommentId, post, t } = this.props
     const { id, creator, createdAt, text, attachments } = comment
     const { editing } = this.state
     const isCreator = currentUser && (comment.creator.id === currentUser.id)
@@ -100,12 +101,12 @@ export class Comment extends Component {
     const dropdownItems = filter(item => isFunction(item.onClick), [
       {},
       { icon: 'Edit', label: 'Edit', onClick: isCreator && this.handleEditComment },
-      { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id) : null },
-      { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id) : null }
+      { icon: 'Trash', label: 'Delete', onClick: isCreator ? () => deleteComment(comment.id, t('Are you sure you want to delete this comment')) : null },
+      { icon: 'Trash', label: 'Remove', onClick: !isCreator && canModerate ? () => removeComment(comment.id, t('Are you sure you want to remove this comment?')) : null }
     ])
 
     return (
-      <div ref={this.commentRef} styleName={cx({ 'commentContainer': true, 'selected-comment': selectedCommentId === comment.id })}>
+      <div ref={this.commentRef} styleName={cx({ commentContainer: true, 'selected-comment': selectedCommentId === comment.id })}>
         <div styleName='header'>
           <Avatar avatarUrl={creator.avatarUrl} url={profileUrl} styleName='avatar' />
           <Link to={profileUrl} styleName='userName'>{creator.name}</Link>
@@ -128,11 +129,9 @@ export class Comment extends Component {
               ))}
               <EmojiRow
                 className={cx({ [styles.emojis]: true, [styles.hiddenReactions]: true })}
-                commentReactions={comment.commentReactions}
-                myReactions={comment.myReactions}
+                comment={comment}
                 currentUser={currentUser}
-                postId={comment.post}
-                commentId={comment.id}
+                post={post}
               />
             </div>
           </div>
@@ -141,8 +140,7 @@ export class Comment extends Component {
           <div>
             <CardImageAttachments attachments={attachments} linked styleName='images' />
             <CardFileAttachments attachments={attachments} styleName='files' />
-          </div>
-        }
+          </div>}
         {editing && (
           <HyloEditor
             styleName='editing'
@@ -159,11 +157,9 @@ export class Comment extends Component {
             </ClickCatcher>
             <EmojiRow
               className={cx({ [styles.emojis]: true, [styles.noEmojis]: !comment.commentReactions || comment.commentReactions.length === 0 })}
-              commentReactions={comment.commentReactions}
-              myReactions={comment.myReactions}
+              comment={comment}
               currentUser={currentUser}
-              postId={comment.post}
-              commentId={comment.id}
+              post={post}
             />
           </>
         )}
@@ -172,7 +168,7 @@ export class Comment extends Component {
   }
 }
 
-export default class CommentWithReplies extends Component {
+export class CommentWithReplies extends Component {
   static propTypes = {
     comment: object.isRequired,
     createComment: func.isRequired, // bound by Comments.connector & Comment.connector
@@ -217,7 +213,7 @@ export default class CommentWithReplies extends Component {
   }
 
   render () {
-    const { comment, createComment, fetchChildComments, childCommentsTotal, hasMoreChildComments } = this.props
+    const { comment, createComment, fetchChildComments, childCommentsTotal, hasMoreChildComments, t } = this.props
     let { childComments } = comment
     const { replying, showLatestOnly, newCommentsAdded } = this.state
 
@@ -259,7 +255,7 @@ export default class CommentWithReplies extends Component {
                 createComment(c)
                   .then(() => this.setState({ newCommentsAdded: this.state.newCommentsAdded + 1 }))
               }}
-              placeholder={`Reply to ${comment.creator.name}`}
+              placeholder={`${t('Reply to')} ${comment.creator.name}`}
               editorContent={this.state.prefillEditor}
               focusOnRender
             />
@@ -270,3 +266,5 @@ export default class CommentWithReplies extends Component {
     )
   }
 }
+
+export default withTranslation()(CommentWithReplies)

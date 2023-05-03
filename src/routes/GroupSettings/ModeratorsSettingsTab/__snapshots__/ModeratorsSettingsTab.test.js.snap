@@ -2,31 +2,31 @@
 
 exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 <div
-  data-stylename="add-moderator adding"
+  data-stylename="styles.adding"
 >
   <div
-    data-stylename="help-text"
+    data-stylename="styles.help-text"
   >
     Search here for members to grant moderator powers
   </div>
   <div
-    data-stylename="input-row"
+    data-stylename="styles.input-row"
   >
     <input
-      data-stylename="input"
+      data-stylename="styles.input"
       onChange={[Function]}
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
     />
     <span
-      data-stylename="cancel-button"
+      data-stylename="styles.cancel-button"
       onClick={[Function]}
     >
       Cancel
     </span>
     <span
-      data-stylename="add-button"
+      data-stylename="styles.add-button"
       onClick={[Function]}
     >
       Add
@@ -57,6 +57,7 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
         ]
       }
       onChange={[Function]}
+      t={[Function]}
       theme={Object {}}
     />
   </div>
@@ -65,40 +66,42 @@ exports[`AddModerator renders correctly when adding with suggestions 1`] = `
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 1`] = `
 <div
-  data-stylename="add-moderator add-new"
+  data-stylename="styles.add-new"
+  id="add-new"
   onClick={[Function]}
 >
-  + Add New
+  + 
+  Add New
 </div>
 `;
 
 exports[`AddModerator renders correctly, and transitions from not adding to adding 2`] = `
 <div
-  data-stylename="add-moderator adding"
+  data-stylename="styles.adding"
 >
   <div
-    data-stylename="help-text"
+    data-stylename="styles.help-text"
   >
     Search here for members to grant moderator powers
   </div>
   <div
-    data-stylename="input-row"
+    data-stylename="styles.input-row"
   >
     <input
-      data-stylename="input"
+      data-stylename="styles.input"
       onChange={[Function]}
       onKeyDown={[Function]}
       placeholder="Type..."
       type="text"
     />
     <span
-      data-stylename="cancel-button"
+      data-stylename="styles.cancel-button"
       onClick={[Function]}
     >
       Cancel
     </span>
     <span
-      data-stylename="add-button"
+      data-stylename="styles.add-button"
       onClick={[Function]}
     >
       Add
@@ -151,32 +154,68 @@ exports[`ModeratorsList renders correctly 1`] = `
       url="/groups/foogroup/members/4"
     />
   </div>
-  <AddModerator />
+  <AddModeratorUntranslated
+    t={[Function]}
+  />
 </div>
 `;
 
 exports[`ModeratorsSettingsTab renders a list of RemovableListItems and AddModerator 1`] = `
 <Fragment>
-  <ModeratorsList
-    key="mList"
-    moderators={
-      Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ]
-    }
-    removeItem={[Function]}
-  />
+  <SettingsSection>
+    <h3>
+      Moderators
+      <div
+        data-stylename="styles.help-text"
+      >
+        Who has access to group settings and moderation powers
+      </div>
+    </h3>
+    <ModeratorsList
+      key="mList"
+      moderators={
+        Array [
+          Object {
+            "id": 1,
+          },
+          Object {
+            "id": 2,
+          },
+          Object {
+            "id": 3,
+          },
+          Object {
+            "id": 4,
+          },
+        ]
+      }
+      removeItem={[Function]}
+      t={[Function]}
+    />
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
+      Other Roles & Badges
+    </h3>
+    <div
+      data-stylename="styles.help-text"
+    >
+      Create additional roles or badges for the group
+    </div>
+    <div
+      data-stylename="styles.add-role"
+      onClick={[Function]}
+    >
+      <h4>
+        Create new role/badge
+      </h4>
+      <Icon
+        data-stylename="styles.new-role"
+        name="Circle-Plus"
+      />
+    </div>
+  </SettingsSection>
+  <br />
 </Fragment>
 `;
 

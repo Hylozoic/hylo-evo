@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './Search.scss'
 import FullPageModal from 'routes/FullPageModal'
 import TextInput from 'components/TextInput'
@@ -88,6 +89,7 @@ export function SearchBar ({
   setSearchFilter,
   filter
 }) {
+  const { t } = useTranslation()
   const onSearchChange = event => {
     const { value } = event.target
     setSearchTerm(value) // no debounce
@@ -98,23 +100,23 @@ export function SearchBar ({
     <TextInput theme={styles}
       inputRef={x => x && x.focus()}
       value={searchForInput || searchFromQueryString}
-      placeholder='Search by keyword for people, posts and groups'
+      placeholder={t('Search by keyword for people, posts and groups')}
       onChange={onSearchChange} />
   </div>
 }
 
-const tabs = [
-  { id: 'all', label: 'All' },
-  { id: 'post', label: 'Discussions' },
-  { id: 'person', label: 'People' },
-  { id: 'comment', label: 'Comments' }
-]
-
 export function TabBar ({ filter, setSearchFilter }) {
+  const { t } = useTranslation()
+  const tabs = [
+    { id: 'all', label: t('All') },
+    { id: 'post', label: t('Discussions') },
+    { id: 'person', label: t('People') },
+    { id: 'comment', label: t('Comments') }
+  ]
+
   return <div styleName='tabs'>
-    <h1>Search</h1>
-    {tabs.map(({ id, label }) => <span
-      key={id}
+    <h1>{t('Search')}</h1>
+    {tabs.map(({ id, label }) => <span key={id}
       styleName={id === filter ? 'tab-active' : 'tab'}
       onClick={() => setSearchFilter(id)}>
       {label}

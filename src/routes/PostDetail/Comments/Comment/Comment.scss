@@ -11,8 +11,9 @@ $comment-row-padding: 25px;
  }
  
 .selected-comment {
-  border: 1px $color-mango-yellow solid;
-  border-radius: 2px;
+  border: 1px solid #fdd549;
+  border-radius: 5px;
+  background-color: rgba(253, 213, 73, .4);
 }
 
 .header {

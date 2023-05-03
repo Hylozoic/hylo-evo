@@ -8,6 +8,7 @@ import ReactPlayer from 'react-player'
 import { useLongPress } from 'use-long-press'
 import Avatar from 'components/Avatar'
 import Button from 'components/Button'
+import BadgeEmoji from 'components/BadgeEmoji'
 import ClickCatcher from 'components/ClickCatcher'
 import CardFileAttachments from 'components/CardFileAttachments'
 import EmojiRow from 'components/EmojiRow'
@@ -57,6 +58,7 @@ export default function ChatPost ({
     creator,
     details,
     fileAttachments,
+    groups,
     id,
     imageAttachments,
     linkPreview,
@@ -64,6 +66,8 @@ export default function ChatPost ({
     myReactions,
     postReactions
   } = post
+
+  const groupIds = groups.map(g => g.id)
 
   if (intersectionObserver) {
     useEffect(() => {
@@ -122,7 +126,7 @@ export default function ChatPost ({
 
   const { reactOnEntity, removeReactOnEntity } = useReactionActions()
   const handleReaction = (emojiFull) => {
-    reactOnEntity({ emojiFull, entityType: 'post', postId: id })
+    reactOnEntity({ emojiFull, entityType: 'post', postId: id, groupIds })
     setIsLongPress(false)
   }
   const handleRemoveReaction = (emojiFull) => removeReactOnEntity({ emojiFull, entityType: 'post', postId: id })
@@ -140,6 +144,7 @@ export default function ChatPost ({
     }
 
     post.details = contentHTML
+    post.topicNames = post.topics?.map((t) => t.name) // Make sure topic stays on the post
     updatePost(post)
     setEditing(false)
 
@@ -178,6 +183,9 @@ export default function ChatPost ({
   const myEmojis = myReactions ? myReactions.map((reaction) => reaction.emojiFull) : []
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
+
+  const badges = (group.id && creator.groupRoles.filter(role => role.groupId === group.id)) || []
+  const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
   return (
     <Highlight {...highlightProps}>
@@ -219,6 +227,14 @@ export default function ChatPost ({
             <div onClick={showCreator} styleName='author'>
               <Avatar avatarUrl={creator.avatarUrl} className={styles.avatar} />
               <div styleName='name'>{creator.name}</div>
+              <div styleName='badgeRow'>
+                {creatorIsModerator && (
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
+                )}
+                {badges.map(badge => (
+                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+                ))}
+              </div>
             </div>
             <div styleName='date'>{DateTime.fromISO(createdAt).toLocaleString(DateTime.TIME_SIMPLE)}</div>
           </div>
@@ -226,7 +242,7 @@ export default function ChatPost ({
         {details && editing && (
           <HyloEditor
             contentHTML={details}
-            groupIds={post.groups.map(g => g.id)}
+            groupIds={groupIds}
             onEscape={handleEditCancel}
             onEnter={handleEditSave}
             placeholder='Edit Post'
@@ -263,9 +279,7 @@ export default function ChatPost ({
         )}
         <EmojiRow
           className={cx({ [styles.emojis]: true, [styles.noEmojis]: !postReactions || postReactions.length === 0 })}
-          postReactions={postReactions}
-          myReactions={myReactions}
-          postId={id}
+          post={post}
           currentUser={currentUser}
         />
         {commentsTotal > 0 && (

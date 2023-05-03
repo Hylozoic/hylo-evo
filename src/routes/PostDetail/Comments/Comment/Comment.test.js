@@ -12,7 +12,7 @@ describe('Comment', () => {
         avatarUrl: 'foo.jpg'
       },
       attachments: [],
-      createdAt: new Date(),
+      createdAt: new Date('2023-02-01'),
       childComments: []
     },
     canModerate: false,

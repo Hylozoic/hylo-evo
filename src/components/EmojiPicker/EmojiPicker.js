@@ -11,7 +11,7 @@ const DEFAULT_TOPNAV_HEIGHT = 56
 const emojiPickerMaxY = PICKER_DEFAULT_HEIGHT + DEFAULT_TOPNAV_HEIGHT
 
 export default function EmojiPicker (props) {
-  const { handleRemoveReaction, myEmojis, handleReaction } = props
+  const { handleRemoveReaction, myEmojis, handleReaction, forReactions = true, emoji } = props
   const [modalOpen, setModalOpen] = useState(false)
   const [modalY, setModalY] = useState()
   const [modalX, setModalX] = useState()
@@ -25,6 +25,13 @@ export default function EmojiPicker (props) {
     setModalOpen(!modalOpen)
     return true
   }
+
+  const handleSelection = (data) => {
+    const selectedEmoji = data.native
+    handleReaction(selectedEmoji)
+    setModalOpen(!modalOpen)
+  }
+
   const toggleModalOpen = (evt) => {
     let yAdjustment = 0
     let xAdjustment = 0
@@ -41,17 +48,27 @@ export default function EmojiPicker (props) {
     }
   }
 
-  return (
-    <div styleName='emoji-picker-container' className={props.className}>
-      <div styleName='emoji-picker-toggle' onClick={toggleModalOpen}>
-        <Icon name='Smiley' styleName='picker-icon' />
+  return forReactions
+    ? (
+      <div styleName='emoji-picker-container' className={props.className}>
+        <div styleName='emoji-picker-toggle' onClick={toggleModalOpen}>
+          <Icon name='Smiley' styleName='picker-icon' />
+        </div>
+        {modalOpen &&
+          <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
+            <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} onEmojiSelect={handleClick} />
+          </div>}
       </div>
-      {modalOpen &&
-        <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
-          <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} onEmojiSelect={handleClick} />
-        </div>}
-    </div>
-  )
+    )
+    : (
+      <div onClick={toggleModalOpen} styleName='emoji-picker-container' className={props.className}>
+        {emoji || '?'}
+        {modalOpen &&
+          <div style={{ top: modalY, left: modalX }} styleName={cx('emoji-options')}>
+            <EmojiPickerContent {...props} onClickOutside={toggleModalOpen} onEmojiSelect={handleSelection} />
+          </div>}
+      </div>
+    )
 }
 
 function EmojiPickerContent (props) {

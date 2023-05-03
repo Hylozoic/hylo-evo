@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import isWebView from 'util/webView'
 import Tooltip from 'components/Tooltip'
@@ -12,6 +13,7 @@ import Loading from 'components/Loading'
 import Member from 'components/Member'
 import PostCard from 'components/PostCard'
 import ScrollListener from 'components/ScrollListener'
+import { CONTEXT_MY } from 'store/constants'
 import { STREAM_SORT_OPTIONS } from 'util/constants'
 
 import styles from './MapDrawer.scss'
@@ -24,6 +26,7 @@ function MapDrawer (props) {
     currentUser,
     fetchPostsForDrawer,
     filters,
+    group,
     groups,
     locationParams,
     members,
@@ -39,14 +42,16 @@ function MapDrawer (props) {
   const {
     sortBy
   } = filters
+  const { t } = useTranslation()
 
+  const localizedTabNames = { posts: t('Posts'), groups: t('Groups'), members: t('Members') }
   const searchText = filters.search
 
   const { hideNavLayout } = useLayoutFlags()
   const withoutNav = isWebView() || hideNavLayout
   const [search, setSearch] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [currentTab, setCurrentTab] = useState('Posts')
+  const [currentTab, setCurrentTab] = useState(localizedTabNames.posts)
 
   const filterByTopic = (topic) => {
     const newFilterTopics = filters.topics.concat(topic)
@@ -60,10 +65,9 @@ function MapDrawer (props) {
 
   // Don't show topics we are already filtering by in searches
   const searchTopics = topics.filter(topic => !filters.topics.find(t => t.name === topic.name))
-
-  const tabs = { 'Posts': numTotalPosts, 'Groups': groups.length }
+  const tabs = { [localizedTabNames.posts]: numTotalPosts, [localizedTabNames.groups]: groups.length }
   if (context !== 'public') {
-    tabs['Members'] = members.length
+    tabs[localizedTabNames.members] = members.length
   }
 
   const handleChildPostInclusion = () => {
@@ -88,7 +92,7 @@ function MapDrawer (props) {
               e.target.blur()
             }
           }}
-          placeholder='Filter by topics and keywords'
+          placeholder={t('Filter by topics and keywords')}
           value={search}
         />
         <Icon name='Funnel' className={styles.filterIcon} />
@@ -138,31 +142,34 @@ function MapDrawer (props) {
         <TabBar currentTab={currentTab} tabs={tabs} selectTab={setCurrentTab} pendingPostsDrawer={pendingPostsDrawer} />
       </div>
 
-      {currentTab === 'Posts' ? <div styleName='contentWrapper'>
+      {currentTab === localizedTabNames.posts ? <div styleName='contentWrapper'>
         <div styleName='postsHeader'>
-          <span onClick={handleChildPostInclusion}
-            data-tip='Show child group posts?'
-            data-for='childgroup-toggle-tt'
-          >
-            {/* TODO: i18n on tooltip */}
-            <Icon
-              name='Subgroup'
-              className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
-            />
-          </span>
-          <Tooltip
-            delay={250}
-            id='childgroup-toggle-tt'
-            position='bottom'
-          />
-          <span>Sort posts by:</span>
+
+          {![CONTEXT_MY, 'all', 'public'].includes(context) &&
+            <>
+              <span onClick={handleChildPostInclusion}
+                data-tip={childPostInclusion === 'yes' ? t('Hide posts from child groups') : t('Show posts from child groups')}
+                data-for='childgroup-toggle-tt'
+              >
+                <Icon
+                  name='Subgroup'
+                  className={cx(styles.toggleIcon, { [styles.activeToggle]: childPostInclusion === 'yes' })}
+                />
+              </span>
+              <Tooltip
+                delay={250}
+                id='childgroup-toggle-tt'
+                position='bottom'
+              />
+            </>}
+          <span>{t('Sort posts by:')}</span>
           <Dropdown styleName='sorter'
             toggleChildren={<span styleName='sorter-label'>
-              {STREAM_SORT_OPTIONS.find(o => o.id === sortBy).label}
+              {t(STREAM_SORT_OPTIONS.find(o => o.id === sortBy).label)}
               <Icon name='ArrowDown' className={styles.sorterIcon} />
             </span>}
             items={STREAM_SORT_OPTIONS.map(({ id, label }) => ({
-              label,
+              label: t(label),
               onClick: () => onUpdateFilters({ sortBy: id })
             }))}
             alignRight
@@ -183,19 +190,19 @@ function MapDrawer (props) {
 
         <ScrollListener onBottom={() => fetchPostsForDrawer(numFetchedPosts, false)} elementId='mapDrawerWrapper' />
       </div>
-        : currentTab === 'Members' ? <div styleName='contentWrapper'>
+        : currentTab === localizedTabNames.members ? <div styleName='contentWrapper'>
           <div styleName='contentListContainer' id='contentList'>
             {members.map(m => <Member
               canModerate={false}
               className={cx({ [styles.contentCard]: true, [styles.member]: true })}
               member={m}
               key={m.id}
-              groupSlug={routeParams.groupSlug}
+              group={group}
               context={context}
             />)}
           </div>
         </div>
-          : currentTab === 'Groups' ? <div styleName='contentWrapper'>
+          : currentTab === localizedTabNames.groups ? <div styleName='contentWrapper'>
             <div styleName='contentListContainer' id='contentList'>
               {groups.map(group => <GroupCard
                 key={group.id}
@@ -224,20 +231,22 @@ MapDrawer.defaultProps = {
   members: [],
   posts: [],
   routeParams: {},
-  onUpdateFilters: (opts) => { console.log('Updating filters with: ' + opts) }
+  onUpdateFilters: (opts) => { console.log(this.props.t('Updating filters with:') + ' ' + opts) }
 }
 
 export default MapDrawer
 
 export function TabBar ({ currentTab, tabs, selectTab, pendingPostsDrawer }) {
+  const { t } = useTranslation()
+  const posts = t('Posts')
   return <ul styleName='tab-bar'>
     {Object.keys(tabs).map(name =>
       <li key={name}
         styleName={name === currentTab ? 'tab-active' : 'tab'}
         onClick={() => selectTab(name)}>
         {name}&nbsp;
-        {(name !== 'Posts' || !pendingPostsDrawer) && <span styleName='tabCount'>{tabs[name]}</span>}
-        {name === 'Posts' && pendingPostsDrawer && <Loading className={styles.loading} size={20} />}
+        {(name !== posts || !pendingPostsDrawer) && <span styleName='tabCount'>{tabs[name]}</span>}
+        {name === posts && pendingPostsDrawer && <Loading className={styles.loading} size={20} />}
       </li>)}
   </ul>
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { bgImageStyle } from 'util/index'
 import ModalDialog from 'components/ModalDialog'
@@ -11,7 +12,7 @@ import useInView from 'react-cool-inview'
 import Loading from 'components/Loading'
 const pageSize = 30
 
-export default function EventInviteDialog ({
+const EventInviteDialog = ({
   fetchPeople,
   forGroups,
   eventInvitations,
@@ -20,7 +21,7 @@ export default function EventInviteDialog ({
   onClose,
   invitePeopleToEvent,
   pending
-}) {
+}) => {
   const [invitedIds, setInvitedIds] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [pageFetched, setPageFetched] = useState(0)
@@ -30,6 +31,7 @@ export default function EventInviteDialog ({
     : setInvitedIds(invitedIds.concat([id]))
 
   const onSearchChange = ({ target: { value } }) => setSearchTerm(value)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const fetch = () => {
@@ -66,10 +68,10 @@ export default function EventInviteDialog ({
   const filteredInviteSuggestions = getFilteredInviteSuggestions()
 
   const inviteButtonLabel = invitedIds.length === 0
-    ? 'Select people to invite'
+    ? t('Select people to invite')
     : invitedIds.length === 1
-      ? 'Invite 1 person'
-      : `Invite ${invitedIds.length} people`
+      ? t('Invite 1 person')
+      : t('Invite {{invitedIds.length}} people', { invitedIds })
 
   return <ModalDialog key='event-invite-dialog'
     closeModal={onClose}
@@ -94,7 +96,7 @@ export default function EventInviteDialog ({
         </div>
       </div>
 
-      <div styleName='alreadyInvitedLabel'>Already Invited</div>
+      <div styleName='alreadyInvitedLabel'>{t('Already Invited')}</div>
       <div styleName='alreadyInvited'>
         {eventInvitations.map(eventInvitation =>
           <InviteeRow
@@ -133,10 +135,13 @@ export const InviteeRow = React.forwardRef((props, ref) => {
 })
 
 export function Search ({ onChange }) {
+  const { t } = useTranslation()
   return <div styleName='search'>
     <TextInput theme={styles}
       inputRef={x => x && x.focus()}
-      placeholder='Search members'
+      placeholder={t('Search members')}
       onChange={onChange} />
   </div>
 }
+
+export default EventInviteDialog

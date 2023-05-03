@@ -17,7 +17,7 @@ export default function GroupExplorer ({
   return (
     <React.Fragment>
       <Helmet>
-        <title>Hylo: Explorer</title>
+        <title>Group Explorer | Hylo</title>
         <meta name='description' content='Find the others on Hylo' />
       </Helmet>
       <ExplorerBanner />

@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { postUrl, createPostUrl } from 'util/navigation'
 import RoundImage from '../../RoundImage'
@@ -9,7 +10,7 @@ import './ProjectsWidget.scss'
 
 const { array, bool, object } = PropTypes
 
-export default class ProjectsWidget extends Component {
+class ProjectsWidget extends Component {
   static propTypes = {
     isMember: bool,
     items: array,
@@ -17,7 +18,7 @@ export default class ProjectsWidget extends Component {
   }
 
   render () {
-    const { isMember, items, routeParams } = this.props
+    const { isMember, items, routeParams, t } = this.props
 
     return (
       <div styleName='projects'>
@@ -36,10 +37,10 @@ export default class ProjectsWidget extends Component {
           <div styleName='project'>
             <div styleName='meta'>
               <div>
-                <div styleName='title'>What are you doing together?</div>
-                <div styleName='last-activity'>Projects help you and your group accomplish shared goals.</div>
+                <div styleName='title'>{t('What are you doing together?')}</div>
+                <div styleName='last-activity'>{t('Projects help you and your group accomplish shared goals.')}</div>
               </div>
-              <div styleName='create-project-cta'>+ New project</div>
+              <div styleName='create-project-cta'>{t('+ New project')}</div>
             </div>
           </div>
         </Link> : '' }
@@ -47,3 +48,4 @@ export default class ProjectsWidget extends Component {
     )
   }
 }
+export default withTranslation()(ProjectsWidget)

@@ -7,6 +7,18 @@ import userEvent from '@testing-library/user-event'
 import orm from 'store/models'
 import { FARM_VIEW } from 'util/constants'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 jest.mock('components/ScrollListener', () => () => <div />) // was throwing errors with this.element().removeEventListener('blabadlbakdbfl')
 
 function testProviders () {

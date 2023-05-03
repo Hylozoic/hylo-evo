@@ -21,6 +21,15 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         avatarUrl
         location
         tagline
+        groupRoles {
+          name
+          emoji
+          active
+          groupId
+        }
+        moderatedGroupMemberships {
+          groupId
+        }
         skills {
           hasMore
           items {

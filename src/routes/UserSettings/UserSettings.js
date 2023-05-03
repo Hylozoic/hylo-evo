@@ -11,11 +11,12 @@ import SavedSearchesTab from './SavedSearchesTab/SavedSearchesTab'
 import FullPageModal from 'routes/FullPageModal'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import './UserSettings.scss'
+import { withTranslation } from 'react-i18next'
 
 // NOTE: This area is also rendered and shared with the mobile app.
 // When making changes here or in any of the settings tabs please
 // confirm accurate rendering and function in the related mobile area.
-export default class UserSettings extends Component {
+class UserSettings extends Component {
   render () {
     const {
       currentUser,
@@ -36,12 +37,13 @@ export default class UserSettings extends Component {
       fetchLocation,
       deleteMe,
       deactivateMe,
-      logout
+      logout,
+      t
     } = this.props
 
     const content = [
       {
-        name: 'Edit Profile',
+        name: t('Edit Profile'),
         path: '/settings',
         component: <EditProfileTab
           currentUser={currentUser}
@@ -53,17 +55,17 @@ export default class UserSettings extends Component {
           fetchPending={fetchPending} />
       },
       {
-        name: 'Groups & Affiliations',
+        name: t('Groups & Affiliations'),
         path: '/settings/groups',
         component: <UserGroupsTab personId={currentUser.id} />
       },
       {
-        name: 'Invites & Requests',
+        name: t('Invites & Requests'),
         path: '/settings/invitations',
         component: <ManageInvitesTab currentUser={currentUser} />
       },
       {
-        name: 'Notifications',
+        name: t('Notifications'),
         path: '/settings/notifications',
         component: <NotificationSettingsTab
           currentUser={currentUser}
@@ -75,7 +77,7 @@ export default class UserSettings extends Component {
           allGroupsSettings={allGroupsSettings} />
       },
       {
-        name: 'Account',
+        name: t('Account'),
         path: '/settings/account',
         component: <AccountSettingsTab
           currentUser={currentUser}
@@ -86,7 +88,7 @@ export default class UserSettings extends Component {
           updateUserSettings={updateUserSettings} />
       },
       {
-        name: 'Saved Searches',
+        name: t('Saved Searches'),
         path: '/settings/saved-searches',
         component: <SavedSearchesTab />
       }
@@ -94,7 +96,7 @@ export default class UserSettings extends Component {
 
     if (currentUser && !isEmpty(currentUser.blockedUsers.toRefArray())) {
       content.push({
-        name: 'Blocked Users',
+        name: t('Blocked Users'),
         path: '/settings/blocked-users',
         component: <BlockedUsersTab
           blockedUsers={blockedUsers}
@@ -105,7 +107,7 @@ export default class UserSettings extends Component {
 
     if (currentUser && currentUser.hasFeature(PROJECT_CONTRIBUTIONS)) {
       content.push({
-        name: 'Payment',
+        name: t('Payment'),
         path: '/settings/payment',
         component: <PaymentSettingsTab
           currentUser={currentUser}
@@ -119,3 +121,5 @@ export default class UserSettings extends Component {
     return <FullPageModal content={content} />
   }
 }
+
+export default withTranslation()(UserSettings)

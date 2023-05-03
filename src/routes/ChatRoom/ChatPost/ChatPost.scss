@@ -91,6 +91,13 @@
     padding-bottom: 5px;
   }
 
+  .badgeRow {
+    display: flex;
+    margin-left: 4px;
+    grid-gap: 2px;
+    align-items: center;
+  }
+
   .header {
     width: 100%;
     display: flex;
@@ -99,10 +106,11 @@
 
     .author {
       position: relative;
+      display: flex;
 
       .name {
         white-space: nowrap;
-        margin-left: 22px;
+        margin-left: 8px;
         position: relative;
         font-size: 17px;
         font-family: "Circular Bold";

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Redirect, Link, Switch } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet'
 import Div100vh from 'react-div-100vh'
 import Particles from 'react-tsparticles'
@@ -12,8 +13,8 @@ import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayoutRouter/Login'
-import OAuthConsent from './OAuth/Consent'
-import OAuthLogin from './OAuth/Login'
+import OAuthConsent from 'routes/OAuth/Consent'
+import OAuthLogin from 'routes/OAuth/Login'
 import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
 import './NonAuthLayoutRouter.scss'
@@ -27,6 +28,7 @@ const particlesStyle = {
 }
 
 export default function NonAuthLayoutRouter (props) {
+  const { t } = useTranslation()
   const { location } = props
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(getAuthenticated)
@@ -35,6 +37,7 @@ export default function NonAuthLayoutRouter (props) {
   const returnToPath = returnToNavigationState
     ? returnToNavigationState.pathname + returnToNavigationState.search
     : returnToPathFromQueryString
+  const thisApplicationText = t('this application')
 
   useEffect(() => {
     if (returnToPath && returnToPath !== '/') {
@@ -43,7 +46,9 @@ export default function NonAuthLayoutRouter (props) {
       dispatch(setReturnToPath(returnToPath))
     }
 
-    if (isAuthenticated) {
+    // XXX: skipAuthCheck is kind of a hack for when we are doing the oAuth login flow
+    //      and we want to still show the oAuth login/consent pages even when someone is logged into Hylo
+    if (!props.skipAuthCheck && isAuthenticated) {
       props.history.replace('/signup')
     }
   }, [dispatch, setReturnToPath, returnToPath])
@@ -60,7 +65,7 @@ export default function NonAuthLayoutRouter (props) {
         </div>
         <div styleName='topRow'>
           <a href='/'>
-            <img styleName='logo' src='/assets/hylo.svg' alt='Hylo logo' />
+            <img styleName='logo' src='/assets/hylo.svg' alt={t('Hylo logo')} />
           </a>
         </div>
         <div styleName='signupRow'>
@@ -117,7 +122,7 @@ export default function NonAuthLayoutRouter (props) {
             component={() => (
               <div styleName='below-container'>
                 <Link to='/login'>
-                  Already have an account? <Button styleName='signupButton' color='green-white-green-border'>Sign in</Button>
+                  {t('Already have an account?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign in')}</Button>
                 </Link>
               </div>
             )}
@@ -128,11 +133,11 @@ export default function NonAuthLayoutRouter (props) {
               <div styleName='below-container'>
                 <div styleName='resetPasswordBottom'>
                   <Link tabIndex={-1} to='/signup'>
-                    <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+                    <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button>
                   </Link>
                   or
                   <Link to='/login'>
-                    <Button styleName='signupButton' color='green-white-green-border'>Log In</Button>
+                    <Button styleName='signupButton' color='green-white-green-border'>{t('Log In')}</Button>
                   </Link>
                 </div>
               </div>
@@ -144,7 +149,7 @@ export default function NonAuthLayoutRouter (props) {
             component={() => (
               <div styleName='below-container'>
                 <Link tabIndex={-1} to='/signup'>
-                  Not a member of Hylo? <Button styleName='signupButton' color='green-white-green-border'>Sign Up</Button>
+                  {t('Not a member of Hylo?')} <Button styleName='signupButton' color='green-white-green-border'>{t('Sign Up')}</Button>
                 </Link>
               </div>
             )}
@@ -153,7 +158,7 @@ export default function NonAuthLayoutRouter (props) {
             path='/oauth/login'
             component={(props) => (
               <div styleName='below-container'>
-                <p>Use your Hylo account to access {getQuerystringParam('name', {}, props) || 'this application'}.</p>
+                <p>{t(`Use your Hylo account to access {{name}}.`, { name: getQuerystringParam('name', {}, props) || thisApplicationText })}</p>
               </div>
             )}
           />
@@ -161,14 +166,14 @@ export default function NonAuthLayoutRouter (props) {
             path='/oauth/consent'
             component={(props) => (
               <div styleName='below-container'>
-                <p>Make sure you trust {getQuerystringParam('name', {}, props) || 'this application'} with your information.</p>
+                <p>{t(`Make sure you trust {{name}} with your information.`, { name: getQuerystringParam('name', {}, props) || thisApplicationText })}</p>
               </div>
             )}
           />
         </Switch>
         <div styleName='below-container'>
-          <a href='https://hylo.com/terms/' target='_blank' rel='noreferrer'>Terms of Service</a> +&nbsp;
-          <a href='https://hylo.com/terms/privacy' target='_blank' rel='noreferrer'>Privacy Policy</a>
+          <a href='https://hylo.com/terms/' target='_blank' rel='noreferrer'>{t('Terms of Service')}</a> +&nbsp;
+          <a href='https://hylo.com/terms/privacy' target='_blank' rel='noreferrer'>{t('Privacy Policy')}</a>
         </div>
       </div>
       <HyloCookieConsent />

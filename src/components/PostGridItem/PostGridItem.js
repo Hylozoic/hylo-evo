@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 import Tooltip from 'components/Tooltip'
-// import { DateTime } from 'luxon'
+import { useTranslation } from 'react-i18next'
 import { personUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import Avatar from 'components/Avatar'
@@ -32,11 +32,10 @@ export default function PostGridItem (props) {
   if (!creator) { // PostCard guards against this, so it must be important? ;P
     return null
   }
-
+  const { t } = useTranslation()
   const creatorUrl = personUrl(creator.id, routeParams.slug)
   const unread = false
   // will reintegrate once I have attachment vars
-  /* const startTime = DateTime.fromISO(post.startTime) */
 
   return (
     <div styleName={cx('post-grid-item-container', { unread, expanded }, attachmentType)} onClick={showDetails}>
@@ -44,10 +43,9 @@ export default function PostGridItem (props) {
         {childPost &&
           <div
             styleName='icon-container'
-            data-tip='Post from child group'
+            data-tip={t('Post from child group')}
             data-for='childgroup-tt'
           >
-            {/* TODO: i18n on tooltip */}
             <Icon
               name='Subgroup'
               styleName='icon'

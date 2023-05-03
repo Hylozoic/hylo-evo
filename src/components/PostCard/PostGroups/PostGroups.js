@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { get, isEmpty } from 'lodash/fp'
 import cx from 'classnames'
 import { Link } from 'react-router-dom'
@@ -7,7 +8,7 @@ import GroupsList from 'components/GroupsList'
 import Icon from 'components/Icon'
 import './PostGroups.scss'
 
-export default class PostGroups extends Component {
+class PostGroups extends Component {
   static defaultState = {
     expanded: false
   }
@@ -24,7 +25,7 @@ export default class PostGroups extends Component {
   }
 
   render () {
-    const { groups, constrained, slug, showBottomBorder } = this.props
+    const { groups, constrained, slug, showBottomBorder, t } = this.props
     const { expanded } = this.state
 
     // don't show if there are no groups or this isn't cross posted
@@ -32,9 +33,9 @@ export default class PostGroups extends Component {
 
     return <div styleName={cx('groups', { constrained, expanded, bottomBorder: showBottomBorder })} onClick={expanded ? this.toggleExpanded : undefined}>
       <div styleName='row'>
-        <span styleName='label'>Posted In:&nbsp;</span>
+        <span styleName='label'>{`${this.props.t('Posted In:')} `}</span>
         {!expanded &&
-          <LinkedGroupNameList groups={groups} maxShown={2} expandFunc={this.toggleExpanded} />}
+          <LinkedGroupNameList t={t} groups={groups} maxShown={2} expandFunc={this.toggleExpanded} />}
         <a onClick={this.toggleExpanded} styleName='expandLink'><Icon name={expanded ? 'ArrowUp' : 'ArrowDown'} styleName='expandIcon' /></a>
       </div>
 
@@ -43,7 +44,7 @@ export default class PostGroups extends Component {
   }
 }
 
-export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc }) {
+export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc, t }) {
   const groupsToDisplay = (maxShown && maxShown <= groups.length)
     ? groups.slice(0, maxShown)
     : groups
@@ -52,7 +53,7 @@ export function LinkedGroupNameList ({ groups, maxShown = 2, expandFunc }) {
   return <span styleName='groupList'>
     {groupsToDisplay.map((group, i) =>
       <LinkedGroupName group={group} key={i}>
-        <Separator currentIndex={i} displayCount={groupsToDisplay.length} othersCount={othersCount} />
+        <Separator currentIndex={i} displayCount={groupsToDisplay.length} t={t} othersCount={othersCount} />
       </LinkedGroupName>)}
     {othersCount > 0 &&
       <Others othersCount={othersCount} expandFunc={expandFunc} />}
@@ -66,24 +67,27 @@ export function LinkedGroupName ({ group, children }) {
   </span>
 }
 
-export function Separator ({ currentIndex, displayCount, othersCount }) {
+export function Separator ({ currentIndex, displayCount, othersCount, t }) {
   const isLastEntry = currentIndex === displayCount - 1
   const isNextToLastEntry = currentIndex === Math.max(0, displayCount - 2)
   const hasOthers = othersCount > 0
 
   if (isLastEntry) return null
-  if (!hasOthers && isNextToLastEntry) return <span key='and'> and </span>
+  if (!hasOthers && isNextToLastEntry) return <span key='and'> {t('and')} </span>
 
   return <span>, </span>
 }
 
 export function Others ({ othersCount, expandFunc }) {
+  const { t } = useTranslation()
   if (othersCount < 0) return null
 
-  const phrase = othersCount === 1 ? '1 other' : othersCount + ' others'
+  const phrase = othersCount === 1 ? t('1 other') : t('{{othersCount}} others', { othersCount })
 
   return <React.Fragment>
-    <span key='and'> and </span>
+    <span key='and'> {t('and')} </span>
     <a key='others' styleName='groupLink' onClick={expandFunc}>{phrase}</a>
   </React.Fragment>
 }
+
+export default withTranslation()(PostGroups)

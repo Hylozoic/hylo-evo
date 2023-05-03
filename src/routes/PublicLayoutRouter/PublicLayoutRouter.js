@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams, useLocation, useHistory, Redirect, Route, Switch } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Div100vh from 'react-div-100vh'
 import { POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -26,11 +27,11 @@ export default function PublicLayoutRouter (props) {
       <PublicPageHeader />
       <Switch>
         <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
-        <Route path='/:context(groups)/:groupSlug' exact component={PublicGroupDetail} />
+        <Route path='/:context(groups)/:groupSlug' component={PublicGroupDetail} />
         <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
         <Route path='/:context(public)/:view(groups)' component={GroupExplorerLayoutRouter} />
         <Redirect from={`(.*)/${POST_DETAIL_MATCH}`} to='/post/:postId' />
-        <Redirect to={{ pathname: '/public/map', state: { from: location } }} />
+        <Redirect to={{ pathname: '/login', state: { from: location } }} />
       </Switch>
       <HyloCookieConsent />
     </Div100vh>
@@ -41,6 +42,7 @@ export function PublicGroupDetail (props) {
   const dispatch = useDispatch()
   const routeParams = useParams()
   const history = useHistory()
+  const location = useLocation()
   const [loading, setLoading] = useState(true)
   const groupSlug = routeParams?.groupSlug
 
@@ -51,7 +53,7 @@ export function PublicGroupDetail (props) {
       const result = await dispatch(checkIsPublicGroup(groupSlug))
       const isPublicGroup = result?.payload?.data?.group?.visibility === 2
       if (!isPublicGroup) {
-        history.replace('/login')
+        history.replace('/login?returnToUrl=' + location.pathname + location.search)
       }
 
       setLoading(false)
@@ -63,7 +65,7 @@ export function PublicGroupDetail (props) {
   }
 
   return (
-    <div styleName='center-column' id={CENTER_COLUMN_ID}>
+    <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
       <GroupDetail {...props} />
     </div>
   )
@@ -73,6 +75,7 @@ export function PublicPostDetail (props) {
   const dispatch = useDispatch()
   const routeParams = useParams()
   const history = useHistory()
+  const location = useLocation()
   const [loading, setLoading] = useState(true)
   const postId = routeParams?.postId
 
@@ -84,7 +87,7 @@ export function PublicPostDetail (props) {
       const isPublicPost = result?.payload?.data?.post?.id
 
       if (!isPublicPost) {
-        history.replace('/login')
+        history.replace('/login?returnToUrl=' + location.pathname + location.search)
       }
 
       setLoading(false)
@@ -96,7 +99,7 @@ export function PublicPostDetail (props) {
   }
 
   return (
-    <div styleName='center-column' id={DETAIL_COLUMN_ID}>
+    <div styleName='center-column non-map-view' id={DETAIL_COLUMN_ID}>
       <div />
       <PostDetail {...props} />
       <div />
@@ -105,10 +108,12 @@ export function PublicPostDetail (props) {
 }
 
 export function MapExplorerLayoutRouter (props) {
+  const history = useHistory()
+
   return (
     <>
-      <div styleName='center-column' id={CENTER_COLUMN_ID}>
-        <MapExplorer {...props} />
+      <div styleName='center-column map-view' id={CENTER_COLUMN_ID}>
+        <MapExplorer {...props} history={history} />
       </div>
       <Route
         path={`(.*)/${POST_DETAIL_MATCH}`}
@@ -133,7 +138,7 @@ export function MapExplorerLayoutRouter (props) {
 export function GroupExplorerLayoutRouter () {
   return (
     <>
-      <div styleName='center-column' id={CENTER_COLUMN_ID}>
+      <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
         <div>
           <GroupExplorer />
         </div>
@@ -151,19 +156,20 @@ export function GroupExplorerLayoutRouter () {
 }
 
 export function PublicPageHeader () {
+  const { t } = useTranslation()
   return (
     <div styleName='background'>
       <Helmet>
-        <title>Hylo: Public</title>
+        <title>{t('Public')} | Hylo</title>
         <meta name='description' content='Hylo: Public content' />
       </Helmet>
       <div styleName='header'>
         <a href='/'>
-          <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />
+          <img styleName='logo' src='/assets/navy-merkaba.svg' alt={t('Hylo logo')} />
         </a>
         <div styleName='access-controls'>
-          <a href='/login'>Sign in</a>
-          <a styleName='sign-up' href='/signup'>Join Hylo</a>
+          <a href='/login'>{t('Sign in')}</a>
+          <a styleName='sign-up' href='/signup'>{t('Join Hylo')}</a>
         </div>
       </div>
     </div>

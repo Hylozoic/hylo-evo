@@ -1,9 +1,11 @@
 import cx from 'classnames'
 import { filter, isFunction } from 'lodash'
 import React, { PureComponent } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import Avatar from 'components/Avatar'
+import BadgeEmoji from 'components/BadgeEmoji'
 import Dropdown from 'components/Dropdown'
 import PostLabel from 'components/PostLabel'
 import Highlight from 'components/Highlight'
@@ -14,7 +16,7 @@ import { personUrl, topicUrl } from 'util/navigation'
 import { TextHelpers } from 'hylo-shared'
 import './PostHeader.scss'
 
-export default class PostHeader extends PureComponent {
+class PostHeader extends PureComponent {
   static defaultProps = {
     routeParams: {}
   }
@@ -35,6 +37,7 @@ export default class PostHeader extends PureComponent {
       createdAt,
       detailHasImage,
       expanded,
+      groups,
       type,
       id,
       startTime,
@@ -54,7 +57,8 @@ export default class PostHeader extends PureComponent {
       announcement,
       fulfillPost,
       unfulfillPost,
-      postUrl
+      postUrl,
+      t
     } = this.props
 
     if (!creator) return null
@@ -72,12 +76,12 @@ export default class PostHeader extends PureComponent {
       type: 'post'
     }
     const dropdownItems = filter([
-      { icon: 'Pin', label: pinned ? 'Unpin' : 'Pin', onClick: pinPost },
-      { icon: 'Edit', label: 'Edit', onClick: editPost },
-      { icon: 'Copy', label: 'Copy Link', onClick: copyLink },
-      { icon: 'Flag', label: 'Flag', onClick: this.flagPostFunc() },
-      { icon: 'Trash', label: 'Delete', onClick: deletePost, red: true },
-      { icon: 'Trash', label: 'Remove From Group', onClick: removePost, red: true }
+      { icon: 'Pin', label: pinned ? t('Unpin') : t('Pin'), onClick: pinPost },
+      { icon: 'Edit', label: t('Edit'), onClick: editPost },
+      { icon: 'Copy', label: t('Copy Link'), onClick: copyLink },
+      { icon: 'Flag', label: t('Flag'), onClick: this.flagPostFunc() },
+      { icon: 'Trash', label: t('Delete'), onClick: () => deletePost(t('Are you sure you want to delete this post?')), red: true },
+      { icon: 'Trash', label: t('Remove From Group'), onClick: removePost, red: true }
     ], item => isFunction(item.onClick))
 
     const typesWithTimes = ['offer', 'request', 'resource', 'project']
@@ -88,12 +92,12 @@ export default class PostHeader extends PureComponent {
     const locale = 'en' /* TODO: Update with locale, once locale becomes available */
 
     // If it was completed/fulfilled before it ended, then use that as the end datetime
-    let actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
+    const actualEndTime = fulfilledAt && fulfilledAt < endTime ? fulfilledAt : endTime
 
     const { from, to } = TextHelpers.formatDatePair(locale, startTime, actualEndTime, true)
     const startString = fulfilledAt ? false
-      : TextHelpers.isDateInTheFuture(startTime) ? `Starts: ${from}`
-        : TextHelpers.isDateInTheFuture(endTime) ? `Started: ${from}`
+      : TextHelpers.isDateInTheFuture(startTime) ? t('Starts: {{from}}', { from })
+        : TextHelpers.isDateInTheFuture(endTime) ? t('Started: {{from}}', { from })
           : false
     const endTimeDate = new Date(endTime)
     const endTimeTimestamp = endTimeDate.getTime()
@@ -102,9 +106,9 @@ export default class PostHeader extends PureComponent {
 
     let endString = false
     if (fulfilledAt && fulfilledAt <= endTime) {
-      endString = `Completed: ${to}`
+      endString = t('Completed: {{endTime}}', { endTime: to })
     } else {
-      endString = endTimeTimestamp !== nowTimestamp && TextHelpers.isDateInTheFuture(endTime) ? `Ends: ${to}` : actualEndTime ? `Ended: ${to}` : false
+      endString = endTimeTimestamp !== nowTimestamp && TextHelpers.isDateInTheFuture(endTime) ? t('Ends: {{endTime}}', { endTime: to }) : actualEndTime ? t('Ended: {{endTime}}', { endTime: to }) : false
     }
 
     let timeWindow = ''
@@ -118,71 +122,93 @@ export default class PostHeader extends PureComponent {
     }
 
     const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
+    const currentGroup = groups.find(group => group.slug === routeParams.groupSlug)
+    const currentGroupId = currentGroup && currentGroup.id
+    const badges = (currentGroupId && creator.groupRoles?.filter(role => role.groupId === currentGroupId)) || []
+    const creatorIsModerator = creator.moderatedGroupMemberships?.find(moderatedMembership => moderatedMembership.groupId === currentGroupId)
 
-    return <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
-      <div styleName='headerMainRow'>
-        <div styleName='headerTopRow'>
-          <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
-          <div styleName='headerText'>
-            <Highlight {...highlightProps}>
-              <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
-            </Highlight>
-            <div styleName='timestampRow'>
-              <span styleName='timestamp'>
-                {TextHelpers.humanDate(createdAt)}
-              </span>
-              {announcement && <span styleName='announcementSection'>
-                <span styleName='announcementSpacer'>•</span>
-                <span data-tip='Announcement' data-for='announcement-tt'>
-                  <Icon name='Announcement' styleName='announcementIcon' />
+    return (
+      <div styleName={cx('header', { constrained }, { detailHasImage })} className={className}>
+        <div styleName='headerMainRow'>
+          <div styleName='headerTopRow'>
+            <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' />
+            <div styleName='headerText'>
+              <Highlight {...highlightProps}>
+                <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
+              </Highlight>
+              <div styleName='badgeRow'>
+                {creatorIsModerator && (
+                  <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} id={id} />
+                )}
+                {badges.map(badge => (
+                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+                ))}
+              </div>
+              <div styleName='timestampRow'>
+                <span styleName='timestamp'>
+                  {TextHelpers.humanDate(createdAt)}
                 </span>
-              </span>}
+                {announcement && <span styleName='announcementSection'>
+                  <span styleName='announcementSpacer'>•</span>
+                  <span data-tip='Announcement' data-for='announcement-tt'>
+                    <Icon name='Announcement' styleName='announcementIcon' />
+                  </span>
+                </span>}
+              </div>
+            </div>
+            <div styleName='upperRight'>
+              {pinned && <Icon name='Pin' styleName='pinIcon' />}
+              {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type='completed' styleName='label' /></div>}
+              {type && <PostLabel type={type} styleName='label' />}
+              {dropdownItems.length > 0 &&
+                <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
+              {close && context &&
+                <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
             </div>
           </div>
-          <div styleName='upperRight'>
-            {pinned && <Icon name='Pin' styleName='pinIcon' />}
-            {fulfilledAt && <div data-tip='Completed' data-for='announcement-tt'><PostLabel type={'completed'} styleName='label' /></div>}
-            {type && <PostLabel type={type} styleName='label' />}
-            {dropdownItems.length > 0 &&
-              <Dropdown toggleChildren={<Icon name='More' />} items={dropdownItems} alignRight />}
-            {close && context &&
-              <a styleName='close' onClick={close}><Icon name='Ex' /></a>}
-          </div>
+          {flaggingVisible &&
+            <FlagContent
+              type='post'
+              linkData={flagPostData}
+              onClose={() => this.setState({ flaggingVisible: false })}
+            />
+          }
         </div>
-        {flaggingVisible && <FlagContent type='post'
-          linkData={flagPostData}
-          onClose={() => this.setState({ flaggingVisible: false })} />
-        }
-      </div>
-      <div styleName={cx('subheader', { hasImage }, { showNormal })} >
-        {topics?.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
-        {canHaveTimes && timeWindow.length > 0 && <div styleName='timeWindow'>
-          {timeWindow}
-        </div>}
-      </div>
-      {canBeCompleted && canEdit && expanded && (
-        <PostCompletion
-          type={type}
-          startTime={startTime}
-          endTime={endTime}
-          isFulfilled={!!fulfilledAt}
-          fulfillPost={fulfillPost}
-          unfulfillPost={unfulfillPost}
-        />
-      )}
+        <div styleName={cx('subheader', { hasImage }, { showNormal })}>
+          {topics?.length > 0 && <TopicsLine topics={topics} slug={routeParams.groupSlug} />}
+          {canHaveTimes && timeWindow.length > 0 && <div styleName='timeWindow'>
+            {timeWindow}
+          </div>}
+        </div>
+        {canBeCompleted && canEdit && expanded && (
+          <PostCompletion
+            type={type}
+            startTime={startTime}
+            endTime={endTime}
+            isFulfilled={!!fulfilledAt}
+            fulfillPost={fulfillPost}
+            unfulfillPost={unfulfillPost}
+          />
+        )}
 
-      <ReactTooltip
-        backgroundColor={'rgba(35, 65, 91, 1.0)'}
-        effect={'solid'}
-        delayShow={0}
-        id='announcement-tt' />
-    </div>
+        <ReactTooltip
+          backgroundColor='rgba(35, 65, 91, 1.0)'
+          effect='solid'
+          delayShow={0}
+          id='announcement-tt'
+        />
+      </div>
+    )
   }
 }
 
 export function TopicsLine ({ topics, slug, newLine }) {
-  return <div styleName={cx('topicsLine', { 'newLineForTopics': newLine })}>
-    {topics.slice(0, 3).map(t =>
-      <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
-  </div>
+  return (
+    <div styleName={cx('topicsLine', { newLineForTopics: newLine })}>
+      {topics.slice(0, 3).map(t =>
+        <Link styleName='topic' to={topicUrl(t.name, { groupSlug: slug })} key={t.name}>#{t.name}</Link>)}
+    </div>
+  )
 }
+
+export default withTranslation()(PostHeader)

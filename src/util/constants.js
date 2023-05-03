@@ -1,12 +1,12 @@
 export const MAX_POST_TOPICS = 3
 
-export const STREAM_SORT_OPTIONS = [
+export const STREAM_SORT_OPTIONS = [ // LOOK UP
   { id: 'updated', label: 'Latest activity' },
   { id: 'created', label: 'Post Date' },
   { id: 'reactions', label: 'Popular' }
 ]
 
-export const COLLECTION_SORT_OPTIONS = [
+export const COLLECTION_SORT_OPTIONS = [ // LOOK UP
   { id: 'order', label: 'Manual' },
   { id: 'updated', label: 'Latest activity' },
   { id: 'created', label: 'Post Date' },
@@ -386,6 +386,14 @@ export const PRODUCT_CATEGORIES = [
   {
     value: 'grains_other',
     label: 'Grains and other row crops'
+  },
+  {
+    value: 'grains',
+    label: 'Grains'
+  },
+  {
+    value: 'other_row_crops',
+    label: 'Other row crops'
   },
   {
     value: 'vegetables',

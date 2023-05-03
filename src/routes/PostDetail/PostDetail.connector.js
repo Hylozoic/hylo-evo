@@ -3,16 +3,17 @@ import { get, find } from 'lodash/fp'
 import { push } from 'connected-react-router'
 import { editPostUrl, removePostFromUrl } from 'util/navigation'
 import fetchPost from 'store/actions/fetchPost'
-import getRouteParam from 'store/selectors/getRouteParam'
-import getPost from 'store/selectors/getPost'
-import presentPost from 'store/presenters/presentPost'
-import getMe from 'store/selectors/getMe'
-import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
 import joinProject from 'store/actions/joinProject'
 import leaveProject from 'store/actions/leaveProject'
 import processStripeToken from 'store/actions/processStripeToken'
 import respondToEvent from 'store/actions/respondToEvent'
+import trackAnalyticsEvent from 'store/actions/trackAnalyticsEvent'
 import { FETCH_POST } from 'store/constants'
+import presentPost from 'store/presenters/presentPost'
+import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
+import getMe from 'store/selectors/getMe'
+import getPost from 'store/selectors/getPost'
+import getRouteParam from 'store/selectors/getRouteParam'
 
 export function mapStateToProps (state, props) {
   // match params
@@ -28,6 +29,7 @@ export function mapStateToProps (state, props) {
     id,
     routeParams,
     post,
+    currentGroup,
     currentUser,
     isProjectMember,
     pending: state.pending[FETCH_POST]
@@ -49,8 +51,20 @@ export function mapDispatchToProps (dispatch, props) {
     joinProject: () => dispatch(joinProject(postId)),
     leaveProject: () => dispatch(leaveProject(postId)),
     processStripeToken: (postId, token, amount) => dispatch(processStripeToken(postId, token, amount)),
-    respondToEvent: response => dispatch(respondToEvent(postId, response))
+    respondToEvent: (post, response) => dispatch(respondToEvent(post, response)),
+    trackAnalyticsEvent: (name, data) => dispatch(trackAnalyticsEvent(name, data))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
+export function mergeProps (stateProps, dispatchProps, ownProps) {
+  const { post } = stateProps
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    respondToEvent: (response) => dispatchProps.respondToEvent(post, response)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)

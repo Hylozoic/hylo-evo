@@ -4,16 +4,33 @@ import isWebView from 'util/webView'
 import { POST_TYPES } from 'store/models/Post'
 import Icon from 'components/Icon'
 import './CreateModal.scss'
+import { useTranslation } from 'react-i18next'
 
 const postTypes = Object.keys(POST_TYPES).filter(t => t !== 'chat')
 
 export default function CreateModalChooser ({ location }) {
   const querystringParams = new URLSearchParams(location.search)
   const hasLocation = querystringParams.has('lat') && querystringParams.has('lng')
+  const { t } = useTranslation()
+  // These need to be invoked here so that they get picked up by the translation extractor
+  t('What help can you offer?')
+  t('What are you looking for help with?')
+  t('What resource is available?')
+  t('What would you like to call your project?')
+  t('What is your event called?')
+  t('Whats on your mind?')
+  t('Add a description')
+  t('request')
+  t('discusion')
+  t('offer')
+  t('resource')
+  t('project')
+  t('event')
+  t('Talk about whats important with others')
 
   return (
     <div styleName='chooser'>
-      <h1>{hasLocation && 'New Post at this location: '}What would you like to create?</h1>
+      <h1>{hasLocation && t('New Post at this location:') + ' '}{t('What would you like to create?')}</h1>
       {postTypes.map(postType => {
         querystringParams.set('newPostType', postType)
 
@@ -26,8 +43,8 @@ export default function CreateModalChooser ({ location }) {
             <div>
               <Icon name={iconName} styleName='postIcon' />
               <b>
-                <span styleName='postTypeName'>{postType}</span>
-                <span styleName='postTypeDescription'>{POST_TYPES[postType].description}</span>
+                <span styleName='postTypeName'>{t(postType)}</span>
+                <span styleName='postTypeDescription'>{t(POST_TYPES[postType].description)}</span>
               </b>
               <span styleName='indicator' />
             </div>
@@ -40,8 +57,8 @@ export default function CreateModalChooser ({ location }) {
           <div key='group'>
             <Icon name='Groups' styleName='postIcon' />
             <b>
-              <span styleName='postTypeName'>Group</span>
-              <span styleName='postTypeDescription'>Create a new movement, network, community or group!</span>
+              <span styleName='postTypeName'>{t('Group')}</span>
+              <span styleName='postTypeDescription'>{t('Create a new movement, network, community or group!')}</span>
             </b>
             <span styleName='indicator' />
           </div>

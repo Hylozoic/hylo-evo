@@ -99,11 +99,21 @@ Object {
       name
       avatarUrl
       tagline
+      groupRoles {
+        id
+        name
+        emoji
+        active
+        groupId
+      }
       locationObject {
         center {
           lat
           lng
         }
+      }
+      moderatedGroupMemberships {
+        groupId
       }
       skills {
         hasMore
@@ -210,6 +220,15 @@ posts: viewPosts(
     id
     name
     avatarUrl
+    groupRoles {
+      name
+      emoji
+      active
+      groupId
+    }
+    moderatedGroupMemberships {
+      groupId
+    }
   }
   createdAt
   updatedAt
@@ -339,6 +358,7 @@ posts: viewPosts(
           "lng": -121.93892409934989,
         },
       ],
+      "childPostInclusion": "yes",
       "context": "groups",
       "filter": undefined,
       "first": 10,
@@ -450,6 +470,7 @@ Object {
           "lng": -121.93892409934989,
         },
       ],
+      "childPostInclusion": "yes",
       "context": "groups",
       "filter": undefined,
       "first": 500,
@@ -561,6 +582,7 @@ Object {
           "lng": -121.93892409934989,
         },
       ],
+      "childPostInclusion": "yes",
       "context": "all",
       "filter": "request",
       "first": 500,

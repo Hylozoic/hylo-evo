@@ -1,7 +1,8 @@
-import { find } from 'lodash/fp'
-import { bool, arrayOf, func, number, shape, string, object } from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation, withTranslation } from 'react-i18next'
+import { find } from 'lodash/fp'
+import { bool, arrayOf, func, number, shape, string, object } from 'prop-types'
 // import CreateTopic from 'components/CreateTopic'
 import { GroupCell } from 'components/GroupsList/GroupsList'
 import Dropdown from 'components/Dropdown'
@@ -13,15 +14,9 @@ import { inflectedTotal } from 'util/index'
 import { topicUrl, baseUrl } from 'util/navigation'
 import './AllTopics.scss'
 
-const sortOptions = [
-  { id: 'name', label: 'Name' },
-  { id: 'num_followers', label: 'Popular' },
-  { id: 'updated_at', label: 'Recent' }
-]
-
 const TOPIC_LIST_ID = 'topic-list'
 
-export default class AllTopics extends Component {
+class AllTopics extends Component {
   state = {
     createTopicModalVisible: false
   }
@@ -73,7 +68,7 @@ export default class AllTopics extends Component {
   }
 
   deleteGroupTopic (groupTopicId) {
-    if (window.confirm('Are you sure you want to delete this groupTopic?')) {
+    if (window.confirm(this.props.t('Are you sure you want to delete this groupTopic?'))) {
       this.props.deleteGroupTopic(groupTopicId)
     }
   }
@@ -95,15 +90,17 @@ export default class AllTopics extends Component {
       fetchMoreTopics,
       fetchIsPending,
       canModerate,
-      toggleGroupTopicSubscribe
+      toggleGroupTopicSubscribe,
+      t
     } = this.props
     const { totalTopicsCached } = this.state
+    const all = t('All')
 
     return (
       <FullPageModal fullWidth goToOnClose={baseUrl({ ...routeParams, view: undefined })}>
         <div styleName='all-topics'>
-          <div styleName='title'>{group ? group.name : 'All'} Topics</div>
-          <div styleName='subtitle'>{totalTopicsCached} Total Topics</div>
+          <div styleName='title'>{t('{{groupName}} Topics', { groupName: group ? group.name : all })}</div>
+          <div styleName='subtitle'>{t('{{totalTopicsCached}} Total Topics', { totalTopicsCached })}</div>
           <div styleName='controls'>
             <SearchBar {...{ search, setSearch, selectedSort, setSort, fetchIsPending }} />
           </div>
@@ -131,6 +128,12 @@ export default class AllTopics extends Component {
 }
 
 export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPending }) {
+  const { t } = useTranslation()
+  const sortOptions = [
+    { id: 'name', label: t('Name') },
+    { id: 'num_followers', label: t('Popular') },
+    { id: 'updated_at', label: t('Recent') }
+  ]
   let selected = find(o => o.id === selectedSort, sortOptions)
 
   if (!selected) selected = sortOptions[0]
@@ -140,7 +143,7 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
       <TextInput
         styleName='search-input'
         value={search}
-        placeholder='Search topics'
+        placeholder={t('Search topics')}
         loading={fetchIsPending}
         noClearButton
         onChange={event => setSearch(event.target.value)}
@@ -165,6 +168,7 @@ export function SearchBar ({ search, setSearch, selectedSort, setSort, fetchIsPe
 
 export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscribe, deleteItem, canModerate }) {
   const { name, groupTopics, postsTotal, followersTotal } = topic
+  const { t } = useTranslation()
   let groupTopicContent
 
   if (singleGroup) {
@@ -179,7 +183,7 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
         {inflectedTotal('post', postsTotal)} • {inflectedTotal('subscriber', followersTotal)} •
         {toggleSubscribe && (
           <span onClick={() => toggleSubscribe(groupTopic)} styleName='topic-subscribe'>
-            {groupTopic.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+            {groupTopic.isSubscribed ? t('Unsubscribe') : t('Subscribe')}
           </span>
         )}
       </div>
@@ -195,7 +199,7 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
           {inflectedTotal('post', ct.postsTotal)} • {inflectedTotal('subscriber', ct.followersTotal)} •
           {toggleSubscribe && (
             <span onClick={() => toggleSubscribe(ct)} styleName='topic-subscribe'>
-              {ct.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+              {ct.isSubscribed ? t('Unsubscribe') : t('Subscribe')}
             </span>
           )}
         </div>
@@ -215,3 +219,5 @@ export function TopicListItem ({ topic, singleGroup, routeParams, toggleSubscrib
     </div>
   )
 }
+
+export default withTranslation()(AllTopics)

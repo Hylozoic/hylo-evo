@@ -6,6 +6,13 @@ import {
   addModerator,
   removeModerator
 } from './ModeratorsSettingsTab.store'
+import {
+  addGroupRole,
+  addRoleToMember,
+  fetchMembersForGroupRole,
+  removeRoleFromMember,
+  updateGroupRole
+} from '../../../store/actions/roles'
 import getPerson from 'store/selectors/getPerson'
 import { includes } from 'lodash/fp'
 
@@ -16,9 +23,13 @@ export function mapStateToProps (state, props) {
     .filter(personId => !includes(personId, moderatorIds))
     .map(personId => getPerson(state, { personId }))
 
+  const rawSuggestions = state.ModeratorsSettings
+    .map(personId => getPerson(state, { personId }))
+
   return {
     moderators,
-    moderatorSuggestions
+    moderatorSuggestions,
+    rawSuggestions
   }
 }
 
@@ -27,9 +38,14 @@ export function mapDispatchToProps (dispatch, props) {
 
   return {
     addModerator: id => dispatch(addModerator(id, groupId)),
-    removeModerator: (id, isRemoveFromGroup) => dispatch(removeModerator(id, groupId, isRemoveFromGroup)),
+    addGroupRole: params => dispatch(addGroupRole(params)),
+    addRoleToMember: params => dispatch(addRoleToMember({ ...params, groupId })),
+    clearModeratorSuggestions: () => dispatch(clearModeratorSuggestions()),
     fetchModeratorSuggestions: autocomplete => dispatch(fetchModeratorSuggestions(groupId, autocomplete)),
-    clearModeratorSuggestions: () => dispatch(clearModeratorSuggestions())
+    fetchMembersForGroupRole: params => dispatch(fetchMembersForGroupRole({ ...params, id: groupId })),
+    removeModerator: (id, isRemoveFromGroup) => dispatch(removeModerator(id, groupId, isRemoveFromGroup)),
+    removeRoleFromMember: params => dispatch(removeRoleFromMember({ ...params, groupId })),
+    updateGroupRole: params => dispatch(updateGroupRole(params))
   }
 }
 

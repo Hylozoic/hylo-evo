@@ -97,6 +97,7 @@ export function mapStateToProps (state, props) {
   // If we know posts are not Chat posts then we load less of them because they take up more space
 
   const fetchPostsPastParams = {
+    childPostInclusion: 'no',
     context,
     cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
     filter: 'chat',
@@ -109,6 +110,7 @@ export function mapStateToProps (state, props) {
   }
 
   const fetchPostsFutureParams = {
+    childPostInclusion: 'no',
     context,
     cursor: groupTopic?.lastReadPostId,
     filter: 'chat',
@@ -187,7 +189,7 @@ export function mapDispatchToProps (dispatch, props) {
       }
     },
     pollingFetchLinkPreviewRaw: url => pollingFetchLinkPreview(dispatch, url),
-    respondToEvent: (postId) => response => dispatch(respondToEvent(postId, response)),
+    respondToEvent: (post) => response => dispatch(respondToEvent(post, response)),
     showDetails: (postId) => dispatch(push(postUrl(postId, routeParams, { ...props.locationParams, ...querystringParams }))),
     toggleGroupTopicSubscribe: groupTopic => dispatch(toggleGroupTopicSubscribe(groupTopic)),
     ...bindActionCreators({

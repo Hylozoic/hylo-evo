@@ -1,6 +1,7 @@
+import { AnalyticsEvents } from 'hylo-shared'
 import { RESPOND_TO_EVENT } from 'store/constants'
 
-export default function respondToEvent (id, response) {
+export default function respondToEvent (post, response) {
   return {
     type: RESPOND_TO_EVENT,
     graphql: {
@@ -9,12 +10,17 @@ export default function respondToEvent (id, response) {
           success
         }
       }`,
-      variables: { id, response }
+      variables: { id: post.id, response }
     },
     meta: {
-      id,
+      id: post.id,
       response,
-      optimistic: true
+      optimistic: true,
+      analytics: {
+        eventName: AnalyticsEvents.EVENT_RSVP,
+        groupId: post.groups.map(g => g.id),
+        response
+      }
     }
   }
 }

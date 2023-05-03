@@ -9,11 +9,13 @@ Object {
   "onClose": [Function],
   "processStripeToken": [Function],
   "respondToEvent": [Function],
+  "trackAnalyticsEvent": [Function],
 }
 `;
 
 exports[`mapStateToProps returns the right keys 1`] = `
 Object {
+  "currentGroup": null,
   "currentUser": undefined,
   "id": undefined,
   "isProjectMember": undefined,

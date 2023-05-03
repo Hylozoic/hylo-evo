@@ -18,6 +18,7 @@ Object {
                 dmNotifications
                 commentNotifications
                 signupInProgress
+                locale
                 streamChildPosts
                 streamViewMode
                 streamSortBy
@@ -33,6 +34,9 @@ Object {
     },
   },
   "meta": Object {
+    "analytics": Object {
+      "eventName": "Registered",
+    },
     "extractModel": Array [
       Object {
         "getRoot": [Function],

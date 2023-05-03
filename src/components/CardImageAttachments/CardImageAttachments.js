@@ -19,16 +19,14 @@ export default function CardImageAttachments ({
   if (!firstImageUrl) return null
 
   return (
-    <div style={bgImageStyle(firstImageUrl)} className={className} styleName='image'>
-      <div>
-        {linked && <a href={firstImageUrl} target='_blank' rel='noreferrer' styleName='link'>&nbsp;</a>}
-        <div styleName='others'>
-          <div styleName='others-inner'>
-            {!isEmpty(otherImageUrls) && otherImageUrls.map(url =>
-              <a href={url} styleName='other' target='_blank' rel='noreferrer' key={url}>
-                <div style={bgImageStyle(url)} />
-              </a>)}
-          </div>
+    <div className={className} styleName='image'>
+      {linked ? <a href={firstImageUrl} target='_blank' rel='noreferrer'><img src={firstImageUrl} /></a> : <img src={firstImageUrl} />}
+      <div styleName='others'>
+        <div styleName='others-inner'>
+          {!isEmpty(otherImageUrls) && otherImageUrls.map(url =>
+            <a href={url} styleName='other' target='_blank' rel='noreferrer' key={url}>
+              <div style={bgImageStyle(url)} />
+            </a>)}
         </div>
       </div>
     </div>

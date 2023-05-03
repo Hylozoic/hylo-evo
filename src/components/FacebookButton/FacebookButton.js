@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import Icon from 'components/Icon'
 import './FacebookButton.scss'
@@ -8,7 +9,8 @@ export default function FacebookButton ({
   signUp,
   className = ''
 }) {
-  const label = 'Continue with Facebook'
+  const { t } = useTranslation()
+  const label = t('Continue with Facebook')
 
   return <a
     aria-label={label}

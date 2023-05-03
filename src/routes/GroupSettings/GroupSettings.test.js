@@ -2,6 +2,18 @@ import GroupSettings from './GroupSettings'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 it('renders correctly with no group', () => {
   const wrapper = shallow(<GroupSettings fetchGroupSettings={jest.fn()} />)
   expect(wrapper).toMatchSnapshot()

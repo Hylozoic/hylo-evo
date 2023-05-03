@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { DateTime } from 'luxon'
 import { isEmpty } from 'lodash/fp'
@@ -44,6 +45,7 @@ const PostListRow = (props) => {
   const numOtherCommentors = commentersTotal - 1
   const unread = false
   const startTime = DateTime.fromISO(post.startTime)
+  const { t } = useTranslation()
 
   return (
     <div styleName={cx('post-row', { unread, expanded })} onClick={showDetails}>
@@ -60,7 +62,7 @@ const PostListRow = (props) => {
               <Avatar avatarUrl={creator.avatarUrl} url={creatorUrl} styleName='avatar' tiny />
               {creator.name} {
                 numOtherCommentors > 1
-                  ? (<span> and <strong>{numOtherCommentors} others</strong></span>)
+                  ? (<span> {t('and')} <strong>{numOtherCommentors} {t('others')}</strong></span>)
                   : null
               }
             </div> }
@@ -68,10 +70,9 @@ const PostListRow = (props) => {
           {childPost &&
             <div
               styleName='icon-container'
-              data-tip='Post from child group'
+              data-tip={t('Post from child group')}
               data-for='childgroup-tt'
             >
-              {/* TODO: i18n on tooltip */}
               <Icon
                 name='Subgroup'
                 styleName='icon'
@@ -96,8 +97,7 @@ const PostListRow = (props) => {
         <HyloHTML styleName='details' html={details} />
         <div styleName='reactions'>
           <EmojiRow
-            {...post}
-            postId={post.id}
+            post={post}
             currentUser={currentUser}
           />
         </div>

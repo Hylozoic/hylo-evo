@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { newMessageUrl } from 'util/navigation'
 import useRouter from 'hooks/useRouter'
@@ -23,9 +24,64 @@ export default function OpportunitiesToCollaborateWidget () {
 }
 
 export function OpportunityToCollaborate ({ group, opportunity }) {
+  const { t } = useTranslation()
+  const promptLookup = { // TODO: Can we figure out a way to reduce duplication here?
+    research: t('research projects'),
+    events: t('event collaboration'),
+    volunteering: t('volunteer opportunities'),
+    mentorship: t('mentorship & advice'),
+    cooperative: t('cooperatives'),
+    buy: t('purchasing from you'),
+    markets: t('new markets'),
+    ecosystem_service_markets: t('ecosystem services'),
+    loans: t('low-cost loans'),
+    support: t('farm support'),
+    equipment_sharing: t('equipment sharing'),
+    increase_sales: t('increasing sales'),
+    communication: t('helping with your communication & marketing'),
+    new_products_methods: t('introducing new methods & practices'),
+    carbon: t('carbon markets'),
+    environmental_impact: t('environmental impact'),
+    benchmarking: t('benchmarking your farm'),
+    insetting: t('insetting'),
+    reduce_risk: t('hazard risk mitigation'),
+    farm_valuation: t('farm valuation'),
+    certifications: t('certifications'),
+    food_nutrition: t('nutrient density'),
+    biodiversity: t('biodiversity'),
+    product_quality: t('product quality'),
+    animal_welfare: t('animal welfare')
+  }
+  const collabTitle = {
+    research: t('Research projects'),
+    events: t('Event collaboration'),
+    volunteering: t('Volunteer opportunities'),
+    mentorship: t('Mentorship & advice'),
+    cooperative: t('Cooperatives'),
+    buy: t('Buy from us'),
+    markets: t('New markets'),
+    ecosystem_service_markets: t('Ecosystem services'),
+    loans: t('Low-cost loans'),
+    support: t('Farm support'),
+    equipment_sharing: t('Equipment sharing'),
+    increase_sales: t('Increasing sales'),
+    communication: t('Communication & marketing'),
+    new_products_methods: t('New methods & practices'),
+    carbon: t('Carbon markets'),
+    environmental_impact: t('Environmental impact'),
+    benchmarking: t('Benchmarking'),
+    insetting: t('Insetting'),
+    reduce_risk: t('Hazard risk mitigation'),
+    farm_valuation: t('Farm valuation'),
+    certifications: t('Certifications'),
+    food_nutrition: t('Nutrient density'),
+    biodiversity: t('Biodiversity'),
+    product_quality: t('Product quality'),
+    animal_welfare: t('Animal welfare')
+  }
   const currentUser = useSelector(state => getMe(state))
   const { push } = useRouter()
-  const prompt = `Hi there ${group.name}, I'd like to talk about ${promptLookup[opportunity]}.`
+  const prompt = t(`Hi there {{groupName}}, I'd like to talk about {{prompt}}.`, { groupName: group.name, prompt: promptLookup[opportunity] })
   const goToGroupModeratorsMessage = useCallback(() => {
     push(
       `${newMessageUrl()}?participants=${group.moderators.map(m => m.id).join(',')}&prompt=${encodeURIComponent(prompt)}`
@@ -51,91 +107,35 @@ export function OpportunityToCollaborate ({ group, opportunity }) {
   )
 }
 
-const collabTitle = {
-  research: 'Research projects',
-  events: 'Event collaboration',
-  volunteering: 'Volunteer opportunities',
-  mentorship: 'Mentorship & advice',
-  cooperative: 'Cooperatives',
-  buy: 'Buy from us',
-  markets: 'New markets',
-  ecosystem_service_markets: 'Ecosystem services',
-  loans: 'Low-cost loans',
-  support: 'Farm support',
-  equipment_sharing: 'Equipment sharing',
-  increase_sales: 'Increasing sales',
-  communication: 'Communication & marketing',
-  new_products_methods: 'New methods & practices',
-  carbon: 'Carbon markets',
-  environmental_impact: 'Environmental impact',
-  benchmarking: 'Benchmarking',
-  insetting: 'Insetting',
-  reduce_risk: 'Hazard risk mitigation',
-  farm_valuation: 'Farm valuation',
-  certifications: 'Certifications',
-  food_nutrition: 'Nutrient density',
-  biodiversity: 'Biodiversity',
-  product_quality: 'Product quality',
-  animal_welfare: 'Animal welfare'
-}
-
 const collabText = (group) => {
+  const { t } = useTranslation()
   return {
-    research: `${group.name} is available to participate in research`,
-    events: `${group.name} is open to co-hosting events`,
-    volunteering: `${group.name} has some volunteering opportunities`,
-    mentorship: `Contact ${group.name} to learn about their practices`,
-    cooperative: `${group.name} is interested in forming a cooperative`,
-    buy: `Buy from ${group.name}`,
-    markets: `${group.name} is seeking new markets`,
-    ecosystem_service_markets: `${group.name} is seeking ecosystem services`,
-    loans: `${group.name} is interested in low-cost loans`,
-    support: `${group.name} is seeking farm support`,
-    equipment_sharing: `${group.name} is interested in equipment sharing`,
-    increase_sales: `${group.name} is interested in increasing their sales`,
-    communication: `${group.name} seeks better communication / marketing to their buyers`,
-    new_products_methods: `${group.name} wants to learn about new methods or practices`,
-    carbon: `${group.name} is interested in carbon markets`,
-    environmental_impact: `${group.name} is curious about better understanding their farm through data (soil, environmental impacts, etc.)`,
-    benchmarking: `${group.name} wants to comparing my farm to others`,
-    insetting: `${group.name} wants to easily provide data to supply chain partners`,
-    reduce_risk: `${group.name} wants to reduce hazard risk (fire, flood, drought, etc.)`,
-    farm_valuation: `${group.name} wants to increase their farm valuation`,
-    certifications: `${group.name} is curious about further certification (organic, ISO, regenerative, etc.)`,
-    food_nutrition: `${group.name} is curious about understanding the nutrient density of their product`,
-    biodiversity: `${group.name} wants help focusing on biodiversity (protecting species, improving ecology, markets)`,
-    product_quality: `${group.name} wants to improve product quality`,
-    animal_welfare: `${group.name} wants to ensure animal welfare`
+    research: t(`{{group.name}} is available to participate in research`, { group }),
+    events: t(`{{group.name}} is open to co-hosting events`, { group }),
+    volunteering: t(`{{group.name}} has some volunteering opportunities`, { group }),
+    mentorship: t(`Contact {{group.name}} to learn about their practices`, { group }),
+    cooperative: t(`{{group.name}} is interested in forming a cooperative`, { group }),
+    buy: t(`Buy from {{group.name}}`, { group }),
+    markets: t(`{{group.name}} is seeking new markets`, { group }),
+    ecosystem_service_markets: t(`{{group.name}} is seeking ecosystem services`, { group }),
+    loans: t(`{{group.name}} is interested in low-cost loans`, { group }),
+    support: t(`{{group.name}} is seeking farm support`, { group }),
+    equipment_sharing: t(`{{group.name}} is interested in equipment sharing`, { group }),
+    increase_sales: t(`{{group.name}} is interested in increasing their sales`, { group }),
+    communication: t(`{{group.name}} seeks better communication / marketing to their buyers`, { group }),
+    new_products_methods: t(`{{group.name}} wants to learn about new methods or practices`, { group }),
+    carbon: t(`{{group.name}} is interested in carbon markets`, { group }),
+    environmental_impact: t(`{{group.name}} is curious about better understanding their farm through data (soil, environmental impacts, etc.)`, { group }),
+    benchmarking: t(`{{group.name}} wants to comparing my farm to others`, { group }),
+    insetting: t(`{{group.name}} wants to easily provide data to supply chain partners`, { group }),
+    reduce_risk: t(`{{group.name}} wants to reduce hazard risk (fire, flood, drought, etc.)`, { group }),
+    farm_valuation: t(`{{group.name}} wants to increase their farm valuation`, { group }),
+    certifications: t(`{{group.name}} is curious about further certification (organic, ISO, regenerative, etc.)`, { group }),
+    food_nutrition: t(`{{group.name}} is curious about understanding the nutrient density of their product`, { group }),
+    biodiversity: t(`{{group.name}} wants help focusing on biodiversity (protecting species, improving ecology, markets)`, { group }),
+    product_quality: t(`{{group.name}} wants to improve product quality`, { group }),
+    animal_welfare: t(`{{group.name}} wants to ensure animal welfare`, { group })
   }
-}
-
-// XXX: flag for internationalization/translation
-const promptLookup = {
-  research: 'research projects',
-  events: 'event collaboration',
-  volunteering: 'volunteer opportunities',
-  mentorship: 'mentorship & advice',
-  cooperative: 'cooperatives',
-  buy: 'purchasing from you',
-  markets: 'new markets',
-  ecosystem_service_markets: 'ecosystem services',
-  loans: 'low-cost loans',
-  support: 'farm support',
-  equipment_sharing: 'equipment sharing',
-  increase_sales: 'increasing sales',
-  communication: 'helping with your communication & marketing',
-  new_products_methods: 'introducing new methods & practices',
-  carbon: 'carbon markets',
-  environmental_impact: 'environmental impact',
-  benchmarking: 'benchmarking your farm',
-  insetting: 'insetting',
-  reduce_risk: 'hazard risk mitigation',
-  farm_valuation: 'farm valuation',
-  certifications: 'certifications',
-  food_nutrition: 'nutrient density',
-  biodiversity: 'biodiversity',
-  product_quality: 'product quality',
-  animal_welfare: 'animal welfare'
 }
 
 const determineIcon = (opportunity) => {

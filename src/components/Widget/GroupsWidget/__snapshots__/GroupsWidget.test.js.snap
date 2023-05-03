@@ -49,6 +49,7 @@ exports[`GroupsWidget renders correctly (with min props) 1`] = `
           "slug": "group one",
         }
       }
+      t={[Function]}
     >
       <div
         data-stylename="groups"
@@ -331,6 +332,7 @@ exports[`GroupsWidget renders correctly with items 1`] = `
           "slug": "group one",
         }
       }
+      t={[Function]}
     >
       <div
         data-stylename="groups"
@@ -585,7 +587,8 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                   data-stylename="member-count"
                                 >
                                   1
-                                   member
+                                   
+                                  member
                                 </div>
                                 <div
                                   data-stylename="group-description"
@@ -722,8 +725,8 @@ exports[`GroupsWidget renders correctly with items 1`] = `
                                   data-stylename="member-count"
                                 >
                                   10
-                                   member
-                                  s
+                                   
+                                  member
                                 </div>
                                 <div
                                   data-stylename="group-description"

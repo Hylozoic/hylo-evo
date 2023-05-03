@@ -12,6 +12,14 @@ jest.mock('lodash/debounce', () => fn => {
 const expectedNow = DateTime.local(2022, 6, 1, 23, 0, 0, { locale: 'en', zone: 'utc' }).toMillis()
 Settings.now = () => expectedNow
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('PostEditor', () => {
   const baseProps = {}
 
@@ -33,22 +41,11 @@ describe('PostEditor', () => {
       const props = {
         ...baseProps,
         initialPrompt: 'a test prompt',
-        titlePlaceholderForPostType: {
-          default: 'a test title placeholder'
-        },
-        detailsPlaceholder: 'details placeholder'
       }
       const wrapper = shallow(<PostEditor {...props} />)
       expect(wrapper).toMatchSnapshot()
     })
 
-    const titlePlaceholderForPostType = {
-      discussion: 'discussion placeholder',
-      request: 'request placeholder',
-      offer: 'offer placeholder',
-      resource: 'resource placeholder',
-      default: 'default placeholder'
-    }
     const renderForType = (type) => {
       const props = {
         ...baseProps,
@@ -57,8 +54,7 @@ describe('PostEditor', () => {
           startTime: new Date(1551908483315),
           endTime: new Date(1551908483315),
           groups: []
-        },
-        titlePlaceholderForPostType
+        }
       }
       return shallow(<PostEditor {...props} />)
     }

@@ -3,6 +3,14 @@ import { shallow } from 'enzyme'
 import EventBody from './EventBody'
 import { DateTime } from 'luxon'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('EventBody', () => {
   it.skip('matches last snapshot', () => {
     const event = {

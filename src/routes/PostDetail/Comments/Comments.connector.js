@@ -1,14 +1,14 @@
-import { connect } from 'react-redux'
-import getMe from 'store/selectors/getMe'
 import { isEmpty } from 'lodash/fp'
+import { connect } from 'react-redux'
+import createComment from 'store/actions/createComment'
 import fetchComments from 'store/actions/fetchComments'
+import { FETCH_COMMENTS } from 'store/constants'
 import {
   getComments,
   getHasMoreComments,
   getTotalComments
 } from 'store/selectors/getComments'
-import createComment from 'store/actions/createComment'
-import { FETCH_COMMENTS } from 'store/constants'
+import getMe from 'store/selectors/getMe'
 
 export function mapStateToProps (state, props) {
   const comments = getComments(state, props)
@@ -17,18 +17,19 @@ export function mapStateToProps (state, props) {
   return {
     commentsPending,
     comments,
-    total: getTotalComments(state, { id: props.postId }),
-    hasMore: getHasMoreComments(state, { id: props.postId }),
-    currentUser: getMe(state)
+    currentUser: getMe(state),
+    hasMore: getHasMoreComments(state, { id: props.post.id }),
+    total: getTotalComments(state, { id: props.post.id })
   }
 }
 
 export const mapDispatchToProps = (dispatch, props) => {
-  const { postId, scrollToBottom } = props
+  const { post, scrollToBottom } = props
+
   return {
-    fetchCommentsMaker: cursor => () => dispatch(fetchComments(postId, { cursor })),
+    fetchCommentsMaker: cursor => () => dispatch(fetchComments(post.id, { cursor })),
     createComment: async commentParams => {
-      await dispatch(createComment({ postId, ...commentParams }))
+      await dispatch(createComment({ post, ...commentParams }))
       scrollToBottom()
     }
   }
@@ -38,6 +39,7 @@ export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const { comments } = stateProps
   const { fetchCommentsMaker } = dispatchProps
   const cursor = !isEmpty(comments) && comments[0].id
+
   const fetchComments = fetchCommentsMaker(cursor)
   return {
     ...ownProps,

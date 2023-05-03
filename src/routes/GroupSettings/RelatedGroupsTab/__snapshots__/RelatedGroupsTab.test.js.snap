@@ -43,10 +43,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
     <div
       data-stylename="subtitle"
     >
-      These are the 3 groups
-       that 
-      Best Group
-       is a member of
+      These are the {{length}} groups that {{group.name}} is a member of
     </div>
     <div
       data-stylename="group-list"
@@ -149,9 +146,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
           data-stylename="connect-icon"
           name="Handshake"
         />
-        Join 
-        Best Group
-         to another group
+        Join {{group.name}} to another group
       </div>
       <span
         data-stylename="connect-label"
@@ -169,9 +164,7 @@ exports[`RelatedGroupstab renders correctly 1`] = `
     <div
       data-stylename="subtitle"
     >
-      These 3 groups are members
-       of 
-      Best Group
+      These {{childGroups.length}} groups are members of {{group.name}}
     </div>
     <div
       data-stylename="group-list"
@@ -274,7 +267,8 @@ exports[`RelatedGroupstab renders correctly 1`] = `
           data-stylename="connect-icon"
           name="Handshake"
         />
-        Invite a group to join 
+        Invite a group to join
+         
         <strong>
           Best Group
         </strong>

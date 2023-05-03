@@ -23,4 +23,6 @@ if (!process.env.CI && argv.indexOf('--coverage') < 0) {
 // Disable cache if it's causing problems (will make Jest much slower).
 // argv.push('--no-cache')
 
+argv.push('--runInBand') // Needed to speed up test run times in docker and CI envs
+
 jest.run(argv)

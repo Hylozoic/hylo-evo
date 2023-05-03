@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { DEFAULT_AVATAR } from 'store/models/Group'
 import Icon from 'components/Icon'
@@ -10,7 +11,7 @@ import { groupDetailUrl, groupUrl } from 'util/navigation'
 
 import './LandingPage.scss'
 
-export default class LandingPage extends Component {
+class LandingPage extends Component {
   static propTypes = {
     group: PropTypes.object
   }
@@ -31,7 +32,7 @@ export default class LandingPage extends Component {
       <div>
         <div styleName='banner' style={{ backgroundImage: `url(${group.bannerUrl})` }}>
           <div styleName='right'>
-            <Link styleName='about' to={isAboutOpen ? groupUrl(group.slug, 'explore') : groupDetailUrl(group.slug, { context: 'groups', view: 'explore', groupSlug: group.slug })}><Icon name='Info' />About us</Link>
+            <Link styleName='about' to={isAboutOpen ? groupUrl(group.slug, 'explore') : groupDetailUrl(group.slug, { context: 'groups', view: 'explore', groupSlug: group.slug })}><Icon name='Info' />{this.props.t('About us')}</Link>
           </div>
 
           <div styleName='title'>
@@ -58,3 +59,5 @@ export default class LandingPage extends Component {
     )
   }
 }
+
+export default withTranslation()(LandingPage)

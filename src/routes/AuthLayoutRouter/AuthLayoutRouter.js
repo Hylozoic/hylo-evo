@@ -10,6 +10,7 @@ import cx from 'classnames'
 import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
 import isWebView from 'util/webView'
+import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
@@ -125,8 +126,24 @@ export default function AuthLayoutRouter (props) {
         $email: currentUser.email,
         $location: currentUser.location
       })
+
+      if (currentUser?.settings?.locale) localeLocalStorageSync(currentUser?.settings?.locale)
     }
   }, [currentUser?.id])
+
+  useEffect(() => {
+    // Add all current group membershps to mixpanel user
+    mixpanel.set_group('groupId', memberships.map(m => m.group.id))
+
+    if (currentGroup?.id) {
+      // Setup group profile info
+      mixpanel.get_group('groupId', currentGroup.id).set({
+        $location: currentGroup.location,
+        $name: currentGroup.name,
+        type: currentGroup.type
+      })
+    }
+  }, [currentGroup?.id])
 
   useEffect(() => {
     (async function () {
@@ -200,7 +217,7 @@ export default function AuthLayoutRouter (props) {
   return (
     <IntercomProvider appId={isTest ? '' : config.intercom.appId} autoBoot autoBootProps={intercomProps}>
       <Helmet>
-        <title>Hylo{currentGroup ? `: ${currentGroup.name}` : ''}</title>
+        <title>{currentGroup ? `${currentGroup.name} | ` : ''}Hylo</title>
         <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
       </Helmet>
       {/* Redirects for switching into global contexts, since these pages don't exist yet */}
@@ -350,7 +367,7 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/${POST_DETAIL_MATCH}`} component={PostDetail} />
               {/* **** My Routes **** */}
               <Route path='/:context(my)/:view(mentions|interactions|posts|announcements)' component={Stream} />
-              <RedirectRoute exact path='/my' to='/my/mentions' />
+              <RedirectRoute exact path='/my' to='/my/posts' />
               {/* **** Other Routes **** */}
               <Route path='/welcome' component={WelcomeWizardRouter} />
               <Route path='/messages/:messageThreadId?' render={routeProps => <Messages {...routeProps} />} />

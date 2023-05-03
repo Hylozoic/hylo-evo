@@ -3,10 +3,19 @@ import { DateTime, Settings } from 'luxon'
 import { shallow } from 'enzyme'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 const creator = {
   name: 'JJ',
   avatarUrl: 'foo.png',
-  id: 123
+  id: 123,
+  moderatedGroupMemberships: []
 }
 const context = {
   label: 'some context',
@@ -52,6 +61,8 @@ it('matches announcement snapshot', () => {
 it('displays fulfilledAt time if it is before endTime', () => {
   Settings.now = () => expectedNow
   fulfilledAt = '2095-11-29T00:00:00.000Z'
+  const startTime = '2020-11-29'
+  const endTime = '2029-11-29'
 
   const wrapper = shallow(<PostHeader groups={groups} creator={creator} fulfilledAt={fulfilledAt} startTime={startTime} endTime={endTime} />)
   expect(wrapper).toMatchSnapshot()

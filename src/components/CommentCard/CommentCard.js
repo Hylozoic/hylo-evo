@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import RoundImage from 'components/RoundImage'
 import { TextHelpers } from 'hylo-shared'
@@ -19,6 +20,7 @@ export default function CommentCard ({
   const postTitle = post.title ? TextHelpers.truncateText(post.title, 25) : TextHelpers.truncateHTML(post.details, 25)
 
   const commentText = expanded ? comment.text : TextHelpers.truncateHTML(comment.text, 144)
+  const { t } = useTranslation()
 
   return (
     <span onClick={() => showDetails(comment.post.id)} styleName='link'>
@@ -27,7 +29,7 @@ export default function CommentCard ({
           <RoundImage url={creator.avatarUrl} styleName='profileImage' />
           <Highlight {...highlightProps}>
             <div styleName='comment-meta'>
-              <span styleName='person-name'>{creator.name}</span> commented on&nbsp;
+              <span styleName='person-name'>{creator.name}</span> {t('commented on')}{' '}
               <span styleName='post-title'>{postTitle}</span>
             </div>
           </Highlight>

@@ -2,7 +2,6 @@ import { get, isString, isObject, omit } from 'lodash/fp'
 import mixpanel from 'mixpanel-browser'
 import { getAuthenticated } from '../selectors/getAuthState'
 import getMe from '../selectors/getMe'
-import { isDev } from 'config'
 
 export default function mixpanelMiddleware (store) {
   return next => action => {
@@ -14,7 +13,7 @@ export default function mixpanelMiddleware (store) {
       // a required key).
       const state = store.getState()
 
-      if (isDev || !mixpanel) return next(action)
+      if (!process.env.MIXPANEL_TOKEN || !mixpanel) return next(action)
 
       const isLoggedIn = getAuthenticated(state)
       const { analytics } = meta

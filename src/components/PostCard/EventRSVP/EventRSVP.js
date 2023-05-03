@@ -1,29 +1,31 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import './EventRSVP.scss'
 import DropdownButton from 'components/DropdownButton'
 import { RESPONSES } from 'store/models/EventInvitation'
 
 export default function EventRSVP ({ myEventResponse, respondToEvent, position }) {
+  const { t } = useTranslation()
   var label
 
   switch (myEventResponse) {
     case RESPONSES.YES:
-      label = 'Going'
+      label = t('Going')
       break
     case RESPONSES.INTERESTED:
-      label = 'Interested'
+      label = t('Interested')
       break
     case RESPONSES.NO:
-      label = 'Not Going'
+      label = t('Not Going')
       break
     default:
-      label = 'RSVP'
+      label = t('RSVP')
   }
 
   const choices = [
-    { label: 'Going', value: RESPONSES.YES },
-    { label: 'Interested', value: RESPONSES.INTERESTED },
-    { label: 'Not Going', value: RESPONSES.NO }
+    { label: t('Going'), value: RESPONSES.YES },
+    { label: t('Interested'), value: RESPONSES.INTERESTED },
+    { label: t('Not Going'), value: RESPONSES.NO }
   ]
 
   return <div styleName='eventRSVP'>

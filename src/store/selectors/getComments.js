@@ -21,7 +21,7 @@ const normaliseCommentModel = post => comment => ({
 
 export const getComments = createSelector(
   state => orm.session(state.orm),
-  (_, props) => props.postId,
+  (_, props) => props.postId || props.post?.id,
   ({ Post }, id) => {
     const post = Post.withId(id)
     if (!post) return []

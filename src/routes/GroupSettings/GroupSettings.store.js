@@ -94,6 +94,16 @@ export function fetchGroupSettings (slug) {
               type
             }
           }
+          groupRoles {
+            items {
+              active
+              id
+              emoji
+              color
+              name
+              description
+            }
+          }
           groupToGroupJoinQuestions {
             items {
               id

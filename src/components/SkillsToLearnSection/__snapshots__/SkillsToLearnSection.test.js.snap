@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`shows basic pills 1`] = `
-<SkillsSection
-  editable={true}
+<withI18nextTranslation(SkillsSection)
   fetchMemberSkills={[MockFunction]}
   label="Add a skill you want to learn"
   placeholder="What skills do you want to learn?"
@@ -22,8 +21,7 @@ exports[`shows basic pills 1`] = `
 `;
 
 exports[`shows editable fields when isMe = true 1`] = `
-<SkillsSection
-  editable={true}
+<withI18nextTranslation(SkillsSection)
   fetchMemberSkills={[MockFunction]}
   isMe={true}
   label="Add a skill you want to learn"

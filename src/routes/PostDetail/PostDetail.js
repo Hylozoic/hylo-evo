@@ -1,10 +1,11 @@
-import cx from 'classnames'
 import React, { Component } from 'react'
 import ReactResizeDetector from 'react-resize-detector'
+import { withTranslation, useTranslation } from 'react-i18next'
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { get, throttle } from 'lodash/fp'
 import { Helmet } from 'react-helmet'
-import { TextHelpers } from 'hylo-shared'
+import { AnalyticsEvents, TextHelpers } from 'hylo-shared'
 import { DETAIL_COLUMN_ID, position } from 'util/scrolling'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import CardImageAttachments from 'components/CardImageAttachments'
@@ -29,7 +30,7 @@ import './PostDetail.scss'
 // the height of the header plus the padding-top
 const STICKY_HEADER_SCROLL_OFFSET = 70
 const MAX_DETAILS_LENGTH = 144
-export default class PostDetail extends Component {
+class PostDetail extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
     fetchPost: PropTypes.func,
@@ -75,6 +76,17 @@ export default class PostDetail extends Component {
 
   onPostIdChange = () => {
     this.props.fetchPost()
+
+    const post = this.props.post
+    if (post) {
+      this.props.trackAnalyticsEvent(AnalyticsEvents.POST_OPENED, {
+        postId: post.id,
+        groupId: post.groups.map(g => g.id),
+        isPublic: post.isPublic,
+        topics: post.topics?.map(t => t.name),
+        type: post.type
+      })
+    }
   }
 
   handleScroll = throttle(100, event => {
@@ -102,6 +114,7 @@ export default class PostDetail extends Component {
 
   render () {
     const {
+      currentGroup,
       currentUser,
       joinProject,
       isProjectMember,
@@ -111,7 +124,8 @@ export default class PostDetail extends Component {
       processStripeToken,
       respondToEvent,
       routeParams,
-      onClose
+      onClose,
+      t
     } = this.props
     const { atHeader, atActivity, headerWidth, activityWidth } = this.state
 
@@ -144,10 +158,10 @@ export default class PostDetail extends Component {
 
     if (isProject) {
       people = post.members
-      postPeopleDialogTitle = 'Project Members'
+      postPeopleDialogTitle = t('Project Members')
     } else if (isEvent) {
       people = post.eventInvitations
-      postPeopleDialogTitle = 'Responses'
+      postPeopleDialogTitle = t('Responses')
     }
 
     const detailHasImage = post.attachments.find(a => a.type === 'image') || false
@@ -168,9 +182,9 @@ export default class PostDetail extends Component {
           <div styleName={cx('post', { noUser: !currentUser, headerPad: atHeader })}>
             <Helmet>
               <title>
-                {`Hylo: ${post.title || TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)}`}
+                {`${post.title || TextHelpers.presentHTMLToText(post.details, { truncate: 20 })} | Hylo`}
               </title>
-              <meta name='description' content={TextHelpers.truncateHTML(post.details, MAX_DETAILS_LENGTH)} />
+              <meta name='description' content={TextHelpers.presentHTMLToText(post.details, { truncate: MAX_DETAILS_LENGTH })} />
             </Helmet>
             <ScrollListener elementId={DETAIL_COLUMN_ID} onScroll={this.handleScroll} />
             <PostHeader
@@ -227,26 +241,26 @@ export default class PostDetail extends Component {
                 </div>
                 {post.projectManagementLink && projectManagementTool && (
                   <div styleName='project-management-tool'>
-                    <div>This project is being managed on <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
-                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
+                    <div>{t('This project is being managed on')} <img src={`/assets/pm-tools/${projectManagementTool}.svg`} /></div>
+                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>{t('View tasks')}</a></div>
                   </div>
                 )}
                 {post.projectManagementLink && !projectManagementTool && (
                   <div styleName='project-management-tool'>
-                    <div>View project management tool</div>
-                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>View tasks</a></div>
+                    <div>{t('View project management tool')}</div>
+                    <div><a styleName='join-project-button' href={post.projectManagementLink} target='_blank'>{t('View tasks')}</a></div>
                   </div>
                 )}
                 {post.donationsLink && donationService && (
                   <div styleName='donate'>
-                    <div>Support this project on <img src={`/assets/payment-services/${donationService}.svg`} /></div>
-                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                    <div>{t('Support this project on')} <img src={`/assets/payment-services/${donationService}.svg`} /></div>
+                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
                   </div>
                 )}
                 {post.donationsLink && !donationService && (
                   <div styleName='donate'>
-                    <div>Support this project</div>
-                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>Contribute</a></div>
+                    <div>{t('Support this project')}</div>
+                    <div><a styleName='join-project-button' href={post.donationsLink} target='_blank'>{t('Contribute')}</a></div>
                   </div>
                 )}
               </div>
@@ -272,13 +286,14 @@ export default class PostDetail extends Component {
               </div>
             )}
             <Comments
-              postId={post.id}
+              post={post}
               slug={routeParams.groupSlug}
               selectedCommentId={routeParams.commentId}
               scrollToBottom={scrollToBottom}
             />
             {showPeopleDialog && (
               <PostPeopleDialog
+                currentGroup={currentGroup}
                 title={postPeopleDialogTitle}
                 members={people}
                 onClose={togglePeopleDialog}
@@ -293,7 +308,8 @@ export default class PostDetail extends Component {
 }
 
 export function JoinProjectSection ({ currentUser, members, leaving, joinProject, leaveProject, togglePeopleDialog }) {
-  const buttonText = leaving ? 'Leave Project' : 'Join Project'
+  const { t } = useTranslation()
+  const buttonText = leaving ? t('Leave Project') : t('Join Project')
   const onClick = () => leaving ? leaveProject() : joinProject()
 
   return (
@@ -304,10 +320,10 @@ export function JoinProjectSection ({ currentUser, members, leaving, joinProject
         excludePersonId={get('id', currentUser)}
         onClick={togglePeopleDialog}
         phrases={{
-          emptyMessage: 'No project members',
-          phraseSingular: 'is a member',
-          mePhraseSingular: 'are a member',
-          pluralPhrase: 'are members'
+          emptyMessage: t('No project members'),
+          phraseSingular: t('is a member'),
+          mePhraseSingular: t('are a member'),
+          pluralPhrase: t('are members')
         }}
       />
       <Button
@@ -320,3 +336,5 @@ export function JoinProjectSection ({ currentUser, members, leaving, joinProject
     </div>
   )
 }
+
+export default withTranslation()(PostDetail)

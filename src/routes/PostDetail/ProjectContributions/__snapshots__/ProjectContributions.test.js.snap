@@ -5,6 +5,7 @@ exports[`ProjectContributions disables button on invalid amount 1`] = `
   postId={123}
   processStripeToken={[MockFunction]}
   stripeKey="anything"
+  t={[Function]}
   totalContributions={321}
 >
   <div
@@ -116,8 +117,7 @@ exports[`ProjectContributions disables button on invalid amount 1`] = `
     <div
       data-stylename="project-contributions-total"
     >
-      Contributions so far: $
-      321
+      Contributions so far: {{totalContributions}}
     </div>
   </div>
 </ProjectContributions>
@@ -137,8 +137,7 @@ exports[`ProjectContributions renders correctly 1`] = `
   <div
     data-stylename="project-contributions-total"
   >
-    Contributions so far: $
-    321
+    Contributions so far: {{totalContributions}}
   </div>
 </div>
 `;
@@ -148,6 +147,7 @@ exports[`ProjectContributions renders error message 1`] = `
   postId={123}
   processStripeToken={[MockFunction]}
   stripeKey="anything"
+  t={[Function]}
   totalContributions={321}
 >
   <div
@@ -182,8 +182,7 @@ exports[`ProjectContributions renders error message 1`] = `
     <div
       data-stylename="project-contributions-total"
     >
-      Contributions so far: $
-      321
+      Contributions so far: {{totalContributions}}
     </div>
   </div>
 </ProjectContributions>
@@ -194,6 +193,7 @@ exports[`ProjectContributions renders received message 1`] = `
   postId={123}
   processStripeToken={[MockFunction]}
   stripeKey="anything"
+  t={[Function]}
   totalContributions={321}
 >
   <div
@@ -207,8 +207,7 @@ exports[`ProjectContributions renders received message 1`] = `
     <div
       data-stylename="project-contributions-total"
     >
-      Contributions so far: $
-      321
+      Contributions so far: {{totalContributions}}
     </div>
   </div>
 </ProjectContributions>

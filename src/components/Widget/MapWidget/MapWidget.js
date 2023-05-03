@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 
 import './MapWidget.scss'
 
 const { array } = PropTypes
 
-export default class MapWidget extends Component {
+class MapWidget extends Component {
   static propTypes = {
     map: array
   }
@@ -13,8 +14,10 @@ export default class MapWidget extends Component {
   render () {
     return (
       <div>
-        Community map
+        {this.props.t('Community map')}
       </div>
     )
   }
 }
+
+export default withTranslation()(MapWidget)

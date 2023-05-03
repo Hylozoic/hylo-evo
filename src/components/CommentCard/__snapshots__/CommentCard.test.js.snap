@@ -28,7 +28,9 @@ exports[`displays image an image attachments 1`] = `
           >
             Joe Smith
           </span>
-           commented on 
+           
+          commented on
+           
           <span
             data-stylename="post-title"
           >
@@ -112,7 +114,9 @@ exports[`matches last snapshot 1`] = `
           >
             Joe Smith
           </span>
-           commented on 
+           
+          commented on
+           
           <span
             data-stylename="post-title"
           >
@@ -182,7 +186,9 @@ exports[`matches last snapshot with different config 1`] = `
           >
             Joe Smith
           </span>
-           commented on 
+           
+          commented on
+           
           <span
             data-stylename="post-title"
           >

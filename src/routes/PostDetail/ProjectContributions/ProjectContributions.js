@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import StripeCheckout from 'react-stripe-checkout'
+import { withTranslation } from 'react-i18next'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput'
 import './ProjectContributions.scss'
 
-export default class ProjectContributions extends Component {
+class ProjectContributions extends Component {
   static defaultProps = {
     stripeKey: process.env.STRIPE_PUBLISHABLE_KEY
   }
@@ -28,7 +29,7 @@ export default class ProjectContributions extends Component {
   }
 
   render () {
-    const { postId, totalContributions, processStripeToken, stripeKey } = this.props
+    const { postId, totalContributions, processStripeToken, stripeKey, t } = this.props
     const { expanded, contributionAmount, received, error } = this.state
 
     const onToken = token => {
@@ -53,17 +54,17 @@ export default class ProjectContributions extends Component {
       contributionAmount > 0
 
     return <div styleName='project-contributions'>
-      {received && <div styleName='success-notification'>Thanks for your contribution!</div>}
-      {error && <div styleName='error-notification'>There was a problem processing your payment. Please check your card details and try again.</div>}
+      {received && <div styleName='success-notification'>{t('Thanks for your contribution!')}</div>}
+      {error && <div styleName='error-notification'>{t('There was a problem processing your payment. Please check your card details and try again.')}</div>}
       {!expanded && !received && <Button
         color='green'
         onClick={this.toggleExpanded}
-        label='Contribute'
+        label={t('Contribute')}
         small
         narrow />}
       {expanded && <div>
         <div styleName='amount-row'>
-          <span styleName='amount-label'>Amount</span>
+          <span styleName='amount-label'>{t('Amount')}</span>
           <TextInput
             onChange={this.setAmount}
             inputRef={input => { this.amountInput = input }}
@@ -72,7 +73,7 @@ export default class ProjectContributions extends Component {
         </div>
         <StripeCheckout
           disabled={!valid}
-          name='Contributing Via Stripe'
+          name={t('Contributing Via Stripe')}
           token={onToken}
           stripeKey={stripeKey}
           amount={Number(contributionAmount)} />
@@ -80,11 +81,13 @@ export default class ProjectContributions extends Component {
           styleName='cancel-button'
           color='gray'
           onClick={this.toggleExpanded}
-          label='Cancel'
+          label={t('Cancel')}
           small
           narrow />
       </div>}
-      <div styleName='project-contributions-total'>Contributions so far: ${totalContributions}</div>
+      <div styleName='project-contributions-total'>{t(`Contributions so far: {{totalContributions}}`, { totalContributions })}</div>
     </div>
   }
 }
+
+export default withTranslation()(ProjectContributions)

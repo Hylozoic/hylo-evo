@@ -11,12 +11,12 @@ exports[`AllTopics matches the latest snapshot 1`] = `
     <div
       data-stylename="title"
     >
-       Topics
+      {{groupName}} Topics
     </div>
     <div
       data-stylename="subtitle"
     >
-       Total Topics
+      {{totalTopicsCached}} Total Topics
     </div>
     <div
       data-stylename="controls"

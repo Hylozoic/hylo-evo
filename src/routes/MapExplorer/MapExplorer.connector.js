@@ -34,7 +34,7 @@ import {
 
 export function presentMember (person, groupId) {
   return {
-    ...pick(['id', 'name', 'avatarUrl', 'locationObject', 'tagline', 'skills'], person.ref),
+    ...pick(['id', 'name', 'avatarUrl', 'groupRoles', 'locationObject', 'moderatedGroupMemberships', 'tagline', 'skills'], person.ref),
     type: 'member',
     skills: person.skills.toModelArray(),
     group: person.memberships.first()
@@ -185,7 +185,7 @@ export function mapDispatchToProps (dispatch, props) {
   const updateUrlFromStore = (params, replace) => {
     const querystringParams = getQuerystringParam(['sortBy', 'search', 'hide', 'topics'], null, props)
 
-    // See if we need to udpate the URL to match the new filters in the redux store
+    // See if we need to update the URL to match the new filters in the redux store
     let newQueryParams = { ...pick([ 'search', 'sortBy' ], params) }
     if (params.featureTypes) {
       newQueryParams['hide'] = Object.keys(params.featureTypes).filter(type => !params.featureTypes[type])

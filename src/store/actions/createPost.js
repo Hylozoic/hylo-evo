@@ -66,7 +66,11 @@ export default function createPost (postParams) {
       analytics: {
         eventName: AnalyticsEvents.POST_CREATED,
         detailsLength: TextHelpers.textLengthHTML(details),
-        isAnnouncement: sendAnnouncement
+        groupId: groupIds,
+        isAnnouncement: sendAnnouncement,
+        isPublic,
+        topics: topicNames,
+        type
       }
     }
   }
