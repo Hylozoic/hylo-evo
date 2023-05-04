@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash/fp'
 import { TextHelpers } from 'hylo-shared'
 import { personUrl, groupUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
+import BadgeEmoji from 'components/BadgeEmoji'
 import ClickCatcher from 'components/ClickCatcher'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
@@ -31,19 +32,21 @@ export default class GroupSidebar extends Component {
 
     const { description, memberCount, moderatorDescriptorPlural, name, slug } = group
 
-    return <div styleName='group-sidebar'>
-      <SettingsLink canModerate={canModerate} group={group} />
-      {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
-        <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> Invite People</Button>
-      </Link>}
-      <AboutSection name={name} description={description} />
-      <MemberSection
-        members={members}
-        memberCount={memberCount}
-        slug={slug}
-        canModerate={canModerate} />
-      <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} />
-    </div>
+    return (
+      <div styleName='group-sidebar'>
+        <SettingsLink canModerate={canModerate} group={group} />
+        {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
+          <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> Invite People</Button>
+        </Link>}
+        <AboutSection name={name} description={description} />
+        <MemberSection
+          members={members}
+          memberCount={memberCount}
+          slug={slug}
+          canModerate={canModerate} />
+        <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} groupId={group.id} />
+      </div>
+    )
   }
 }
 
@@ -70,28 +73,32 @@ export class AboutSection extends Component {
       expanded = true
     }
 
-    return <div styleName='about-section'>
-      <div styleName='header'>
-        About {name}
+    return (
+      <div styleName='about-section'>
+        <div styleName='header'>
+          About {name}
+        </div>
+        <div styleName={cx('description', { expanded })}>
+          {!expanded && <div styleName='gradient' />}
+          <ClickCatcher>
+            <HyloHTML element='span' html={TextHelpers.markdown(description)} />
+          </ClickCatcher>
+        </div>
+        {showExpandButton && <span styleName='expand-button' onClick={onClick}>
+          {expanded ? 'Show Less' : 'Read More'}
+        </span>}
       </div>
-      <div styleName={cx('description', { expanded })}>
-        {!expanded && <div styleName='gradient' />}
-        <ClickCatcher>
-          <HyloHTML element='span' html={TextHelpers.markdown(description)} />
-        </ClickCatcher>
-      </div>
-      {showExpandButton && <span styleName='expand-button' onClick={onClick}>
-        {expanded ? 'Show Less' : 'Read More'}
-      </span>}
-    </div>
+    )
   }
 }
 
 export function SettingsLink ({ canModerate, group }) {
   if (!canModerate) return null
-  return <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
-    <Icon name='Settings' styleName='settings-icon' /> Group Settings
-  </Link>
+  return (
+    <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
+      <Icon name='Settings' styleName='settings-icon' /> Group Settings
+    </Link>
+  )
 }
 
 export function MemberSection ({ members, memberCount, slug, canModerate }) {
@@ -102,30 +109,42 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
 
   const showTotal = memberCount - members.length > 0
 
-  return <div styleName='member-section'>
-    <Link to={groupUrl(slug, 'members')} styleName='members-link'>
-      <div styleName='header'>Members</div>
-      <div styleName='images-and-count'>
-        <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
-        {showTotal && <span styleName='members-total'>
-          {formatTotal(memberCount - members.length)}
-        </span>}
-      </div>
-    </Link>
-  </div>
+  return (
+    <div styleName='member-section'>
+      <Link to={groupUrl(slug, 'members')} styleName='members-link'>
+        <div styleName='header'>Members</div>
+        <div styleName='images-and-count'>
+          <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
+          {showTotal && <span styleName='members-total'>
+            {formatTotal(memberCount - members.length)}
+          </span>}
+        </div>
+      </Link>
+    </div>
+  )
 }
 
-export function GroupLeaderSection ({ descriptor, leaders, slug }) {
-  return <div styleName='leader-section'>
-    <div styleName='header leader-header'>Group {descriptor}</div>
-    {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} />)}
-  </div>
+export function GroupLeaderSection ({ descriptor, groupId, leaders, slug }) {
+  return (
+    <div styleName='leader-section'>
+      <div styleName='header leader-header'>Group {descriptor}</div>
+      {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} groupId={groupId} />)}
+    </div>
+  )
 }
 
-export function GroupLeader ({ leader, slug }) {
+export function GroupLeader ({ groupId, leader, slug }) {
   const { name, avatarUrl } = leader
-  return <div styleName='leader'>
-    <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
-    <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
-  </div>
+  const badges = leader.groupRoles?.filter(role => role.groupId === groupId) || []
+  return (
+    <div styleName='leader'>
+      <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
+      <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
+      <div styleName='badges'>
+        {badges.map(badge => (
+          <BadgeEmoji key={badge.name} expanded {...badge} id={leader.id} />
+        ))}
+      </div>
+    </div>
+  )
 }
