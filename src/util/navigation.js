@@ -37,7 +37,7 @@ export function baseUrl ({
   view
 }) {
   const safeMemberId = personId || memberId
-  console.log({context, groupSlug, memberId, personId, view})
+  
   if (safeMemberId) {
     return personUrl(safeMemberId, groupSlug)
   } else if (topicName) {
