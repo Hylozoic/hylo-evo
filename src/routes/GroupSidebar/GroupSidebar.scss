@@ -15,7 +15,8 @@ $about-height: 116px;
 
 .group-sidebar {
   padding: 20px 10px;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: auto;
 }
 
