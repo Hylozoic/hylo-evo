@@ -382,7 +382,7 @@ function RoleRowUntranslated ({
         isDraftRole
           ? (
             <div styleName='styles.role-row styles.reverse-flex'>
-              <div styleName='styles.create-button' onClick={onSave}>[t('Create Role')]</div>
+              <div styleName='styles.create-button' onClick={onSave}>{t('Create Role')}</div>
             </div>
           )
           : active && (
