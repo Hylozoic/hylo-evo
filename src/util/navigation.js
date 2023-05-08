@@ -37,7 +37,7 @@ export function baseUrl ({
   view
 }) {
   const safeMemberId = personId || memberId
-
+  console.log({context, groupSlug, memberId, personId, view})
   if (safeMemberId) {
     return personUrl(safeMemberId, groupSlug)
   } else if (topicName) {
@@ -184,4 +184,12 @@ export const origin = () =>
 
 export function isPublicPath (path) {
   return (path.startsWith('/public'))
+}
+
+export function isMapView (path) {
+  return (path.includes('/map/'))
+}
+
+export function isGroupsView (path) {
+  return (path.includes('/groups/'))
 }
