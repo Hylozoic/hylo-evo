@@ -30,20 +30,22 @@ class AboutSection extends Component {
       expanded = true
     }
 
-    return <div styleName='about-section'>
-      <div styleName='header'>
-        {this.props.t('About {{name}}', { name })}
+    return (
+      <div styleName='about-section'>
+        <div styleName='header'>
+          {this.props.t('About {{name}}', { name })}
+        </div>
+        <div styleName={cx('description', { expanded })}>
+          {!expanded && <div styleName='gradient' />}
+          <ClickCatcher>
+            <HyloHTML element='span' html={TextHelpers.markdown(description)} />
+          </ClickCatcher>
+        </div>
+        {showExpandButton && <span styleName='expand-button' onClick={onClick}>
+          {expanded ? this.props.t('Show Less') : this.props.t('Read More')}
+        </span>}
       </div>
-      <div styleName={cx('description', { expanded })}>
-        {!expanded && <div styleName='gradient' />}
-        <ClickCatcher>
-          <HyloHTML element='span' html={TextHelpers.markdown(description)} />
-        </ClickCatcher>
-      </div>
-      {showExpandButton && <span styleName='expand-button' onClick={onClick}>
-        {expanded ? this.props.t('Show Less') : this.props.t('Read More')}
-      </span>}
-    </div>
+    )
   }
 }
 

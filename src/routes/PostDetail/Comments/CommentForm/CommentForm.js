@@ -4,7 +4,9 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { IoSend } from 'react-icons/io5'
 import AttachmentManager from 'components/AttachmentManager'
+import Button from 'components/Button'
 import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -102,15 +104,28 @@ class CommentForm extends Component {
             >
               {this.prop.t('Sign up to reply')}
             </Link>
-            : <UploadAttachmentButton
-              type='comment'
-              id='new'
-              allowMultiple
-              onSuccess={addAttachment}
-              customRender={renderProps => (
-                <UploadButton {...renderProps} styleName='upload-button' />
-              )}
-            />
+            : (
+              <>
+                <div styleName='send-message-container'>
+                  <Button
+                    borderRadius='6px'
+                    onClick={() => this.handleOnEnter(this.editor.current.getHTML())}
+                    styleName='send-message-button'
+                  >
+                    <IoSend color='white' />
+                  </Button>
+                </div>
+                <UploadAttachmentButton
+                  type='comment'
+                  id='new'
+                  allowMultiple
+                  onSuccess={addAttachment}
+                  customRender={renderProps => (
+                    <UploadButton {...renderProps} styleName='upload-button' />
+                  )}
+                />
+              </>
+            )
           }
         </div>
       </div>

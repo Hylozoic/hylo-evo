@@ -90,6 +90,12 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       id
       name
       avatarUrl
+      groupRoles {
+        name
+        emoji
+        active
+        groupId
+      }
     }
   }
   parentGroups {

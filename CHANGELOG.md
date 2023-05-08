@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.4.2] - 2023-05-04
+
+### Added
+- Show badges next to moderators in group sidebar
+- Send button to all comment forms 
+
+### Changed
+- Tweaked styling of group cards so they are not too big and show first two lines of description
+
 ## [5.4.1] - 2023-04-13
 
 ### Fixed

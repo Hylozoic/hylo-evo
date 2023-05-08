@@ -161,7 +161,7 @@ $about-height: 116px;
 }
 
 .leader-image {
-  margin-right: $space-4x;
+  margin-right: $space-2x;
 }
 
 .leader-name {
@@ -171,4 +171,10 @@ $about-height: 116px;
     color: $color-rhino-80;
     text-decoration: none;
   }
+}
+
+.badges {
+  display: flex;
+  margin-left: 4px;
+  grid-gap: 2px;
 }

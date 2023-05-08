@@ -38,6 +38,7 @@ exports[`GroupSidebar renders correctly 1`] = `
     slug="great-cause"
   />
   <GroupLeaderSection
+    groupId={1}
     leaders={
       Array [
         Object {
