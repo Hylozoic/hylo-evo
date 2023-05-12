@@ -225,8 +225,8 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
         <input type='radio' name='accessibility' value={forSetting} onChange={updateSetting('accessibility')} checked={currentSetting === forSetting} />
         <Icon name={accessibilityIcon(forSetting)} styleName='styles.settingIcon' />
         <div styleName='styles.settingDescription'>
-          <h4>{accessibilityString(forSetting)}</h4>
-          <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{accessibilityDescription(forSetting)}</span>
+          <h4>{t(accessibilityString(forSetting))}</h4>
+          <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{t(accessibilityDescription(forSetting))}</span>
         </div>
       </label>
       {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted &&
@@ -235,7 +235,8 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
             <SwitchStyled
               checked={askJoinQuestions}
               onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
-              backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'} />
+              backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'}
+            />
             <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
             <div styleName='general.onOff'>
               <div styleName='general.off'>{t('OFF')}</div>

@@ -161,11 +161,11 @@ class UnwrappedGroupDetail extends Component {
               <h3>{t('Privacy settings')}</h3>
               <div styleName='g.privacySetting'>
                 <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
-                <p>{visibilityString(group.visibility)} - {visibilityDescription(group.visibility)}</p>
+                <p>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</p>
               </div>
               <div styleName='g.privacySetting'>
                 <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
-                <p>{accessibilityString(group.accessibility)} - {accessibilityDescription(group.accessibility)}</p>
+                <p>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</p>
               </div>
             </div>
             : ''
@@ -272,6 +272,7 @@ class UnwrappedGroupDetail extends Component {
           requestToJoinGroup={this.requestToJoinGroup}
           removeSkill={removeSkill}
           routeParams={routeParams}
+          t={t}
         />
       </div>
     )
@@ -301,7 +302,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
       }
       { group.prerequisiteGroups && group.prerequisiteGroups.length > 0
         ? <div styleName='g.prerequisiteGroups'>
-          {group.prerequisiteGroups.length === 1 ? <h4>{group.name}{' '}{t('is only accessible to members of')}{' '}{group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{t('{group.name} is only accessible to members of the following groups:', { group })}</h4>}
+          {group.prerequisiteGroups.length === 1 ? <h4>{group.name}{' '}{t('is only accessible to members of')}{' '}{group.prerequisiteGroups.map(prereq => <span key={prereq.id}>{prereq.name}</span>)}</h4> : <h4>{t('{{group.name}} is only accessible to members of the following groups:', { group })}</h4>}
           {group.prerequisiteGroups.map(prereq => <div key={prereq.id} styleName='g.prerequisiteGroup'>
             <Link to={fullPage ? groupUrl(prereq.slug) : groupDetailUrl(prereq.slug, routeParams)} styleName='g.groupDetailHeader g.prereqHeader' style={{ backgroundImage: `url(${prereq.bannerUrl || DEFAULT_BANNER})` }}>
               <div styleName='g.groupTitleContainer'>
@@ -312,13 +313,13 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     <span styleName='g.group-privacy'>
                       <Icon name={visibilityIcon(prereq.visibility)} styleName='g.privacy-icon' />
                       <div styleName='g.privacy-tooltip'>
-                        <div>{visibilityString(prereq.visibility)} - {visibilityDescription(prereq.visibility)}</div>
+                        <div>{t(visibilityString(prereq.visibility))} - {t(visibilityDescription(prereq.visibility))}</div>
                       </div>
                     </span>
                     <span styleName='g.group-privacy'>
                       <Icon name={accessibilityIcon(prereq.accessibility)} styleName='g.privacy-icon' />
                       <div styleName='g.privacy-tooltip'>
-                        <div>{accessibilityString(prereq.accessibility)} - {accessibilityDescription(prereq.accessibility)}</div>
+                        <div>{t(accessibilityString(prereq.accessibility))} - {t(accessibilityDescription(prereq.accessibility))}</div>
                       </div>
                     </span>
                     {prereq.location}

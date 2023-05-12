@@ -933,7 +933,7 @@
   "wrote:": "escribió:",
   "wrote: ": "escribió:",
   "you're subscribed to #{{topicName}}": "estás suscrito",
-  "{group.name} is only accessible to members of the following groups:": "{group.name} solo es accesible para los miembros de los siguientes grupos:",
+  "{{group.name}} is only accessible to members of the following groups:": "{{group.name}} solo es accesible para los miembros de los siguientes grupos:",
   "{{action}} was canceled or no user data was found.": "{{action}} se canceló o no se encontraron datos de usuario.",
   "{{appName}} is asking to have offline access to Hylo": "{{appName}} solicita acceso sin conexión a Hylo",
   "{{appName}} is asking you to confirm previously given authorization": "{{appName}} te pide que confirmes la autorización otorgada previamente",
