@@ -218,16 +218,17 @@ export class SettingsRow extends React.Component {
 
 export function SettingsIcon ({ settingKey, name, update, settings }) {
   const settingStatus = settings[settingKey] ? 'On' : 'Off'
+  const { t } = useTranslation()
 
   return (
     <div
       styleName={cx('setting-controls', { highlightIcon: settings[settingKey] })}
       onClick={() => update({ [settingKey]: !settings[settingKey] })}
-      data-tip={`Turn ${name === 'EmailNotification' ? 'Email' : 'Mobile Push'} Notifications ${settings[settingKey] ? 'Off' : 'On'}`}
+      data-tip={`Turn ${name === 'EmailNotification' ? 'Email' : 'Mobile Push'} Notifications ${settings[settingKey] ? t('Off') : t('On')}`}
       data-for='helpTip'
     >
       <Icon name={name} styleName={cx('icon', { highlightIcon: settings[settingKey] })} />
-      <span styleName='setting-status'>{settingStatus}</span>
+      <span styleName='setting-status'>{t(settingStatus)}</span>
     </div>
   )
 }
