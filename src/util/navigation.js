@@ -185,3 +185,11 @@ export const origin = () =>
 export function isPublicPath (path) {
   return (path.startsWith('/public'))
 }
+
+export function isMapView (path) {
+  return (path.includes('/map/'))
+}
+
+export function isGroupsView (path) {
+  return (path.includes('/groups/'))
+}

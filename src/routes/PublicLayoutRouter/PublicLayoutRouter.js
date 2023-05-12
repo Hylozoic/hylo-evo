@@ -163,13 +163,15 @@ export function PublicPageHeader () {
         <title>{t('Public')} | Hylo</title>
         <meta name='description' content='Hylo: Public content' />
       </Helmet>
-      <div styleName='header'>
-        <a href='/'>
-          <img styleName='logo' src='/assets/navy-merkaba.svg' alt={t('Hylo logo')} />
-        </a>
-        <div styleName='access-controls'>
-          <a href='/login'>{t('Sign in')}</a>
-          <a styleName='sign-up' href='/signup'>{t('Join Hylo')}</a>
+      <div styleName='wrapper'>
+        <div styleName='header'>
+          <a href='/'>
+            <img styleName='logo' src='/assets/navy-merkaba.svg' alt={t('Hylo logo')} />
+          </a>
+          <div styleName='access-controls'>
+            <a href='/login'>{t('Sign in')}</a>
+            <a styleName='sign-up' href='/signup'>{t('Join Hylo')}</a>
+          </div>
         </div>
       </div>
     </div>

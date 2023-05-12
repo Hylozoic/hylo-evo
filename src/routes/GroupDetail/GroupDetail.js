@@ -31,7 +31,7 @@ import {
   visibilityString
 } from 'store/models/Group'
 import { inIframe } from 'util/index'
-import { baseUrl, groupDetailUrl, groupUrl, personUrl } from 'util/navigation'
+import { baseUrl, groupDetailUrl, groupUrl, isGroupsView, isMapView, isPublicPath, personUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
@@ -409,8 +409,13 @@ export function GroupDetail (props) {
   const closeDetailModal = () => {
     // `detailsGroupSlug` is not currently used in any URL generation, `null`'ing
     // it here in case that changes, and it's otherwise descriptive of the intent.
+    let view = ''
+    if (isMapView(location.pathname)) view = 'map'
+    if (isGroupsView(location.pathname)) view = 'groups'
+    // The 'view' cannot be determined from the routeParams because of how route matching works
+    const url = baseUrl({ ...props.routeParams, detailGroupSlug: null, view, context: isPublicPath(location.pathname) ? 'public' : undefined }) + location.search
     history.push(
-      baseUrl({ ...props.routeParams, detailGroupSlug: null }) + location.search
+      url
     )
   }
 
