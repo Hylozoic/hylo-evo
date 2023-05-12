@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { get } from 'lodash/fp'
 import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import CardImageAttachments from 'components/CardImageAttachments'
 import Icon from 'components/Icon'
 import { POST_PROP_TYPES } from 'store/models/Post'
@@ -33,7 +34,7 @@ export default function PostCard (props) {
   } = props
 
   const postCardRef = forwardedRef || useRef()
-
+  const { t } = useTranslation()
   // TODO: dupe of clickcatcher?
   const shouldShowDetails = useCallback(element => {
     if (element === postCardRef) return true
@@ -71,8 +72,7 @@ export default function PostCard (props) {
         <div styleName='child-post-label-wrapper'>
           <div styleName='child-post-label'>
             <Icon name='Subgroup' styleName='icon' />
-            <span>Post from <b>child group</b></span>
-            {/* TODO: i18n */}
+            <span>{t('Post from')} <b>{t('child group')}</b></span>
           </div>
         </div>}
       <div

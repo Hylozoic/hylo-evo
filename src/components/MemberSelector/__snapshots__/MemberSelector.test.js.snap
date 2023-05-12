@@ -8,6 +8,7 @@ exports[`MemberSelector renders correctly (with min props) 1`] = `
   placeholder="Type persons name..."
   renderSuggestion={[Function]}
   suggestions={Array []}
+  t={[Function]}
   tags={Array []}
   theme={Object {}}
 />

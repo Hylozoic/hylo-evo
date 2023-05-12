@@ -10,6 +10,7 @@ import cx from 'classnames'
 import mixpanel from 'mixpanel-browser'
 import config, { isTest } from 'config'
 import isWebView from 'util/webView'
+import { localeLocalStorageSync } from 'util/locale'
 import { useLayoutFlags } from 'contexts/LayoutFlagsContext'
 import getReturnToPath from 'store/selectors/getReturnToPath'
 import setReturnToPath from 'store/actions/setReturnToPath'
@@ -125,6 +126,8 @@ export default function AuthLayoutRouter (props) {
         $email: currentUser.email,
         $location: currentUser.location
       })
+
+      if (currentUser?.settings?.locale) localeLocalStorageSync(currentUser?.settings?.locale)
     }
   }, [currentUser?.id])
 

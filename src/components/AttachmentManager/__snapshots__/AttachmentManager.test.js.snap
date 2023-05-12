@@ -414,7 +414,8 @@ exports[`FileManager matches last snapshot 1`] = `
         >
           +
         </span>
-         Add File
+         
+        Add File
       </div>
     </Connect(UploadAttachmentButton)>
   </div>

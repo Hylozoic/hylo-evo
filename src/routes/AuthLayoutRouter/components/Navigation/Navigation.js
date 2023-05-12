@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { compact } from 'lodash/fp'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Icon from 'components/Icon'
 import { topicsUrl } from 'util/navigation'
 import NavLink from './NavLink'
@@ -43,6 +44,8 @@ export default function Navigation (props) {
     }
   }
 
+  const { t } = useTranslation()
+
   // This should probably be normalized between
   // store/models/Group/PUBLIC_CONTEXT_ID (public-context)
   // and here and in Drawer, etc (public)
@@ -53,27 +56,27 @@ export default function Navigation (props) {
 
   const myLinks = [
     createPath && {
-      label: 'Create',
+      label: t('Create'),
       icon: 'Create',
       to: createPath
     },
     {
-      label: 'My Posts',
+      label: t('My Posts'),
       icon: 'Posticon',
       to: '/my/posts'
     },
     {
-      label: 'Interactions',
+      label: t('Interactions'),
       icon: 'Support',
       to: '/my/interactions'
     },
     {
-      label: 'Mentions',
+      label: t('Mentions'),
       icon: 'Email',
       to: '/my/mentions'
     },
     {
-      label: 'Announcements',
+      label: t('Announcements'),
       icon: 'Announcement',
       to: '/my/announcements'
     }
@@ -81,12 +84,12 @@ export default function Navigation (props) {
 
   const regularLinks = compact([
     createPath && {
-      label: 'Create',
+      label: t('Create'),
       icon: 'Create',
       to: createPath
     },
     rootPath && {
-      label: group && group.type === GROUP_TYPES.farm ? 'Home' : 'Stream',
+      label: group && group.type === GROUP_TYPES.farm ? t('Home') : t('Stream'),
       icon: group && group.type === GROUP_TYPES.farm ? 'Home' : 'Stream',
       to: rootPath,
       badge: badge,
@@ -94,37 +97,37 @@ export default function Navigation (props) {
       exact: true
     },
     streamPath && group && group.type === GROUP_TYPES.farm && {
-      label: 'Stream',
+      label: t('Stream'),
       icon: 'Stream',
       to: streamPath
     },
     explorePath && group && group.type !== GROUP_TYPES.farm && {
-      label: 'Explore',
+      label: t('Explore'),
       icon: 'Binoculars',
       to: explorePath
     },
     projectsPath && {
-      label: 'Projects',
+      label: t('Projects'),
       icon: 'Projects',
       to: projectsPath
     },
     eventsPath && {
-      label: 'Events',
+      label: t('Events'),
       icon: 'Events',
       to: eventsPath
     },
     membersPath && {
-      label: 'Members',
+      label: t('Members'),
       icon: 'People',
       to: membersPath
     },
     (hasRelatedGroups || isPublic) && groupsPath && {
-      label: isPublic ? 'Group Explorer' : 'Groups',
+      label: isPublic ? t('Group Explorer') : t('Groups'),
       icon: 'Groups',
       to: groupsPath
     },
     mapPath && {
-      label: 'Map',
+      label: t('Map'),
       icon: 'Globe',
       to: mapPath
     },

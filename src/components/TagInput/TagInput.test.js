@@ -2,6 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import TagInput from './TagInput'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 const defaultMinProps = {
   handleInputChange: () => {}
 }

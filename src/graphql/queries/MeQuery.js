@@ -58,6 +58,7 @@ export default gql`
       digestFrequency
       dmNotifications
       commentNotifications
+      locale
       mapBaseLayer
       signupInProgress
       streamChildPosts

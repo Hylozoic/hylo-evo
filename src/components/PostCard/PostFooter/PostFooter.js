@@ -1,14 +1,15 @@
+import React from 'react'
+import { withTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
-import React from 'react'
 import PeopleInfo from '../PeopleInfo'
 import Tooltip from 'components/Tooltip'
 import { CURRENT_USER_PROP_TYPES } from 'store/models/Me'
 
 import './PostFooter.scss'
 
-export default class PostFooter extends React.PureComponent {
+class PostFooter extends React.PureComponent {
   static propTypes= {
     currentUser: PropTypes.shape(CURRENT_USER_PROP_TYPES),
     commenters: PropTypes.array,
@@ -39,3 +40,5 @@ export default class PostFooter extends React.PureComponent {
     )
   }
 }
+
+export default withTranslation()(PostFooter)

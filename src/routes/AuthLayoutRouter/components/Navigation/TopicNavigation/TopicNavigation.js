@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { Link, NavLink } from 'react-router-dom'
 import Badge from 'components/Badge'
@@ -24,13 +25,14 @@ export default function TopicNavigation ({
       newPostCount > 0 && clearBadge(groupTopicId)
     }
   }
+  const { t } = useTranslation()
 
   return (
     <div styleName={cx('s.topicNavigation', { 's.collapsed': collapsed })}>
       <div styleName={cx('s.header', { 's.header-link': collapsed })} onClick={expand}>
         <Link to={seeAllUrl}>
           <Icon name='Topics' styleName='s.icon' />
-          <span styleName='s.title'>Topics</span>
+          <span styleName='s.title'>{t('Topics')}</span>
         </Link>
       </div>
       <TopicsList
@@ -39,7 +41,7 @@ export default function TopicNavigation ({
         topics={topics}
       />
       <div styleName='s.addTopic'>
-        <Link to={seeAllUrl} styleName='s.allTopics'>All topics</Link>
+        <Link to={seeAllUrl} styleName='s.allTopics'>{t('All topics')}</Link>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types'
 import React, { useState, useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import PropTypes from 'prop-types'
 import { debounce, throttle } from 'lodash/fp'
 import { getKeyCode, keyMap } from 'util/textInput'
 import PeopleList from './PeopleList'
@@ -12,6 +13,7 @@ export default function PeopleSelector (props) {
   const [currentMatch, setCurrentMatch] = useState(null)
   const [currentText, setCurrentText] = useState('')
   const autocompleteInput = useRef(null)
+  const { t } = useTranslation()
 
   const {
     focusMessage,
@@ -101,7 +103,7 @@ export default function PeopleSelector (props) {
 
   return <div styleName='thread-header' tabIndex='0'>
     <div styleName='autocomplete-control'>
-      <span styleName='to'>With:</span>
+      <span styleName='to'>{t('With:')}</span>
       {selectedPeople && selectedPeople.map(person =>
         <MatchingPeopleListItem
           avatarUrl={person.avatarUrl}
@@ -117,7 +119,7 @@ export default function PeopleSelector (props) {
           spellCheck={false}
           onChange={onChange}
           onKeyDown={onKeyDown}
-          placeholder={'+ Add someone'}
+          placeholder={`+ ${t('Add someone')}`}
           onFocus={props.onFocus}
           value={currentText}
         />

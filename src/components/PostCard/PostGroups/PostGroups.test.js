@@ -2,6 +2,14 @@ import React from 'react'
 import PostGroups from './PostGroups'
 import { shallow } from 'enzyme'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('PostGroups', () => {
   it('matches last snapshot', () => {
     const props = {

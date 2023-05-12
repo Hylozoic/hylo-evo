@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import ReactTooltip from 'react-tooltip'
 import isMobile from 'ismobilejs'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { debounce, includes, isEmpty, delay } from 'lodash'
 import cx from 'classnames'
 import { getKeyCode, keyMap } from 'util/textInput'
-import { KeyControlledItemList } from 'components/KeyControlledList'
+import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import Pill from 'components/Pill'
 import styles from './Pillbox.scss'
 
 // keys that can be pressed to create a new pill
 const creationKeyCodes = [keyMap.ENTER]
 
-export default class Pillbox extends Component {
+class Pillbox extends Component {
   constructor (props) {
     super(props)
 
@@ -72,9 +73,9 @@ export default class Pillbox extends Component {
   }, 200)
 
   render () {
-    const { addLabel = 'Add', editable, handleClick, handleDelete } = this.props
+    const { addLabel = this.props.t('Add'), editable, handleClick, handleDelete } = this.props
 
-    let { pills, placeholder = 'type here', suggestions } = this.props
+    let { pills, placeholder = this.props.t('type here'), suggestions } = this.props
 
     let { adding } = this.state
 
@@ -152,3 +153,4 @@ export default class Pillbox extends Component {
     </div>
   }
 }
+export default withTranslation()(Pillbox)

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { withTranslation } from 'react-i18next'
 import { isEmpty, trim } from 'lodash'
 import './FlagContent.scss'
 import Select from 'components/Select'
@@ -6,7 +7,7 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import TextareaAutosize from 'react-textarea-autosize'
 
-export default class FlagContent extends PureComponent {
+class FlagContent extends PureComponent {
   state = {
     promptVisible: false,
     highlightRequired: false,
@@ -67,30 +68,33 @@ export default class FlagContent extends PureComponent {
     const { highlightRequired } = this.state
 
     const required = !this.isExplanationOptional(selectedCategory) && highlightRequired
-      ? ' (explanation required)'
+      ? ` ${this.props.t('(explanation required)')}`
       : ''
-    const subtitle = `Why was this ${type} '${selectedCategory}'${required}?`
+    const subtitle = this.props.t(`Why was this {{type}} '{{selectedCategory}}'{{required}}?`, { type,
+      selectedCategory,
+      required })
     this.setState({ subtitle })
   }
 
   render () {
+    const { t } = this.props
     const options = [
-      { label: 'Inappropriate Content', id: 'inappropriate' },
-      { label: 'Spam', id: 'spam' },
-      { label: 'Offensive', id: 'offensive' },
-      { label: 'Abusive', id: 'abusive' },
-      { label: 'Illegal', id: 'illegal' },
-      { label: 'Other', id: 'other' }
+      { label: t('Inappropriate Content'), id: 'inappropriate' },
+      { label: t('Spam'), id: 'spam' },
+      { label: t('Offensive'), id: 'offensive' },
+      { label: t('Abusive'), id: 'abusive' },
+      { label: t('Illegal'), id: 'illegal' },
+      { label: t('Other'), id: 'other' }
     ]
 
     const {
-      subtitle = 'What was wrong?',
+      subtitle = t('What was wrong?'),
       reasonRequired,
       selectedCategory = '', explanation } = this.state
 
     return <div styleName='popup'>
       <div styleName='popup-inner'>
-        <h1>Explanation for Flagging</h1>
+        <h1>{t('Explanation for Flagging')}</h1>
         <span onClick={this.closeModal} styleName='close-btn'>
           <Icon name='Ex' styleName='icon' />
         </span>
@@ -100,9 +104,9 @@ export default class FlagContent extends PureComponent {
             <Select
               onChange={this.updateSelected}
               fullWidth
-              styleName={reasonRequired ? 'reason-required' : ''}
+              styleName={reasonRequired ? t('reason-required') : ''}
               selected={selectedCategory}
-              placeholder='Select a reason'
+              placeholder={t('Select a reason')}
               options={options} />
           </div>
           <TextareaAutosize
@@ -111,9 +115,10 @@ export default class FlagContent extends PureComponent {
             value={explanation}
             onChange={(e) => { this.setState({ explanation: e.target.value }) }}
             placeholder={subtitle} />
-          <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>Submit</Button>
+          <Button styleName='submit-btn' onClick={this.submit} disabled={isEmpty(selectedCategory)}>{t('Submit')}</Button>
         </div>
       </div>
     </div>
   }
 }
+export default withTranslation()(FlagContent)

@@ -94,6 +94,12 @@ exports[`matches announcement snapshot 1`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
             ]
           }
           toggleChildren={
@@ -195,6 +201,12 @@ exports[`matches announcement snapshot 2`] = `
                 "icon": "Copy",
                 "label": "Copy Link",
                 "onClick": [Function],
+              },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
               },
             ]
           }
@@ -389,6 +401,12 @@ exports[`matches snapshot 1`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
             ]
           }
           toggleChildren={
@@ -472,6 +490,12 @@ exports[`matches snapshot 2`] = `
                 "icon": "Copy",
                 "label": "Copy Link",
                 "onClick": [Function],
+              },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
               },
             ]
           }
@@ -652,6 +676,12 @@ exports[`renders human readable dates 1`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
             ]
           }
           toggleChildren={
@@ -669,7 +699,7 @@ exports[`renders human readable dates 1`] = `
     <div
       data-stylename="timeWindow"
     >
-      Started: Sun, Nov 29, 2020 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+      Started: {{from}} / Ends: {{endTime}}
     </div>
   </div>
   <ReactTooltip
@@ -742,6 +772,12 @@ exports[`renders human readable dates 2`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
             ]
           }
           toggleChildren={
@@ -759,7 +795,7 @@ exports[`renders human readable dates 2`] = `
     <div
       data-stylename="timeWindow"
     >
-      Started: Tue, Nov 29, 2022 at 12:00AM / Ends: Thu, Nov 29, 2029 at 12:00AM GMT
+      Started: {{from}} / Ends: {{endTime}}
     </div>
   </div>
   <ReactTooltip
@@ -832,6 +868,12 @@ exports[`renders human readable dates 3`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
+              Object {
+                "icon": "Trash",
+                "label": "Delete",
+                "onClick": [Function],
+                "red": true,
+              },
             ]
           }
           toggleChildren={
@@ -849,7 +891,7 @@ exports[`renders human readable dates 3`] = `
     <div
       data-stylename="timeWindow"
     >
-      Ended: Sun, Nov 29, 2020 at 12:00AM GMT
+      Ended: {{endTime}}
     </div>
   </div>
   <ReactTooltip

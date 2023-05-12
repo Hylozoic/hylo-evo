@@ -29,7 +29,7 @@ exports[`MembershipSettingsRow renders correctly 1`] = `
 exports[`MessageSettingsRow renders correctly 1`] = `
 <SettingsRow
   iconName="Messages"
-  name="Direct Messages"
+  name="Messages"
   settings={
     Object {
       "sendEmail": true,
@@ -93,7 +93,8 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     <div
       data-stylename="prompt"
     >
-      How would you like to receive notifications about new comments on posts you're following?
+      How would you like to receive notifications about
+      new comments on posts you're following?
     </div>
     <div
       data-stylename="setting-select"
@@ -171,16 +172,21 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
     <p
       data-stylename="help-paragraph"
     >
-      Download our 
+      Download our
+       
       <a
         href="https://itunes.apple.com/app/appName/id1002185140"
+        rel="noreferrer"
         target="_blank"
       >
         iOS
       </a>
-        or 
+       
+      or
+       
       <a
         href="https://play.google.com/store/apps/details?id=com.hylo.hyloandroid"
+        rel="noreferrer"
         target="_blank"
       >
         Android

@@ -2,6 +2,7 @@ import cx from 'classnames'
 import { throttle } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { IoSend } from 'react-icons/io5'
 import AttachmentManager from 'components/AttachmentManager'
@@ -16,7 +17,7 @@ import { STARTED_TYPING_INTERVAL } from 'util/constants'
 
 import './CommentForm.scss'
 
-export default class CommentForm extends Component {
+class CommentForm extends Component {
   static propTypes = {
     createComment: PropTypes.func.isRequired,
     currentUser: PropTypes.object,
@@ -70,7 +71,7 @@ export default class CommentForm extends Component {
 
   render () {
     const { currentUser, className, addAttachment, editorContent } = this.props
-    const placeholder = this.props.placeholder || 'Add a comment...'
+    const placeholder = this.props.placeholder || this.props.t('Add a comment...')
 
     return (
       <div
@@ -101,7 +102,7 @@ export default class CommentForm extends Component {
               target={inIframe() ? '_blank' : ''}
               styleName='signupButton'
             >
-              Sign up to reply
+              {this.prop.t('Sign up to reply')}
             </Link>
             : (
               <>
@@ -144,3 +145,5 @@ export function UploadButton ({
     </div>
   )
 }
+
+export default withTranslation()(CommentForm)

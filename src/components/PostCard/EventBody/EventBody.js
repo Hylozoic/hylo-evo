@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import { get, filter } from 'lodash/fp'
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
 import Button from 'components/Button'
 import EmojiRow from 'components/EmojiRow'
@@ -14,7 +15,7 @@ import PeopleInfo from 'components/PostCard/PeopleInfo'
 import { RESPONSES } from 'store/models/EventInvitation'
 import '../PostBody/PostBody.scss'
 
-export default class EventBody extends Component {
+class EventBody extends Component {
   state = {
     showInviteDialog: false
   }
@@ -22,7 +23,7 @@ export default class EventBody extends Component {
   toggleInviteDialog = () => this.setState({ showInviteDialog: !this.state.showInviteDialog })
 
   render () {
-    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, onClick, togglePeopleDialog } = this.props
+    const { currentUser, event, respondToEvent, slug, expanded, className, constrained, onClick, togglePeopleDialog, t } = this.props
     const { showInviteDialog } = this.state
     const { id, startTime, endTime, location, eventInvitations, groups } = event
 
@@ -42,7 +43,7 @@ export default class EventBody extends Component {
           <div styleName='rsvp'>
             <EventRSVP {...event} respondToEvent={respondToEvent} />
           </div>
-          <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+          <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
       </div>
 
@@ -75,10 +76,10 @@ export default class EventBody extends Component {
             excludePersonId={get('id', currentUser)}
             onClick={togglePeopleDialog}
             phrases={{
-              emptyMessage: 'No one is attending yet',
-              phraseSingular: 'is attending',
-              mePhraseSingular: 'are attending',
-              pluralPhrase: 'attending'
+              emptyMessage: t('No one is attending yet'),
+              phraseSingular: t('is attending'),
+              mePhraseSingular: t('are attending'),
+              pluralPhrase: t('attending')
             }}
           />
         </div>
@@ -87,7 +88,7 @@ export default class EventBody extends Component {
           <div styleName='rsvp'>
             <EventRSVP {...event} respondToEvent={respondToEvent} />
           </div>
-          <Button label='Invite' onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
+          <Button label={t('Invite')} onClick={this.toggleInviteDialog} narrow small color='green-white' styleName='inviteButton' />
         </div>}
       </div>
       <EmojiRow
@@ -102,3 +103,4 @@ export default class EventBody extends Component {
     </div>
   }
 }
+export default withTranslation()(EventBody)

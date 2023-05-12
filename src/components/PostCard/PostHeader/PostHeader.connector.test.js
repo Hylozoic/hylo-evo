@@ -41,7 +41,6 @@ describe('mapDispatchToProps', () => {
 
     dispatchProps.deletePost(1)
     dispatchProps.pinPost(2, 3)
-    expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to delete this post?')
     expect(dispatch.mock.calls).toMatchSnapshot()
   })
 
@@ -113,8 +112,8 @@ describe('mergeProps', () => {
       expect(removePost).toBeFalsy()
       expect(editPost).toBeTruthy()
 
-      deletePost()
-      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33)
+      deletePost('lettuce')
+      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33, 'lettuce')
 
       editPost()
       expect(dispatchProps.editPost).toHaveBeenCalledWith(20)
@@ -176,8 +175,8 @@ describe('mergeProps', () => {
       expect(removePost).toBeFalsy()
       expect(pinPost).toBeFalsy()
 
-      deletePost()
-      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33)
+      deletePost('lettuce')
+      expect(dispatchProps.deletePost).toHaveBeenCalledWith(20, 33, 'lettuce')
     })
   })
 

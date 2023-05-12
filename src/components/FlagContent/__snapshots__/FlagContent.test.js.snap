@@ -14,6 +14,7 @@ exports[`FlagContent calls submit successfully with category:other 1`] = `
   promptVisible={false}
   reasonRequired={false}
   submitFlagContent={[MockFunction]}
+  t={[Function]}
   type="post"
   visible={true}
 >

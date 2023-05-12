@@ -8,7 +8,7 @@ exports[`renders as expected 1`] = `
     <div
       onClick={[Function]}
     >
-      <Connect(PostHeader)
+      <Connect(withI18nextTranslation(PostHeader))
         attachments={
           Array [
             Object {
@@ -163,7 +163,7 @@ exports[`renders as expected 1`] = `
     <div
       onClick={[Function]}
     >
-      <Connect(PostGroups)
+      <Connect(withI18nextTranslation(PostGroups))
         groups={
           Array [
             Object {
@@ -175,7 +175,7 @@ exports[`renders as expected 1`] = `
         }
       />
     </div>
-    <PostFooter
+    <withI18nextTranslation(PostFooter)
       attachments={
         Array [
           Object {

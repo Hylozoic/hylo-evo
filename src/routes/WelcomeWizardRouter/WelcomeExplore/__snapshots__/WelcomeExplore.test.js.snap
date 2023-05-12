@@ -14,9 +14,7 @@ exports[`WelcomeExplore renders correctly 1`] = `
         Welcome to Hylo!
       </h3>
       <p>
-        We're glad you're here, 
-        Tibet
-        . To get started, explore public groups and posts, or create your own group!
+        We're glad you're here, {{firstName}}. To get started, explore public groups and posts, or create your own group!
       </p>
     </div>
     <Link

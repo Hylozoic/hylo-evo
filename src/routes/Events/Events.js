@@ -1,7 +1,8 @@
+import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import Dropdown from 'components/Dropdown'
 import StreamBanner from 'components/StreamBanner'
@@ -14,12 +15,7 @@ import { CENTER_COLUMN_ID } from 'util/scrolling'
 import s from './Events.scss'
 import viewStyles from '../../components/StreamViewControls/StreamViewControls.scss'
 
-const timeframeOptions = [
-  { id: 'future', label: 'Upcoming Events' },
-  { id: 'past', label: 'Past Events' }
-]
-
-export default class Events extends Component {
+class Events extends Component {
   static propTypes = {
     newPost: PropTypes.func,
     routeParams: PropTypes.object,
@@ -65,8 +61,14 @@ export default class Events extends Component {
       posts,
       querystringParams,
       routeParams,
-      timeframe, updateTimeframe
+      timeframe, updateTimeframe, t
     } = this.props
+    const timeframeOptions = [
+      { id: 'future', label: t('Upcoming Events') },
+      { id: 'past', label: t('Past Events') }
+    ]
+    const upcomingText = t('upcoming')
+    const pastText = t('past')
     const { context } = routeParams
 
     if (!currentUser) return <Loading />
@@ -88,7 +90,7 @@ export default class Events extends Component {
           querystringParams={querystringParams}
           currentUserHasMemberships={currentUserHasMemberships}
           icon='Events'
-          label='Events'
+          label={t('Events')}
         />
         <div styleName='viewStyles.stream-view-container'>
           <div styleName='viewStyles.stream-view-ctrls'>
@@ -111,7 +113,7 @@ export default class Events extends Component {
         {pending && <Loading />}
 
         <div styleName={cx('s.events-stream', { [s.collapsedState]: collapsedState })}>
-          {!pending && posts.length === 0 ? <NoPosts message={`No ${timeframe === 'future' ? 'upcoming' : 'past'} events`} /> : ''}
+          {!pending && posts.length === 0 ? <NoPosts message={t('No {{timeFrame}} events', { timeFrame: timeframe === 'future' ? upcomingText : pastText })} /> : ''}
 
           {posts.map(post => {
             const expanded = post.id === routeParams.postId
@@ -134,3 +136,5 @@ export default class Events extends Component {
     )
   }
 }
+
+export default withTranslation()(Events)

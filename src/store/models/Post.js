@@ -47,7 +47,7 @@ Post.fields = {
     to: 'Person',
     relatedName: 'postsFollowing',
     through: 'PostFollower',
-    throughFields: [ 'post', 'follower' ]
+    throughFields: ['post', 'follower']
   }),
   groups: many('Group'),
   groupsTotal: attr(),
@@ -56,13 +56,13 @@ Post.fields = {
     to: 'Person',
     relatedName: 'postsCommented',
     through: 'PostCommenter',
-    throughFields: [ 'post', 'commenter' ]
+    throughFields: ['post', 'commenter']
   }),
   members: many({
     to: 'Person',
     relatedName: 'projectsJoined',
     through: 'ProjectMember',
-    throughFields: [ 'post', 'member' ]
+    throughFields: ['post', 'member']
   }),
   commentersTotal: attr(),
   createdAt: attr(),
@@ -78,49 +78,49 @@ Post.fields = {
 }
 
 export const POST_TYPES = {
-  'chat': {
+  chat: {
     primaryColor: [0, 163, 227, 255], // $color-picton-blue
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
     map: false,
     label: 'Chat',
     description: 'Quick topic-based chats'
   },
-  'discussion': {
+  discussion: {
     primaryColor: [0, 163, 227, 255], // $color-picton-blue
     backgroundColor: 'rgba(0, 163, 227, .2)', // $color-link-water
     map: true,
     label: 'Discussion',
     description: 'Talk about what\'s important with others'
   },
-  'request': {
+  request: {
     primaryColor: [102, 75, 165, 255], // $color-persimmon;
     backgroundColor: 'rgba(102, 75, 165, .2)', // $color-peach-schnapps;
     map: true,
     label: 'Request',
     description: 'What can people help you with?'
   },
-  'offer': {
+  offer: {
     primaryColor: [0, 199, 157, 255], // $color-caribbean-green
     backgroundColor: 'rgba(0, 199, 157, .2)', // $color-iceberg;
     map: true,
     label: 'Offer',
     description: 'What do you have for others?'
   },
-  'resource': {
+  resource: {
     primaryColor: [255, 212, 3, 255], // $color-mango-yellow;
     backgroundColor: 'rgba(255, 212, 3, .2)',
     map: true,
     label: 'Resource',
     description: 'Let people know about available resources'
   },
-  'project': {
+  project: {
     primaryColor: [252, 128, 0, 255], // $color-fuchsia-pink;
     backgroundColor: 'rgba(252, 128, 0, .2)', // $color-prim;
     map: true,
     label: 'Project',
     description: 'Create a project that people can help with'
   },
-  'event': {
+  event: {
     primaryColor: [254, 72, 80, 255], // $color-medium-purple
     backgroundColor: 'rgba(254, 72, 80, .2)', // $color-moon-raker
     map: true,

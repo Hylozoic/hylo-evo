@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { checkForStorageAccess, formatError } from '../util'
@@ -12,13 +13,13 @@ import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
 
-export const DEFAULT_LOGIN_ERROR = 'Sorry, that Email and Password combination didn\'t work.'
-
 export default function Login (props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [error, setError] = useState(getQuerystringParam('error', null, props))
+  const { t } = useTranslation()
+  const DEFAULT_LOGIN_ERROR = t('Sorry, that Email and Password combination didn\'t work.')
 
   const handleEmailChange = event => {
     setEmail(event.target.value)
@@ -78,14 +79,14 @@ export default function Login (props) {
   return (
     <div className={props.className}>
       <div styleName='formWrapper'>
-        <h1 styleName='title'>Sign in to Hylo</h1>
+        <h1 styleName='title'>{t('Sign in to Hylo')}</h1>
 
-        {error && formatError(error, 'Login')}
+        {error && formatError(error, 'Login', t)}
 
         <TextInput
           aria-label='email' label='email' name='email' id='email'
           autoFocus
-          internalLabel='Email'
+          internalLabel={t('Email')}
           onChange={handleEmailChange}
           styleName='field'
           type='email'
@@ -94,7 +95,7 @@ export default function Login (props) {
 
         <TextInput
           aria-label='password' label='password' name='password' id='password'
-          internalLabel='Password'
+          internalLabel={t('Password')}
           onChange={handlePasswordChange}
           onEnter={handleLogin}
           styleName='field'
@@ -103,10 +104,10 @@ export default function Login (props) {
         />
 
         <Link to='/reset-password' styleName='forgot-password'>
-          <span styleName='forgot-password'>Forgot password?</span>
+          <span styleName='forgot-password'>{t('Forgot password?')}</span>
         </Link>
 
-        <Button styleName='submit' label='Sign in' onClick={handleLogin} />
+        <Button styleName='submit' label={t('Sign in')} onClick={handleLogin} />
       </div>
       <div styleName='auth-buttons'>
         <FacebookButton onClick={() => handleLoginWithService('facebook')} />

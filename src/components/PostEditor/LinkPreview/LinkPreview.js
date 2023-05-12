@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
+import { useTranslation } from 'react-i18next'
 import { ImEnlarge, ImShrink } from 'react-icons/im'
 import { bgImageStyle } from 'util/index'
 import Icon from 'components/Icon'
@@ -12,6 +13,7 @@ export default function LinkPreview ({ loading, featured: providedFeatured, ...p
   const [featured, setFeatured] = useState()
   const { linkPreview, onClose, onFeatured, className } = props
   const url = linkPreview?.url
+  const { t } = useTranslation()
 
   const toggleFeatured = () => {
     setFeatured(!featured)
@@ -44,7 +46,7 @@ export default function LinkPreview ({ loading, featured: providedFeatured, ...p
       <div styleName='container' className={className}>
         {featured && (
           <span styleName='featured'>
-            <span><strong>Featured:</strong> This video will be full-width, displayed above the description, and playable.</span>
+            <span><strong>{t('Featured:')}</strong> {t('This video will be full-width, displayed above the description, and playable.')}</span>
           </span>
         )}
         <div styleName='link-preview'>

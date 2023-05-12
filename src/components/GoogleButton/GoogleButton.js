@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import './GoogleButton.scss'
 
@@ -7,7 +8,8 @@ export default function GoogleButton ({
   signUp,
   className = ''
 }) {
-  const label = 'Continue with Google'
+  const { t } = useTranslation()
+  const label = t('Continue with Google')
 
   return <a
     aria-label={label}

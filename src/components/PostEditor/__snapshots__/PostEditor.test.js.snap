@@ -233,7 +233,6 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={
             Array [
@@ -247,11 +246,13 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
               },
             ]
           }
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -292,7 +293,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -472,7 +473,6 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={
             Array [
@@ -486,11 +486,13 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
               },
             ]
           }
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -531,7 +533,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -662,7 +664,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="discussion placeholder"
+        placeholder="What’s on your mind?"
         type="text"
         value=""
       />
@@ -725,14 +727,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -745,7 +748,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -819,7 +822,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="offer placeholder"
+        placeholder="What help can you offer?"
         type="text"
         value=""
       />
@@ -882,14 +885,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -930,7 +934,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your offer located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1004,7 +1008,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="request placeholder"
+        placeholder="What are you looking for help with?"
         type="text"
         value=""
       />
@@ -1067,14 +1071,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1115,7 +1120,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your request located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1189,7 +1194,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="resource placeholder"
+        placeholder="What resource is available?"
         type="text"
         value=""
       />
@@ -1252,14 +1257,15 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1300,7 +1306,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your resource located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1374,7 +1380,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="a test title placeholder"
+        placeholder="What’s on your mind?"
         type="text"
         value=""
       />
@@ -1438,14 +1444,15 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1458,7 +1465,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1637,14 +1644,15 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={true}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1657,7 +1665,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1795,14 +1803,15 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={true}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1815,7 +1824,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -1953,14 +1962,15 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -1973,7 +1983,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -2130,14 +2140,15 @@ exports[`PostEditor renders contribution button 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -2150,7 +2161,7 @@ exports[`PostEditor renders contribution button 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>
@@ -2172,7 +2183,9 @@ exports[`PostEditor renders contribution button 1`] = `
         <div
           data-stylename="accept-contributions-help"
         >
-          If you turn 'Accept Contributions' on, people will be able to send money to your Stripe connected account to support this project.
+          If you turn 'Accept Contributions' on, people will be able
+                      to send money to your Stripe connected account to support
+                      this project.
         </div>
       </div>
     </div>
@@ -2352,14 +2365,15 @@ exports[`PostEditor renders with min props 1`] = `
         <GroupsSelector
           onChange={[Function]}
           options={Array []}
-          placeholder="Type group name..."
           readOnly={false}
           selected={Array []}
+          t={[Function]}
         />
       </div>
     </div>
     <PublicToggle
       isPublic={false}
+      t={[Function]}
       togglePublic={[Function]}
     />
     <div
@@ -2372,7 +2386,7 @@ exports[`PostEditor renders with min props 1`] = `
       </div>
       <Connect(LocationInput)
         onChange={[Function]}
-        placeholder="Where is your discussion located?"
+        placeholder="Where is your {{type}} located?"
         saveLocationToDB={true}
       />
     </div>

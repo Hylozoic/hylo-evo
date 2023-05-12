@@ -1,6 +1,19 @@
 import React from 'react'
-import StreamBanner, { postPromptString } from './StreamBanner'
+import StreamBanner, { PostPrompt } from './StreamBanner'
+import { BrowserRouter } from 'react-router-dom'
 import { mount } from 'enzyme'
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
 
 const currentUser = {
   avatarUrl: 'me.png',
@@ -46,11 +59,11 @@ it('matches the snapshot for an orphan user', () => {
   expect(node).toMatchSnapshot()
 })
 
-describe('postPromptString', () => {
-  it('renders a post prompt string', () => {
-    const firstName = 'anybody'
+describe('PostPrompt', () => {
+  it('renders a post prompt', () => {
+    const firstName = 'Arturo'
+    const wrapper = mount(<BrowserRouter><PostPrompt firstName={firstName} type='project' /></BrowserRouter>)
 
-    expect(postPromptString('project', { firstName })).toMatchSnapshot()
-    expect(postPromptString('', { firstName })).toMatchSnapshot()
+    expect(wrapper).toMatchSnapshot()
   })
 })
