@@ -16,7 +16,7 @@ const makeDropdown = (selected, options, onChange) => {
       toggleChildren={
         <span styleName='dropdown-label'>
           <Icon name='ArrowDown' />
-          {options.find(o => o.id === selected).label}
+          {t(options.find(o => o.id === selected).label)}
         </span>
       }
       items={options.map(({ id, label }) => ({
@@ -30,13 +30,13 @@ const makeDropdown = (selected, options, onChange) => {
 const StreamViewControls = (props) => {
   const { t } = useTranslation()
   const POST_TYPE_OPTIONS = [
-    { id: undefined, label: t('All Posts') },
-    { id: 'discussion', label: t('Discussions') },
-    { id: 'event', label: t('Events') },
-    { id: 'offer', label: t('Offers') },
-    { id: 'project', label: t('Projects') },
-    { id: 'request', label: t('Requests') },
-    { id: 'resource', label: t('Resources') }
+    { id: undefined, label: 'All Posts' },
+    { id: 'discussion', label: 'Discussions' },
+    { id: 'event', label: 'Events' },
+    { id: 'offer', label: 'Offers' },
+    { id: 'project', label: 'Projects' },
+    { id: 'request', label: 'Requests' },
+    { id: 'resource', label: 'Resources' }
   ]
 
   const { customViewType, sortBy, postTypeFilter, viewMode, changeSearch, changeSort, changeTab, changeView, context, searchValue, view, customPostTypes, changeChildPostInclusion, childPostInclusion } = props
