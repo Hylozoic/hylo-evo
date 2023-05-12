@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Beta of Internationalization support! First pass of translation into Spanish. Users can select their language using a new menu item, and that will be saved for the future. 
 
+### Fixed
+- Fix close button when viewing posts or groups when not logged in and looking at the public map or group explorer
+
 ## [5.4.2] - 2023-05-04
 
 ### Added
