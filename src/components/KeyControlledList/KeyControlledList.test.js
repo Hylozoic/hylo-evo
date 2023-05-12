@@ -1,6 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { KeyControlledItemList } from './KeyControlledList'
+import KeyControlledItemList from './KeyControlledItemList'
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
 
 describe('KeyControlledItemList', () => {
   const defaultMinProps = {

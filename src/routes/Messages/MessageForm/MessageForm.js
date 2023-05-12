@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { throttle } from 'lodash'
 import { get } from 'lodash/fp'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -13,6 +14,7 @@ import styles from './MessageForm.scss'
 
 export default function MessageForm (props) {
   const [hasFocus, setHasFocus] = useState(false)
+  const { t } = useTranslation()
 
   const handleSubmit = event => {
     if (event) event.preventDefault()
@@ -46,7 +48,7 @@ export default function MessageForm (props) {
     messageText,
     onFocus,
     pending,
-    placeholder
+    placeholder = t('Write something...')
   } = props
 
   if (pending) return <Loading />
@@ -72,10 +74,6 @@ export default function MessageForm (props) {
       <Icon name='Reply' styleName='reply-icon' />
     </button>
   </form>
-}
-
-MessageForm.defaultProps = {
-  placeholder: 'Write something...'
 }
 
 MessageForm.propTypes = {

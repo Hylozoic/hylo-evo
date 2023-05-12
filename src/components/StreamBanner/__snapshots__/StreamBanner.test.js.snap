@@ -1,5 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PostPrompt renders a post prompt 1`] = `
+<BrowserRouter>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <PostPrompt
+      firstName="Arturo"
+      type="project"
+    >
+      <div
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <Link
+          to="/all/create/post?newPostType=project"
+        >
+          <LinkAnchor
+            href="/all/create/post?newPostType=project"
+            navigate={[Function]}
+          >
+            <a
+              href="/all/create/post?newPostType=project"
+              onClick={[Function]}
+            >
+              <div
+                className="post-prompt"
+                data-stylename="postPrompt"
+              >
+                <RoundImage
+                  data-stylename="prompt-image"
+                  small={true}
+                >
+                  <div
+                    data-stylename="image small"
+                    style={Object {}}
+                  />
+                </RoundImage>
+                Hi {{firstName}}, what would you like to create?
+              </div>
+            </a>
+          </LinkAnchor>
+        </Link>
+        <div
+          data-stylename="shadow"
+        />
+      </div>
+    </PostPrompt>
+  </Router>
+</BrowserRouter>
+`;
+
 exports[`matches the snapshot for an orphan user 1`] = `
 <StreamBanner
   all={true}
@@ -20,10 +90,6 @@ exports[`matches the snapshot for an orphan user 1`] = `
   }
 />
 `;
-
-exports[`postPromptString renders a post prompt string 1`] = `"Hi anybody, what would you like to create?"`;
-
-exports[`postPromptString renders a post prompt string 2`] = `"Hi anybody, what's on your mind?"`;
 
 exports[`renders for all groups 1`] = `
 <StreamBanner

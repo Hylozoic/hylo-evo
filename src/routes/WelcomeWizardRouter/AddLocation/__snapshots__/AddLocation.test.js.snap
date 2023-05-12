@@ -43,7 +43,8 @@ exports[`AddLocation renders correctly 1`] = `
       data-stylename="instructions"
     >
       <p>
-        Add your location to see more relevant content, and find people and projects around you.
+        Add your location to see more relevant content, and find people and projects around you
+        .
       </p>
     </div>
     <div>

@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { isEmpty, map } from 'lodash'
 import cx from 'classnames'
 import Pillbox from 'components/Pillbox'
 import Loading from 'components/Loading'
 import './SkillsSection.scss'
 
-export default class SkillsSection extends Component {
+class SkillsSection extends Component {
   static defaultProps = {
-    editable: true,
-    label: 'Add a Skill or Interest',
-    placeholder: 'What skills and interests do you have?'
+    editable: true
   }
 
   componentDidMount () {
@@ -45,8 +44,8 @@ export default class SkillsSection extends Component {
       editable,
       group,
       isMe,
-      label,
-      placeholder,
+      label = this.props.t('Add a Skill or Interest'),
+      placeholder = this.props.t('What skills and interests do you have?'),
       skills,
       skillSuggestions
     } = this.props
@@ -66,3 +65,4 @@ export default class SkillsSection extends Component {
     </div>
   }
 }
+export default withTranslation()(SkillsSection)

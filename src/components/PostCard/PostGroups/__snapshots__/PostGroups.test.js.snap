@@ -10,7 +10,7 @@ exports[`PostGroups matches last snapshot 1`] = `
     <span
       data-stylename="label"
     >
-      Posted In: 
+      Posted In: 
     </span>
     <LinkedGroupNameList
       expandFunc={[Function]}
@@ -34,6 +34,7 @@ exports[`PostGroups matches last snapshot 1`] = `
         ]
       }
       maxShown={2}
+      t={[Function]}
     />
     <a
       data-stylename="expandLink"
@@ -59,7 +60,7 @@ exports[`PostGroups matches last snapshot when expanded 1`] = `
     <span
       data-stylename="label"
     >
-      Posted In: 
+      Posted In: 
     </span>
     <a
       data-stylename="expandLink"

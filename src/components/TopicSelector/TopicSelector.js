@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import AsyncCreatableSelect from 'react-select/async-creatable'
 import styles from './TopicSelector.scss'
 import { isEmpty, isEqual, uniqBy, orderBy, get, includes } from 'lodash/fp'
@@ -49,11 +50,10 @@ const inputStyles = {
   indicatorSeparator: styles => ({ display: 'none' })
 }
 
-export default class TopicSelector extends Component {
+class TopicSelector extends Component {
   static defaultProps = {
     forGroups: [],
     defaultTopics: [],
-    placeholder: 'Enter up to three topics...',
     selectedTopics: []
   }
 
@@ -113,7 +113,7 @@ export default class TopicSelector extends Component {
       [{
         label: forGroups && forGroups.length > 0
           ? forGroups[0].name
-          : 'Default Topics',
+          : this.props.t('Default Topics'),
         options: groupTopics
       }]
     )
@@ -142,7 +142,7 @@ export default class TopicSelector extends Component {
     return [
       ...this.formatGroupTopicSuggestions(filteredDefaultTopics) || [],
       {
-        label: 'All Topics',
+        label: this.props.t('All Topics'),
         options: sortedTopicResults
       }
     ]
@@ -162,7 +162,7 @@ export default class TopicSelector extends Component {
   }
 
   render () {
-    const { placeholder, defaultTopics: providedDefaultTopics } = this.props
+    const { placeholder = this.props.t('Enter up to three topics...'), defaultTopics: providedDefaultTopics, t } = this.props
     const { selected } = this.state
     const defaultTopics = this.formatGroupTopicSuggestions(providedDefaultTopics) || []
 
@@ -191,8 +191,8 @@ export default class TopicSelector extends Component {
         }}
         noOptionsMessage={() => {
           return selected.length >= MAX_TOPICS
-            ? `You can only select up to ${MAX_TOPICS} topics`
-            : 'Start typing to add a topic'
+            ? t(`You can only select up to {{MAX_TOPICS}} topics`, { MAX_TOPICS })
+            : t('Start typing to add a topic')
         }}
         formatOptionLabel={(item, { context }) => {
           if (context === 'value') {
@@ -200,7 +200,7 @@ export default class TopicSelector extends Component {
           }
 
           if (item.__isNew__) {
-            return <div>Create topic &quot;#{item.value}&quot;</div>
+            return <div>{t('Create topic "#{{item.value}}"', { item })}</div>
           }
 
           const { name, postsTotal, followersTotal } = item
@@ -214,8 +214,8 @@ export default class TopicSelector extends Component {
             <div className={styles.item}>
               <div styleName='menuTopicLabel'>#{name}</div>
               <div styleName='suggestionMeta'>
-                <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} subscribers</span>
-                <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} posts</span>
+                <span styleName='column'><Icon name='Star' styleName='icon' />{formatCount(followersTotal)} {t('subscribers')}</span>
+                <span styleName='column'><Icon name='Events' styleName='icon' />{formatCount(postsTotal)} {t('posts')}</span>
               </div>
             </div>
           )
@@ -224,3 +224,5 @@ export default class TopicSelector extends Component {
     )
   }
 }
+
+export default withTranslation()(TopicSelector)

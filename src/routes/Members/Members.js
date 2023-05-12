@@ -1,5 +1,6 @@
 import { debounce, isEmpty, some, times } from 'lodash/fp'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 import { bool, func, string, arrayOf, shape } from 'prop-types'
@@ -15,7 +16,7 @@ import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 import './Members.scss'
 
-export default class Members extends Component {
+class Members extends Component {
   componentDidMount () {
     this.fetchOrShowCached()
   }
@@ -47,7 +48,7 @@ export default class Members extends Component {
 
   render () {
     const {
-      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember
+      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember, t
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
@@ -55,27 +56,27 @@ export default class Members extends Component {
     return (
       <div>
         <Helmet>
-          <title>Members | {group ? `${group.name} | ` : ''}Hylo</title>
+          <title>{t('Members')} | {group ? `${group.name} | ` : ''}Hylo</title>
         </Helmet>
 
         <div styleName='header'>
           <div>
-            <div styleName='title'>Members</div>
+            <div styleName='title'>{t('Members')}</div>
             <div styleName='total-members'>
-              {memberCount} Total Members
+              {t('{{memberCount}} Total Members', { memberCount })}
             </div>
           </div>
           {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
             <Button styleName='invite'
               color='green-white-green-border'
               narrow >
-              <Icon name='Invite' styleName='invite-icon' /> Invite
+              <Icon name='Invite' styleName='invite-icon' /> {t('Invite People')}
             </Button>
           </Link>}
         </div>
         <div styleName='content'>
           <div styleName='controls'>
-            <TextInput placeholder='Search by name or skills & interests'
+            <TextInput placeholder={t('Search by name or skills & interests')}
               styleName='search'
               defaultValue={search}
               onChange={e => this.search(e.target.value)} />
@@ -83,7 +84,7 @@ export default class Members extends Component {
               toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
               alignRight
               items={Object.keys(sortKeys).map(k => ({
-                label: sortKeys[k],
+                label: t(sortKeys[k]),
                 onClick: () => changeSort(k)
               }))} />
           </div>
@@ -123,8 +124,9 @@ Members.propTypes = {
 }
 
 function SortLabel ({ text }) {
+  const { t } = useTranslation()
   return <div styleName='sort-label'>
-    <span>Sort by <strong>{text}</strong></span>
+    <span>{t('Sort by')} <strong>{text}</strong></span>
     <Icon name='ArrowDown' styleName='sort-icon' />
   </div>
 }
@@ -141,3 +143,4 @@ function sortKeysFactory (context) {
 export function twoByTwo (list) {
   return times(i => list.slice(i * 2, i * 2 + 2), (list.length + 1) / 2)
 }
+export default withTranslation()(Members)

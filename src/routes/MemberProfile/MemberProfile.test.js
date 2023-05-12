@@ -2,6 +2,13 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import denormalized from './MemberProfile.test.json'
 import MemberProfile from './MemberProfile'
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
 
 describe('MemberProfile', () => {
   const defaultTestProps = {
@@ -40,7 +47,7 @@ describe('MemberProfile', () => {
   it('does not display bio on other tabs', () => {
     const props = {
       ...defaultTestProps,
-      currentTab: 'Upvotes',
+      currentTab: 'Reactions',
       bio: 'WOMBATS',
       votes: []
     }
@@ -63,7 +70,7 @@ describe('MemberProfile', () => {
       currentTab: 'Posts'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes("Rich Churcher's posts")).toBe(true)
+    expect(wrapper.text().includes('{{name}}s posts')).toBe(true)
   })
 
   it('renders MemberComments on Comments', () => {
@@ -72,15 +79,15 @@ describe('MemberProfile', () => {
       currentTab: 'Comments'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes("Rich Churcher's comments")).toBe(true)
+    expect(wrapper.text().includes('{{name}}s comments')).toBe(true)
   })
 
-  it('renders MemberVotes on Upvotes', () => {
+  it('renders MemberVotes on reactions', () => {
     const props = {
       ...defaultTestProps,
-      currentTab: 'Upvotes'
+      currentTab: 'Reactions'
     }
     const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes("Rich Churcher's upvotes")).toBe(true)
+    expect(wrapper.text().includes('{{name}}s reactions')).toBe(true)
   })
 })

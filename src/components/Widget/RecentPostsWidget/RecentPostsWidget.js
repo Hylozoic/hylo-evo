@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Slider from 'react-slick'
 import { Link } from 'react-router-dom'
 import { filter, isEmpty } from 'lodash/fp'
@@ -34,8 +35,9 @@ const settings = {
   ]
 }
 
-export default ({ group, items, routeParams }) => {
+const RecentPostsWidget = ({ group, items, routeParams }) => {
   const [swiped, setSwiped] = useState(false)
+  const { t } = useTranslation()
 
   const handleSwiped = useCallback(() => {
     setSwiped(true)
@@ -59,13 +61,13 @@ export default ({ group, items, routeParams }) => {
         <div>
           <Link to={createPostUrl(routeParams)} styleName='post create-new'>
             <div styleName='content'>
-              <div styleName='type'>NO MORE RECENT ACTIVITY</div>
-              <div styleName='recent-posts-cta'>+ New post</div>
+              <div styleName='type'>{t('NO MORE RECENT ACTIVITY')}</div>
+              <div styleName='recent-posts-cta'>{t('+ New post')}</div>
             </div>
           </Link>
         </div>
         <div styleName='view-all'>
-          <Link to={groupUrl(group.slug, 'stream')}>View all</Link>
+          <Link to={groupUrl(group.slug, 'stream')}>{t('View all')}</Link>
         </div>
       </Slider>
     </div>
@@ -97,3 +99,4 @@ const RecentPostCard = ({ group, onClickCapture, post, routeParams }) => {
     </div>
   )
 }
+export default RecentPostsWidget

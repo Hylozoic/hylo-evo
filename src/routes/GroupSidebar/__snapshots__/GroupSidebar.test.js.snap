@@ -18,6 +18,7 @@ exports[`GroupSidebar renders correctly 1`] = `
   <AboutSection
     description="the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, the description, which is long enough to add a \\"Read More\\" button, "
     name="A Great Cause"
+    t={[Function]}
   />
   <MemberSection
     memberCount={56}
@@ -37,6 +38,7 @@ exports[`GroupSidebar renders correctly 1`] = `
     slug="great-cause"
   />
   <GroupLeaderSection
+    groupId={1}
     leaders={
       Array [
         Object {

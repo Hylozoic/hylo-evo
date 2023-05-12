@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import { Redirect } from 'react-router'
 import { any, arrayOf, func, object, string, bool } from 'prop-types'
 import { debounce, has, get, isEmpty, trim } from 'lodash/fp'
@@ -11,7 +12,7 @@ import TextInput from 'components/TextInput'
 
 import './CreateTopic.scss'
 
-export default class CreateTopic extends Component {
+class CreateTopic extends Component {
   static propTypes = {
     buttonText: string,
     groupId: any,
@@ -25,13 +26,13 @@ export default class CreateTopic extends Component {
 
   defaultState = {
     closeOnSubmit: false,
-    modalTitle: 'Create a Topic',
+    modalTitle: this.props.t('Create a Topic'),
     modalVisible: false,
     nameError: null,
     loading: false,
     showCancelButton: true,
     showSubmitButton: true,
-    submitButtonText: 'Add Topic',
+    submitButtonText: this.props.t('Add Topic'),
     topicName: '',
     useNotificationFormat: false
   }
@@ -74,9 +75,9 @@ export default class CreateTopic extends Component {
     this.setState({
       closeOnSubmit: true,
       loading: false,
-      modalTitle: 'Topic Created',
+      modalTitle: this.props.t('Topic Created'),
       showCancelButton: false,
-      submitButtonText: 'Ok',
+      submitButtonText: this.props.t('Ok'),
       useNotificationFormat: true
     })
   }
@@ -94,7 +95,7 @@ export default class CreateTopic extends Component {
 
     const name = this.safeTopicName()
     if (isEmpty(name)) {
-      return this.setState({ nameError: 'Topic name is required.' })
+      return this.setState({ nameError: this.props.t('Topic name is required.') })
     }
 
     // First, check if we already have the topic, and it has posts. If so, we
@@ -157,7 +158,7 @@ export default class CreateTopic extends Component {
       topicName,
       useNotificationFormat
     } = this.state
-    const { subscribeAfterCreate } = this.props
+    const { subscribeAfterCreate, t } = this.props
 
     if (redirectTopic && subscribeAfterCreate) {
       const url = topicUrl(encodeURI(redirectTopic), { groupSlug: this.props.groupSlug })
@@ -179,7 +180,7 @@ export default class CreateTopic extends Component {
         submitButtonText={submitButtonText}
         useNotificationFormat={useNotificationFormat}>
         {useNotificationFormat
-          ? (subscribeAfterCreate ? <div styleName='dialog-content'>you're subscribed to #{this.ignoreHash(topicName)}</div> : <div styleName='dialog-content'>Created topic #{this.ignoreHash(topicName)}</div>)
+          ? (subscribeAfterCreate ? <div styleName='dialog-content'>{t('you\'re subscribed to #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div> : <div styleName='dialog-content'>{t('Created topic #{{topicName}}', { topicName: this.ignoreHash(topicName) })}</div>)
           : <div>
             <TextInput
               aria-label='topic-name'
@@ -188,7 +189,7 @@ export default class CreateTopic extends Component {
               name='topic-name'
               onChange={this.updateTopicName}
               loading={loading}
-              placeholder='Enter a topic name:'
+              placeholder={t('Enter a topic name:')}
               value={this.state.topicName} />
             {nameError && <div styleName='topic-error'>{nameError}</div>}
           </div>}
@@ -196,3 +197,4 @@ export default class CreateTopic extends Component {
     </React.Fragment>
   }
 }
+export default withTranslation()(CreateTopic)

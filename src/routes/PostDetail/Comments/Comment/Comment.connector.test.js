@@ -1,6 +1,14 @@
 import { mapStateToProps, mergeProps } from './Comment.connector'
 import orm from 'store/models'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('mapStateToProps', () => {
   describe('as moderator', () => {
     let state, myComment, otherComment
@@ -88,7 +96,7 @@ describe('mergeProps', () => {
       window.confirm = jest.fn()
       const stateProps = { canModerate: true, isCreator: true }
       const props = mergeProps(stateProps, { fetchCommentsMaker: () => {} }, { comment: { childComments: [] } })
-      props.deleteComment(1)
+      props.deleteComment(1, 'Are you sure you want to delete this comment?')
       expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to delete this comment?')
     })
 
@@ -96,7 +104,7 @@ describe('mergeProps', () => {
       window.confirm = jest.fn()
       const stateProps = { canModerate: true, isCreator: false }
       const props = mergeProps(stateProps, { fetchCommentsMaker: () => {} }, { comment: { childComments: [] } })
-      props.removeComment(1)
+      props.removeComment(1, 'Are you sure you want to remove this comment?')
       expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to remove this comment?')
     })
   })

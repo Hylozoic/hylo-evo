@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
+import { withTranslation, useTranslation } from 'react-i18next'
 import get from 'lodash/get'
 import { WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
@@ -17,7 +18,7 @@ import './UserGroupsTab.scss'
 
 const { array, func, object, string } = PropTypes
 
-export default class UserGroupsTab extends Component {
+class UserGroupsTab extends Component {
   static propTypes = {
     action: string,
     affiliations: object,
@@ -36,18 +37,18 @@ export default class UserGroupsTab extends Component {
   }
 
   render () {
-    const { action } = this.props
+    const { action, t } = this.props
     const { affiliations, memberships, errorMessage, successMessage, showAddAffiliations } = this.state
     const displayMessage = errorMessage || successMessage
     if (!memberships || !affiliations) return <Loading />
 
     return (
       <div styleName='container'>
-        <h1 styleName='title'>Your affiliations with organizations</h1>
+        <h1 styleName='title'>{t('Your affiliations with organizations')}</h1>
 
-        <div styleName='description'>This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.</div>
+        <div styleName='description'>{t('This list automatically shows which groups on Hylo you are a part of. You can also share your affiliations with organizations that are not currently on Hylo.')}</div>
 
-        <h2 styleName='subhead'>Hylo Groups</h2>
+        <h2 styleName='subhead'>{t('Hylo Groups')}</h2>
         {action === LEAVE_GROUP && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {memberships.map((m, index) =>
           <Membership
@@ -57,7 +58,7 @@ export default class UserGroupsTab extends Component {
             index={index}
           />)}
 
-        <h2 styleName='subhead'>Other Affiliations</h2>
+        <h2 styleName='subhead'>{t('Other Affiliations')}</h2>
         {action === DELETE_AFFILIATION && displayMessage && <Message errorMessage={errorMessage} successMessage={successMessage} reset={this.resetMessage} />}
         {affiliations && affiliations.items.length > 0 && affiliations.items.map((a, index) =>
           <Affiliation
@@ -73,7 +74,7 @@ export default class UserGroupsTab extends Component {
         {showAddAffiliations ? <AddAffiliation close={this.toggleAddAffiliations} save={this.saveAffiliation} /> : (
           <div styleName='add-affiliation' onClick={this.toggleAddAffiliations}>
             <div styleName='plus'>+</div>
-            <div>Add new affiliation</div>
+            <div>{t('Add new affiliation')}</div>
           </div>
         )}
       </div>
@@ -144,8 +145,8 @@ export default class UserGroupsTab extends Component {
 }
 
 export function AddAffiliation ({ close, save }) {
+  const { t } = useTranslation()
   const PREPOSITIONS = ['of', 'at', 'for']
-
   const [role, setRole] = useState('')
   const [preposition, setPreposition] = useState(PREPOSITIONS[0])
   const [orgName, setOrgName] = useState('')
@@ -161,7 +162,7 @@ export function AddAffiliation ({ close, save }) {
   return (
     <div styleName='affiliation-form'>
       <div styleName='header'>
-        <h3>Add new affiliation</h3>
+        <h3>{t('Add new affiliation')}</h3>
         <div styleName='close' onClick={close}>x</div>
       </div>
 
@@ -171,7 +172,7 @@ export function AddAffiliation ({ close, save }) {
           <input
             type='text'
             onChange={e => setRole(e.target.value.substring(0, CHAR_LIMIT))}
-            placeholder='Name of role'
+            placeholder={t('Name of role')}
             value={role}
           />
           <div styleName='chars'>{role.length}/{CHAR_LIMIT}</div>
@@ -180,12 +181,12 @@ export function AddAffiliation ({ close, save }) {
         <Dropdown
           toggleChildren={
             <span>
-              {PREPOSITIONS.find(p => p === preposition)}
+              {t(PREPOSITIONS.find(p => p === preposition))}
               <Icon name='ArrowDown' />
             </span>
           }
           items={PREPOSITIONS.map(p => ({
-            label: p,
+            label: t(p),
             onClick: () => setPreposition(p)
           }))}
           alignLeft
@@ -195,7 +196,7 @@ export function AddAffiliation ({ close, save }) {
           <input
             type='text'
             onChange={e => setOrgName(e.target.value.substring(0, CHAR_LIMIT))}
-            placeholder='Name of organization'
+            placeholder={t('Name of organization')}
             value={orgName}
           />
           <div styleName='chars'>{orgName.length}/{CHAR_LIMIT}</div>
@@ -205,13 +206,13 @@ export function AddAffiliation ({ close, save }) {
           <input
             type='text'
             onChange={e => setUrl(e.target.value.substring(URL_PROTOCOL.length))}
-            placeholder='URL of organization'
+            placeholder={t('URL of organization')}
             value={formatUrl(url)}
           />
         </div>
 
         <div styleName={`save ${canSave ? '' : 'disabled'}`}>
-          <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>Add Affiliation</span>
+          <span onClick={canSave ? () => save({ role, preposition, orgName, url }) : undefined}>{t('Add Affiliation')}</span>
         </div>
 
       </div>
@@ -224,3 +225,4 @@ export function Message ({ errorMessage, successMessage, reset }) {
     <div styleName={`message ${errorMessage ? 'error' : 'success'}`} onClick={reset}>{errorMessage || successMessage }</div>
   )
 }
+export default withTranslation()(UserGroupsTab)

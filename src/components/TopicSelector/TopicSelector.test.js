@@ -2,6 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import TopicSelector from './TopicSelector'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 describe('TopicSelector', () => {
   const defaultMinProps = {
     fetchDefaultTopics: () => {}

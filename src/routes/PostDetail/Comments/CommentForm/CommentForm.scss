@@ -14,6 +14,22 @@
   margin-right: 7px;
 }
 
+.send-message-container {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.send-message-button {
+  padding: 0;
+  line-height: 26px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 6px;
+}
+
 .prompt {
   display: flex;
   border-radius: 4px;

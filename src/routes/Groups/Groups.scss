@@ -1,4 +1,5 @@
 .container {
+
 }
 
 .add-group {
@@ -122,15 +123,17 @@
     width: 100%;
     text-decoration: none;
     color: white;
+    max-height: 36px;
+    overflow: hidden;
 
     span {
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display: block;
       text-decoration: none;
       color: white;
       font-size: 14px;
+      line-height: 18px;
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { useEditor, EditorContent, Extension, BubbleMenu } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -12,7 +12,7 @@ import HyloEditorMenuBar from './HyloEditorMenuBar'
 import 'tippy.js/dist/tippy.css'
 import './HyloEditor.scss'
 
-export const HyloEditor = React.forwardRef(function HyloEditor ({
+const HyloEditor = React.forwardRef(function HyloEditor ({
   className,
   containerClassName = 'hyloEditor',
   contentHTML,
@@ -31,7 +31,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
   showMenu = false,
   suggestionsThemeName = 'suggestions'
 }, ref) {
-  const dispatch = useDispatch()
+  const { t } = useTranslation()
   const editorRef = useRef(null)
   const [selectedLink, setSelectedLink] = useState()
   const editor = useEditor({
@@ -113,9 +113,9 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
         }
       }),
 
-      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
+      PeopleMentions({ onSelection: onAddMention, maxSuggestions, groupIds, suggestionsThemeName }),
 
-      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, suggestionsThemeName, dispatch }),
+      TopicMentions({ onSelection: onAddTopic, maxSuggestions, groupIds, suggestionsThemeName }),
 
       Highlight
     ],
@@ -200,7 +200,7 @@ export const HyloEditor = React.forwardRef(function HyloEditor ({
             }}
             styleName='addLinkPreviewButton'
           >
-            <VscPreview /> Add Preview
+            <VscPreview /> {t('Add Preview')}
           </span>
         </BubbleMenu>
       )}

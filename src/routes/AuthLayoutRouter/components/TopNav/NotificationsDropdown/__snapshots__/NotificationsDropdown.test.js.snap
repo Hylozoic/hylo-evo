@@ -561,7 +561,8 @@ exports[`NotificationBody renders correctly with a comment mention notification 
   >
     Marie
   </span>
-   wrote: "
+   wrote: 
+  "
   I live right next to there and can come help out. I've never done …
   "
 </div>
@@ -576,7 +577,8 @@ exports[`NotificationBody renders correctly with a comment notification 1`] = `
   >
     Marie
   </span>
-   wrote: "
+   wrote: 
+  "
   I live right next to there and can come help out. I've never done …
   "
 </div>
@@ -591,11 +593,8 @@ exports[`NotificationBody renders correctly with a donation from notification 1`
   >
     Marie Curie
   </span>
-   contributed $
-  123
-   to "
-  Our Oceans
-  "
+   
+  contributed {{amount}} to "{{postSummary}}"
 </div>
 `;
 
@@ -608,11 +607,8 @@ exports[`NotificationBody renders correctly with a donation to notification 1`] 
   >
     You
   </span>
-   contributed $
-  123
-   to "
-  Our Oceans
-  "
+   
+  contributed {{amount}} to "{{postSummary}}"
 </div>
 `;
 
@@ -645,7 +641,10 @@ exports[`NotificationBody renders correctly with a mention notification 1`] = `
   >
     Marie
   </span>
-   wrote: "
+   
+  wrote:
+   
+  "
   Heads up
   "
 </div>
@@ -660,7 +659,10 @@ exports[`NotificationBody renders correctly with a tag notification 1`] = `
   >
     Arthur
   </span>
-   wrote: "
+   
+  wrote:
+   
+  "
   I have so many things I need!
   "
 </div>
@@ -673,11 +675,12 @@ exports[`NotificationBody renders correctly with an announcement notification 1`
   <span
     data-stylename="bold"
   >
-    Marie
+    Marie Curie
   </span>
-   wrote: "
+   
+  wrote: 
+   
   Announcement
-  "
 </div>
 `;
 
@@ -726,6 +729,7 @@ exports[`NotificationHeader renders correctly with a comment notification 1`] = 
   data-stylename="header"
 >
   New Comment on 
+   
   <span
     data-stylename="bold"
   >
@@ -755,7 +759,8 @@ exports[`NotificationHeader renders correctly with a donation to notification 1`
   <span
     data-stylename="bold"
   >
-    You 
+    You
+     
   </span>
   contributed to a project
 </div>
@@ -788,10 +793,10 @@ exports[`NotificationHeader renders correctly with a tag notification 1`] = `
   data-stylename="header"
 >
   New Post in 
+   
   <span
     data-stylename="bold"
   >
-    #
     request
   </span>
 </div>

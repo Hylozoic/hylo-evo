@@ -3,6 +3,7 @@
 exports[`renders an error when an error is thrown 1`] = `
 <ErrorBoundary
   message="An Error Message"
+  t={[Function]}
 >
   <div
     data-stylename="container"
@@ -27,6 +28,7 @@ exports[`renders an error when an error is thrown 1`] = `
 exports[`renders children correctly 1`] = `
 <ErrorBoundary
   message="An Error Message"
+  t={[Function]}
 >
   <Something />
 </ErrorBoundary>

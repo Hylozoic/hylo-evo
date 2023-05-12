@@ -632,7 +632,7 @@ export const getGroupsFilteredByTopics = createSelector(
     return isEmpty(filterTopics)
       ? groups
       : groups.filter(g => filterTopics.find(ft => g.name.toLowerCase().includes(ft.name.toLowerCase()) ||
-                                                   (g.description.toLowerCase() && g.description.includes(ft.name.toLowerCase())))
+                                                   (g.description && g.description.includes(ft.name.toLowerCase())))
       )
   }
 )

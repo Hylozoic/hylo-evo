@@ -11,7 +11,8 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      Who is able to see 
+      Who is able to see
+       
       <strong>
         Foomunity
       </strong>
@@ -21,18 +22,21 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       currentSetting={1}
       forSetting={0}
       key="0"
+      t={[Function]}
       updateSetting={[Function]}
     />
     <VisibilitySettingRow
       currentSetting={1}
       forSetting={1}
       key="1"
+      t={[Function]}
       updateSetting={[Function]}
     />
     <VisibilitySettingRow
       currentSetting={1}
       forSetting={2}
       key="2"
+      t={[Function]}
       updateSetting={[Function]}
     />
   </SettingsSection>
@@ -43,11 +47,10 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      How can people become members of 
+      How can people become members of
       <strong>
         Foomunity
       </strong>
-      ?
     </p>
     <AccessibilitySettingRow
       currentSetting={1}
@@ -99,11 +102,14 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
     <p
       data-stylename="general.detailText"
     >
-      When you select a prerequisite group, people must join the selected groups before joining 
+      When you select a prerequisite group, people must join the selected groups before joining
+       
       <strong>
         Foomunity
       </strong>
-      . Only parent groups can be added as prerequisite groups.
+      .
+       
+      Only parent groups can be added as prerequisite groups.
     </p>
     <p
       data-stylename="styles.prerequisiteWarning"
@@ -113,30 +119,35 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       >
         Warning:
       </strong>
-       If you select a prerequisite group that has a visibility setting of
+       
+      If you select a prerequisite group that has a visibility setting of
       <strong>
         <Icon
           data-stylename="styles.prerequisiteIcon"
           name="Hidden"
         />
-         Hidden
+         
+        Hidden
       </strong>
-       or
+       
+      or
       <strong>
         <Icon
           data-stylename="styles.prerequisiteIcon"
           name="Shield"
         />
-         Protected
+         
+        Protected
       </strong>
-      , only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
+      ,
+      only members of those groups will be able to join this group. Because of these settings, people who find your group will not be able to see the prerequisite group.
     </p>
     <GroupsSelector
       groupSettings={true}
       onChange={[Function]}
       options={Array []}
-      placeholder="Type group name..."
       selected={Array []}
+      t={[Function]}
     />
   </SettingsSection>
   <SettingsSection>

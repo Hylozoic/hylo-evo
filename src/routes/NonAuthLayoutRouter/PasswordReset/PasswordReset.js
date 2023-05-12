@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withTranslation } from 'react-i18next'
 import validator from 'validator'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
 import './PasswordReset.scss'
 
-export default class PasswordReset extends Component {
+class PasswordReset extends Component {
   constructor (props) {
     super(props)
     this.state = { email: '', success: false, error: false }
@@ -27,7 +28,7 @@ export default class PasswordReset extends Component {
   }
 
   render () {
-    const { className } = this.props
+    const { className, t } = this.props
     const onChange = event => this.setState({
       email: event.target.value,
       success: false
@@ -39,14 +40,14 @@ export default class PasswordReset extends Component {
     return (
       <div className={className}>
         <div styleName='formWrapper'>
-          <h1 styleName='title'>Reset Your Password</h1>
+          <h1 styleName='title'>{t('Reset Your Password')}</h1>
           <div styleName='subtitle'>
-            Enter your email address and we'll send you an email that lets you reset your password.
+            {t("Enter your email address and we'll send you an email that lets you reset your password.")}
           </div>
-          {success && <div styleName='success'>If your email address matched an account in our system, we sent you an email. Please check your inbox.</div>}
-          {error && <div styleName='error'>There was a problem with your request. Please check your email and try again.</div>}
+          {success && <div styleName='success'>{t('If your email address matched an account in our system, we sent you an email. Please check your inbox.')}</div>}
+          {error && <div styleName='error'>{t('There was a problem with your request. Please check your email and try again.')}</div>}
 
-          <label>Your email address</label>
+          <label>{t('Your email address')}</label>
           <TextInput
             autoFocus
             inputRef={input => { this.email = input }}
@@ -60,7 +61,7 @@ export default class PasswordReset extends Component {
           />
 
           <Button
-            styleName='submit' label='Reset' color={canSubmit ? 'green' : 'gray'}
+            styleName='submit' label={t('Reset')} color={canSubmit ? 'green' : 'gray'}
             onClick={canSubmit ? () => this.submit() : null}
           />
         </div>
@@ -68,3 +69,4 @@ export default class PasswordReset extends Component {
     )
   }
 }
+export default withTranslation()(PasswordReset)

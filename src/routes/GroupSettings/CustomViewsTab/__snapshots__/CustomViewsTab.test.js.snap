@@ -75,6 +75,7 @@ exports[`CustomViewsTab renders correctly 1`] = `
       Current settings up to date
     </span>
     <Button
+      className="save-button"
       color="gray"
       data-stylename="general.save-button"
       label="Save Changes"

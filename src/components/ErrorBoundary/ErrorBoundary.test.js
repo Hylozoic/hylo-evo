@@ -2,6 +2,14 @@ import ErrorBoundary from './ErrorBoundary'
 import { mount } from 'enzyme'
 import React from 'react'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 const Something = () => null
 
 it('renders children correctly', () => {

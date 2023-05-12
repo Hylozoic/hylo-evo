@@ -76,7 +76,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
           "onClick": [Function],
         },
         Object {
-          "label": "Display only nearest city and don't show on the map",
+          "label": "Display only nearest city and dont show on the map",
           "onClick": [Function],
         },
       ]
@@ -208,6 +208,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
       Current settings up to date
     </span>
     <Button
+      className="save-button"
       color="gray"
       data-stylename="general.save-button"
       label="Save Changes"

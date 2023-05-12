@@ -3,6 +3,22 @@ import { shallow } from 'enzyme'
 import React from 'react'
 import orm from 'store/models'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  },
+  withTranslation: () => Component => {
+    Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
+    return Component
+  }
+}))
+
 const session = orm.mutableSession(orm.getEmptyState())
 const { MessageThread, Message, Person } = session
 

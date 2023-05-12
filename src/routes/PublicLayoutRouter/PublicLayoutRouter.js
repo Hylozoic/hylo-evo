@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams, useLocation, useHistory, Redirect, Route, Switch } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Div100vh from 'react-div-100vh'
 import { POST_DETAIL_MATCH, GROUP_DETAIL_MATCH } from 'util/navigation'
 import { CENTER_COLUMN_ID, DETAIL_COLUMN_ID } from 'util/scrolling'
@@ -107,11 +108,12 @@ export function PublicPostDetail (props) {
 }
 
 export function MapExplorerLayoutRouter (props) {
+  const history = useHistory()
+
   return (
     <>
-      <div />
       <div styleName='center-column map-view' id={CENTER_COLUMN_ID}>
-        <MapExplorer {...props} />
+        <MapExplorer {...props} history={history} />
       </div>
       <Route
         path={`(.*)/${POST_DETAIL_MATCH}`}
@@ -154,20 +156,21 @@ export function GroupExplorerLayoutRouter () {
 }
 
 export function PublicPageHeader () {
+  const { t } = useTranslation()
   return (
     <div styleName='background'>
       <Helmet>
-        <title>Public | Hylo</title>
+        <title>{t('Public')} | Hylo</title>
         <meta name='description' content='Hylo: Public content' />
       </Helmet>
       <div styleName='wrapper'>
         <div styleName='header'>
           <a href='/'>
-            <img styleName='logo' src='/assets/navy-merkaba.svg' alt='Hylo logo' />
+            <img styleName='logo' src='/assets/navy-merkaba.svg' alt={t('Hylo logo')} />
           </a>
           <div styleName='access-controls'>
-            <a href='/login'>Sign in</a>
-            <a styleName='sign-up' href='/signup'>Join Hylo</a>
+            <a href='/login'>{t('Sign in')}</a>
+            <a styleName='sign-up' href='/signup'>{t('Join Hylo')}</a>
           </div>
         </div>
       </div>

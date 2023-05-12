@@ -1,5 +1,6 @@
 import { get } from 'lodash/fp'
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import CustomViewsTab from './CustomViewsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
 import GroupSettingsTab from './GroupSettingsTab'
@@ -41,6 +42,7 @@ export default function GroupSettings ({
   upload
 }) {
   const slug = get('slug', group)
+  const { t } = useTranslation()
 
   useEffect(() => {
     group && fetchGroupSettings()
@@ -49,92 +51,95 @@ export default function GroupSettings ({
   if (!group) return <Loading />
   if (!canModerate) return <Redirect to={groupUrl(slug)} />
 
-  return <FullPageModal goToOnClose={groupUrl(slug)}
-    content={[
-      {
-        name: 'Settings',
-        path: groupUrl(slug, 'settings'),
-        component: <GroupSettingsTab
-          fetchLocation={fetchLocation}
-          fetchPending={fetchPending}
-          currentUser={currentUser}
-          group={group}
-          parentGroups={parentGroups}
-          prerequisiteGroups={prerequisiteGroups}
-          updateGroupSettings={updateGroupSettings}
-        />
-      },
-      {
-        name: 'Roles & Badges',
-        path: groupUrl(slug, 'settings/roles'),
-        component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} />
-      },
-      {
-        name: 'Privacy & Access',
-        path: groupUrl(slug, 'settings/privacy'),
-        component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} parentGroups={parentGroups} fetchPending={fetchPending} />
-      },
-      {
-        name: 'Custom Views',
-        path: groupUrl(slug, 'settings/views'),
-        component: <CustomViewsTab
-          group={group}
-          addPostToCollection={addPostToCollection}
-          createCollection={createCollection}
-          fetchCollectionPosts={fetchCollectionPosts}
-          fetchCollectionPostsPending={fetchCollectionPostsPending}
-          fetchPending={fetchPending}
-          removePostFromCollection={removePostFromCollection}
-          reorderPostInCollection={reorderPostInCollection}
-          updateGroupSettings={updateGroupSettings}
-        />
-      },
-      {
-        name: 'Topics',
-        path: groupUrl(slug, 'settings/topics'),
-        component: <TopicsSettingsTab group={group} />
-      },
-      {
-        name: 'Invite',
-        path: groupUrl(slug, 'settings/invite'),
-        component: <InviteSettingsTab group={group} />
-      },
-      {
-        name: 'Join Requests',
-        path: groupUrl(slug, 'settings/requests'),
-        component: <MembershipRequestsTab
-          group={group}
-          currentUser={currentUser}
-        />
-      },
-      {
-        name: 'Related Groups',
-        path: groupUrl(slug, 'settings/relationships'),
-        component: <RelatedGroupsTab
-          group={group}
-          currentUser={currentUser}
-        />
-      },
-      {
-        name: '',
-        path: groupUrl(slug, 'settings/import'),
-        component: <ImportExportSettingsTab
-          group={group}
-          upload={upload}
-        />
-      },
-      {
-        name: 'Export Data',
-        path: groupUrl(slug, 'settings/export'),
-        component: <ExportDataTab
-          group={group}
-        />
-      },
-      {
-        name: 'Delete',
-        path: groupUrl(slug, 'settings/delete'),
-        component: <DeleteSettingsTab group={group} deleteGroup={deleteGroup} />
-      }
-    ]}
-  />
+  return (
+    <FullPageModal
+      goToOnClose={groupUrl(slug)}
+      content={[
+        {
+          name: t('Settings'),
+          path: groupUrl(slug, 'settings'),
+          component: <GroupSettingsTab
+            fetchLocation={fetchLocation}
+            fetchPending={fetchPending}
+            currentUser={currentUser}
+            group={group}
+            parentGroups={parentGroups}
+            prerequisiteGroups={prerequisiteGroups}
+            updateGroupSettings={updateGroupSettings}
+          />
+        },
+        {
+          name: t('Roles & Badges'),
+          path: groupUrl(slug, 'settings/roles'),
+          component: <ModeratorsSettingsTab groupId={group.id} group={group} slug={group.slug} />
+        },
+        {
+          name: t('Privacy & Access'),
+          path: groupUrl(slug, 'settings/privacy'),
+          component: <PrivacySettingsTab group={group} slug={group.slug} updateGroupSettings={updateGroupSettings} parentGroups={parentGroups} fetchPending={fetchPending} />
+        },
+        {
+          name: t('Custom Views'),
+          path: groupUrl(slug, 'settings/views'),
+          component: <CustomViewsTab
+            group={group}
+            addPostToCollection={addPostToCollection}
+            createCollection={createCollection}
+            fetchCollectionPosts={fetchCollectionPosts}
+            fetchCollectionPostsPending={fetchCollectionPostsPending}
+            fetchPending={fetchPending}
+            removePostFromCollection={removePostFromCollection}
+            reorderPostInCollection={reorderPostInCollection}
+            updateGroupSettings={updateGroupSettings}
+          />
+        },
+        {
+          name: t('Topics'),
+          path: groupUrl(slug, 'settings/topics'),
+          component: <TopicsSettingsTab group={group} />
+        },
+        {
+          name: t('Invite'),
+          path: groupUrl(slug, 'settings/invite'),
+          component: <InviteSettingsTab group={group} />
+        },
+        {
+          name: t('Join Requests'),
+          path: groupUrl(slug, 'settings/requests'),
+          component: <MembershipRequestsTab
+            group={group}
+            currentUser={currentUser}
+          />
+        },
+        {
+          name: t('Related Groups'),
+          path: groupUrl(slug, 'settings/relationships'),
+          component: <RelatedGroupsTab
+            group={group}
+            currentUser={currentUser}
+          />
+        },
+        {
+          name: '',
+          path: groupUrl(slug, 'settings/import'),
+          component: <ImportExportSettingsTab
+            group={group}
+            upload={upload}
+          />
+        },
+        {
+          name: t('Export Data'),
+          path: groupUrl(slug, 'settings/export'),
+          component: <ExportDataTab
+            group={group}
+          />
+        },
+        {
+          name: t('Delete'),
+          path: groupUrl(slug, 'settings/delete'),
+          component: <DeleteSettingsTab group={group} deleteGroup={deleteGroup} />
+        }
+      ]}
+    />
+  )
 }

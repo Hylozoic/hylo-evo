@@ -37,7 +37,7 @@ export function baseUrl ({
   view
 }) {
   const safeMemberId = personId || memberId
-  
+
   if (safeMemberId) {
     return personUrl(safeMemberId, groupSlug)
   } else if (topicName) {

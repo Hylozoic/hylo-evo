@@ -13,6 +13,7 @@ exports[`RemovableListItem does not render as links when no URL specified 1`] = 
     Zeus
   </span>
   <span
+    className="remove-button"
     data-stylename="remove-button"
     onClick={[Function]}
   >
@@ -63,6 +64,7 @@ exports[`RemovableListItem renders correctly 1`] = `
     Zeus
   </Link>
   <span
+    className="remove-button"
     data-stylename="remove-button"
     onClick={[Function]}
   >

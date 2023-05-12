@@ -4,6 +4,18 @@ import { shallow } from 'enzyme'
 import { render } from 'util/testing/reactTestingLibraryExtended'
 import AttachmentManager, { ImageManager, ImagePreview, FileManager, FilePreview } from './AttachmentManager'
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
+  }
+}))
+
 const minDefaultProps = {
   type: 'anything',
   loadAttachments: () => {},

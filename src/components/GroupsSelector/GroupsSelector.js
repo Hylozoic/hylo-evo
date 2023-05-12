@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import { differenceBy } from 'lodash'
 import TagInput from 'components/TagInput'
 import styles from './GroupsSelector.scss'
+import { withTranslation } from 'react-i18next'
 
-export default class GroupsSelector extends Component {
+class GroupsSelector extends Component {
   static propTypes = {
     placeholder: PropTypes.string,
     selected: PropTypes.array,
@@ -13,7 +14,6 @@ export default class GroupsSelector extends Component {
   }
 
   static defaultProps = {
-    placeholder: 'Type group name...',
     selected: [],
     options: []
   }
@@ -67,7 +67,7 @@ export default class GroupsSelector extends Component {
   }
 
   render () {
-    const { selected, placeholder, readOnly } = this.props
+    const { selected, placeholder = this.props.t('Type group name...'), readOnly } = this.props
     const { suggestions } = this.state
 
     return (
@@ -86,3 +86,5 @@ export default class GroupsSelector extends Component {
     )
   }
 }
+
+export default withTranslation()(GroupsSelector)

@@ -187,6 +187,12 @@ export default () => {
         avatarUrl
         lastActiveAt
         name
+        groupRoles {
+          name
+          emoji
+          active
+          groupId
+        }
       }
     }
     openOffersAndRequests: posts(types: ["offer", "request"], isFulfilled: false, first: 4) {

@@ -1,22 +1,19 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { object, string, array } from 'prop-types'
 import { isEmpty } from 'lodash/fp'
-import { TextHelpers } from 'hylo-shared'
 import { personUrl, groupUrl } from 'util/navigation'
 import Avatar from 'components/Avatar'
-import ClickCatcher from 'components/ClickCatcher'
+import BadgeEmoji from 'components/BadgeEmoji'
 import Loading from 'components/Loading'
 import RoundImageRow from 'components/RoundImageRow'
 import Button from 'components/Button'
-import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
-import cx from 'classnames'
+import AboutSection from './AboutSection'
 import './GroupSidebar.scss'
 
-const { object, string, array } = PropTypes
-
-export default class GroupSidebar extends Component {
+class GroupSidebar extends Component {
   static propTypes = {
     slug: string,
     group: object,
@@ -31,70 +28,36 @@ export default class GroupSidebar extends Component {
 
     const { description, memberCount, moderatorDescriptorPlural, name, slug } = group
 
-    return <div styleName='group-sidebar'>
-      <SettingsLink canModerate={canModerate} group={group} />
-      {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
-        <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> Invite People</Button>
-      </Link>}
-      <AboutSection name={name} description={description} />
-      <MemberSection
-        members={members}
-        memberCount={memberCount}
-        slug={slug}
-        canModerate={canModerate} />
-      <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} />
-    </div>
-  }
-}
-
-export class AboutSection extends Component {
-  static propTypes = {
-    name: string,
-    description: string
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = { expanded: false }
-  }
-
-  render () {
-    const { name, description } = this.props
-    let { expanded } = this.state
-
-    if (!description) return null
-
-    const onClick = () => this.setState({ expanded: !expanded })
-    const showExpandButton = description.length > 155
-    if (!showExpandButton) {
-      expanded = true
-    }
-
-    return <div styleName='about-section'>
-      <div styleName='header'>
-        About {name}
+    return (
+      <div styleName='group-sidebar'>
+        <SettingsLink canModerate={canModerate} group={group} />
+        {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
+          <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> {this.props.t('Invite People')}</Button>
+        </Link>}
+        <AboutSection name={name} description={description} />
+        <MemberSection
+          members={members}
+          memberCount={memberCount}
+          slug={slug}
+          canModerate={canModerate} />
+        <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} groupId={group.id} />
       </div>
-      <div styleName={cx('description', { expanded })}>
-        {!expanded && <div styleName='gradient' />}
-        <ClickCatcher>
-          <HyloHTML element='span' html={TextHelpers.markdown(description)} />
-        </ClickCatcher>
-      </div>
-      {showExpandButton && <span styleName='expand-button' onClick={onClick}>
-        {expanded ? 'Show Less' : 'Read More'}
-      </span>}
-    </div>
+    )
   }
 }
 
 export function SettingsLink ({ canModerate, group }) {
+  const { t } = useTranslation()
   if (!canModerate) return null
-  return <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
-    <Icon name='Settings' styleName='settings-icon' /> Group Settings
-  </Link>
+  return (
+    <Link styleName='settings-link' to={groupUrl(group.slug, 'settings')}>
+      <Icon name='Settings' styleName='settings-icon' /> {t('Group Settings')}
+    </Link>
+  )
 }
 
 export function MemberSection ({ members, memberCount, slug, canModerate }) {
+  const { t } = useTranslation()
   const formatTotal = total => {
     if (total < 1000) return `+${total}`
     return `+${Number(total / 1000).toFixed(1)}k`
@@ -102,30 +65,46 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
 
   const showTotal = memberCount - members.length > 0
 
-  return <div styleName='member-section'>
-    <Link to={groupUrl(slug, 'members')} styleName='members-link'>
-      <div styleName='header'>Members</div>
-      <div styleName='images-and-count'>
-        <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
-        {showTotal && <span styleName='members-total'>
-          {formatTotal(memberCount - members.length)}
-        </span>}
-      </div>
-    </Link>
-  </div>
+  return (
+    <div styleName='member-section'>
+      <Link to={groupUrl(slug, 'members')} styleName='members-link'>
+        <div styleName='header'>{t('Members')}</div>
+        <div styleName='images-and-count'>
+          <RoundImageRow imageUrls={members.map(m => m.avatarUrl)} styleName='image-row' />
+          {showTotal &&
+            <span styleName='members-total'>
+              {formatTotal(memberCount - members.length)}
+            </span>}
+        </div>
+      </Link>
+    </div>
+  )
 }
 
-export function GroupLeaderSection ({ descriptor, leaders, slug }) {
-  return <div styleName='leader-section'>
-    <div styleName='header leader-header'>Group {descriptor}</div>
-    {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} />)}
-  </div>
+export function GroupLeaderSection ({ descriptor, leaders, groupId, slug }) {
+  const { t } = useTranslation()
+  return (
+    <div styleName='leader-section'>
+      <div styleName='header leader-header'>{t('Group {{locationDescriptor}}', { locationDescriptor: descriptor })}</div>
+      {leaders.map(l => <GroupLeader leader={l} slug={slug} key={l.id} groupId={groupId} />)}
+    </div>
+  )
 }
 
-export function GroupLeader ({ leader, slug }) {
+export function GroupLeader ({ groupId, leader, slug }) {
   const { name, avatarUrl } = leader
-  return <div styleName='leader'>
-    <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
-    <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
-  </div>
+  const badges = leader.groupRoles?.filter(role => role.groupId === groupId) || []
+  return (
+    <div styleName='leader'>
+      <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
+      <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
+      <div styleName='badges'>
+        {badges.map(badge => (
+          <BadgeEmoji key={badge.name} expanded {...badge} id={leader.id} />
+        ))}
+      </div>
+    </div>
+  )
 }
+
+export default withTranslation()(GroupSidebar)

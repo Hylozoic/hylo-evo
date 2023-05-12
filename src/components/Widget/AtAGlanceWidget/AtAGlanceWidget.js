@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { capitalize } from 'lodash'
 import FancyLink from 'components/FancyLink'
 import { getSocialMedia, getWebsite, getAtAGlance } from 'store/selectors/farmExtensionSelectors'
@@ -15,12 +16,13 @@ export default function AtAGlanceWidget ({ group }) {
   const socialMedia = sanitizeURL(getSocialMedia(group))
   const website = sanitizeURL(getWebsite(group))
   const atAGlance = getAtAGlance(group)
+  const { t } = useTranslation()
 
   return (
     <div styleName='at-a-glance-container'>
       {atAGlance.length > 0 && <FarmDetailSection items={atAGlance.map((item) => capitalize(item))} />}
-      {website && <FancyLink iconName='Website' target='_blank' linkUrl={website} title={`Website for ${group.name}`} />}
-      {socialMedia && <FancyLink iconName='Socials' target='_blank' linkUrl={socialMedia} title={`Social media link for ${group.name}`} />}
+      {website && <FancyLink iconName='Website' target='_blank' linkUrl={website} title={t(`Website for {{group.name}}`, { group })} />}
+      {socialMedia && <FancyLink iconName='Socials' target='_blank' linkUrl={socialMedia} title={t(`Social media link for {{group.name}}`, { group })} />}
     </div>
   )
 }

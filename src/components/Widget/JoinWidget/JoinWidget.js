@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { JoinSection } from 'routes/GroupDetail/GroupDetail'
 import { Link } from 'react-router-dom'
 import Avatar from 'components/Avatar'
@@ -23,28 +24,29 @@ export default function JoinWidget ({ group, fullPage = true, routeParams }) {
   const handleRemoveSkill = (skillId) => dispatch(removeSkill(skillId))
   const handleJoinGroup = (groupId) => dispatch(joinGroup(groupId))
   const handleRequestToJoinGroup = (groupId, questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers))
+  const { t } = useTranslation()
 
   return <div styleName='join-container'>
     {!currentUser
-      ? <div styleName='signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='requestButton'>Signup or Login to connect with <span styleName='requestGroup'>{group.name}</span></Link></div>
+      ? <div styleName='signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='requestButton'>{t('Signup or Login to connect with')} <span styleName='requestGroup'>{group.name}</span></Link></div>
       : <div>
         <div styleName='groupProfiles'>
           <div styleName='profileContainer'>
-            <div styleName='groupSubtitle'>Recent Posts</div>
+            <div styleName='groupSubtitle'>{t('Recent Posts')}</div>
             <div styleName='profile'>
               <Icon name='BadgeCheck' />
-              <span styleName='profileText'>Only members of this group can see posts</span>
+              <span styleName='profileText'>{t('Only members of this group can see posts')}</span>
             </div>
           </div>
           <div styleName='profileContainer'>
-            <div styleName='groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? `Members` : `Member`}</div>
+            <div styleName='groupSubtitle'>{group.memberCount} {group.memberCount > 1 ? t(`Members`) : t(`Member`)}</div>
             {get(group, 'settings.publicMemberDirectory')
               ? <div>{group.members.map(member => {
                 return <div key={member.id} styleName='avatarContainer'><Avatar avatarUrl={member.avatarUrl} styleName='avatar' /><span>{member.name}</span></div>
               })}</div>
               : <div styleName='profile'>
                 <Icon name='Unlock' />
-                <span styleName='profileText'>Join to see</span>
+                <span styleName='profileText'>{t('Join to see')}</span>
               </div>
             }
           </div>

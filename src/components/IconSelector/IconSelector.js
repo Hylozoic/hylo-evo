@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import Icon from 'components/Icon'
 
 import './IconSelector.scss'
@@ -114,11 +115,12 @@ export default function IconSelector ({ selectedIcon, updateIcon, selectedIconCl
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const toggleModalOpen = () => setModalOpen(!modalOpen)
+  const { t } = useTranslation()
 
   return (
     <div styleName='icon-selector-container'>
       <div styleName='selected-icon' onClick={toggleModalOpen}>
-        {selectedIcon ? <Icon green name={selectedIcon} className={selectedIconClass} /> : <div styleName='text'>No icon selected</div>}
+        {selectedIcon ? <Icon green name={selectedIcon} className={selectedIconClass} /> : <div styleName='text'>{t('No icon selected')}</div>}
         <Icon name='ArrowDown' />
       </div>
       <div styleName={cx('icon-options', { open: modalOpen })}>
