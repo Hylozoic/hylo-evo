@@ -25,7 +25,7 @@ export default function PublicLayoutRouter (props) {
     <Div100vh styleName={cx('public-container', { 'map-view': isMapView })}>
       <PublicPageHeader />
       <Switch>
-        <Route path={`/${POST_DETAIL_MATCH}`} component={PublicPostDetail} />
+        <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
         <Route path='/:context(groups)/:groupSlug' component={PublicGroupDetail} />
         <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
         <Route path='/:context(public)/:view(groups)' component={GroupExplorerLayoutRouter} />
@@ -48,10 +48,8 @@ export function PublicGroupDetail (props) {
   useEffect(() => {
     (async () => {
       setLoading(true)
-
       const result = await dispatch(checkIsPublicGroup(groupSlug))
       const isPublicGroup = result?.payload?.data?.group?.visibility === 2
-      console.log(isPublicGroup, result, 'public group detail')
       if (!isPublicGroup) {
         history.replace('/login?returnToUrl=' + location.pathname + location.search)
       }
@@ -69,7 +67,6 @@ export function PublicGroupDetail (props) {
       <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
         <GroupDetail {...props} />
       </div>
-      <div />
       <Route
         path={`(.*)/${POST_DETAIL_MATCH}`}
         render={routeProps => (
@@ -87,8 +84,7 @@ export function PublicPostRouteRedirector (props) {
   const history = useHistory()
   const location = useLocation()
   const postId = routeParams?.postId
-  console.log(postId, 'ahahhaha')
-
+  
   useEffect(() => {
     (async () => {
       setLoading(true)
