@@ -25,7 +25,7 @@ export default function PublicLayoutRouter (props) {
     <Div100vh styleName={cx('public-container', { 'map-view': isMapView })}>
       <PublicPageHeader />
       <Switch>
-        <Route path={`/${POST_DETAIL_MATCH}`} exact component={PublicPostDetail} />
+        <Route path={`/${POST_DETAIL_MATCH}`} component={PublicPostDetail} />
         <Route path='/:context(groups)/:groupSlug' component={PublicGroupDetail} />
         <Route path='/:context(public)/:view(map)' component={MapExplorerLayoutRouter} />
         <Route path='/:context(public)/:view(groups)' component={GroupExplorerLayoutRouter} />
@@ -51,6 +51,7 @@ export function PublicGroupDetail (props) {
 
       const result = await dispatch(checkIsPublicGroup(groupSlug))
       const isPublicGroup = result?.payload?.data?.group?.visibility === 2
+      console.log(isPublicGroup, result, 'public group detail')
       if (!isPublicGroup) {
         history.replace('/login?returnToUrl=' + location.pathname + location.search)
       }
@@ -64,10 +65,48 @@ export function PublicGroupDetail (props) {
   }
 
   return (
-    <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
-      <GroupDetail {...props} />
-    </div>
+    <>
+      <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
+        <GroupDetail {...props} />
+      </div>
+      <div />
+      <Route
+        path={`(.*)/${POST_DETAIL_MATCH}`}
+        render={routeProps => (
+          <PublicPostRouteRedirector {...routeProps} />
+        )}
+      />
+    </>
   )
+}
+
+export function PublicPostRouteRedirector (props) {
+  const dispatch = useDispatch()
+  const routeParams = useParams()
+  const [loading, setLoading] = useState(true)
+  const history = useHistory()
+  const location = useLocation()
+  const postId = routeParams?.postId
+  console.log(postId, 'ahahhaha')
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true)
+
+      const result = await dispatch(checkIsPostPublic(postId))
+      const isPublicPost = result?.payload?.data?.post?.id
+      if (!isPublicPost) {
+        history.replace('/login?returnToUrl=' + location.pathname + location.search)
+      }
+
+      setLoading(false)
+    })()
+  }, [dispatch, postId])
+
+  if (loading) {
+    return <Loading />
+  }
+  return (<Redirect to={`/post/${postId}`} />)
 }
 
 export function PublicPostDetail (props) {
