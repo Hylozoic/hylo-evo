@@ -49,7 +49,6 @@ export function PublicGroupDetail (props) {
   useEffect(() => {
     (async () => {
       setLoading(true)
-
       const result = await dispatch(checkIsPublicGroup(groupSlug))
       const isPublicGroup = result?.payload?.data?.group?.visibility === 2
       if (!isPublicGroup) {
@@ -65,10 +64,46 @@ export function PublicGroupDetail (props) {
   }
 
   return (
-    <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
-      <GroupDetail {...props} />
-    </div>
+    <>
+      <div styleName='center-column non-map-view' id={CENTER_COLUMN_ID}>
+        <GroupDetail {...props} />
+      </div>
+      <Route
+        path={`(.*)/${POST_DETAIL_MATCH}`}
+        render={routeProps => (
+          <PublicPostRouteRedirector {...routeProps} />
+        )}
+      />
+    </>
   )
+}
+
+export function PublicPostRouteRedirector (props) {
+  const dispatch = useDispatch()
+  const routeParams = useParams()
+  const [loading, setLoading] = useState(true)
+  const history = useHistory()
+  const location = useLocation()
+  const postId = routeParams?.postId
+  
+  useEffect(() => {
+    (async () => {
+      setLoading(true)
+
+      const result = await dispatch(checkIsPostPublic(postId))
+      const isPublicPost = result?.payload?.data?.post?.id
+      if (!isPublicPost) {
+        history.replace('/login?returnToUrl=' + location.pathname + location.search)
+      }
+
+      setLoading(false)
+    })()
+  }, [dispatch, postId])
+
+  if (loading) {
+    return <Loading />
+  }
+  return (<Redirect to={`/post/${postId}`} />)
 }
 
 export function PublicPostDetail (props) {
