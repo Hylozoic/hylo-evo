@@ -118,7 +118,7 @@ export class Comment extends Component {
             {editing && (
               <Icon name='Ex' styleName='cancelIcon' onClick={this.handleEditCancel} />
             )}
-            <div styleName='commentActions'>
+            {currentUser && <div styleName='commentActions'>
               <div styleName='commentAction' onClick={onReplyComment} data-tip='Reply' data-for={`reply-tip-${id}`}>
                 <Icon name='Replies' />
               </div>
@@ -133,7 +133,7 @@ export class Comment extends Component {
                 currentUser={currentUser}
                 post={post}
               />
-            </div>
+            </div>}
           </div>
         </div>
         {attachments &&

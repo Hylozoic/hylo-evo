@@ -13,7 +13,7 @@ export default function EmojiPill ({ emojiFull, onClick = () => {}, count, userL
         id={emojiFull}
         key={emojiFull}
         label={`${emojiFull} ${count}`}
-        onClick={() => onClick(emojiFull)}
+        onClick={onClick ? () => onClick(emojiFull) : null}
         styleName={cx('tag-pill', { selected })}
 
       />

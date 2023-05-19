@@ -41,7 +41,7 @@ export function mapDispatchToProps (dispatch, props) {
   const postId = getRouteParam('postId', {}, props)
   const closeLocation = {
     ...props.location,
-    pathname: removePostFromUrl(location.pathname)
+    pathname: removePostFromUrl(location.pathname) || '/'
   }
 
   return {

@@ -39,7 +39,7 @@ export default function EmojiRow (props) {
       {entityReactions && <div styleName='footer-reactions'>
         {Object.values(usersReactions).map(reaction => (
           <EmojiPill
-            onClick={reaction.loggedInUser ? handleRemoveReaction : handleReaction}
+            onClick={currentUser ? reaction.loggedInUser ? handleRemoveReaction : handleReaction : null}
             key={reaction.emojiFull}
             emojiFull={reaction.emojiFull}
             count={reaction.userList.length}

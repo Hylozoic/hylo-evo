@@ -66,7 +66,7 @@ class MemberProfile extends React.Component {
   render () {
     if (this.props.error) return <Error>{this.props.error}</Error>
     if (this.props.personLoading) return <Loading />
-    if (!this.props.person) return <NotFound />
+    if (!this.props.person?.name) return <NotFound />
 
     const {
       contentLoading,

@@ -94,12 +94,6 @@ exports[`matches announcement snapshot 1`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
-              },
             ]
           }
           toggleChildren={
@@ -201,12 +195,6 @@ exports[`matches announcement snapshot 2`] = `
                 "icon": "Copy",
                 "label": "Copy Link",
                 "onClick": [Function],
-              },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
               },
             ]
           }
@@ -401,12 +389,6 @@ exports[`matches snapshot 1`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
-              },
             ]
           }
           toggleChildren={
@@ -490,12 +472,6 @@ exports[`matches snapshot 2`] = `
                 "icon": "Copy",
                 "label": "Copy Link",
                 "onClick": [Function],
-              },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
               },
             ]
           }
@@ -676,12 +652,6 @@ exports[`renders human readable dates 1`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
-              },
             ]
           }
           toggleChildren={
@@ -772,12 +742,6 @@ exports[`renders human readable dates 2`] = `
                 "label": "Copy Link",
                 "onClick": [Function],
               },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
-              },
             ]
           }
           toggleChildren={
@@ -867,12 +831,6 @@ exports[`renders human readable dates 3`] = `
                 "icon": "Copy",
                 "label": "Copy Link",
                 "onClick": [Function],
-              },
-              Object {
-                "icon": "Trash",
-                "label": "Delete",
-                "onClick": [Function],
-                "red": true,
               },
             ]
           }

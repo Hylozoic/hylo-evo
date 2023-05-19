@@ -85,7 +85,7 @@ export function PublicPostRouteRedirector (props) {
   const history = useHistory()
   const location = useLocation()
   const postId = routeParams?.postId
-  
+
   useEffect(() => {
     (async () => {
       setLoading(true)

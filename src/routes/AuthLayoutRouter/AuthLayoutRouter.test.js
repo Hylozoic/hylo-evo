@@ -221,7 +221,7 @@ it('shows NotFound if the group does not exist', async () => {
   )
 
   render(
-    <AuthLayoutRouter location={{ pathname: '/groups/test-group', search: '' }} />,
+    <AuthLayoutRouter location={{ pathname: '/groups/no-group', search: '' }} />,
     { wrapper: testWrapper() }
   )
 

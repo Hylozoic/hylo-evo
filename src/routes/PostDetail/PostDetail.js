@@ -199,6 +199,7 @@ class PostDetail extends Component {
               <div styleName={cx('header-sticky', { 'at-activity': atActivity })} style={headerStyle}>
                 <PostHeader
                   styleName='header'
+                  currentUser={currentUser}
                   {...post}
                   routeParams={routeParams}
                   close={onClose}

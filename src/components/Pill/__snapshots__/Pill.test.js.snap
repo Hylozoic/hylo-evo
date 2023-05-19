@@ -13,7 +13,7 @@ exports[`Pill renders 1`] = `
       data-for="pill-label"
       data-stylename="display-label"
       data-tip="Click to Search"
-      onClick={[Function]}
+      onClick={null}
     >
       mountain climbing
     </span>
@@ -35,7 +35,7 @@ exports[`Pill renders when editable 1`] = `
       data-for="pill-label"
       data-stylename="display-label"
       data-tip="Click to Search"
-      onClick={[Function]}
+      onClick={null}
     >
       mountain climbing
     </span>
