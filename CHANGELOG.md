@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.5.1] - 2023-05-18
+
+### Fixed
+- Correct routing for public posts when viewing while not logged in. All post URLs will now redirect to https://hylo.com/post/:postId
+- Remove all ways one could try to interact with a public post when not logged in 
+- Fix close button when viewing a post at https://hylo.com/post/:postId
+- Fix viewing member profile of currently logged in user outside of a group context, i.e. at url https://hylo.com/members/:id
+
 ## [5.5.0] - 2023-05-12
 
 ### Added
