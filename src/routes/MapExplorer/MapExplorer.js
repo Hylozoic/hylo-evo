@@ -531,7 +531,7 @@ class MapExplorer extends React.Component {
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
         <Helmet>
-          <title>Map | {group ? `${group.name} | ` : ': Map'}Hylo</title>
+          <title>Map | {group ? `${group.name} | ` : context === 'public' ? 'Public | ' : ' All My Groups | '}Hylo</title>
         </Helmet>
 
         <div styleName='mapContainer'>
