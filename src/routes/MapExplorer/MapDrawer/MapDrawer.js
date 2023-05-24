@@ -35,6 +35,7 @@ function MapDrawer (props) {
     onUpdateFilters,
     pendingPostsDrawer,
     posts,
+    queryParams,
     routeParams,
     topics
   } = props
@@ -178,13 +179,14 @@ function MapDrawer (props) {
 
         <div styleName='contentListContainer' id='contentList'>
           {posts.map(p => <PostCard
-            locationParams={locationParams}
-            routeParams={routeParams}
-            post={p}
-            styleName='contentCard'
             constrained
             expanded={false}
             key={p.id}
+            locationParams={locationParams}
+            post={p}
+            querystringParams={queryParams}
+            routeParams={routeParams}
+            styleName='contentCard'
           />)}
         </div>
 
@@ -222,6 +224,7 @@ MapDrawer.propTypes = {
   groups: PropTypes.array,
   members: PropTypes.array,
   posts: PropTypes.array,
+  queryParams: PropTypes.object,
   routeParams: PropTypes.object,
   onUpdateFilters: PropTypes.func
 }
@@ -230,6 +233,7 @@ MapDrawer.defaultProps = {
   groups: [],
   members: [],
   posts: [],
+  queryParams: {},
   routeParams: {},
   onUpdateFilters: (opts) => { console.log(this.props.t('Updating filters with:') + ' ' + opts) }
 }

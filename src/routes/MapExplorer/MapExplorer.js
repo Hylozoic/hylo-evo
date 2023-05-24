@@ -500,6 +500,7 @@ class MapExplorer extends React.Component {
       pendingPostsMap,
       pendingPostsDrawer,
       postsForDrawer,
+      queryParams,
       routeParams,
       searches,
       topics,
@@ -577,6 +578,7 @@ class MapExplorer extends React.Component {
             onUpdateFilters={this.props.storeClientFilterParams}
             pendingPostsDrawer={pendingPostsDrawer}
             posts={postsForDrawer}
+            queryParams={queryParams}
             routeParams={routeParams}
             topics={topics}
           />
