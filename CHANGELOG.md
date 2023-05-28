@@ -1,4 +1,4 @@
-# Changelog 
+# Changelog
 All notable changes to Hylo Evo (the Hylo front-end) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -6,18 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.5.2] - 2023-05-27
+
+### Fixed
+- Don't lose map filter when closing a post in the map drawer
+- Fix display of map when not logged in and hideNav is on
+
 ## [5.5.1] - 2023-05-18
 
 ### Fixed
 - Correct routing for public posts when viewing while not logged in. All post URLs will now redirect to https://hylo.com/post/:postId
-- Remove all ways one could try to interact with a public post when not logged in 
+- Remove all ways one could try to interact with a public post when not logged in
 - Fix close button when viewing a post at https://hylo.com/post/:postId
 - Fix viewing member profile of currently logged in user outside of a group context, i.e. at url https://hylo.com/members/:id
 
 ## [5.5.0] - 2023-05-12
 
 ### Added
-- Beta of Internationalization support! First pass of translation into Spanish. Users can select their language using a new menu item, and that will be saved for the future. 
+- Beta of Internationalization support! First pass of translation into Spanish. Users can select their language using a new menu item, and that will be saved for the future.
 
 ### Fixed
 - Fix close button when viewing posts or groups when not logged in and looking at the public map or group explorer
@@ -26,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Show badges next to moderators in group sidebar
-- Send button to all comment forms 
+- Send button to all comment forms
 
 ### Changed
 - Tweaked styling of group cards so they are not too big and show first two lines of description
@@ -511,7 +517,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.1.8] - 2021-11-1
 ### Added
 - Add Layout Flags context to capture the `layoutFlags` query param and make it available in React context as `<layoutFlag>Layout`
-- Switch on/off site header and footer for `mobileSettingsLayout` 
+- Switch on/off site header and footer for `mobileSettingsLayout`
 - Update and normalize Group Settings area UI, optimizing for small/mobile screens
 
 ## [3.1.7] - 2021-10-26
