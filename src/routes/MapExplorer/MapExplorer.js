@@ -500,6 +500,7 @@ class MapExplorer extends React.Component {
       pendingPostsMap,
       pendingPostsDrawer,
       postsForDrawer,
+      queryParams,
       routeParams,
       searches,
       topics,
@@ -531,7 +532,7 @@ class MapExplorer extends React.Component {
     return (
       <div styleName={cx('container', { noUser: !currentUser, withoutNav })}>
         <Helmet>
-          <title>Map | {group ? `${group.name} | ` : ': Map'}Hylo</title>
+          <title>Map | {group ? `${group.name} | ` : context === 'public' ? 'Public | ' : ' All My Groups | '}Hylo</title>
         </Helmet>
 
         <div styleName='mapContainer'>
@@ -577,6 +578,7 @@ class MapExplorer extends React.Component {
             onUpdateFilters={this.props.storeClientFilterParams}
             pendingPostsDrawer={pendingPostsDrawer}
             posts={postsForDrawer}
+            queryParams={queryParams}
             routeParams={routeParams}
             topics={topics}
           />

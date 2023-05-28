@@ -79,7 +79,7 @@ export function mapStateToProps (state, props) {
   const topicsFromPosts = getCurrentTopics(state, fetchPostsParams)
 
   const stateFilters = state.MapExplorer.clientFilterParams
-  const queryParams = getQuerystringParam(['search', 'sortBy', 'hide', 'topics'], state, props)
+  const queryParams = getQuerystringParam(['search', 'sortBy', 'hide', 'topics', 'group'], state, props)
   const filters = {
     ...stateFilters,
     ...pick(['search', 'sortBy'], queryParams)
