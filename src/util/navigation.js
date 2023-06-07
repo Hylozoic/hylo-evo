@@ -4,6 +4,7 @@ import qs from 'querystring'
 
 export const HYLO_ID_MATCH = '\\d+'
 export const POST_ID_MATCH = HYLO_ID_MATCH
+const GROUP_SLUG_MATCH = '[^\\\\]+'
 export const OPTIONAL_POST_MATCH = `:detail(post)?/:postId(${POST_ID_MATCH})?/:action(new|edit)?`
 export const OPTIONAL_NEW_POST_MATCH = ':detail(post)?/:action(new)?' // TODO: need this?
 export const POST_DETAIL_MATCH = `:detail(post)/:postId(${POST_ID_MATCH})/:action(edit|comments)?/:commentId?`
@@ -170,6 +171,11 @@ export function addQuerystringToPath (path, querystringParams) {
 
 export function removePostFromUrl (url) {
   const matchForReplaceRegex = `/post/${POST_ID_MATCH}`
+  return url.replace(new RegExp(matchForReplaceRegex), '')
+}
+
+export function removeGroupFromUrl (url) {
+  const matchForReplaceRegex = `/group/${GROUP_SLUG_MATCH}`
   return url.replace(new RegExp(matchForReplaceRegex), '')
 }
 
