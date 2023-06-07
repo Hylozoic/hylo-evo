@@ -21,7 +21,7 @@ export default function CreateModalChooser ({ location }) {
   t('Whats on your mind?')
   t('Add a description')
   t('request')
-  t('discusion')
+  t('discussion')
   t('offer')
   t('resource')
   t('project')

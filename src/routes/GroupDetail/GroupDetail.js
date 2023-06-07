@@ -349,7 +349,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
               ? hasPendingRequest
                 ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
-                : <div styleName='g.requestOption'> {t('Restricted group, no request pending')}
+                : <div styleName='g.requestOption'> {t('Restricted group')}
                   {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                     <h3>{q.text}</h3>
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
