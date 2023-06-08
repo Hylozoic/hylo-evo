@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.5.3] - 2023-05-27
+
+### Fixed
+- Mispelling of Discussion in create modal
+- Fix display of member posts on user profile
+- Group Details page:
+  - Always show privacy settings in main body, instead of ugly, random text describing accessibility setting
+  - Hide Posts and members in body for now since we never show anything there
+  - Move member count to header
+  - Add header text asking people to answer join questions
+- Fix closing about info pane from Explore page
+
 ## [5.5.2] - 2023-05-27
 
 ### Fixed
