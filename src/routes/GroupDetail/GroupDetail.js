@@ -2,7 +2,7 @@ import cx from 'classnames'
 import { get, keyBy, map, trim } from 'lodash'
 import React, { Component, useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useTranslation, withTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
@@ -31,7 +31,7 @@ import {
   visibilityString
 } from 'store/models/Group'
 import { inIframe } from 'util/index'
-import { baseUrl, groupDetailUrl, groupUrl, isGroupsView, isMapView, isPublicPath, personUrl } from 'util/navigation'
+import { groupDetailUrl, groupUrl, personUrl, removeGroupFromUrl } from 'util/navigation'
 import g from './GroupDetail.scss' // eslint-disable-line no-unused-vars
 import m from '../MapExplorer/MapDrawer/MapDrawer.scss' // eslint-disable-line no-unused-vars
 
@@ -46,6 +46,7 @@ export const initialState = {
 
 class UnwrappedGroupDetail extends Component {
   static propTypes = {
+    closeDetailModal: PropTypes.func,
     group: PropTypes.object,
     routeParams: PropTypes.object,
     currentUser: PropTypes.object,
@@ -118,24 +119,23 @@ class UnwrappedGroupDetail extends Component {
           <div styleName='g.groupTitleContainer'>
             <img src={group.avatarUrl || DEFAULT_AVATAR} styleName='g.groupAvatar' />
             <div>
-              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{t('About')}</span>}{group.name}</div> {/* TODO: Handle this tranlsation */}
+              <div styleName='g.groupTitle'>{isAboutCurrentGroup && <span>{t('About')}</span>} {group.name}</div>
               <div styleName='g.groupContextInfo'>
-                {!isAboutCurrentGroup && (
-                  <div>
-                    <span styleName='g.group-privacy'>
-                      <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
-                      <div styleName='g.privacy-tooltip'>
-                        <div>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</div>
-                      </div>
-                    </span>
-                    <span styleName='g.group-privacy'>
-                      <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
-                      <div styleName='g.privacy-tooltip'>
-                        <div>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</div>
-                      </div>
-                    </span>
-                  </div>
-                )}
+                <div>
+                  <span styleName='g.group-privacy'>
+                    <Icon name={visibilityIcon(group.visibility)} styleName='g.privacy-icon' />
+                    <div styleName='g.privacy-tooltip'>
+                      <div>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</div>
+                    </div>
+                  </span>
+                  <span styleName='g.group-privacy'>
+                    <Icon name={accessibilityIcon(group.accessibility)} styleName='g.privacy-icon' />
+                    <div styleName='g.privacy-tooltip'>
+                      <div>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</div>
+                    </div>
+                  </span>
+                  <span styleName='g.memberCount'>{group.memberCount} {group.memberCount > 1 ? t('Members') : t('Member')}</span>
+                </div>
                 <span styleName='g.group-location'>{group.location}</span>
               </div>
             </div>
@@ -158,18 +158,20 @@ class UnwrappedGroupDetail extends Component {
                   </Link>
                 ))}
               </div>
-              <h3>{t('Privacy settings')}</h3>
-              <div styleName='g.privacySetting'>
-                <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
-                <p>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</p>
-              </div>
-              <div styleName='g.privacySetting'>
-                <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
-                <p>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</p>
-              </div>
             </div>
             : ''
           }
+          <div>
+            <h3>{t('Privacy settings')}</h3>
+            <div styleName='g.privacySetting'>
+              <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
+              <p>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</p>
+            </div>
+            <div styleName='g.privacySetting'>
+              <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
+              <p>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</p>
+            </div>
+          </div>
           {!isAboutCurrentGroup
             ? !currentUser
               ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{t('Signup or Login to connect with')}{' '}<span styleName='g.requestGroup'>{group.name}</span></Link></div>
@@ -192,7 +194,8 @@ class UnwrappedGroupDetail extends Component {
       t
     } = this.props
 
-    const topics = group && group.groupTopics
+    // XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
+    // const topics = group.groupTopics && group.groupTopics.toModelArray()
 
     return (
       <>
@@ -215,6 +218,7 @@ class UnwrappedGroupDetail extends Component {
               </ClickCatcher>
             </div>
           )}
+        {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
         {!isAboutCurrentGroup && topics && topics.length && (
           <div styleName='g.groupTopics'>
             <div styleName='g.groupSubtitle'>{t('Topics')}</div>
@@ -229,7 +233,7 @@ class UnwrappedGroupDetail extends Component {
               )
             })}
           </div>
-        )}
+          ) */}
       </>
     )
   }
@@ -241,6 +245,7 @@ class UnwrappedGroupDetail extends Component {
     // half of this could be shifted to farm specific widgets
     return (
       <div>
+        {/* XXX: turned off until we re-add settings for showing recent posts and group directory publicly
         <div styleName='g.groupDetails'>
           <div styleName='g.detailContainer'>
             <div styleName='g.groupSubtitle'>{t('Recent Posts')}</div>
@@ -261,7 +266,7 @@ class UnwrappedGroupDetail extends Component {
               </div>
             }
           </div>
-        </div>
+        </div> */}
         <JoinSection
           addSkill={addSkill}
           currentUser={currentUser}
@@ -296,7 +301,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
   const hasPendingRequest = groupsWithPendingRequests[group.id]
 
   return (
-    <div styleName={group.accessibility === GROUP_ACCESSIBILITY.Open ? 'g.requestBarBordered' : 'g.requestBarBorderless'}>
+    <div styleName='g.requestBar'>
       {group.suggestedSkills && group.suggestedSkills.length > 0 &&
         <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />
       }
@@ -337,7 +342,6 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
         : group.numPrerequisitesLeft ? t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
           : group.accessibility === GROUP_ACCESSIBILITY.Open
             ? <div styleName='g.requestOption'>
-              <div styleName='g.requestHint'>{t('Anyone can join this group!')}</div>
               {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                 <h3>{q.text}</h3>
                 <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
@@ -349,7 +353,8 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
               ? hasPendingRequest
                 ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
-                : <div styleName='g.requestOption'> {t('Restricted group, no request pending')}
+                : <div styleName='g.requestOption'>
+                  {group.settings.askJoinQuestions && questionAnswers.length > 0 && <div>{t('Please answer the following to join:')}</div>}
                   {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                     <h3>{q.text}</h3>
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
@@ -360,9 +365,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     </div>
                   </div>
                 </div>
-              : <div styleName='g.requestOption'> {/* Closed group */}
-                {t('This is group is invitation only')}
-              </div>
+              : ''
       }
     </div>
   )
@@ -405,18 +408,9 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
 
 export function GroupDetail (props) {
   const history = useHistory()
-  const location = useLocation()
   const closeDetailModal = () => {
-    // `detailsGroupSlug` is not currently used in any URL generation, `null`'ing
-    // it here in case that changes, and it's otherwise descriptive of the intent.
-    let view = ''
-    if (isMapView(location.pathname)) view = 'map'
-    if (isGroupsView(location.pathname)) view = 'groups'
-    // The 'view' cannot be determined from the routeParams because of how route matching works
-    const url = baseUrl({ ...props.routeParams, detailGroupSlug: null, view, context: isPublicPath(location.pathname) ? 'public' : undefined }) + location.search
-    history.push(
-      url
-    )
+    const newUrl = removeGroupFromUrl(window.location.pathname)
+    history.push(newUrl)
   }
 
   return (
@@ -424,4 +418,4 @@ export function GroupDetail (props) {
   )
 }
 
-export default withTranslation()(UnwrappedGroupDetail)
+export default withTranslation()(GroupDetail)

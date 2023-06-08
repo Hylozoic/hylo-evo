@@ -145,7 +145,7 @@ I'm inviting you to join {{name}} on Hylo.
                 {t('Share a Join Link')}
               </div>
               <div styleName='styles.help'>
-                {t('Anyone can join ')}<span style={{ fontWeight: 'bold' }}>{group.name}</span> {t('with this link')}.{' '}{inviteLink && t('Click or press on it to copy it')}:
+                {t('Anyone can join')}<span style={{ fontWeight: 'bold' }}> {group.name}</span> {t('with this link')}.{' '}{inviteLink && t('Click or press on it to copy it')}:
               </div>
               <div styleName='styles.invite-link-settings'>
                 {inviteLink && (

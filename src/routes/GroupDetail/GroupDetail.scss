@@ -150,23 +150,23 @@
       }
     }
   }
+}
 
-  .privacySetting {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+.privacySetting {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 
-    .settingIcon {
-      font-size: 24px;
-      color: rgba(140, 151, 166, 1.00);
-    }
+  .settingIcon {
+    font-size: 24px;
+    color: rgba(140, 151, 166, 1.00);
+  }
 
-    p {
-      font-size: 14px;
-      color: rgba(140, 151, 166, 1.00);
-      margin-bottom: 0;
-      margin-left: 10px;
-    }
+  p {
+    font-size: 14px;
+    color: rgba(140, 151, 166, 1.00);
+    margin-bottom: 0;
+    margin-left: 10px;
   }
 }
 
@@ -379,6 +379,11 @@
   }
 }
 
+.memberCount {
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
 .avatarContainer {
   color: $color-regent;
   display: flex;
@@ -390,7 +395,7 @@
   margin-right: 10px;
 }
 
-%requestBar {
+.requestBar {
   background-color: $color-white;
   color: $color-regent;
   align-items: center;
@@ -398,25 +403,12 @@
   flex-direction: column;
   padding-bottom: 10px;
   z-index: 5;
-}
-
-.requestBarBordered {
-  @extend %requestBar;
-  border: 1px solid $color-athens-gray-dark;
-  border-radius: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  display: block;
-  width: 100%;
-}
-
-.requestBarBorderless {
-  @extend %requestBar;
   border-width: 0px;
   justify-content: center;
   height: auto;
 }
 
-.requestBarBorderless .requestButton {
+.requestBar .requestButton {
   box-shadow: $box-shadow-default;
 }
 
@@ -426,18 +418,13 @@
   width: 100%;
 }
 
-.requestHint {
-  font-size: 14px;
-  padding: 5px 15px;
-}
-
 .joinQuestion {
   background-color: rgba(249, 250, 251, 1.000);
   border: 1px solid rgba(224, 229, 233, 1.000);
   border-radius: 5px;
   padding: 15px;
   width: 100%;
-  margin-bottom: 25px;
+  margin: 10px 0 15px;
 
   h4 {
     color: rgba(140, 151, 166, 1.00);
@@ -482,7 +469,7 @@
   color: $color-white;
   cursor: pointer;
   font-size: 14px;
-  margin: 0 15px;
+  margin: 10px 15px 0 15px;
   padding: 5px 15px;
   text-align: center;
   display: inline-block;

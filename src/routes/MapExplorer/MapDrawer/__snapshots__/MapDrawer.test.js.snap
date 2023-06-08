@@ -239,6 +239,7 @@ exports[`MapDrawer renders correctly with lots of stuff 1`] = `
             "type": "request",
           }
         }
+        querystringParams={Object {}}
         routeParams={
           Object {
             "context": "groups",
