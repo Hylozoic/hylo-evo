@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.5.4] - 2023-06-15
+
+### Fixed
+- Editing a post was causing a blank screen
+
 ## [5.5.3] - 2023-05-27
 
 ### Fixed

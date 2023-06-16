@@ -87,4 +87,4 @@ class GroupsSelector extends Component {
   }
 }
 
-export default withTranslation()(GroupsSelector)
+export default withTranslation('translation', { withRef: true })(GroupsSelector)
