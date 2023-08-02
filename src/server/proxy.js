@@ -23,7 +23,8 @@ const staticPages = [
   '/team',
   '/terms',
   '/terms/privacy',
-  '/newapp'
+  '/newapp',
+  '/murmurations.json'
 ]
 
 export const IOS_SITE_ASSOCIATION_FILE = 'apple-app-site-association'
