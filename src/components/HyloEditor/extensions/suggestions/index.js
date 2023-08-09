@@ -92,7 +92,8 @@ export default {
       onExit () {
         // console.log('!!! Mention Plugin `suggestion.onExit()` called early?')
         popup && popup[0].destroy()
-        component && component.destroy()
+        // Was causing a crashing bug
+        component && setTimeout(() => component.destroy(), 500)
       }
     }
   }
