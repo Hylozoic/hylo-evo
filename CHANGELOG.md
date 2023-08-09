@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - MVP of timezone support for posts, for now just always use the current user's timezone when creating a post
 
+### Fixed
+- Crashing error (blank screen) after using the person suggestion autocomplete feature and then changing views
+- Crashing error when loading projects page
+
 ## [5.5.4] - 2023-06-15
 
 ### Fixed
