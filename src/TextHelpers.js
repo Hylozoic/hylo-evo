@@ -153,9 +153,9 @@ export function humanDate (date, short) {
     .replace(/ month(s?)/, ' mo$1')
 }
 
-export const formatDatePair = (startTime, endTime, returnAsObj) => {
-  const start = moment.tz(startTime, moment.tz.guess())
-  const end = moment.tz(endTime, moment.tz.guess())
+export const formatDatePair = (startTime, endTime, returnAsObj, timezone) => {
+  const start = moment.tz(startTime, timezone || moment.tz.guess() || 'UTC')
+  const end = moment.tz(endTime, timezone || moment.tz.guess() || 'UTC')
 
   const now = moment()
   const isThisYear = start.year() === now.year() && end.year() === now.year()

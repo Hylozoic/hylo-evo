@@ -52,6 +52,12 @@ describe('formatDatePair', () => {
     expect(TextHelpers.formatDatePair(d1, d4)).toMatchSnapshot()
     expect(TextHelpers.formatDatePair(d1, d5)).toMatchSnapshot()
   })
+
+  it('can accept a custom timezone', () => {
+    const d1 = moment.tz(1551908483315, 'Etc/GMT').month(1).day(1).hour(18)
+    const d2 = moment.tz(d1, 'Etc/GMT').hour(21)
+    expect(TextHelpers.formatDatePair(d1, d2, false, 'America/New_York')).toMatchSnapshot()
+  })
 })
 
 describe('sanitizeURL', () => {

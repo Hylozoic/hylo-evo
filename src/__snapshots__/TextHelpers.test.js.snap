@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`formatDatePair can accept a custom timezone 1`] = `"Mon, Feb 4, 2019 at 1:41PM - Mon, Feb 4 at 4:41PM EST"`;
+
 exports[`formatDatePair displays differences of dates 1`] = `"Mon, Feb 4, 2019 at 10:41AM PST"`;
 
 exports[`formatDatePair displays differences of dates 2`] = `"Mon, Feb 4, 2019 at 10:41AM - Mon, Feb 4 at 1:41PM PST"`;

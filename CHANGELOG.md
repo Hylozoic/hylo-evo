@@ -4,6 +4,11 @@ All notable changes to Hylo Utils (shared utils for all Hylo products) will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.4]
+
+### Added
+- Custom timezone support to TextHelpers.formatDatePair
+
 ## [5.2.3]
 
 ### Added
@@ -106,7 +111,7 @@ URL as is currently done with topics (hashtags)
 
 ## [1.0.9]
 ### Fixed
-- Linkify's handling of hashtags 
+- Linkify's handling of hashtags
 
 ## [1.1.0]
 
