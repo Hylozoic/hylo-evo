@@ -1,6 +1,6 @@
 {
   "name": "hylo-shared",
-  "version": "5.2.4",
+  "version": "5.2.5",
   "description": "Code shared across Hylo applications for consistency of results",
   "repository": {
     "type": "git",
