@@ -44,6 +44,8 @@ const StreamViewControls = (props) => {
   const [searchState, setSearchState] = useState('')
 
   const postTypeOptionsForFilter = customPostTypes && customPostTypes.length > 1 ? POST_TYPE_OPTIONS.filter(postType => postType.label === 'All Posts' || customPostTypes.includes(postType.id)) : POST_TYPE_OPTIONS
+  const postTypeFilterDropdown = makeDropdown(postTypeFilter, postTypeOptionsForFilter, changeTab)
+
   const handleSearchToggle = () => {
     setSearchActive(!searchActive)
   }
@@ -107,7 +109,7 @@ const StreamViewControls = (props) => {
           </div>
         </div>
         {makeDropdown(sortBy, customViewType === 'collection' ? COLLECTION_SORT_OPTIONS : STREAM_SORT_OPTIONS, changeSort)}
-        {!['projects'].includes(view) && makeDropdown(postTypeFilter, postTypeOptionsForFilter, changeTab)}
+        {!['projects'].includes(view) && postTypeFilterDropdown}
         <Tooltip id='stream-viewmode-tip' position='bottom' />
       </div>
       {searchActive &&
