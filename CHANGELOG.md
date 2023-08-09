@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.5.5] - 2023-08-09
+
+### Added
+- MVP of timezone support for posts, for now just always use the current user's timezone when creating a post
+
 ## [5.5.4] - 2023-06-15
 
 ### Fixed

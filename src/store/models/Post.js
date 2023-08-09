@@ -73,6 +73,7 @@ Post.fields = {
   projectManagementLink: attr(),
   peopleReactedTotal: attr(),
   myVote: attr(),
+  timezone: attr(),
   topics: many('Topic'),
   isPublic: attr()
 }
@@ -140,7 +141,6 @@ export const POST_PROP_TYPES = {
   location: PropTypes.string,
   locationObject: PropTypes.object,
   name: PropTypes.string,
-  upVotes: PropTypes.string,
   updatedAt: PropTypes.string,
   imageUrl: PropTypes.string,
   linkPreview: PropTypes.object,

@@ -68,6 +68,7 @@ const postFieldsFragment = withComments => `
   fulfilledAt
   startTime
   endTime
+  timezone
   donationsLink
   projectManagementLink
   myEventResponse

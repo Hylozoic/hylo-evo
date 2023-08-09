@@ -5,19 +5,19 @@ import { CREATE_PROJECT } from 'store/constants'
 
 export default function createProject (postParams) {
   const {
-    type,
-    title,
-    details,
-    groups,
-    linkPreview,
-    imageUrls,
-    fileUrls,
-    topicNames,
-    sendAnnouncement,
-    memberIds = [],
     acceptContributions,
+    details,
     donationsLink,
-    projectManagementLink
+    fileUrls,
+    groups,
+    imageUrls,
+    linkPreview,
+    memberIds = [],
+    projectManagementLink,
+    sendAnnouncement,
+    title,
+    topicNames,
+    type
   } = postParams
   const linkPreviewId = linkPreview && linkPreview.id
   const groupIds = groups.map(c => c.id)
@@ -26,32 +26,32 @@ export default function createProject (postParams) {
     type: CREATE_PROJECT,
     graphql: {
       query: `mutation (
-        $title: String
+        $acceptContributions: Boolean
+        $announcement: Boolean
         $details: String
-        $linkPreviewId: String
+        $donationsLink: String
+        $fileUrls: [String]
         $groupIds: [ID]
         $imageUrls: [String]
-        $fileUrls: [String]
-        $announcement: Boolean
-        $topicNames: [String]
+        $linkPreviewId: String
         $memberIds: [ID]
-        $acceptContributions: Boolean
-        $donationsLink: String
         $projectManagementLink: String
+        $title: String
+        $topicNames: [String]
       ) {
         createProject(data: {
-          title: $title
+          acceptContributions: $acceptContributions
+          announcement: $announcement
           details: $details
-          linkPreviewId: $linkPreviewId
+          donationsLink: $donationsLink
+          fileUrls: $fileUrls
           groupIds: $groupIds
           imageUrls: $imageUrls
-          fileUrls: $fileUrls
-          announcement: $announcement
-          topicNames: $topicNames
+          linkPreviewId: $linkPreviewId
           memberIds: $memberIds
-          acceptContributions: $acceptContributions
-          donationsLink: $donationsLink
           projectManagementLink: $projectManagementLink
+          title: $title
+          topicNames: $topicNames
         }) {${postFieldsFragment(false)}}
       }`,
       variables: {

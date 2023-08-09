@@ -57,7 +57,8 @@ class PostEditor extends React.Component {
       title: '',
       details: '',
       groups: [],
-      location: ''
+      location: '',
+      timezone: Moment.tz.guess()
     },
     postTypes: Object.keys(POST_TYPES).filter(t => t !== 'chat'),
     editing: false,
@@ -445,22 +446,23 @@ class PostEditor extends React.Component {
       ensureLocationIdIfCoordinate
     } = this.props
     const {
-      id,
-      type,
-      title,
-      groups,
-      linkPreview,
-      linkPreviewFeatured,
-      members,
-      topics,
       acceptContributions,
       donationsLink,
-      projectManagementLink,
-      eventInvitations,
-      startTime,
       endTime,
+      eventInvitations,
+      groups,
+      id,
+      isPublic,
+      linkPreview,
+      linkPreviewFeatured,
       locationId,
-      isPublic
+      members,
+      projectManagementLink,
+      startTime,
+      timezone,
+      title,
+      topics,
+      type
     } = this.state.post
     const details = this.editorRef.current.getHTML()
     const topicNames = topics?.map((t) => t.name)
@@ -479,26 +481,27 @@ class PostEditor extends React.Component {
     })
     const postToSave = {
       id,
-      type,
-      title,
+      acceptContributions,
       details,
+      donationsLink: sanitizeURL(donationsLink),
+      endTime,
+      eventInviteeIds,
+      fileUrls,
       groups,
+      imageUrls,
+      isPublic,
       linkPreview,
       linkPreviewFeatured,
-      imageUrls,
-      fileUrls,
-      topicNames,
-      sendAnnouncement: announcementSelected,
-      memberIds,
-      acceptContributions,
-      donationsLink: sanitizeURL(donationsLink),
-      projectManagementLink: sanitizeURL(projectManagementLink),
-      eventInviteeIds,
-      startTime,
-      endTime,
       location,
       locationId: actualLocationId,
-      isPublic
+      memberIds,
+      projectManagementLink: sanitizeURL(projectManagementLink),
+      sendAnnouncement: announcementSelected,
+      startTime,
+      timezone,
+      title,
+      topicNames,
+      type
     }
     const saveFunc = editing ? updatePost : createPost
     setAnnouncement(false)
