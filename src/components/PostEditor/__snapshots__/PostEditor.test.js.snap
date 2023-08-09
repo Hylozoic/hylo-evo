@@ -598,6 +598,7 @@ Array [
       "projectManagementLink": null,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
+      "timezone": undefined,
       "title": "valid title",
       "topicNames": Array [
         "design",
@@ -1514,6 +1515,7 @@ Array [
       "projectManagementLink": null,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
+      "timezone": undefined,
       "title": "valid title",
       "topicNames": Array [
         "design",
@@ -2438,6 +2440,7 @@ Array [
       "projectManagementLink": null,
       "sendAnnouncement": undefined,
       "startTime": "2019-03-06T21:41:23.315Z",
+      "timezone": undefined,
       "title": "valid title",
       "topicNames": Array [
         "design",

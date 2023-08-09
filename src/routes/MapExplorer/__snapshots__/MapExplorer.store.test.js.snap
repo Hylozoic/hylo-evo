@@ -236,6 +236,7 @@ posts: viewPosts(
   fulfilledAt
   startTime
   endTime
+  timezone
   donationsLink
   projectManagementLink
   myEventResponse
