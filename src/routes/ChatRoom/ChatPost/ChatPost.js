@@ -119,7 +119,7 @@ export default function ChatPost ({
     setEditing(true)
     setTimeout(() => {
       editorRef.current.focus('end')
-    }, 200)
+    }, 500)
     event.stopPropagation()
     return true
   }

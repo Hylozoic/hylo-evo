@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Crashing error (blank screen) after using the person suggestion autocomplete feature and then changing views
 - Crashing error when loading projects page
+- Crash when changing post type in post creation model when a non-english language is selected
 
 ## [5.5.4] - 2023-06-15
 

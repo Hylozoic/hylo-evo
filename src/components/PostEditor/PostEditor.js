@@ -163,8 +163,7 @@ class PostEditor extends React.Component {
 
   focus = () => this.editorRef.current.focus()
 
-  handlePostTypeSelection = (event) => {
-    const type = event.target.textContent.toLowerCase()
+  handlePostTypeSelection = (type) => (event) => {
     const { changeQueryString, location } = this.props
     this.setIsDirty(true)
     changeQueryString({
@@ -239,7 +238,7 @@ class PostEditor extends React.Component {
     return {
       borderRadius: '5px',
       label,
-      onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection,
+      onClick: active ? this.togglePostTypeMenu : this.handlePostTypeSelection(forPostType),
       disabled: loading,
       color: '',
       className,
