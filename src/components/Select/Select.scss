@@ -6,7 +6,7 @@
 .select-wrapper:after {
   content: '\e928';
   font: normal normal normal 17px/1 'hylo-evo-icons';
-  color: $color-rhino-60;
+  color: $color-rhino-80;
   right: 11px;
   top: 3px;
   height: 34px;
@@ -32,7 +32,7 @@ select::-ms-expand {
   padding: 0 34px 0 13px;
   font-size: 16px;
   line-height: 1.75;
-  color: $color-rhino-60;
+  color: $color-rhino-80;
   background-color: #ffffff;
   background-image: none;
   border: 1px solid $color-ghost;

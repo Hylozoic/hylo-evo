@@ -110,7 +110,8 @@ class NotificationSettingsTab extends Component {
           </div>
         </div>
         <div styleName='global-setting'>
-          <div styleName='prompt'>{t('How would you like to receive notifications about')}
+          <div styleName='prompt'>
+            {t('How would you like to receive notifications about')}&nbsp;
             {t('new comments on posts you\'re following?')}
           </div>
           <div styleName='setting-select'>

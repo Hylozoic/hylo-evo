@@ -12,6 +12,7 @@ exports[`renders correctly 1`] = `
     checked={true}
     className="box"
     data-stylename="checkbox"
+    disabled={false}
     onChange={[Function]}
     type="checkbox"
   />

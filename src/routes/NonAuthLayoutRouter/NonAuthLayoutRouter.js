@@ -13,10 +13,12 @@ import Button from 'components/Button'
 import HyloCookieConsent from 'components/HyloCookieConsent'
 import JoinGroup from 'routes/JoinGroup'
 import Login from 'routes/NonAuthLayoutRouter/Login'
-import OAuthConsent from 'routes/OAuth/Consent'
-import OAuthLogin from 'routes/OAuth/Login'
+import ManageNotifications from 'routes/NonAuthLayoutRouter/ManageNotifications'
 import PasswordReset from 'routes/NonAuthLayoutRouter/PasswordReset'
 import SignupRouter from 'routes/NonAuthLayoutRouter/Signup/SignupRouter'
+import OAuthConsent from 'routes/OAuth/Consent'
+import OAuthLogin from 'routes/OAuth/Login'
+
 import './NonAuthLayoutRouter.scss'
 
 const particlesStyle = {
@@ -89,6 +91,12 @@ export default function NonAuthLayoutRouter (props) {
               )}
             />
             <Route
+              path='/notifications'
+              component={routeProps => (
+                <ManageNotifications {...props} {...routeProps} styleName='form' />
+              )}
+            />
+            <Route
               path={[
                 '/:context(groups)/:groupSlug/join/:accessCode',
                 '/h/use-invitation'
@@ -115,6 +123,8 @@ export default function NonAuthLayoutRouter (props) {
             <Redirect to={{ pathname: '/login', state: { from: location } }} />
           </Switch>
         </div>
+
+        {/* The below-container content for each route */}
         <Switch>
           <Route
             path='/signup'

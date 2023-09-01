@@ -85,6 +85,7 @@ posts: viewPosts(
   fulfilledAt
   startTime
   endTime
+  timezone
   donationsLink
   projectManagementLink
   myEventResponse
@@ -314,6 +315,7 @@ posts(
   fulfilledAt
   startTime
   endTime
+  timezone
   donationsLink
   projectManagementLink
   myEventResponse

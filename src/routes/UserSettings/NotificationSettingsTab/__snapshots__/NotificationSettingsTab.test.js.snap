@@ -94,6 +94,7 @@ exports[`NotificationSettingsTab renders correctly 1`] = `
       data-stylename="prompt"
     >
       How would you like to receive notifications about
+       
       new comments on posts you're following?
     </div>
     <div
