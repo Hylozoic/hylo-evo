@@ -9,7 +9,7 @@ export default function apiMiddleware (req) {
     const { path, params, method } = payload.api
     const cookie = req && req.headers.cookie
 
-    var promise = fetchJSON(path, params, { method, cookie, host: getHost() })
+    let promise = fetchJSON(path, params, { method, cookie, host: getHost() })
 
     if (meta && meta.then) {
       promise = promise.then(meta.then)
@@ -28,22 +28,23 @@ export function getHost () {
 }
 
 export function fetchJSON (path, params, options = {}) {
-  const fetchURL = (options.host) + path
+  const method = options.method ? options.method.toLowerCase() : 'get'
+  const fetchURL = (options.host) + path + (method === 'get' && params ? '?' + Object.keys(params).map(k => `${k}=${params[k]}`).join('&') : '')
   const fetchOptions = {
-    method: options.method || 'get',
+    method,
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Cookie': options.cookie
+      Cookie: options.cookie
     },
     credentials: 'same-origin',
-    body: JSON.stringify(params)
+    body: method === 'post' ? JSON.stringify(params) : null
   }
   const processResults = (resp) => {
-    let { status, statusText, url } = resp
+    const { status, statusText, url } = resp
     if (status === 200) return resp.json()
     return resp.text().then(body => {
-      let error = new Error(body)
+      const error = new Error(body)
       error.response = { status, statusText, url, body }
       throw error
     })

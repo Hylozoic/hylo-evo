@@ -223,6 +223,8 @@ export default function AuthLayoutRouter (props) {
       {/* Redirects for switching into global contexts, since these pages don't exist yet */}
       <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
       <RedirectRoute exact path='/:context(all)/(members|settings)' to='/all' />
+      {/* Redirect manage notifications page to settings page when logged in */}
+      <RedirectRoute exact path='/notifications)' to='/settings/notifications' />
       {/* First time viewing a group redirect to explore page */}
       {currentGroupMembership && !get('lastViewedAt', currentGroupMembership) && (
         <RedirectRoute exact path='/:context(groups)/:groupSlug' to={`/groups/${currentGroupSlug}/explore`} />
