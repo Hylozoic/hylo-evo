@@ -122,23 +122,25 @@ class EditProfileTab extends Component {
         <Helmet>
           <title>{t('Your Settings')} | Hylo</title>
         </Helmet>
+        <label styleName='label'>{t('Your Name')}</label>
         {!validateName(name) && <div styleName='name-validation'>{t('Name must not be blank')}</div>}
         <input type='text' styleName='name' onChange={this.updateSetting('name')} value={name || ''} />
-        <div style={bgImageStyle(bannerUrl)} styleName='banner'>
-          <UploadAttachmentButton
-            type='userBanner'
-            id={currentUser.id}
-            onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-            styleName='change-banner-button'
-          />
-        </div>
+        <label styleName='label'>{t('Banner and Avatar Images')}</label>
+        <UploadAttachmentButton
+          type='userBanner'
+          id={currentUser.id}
+          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
+          styleName='change-banner'
+        >
+          <div style={bgImageStyle(bannerUrl)} styleName='banner-image'><Icon name='AddImage' styleName='uploadIcon' /></div>
+        </UploadAttachmentButton>
         <UploadAttachmentButton
           type='userAvatar'
           id={currentUser.id}
           onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-          styleName='change-avatar-button'
+          styleName='change-avatar'
         >
-          <div style={bgImageStyle(avatarUrl)} styleName='avatar'><Icon name='AddImage' styleName='uploadIcon' /></div>
+          <div style={bgImageStyle(avatarUrl)} styleName='avatar-image'><Icon name='AddImage' styleName='uploadIcon' /></div>
         </UploadAttachmentButton>
         <SettingsControl label={t('Tagline')} onChange={this.updateSetting('tagline')} value={tagline} maxLength={60} />
         <SettingsControl label={t('About Me')} onChange={this.updateSetting('bio')} value={bio} type='textarea' />
