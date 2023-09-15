@@ -66,6 +66,7 @@ Object {
           }
           invitePath
           name
+          purpose
           settings {
             allowGroupInvites
             askGroupToGroupJoinQuestions
