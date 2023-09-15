@@ -32,6 +32,7 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
   moderatorDescriptor
   moderatorDescriptorPlural
   name
+  purpose
   settings {
     allowGroupInvites
     askGroupToGroupJoinQuestions
@@ -110,71 +111,81 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       visibility
     }
   }
-  ${withTopics ? `
-  groupTopics(first: 8) {
-    items {
-      id
-      lastReadPostId
-      topic {
-        id
-        name
+  ${withTopics
+    ? `
+      groupTopics(first: 8) {
+        items {
+          id
+          lastReadPostId
+          topic {
+            id
+            name
+          }
+          postsTotal
+        }
+      }`
+    : ''}
+  ${withJoinQuestions
+    ? `
+      joinQuestions {
+        items {
+          id
+          questionId
+          text
+        }
       }
-      postsTotal
-    }
-  }` : ''}
-  ${withJoinQuestions ? `
-  joinQuestions {
-    items {
-      id
-      questionId
-      text
-    }
-  }
-  suggestedSkills {
-    items {
-      id
-      name
-    }
-  }` : ''}
-  ${withPrerequisites ? `
-  prerequisiteGroups(onlyNotMember: true) {
-    items {
-      avatarUrl
-      id
-      name
-      settings {
-        allowGroupInvites
-        askGroupToGroupJoinQuestions
-        askJoinQuestions
-        hideExtensionData
-        locationDisplayPrecision
-        publicMemberDirectory
-        showSuggestedSkills
+      suggestedSkills {
+        items {
+          id
+          name
+        }
+      }`
+    : ''}
+  ${withPrerequisites
+    ? `
+      prerequisiteGroups(onlyNotMember: true) {
+        items {
+          avatarUrl
+          id
+          name
+          settings {
+            allowGroupInvites
+            askGroupToGroupJoinQuestions
+            askJoinQuestions
+            hideExtensionData
+            locationDisplayPrecision
+            publicMemberDirectory
+            showSuggestedSkills
+          }
+          slug
+        }
       }
-      slug
-    }
-  }
-  numPrerequisitesLeft
-  ` : ''}
-  ${withExtensions ? `
-  groupExtensions {
-    items {
-      id
-      data
-      type
-      active
-    }
-  }` : ''}
-  ${withWidgets ? `
-  widgets {
-    items {
-      id
-      name
-      context
-      order
-      isVisible
-    }
-  }` : ''}
+      numPrerequisitesLeft
+      `
+    : ''}
+  ${withExtensions
+    ? `
+      groupExtensions {
+        items {
+          id
+          data
+          type
+          active
+        }
+      }`
+    : ''}
+  ${withWidgets
+    ? `
+      widgets {
+        items {
+          id
+          name
+          context
+          order
+          isVisible
+        }
+      }`
+    : ''}
 `
 
 export default groupFieldsFragment

@@ -37,6 +37,7 @@ export default () => {
     moderatorDescriptor
     moderatorDescriptorPlural
     name
+    purpose
     settings {
       allowGroupInvites
       askGroupToGroupJoinQuestions
@@ -97,6 +98,7 @@ export default () => {
         geoShape
         memberCount
         name
+        purpose
         slug
         visibility
         settings {
@@ -217,6 +219,7 @@ export default () => {
         description
         geoShape
         name
+        purpose
         slug
         visibility
         settings {

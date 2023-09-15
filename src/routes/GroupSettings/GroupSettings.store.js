@@ -50,6 +50,7 @@ export function fetchGroupSettings (slug) {
           }
           invitePath
           name
+          purpose
           settings {
             allowGroupInvites
             askGroupToGroupJoinQuestions

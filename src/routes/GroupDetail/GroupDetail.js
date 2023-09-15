@@ -202,7 +202,7 @@ class UnwrappedGroupDetail extends Component {
         {isAboutCurrentGroup && group.aboutVideoUri && (
           <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
         )}
-        {isAboutCurrentGroup && !group.description && canModerate
+        {isAboutCurrentGroup && (!group.purpose && !group.description) && canModerate
           ? (
             <div styleName='g.no-description'>
               <div>
@@ -213,6 +213,11 @@ class UnwrappedGroupDetail extends Component {
             </div>
           ) : (
             <div styleName='g.groupDescription'>
+              <h3>{t('Purpose')}</h3>
+              <ClickCatcher>
+                <HyloHTML element='span' html={TextHelpers.markdown(group.purpose)} />
+              </ClickCatcher>
+              <h3>{t('Description')}</h3>
               <ClickCatcher>
                 <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
               </ClickCatcher>

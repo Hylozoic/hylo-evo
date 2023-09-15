@@ -26,10 +26,11 @@ class CreateGroup extends Component {
 
     this.state = {
       accessibility: 1,
-      characterCount: 0,
+      nameCharacterCount: 0,
       invitees: [],
       name: props.initialGroupName || '',
       parentGroups: this.props.parentGroups || [],
+      purposeCharacterCount: 0,
       slug: props.initialGroupSlug || '',
       slugCustomized: false,
       visibility: 1,
@@ -73,7 +74,7 @@ class CreateGroup extends Component {
   }
 
   updateField = (field) => (value) => {
-    let newValue = typeof value.target !== 'undefined' ? value.target.value : value
+    const newValue = typeof value.target !== 'undefined' ? value.target.value : value
 
     const updates = {
       [field]: newValue,
@@ -83,7 +84,11 @@ class CreateGroup extends Component {
 
     if (field === 'name') {
       updates.errors.name = newValue === '' ? this.props.t('Please enter a group name') : false
-      updates.characterCount = newValue.length
+      updates.nameCharacterCount = newValue.length
+    }
+
+    if (field === 'purpose') {
+      updates.purposeCharacterCount = newValue.length
     }
 
     if (field === 'slug') {
@@ -103,11 +108,12 @@ class CreateGroup extends Component {
   }
 
   onSubmit = () => {
-    let { accessibility, name, parentGroups, slug, visibility } = this.state
+    let { accessibility, name, parentGroups, purpose, slug, visibility } = this.state
     name = typeof name === 'string' ? trim(name) : name
+    purpose = typeof purpose === 'string' ? trim(purpose) : purpose
 
     if (this.isValid()) {
-      this.props.createGroup({ accessibility, name, slug, parentIds: parentGroups.map(g => g.id), visibility })
+      this.props.createGroup({ accessibility, name, slug, parentIds: parentGroups.map(g => g.id), purpose, visibility })
         .then(({ error }) => {
           if (error) {
             // `state.error` doesn't appear to be displayed anywhere
@@ -123,7 +129,7 @@ class CreateGroup extends Component {
 
   render () {
     const { goBack, match, parentGroupOptions, t } = this.props
-    const { accessibility, characterCount, edited, errors, name, parentGroups, slug, visibility } = this.state
+    const { accessibility, nameCharacterCount, edited, errors, name, parentGroups, purposeCharacterCount, slug, visibility } = this.state
 
     if (!match) return null
 
@@ -147,7 +153,7 @@ class CreateGroup extends Component {
             onEnter={this.onSubmit}
             styleName='groupNameInput'
           />
-          <span styleName='characterCounter'>{characterCount} / 60</span>
+          <span styleName='characterCounter'>{nameCharacterCount} / 60</span>
           {errors.name && <span styleName='nameError'>{errors.name}</span>}
           <span styleName='slug'>
             <button tabIndex='-1' styleName='slugButton' onClick={this.focusSlug}>
@@ -249,6 +255,22 @@ class CreateGroup extends Component {
             />
           </div>
         </div> */}
+
+        <div styleName='purposeContainer'>
+          <div styleName='purposeField'>
+            <span styleName='title'>{t('GROUP PURPOSE')}</span>
+            <span styleName='characterCounter'>{purposeCharacterCount} / 500</span>
+            <div styleName='purposeHelp'>
+              ?
+              <div styleName='purposeTooltip'>{t('Purpose is important')}</div>
+            </div>
+            <textarea
+              maxLength={500}
+              onChange={this.updateField('purpose')}
+              placeholder={t('What does this group hope to accomplish?')}
+            />
+          </div>
+        </div>
 
         {parentGroupOptions && parentGroupOptions.length > 0 && (
           <div styleName='parentGroups'>

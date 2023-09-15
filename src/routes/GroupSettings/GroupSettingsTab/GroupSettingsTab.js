@@ -67,6 +67,7 @@ class GroupSettingsTab extends Component {
         moderatorDescriptor: group.moderatorDescriptor || t('Moderator'),
         moderatorDescriptorPlural: group.moderatorDescriptorPlural || t('Moderators'),
         name: name || '',
+        purpose: group.purpose || '',
         settings: typeof settings !== 'undefined' ? settings : { }
       },
       error: null,
@@ -134,7 +135,7 @@ class GroupSettingsTab extends Component {
 
     const { changed, edits, error } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, purpose, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
@@ -167,6 +168,7 @@ class GroupSettingsTab extends Component {
         >
           <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
         </UploadAttachmentButton>
+        <SettingsControl label={t('Purpose Statement')} onChange={this.updateSetting('purpose')} value={purpose} type='textarea' maxLength='500' />
         <SettingsControl label={t('Description')} onChange={this.updateSetting('description')} value={description} type='textarea' />
         <SettingsControl label={t('About Video URL')} onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
         <SettingsControl

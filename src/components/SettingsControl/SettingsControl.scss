@@ -10,7 +10,7 @@
 .control-label {
   display: block;
   composes: tag from 'css/typography.scss';
-  color: $color-rhino-30;
+  color: $color-rhino-50;
   margin-bottom: $space-1x;
   &.error {
     color: red;

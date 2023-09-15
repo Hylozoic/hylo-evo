@@ -26,20 +26,18 @@ class GroupSidebar extends Component {
 
     if (!group || isEmpty(members)) return <Loading />
 
-    const { description, memberCount, moderatorDescriptorPlural, name, slug } = group
+    const { description, memberCount, moderatorDescriptorPlural, purpose, slug } = group
 
     return (
       <div styleName='group-sidebar'>
+        <AboutSection description={description} purpose={purpose} />
         <SettingsLink canModerate={canModerate} group={group} />
-        {canModerate && <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
-          <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> {this.props.t('Invite People')}</Button>
-        </Link>}
-        <AboutSection name={name} description={description} />
         <MemberSection
           members={members}
           memberCount={memberCount}
           slug={slug}
-          canModerate={canModerate} />
+          canModerate={canModerate}
+        />
         <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} groupId={group.id} />
       </div>
     )
@@ -77,6 +75,10 @@ export function MemberSection ({ members, memberCount, slug, canModerate }) {
             </span>}
         </div>
       </Link>
+      {canModerate &&
+        <Link to={groupUrl(slug, 'settings/invite')} styleName='invite-link'>
+          <Button styleName='settings-link'><Icon name='Invite' styleName='invite-icon' /> {t('Invite People')}</Button>
+        </Link>}
     </div>
   )
 }
