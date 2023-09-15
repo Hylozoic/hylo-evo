@@ -212,7 +212,7 @@ class UnwrappedGroupDetail extends Component {
         {isAboutCurrentGroup && group.aboutVideoUri && (
           <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
         )}
-        {isAboutCurrentGroup && !group.description && canModerate
+        {isAboutCurrentGroup && (!group.purpose && !group.description) && canModerate
           ? (
             <div styleName='g.no-description'>
               <div>
@@ -221,26 +221,18 @@ class UnwrappedGroupDetail extends Component {
                 <Link to={groupUrl(group.slug, 'settings')}>{t('Add a group description')}</Link>
               </div>
             </div>
-          </div>
-          : <div styleName='g.groupDescription'>
-            {group.purpose
-              ? <>
-                <h3>{t('Purpose')}</h3>
-                <ClickCatcher>
-                  <HyloHTML element='span' html={TextHelpers.markdown(group.purpose)} />
-                </ClickCatcher>
-              </>
-              : ''}
-            {group.description
-              ? <>
-                <h3>{t('Description')}</h3>
-                <ClickCatcher>
-                  <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
-                </ClickCatcher>
-              </>
-              : ''}
-          </div>
-        }
+          ) : (
+            <div styleName='g.groupDescription'>
+              <h3>{t('Purpose')}</h3>
+              <ClickCatcher>
+                <HyloHTML element='span' html={TextHelpers.markdown(group.purpose)} />
+              </ClickCatcher>
+              <h3>{t('Description')}</h3>
+              <ClickCatcher>
+                <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+              </ClickCatcher>
+            </div>
+          )}
         {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
         {!isAboutCurrentGroup && topics && topics.length && (
           <div styleName='g.groupTopics'>

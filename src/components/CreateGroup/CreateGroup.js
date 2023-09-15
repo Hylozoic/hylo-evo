@@ -84,7 +84,11 @@ class CreateGroup extends Component {
 
     if (field === 'name') {
       updates.errors.name = newValue === '' ? this.props.t('Please enter a group name') : false
-      updates.characterCount = newValue.length
+      updates.nameCharacterCount = newValue.length
+    }
+
+    if (field === 'purpose') {
+      updates.purposeCharacterCount = newValue.length
     }
 
     if (field === 'slug') {
@@ -125,7 +129,7 @@ class CreateGroup extends Component {
 
   render () {
     const { goBack, match, parentGroupOptions, t } = this.props
-    const { accessibility, characterCount, edited, errors, name, parentGroups, slug, visibility } = this.state
+    const { accessibility, nameCharacterCount, edited, errors, name, parentGroups, purposeCharacterCount, slug, visibility } = this.state
 
     if (!match) return null
 
@@ -258,7 +262,7 @@ class CreateGroup extends Component {
             <span styleName='characterCounter'>{purposeCharacterCount} / 500</span>
             <div styleName='purposeHelp'>
               ?
-              <div styleName='purposeTooltip'>{t('purposeHelpText')}</div>
+              <div styleName='purposeTooltip'>{t('Purpose is important')}</div>
             </div>
             <textarea
               maxLength={500}

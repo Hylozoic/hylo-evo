@@ -168,6 +168,7 @@ class GroupSettingsTab extends Component {
         >
           <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
         </UploadAttachmentButton>
+        <SettingsControl label={t('Purpose Statement')} onChange={this.updateSetting('purpose')} value={purpose} type='textarea' maxLength='500' />
         <SettingsControl label={t('Description')} onChange={this.updateSetting('description')} value={description} type='textarea' />
         <SettingsControl label={t('About Video URL')} onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
         <SettingsControl

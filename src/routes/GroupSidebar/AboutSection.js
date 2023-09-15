@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import { isEmpty } from 'lodash'
+import React, { useEffect, useRef, useState } from 'react'
 import { string } from 'prop-types'
 import { withTranslation } from 'react-i18next'
 import { TextHelpers } from 'hylo-shared'
@@ -7,28 +8,18 @@ import HyloHTML from 'components/HyloHTML'
 import cx from 'classnames'
 import './GroupSidebar.scss'
 
-class AboutSection extends Component {
-  static propTypes = {
-    name: string,
-    description: string
-  }
+function AboutSection (props) {
+  const { description, purpose, t } = props
+  const [showExpandButton, setShowExpandButton] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const containerRef = useRef(null)
 
-  constructor (props) {
-    super(props)
-    this.state = { expanded: false }
-  }
-
-  render () {
-    const { name, description } = this.props
-    let { expanded } = this.state
-
-    if (!description) return null
-
-    const onClick = () => this.setState({ expanded: !expanded })
-    const showExpandButton = description.length > 155
-    if (!showExpandButton) {
-      expanded = true
+  useEffect(() => {
+    const container = containerRef.current
+    if (container) {
+      setShowExpandButton(container.scrollHeight > container.clientHeight)
     }
+  }, [containerRef.current, purpose, description])
 
     return <div styleName='about-section'>
       <div styleName='header'>
