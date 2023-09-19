@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.5.6] - 2023-09-19
+
+### Added
+- Ability to change notification settings and unsubscribe from all notifications from links in emails that still work even when not logged in.
+
 ## [5.5.5] - 2023-08-09
 
 ### Added
