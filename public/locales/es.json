@@ -983,5 +983,6 @@
   "{{othersCount}} others": "{{othersCount}} otros",
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requiere que los grupos respondan las siguientes preguntas antes de unirse",
   "{{personOne}} and {{personTwo}}": "{{personOne}} y {{personTwo}}",
-  "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas"
+  "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas",
+  "purposeHelpText": "Tu declaración de propósito es un resumen conciso de por qué existe tu grupo y qué esperas lograr. Un propósito claro y específico ayuda a alinear a los miembros de tu grupo para coordinarse eficazmente para lograr tus objetivos. Apunta a una o dos oraciones."
 }

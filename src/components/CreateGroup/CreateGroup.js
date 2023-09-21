@@ -262,7 +262,7 @@ class CreateGroup extends Component {
             <span styleName='characterCounter'>{purposeCharacterCount} / 500</span>
             <div styleName='purposeHelp'>
               ?
-              <div styleName='purposeTooltip'>{t('Purpose is important')}</div>
+              <div styleName='purposeTooltip'>{t('purposeHelpText')}</div>
             </div>
             <textarea
               maxLength={500}

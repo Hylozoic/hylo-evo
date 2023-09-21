@@ -964,5 +964,6 @@
   "{{othersCount}} others": "{{othersCount}} others",
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requires groups to answer the following questions before joining",
   "{{personOne}} and {{personTwo}}": "{{personOne}} and {{personTwo}}",
-  "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total Topics"
+  "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total Topics",
+  "purposeHelpText": "Your purpose statement is a concise summary of why your group exists and what you hope to accomplish. A clear and specific purpose helps align members of your group to coordinate effectively to achieve your goals. Aim for one or two sentences."
 }

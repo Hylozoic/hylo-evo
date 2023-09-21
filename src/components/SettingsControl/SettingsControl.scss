@@ -37,6 +37,44 @@ textarea.control-input {
   height: $space-20x;
 }
 
+.help {
+  display: inline-block;
+  position: relative;
+  background-color: rgba(128, 140, 155, 1.00);
+  color: white;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 18px;
+  margin-left: 5px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+  composes: bdy-drk-sm from 'css/typography.scss';
+
+  .helpTooltip {
+    display: none;
+    position: absolute;
+    width: 240px;
+    top: 20px;
+    left: 0;
+    background-color: $color-black-80;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    z-index: 100;
+    text-transform: none;
+    font-family: "Circular Book", sans-serif;
+  }
+
+  &:hover {
+    .helpTooltip {
+      display: block;
+    }
+  }
+}
+
 @media screen and (max-width: 320px) {
   .control-input {
     font-size: 14px;
