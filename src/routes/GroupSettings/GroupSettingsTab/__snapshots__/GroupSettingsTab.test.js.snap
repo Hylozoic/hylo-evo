@@ -65,6 +65,7 @@ exports[`GroupSettingsTab renders correctly 1`] = `
     </div>
   </Connect(UploadAttachmentButton)>
   <SettingsControl
+    helpText="purposeHelpText"
     label="Purpose Statement"
     maxLength="500"
     onChange={[Function]}
