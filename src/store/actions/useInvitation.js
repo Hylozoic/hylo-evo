@@ -18,6 +18,7 @@ export default function useInvitation (inviteCodes = {}) {
                 id
                 accessibility
                 name
+                purpose
                 settings {
                   allowGroupInvites
                   askJoinQuestions

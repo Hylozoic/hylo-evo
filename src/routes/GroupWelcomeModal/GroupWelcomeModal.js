@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -54,13 +55,18 @@ export default function GroupWelcomeModal (props) {
           <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='banner'>
             <div styleName='banner-content'>
               <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} size='50px' square />
-              <h3>{t('Welcome to {{group.name}}!', { group })}</h3>
+              <h2>{t('Welcome to {{group.name}}!', { group })}</h2>
             </div>
             <div styleName='fade' />
           </div>
           <div styleName='welcome-content'>
             {group.settings.showSuggestedSkills && group.suggestedSkills && group.suggestedSkills.length > 0 &&
               <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
+            {!isEmpty(group.purpose) &&
+              <div>
+                <h2>{t('Our Purpose')}</h2>
+                <p>{group.purpose}</p>
+              </div>}
             <div styleName='call-to-action'>
               <Button label={t('Jump in!')} data-testid='jump-in' onClick={closeModal} />
             </div>

@@ -45,7 +45,7 @@ query (
   $search: String,
   $sortBy: String
 ) {
-  groups( 
+  groups(
     boundingBox: $boundingBox,
     first: $first,
     farmQuery: $farmQuery
@@ -80,6 +80,7 @@ query (
       avatarUrl
       bannerUrl
       name
+      purpose
       type
       settings {
         allowGroupInvites

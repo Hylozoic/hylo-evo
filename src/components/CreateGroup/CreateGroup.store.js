@@ -91,6 +91,7 @@ export function createGroup (data) {
         createGroup(data: $data) {
           id
           name
+          purpose
           slug
           parentGroups {
             items {

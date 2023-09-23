@@ -9,7 +9,7 @@
 ## Running local:
 
 1. `yarn install`
-2. `yarn start`
+2. `yarn dev`
 3. Setup [hylo-node](https://github.com/Hylozoic/hylo-node) and run that locally as well.
 4. Run hylo-node
 
@@ -38,9 +38,9 @@ Please review our [Contribution Guide](CONTRIBUTING.md) and [Code of Conduct](CO
 
 The application's series of Redux middlewares take care of *MOST* of the data fetching for the application. Data fetching side-effects are triggered by dispatching specific redux actions, as with most redux setups. Instead of custom or specific request handlers, however, Evo uses a series of middleware handlers to handle all fetching to the platform backend. These actions conform to the flux-standard-action pattern, with some additions to handle the application's edge cases.
 
-[The order of these middlewares matters](https://github.com/Hylozoic/hylo-evo/blob/dev/src/store/middleware/index.js). In sequence, actions will pass through the middlewares, with each checking for certain properties, conditionally triggering a side-effect (editing the action, firing off another action, making a request, etc) and then passing the action down the sequence via the `next` call. 
-- The graphql middleware mutates any graphql action to format it for an API call. 
-- The api middleware makes any api fetch requests to the backend, as specified by the `api` property on the action, and adds the fetch requests `promise` return value to the `payload` property of the action. 
+[The order of these middlewares matters](https://github.com/Hylozoic/hylo-evo/blob/dev/src/store/middleware/index.js). In sequence, actions will pass through the middlewares, with each checking for certain properties, conditionally triggering a side-effect (editing the action, firing off another action, making a request, etc) and then passing the action down the sequence via the `next` call.
+- The graphql middleware mutates any graphql action to format it for an API call.
+- The api middleware makes any api fetch requests to the backend, as specified by the `api` property on the action, and adds the fetch requests `promise` return value to the `payload` property of the action.
 - The error middleware checks for any errors thrown by the other middleware
 - The 'optimistic' middleware optimistically updates the local store for edited or created data while the application waits for the data to be saved in the backend
 - The 'pending' middleware spots any payloads with a `promise` and then dispatches a `_PENDING` version of that action, so that the rest of the application knows there is async data loading occuring
@@ -56,7 +56,7 @@ So to recap, if you want to interact with the backend and ensure some data is av
 ### Non-logged in Routing
 For users that are not logged in can see public posts and groups via routes like
 
-`/groups/:groupSlug` => Group Detail view 
+`/groups/:groupSlug` => Group Detail view
 `/public/groups` => Group Explorer
 `/post/:postId` => Post Detail
 `/public/map` => Map Explorer (public)
@@ -65,12 +65,12 @@ For users that are not logged in can see public posts and groups via routes like
 `/public/post/:postId` => `/post/:postId`
 
 ### Translations
-We use i18next to handle translations of platform strings (no translations of user content at this time). 
+We use i18next to handle translations of platform strings (no translations of user content at this time).
 
 The `i18next-extract` config details in the `babel.config.js` file determines how all language keys are extracted and what languages are supported. Whenever babel runs, it will comb the entire repo for js/jsx files, and anytime it finds a t('example-key') function, it will pull every key into each of the translation files. It is disabled in the babel.config by default: when it runs, it generates keys for missing translations. It also sometimes overwrites newly added translations, causing a lot of finicky editing if its on by default. When you add a new translation, uncomment the config, restart webpack (yarn start)  and it should pick up the key for every locale file.
 
 If using vscode, there is a really fantastic extension for working with i18n; [i18n-ally](https://github.com/lokalise/i18n-ally)
-They have a 8 minute setup and feature [demo video](https://www.youtube.com/watch?v=kowM-MoGVns). 
+They have a 8 minute setup and feature [demo video](https://www.youtube.com/watch?v=kowM-MoGVns).
 
 
 ### Sockets

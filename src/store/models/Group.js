@@ -44,7 +44,7 @@ export function visibilityDescription (v) {
     case GROUP_VISIBILITY.Hidden:
       return 'Only members of this group or direct child groups can see it'
     case GROUP_VISIBILITY.Protected:
-      return 'Members of parent groups can see this group'
+      return 'Only members of this group or direct parent or child groups can see this group'
     case GROUP_VISIBILITY.Public:
       return 'Anyone can find and see this group'
   }
@@ -70,9 +70,9 @@ export const visibilityString = (visibility) => {
 }
 
 export const LOCATION_PRECISION = {
-  'precise': 'Display exact location',
-  'near': 'Display only nearest city and show nearby location on the map',
-  'region': 'Display only nearest city and dont show on the map'
+  precise: 'Display exact location',
+  near: 'Display only nearest city and show nearby location on the map',
+  region: 'Display only nearest city and dont show on the map'
 }
 
 export class GroupModerator extends Model { }
@@ -184,6 +184,7 @@ Group.fields = {
     through: 'GroupPrerequisite',
     throughFields: [ 'prerequisiteGroup', 'forGroup' ]
   }),
+  purpose: attr(),
   settings: attr(),
   slug: attr(),
   suggestedSkills: many('Skill'),

@@ -11,33 +11,48 @@ exports[`EditProfileTab renders correctly 1`] = `
        | Hylo
     </title>
   </HelmetWrapper>
+  <label
+    data-stylename="label"
+  >
+    Your Name
+  </label>
   <input
     data-stylename="name"
     onChange={[Function]}
     type="text"
     value="Yay"
   />
-  <div
-    data-stylename="banner"
-    style={
-      Object {
-        "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg)",
-      }
-    }
+  <label
+    data-stylename="label"
   >
-    <Connect(UploadAttachmentButton)
-      data-stylename="change-banner-button"
-      onSuccess={[Function]}
-      type="userBanner"
-    />
-  </div>
+    Banner and Avatar Images
+  </label>
   <Connect(UploadAttachmentButton)
-    data-stylename="change-avatar-button"
+    data-stylename="change-banner"
+    onSuccess={[Function]}
+    type="userBanner"
+  >
+    <div
+      data-stylename="banner-image"
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg)",
+        }
+      }
+    >
+      <Icon
+        data-stylename="uploadIcon"
+        name="AddImage"
+      />
+    </div>
+  </Connect(UploadAttachmentButton)>
+  <Connect(UploadAttachmentButton)
+    data-stylename="change-avatar"
     onSuccess={[Function]}
     type="userAvatar"
   >
     <div
-      data-stylename="avatar"
+      data-stylename="avatar-image"
       style={Object {}}
     >
       <Icon
@@ -148,6 +163,11 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
        | Hylo
     </title>
   </HelmetWrapper>
+  <label
+    data-stylename="label"
+  >
+    Your Name
+  </label>
   <div
     data-stylename="name-validation"
   >
@@ -159,27 +179,37 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
     type="text"
     value=""
   />
-  <div
-    data-stylename="banner"
-    style={
-      Object {
-        "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg)",
-      }
-    }
+  <label
+    data-stylename="label"
   >
-    <Connect(UploadAttachmentButton)
-      data-stylename="change-banner-button"
-      onSuccess={[Function]}
-      type="userBanner"
-    />
-  </div>
+    Banner and Avatar Images
+  </label>
   <Connect(UploadAttachmentButton)
-    data-stylename="change-avatar-button"
+    data-stylename="change-banner"
+    onSuccess={[Function]}
+    type="userBanner"
+  >
+    <div
+      data-stylename="banner-image"
+      style={
+        Object {
+          "backgroundImage": "url(https://d3ngex8q79bk55.cloudfront.net/misc/default_user_banner.jpg)",
+        }
+      }
+    >
+      <Icon
+        data-stylename="uploadIcon"
+        name="AddImage"
+      />
+    </div>
+  </Connect(UploadAttachmentButton)>
+  <Connect(UploadAttachmentButton)
+    data-stylename="change-avatar"
     onSuccess={[Function]}
     type="userAvatar"
   >
     <div
-      data-stylename="avatar"
+      data-stylename="avatar-image"
       style={Object {}}
     >
       <Icon

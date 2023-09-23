@@ -6,7 +6,7 @@ import cx from 'classnames'
 import './SettingsControl.scss'
 
 export default function SettingsControl (props) {
-  const { label, value = '', onChange, renderControl, type, error, controlClass, ...otherProps } = props
+  const { helpText, label, value = '', onChange, renderControl, type, error, controlClass, ...otherProps } = props
   let control
 
   if (renderControl) {
@@ -14,12 +14,16 @@ export default function SettingsControl (props) {
   } else {
     switch (type) {
       case 'textarea':
-        control = <TextareaAutosize minRows={1}
-          maxRows={100}
-          styleName='control-input'
-          value={value}
-          onChange={onChange}
-          {...otherProps} />
+        control = (
+          <TextareaAutosize
+            minRows={1}
+            maxRows={100}
+            onChange={onChange}
+            styleName='control-input'
+            value={value}
+            {...otherProps}
+          />
+        )
         break
       case 'icon-selector':
         control = (
@@ -31,34 +35,53 @@ export default function SettingsControl (props) {
         )
         break
       case 'password':
-        control = <input styleName='control-input'
-          type='password'
-          value={value}
-          onChange={onChange}
-          autoComplete='new-password'
-          autoCorrect='off'
-          spellCheck='off'
-          {...otherProps} />
+        control = (
+          <input
+            autoComplete='new-password'
+            autoCorrect='off'
+            onChange={onChange}
+            spellCheck='off'
+            styleName='control-input'
+            type='password'
+            value={value}
+            {...otherProps}
+          />
+        )
         break
       case 'location':
-        control = <LocationInput
-          saveLocationToDB
-          onChange={onChange}
-          {...otherProps}
-        />
+        control = (
+          <LocationInput
+            onChange={onChange}
+            saveLocationToDB
+            {...otherProps}
+          />
+        )
         break
       default:
-        control = <input styleName='control-input'
-          type='text'
-          value={value}
-          onChange={onChange}
-          {...otherProps} />
+        control = (
+          <input
+            onChange={onChange}
+            styleName='control-input'
+            type='text'
+            value={value}
+            {...otherProps}
+          />
+        )
         break
     }
   }
 
-  return <div styleName={cx('control', { error })} className={controlClass}>
-    <label styleName={cx('control-label', { error })}>{label}</label>
-    {control}
-  </div>
+  return (
+    <div styleName={cx('control', { error })} className={controlClass}>
+      <label styleName={cx('control-label', { error })}>
+        {label}
+        {helpText
+          ? <div styleName='help'>?<div styleName='helpTooltip'>{helpText}</div></div>
+          : ''
+        }
+      </label>
+
+      {control}
+    </div>
+  )
 }

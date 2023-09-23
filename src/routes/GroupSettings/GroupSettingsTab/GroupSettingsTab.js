@@ -9,6 +9,7 @@ import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import { ensureLocationIdIfCoordinate } from 'components/LocationInput/LocationInput.store'
 import EditableMap from 'components/Map/EditableMap/EditableMap'
+import EditableMapModal from 'components/Map/EditableMap/EditableMapModal'
 import SettingsControl from 'components/SettingsControl'
 import SkillsSection from 'components/SkillsSection'
 import SwitchStyled from 'components/SwitchStyled'
@@ -23,7 +24,6 @@ import SettingsSection from '../SettingsSection'
 
 import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
 import styles from './GroupSettingsTab.scss' // eslint-disable-line no-unused-vars
-import EditableMapModal from 'components/Map/EditableMap/EditableMapModal'
 
 const { object, func } = PropTypes
 
@@ -67,6 +67,7 @@ class GroupSettingsTab extends Component {
         moderatorDescriptor: group.moderatorDescriptor || t('Moderator'),
         moderatorDescriptorPlural: group.moderatorDescriptorPlural || t('Moderators'),
         name: name || '',
+        purpose: group.purpose || '',
         settings: typeof settings !== 'undefined' ? settings : { }
       },
       error: null,
@@ -134,7 +135,7 @@ class GroupSettingsTab extends Component {
 
     const { changed, edits, error } = this.state
     const {
-      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, settings
+      aboutVideoUri, avatarUrl, bannerUrl, description, geoShape, location, moderatorDescriptor, moderatorDescriptorPlural, name, purpose, settings
     } = edits
 
     const { locationDisplayPrecision, showSuggestedSkills } = settings
@@ -146,23 +147,35 @@ class GroupSettingsTab extends Component {
 
     return (
       <div styleName='general.groupSettings'>
-        <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
-        <div style={bgImageStyle(bannerUrl)} styleName='styles.banner'>
-          <UploadAttachmentButton
-            type='groupBanner'
-            id={group.id}
-            onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
-            styleName='styles.change-banner-button'
-          />
-        </div>
-        <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar'>
-          <UploadAttachmentButton
-            type='groupAvatar'
-            id={group.id}
-            onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
-            styleName='styles.change-avatar-button'
-          />
-        </div>
+        <span styleName='styles.nameBox'>
+          <label styleName='styles.label'>{t('Group Name')}</label>
+          <input type='text' styleName='styles.name' onChange={this.updateSetting('name')} value={name || ''} />
+        </span>
+        <label styleName='styles.label'>{t('Banner and Avatar Images')}</label>
+        <UploadAttachmentButton
+          type='groupBanner'
+          id={group.id}
+          onSuccess={({ url }) => this.updateSettingDirectly('bannerUrl')(url)}
+          styleName='styles.change-banner'
+        >
+          <div style={bgImageStyle(bannerUrl)} styleName='styles.banner-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
+        </UploadAttachmentButton>
+        <UploadAttachmentButton
+          type='groupAvatar'
+          id={group.id}
+          onSuccess={({ url }) => this.updateSettingDirectly('avatarUrl')(url)}
+          styleName='styles.change-avatar'
+        >
+          <div style={bgImageStyle(avatarUrl)} styleName='styles.avatar-image'><Icon name='AddImage' styleName='styles.uploadIcon' /></div>
+        </UploadAttachmentButton>
+        <SettingsControl
+          helpText={t('purposeHelpText')}
+          label={t('Purpose Statement')}
+          maxLength='500'
+          onChange={this.updateSetting('purpose')}
+          type='textarea'
+          value={purpose}
+        />
         <SettingsControl label={t('Description')} onChange={this.updateSetting('description')} value={description} type='textarea' />
         <SettingsControl label={t('About Video URL')} onChange={this.updateSetting('aboutVideoUri')} value={aboutVideoUri} />
         <SettingsControl

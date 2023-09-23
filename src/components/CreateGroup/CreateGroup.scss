@@ -44,7 +44,7 @@
 
 .nameAndSlug {
   background: rgba(246, 248, 249, 1.00);
-  padding: 30px;
+  padding: 20px 30px;
   position: relative;
 
   .groupNameInput {
@@ -127,7 +127,7 @@
 }
 
 .privacy {
-  padding: 10px;
+  padding: 5px 10px;
   background: white;
 }
 
@@ -174,7 +174,7 @@
     align-items: center;
 
     .selectedString {
-      padding-right: 20px;
+      padding-right: 35px;
     }
 
     .dropdownDescription {
@@ -236,8 +236,86 @@
   }
 }
 
+.purposeContainer {
+  background: rgba(246, 248, 249, 1.00);
+  padding: 20px 30px;
+  position: relative;
+
+  .characterCounter {
+    position: absolute;
+    top: 16px;
+    right: 40px;
+    color: rgba(192, 197, 205, 1.00);
+    font-size: 12px;
+  }
+
+  .purposeField {
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba(225, 229, 233, 1.00);
+    background-color: white;
+    position: relative;
+
+    .title {
+      font-size: 12px;
+      color: rgba(192, 197, 205, 1.00);
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+
+  .purposeHelp {
+    background-color: rgba(128, 140, 155, 1.00);
+    color: white;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    text-align: center;
+    font-size: 12px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+
+    .purposeTooltip {
+      display: none;
+      position: absolute;
+      width: 240px;
+      top: 20px;
+      right: 0;
+      background-color: $color-black-80;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      z-index: 10;
+    }
+
+    &:hover {
+      .purposeTooltip {
+        display: block;
+      }
+    }
+  }
+
+  textarea {
+    font-size: 16px;
+    font-family: "Circular Book";
+    width: 100%;
+    color: rgba(41, 64, 90, 1.00);
+    border: none;
+    outline: none;
+    padding: 0;
+
+    &::placeholder {
+      color: rgba(192, 197, 205, 1.00);
+      font-style: italic;
+    }
+  }
+}
+
 .parentGroups {
-  padding: 30px 30px 0 30px;
+  padding: 20px 30px 0 30px;
 
   .parentSelector {
     padding: 15px;
@@ -277,6 +355,7 @@
         padding: 5px 8px;
         border-radius: 5px;
         top: 20px;
+        z-index: 10;
       }
 
       &:hover {

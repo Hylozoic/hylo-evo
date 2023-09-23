@@ -4,42 +4,74 @@ exports[`GroupSettingsTab renders correctly 1`] = `
 <div
   data-stylename="general.groupSettings"
 >
-  <input
-    data-stylename="styles.name"
+  <span
+    data-stylename="styles.nameBox"
+  >
+    <label
+      data-stylename="styles.label"
+    >
+      Group Name
+    </label>
+    <input
+      data-stylename="styles.name"
+      onChange={[Function]}
+      type="text"
+      value="Foomunity"
+    />
+  </span>
+  <label
+    data-stylename="styles.label"
+  >
+    Banner and Avatar Images
+  </label>
+  <Connect(UploadAttachmentButton)
+    data-stylename="styles.change-banner"
+    id={1}
+    onSuccess={[Function]}
+    type="groupBanner"
+  >
+    <div
+      data-stylename="styles.banner-image"
+      style={
+        Object {
+          "backgroundImage": "url(avatar.png)",
+        }
+      }
+    >
+      <Icon
+        data-stylename="styles.uploadIcon"
+        name="AddImage"
+      />
+    </div>
+  </Connect(UploadAttachmentButton)>
+  <Connect(UploadAttachmentButton)
+    data-stylename="styles.change-avatar"
+    id={1}
+    onSuccess={[Function]}
+    type="groupAvatar"
+  >
+    <div
+      data-stylename="styles.avatar-image"
+      style={
+        Object {
+          "backgroundImage": "url(avatar.png)",
+        }
+      }
+    >
+      <Icon
+        data-stylename="styles.uploadIcon"
+        name="AddImage"
+      />
+    </div>
+  </Connect(UploadAttachmentButton)>
+  <SettingsControl
+    helpText="purposeHelpText"
+    label="Purpose Statement"
+    maxLength="500"
     onChange={[Function]}
-    type="text"
-    value="Foomunity"
+    type="textarea"
+    value=""
   />
-  <div
-    data-stylename="styles.banner"
-    style={
-      Object {
-        "backgroundImage": "url(avatar.png)",
-      }
-    }
-  >
-    <Connect(UploadAttachmentButton)
-      data-stylename="styles.change-banner-button"
-      id={1}
-      onSuccess={[Function]}
-      type="groupBanner"
-    />
-  </div>
-  <div
-    data-stylename="styles.avatar"
-    style={
-      Object {
-        "backgroundImage": "url(avatar.png)",
-      }
-    }
-  >
-    <Connect(UploadAttachmentButton)
-      data-stylename="styles.change-avatar-button"
-      id={1}
-      onSuccess={[Function]}
-      type="groupAvatar"
-    />
-  </div>
   <SettingsControl
     label="Description"
     onChange={[Function]}
