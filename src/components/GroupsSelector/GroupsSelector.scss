@@ -2,7 +2,7 @@
   display: inline-block;
   /* Slightly adjust y positioning to make perfectly centered with "Post In" */
   position: relative;
-  top: 2px;
+  top: 4px;
   /* shared font styles */
   color: $color-caribbean-green;
   font-size: 1em;
@@ -94,7 +94,8 @@
 [class*='tags-empty'] {
   /* Adjusts search bar position height when no tagged groups are selected*/
   position: absolute;
-  transform: translateY(-9px);
+  z-index: 999;
+  transform: translateY(-19px);
 }
 
 .search input::placeholder {
@@ -106,7 +107,7 @@
 }
 
 .suggestions {
-  position: absolute;
+  position:absolute;
   top: 100%;
   left: 0;
 }
