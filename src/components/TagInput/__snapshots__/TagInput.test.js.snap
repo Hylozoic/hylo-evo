@@ -73,7 +73,7 @@ exports[`TagInput renders correctly (with min props) 1`] = `
     className="selected"
   />
   <div
-    className="search"
+    className="search tags-empty"
   >
     <div
       className="searchInput"
