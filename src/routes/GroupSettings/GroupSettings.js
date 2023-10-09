@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import AgreementsTab from './AgreementsTab'
 import CustomViewsTab from './CustomViewsTab'
 import DeleteSettingsTab from './DeleteSettingsTab'
 import GroupSettingsTab from './GroupSettingsTab'
@@ -67,6 +68,11 @@ export default function GroupSettings ({
             prerequisiteGroups={prerequisiteGroups}
             updateGroupSettings={updateGroupSettings}
           />
+        },
+        {
+          name: t('Agreements'),
+          path: groupUrl(slug, 'settings/agreements'),
+          component: <AgreementsTab group={group} />
         },
         {
           name: t('Roles & Badges'),

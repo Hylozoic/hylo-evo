@@ -23,9 +23,9 @@ exports[`AttachmentManager as used with CommentForm (default case) when loading,
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="comment"
     uploadAttachmentPending={true}
   />
@@ -46,9 +46,9 @@ exports[`AttachmentManager as used with CommentForm (default case) when loading,
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="comment"
     uploadAttachmentPending={true}
   />
@@ -74,9 +74,9 @@ exports[`AttachmentManager as used with CommentForm (default case) with attachme
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="comment"
   />
   <FileManager
@@ -96,9 +96,9 @@ exports[`AttachmentManager as used with CommentForm (default case) with attachme
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="comment"
   />
 </Fragment>
@@ -114,12 +114,12 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
     showLabel={true}
     showLoading={true}
     showsAddButton={true}
-    switchAttachments={[Function]}
     type="post"
     uploadAttachmentPending={true}
   />
@@ -129,12 +129,12 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
     showLabel={true}
     showLoading={true}
     showsAddButton={true}
-    switchAttachments={[Function]}
     type="post"
     uploadAttachmentPending={true}
   />
@@ -160,12 +160,12 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
     showLabel={true}
     showLoading={true}
     showsAddButton={true}
-    switchAttachments={[Function]}
     type="post"
     uploadAttachmentPending={true}
   />
@@ -186,12 +186,12 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
     showLabel={true}
     showLoading={true}
     showsAddButton={true}
-    switchAttachments={[Function]}
     type="post"
     uploadAttachmentPending={true}
   />
@@ -217,12 +217,12 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
     showLabel={true}
     showLoading={true}
     showsAddButton={true}
-    switchAttachments={[Function]}
     type="post"
   />
   <FileManager
@@ -242,12 +242,12 @@ exports[`AttachmentManager as used with PostEditor (showLabel, showLoading, show
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
     showLabel={true}
     showLoading={true}
     showsAddButton={true}
-    switchAttachments={[Function]}
     type="post"
   />
 </Fragment>
@@ -273,9 +273,9 @@ exports[`AttachmentManager when attachmentType "file" with attachments (of both 
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="anything"
     uploadAttachmentPending={true}
   />
@@ -302,9 +302,9 @@ exports[`AttachmentManager when attachmentType "image" with attachments (of both
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="anything"
     uploadAttachmentPending={true}
   />
@@ -330,9 +330,9 @@ exports[`AttachmentManager when attachmentType not provided with attachments (of
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="anything"
     uploadAttachmentPending={true}
   />
@@ -353,9 +353,9 @@ exports[`AttachmentManager when attachmentType not provided with attachments (of
     clearAttachments={[Function]}
     id="new"
     loadAttachments={[Function]}
+    moveAttachment={[Function]}
     removeAttachment={[Function]}
     setAttachments={[Function]}
-    switchAttachments={[Function]}
     type="anything"
     uploadAttachmentPending={true}
   />
@@ -449,58 +449,82 @@ exports[`FilePreview matches last snapshot 1`] = `
 `;
 
 exports[`ImageManager matches last snapshot 1`] = `
-<div
-  data-stylename="image-manager"
+<Memo(DndContext)
+  onDragEnd={[Function]}
 >
-  <div
-    data-stylename="section-label"
-  >
-    Images
-  </div>
-  <div
-    data-stylename="image-previews"
-  >
-    <ImagePreview
-      attachment={
+  <SortableContext
+    items={
+      Array [
         Object {
           "attachmentType": "image",
+          "id": "https://nowhere/foo.png",
           "url": "https://nowhere/foo.png",
-        }
-      }
-      index={0}
-      key="0"
-      removeImage={[Function]}
-    />
-    <ImagePreview
-      attachment={
+        },
         Object {
           "attachmentType": "image",
+          "id": "https://nowhere/bar.jpg",
           "url": "https://nowhere/bar.jpg",
-        }
-      }
-      index={1}
-      key="1"
-      removeImage={[Function]}
-    />
+        },
+      ]
+    }
+    strategy={[Function]}
+  >
     <div
-      data-stylename="add-image"
-    >
-      <Loading />
-    </div>
-    <Connect(UploadAttachmentButton)
-      attachmentType="image"
-      id={1}
-      onSuccess={[Function]}
-      type="post"
+      data-stylename="image-manager"
     >
       <div
-        data-stylename="add-image"
+        data-stylename="section-label"
       >
-        +
+        Images
       </div>
-    </Connect(UploadAttachmentButton)>
-  </div>
-</div>
+      <div
+        data-stylename="image-previews"
+      >
+        <ImagePreview
+          attachment={
+            Object {
+              "attachmentType": "image",
+              "id": "https://nowhere/foo.png",
+              "url": "https://nowhere/foo.png",
+            }
+          }
+          index={0}
+          key="0"
+          removeImage={[Function]}
+        />
+        <ImagePreview
+          attachment={
+            Object {
+              "attachmentType": "image",
+              "id": "https://nowhere/bar.jpg",
+              "url": "https://nowhere/bar.jpg",
+            }
+          }
+          index={1}
+          key="1"
+          removeImage={[Function]}
+        />
+        <div
+          data-stylename="add-image"
+        >
+          <Loading />
+        </div>
+        <Connect(UploadAttachmentButton)
+          attachmentType="image"
+          id={1}
+          onSuccess={[Function]}
+          type="post"
+        >
+          <div
+            data-stylename="add-image"
+          >
+            +
+          </div>
+        </Connect(UploadAttachmentButton)>
+      </div>
+    </div>
+  </SortableContext>
+</Memo(DndContext)>
 `;
 
 exports[`ImagePreview matches last snapshot 1`] = `
@@ -510,9 +534,13 @@ Object {
     id="root"
   >
     <div
+      aria-describedby=""
+      aria-disabled="false"
+      aria-pressed="true"
+      aria-roledescription="sortable"
       data-stylename="image-preview"
-      draggable="true"
-      style="opacity: 1;"
+      role="button"
+      tabindex="0"
     >
       <div
         data-stylename="image"
@@ -529,9 +557,13 @@ Object {
     id="root"
   >
     <div
+      aria-describedby=""
+      aria-disabled="false"
+      aria-pressed="true"
+      aria-roledescription="sortable"
       data-stylename="image-preview"
-      draggable="true"
-      style="opacity: 1;"
+      role="button"
+      tabindex="0"
     >
       <div
         data-stylename="image"

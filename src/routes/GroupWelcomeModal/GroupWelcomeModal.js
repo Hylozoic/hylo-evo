@@ -1,5 +1,6 @@
+import cx from 'classnames'
 import { isEmpty } from 'lodash'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
@@ -19,27 +20,53 @@ import { SuggestedSkills } from 'routes/GroupDetail/GroupDetail'
 import './GroupWelcomeModal.scss'
 
 export default function GroupWelcomeModal (props) {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, props))
   const currentMembership = useSelector(state => getMyGroupMembership(state, props))
   const group = presentGroup(currentGroup)
-  const showJoinForm = currentMembership?.settings?.showJoinForm
-  const { t } = useTranslation()
+  const numAgreements = group.agreements?.length || 0
+
+  const [acceptedAgreements, setAcceptedAgreements] = useState(Array(numAgreements).fill(false))
+  const numAcceptedAgreements = acceptedAgreements.reduce((count, agreement) => count + (agreement ? 1 : 0), 0)
+  const acceptedAllAgreements = numAcceptedAgreements === numAgreements
+
+  // TODO: check if ageeements have changed and if so bring up modal again
+  const showJoinForm = currentMembership?.settings?.showJoinForm // || !acceptedAllAgreements
 
   useEffect(() => {
     if (showJoinForm && group?.id) dispatch(fetchGroupWelcomeData(group.id))
   }, [group?.id, showJoinForm])
 
+  useEffect(() => {
+    if (group.agreements && group.agreements.length > 0) {
+      setAcceptedAgreements(group.agreements.map(a => a.accepted))
+    }
+  }, [group?.id])
+
   if (!showJoinForm || !group) return null
 
+  const handleCheckAgreement = e => {
+    const accepted = e.target.checked
+    const agreementIndex = e.target.value
+    const newAgreements = [...acceptedAgreements]
+    newAgreements[agreementIndex] = accepted
+    setAcceptedAgreements(newAgreements)
+  }
+
+  const handleCheckAllAgreements = e => {
+    const accepted = !acceptedAllAgreements
+    const newAgreements = Array(numAgreements).fill(accepted)
+    setAcceptedAgreements(newAgreements)
+  }
+
   const closeModal = async () => {
-    await dispatch(updateMembershipSettings(group.id, { showJoinForm: false }))
+    await dispatch(updateMembershipSettings(group.id, { showJoinForm: false }, true))
     return null
   }
 
   const addSkill = name => dispatch(addSkillAction(name))
-
   const removeSkill = skillId => dispatch(removeSkillAction(skillId))
 
   return (
@@ -60,15 +87,59 @@ export default function GroupWelcomeModal (props) {
             <div styleName='fade' />
           </div>
           <div styleName='welcome-content'>
-            {group.settings.showSuggestedSkills && group.suggestedSkills && group.suggestedSkills.length > 0 &&
-              <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
             {!isEmpty(group.purpose) &&
               <div>
                 <h2>{t('Our Purpose')}</h2>
                 <p>{group.purpose}</p>
               </div>}
+            {group.agreements?.length > 0 && (
+              <div styleName='agreements'>
+                <h2>{t('Our Agreements')}</h2>
+                <ol>
+                  {group.agreements.map((agreement, i) => {
+                    return (
+                      <li styleName='agreement' key={i}>
+                        <h3>{agreement.title}</h3>
+                        <p>{agreement.description}</p>
+                        <input
+                          type='checkbox'
+                          id={'agreement' + agreement.id}
+                          value={i}
+                          onChange={handleCheckAgreement}
+                          checked={acceptedAgreements[i]}
+                        />
+                        <label htmlFor={'agreement' + agreement.id} styleName={cx({ 'accepted': acceptedAgreements[i] })}>
+                          {t('I agree to the above')}
+                        </label>
+                      </li>
+                    )
+                  })}
+                </ol>
+              </div>
+            )}
+            {numAgreements > 3 &&
+              <div>
+                <input
+                  type='checkbox'
+                  id='checkAllAgreements'
+                  onChange={handleCheckAllAgreements}
+                  checked={acceptedAllAgreements}
+                />
+                <label htmlFor='checkAllAgreements' styleName={cx({ 'accepted': acceptedAllAgreements })}>
+                  {t('I agree to all of the above')}
+                </label>
+              </div>}
+
+            {group.settings.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
+              <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
+
             <div styleName='call-to-action'>
-              <Button label={t('Jump in!')} data-testid='jump-in' onClick={closeModal} />
+              <Button
+                data-testid='jump-in'
+                disabled={!acceptedAllAgreements}
+                label={t('Jump in!')}
+                onClick={closeModal}
+              />
             </div>
           </div>
         </div>

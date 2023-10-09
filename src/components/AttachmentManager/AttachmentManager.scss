@@ -43,6 +43,7 @@
 
 .image-preview {
   composes: image-box;
+  cursor: move;
 }
 
 .image {

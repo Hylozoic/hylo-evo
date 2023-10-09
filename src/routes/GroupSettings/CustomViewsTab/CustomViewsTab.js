@@ -73,7 +73,7 @@ class CustomViewsTab extends Component {
   defaultEditState () {
     const { group } = this.props
 
-    if (!group) return { customViews: [], changed: false, valid: false }
+    if (!group) return { customViews: [], changed: false, error: null }
 
     const {
       customViews

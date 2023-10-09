@@ -1,9 +1,11 @@
 import { isEmpty, filter } from 'lodash/fp'
 import path from 'path'
 import PropTypes from 'prop-types'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDrag, useDrop } from 'react-dnd'
+import { DndContext } from '@dnd-kit/core'
+import { SortableContext, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
@@ -12,6 +14,7 @@ import { ID_FOR_NEW } from './AttachmentManager.store'
 import './AttachmentManager.scss'
 
 export const attachmentsObjectType = {
+  id: PropTypes.string,
   url: PropTypes.string.isRequired,
   attachmentType: PropTypes.string.isRequired
 }
@@ -37,7 +40,7 @@ export default class AttachmentManager extends React.Component {
     loadAttachments: PropTypes.func.isRequired,
     addAttachment: PropTypes.func.isRequired,
     removeAttachment: PropTypes.func.isRequired,
-    switchAttachments: PropTypes.func.isRequired,
+    moveAttachment: PropTypes.func.isRequired,
     clearAttachments: PropTypes.func.isRequired,
     // only used by connector
     setAttachments: PropTypes.func.isRequired
@@ -77,12 +80,14 @@ export default class AttachmentManager extends React.Component {
     const showFiles = (!isEmpty(fileAttachments) || (uploadAttachmentPending && showLoading)) &&
       (!attachmentType || attachmentType === 'file')
 
-    return <React.Fragment>
-      {showImages &&
-        <ImageManager {...this.props} showLoading={showLoading} attachments={imageAttachments} />}
-      {showFiles &&
-        <FileManager {...this.props} showLoading={showLoading} attachments={fileAttachments} />}
-    </React.Fragment>
+    return (
+      <>
+        {showImages &&
+          <ImageManager {...this.props} showLoading={showLoading} attachments={imageAttachments} />}
+        {showFiles &&
+          <FileManager {...this.props} showLoading={showLoading} attachments={fileAttachments} />}
+      </>
+    )
   }
 }
 
@@ -93,96 +98,73 @@ export function ImageManager (props) {
     uploadAttachmentPending, showLoading, showAddButton, showLabel
   } = props
 
-  return <div styleName='image-manager'>
-    {showLabel && <div styleName='section-label'>{t('Images')}</div>}
-    <div styleName='image-previews'>
-      {attachments.map((attachment, i) =>
-        <ImagePreview
-          attachment={attachment}
-          removeImage={() => removeAttachment(type, id, attachment)}
-          switchImages={props.switchImages}
-          index={i}
-          key={i} />)}
-      {showLoading && uploadAttachmentPending && <div styleName='add-image'><Loading /></div>}
-      {showAddButton && <UploadAttachmentButton
-        type={type}
-        id={id}
-        attachmentType='image'
-        onSuccess={attachment => addAttachment(type, id, attachment)}>
-        <div styleName='add-image'>+</div>
-      </UploadAttachmentButton>}
-    </div>
-  </div>
+  const handleDragEnd = ({ active, over }) => {
+    if (active.id !== over.id) {
+      props.switchImages(active.data.current.sortable.index, over.data.current.sortable.index)
+    }
+  }
+
+  const images = attachments.map((attachment, i) => ({
+    ...attachment,
+    id: attachment.url
+  }))
+
+  return (
+    <DndContext onDragEnd={handleDragEnd}>
+      <SortableContext items={images} strategy={horizontalListSortingStrategy}>
+        <div styleName='image-manager'>
+          {showLabel && <div styleName='section-label'>{t('Images')}</div>}
+          <div styleName='image-previews'>
+            {images.map((attachment, i) =>
+              <ImagePreview
+                attachment={attachment}
+                removeImage={() => removeAttachment(type, id, attachment)}
+                index={i}
+                key={i}
+              />)}
+            {showLoading && uploadAttachmentPending && <div styleName='add-image'><Loading /></div>}
+            {showAddButton && (
+              <UploadAttachmentButton
+                type={type}
+                id={id}
+                attachmentType='image'
+                onSuccess={attachment => addAttachment(type, id, attachment)}>
+                <div styleName='add-image'>+</div>
+              </UploadAttachmentButton>)}
+          </div>
+        </div>
+      </SortableContext>
+    </DndContext>
+  )
 }
 
 export function ImagePreview (props) {
   const {
-    attachment, index, removeImage, switchImages
+    attachment, removeImage
   } = props
 
-  const ref = useRef(null)
-
-  const [{ handlerId }, drop] = useDrop({  // eslint-disable-line
-    accept: 'image',
-    collect (monitor) {
-      return {
-        handlerId: monitor.getHandlerId()
-      }
-    },
-    hover (item, monitor) {
-      if (!ref.current) {
-        return
-      }
-      const dragIndex = item.index
-      const hoverIndex = index
-
-      // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
-        return
-      }
-      // Determine rectangle on screen
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
-      // Get vertical middle
-      const hoverMiddleX =
-        (hoverBoundingRect.right - hoverBoundingRect.left) / 2
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset()
-      // Get pixels to the left
-      const hoverClientX = clientOffset.x - hoverBoundingRect.left
-      // Only perform the move when the mouse has crossed half of the items width
-      // Dragging right
-      if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-        return
-      }
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-        return
-      }
-      // Time to actually perform the action
-      // XXX: movePost(dragIndex, hoverIndex)
-      switchImages(dragIndex, hoverIndex)
-
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      item.index = hoverIndex
-    }
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({
+    id: attachment.id,
+    transition: null
+    // transition: null,{
+    //   duration: 150, // milliseconds
+    //   easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+    // }
   })
-  const [{ isDragging }, drag] = useDrag({
-    type: 'image',
-    item: () => {
-      return { id: attachment.id, index }
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
-  })
-  const opacity = isDragging ? 0 : 1
-  drag(drop(ref))
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  }
 
   return (
-    <div styleName='image-preview' ref={ref} style={{ opacity }}>
+    <div styleName='image-preview' ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <div style={bgImageStyle(attachment.url)} styleName='image'>
         <Icon name='Ex' styleName='remove-image' onClick={removeImage} />
       </div>
@@ -196,34 +178,40 @@ export function FileManager ({
 }) {
   const { t } = useTranslation()
 
-  return <div styleName='file-manager'>
-    {showLabel && <div styleName='section-label'>{t('Files')}</div>}
-    <div styleName='file-previews'>
-      {attachments.map((attachment, i) =>
-        <FilePreview
-          attachment={attachment}
-          removeFile={() => removeAttachment(type, id, attachment)}
-          key={i} />)}
-      {showLoading && uploadAttachmentPending && <div styleName='loading-file'>{t('Loading...')}</div>}
-      {showAddButton && <UploadAttachmentButton
-        id={id}
-        type={type}
-        attachmentType='file'
-        onSuccess={attachment => addAttachment(type, id, attachment)}
-        styleName='add-file-row'>
-        <div styleName='add-file'>
-          <span styleName='add-file-plus'>+</span> {t('Add File')}</div>
-      </UploadAttachmentButton>}
+  return (
+    <div styleName='file-manager'>
+      {showLabel && <div styleName='section-label'>{t('Files')}</div>}
+      <div styleName='file-previews'>
+        {attachments.map((attachment, i) =>
+          <FilePreview
+            attachment={attachment}
+            removeFile={() => removeAttachment(type, id, attachment)}
+            key={i} />)}
+        {showLoading && uploadAttachmentPending && <div styleName='loading-file'>{t('Loading...')}</div>}
+        {showAddButton && (
+          <UploadAttachmentButton
+            id={id}
+            type={type}
+            attachmentType='file'
+            onSuccess={attachment => addAttachment(type, id, attachment)}
+            styleName='add-file-row'>
+            <div styleName='add-file'>
+              <span styleName='add-file-plus'>+</span> {t('Add File')}
+            </div>
+          </UploadAttachmentButton>)}
+      </div>
     </div>
-  </div>
+  )
 }
 
 export function FilePreview ({ attachment, removeFile, fileSize }) {
   const filename = path.basename(attachment.url)
-  return <div styleName='file-preview'>
-    <Icon name='Document' styleName='icon-document' />
-    <div styleName='file-name'>{decodeURIComponent(filename)}</div>
-    {fileSize && <div styleName='file-size'>{fileSize}</div>}
-    <Icon name='Ex' styleName='remove-file' onClick={removeFile} />
-  </div>
+  return (
+    <div styleName='file-preview'>
+      <Icon name='Document' styleName='icon-document' />
+      <div styleName='file-name'>{decodeURIComponent(filename)}</div>
+      {fileSize && <div styleName='file-size'>{fileSize}</div>}
+      <Icon name='Ex' styleName='remove-file' onClick={removeFile} />
+    </div>
+  )
 }

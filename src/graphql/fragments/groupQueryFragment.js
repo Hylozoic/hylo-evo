@@ -7,6 +7,14 @@ export default () => {
     id
     aboutVideoUri
     accessibility
+    agreements {
+      items {
+        id
+        description
+        order
+        title
+      }
+    }
     avatarUrl
     bannerUrl
     customViews {

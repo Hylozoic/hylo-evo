@@ -24,6 +24,19 @@ exports[`renders correctly with a group 1`] = `
         "path": "/groups/foo/settings",
       },
       Object {
+        "component": <AgreementsTab
+          group={
+            Object {
+              "id": 1,
+              "name": "Foomunity",
+              "slug": "foo",
+            }
+          }
+        />,
+        "name": "Agreements",
+        "path": "/groups/foo/settings/agreements",
+      },
+      Object {
         "component": <Memo(Connect(withI18nextTranslation(ModeratorsSettingsTab)))
           group={
             Object {

@@ -5,6 +5,14 @@ export const groupWelcomeQuery = `
   query GroupWelcomeQuery ($id: ID) {
     group (id: $id) {
       id
+      agreements {
+        items {
+          id
+          accepted
+          description
+          title
+        }
+      }
       joinQuestions {
         items {
           id

@@ -1,17 +1,16 @@
 .selectedPosts {
-  list-style: none;
   padding: 2px;
+}
 
-  li {
-    position: relative;
-    padding: 1px 5px 1px 3px;
-    box-shadow: 0px 2px 6px 0px $color-black-10;
-    margin-bottom: 3px;
-    display: flex;
+.selectedPost {
+  position: relative;
+  padding: 1px 5px 1px 3px;
+  box-shadow: 0px 2px 6px 0px $color-black-10;
+  margin-bottom: 3px;
+  display: flex;
 
-    &:hover {
-      background: #eee;
-    }
+  &:hover {
+    background: #eee;
   }
 
   .postTitle {

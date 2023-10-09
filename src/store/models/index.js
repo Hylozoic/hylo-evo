@@ -1,6 +1,7 @@
 import { ORM } from 'redux-orm'
 import './Model.extension'
 import Activity from './Activity'
+import Agreement from './Agreement'
 import Attachment from './Attachment'
 import Collection, { CollectionPost } from './Collection'
 import Comment from './Comment'
@@ -32,6 +33,7 @@ export const orm = new ORM({ stateSelector: state => state.orm })
 
 orm.register(
   Activity,
+  Agreement,
   Attachment,
   Collection,
   CollectionPost,

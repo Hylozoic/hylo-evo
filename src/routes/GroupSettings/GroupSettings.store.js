@@ -63,6 +63,14 @@ export function fetchGroupSettings (slug) {
           type
           slug
           visibility
+          agreements {
+            items {
+              id
+              description
+              order
+              title
+            }
+          }
           childGroups (first: 100) {
             items {
               id
@@ -181,6 +189,14 @@ export function updateGroupSettings (id, changes) {
       query: `mutation ($id: ID, $changes: GroupInput) {
         updateGroupSettings(id: $id, changes: $changes) {
           id
+          agreements {
+            items {
+              id
+              description
+              order
+              title
+            }
+          }
           customViews {
             items {
               id
