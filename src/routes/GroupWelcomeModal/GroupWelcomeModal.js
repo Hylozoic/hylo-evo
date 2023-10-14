@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
+import { TextHelpers } from 'hylo-shared'
 import { bgImageStyle } from 'util/index'
 import getMe from 'store/selectors/getMe'
 import getGroupForCurrentRoute from 'store/selectors/getGroupForCurrentRoute'
@@ -14,6 +15,8 @@ import { addSkill as addSkillAction, removeSkill as removeSkillAction } from 'co
 import { fetchGroupWelcomeData } from './GroupWelcomeModal.store'
 import { updateMembershipSettings } from 'routes/UserSettings/UserSettings.store'
 import Button from 'components/Button'
+import ClickCatcher from 'components/ClickCatcher'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { SuggestedSkills } from 'routes/GroupDetail/GroupDetail'
@@ -100,7 +103,9 @@ export default function GroupWelcomeModal (props) {
                     return (
                       <li styleName='agreement' key={i}>
                         <h3>{agreement.title}</h3>
-                        <p>{agreement.description}</p>
+                        <ClickCatcher>
+                          <HyloHTML element='p' html={TextHelpers.markdown(agreement.description)} />
+                        </ClickCatcher>
                         <input
                           type='checkbox'
                           id={'agreement' + agreement.id}
@@ -115,20 +120,20 @@ export default function GroupWelcomeModal (props) {
                     )
                   })}
                 </ol>
+                {numAgreements > 3 &&
+                  <div>
+                    <input
+                      type='checkbox'
+                      id='checkAllAgreements'
+                      onChange={handleCheckAllAgreements}
+                      checked={acceptedAllAgreements}
+                    />
+                    <label htmlFor='checkAllAgreements' styleName={cx({ 'accepted': acceptedAllAgreements })}>
+                      {t('I agree to all of the above')}
+                    </label>
+                  </div>}
               </div>
             )}
-            {numAgreements > 3 &&
-              <div>
-                <input
-                  type='checkbox'
-                  id='checkAllAgreements'
-                  onChange={handleCheckAllAgreements}
-                  checked={acceptedAllAgreements}
-                />
-                <label htmlFor='checkAllAgreements' styleName={cx({ 'accepted': acceptedAllAgreements })}>
-                  {t('I agree to all of the above')}
-                </label>
-              </div>}
 
             {group.settings.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
               <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
