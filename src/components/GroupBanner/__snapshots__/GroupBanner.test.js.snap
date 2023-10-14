@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostPrompt renders a post prompt 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <PostPrompt
+    firstName="Arturo"
+    type="project"
+  />
+</Router>
+`;
+
+exports[`matches the snapshot for an orphan user 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <GroupBanner
+    context="all"
+    currentUser={
+      Object {
+        "avatarUrl": "me.png",
+        "firstName": [Function],
+        "memberships": Object {
+          "count": [Function],
+        },
+      }
+    }
+    currentUserHasMemberships={false}
+    routeParams={
+      Object {
+        "slug": "foo",
+        "view": "stream",
+      }
+    }
+  />
+</Router>
+`;
+
+exports[`renders for all groups 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <GroupBanner
+    context="all"
+    currentUser={
+      Object {
+        "avatarUrl": "me.png",
+        "firstName": [Function],
+        "memberships": Object {
+          "count": [Function],
+        },
+      }
+    }
+    currentUserHasMemberships={true}
+    routeParams={
+      Object {
+        "view": "stream",
+      }
+    }
+  />
+</Router>
+`;
+
+exports[`renders with a group 1`] = `
+<Router
+  history={
+    Object {
+      "action": "POP",
+      "block": [Function],
+      "createHref": [Function],
+      "go": [Function],
+      "goBack": [Function],
+      "goForward": [Function],
+      "length": 1,
+      "listen": [Function],
+      "location": Object {
+        "hash": "",
+        "pathname": "/",
+        "search": "",
+        "state": undefined,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <GroupBanner
+    group={
+      Object {
+        "avatarUrl": "avatar.png",
+        "bannerUrl": "banner.png",
+        "location": "space, duh",
+        "name": "Spacebase",
+      }
+    }
+    isTesting={true}
+    routeParams={
+      Object {
+        "slug": "foo",
+        "view": "stream",
+      }
+    }
+  />
+</Router>
+`;

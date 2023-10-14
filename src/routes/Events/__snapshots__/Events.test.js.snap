@@ -11,7 +11,7 @@ exports[`Events renders a post list 1`] = `
       Hylo
     </title>
   </HelmetWrapper>
-  <StreamBanner
+  <GroupBanner
     currentUser={
       Object {
         "id": 1,

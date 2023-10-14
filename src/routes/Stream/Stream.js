@@ -3,7 +3,7 @@ import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
-import StreamBanner from 'components/StreamBanner'
+import GroupBanner from 'components/GroupBanner'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
 import PostListRow from 'components/PostListRow'
@@ -96,6 +96,7 @@ export default class Stream extends Component {
       followersTotal,
       groupTopic,
       group,
+      isAboutOpen,
       newPost,
       routeParams,
       posts,
@@ -145,7 +146,7 @@ export default class Stream extends Component {
               newPost={newPost}
             />
           ) : (
-            <StreamBanner
+            <GroupBanner
               customPostTypes={customPostTypes}
               customActivePostsOnly={customActivePostsOnly}
               customViewTopics={customViewTopics}
@@ -154,6 +155,7 @@ export default class Stream extends Component {
               currentUser={currentUser}
               currentUserHasMemberships={currentUserHasMemberships}
               group={group}
+              isAboutOpen={isAboutOpen}
               newPost={newPost}
               querystringParams={querystringParams}
               routeParams={routeParams}

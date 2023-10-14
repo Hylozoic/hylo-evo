@@ -24,7 +24,7 @@ describe('Events', () => {
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('displays the regular StreamBanner', () => {
+  it('displays the regular GroupBanner', () => {
     const props = {
       currentUser: { id: 1 },
       posts: [],
@@ -32,6 +32,6 @@ describe('Events', () => {
       fetchEvents: jest.fn()
     }
     const wrapper = shallow(<Events {...props} />)
-    expect(wrapper.find('StreamBanner')).toHaveLength(1)
+    expect(wrapper.find('GroupBanner')).toHaveLength(1)
   })
 })

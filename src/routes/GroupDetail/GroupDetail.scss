@@ -123,7 +123,7 @@
 }
 
 .aboutCurrentGroup {
-  padding: 15px 0;
+  padding: 5px 0;
 
   .moderators {
     margin-bottom: 10px;
@@ -344,6 +344,15 @@
 
 .detailText {
   margin-left: 10px;
+}
+
+.agreements {
+  font-size: 14px;
+  color: $color-regent;
+
+  strong {
+    color: $color-rhino-80;
+  }
 }
 
 .group-privacy {

@@ -403,8 +403,9 @@ export default function AuthLayoutRouter (props) {
               <Route path={`/:context(all|public)/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(events|explore|map|projects|stream)/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${POST_DETAIL_MATCH}`} component={PostDetail} />
+              <Route path={`/:context(groups)/:groupSlug/:view(custom)/:customViewId/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(members)/:personId/${POST_DETAIL_MATCH}`} component={PostDetail} />
-              <Route path={`/:context(groups)/:groupSlug/:view(explore|map|groups)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
+              <Route path={`/:context(groups)/:groupSlug/:view(events|explore|groups|map|projects|stream)/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />
               <Route path={`/:context(groups)/:groupSlug/:view(topics)/:topicName/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/${POST_DETAIL_MATCH}`} component={PostDetail} />
               <Route path={`/:context(groups)/:groupSlug/${GROUP_DETAIL_MATCH}`} component={GroupDetail} />

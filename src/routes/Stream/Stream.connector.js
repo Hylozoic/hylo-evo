@@ -54,6 +54,7 @@ export function mapStateToProps (state, props) {
   const viewIcon = customViewIcon
   const topicName = getRouteParam('topicName', state, props)
   const topicLoading = isPendingFor([FETCH_TOPIC, FETCH_GROUP_TOPIC], state)
+  const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
 
   if (groupSlug) {
     groupTopic = getGroupTopicForCurrentRoute(state, props)
@@ -121,6 +122,7 @@ export function mapStateToProps (state, props) {
     fetchPostsParam,
     group,
     hasMore,
+    isAboutOpen,
     pending: state.pending[FETCH_POSTS],
     postTypeFilter,
     posts,

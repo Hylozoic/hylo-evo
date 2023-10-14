@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import ReactTooltip from 'react-tooltip'
 import cx from 'classnames'
 import { capitalize } from 'lodash'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { bgImageStyle } from 'util/index'
-import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
-import PostLabel from 'components/PostLabel'
-import './StreamBanner.scss'
-import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
-import { createPostUrl } from 'util/navigation'
+import ReactTooltip from 'react-tooltip'
+
 import Icon from 'components/Icon'
+import PostLabel from 'components/PostLabel'
 import RoundImage from 'components/RoundImage'
 import { CONTEXT_MY } from 'store/constants'
+import { DEFAULT_BANNER, DEFAULT_AVATAR } from 'store/models/Group'
+import { whiteMerkaba, allGroupsBanner, publicGlobe } from 'util/assets'
+import { bgImageStyle } from 'util/index'
+import { createPostUrl, groupUrl, groupDetailUrl } from 'util/navigation'
 
-export default function StreamBanner ({
+import './GroupBanner.scss'
+
+export default function GroupBanner ({
   context,
   currentUserHasMemberships,
   currentUser,
@@ -34,6 +36,7 @@ export default function StreamBanner ({
   let bannerUrl, avatarUrl, name, location, subtitle
   const { t } = useTranslation()
   const view = routeParams.view
+  const isAboutOpen = routeParams.detailGroupSlug
 
   if (context === 'all') {
     name = t('All My Groups')
@@ -61,12 +64,23 @@ export default function StreamBanner ({
     ({ bannerUrl, avatarUrl, name, location } = group)
   }
 
+  const hasPostPrompt = currentUserHasMemberships && context !== CONTEXT_MY && view !== 'explore'
   const numCustomFilters = customViewType === 'stream' ? (customPostTypes.length + customViewTopics.length + (customActivePostsOnly ? 1 : 0)) : false
 
   return (
-    <div styleName={cx('banner', { 'all-groups': context === 'all' })}>
+    <div styleName={cx('banner', { 'all-groups': context === 'all', 'has-post-prompt': hasPostPrompt })}>
       <div style={bgImageStyle(bannerUrl || DEFAULT_BANNER)} styleName='image'>
         <div styleName='fade'><div styleName='fade2' /></div>
+
+        {group && <div styleName='right'>
+          <Link
+            styleName={cx({ 'about': true, 'is-about-open': isAboutOpen })}
+            to={isAboutOpen ? groupUrl(group.slug, routeParams, querystringParams) : groupDetailUrl(group.slug, routeParams, querystringParams)}
+          >
+            <Icon name='Info' />{t('About us')}
+          </Link>
+        </div>}
+
         <div styleName='header'>
           {icon
             ? <div styleName='custom-icon'>
@@ -94,7 +108,7 @@ export default function StreamBanner ({
             </div>
           </div>
         </div>
-        {currentUserHasMemberships && context !== CONTEXT_MY && (<PostPrompt
+        {hasPostPrompt && (<PostPrompt
           avatarUrl={currentUser.avatarUrl}
           firstName={currentUser.firstName()}
           newPost={newPost}
@@ -110,7 +124,7 @@ export default function StreamBanner ({
           effect='solid'
           delayShow={0}
           place='bottom'
-          getContent={function () {
+          getContent={() => {
             return (customViewType === 'stream'
               ? <div styleName='custom-filters'>
                 <span styleName='displaying'>
@@ -127,14 +141,15 @@ export default function StreamBanner ({
           }}
         />)}
       </div>
-      {currentUserHasMemberships && <PostPrompt
-        avatarUrl={currentUser.avatarUrl}
-        firstName={currentUser.firstName()}
-        newPost={newPost}
-        querystringParams={querystringParams}
-        routeParams={routeParams}
-        type={type}
-      />}
+      {currentUserHasMemberships &&
+        <PostPrompt
+          avatarUrl={currentUser.avatarUrl}
+          firstName={currentUser.firstName()}
+          newPost={newPost}
+          querystringParams={querystringParams}
+          routeParams={routeParams}
+          type={type}
+        />}
 
       {/* The ReactTooltip with getContent breaks our snapshots because it uses dynamic classname, so removing in our tests */}
       {!isTesting && <ReactTooltip
@@ -143,7 +158,7 @@ export default function StreamBanner ({
         effect='solid'
         delayShow={0}
         place='bottom'
-        getContent={function () {
+        getContent={() => {
           return (customViewType === 'stream'
             ? <div styleName='custom-filters'>
               <span styleName='displaying'>

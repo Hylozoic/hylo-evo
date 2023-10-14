@@ -112,6 +112,7 @@ class UnwrappedGroupDetail extends Component {
           <title>{group.name} | Hylo</title>
           <meta name='description' content={TextHelpers.truncateHTML(group.description, MAX_DETAILS_LENGTH)} />
         </Helmet>
+
         <div styleName='g.groupDetailHeader' style={{ backgroundImage: `url(${group.bannerUrl || DEFAULT_BANNER})` }}>
           {!fullPage && (
             <a styleName='g.close' onClick={closeDetailModal}><Icon name='Ex' /></a>
@@ -142,6 +143,7 @@ class UnwrappedGroupDetail extends Component {
           </div>
           <div styleName='g.headerBackground' />
         </div>
+
         <div styleName='g.groupDetailBody'>
           {group.type === GROUP_TYPES.default && this.defaultGroupBody()}
           {group.type === GROUP_TYPES.farm && (
@@ -161,6 +163,23 @@ class UnwrappedGroupDetail extends Component {
             </div>
             : ''
           }
+          {group.agreements?.length > 0
+            ? (
+              <div styleName='g.agreements'>
+                <h3>{t('Agreements')}</h3>
+                {group.agreements.map((agreement, i) => {
+                  return (
+                    <div key={i}>
+                      <strong>{parseInt(i) + 1}) {agreement.title}</strong>
+                      <ClickCatcher>
+                        <HyloHTML element='span' html={TextHelpers.markdown(agreement.description)} />
+                      </ClickCatcher>
+                    </div>
+                  )
+                })}
+              </div>)
+            : ''
+          }
           <div>
             <h3>{t('Privacy settings')}</h3>
             <div styleName='g.privacySetting'>
@@ -174,12 +193,22 @@ class UnwrappedGroupDetail extends Component {
           </div>
           {!isAboutCurrentGroup
             ? !currentUser
-              ? <div styleName='g.signupButton'><Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>{t('Signup or Login to connect with')}{' '}<span styleName='g.requestGroup'>{group.name}</span></Link></div>
+              ? (
+                <div styleName='g.signupButton'>
+                  <Link to={'/login?returnToUrl=' + location.pathname} target={inIframe() ? '_blank' : ''} styleName='g.requestButton'>
+                    {t('Signup or Login to connect with')}{' '}
+                    <span styleName='g.requestGroup'>{group.name}</span>
+                  </Link>
+                </div>)
               : isMember
-                ? <div styleName='g.existingMember'>{t('You are a member of')} <Link to={groupUrl(group.slug)}>{group.name}</Link>!</div>
+                ? (
+                  <div styleName='g.existingMember'>
+                    {t('You are a member of')}
+                    <Link to={groupUrl(group.slug)}>{group.name}</Link>
+                  </div>)
                 : this.renderDefaultGroupDetails()
             : ''
-          } {/* TODO: Handle above translation */}
+          }
         </div>
         <SocketSubscriber type='group' id={group.id} />
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
-import StreamBanner, { PostPrompt } from './StreamBanner'
+import GroupBanner, { PostPrompt } from './GroupBanner'
 import { BrowserRouter } from 'react-router-dom'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -31,38 +31,38 @@ const group = {
 }
 
 it('renders with a group', () => {
-  const node = mount(<StreamBanner
+  const node = shallow(<BrowserRouter><GroupBanner
     group={group}
-    routeParams={{ view: 'stream' }}
+    routeParams={{ view: 'stream', slug: 'foo' }}
     isTesting
-  />)
+  /></BrowserRouter>)
   expect(node).toMatchSnapshot()
 })
 
 it('renders for all groups', () => {
-  const node = mount(<StreamBanner
-    all
+  const node = shallow(<BrowserRouter><GroupBanner
+    context='all'
     routeParams={{ view: 'stream' }}
     currentUser={currentUser}
     currentUserHasMemberships
-  />)
+  /></BrowserRouter>)
   expect(node).toMatchSnapshot()
 })
 
 it('matches the snapshot for an orphan user', () => {
-  const node = mount(<StreamBanner
-    all
-    routeParams={{ view: 'stream' }}
+  const node = shallow(<BrowserRouter><GroupBanner
+    context='all'
+    routeParams={{ view: 'stream', slug: 'foo' }}
     currentUser={currentUser}
     currentUserHasMemberships={false}
-  />)
+  /></BrowserRouter>)
   expect(node).toMatchSnapshot()
 })
 
 describe('PostPrompt', () => {
   it('renders a post prompt', () => {
     const firstName = 'Arturo'
-    const wrapper = mount(<BrowserRouter><PostPrompt firstName={firstName} type='project' /></BrowserRouter>)
+    const wrapper = shallow(<BrowserRouter><PostPrompt firstName={firstName} type='project' /></BrowserRouter>)
 
     expect(wrapper).toMatchSnapshot()
   })
