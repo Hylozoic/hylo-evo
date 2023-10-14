@@ -78,7 +78,6 @@ export default function ChatRoom (props) {
   } = props
 
   const { topicName, groupSlug } = routeParams
-  const { postid: postIdToScrollTo } = querystringParams
 
   const emptyPost = useMemo(() => ({
     details: '',
@@ -122,9 +121,6 @@ export default function ChatRoom (props) {
 
   // Need a ref for this one because we need to lookup the current value in many hooks
   const postsTotal = useRef(false)
-
-  // If a postIdToScrollTo exists in the querystring, we only want to scroll it into view once
-  const [hasScrolledToPost, setHasScrolledToPost] = useState(false)
 
   // Cache total number of posts here to handle bug on back-end
   // https://github.com/Hylozoic/hylo-node/issues/901
@@ -374,34 +370,6 @@ export default function ChatRoom (props) {
       return acc
     }, [])
   }, [postsPast, postsFuture])
-
-  useEffect(() => {
-    if (postIdToScrollTo && virtuoso.current && !hasScrolledToPost) {
-      const postIndex = postsForDisplay.findIndex((post) => post.id === postIdToScrollTo)
-      if (postIndex >= 0) {
-        // Post is present in the current display, scroll to it
-        setTimeout(() => {
-          virtuoso.current.scrollToIndex({ index: postIndex, align: 'start', behavior: 'smooth' })
-        }, 100)
-        setHasScrolledToPost(true) // Set the state to prevent re-scrolling
-      } else {
-        // chat is not in the current fetched chats
-        if (postIdToScrollTo > postsForDisplay[0]?.id) {
-          // Chat is in the future
-          const offset = postsForDisplay.length
-          fetchPostsFutureLocal(offset)
-        } else if (postIdToScrollTo < postsForDisplay[postsForDisplay.length - 1]?.id) {
-          // Chat is in the past
-          const offset = 0
-          fetchPostsPastLocal(offset)
-        } else {
-          // Chat is missing but not in the past or future???
-          console.warn('The post with ID', postIdToScrollTo, 'is missing.')
-        }
-      }
-    }
-  }, [postIdToScrollTo, postsForDisplay, hasScrolledToPost, fetchPostsFutureLocal, fetchPostsPastLocal, atBottom])
-  // Needed to include atBottom as it is a reliable way to ensure virtuoso is available
 
   if (topicLoading) return <Loading />
 
