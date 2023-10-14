@@ -84,9 +84,9 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
   const view = getRouteParam('view', state, props)
 
-  const querystringParams = getQuerystringParam(['search', 'postid'], null, props)
+  const querystringParams = getQuerystringParam(['search', 'postId'], null, props)
   const search = getQuerystringParam('search', state, props)
-  const postIdToStartAt = querystringParams?.postid
+  const postIdToStartAt = querystringParams?.postId
 
   const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
   const linkPreview = getLinkPreview(state, props)
