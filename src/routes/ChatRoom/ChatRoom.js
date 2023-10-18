@@ -280,7 +280,7 @@ export default function ChatRoom (props) {
     }
   }, [totalPostsFuture])
 
-  const scrollToBottom = useCallback(() => {
+  const scrollToBottom = useCallback(() => { // scrollToBottom is here but no scroll to index...
     if (virtuoso.current) {
       virtuoso.current.scrollToIndex(postsTotal.current)
     }
