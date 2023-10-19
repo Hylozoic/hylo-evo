@@ -2,7 +2,7 @@
   display: inline-block;
   /* Slightly adjust y positioning to make perfectly centered with "Post In" */
   position: relative;
-  top: 4px;
+  top: 2px;
   /* shared font styles */
   color: $color-caribbean-green;
   font-size: 1em;
@@ -91,11 +91,6 @@
   line-height: inherit;
 }
 
-[class*='tags-empty'] {
-  /* Adjusts search bar position height when no tagged groups are selected */
-  top: -4px;
-}
-
 .search input::placeholder {
   color: $color-rhino-30;
 }
@@ -108,6 +103,12 @@
   position: absolute;
   top: 100%;
   left: 0;
+}
+
+[class*='tags-empty'] {
+  /* Adjusts search bar position height when no tagged groups are selected */
+  position: absolute;
+  bottom: -1px;
 }
 
 @media screen and (min-width: 30em) {
