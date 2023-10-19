@@ -2,7 +2,7 @@
   display: inline-block;
   /* Slightly adjust y positioning to make perfectly centered with "Post In" */
   position: relative;
-  top: 2px;
+  top: 4px;
   /* shared font styles */
   color: $color-caribbean-green;
   font-size: 1em;
@@ -63,7 +63,7 @@
   /* prevent autoresize overflowing the container */
   max-width: 100%;
   line-height: 1;
-  /* Adjusts search bar position height*/
+  /* Adjusts search bar position height */
   position: relative;
   top: -8px;
 }
@@ -92,9 +92,8 @@
 }
 
 [class*='tags-empty'] {
-  /* Adjusts search bar position height when no tagged groups are selected*/
-  position: absolute;
-  transform: translateY(-9px);
+  /* Adjusts search bar position height when no tagged groups are selected */
+  top: -4px;
 }
 
 .search input::placeholder {
