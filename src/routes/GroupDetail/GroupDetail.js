@@ -386,8 +386,11 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                 <h3>{q.text}</h3>
                 <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
               </div>)}
+              {group.agreements?.length > 0 ? <p>{t('By joining this group you agree to all above agreements')}</p> : ''}
               <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>{t('Join')}{' '}<span styleName='g.requestGroup'>{group.name}</span></div>
+                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>
+                  {t('Join')}{' '}<span styleName='g.requestGroup'>{group.name}</span>
+                </div>
               </div>
             </div>
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
@@ -399,6 +402,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
                     <h3>{q.text}</h3>
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
                   </div>)}
+                  {group.agreements?.length > 0 ? <p>{t('By joining this group you agree to all above agreements')}</p> : ''}
                   <div styleName='g.center'>
                     <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
                       {t('Request Membership in')}{' '}<span styleName='g.requestGroup'>{group.name}</span>

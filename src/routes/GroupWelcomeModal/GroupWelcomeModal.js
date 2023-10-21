@@ -29,8 +29,8 @@ export default function GroupWelcomeModal (props) {
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, props))
   const currentMembership = useSelector(state => getMyGroupMembership(state, props))
   const group = presentGroup(currentGroup)
-  const numAgreements = group.agreements?.length || 0
 
+  const numAgreements = group?.agreements?.length || 0
   const [acceptedAgreements, setAcceptedAgreements] = useState(Array(numAgreements).fill(false))
   const numAcceptedAgreements = acceptedAgreements.reduce((count, agreement) => count + (agreement ? 1 : 0), 0)
   const acceptedAllAgreements = numAcceptedAgreements === numAgreements
@@ -43,7 +43,7 @@ export default function GroupWelcomeModal (props) {
   }, [group?.id, showJoinForm])
 
   useEffect(() => {
-    if (group.agreements && group.agreements.length > 0) {
+    if (numAgreements > 0) {
       setAcceptedAgreements(group.agreements.map(a => a.accepted))
     }
   }, [group?.id])
@@ -135,7 +135,7 @@ export default function GroupWelcomeModal (props) {
               </div>
             )}
 
-            {group.settings.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
+            {group.settings?.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
               <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
 
             <div styleName='call-to-action'>
