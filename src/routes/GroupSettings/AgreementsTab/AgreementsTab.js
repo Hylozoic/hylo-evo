@@ -122,8 +122,8 @@ function AgreementsTab (props) {
       <SortableContext items={agreements} strategy={verticalListSortingStrategy}>
 
         <div styleName='general.groupSettings'>
-          <h1>{t('Agreements')}</h1>
-          <p>{t('Define the group agreements or code of conduct')}</p>
+          <h1>{t('Group Agreements')}</h1>
+          <p>{t('Group agreements shape the culture of your group by helping people to understand what\'s normal and acceptable. Agreements are presented to members when they are joining a group, and for people who already joined but have yet to agree to a new agreement. People are not able to join a group or see content within a group if they have not agreed to all agreements.')}</p>
           <div>
             {agreements.map((agreement, i) => (
               <AgreementRowDraggable
@@ -218,6 +218,20 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
 
   const viewCount = parseInt(index) + 1
 
+  function ExampleText () {
+    const exampleString = [
+      t('Example: "I will not spread misinformation"'),
+      t('Example: "I will only post content relevant to this group"'),
+      t('Example: "I promise to be kind to other members"'),
+      t('Example: "I will not troll or be intentionally divisive"'),
+      t('Example: "I will contribute positive and generative energy to discussions"')
+    ]
+
+    const randomString = Math.floor(Math.random() * exampleString.length)
+
+    return exampleString[randomString]
+  }
+
   return (
     <div styleName='styles.agreement-row' ref={ref} style={style} {...attributes} {...listeners}>
       <div styleName='styles.header'>
@@ -228,17 +242,17 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
         </div>
       </div>
       <SettingsControl
-        controlClass={styles['settings-control'] + ' ' + styles['settings-control-title']}
+        controlClass={styles['settings-control']}
         label={t('Title')}
         onChange={onChange('title')}
-        placeholder={t('Agreement title or summary')}
+        placeholder={ExampleText()}
         value={title}
       />
       <SettingsControl
         controlClass={styles['settings-control']}
         label={t('Description')}
         onChange={onChange('description')}
-        placeholder={t('Agreement description or details')}
+        placeholder={t('Describe the agreement and what the group expects from its members')}
         type='textarea'
         value={description}
       />
