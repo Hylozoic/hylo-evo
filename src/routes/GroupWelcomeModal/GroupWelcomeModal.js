@@ -91,29 +91,32 @@ export default function GroupWelcomeModal (props) {
           </div>
           <div styleName='welcome-content'>
             {!isEmpty(group.purpose) &&
-              <div>
+              <div styleName='welcome-section'>
                 <h2>{t('Our Purpose')}</h2>
                 <p>{group.purpose}</p>
               </div>}
             {group.agreements?.length > 0 && (
-              <div styleName='agreements'>
+              <div styleName={cx('agreements', 'welcome-section')}>
                 <h2>{t('Our Agreements')}</h2>
                 <ol>
                   {group.agreements.map((agreement, i) => {
                     return (
-                      <li styleName='agreement' key={i}>
+                      <li styleName={cx('agreement', { 'border-bottom': group.agreements.length > 1 && i !== (group.agreements.length - 1) })} key={i}>
                         <h3>{agreement.title}</h3>
-                        <ClickCatcher>
-                          <HyloHTML element='p' html={TextHelpers.markdown(agreement.description)} />
-                        </ClickCatcher>
+                        <div styleName='agreement-description'>
+                          <ClickCatcher>
+                            <HyloHTML element='p' html={TextHelpers.markdown(agreement.description)} />
+                          </ClickCatcher>
+                        </div>
                         <input
+                          styleName='i-agree'
                           type='checkbox'
                           id={'agreement' + agreement.id}
                           value={i}
                           onChange={handleCheckAgreement}
                           checked={acceptedAgreements[i]}
                         />
-                        <label htmlFor={'agreement' + agreement.id} styleName={cx({ 'accepted': acceptedAgreements[i] })}>
+                        <label htmlFor={'agreement' + agreement.id} styleName={cx('i-agree', { 'accepted': acceptedAgreements[i] })}>
                           {t('I agree to the above')}
                         </label>
                       </li>

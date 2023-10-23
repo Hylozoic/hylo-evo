@@ -165,8 +165,8 @@ class UnwrappedGroupDetail extends Component {
           }
           {group.agreements?.length > 0
             ? (
-              <div styleName='g.agreements'>
-                <h3>{t('Agreements')}</h3>
+              <div styleName={cx('g.agreements', 'g.detailSection')}>
+                <h2>{t('Agreements')}</h2>
                 {group.agreements.map((agreement, i) => {
                   return (
                     <div key={i}>
@@ -180,7 +180,7 @@ class UnwrappedGroupDetail extends Component {
               </div>)
             : ''
           }
-          <div>
+          <div styleName='g.detailSection'>
             <h3>{t('Privacy settings')}</h3>
             <div styleName='g.privacySetting'>
               <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
@@ -203,7 +203,7 @@ class UnwrappedGroupDetail extends Component {
               : isMember
                 ? (
                   <div styleName='g.existingMember'>
-                    {t('You are a member of')}
+                    {t('You are a member of ')}
                     <Link to={groupUrl(group.slug)}>{group.name}</Link>
                   </div>)
                 : this.renderDefaultGroupDetails()
@@ -239,7 +239,7 @@ class UnwrappedGroupDetail extends Component {
               <Link to={groupUrl(group.slug, 'settings')}>{t('Add a group description')}</Link>
             </div>
           </div>
-          : <div styleName='g.groupDescription'>
+          : <div styleName={cx('g.groupDescription', 'g.detailSection')}>
             {group.purpose
               ? <>
                 <h3>{t('Purpose')}</h3>

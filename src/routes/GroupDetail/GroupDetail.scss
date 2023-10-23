@@ -346,6 +346,15 @@
   margin-left: 10px;
 }
 
+.detailSection {
+  background: rgba(244, 247, 250, 0.56);
+  border: 1px dashed #E1E5E9;
+  padding: 20px 25px;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: 5px;
+}
+
 .agreements {
   font-size: 14px;
   color: $color-regent;

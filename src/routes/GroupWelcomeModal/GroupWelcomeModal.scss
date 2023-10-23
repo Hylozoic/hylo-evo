@@ -128,6 +128,15 @@
   }
 }
 
+.welcome-section {
+  background: rgba(244, 247, 250, 0.56);
+  border: 1px dashed #E1E5E9;
+  padding: 20px 25px;
+  margin-bottom: 20px;
+  position: relative;
+  border-radius: 5px;
+}
+
 .welcome-content {
   padding: 15px;
   flex-grow: 1;
@@ -155,13 +164,27 @@
 
 .agreement {
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
 
   h3 {
     font-size: 16px;
+    margin-bottom: 0px;
   }
 
   p {
     font-size: 14px;
   }
+
+  .agreement-description {
+    opacity: .7;
+  }
+}
+
+.i-agree:hover {
+  cursor: pointer;
+}
+
+.border-bottom {
+  border-bottom: 1px dashed rgba(205, 209, 213, 1.0);
 }
