@@ -1,7 +1,7 @@
 import React from 'react'
 import GroupBanner, { PostPrompt } from './GroupBanner'
 import { BrowserRouter } from 'react-router-dom'
-import shallow from 'enzyme'
+import { shallow } from 'enzyme'
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
