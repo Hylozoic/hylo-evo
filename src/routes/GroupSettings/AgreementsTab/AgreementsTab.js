@@ -86,9 +86,9 @@ function AgreementsTab (props) {
     validate()
   }
 
-  const handleDragStart = (event) => {
+  const handleDragStart = useCallback((event) => {
     setDragIndex(event.active.data.current.sortable.index)
-  }
+  }, [])
 
   const handleDragEnd = useCallback((event) => {
     const { active, over } = event
@@ -123,7 +123,7 @@ function AgreementsTab (props) {
 
         <div styleName='general.groupSettings'>
           <h1>{t('Group Agreements')}</h1>
-          <p>{t('Group agreements shape the culture of your group by helping people to understand what\'s normal and acceptable. Agreements are presented to members when they are joining a group, and for people who already joined but have yet to agree to a new agreement. People are not able to join a group or see content within a group if they have not agreed to all agreements.')}</p>
+          <p>{t('groupAgreementsDescription')}</p>
           <div>
             {agreements.map((agreement, i) => (
               <AgreementRowDraggable
@@ -177,6 +177,7 @@ function AgreementRowDraggable ({
   const {
     attributes,
     listeners,
+    setActivatorNodeRef,
     setNodeRef,
     transform,
     transition
@@ -197,9 +198,23 @@ function AgreementRowDraggable ({
   return (
     <AgreementRow
       ref={setNodeRef}
-      {...{ agreement, attributes, index, onChange, onDelete, reorderAgreement, dragging, listeners, style }}
+      {...{ agreement, attributes, index, onChange, onDelete, reorderAgreement, dragging, listeners, setActivatorNodeRef, style }}
     />
   )
+}
+
+function exampleText (t) {
+  const exampleString = [
+    t('Example: "I will not spread misinformation"'),
+    t('Example: "I will only post content relevant to this group"'),
+    t('Example: "I promise to be kind to other members"'),
+    t('Example: "I will not troll or be intentionally divisive"'),
+    t('Example: "I will contribute positive and generative energy to discussions"')
+  ]
+
+  const randomString = Math.floor(Math.random() * exampleString.length)
+
+  return exampleString[randomString]
 }
 
 const AgreementRow = forwardRef(({ children, ...props }, ref) => {
@@ -210,6 +225,7 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
     onChange,
     onDelete,
     listeners,
+    setActivatorNodeRef,
     style
   } = props
 
@@ -218,23 +234,9 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
 
   const viewCount = parseInt(index) + 1
 
-  function ExampleText () {
-    const exampleString = [
-      t('Example: "I will not spread misinformation"'),
-      t('Example: "I will only post content relevant to this group"'),
-      t('Example: "I promise to be kind to other members"'),
-      t('Example: "I will not troll or be intentionally divisive"'),
-      t('Example: "I will contribute positive and generative energy to discussions"')
-    ]
-
-    const randomString = Math.floor(Math.random() * exampleString.length)
-
-    return exampleString[randomString]
-  }
-
   return (
-    <div styleName='styles.agreement-row' ref={ref} style={style} {...attributes} {...listeners}>
-      <div styleName='styles.header'>
+    <div styleName='styles.agreement-row' ref={ref} style={style}>
+      <div styleName='styles.header' {...listeners} {...attributes} ref={setActivatorNodeRef}>
         <strong>{viewCount})</strong>
         <div styleName='styles.controls'>
           <Icon name='Draggable' styleName='styles.drag-handle' />
@@ -245,7 +247,7 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
         controlClass={styles['settings-control']}
         label={t('Title')}
         onChange={onChange('title')}
-        placeholder={ExampleText()}
+        placeholder={exampleText(t)}
         value={title}
       />
       <SettingsControl
