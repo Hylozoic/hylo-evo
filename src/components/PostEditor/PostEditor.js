@@ -186,12 +186,12 @@ class PostEditor extends React.Component {
     const { t } = this.props
 
     const titlePlaceHolders = {
-      offer: t('What help can you offer?'),
-      request: t('What are you looking for help with?'),
-      resource: t('What resource is available?'),
-      project: t('What would you like to call your project?'),
-      event: t('What is your event called?'),
-      default: t('Add post title')
+      offer: t('Add title'),
+      request: t('Add title'),
+      resource: t('Add title'),
+      project: t('Add title'),
+      event: t('Add title'),
+      default: t('Add title')
     }
 
     return (

@@ -283,7 +283,7 @@
   "Hi {{firstName}}, what are you looking for?": "Hola {{firstName}}, ¿qué estás buscando?",
   "Hi {{firstName}}, what would you like to create?": "Hola, {{firstName}}, ¿qué te gustaría crear?",
   "Hi {{firstName}}, what would you like to share?": "Hola, {{firstName}}, ¿qué te gustaría compartir?",
-  "Hi {{firstName}}, start a post": "Hola, {{firstName}}, crea una publicación",
+  "Hi {{firstName}}, click here to start a post": "Hola, {{firstName}}, crea una publicación",
   "Hi!\n\nI'm inviting you to join {{name}} on Hylo.\n\n{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration": "¡Hola!\n\nTe invito a unirte a {{name}} en Hylo.\n\n{{name}} está usando Hylo para nuestra comunidad en línea: este es nuestro espacio dedicado a la comunicación y la colaboración.",
   "Hi!\n\nI'm inviting you to join {{name}} on Hylo.\n\n{{name}} is using Hylo for our online community: this is our dedicated space for communication & collaboration.": "¡Hola!\n\nTe invito a unirte a {{name}} en Hylo.\n\n{{name}} está usando Hylo para nuestra comunidad en línea: este es nuestro espacio dedicado a la comunicación y la colaboración.",
   "Hidden": "Oculto",
