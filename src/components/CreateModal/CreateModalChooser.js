@@ -18,7 +18,7 @@ export default function CreateModalChooser ({ location }) {
   t('What resource is available?')
   t('What would you like to call your project?')
   t('What is your event called?')
-  t('Whats on your mind?')
+  t('Add post title')
   t('Add a description')
   t('request')
   t('discussion')
