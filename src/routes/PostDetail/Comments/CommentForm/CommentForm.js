@@ -11,6 +11,7 @@ import HyloEditor from 'components/HyloEditor'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import RoundImage from 'components/RoundImage'
+import Tooltip from 'components/Tooltip'
 import UploadAttachmentButton from 'components/UploadAttachmentButton'
 import { inIframe } from 'util/index'
 import { STARTED_TYPING_INTERVAL } from 'util/constants'
@@ -51,11 +52,12 @@ class CommentForm extends Component {
       createComment,
       sendIsTyping,
       attachments,
-      clearAttachments
+      clearAttachments,
+      t
     } = this.props
 
     if (this.editor?.current && this.editor.current.isEmpty()) {
-      // Do nothing and stop event propagation
+      window.alert(t('You need to include text to post a comment'))
       return true
     }
 
@@ -70,7 +72,7 @@ class CommentForm extends Component {
   }
 
   render () {
-    const { currentUser, className, addAttachment, editorContent } = this.props
+    const { currentUser, className, addAttachment, editorContent, t } = this.props
     const placeholder = this.props.placeholder || this.props.t('Add a comment...')
 
     return (
@@ -107,13 +109,22 @@ class CommentForm extends Component {
             : (
               <>
                 <div styleName='send-message-container'>
+                  {/* have to change something here */}
                   <Button
                     borderRadius='6px'
                     onClick={() => this.handleOnEnter(this.editor.current.getHTML())}
                     styleName='send-message-button'
+                    dataTip={t('You need to include text to post a comment')}
+                    dataFor='comment-submit-tt'
                   >
                     <IoSend color='white' />
                   </Button>
+                  <Tooltip
+                    delay={150}
+                    position='top'
+                    offset={{ bottom: 0 }}
+                    id='comment-submit-tt'
+                  />
                 </div>
                 <UploadAttachmentButton
                   type='comment'
