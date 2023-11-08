@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { throttle } from 'lodash/fp'
+import { throttle, isEmpty } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
@@ -56,7 +56,7 @@ class CommentForm extends Component {
       t
     } = this.props
 
-    if (this.editor?.current && this.editor.current.isEmpty()) {
+    if (this.editor?.current && isEmpty(attachments) && this.editor.current.isEmpty()) {
       window.alert(t('You need to include text to post a comment'))
       return true
     }
@@ -109,7 +109,6 @@ class CommentForm extends Component {
             : (
               <>
                 <div styleName='send-message-container'>
-                  {/* have to change something here */}
                   <Button
                     borderRadius='6px'
                     onClick={() => this.handleOnEnter(this.editor.current.getHTML())}
