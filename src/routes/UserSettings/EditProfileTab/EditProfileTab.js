@@ -181,6 +181,7 @@ class EditProfileTab extends Component {
           updateSettingDirectly={() => this.updateSettingDirectly('linkedinUrl')}
           handleUnlinkAccount={() => unlinkAccount('linkedin')}
         />
+        <div style={{ height: '80px' }} />
         <div styleName='saveChanges'>
           <span styleName={changed ? 'settingChanged' : ''}>{changed ? t('Changes not saved') : t('Current settings up to date')}</span>
           <Button label={t('Save Changes')} color={changed && validateName(name) ? 'green' : 'gray'} onClick={changed && validateName(name) ? this.save : null} styleName='save-button' />

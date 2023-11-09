@@ -26,6 +26,7 @@ import styles from './PostEditor.scss'
 import { PROJECT_CONTRIBUTIONS } from 'config/featureFlags'
 import { MAX_POST_TOPICS } from 'util/constants'
 import { sanitizeURL } from 'util/url'
+import Tooltip from 'components/Tooltip'
 
 export const MAX_TITLE_LENGTH = 50
 
@@ -185,12 +186,12 @@ class PostEditor extends React.Component {
     const { t } = this.props
 
     const titlePlaceHolders = {
-      offer: t('What help can you offer?'),
-      request: t('What are you looking for help with?'),
-      resource: t('What resource is available?'),
-      project: t('What would you like to call your project?'),
-      event: t('What is your event called?'),
-      default: t('What’s on your mind?')
+      offer: t('Add a title'),
+      request: t('Add a title'),
+      resource: t('Add a title'),
+      project: t('Add a title'),
+      event: t('Add a title'),
+      default: t('Add a title')
     }
 
     return (
@@ -858,6 +859,7 @@ class PostEditor extends React.Component {
             groupCount={get('groups', post).length}
             myModeratedGroups={myModeratedGroups}
             groups={post.groups}
+            t={t}
           />
         </div>
       </div>
@@ -873,6 +875,7 @@ export function ActionsBar ({
   valid,
   loading,
   submitButtonLabel,
+  submitButtonTooltip,
   save,
   setAnnouncement,
   announcementSelected,
@@ -881,7 +884,8 @@ export function ActionsBar ({
   groupCount,
   canModerate,
   myModeratedGroups,
-  groups
+  groups,
+  t
 }) {
   return (
     <div styleName='actionsBar'>
@@ -944,6 +948,14 @@ export function ActionsBar ({
         styleName='postButton'
         label={submitButtonLabel}
         color='green'
+        dataTip={!valid ? t('You need a title and at least one group to post') : ''}
+        dataFor='submit-tt'
+      />
+      <Tooltip
+        delay={150}
+        position='bottom'
+        offset={{ top: 0 }}
+        id='submit-tt'
       />
     </div>
   )
