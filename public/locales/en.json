@@ -793,7 +793,7 @@
   "You have no active messages": "You have no active messages",
   "You have unsaved changes, are you sure you want to leave?": "You have unsaved changes, are you sure you want to leave?",
   "You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it": "You may add parent groups if you are a moderator of the group you wish to add, or if the group you wish to add has the Open access setting which allows any group to join it",
-  "You need a title, description, and at least one group to post": "You need a title, description, and at least one group to post",
+  "You need a title and at least one group to post": "You need a title and at least one group to post",
   "You need to include text to post a comment": "You need to include text to post a comment",
   "You should receive an email with the member export in a few minutes": "You should receive an email with the member export in a few minutes",
   "You wish to turn {{onOrOff}} {{type}} for all groups? This will affect {{numGroups}} {{groups}}.": "You wish to turn {{onOrOff}} {{type}} for all groups? This will affect {{numGroups}} {{groups}}.",
