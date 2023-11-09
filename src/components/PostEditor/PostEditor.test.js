@@ -36,7 +36,7 @@ describe('PostEditor', () => {
     test('initial prompt and placeholders', () => {
       const props = {
         ...baseProps,
-        initialPrompt: 'a test prompt',
+        initialPrompt: 'a test prompt'
       }
       const wrapper = shallow(<PostEditor {...props} />)
       expect(wrapper).toMatchSnapshot()
