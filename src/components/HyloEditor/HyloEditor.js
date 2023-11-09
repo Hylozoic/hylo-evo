@@ -149,7 +149,7 @@ const HyloEditor = React.forwardRef(function HyloEditor ({
       return editorRef.current.getText()
     },
     isEmpty: () => {
-      return editorRef.current?.isEmpty
+      return editorRef.current ? editorRef.current.isEmpty : true
     },
     setContent: content => {
       editorRef.current.commands.setContent(content)
