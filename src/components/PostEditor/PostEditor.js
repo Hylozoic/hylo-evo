@@ -948,7 +948,7 @@ export function ActionsBar ({
         styleName='postButton'
         label={submitButtonLabel}
         color='green'
-        dataTip={!valid ? t('You need a title, description, and at least one group to post') : ''}
+        dataTip={!valid ? t('You need a title and at least one group to post') : ''}
         dataFor='submit-tt'
       />
       <Tooltip
