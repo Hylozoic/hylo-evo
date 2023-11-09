@@ -200,8 +200,9 @@ class TopicSelector extends Component {
           }
 
           if (item.__isNew__) {
-            return <div>{t('Create topic "#{{item.value}}"', { item })}</div>
-          }
+            const validationMessage = Validators.validateTopicName(item.value)
+            return <div>{validationMessage || t('Create topic "#{{item.value}}"', { item })}</div>
+          } // TODO: i18n, figure out with hylo-shared
 
           const { name, postsTotal, followersTotal } = item
           const formatCount = count => isNaN(count)

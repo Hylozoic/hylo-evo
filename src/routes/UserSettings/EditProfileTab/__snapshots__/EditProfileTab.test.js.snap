@@ -135,6 +135,13 @@ exports[`EditProfileTab renders correctly 1`] = `
     updateSettingDirectly={[Function]}
   />
   <div
+    style={
+      Object {
+        "height": "80px",
+      }
+    }
+  />
+  <div
     data-stylename="saveChanges"
   >
     <span
@@ -285,6 +292,13 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
     provider="linkedin"
     t={[Function]}
     updateSettingDirectly={[Function]}
+  />
+  <div
+    style={
+      Object {
+        "height": "80px",
+      }
+    }
   />
   <div
     data-stylename="saveChanges"
