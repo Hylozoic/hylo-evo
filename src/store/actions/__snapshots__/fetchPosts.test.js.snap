@@ -160,8 +160,6 @@ posts: viewPosts(
   topics {
     id
     name
-    postsTotal
-    followersTotal
   }
   members {
     total
@@ -390,8 +388,6 @@ posts(
   topics {
     id
     name
-    postsTotal
-    followersTotal
   }
   members {
     total
