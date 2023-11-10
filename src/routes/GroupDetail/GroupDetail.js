@@ -229,7 +229,7 @@ class UnwrappedGroupDetail extends Component {
                 </>
                 : ''}
             </div>
-          : ''
+            : ''
         }
         {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
         {!isAboutCurrentGroup && topics && topics.length && (
