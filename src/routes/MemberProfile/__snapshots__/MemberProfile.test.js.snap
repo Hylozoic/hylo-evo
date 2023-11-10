@@ -126,7 +126,13 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
     <div
       data-stylename="bio"
     >
-      I like wombats.
+      <ClickCatcher>
+        <HyloHTML
+          element="span"
+          html="<p>I like wombats.</p>
+"
+        />
+      </ClickCatcher>
     </div>
     <div
       data-stylename="member-details"
