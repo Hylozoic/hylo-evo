@@ -66,7 +66,7 @@ export function fetchMemberSkills (id, limit = 20) {
   return {
     type: FETCH_MEMBER_SKILLS,
     graphql: {
-      query: `query ($id: ID, $limit: Int) {
+      query: `query MemberSkillsToLearn ($id: ID, $limit: Int) {
         person (id: $id) {
           id
           skillsToLearn (first: $limit) {
