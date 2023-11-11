@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import React, { useState } from 'react'
 import { useTranslation, withTranslation } from 'react-i18next'
 import { filter, isFunction } from 'lodash'
@@ -5,7 +6,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Moment from 'moment-timezone'
 import ReactTooltip from 'react-tooltip'
 import { Helmet } from 'react-helmet'
-import cx from 'classnames'
+import { TextHelpers } from 'hylo-shared'
 import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
@@ -17,7 +18,9 @@ import {
 import Affiliation from 'components/Affiliation'
 import Button from 'components/Button'
 import BadgeEmoji from 'components/BadgeEmoji'
+import ClickCatcher from 'components/ClickCatcher'
 import Dropdown from 'components/Dropdown'
+import HyloHTML from 'components/HyloHTML'
 import Icon from 'components/Icon'
 import NotFound from 'components/NotFound'
 import RoundImage from 'components/RoundImage'
@@ -38,7 +41,7 @@ class MemberProfile extends React.Component {
     blockConfirmMessage: `Are you sure you want to block this member?
     You will no longer see this member's activity
     and they won't see yours.
-    
+
     You can unblock this member at any time.
     Go to Settings > Blocked Users.`
   }
@@ -154,7 +157,11 @@ class MemberProfile extends React.Component {
             <ActionDropdown items={actionDropdownItems} />
           </div>
           {person.tagline && <div styleName='tagline'>{person.tagline}</div>}
-          {person.bio && <div styleName='bio'>{person.bio}</div>}
+          {person.bio && <div styleName='bio'>
+            <ClickCatcher>
+              <HyloHTML element='span' html={TextHelpers.markdown(person.bio)} />
+            </ClickCatcher>
+          </div>}
           <div styleName='member-details'>
             <div styleName='profile-subhead'>
               {t('Skills & Interests')}

@@ -159,8 +159,6 @@ const postFieldsFragment = withComments => `
   topics {
     id
     name
-    postsTotal
-    followersTotal
   }
   members {
     total

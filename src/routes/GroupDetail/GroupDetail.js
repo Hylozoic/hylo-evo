@@ -210,24 +210,26 @@ class UnwrappedGroupDetail extends Component {
               <Link to={groupUrl(group.slug, 'settings')}>{t('Add a group description')}</Link>
             </div>
           </div>
-          : <div styleName='g.groupDescription'>
-            {group.purpose
-              ? <>
-                <h3>{t('Purpose')}</h3>
-                <ClickCatcher>
-                  <HyloHTML element='span' html={TextHelpers.markdown(group.purpose)} />
-                </ClickCatcher>
-              </>
-              : ''}
-            {group.description
-              ? <>
-                <h3>{t('Description')}</h3>
-                <ClickCatcher>
-                  <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
-                </ClickCatcher>
-              </>
-              : ''}
-          </div>
+          : group.purpose || group.description
+            ? <div styleName={cx('g.groupDescription')}>
+              {group.purpose
+                ? <>
+                  <h3>{t('Purpose')}</h3>
+                  <ClickCatcher>
+                    <HyloHTML element='span' html={TextHelpers.markdown(group.purpose)} />
+                  </ClickCatcher>
+                </>
+                : ''}
+              {group.description
+                ? <>
+                  <h3>{t('Description')}</h3>
+                  <ClickCatcher>
+                    <HyloHTML element='span' html={TextHelpers.markdown(group.description)} />
+                  </ClickCatcher>
+                </>
+                : ''}
+            </div>
+            : ''
         }
         {/* XXX: turning this off for now because topics are random and can be weird. Turn back on when groups have their own #tags
         {!isAboutCurrentGroup && topics && topics.length && (

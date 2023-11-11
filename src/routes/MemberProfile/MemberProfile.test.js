@@ -1,7 +1,12 @@
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import React from 'react'
+import orm from 'store/models'
+import { graphql } from 'msw'
+import mockGraphqlServer from 'util/testing/mockGraphqlServer'
+import { AllTheProviders, render, screen, waitForElementToBeRemoved } from 'util/testing/reactTestingLibraryExtended'
 import denormalized from './MemberProfile.test.json'
-import MemberProfile from './MemberProfile'
+import MemberProfile from './MemberProfile.js'
+
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
   withTranslation: () => Component => {
@@ -9,6 +14,12 @@ jest.mock('react-i18next', () => ({
     return Component
   }
 }))
+
+function testWrapper (providedState) {
+  const ormSession = orm.mutableSession(orm.getEmptyState())
+  const reduxState = { orm: ormSession.state, ...providedState }
+  return AllTheProviders(reduxState)
+}
 
 describe('MemberProfile', () => {
   const defaultTestProps = {
@@ -31,7 +42,54 @@ describe('MemberProfile', () => {
     expect(wrapper.text().includes('Error')).toBe(true)
   })
 
-  it('displays bio on the Overview tab', () => {
+  it('displays bio on the Overview tab', async () => {
+    mockGraphqlServer.resetHandlers(
+      graphql.query('MemberSkills', (req, res, ctx) => {
+        return res(
+          ctx.data({
+            person: {
+              id: '1',
+              skills: {
+                items: []
+              }
+            }
+          })
+        )
+      }),
+      graphql.query('MemberSkillsToLearn', (req, res, ctx) => {
+        return res(
+          ctx.data({
+            person: {
+              id: '1',
+              skills: {
+                items: [{ id: 1, name: 'skill' }]
+              }
+            }
+          })
+        )
+      }),
+      graphql.query('RecentActivity', (req, res, ctx) => {
+        return res(
+          ctx.data({
+            person: {
+              id: '1',
+              comments: {
+                items: [{
+                  id: 1,
+                  text: 'hello',
+                  creator: { id: 1 },
+                  post: { id: 1, title: 'title' },
+                  attachments: [],
+                  createdAt: '2021-04-12T15:00:00.000Z'
+                }],
+                posts: []
+              }
+            }
+          })
+        )
+      })
+    )
+
     const props = {
       ...defaultTestProps,
       currentTab: 'Overview',
@@ -40,8 +98,12 @@ describe('MemberProfile', () => {
         bio: 'WOMBATS'
       }
     }
-    const wrapper = shallow(<MemberProfile {...props} />)
-    expect(wrapper.text().includes('WOMBATS')).toBe(true)
+    render(
+      <MemberProfile {...props} />,
+      { wrapper: testWrapper() }
+    )
+
+    expect(screen.getByText('WOMBATS')).toBeInTheDocument()
   })
 
   it('does not display bio on other tabs', () => {
