@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.6.1] - 2023-11-11
+
+### Added
+- Instructional tooltips in several places explaining things like why you can't create a post if you havent filled out the title or added a group.
+- Script tag when logged in to Hylo that can be used to add your profile to Greencheck via their bookmarklet.
+
+### Changed
+- Notifications for new chats take you to the chat room on mobile, scrolled to that post, instead of opening the post itself.
+- The placeholder text for the title field when creating a post is now "Add a title". Also changed the text at the top of the stream in the create post box from "What's on your Mind?"" to "click here to start a post".
+- Optimization: When loading post topics don't load topic.postsTotal and followersTotal. This will speed up loading of posts in chat rooms, and across the app.
+
+### Fixed
+- Positioning of Groups input in the create post modal when no groups are selected.
+- Don't show blank box on group details if purpose and description both empty.
+
 ## [5.6.0] - 2023-09-23
 
 ### Added
