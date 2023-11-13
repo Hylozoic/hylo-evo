@@ -47,7 +47,11 @@ class NotificationsDropdown extends Component {
   }
 
   onToggle = nowActive => {
-    if (nowActive) this.setState({ lastOpenedAt: new Date() })
+    const { fetchNotifications, pending } = this.props
+    if (nowActive) {
+      this.setState({ lastOpenedAt: new Date() })
+      if (!pending) fetchNotifications()
+    }
   }
 
   componentDidMount = () => {
