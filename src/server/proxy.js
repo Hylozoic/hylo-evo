@@ -89,7 +89,7 @@ export function handlePage (req, res) {
   } else {
     getAndStore(newUrl)
       .then(() => sendCachedData(cache.get(newUrl)))
-      .catch(err => res.serverError(err.message))
+      .catch(err => res.status(500).send(err.message))
   }
 }
 
