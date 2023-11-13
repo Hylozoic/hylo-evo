@@ -815,6 +815,7 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
   body={
     <div
       data-stylename="notifications"
+      id="notifications-scroll-list"
     >
       <Notification
         notification={
@@ -1010,6 +1011,10 @@ exports[`NotificationsDropdown renders correctly with a list of threads 1`] = `
           }
         }
         onClick={[Function]}
+      />
+      <ScrollListener
+        elementId="notifications-scroll-list"
+        onBottom={[Function]}
       />
     </div>
   }
