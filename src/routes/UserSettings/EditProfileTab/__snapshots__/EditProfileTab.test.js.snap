@@ -115,7 +115,6 @@ exports[`EditProfileTab renders correctly 1`] = `
   <SocialControl
     handleUnlinkAccount={[Function]}
     label="Facebook"
-    onLink={[Function]}
     provider="facebook"
     t={[Function]}
     updateSettingDirectly={[Function]}
@@ -274,7 +273,6 @@ exports[`EditProfileTab renders correctly without location object 1`] = `
   <SocialControl
     handleUnlinkAccount={[Function]}
     label="Facebook"
-    onLink={[Function]}
     provider="facebook"
     t={[Function]}
     updateSettingDirectly={[Function]}

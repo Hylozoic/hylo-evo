@@ -9,7 +9,6 @@ import checkLogin from 'store/actions/checkLogin'
 import { sendEmailVerification as sendEmailVerificationAction } from './Signup.store'
 import loginWithService from 'store/actions/loginWithService'
 import Button from 'components/Button'
-import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import TextInput from 'components/TextInput'
 import './Signup.scss'
@@ -112,7 +111,6 @@ export default function Signup (props) {
       <p styleName='or'>{t('Or sign in with an existing account')}: </p>
 
       <div styleName='auth-buttons'>
-        <FacebookButton onClick={() => handleSignupWithService('facebook')} />
         <GoogleButton onClick={() => handleSignupWithService('google')} />
       </div>
     </div>

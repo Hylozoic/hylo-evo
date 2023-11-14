@@ -163,7 +163,6 @@ class EditProfileTab extends Component {
           label='Facebook'
           provider='facebook'
           value={facebookUrl}
-          onLink={() => loginWithService('facebook')}
           updateSettingDirectly={() => this.updateSettingDirectly('facebookUrl')}
           handleUnlinkAccount={() => unlinkAccount('facebook')}
         />
