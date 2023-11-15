@@ -90,7 +90,6 @@ export default function Login (props) {
         </div>
 
         {/* <div styleName='auth-buttons'>
-          <FacebookButton onClick={() => this.loginAndRedirect('facebook')} />
           <GoogleButton onClick={() => this.loginAndRedirect('google')} />
         </div> */}
       </div>

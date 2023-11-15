@@ -29,9 +29,6 @@ export const google = {
   key: process.env.GOOGLE_BROWSER_KEY,
   clientId: process.env.GOOGLE_CLIENT_ID
 }
-export const facebook = {
-  appId: process.env.FACEBOOK_APP_ID
-}
 export const segment = {
   writeKey: process.env.SEGMENT_KEY
 }
@@ -67,7 +64,6 @@ const config = {
   slack,
   s3,
   google,
-  facebook,
   segment,
   featureFlags,
   intercom,

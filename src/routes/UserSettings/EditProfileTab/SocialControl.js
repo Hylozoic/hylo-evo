@@ -72,32 +72,23 @@ class SocialControl extends Component {
   }
 
   render () {
-    const { label, value = '', provider, onLink, t } = this.props
+    const { label, value = '', t } = this.props
     const linked = !!value
 
-    const linkButton =
+    const linkButton = (
       <span
         styleName='link-button'
         onClick={linked ? () => this.handleUnlinkClick() : () => this.handleLinkClick()}>
         {linked ? t('Unlink') : t('Link')}
 
       </span>
-
-    const connectFacebookButton =
-      <span
-        styleName='link-button'
-        onClick={linked ? () => this.handleUnlinkClick() : () => onLink()}
-        className='ml-auto'
-      >
-        {linked ? t('Disconnect') : t('Connect')}
-      </span>
+    )
 
     return (
       <div styleName='control'>
         <div styleName={cx('social-control-label')}>
           {linked ? <Icon name='Complete' styleName='linkedIcon' /> : ''}
           {label}
-          {provider === 'facebook' && connectFacebookButton}
           {linkButton}
         </div>
       </div>
