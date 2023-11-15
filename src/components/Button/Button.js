@@ -9,6 +9,8 @@ export default function Button ({
   borderRadius = '25px',
   label,
   color = 'green',
+  dataTip,
+  dataFor,
   hover,
   active,
   narrow,
@@ -21,18 +23,22 @@ export default function Button ({
   tabIndex = 0
 }) {
   const buttonClassName = noDefaultStyles ? '' : 'button'
-  let styleName = cx(buttonClassName, color, { hover, active, narrow, small, disabled })
+  const styleName = cx(buttonClassName, color, { hover, active, narrow, small, disabled })
 
-  return <div
-    role='button'
-    tabIndex={tabIndex}
-    styleName={styleName}
-    style={{ borderRadius }}
-    className={className}
-    onClick={!disabled ? onClick : undefined}
-  >
-    {label || children}
-  </div>
+  return (
+    <div
+      role='button'
+      tabIndex={tabIndex}
+      styleName={styleName}
+      style={{ borderRadius }}
+      className={className}
+      onClick={!disabled ? onClick : undefined}
+      data-tip={dataTip}
+      data-for={dataFor}
+    >
+      {label || children}
+    </div>
+  )
 }
 Button.propTypes = {
   label: oneOfType([

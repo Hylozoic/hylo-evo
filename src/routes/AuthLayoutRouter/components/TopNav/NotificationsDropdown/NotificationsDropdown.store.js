@@ -1,4 +1,7 @@
+import { createSelector } from 'reselect'
 import { createSelector as ormCreateSelector } from 'redux-orm'
+import { get } from 'lodash/fp'
+import { makeGetQueryResults } from 'store/reducers/queryResults'
 import orm from 'store/models'
 import {
   FETCH_NOTIFICATIONS,
@@ -6,16 +9,18 @@ import {
   MARK_ALL_ACTIVITIES_READ
 } from 'store/constants'
 
-export function fetchNotifications () {
+// Synced from ReactNative Nov '23
+export function fetchNotifications (first = 20, offset = 0) {
   return {
     type: FETCH_NOTIFICATIONS,
     graphql: {
       query: `query NotificationsQuery (
         $first: Int = 20,
+        $offset: Int = 0,
         $order: String = "desc",
         $resetCount: Boolean = true
       ) {
-        notifications (first: $first, order: $order, resetCount: $resetCount) {
+        notifications (first: $first, order: $order, offset: $offset, resetCount: $resetCount) {
           total
           hasMore
           items {
@@ -60,11 +65,15 @@ export function fetchNotifications () {
             }
           }
         }
-      }`
+      }`,
+      variables: { first, offset }
     },
     meta: {
       extractModel: 'Notification',
-      resetCount: true
+      resetCount: true,
+      extractQueryResults: {
+        getItems: get('payload.data.notifications')
+      }
     }
   }
 }
@@ -102,6 +111,15 @@ export function markAllActivitiesRead () {
     }
   }
 }
+
+// Synced from ReactNative Nov '23
+const getNotificationsResults = makeGetQueryResults(FETCH_NOTIFICATIONS)
+
+// Synced from ReactNative Nov '23
+export const getHasMoreNotifications = createSelector(
+  getNotificationsResults,
+  get('hasMore')
+)
 
 export const getNotifications = ormCreateSelector(
   orm,

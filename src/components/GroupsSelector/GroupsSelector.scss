@@ -1,5 +1,8 @@
 .root {
   display: inline-block;
+  /* Slightly adjust y positioning to make perfectly centered with "Post In" */
+  position: relative;
+  top: 2px;
   /* shared font styles */
   color: $color-caribbean-green;
   font-size: 1em;
@@ -60,6 +63,7 @@
   /* prevent autoresize overflowing the container */
   max-width: 100%;
   line-height: 1;
+  /* Adjusts search bar position height */
   position: relative;
   top: -8px;
 }
@@ -99,6 +103,12 @@
   position: absolute;
   top: 100%;
   left: 0;
+}
+
+[class*='tags-empty'] {
+  /* Adjusts search bar position height when no tagged groups are selected */
+  position: absolute;
+  bottom: -1px;
 }
 
 @media screen and (min-width: 30em) {

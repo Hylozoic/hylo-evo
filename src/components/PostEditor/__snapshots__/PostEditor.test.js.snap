@@ -35,9 +35,21 @@ exports[`ActionsBar matches last snapshot 1`] = `
   <Button
     color="green"
     data-stylename="postButton"
+    dataFor="submit-tt"
+    dataTip=""
     disabled={false}
     label="Save"
     onClick={[Function]}
+  />
+  <Tooltip
+    delay={150}
+    id="submit-tt"
+    offset={
+      Object {
+        "top": 0,
+      }
+    }
+    position="bottom"
   />
 </div>
 `;
@@ -77,9 +89,21 @@ exports[`ActionsBar matches last snapshot while loading 1`] = `
   <Button
     color="green"
     data-stylename="postButton"
+    dataFor="submit-tt"
+    dataTip=""
     disabled={true}
     label="Posting..."
     onClick={[Function]}
+  />
+  <Tooltip
+    delay={150}
+    id="submit-tt"
+    offset={
+      Object {
+        "top": 0,
+      }
+    }
+    position="bottom"
   />
 </div>
 `;
@@ -140,7 +164,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What are you looking for help with?"
+        placeholder="Add a title"
         type="text"
         value="valid title"
       />
@@ -317,6 +341,7 @@ exports[`PostEditor editing a post form in editing mode 1`] = `
       save={[Function]}
       setAnnouncement={[MockFunction]}
       submitButtonLabel="Save"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={true}
     />
@@ -380,7 +405,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What are you looking for help with?"
+        placeholder="Add a title"
         type="text"
         value="valid title"
       />
@@ -557,6 +582,7 @@ exports[`PostEditor editing a post post is loaded into fields 1`] = `
       save={[Function]}
       setAnnouncement={[MockFunction]}
       submitButtonLabel="Save"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={true}
     />
@@ -665,7 +691,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -760,6 +786,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -823,7 +850,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What help can you offer?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -946,6 +973,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -1009,7 +1037,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What are you looking for help with?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -1132,6 +1160,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -1195,7 +1224,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What resource is available?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -1318,6 +1347,7 @@ exports[`PostEditor for a new post correct title placeholder and type button sel
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -1381,7 +1411,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -1477,6 +1507,7 @@ exports[`PostEditor for a new post initial prompt and placeholders 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -1582,7 +1613,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
         disabled={true}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -1678,6 +1709,7 @@ exports[`PostEditor post is defaulted while loading editor 1`] = `
       loading={true}
       save={[Function]}
       submitButtonLabel="Save"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={true}
     />
@@ -1741,7 +1773,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
         disabled={true}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -1837,6 +1869,7 @@ exports[`PostEditor post is defaulted while loading editor for NEW post 1`] = `
       loading={true}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -1900,7 +1933,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -1996,6 +2029,7 @@ exports[`PostEditor renders announcement option with admin in props 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -2059,7 +2093,7 @@ exports[`PostEditor renders contribution button 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -2240,6 +2274,7 @@ exports[`PostEditor renders contribution button 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />
@@ -2303,7 +2338,7 @@ exports[`PostEditor renders with min props 1`] = `
         disabled={false}
         maxLength={50}
         onChange={[Function]}
-        placeholder="What’s on your mind?"
+        placeholder="Add a title"
         type="text"
         value=""
       />
@@ -2399,6 +2434,7 @@ exports[`PostEditor renders with min props 1`] = `
       loading={false}
       save={[Function]}
       submitButtonLabel="Post"
+      t={[Function]}
       toggleAnnouncementModal={[Function]}
       valid={false}
     />

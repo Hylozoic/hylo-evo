@@ -9,7 +9,6 @@ import login from 'store/actions/login'
 import loginWithService from 'store/actions/loginWithService'
 import TextInput from 'components/TextInput'
 import Button from 'components/Button'
-import FacebookButton from 'components/FacebookButton'
 import GoogleButton from 'components/GoogleButton'
 import './Login.scss'
 
@@ -110,7 +109,6 @@ export default function Login (props) {
         <Button styleName='submit' label={t('Sign in')} onClick={handleLogin} />
       </div>
       <div styleName='auth-buttons'>
-        <FacebookButton onClick={() => handleLoginWithService('facebook')} />
         <GoogleButton onClick={() => handleLoginWithService('google')} />
       </div>
     </div>

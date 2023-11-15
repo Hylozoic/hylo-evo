@@ -84,8 +84,9 @@ export function mapStateToProps (state, props) {
   const context = getRouteParam('context', state, props)
   const view = getRouteParam('view', state, props)
 
-  const querystringParams = getQuerystringParam(['search'], null, props)
+  const querystringParams = getQuerystringParam(['search', 'postId'], null, props)
   const search = getQuerystringParam('search', state, props)
+  const postIdToStartAt = querystringParams?.postId
 
   const imageAttachments = getAttachments(state, { type: 'post', id: 'new', attachmentType: 'image' })
   const linkPreview = getLinkPreview(state, props)
@@ -99,7 +100,7 @@ export function mapStateToProps (state, props) {
   const fetchPostsPastParams = {
     childPostInclusion: 'no',
     context,
-    cursor: parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
+    cursor: parseInt(postIdToStartAt) + 1 || parseInt(groupTopic?.lastReadPostId) + 1, // -1 because we want the lastread post id included
     filter: 'chat',
     first: NUM_POSTS_TO_LOAD,
     order: 'desc',
@@ -112,7 +113,7 @@ export function mapStateToProps (state, props) {
   const fetchPostsFutureParams = {
     childPostInclusion: 'no',
     context,
-    cursor: groupTopic?.lastReadPostId,
+    cursor: postIdToStartAt || groupTopic?.lastReadPostId,
     filter: 'chat',
     first: NUM_POSTS_TO_LOAD,
     order: 'asc',
@@ -122,7 +123,7 @@ export function mapStateToProps (state, props) {
     topic: topic?.id
   }
 
-  const postsPast = groupTopic?.lastReadPostId ? getPosts(state, fetchPostsPastParams) : []
+  const postsPast = (postIdToStartAt || groupTopic?.lastReadPostId) ? getPosts(state, fetchPostsPastParams) : []
   const hasMorePostsPast = getHasMorePosts(state, fetchPostsPastParams)
   const totalPostsPast = getTotalPosts(state, fetchPostsPastParams) || 0
   const currentPostIndex = totalPostsPast ? Math.min(Math.max(totalPostsPast - 2, 0), NUM_POSTS_TO_LOAD - 1) : 0

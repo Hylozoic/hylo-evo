@@ -189,7 +189,7 @@ export const PostPrompt = (props) => {
       request: t('Hi {{firstName}}, what are you looking for?', { firstName }),
       project: t('Hi {{firstName}}, what would you like to create?', { firstName }),
       event: t('Hi {{firstName}}, want to create an event?', { firstName }),
-      default: t('Hi {{firstName}}, what\'s on your mind?', { firstName })
+      default: t('Hi {{firstName}}, click here to start a post', { firstName })
     }
     return postPrompts[type] || postPrompts.default
   }

@@ -26,6 +26,7 @@ import {
 } from 'store/models/Notification'
 import NoItems from 'routes/AuthLayoutRouter/components/TopNav/NoItems'
 import LoadingItems from 'routes/AuthLayoutRouter/components/TopNav/LoadingItems'
+import ScrollListener from 'components/ScrollListener/ScrollListener'
 
 const NOTIFICATION_TEXT_MAX = 76
 
@@ -35,6 +36,8 @@ class NotificationsDropdown extends Component {
     markActivityRead: PropTypes.func,
     markAllActivitiesRead: PropTypes.func,
     renderToggleChildren: PropTypes.func,
+    hasMore: PropTypes.bool,
+    fetchMore: PropTypes.func,
     notifications: PropTypes.array,
     className: PropTypes.string
   }
@@ -47,7 +50,11 @@ class NotificationsDropdown extends Component {
   }
 
   onToggle = nowActive => {
-    if (nowActive) this.setState({ lastOpenedAt: new Date() })
+    const { fetchNotifications, pending } = this.props
+    if (nowActive) {
+      this.setState({ lastOpenedAt: new Date() })
+      if (!pending) fetchNotifications()
+    }
   }
 
   componentDidMount = () => {
@@ -76,6 +83,7 @@ class NotificationsDropdown extends Component {
       markActivityRead,
       markAllActivitiesRead,
       pending,
+      hasMore,
       t
     } = this.props
     const { showingUnread } = this.state
@@ -96,52 +104,65 @@ class NotificationsDropdown extends Component {
     }
 
     let body
-    if (pending) {
+    if (pending && notifications.length === 0) {
       body = <LoadingItems />
     } else if (isEmpty(notifications)) {
       body = <NoItems message={message} />
     } else {
-      body = <div styleName='notifications'>
-        {notifications.map(notification => <Notification
-          notification={notification}
-          onClick={onClick}
-          key={notification.id} />)}
-      </div>
+      body = (
+        <div styleName='notifications' id='notifications-scroll-list'>
+          {notifications.map(notification => <Notification
+            notification={notification}
+            onClick={onClick}
+            key={notification.id} />)}
+          <ScrollListener
+            elementId='notifications-scroll-list'
+            onBottom={hasMore ? () => this.props.fetchMore(this.props.notifications.length) : () => {}}
+          />
+          {pending && <LoadingItems />}
+        </div>
+      )
     }
 
-    return <TopNavDropdown ref='dropdown'
-      className={className}
-      onToggle={this.onToggle}
-      toggleChildren={renderToggleChildren(this.hasUnread())}
-      header={
-        <div styleName='header-content'>
-          <span onClick={showRecent} styleName={cx('tab', { active: !showingUnread })}>
-            {this.props.t('Recent')}
-          </span>
-          <span onClick={showUnread} styleName={cx('tab', { active: showingUnread })}>
-            {this.props.t('Unread')}
-          </span>
-          <span onClick={markAllActivitiesRead} styleName='mark-read'>{this.props.t('Mark all as read')}</span>
-        </div>}
-      body={body}
-    />
+    return (
+      <TopNavDropdown
+        ref='dropdown'
+        className={className}
+        onToggle={this.onToggle}
+        toggleChildren={renderToggleChildren(this.hasUnread())}
+        header={
+          <div styleName='header-content'>
+            <span onClick={showRecent} styleName={cx('tab', { active: !showingUnread })}>
+              {this.props.t('Recent')}
+            </span>
+            <span onClick={showUnread} styleName={cx('tab', { active: showingUnread })}>
+              {this.props.t('Unread')}
+            </span>
+            <span onClick={markAllActivitiesRead} styleName='mark-read'>{this.props.t('Mark all as read')}</span>
+          </div>
+        }
+        body={body}
+      />
+    )
   }
 }
 
 export function Notification ({ notification, onClick }) {
   const { activity: { unread, actor } } = notification
 
-  return <li styleName={cx('notification', { unread })}
-    onClick={() => onClick(notification)}>
-    <div styleName='image-wraper'>
-      <RoundImage url={actor.avatarUrl} />
-    </div>
-    <div styleName='content'>
-      <NotificationHeader notification={notification} />
-      <NotificationBody notification={notification} />
-      <div styleName='date'>{TextHelpers.humanDate(notification.createdAt)}</div>
-    </div>
-  </li>
+  return (
+    <li styleName={cx('notification', { unread })}
+      onClick={() => onClick(notification)}>
+      <div styleName='image-wraper'>
+        <RoundImage url={actor.avatarUrl} />
+      </div>
+      <div styleName='content'>
+        <NotificationHeader notification={notification} />
+        <NotificationBody notification={notification} />
+        <div styleName='date'>{TextHelpers.humanDate(notification.createdAt)}</div>
+      </div>
+    </li>
+  )
 }
 
 export function NotificationHeader ({ notification }) {
@@ -156,7 +177,7 @@ export function NotificationHeader ({ notification }) {
         </div>
       )
     }
-    case ACTION_TAG:
+    case ACTION_TAG: {
       const tagReason = find(r => r.startsWith('tag: '), reasons)
       const tag = tagReason.split(': ')[1]
       return (
@@ -164,6 +185,7 @@ export function NotificationHeader ({ notification }) {
           {t('New Post in ')} <span styleName='bold'>{tag}</span>
         </div>
       )
+    }
     case ACTION_JOIN_REQUEST:
       return (
         <div styleName='header'>

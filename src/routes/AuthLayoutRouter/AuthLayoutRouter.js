@@ -219,6 +219,9 @@ export default function AuthLayoutRouter (props) {
       <Helmet>
         <title>{currentGroup ? `${currentGroup.name} | ` : ''}Hylo</title>
         <meta name='description' content='Prosocial Coordination for a Thriving Planet' />
+        <script id='greencheck' type='application/json'>
+          {`{ id: "${currentUser.id}", fullname: "${currentUser.name}", description: "${currentUser.tagline}", image: "${currentUser.avatarUrl}" }`}
+        </script>
       </Helmet>
       {/* Redirects for switching into global contexts, since these pages don't exist yet */}
       <RedirectRoute exact path='/:context(public)/(members|settings)' to='/public' />
