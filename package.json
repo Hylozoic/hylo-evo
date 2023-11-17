@@ -9,7 +9,7 @@
   },
   "browserslist": [
     "defaults"
-    ],
+  ],
   "proxy": "localhost:3001",
   "scripts": {
     "dev": "yarn start",

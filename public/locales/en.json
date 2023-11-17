@@ -609,6 +609,8 @@
   "Send me a digest": "Send me a digest",
   "Sent": "Sent",
   "Sent {{numGood}} {{email}}": "Sent {{numGood}} {{email}}",
+  "Select Images to Upload (max 50 MB each)": "Select Images to Upload (max 50 MB each)",
+  "Select Files to Upload (max 50 MB each)": "Select Files to Upload (max 50 MB each)",
   "Set default topics for your group which will be suggested first when\n            members are creating a new post.\n            Every new member will also be subscribed to these topics when they join.": "Set default topics for your group which will be suggested first when\n            members are creating a new post.\n            Every new member will also be subscribed to these topics when they join.",
   "Set your password here.": "Set your password here.",
   "Settings": "Settings",

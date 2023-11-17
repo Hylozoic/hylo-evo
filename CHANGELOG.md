@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Set max file/image attachment size to 50 MB and enforce limit in file picker and tell user about the limit there too
+
 ## [5.6.1] - 2023-11-11
 
 ### Added
