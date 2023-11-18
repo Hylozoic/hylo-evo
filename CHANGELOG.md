@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Instructional tooltips in several places explaining things like why you can't create a post if you havent filled out the title or added a group.
 - Script tag when logged in to Hylo that can be used to add your profile to Greencheck via their bookmarklet.
+- You can now format and add links to your user profile bio using Markdown!
 
 ### Changed
 - Notifications for new chats take you to the chat room on mobile, scrolled to that post, instead of opening the post itself.
