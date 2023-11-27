@@ -9,13 +9,13 @@ import Badge from 'components/Badge'
 import BadgedIcon from 'components/BadgedIcon'
 import Dropdown from 'components/Dropdown'
 import Icon from 'components/Icon'
-import { localeToFlagEmoji, localeLocalStorageSync } from 'util/locale'
 import RoundImage from 'components/RoundImage'
+import { CONTEXT_MY } from 'store/constants'
 import { bgImageStyle } from 'util/index'
 import { hyloLogo, publicLogo } from 'util/assets'
+import { localeToFlagEmoji, localeLocalStorageSync } from 'util/locale'
 import { baseUrl, personUrl } from 'util/navigation'
-import './TopNav.scss'
-import { CONTEXT_MY } from 'store/constants'
+import styles from './TopNav.scss'
 
 const MessagesDropdown = React.lazy(() => import('./MessagesDropdown'))
 const NotificationsDropdown = React.lazy(() => import('./NotificationsDropdown'))
@@ -62,9 +62,19 @@ export default function TopNav (props) {
           <Title group={group} isPublic={isPublic} isMyHome={isMyHome} />
         </Link>
         <div styleName='navIcons' id='personalSettings'>
-          <Suspense fallback={<span>{localeFlag}</span>}>
-            <LocaleDropdown renderToggleChildren={<span styleName='locale'>{localeFlag}</span>} />
-          </Suspense>
+          <Dropdown
+            styleName={cx('nav-menu', 'support-menu')}
+            alignLeft
+            toggleChildren={
+              <Icon name='QuestionMark' />
+            }
+          >
+            <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
+            <li><a href='https://hylozoic.gitbook.io/hylo/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('User Guide')}</a></li>
+            <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
+            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
+            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Contribute to Hylo')}</a></li>
+          </Dropdown>
           <Link to='/search'><Icon name='Search' styleName='icon' /></Link>
           <Suspense fallback={<BadgedIcon name='Messages' styleName='icon' />}>
             <MessagesDropdown renderToggleChildren={showBadge =>
@@ -75,8 +85,9 @@ export default function TopNav (props) {
               <BadgedIcon name='Notifications' styleName='icon' showBadge={showBadge} />} />
           </Suspense>
           <Dropdown
-            styleName='user-menu'
+            styleName={cx('nav-menu', 'user-menu')}
             alignRight
+            noOverflow
             toggleChildren={
               <RoundImage url={get('avatarUrl', currentUser)} small />
             }
@@ -87,10 +98,11 @@ export default function TopNav (props) {
               </Link>
             </li>
             <li><Link styleName='hover-highlight' to='/settings'>{t('Settings')}</Link></li>
-            <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
-            <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
-            <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
-            <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Contribute to Hylo')}</a></li>
+            <li>
+              <Suspense fallback={<span>{t('Locale')} {localeFlag}</span>}>
+                <LocaleDropdown className={styles['locale-dropdown']} renderToggleChildren={<span styleName='locale'>{t('Locale')} {localeFlag}</span>} />
+              </Suspense>
+            </li>
             <li><a onClick={logout}>{t('Log out')}</a></li>
           </Dropdown>
         </div>

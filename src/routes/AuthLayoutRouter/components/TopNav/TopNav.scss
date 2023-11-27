@@ -159,7 +159,7 @@ a.current-context {
     height: 28px;
     margin-right: 15px;
     text-decoration: none;
-    cursor: pointer;
+    cursor: pointer !important;
 
     &:hover {
       text-decoration: none;
@@ -167,18 +167,38 @@ a.current-context {
   }
 }
 
-.locale {
-  display: inline;
+.support-menu {
+  top: 2px;
 }
 
 .icon {
   position: relative;
   top: 3px;
   font-size: 22px;
+  cursor: pointer !important;
 }
 
 .icon:hover {
   color: $color-rhino;
+}
+
+.nav-menu {
+  cursor: pointer;
+  li {
+    display: block;
+    padding: 8px 20px;
+    border-bottom: 1px solid $color-athens-gray;
+  }
+
+  li > a, li > span {
+    &, &:not([href]) {
+      color: $color-rhino-60;
+      cursor: pointer;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
 .user-menu li span.isMobileDevice {
@@ -191,17 +211,9 @@ a.current-context {
 
 .user-menu {
   margin-right: 0 !important;
-  li a, li span {
-    &, &:not([href]) {
-      color: $color-rhino-60;
-      cursor: pointer;
-    }
-    &:hover {
-      text-decoration: none;
-    }
-    display: block;
-    padding: 8px 20px;
-    border-bottom: 1px solid $color-athens-gray;
+
+  &:hover > span > div {
+    border: solid 2px #eeeeee;
   }
 }
 
@@ -209,12 +221,23 @@ a.current-context {
   /* emtpy */
 }
 
-.hover-highlight:hover, .user-menu li span:hover {
+.hover-highlight:hover, .nav-menu li span:hover {
   color: $color-black;
 }
 
+.locale {
+  @include font-regular;
+  color: $color-rhino-60;
+  cursor: pointer;
+  background-color: white;
+}
+
+.locale-dropdown {
+  z-index: 1000;
+}
+
 @media screen and (max-width: 600px) {
-  .user-menu > div {
+  .nav-menu > div {
     bottom: 30px;
   }
 
