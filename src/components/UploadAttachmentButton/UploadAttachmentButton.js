@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { ID_FOR_NEW } from 'components/AttachmentManager/AttachmentManager.store'
 import Icon from 'components/Icon'
 import cx from 'classnames'
@@ -24,6 +25,7 @@ export default function UploadAttachmentButton ({
   ...uploadButtonProps
 }) {
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
 
   const uploadAttachmentComplete = response => {
     if (!response) {
@@ -57,7 +59,8 @@ export default function UploadAttachmentButton ({
       attachmentType,
       maxFiles: allowMultiple ? 10 : 1,
       onUploadDone,
-      onCancel
+      onCancel,
+      t
     }).open()
   }
 

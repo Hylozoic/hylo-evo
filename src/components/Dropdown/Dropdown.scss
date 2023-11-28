@@ -74,6 +74,10 @@ $dropdown-border-color: $color-box-shadow;
     white-space: nowrap;
     margin-bottom: 0;
   }
+
+  &.noOverflow {
+    overflow: visible;
+  }
 }
 
 .itemBorder {

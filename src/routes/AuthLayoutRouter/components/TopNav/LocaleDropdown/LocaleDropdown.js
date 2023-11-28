@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import Dropdown from 'components/Dropdown'
 import updateUserSettings from 'store/actions/updateUserSettings'
 
-export default function LocaleDropdown ({ renderToggleChildren, currentUser }) {
+export default function LocaleDropdown ({ renderToggleChildren, currentUser, className }) {
   const dispatch = useDispatch()
   const { i18n } = useTranslation()
 
@@ -19,7 +19,9 @@ export default function LocaleDropdown ({ renderToggleChildren, currentUser }) {
 
   return (
     <Dropdown
+      className={className}
       toggleChildren={renderToggleChildren}
+      alignRight
       items={[
         {
           key: 'en',

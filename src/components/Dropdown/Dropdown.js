@@ -68,19 +68,19 @@ export default class Dropdown extends React.Component {
   }
 
   render () {
-    const { toggleChildren, className, triangle, alignRight, menuAbove } = this.props
+    const { toggleChildren, className, triangle, alignRight, menuAbove, noOverflow } = this.props
     const { active } = this.state
     const styleName = cx('dropdown', { 'has-triangle': triangle })
 
     return (
       <div className={className} styleName={styleName} ref='parent'
         onKeyDown={this.handleKeys}>
-        <span styleName={cx('dropdown-toggle', { 'toggled': this.state.active })} onClick={this.toggle}>
+        <span styleName={cx('dropdown-toggle', { toggled: this.state.active })} onClick={this.toggle}>
           {toggleChildren}
         </span>
-        <span styleName={cx('close-dropdown', { 'toggled': this.state.active })} onClick={this.toggle}><Icon name='Ex' /></span>
+        <span styleName={cx('close-dropdown', { toggled: this.state.active })} onClick={this.toggle}><Icon name='Ex' /></span>
         <div styleName={cx('wrapper', { alignRight, menuAbove })}>
-          <ul styleName={cx('dropdown-menu', { active, alignRight })}
+          <ul styleName={cx('dropdown-menu', { active, alignRight, noOverflow })}
             onClick={() => this.toggle()}>
             {this.renderMenuItems()}
           </ul>
