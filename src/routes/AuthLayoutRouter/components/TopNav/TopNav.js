@@ -70,7 +70,7 @@ export default function TopNav (props) {
             }
           >
             <li><span styleName='hover-highlight' onClick={showIntercom}>{t('Feedback & Support')}</span></li>
-            <li><a href='https://hylozoic.gitbook.io/hylo/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('User Guide')}</a></li>
+            <li><a href='https://hylozoic.gitbook.io/hylo/guides/hylo-user-guide' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('User Guide')}</a></li>
             <li><a href='http://hylo.com/terms/' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Terms & Privacy')}</a></li>
             <li><span styleName={cx('hover-highlight', appStoreLinkClass)} onClick={downloadApp}>{t('Download App')}</span></li>
             <li><a href='https://opencollective.com/hylo' target='_blank' rel='noreferrer' styleName='hover-highlight'>{t('Contribute to Hylo')}</a></li>
