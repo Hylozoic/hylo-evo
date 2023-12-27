@@ -17,7 +17,6 @@ import { updateMembershipSettings } from 'routes/UserSettings/UserSettings.store
 import Button from 'components/Button'
 import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
-import Icon from 'components/Icon'
 import RoundImage from 'components/RoundImage'
 import { SuggestedSkills } from 'routes/GroupDetail/GroupDetail'
 import './GroupWelcomeModal.scss'
@@ -29,42 +28,46 @@ export default function GroupWelcomeModal (props) {
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, props))
   const currentMembership = useSelector(state => getMyGroupMembership(state, props))
   const group = presentGroup(currentGroup)
+  const membershipAgreements = currentMembership?.agreements.toModelArray()
 
   const numAgreements = group?.agreements?.length || 0
-  const [acceptedAgreements, setAcceptedAgreements] = useState(Array(numAgreements).fill(false))
-  const numAcceptedAgreements = acceptedAgreements.reduce((count, agreement) => count + (agreement ? 1 : 0), 0)
-  const acceptedAllAgreements = numAcceptedAgreements === numAgreements
+  const [currentAgreements, setCurrentAgreements] = useState(Array(numAgreements).fill(false))
 
-  // TODO: check if ageeements have changed and if so bring up modal again
-  const showJoinForm = currentMembership?.settings?.showJoinForm // || !acceptedAllAgreements
+  const numCheckedAgreements = currentAgreements.reduce((count, agreement) => count + (agreement ? 1 : 0), 0)
+  const checkedAllAgreements = numCheckedAgreements === numAgreements
+
+  const agreementsChanged = numAgreements > 0 &&
+    (!currentMembership.settings.agreementsAcceptedAt ||
+     currentMembership.settings.agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
+  const showWelcomeModal = currentMembership?.settings?.showJoinForm || agreementsChanged
 
   useEffect(() => {
-    if (showJoinForm && group?.id) dispatch(fetchGroupWelcomeData(group.id))
-  }, [group?.id, showJoinForm])
-
-  useEffect(() => {
-    if (numAgreements > 0) {
-      setAcceptedAgreements(group.agreements.map(a => a.accepted))
-    }
+    if (group?.id) dispatch(fetchGroupWelcomeData(group.id, currentUser.id))
   }, [group?.id])
 
-  if (!showJoinForm || !group) return null
+  useEffect(() => {
+    if (agreementsChanged && numAgreements > 0 && membershipAgreements?.length > 0) {
+      setCurrentAgreements(group.agreements.map(ga => membershipAgreements.find(ma => ma.id === ga.id)?.accepted))
+    }
+  }, [membershipAgreements?.length])
+
+  if (!showWelcomeModal || !group) return null
 
   const handleCheckAgreement = e => {
     const accepted = e.target.checked
     const agreementIndex = e.target.value
-    const newAgreements = [...acceptedAgreements]
+    const newAgreements = [...currentAgreements]
     newAgreements[agreementIndex] = accepted
-    setAcceptedAgreements(newAgreements)
+    setCurrentAgreements(newAgreements)
   }
 
   const handleCheckAllAgreements = e => {
-    const accepted = !acceptedAllAgreements
+    const accepted = !checkedAllAgreements
     const newAgreements = Array(numAgreements).fill(accepted)
-    setAcceptedAgreements(newAgreements)
+    setCurrentAgreements(newAgreements)
   }
 
-  const closeModal = async () => {
+  const handleAccept = async () => {
     await dispatch(updateMembershipSettings(group.id, { showJoinForm: false }, true))
     return null
   }
@@ -81,7 +84,6 @@ export default function GroupWelcomeModal (props) {
     >
       <div styleName='welcome-modal-wrapper' key='welcome-modal'>
         <div styleName='welcome-modal' className='welcome-modal'>
-          <span styleName='close-button' onClick={closeModal}><Icon name='Ex' /></span>
           <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='banner'>
             <div styleName='banner-content'>
               <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} size='50px' square />
@@ -98,6 +100,7 @@ export default function GroupWelcomeModal (props) {
             {group.agreements?.length > 0 && (
               <div styleName={cx('agreements', 'welcome-section')}>
                 <h2>{t('Our Agreements')}</h2>
+                {agreementsChanged ? <p styleName='agreements-changed'>{t('The agreements have changed since you last accepted them. Please review and accept them again.')}</p> : null}
                 <ol>
                   {group.agreements.map((agreement, i) => {
                     return (
@@ -114,9 +117,9 @@ export default function GroupWelcomeModal (props) {
                           id={'agreement' + agreement.id}
                           value={i}
                           onChange={handleCheckAgreement}
-                          checked={acceptedAgreements[i]}
+                          checked={currentAgreements[i]}
                         />
-                        <label htmlFor={'agreement' + agreement.id} styleName={cx('i-agree', { 'accepted': acceptedAgreements[i] })}>
+                        <label htmlFor={'agreement' + agreement.id} styleName={cx('i-agree', { accepted: currentAgreements[i] })}>
                           {t('I agree to the above')}
                         </label>
                       </li>
@@ -129,9 +132,9 @@ export default function GroupWelcomeModal (props) {
                       type='checkbox'
                       id='checkAllAgreements'
                       onChange={handleCheckAllAgreements}
-                      checked={acceptedAllAgreements}
+                      checked={checkedAllAgreements}
                     />
-                    <label htmlFor='checkAllAgreements' styleName={cx({ 'accepted': acceptedAllAgreements })}>
+                    <label htmlFor='checkAllAgreements' styleName={cx({ accepted: checkedAllAgreements })}>
                       {t('I agree to all of the above')}
                     </label>
                   </div>}
@@ -144,9 +147,9 @@ export default function GroupWelcomeModal (props) {
             <div styleName='call-to-action'>
               <Button
                 data-testid='jump-in'
-                disabled={!acceptedAllAgreements}
+                disabled={!checkedAllAgreements}
                 label={t('Jump in!')}
-                onClick={closeModal}
+                onClick={handleAccept}
               />
             </div>
           </div>

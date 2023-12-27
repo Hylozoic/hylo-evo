@@ -20,6 +20,7 @@ export default function useInvitation (inviteCodes = {}) {
                 name
                 purpose
                 settings {
+                  agreementsLastUpdatedAt
                   allowGroupInvites
                   askJoinQuestions
                   askGroupToGroupJoinQuestions
@@ -33,6 +34,7 @@ export default function useInvitation (inviteCodes = {}) {
                 id
               }
               settings {
+                agreementsAcceptedAt
                 showJoinForm
               }
             }
