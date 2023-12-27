@@ -99,6 +99,13 @@ it('shows group if the group exists', async () => {
         })
       )
     }),
+    graphql.query('GroupWelcomeQuery', (req, res, ctx) => {
+      return res(
+        ctx.data({
+          group: null
+        })
+      )
+    }),
     graphql.query('PostsQuery', (req, res, ctx) => {
       return res(
         ctx.data({

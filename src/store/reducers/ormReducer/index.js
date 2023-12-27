@@ -540,7 +540,7 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
       // Do this here as a way to optimistically update the agreementsAcceptedAt setting,
       // without actually passing it to the server since that will be set auomatically on the back-end
-      if (meta.acceptAgreements !== null) {
+      if (meta.acceptAgreements) {
         newSettings.agreementsAcceptedAt = new Date()
       }
 
