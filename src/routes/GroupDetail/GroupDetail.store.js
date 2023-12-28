@@ -36,6 +36,7 @@ export function joinGroup (groupId) {
             id
           }
           settings {
+            agreementsAcceptedAt
             showJoinForm
           }
         }

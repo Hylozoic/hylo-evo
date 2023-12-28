@@ -23,8 +23,7 @@ export const validateName = name => name && name.match(/\S/gm)
 class EditProfileTab extends Component {
   static propTypes = {
     currentUser: object,
-    updateUserSettings: func,
-    loginWithService: func
+    updateUserSettings: func
   }
 
   constructor (props) {
@@ -102,7 +101,6 @@ class EditProfileTab extends Component {
     const {
       fetchPending,
       currentUser,
-      loginWithService,
       unlinkAccount,
       t
     } = this.props

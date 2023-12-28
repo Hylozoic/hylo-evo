@@ -6,11 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.6.2] - 2023-11-27
+
+### Added
+- New support menu which opens Intercom for Feedback & Support, links to our user guide, and has other support related links.
+
+### Changed
+- Set max file/image attachment size to 50 MB and enforce limit in file picker and tell user about the limit there too
+- Move locale menu into the use menu under the user avatar.
+- Removed Facebook login
+
+### Fixed
+- Greencheck script tag
+
 ## [5.6.1] - 2023-11-11
 
 ### Added
 - Instructional tooltips in several places explaining things like why you can't create a post if you havent filled out the title or added a group.
 - Script tag when logged in to Hylo that can be used to add your profile to Greencheck via their bookmarklet.
+- You can now format and add links to your user profile bio using Markdown!
 
 ### Changed
 - Notifications for new chats take you to the chat room on mobile, scrolled to that post, instead of opening the post itself.

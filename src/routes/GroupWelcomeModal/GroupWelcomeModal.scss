@@ -160,11 +160,19 @@
       color: $color-rhino-80;
     }
   }
+
+  ol {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .agreements-changed {
+    color: orange;
+  }
 }
 
 .agreement {
   position: relative;
-  margin-bottom: 15px;
   padding-bottom: 15px;
 
   h3 {
@@ -179,12 +187,13 @@
   .agreement-description {
     opacity: .7;
   }
+
+  &.border-bottom {
+    border-bottom: 1px dashed rgba(205, 209, 213, 1.0);
+    margin-bottom: 15px;
+  }
 }
 
 .i-agree:hover {
   cursor: pointer;
-}
-
-.border-bottom {
-  border-bottom: 1px dashed rgba(205, 209, 213, 1.0);
 }

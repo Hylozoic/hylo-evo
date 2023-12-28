@@ -15,7 +15,7 @@ import JoinRequest, { JoinRequestQuestionAnswer, Question } from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
 import Me, { MySkillsToLearn } from './Me'
-import Membership from './Membership'
+import Membership, { MembershipAgreement } from './Membership'
 import Message from './Message'
 import MessageThread from './MessageThread'
 import Notification from './Notification'
@@ -56,6 +56,7 @@ orm.register(
   Location,
   Me,
   Membership,
+  MembershipAgreement,
   Message,
   MessageThread,
   MySkillsToLearn,

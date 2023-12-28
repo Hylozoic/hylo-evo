@@ -82,12 +82,17 @@ export function filestackPicker ({
   maxFiles = 1,
   onFileUploadFinished = () => {},
   onUploadDone,
+  t,
   ...rest
 }) {
   return filestack.picker({
     accept: acceptFromAttachmentType(attachmentType),
+    customText: {
+      'Select Files to Upload': attachmentType === 'image' ? t('Select Images to Upload (max 50 MB each)') : t('Select Files to Upload (max 50 MB each)')
+    },
     fromSources: FILESTACK_FROM_SOURCES[attachmentType],
     maxFiles,
+    maxSize: 52428800,
     onFileUploadFinished: fileUploaded =>
       onFileUploadFinished(transformFile(fileUploaded)),
     onUploadDone: ({ filesUploaded, ...rest }) => {

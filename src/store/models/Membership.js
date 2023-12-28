@@ -1,4 +1,11 @@
-import { attr, fk, Model } from 'redux-orm'
+import { attr, fk, many, Model } from 'redux-orm'
+
+export class MembershipAgreement extends Model { }
+MembershipAgreement.modelName = 'MembershipAgreement'
+MembershipAgreement.fields = {
+  id: attr(),
+  accepted: attr()
+}
 
 class Membership extends Model {
   toString () {
@@ -6,11 +13,10 @@ class Membership extends Model {
   }
 }
 
-export default Membership
-
 Membership.modelName = 'Membership'
 Membership.fields = {
   id: attr(),
+  agreements: many('MembershipAgreement'),
   group: fk('Group', 'memberships'),
   hasModeratorRole: attr(),
   lastViewAt: attr(),
@@ -18,3 +24,5 @@ Membership.fields = {
   person: fk('Person', 'memberships'),
   settings: attr()
 }
+
+export default Membership

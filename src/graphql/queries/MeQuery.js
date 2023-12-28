@@ -112,9 +112,10 @@ export default gql`
         id
       }
       settings {
-       sendEmail
-       sendPushNotifications
-       showJoinForm
+        agreementsAcceptedAt
+        sendEmail
+        sendPushNotifications
+        showJoinForm
       }
       commonRoles {
         items {
