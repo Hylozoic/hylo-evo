@@ -8,12 +8,32 @@ const CommentFieldsFragment = `
     id
     name
     avatarUrl
-    groupRoles {
-      name
-      emoji
-      active
-      groupId
-    }
+    groupRoles{
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+           id
+           title
+           description
+         }
+       }
+     }
+    commonRoles{
+      items {
+         name
+         emoji
+         responsibilities {
+           items {
+              id
+              title
+              description
+            }
+          }
+       }
+     }
     moderatedGroupMemberships {
       groupId
     }
@@ -52,12 +72,32 @@ const postFieldsFragment = withComments => `
     id
     name
     avatarUrl
-    groupRoles {
-      name
-      emoji
-      active
-      groupId
-    }
+    groupRoles{
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+           id
+           title
+           description
+         }
+       }
+     }
+    commonRoles{
+      items {
+         name
+         emoji
+         responsibilities {
+           items {
+              id
+              title
+              description
+            }
+          }
+       }
+     }
     moderatedGroupMemberships {
       groupId
     }

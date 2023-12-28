@@ -22,9 +22,11 @@ describe('mapStateToProps', () => {
         memberships: [session.Membership.create({
           id: '345',
           group: group.id,
-          hasModeratorRole: true
+          hasModeratorRole: true,
+          commonRoles: { items: [] }
         })]
       })
+
       const meUser = session.Person.create({ id: '1' })
       const otherUser = session.Person.create({ id: '2' })
       myComment = session.Comment.create({ creator: meUser, parentComment: null })
@@ -44,11 +46,6 @@ describe('mapStateToProps', () => {
       const props = mapStateToProps(state, { groupSlug: 'foo', comment: otherComment })
       expect(props.canModerate).toBeTruthy()
     })
-
-    it('sets canModerate to false otherwise if you can moderate someone elses comment', () => {
-      const props = mapStateToProps(state, { groupSlug: 'boo', comment: myComment })
-      expect(props.canModerate).toBeFalsy()
-    })
   })
 
   describe('as regular user', () => {
@@ -63,7 +60,8 @@ describe('mapStateToProps', () => {
         memberships: [session.Membership.create({
           id: '345',
           group: group.id,
-          hasModeratorRole: true
+          hasModeratorRole: false,
+          commonRoles: { items: []}
         })]
       })
       const meUser = session.Person.create({ id: '1' })
@@ -86,6 +84,11 @@ describe('mapStateToProps', () => {
       const props = mapStateToProps(state, { groupSlug: 'bar', comment: otherComment })
       expect(props.canModerate).toBeFalsy()
       expect(props.isCreator).toBeFalsy()
+    })
+
+    it('sets canModerate to false otherwise if you can moderate someone elses comment', () => {
+      const props = mapStateToProps(state, { groupSlug: 'foo', comment: myComment })
+      expect(props.canModerate).toBeFalsy()
     })
   })
 })

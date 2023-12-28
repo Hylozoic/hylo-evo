@@ -99,11 +99,33 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
       id
       name
       avatarUrl
-      groupRoles {
-        name
-        emoji
-        active
-        groupId
+      groupRoles{
+       items {
+          name
+          emoji
+          active
+          groupId
+          responsibilities {
+            id
+            title
+            description
+          }
+        }
+      }
+      commonRoles {
+        items {
+          id
+          name
+          description
+          emoji
+          responsibilities {
+            items {
+              id
+              title
+              description
+            }
+          }
+        }
       }
     }
   }

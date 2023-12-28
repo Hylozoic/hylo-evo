@@ -98,7 +98,8 @@ describe('mergeProps', () => {
         memberships: [session.Membership.create({
           id: '345',
           group: group.id,
-          hasModeratorRole: true
+          hasModeratorRole: true,
+          commonRoles: { items: []}
         })] })
       const state = {
         orm: session.state
@@ -129,7 +130,8 @@ describe('mergeProps', () => {
         memberships: [session.Membership.create({
           id: '345',
           group: group.id,
-          hasModeratorRole: true
+          hasModeratorRole: true,
+          commonRoles: { items: []}
         })] })
 
       const state = {
@@ -158,7 +160,8 @@ describe('mergeProps', () => {
         memberships: [session.Membership.create({
           id: '345',
           group: group.id,
-          hasModeratorRole: false
+          hasModeratorRole: false,
+          commonRoles: { items: []}
         })] })
 
       const state = {
@@ -187,7 +190,8 @@ describe('mergeProps', () => {
       memberships: [session.Membership.create({
         id: '345',
         group: group.id,
-        hasModeratorRole: false
+        hasModeratorRole: false,
+        commonRoles: { items: []}
       })] })
 
     const state = {

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { RESP_MANAGE_CONTENT } from 'store/constants'
 import { removePostFromUrl, editPostUrl, postUrl } from 'util/navigation'
 import getMe from 'store/selectors/getMe'
 import deletePost from 'store/actions/deletePost'
@@ -10,6 +11,7 @@ import {
   pinPost,
   getGroup
 } from './PostHeader.store'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 export function mapStateToProps (state, props) {
   const group = getGroup(state, props)
@@ -63,7 +65,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
   const canModerate = currentUser && currentUser.canModerate(group)
-
+  const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
   return {
     ...stateProps,
     ...dispatchProps,
@@ -73,8 +75,8 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
     fulfillPost: isCreator ? () => fulfillPost(id) : undefined,
     unfulfillPost: isCreator ? () => unfulfillPost(id) : undefined,
     canFlag: !isCreator,
-    pinPost: canModerate && group ? () => pinPost(id, group.id) : undefined,
-    removePost: !isCreator && canModerate ? () => removePost(id) : undefined,
+    pinPost: (canModerate || responsibilities.includes(RESP_MANAGE_CONTENT)) && group ? () => pinPost(id, group.id) : undefined,
+    removePost: !isCreator && (canModerate || responsibilities.includes(RESP_MANAGE_CONTENT)) ? () => removePost(id) : undefined,
     canEdit
   }
 }

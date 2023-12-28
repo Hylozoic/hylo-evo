@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component, useEffect, useState } from 'react'
 import { withTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 import Loading from 'components/Loading'
 import KeyControlledItemList from 'components/KeyControlledList/KeyControlledItemList'
 import RemovableListItem from 'components/RemovableListItem'
 import Icon from 'components/Icon'
 import { isEmpty, get, includes } from 'lodash/fp'
+import { removeResponsibilityFromRole, addResponsibilityToRole, fetchResponsibilitiesForGroupRole, fetchResponsibilitiesForGroup, fetchResponsibilitiesForCommonRole } from 'store/actions/responsibilities'
 import { getKeyCode, keyMap } from 'util/textInput'
 import { personUrl } from 'util/navigation'
 import SettingsControl from 'components/SettingsControl'
@@ -16,7 +18,7 @@ import EmojiPicker from 'components/EmojiPicker'
 import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
 import styles from './ModeratorsSettingsTab.scss' // eslint-disable-line no-unused-vars
 
-const { array, func, string, object } = PropTypes
+const { array, func, string, object, bool } = PropTypes
 
 const emptyRole = {
   color: '',
@@ -171,6 +173,8 @@ class ModeratorsSettingsTab extends Component {
       roles
     } = this.state
 
+    const { commonRoles = [] } = group
+
     const unsavedRolePresent = roles.length > 0 ? roles[roles.length - 1]?.active === '' : false
     if (!moderators) return <Loading />
 
@@ -182,17 +186,33 @@ class ModeratorsSettingsTab extends Component {
             <div styleName='styles.help-text'>{t('Who has access to group settings and moderation powers')}</div>
           </h3>
           <ModeratorsList key='mList' {...this.props} removeItem={(id) => this.setState({ modalVisible: true, moderatorToRemove: id })} />
-          {modalVisible && <ModalDialog
-            key='remove-moderator-dialog'
-            closeModal={() => this.setState({ modalVisible: false })}
-            showModalTitle={false}
-            submitButtonAction={this.submitRemoveModerator}
-            submitButtonText={this.props.t('Remove')}>
-            <div styleName='styles.content'>
-              <div styleName='styles.modal-text'>{this.props.t('Are you sure you wish to remove this moderator?')}</div>
-              <CheckBox checked={isRemoveFromGroup} label={this.props.t('Remove from group as well')} onChange={value => this.setState({ isRemoveFromGroup: value })} />
-            </div>
-          </ModalDialog>}
+          {modalVisible &&
+            <ModalDialog
+              key='remove-moderator-dialog'
+              closeModal={() => this.setState({ modalVisible: false })}
+              showModalTitle={false}
+              submitButtonAction={this.submitRemoveModerator}
+              submitButtonText={this.props.t('Remove')}
+            >
+              <div styleName='styles.content'>
+                <div styleName='styles.modal-text'>{this.props.t('Are you sure you wish to remove this moderator?')}</div>
+                <CheckBox checked={isRemoveFromGroup} label={this.props.t('Remove from group as well')} onChange={value => this.setState({ isRemoveFromGroup: value })} />
+              </div>
+            </ModalDialog>}
+        </SettingsSection>
+        <SettingsSection>
+          <h3>{t('Common Roles & Badges')}</h3>
+          <div styleName='styles.help-text'>{t('Use common roles or badges for the group')}</div>
+          {commonRoles.map((role, i) => (
+            <RoleRow
+              {...this.props}
+              group={group}
+              key={i}
+              index={i}
+              {...role}
+              isCommonRole
+            />
+          ))}
         </SettingsSection>
         <SettingsSection>
           <h3>{t('Other Roles & Badges')}</h3>
@@ -342,15 +362,17 @@ function RoleRowUntranslated ({
   active,
   addRoleToMember,
   changed,
+  isCommonRole,
   clearModeratorSuggestions,
   description,
   emoji,
   fetchModeratorSuggestions,
   fetchMembersForGroupRole,
+  fetchMembersForCommonRole,
   group,
   id,
   name,
-  onChange,
+  onChange = () => {},
   onDelete,
   onToggleActivation,
   onReset,
@@ -362,15 +384,16 @@ function RoleRowUntranslated ({
   t
 }) {
   const isDraftRole = active === ''
-  const inactiveStyle = (!active && !isDraftRole) ? 'styles.inactive' : ''
+  const inactiveStyle = (!active && !isDraftRole && !isCommonRole) ? 'styles.inactive' : ''
   return (
     <div styleName={`styles.role-container ${inactiveStyle}`}>
-      <div styleName='styles.action-container'>
-        {isDraftRole && (<span onClick={onDelete} styleName='styles.action'><Icon name='Trash' /> {t('Delete')}</span>)}
-        {!isDraftRole && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
-        {!isDraftRole && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
-        {!isDraftRole && !changed && (<span styleName='styles.action' onClick={onToggleActivation}><Icon name={active ? 'CircleEx' : 'CircleArrow'} /> {active ? t('Deactivate') : t('Reactivate')}</span>)}
-      </div>
+      {!isCommonRole &&
+        <div styleName='styles.action-container'>
+          {isDraftRole && (<span onClick={onDelete} styleName='styles.action'><Icon name='Trash' /> {t('Delete')}</span>)}
+          {!isDraftRole && changed && (<span styleName='styles.action' onClick={onUpdate}><Icon name='Unlock' /> {t('Save')}</span>)}
+          {!isDraftRole && changed && (<span styleName='styles.action' onClick={onReset}><Icon name='Back' /> {t('Revert')}</span>)}
+          {!isDraftRole && !changed && (<span styleName='styles.action' onClick={onToggleActivation}><Icon name={active ? 'CircleEx' : 'CircleArrow'} /> {active ? t('Deactivate') : t('Reactivate')}</span>)}
+        </div>}
       <div styleName='styles.role-row'>
         <EmojiPicker forReactions={false} emoji={emoji} handleReaction={onChange('emoji')} className={styles['emoji-picker']} />
         <div styleName='styles.role-stack'>
@@ -385,12 +408,15 @@ function RoleRowUntranslated ({
               <div styleName='styles.create-button' onClick={onSave}>{t('Create Role')}</div>
             </div>
           )
-          : active && (
+          : (active || isCommonRole) && (
             <SettingsSection>
-              <GroupRoleList
-                {...{ addRoleToMember, rawSuggestions, clearModeratorSuggestions, fetchMembersForGroupRole, fetchModeratorSuggestions, removeRoleFromMember }}
+              <RoleList
+                {...{ addRoleToMember, rawSuggestions, clearModeratorSuggestions, fetchMembersForGroupRole, fetchMembersForCommonRole, fetchModeratorSuggestions, removeRoleFromMember, active }}
                 key='grList'
-                groupRoleId={id}
+                group={group}
+                isCommonRole={isCommonRole}
+                roleId={id}
+                t={t}
                 slug={group.slug}
               />
             </SettingsSection>
@@ -407,9 +433,10 @@ class AddMemberToRoleUntranslated extends Component {
     addRoleToMember: func,
     clearSuggestions: func,
     fetchSuggestions: func,
-    groupRoleId: string,
+    roleId: string,
     memberSuggestions: array,
-    updateLocalMembersForRole: func
+    updateLocalMembersForRole: func,
+    isCommonRole: bool
   }
 
   constructor (props) {
@@ -420,7 +447,7 @@ class AddMemberToRoleUntranslated extends Component {
   }
 
   render () {
-    const { fetchSuggestions, addRoleToMember, memberSuggestions, clearSuggestions, groupRoleId, updateLocalMembersForRole, t } = this.props
+    const { fetchSuggestions, addRoleToMember, memberSuggestions, clearSuggestions, roleId, updateLocalMembersForRole, isCommonRole = false, t } = this.props
 
     const { adding } = this.state
 
@@ -435,7 +462,7 @@ class AddMemberToRoleUntranslated extends Component {
     }
 
     const onChoose = choice => {
-      addRoleToMember({ personId: choice.id, groupRoleId }).then(() => {
+      addRoleToMember({ personId: choice.id, roleId, isCommonRole }).then(() => {
         updateLocalMembersForRole(choice)
       })
       toggle()
@@ -498,34 +525,173 @@ class AddMemberToRoleUntranslated extends Component {
 
 const AddMemberToRole = withTranslation()(AddMemberToRoleUntranslated)
 
-export function GroupRoleList ({ slug, removeItem, fetchModeratorSuggestions, addRoleToMember, rawSuggestions, clearModeratorSuggestions, groupRoleId, fetchMembersForGroupRole, removeRoleFromMember }) {
+class AddResponsibilityToRoleUntranslated extends Component {
+  static propTypes = {
+    addResponsibilityToRole: func,
+    groupRoleId: string,
+    responsibilitySuggestions: array
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      adding: false
+    }
+  }
+
+  render () {
+    const { addResponsibilityToRole, responsibilitySuggestions, groupRoleId, group, t } = this.props
+
+    const { adding } = this.state
+
+    const toggle = () => {
+      this.setState({ adding: !adding })
+    }
+
+    const onChoose = choice => {
+      addResponsibilityToRole({ responsibilityId: choice.id, groupRoleId, groupId: group.id, responsibility: choice })
+      toggle()
+    }
+
+    const chooseCurrentItem = () => {
+      if (!this.refs.list) return
+      return this.refs.list.handleKeys({
+        keyCode: keyMap.ENTER,
+        preventDefault: () => {}
+      })
+    }
+
+    const handleKeys = e => {
+      if (getKeyCode(e) === keyMap.ESC) {
+        toggle()
+        return
+      }
+      if (!this.refs.list) return
+      return this.refs.list.handleKeys(e)
+    }
+
+    const listWidth = { width: get('refs.input.clientWidth', this, 0) + 4 }
+    if (adding) {
+      return (
+        <div styleName='styles.adding'>
+          <div styleName='styles.help-text'>{t('Search here for responsibilities to add to this role')}</div>
+          <div styleName='styles.input-row'>
+            <input
+              styleName='styles.input'
+              placeholder='Type...'
+              type='text'
+              onKeyDown={handleKeys}
+              ref='input'
+            />
+            <span styleName='styles.cancel-button' onClick={toggle}>{t('Cancel')}</span>
+            <span styleName='styles.add-button' onClick={chooseCurrentItem}>{t('Add')}</span>
+          </div>
+          {!isEmpty(responsibilitySuggestions) && <div style={listWidth}>
+            <KeyControlledItemList
+              ref='list'
+              items={responsibilitySuggestions}
+              onChange={onChoose}
+              theme={styles}
+            />
+          </div>}
+        </div>
+      )
+    } else {
+      return (
+        <div styleName='styles.add-new' onClick={toggle}>
+          + {t('Add Responsibility to Role')}
+        </div>
+      )
+    }
+  }
+}
+
+const AddResponsibiilityToRole = withTranslation()(AddResponsibilityToRoleUntranslated)
+
+export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, rawSuggestions, clearModeratorSuggestions, roleId, fetchMembersForGroupRole, fetchMembersForCommonRole, removeRoleFromMember, group, isCommonRole, t }) {
   const [membersForRole, setMembersForRole] = useState([])
+  const [responsibilitiesForRole, setResponsibilitiesForRole] = useState([])
+  const [availableResponsibilities, setAvailableResponsibilities] = useState([])
+  const dispatch = useDispatch()
+  const memberFetcher = isCommonRole ? fetchMembersForCommonRole : fetchMembersForGroupRole
+  const responsbilityFetcher = isCommonRole ? fetchResponsibilitiesForCommonRole : fetchResponsibilitiesForGroupRole
 
   useEffect(() => {
-    fetchMembersForGroupRole({ groupRoleId })
-      .then((response) => {
-        setMembersForRole(response.payload.data.group.members.items)
-      })
+    memberFetcher({ roleId })
+      .then((response) => setMembersForRole(response.payload.data.group.members.items))
+  }, [])
+
+  useEffect(() => {
+    dispatch(responsbilityFetcher({ roleId }))
+      .then((response) => setResponsibilitiesForRole(response.payload.data.responsibilities))
+  }, [])
+
+  useEffect(() => {
+    dispatch(fetchResponsibilitiesForGroup({ groupId: group.id }))
+      .then((response) => setAvailableResponsibilities(response.payload.data.responsibilities))
   }, [])
 
   const memberRoleIds = membersForRole.map(mr => mr.id)
 
   const memberSuggestions = rawSuggestions.filter(person => !includes(person.id, memberRoleIds))
 
+  const groupRoleResponsibilityTitles = responsibilitiesForRole.map(rfr => rfr.title)
+  // TODO: dubious. Need to ensure the above returns responsibilityIds and then change the below off title
+  const responsibilitySuggestions = availableResponsibilities.filter(responsibility => !includes(responsibility.title, groupRoleResponsibilityTitles))
+
   const updateLocalMembersForRole = (choice) => {
     const updatedMembers = [...membersForRole, choice]
     setMembersForRole(updatedMembers)
   }
 
+  const updateLocalResponsibilitiesForRole = (choice) => {
+    const updatedResponsibilities = [...responsibilitiesForRole, choice]
+    setResponsibilitiesForRole(updatedResponsibilities)
+  }
+
   const handleRemoveRoleFromMember = (id) => {
-    removeRoleFromMember({ personId: id, groupRoleId }).then(() => {
+    dispatch(removeRoleFromMember({ personId: id, roleId, isCommonRole })).then(() => {
       const updatedMembers = membersForRole.filter(member => member.id !== id)
       setMembersForRole(updatedMembers)
     })
   }
 
+  const handleRemoveResponsibilityFromRole = (id) => {
+    dispatch(removeResponsibilityFromRole({ roleResponsibilityId: id, groupId: group.id })).then(() => {
+      const updatedResponsibilities = responsibilitiesForRole.filter(responsibility => responsibility.id !== id)
+      setResponsibilitiesForRole(updatedResponsibilities)
+    })
+  }
+
+  const handleAddResponsibilityToRole = ({ responsibilityId, roleId, groupId, responsibility }) => {
+    dispatch(addResponsibilityToRole({ responsibilityId, roleId, groupId })).then((response) => {
+      const updatedResponsibilities = [...responsibilitiesForRole, { ...responsibility, id: response.payload.data.addResponsibilityToRole.id, responsibilityId: responsibility.id }]
+      setResponsibilitiesForRole(updatedResponsibilities)
+    })
+  }
+
   return (
     <div>
+      <div>
+        {responsibilitiesForRole.map(r =>
+          <RemovableListItem
+            item={r}
+            removeItem={isCommonRole ? null : handleRemoveResponsibilityFromRole}
+            key={r.id}
+          />)}
+      </div>
+      {!isCommonRole && (
+        <AddResponsibiilityToRole
+          fetchSuggestions={() => dispatch(fetchResponsibilitiesForGroup({ groupId: group.id }))}
+          addResponsibilityToRole={handleAddResponsibilityToRole}
+          responsibilitySuggestions={responsibilitySuggestions}
+          updateLocalResponsibilitiesForRole={updateLocalResponsibilitiesForRole}
+          roleId={roleId}
+          group={group}
+        />)}
+      {isCommonRole && (
+        <div styleName='styles.help-text'>{t('Common roles cannot have their responsibilities edited')}</div>
+      )}
       <div>
         {membersForRole.map(m =>
           <RemovableListItem
@@ -541,7 +707,8 @@ export function GroupRoleList ({ slug, removeItem, fetchModeratorSuggestions, ad
         memberSuggestions={memberSuggestions}
         clearSuggestions={clearModeratorSuggestions}
         updateLocalMembersForRole={updateLocalMembersForRole}
-        groupRoleId={groupRoleId}
+        roleId={roleId}
+        isCommonRole={isCommonRole}
       />
     </div>
   )

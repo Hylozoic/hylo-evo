@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { object, string, array } from 'prop-types'
 import { isEmpty } from 'lodash/fp'
 import { personUrl, groupUrl } from 'util/navigation'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import Avatar from 'components/Avatar'
 import BadgeEmoji from 'components/BadgeEmoji'
 import Loading from 'components/Loading'
@@ -12,31 +13,34 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import AboutSection from './AboutSection'
 import './GroupSidebar.scss'
+import { RESP_ADD_MEMBERS } from 'store/constants'
 
 class GroupSidebar extends Component {
   static propTypes = {
     slug: string,
     group: object,
     members: array,
-    leaders: array
+    leaders: array,
+    currentUser: object
   }
 
   render () {
-    const { group, members, leaders, canModerate } = this.props
+    const { group, members, leaders, canModerate, currentUser } = this.props
 
     if (!group || isEmpty(members)) return <Loading />
 
     const { description, memberCount, moderatorDescriptorPlural, purpose, slug } = group
+    const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
 
     return (
       <div styleName='group-sidebar'>
         <AboutSection description={description} purpose={purpose} />
-        <SettingsLink canModerate={canModerate} group={group} />
+        <SettingsLink canModerate={canModerate || responsibilities.length > 0} group={group} />
         <MemberSection
           members={members}
           memberCount={memberCount}
           slug={slug}
-          canModerate={canModerate}
+          canModerate={canModerate || responsibilities.includes(RESP_ADD_MEMBERS)}
         />
         <GroupLeaderSection leaders={leaders} slug={slug} descriptor={moderatorDescriptorPlural} groupId={group.id} />
       </div>
@@ -95,14 +99,16 @@ export function GroupLeaderSection ({ descriptor, leaders, groupId, slug }) {
 
 export function GroupLeader ({ groupId, leader, slug }) {
   const { name, avatarUrl } = leader
-  const badges = leader.groupRoles?.filter(role => role.groupId === groupId) || []
+  // const badges = leader.groupRoles?.items?.filter(role => role.groupId === groupId) || []
+  const badges = (leader.commonRoles.items.concat(leader.groupRoles?.items.filter(role => role.groupId === groupId))) || []
+  console.log(badges, 'groupLeader component', leader.commonRoles.items, 'leader common roles')
   return (
     <div styleName='leader'>
       <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
       <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
       <div styleName='badges'>
         {badges.map(badge => (
-          <BadgeEmoji key={badge.name} expanded {...badge} id={leader.id} />
+          <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items || badge.responsibilities} id={leader.id} />
         ))}
       </div>
     </div>

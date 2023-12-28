@@ -42,7 +42,7 @@ describe('GroupSidebar', () => {
   const members = [{ id: 1 }, { id: 2 }, { id: 3 }]
   const leaders = [{ id: 4 }, { id: 5 }, { id: 6 }]
   const memberCount = 56
-  const currentUser = { canModerate: () => true }
+  const currentUser = { canModerate: () => true, memberships: {toRefArray: () => [{commonRoles: { items: [] }}]}} 
 
   it('renders correctly', () => {
     const wrapper = shallow(
@@ -117,7 +117,10 @@ describe('GroupLeader', () => {
     const leader = {
       id: 1,
       name: 'Jon Smith',
-      avatarUrl: 'foo.png'
+      avatarUrl: 'foo.png',
+      canModerate: () => true,
+      commonRoles: { items: [] },
+      groupRoles: { items: [] }
     }
     const wrapper = shallow(<GroupLeader leader={leader} />)
     expect(wrapper.find('Avatar').prop('avatarUrl')).toEqual(leader.avatarUrl)

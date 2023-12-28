@@ -88,6 +88,19 @@ export default gql`
         }
       }
     }
+    groupRoles {
+        items {
+          name
+          emoji
+          active
+          groupId
+          responsibilities {
+            id
+            title
+            description
+          }
+        }
+      }
     # For memberships only including only what is needed
     # for initial load in AuthLayoutRouter
     memberships {
@@ -102,6 +115,21 @@ export default gql`
        sendEmail
        sendPushNotifications
        showJoinForm
+      }
+      commonRoles {
+        items {
+          id
+          name
+          description
+          emoji
+          responsibilities {
+            items {
+              id
+              title
+              description
+            }
+          }
+        }
       }
       group {
         id

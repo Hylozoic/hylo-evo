@@ -17,6 +17,8 @@ import Button from 'components/Button'
 import Icon from 'components/Icon'
 import cx from 'classnames'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
+import getMe from 'store/selectors/getMe'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 
 const myPath = '/my'
 
@@ -24,10 +26,12 @@ export default function Drawer (props) {
   const history = useHistory()
   const { t } = useTranslation()
   const currentLocation = useLocation()
+  const currentUser = useSelector(getMe)
   const dispatch = useDispatch()
   const groups = useSelector(getMyGroups)
   const canModerate = useSelector(state => props.group && getCanModerate(state, props))
   const { group, className } = props
+  const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
   const defaultContexts = [
     {
       id: PUBLIC_CONTEXT_ID,
@@ -94,7 +98,7 @@ export default function Drawer (props) {
             <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
           </div>
           <Logo group={group} />
-          {canModerate && (
+          {(canModerate || responsibilities.length !== 0) && (
             <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
               <Icon name='Settings' styleName='s.settingsIcon' /> {t('Group Settings')}
             </Link>

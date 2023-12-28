@@ -916,6 +916,7 @@ export function ActionsBar ({
             styleName={cx('action-icon', { 'highlight-icon': showFiles })}
           />
         </UploadAttachmentButton>
+        {/* TODO: What responsibilities can make announcements? At the moment, this is shown if you moderate ANY of the groups included in the post... */}
         {canModerate && (
           <span data-tip='Send Announcement' data-for='announcement-tt'>
             <Icon

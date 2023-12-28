@@ -8,13 +8,16 @@ import deleteComment from 'store/actions/deleteComment'
 import fetchChildComments from 'store/actions/fetchChildComments'
 import { getHasMoreChildComments, getTotalChildComments } from 'store/selectors/getChildComments'
 import getMe from 'store/selectors/getMe'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import { RESP_MANAGE_CONTENT } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   const { comment, post } = props
   const currentUser = getMe(state, props)
   const group = getGroupForCurrentRoute(state, props)
   const isCreator = currentUser && (comment.creator.id === currentUser.id)
-  const canModerate = currentUser && currentUser.canModerate(group)
+  const responsibilities = group && getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
+  const canModerate = currentUser && (currentUser.canModerate(group) || responsibilities.includes(RESP_MANAGE_CONTENT))
 
   return {
     canModerate,

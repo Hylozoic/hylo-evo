@@ -120,7 +120,7 @@ class PostHeader extends PureComponent {
     const showNormal = ((canBeCompleted && canEdit && expanded) && (topics?.length > 0 || (canHaveTimes && timeWindow.length > 0))) || false
     const currentGroup = groups.find(group => group.slug === routeParams.groupSlug)
     const currentGroupId = currentGroup && currentGroup.id
-    const badges = (currentGroupId && creator.groupRoles?.filter(role => role.groupId === currentGroupId)) || []
+    const badges = (currentGroupId && creator.commonRoles.items.concat(creator.groupRoles?.items.filter(role => role.groupId === currentGroupId))) || []
     const creatorIsModerator = creator.moderatedGroupMemberships?.find(moderatedMembership => moderatedMembership.groupId === currentGroupId)
 
     return (
@@ -137,7 +137,7 @@ class PostHeader extends PureComponent {
                   <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} id={id} />
                 )}
                 {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} id={id} />
+                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items || badge.responsibilities} id={id} />
                 ))}
               </div>
               <div styleName='timestampRow'>

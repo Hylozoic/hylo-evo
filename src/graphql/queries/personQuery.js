@@ -74,13 +74,35 @@ export default
       person {
         id
       }
+      commonRoles {
+        items {
+          id
+          name
+          description
+          emoji
+          responsibilities {
+            items {
+              id
+              title
+              description
+            }
+          }
+        }
+      }
     }
-    groupRoles {
-      name
-      emoji
-      active
-      groupId
-    }
+    groupRoles{
+      items {
+         name
+         emoji
+         active
+         groupId
+         responsibilities {
+           id
+           title
+           description
+         }
+       }
+     }
     projects {
       items {
         id

@@ -11,10 +11,12 @@ import Member from 'components/Member'
 import TextInput from 'components/TextInput'
 import ScrollListener from 'components/ScrollListener'
 import { queryParamWhitelist } from 'store/reducers/queryResults'
+import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import { groupUrl } from 'util/navigation'
 import { CENTER_COLUMN_ID } from 'util/scrolling'
 
 import './Members.scss'
+import { RESP_ADD_MEMBERS } from 'store/constants'
 
 class Members extends Component {
   componentDidMount () {
@@ -48,10 +50,12 @@ class Members extends Component {
 
   render () {
     const {
-      group, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember, t
+      group, currentUser, memberCount, members, sortBy, changeSort, search, slug, context, canModerate, removeMember, t
     } = this.props
 
     const sortKeys = sortKeysFactory(context)
+
+    const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
 
     return (
       <div>
@@ -66,7 +70,7 @@ class Members extends Component {
               {t('{{memberCount}} Total Members', { memberCount })}
             </div>
           </div>
-          {canModerate && <Link to={groupUrl(slug, 'settings/invite')}>
+          {(canModerate || responsibilities.includes(RESP_ADD_MEMBERS)) && <Link to={groupUrl(slug, 'settings/invite')}>
             <Button styleName='invite'
               color='green-white-green-border'
               narrow >
@@ -92,6 +96,7 @@ class Members extends Component {
             {twoByTwo(members).map(pair => <div styleName='member-row' key={pair[0].id}>
               {pair.map(m => <Member
                 group={group}
+                currentUser={currentUser}
                 canModerate={canModerate}
                 removeMember={removeMember}
                 member={m} key={m.id}

@@ -103,13 +103,32 @@ const membersFragment = `
       name
       avatarUrl
       tagline
-      groupRoles {
-        id
-        name
-        emoji
-        active
-        groupId
-      }
+      groupRoles{
+        items {
+           name
+           emoji
+           active
+           groupId
+           responsibilities {
+             id
+             title
+             description
+           }
+         }
+       }
+      commonRoles{
+        items {
+           name
+           emoji
+           responsibilities {
+             items {
+                id
+                title
+                description
+              }
+            }
+         }
+       }
       locationObject {
         center {
           lat
