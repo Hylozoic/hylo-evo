@@ -39,6 +39,7 @@ export default function GroupWelcomeModal (props) {
   const agreementsChanged = numAgreements > 0 &&
     (!currentMembership.settings.agreementsAcceptedAt ||
      currentMembership.settings.agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
+
   const showWelcomeModal = currentMembership?.settings?.showJoinForm || agreementsChanged
 
   useEffect(() => {
@@ -100,7 +101,9 @@ export default function GroupWelcomeModal (props) {
             {group.agreements?.length > 0 && (
               <div styleName={cx('agreements', 'welcome-section')}>
                 <h2>{t('Our Agreements')}</h2>
-                {agreementsChanged ? <p styleName='agreements-changed'>{t('The agreements have changed since you last accepted them. Please review and accept them again.')}</p> : null}
+                {currentMembership.settings.agreementsAcceptedAt && agreementsChanged
+                  ? <p styleName='agreements-changed'>{t('The agreements have changed since you last accepted them. Please review and accept them again.')}</p>
+                  : null}
                 <ol>
                   {group.agreements.map((agreement, i) => {
                     return (
