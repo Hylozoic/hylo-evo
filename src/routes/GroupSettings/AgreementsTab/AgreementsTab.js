@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
-import Icon from 'components/Icon'
+import Icon, { IconWithRef } from 'components/Icon'
 import Loading from 'components/Loading'
 import SettingsControl from 'components/SettingsControl'
 import {
@@ -62,6 +62,7 @@ function AgreementsTab (props) {
   }
 
   const deleteAgreement = (i) => () => {
+    console.log("delete")
     if (window.confirm(t('Are you sure you want to delete this agreement?'))) {
       const newAgreements = [...agreements]
       newAgreements.splice(i, 1)
@@ -236,10 +237,10 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
 
   return (
     <div styleName='styles.agreement-row' ref={ref} style={style}>
-      <div styleName='styles.header' {...listeners} {...attributes} ref={setActivatorNodeRef}>
+      <div styleName='styles.header'>
         <strong>{viewCount})</strong>
         <div styleName='styles.controls'>
-          <Icon name='Draggable' styleName='styles.drag-handle' />
+          <IconWithRef name='Draggable' styleName='styles.drag-handle' {...listeners} {...attributes} ref={setActivatorNodeRef} />
           <Icon name='Trash' onClick={onDelete} styleName='styles.delete-button' />
         </div>
       </div>
@@ -257,6 +258,7 @@ const AgreementRow = forwardRef(({ children, ...props }, ref) => {
         placeholder={t('Describe the agreement and what the group expects from its members')}
         type='textarea'
         value={description}
+        style={{ minHeight: '60px' }}
       />
     </div>
   )

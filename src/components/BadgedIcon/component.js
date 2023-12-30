@@ -4,9 +4,11 @@ import cx from 'classnames'
 import './component.scss'
 
 export default function BadgedIcon (props) {
-  const { className, showBadge, green } = props
+  const { className, showBadge, green, ...rest } = props
   const styleNames = cx({ green }, showBadge ? 'badge' : 'badge-hidden')
-  return <Icon {...props} className={className}>
-    <span styleName='badgeWrapper'><span styleName={styleNames} /></span>
-  </Icon>
+  return (
+    <Icon {...rest} green={green} className={className}>
+      <span styleName='badgeWrapper'><span styleName={styleNames} /></span>
+    </Icon>
+  )
 }

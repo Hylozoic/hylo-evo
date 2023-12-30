@@ -281,7 +281,7 @@ export function ActionDropdown ({ items }) {
       alignRight
       items={activeItems}
       toggleChildren={
-        <Icon styleName='action-icon-button action-menu' name='More' alignRight />
+        <Icon styleName='action-icon-button action-menu' name='More' />
       }
     />
 }
