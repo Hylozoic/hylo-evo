@@ -37,13 +37,13 @@ export default function GroupWelcomeModal (props) {
   const checkedAllAgreements = numCheckedAgreements === numAgreements
 
   const agreementsChanged = numAgreements > 0 &&
-    (!currentMembership.settings.agreementsAcceptedAt ||
-     currentMembership.settings.agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
+    (!currentMembership?.settings.agreementsAcceptedAt ||
+     currentMembership?.settings.agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
 
   const showWelcomeModal = currentMembership?.settings?.showJoinForm || agreementsChanged
 
   useEffect(() => {
-    if (group?.id) dispatch(fetchGroupWelcomeData(group.id, currentUser.id))
+    if (group?.id && currentMembership) dispatch(fetchGroupWelcomeData(group.id, currentUser.id))
   }, [group?.id])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function GroupWelcomeModal (props) {
     }
   }, [membershipAgreements?.length])
 
-  if (!showWelcomeModal || !group) return null
+  if (!showWelcomeModal || !group || !currentMembership) return null
 
   const handleCheckAgreement = e => {
     const accepted = e.target.checked
@@ -101,7 +101,7 @@ export default function GroupWelcomeModal (props) {
             {group.agreements?.length > 0 && (
               <div styleName={cx('agreements', 'welcome-section')}>
                 <h2>{t('Our Agreements')}</h2>
-                {currentMembership.settings.agreementsAcceptedAt && agreementsChanged
+                {currentMembership?.settings.agreementsAcceptedAt && agreementsChanged
                   ? <p styleName='agreements-changed'>{t('The agreements have changed since you last accepted them. Please review and accept them again.')}</p>
                   : null}
                 <ol>
