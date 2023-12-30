@@ -163,6 +163,17 @@ class UnwrappedGroupDetail extends Component {
             </div>
             : ''
           }
+          <div styleName='g.detailSection'>
+            <h3>{t('Privacy settings')}</h3>
+            <div styleName='g.privacySetting'>
+              <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
+              <p>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</p>
+            </div>
+            <div styleName='g.privacySetting'>
+              <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
+              <p>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</p>
+            </div>
+          </div>
           {group.agreements?.length > 0
             ? (
               <div styleName={cx('g.agreements', 'g.detailSection')}>
@@ -180,17 +191,6 @@ class UnwrappedGroupDetail extends Component {
               </div>)
             : ''
           }
-          <div styleName='g.detailSection'>
-            <h3>{t('Privacy settings')}</h3>
-            <div styleName='g.privacySetting'>
-              <Icon name={visibilityIcon(group.visibility)} styleName='g.settingIcon' />
-              <p>{t(visibilityString(group.visibility))} - {t(visibilityDescription(group.visibility))}</p>
-            </div>
-            <div styleName='g.privacySetting'>
-              <Icon name={accessibilityIcon(group.accessibility)} styleName='g.settingIcon' />
-              <p>{t(accessibilityString(group.accessibility))} - {t(accessibilityDescription(group.accessibility))}</p>
-            </div>
-          </div>
           {!isAboutCurrentGroup
             ? !currentUser
               ? (
@@ -399,7 +399,7 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
               ? hasPendingRequest
                 ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
                 : <div styleName='g.requestOption'>
-                  {group.settings.askJoinQuestions && questionAnswers.length > 0 && <div>{t('Please answer the following to join:')}</div>}
+                  {group.settings.askJoinQuestions && questionAnswers.length > 0 && <div>{t('Please answer the following to join')}:</div>}
                   {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
                     <h3>{q.text}</h3>
                     <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
