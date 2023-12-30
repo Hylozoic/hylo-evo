@@ -62,7 +62,6 @@ function AgreementsTab (props) {
   }
 
   const deleteAgreement = (i) => () => {
-    console.log("delete")
     if (window.confirm(t('Are you sure you want to delete this agreement?'))) {
       const newAgreements = [...agreements]
       newAgreements.splice(i, 1)
