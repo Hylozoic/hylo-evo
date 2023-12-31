@@ -988,5 +988,6 @@
   "{{personOne}} and {{personTwo}}": "{{personOne}} and {{personTwo}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total Topics",
   "groupAgreementsDescription": "Group agreements shape the culture of your group by helping people to understand what's normal and acceptable. Agreements are presented to members when they are joining a group, and for people who already joined but have yet to agree to a new agreement. People are not able to join a group or see content within a group if they have not agreed to all agreements.",
+  "groupAgreementsWarning": "When you change your agreements, every member of the group will be notified and asked to re-accept the changed agreements. So be sure you have made all the important changes needed before Saving.",
   "purposeHelpText": "Your purpose statement is a concise summary of why your group exists and what you hope to accomplish. A clear and specific purpose helps align members of your group to coordinate effectively to achieve your goals. Aim for one or two sentences."
 }

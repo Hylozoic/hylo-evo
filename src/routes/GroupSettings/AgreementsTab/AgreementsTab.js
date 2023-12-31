@@ -124,6 +124,7 @@ function AgreementsTab (props) {
         <div styleName='general.groupSettings'>
           <h1>{t('Group Agreements')}</h1>
           <p>{t('groupAgreementsDescription')}</p>
+          <p styleName='styles.warning'>{t('groupAgreementsWarning')}</p>
           <div>
             {agreements.map((agreement, i) => (
               <AgreementRowDraggable

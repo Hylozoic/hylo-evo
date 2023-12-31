@@ -992,5 +992,7 @@
   "{{parentGroup.name}} requires groups to answer the following questions before joining": "{{parentGroup.name}} requiere que los grupos respondan las siguientes preguntas antes de unirse",
   "{{personOne}} and {{personTwo}}": "{{personOne}} y {{personTwo}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total de temas",
+  "groupAgreementsDescription": "Los acuerdos grupales dan forma a la cultura de su grupo al ayudar a las personas a comprender lo que es normal y aceptable. Los acuerdos se presentan a los miembros cuando se unen a un grupo y a las personas que ya se unieron pero que aún no han aceptado un nuevo acuerdo. Las personas no pueden unirse a un grupo ni ver contenido dentro de un grupo si no han aceptado todos los acuerdos.",
+  "groupAgreementsWarning": "Cuando cambie sus acuerdos, se notificará a todos los miembros del grupo y se les pedirá que vuelvan a aceptar los acuerdos modificados. Así que asegúrese de haber realizado todos los cambios importantes necesarios antes de guardarlos.",
   "purposeHelpText": "Tu declaración de propósito es un resumen conciso de por qué existe tu grupo y qué esperas lograr. Un propósito claro y específico ayuda a alinear a los miembros de tu grupo para coordinarse eficazmente para lograr tus objetivos. Apunta a una o dos oraciones."
 }
