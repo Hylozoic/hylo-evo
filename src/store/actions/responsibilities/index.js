@@ -26,13 +26,13 @@ export function addGroupResponsibility ({ groupId, title, description }) {
   }
 }
 
-export function addResponsibilityToRole ({ groupId, groupRoleId, responsibilityId }) {
+export function addResponsibilityToRole ({ groupId, roleId, responsibilityId }) {
   // DRAFT
   return {
     type: ADD_RESPONSIBILITY_TO_ROLE,
     graphql: {
-      query: `mutation ($groupId: ID, $groupRoleId: ID, $responsibilityId: ID) {
-        addResponsibilityToRole (groupId: $groupId, groupRoleId: $groupRoleId, responsibilityId: $responsibilityId) {
+      query: `mutation ($groupId: ID, $roleId: ID, $responsibilityId: ID) {
+        addResponsibilityToRole (groupId: $groupId, roleId: $roleId, responsibilityId: $responsibilityId) {
           id
           title
           description
@@ -40,25 +40,21 @@ export function addResponsibilityToRole ({ groupId, groupRoleId, responsibilityI
           responsibilityId
         }
       }`,
-      variables: { groupId, groupRoleId, responsibilityId }
+      variables: { groupId, roleId, responsibilityId }
     }
-    // meta: {
-    //   extractModel: 'GroupRole'
-    //   // CONSIDER OPTIMISTIC UPDATE
-    // }
   }
 }
 
-export function removeResponsibilityFromRole ({ groupId, groupRoleId, roleResponsibilityId }) {
+export function removeResponsibilityFromRole ({ groupId, roleResponsibilityId }) {
   return {
     type: REMOVE_RESPONSIBILITY_FROM_ROLE,
     graphql: {
-      query: `mutation ($groupId: ID, $groupRoleId: ID, $roleResponsibilityId: ID) {
-        removeResponsibilityFromRole (groupId: $groupId, groupRoleId: $groupRoleId, roleResponsibilityId: $roleResponsibilityId) {
+      query: `mutation ($groupId: ID, $roleResponsibilityId: ID) {
+        removeResponsibilityFromRole (groupId: $groupId, roleResponsibilityId: $roleResponsibilityId) {
           success
         }
       }`,
-      variables: { groupId, groupRoleId, roleResponsibilityId }
+      variables: { groupId, roleResponsibilityId }
     }
   }
 }

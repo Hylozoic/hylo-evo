@@ -528,7 +528,7 @@ const AddMemberToRole = withTranslation()(AddMemberToRoleUntranslated)
 class AddResponsibilityToRoleUntranslated extends Component {
   static propTypes = {
     addResponsibilityToRole: func,
-    groupRoleId: string,
+    roleId: string,
     responsibilitySuggestions: array
   }
 
@@ -540,7 +540,7 @@ class AddResponsibilityToRoleUntranslated extends Component {
   }
 
   render () {
-    const { addResponsibilityToRole, responsibilitySuggestions, groupRoleId, group, t } = this.props
+    const { addResponsibilityToRole, responsibilitySuggestions, roleId, group, t } = this.props
 
     const { adding } = this.state
 
@@ -549,7 +549,7 @@ class AddResponsibilityToRoleUntranslated extends Component {
     }
 
     const onChoose = choice => {
-      addResponsibilityToRole({ responsibilityId: choice.id, groupRoleId, groupId: group.id, responsibility: choice })
+      addResponsibilityToRole({ responsibilityId: choice.id, roleId, groupId: group.id, responsibility: choice })
       toggle()
     }
 
@@ -606,7 +606,7 @@ class AddResponsibilityToRoleUntranslated extends Component {
   }
 }
 
-const AddResponsibiilityToRole = withTranslation()(AddResponsibilityToRoleUntranslated)
+const AddResponsibilityToRole = withTranslation()(AddResponsibilityToRoleUntranslated)
 
 export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, rawSuggestions, clearModeratorSuggestions, roleId, fetchMembersForGroupRole, fetchMembersForCommonRole, removeRoleFromMember, group, isCommonRole, t }) {
   const [membersForRole, setMembersForRole] = useState([])
@@ -681,7 +681,7 @@ export function RoleList ({ slug, fetchModeratorSuggestions, addRoleToMember, ra
           />)}
       </div>
       {!isCommonRole && (
-        <AddResponsibiilityToRole
+        <AddResponsibilityToRole
           fetchSuggestions={() => dispatch(fetchResponsibilitiesForGroup({ groupId: group.id }))}
           addResponsibilityToRole={handleAddResponsibilityToRole}
           responsibilitySuggestions={responsibilitySuggestions}
