@@ -99,7 +99,7 @@ Object {
       name
       avatarUrl
       tagline
-      groupRoles{
+      groupRoles {
         items {
            name
            emoji
@@ -239,7 +239,7 @@ posts: viewPosts(
     id
     name
     avatarUrl
-    groupRoles{
+    groupRoles {
       items {
          name
          emoji

@@ -8,7 +8,7 @@ const CommentFieldsFragment = `
     id
     name
     avatarUrl
-    groupRoles{
+    groupRoles {
       items {
          name
          emoji
@@ -72,7 +72,7 @@ const postFieldsFragment = withComments => `
     id
     name
     avatarUrl
-    groupRoles{
+    groupRoles {
       items {
          name
          emoji

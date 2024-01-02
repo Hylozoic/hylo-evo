@@ -99,9 +99,7 @@ export function GroupLeaderSection ({ descriptor, leaders, groupId, slug }) {
 
 export function GroupLeader ({ groupId, leader, slug }) {
   const { name, avatarUrl } = leader
-  // const badges = leader.groupRoles?.items?.filter(role => role.groupId === groupId) || []
   const badges = (leader.commonRoles.items.concat(leader.groupRoles?.items.filter(role => role.groupId === groupId))) || []
-  console.log(badges, 'groupLeader component', leader.commonRoles.items, 'leader common roles')
   return (
     <div styleName='leader'>
       <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />

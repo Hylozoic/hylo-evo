@@ -89,18 +89,18 @@ export default gql`
       }
     }
     groupRoles {
-        items {
-          name
-          emoji
-          active
-          groupId
-          responsibilities {
-            id
-            title
-            description
-          }
+      items {
+        name
+        emoji
+        active
+        groupId
+        responsibilities {
+          id
+          title
+          description
         }
       }
+    }
     # For memberships only including only what is needed
     # for initial load in AuthLayoutRouter
     memberships {

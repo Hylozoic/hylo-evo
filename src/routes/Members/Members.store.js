@@ -21,7 +21,7 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
         avatarUrl
         location
         tagline
-        groupRoles{
+        groupRoles {
           items {
              name
              emoji

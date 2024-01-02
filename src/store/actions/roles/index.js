@@ -117,7 +117,7 @@ export function fetchMembersForGroupRole ({ id, roleId: groupRoleId }) {
               id
               name
               avatarUrl
-              groupRoles{
+              groupRoles {
                 items {
                    name
                    emoji

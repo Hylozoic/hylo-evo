@@ -19,6 +19,7 @@ import cx from 'classnames'
 import s from './Drawer.scss' // eslint-disable-line no-unused-vars
 import getMe from 'store/selectors/getMe'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import { RESP_MANAGE_CONTENT } from 'store/constants'
 
 const myPath = '/my'
 
@@ -98,7 +99,7 @@ export default function Drawer (props) {
             <Icon name='Ex' styleName='s.closeDrawer' onClick={toggleDrawer} />
           </div>
           <Logo group={group} />
-          {(canModerate || responsibilities.length !== 0) && (
+          {(canModerate || (responsibilities.length !== 0 && !responsibilities.includes(RESP_MANAGE_CONTENT))) && (
             <Link styleName='s.settingsLink' to={groupUrl(group.slug, 'settings')}>
               <Icon name='Settings' styleName='s.settingsIcon' /> {t('Group Settings')}
             </Link>

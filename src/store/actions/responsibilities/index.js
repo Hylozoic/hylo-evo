@@ -27,7 +27,6 @@ export function addGroupResponsibility ({ groupId, title, description }) {
 }
 
 export function addResponsibilityToRole ({ groupId, roleId, responsibilityId }) {
-  // DRAFT
   return {
     type: ADD_RESPONSIBILITY_TO_ROLE,
     graphql: {

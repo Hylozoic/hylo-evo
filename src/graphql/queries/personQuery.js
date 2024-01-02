@@ -90,7 +90,7 @@ export default
         }
       }
     }
-    groupRoles{
+    groupRoles {
       items {
          name
          emoji

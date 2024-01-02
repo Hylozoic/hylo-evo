@@ -69,7 +69,7 @@ posts: viewPosts(
     id
     name
     avatarUrl
-    groupRoles{
+    groupRoles {
       items {
          name
          emoji
@@ -317,7 +317,7 @@ posts(
     id
     name
     avatarUrl
-    groupRoles{
+    groupRoles {
       items {
          name
          emoji

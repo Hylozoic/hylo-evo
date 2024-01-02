@@ -83,7 +83,6 @@ export function fetchGroupSettings (slug) {
             name
             emoji
             description
-
           }
           customViews {
             items {

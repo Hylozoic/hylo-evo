@@ -103,7 +103,7 @@ const membersFragment = `
       name
       avatarUrl
       tagline
-      groupRoles{
+      groupRoles {
         items {
            name
            emoji

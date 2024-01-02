@@ -234,7 +234,6 @@ class UnwrappedGroupDetail extends Component {
         {isAboutCurrentGroup && group.aboutVideoUri && (
           <GroupAboutVideoEmbed uri={group.aboutVideoUri} styleName='g.groupAboutVideo' />
         )}
-        {/* Add something here for responsibilities */}
         {isAboutCurrentGroup && (!group.purpose && !group.description) && (canModerate || responsibilties.includes(RESP_ADMINISTRATION))
           ? <div styleName='g.no-description'>
             <div>
