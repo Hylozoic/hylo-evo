@@ -10,7 +10,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
       expanded={false}
       post={
         Object {
-          "createdAt": "Tue Apr 18 2017 09:50:25 GMT+1200 (NZST)",
+          "createdAt": "2023-04-12T15:00:00.000Z",
           "id": "2",
           "post": Object {
             "commenters": Array [
@@ -21,7 +21,7 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
               },
             ],
             "commentersTotal": 1,
-            "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+            "createdAt": "2023-04-12T15:00:00.000Z",
             "creator": Object {
               "id": "46816",
             },
@@ -55,12 +55,12 @@ exports[`MemberVotes renders the same as the last snapshot 1`] = `
       expanded={false}
       post={
         Object {
-          "createdAt": "Tue Apr 18 2017 09:20:39 GMT+1200 (NZST)",
+          "createdAt": "2022-07-12T15:00:00.000Z",
           "id": "1",
           "post": Object {
             "commenters": Array [],
             "commentersTotal": 0,
-            "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+            "createdAt": "2022-07-12T15:00:00.000Z",
             "creator": Object {
               "id": "46816",
             },

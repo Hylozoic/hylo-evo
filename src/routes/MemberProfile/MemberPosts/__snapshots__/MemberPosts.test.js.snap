@@ -12,7 +12,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
         Object {
           "commenters": Array [],
           "commentersTotal": 0,
-          "createdAt": "Sat Apr 15 2017 16:27:59 GMT+1200 (NZST)",
+          "createdAt": "2021-07-12T15:00:00.000Z",
           "creator": Object {
             "id": "46816",
           },
@@ -48,7 +48,7 @@ exports[`MemberPosts renders the same as the last snapshot 1`] = `
             },
           ],
           "commentersTotal": 1,
-          "createdAt": "Sat Mar 18 2017 10:48:43 GMT+1300 (NZDT)",
+          "createdAt": "2021-08-12T15:00:00.000Z",
           "creator": Object {
             "id": "46816",
           },

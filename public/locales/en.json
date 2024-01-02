@@ -1003,4 +1003,5 @@
   "{{personOne}} and {{personTwo}}": "{{personOne}} and {{personTwo}}",
   "{{totalTopicsCached}} Total Topics": "{{totalTopicsCached}} Total Topics",
   "groupAgreementsDescription": "Group agreements shape the culture of your group by helping people to understand what's normal and acceptable. Agreements are presented to members when they are joining a group, and for people who already joined but have yet to agree to a new agreement. People are not able to join a group or see content within a group if they have not agreed to all agreements.",
+  "groupAgreementsWarning": "When you change your agreements, all group members will be notified and asked to re-accept the modified agreements. So make sure you have made all the necessary important changes before saving them."
 }

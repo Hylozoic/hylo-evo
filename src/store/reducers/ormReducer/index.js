@@ -504,6 +504,15 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       }
 
       if (payload.data.updateGroupSettings && (payload.data.updateGroupSettings.agreements)) {
+        // Optimistically update the agreementsAcceptedAt setting, so the person adding the agreements doesnt have to immediately accept them
+        me = Me.first()
+        membership = Membership.safeGet({ group: meta.id, person: me.id })
+        const newSettings = {
+          ...membership.settings,
+          agreementsAcceptedAt: new Date()
+        }
+        membership.update({ settings: newSettings })
+
         group = Group.withId(meta.id)
         clearCacheFor(Group, meta.id)
       }
