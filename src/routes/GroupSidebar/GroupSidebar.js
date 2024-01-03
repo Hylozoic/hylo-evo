@@ -14,6 +14,7 @@ import Icon from 'components/Icon'
 import AboutSection from './AboutSection'
 import './GroupSidebar.scss'
 import { RESP_ADD_MEMBERS } from 'store/constants'
+import { combineRoles } from 'store/models/Person'
 
 class GroupSidebar extends Component {
   static propTypes = {
@@ -99,14 +100,14 @@ export function GroupLeaderSection ({ descriptor, leaders, groupId, slug }) {
 
 export function GroupLeader ({ groupId, leader, slug }) {
   const { name, avatarUrl } = leader
-  const badges = (leader.commonRoles.items.concat(leader.groupRoles?.items.filter(role => role.groupId === groupId))) || []
+  const badges = combineRoles({ person: leader, groupId })
   return (
     <div styleName='leader'>
       <Avatar url={personUrl(leader.id, slug)} avatarUrl={avatarUrl} styleName='leader-image' medium />
       <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
       <div styleName='badges'>
         {badges.map(badge => (
-          <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items || badge.responsibilities} id={leader.id} />
+          <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} id={leader.id} />
         ))}
       </div>
     </div>

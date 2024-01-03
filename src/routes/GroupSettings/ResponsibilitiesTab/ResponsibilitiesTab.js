@@ -108,8 +108,8 @@ export default function ResponsibilitiesTab ({ group }) {
   return (
     <>
       <h3>{t('Responsibilities and permissions')}</h3>
-      <span styleName='styles.description'>{t('Managing a group comes with responsibilities. These are detailed below, and can be assigned to roles to share group stewardship across the group')}</span>
       <h4>{t('Platform Responsibilities')}</h4>
+      <span styleName='styles.description'>{t('Managing a group comes with responsibilities. These are detailed below, and can be assigned to roles to share group stewardship across the group')}</span>
       <SettingsSection>
         <div styleName='styles.help-text'>{t('Each of these responsibilities gives access to specific functionality related to the platform')}</div>
         {responsibilities && responsibilities.map((role, i) => (
@@ -196,7 +196,7 @@ function ResponsibilityRow ({
         draft &&
           (
             <div styleName='styles.responsibility-row styles.reverse-flex'>
-              <div styleName='styles.create-button' onClick={onSave}>{t('Create Responsibility')}</div>
+              <div styleName='styles.create-button' onClick={onSave}>{t('Create')}</div>
             </div>
           )
       }

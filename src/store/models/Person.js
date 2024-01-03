@@ -54,5 +54,10 @@ export const PERSON_PROP_TYPES = {
 
 export const firstName = person => person.name.split(' ')[0]
 export const twitterUrl = twitterName => twitterName && `https://twitter.com/${twitterName}`
+export const combineRoles = ({ person, groupId }) => {
+  if (!person || !groupId) return []
+  console.log(person.commonRoles.items, 'wewewewe')
+  return person.commonRoles.items.concat(person.groupRoles?.items.filter(role => role.groupId === groupId)) || []
+}
 
 export const AXOLOTL_ID = '13986'

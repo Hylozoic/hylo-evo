@@ -9,6 +9,7 @@ import SkillLabel from 'components/SkillLabel'
 import './Member.scss'
 import { RESP_REMOVE_MEMBERS } from 'store/constants'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
+import { combineRoles } from 'store/models/Person'
 
 const { object, string, shape } = PropTypes
 
@@ -25,7 +26,7 @@ class Member extends React.Component {
     const {
       className,
       group,
-      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships, groupRoles, commonRoles },
+      member: { id, name, location, tagline, avatarUrl, skills, moderatedGroupMemberships },
       goToPerson,
       canModerate,
       removeMember,
@@ -33,7 +34,7 @@ class Member extends React.Component {
       t
     } = this.props
 
-    const badges = (group.id && groupRoles && commonRoles.items.concat(groupRoles.filter(role => role.groupId === group.id))) || []
+    const badges = combineRoles({ person: this.props.member, groupId: group.id })
     const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
     const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group.id }).map(r => r.title)
     return (
@@ -53,7 +54,7 @@ class Member extends React.Component {
               <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
             )}
             {badges.map(badge => (
-              <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items || badge.responsibilities} id={id} />
+              <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>

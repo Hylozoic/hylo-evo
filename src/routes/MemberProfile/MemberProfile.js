@@ -139,7 +139,7 @@ class MemberProfile extends React.Component {
                 <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} />
               )}
               {badges.map(badge => (
-                <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items || badge.responsibilities} />
+                <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} />
               ))}
             </div>
             {person.location && <div styleName='header-member-location'>

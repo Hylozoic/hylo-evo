@@ -30,6 +30,7 @@ import { personUrl } from 'util/navigation'
 import styles from './ChatPost.scss'
 import getResponsibilitiesForGroup from 'store/selectors/getResponsibilitiesForGroup'
 import { RESP_MANAGE_CONTENT } from 'store/constants'
+import { combineRoles } from 'store/models/Person'
 
 export default function ChatPost ({
   canModerate,
@@ -188,7 +189,7 @@ export default function ChatPost ({
 
   const commenterAvatarUrls = commenters.map(p => p.avatarUrl)
 
-  const badges = (group.id && creator.commonRoles.items.concat(creator.groupRoles?.items.filter(role => role.groupId === group.id))) || []
+  const badges = combineRoles({ person: creator, groupId: group.id })
   const creatorIsModerator = creator.moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
   return (
@@ -236,7 +237,7 @@ export default function ChatPost ({
                   <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || 'Moderator'} id={id} />
                 )}
                 {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items || badge.responsibilities} id={id} />
+                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} id={id} />
                 ))}
               </div>
             </div>
