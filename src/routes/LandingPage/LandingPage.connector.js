@@ -10,13 +10,14 @@ import getMyJoinRequests from 'store/selectors/getMyJoinRequests'
 import getMyMemberships from 'store/selectors/getMyMemberships'
 import { getPosts } from 'store/selectors/getPosts'
 import getRouteParam from 'store/selectors/getRouteParam'
+import { RESP_ADMINISTRATION } from 'store/constants'
 
 export function mapStateToProps (state, props) {
   const groupSlug = getRouteParam('groupSlug', state, props)
   const fetchPostsParam = { slug: groupSlug, context: 'groups', sortBy: 'created' }
   const group = presentGroup(getGroupForCurrentRoute(state, props))
   const isAboutOpen = getRouteParam('detailGroupSlug', state, props)
-  const isModerator = getCanModerate(state, { group })
+  const isModerator = getCanModerate(state, { group, additionalResponsibility: RESP_ADMINISTRATION }) // here?
   const posts = getPosts(state, fetchPostsParam).map(p => presentPost(p, group.id))
   const routeParams = props.match.params
   const widgets = ((group && group.widgets) || []).filter(w => w.name !== 'map' && w.context === 'landing')
