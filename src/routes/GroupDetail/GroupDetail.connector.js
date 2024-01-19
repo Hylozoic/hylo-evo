@@ -51,7 +51,7 @@ export function mapDispatchToProps (dispatch, props) {
     removeSkill: (skillId) => dispatch(removeSkill(skillId)),
     fetchGroup: (currentUser) => dispatch(fetchGroupDetails({ slug, withWidgets: true, withPrerequisites: !!currentUser })),
     fetchJoinRequests: () => dispatch(fetchJoinRequests()),
-    joinGroup: (groupId) => dispatch(joinGroup(groupId)),
+    joinGroup: (groupId, questionAnswers) => dispatch(joinGroup(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } }))),
     createJoinRequest: (groupId, questionAnswers) => dispatch(createJoinRequest(groupId, questionAnswers.map(q => { return { questionId: q.questionId, answer: q.answer } })))
   }
 }

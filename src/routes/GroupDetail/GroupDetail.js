@@ -4,6 +4,7 @@ import React, { Component, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { Link, useHistory } from 'react-router-dom'
 import { useTranslation, withTranslation } from 'react-i18next'
+import ReactTooltip from 'react-tooltip'
 import PropTypes from 'prop-types'
 import { TextHelpers, WebViewMessageTypes } from 'hylo-shared'
 import isWebView, { sendMessageToWebView } from 'util/webView'
@@ -72,10 +73,10 @@ class UnwrappedGroupDetail extends Component {
     this.setState(initialState)
   }
 
-  joinGroup = async () => {
+  joinGroup = async (groupId, questionAnswers) => {
     const { joinGroup, group } = this.props
 
-    await joinGroup(group.id)
+    await joinGroup(groupId, questionAnswers)
 
     if (isWebView()) {
       // Could be handled better using WebSockets
@@ -210,6 +211,12 @@ class UnwrappedGroupDetail extends Component {
             : ''
           }
         </div>
+        <ReactTooltip
+          backgroundColor='rgba(35, 65, 91, 1.0)'
+          effect='solid'
+          delayShow={0}
+          id='join-tip'
+        />
         <SocketSubscriber type='group' id={group.id} />
       </div>
     )
@@ -327,19 +334,6 @@ class UnwrappedGroupDetail extends Component {
 }
 
 export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWithPendingRequests, joinGroup, requestToJoinGroup, removeSkill, routeParams, t }) {
-  const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
-  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
-
-  const setAnswer = (index) => (event) => {
-    const answerValue = event.target.value
-    setQuestionAnswers(prevAnswers => {
-      const newAnswers = [...prevAnswers]
-      newAnswers[index].answer = answerValue
-      setAllQuestionsAnswered(newAnswers.every(a => trim(a.answer).length > 0))
-      return newAnswers
-    })
-  }
-
   const hasPendingRequest = groupsWithPendingRequests[group.id]
 
   return (
@@ -381,36 +375,14 @@ export function JoinSection ({ addSkill, currentUser, fullPage, group, groupsWit
             </div>
           </div>)}
         </div>
-        : group.numPrerequisitesLeft ? t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
+        : group.numPrerequisitesLeft
+          ? t('This group has prerequisite groups you cannot see, you cannot join this group at this time')
           : group.accessibility === GROUP_ACCESSIBILITY.Open
-            ? <div styleName='g.requestOption'>
-              {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
-                <h3>{q.text}</h3>
-                <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
-              </div>)}
-              {group.agreements?.length > 0 ? <p>{t('By joining this group you agree to all above agreements')}</p> : ''}
-              <div styleName='g.center'>
-                <div styleName='g.requestButton' onClick={() => joinGroup(group.id)}>
-                  {t('Join')}{' '}<span styleName='g.requestGroup'>{group.name}</span>
-                </div>
-              </div>
-            </div>
+            ? <JoinQuestionsAndButtons group={group} joinGroup={joinGroup} joinText={t('Join {{group.name}}', { group })} t={t} />
             : group.accessibility === GROUP_ACCESSIBILITY.Restricted
               ? hasPendingRequest
                 ? <div styleName='g.requestPending'>{t('Request to join pending')}</div>
-                : <div styleName='g.requestOption'>
-                  {group.settings.askJoinQuestions && questionAnswers.length > 0 && <div>{t('Please answer the following to join')}:</div>}
-                  {group.settings.askJoinQuestions && questionAnswers.map((q, index) => <div styleName='g.joinQuestion' key={index}>
-                    <h3>{q.text}</h3>
-                    <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
-                  </div>)}
-                  {group.agreements?.length > 0 ? <p>{t('By joining this group you agree to all above agreements')}</p> : ''}
-                  <div styleName='g.center'>
-                    <div styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })} onClick={allQuestionsAnswered ? () => requestToJoinGroup(group.id, questionAnswers) : () => {}}>
-                      {t('Request Membership in')}{' '}<span styleName='g.requestGroup'>{group.name}</span>
-                    </div>
-                  </div>
-                </div>
+                : <JoinQuestionsAndButtons group={group} joinGroup={requestToJoinGroup} joinText={t('Request Membership in {{group.name}}', { group })} t={t} />
               : ''
       }
     </div>
@@ -447,6 +419,44 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
           handleClick={handleClick}
           editable={false}
         />
+      </div>
+    </div>
+  )
+}
+
+function JoinQuestionsAndButtons ({ group, joinGroup, joinText, t }) {
+  const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
+
+  const setAnswer = (index) => (event) => {
+    const answerValue = event.target.value
+    setQuestionAnswers(prevAnswers => {
+      const newAnswers = [...prevAnswers]
+      newAnswers[index].answer = answerValue
+      setAllQuestionsAnswered(newAnswers.every(a => trim(a.answer).length > 0))
+      return newAnswers
+    })
+  }
+
+  return (
+    <div styleName='g.requestOption'>
+      {group.settings.askJoinQuestions && questionAnswers.length > 0 && <div>{t('Please answer the following to join')}:</div>}
+      {group.settings.askJoinQuestions && questionAnswers.map((q, index) => (
+        <div styleName='g.joinQuestion' key={index}>
+          <h3>{q.text}</h3>
+          <textarea name={`question_${q.questionId}`} onChange={setAnswer(index)} value={q.answer} placeholder={t('Type your answer here...')} />
+        </div>
+      )
+      )}
+      <div styleName='g.center'>
+        <div
+          styleName={cx('g.requestButton', { 'g.disabledButton': !allQuestionsAnswered })}
+          onClick={allQuestionsAnswered ? () => joinGroup(group.id, questionAnswers) : () => {}}
+          data-tip={!allQuestionsAnswered ? t('You must answer all the questions to join') : ''}
+          data-for='join-tip'
+        >
+          {joinText}
+        </div>
       </div>
     </div>
   )

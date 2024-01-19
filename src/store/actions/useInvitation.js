@@ -35,6 +35,7 @@ export default function useInvitation (inviteCodes = {}) {
               }
               settings {
                 agreementsAcceptedAt
+                joinQuestionsAnsweredAt
                 showJoinForm
               }
             }

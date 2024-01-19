@@ -100,7 +100,7 @@ class PrivacySettingsTab extends Component {
       settings,
       visibility
     } = edits
-    const { askGroupToGroupJoinQuestions, hideExtensionData } = settings
+    const { askJoinQuestions, askGroupToGroupJoinQuestions, hideExtensionData } = settings
     const { name, type } = group
 
     return (
@@ -121,20 +121,39 @@ class PrivacySettingsTab extends Component {
 
         <SettingsSection>
           <h3>{t('Access')}</h3>
-          <p styleName='general.detailText'>{t('How can people become members of')}{''}<strong>{name}</strong></p>
+          <p styleName='general.detailText'>{t('How can people become members of')}{' '}<strong>{name}</strong></p>
           {Object.values(GROUP_ACCESSIBILITY).map(accessSetting =>
             <AccessibilitySettingRow
               key={accessSetting}
               forSetting={accessSetting}
               clearField={this.clearField}
               currentSetting={accessibility}
-              askJoinQuestions={settings?.askJoinQuestions}
+              askJoinQuestions={askJoinQuestions}
               joinQuestions={joinQuestions}
               updateJoinQuestion={this.updateJoinQuestion}
               updateSetting={this.updateSetting}
               updateSettingDirectly={this.updateSettingDirectly}
             />
           )}
+        </SettingsSection>
+
+        <SettingsSection>
+          <h3>{t('Join Questions')}</h3>
+          <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': settings?.askJoinQuestions })}>
+            <div styleName={cx({ 'general.switchContainer': true, 'general.on': askJoinQuestions })}>
+              <SwitchStyled
+                checked={askJoinQuestions}
+                onChange={() => this.updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
+                backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'}
+              />
+              <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
+              <div styleName='general.onOff'>
+                <div styleName='general.off'>{t('OFF')}</div>
+                <div styleName='general.on'>{t('ON')}</div>
+              </div>
+            </div>
+            <QuestionsForm questions={joinQuestions} save={this.updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
+          </div>
         </SettingsSection>
 
         <SettingsSection>
@@ -174,24 +193,26 @@ class PrivacySettingsTab extends Component {
           </div>
         </SettingsSection>
 
-        { type ? <SettingsSection>
-          <h3>{t('Hide {{postType}} Data', { postType: startCase(type) })}</h3>
-          <p styleName='styles.dataDetail'>{t('If you don\'t want to display the detailed {{postType}} specific data on your group\'s profile', { postType: type })}</p>
-          <div styleName={cx({ 'general.switchContainer': true, 'general.on': hideExtensionData })}>
-            <SwitchStyled
-              checked={hideExtensionData}
-              onChange={() => this.updateSettingDirectly('settings.hideExtensionData')(hideExtensionData === undefined || hideExtensionData === null || !hideExtensionData)}
-              backgroundColor={hideExtensionData ? '#0DC39F' : '#8B96A4'}
-            />
-            <span styleName='general.toggleDescription'>{t('Hide {{postType}} data for this group', { postType: type })}</span>
-            <div styleName='general.onOff'>
-              <div styleName='general.off'>{t('OFF')}</div>
-              <div styleName='general.on'>{t('ON')}</div>
-            </div>
-          </div>
-        </SettingsSection>
-          : ''
-        }
+        {type
+          ? (
+            <SettingsSection>
+              <h3>{t('Hide {{postType}} Data', { postType: startCase(type) })}</h3>
+              <p styleName='styles.dataDetail'>{t('If you don\'t want to display the detailed {{postType}} specific data on your group\'s profile', { postType: type })}</p>
+              <div styleName={cx({ 'general.switchContainer': true, 'general.on': hideExtensionData })}>
+                <SwitchStyled
+                  checked={hideExtensionData}
+                  onChange={() => this.updateSettingDirectly('settings.hideExtensionData')(hideExtensionData === undefined || hideExtensionData === null || !hideExtensionData)}
+                  backgroundColor={hideExtensionData ? '#0DC39F' : '#8B96A4'}
+                />
+                <span styleName='general.toggleDescription'>{t('Hide {{postType}} data for this group', { postType: type })}</span>
+                <div styleName='general.onOff'>
+                  <div styleName='general.off'>{t('OFF')}</div>
+                  <div styleName='general.on'>{t('ON')}</div>
+                </div>
+              </div>
+            </SettingsSection>
+          )
+          : ''}
 
         <div styleName='general.saveChanges'>
           <span styleName={changed ? 'general.settingChanged' : ''}>{changed ? t('Changes not saved') : t('Current settings up to date')}</span>
@@ -217,7 +238,7 @@ function VisibilitySettingRow ({ currentSetting, forSetting, updateSetting, t })
   )
 }
 
-function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting, forSetting, joinQuestions, updateJoinQuestion, updateSetting, updateSettingDirectly }) {
+function AccessibilitySettingRow ({ currentSetting, forSetting, updateSetting }) {
   const { t } = useTranslation()
   return (
     <div styleName={'styles.privacySetting' + ' ' + cx({ 'styles.on': currentSetting === forSetting })}>
@@ -229,23 +250,6 @@ function AccessibilitySettingRow ({ askJoinQuestions, clearField, currentSetting
           <span styleName={cx('styles.privacy-option', { 'styles.disabled': currentSetting !== forSetting })}>{t(accessibilityDescription(forSetting))}</span>
         </div>
       </label>
-      {forSetting === currentSetting && currentSetting === GROUP_ACCESSIBILITY.Restricted &&
-        <div styleName={cx({ 'styles.groupQuestions': true, 'styles.on': askJoinQuestions })}>
-          <div styleName={cx({ 'general.switchContainer': true, 'general.on': askJoinQuestions })}>
-            <SwitchStyled
-              checked={askJoinQuestions}
-              onChange={() => updateSettingDirectly('settings.askJoinQuestions')(!askJoinQuestions)}
-              backgroundColor={askJoinQuestions ? '#0DC39F' : '#8B96A4'}
-            />
-            <span styleName='general.toggleDescription'>{t('Require people to answer questions when requesting to join this group')}</span>
-            <div styleName='general.onOff'>
-              <div styleName='general.off'>{t('OFF')}</div>
-              <div styleName='general.on'>{t('ON')}</div>
-            </div>
-          </div>
-          <QuestionsForm questions={joinQuestions} save={updateSettingDirectly('joinQuestions', true)} disabled={!askJoinQuestions} />
-        </div>
-      }
     </div>
   )
 }

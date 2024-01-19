@@ -100,6 +100,7 @@ export default gql`
       }
       settings {
         agreementsAcceptedAt
+        joinQuestionsAnsweredAt
         sendEmail
         sendPushNotifications
         showJoinForm

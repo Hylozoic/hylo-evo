@@ -11,7 +11,7 @@ import Group, { GroupRelationship, GroupModerator, GroupJoinQuestion, GroupPrere
 import GroupRelationshipInvite, { GroupToGroupJoinRequestQuestionAnswer } from './GroupRelationshipInvite'
 import GroupTopic from './GroupTopic'
 import Invitation from './Invitation'
-import JoinRequest, { JoinRequestQuestionAnswer, Question } from './JoinRequest'
+import JoinRequest, { GroupJoinQuestionAnswer, Question } from './JoinRequest'
 import LinkPreview from './LinkPreview'
 import Location from './Location'
 import Me, { MySkillsToLearn } from './Me'
@@ -42,6 +42,7 @@ orm.register(
   EventInvitation,
   Group,
   GroupJoinQuestion,
+  GroupJoinQuestionAnswer,
   GroupModerator,
   GroupPrerequisite,
   GroupRelationship,
@@ -51,7 +52,6 @@ orm.register(
   GroupTopic,
   Invitation,
   JoinRequest,
-  JoinRequestQuestionAnswer,
   LinkPreview,
   Location,
   Me,
