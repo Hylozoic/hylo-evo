@@ -426,7 +426,7 @@ export function SuggestedSkills ({ addSkill, currentUser, group, removeSkill }) 
 
 function JoinQuestionsAndButtons ({ group, joinGroup, joinText, t }) {
   const [questionAnswers, setQuestionAnswers] = useState(group.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
-  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(questionAnswers.length === 0)
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(!group.settings.askJoinQuestions || questionAnswers.length === 0)
 
   const setAnswer = (index) => (event) => {
     const answerValue = event.target.value

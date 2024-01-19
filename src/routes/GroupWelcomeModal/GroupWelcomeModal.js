@@ -42,7 +42,7 @@ export default function GroupWelcomeModal (props) {
     (!agreementsAcceptedAt || agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
 
   const [questionAnswers, setQuestionAnswers] = useState(group?.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
-  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(!!joinQuestionsAnsweredAt)
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(!group?.settings?.askJoinQuestions || !!joinQuestionsAnsweredAt)
 
   const hasFirstPage = numAgreements > 0
   const hasSecondPage = (group?.settings?.askJoinQuestions && questionAnswers?.length > 0 && !joinQuestionsAnsweredAt) ||
@@ -64,8 +64,8 @@ export default function GroupWelcomeModal (props) {
     if (group?.joinQuestions?.length > 0) {
       setQuestionAnswers(group?.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
 
-      // not loading answers right now, so know if answered by whether joinQuestionsAnsweredAt is set
-      setAllQuestionsAnswered(!!joinQuestionsAnsweredAt)
+      // not loading answers right now, so we know if answered before by whether joinQuestionsAnsweredAt is set
+      setAllQuestionsAnswered(!group?.settings?.askJoinQuestions || !!joinQuestionsAnsweredAt)
 
       // If dont have agreements to show come straight to the join questions page
       if (!hasFirstPage) {
@@ -161,6 +161,7 @@ export default function GroupWelcomeModal (props) {
                           styleName='i-agree'
                           type='checkbox'
                           id={'agreement' + agreement.id}
+                          data-testid={'cbAgreement' + i}
                           value={i}
                           onChange={handleCheckAgreement}
                           checked={currentAgreements[i]}
@@ -215,7 +216,7 @@ export default function GroupWelcomeModal (props) {
               />
             )}
             <Button
-              data-testid='jump-in'
+              dataTestId='jump-in'
               disabled={(page === 1 && !checkedAllAgreements) || (page === 2 && !allQuestionsAnswered)}
               label={page === 1 && hasSecondPage ? t('Next') : t('Jump in!')}
               onClick={handleAccept}

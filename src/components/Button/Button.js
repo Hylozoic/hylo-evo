@@ -6,20 +6,21 @@ import './Button.scss'
 const { string, bool, func, object, oneOfType, node } = PropTypes
 
 export default function Button ({
+  active,
   borderRadius = '25px',
-  label,
+  children,
+  className,
   color = 'green',
+  dataTestId,
   dataTip,
   dataFor,
-  hover,
-  active,
-  narrow,
-  small,
-  noDefaultStyles,
   disabled = false,
-  children,
+  hover,
+  label,
+  narrow,
+  noDefaultStyles,
   onClick,
-  className,
+  small,
   tabIndex = 0
 }) {
   const buttonClassName = noDefaultStyles ? '' : 'button'
@@ -35,6 +36,7 @@ export default function Button ({
       onClick={!disabled ? onClick : undefined}
       data-tip={dataTip}
       data-for={dataFor}
+      data-testid={dataTestId}
     >
       {label || children}
     </div>
