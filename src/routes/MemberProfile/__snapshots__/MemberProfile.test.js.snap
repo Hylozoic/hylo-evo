@@ -261,7 +261,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         memberCap={3}
         project={
           Object {
-            "createdAt": "Thu Oct 29 2020 19:55:58 GMT-0700 (PDT)",
+            "createdAt": "2021-04-12T15:00:00.000Z",
             "creator": Object {
               "name": "Test Account",
             },
@@ -299,7 +299,7 @@ exports[`MemberProfile renders the same as the last snapshot 1`] = `
         memberCap={3}
         project={
           Object {
-            "createdAt": "Mon Nov 02 2020 13:40:01 GMT-0800 (PST)",
+            "createdAt": "2022-04-12T15:00:00.000Z",
             "creator": Object {
               "name": "Test Account",
             },

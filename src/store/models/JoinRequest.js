@@ -20,17 +20,17 @@ JoinRequest.fields = {
   id: attr(),
   createdAt: attr(),
   group: fk('Group'),
-  questionAnswers: many('JoinRequestQuestionAnswer'),
+  questionAnswers: many('GroupJoinQuestionAnswer'),
   status: attr(),
   updatedAt: attr(),
   user: fk('Person')
 }
 
-export class JoinRequestQuestionAnswer extends Model { }
-JoinRequestQuestionAnswer.modelName = 'JoinRequestQuestionAnswer'
-JoinRequestQuestionAnswer.fields = {
+export class GroupJoinQuestionAnswer extends Model { }
+GroupJoinQuestionAnswer.modelName = 'GroupJoinQuestionAnswer'
+GroupJoinQuestionAnswer.fields = {
   answer: attr(),
-  question: fk('Question', 'joinRequestAnswers')
+  question: fk('Question', 'joinQuestionAnswers')
 }
 
 export class Question extends Model { }

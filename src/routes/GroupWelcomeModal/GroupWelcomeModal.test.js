@@ -23,7 +23,7 @@ jest.mock('react-i18next', () => ({
   }
 }))
 
-it('selects group, displays suggested skills, and renders nothing when showJoinForm is false', async () => {
+it('selects group, displays agreements and suggested skills, and renders nothing when showJoinForm is false', async () => {
   const testGroup = {
     id: '1',
     name: 'Test Group',
@@ -64,6 +64,9 @@ it('selects group, displays suggested skills, and renders nothing when showJoinF
         ctx.data({
           group: {
             id: testGroup.id,
+            agreements: {
+              items: [{ id: 1, description: 'Do good stuff always', title: 'Be cool' }]
+            },
             suggestedSkills: {
               items: [
                 { id: '1', name: 'a-skill-to-have' }
@@ -92,9 +95,16 @@ it('selects group, displays suggested skills, and renders nothing when showJoinF
   const user = userEvent.setup()
 
   // expect(await screen.findByText(`Welcome to ${testGroup.name}!`)).toBeInTheDocument() TODO: Fix this test
-  expect(await screen.findByText('a-skill-to-have')).toBeInTheDocument()
+  expect(await screen.findByText('Do good stuff always')).toBeInTheDocument()
 
-  await user.click(screen.getByRole('button'))
+  const cbEl = screen.getByTestId('cbAgreement0')
+  expect(cbEl).toBeInTheDocument()
+  expect(cbEl).not.toBeChecked()
+
+  await user.click(cbEl)
+  await user.click(screen.getByTestId('jump-in'))
+  expect(await screen.findByText('a-skill-to-have')).toBeInTheDocument()
+  await user.click(screen.getByTestId('jump-in'))
 
   expect(container).toBeEmptyDOMElement()
 })

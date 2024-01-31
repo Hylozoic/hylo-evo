@@ -1,9 +1,11 @@
+import { DndContext, DragOverlay } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import update from 'immutability-helper'
 import { isEmpty } from 'lodash'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInView from 'react-cool-inview'
-import { useDrag, useDrop } from 'react-dnd'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
@@ -24,6 +26,7 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   const [offset, setOffset] = useState('')
   const [selectedPosts, setSelectedPosts] = useState(posts || [])
   const [suggestionsOpen, setSuggestionsOpen] = useState(false)
+  const [dragIndex, setDragIndex] = useState(null)
   const searchBoxRef = useRef()
   const { t } = useTranslation()
 
@@ -106,17 +109,28 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
     event.stopPropagation()
   }
 
-  const movePost = useCallback((dragIndex, hoverIndex) => {
-    setSelectedPosts((prevPosts) => {
-      onReorderPost(prevPosts[dragIndex], hoverIndex)
-      return update(prevPosts, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevPosts[dragIndex]]
-        ]
+  const handleDragStart = (event) => {
+    setDragIndex(event.active.data.current.sortable.index)
+  }
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event
+
+    if (active.id !== over.id) {
+      const activeIndex = active.data.current.sortable.index
+      const overIndex = over.data.current.sortable.index
+      onReorderPost(selectedPosts[activeIndex], over.data.current.sortable.index)
+      setSelectedPosts((prevPosts) => {
+        return update(prevPosts, {
+          $splice: [
+            [activeIndex, 1],
+            [overIndex, 0, prevPosts[activeIndex]]
+          ]
+        })
       })
-    })
-  }, [])
+    }
+    setDragIndex(null)
+  }
 
   const displaySuggestions = useMemo(() => {
     const selectedPostIds = selectedPosts.map(p => p.id)
@@ -126,129 +140,121 @@ export default function PostSelector ({ collection, draggable, group, onRemovePo
   const pending = useSelector(state => isPendingFor(FETCH_POSTS, state))
 
   return (
-    <div>
-      <ul styleName='selectedPosts'>
-        {selectedPosts.map((p, i) => (
-          <SelectedPost
-            draggable={draggable}
-            handleDelete={handleDelete}
-            index={i}
-            key={p.id}
-            movePost={movePost}
-            post={p}
-          />)
-        )}
-      </ul>
-      <div styleName='search'>
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <SortableContext items={selectedPosts} strategy={verticalListSortingStrategy}>
         <div>
-          <input
-            ref={searchBoxRef}
-            type='text'
-            placeholder={t('Search for posts')}
-            spellCheck={false}
-            onChange={event => handleInputChange(event.target.value)}
-            onFocus={() => setSuggestionsOpen(true)}
-            onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
-          />
-        </div>
-        {suggestionsOpen && (pending || !isEmpty(displaySuggestions)) &&
-          <div styleName='suggestionsWrapper'>
-            {pending && <Loading />}
-            <ul styleName='suggestions'>
-              {displaySuggestions.map((s, idx) => (
-                <Suggestion
-                  key={s.id}
-                  item={s}
-                  onSelect={handleSelectPost}
-                  observeRef={idx === suggestions.length - 1 ? observe : null}
-                />
-              ))}
-            </ul>
+          <div styleName='selectedPosts'>
+            {selectedPosts.map((p, i) => (
+              <SelectedPostDraggable
+                draggable={draggable}
+                dragging={i === dragIndex}
+                handleDelete={handleDelete}
+                index={i}
+                key={p.id}
+                post={p}
+              />)
+            )}
           </div>
-        }
-      </div>
-    </div>
+          <div styleName='search'>
+            <div>
+              <input
+                ref={searchBoxRef}
+                type='text'
+                placeholder={t('Search for posts')}
+                spellCheck={false}
+                onChange={event => handleInputChange(event.target.value)}
+                onFocus={() => setSuggestionsOpen(true)}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
+              />
+            </div>
+            {suggestionsOpen && (pending || !isEmpty(displaySuggestions)) &&
+              <div styleName='suggestionsWrapper'>
+                {pending && <Loading />}
+                <ul styleName='suggestions'>
+                  {displaySuggestions.map((s, idx) => (
+                    <Suggestion
+                      key={s.id}
+                      item={s}
+                      onSelect={handleSelectPost}
+                      observeRef={idx === suggestions.length - 1 ? observe : null}
+                    />
+                  ))}
+                </ul>
+              </div>
+            }
+          </div>
+        </div>
+      </SortableContext>
+
+      <DragOverlay>
+        {dragIndex !== null
+          ? (
+            <SelectedPost
+              draggable
+              group={group}
+              handleDelete={() => { }}
+              index={dragIndex}
+              post={selectedPosts[dragIndex]}
+            />)
+          : null}
+      </DragOverlay>
+    </DndContext>
   )
 }
 
-export function SelectedPost ({ draggable, post, index, movePost, handleDelete }) {
-  const ref = useRef(null)
-  const { t } = useTranslation()
-
-  const [{ handlerId }, drop] = useDrop({ // eslint-disable-line no-unused-vars
-    accept: 'post',
-    collect (monitor) {
-      return {
-        handlerId: monitor.getHandlerId()
-      }
-    },
-    hover (item, monitor) {
-      if (!ref.current) {
-        return
-      }
-      const dragIndex = item.index
-      const hoverIndex = index
-      // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
-        return
-      }
-      // Determine rectangle on screen
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
-      // Get vertical middle
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset()
-      // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-      // Dragging downwards
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
-      }
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      }
-      // Time to actually perform the action
-      movePost(dragIndex, hoverIndex)
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      item.index = hoverIndex
+function SelectedPostDraggable ({ draggable, dragging, index, handleDelete, post }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({
+    id: post.id,
+    disabled: !draggable,
+    transition: {
+      duration: 150, // milliseconds
+      easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
     }
   })
-  const [{ isDragging }, drag] = useDrag({
-    type: 'post',
-    item: () => {
-      return { id: post.id, index }
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
-  })
-  const opacity = isDragging ? 0 : 1
-  if (draggable) {
-    drag(drop(ref))
+
+  const style = {
+    transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
+    transition,
+    opacity: dragging ? 0 : 1,
+    cursor: 'move'
   }
 
-  return <li key={post.id} ref={ref} style={{ opacity, cursor: draggable ? 'move' : 'default' }}>
-    <RoundImage url={post.creator.avatarUrl} styleName='selectedPostAvatar' small />
-    <span styleName='postTitle'>{post.title}</span>
-    <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost selectedPostIcon' dataTip={t('Remove Post')} />
-    {draggable && <Icon name='Draggable' styleName='selectedPostIcon dragHandle' />}
-  </li>
+  return (
+    <SelectedPost
+      ref={setNodeRef}
+      {...{ post, attributes, index, handleDelete, draggable, listeners, style }}
+    />
+  )
 }
 
-export function Suggestion ({ item, onSelect, observeRef }) {
+const SelectedPost = forwardRef(({ children, ...props }, ref) => {
+  const { t } = useTranslation()
+  const { attributes, draggable, index, handleDelete, listeners, post, style } = props
+
+  return (
+    <div styleName='selectedPost' ref={ref} style={style} {...attributes} {...listeners}>
+      <RoundImage url={post.creator.avatarUrl} styleName='selectedPostAvatar' small />
+      <span styleName='postTitle'>{post.title}</span>
+      <Icon name='Trash' onClick={handleDelete(post, index)} styleName='removePost selectedPostIcon' dataTip={t('Remove Post')} />
+      {draggable && <Icon name='Draggable' styleName='selectedPostIcon dragHandle' />}
+    </div>
+  )
+})
+
+function Suggestion ({ item, onSelect, observeRef }) {
   const { id, title, creator } = item
-  return <li key={id || 'blank'} styleName='suggestion' ref={observeRef}>
-    <a onClick={event => onSelect(item, event)} styleName='suggestionLink'>
-      <RoundImage url={creator.avatarUrl} styleName='suggestionAvatar' small />
-      <div styleName='suggestionName'>{title}</div>
-    </a>
-  </li>
+  return (
+    <li key={id || 'blank'} styleName='suggestion' ref={observeRef}>
+      <a onClick={event => onSelect(item, event)} styleName='suggestionLink'>
+        <RoundImage url={creator.avatarUrl} styleName='suggestionAvatar' small />
+        <div styleName='suggestionName'>{title}</div>
+      </a>
+    </li>
+  )
 }

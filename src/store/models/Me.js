@@ -78,10 +78,10 @@ export default Me
 
 Me.modelName = 'Me'
 Me.fields = {
+  blockedUsers: many('Person'),
+  intercomHash: attr(),
   isAdmin: attr(),
   name: attr(),
-  posts: many('Post'),
-  intercomHash: attr(),
   groupInvitesPending: many('Invitation'),
   joinRequests: many('JoinRequest'),
   location: attr(),
@@ -89,21 +89,15 @@ Me.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
-
-  // strictly speaking, a membership belongs to a single person, so it's not a
-  // many-to-many relationship. but putting this here ensures that when we have
-  // a query on the current user that contains memberships, the data will be
-  // properly extracted and stored for the user.
   memberships: many('Membership'),
-
   messageThreads: many('MessageThread'),
   notifications: many('Notification'),
+  posts: many('Post'),
   skills: many('Skill'),
   skillsToLearn: many({
     to: 'Skill',
     relatedName: 'personLearning',
     through: 'MySkillsToLearn',
     throughFields: [ 'me', 'skillToLearn' ]
-  }),
-  blockedUsers: many('Person')
+  })
 }

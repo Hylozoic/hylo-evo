@@ -30,7 +30,7 @@ class Member extends React.Component {
       t
     } = this.props
 
-    const badges = (group.id && groupRoles.filter(role => role.groupId === group.id)) || []
+    const badges = (group.id && groupRoles?.filter(role => role.groupId === group.id)) || []
     const creatorIsModerator = moderatedGroupMemberships.find(moderatedMembership => moderatedMembership.groupId === group.id)
 
     return (

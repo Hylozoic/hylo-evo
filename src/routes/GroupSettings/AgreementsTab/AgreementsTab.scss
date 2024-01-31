@@ -1,0 +1,157 @@
+// AgreementsTab
+.label {
+  composes: tag from 'css/typography.scss';
+}
+
+.warning {
+  color: $color-amaranth;
+}
+
+.add-button {
+  margin-bottom: 30px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  box-shadow: 0px 5px 8px rgba(35, 65, 91, .2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h4 {
+    font-size: 16px;
+    color: rgba(35, 65, 91, 1.0);
+    margin-bottom: 0;
+  }
+
+  .add-button-icon {
+    font-size: 36px;
+    color: rgba(191, 197, 206, 1.0);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.agreement-row {
+  margin-bottom: 30px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  box-shadow: 0px 5px 8px rgba(35, 65, 91, .2);
+  position: relative;
+
+  .header {
+    display: flex;
+    height: 28px;
+
+    strong {
+      flex-grow: 1;
+    }
+
+    .delete-button {
+      cursor: pointer;
+    }
+  }
+
+  .drag-handle {
+    font-size: 16px;
+    cursor: move;
+  }
+
+  .controls {
+    display: none;
+    position: relative;
+
+    span {
+      vertical-align: middle;
+    }
+  }
+
+  &:hover {
+    .controls {
+      display: inline;
+    }
+  }
+}
+
+.settings-control {
+  border-bottom: none;
+  padding-right: 10px;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+
+  label {
+    color: rgba(44, 64, 89, 0.6);
+  }
+}
+
+.settings-control input, .settings-control textarea {
+  border: 1px solid rgba(224, 229, 233, 1.0);
+  padding: 5px 8px;
+  font-size: 16px;
+  border-radius: 5px;
+
+  &::placeholder {
+    opacity: 0.5;
+  }
+}
+
+.settings-control input {
+  height: 40px;
+}
+
+.settings-control-title {
+  font-size: 16px;
+}
+
+.selectedIcon {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.icon-button {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+  padding-right: 10px;
+
+  label {
+    color: rgba(44, 64, 89, 0.6);
+  }
+}
+
+.icon-button > div {
+  border: 1px solid rgba(224, 229, 233, 1.0);
+  border-radius: 5px;
+  height: 40px;
+  line-height: 40px;
+}
+
+// .custom-view-row {
+//   border-bottom: 1px dashed rgba(225, 229, 233, 1.0);
+//   padding: 10px 0;
+//   display: flex;
+//   align-items: center;
+//   min-height: 60px;
+
+//   .label {
+//     margin-bottom:0;
+//   }
+// }
+
+// .custom-view-last-row {
+//   padding: 10px 0;
+
+//   &> div {
+//     border: 1px solid rgba(224, 229, 233, 1.0);
+//     border-radius: 5px;
+//   }
+// }
+
+.help-text {
+  color: $color-black-60;
+  font-size: 0.75rem;
+  transition: all .25s ease;
+  padding-bottom: 20px;
+}

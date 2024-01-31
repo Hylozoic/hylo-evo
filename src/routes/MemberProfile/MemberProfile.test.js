@@ -12,6 +12,14 @@ jest.mock('react-i18next', () => ({
   withTranslation: () => Component => {
     Component.defaultProps = { ...Component.defaultProps, t: (str) => str }
     return Component
+  },
+  useTranslation: (domain) => {
+    return {
+      t: (str) => str,
+      i18n: {
+        changeLanguage: () => new Promise(() => {})
+      }
+    }
   }
 }))
 
@@ -78,7 +86,7 @@ describe('MemberProfile', () => {
                   id: 1,
                   text: 'hello',
                   creator: { id: 1 },
-                  post: { id: 1, title: 'title' },
+                  post: { id: 1, title: 'title', createdAt: '2021-04-12T15:00:00.000Z' },
                   attachments: [],
                   createdAt: '2021-04-12T15:00:00.000Z'
                 }],

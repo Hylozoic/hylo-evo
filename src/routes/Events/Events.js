@@ -5,7 +5,7 @@ import { get } from 'lodash/fp'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import Dropdown from 'components/Dropdown'
-import StreamBanner from 'components/StreamBanner'
+import GroupBanner from 'components/GroupBanner'
 import Icon from 'components/Icon'
 import Loading from 'components/Loading'
 import NoPosts from 'components/NoPosts'
@@ -80,7 +80,7 @@ class Events extends Component {
           <title>Events | {group ? `${group.name} |` : ''}Hylo</title>
         </Helmet>
 
-        <StreamBanner
+        <GroupBanner
           group={group}
           currentUser={currentUser}
           type='event'

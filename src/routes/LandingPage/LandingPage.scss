@@ -11,35 +11,6 @@
   position: relative;
   box-shadow: 0px 4px 15px rgba(41, 64, 90, .2);
 
-  .right {
-    text-align: right;
-    padding-right: 20px;
-    padding-top: 20px;
-    position: relative;
-    z-index: 1;
-
-    .about {
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      border-radius: 20px;
-      padding: 5px 10px;
-      transition: all .25s ease;
-      cursor: pointer;
-      color: white;
-      text-decoration: none;
-
-      > span {
-        color: white;
-        font-size: 14px;
-        padding-right: 5px;
-      }
-    }
-
-    .about:hover {
-      border: 1px solid rgba(255, 255, 255, 0);
-      background-color: rgba(0,0,0,0.5);
-    }
-  }
-
   .title {
     position: relative;
     z-index: 1;

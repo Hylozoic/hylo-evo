@@ -1,6 +1,4 @@
 import React from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import { MemoryRouter } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
@@ -29,13 +27,11 @@ export function generateStore (providedState, providedHistory = history) {
 export const AllTheProviders = providedState => ({ children }) => {
   return (
     <LayoutFlagsProvider>
-      <DndProvider backend={HTML5Backend}>
-        <Provider store={generateStore(providedState)}>
-          <MemoryRouter>
-            {children}
-          </MemoryRouter>
-        </Provider>
-      </DndProvider>
+      <Provider store={generateStore(providedState)}>
+        <MemoryRouter>
+          {children}
+        </MemoryRouter>
+      </Provider>
     </LayoutFlagsProvider>
   )
 }

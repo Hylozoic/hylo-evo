@@ -276,6 +276,8 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
 
     case FETCH_GROUP_WELCOME_DATA: {
       clearCacheFor(Group, meta.id)
+      membership = Membership.safeGet({ group: meta.id, person: meta.userId })
+      clearCacheFor(Membership, membership.id)
       break
     }
 
@@ -500,6 +502,20 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
         group = Group.withId(meta.id)
         clearCacheFor(Group, meta.id)
       }
+
+      if (payload.data.updateGroupSettings && (payload.data.updateGroupSettings.agreements)) {
+        // Optimistically update the agreementsAcceptedAt setting, so the person adding the agreements doesnt have to immediately accept them
+        me = Me.first()
+        membership = Membership.safeGet({ group: meta.id, person: me.id })
+        const newSettings = {
+          ...membership.settings,
+          agreementsAcceptedAt: new Date()
+        }
+        membership.update({ settings: newSettings })
+
+        group = Group.withId(meta.id)
+        clearCacheFor(Group, meta.id)
+      }
       break
     }
 
@@ -526,12 +542,20 @@ export default function ormReducer (state = orm.getEmptyState(), action) {
       me = Me.first()
       membership = Membership.safeGet({ group: meta.groupId, person: me.id })
 
+      const newSettings = {
+        ...membership.settings,
+        ...meta.settings
+      }
+
+      // Do this here as a way to optimistically update the agreementsAcceptedAt setting,
+      // without actually passing it to the server since that will be set auomatically on the back-end
+      if (meta.acceptAgreements) {
+        newSettings.agreementsAcceptedAt = new Date()
+      }
+
       if (!membership) break
       membership.update({
-        settings: {
-          ...membership.settings,
-          ...meta.settings
-        }
+        settings: newSettings
       })
       break
     }

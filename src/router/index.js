@@ -1,7 +1,5 @@
 import React from 'react'
 import { ConnectedRouter } from 'connected-react-router'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Provider } from 'react-redux'
 import { LayoutFlagsProvider } from 'contexts/LayoutFlagsContext'
 import isWebView from 'util/webView'
@@ -19,13 +17,11 @@ export default function App () {
 
   return (
     <LayoutFlagsProvider>
-      <DndProvider backend={HTML5Backend}>
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <RootRouter />
-          </ConnectedRouter>
-        </Provider>
-      </DndProvider>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <RootRouter />
+        </ConnectedRouter>
+      </Provider>
     </LayoutFlagsProvider>
   )
 }
