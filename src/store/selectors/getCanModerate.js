@@ -11,7 +11,6 @@ const getCanModerate = ormCreateSelector(
     if (group && me) {
       const membership = Membership.safeGet({ group: group.id, person: me.id })
       if (!membership) return false
-      console.log('membership', membership, "***********************************************************************")
       const commonResp = membership.commonRoles.items.map(cr => cr.responsibilities.items).flat()
       const groupRolesForGroup = me?.groupRoles?.items.filter(groupRole => groupRole.groupId === group.id) || []
       const resp = groupRolesForGroup.map(groupRole => groupRole.responsibilities.items || []).flat()
