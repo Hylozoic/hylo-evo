@@ -48,6 +48,7 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       data-stylename="general.detailText"
     >
       How can people become members of
+       
       <strong>
         Foomunity
       </strong>
@@ -94,6 +95,55 @@ exports[`PrivacySettingsTab renders correctly 1`] = `
       updateSetting={[Function]}
       updateSettingDirectly={[Function]}
     />
+  </SettingsSection>
+  <SettingsSection>
+    <h3>
+      Join Questions
+    </h3>
+    <div
+      data-stylename="styles.groupQuestions"
+    >
+      <div
+        data-stylename="general.switchContainer"
+      >
+        <SwitchStyled
+          backgroundColor="#8B96A4"
+          checked={false}
+          disabled={false}
+          onChange={[Function]}
+        />
+        <span
+          data-stylename="general.toggleDescription"
+        >
+          Require people to answer questions when requesting to join this group
+        </span>
+        <div
+          data-stylename="general.onOff"
+        >
+          <div
+            data-stylename="general.off"
+          >
+            OFF
+          </div>
+          <div
+            data-stylename="general.on"
+          >
+            ON
+          </div>
+        </div>
+      </div>
+      <QuestionsForm
+        disabled={true}
+        questions={
+          Array [
+            Object {
+              "text": "",
+            },
+          ]
+        }
+        save={[Function]}
+      />
+    </div>
   </SettingsSection>
   <SettingsSection>
     <h3>

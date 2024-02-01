@@ -18,12 +18,12 @@ export function fetchJoinRequests (groupId) {
   }
 }
 
-export function joinGroup (groupId) {
+export function joinGroup (groupId, questionAnswers) {
   return {
     type: JOIN_GROUP,
     graphql: {
-      query: `mutation ($groupId: ID) {
-        joinGroup(groupId: $groupId) {
+      query: `mutation ($groupId: ID, $questionAnswers: [QuestionAnswerInput]) {
+        joinGroup(groupId: $groupId, questionAnswers: $questionAnswers) {
           id
           role
           hasModeratorRole
@@ -37,12 +37,14 @@ export function joinGroup (groupId) {
           }
           settings {
             agreementsAcceptedAt
+            joinQuestionsAnsweredAt
             showJoinForm
           }
         }
       }`,
       variables: {
-        groupId
+        groupId,
+        questionAnswers
       }
     },
     meta: {

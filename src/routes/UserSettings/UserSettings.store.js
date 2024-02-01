@@ -152,7 +152,7 @@ export function unlinkAccount (provider) {
   }
 }
 
-export function updateMembershipSettings (groupId, settings, acceptAgreements = null) {
+export function updateMembershipSettings (groupId, settings, acceptAgreements = null, questionAnswers = []) {
   return {
     type: UPDATE_MEMBERSHIP_SETTINGS,
     graphql: {
@@ -166,6 +166,7 @@ export function updateMembershipSettings (groupId, settings, acceptAgreements = 
       variables: {
         data: {
           acceptAgreements,
+          questionAnswers,
           settings
         },
         groupId: groupId

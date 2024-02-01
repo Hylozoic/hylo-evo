@@ -77,6 +77,22 @@
   flex-direction: column;
 }
 
+.page-2 { display: none; }
+
+.viewing-page-1 {
+  // Empty
+}
+
+.viewing-page-2 {
+  .page-1 {
+    display: none;
+  }
+
+  .page-2 {
+    display: block;
+  }
+}
+
 .close-button {
   cursor: pointer;
   position: absolute;
@@ -131,7 +147,7 @@
 .welcome-section {
   background: rgba(244, 247, 250, 0.56);
   border: 1px dashed #E1E5E9;
-  padding: 20px 25px;
+  padding: 20px 25px 0px;
   margin-bottom: 20px;
   position: relative;
   border-radius: 5px;
@@ -139,12 +155,14 @@
 
 .welcome-content {
   padding: 15px;
+  padding-bottom: 0;
   flex-grow: 1;
   overflow-y: auto;
+}
 
-  .call-to-action {
-    text-align: center;
-  }
+.call-to-action {
+  text-align: center;
+  padding-bottom: 15px;
 }
 
 .agreements {
@@ -196,4 +214,55 @@
 
 .i-agree:hover {
   cursor: pointer;
+}
+
+.questions-header {
+  text-align: center;
+}
+
+.join-question {
+  background-color: rgba(249, 250, 251, 1.000);
+  border: 1px solid rgba(224, 229, 233, 1.000);
+  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  margin: 10px 0 15px;
+
+  h4 {
+    color: rgba(140, 151, 166, 1.00);
+  }
+
+  textarea {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: rgba(35, 64, 91, 1.000);
+
+    &::placeholder {
+      font-style: italic;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.previous-button {
+  margin-right: 20px;
+}
+
+.page-number {
+  color: white; //$color-rhino-80;
+  position: absolute;
+  bottom: 25px;
+  right: 15px;
+}
+
+@media screen and (max-width: 425px) {
+
+  .join-question textarea {
+    font-size: 14px;
+  }
+
 }

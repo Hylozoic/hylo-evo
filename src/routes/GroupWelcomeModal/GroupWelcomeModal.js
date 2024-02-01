@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { isEmpty } from 'lodash'
+import { isEmpty, trim } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,16 +19,18 @@ import ClickCatcher from 'components/ClickCatcher'
 import HyloHTML from 'components/HyloHTML'
 import RoundImage from 'components/RoundImage'
 import { SuggestedSkills } from 'routes/GroupDetail/GroupDetail'
-import './GroupWelcomeModal.scss'
+import styles from './GroupWelcomeModal.scss'
 
 export default function GroupWelcomeModal (props) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const currentUser = useSelector(getMe)
   const currentGroup = useSelector(state => getGroupForCurrentRoute(state, props))
-  const currentMembership = useSelector(state => getMyGroupMembership(state, props))
   const group = presentGroup(currentGroup)
+  const currentMembership = useSelector(state => getMyGroupMembership(state, props))
   const membershipAgreements = currentMembership?.agreements.toModelArray()
+  const { agreementsAcceptedAt, joinQuestionsAnsweredAt } = currentMembership?.settings || {}
+  const [page, setPage] = useState(1)
 
   const numAgreements = group?.agreements?.length || 0
   const [currentAgreements, setCurrentAgreements] = useState(Array(numAgreements).fill(false))
@@ -37,20 +39,40 @@ export default function GroupWelcomeModal (props) {
   const checkedAllAgreements = numCheckedAgreements === numAgreements
 
   const agreementsChanged = numAgreements > 0 &&
-    (!currentMembership?.settings.agreementsAcceptedAt ||
-     currentMembership?.settings.agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
+    (!agreementsAcceptedAt || agreementsAcceptedAt < currentGroup.settings.agreementsLastUpdatedAt)
 
-  const showWelcomeModal = currentMembership?.settings?.showJoinForm || agreementsChanged
+  const [questionAnswers, setQuestionAnswers] = useState(group?.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(!group?.settings?.askJoinQuestions || !!joinQuestionsAnsweredAt)
+
+  const hasFirstPage = numAgreements > 0
+  const hasSecondPage = (group?.settings?.askJoinQuestions && questionAnswers?.length > 0 && !joinQuestionsAnsweredAt) ||
+    (group?.settings?.showSuggestedSkills && group?.suggestedSkills?.length > 0)
+
+  const showWelcomeModal = currentMembership?.settings?.showJoinForm || agreementsChanged || !joinQuestionsAnsweredAt
 
   useEffect(() => {
     if (group?.id && currentMembership) dispatch(fetchGroupWelcomeData(group.id, currentUser.id))
-  }, [group?.id])
+  }, [currentMembership?.id])
 
   useEffect(() => {
-    if (agreementsChanged && numAgreements > 0 && membershipAgreements?.length > 0) {
-      setCurrentAgreements(group.agreements.map(ga => membershipAgreements.find(ma => ma.id === ga.id)?.accepted))
+    if (numAgreements > 0) {
+      setCurrentAgreements(group.agreements.map(ga => membershipAgreements?.find(ma => ma.id === ga.id)?.accepted))
     }
-  }, [membershipAgreements?.length])
+  }, [group?.agreements?.length, membershipAgreements?.length])
+
+  useEffect(() => {
+    if (group?.joinQuestions?.length > 0) {
+      setQuestionAnswers(group?.joinQuestions.map(q => { return { questionId: q.questionId, text: q.text, answer: '' } }))
+
+      // not loading answers right now, so we know if answered before by whether joinQuestionsAnsweredAt is set
+      setAllQuestionsAnswered(!group?.settings?.askJoinQuestions || !!joinQuestionsAnsweredAt)
+
+      // If dont have agreements to show come straight to the join questions page
+      if (!hasFirstPage) {
+        setPage(2)
+      }
+    }
+  }, [group?.joinQuestions?.length])
 
   if (!showWelcomeModal || !group || !currentMembership) return null
 
@@ -69,8 +91,28 @@ export default function GroupWelcomeModal (props) {
   }
 
   const handleAccept = async () => {
-    await dispatch(updateMembershipSettings(group.id, { showJoinForm: false }, true))
+    if (page === 1 && hasSecondPage) {
+      setPage(2)
+      return
+    }
+
+    await dispatch(updateMembershipSettings(
+      group.id,
+      { joinQuestionsAnsweredAt: new Date(), showJoinForm: false },
+      true,
+      questionAnswers.map(q => ({ questionId: q.questionId, answer: q.answer }))
+    ))
     return null
+  }
+
+  const handleAnswerQuestion = (index) => (event) => {
+    const answerValue = event.target.value
+    setQuestionAnswers(prevAnswers => {
+      const newAnswers = [...prevAnswers]
+      newAnswers[index].answer = answerValue
+      setAllQuestionsAnswered(newAnswers.every(a => trim(a.answer).length > 0))
+      return newAnswers
+    })
   }
 
   const addSkill = name => dispatch(addSkillAction(name))
@@ -84,17 +126,18 @@ export default function GroupWelcomeModal (props) {
       timeout={{ appear: 400, enter: 400, exit: 300 }}
     >
       <div styleName='welcome-modal-wrapper' key='welcome-modal'>
-        <div styleName='welcome-modal' className='welcome-modal'>
+        <div styleName={`welcome-modal viewing-page-${page}`} className='welcome-modal'>
           <div style={bgImageStyle(group.bannerUrl || DEFAULT_BANNER)} styleName='banner'>
             <div styleName='banner-content'>
               <RoundImage url={group.avatarUrl || DEFAULT_AVATAR} size='50px' square />
               <h2>{t('Welcome to {{group.name}}!', { group })}</h2>
+              {hasFirstPage && hasSecondPage ? <span styleName='page-number'>({page}/2)</span> : ''}
             </div>
             <div styleName='fade' />
           </div>
-          <div styleName='welcome-content'>
+          <div styleName='welcome-content page-1'>
             {!isEmpty(group.purpose) &&
-              <div styleName='welcome-section'>
+              <div>
                 <h2>{t('Our Purpose')}</h2>
                 <p>{group.purpose}</p>
               </div>}
@@ -118,6 +161,7 @@ export default function GroupWelcomeModal (props) {
                           styleName='i-agree'
                           type='checkbox'
                           id={'agreement' + agreement.id}
+                          data-testid={'cbAgreement' + i}
                           value={i}
                           onChange={handleCheckAgreement}
                           checked={currentAgreements[i]}
@@ -143,18 +187,40 @@ export default function GroupWelcomeModal (props) {
                   </div>}
               </div>
             )}
+          </div>
+          <div styleName='welcome-content page-2'>
+            {!isEmpty(group.purpose) &&
+              <div>
+                <h2>{t('Our Purpose')}</h2>
+                <p>{group.purpose}</p>
+              </div>}
 
-            {group.settings?.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
+            {group?.settings?.showSuggestedSkills && group.suggestedSkills?.length > 0 &&
               <SuggestedSkills addSkill={addSkill} currentUser={currentUser} group={group} removeSkill={removeSkill} />}
 
-            <div styleName='call-to-action'>
+            {!joinQuestionsAnsweredAt && group.settings?.askJoinQuestions && questionAnswers?.length > 0 && <div styleName='questions-header'>{t('Please answer the following questions to enter')}</div>}
+            {!joinQuestionsAnsweredAt && group.settings?.askJoinQuestions && questionAnswers && questionAnswers.map((q, index) => (
+              <div styleName='join-question' key={index}>
+                <h3>{q.text}</h3>
+                <textarea name={`question_${q.questionId}`} onChange={handleAnswerQuestion(index)} value={q.answer} placeholder={t('Type your answer here...')} />
+              </div>)
+            )}
+          </div>
+          <div styleName='call-to-action'>
+            {page === 2 && hasFirstPage && (
               <Button
-                data-testid='jump-in'
-                disabled={!checkedAllAgreements}
-                label={t('Jump in!')}
-                onClick={handleAccept}
+                color='purple'
+                className={styles['previous-button']}
+                label={t('Previous')}
+                onClick={() => setPage(1)}
               />
-            </div>
+            )}
+            <Button
+              dataTestId='jump-in'
+              disabled={(page === 1 && !checkedAllAgreements) || (page === 2 && !allQuestionsAnswered)}
+              label={page === 1 && hasSecondPage ? t('Next') : t('Jump in!')}
+              onClick={handleAccept}
+            />
           </div>
         </div>
       </div>
