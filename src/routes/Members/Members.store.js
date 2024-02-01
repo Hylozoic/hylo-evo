@@ -28,10 +28,12 @@ query ($slug: String, $first: Int, $sortBy: String, $offset: Int, $search: Strin
              active
              groupId
              responsibilities {
-               id
-               title
-               description
-             }
+              items {
+                id
+                title
+                description
+              }
+            }
            }
          }
         commonRoles {
@@ -115,8 +117,7 @@ export const getMembers = makeQueryResultsModelSelector(
   'Person',
   person => ({
     ...person.ref,
-    skills: person.skills.toModelArray(),
-    groupRoles: person.groupRoles.items
+    skills: person.skills.toModelArray()
   })
 )
 

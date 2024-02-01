@@ -13,7 +13,9 @@ beforeAll(() => {
       id: '345',
       group: group.id,
       hasModeratorRole: true,
-      person: 1
+      person: 1,
+      commonRoles: { items: [] },
+      groupRoles: { items: [] }
     })]
   })
 

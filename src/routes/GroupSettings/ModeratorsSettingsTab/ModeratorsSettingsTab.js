@@ -15,7 +15,6 @@ import SettingsSection from '../SettingsSection'
 import ModalDialog from 'components/ModalDialog'
 import CheckBox from 'components/CheckBox'
 import EmojiPicker from 'components/EmojiPicker'
-import general from '../GroupSettings.scss' // eslint-disable-line no-unused-vars
 import styles from './ModeratorsSettingsTab.scss' // eslint-disable-line no-unused-vars
 
 const { array, func, string, object, bool } = PropTypes
@@ -180,6 +179,7 @@ class ModeratorsSettingsTab extends Component {
 
     return (
       <>
+        {/* TODO RESP: Remove this whole section once the moderators are ported to common-role-managers via data migration */}
         <SettingsSection>
           <h3>
             {group?.moderatorDescriptorPlural || t('Moderators')}

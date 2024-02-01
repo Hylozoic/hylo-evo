@@ -107,7 +107,7 @@ export function GroupLeader ({ groupId, leader, slug }) {
       <Link to={personUrl(leader.id, slug)} styleName='leader-name'>{name}</Link>
       <div styleName='badges'>
         {badges.map(badge => (
-          <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} id={leader.id} />
+          <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={leader.id} />
         ))}
       </div>
     </div>

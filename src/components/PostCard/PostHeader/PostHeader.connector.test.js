@@ -191,7 +191,7 @@ describe('mergeProps', () => {
         id: '345',
         group: group.id,
         hasModeratorRole: false,
-        commonRoles: { items: []}
+        commonRoles: { items: [] }
       })] })
 
     const state = {

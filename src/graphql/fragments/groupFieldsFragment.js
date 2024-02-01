@@ -107,9 +107,11 @@ const groupFieldsFragment = ({ withTopics, withJoinQuestions, withPrerequisites,
           active
           groupId
           responsibilities {
-            id
-            title
-            description
+            items {
+              id
+              title
+              description
+            }
           }
         }
       }

@@ -56,7 +56,7 @@ export default function GroupSettings ({
   const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
   if (!group) return <Loading />
   if (!canModerate && responsibilities.length === 0) return <Redirect to={groupUrl(slug)} />
-
+  // TODO RESP: all uses here of canModerate can be removed once the database data-migration is run
   useEffect(() => {
     if (!canModerate && !responsibilities.includes(RESP_ADMINISTRATION) && responsibilities.includes(RESP_ADD_MEMBERS)) push(groupUrl(slug, 'settings/invite'))
   }, [])
@@ -184,7 +184,7 @@ export default function GroupSettings ({
         canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? relatedGroupsSettings : null,
         canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? importSettings : null,
         canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? exportSettings : null,
-        canModerate ? deleteSettings : null
+        canModerate || responsibilities.includes(RESP_ADMINISTRATION) ? deleteSettings : null
       ])}
     />
   )

@@ -10,9 +10,11 @@ const getCanModerate = ormCreateSelector(
     const me = Me.first()
     if (group && me) {
       const membership = Membership.safeGet({ group: group.id, person: me.id })
+      if (!membership) return false
+      console.log('membership', membership, "***********************************************************************")
       const commonResp = membership.commonRoles.items.map(cr => cr.responsibilities.items).flat()
       const groupRolesForGroup = me?.groupRoles?.items.filter(groupRole => groupRole.groupId === group.id) || []
-      const resp = groupRolesForGroup.map(groupRole => groupRole.responsibilities || []).flat()
+      const resp = groupRolesForGroup.map(groupRole => groupRole.responsibilities.items || []).flat()
       const combinedResponsibilities = [...resp, ...commonResp].map(r => r.title)
 
       return get('hasModeratorRole', membership) || combinedResponsibilities.includes(additionalResponsibility)

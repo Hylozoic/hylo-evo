@@ -76,12 +76,14 @@ posts: viewPosts(
          active
          groupId
          responsibilities {
-           id
-           title
-           description
-         }
-       }
-     }
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
+    }
     commonRoles{
       items {
          name
@@ -324,12 +326,14 @@ posts(
          active
          groupId
          responsibilities {
-           id
-           title
-           description
-         }
-       }
-     }
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
+    }
     commonRoles{
       items {
          name

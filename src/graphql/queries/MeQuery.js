@@ -95,9 +95,11 @@ export default gql`
         active
         groupId
         responsibilities {
-          id
-          title
-          description
+          items {
+            id
+            title
+            description
+          }
         }
       }
     }

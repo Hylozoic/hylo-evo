@@ -64,7 +64,7 @@ export function mergeProps (stateProps, dispatchProps, ownProps) {
   const { deletePost, editPost, fulfillPost, unfulfillPost, removePost, pinPost } = dispatchProps
   const isCreator = currentUser && creator && currentUser.id === creator.id
   const canEdit = isCreator
-  const canModerate = currentUser && currentUser.canModerate(group)
+  const canModerate = currentUser && currentUser.canModerate(group) // TODO RESP: this should ultimately require no change to EVO once the linked node code has been changed
   const responsibilities = getResponsibilitiesForGroup({ currentUser, groupId: group?.id }).map(r => r.title)
   return {
     ...stateProps,

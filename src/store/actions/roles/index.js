@@ -124,9 +124,11 @@ export function fetchMembersForGroupRole ({ id, roleId: groupRoleId }) {
                    active
                    groupId
                    responsibilities {
-                     id
-                     title
-                     description
+                    items {
+                      id
+                      title
+                      description
+                    }
                    }
                  }
                }

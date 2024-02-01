@@ -50,11 +50,12 @@ class Member extends React.Component {
           <div styleName='name'>{name}</div>
           <div styleName='location'>{location}</div>
           <div styleName='badgeRow'>
+            {/* TODO RESP: can be removed once mods are ported to managers */}
             {creatorIsModerator && (
               <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} id={id} />
             )}
             {badges.map(badge => (
-              <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} id={id} />
+              <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
             ))}
           </div>
           {skills && <div styleName='skills'>

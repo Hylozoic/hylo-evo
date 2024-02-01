@@ -532,6 +532,7 @@ class PostEditor extends React.Component {
   }
 
   canModerate = () => {
+    // TODO RESP: this is probably best handled upstream but need to verify this still works
     const { myModeratedGroups = [] } = this.props
     const { post } = this.state
     const { groups = [] } = post
@@ -916,7 +917,7 @@ export function ActionsBar ({
             styleName={cx('action-icon', { 'highlight-icon': showFiles })}
           />
         </UploadAttachmentButton>
-        {/* TODO: What responsibilities can make announcements? At the moment, this is shown if you moderate ANY of the groups included in the post... */}
+        {/* TODO RESP: What responsibilities can make announcements? At the moment, this is shown if you moderate ANY of the groups included in the post... */}
         {canModerate && (
           <span data-tip='Send Announcement' data-for='announcement-tt'>
             <Icon

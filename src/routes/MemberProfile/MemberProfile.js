@@ -7,7 +7,7 @@ import Moment from 'moment-timezone'
 import ReactTooltip from 'react-tooltip'
 import { Helmet } from 'react-helmet'
 import { TextHelpers } from 'hylo-shared'
-import { twitterUrl, AXOLOTL_ID } from 'store/models/Person'
+import { twitterUrl, AXOLOTL_ID, combineRoles } from 'store/models/Person'
 import { bgImageStyle } from 'util/index'
 import {
   currentUserSettingsUrl,
@@ -117,7 +117,8 @@ class MemberProfile extends React.Component {
       component: CurrentContentComponent
     } = contentDropDownItems.find(contentItem => contentItem.id === currentTab)
     const groupId = group && group.id
-    const badges = (groupId && person.groupRoles && person.groupRoles.filter(role => role.groupId === groupId)) || []
+
+    const badges = combineRoles({ groupId, person })
     const creatorIsModerator = (person && person.memberships && person.memberships.find(membership => membership.groupId === groupId || membership.hasModeratorRole)) || false
 
     return (
@@ -135,22 +136,18 @@ class MemberProfile extends React.Component {
             <RoundImage styleName='header-member-avatar' url={person.avatarUrl} xlarge />
             <h1 styleName='header-member-name'>{person.name}</h1>
             <div styleName='badgeRow'>
+              {/* TODO RESP: can be removed once mods are ported to managers */}
               {creatorIsModerator && (
                 <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={group?.moderatorDescriptor || t('Moderator')} />
               )}
               {badges.map(badge => (
-                <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} />
+                <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} />
               ))}
             </div>
             {person.location && <div styleName='header-member-location'>
               <Icon name='Location' styleName='header-member-location-icon' />
               {locationWithoutUsa}
             </div>}
-            {/* TODO: Do we still want to show the "Group manager" role? */}
-            {/* {role && <div styleName='location'>
-              <Icon styleName='star' name='StarCircle' />
-              {role}
-            </div>} */}
           </div>
           <div styleName='action-icons'>
             <ActionButtons items={actionButtonsItems} />

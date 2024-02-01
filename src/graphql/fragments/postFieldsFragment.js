@@ -15,9 +15,11 @@ const CommentFieldsFragment = `
          active
          groupId
          responsibilities {
-           id
-           title
-           description
+          items {
+            id
+            title
+            description
+          }
          }
        }
      }
@@ -79,12 +81,14 @@ const postFieldsFragment = withComments => `
          active
          groupId
          responsibilities {
-           id
-           title
-           description
-         }
-       }
-     }
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
+    }
     commonRoles{
       items {
          name

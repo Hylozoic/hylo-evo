@@ -8,13 +8,16 @@ export function firstName (user) {
   return user.name ? user.name.split(' ')[0] : null
 }
 
-export function canModerate (memberships, group) {
+export function canModerate (memberships, group, groupRoles = { items: [] }, additionalResponsibility = '') {
   const matchedMembership = find(
     m => m.group === get('id', group),
     toRefArray(memberships)
   )
+  if (!matchedMembership) return false
+  const roles = [...matchedMembership.commonRoles.items, ...groupRoles.items]
+  const responsibilities = roles.map(r => r.responsibilities.items).flat().map(r => r.title)
 
-  return get('hasModeratorRole', matchedMembership)
+  return get('hasModeratorRole', matchedMembership) || responsibilities.includes(additionalResponsibility)
 }
 
 export function isTester (userId) {
@@ -58,8 +61,8 @@ class Me extends Model {
     return firstName(this)
   }
 
-  canModerate (group) {
-    return canModerate(this.memberships, group)
+  canModerate (group, additionalResponsibility = '') {
+    return canModerate(this.memberships, group, this.groupRoles, additionalResponsibility)
   }
 
   hasFeature (key) {
@@ -89,6 +92,7 @@ Me.fields = {
     to: 'Location',
     as: 'locationObject'
   }),
+  commonRoles: many('CommonRole'),
   memberships: many('Membership'),
   messageThreads: many('MessageThread'),
   notifications: many('Notification'),

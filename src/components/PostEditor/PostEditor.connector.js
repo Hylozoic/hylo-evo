@@ -15,7 +15,8 @@ import { fetchLocation, ensureLocationIdIfCoordinate } from 'components/Location
 import {
   CREATE_POST,
   CREATE_PROJECT,
-  FETCH_POST
+  FETCH_POST,
+  RESP_ADMINISTRATION
 } from 'store/constants'
 import createPost from 'store/actions/createPost'
 import updatePost from 'store/actions/updatePost'
@@ -39,7 +40,8 @@ export function mapStateToProps (state, props) {
   const currentGroup = getGroupForCurrentRoute(state, props)
   const groupOptions = props.groupOptions ||
     (currentUser && currentUser.memberships.toModelArray().map((m) => m.group).sort((a, b) => a.name.localeCompare(b.name)))
-  const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c)))
+  const myModeratedGroups = (currentUser && groupOptions.filter(c => currentUser.canModerate(c, RESP_ADMINISTRATION)))
+  // TODO RESP: verify this works as expected
   const linkPreview = getLinkPreview(state, props)
   const linkPreviewStatus = get('linkPreviewStatus', state[MODULE_NAME])
   const fetchLinkPreviewPending = isPendingFor(FETCH_LINK_PREVIEW, state)

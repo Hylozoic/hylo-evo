@@ -61,7 +61,7 @@ describe('mapStateToProps', () => {
           id: '345',
           group: group.id,
           hasModeratorRole: false,
-          commonRoles: { items: []}
+          commonRoles: { items: [] }
         })]
       })
       const meUser = session.Person.create({ id: '1' })

@@ -97,12 +97,14 @@ export default
          active
          groupId
          responsibilities {
-           id
-           title
-           description
-         }
-       }
-     }
+          items {
+            id
+            title
+            description
+          }
+        }
+      }
+    }
     projects {
       items {
         id

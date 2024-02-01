@@ -62,7 +62,7 @@ it('shows group if the group exists', async () => {
     slug: 'test-group',
     name: 'Test Group'
   }
-  const membership = { id: '1', person: { id: '1' }, group }
+  const membership = { id: '1', person: { id: '1' }, group, commonRoles: { items: [] } }
   const me = {
     id: '1',
     name: 'Test User',
@@ -164,7 +164,7 @@ it('shows NotFound if the group does not exist', async () => {
       signupInProgress: false,
       alreadySeenTour: true
     },
-    memberships: []
+    memberships: [{ id: '3', person: { id: '3' }, commonRoles: { items: [] } }]
   }
 
   mockGraphqlServer.resetHandlers(

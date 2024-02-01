@@ -134,11 +134,12 @@ class PostHeader extends PureComponent {
                 <Link to={creatorUrl} styleName='userName' data-tip={creator.tagline} data-for='announcement-tt'>{creator.name}</Link>
               </Highlight>
               <div styleName='badgeRow'>
+                {/* TODO RESP: can be removed once mods are ported to managers */}
                 {creatorIsModerator && (
                   <BadgeEmoji key='mod' expanded emoji='🛡️' isModerator name={currentGroup?.moderatorDescriptor || 'Moderator'} id={id} />
                 )}
                 {badges.map(badge => (
-                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities.items} id={id} />
+                  <BadgeEmoji key={badge.name} expanded {...badge} responsibilities={badge.responsibilities} id={id} />
                 ))}
               </div>
               <div styleName='timestampRow'>

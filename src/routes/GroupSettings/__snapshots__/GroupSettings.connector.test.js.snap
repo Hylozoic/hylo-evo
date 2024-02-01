@@ -100,7 +100,6 @@ Object {
             name
             emoji
             description
-
           }
           customViews {
             items {

@@ -71,20 +71,24 @@ class Members extends Component {
             </div>
           </div>
           {(canModerate || responsibilities.includes(RESP_ADD_MEMBERS)) && <Link to={groupUrl(slug, 'settings/invite')}>
-            <Button styleName='invite'
+            <Button
+              styleName='invite'
               color='green-white-green-border'
-              narrow >
+              narrow
+            >
               <Icon name='Invite' styleName='invite-icon' /> {t('Invite People')}
             </Button>
           </Link>}
         </div>
         <div styleName='content'>
           <div styleName='controls'>
-            <TextInput placeholder={t('Search by name or skills & interests')}
+            <TextInput
+              placeholder={t('Search by name or skills & interests')}
               styleName='search'
               defaultValue={search}
               onChange={e => this.search(e.target.value)} />
-            <Dropdown styleName='sort-dropdown'
+            <Dropdown
+              styleName='sort-dropdown'
               toggleChildren={<SortLabel text={sortKeys[sortBy]} />}
               alignRight
               items={Object.keys(sortKeys).map(k => ({
